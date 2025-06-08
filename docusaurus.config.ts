@@ -1,6 +1,6 @@
 import {themes as prismThemes} from 'prism-react-renderer';
 import type {Config} from '@docusaurus/types';
-import type * as Preset from '@docusaurus/preset-classic';
+import type * as Preset from 'src/themes/preset-openriak';
 
 // This runs in Node.js - Don't use client-side code here (browser APIs, JSX...)
 
@@ -38,16 +38,47 @@ const config: Config = {
 
   presets: [
     [
-      'classic',
+      'preset-openriak',
       {
-        docs: {
-          sidebarPath: './sidebars.ts',
+        kv: {
+          id: "kv",
+          path: "content/kv",
+          routeBasePath: "kv",
+          sidebarPath: require.resolve('./src/sidebars/sidebarsKV.ts'),
           // Please change this to your repo.
           // Remove this to remove the "edit this page" links.
           editUrl:
-            'https://github.com/openriak/openriak-docs/tree/develop/',
+            'https://github.com/openriak/openriak-docs/tree/develop/kv/',
+        },
+        cs: {
+          id: "cs",
+          path: "content/cs",
+          routeBasePath: "cs",
+          sidebarPath: require.resolve('./src/sidebars/sidebarsCS.ts'),
+          // Please change this to your repo.
+          // Remove this to remove the "edit this page" links.
+          editUrl:
+            'https://github.com/openriak/openriak-docs/tree/develop/cs/',
+        },
+        ts: {
+          id: "ts",
+          path: "content/ts",
+          routeBasePath: "ts",
+          sidebarPath: require.resolve('./src/sidebars/sidebarsTS.ts'),
+          // Please change this to your repo.
+          // Remove this to remove the "edit this page" links.
+          editUrl:
+            'https://github.com/openriak/openriak-docs/tree/develop/ts/',
+        },
+        community: {
+          id: "community",
+          path: "content/community",
+          routeBasePath: "community"
         },
         blog: {
+          id: "blog",
+          path: "content/blog",
+          routeBasePath: "blog",
           showReadingTime: true,
           feedOptions: {
             type: ['rss', 'atom'],
@@ -81,10 +112,35 @@ const config: Config = {
       items: [
         {
           type: 'docSidebar',
-          sidebarId: 'tutorialSidebar',
+          id: "kv",
+          docsPluginId: "kv",
+          sidebarId: 'kvSidebar',
           position: 'left',
-          label: 'Tutorial',
+          label: 'KV',
+          sidebarPath: require.resolve('./src/sidebars/sidebarsKV.ts'),
+          //docsPluginId: "kv", // ← must match the plugin `id`
         },
+        {
+          type: 'docSidebar',
+          id: "cs",
+          docsPluginId: "cs",
+          sidebarId: 'csSidebar',
+          position: 'left',
+          label: 'CS',
+          sidebarPath: require.resolve('./src/sidebars/sidebarsCS.ts'),
+          //docsPluginId: "kv", // ← must match the plugin `id`
+        },
+        {
+          type: 'docSidebar',
+          id: "ts",
+          docsPluginId: "ts",
+          sidebarId: 'tsSidebar',
+          position: 'left',
+          label: 'TS',
+          sidebarPath: require.resolve('./src/sidebars/sidebarsTS.ts'),
+          //docsPluginId: "kv", // ← must match the plugin `id`
+        },
+        {to: '/community', label: 'Community', position: 'left'},
         {to: '/blog', label: 'Blog', position: 'left'},
         {
           href: 'https://github.com/openriak/openriak-docs',
@@ -100,8 +156,37 @@ const config: Config = {
           title: 'Docs',
           items: [
             {
-              label: 'Tutorial',
-              to: '/docs/intro',
+              label: 'OpenRiak KV',
+              to: '/kv/intro',
+            },
+            {
+              label: 'OpenRiak CS',
+              to: '/cs/intro',
+            },
+            {
+              label: 'OpenRiak TS',
+              to: '/ts/intro',
+            },
+          ],
+        },
+        {
+          title: 'Source',
+          items: [
+            {
+              label: 'OpenRiak',
+              to: 'https://github.com/OpenRiak',
+            },
+            {
+              label: 'OpenRiak KV',
+              to: 'https://github.com/OpenRiak/riak_kv',
+            },
+            {
+              label: 'TicTac AAE',
+              to: 'https://github.com/OpenRiak/kv_index_tictactree',
+            },
+            {
+              label: 'Riak Erlang Client',
+              to: 'https://github.com/OpenRiak/riak-erlang-client',
             },
           ],
         },

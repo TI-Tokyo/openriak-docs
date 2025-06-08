@@ -5,6 +5,12 @@
       "label": "Start Docker Container (Debug)",
       "type": "shell",
       "command": "docker compose -f ./docker/docker-compose.debug.yaml up --build",
+ 			"options": {
+   			"env": {
+			    "DOCKER_BUILDKIT": "1",
+   				"COMPOSE_BAKE": "true",
+   			}			
+			},
       "isBackground": true,
       "problemMatcher": [
         {
@@ -19,7 +25,7 @@
           "background": {
             "activeOnStart": true,
             "beginsPattern": "Debugger listening on",
-            "endsPattern": "Debugger attached"
+            "endsPattern": "Docusaurus website is running"
           }
         }
       ]
