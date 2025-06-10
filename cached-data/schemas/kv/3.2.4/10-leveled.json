@@ -1,0 +1,1082 @@
+[
+  {
+    "rawSchema": "{mapping, \"leveled.data_root\", \"leveled.data_root\", [ {default, \"$(platform_data_dir)/leveled\"}, {datatype, directory} ]}.",
+    "comment": [
+      "-*- erlang -*-",
+      "%% leveled",
+      "@doc A path under which leveled data files will be stored."
+    ],
+    "type": "mapping",
+    "configName": "leveled.data_root",
+    "settingName": "leveled.data_root",
+    "properties": [
+      {
+        "type": "tuple",
+        "value": [
+          {
+            "type": "atom",
+            "value": "default"
+          },
+          {
+            "type": "text",
+            "value": "$(platform_data_dir)/leveled"
+          }
+        ]
+      },
+      {
+        "type": "tuple",
+        "value": [
+          {
+            "type": "atom",
+            "value": "datatype"
+          },
+          {
+            "type": "atom",
+            "value": "directory"
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "rawSchema": "{mapping, \"leveled.sync_strategy\", \"leveled.sync_strategy\", [ {default, none}, {datatype, atom} ]}.",
+    "comment": [
+      "@doc Strategy for flushing data to disk",
+      "Can be set to riak_sync, sync (if OTP > 16) or none.  Use none, and the OS",
+      "will flush when most efficient.  Use riak_sync or sync to flush after every",
+      "PUT (not recommended without some hardware support e.g. flash drives and/or",
+      "Flash-backed Write Caches)"
+    ],
+    "type": "mapping",
+    "configName": "leveled.sync_strategy",
+    "settingName": "leveled.sync_strategy",
+    "properties": [
+      {
+        "type": "tuple",
+        "value": [
+          {
+            "type": "atom",
+            "value": "default"
+          },
+          {
+            "type": "atom",
+            "value": "none"
+          }
+        ]
+      },
+      {
+        "type": "tuple",
+        "value": [
+          {
+            "type": "atom",
+            "value": "datatype"
+          },
+          {
+            "type": "atom",
+            "value": "atom"
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "rawSchema": "{mapping, \"leveled.cache_size\", \"leveled.cache_size\", [ {default, 2000}, {datatype, integer}, hidden ]}.",
+    "comment": [
+      "@doc The key size of the Bookie's in-memory cache"
+    ],
+    "type": "mapping",
+    "configName": "leveled.cache_size",
+    "settingName": "leveled.cache_size",
+    "properties": [
+      {
+        "type": "tuple",
+        "value": [
+          {
+            "type": "atom",
+            "value": "default"
+          },
+          {
+            "type": "atom",
+            "value": "2000"
+          }
+        ]
+      },
+      {
+        "type": "tuple",
+        "value": [
+          {
+            "type": "atom",
+            "value": "datatype"
+          },
+          {
+            "type": "atom",
+            "value": "integer"
+          }
+        ]
+      },
+      {
+        "type": "atom",
+        "value": "hidden"
+      }
+    ]
+  },
+  {
+    "rawSchema": "{mapping, \"leveled.cache_multiple\", \"leveled.cache_multiple\", [ {default, 2}, {datatype, integer}, hidden ]}.",
+    "comment": [
+      "@doc The maximum size of the bookie's cache before each new PUT results in",
+      "a slow-offer pause.  Prior to Riak 3.0.10 this defaulted to 4"
+    ],
+    "type": "mapping",
+    "configName": "leveled.cache_multiple",
+    "settingName": "leveled.cache_multiple",
+    "properties": [
+      {
+        "type": "tuple",
+        "value": [
+          {
+            "type": "atom",
+            "value": "default"
+          },
+          {
+            "type": "atom",
+            "value": "2"
+          }
+        ]
+      },
+      {
+        "type": "tuple",
+        "value": [
+          {
+            "type": "atom",
+            "value": "datatype"
+          },
+          {
+            "type": "atom",
+            "value": "integer"
+          }
+        ]
+      },
+      {
+        "type": "atom",
+        "value": "hidden"
+      }
+    ]
+  },
+  {
+    "rawSchema": "{mapping, \"leveled.penciller_cache_size\", \"leveled.penciller_cache_size\", [ {default, 20000}, {datatype, integer}, hidden ]}.",
+    "comment": [
+      "@doc The key size of the Penciller's in-memory cache"
+    ],
+    "type": "mapping",
+    "configName": "leveled.penciller_cache_size",
+    "settingName": "leveled.penciller_cache_size",
+    "properties": [
+      {
+        "type": "tuple",
+        "value": [
+          {
+            "type": "atom",
+            "value": "default"
+          },
+          {
+            "type": "atom",
+            "value": "20000"
+          }
+        ]
+      },
+      {
+        "type": "tuple",
+        "value": [
+          {
+            "type": "atom",
+            "value": "datatype"
+          },
+          {
+            "type": "atom",
+            "value": "integer"
+          }
+        ]
+      },
+      {
+        "type": "atom",
+        "value": "hidden"
+      }
+    ]
+  },
+  {
+    "rawSchema": "{mapping, \"leveled.compression_method\", \"leveled.compression_method\", [ {datatype, {enum, [native, lz4, zstd, none]}}, {default, native} ]}.",
+    "comment": [
+      "@doc Compression method",
+      "Can be lz4, zstd or native (which will use the Erlang native zlib",
+      "compression) within term_to_binary"
+    ],
+    "type": "mapping",
+    "configName": "leveled.compression_method",
+    "settingName": "leveled.compression_method",
+    "properties": [
+      {
+        "type": "tuple",
+        "value": [
+          {
+            "type": "atom",
+            "value": "datatype"
+          },
+          {
+            "type": "tuple",
+            "value": [
+              {
+                "type": "atom",
+                "value": "enum"
+              },
+              {
+                "type": "array",
+                "value": [
+                  {
+                    "type": "atom",
+                    "value": "native"
+                  },
+                  {
+                    "type": "atom",
+                    "value": "lz4"
+                  },
+                  {
+                    "type": "atom",
+                    "value": "zstd"
+                  },
+                  {
+                    "type": "atom",
+                    "value": "none"
+                  }
+                ]
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "type": "tuple",
+        "value": [
+          {
+            "type": "atom",
+            "value": "default"
+          },
+          {
+            "type": "atom",
+            "value": "native"
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "rawSchema": "{mapping, \"leveled.ledger_compression\", \"leveled.ledger_compression\", [ {datatype, {enum, [as_store, native, lz4, zstd, none]}}, {default, as_store} ]}.",
+    "comment": [
+      "@doc Ledger compression",
+      "If an alternative compression method is preferred specifically for the",
+      "ledger, it can be specified here.  Default is as_store - use whatever method",
+      "has been defined in leveled.compression.method.  Alternatives are native,",
+      "lz4, ztsd and none"
+    ],
+    "type": "mapping",
+    "configName": "leveled.ledger_compression",
+    "settingName": "leveled.ledger_compression",
+    "properties": [
+      {
+        "type": "tuple",
+        "value": [
+          {
+            "type": "atom",
+            "value": "datatype"
+          },
+          {
+            "type": "tuple",
+            "value": [
+              {
+                "type": "atom",
+                "value": "enum"
+              },
+              {
+                "type": "array",
+                "value": [
+                  {
+                    "type": "atom",
+                    "value": "as_store"
+                  },
+                  {
+                    "type": "atom",
+                    "value": "native"
+                  },
+                  {
+                    "type": "atom",
+                    "value": "lz4"
+                  },
+                  {
+                    "type": "atom",
+                    "value": "zstd"
+                  },
+                  {
+                    "type": "atom",
+                    "value": "none"
+                  }
+                ]
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "type": "tuple",
+        "value": [
+          {
+            "type": "atom",
+            "value": "default"
+          },
+          {
+            "type": "atom",
+            "value": "as_store"
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "rawSchema": "{mapping, \"leveled.compression_point\", \"leveled.compression_point\", [ {default, on_receipt}, {datatype, atom} ]}.",
+    "comment": [
+      "@doc Compression point",
+      "The point at which compression is applied to the Journal (the Ledger is",
+      "always compressed).  Use on_receipt or on_compact.  on_compact is suitable",
+      "when values are unlikely to yield much benefit from compression",
+      "(compression is only attempted when compacting)"
+    ],
+    "type": "mapping",
+    "configName": "leveled.compression_point",
+    "settingName": "leveled.compression_point",
+    "properties": [
+      {
+        "type": "tuple",
+        "value": [
+          {
+            "type": "atom",
+            "value": "default"
+          },
+          {
+            "type": "atom",
+            "value": "on_receipt"
+          }
+        ]
+      },
+      {
+        "type": "tuple",
+        "value": [
+          {
+            "type": "atom",
+            "value": "datatype"
+          },
+          {
+            "type": "atom",
+            "value": "atom"
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "rawSchema": "{mapping, \"leveled.compression_level\", \"leveled.compression_level\", [ {default, 1}, {datatype, integer}, {validators, [\"range:0-7\"]}, hidden ]}.",
+    "comment": [
+      "@doc Compresstion Level (Ledger LSM)",
+      "Specify the level in the LSM tree from which compression should occur.",
+      "Defaults to L1, so only L0 writes are uncompressed."
+    ],
+    "type": "mapping",
+    "configName": "leveled.compression_level",
+    "settingName": "leveled.compression_level",
+    "properties": [
+      {
+        "type": "tuple",
+        "value": [
+          {
+            "type": "atom",
+            "value": "default"
+          },
+          {
+            "type": "atom",
+            "value": "1"
+          }
+        ]
+      },
+      {
+        "type": "tuple",
+        "value": [
+          {
+            "type": "atom",
+            "value": "datatype"
+          },
+          {
+            "type": "atom",
+            "value": "integer"
+          }
+        ]
+      },
+      {
+        "type": "tuple",
+        "value": [
+          {
+            "type": "atom",
+            "value": "validators"
+          },
+          {
+            "type": "array",
+            "value": [
+              {
+                "type": "text",
+                "value": "range:0-7"
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "type": "atom",
+        "value": "hidden"
+      }
+    ]
+  },
+  {
+    "rawSchema": "{mapping, \"leveled.log_level\", \"leveled.log_level\", [ {default, info}, {datatype, atom} ]}.",
+    "comment": [
+      "@doc Log level",
+      "Can be debug, info, warn, error or critical",
+      "Set the minimum log level to be used within leveled.  Leveled will log many",
+      "lines to allow for stats to be etracted by those using log indexers such as",
+      "Splunk"
+    ],
+    "type": "mapping",
+    "configName": "leveled.log_level",
+    "settingName": "leveled.log_level",
+    "properties": [
+      {
+        "type": "tuple",
+        "value": [
+          {
+            "type": "atom",
+            "value": "default"
+          },
+          {
+            "type": "atom",
+            "value": "info"
+          }
+        ]
+      },
+      {
+        "type": "tuple",
+        "value": [
+          {
+            "type": "atom",
+            "value": "datatype"
+          },
+          {
+            "type": "atom",
+            "value": "atom"
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "rawSchema": "{mapping, \"leveled.journal_size\", \"leveled.journal_size\", [ {default, 1000000000}, {datatype, integer} ]}.",
+    "comment": [
+      "@doc The approximate size (in bytes) when a Journal file should be rolled.",
+      "Normally keep this as around the size of o(100K) objects.  Default is 1GB.",
+      "Note that on startup an actual maximum size will be chosen which varies by",
+      "a random factor from this point - to avoid coordination of roll events",
+      "across vnodes."
+    ],
+    "type": "mapping",
+    "configName": "leveled.journal_size",
+    "settingName": "leveled.journal_size",
+    "properties": [
+      {
+        "type": "tuple",
+        "value": [
+          {
+            "type": "atom",
+            "value": "default"
+          },
+          {
+            "type": "atom",
+            "value": "1000000000"
+          }
+        ]
+      },
+      {
+        "type": "tuple",
+        "value": [
+          {
+            "type": "atom",
+            "value": "datatype"
+          },
+          {
+            "type": "atom",
+            "value": "integer"
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "rawSchema": "{mapping, \"leveled.journal_objectcount\", \"leveled.journal_objectcount\", [ {default, 200000}, {datatype, integer} ]}.",
+    "comment": [
+      "@doc The approximate count of objects when a Journal file should be rolled.",
+      "This time measured in object count, a file will be rolled if either the",
+      "object count or the journal size limit is reached.  Default 200K.",
+      "Note that on startup an actual maximum size will be chosen which varies by",
+      "a random factor from this point - to avoid coordination of roll events",
+      "across vnodes."
+    ],
+    "type": "mapping",
+    "configName": "leveled.journal_objectcount",
+    "settingName": "leveled.journal_objectcount",
+    "properties": [
+      {
+        "type": "tuple",
+        "value": [
+          {
+            "type": "atom",
+            "value": "default"
+          },
+          {
+            "type": "atom",
+            "value": "200000"
+          }
+        ]
+      },
+      {
+        "type": "tuple",
+        "value": [
+          {
+            "type": "atom",
+            "value": "datatype"
+          },
+          {
+            "type": "atom",
+            "value": "integer"
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "rawSchema": "{mapping, \"leveled.ledger_pagecachelevel\", \"leveled.ledger_pagecachelevel\", [ {default, 4}, {datatype, integer} ]}.",
+    "comment": [
+      "@doc The level of the ledger to be pre-loaded into the page cache",
+      "Depending on how much memory is available for the page cache, and how much",
+      "disk I/O activity can be tolerated at startup - then the level at which the",
+      "ledger is forced into the page cache can be controlled by configuration."
+    ],
+    "type": "mapping",
+    "configName": "leveled.ledger_pagecachelevel",
+    "settingName": "leveled.ledger_pagecachelevel",
+    "properties": [
+      {
+        "type": "tuple",
+        "value": [
+          {
+            "type": "atom",
+            "value": "default"
+          },
+          {
+            "type": "atom",
+            "value": "4"
+          }
+        ]
+      },
+      {
+        "type": "tuple",
+        "value": [
+          {
+            "type": "atom",
+            "value": "datatype"
+          },
+          {
+            "type": "atom",
+            "value": "integer"
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "rawSchema": "{mapping, \"leveled.compaction_runs_perday\", \"leveled.compaction_runs_perday\", [ {default, 24}, {datatype, integer} ]}.",
+    "comment": [
+      "@doc The number of journal compactions per vnode per day",
+      "The higher the value, the more compaction runs, and the sooner space is",
+      "recovered.  But each run has a cost"
+    ],
+    "type": "mapping",
+    "configName": "leveled.compaction_runs_perday",
+    "settingName": "leveled.compaction_runs_perday",
+    "properties": [
+      {
+        "type": "tuple",
+        "value": [
+          {
+            "type": "atom",
+            "value": "default"
+          },
+          {
+            "type": "atom",
+            "value": "24"
+          }
+        ]
+      },
+      {
+        "type": "tuple",
+        "value": [
+          {
+            "type": "atom",
+            "value": "datatype"
+          },
+          {
+            "type": "atom",
+            "value": "integer"
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "rawSchema": "{mapping, \"leveled.compaction_scores_perday\", \"leveled.compaction_scores_perday\", [ {default, 2}, {datatype, integer} ]}.",
+    "comment": [
+      "@doc The number of times per day to score an individual file for compaction.",
+      "The default value will lead to each file, on average, being scored once",
+      "every 12 hours"
+    ],
+    "type": "mapping",
+    "configName": "leveled.compaction_scores_perday",
+    "settingName": "leveled.compaction_scores_perday",
+    "properties": [
+      {
+        "type": "tuple",
+        "value": [
+          {
+            "type": "atom",
+            "value": "default"
+          },
+          {
+            "type": "atom",
+            "value": "2"
+          }
+        ]
+      },
+      {
+        "type": "tuple",
+        "value": [
+          {
+            "type": "atom",
+            "value": "datatype"
+          },
+          {
+            "type": "atom",
+            "value": "integer"
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "rawSchema": "{mapping, \"leveled.compaction_low_hour\", \"leveled.compaction_low_hour\", [ {default, 0}, {datatype, integer} ]}.",
+    "comment": [
+      "@doc Compaction Low Hour",
+      "The hour of the day in which journal compaction can start.  Use Low hour",
+      "of 0 and High hour of 23 to have no compaction window (i.e. always compact",
+      "regardless of time of day)"
+    ],
+    "type": "mapping",
+    "configName": "leveled.compaction_low_hour",
+    "settingName": "leveled.compaction_low_hour",
+    "properties": [
+      {
+        "type": "tuple",
+        "value": [
+          {
+            "type": "atom",
+            "value": "default"
+          },
+          {
+            "type": "atom",
+            "value": "0"
+          }
+        ]
+      },
+      {
+        "type": "tuple",
+        "value": [
+          {
+            "type": "atom",
+            "value": "datatype"
+          },
+          {
+            "type": "atom",
+            "value": "integer"
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "rawSchema": "{mapping, \"leveled.compaction_top_hour\", \"leveled.compaction_top_hour\", [ {default, 23}, {datatype, integer} ]}.",
+    "comment": [
+      "@doc Compaction Top Hour",
+      "The hour of the day, after which journal compaction should stop.",
+      "If low hour > top hour then, compaction will work overnight between low",
+      "hour and top hour (inclusive).  Timings rely on server's view of local time"
+    ],
+    "type": "mapping",
+    "configName": "leveled.compaction_top_hour",
+    "settingName": "leveled.compaction_top_hour",
+    "properties": [
+      {
+        "type": "tuple",
+        "value": [
+          {
+            "type": "atom",
+            "value": "default"
+          },
+          {
+            "type": "atom",
+            "value": "23"
+          }
+        ]
+      },
+      {
+        "type": "tuple",
+        "value": [
+          {
+            "type": "atom",
+            "value": "datatype"
+          },
+          {
+            "type": "atom",
+            "value": "integer"
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "rawSchema": "{mapping, \"leveled.max_run_length\", \"leveled.max_run_length\", [ {default, 4}, {datatype, integer} ]}.",
+    "comment": [
+      "@doc Max Journal Files Per Compaction Run",
+      "In a single compaction run, what is the maximum number of consecutive files",
+      "which may be compacted.  If increasing this value, the average number of",
+      "files per run may decrease, unless adjustments are also made to the",
+      "maxrunlength and singlefile compactionpercentage settings."
+    ],
+    "type": "mapping",
+    "configName": "leveled.max_run_length",
+    "settingName": "leveled.max_run_length",
+    "properties": [
+      {
+        "type": "tuple",
+        "value": [
+          {
+            "type": "atom",
+            "value": "default"
+          },
+          {
+            "type": "atom",
+            "value": "4"
+          }
+        ]
+      },
+      {
+        "type": "tuple",
+        "value": [
+          {
+            "type": "atom",
+            "value": "datatype"
+          },
+          {
+            "type": "atom",
+            "value": "integer"
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "rawSchema": "{mapping, \"leveled.maxrunlength_compactionpercentage\", \"leveled.maxrunlength_compactionpercentage\", [ {default, 75.0}, {datatype, float}, hidden ]}.",
+    "comment": [
+      "@doc Target Percentage for Max Run",
+      "What is the target score for a maximum run of files, to qualify for",
+      "compaction.  If less than this percentage would be retained after compaction",
+      "then it is a candidate (e.g. in default case if 25% of space would be",
+      "recovered)"
+    ],
+    "type": "mapping",
+    "configName": "leveled.maxrunlength_compactionpercentage",
+    "settingName": "leveled.maxrunlength_compactionpercentage",
+    "properties": [
+      {
+        "type": "tuple",
+        "value": [
+          {
+            "type": "atom",
+            "value": "default"
+          },
+          {
+            "type": "atom",
+            "value": "75.0"
+          }
+        ]
+      },
+      {
+        "type": "tuple",
+        "value": [
+          {
+            "type": "atom",
+            "value": "datatype"
+          },
+          {
+            "type": "atom",
+            "value": "float"
+          }
+        ]
+      },
+      {
+        "type": "atom",
+        "value": "hidden"
+      }
+    ]
+  },
+  {
+    "rawSchema": "{mapping, \"leveled.singlefile_compactionpercentage\", \"leveled.singlefile_compactionpercentage\", [ {default, 25.0}, {datatype, float}, hidden ]}.",
+    "comment": [
+      "@doc Target Percentage for Single File",
+      "What is the target score for a run of a single file, to qualify for",
+      "compaction.  If less than this percentage would be retained after compaction",
+      "then it is a candidate (e.g. in default case if 75% of space would be",
+      "recovered)"
+    ],
+    "type": "mapping",
+    "configName": "leveled.singlefile_compactionpercentage",
+    "settingName": "leveled.singlefile_compactionpercentage",
+    "properties": [
+      {
+        "type": "tuple",
+        "value": [
+          {
+            "type": "atom",
+            "value": "default"
+          },
+          {
+            "type": "atom",
+            "value": "25.0"
+          }
+        ]
+      },
+      {
+        "type": "tuple",
+        "value": [
+          {
+            "type": "atom",
+            "value": "datatype"
+          },
+          {
+            "type": "atom",
+            "value": "float"
+          }
+        ]
+      },
+      {
+        "type": "atom",
+        "value": "hidden"
+      }
+    ]
+  },
+  {
+    "rawSchema": "{mapping, \"leveled.snapshot_timeout_short\", \"leveled.snapshot_timeout_short\", [ {default, 1800}, {datatype, integer}, hidden ]}.",
+    "comment": [
+      "@doc Snapshot timeout (short)",
+      "Maximum expected time for an index query.  A query which is taking longer",
+      "than this may fail as it will be released - potentially allowing for some",
+      "file processes to delete.  Timeout is in seconds."
+    ],
+    "type": "mapping",
+    "configName": "leveled.snapshot_timeout_short",
+    "settingName": "leveled.snapshot_timeout_short",
+    "properties": [
+      {
+        "type": "tuple",
+        "value": [
+          {
+            "type": "atom",
+            "value": "default"
+          },
+          {
+            "type": "atom",
+            "value": "1800"
+          }
+        ]
+      },
+      {
+        "type": "tuple",
+        "value": [
+          {
+            "type": "atom",
+            "value": "datatype"
+          },
+          {
+            "type": "atom",
+            "value": "integer"
+          }
+        ]
+      },
+      {
+        "type": "atom",
+        "value": "hidden"
+      }
+    ]
+  },
+  {
+    "rawSchema": "{mapping, \"leveled.snapshot_timeout_long\", \"leveled.snapshot_timeout_long\", [ {default, 86400}, {datatype, integer}, hidden ]}.",
+    "comment": [
+      "@doc Snapshot timeout (long)",
+      "Maximum expected time for any other fold.  A fold which is taking longer",
+      "than this may fail as it will be released - potentially allowing for some",
+      "file processes to delete.  Timeout is in seconds."
+    ],
+    "type": "mapping",
+    "configName": "leveled.snapshot_timeout_long",
+    "settingName": "leveled.snapshot_timeout_long",
+    "properties": [
+      {
+        "type": "tuple",
+        "value": [
+          {
+            "type": "atom",
+            "value": "default"
+          },
+          {
+            "type": "atom",
+            "value": "86400"
+          }
+        ]
+      },
+      {
+        "type": "tuple",
+        "value": [
+          {
+            "type": "atom",
+            "value": "datatype"
+          },
+          {
+            "type": "atom",
+            "value": "integer"
+          }
+        ]
+      },
+      {
+        "type": "atom",
+        "value": "hidden"
+      }
+    ]
+  },
+  {
+    "rawSchema": "{mapping, \"leveled.stats_percentage\", \"leveled.stats_percentage\", [ {default, 10}, {datatype, integer}, {validators, [\"range:0-100\"]} ]}.",
+    "comment": [
+      "@doc Statistic monitoring proportion",
+      "The proportion of requests to be convered by stats, an integer between",
+      "0 and 100.  There is no flow control, so setting this too high could",
+      "possibly overflow the leveled_monitor mailbox."
+    ],
+    "type": "mapping",
+    "configName": "leveled.stats_percentage",
+    "settingName": "leveled.stats_percentage",
+    "properties": [
+      {
+        "type": "tuple",
+        "value": [
+          {
+            "type": "atom",
+            "value": "default"
+          },
+          {
+            "type": "atom",
+            "value": "10"
+          }
+        ]
+      },
+      {
+        "type": "tuple",
+        "value": [
+          {
+            "type": "atom",
+            "value": "datatype"
+          },
+          {
+            "type": "atom",
+            "value": "integer"
+          }
+        ]
+      },
+      {
+        "type": "tuple",
+        "value": [
+          {
+            "type": "atom",
+            "value": "validators"
+          },
+          {
+            "type": "array",
+            "value": [
+              {
+                "type": "text",
+                "value": "range:0-100"
+              }
+            ]
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "rawSchema": "{mapping, \"leveled.stats_logfrequency\", \"leveled.stats_logfrequency\", [ {default, 30}, {datatype, integer} ]}.",
+    "comment": [
+      "@doc Statistic log frequency (seconds)",
+      "The wait in seconds between logs from each leveled_monitor (there is one",
+      "monitor per vnode)"
+    ],
+    "type": "mapping",
+    "configName": "leveled.stats_logfrequency",
+    "settingName": "leveled.stats_logfrequency",
+    "properties": [
+      {
+        "type": "tuple",
+        "value": [
+          {
+            "type": "atom",
+            "value": "default"
+          },
+          {
+            "type": "atom",
+            "value": "30"
+          }
+        ]
+      },
+      {
+        "type": "tuple",
+        "value": [
+          {
+            "type": "atom",
+            "value": "datatype"
+          },
+          {
+            "type": "atom",
+            "value": "integer"
+          }
+        ]
+      }
+    ]
+  }
+]

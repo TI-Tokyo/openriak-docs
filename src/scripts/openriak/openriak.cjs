@@ -3,7 +3,6 @@
 const fs = require('fs');
 const path = require('path');
 const request = require('sync-request');
-//const { Console } = require('console');
 
 const commands = {
   updateSchemas: {
@@ -157,7 +156,7 @@ function updateSchemas(project, version) {
     }
 
     const versionTagOrCommit = object.tagOrCommit || version;
-    console.log(`ℹ️  Checking schema for "${project}" version "${version}" using tag or commit name "${versionTagOrCommit}":`);
+    //console.log(`ℹ️  Checking schema for "${project}" version "${version}" using tag or commit name "${versionTagOrCommit}":`);
 
     const versionRebarConfigFile  = object.rebarConfigFile || defaultRebarConfigFile;
     const versionRebarLockFile    = object.rebarLockFile   || defaultRebarLockFile;
@@ -168,8 +167,8 @@ function updateSchemas(project, version) {
     const actualRebarConfigFileRaw = convertGithubToRawUrl(actualRebarConfigFile);
     const actualRebarLockFileRaw   = convertGithubToRawUrl(actualRebarLockFile  );
 
-    console.log('ℹ️  Resolved rebar.config path:', actualRebarConfigFileRaw);
-    console.log('ℹ️  Resolved rebar.lock path:  ', actualRebarLockFileRaw  );
+    //console.log('ℹ️  Resolved rebar.config path:', actualRebarConfigFileRaw);
+    //console.log('ℹ️  Resolved rebar.lock path:  ', actualRebarLockFileRaw  );
 
     const rebarConfigDestPath = path.join(versionRoot, 'rebar.config');
     const rebarLockDestPath   = path.join(versionRoot, 'rebar.lock'  );
@@ -193,6 +192,8 @@ function updateSchemas(project, version) {
       }
     }
 
+    // Make sure we have metadata for each schema defined in the project rebar.config file
+    // and that the metadata is specific to this project and version
     var unfoundRepos = false;
     desiredSchemas.forEach((schemaName, index) => {
       //console.log(`ℹ️  Finding "${schemaName}" at index ${index}.`);
@@ -202,11 +203,11 @@ function updateSchemas(project, version) {
         unfoundRepos = true;
       } else if (repoInfo.repoUrl) {
         repoInfo.tagOrCommit = versionTagOrCommit;
-        console.log(`ℹ️  Using "${repoInfo.repo}" with tagOrCommit "${repoInfo.tagOrCommit}" for schema "${schemaName}".`);
+        //console.log(`ℹ️  Using "${repoInfo.repo}" with tagOrCommit "${repoInfo.tagOrCommit}" for schema "${schemaName}".`);
       } else if (repoInfo.repo in rebarLockSections) {
         repoInfo.repoUrl = rebarLockSections[repoInfo.repo].url;
         repoInfo.tagOrCommit = rebarLockSections[repoInfo.repo].tagOrCommit;
-        console.log(`ℹ️  Using "${repoInfo.repo}" with tagOrCommit "${repoInfo.tagOrCommit}" for schema "${schemaName}".`);
+        //console.log(`ℹ️  Using "${repoInfo.repo}" with tagOrCommit "${repoInfo.tagOrCommit}" for schema "${schemaName}".`);
       } else {
         console.log(`❌ Unable to find repo for schema"${schemaName}".`);
         unfoundRepos = true;
@@ -222,10 +223,17 @@ function updateSchemas(project, version) {
       // remove ".git" and any trailing slash if present from the repo url
       const repoUrl = repoInfo.repoUrl.replace(/(\.git)?\/?$/, '');
       const fileUrl = repoInfo.fileUrl.replace('{tagOrCommit}', repoInfo.tagOrCommit);
-      const fullUrl = `${repoUrl}/blob${fileUrl}`;
+      const fullUrl = `${repoUrl}${fileUrl}`;
       const rawUrl = convertGithubToRawUrl(fullUrl);
-      const savePath = path.join(versionRoot, `${schemaName}.schema`);
-      downloadFile(rawUrl, savePath);
+      const schemaSavePath = path.join(versionRoot, `${schemaName}.schema`);
+      downloadFile(rawUrl, schemaSavePath);
+      const schemaObject = parseCuttlefishSchema(schemaSavePath);
+      console.log(schemaObject);
+      
+      const objectSavePath = path.join(versionRoot, `${index}-${schemaName}.json`);
+      fs.writeFileSync(objectSavePath, JSON.stringify(schemaObject, null, 2), 'utf8');
+      console.log(`✅ Converted and saved to ${objectSavePath}`);
+
     });
   }
 }
@@ -286,7 +294,7 @@ function getRebarConfSectionFromFile(path, sectionName) {
   const extractedBlock = match[1];
   const blockAsObject = convertErlangTuplePairsToObject(extractedBlock);
 
-  console.log(`ℹ️  Erlang code block "${sectionName}" extracted from "${path}" and converted to Object.`);
+  //console.log(`ℹ️  Erlang code block "${sectionName}" extracted from "${path}" and converted to Object.`);
   //console.log(blockAsObject);
 
   return blockAsObject;
@@ -351,13 +359,13 @@ function downloadFile(url, savePath) {
   const dir = path.dirname(savePath);
   fs.mkdirSync(dir, { recursive: true });
 
-  console.log(`ℹ️  Save url "${url}" to file "${savePath}"`);
+  //console.log(`ℹ️  Save url "${url}" to file "${savePath}"`);
 
   try {
     const res = request('GET', url, { timeout: 10000 }); // timeout in ms
     if (res.statusCode === 200) {
       fs.writeFileSync(savePath, res.getBody());
-      console.log(`✅ Downloaded and saved to ${savePath}`);
+      //console.log(`✅ Downloaded and saved to ${savePath}`);
     } else {
       console.error(`❌ Failed: HTTP ${res.statusCode}`);
       process.exit(1);
@@ -368,4 +376,277 @@ function downloadFile(url, savePath) {
   }
 }
 
+function parseCuttlefishSchema(filePath) {
+  const raw = fs.readFileSync(filePath, 'utf-8');
+
+  const lines = raw.split('\n');
+
+  const results = [];
+
+  let commentBuffer = [];
+
+  for (let i = 0; i < lines.length; i++) {
+    var line = lines[i].trim();
+
+    // Skip header line like: %%-*- mode: erlang -*-
+    if (/^%%-*-.*-*-$/.test(line)) continue;
+
+    // Collect comments
+    if (line.startsWith('%%')) {
+      commentBuffer.push(line.replace(/^%%\s?/, ''));
+      continue;
+    }
+
+    // Detect mapping block start
+    if (line.startsWith('{mapping,')) {
+      let blockLines = [line];
+      while (!line.endsWith('}.')) {
+        i++;
+        line = lines[i].trim();
+        blockLines.push(line);
+      }
+
+      const mappingBlock = blockLines.join(' ').trim();
+
+      const mappingMatch = mappingBlock.match(/^\{mapping,\s*"([^"]+)",\s*"([^"]+)",\s*\[(.*)\]\s*\}\.$/s);
+      if (!mappingMatch) continue;
+
+      const mappingObject = parseErlangToObject(mappingBlock).value;
+      console.log(mappingObject);
+      const blockType   = mappingObject[0].value;
+      const configName  = mappingObject[1].value;
+      const settingName = mappingObject[2].value;
+      const properties  = mappingObject[3].value;
+
+      results.push({
+        rawSchema: mappingBlock,
+        comment: commentBuffer,
+        type: blockType,
+        configName: configName,
+        settingName: settingName,
+        properties: properties,
+      });
+
+      commentBuffer = [];
+    }
+  }
+  return results;
+}
+
+function parseSchemaValidators(value) {
+  // Normalize input (remove quotes if present)
+  // I know we did this before but, I'm untrusting on occasion
+  const trimmed = value.replace(/^"(.*)"$/, '$1').trim();
+
+  try {
+    // Replace Erlang-style list with JSON-compatible string
+    const values = JSON.parse(
+      trimmed.replace(/'/g, '"')
+    );
+    return { rawDatatype: trimmed, validators: values };
+  } catch {
+    return { rawDatatype: trimmed, validators: [] };
+  }
+}
+
+function parseSchemaDataType(value) {
+  // Normalize input (remove quotes if present)
+  // I know we did this before but, I'm untrusting on occasion
+  const trimmed = value.replace(/^"(.*)"$/, '$1').trim();
+
+  // Match outer Erlang tuple: {key, value}
+  //const tupleRegex = /^\{([^,]+),\s*(.+)\}$/;
+  const tupleRegex = /(^[^{},]+$)|(^\{([^,]+),\s*(.+)\}$)|(^\[(.+)\]$)/;
+    const match = trimmed.match(tupleRegex);
+
+  if (!match) {
+    return { type: 'unknown-nomatch', rawDatatype: trimmed };
+  }  
+
+  const [rawDatatype, simpleType, complexRaw, complexType, valuesRaw, arrayRaw, array ] = match;
+  if (arrayRaw) {
+
+  }
+  const cleanType = (simpleType || complexType).trim();
+  const cleanValuesRaw = (valuesRaw || "").trim();
+  // Handle known types
+  switch (cleanType) {
+    case 'atom':
+    case 'bytesize':
+    case 'directory':
+    case 'file':
+    case 'float':
+    case 'integer':
+    case 'ip':
+    case 'string':
+      return { rawDatatype: rawDatatype, type: cleanType };
+
+    case 'duration':
+      return { rawDatatype: rawDatatype, type: 'duration', unit: cleanValuesRaw };
+
+    case 'enum':
+      try {
+        //console.log(`ℹ️  Found "${cleanType}" with values "${cleanValuesRaw}".`);
+        const singleToDoubleQuoted = cleanValuesRaw.replace(/'([^']*)'/g, (_, inner) =>
+            `"${inner.replace(/"/g, '\\"')}"`
+          );
+        //console.log(`ℹ️  Cleaned values to "${singleToDoubleQuoted}".`);
+        const valuesArray = JSON.parse(singleToDoubleQuoted);
+        //console.log(`ℹ️  Parsed values to "${valuesArray}".`);
+        return { rawDatatype: rawDatatype, type: 'enum', valuesArray };
+      } catch (err) {
+        return { rawDatatype: rawDatatype, type: 'unknown', err: err };
+      }
+
+    default:
+      // Fallback: return unknown but matched  if unrecognized
+      return { rawDatatype: rawDatatype, type: 'unknown-matched' };
+  }
+}
+
+function findClosingQuote(input, from, quoteChar) {
+  //console.log(`ℹ️  Finding quote <<${quoteChar}>> in <<${input.slice(from)}>>.`)
+  var skipMarker = '\\';
+  for (var i=from; i<input.length; i++) {
+    //console.log(`ℹ️  i: ${i}, char: ${input[i]}`);
+    switch (input[i]) {
+      case skipMarker: i++; break;
+      case quoteChar:  return i;
+    }
+  }
+  throw new Error(`❌ Error: Closing quote "${quoteChar}" not found in "${input}" from ${{from}}.`);
+}
+
+function findClosingBracket(input, from, opener, closer, skipMarker) {
+  //console.log(`ℹ️  Finding "${opener}" to "${closer}" in "${input}" starting from ${from}.`)
+  var openCounter = 0;
+  for (var i=from; i<input.length; i++) {
+    //console.log(`ℹ️  openCouter: ${openCounter}, i: ${i}, char: ${input[i]}`);
+    switch (input[i]) {
+      case skipMarker: i++; break;
+      case opener: openCounter++; break;
+      case closer: openCounter--; break;
+      case '"':    i = findClosingQuote(input, i+1, '"'); break;
+      case '\'':   i = findClosingQuote(input, i+1, '\''); break;
+    }
+    if (!openCounter) {
+      return i;
+    }
+  }
+  throw new Error(`❌ Error: Closing not found for "${opener}"/"${closer}" pair in "${input.slice(from)}".`);
+}
+
+function findComma(input, from) {
+  //console.log(`ℹ️  Finding "," in "${input}" starting from ${from}.`)
+  for (var i=from; i<input.length; i++) {
+    //console.log(`ℹ️  i: ${i}, char: ${input[i]}`);
+    switch (input[i]) {
+      case ',': return i; break;
+    }
+  }
+  // no comma found, which is fine
+  return input.length;
+}
+
+function parseErlangToObject(input) {
+  var cleanInput = input.trim();
+  if (!cleanInput) {
+    throw new Error(`❌ Error: No string to parse: ${input}`);
+  }
+  const results = [];
+
+  while (cleanInput) {
+    //console.log(`ℹ️  Checking <<${cleanInput}>>`);
+    switch (cleanInput[0]) {
+      case '{': 
+        if (cleanInput[1] === '{') {
+          // it'S a schema template placeholder like "{{somename}}"
+          var closingLocation = findClosingQuote(cleanInput, 2, '}');
+          var innerText = cleanInput.slice(2,closingLocation);
+          //console.log(`ℹ️  Found template placeholder content <<${innerText}>>.`)
+          results.push({type: "template", value: innerText});
+          cleanInput = cleanInput.slice(closingLocation+2);
+          break;
+        } else {
+          // tuple
+          var closingLocation = findClosingBracket(cleanInput, 0, '{', '}');
+          var innerText = cleanInput.slice(1,closingLocation);
+          //console.log(`ℹ️  Found tuple content <<${innerText}>>.`)
+          results.push({type:"tuple",value:parseErlangToObject(innerText)});
+          cleanInput = cleanInput.slice(closingLocation+1);
+        }
+        break;
+      case '[':
+        //array
+        var closingLocation = findClosingBracket(cleanInput, 0, '[', ']');
+        var innerText = cleanInput.slice(1,closingLocation);
+        //console.log(`ℹ️  Found array content <<${innerText}>>.`)
+        results.push({type:"array", value: parseErlangToObject(innerText)});
+        cleanInput = cleanInput.slice(closingLocation+1);
+        //console.log(`ℹ️  Finished. Moving on to next input: ${cleanInput}`)
+        break;
+      case '\'':
+        // single-quoted string
+        var closingLocation = findClosingQuote(cleanInput, 1, '\'');
+        var innerText = cleanInput.slice(1,closingLocation);
+        //console.log(`ℹ️  Found single-quoted string content <<${innerText}>>.`)
+        results.push({type: "text", value: innerText});
+        cleanInput = cleanInput.slice(closingLocation+1);
+        break;
+      case '"':
+        // double-quoted string
+        var closingLocation = findClosingQuote(cleanInput, 1, '"');
+        var innerText = cleanInput.slice(1,closingLocation);
+        //console.log(`ℹ️  Found double-quoted string content <<${innerText}>>.`)
+        results.push({type:"text", value: innerText});
+        cleanInput = cleanInput.slice(closingLocation+1);
+        break;
+      case '<':
+        //binary string
+        var closingLocation = findClosingBracket(cleanInput, 1, '<', '>');
+        var innerText = cleanInput.slice(2,closingLocation-1);
+        //console.log(`ℹ️  Found binary content <<${innerText}>>.`)
+        results.push({type:"binary", value:innerText});
+        cleanInput = cleanInput.slice(closingLocation+2);
+        break;
+      case ' ':
+        // space
+        //console.log(`ℹ️  Found space.`)
+        cleanInput = cleanInput.slice(1);
+        break;
+      case ',':
+        // space
+        //console.log(`ℹ️  Found comma.`)
+        cleanInput = cleanInput.slice(1);
+        break;
+      default:
+        //atom
+        var closingLocation = findComma(cleanInput, 0);
+        var innerText = cleanInput.slice(0,closingLocation);
+        //console.log(`ℹ️  Found atom <<${innerText}>>.`)
+        results.push({type:"atom", value:innerText});
+        cleanInput = cleanInput.slice(closingLocation+1);
+        break;
+    }
+  }
+  
+  if (results.length === 2 && results[1].type === "atom" && results[1].value === ".") {
+    return results[0];
+  }
+  return results;
+}
+
+function testHarness() {
+  const input = `{mapping, {{logger.level}}, "kernel.logger_level", [ {default, {{logger_level}} }, {datatype, {enum, [debug, info, notice, warning, error, critical, alert, emergency, none]}} ]}.`;
+  //const input = `{mapping}`;
+  //const input = `{mapping, darn}`;
+  //const input = `{"mapping"}`;
+//  const input = `{"mapping", "darn"}`;
+//  const input = `{mapping, "darn"}`;
+//const input = `{mapping, {{logger.level}}}`
+  const jsObject = parseErlangToObject(input);
+  console.log("✅ Success:", JSON.stringify(jsObject, null, 2));
+}
+
 main();
+//testHarness();
