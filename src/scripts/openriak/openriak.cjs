@@ -90,9 +90,26 @@ function getFileContent(path) {
   }
 }
 
-function updateSchemas(project, version) {
-
+function getSchemaRoot(project) {
   const schemaRoot = path.join('cached-data', 'schemas', project);
+  // Ensure folder exists
+  if (!fs.existsSync(schemaRoot)) {
+    fs.mkdirSync(schemaRoot, { recursive: true });
+  }
+  return schemaRoot;
+}
+
+function getVersionRoot(project, version) {
+  const versionRoot = path.join(getSchemaRoot(project), version);
+  // Ensure folder exists
+  if (!fs.existsSync(versionRoot)) {
+    fs.mkdirSync(versionRoot, { recursive: true });
+  }
+  return versionRoot;
+}
+
+function getSchemaDefinitions(project, version) {
+  const schemaRoot = getSchemaRoot(project);
   const schemaPath = path.join(schemaRoot, 'schemas.json');
 
   // Ensure folder exists
@@ -139,6 +156,10 @@ function updateSchemas(project, version) {
     process.exit(1);
   }
 
+  return schemas;
+}
+
+function getVersionsToUpdate(schemas, version) {
   // Loop over the versions to update
   var versionsToUpdate = {};
   if (version) {
@@ -146,9 +167,13 @@ function updateSchemas(project, version) {
   } else {
     versionsToUpdate = schemas.versions;
   }
+  return versionsToUpdate;
+}
 
+function updateSchemaFiles(project, version, schemas) {
+  const versionsToUpdate = getVersionsToUpdate(schemas, version)
   for (const [version, object] of Object.entries(versionsToUpdate)) {
-    const versionRoot = path.join(schemaRoot, version);
+    const versionRoot = getVersionRoot(project, version);
 
     // Ensure folder exists
     if (!fs.existsSync(versionRoot)) {
@@ -158,8 +183,8 @@ function updateSchemas(project, version) {
     const versionTagOrCommit = object.tagOrCommit || version;
     //console.log(`ℹ️  Checking schema for "${project}" version "${version}" using tag or commit name "${versionTagOrCommit}":`);
 
-    const versionRebarConfigFile  = object.rebarConfigFile || defaultRebarConfigFile;
-    const versionRebarLockFile    = object.rebarLockFile   || defaultRebarLockFile;
+    const versionRebarConfigFile  = object.rebarConfigFile || schemas.defaultRebarConfigFile;
+    const versionRebarLockFile    = object.rebarLockFile   || schemas.defaultRebarLockFile;
     
     const actualRebarConfigFile = versionRebarConfigFile.replace('{versionTagOrCommit}', versionTagOrCommit);
     const actualRebarLockFile   = versionRebarLockFile.replace('{versionTagOrCommit}', versionTagOrCommit  );
@@ -170,8 +195,8 @@ function updateSchemas(project, version) {
     //console.log('ℹ️  Resolved rebar.config path:', actualRebarConfigFileRaw);
     //console.log('ℹ️  Resolved rebar.lock path:  ', actualRebarLockFileRaw  );
 
-    const rebarConfigDestPath = path.join(versionRoot, 'rebar.config');
-    const rebarLockDestPath   = path.join(versionRoot, 'rebar.lock'  );
+    const rebarConfigDestPath = path.join(versionRoot, 'rebar', 'rebar.config');
+    const rebarLockDestPath   = path.join(versionRoot, 'rebar', 'rebar.lock'  );
   
     downloadFile(actualRebarConfigFileRaw, rebarConfigDestPath);
     downloadFile(actualRebarLockFileRaw,   rebarLockDestPath  );
@@ -225,17 +250,260 @@ function updateSchemas(project, version) {
       const fileUrl = repoInfo.fileUrl.replace('{tagOrCommit}', repoInfo.tagOrCommit);
       const fullUrl = `${repoUrl}${fileUrl}`;
       const rawUrl = convertGithubToRawUrl(fullUrl);
-      const schemaSavePath = path.join(versionRoot, `${schemaName}.schema`);
+      const schemaSavePath = path.join(versionRoot, 'schemas', `${index}-${schemaName}.schema`);
       downloadFile(rawUrl, schemaSavePath);
       const schemaObject = parseCuttlefishSchema(schemaSavePath);
-      console.log(schemaObject);
+      //console.log(schemaObject);
       
-      const objectSavePath = path.join(versionRoot, `${index}-${schemaName}.json`);
+      const objectSavePath = path.join(versionRoot, 'schemas', `${index}-${schemaName}.json`);
       fs.writeFileSync(objectSavePath, JSON.stringify(schemaObject, null, 2), 'utf8');
       console.log(`✅ Converted and saved to ${objectSavePath}`);
 
     });
+
   }
+
+}
+
+function updateSchemas(project, version) {
+  const schemas = getSchemaDefinitions(project, version);
+  //updateSchemaFiles(project, version, schemas);
+  updateTemplatePlaceholdersFiles(project, version, schemas)
+}
+
+function updateTemplatePlaceholdersFiles(project, desiredVersion, schemas) {
+  // Now handle the cuttlefish template placeholders
+
+  if (!schemas.templates) {
+    console.log(`✅ No cuttlefish template placeholders defined, so exiting as done.`);
+    return;
+  }
+
+  const versionsToUpdate = getVersionsToUpdate(schemas, desiredVersion);
+
+  for (const [templateName, files] of Object.entries(schemas.templates)) {
+    if (templateName.startsWith('#')) { continue; }
+    for (const [version, versionObject] of Object.entries(versionsToUpdate)) {
+      const versionRoot = getVersionRoot(project, version);
+      const versionTagOrCommit = versionObject.tagOrCommit || version;
+
+      var templateFiles = null;
+      if (Array.isArray(files)) {
+        templateFiles = [];
+        templateFiles = structuredClone(files);
+      } else if (files.path) {
+        templateFiles = [structuredClone(files)];
+      } else {
+        throw Error(`❌ Error: unknown template detail type for template "${templateName}".`);
+      }
+
+      const convertedTemplatePlaceholders = [];
+      for (const [index, templateFile] of templateFiles.entries()) {
+        if (templateFile.path) {
+          templateFile.path = templateFile.path.replace('{versionTagOrCommit}', versionTagOrCommit);
+          templateFile.path = convertGithubToRawUrl(templateFile.path);
+          const templateSavePath = path.join(versionRoot, `templates`, `${templateName}-${index}.vars.config`);
+          downloadFile(templateFile.path, templateSavePath);
+
+          const templateObject = parseTemplatePlaceholders(templateSavePath, version, templateFile);
+          //console.log(schemaObject);
+          
+          convertedTemplatePlaceholders.push(templateObject);
+        } else if (templateFile.placeholderName && templateFile.value) {
+          const templateObject = {};
+          templateObject[templateFile.placeholderName] = templateFile.value;
+          convertedTemplatePlaceholders.push(templateObject);
+        } else if (templateFile.placeholderName && templateFile.source) {
+          switch (templateFile.source) {
+            case 'version':
+              const templateObject = {};
+              templateObject[templateFile.placeholderName] = version;
+              convertedTemplatePlaceholders.push(templateObject);
+              //console.log(`ℹ️  source version`);
+              break;
+            default:
+              console.error(`❌ Unknown placeholder source of "${templateFile.source}"`);
+              process.exit(1);
+          }
+        }
+      }
+
+      // merge them together, with later values overwriting earlier values
+      const templatePlaceholdersObject = {};
+      for (source of convertedTemplatePlaceholders) {
+        for (const [name, value] of Object.entries(source)) {
+          templatePlaceholdersObject[name] = value;
+        }
+      }
+
+      // order by name to make it more human readable
+      const sortedTemplatePlaceholdersObject = Object.keys(templatePlaceholdersObject)
+        .sort() // Sort keys alphabetically
+        .reduce((acc, key) => {
+          acc[key] = templatePlaceholdersObject[key]; // Rebuild object with sorted keys
+          return acc;
+        }, {});
+
+      //console.log(`ℹ️  sortedTemplatePlaceholdersObject: `, sortedTemplatePlaceholdersObject);
+
+
+      // perform replacements on the placeholders 
+      const placeHolderRegExp = /(\{\{([^}]+)\}\})/s;
+      for (const [name, value] of Object.entries(templatePlaceholdersObject)) {
+        var newValue = value;
+        const limitMax = 10;
+        var limitCounter = 0;
+        while (limitCounter < limitMax && newValue.match(placeHolderRegExp)) {
+          limitCounter++;
+          const [, replacementKey, replacementProperty] = newValue.match(placeHolderRegExp);
+          //console.log(`ℹ️  Replacing placeholder: "${replacementKey}" with "${replacementProperty}".`);
+          // check if desired placeholder exists
+          if (templatePlaceholdersObject[replacementProperty]) {
+            newValue = newValue.replace(replacementKey, templatePlaceholdersObject[replacementProperty]);
+            //console.log(`ℹ️  Loop: New value for "${name}" is "${newValue}" (was "${value}").`);
+
+          } else {
+            console.error(`❌ Placeholder replacement loop on project "${project}" version "${version}" placeholder "${name}" in template "${templateName}" wants placeholder "${replacementProperty}" which could not be found.`)
+            process.exit(1);
+          }
+        }
+        if (limitCounter === limitMax) {
+          console.error(`❌ Placeholder replacement loop on project "${project}" version "${version}" with template placeholder name "${name}" exceeded limit.`)
+          process.exit(1);
+        }
+        //console.log(`ℹ️  New value for "${name}" is "${newValue}" (was "${value}").`);
+        templatePlaceholdersObject[name] = newValue;
+      }
+
+      const templatePlaceholdersSavePath = path.join(versionRoot, 'templates', `${templateName}.templatePlaceholders.json`);
+      fs.writeFileSync(templatePlaceholdersSavePath, JSON.stringify(templatePlaceholdersObject, null, 2), 'utf8');
+      console.log(`✅ Converted var.config named "${templateName}" for project "${project}" version "${version}" and saved to ${templatePlaceholdersSavePath}`);
+    }
+  }
+}
+
+function parseTemplatePlaceholders(templateSavePath, version, config) {
+  const result = {};
+
+  const raw = fs.readFileSync(templateSavePath, 'utf8');
+  const lines = raw.split('\n');
+
+  // get substituion variables
+  const variables = {};
+  if (config.variables) {
+    for (const variable of config.variables) {
+      if (variable.pattern) {
+        //console.log(`ℹ️  Looking for pattern`);
+        for (let i = 0; i < lines.length; i++) {
+          const nameGroup = variable.nameGroup || "name";
+          const valueGroup = variable.valueGroup || "value";
+          
+          var line = lines[i].trim();
+          const regExp = new RegExp(variable.pattern, );
+          const match = line.match(regExp, "gm");
+          //console.log(i);
+          //console.log(line);
+          //console.log(variable.pattern);
+          //console.log(match);
+          if (match && match.groups) {
+            const name = match.groups[nameGroup];
+            const value = match.groups[valueGroup];
+            variables[name] = value;
+            //console.log(`ℹ️  Variable "${name}" with value "${value}".`);
+          }
+        }
+      } else if (variable.value) {
+        //console.log(`ℹ️ℹ  Variable "${variable["name"]}" with value "${variable["value"]}".`);
+        variables[variable["name"]] = variable["value"];
+      } else if (variable.source) {
+        //console.log(`ℹ️ℹ  Variable "${variable.name}" with source "${variable.source}".`)
+        switch (variable.source) {
+          case 'version': variables[variable["name"]] = version; break;
+          default:
+            console.error(`❌ Unknown placeholder variable source of "${variable.source}"`);
+            process.exit(1);
+        }
+      } else {
+        console.error(`❌ Unknown placeholder variable format for "${JSON.stringify(variable, null, 0)}"`);
+        process.exit(1);
+      }
+    }
+  }
+
+  //console.log(`ℹ️  Variables: ${JSON.stringify(variables, null, 2)}`);
+
+  // get template placeholders
+  var inSelectedSection = false;
+  if (!config.after) {
+    inSelectedSection = true;
+  }
+
+  for (let i = 0; i < lines.length; i++) {
+    var line = lines[i].trim();
+
+    // ignore blank lines
+    if (!line) { continue; }
+
+    if (config.after && line === config.after) {
+      inSelectedSection = true;
+    }
+
+    if (config.until && line === config.until) {
+      inSelectedSection = false;
+    }
+
+    // Ignore comments
+    if (line.startsWith('%%')) {
+      continue;
+    }
+
+    // Detect mapping block start
+    if (inSelectedSection && line.startsWith('{')) {
+      let blockLines = [line];
+      while (!line.endsWith('}.')) {
+        i++;
+        line = lines[i].trim();
+        blockLines.push(line);
+      }
+
+      const mappingBlock = blockLines.join(' ').trim();
+
+      const templateMatch = mappingBlock.match(/^\{\s*([^,]+)\s*,\s*"([^"]+)"\s*\}\.$/s);
+      if (!templateMatch) continue;
+
+      //console.log("ℹ️  Template match: ", JSON.stringify(templateMatch, null, 2));
+
+      const [rawTemplateMatch, templateName, templateValue] = templateMatch;
+
+      //console.log(`ℹ️  Template Placeholder "${templateName}" with value "${templateValue}".`);
+
+      var templateValueWithVariables = templateValue;
+      // stick a max limit on it in case of issues
+      var replaceIterationCounterMax = 10;
+      var replaceIterationCounter = 0;
+      while (replaceIterationCounter < replaceIterationCounterMax && templateValueWithVariables.includes("%{")) {
+        replaceIterationCounter++;
+        for ([varName, varValue] of Object.entries(variables)) {
+          const replaceVarName = `%{${varName}}`;
+          if (templateValueWithVariables.includes(replaceVarName)) {
+            //console.log(`ℹ️ℹ️  Template Placeholder contains "${replaceVarName}" so will replace with value "${varValue}".`);
+            templateValueWithVariables = templateValueWithVariables.replace(replaceVarName, varValue);
+            //console.log(`ℹ️ℹ️  New Template Placeholder "${templateName}" with value "${templateValueWithVariables}".`);
+          }
+        }
+      }
+      if (templateValueWithVariables !== templateValue) {
+        //console.log(`ℹ️ℹ️ℹ️  New Template Placeholder "${templateName}" with value "${templateValueWithVariables}".`);
+      }
+      if (replaceIterationCounter === replaceIterationCounterMax) {
+        console.error(`❌ Variable replacement loop on "${templateSavePath}" with template placeholder name "${templateName}" exceeded limit.`)
+        process.exit(1);
+      }
+      result[templateName] = templateValueWithVariables;
+    }
+  }
+
+  return result;
 }
 
 function getRebarLockSections(rebarLockContent) {
@@ -364,7 +632,7 @@ function downloadFile(url, savePath) {
   try {
     const res = request('GET', url, { timeout: 10000 }); // timeout in ms
     if (res.statusCode === 200) {
-      fs.writeFileSync(savePath, res.getBody());
+      fs.writeFileSync(savePath, res.getBody(), 'utf8');
       //console.log(`✅ Downloaded and saved to ${savePath}`);
     } else {
       console.error(`❌ Failed: HTTP ${res.statusCode}`);
@@ -377,7 +645,7 @@ function downloadFile(url, savePath) {
 }
 
 function parseCuttlefishSchema(filePath) {
-  const raw = fs.readFileSync(filePath, 'utf-8');
+  const raw = fs.readFileSync(filePath, 'utf8');
 
   const lines = raw.split('\n');
 
@@ -412,7 +680,7 @@ function parseCuttlefishSchema(filePath) {
       if (!mappingMatch) continue;
 
       const mappingObject = parseErlangToObject(mappingBlock).value;
-      console.log(mappingObject);
+      //console.log(mappingObject);
       const blockType   = mappingObject[0].value;
       const configName  = mappingObject[1].value;
       const settingName = mappingObject[2].value;
@@ -428,80 +696,61 @@ function parseCuttlefishSchema(filePath) {
       });
 
       commentBuffer = [];
-    }
-  }
-  return results;
-}
-
-function parseSchemaValidators(value) {
-  // Normalize input (remove quotes if present)
-  // I know we did this before but, I'm untrusting on occasion
-  const trimmed = value.replace(/^"(.*)"$/, '$1').trim();
-
-  try {
-    // Replace Erlang-style list with JSON-compatible string
-    const values = JSON.parse(
-      trimmed.replace(/'/g, '"')
-    );
-    return { rawDatatype: trimmed, validators: values };
-  } catch {
-    return { rawDatatype: trimmed, validators: [] };
-  }
-}
-
-function parseSchemaDataType(value) {
-  // Normalize input (remove quotes if present)
-  // I know we did this before but, I'm untrusting on occasion
-  const trimmed = value.replace(/^"(.*)"$/, '$1').trim();
-
-  // Match outer Erlang tuple: {key, value}
-  //const tupleRegex = /^\{([^,]+),\s*(.+)\}$/;
-  const tupleRegex = /(^[^{},]+$)|(^\{([^,]+),\s*(.+)\}$)|(^\[(.+)\]$)/;
-    const match = trimmed.match(tupleRegex);
-
-  if (!match) {
-    return { type: 'unknown-nomatch', rawDatatype: trimmed };
-  }  
-
-  const [rawDatatype, simpleType, complexRaw, complexType, valuesRaw, arrayRaw, array ] = match;
-  if (arrayRaw) {
-
-  }
-  const cleanType = (simpleType || complexType).trim();
-  const cleanValuesRaw = (valuesRaw || "").trim();
-  // Handle known types
-  switch (cleanType) {
-    case 'atom':
-    case 'bytesize':
-    case 'directory':
-    case 'file':
-    case 'float':
-    case 'integer':
-    case 'ip':
-    case 'string':
-      return { rawDatatype: rawDatatype, type: cleanType };
-
-    case 'duration':
-      return { rawDatatype: rawDatatype, type: 'duration', unit: cleanValuesRaw };
-
-    case 'enum':
-      try {
-        //console.log(`ℹ️  Found "${cleanType}" with values "${cleanValuesRaw}".`);
-        const singleToDoubleQuoted = cleanValuesRaw.replace(/'([^']*)'/g, (_, inner) =>
-            `"${inner.replace(/"/g, '\\"')}"`
-          );
-        //console.log(`ℹ️  Cleaned values to "${singleToDoubleQuoted}".`);
-        const valuesArray = JSON.parse(singleToDoubleQuoted);
-        //console.log(`ℹ️  Parsed values to "${valuesArray}".`);
-        return { rawDatatype: rawDatatype, type: 'enum', valuesArray };
-      } catch (err) {
-        return { rawDatatype: rawDatatype, type: 'unknown', err: err };
+    } else if (line.startsWith('{translation,')) {
+      let blockLines = [line];
+      while (!line.endsWith('}.')) {
+        i++;
+        line = lines[i].trim();
+        blockLines.push(line);
       }
 
-    default:
-      // Fallback: return unknown but matched  if unrecognized
-      return { rawDatatype: rawDatatype, type: 'unknown-matched' };
+      const translationBlock = blockLines.join(' ').trim();
+
+      const translationRegExp = /^\{(translation),\s*"([^"]+)",\s*(.*)\s*\}\.$/s
+      const translationMatch = translationBlock.match(translationRegExp);
+      if (!translationMatch) continue;
+
+      const [rawTranslationBlock, blockType, configName, func] = translationMatch;
+      
+      results.push({
+        rawSchema: rawTranslationBlock,
+        comment: commentBuffer,
+        type: blockType,
+        configName: configName,
+        func: func,
+      });
+
+      commentBuffer = [];
+    } else if (line.startsWith('{validator,')) {
+      let blockLines = [line];
+      while (!line.endsWith('}.')) {
+        i++;
+        line = lines[i].trim();
+        blockLines.push(line);
+      }
+
+      const validatorBlock = blockLines.join(' ').trim();
+
+      const validatorRegExp = /^\{(validator),\s*"([^"]+)",\s*"([^"]+)",\s*(.*)\s*\}\.$/s
+      const validatorMatch = validatorBlock.match(validatorRegExp);
+      if (!validatorMatch) continue;
+
+      const [rawValidatorBlock, blockType, name, description, func] = validatorMatch;
+      
+      results.push({
+        rawSchema: rawValidatorBlock,
+        comment: commentBuffer,
+        type: blockType,
+        name: name,
+        description: description,
+        func: func,
+      });
+
+      commentBuffer = [];
+    }
+
   }
+  return results;
 }
 
 function findClosingQuote(input, from, quoteChar) {
