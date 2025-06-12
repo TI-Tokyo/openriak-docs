@@ -4,7 +4,6 @@ const {
   getFileContent, 
   setFileContent } = require('../lib/fileHelpers.cjs');
 const { 
-  getSchemaRoot, 
   getVersionRoot, 
   getSchemaDefinitions, 
   getVersionsToUpdate, 
@@ -15,6 +14,7 @@ const {
 const { 
   convertGithubToRawUrl, 
   downloadFile} = require('../lib/netHelpers.cjs');
+const {simplifySchemaJSON} = require("./simplifySchemaJSON.cjs");
 const path = require('path');
 
 function updateSchemas(project, version) {
@@ -104,10 +104,17 @@ function updateSchemaFiles(project, version) {
       const schemaObject = parseCuttlefishSchema(schemaSavePath);
       //console.log(schemaObject);
       
+      const rawObjectSavePath = path.join(versionRoot, 'schemas', `${index}-${schemaName}.raw.json`);
       const objectSavePath = path.join(versionRoot, 'schemas', `${index}-${schemaName}.json`);
-      setFileContent(objectSavePath, JSON.stringify(schemaObject, null, 2));
-      console.log(`✅ Converted and saved to ${objectSavePath}`);
-
+      setFileContent(rawObjectSavePath, JSON.stringify(schemaObject, null, 2));
+      try {
+        const simplerSchemaObject = simplifySchemaJSON(schemaObject);
+        setFileContent(objectSavePath, JSON.stringify(simplerSchemaObject, null, 2));
+      } catch (err) {
+        console.error(`❌ Error when simplifying JSON schema object: ${err.message}`);
+        process.exit(1);
+      }
+      console.log(`✅ Converted and saved to ${objectSavePath}.`);
     });
 
   }
@@ -221,7 +228,8 @@ function updateTemplateFiles(project, version) {
 
       const templatePlaceholdersSavePath = path.join(versionRoot, 'templates', `${templateName}.templatePlaceholders.json`);
       setFileContent(templatePlaceholdersSavePath, JSON.stringify(templatePlaceholdersObject, null, 2));
-      console.log(`✅ Converted var.config named "${templateName}" for project "${project}" version "${version}" and saved to ${templatePlaceholdersSavePath}`);
+//      console.log(`✅ Converted var.config named "${templateName}" for project "${project}" version "${version}" and saved to ${templatePlaceholdersSavePath}`);
+      console.log(`✅ Converted and saved to ${templatePlaceholdersSavePath}`);
     }
   }
 }
