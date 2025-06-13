@@ -2,9 +2,21 @@
   "version": "2.0.0",
   "tasks": [
     {
+      "label": "Build Docker Container (Debug)",
+      "type": "shell",
+      "command": "docker compose -f ./docker/docker-compose.debug.yaml build --no-cache",
+ 			"options": {
+   			"env": {
+			    "DOCKER_BUILDKIT": "1",
+   				"COMPOSE_BAKE": "true",
+   			}			
+			},
+    },
+    {
       "label": "Start Docker Container (Debug)",
       "type": "shell",
-      "command": "docker compose -f ./docker/docker-compose.debug.yaml up --build",
+      "command": "docker compose -f ./docker/docker-compose.debug.yaml up",
+      "dependsOn": ["Build Docker Container (Debug)"],
  			"options": {
    			"env": {
 			    "DOCKER_BUILDKIT": "1",
