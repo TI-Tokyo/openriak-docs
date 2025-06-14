@@ -54,20 +54,20 @@ function mergeCloneTest() {
 }
 
 function mergeClone(level, fromObject, toObject, allowMerge) {
-  console.log(" ".repeat(level) + 'ℹ️  mergeClone');
+  //console.log(" ".repeat(level) + 'ℹ️  mergeClone');
   if (Array.isArray(fromObject)) {
-    console.log(" ".repeat(level) + `ℹ️  -> Found array in fromObject`);
+    //console.log(" ".repeat(level) + `ℹ️  -> Found array in fromObject`);
 
     // array, so do merge on each item instead
     return mergeCloneArray(level, fromObject, toObject, allowMerge);
   } else {
-    console.log(" ".repeat(level) + `ℹ️  -> Found object in fromObject`);
+    //console.log(" ".repeat(level) + `ℹ️  -> Found object in fromObject`);
     switch (typeof fromObject) {
       // value types, so return actual value
       case 'boolean':
       case 'string':
       case 'integer':
-        console.log(" ".repeat(level) + `ℹ️  -> Found value object in fromObject`);
+        //console.log(" ".repeat(level) + `ℹ️  -> Found value object in fromObject`);
         if (allowMerge && toObject) {
           // if merging, then use updated value in fromObject
           return fromObject;
@@ -89,7 +89,7 @@ function mergeClone(level, fromObject, toObject, allowMerge) {
 }
 
 function mergeCloneArray(level, fromObject, toObject, allowMerge) {
-  console.log(" ".repeat(level) + 'ℹ️  mergeCloneArray');
+  //console.log(" ".repeat(level) + 'ℹ️  mergeCloneArray');
   if (toObject === null ) {
     return fromObject;
     const results = [];
@@ -108,7 +108,7 @@ function mergeCloneArray(level, fromObject, toObject, allowMerge) {
 }
 
 function mergeCloneObject(level, fromObject, toObject = null, allowMerge = false) {
-  console.log(" ".repeat(level) + 'ℹ️  mergeCloneObject');
+  //console.log(" ".repeat(level) + 'ℹ️  mergeCloneObject');
   if (!toObject) {
     return fromObject;
   }
@@ -120,16 +120,16 @@ function mergeCloneObject(level, fromObject, toObject = null, allowMerge = false
       switch (fromName) {
         case 'merge': 
           // don't merge in the merge value - it's a flag as to whether to merge THIS item, not all subsequent items
-          console.log(" ".repeat(level) + `ℹ️  -> Found "${fromName}" so skipping this entry.`);
+          //console.log(" ".repeat(level) + `ℹ️  -> Found "${fromName}" so skipping this entry.`);
           break;
         case 'mappings':
         case 'translations':
         case 'validators':
-          console.log(" ".repeat(level) + `ℹ️  -> Found "${fromName}" so merging regardless`);
+          //console.log(" ".repeat(level) + `ℹ️  -> Found "${fromName}" so merging regardless`);
           toObject[fromName] = mergeClone(level+2, fromValue, toObject[fromName], (allowMerge || fromValue.merge || false));
           break;
         default:
-          console.log(" ".repeat(level) + `ℹ️  -> Found "${fromName}" so checking on merge. Alreadying merging: "${allowMerge}". Start merging: "${fromValue.merge || false}"`);
+          //console.log(" ".repeat(level) + `ℹ️  -> Found "${fromName}" so checking on merge. Alreadying merging: "${allowMerge}". Start merging: "${fromValue.merge || false}"`);
           toObject[fromName] = mergeClone(level+2, fromValue, toObject[fromName], (allowMerge || fromValue.merge || false));
           if (allowMerge || fromValue.merge || Array.isArray(fromValue)) {
             // merge objects
