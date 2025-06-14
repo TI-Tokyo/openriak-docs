@@ -15,7 +15,6 @@
         "datatype": "ip",
         "include_default": "internal"
       },
-      "rawSchema": "{mapping, \"listener.http.$name\", \"riak_api.http\", [ {default, {\"{{web_ip}}\",{{web_port}} }}, {datatype, ip}, {include_default, \"internal\"} ]}.",
       "comment": [
         "HTTP Listeners",
         "@doc listener.http.<name> is an IP address and TCP port that the Riak",
@@ -39,7 +38,6 @@
         "datatype": "ip",
         "include_default": "internal"
       },
-      "rawSchema": "{mapping, \"listener.protobuf.$name\", \"riak_api.pb\", [ {default, {\"{{pb_ip}}\",{{pb_port}} }}, {datatype, ip}, {include_default, \"internal\"} ]}.",
       "comment": [
         "@doc listener.protobuf.<name> is an IP address and TCP port that the Riak",
         "Protocol Buffers interface will bind."
@@ -59,7 +57,6 @@
           }
         ]
       },
-      "rawSchema": "{mapping, \"protobuf.backlog\", \"riak_api.pb_backlog\", [ {datatype, integer}, {default, 128}, {commented, 128}, {validators, [\"greater_than_zero\"]} ]}.",
       "comment": [
         "@doc The maximum length to which the queue of pending connections",
         "may grow. If set, it must be an integer > 0. If you anticipate a",
@@ -79,7 +76,6 @@
         "default": "off",
         "hidden": true
       },
-      "rawSchema": "{mapping, \"protobuf.nagle\", \"riak_api.disable_pb_nagle\", [ {datatype, {flag, off, on}}, {default, off}, hidden ]}.",
       "comment": [
         "@doc Turns off Nagle's algorithm for Protocol Buffers",
         "connections. This is equivalent to setting the TCP_NODELAY option",
@@ -94,7 +90,6 @@
         "default": "on",
         "hidden": true
       },
-      "rawSchema": "{mapping, \"protobuf.keepalive\", \"riak_api.pb_keepalive\", [ {datatype, flag}, {default, on}, hidden ]}.",
       "comment": [
         "@doc Turns on TCP keepalive for Protocol Buffers connections.",
         "This is equivalent to setting the SO_KEEPALIVE option on the socket."
@@ -117,7 +112,6 @@
         "datatype": "ip",
         "include_default": "internal"
       },
-      "rawSchema": "{mapping, \"listener.https.$name\", \"riak_api.https\", [ {commented, {\"{{web_ip}}\",{{web_port}} }}, {datatype, ip}, {include_default, \"internal\"} ]}.",
       "comment": [
         "@doc listener.https.<name> is an IP address and TCP port that the Riak",
         "HTTPS interface will bind."
@@ -137,7 +131,6 @@
         "default": "off",
         "hidden": true
       },
-      "rawSchema": "{mapping, \"honor_cipher_order\", \"riak_api.honor_cipher_order\", [ {datatype, {enum, [on, off]}}, {default, off}, hidden ]}.",
       "comment": [
         "@doc Whether to prefer the order in which the server lists its",
         "ciphers. When set to 'off', the client's preferred cipher order",
@@ -158,7 +151,6 @@
         "default": "off",
         "hidden": true
       },
-      "rawSchema": "{mapping, \"tls_protocols.sslv3\", \"riak_api.tls_protocols\", [ {datatype, {enum, [on, off]}}, {default, off}, hidden ]}.",
       "comment": [
         "@doc Determine which SSL/TLS versions are allowed. By default only TLS 1.2",
         "is allowed, but other versions can be enabled if clients don't support the",
@@ -180,7 +172,6 @@
         "default": "off",
         "hidden": true
       },
-      "rawSchema": "{mapping, \"tls_protocols.tlsv1\", \"riak_api.tls_protocols\", [ {datatype, {enum, [on, off]}}, {default, off}, hidden ]}.",
       "comment": [
         "@see tls_protocols.sslv3"
       ],
@@ -199,7 +190,6 @@
         "default": "off",
         "hidden": true
       },
-      "rawSchema": "{mapping, \"tls_protocols.tlsv1.1\", \"riak_api.tls_protocols\", [ {datatype, {enum, [on, off]}}, {default, off}, hidden ]}.",
       "comment": [
         "@see tls_protocols.sslv3"
       ],
@@ -218,7 +208,6 @@
         "default": "on",
         "hidden": true
       },
-      "rawSchema": "{mapping, \"tls_protocols.tlsv1.2\", \"riak_api.tls_protocols\", [ {datatype, {enum, [on, off]}}, {default, on}, hidden ]}.",
       "comment": [
         "@see tls_protocols.sslv3"
       ],
@@ -237,7 +226,6 @@
         "default": "on",
         "hidden": true
       },
-      "rawSchema": "{mapping, \"check_crl\", \"riak_api.check_crl\", [ {datatype, {enum, [on, off]}}, {default, on}, hidden ]}.",
       "comment": [
         "@doc Whether to check the CRL of a client certificate. This defaults to",
         "on but some CAs may not maintain or define a CRL, so this can be disabled",
@@ -250,42 +238,36 @@
   "translations": {
     "riak_api.http": {
       "properties": {},
-      "rawSchema": "{translation, \"riak_api.http\", fun(Conf) -> HTTP = cuttlefish_variable:filter_by_prefix(\"listener.http\", Conf), [ IP || {_, IP} <- HTTP] end }.",
       "comment": [],
       "configName": "riak_api.http",
       "settingName": "fun(Conf) -> HTTP = cuttlefish_variable:filter_by_prefix(\"listener.http\", Conf), [ IP || {_, IP} <- HTTP] end "
     },
     "riak_api.pb": {
       "properties": {},
-      "rawSchema": "{translation, \"riak_api.pb\", fun(Conf) -> PB = cuttlefish_variable:filter_by_prefix(\"listener.protobuf\", Conf), [ IP || {_, IP} <- PB] end }.",
       "comment": [],
       "configName": "riak_api.pb",
       "settingName": "fun(Conf) -> PB = cuttlefish_variable:filter_by_prefix(\"listener.protobuf\", Conf), [ IP || {_, IP} <- PB] end "
     },
     "riak_api.https": {
       "properties": {},
-      "rawSchema": "{translation, \"riak_api.https\", fun(Conf) -> HTTPS = cuttlefish_variable:filter_by_prefix(\"listener.https\", Conf), [ IP || {_, IP} <- HTTPS] end }.",
       "comment": [],
       "configName": "riak_api.https",
       "settingName": "fun(Conf) -> HTTPS = cuttlefish_variable:filter_by_prefix(\"listener.https\", Conf), [ IP || {_, IP} <- HTTPS] end "
     },
     "riak_api.honor_cipher_order": {
       "properties": {},
-      "rawSchema": "{translation, \"riak_api.honor_cipher_order\", fun(Conf) -> CipherOrder = cuttlefish:conf_get(\"honor_cipher_order\", Conf), case CipherOrder of on  -> true; off -> false end end }.",
       "comment": [],
       "configName": "riak_api.honor_cipher_order",
       "settingName": "fun(Conf) -> CipherOrder = cuttlefish:conf_get(\"honor_cipher_order\", Conf), case CipherOrder of on  -> true; off -> false end end "
     },
     "riak_api.tls_protocols": {
       "properties": {},
-      "rawSchema": "{translation, \"riak_api.tls_protocols\", fun(Conf) -> Protocols = cuttlefish_variable:filter_by_prefix(\"tls_protocols\", Conf), [begin case Key of [\"tls_protocols\",\"sslv3\"] -> sslv3; [\"tls_protocols\",\"tlsv1\"] -> tlsv1; [\"tls_protocols\",\"tlsv1\", \"1\"] -> 'tlsv1.1'; [\"tls_protocols\",\"tlsv1\", \"2\"] -> 'tlsv1.2' end end || {Key, Value} <- Protocols, Value == on] end }.",
       "comment": [],
       "configName": "riak_api.tls_protocols",
       "settingName": "fun(Conf) -> Protocols = cuttlefish_variable:filter_by_prefix(\"tls_protocols\", Conf), [begin case Key of [\"tls_protocols\",\"sslv3\"] -> sslv3; [\"tls_protocols\",\"tlsv1\"] -> tlsv1; [\"tls_protocols\",\"tlsv1\", \"1\"] -> 'tlsv1.1'; [\"tls_protocols\",\"tlsv1\", \"2\"] -> 'tlsv1.2' end end || {Key, Value} <- Protocols, Value == on] end "
     },
     "riak_api.check_crl": {
       "properties": {},
-      "rawSchema": "{translation, \"riak_api.check_crl\", fun(Conf) -> CheckCRL = cuttlefish:conf_get(\"check_crl\", Conf), case CheckCRL of on -> true; off -> false end end }.",
       "comment": [],
       "configName": "riak_api.check_crl",
       "settingName": "fun(Conf) -> CheckCRL = cuttlefish:conf_get(\"check_crl\", Conf), case CheckCRL of on -> true; off -> false end end "
@@ -294,7 +276,6 @@
   "validators": {
     "undefined": {
       "properties": {},
-      "rawSchema": "{validator, \"greater_than_zero\", \"must be greater than zero\", fun(Value) -> Value > 0 end}.",
       "comment": [],
       "name": "greater_than_zero",
       "description": "must be greater than zero",

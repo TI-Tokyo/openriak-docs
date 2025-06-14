@@ -6,7 +6,6 @@
         "default": "3",
         "hidden": true
       },
-      "rawSchema": "{mapping, \"buckets.default.n_val\", \"riak_core.default_bucket_props.n_val\", [ {datatype, integer}, {default, 3}, hidden ]}.",
       "comment": [
         "Default Bucket Properties",
         "@doc The number of replicas stored. Note: See Replication",
@@ -36,7 +35,6 @@
         ],
         "commented": "64"
       },
-      "rawSchema": "{mapping, \"ring_size\", \"riak_core.ring_creation_size\", [ {datatype, integer}, {default, 64}, {validators, [\"ring_size^2\", \"ring_size_max\", \"ring_size_min\"]}, {commented, 64} ]}.",
       "comment": [
         "@doc Number of partitions in the cluster (only valid when first",
         "creating the cluster). Must be a power of 2, minimum 8 and maximum",
@@ -51,7 +49,6 @@
         "default": "2",
         "commented": "2"
       },
-      "rawSchema": "{mapping, \"transfer_limit\", \"riak_core.handoff_concurrency\", [ {datatype, integer}, {default, 2}, {commented, 2} ]}.",
       "comment": [
         "@doc Number of concurrent node-to-node transfers allowed.",
         "It is generally safe to raise this number to increase concurrency.  A",
@@ -71,7 +68,6 @@
         "default": "500",
         "commented": "500"
       },
-      "rawSchema": "{mapping, \"handoff_batch_threshold_count\", \"riak_core.handoff_batch_threshold_count\", [ {datatype, integer}, {default, 500}, {commented, 500} ]}.",
       "comment": [
         "@doc Handoff batch threshold count",
         "The maximum number of objects allowed in a single handoff batch.  If there",
@@ -87,7 +83,6 @@
         "default": "120000",
         "commented": "120000"
       },
-      "rawSchema": "{mapping, \"handoff_timeout\", \"riak_core.handoff_timeout\", [ {datatype, integer}, {default, 120000}, {commented, 120000} ]}.",
       "comment": [
         "@doc Handoff timeout (milliseconds)",
         "The timeout to wait for acknowledgement of the previous handoff batch"
@@ -101,7 +96,6 @@
         "default": "$(platform_data_dir)/ring",
         "hidden": true
       },
-      "rawSchema": "{mapping, \"ring.state_dir\", \"riak_core.ring_state_dir\", [ {datatype, directory}, {default, \"$(platform_data_dir)/ring\"}, hidden ]}.",
       "comment": [
         "@doc Default location of ringstate"
       ],
@@ -113,7 +107,6 @@
         "datatype": "file",
         "commented": "$(platform_etc_dir)/cert.pem"
       },
-      "rawSchema": "{mapping, \"ssl.certfile\", \"riak_core.ssl.certfile\", [ {datatype, file}, {commented, \"$(platform_etc_dir)/cert.pem\"} ]}.",
       "comment": [
         "@doc Default cert location for https can be overridden",
         "with the ssl config variable, for example:"
@@ -126,7 +119,6 @@
         "datatype": "file",
         "commented": "$(platform_etc_dir)/key.pem"
       },
-      "rawSchema": "{mapping, \"ssl.keyfile\", \"riak_core.ssl.keyfile\", [ {datatype, file}, {commented, \"$(platform_etc_dir)/key.pem\"} ]}.",
       "comment": [
         "@doc Default key location for https can be overridden with the ssl",
         "config variable, for example:"
@@ -139,7 +131,6 @@
         "datatype": "file",
         "commented": "$(platform_etc_dir)/cacertfile.pem"
       },
-      "rawSchema": "{mapping, \"ssl.cacertfile\", \"riak_core.ssl.cacertfile\", [ {datatype, file}, {commented, \"$(platform_etc_dir)/cacertfile.pem\"} ]}.",
       "comment": [
         "@doc Default signing authority location for https can be overridden",
         "with the ssl config variable, for example:"
@@ -159,7 +150,6 @@
         ],
         "hidden": true
       },
-      "rawSchema": "{mapping, \"handoff.ip\", \"riak_core.handoff_ip\", [ {default, \"{{handoff_ip}}\" }, {datatype, string}, {validators, [\"valid_ipaddr\"]}, hidden ]}.",
       "comment": [
         "@doc handoff.ip is the network address that Riak binds to for",
         "intra-cluster data handoff."
@@ -173,7 +163,6 @@
         "datatype": "integer",
         "hidden": true
       },
-      "rawSchema": "{mapping, \"handoff.port\", \"riak_core.handoff_port\", [ {default, {{handoff_port}} }, {datatype, integer}, hidden ]}.",
       "comment": [
         "@doc handoff.port is the TCP port that Riak uses for",
         "intra-cluster data handoff."
@@ -188,7 +177,6 @@
         "datatype": "file",
         "hidden": true
       },
-      "rawSchema": "{mapping, \"handoff.ssl.certfile\", \"riak_core.handoff_ssl_options.certfile\", [ %%  {commented, \"/tmp/erlserver.pem\"}, {datatype, file}, hidden ]}.",
       "comment": [
         "@doc To encrypt riak_core intra-cluster data handoff traffic,",
         "uncomment the following line and edit its path to an appropriate",
@@ -203,7 +191,6 @@
         "datatype": "file",
         "hidden": true
       },
-      "rawSchema": "{mapping, \"handoff.ssl.keyfile\", \"riak_core.handoff_ssl_options.keyfile\", [ {datatype, file}, hidden ]}.",
       "comment": [
         "@doc if you need a seperate keyfile for handoff"
       ],
@@ -220,7 +207,6 @@
         },
         "hidden": true
       },
-      "rawSchema": "{mapping, \"handoff.outbound\", \"riak_core.disable_outbound_handoff\", [ {default, on}, {datatype, {flag, off, on}}, hidden ]}.",
       "comment": [
         "@doc Enables/disables outbound handoff transfers for this node. If you",
         "turn this setting off at runtime with riak-admin, it will kill any",
@@ -239,7 +225,6 @@
         },
         "hidden": true
       },
-      "rawSchema": "{mapping, \"handoff.inbound\", \"riak_core.disable_inbound_handoff\", [ {default, on}, {datatype, {flag, off, on}}, hidden ]}.",
       "comment": [
         "@doc Enables/disables inbound handoff transfers for this node. If you",
         "turn this setting off at runtime with riak-admin, it will kill any",
@@ -253,7 +238,6 @@
         "default": "off",
         "datatype": "flag"
       },
-      "rawSchema": "{mapping, \"dtrace\", \"riak_core.dtrace_support\", [ {default, off}, {datatype, flag} ]}.",
       "comment": [
         "@doc DTrace support Do not enable 'dtrace' unless your Erlang/OTP",
         "runtime is compiled to support DTrace.  DTrace is available in",
@@ -268,7 +252,6 @@
         "datatype": "directory",
         "default": "{{platform_bin_dir}}"
       },
-      "rawSchema": "{mapping, \"platform_bin_dir\", \"riak_core.platform_bin_dir\", [ {datatype, directory}, {default, \"{{platform_bin_dir}}\"} ]}.",
       "comment": [
         "@doc Platform-specific installation paths (substituted by rebar)"
       ],
@@ -280,7 +263,6 @@
         "datatype": "directory",
         "default": "{{platform_data_dir}}"
       },
-      "rawSchema": "{mapping, \"platform_data_dir\", \"riak_core.platform_data_dir\", [ {datatype, directory}, {default, \"{{platform_data_dir}}\"} ]}.",
       "comment": [
         "@see platform_bin_dir"
       ],
@@ -292,7 +274,6 @@
         "datatype": "directory",
         "default": "{{platform_etc_dir}}"
       },
-      "rawSchema": "{mapping, \"platform_etc_dir\", \"riak_core.platform_etc_dir\", [ {datatype, directory}, {default, \"{{platform_etc_dir}}\"} ]}.",
       "comment": [
         "@see platform_bin_dir"
       ],
@@ -304,7 +285,6 @@
         "datatype": "directory",
         "default": "{{platform_lib_dir}}"
       },
-      "rawSchema": "{mapping, \"platform_lib_dir\", \"riak_core.platform_lib_dir\", [ {datatype, directory}, {default, \"{{platform_lib_dir}}\"} ]}.",
       "comment": [
         "@see platform_bin_dir"
       ],
@@ -316,7 +296,6 @@
         "datatype": "directory",
         "default": "{{platform_log_dir}}"
       },
-      "rawSchema": "{mapping, \"platform_log_dir\", \"riak_core.platform_log_dir\", [ {datatype, directory}, {default, \"{{platform_log_dir}}\"} ]}.",
       "comment": [
         "@see platform_bin_dir"
       ],
@@ -329,7 +308,6 @@
         "default": "off",
         "commented": "on"
       },
-      "rawSchema": "{mapping, \"strong_consistency\", \"riak_core.enable_consensus\", [ {datatype, flag}, {default, off}, {commented, on} ]}.",
       "comment": [
         "@doc Enable consensus subsystem. Set to 'on' to enable the",
         "consensus subsystem used for strongly consistent Riak operations."
@@ -343,7 +321,6 @@
         "default": "off",
         "hidden": true
       },
-      "rawSchema": "{mapping, \"background_manager\", \"riak_core.use_background_manager\", [ {datatype, flag}, {default, off}, hidden ]}.",
       "comment": [
         "@doc Whether to enable the background manager globally. When",
         "enabled, participating Riak subsystems will coordinate access to",
@@ -364,7 +341,6 @@
         },
         "hidden": true
       },
-      "rawSchema": "{mapping, \"vnode_management_timer\", \"riak_core.vnode_management_timer\", [ {default, \"10s\"}, {datatype, {duration, ms}}, hidden ]}.",
       "comment": [
         "@doc Interval of time between vnode management",
         "activities. Modifying this will change the amount of time between",
@@ -387,7 +363,6 @@
         },
         "merge": true
       },
-      "rawSchema": "{mapping, \"choose_claim_fun\", \"riak_core.choose_claim_fun\", [ {commented, \"choose_claim_v2\"}, {datatype, {enum, [choose_claim_v2, choose_claim_v3, choose_claim_v4]}}, merge ]}.",
       "comment": [
         "@doc Choose claim function",
         "Claim function to be used when handling joins to the cluster.",
@@ -420,7 +395,6 @@
         ],
         "commented": "4"
       },
-      "rawSchema": "{mapping, \"target_n_val\", \"riak_core.target_n_val\", [ {datatype, integer}, {default, 4}, {validators, [\"target_nval_max\", \"target_nval_min\"]}, {commented, 4} ]}.",
       "comment": [
         "@doc Target N Val for Cluster Administration",
         "Cluster change operations such as joins and leaves will use a target_n_val",
@@ -457,7 +431,6 @@
         ],
         "commented": "3"
       },
-      "rawSchema": "{mapping, \"target_location_n_val\", \"riak_core.target_location_n_val\", [ {datatype, integer}, {default, 3}, {validators, [\"target_nval_max\", \"target_nval_min\"]}, {commented, 3} ]}.",
       "comment": [
         "@doc Target Location N Val for Cluster Administration",
         "Cluster change operations such as joins and leaves will use a",
@@ -487,7 +460,6 @@
         "datatype": "flag",
         "default": "off"
       },
-      "rawSchema": "{mapping, \"full_rebalance_onleave\", \"riak_core.full_rebalance_onleave\", [ {datatype, flag}, {default, off} ]}.",
       "comment": [
         "@doc On cluster leave - force full rebalance partitions",
         "By default on a cluster leave there will first be an attempt to handoff",
@@ -510,7 +482,6 @@
   "translations": {
     "riak_core.job_accept_class": {
       "properties": {},
-      "rawSchema": "{translation, \"riak_core.job_accept_class\", fun(Conf) -> Fold = fun({[_, _, Mod, Op], true}, Result) -> [{erlang:list_to_atom(Mod), erlang:list_to_atom(Op)} | Result]; ({[_, _, _, _], false}, Result) -> Result; ({[_, _, _, _], _} = Setting, _) -> cuttlefish:invalid(io_lib:format(\"~p\", [Setting])); (_, Result) -> Result end, lists:sort(lists:foldl(Fold, [], cuttlefish_variable:filter_by_prefix([\"cluster\", \"job\"], Conf))) end}.",
       "comment": [
         "Async Job Management",
         "",
@@ -556,7 +527,6 @@
   "validators": {
     "undefined": {
       "properties": {},
-      "rawSchema": "{validator, \"target_nval_min\", \"must be at least 1\", fun(Size) -> Size >= 1 end}.",
       "comment": [],
       "name": "target_nval_min",
       "description": "must be at least 1",

@@ -18,7 +18,6 @@
           ]
         }
       },
-      "rawSchema": "{mapping, \"logger.level\", \"kernel.logger_level\", [ {default, {{logger_level}} }, {datatype, {enum, [debug, info, notice, warning, error, critical, alert, emergency, none]}} ]}.",
       "comment": [
         "@doc The severity level of the console log, default is 'info'."
       ],
@@ -29,7 +28,6 @@
       "properties": {
         "default": "[time,\\\" [\\\",level,\\\"] \\\",pid,\\\"@\\\",mfa,\\\":\\\",line,\\\" \\\",msg,\\\"\\\\n\\\"]."
       },
-      "rawSchema": "{mapping, \"logger.format\", \"kernel.logger\", [ {default, \"[time,\\\" [\\\",level,\\\"] \\\",pid,\\\"@\\\",mfa,\\\":\\\",line,\\\" \\\",msg,\\\"\\\\n\\\"].\"} ]}.",
       "comment": [
         "@doc Format string for the messages emitted to default log. The string is passed into",
         "the handler as a logger_formatter template, the format is a list containing strings",
@@ -44,7 +42,6 @@
         "default": "$(platform_log_dir)/console.log",
         "datatype": "file"
       },
-      "rawSchema": "{mapping, \"logger.file\", \"kernel.logger\", [ {default, \"$(platform_log_dir)/console.log\"}, {datatype, file} ]}.",
       "comment": [
         "@doc Filename to use for log files."
       ],
@@ -56,7 +53,6 @@
         "default": "10",
         "datatype": "integer"
       },
-      "rawSchema": "{mapping, \"logger.max_files\", \"kernel.logger\", [ {default, 10}, {datatype, integer} ]}.",
       "comment": [
         "@doc With log rotation enabled, this decides the maximum number of log",
         "files to store."
@@ -69,7 +65,6 @@
         "default": "1MB",
         "datatype": "bytesize"
       },
-      "rawSchema": "{mapping, \"logger.max_file_size\", \"kernel.logger\", [ {default, \"1MB\"}, {datatype, bytesize} ]}.",
       "comment": [
         "@doc The maximum size of a single log file. Total size used for log files will",
         "be max_file_size * max_files."
@@ -81,7 +76,6 @@
       "properties": {
         "default": "riak"
       },
-      "rawSchema": "{mapping, \"distributed_cookie\", \"vm_args.-setcookie\", [ {default, \"riak\"} ]}.",
       "comment": [
         "@doc Cookie for distributed node communication.  All nodes in the",
         "same cluster should use the same cookie or they will not be able to",
@@ -95,7 +89,6 @@
         "default": "32MB",
         "merge": true
       },
-      "rawSchema": "{mapping, \"erlang.distribution_buffer_size\", \"vm_args.+zdbbl\", [ {default, \"32MB\"}, merge ]}.",
       "comment": [
         "override zdbbl from 1mb to 32mb"
       ],
@@ -108,7 +101,6 @@
         "datatype": "integer",
         "merge": true
       },
-      "rawSchema": "{mapping, \"erlang.schedulers.force_wakeup_interval\", \"vm_args.+sfwi\", [ {default, 500}, {datatype, integer}, merge ]}.",
       "comment": [
         "@doc Riak changes the VM default wakeup interval in order to reduce the",
         "risk of scheduler collapse, prior to the availability of Dirty NIFs in",
@@ -124,7 +116,6 @@
         "default": "false",
         "merge": true
       },
-      "rawSchema": "{mapping, \"erlang.schedulers.compaction_of_load\", \"vm_args.+scl\", [ {default, \"false\"}, merge ]}.",
       "comment": [
         "@doc Riak changes the compaction_of_load default from true to false. This",
         "is part of the strategy for preventing scheduler collapse in older VMs.",
@@ -147,7 +138,6 @@
         ],
         "merge": true
       },
-      "rawSchema": "{mapping, \"erlang.async_threads\", \"vm_args.+A\", [ {default, 64}, {datatype, integer}, {validators, [\"range:0-1024\"]}, merge ]}.",
       "comment": [
         "@doc Sets the number of threads in async thread pool, valid range",
         "is 0-1024. If thread support is available, the default is 64.",
@@ -173,7 +163,6 @@
         },
         "merge": true
       },
-      "rawSchema": "{mapping, \"erlang.vm.ignore_break_signal\", \"vm_args.+B\", [ {default, true}, {datatype, {enum, [true, false]}}, merge ]}.",
       "comment": [
         "@doc VM emulator ignore break signal (prevent ^C / ^Gq)"
       ],
@@ -195,7 +184,6 @@
         ],
         "merge": true
       },
-      "rawSchema": "{mapping, \"erlang.virtual_heap.hmbs\", \"vm_args.+hmbs\", [ {default, otp}, {datatype, [{atom, otp}, integer]}, merge ]}.",
       "comment": [
         "@doc Default binary virtual heap size (words)",
         "The default value in OTP 24 is 32768.  Default is value VH_DEFAULT_SIZE in:",
@@ -221,7 +209,6 @@
         ],
         "merge": true
       },
-      "rawSchema": "{mapping, \"erlang.virtual_heap.hms\", \"vm_args.+hms\", [ {default, otp}, {datatype, [{atom, otp}, integer]}, merge ]}.",
       "comment": [
         "@doc Default virtual heap size (words)",
         "The default value in OTP 24 is 233.  Default is value H_DEFAULT_SIZE in:",
@@ -238,7 +225,6 @@
         "datatype": "integer",
         "merge": true
       },
-      "rawSchema": "{mapping, \"erlang.eheap_memory.sbct\", \"vm_args.+MHsbct\", [ {commented, 512}, {datatype, integer}, merge ]}.",
       "comment": [
         "@doc The VM single block carrier threshold (KB) for process heap"
       ],
@@ -251,7 +237,6 @@
         "datatype": "integer",
         "merge": true
       },
-      "rawSchema": "{mapping, \"erlang.binary_memory.sbct\", \"vm_args.+MBsbct\", [ {commented, 512}, {datatype, integer}, merge ]}.",
       "comment": [
         "@doc The VM single block carrier threshold (KB) for binary heap"
       ],
@@ -264,7 +249,6 @@
         "datatype": "integer",
         "merge": true
       },
-      "rawSchema": "{mapping, \"erlang.eheap_memory.lmbcs\", \"vm_args.+MHlmbcs\", [ {commented, 5120}, {datatype, integer}, merge ]}.",
       "comment": [
         "@doc The VM multi block carrier large size for process heap"
       ],
@@ -277,7 +261,6 @@
         "datatype": "integer",
         "merge": true
       },
-      "rawSchema": "{mapping, \"erlang.binary_memory.lmbcs\", \"vm_args.+MBlmbcs\", [ {commented, 5120}, {datatype, integer}, merge ]}.",
       "comment": [
         "@doc The VM multi block carrier large size for binary heap"
       ],
@@ -290,7 +273,6 @@
         "datatype": "integer",
         "merge": true
       },
-      "rawSchema": "{mapping, \"erlang.eheap_memory.smbcs\", \"vm_args.+MHsmbcs\", [ {commented, 256}, {datatype, integer}, merge ]}.",
       "comment": [
         "@doc The VM multi block carrier small size for process heap"
       ],
@@ -303,7 +285,6 @@
         "datatype": "integer",
         "merge": true
       },
-      "rawSchema": "{mapping, \"erlang.binary_memory.smbcs\", \"vm_args.+MBsmbcs\", [ {commented, 256}, {datatype, integer}, merge ]}.",
       "comment": [
         "@doc The VM multi block carrier small size for binary heap"
       ],
@@ -329,7 +310,6 @@
         },
         "merge": true
       },
-      "rawSchema": "{mapping, \"erlang.binary_memory.as\", \"vm_args.+MBas\", [ {commented, \"aoffcbf\"}, {datatype, {enum, [bf, aobf, aoff, aoffcbf, aoffcaobf, ageffcaoff, ageffcbf, ageffcaobf, gf]}}, merge ]}.",
       "comment": [
         "@doc Set allocation strategy for binary multiblock carriers.  Default is",
         "not predictable - do not rely on aoffcbf being the default.  For more info",
@@ -358,7 +338,6 @@
         },
         "merge": true
       },
-      "rawSchema": "{mapping, \"erlang.eheap_memory.as\", \"vm_args.+MHas\", [ {commented, \"aoffcbf\"}, {datatype, {enum, [bf, aobf, aoff, aoffcbf, aoffcaobf, ageffcaoff, ageffcbf, ageffcaobf, gf]}}, merge ]}.",
       "comment": [
         "@doc Set allocation strategy for process multiblock carriers.  Default is",
         "not predictable - do not rely on aoffcbf being the default.  For more info",
@@ -380,7 +359,6 @@
         },
         "merge": true
       },
-      "rawSchema": "{mapping, \"erlang.schedulers_binding\", \"vm_args.+stbt\", [ {commented, \"u\"}, {datatype, {enum, [u, db]}}, merge ]}.",
       "comment": [
         "@doc Set scheduler binding.  This is either unbound (default - u) or can be",
         "set to whatever the default binding condition is, in the deployed release of",
@@ -415,7 +393,6 @@
         },
         "merge": true
       },
-      "rawSchema": "{mapping, \"erlang.schedulers_busywait\", \"vm_args.+sbwt\", [ {commented, \"none\"}, {datatype, {enum, [none, very_short, short, medium, long, very_long]}}, merge ]}.",
       "comment": [
         "@doc Busy wait of schedulers",
         "Sets scheduler busy wait threshold. Defaults to medium. The threshold",
@@ -443,7 +420,6 @@
         },
         "merge": true
       },
-      "rawSchema": "{mapping, \"erlang.schedulers_busywait_dirtycpu\", \"vm_args.+sbwtdcpu\", [ {commented, \"none\"}, {datatype, {enum, [none, very_short, short, medium, long, very_long]}}, merge ]}.",
       "comment": [
         "@doc Busy wait of dirty cpu schedulers",
         "Sets scheduler busy wait threshold. Defaults to short. The threshold",
@@ -471,7 +447,6 @@
         },
         "merge": true
       },
-      "rawSchema": "{mapping, \"erlang.schedulers_busywait_dirtyio\", \"vm_args.+sbwtdio\", [ {commented, \"none\"}, {datatype, {enum, [none, very_short, short, medium, long, very_long]}}, merge ]}.",
       "comment": [
         "@doc Busy wait of dirty io schedulers",
         "Sets scheduler busy wait threshold. Defaults to short. The threshold",
@@ -494,7 +469,6 @@
         ],
         "merge": true
       },
-      "rawSchema": "{mapping, \"erlang.schedulers_online_percentage\", \"vm_args.+SP\",[ {commented, \"100:75\"}, {validators, [\"scheduler_percentage\"]}, merge ]}.",
       "comment": [
         "@doc Set the Percentage of Schedulers to be online",
         "For every vCPU in the system, what percentage should have a scheduler, and",
@@ -516,7 +490,6 @@
         ],
         "merge": true
       },
-      "rawSchema": "{mapping, \"erlang.schedulers_dirtycpu_online_percentage\", \"vm_args.+SDPcpu\",[ {commented, \"50:25\"}, {validators, [\"scheduler_percentage\"]}, merge ]}.",
       "comment": [
         "@doc Set the Percentage of Dirty CPU Schedulers to be online",
         "When using the leveled backend a relatievly low number of dirty schedulers",
@@ -542,7 +515,6 @@
         ],
         "merge": true
       },
-      "rawSchema": "{mapping, \"erlang.schedulers_dirtyio_online\", \"vm_args.+SDio\",[ {commented, 10}, {datatype, integer}, {validators, [\"scheduler_absolute\"]}, merge ]}.",
       "comment": [
         "@doc Set the absolute limit of Dirty IO Schedulers to be online",
         "When using the leveled backend a relatievly high number of dirty schedulers",
@@ -562,7 +534,6 @@
         "level": "basic",
         "merge": true
       },
-      "rawSchema": "{mapping, \"leveldb.limited_developer_mem\", \"eleveldb.limited_developer_mem\", [ {default, on}, {level, basic}, merge ]}.",
       "comment": [
         "Because of the 'merge' keyword in the proplist below, the docs and datatype",
         "are pulled from the leveldb schema."
@@ -578,7 +549,6 @@
           "unit": "ms"
         }
       },
-      "rawSchema": "{mapping, \"erlang.shutdown_time\", \"vm_args.-shutdown_time\", [ {default, \"10s\"}, {datatype, {duration, ms}} ]}.",
       "comment": [
         "@doc erlang vm shutdown_time is useful when running a riak_test devrel"
       ],
@@ -599,7 +569,6 @@
         "default": "off",
         "hidden": true
       },
-      "rawSchema": "{mapping, \"log.console\", \"legacy.handlers.console\", [ {datatype, {enum, [off, file, console, both]}}, {default, off}, hidden ]}.",
       "comment": [
         "Unused log items",
         "@doc Unused item - kept for backwards compatability"
@@ -626,7 +595,6 @@
         "default": "none",
         "hidden": true
       },
-      "rawSchema": "{mapping, \"log.console.level\", \"legacy.handlers.console.level\", [ {datatype, {enum, [debug, info, notice, warning, error, critical, alert, emergency, none]}}, {default, none}, hidden ]}.",
       "comment": [
         "@doc Unused item - kept for backwards compatability"
       ],
@@ -639,7 +607,6 @@
         "datatype": "file",
         "hidden": true
       },
-      "rawSchema": "{mapping, \"log.console.file\", \"legacy.handlers.console.file\", [ {default, \"$(platform_log_dir)/console.log\"}, {datatype, file}, hidden ]}.",
       "comment": [
         "@doc Unused item - kept for backwards compatability"
       ],
@@ -652,7 +619,6 @@
         "datatype": "file",
         "hidden": true
       },
-      "rawSchema": "{mapping, \"log.error.file\", \"legacy.handlers.error.file\", [ {default, \"$(platform_log_dir)/error.log\"}, {datatype, file}, hidden ]}.",
       "comment": [
         "@doc Unused item - kept for backwards compatability"
       ],
@@ -665,7 +631,6 @@
         "datatype": "flag",
         "hidden": true
       },
-      "rawSchema": "{mapping, \"log.syslog\", \"legacy.handlers.syslog\", [ {default, off}, {datatype, flag}, hidden ]}.",
       "comment": [
         "@doc Unused item - kept for backwards compatability"
       ],
@@ -678,7 +643,6 @@
         "datatype": "atom",
         "hidden": true
       },
-      "rawSchema": "{mapping, \"log.syslog.ident\", \"legacy.handlers.syslog.ident\", [ {default, \"riak\"}, {datatype, atom}, hidden ]}.",
       "comment": [
         "@doc Unused item - kept for backwards compatability"
       ],
@@ -716,7 +680,6 @@
         "default": "daemon",
         "hidden": true
       },
-      "rawSchema": "{mapping, \"log.syslog.facility\", \"legacy.handlers.syslog.facility\", [ {datatype, {enum,[kern, user, mail, daemon, auth, syslog, lpr, news, uucp, clock, authpriv, ftp, cron, local0, local1, local2, local3, local4, local5, local6, local7]}}, {default, daemon}, hidden ]}.",
       "comment": [
         "@doc Unused item - kept for backwards compatability"
       ],
@@ -742,7 +705,6 @@
         "default": "none",
         "hidden": true
       },
-      "rawSchema": "{mapping, \"log.syslog.level\", \"legacy.handlers.syslog.level\", [ {datatype, {enum, [debug, info, notice, warning, error, critical, alert, emergency, none]}}, {default, none}, hidden ]}.",
       "comment": [
         "@doc Unused item - kept for backwards compatability"
       ],
@@ -755,7 +717,6 @@
         "datatype": "flag",
         "hidden": true
       },
-      "rawSchema": "{mapping, \"sasl\", \"legacy.sasl.sasl_error_logger\", [ {default, off}, {datatype, flag}, hidden ]}.",
       "comment": [
         "@doc Unused item - kept for backwards compatability"
       ],
@@ -768,7 +729,6 @@
         "datatype": "flag",
         "hidden": true
       },
-      "rawSchema": "{mapping, \"log.crash\", \"legacy.crash_log\", [ {default, off}, {datatype, flag}, hidden ]}.",
       "comment": [
         "@doc Unused item - kept for backwards compatability"
       ],
@@ -781,7 +741,6 @@
         "datatype": "file",
         "hidden": true
       },
-      "rawSchema": "{mapping, \"log.crash.file\", \"legacy.crash_log_file\", [ {default, \"$(platform_log_dir)/crash.log\"}, {datatype, file}, hidden ]}.",
       "comment": [
         "@doc Unused item - kept for backwards compatability"
       ],
@@ -794,7 +753,6 @@
         "datatype": "bytesize",
         "hidden": true
       },
-      "rawSchema": "{mapping, \"log.crash.maximum_message_size\", \"legacy.crash_log_msg_size\", [ {default, \"64KB\"}, {datatype, bytesize}, hidden ]}.",
       "comment": [
         "@doc Unused item - kept for backwards compatability"
       ],
@@ -807,7 +765,6 @@
         "datatype": "bytesize",
         "hidden": true
       },
-      "rawSchema": "{mapping, \"log.crash.size\", \"legacy.crash_log_size\", [ {default, \"10MB\"}, {datatype, bytesize}, hidden ]}.",
       "comment": [
         "@doc Unused item - kept for backwards compatability"
       ],
@@ -829,7 +786,6 @@
         "default": "current",
         "hidden": true
       },
-      "rawSchema": "{mapping, \"log.crash.rotation.keep\", \"legacy.crash_log_count\", [ {datatype, [integer, {atom, current}]}, {default, current}, hidden ]}.",
       "comment": [
         "@doc Unused item - kept for backwards compatability"
       ],
@@ -841,7 +797,6 @@
         "default": "$D0",
         "hidden": true
       },
-      "rawSchema": "{mapping, \"log.crash.rotation\", \"legacy.crash_log_date\", [ {default, \"$D0\"}, hidden ]}.",
       "comment": [
         "@doc Unused item - kept for backwards compatability"
       ],
@@ -854,7 +809,6 @@
         "default": "off",
         "hidden": true
       },
-      "rawSchema": "{mapping, \"log.error.redirect\", \"legacy.error_logger_redirect\", [ {datatype, flag}, {default, off}, hidden ]}.",
       "comment": [
         "@doc Unused item - kept for backwards compatability"
       ],
@@ -867,7 +821,6 @@
         "default": "100",
         "hidden": true
       },
-      "rawSchema": "{mapping, \"log.error.messages_per_second\", \"legacy.error_logger_hwm\", [ {datatype, integer}, {default, 100}, hidden ]}.",
       "comment": [
         "@doc Unused item - kept for backwards compatability"
       ],
@@ -878,28 +831,24 @@
   "translations": {
     "kernel.logger": {
       "properties": {},
-      "rawSchema": "{translation, \"kernel.logger\", fun(Conf) -> LogFile = cuttlefish:conf_get(\"logger.file\", Conf), MaxNumBytes = cuttlefish:conf_get(\"logger.max_file_size\", Conf), MaxNumFiles = cuttlefish:conf_get(\"logger.max_files\", Conf),  DefaultFormatStr = cuttlefish:conf_get(\"logger.format\", Conf), DefaultFormatTerm = case erl_scan:string(DefaultFormatStr) of {ok, DefaultTokens, _} -> case erl_parse:parse_term(DefaultTokens) of {ok, DefaultTerm} -> DefaultTerm; {error, {_, _, DefaultError}} -> cuttlefish:error(foo) end; {error, {_, _, DefaultScanError}} -> cuttlefish:error(foo) end, ConfigMap0 = #{config => #{file => LogFile, max_no_bytes => MaxNumBytes, max_no_files => MaxNumFiles}, formatter => {logger_formatter, #{template => DefaultFormatTerm} } },  [{handler, default, logger_std_h, ConfigMap0}]  end }.",
       "comment": [],
       "configName": "kernel.logger",
       "settingName": "fun(Conf) -> LogFile = cuttlefish:conf_get(\"logger.file\", Conf), MaxNumBytes = cuttlefish:conf_get(\"logger.max_file_size\", Conf), MaxNumFiles = cuttlefish:conf_get(\"logger.max_files\", Conf),  DefaultFormatStr = cuttlefish:conf_get(\"logger.format\", Conf), DefaultFormatTerm = case erl_scan:string(DefaultFormatStr) of {ok, DefaultTokens, _} -> case erl_parse:parse_term(DefaultTokens) of {ok, DefaultTerm} -> DefaultTerm; {error, {_, _, DefaultError}} -> cuttlefish:error(foo) end; {error, {_, _, DefaultScanError}} -> cuttlefish:error(foo) end, ConfigMap0 = #{config => #{file => LogFile, max_no_bytes => MaxNumBytes, max_no_files => MaxNumFiles}, formatter => {logger_formatter, #{template => DefaultFormatTerm} } },  [{handler, default, logger_std_h, ConfigMap0}]  end "
     },
     "vm_args.+B": {
       "properties": {},
-      "rawSchema": "{translation, \"vm_args.+B\", fun(Conf) -> Setting = cuttlefish:conf_get(\"erlang.vm.ignore_break_signal\", Conf), case Setting of true -> \"i\"; false -> cuttlefish:unset() end end }.",
       "comment": [],
       "configName": "vm_args.+B",
       "settingName": "fun(Conf) -> Setting = cuttlefish:conf_get(\"erlang.vm.ignore_break_signal\", Conf), case Setting of true -> \"i\"; false -> cuttlefish:unset() end end "
     },
     "vm_args.+hmbs": {
       "properties": {},
-      "rawSchema": "{translation, \"vm_args.+hmbs\", fun(Conf) -> Setting = cuttlefish:conf_get(\"erlang.virtual_heap.hmbs\", Conf), case Setting of Setting when is_integer(Setting) -> Setting; otp -> cuttlefish:unset() end end }.",
       "comment": [],
       "configName": "vm_args.+hmbs",
       "settingName": "fun(Conf) -> Setting = cuttlefish:conf_get(\"erlang.virtual_heap.hmbs\", Conf), case Setting of Setting when is_integer(Setting) -> Setting; otp -> cuttlefish:unset() end end "
     },
     "vm_args.+hms": {
       "properties": {},
-      "rawSchema": "{translation, \"vm_args.+hms\", fun(Conf) -> Setting = cuttlefish:conf_get(\"erlang.virtual_heap.hms\", Conf), case Setting of Setting when is_integer(Setting) -> Setting; otp -> cuttlefish:unset() end end }.",
       "comment": [],
       "configName": "vm_args.+hms",
       "settingName": "fun(Conf) -> Setting = cuttlefish:conf_get(\"erlang.virtual_heap.hms\", Conf), case Setting of Setting when is_integer(Setting) -> Setting; otp -> cuttlefish:unset() end end "
@@ -908,7 +857,6 @@
   "validators": {
     "undefined": {
       "properties": {},
-      "rawSchema": "{validator, \"scheduler_absolute\", \"must be 1 to 1024\", fun(Value) -> is_integer(Value) andalso Value =< 1024 andalso Value >= 1 end}.",
       "comment": [],
       "name": "scheduler_absolute",
       "description": "must be 1 to 1024",

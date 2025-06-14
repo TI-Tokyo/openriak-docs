@@ -5,7 +5,6 @@
         "default": "$(platform_data_dir)/bitcask",
         "datatype": "directory"
       },
-      "rawSchema": "{mapping, \"bitcask.data_root\", \"bitcask.data_root\", [ {default, \"$(platform_data_dir)/bitcask\"}, {datatype, directory} ]}.",
       "comment": [
         "-*- erlang -*-",
         "%% bitcask",
@@ -23,7 +22,6 @@
         },
         "hidden": true
       },
-      "rawSchema": "{mapping, \"bitcask.open_timeout\", \"bitcask.open_timeout\", [ {default, \"4s\"}, {datatype, {duration, s}}, hidden ]}.",
       "comment": [
         "@doc Specifies the maximum time Bitcask will block on startup while",
         "attempting to create or open the data directory. You generally need",
@@ -48,7 +46,6 @@
         },
         "hidden": true
       },
-      "rawSchema": "{mapping, \"bitcask.sync.strategy\", \"bitcask.sync_strategy\", [ {default, none}, {datatype, {enum, [none, o_sync, interval]}}, hidden ]}.",
       "comment": [
         "@doc Changes the durability of writes by specifying when to",
         "synchronize data to disk. The default setting protects against data",
@@ -88,7 +85,6 @@
         },
         "hidden": true
       },
-      "rawSchema": "{mapping, \"bitcask.sync.interval\", \"bitcask.sync_strategy\", [ {datatype, {duration, s}}, hidden ]}.",
       "comment": [
         "@see bitcask.sync.strategy"
       ],
@@ -101,7 +97,6 @@
         "datatype": "bytesize",
         "hidden": true
       },
-      "rawSchema": "{mapping, \"bitcask.max_file_size\", \"bitcask.max_file_size\", [ {default, \"2GB\"}, {datatype, bytesize}, hidden ]}.",
       "comment": [
         "@doc Describes the maximum permitted size for any single data file",
         "in the Bitcask directory. If a write causes the current file to",
@@ -124,7 +119,6 @@
         },
         "hidden": true
       },
-      "rawSchema": "{mapping, \"bitcask.merge.policy\", \"bitcask.merge_window\", [ {default, always}, {datatype, {enum, [always, never, window]}}, hidden ]}.",
       "comment": [
         "@doc Lets you specify when during the day merge operations are",
         "allowed to be triggered. Valid options are:",
@@ -148,7 +142,6 @@
         "datatype": "integer",
         "hidden": true
       },
-      "rawSchema": "{mapping, \"bitcask.merge.window.start\", \"bitcask.merge_window\", [ {default, 0}, {datatype, integer}, hidden ]}.",
       "comment": [
         "@see bitcask.merge.policy"
       ],
@@ -161,7 +154,6 @@
         "datatype": "integer",
         "hidden": true
       },
-      "rawSchema": "{mapping, \"bitcask.merge.window.end\", \"bitcask.merge_window\", [ {default, 23}, {datatype, integer}, hidden ]}.",
       "comment": [
         "@see bitcask.merge.policy"
       ],
@@ -180,7 +172,6 @@
           }
         ]
       },
-      "rawSchema": "{mapping, \"bitcask.merge.triggers.fragmentation\", \"bitcask.frag_merge_trigger\", [ {datatype, integer}, hidden, {default, 60}, {validators, [\"is_percentage\"]} ]}.",
       "comment": [
         "@doc Describes what ratio of dead keys to total keys in a file will",
         "trigger merging. The value of this setting is a percentage",
@@ -201,7 +192,6 @@
         "hidden": true,
         "default": "512MB"
       },
-      "rawSchema": "{mapping, \"bitcask.merge.triggers.dead_bytes\", \"bitcask.dead_bytes_merge_trigger\", [ {datatype, bytesize}, hidden, {default, \"512MB\"} ]}.",
       "comment": [
         "@doc Describes how much data stored for dead keys in a single file",
         "will trigger merging. The value is in bytes. If a file meets or",
@@ -230,7 +220,6 @@
           }
         ]
       },
-      "rawSchema": "{mapping, \"bitcask.merge.thresholds.fragmentation\", \"bitcask.frag_threshold\", [ {datatype, integer}, hidden, {default, 40}, {validators, [\"is_percentage\"]} ]}.",
       "comment": [
         "@doc Describes what ratio of dead keys to total keys in a file will",
         "cause it to be included in the merge. The value of this setting is",
@@ -250,7 +239,6 @@
         "hidden": true,
         "default": "128MB"
       },
-      "rawSchema": "{mapping, \"bitcask.merge.thresholds.dead_bytes\", \"bitcask.dead_bytes_threshold\", [ {datatype, bytesize}, hidden, {default, \"128MB\"} ]}.",
       "comment": [
         "@doc Describes the minimum amount of data occupied by dead keys in",
         "a file to cause it to be included in the merge. Increasing the",
@@ -268,7 +256,6 @@
         "hidden": true,
         "default": "10MB"
       },
-      "rawSchema": "{mapping, \"bitcask.merge.thresholds.small_file\", \"bitcask.small_file_threshold\", [ {datatype, bytesize}, hidden, {default, \"10MB\"} ]}.",
       "comment": [
         "@doc Describes the minimum size a file must have to be _excluded_",
         "from the merge. Files smaller than the threshold will be",
@@ -298,7 +285,6 @@
         "hidden": true,
         "default": "unlimited"
       },
-      "rawSchema": "{mapping, \"bitcask.fold.max_age\", \"bitcask.max_fold_age\", [ {datatype, [{atom, unlimited}, {duration, ms}]}, hidden, {default, unlimited} ]}.",
       "comment": [
         "@doc Fold keys thresholds will reuse the keydir if another fold was",
         "started less than `fold.max_age` ago and there were less than",
@@ -324,7 +310,6 @@
         "hidden": true,
         "default": "0"
       },
-      "rawSchema": "{mapping, \"bitcask.fold.max_puts\", \"bitcask.max_fold_puts\", [ {datatype, [integer, {atom, unlimited}]}, hidden, {default, 0} ]}.",
       "comment": [
         "@see bitcask.fold.max_age"
       ],
@@ -349,7 +334,6 @@
         "hidden": true,
         "default": "off"
       },
-      "rawSchema": "{mapping, \"bitcask.expiry\", \"bitcask.expiry_secs\", [ {datatype, [{atom, off}, {duration, s}]}, hidden, {default, off} ]}.",
       "comment": [
         "@doc By default, Bitcask keeps all of your data around. If your",
         "data has limited time-value, or if for space reasons you need to",
@@ -373,7 +357,6 @@
         },
         "hidden": true
       },
-      "rawSchema": "{mapping, \"bitcask.hintfile_checksums\", \"bitcask.require_hint_crc\", [ {default, strict}, {datatype, {enum, [strict, allow_missing]}}, hidden ]}.",
       "comment": [
         "@doc Require the CRC to be present at the end of hintfiles.",
         "Setting this to `allow_missing` runs Bitcask in a backward",
@@ -392,7 +375,6 @@
         "hidden": true,
         "default": "0"
       },
-      "rawSchema": "{mapping, \"bitcask.expiry.grace_time\", \"bitcask.expiry_grace_time\", [ {datatype, {duration, s}}, hidden, {default, 0} ]}.",
       "comment": [
         "@doc By default, Bitcask will trigger a merge whenever a data file",
         "contains an expired key. This may result in excessive merging under",
@@ -418,7 +400,6 @@
           ]
         }
       },
-      "rawSchema": "{mapping, \"bitcask.io_mode\", \"bitcask.io_mode\", [ {default, erlang}, {datatype, {enum, [erlang, nif]}} ]}.",
       "comment": [
         "@doc Configure how Bitcask writes data to disk.",
         "  erlang: Erlang's built-in file API",
@@ -436,42 +417,36 @@
   "translations": {
     "bitcask.sync_strategy": {
       "properties": {},
-      "rawSchema": "{translation, \"bitcask.sync_strategy\", fun(Conf) -> Setting = cuttlefish:conf_get(\"bitcask.sync.strategy\", Conf), case Setting of none -> none; o_sync -> o_sync; interval -> Interval = cuttlefish:conf_get(\"bitcask.sync.interval\", Conf, undefined), {seconds, Interval}; _Default -> none end end}.",
       "comment": [],
       "configName": "bitcask.sync_strategy",
       "settingName": "fun(Conf) -> Setting = cuttlefish:conf_get(\"bitcask.sync.strategy\", Conf), case Setting of none -> none; o_sync -> o_sync; interval -> Interval = cuttlefish:conf_get(\"bitcask.sync.interval\", Conf, undefined), {seconds, Interval}; _Default -> none end end"
     },
     "bitcask.merge_window": {
       "properties": {},
-      "rawSchema": "{translation, \"bitcask.merge_window\", fun(Conf) -> Setting = cuttlefish:conf_get(\"bitcask.merge.policy\", Conf), case Setting of always -> always; never -> never; window -> Start = cuttlefish:conf_get(\"bitcask.merge.window.start\", Conf, undefined), End = cuttlefish:conf_get(\"bitcask.merge.window.end\", Conf, undefined), {Start, End}; _Default -> always end end}.",
       "comment": [],
       "configName": "bitcask.merge_window",
       "settingName": "fun(Conf) -> Setting = cuttlefish:conf_get(\"bitcask.merge.policy\", Conf), case Setting of always -> always; never -> never; window -> Start = cuttlefish:conf_get(\"bitcask.merge.window.start\", Conf, undefined), End = cuttlefish:conf_get(\"bitcask.merge.window.end\", Conf, undefined), {Start, End}; _Default -> always end end"
     },
     "bitcask.max_fold_age": {
       "properties": {},
-      "rawSchema": "{translation, \"bitcask.max_fold_age\", fun(Conf) -> case cuttlefish:conf_get(\"bitcask.fold.max_age\", Conf) of unlimited -> -1; I when is_integer(I) -> %% app.config expects microseconds I * 1000; _ -> -1 %% The default, for safety end end }.",
       "comment": [],
       "configName": "bitcask.max_fold_age",
       "settingName": "fun(Conf) -> case cuttlefish:conf_get(\"bitcask.fold.max_age\", Conf) of unlimited -> -1; I when is_integer(I) -> %% app.config expects microseconds I * 1000; _ -> -1 %% The default, for safety end end "
     },
     "bitcask.max_fold_puts": {
       "properties": {},
-      "rawSchema": "{translation, \"bitcask.max_fold_puts\", fun(Conf) -> case cuttlefish:conf_get(\"bitcask.fold.max_puts\", Conf) of unlimited -> -1; I when is_integer(I) -> I; _ -> 0 %% default catch end end }.",
       "comment": [],
       "configName": "bitcask.max_fold_puts",
       "settingName": "fun(Conf) -> case cuttlefish:conf_get(\"bitcask.fold.max_puts\", Conf) of unlimited -> -1; I when is_integer(I) -> I; _ -> 0 %% default catch end end "
     },
     "bitcask.expiry_secs": {
       "properties": {},
-      "rawSchema": "{translation, \"bitcask.expiry_secs\", fun(Conf) -> case cuttlefish:conf_get(\"bitcask.expiry\", Conf) of off -> -1; I when is_integer(I) -> I; _ -> -1 end end }.",
       "comment": [],
       "configName": "bitcask.expiry_secs",
       "settingName": "fun(Conf) -> case cuttlefish:conf_get(\"bitcask.expiry\", Conf) of off -> -1; I when is_integer(I) -> I; _ -> -1 end end "
     },
     "bitcask.require_hint_crc": {
       "properties": {},
-      "rawSchema": "{translation, \"bitcask.require_hint_crc\", fun(Conf) -> case cuttlefish:conf_get(\"bitcask.hintfile_checksums\", Conf) of strict -> true; allow_missing -> false; _ -> true end end}.",
       "comment": [],
       "configName": "bitcask.require_hint_crc",
       "settingName": "fun(Conf) -> case cuttlefish:conf_get(\"bitcask.hintfile_checksums\", Conf) of strict -> true; allow_missing -> false; _ -> true end end"
@@ -480,7 +455,6 @@
   "validators": {
     "undefined": {
       "properties": {},
-      "rawSchema": "{validator, \"is_percentage\", \"must be a percentage\", fun(Value) -> Value >= 0 andalso Value =< 100 end}.",
       "comment": [],
       "name": "is_percentage",
       "description": "must be a percentage",

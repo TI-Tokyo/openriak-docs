@@ -4,7 +4,6 @@
       "properties": {
         "default": "{{repl_data_root}}"
       },
-      "rawSchema": "{mapping, \"mdc.data_root\", \"riak_repl.data_root\", [ {default, \"{{repl_data_root}}\"} ]}.",
       "comment": [
         "Replication config",
         "@doc Path (relative or absolute) to the working directory for the",
@@ -27,7 +26,6 @@
         ],
         "datatype": "ip"
       },
-      "rawSchema": "{mapping, \"mdc.cluster_manager\", \"riak_core.cluster_mgr\", [ {default, {\"{{cluster_manager_ip}}\", {{cluster_manager_port}} }}, {datatype, ip} ]}.",
       "comment": [
         "@doc The cluster manager will listen for connections from remote",
         "clusters on this ip and port. Every node runs one cluster manager,",
@@ -44,7 +42,6 @@
         "datatype": "integer",
         "default": "5"
       },
-      "rawSchema": "{mapping, \"mdc.max_fssource_cluster\", \"riak_repl.max_fssource_cluster\", [ {datatype, integer}, {default, 5} ]}.",
       "comment": [
         "@doc The hard limit of fullsync workers that will be running on the",
         "source side of a cluster across all nodes on that cluster for a",
@@ -62,7 +59,6 @@
         "datatype": "integer",
         "default": "1"
       },
-      "rawSchema": "{mapping, \"mdc.max_fssource_node\", \"riak_repl.max_fssource_node\", [ {datatype, integer}, {default, 1} ]}.",
       "comment": [
         "@doc Limits the number of fullsync workers that will be running on",
         "each individual node in a source cluster. This is a hard limit for",
@@ -79,7 +75,6 @@
         "datatype": "integer",
         "default": "100"
       },
-      "rawSchema": "{mapping, \"mdc.max_fssource_soft_retries\", \"riak_repl.max_fssource_soft_retries\", [ {datatype, integer}, {default, 100} ]}.",
       "comment": [
         "@doc Limits the number of \"soft_exist\" that the fullsynce",
         "coordinator will handle before failing a partition from",
@@ -98,7 +93,6 @@
         },
         "default": "60s"
       },
-      "rawSchema": "{mapping, \"mdc.fssource_retry_wait\", \"riak_repl.fssource_retry_wait\", [ {datatype, {duration, s}}, {default, \"60s\"} ]}.",
       "comment": [
         "@doc Adds a retry wait time. To be used in conjunction with",
         "soft_retries. When a partition fails to fullsync with a soft_exit,",
@@ -120,7 +114,6 @@
         "datatype": "integer",
         "default": "1"
       },
-      "rawSchema": "{mapping, \"mdc.max_fssink_node\", \"riak_repl.max_fssink_node\", [ {datatype, integer}, {default, 1} ]}.",
       "comment": [
         "@doc Limits the number of fullsync workers allowed to run on each",
         "individual node in a sink cluster. This is a hard limit for all",
@@ -144,7 +137,6 @@
         },
         "default": "true"
       },
-      "rawSchema": "{mapping, \"mdc.fullsync_on_connect\", \"riak_repl.fullsync_on_connect\", [ {datatype, {enum, [true, false]}}, {default, true} ]}.",
       "comment": [
         "@doc Whether to initiate a fullsync on initial connection from the",
         "secondary cluster"
@@ -161,7 +153,6 @@
         "include_default": "all",
         "commented": "30m"
       },
-      "rawSchema": "{mapping, \"mdc.fullsync_interval.$cluster_name\", \"riak_repl.fullsync_interval\", [ {datatype, {duration, ms}}, {include_default, \"all\"}, {commented, \"30m\"} ]}.",
       "comment": [
         "@doc a single integer value representing the duration to wait in",
         "minutes between fullsyncs, or a list of {clustername,",
@@ -176,7 +167,6 @@
         "datatype": "bytesize",
         "default": "100MB"
       },
-      "rawSchema": "{mapping, \"mdc.rtq_max_bytes\", \"riak_repl.rtq_max_bytes\", [ {datatype, bytesize}, {default, \"100MB\"} ]}.",
       "comment": [
         "@doc The maximum size the realtime replication queue can grow to",
         "before new objects are dropped. Defaults to 100MB. Dropped objects",
@@ -196,7 +186,6 @@
         },
         "default": "off"
       },
-      "rawSchema": "{mapping, \"mdc.proxy_get\", \"riak_repl.proxy_get\", [ {datatype, {enum, [on, off]}}, {default, off} ]}.",
       "comment": [
         "@doc Enable Riak CS proxy_get and block filter."
       ],
@@ -211,7 +200,6 @@
         },
         "default": "15s"
       },
-      "rawSchema": "{mapping, \"mdc.realtime.heartbeat_interval\", \"riak_repl.rt_heartbeat_interval\", [ {datatype, {duration, s}}, {default, \"15s\"} ]}.",
       "comment": [
         "@doc A heartbeat message is sent from the source to the sink every",
         "heartbeat_interval. Setting heartbeat_interval to undefined",
@@ -229,7 +217,6 @@
         },
         "default": "15s"
       },
-      "rawSchema": "{mapping, \"mdc.realtime.heartbeat_timeout\", \"riak_repl.rt_heartbeat_timeout\", [ {datatype, {duration, s}}, {default, \"15s\"} ]}.",
       "comment": [
         "@doc If a heartbeat response is not received in",
         "rt_heartbeat_timeout seconds, then the source connection exits and",
@@ -251,7 +238,6 @@
         "default": "false",
         "hidden": true
       },
-      "rawSchema": "{mapping, \"mdc.fullsync.use_bg_manager\", \"riak_repl.fullsync_use_background_manager\", [ {datatype, {enum, [true, false]}}, {default, false}, hidden ]}.",
       "comment": [
         "@doc By default, fullsync replication will try to coordinate with other",
         "riak subsystems that may be contending for the same resources. This will help",
@@ -270,7 +256,6 @@
         },
         "commented": "1m"
       },
-      "rawSchema": "{mapping, \"mdc.fullsync.stat_refresh_interval\", \"riak_repl.fullsync_stat_refresh_interval\", [ {datatype, {duration, ms}}, {commented, \"1m\"} ]}.",
       "comment": [
         "@doc How frequently the stats for fullsync source processes should be",
         "gathered. Requests for fullsync status always returned the most recently",
@@ -283,14 +268,12 @@
   "translations": {
     "riak_repl.fullsync_interval": {
       "properties": {},
-      "rawSchema": "{translation, \"riak_repl.fullsync_interval\", fun(Conf) -> Minute = fun(Millis) -> Millis div 60000 end, FullSyncIntervals = cuttlefish_variable:filter_by_prefix(\"mdc.fullsync_interval\", Conf), case proplists:get_value([\"mdc\", \"fullsync_interval\", \"all\"], FullSyncIntervals) of undefined -> [ {list_to_atom(Name), Minute(Value)} || {[\"mdc\", \"fullsync_interval\", Name], Value} <- FullSyncIntervals]; X -> Minute(X) end end}.",
       "comment": [],
       "configName": "riak_repl.fullsync_interval",
       "settingName": "fun(Conf) -> Minute = fun(Millis) -> Millis div 60000 end, FullSyncIntervals = cuttlefish_variable:filter_by_prefix(\"mdc.fullsync_interval\", Conf), case proplists:get_value([\"mdc\", \"fullsync_interval\", \"all\"], FullSyncIntervals) of undefined -> [ {list_to_atom(Name), Minute(Value)} || {[\"mdc\", \"fullsync_interval\", Name], Value} <- FullSyncIntervals]; X -> Minute(X) end end"
     },
     "riak_repl.proxy_get": {
       "properties": {},
-      "rawSchema": "{translation, \"riak_repl.proxy_get\", fun(Conf) -> case cuttlefish:conf_get(\"mdc.proxy_get\", Conf) of on -> enabled; off -> disabled; _ -> disabled end end}.",
       "comment": [],
       "configName": "riak_repl.proxy_get",
       "settingName": "fun(Conf) -> case cuttlefish:conf_get(\"mdc.proxy_get\", Conf) of on -> enabled; off -> disabled; _ -> disabled end end"

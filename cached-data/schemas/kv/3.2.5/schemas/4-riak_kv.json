@@ -15,7 +15,6 @@
         },
         "default": "active"
       },
-      "rawSchema": "{mapping, \"anti_entropy\", \"riak_kv.anti_entropy\", [ {datatype, {enum, [active, passive, 'active-debug']}}, {default, active} ]}.",
       "comment": [
         "@doc How Riak will repair out-of-sync keys. Some features require",
         "this to be set to 'active', including search.",
@@ -39,7 +38,6 @@
         },
         "default": "passive"
       },
-      "rawSchema": "{mapping, \"tictacaae_active\", \"riak_kv.tictacaae_active\", [ {datatype, {enum, [active, passive]}}, {default, passive} ]}.",
       "comment": [],
       "configName": "tictacaae_active",
       "settingName": "riak_kv.tictacaae_active"
@@ -54,7 +52,6 @@
         "default": "enabled",
         "commented": "enabled"
       },
-      "rawSchema": "{mapping, \"aae_tokenbucket\", \"riak_kv.aae_tokenbucket\", [ {datatype, {flag, enabled, disabled}}, {default, enabled}, {commented, enabled} ]}.",
       "comment": [
         "@doc Use hashtree tokens for anti-entropy throttling",
         "To hold-up the vnode when there is a backlog of activity on the AAE store",
@@ -75,7 +72,6 @@
         "default": "disabled",
         "hidden": true
       },
-      "rawSchema": "{mapping, \"legacyformat_tictacaae_tree\", \"riak_kv.legacyformat_tictacaae_tree\", [ {datatype, {flag, enabled, disabled}}, {default, disabled}, hidden ]}.",
       "comment": [
         "@doc Use legacy-format tictac tree",
         "Should only be required when perfoming a rolling upgrade to 3.4.0 or 3.2.3,",
@@ -90,7 +86,6 @@
         "default": "$(platform_data_dir)/tictac_aae",
         "datatype": "directory"
       },
-      "rawSchema": "{mapping, \"tictacaae_dataroot\", \"riak_kv.tictacaae_dataroot\", [ {default, \"$(platform_data_dir)/tictac_aae\"}, {datatype, directory} ]}.",
       "comment": [
         "@doc A path under which aae data files will be stored."
       ],
@@ -102,7 +97,6 @@
         "default": "$(platform_data_dir)/kv_eraser",
         "datatype": "directory"
       },
-      "rawSchema": "{mapping, \"eraser_dataroot\", \"riak_kv.eraser_dataroot\", [ {default, \"$(platform_data_dir)/kv_eraser\"}, {datatype, directory} ]}.",
       "comment": [
         "@doc A path under which the eraser overload queue will be stored."
       ],
@@ -114,7 +108,6 @@
         "default": "$(platform_data_dir)/kv_reaper",
         "datatype": "directory"
       },
-      "rawSchema": "{mapping, \"reaper_dataroot\", \"riak_kv.reaper_dataroot\", [ {default, \"$(platform_data_dir)/kv_reaper\"}, {datatype, directory} ]}.",
       "comment": [
         "@doc A path under which the reaper overload queue will be stored."
       ],
@@ -126,7 +119,6 @@
         "default": "$(platform_data_dir)/kv_reader",
         "datatype": "directory"
       },
-      "rawSchema": "{mapping, \"reader_dataroot\", \"riak_kv.reader_dataroot\", [ {default, \"$(platform_data_dir)/kv_reader\"}, {datatype, directory} ]}.",
       "comment": [
         "@doc A path under which the reader overload queue will be stored."
       ],
@@ -138,7 +130,6 @@
         "default": "$(platform_data_dir)/kv_replrtqsrc",
         "datatype": "directory"
       },
-      "rawSchema": "{mapping, \"replrtq_dataroot\", \"riak_kv.replrtq_dataroot\", [ {default, \"$(platform_data_dir)/kv_replrtqsrc\"}, {datatype, directory} ]}.",
       "comment": [
         "@doc A path under which the repl real-time overload queue will be stored.",
         "@doc A path under which the reaper overload queue will be stored."
@@ -151,7 +142,6 @@
         "default": "10000000",
         "datatype": "integer"
       },
-      "rawSchema": "{mapping, \"eraser_overflow_limit\", \"riak_kv.eraser_overflow_limit\", [ {default, 10000000}, {datatype, integer} ]}.",
       "comment": [
         "@doc The maximum size of the overflow queue for the eraser.  If the queue",
         "goes beyond this point, new additions will be discarded.",
@@ -167,7 +157,6 @@
         "default": "10000000",
         "datatype": "integer"
       },
-      "rawSchema": "{mapping, \"reaper_overflow_limit\", \"riak_kv.reaper_overflow_limit\", [ {default, 10000000}, {datatype, integer} ]}.",
       "comment": [
         "@doc The maximum size of the overflow queue for the reaper.  If the queue",
         "goes beyond this point, new additions will be discarded.",
@@ -183,7 +172,6 @@
         "default": "10000000",
         "datatype": "integer"
       },
-      "rawSchema": "{mapping, \"replrtq_overflow_limit\", \"riak_kv.replrtq_overflow_limit\", [ {default, 10000000}, {datatype, integer} ]}.",
       "comment": [
         "@doc The maximum size of the overflow queue for the real-time replication",
         "queue (nextgen repl only).  If the queue goes beyond this point, new",
@@ -210,7 +198,6 @@
         "default": "leveled_ko",
         "commented": "leveled_ko"
       },
-      "rawSchema": "{mapping, \"tictacaae_parallelstore\", \"riak_kv.tictacaae_parallelstore\", [ {datatype, {enum, [leveled_ko, leveled_so]}}, {default, leveled_ko}, {commented, leveled_ko} ]}.",
       "comment": [
         "@doc Parallel key store type",
         "When running in parallel mode, which will be the default if the backend does",
@@ -227,7 +214,6 @@
         "datatype": "integer",
         "default": "2016"
       },
-      "rawSchema": "{mapping, \"tictacaae_rebuildwait\", \"riak_kv.tictacaae_rebuildwait\", [ {datatype, integer}, {default, 2016} ]}.",
       "comment": [
         "@doc Minimum Rebuild Wait",
         "The minimum number of hours to wait between rebuilds.  Default value is 12",
@@ -241,7 +227,6 @@
         "datatype": "integer",
         "default": "2592000"
       },
-      "rawSchema": "{mapping, \"tictacaae_rebuilddelay\", \"riak_kv.tictacaae_rebuilddelay\", [ {datatype, integer}, {default, 2592000} ]}.",
       "comment": [
         "@doc Maximum Rebuild Delay",
         "The number of seconds which represents the length of the period in which the",
@@ -262,7 +247,6 @@
         "default": "disabled",
         "commented": "disabled"
       },
-      "rawSchema": "{mapping, \"tictacaae_storeheads\", \"riak_kv.tictacaae_storeheads\", [ {datatype, {flag, enabled, disabled}}, {default, disabled}, {commented, disabled} ]}.",
       "comment": [
         "@doc Store heads in parallel key stores",
         "If running a parallel key store, the whole \"head\" object may be stored to",
@@ -279,7 +263,6 @@
         "default": "480000",
         "hidden": true
       },
-      "rawSchema": "{mapping, \"tictacaae_exchangetick\", \"riak_kv.tictacaae_exchangetick\", [ {datatype, integer}, {default, 480000}, hidden ]}.",
       "comment": [
         "@doc Frequency to prompt exchange per vnode (milliseconds)",
         "The number of milliseconds which the vnode must wait between self-pokes to",
@@ -299,7 +282,6 @@
         "default": "3600000",
         "hidden": true
       },
-      "rawSchema": "{mapping, \"tictacaae_rebuildtick\", \"riak_kv.tictacaae_rebuildtick\", [ {datatype, integer}, {default, 3600000}, hidden ]}.",
       "comment": [
         "@doc Frequency to prompt rebuild check per vnode (milliseconds)",
         "The number of milliseconds which the vnode must wait between self-pokes to",
@@ -317,7 +299,6 @@
         "default": "1000",
         "hidden": true
       },
-      "rawSchema": "{mapping, \"tictacaae_rebuild_blocktime\", \"riak_kv.tictacaae_rebuild_blocktime\", [ {datatype, integer}, {default, 1000}, hidden ]}.",
       "comment": [
         "@doc Block vnode for tree rebuild (milliseconds)",
         "When rebuilding a vnode's tree cache, the vnode can be blocked while the",
@@ -336,7 +317,6 @@
         "datatype": "integer",
         "default": "64"
       },
-      "rawSchema": "{mapping, \"tictacaae_maxresults\", \"riak_kv.tictacaae_maxresults\", [ {datatype, integer}, {default, 64} ]}.",
       "comment": [
         "@doc Max number of leaf IDs per exchange",
         "To control the length of time for each exchange, only a subset of the",
@@ -357,7 +337,6 @@
         "default": "4",
         "hidden": true
       },
-      "rawSchema": "{mapping, \"tictacaae_repairloops\", \"riak_kv.tictacaae_repairloops\", [ {datatype, integer}, {default, 4}, hidden ]}.",
       "comment": [
         "@doc Max number of repair loops per exchange",
         "Each exchange will attempt a repair of tictacaae_maxresults, and will",
@@ -380,7 +359,6 @@
         "default": "2",
         "hidden": true
       },
-      "rawSchema": "{mapping, \"tictacaae_rangeboost\", \"riak_kv.tictacaae_rangeboost\", [ {datatype, integer}, {default, 2}, hidden ]}.",
       "comment": [
         "@doc Multiplier to the `tictcaaae_maxresults` when following an initial AAE",
         "exchange with a range-limited exchange.",
@@ -405,7 +383,6 @@
         "default": "on",
         "hidden": true
       },
-      "rawSchema": "{mapping, \"tictacaae_primaryonly\", \"riak_kv.tictacaae_primaryonly\", [ {datatype, flag}, {default, on}, hidden ]}.",
       "comment": [
         "@doc Exchange only between primary vnodes",
         "Setting this to false allows Tictac AAE exchanges between both primary and",
@@ -426,7 +403,6 @@
         },
         "default": "info"
       },
-      "rawSchema": "{mapping, \"tictacaae_backendloglevel\", \"riak_kv.tictacaae_backendloglevel\", [ {datatype, {enum, [debug, info, warning]}}, {default, info} ]}.",
       "comment": [
         "@doc Tictacaae - change log level of parallel keystore",
         "Backend logging within leveled is relatively verbose, so in some cases",
@@ -449,7 +425,6 @@
         "default": "info",
         "hidden": true
       },
-      "rawSchema": "{mapping, \"tictacaae_loglevel\", \"riak_kv.tictacaae_loglevel\", [ {datatype, {enum, [info, warning]}}, {default, info}, hidden ]}.",
       "comment": [
         "@doc Tictacaae - change log level of tictacaae",
         "Set the log level for each aae_controller, and also for aae exchanges.  It",
@@ -469,7 +444,6 @@
         },
         "default": "native"
       },
-      "rawSchema": "{mapping, \"tictacaae_backendcompression\", \"riak_kv.tictacaae_backendcompression\", [ {datatype, {enum, [native, zstd]}}, {default, native} ]}.",
       "comment": [
         "@doc Tictacaae - change compression method of parallel keystore",
         "Better performance is expected when using the NIF-based zstd compression.",
@@ -494,7 +468,6 @@
         "default": "dscp",
         "commented": "dscp"
       },
-      "rawSchema": "{mapping, \"worker_pool_strategy\", \"riak_kv.worker_pool_strategy\", [ {datatype, {enum, [none, single, dscp]}}, {default, dscp}, {commented, dscp} ]}.",
       "comment": [
         "@doc Pool Strategy - should a single node_worker_pool or multiple pools be",
         "used for queueing potentially longer-running \"background\" queries"
@@ -507,7 +480,6 @@
         "datatype": "integer",
         "default": "4"
       },
-      "rawSchema": "{mapping, \"node_worker_pool_size\", \"riak_kv.node_worker_pool_size\", [ {datatype, integer}, {default, 4} ]}.",
       "comment": [
         "@doc Pool Sizes - sizes for individual node_worker_pools",
         "Only relevant if single or dscp strategy chosen.  Set",
@@ -527,7 +499,6 @@
         "datatype": "integer",
         "default": "2"
       },
-      "rawSchema": "{mapping, \"af1_worker_pool_size\", \"riak_kv.af1_worker_pool_size\", [ {datatype, integer}, {default, 2} ]}.",
       "comment": [],
       "configName": "af1_worker_pool_size",
       "settingName": "riak_kv.af1_worker_pool_size"
@@ -537,7 +508,6 @@
         "datatype": "integer",
         "default": "1"
       },
-      "rawSchema": "{mapping, \"af2_worker_pool_size\", \"riak_kv.af2_worker_pool_size\", [ {datatype, integer}, {default, 1} ]}.",
       "comment": [],
       "configName": "af2_worker_pool_size",
       "settingName": "riak_kv.af2_worker_pool_size"
@@ -547,7 +517,6 @@
         "datatype": "integer",
         "default": "4"
       },
-      "rawSchema": "{mapping, \"af3_worker_pool_size\", \"riak_kv.af3_worker_pool_size\", [ {datatype, integer}, {default, 4} ]}.",
       "comment": [],
       "configName": "af3_worker_pool_size",
       "settingName": "riak_kv.af3_worker_pool_size"
@@ -557,7 +526,6 @@
         "datatype": "integer",
         "default": "1"
       },
-      "rawSchema": "{mapping, \"af4_worker_pool_size\", \"riak_kv.af4_worker_pool_size\", [ {datatype, integer}, {default, 1} ]}.",
       "comment": [],
       "configName": "af4_worker_pool_size",
       "settingName": "riak_kv.af4_worker_pool_size"
@@ -567,7 +535,6 @@
         "datatype": "integer",
         "default": "1"
       },
-      "rawSchema": "{mapping, \"be_worker_pool_size\", \"riak_kv.be_worker_pool_size\", [ {datatype, integer}, {default, 1} ]}.",
       "comment": [],
       "configName": "be_worker_pool_size",
       "settingName": "riak_kv.be_worker_pool_size"
@@ -578,7 +545,6 @@
         "default": "10",
         "commented": "10"
       },
-      "rawSchema": "{mapping, \"backend_pause_ms\", \"riak_kv.backend_pause_ms\", [ {datatype, integer}, {default, 10}, {commented, 10} ]}.",
       "comment": [
         "@doc Backend PUT Pause (ms).",
         "If the backend PUT has resulted in a pause request, then how long should",
@@ -594,7 +560,6 @@
         "default": "2",
         "commented": "2"
       },
-      "rawSchema": "{mapping, \"tombstone_pause\", \"riak_kv.tombstone_pause\", [ {datatype, integer}, {default, 2}, {commented, 2} ]}.",
       "comment": [
         "@doc Tombstone Pause (ms)",
         "The pause has a dual-purpose.  It slows both the riak_kv_reaper and",
@@ -616,7 +581,6 @@
         "default": "enabled",
         "commented": "enabled"
       },
-      "rawSchema": "{mapping, \"participate_in_coverage\", \"riak_core.participate_in_coverage\", [ {datatype, {flag, enabled, disabled}}, {default, enabled}, {commented, enabled} ]}.",
       "comment": [
         "@doc Whether to allow node to participate in coverage queries.",
         "This is used as a manual switch to stop nodes in incomplete states",
@@ -642,7 +606,6 @@
           ]
         }
       },
-      "rawSchema": "{mapping, \"storage_backend\", \"riak_kv.storage_backend\", [ {default, {{storage_backend}} }, {datatype, {enum, [bitcask, leveldb, leveled, memory, multi, prefix_multi]}} ]}.",
       "comment": [
         "@doc Specifies the storage engine used for Riak's key-value data",
         "and secondary indexes (if supported)."
@@ -661,7 +624,6 @@
           }
         ]
       },
-      "rawSchema": "{mapping, \"cs_version\", \"riak_kv.riak_cs_version\", [ {commented, 020000}, {datatype, integer}, {validators, [\"verify_cs_backend\"]} ]}.",
       "comment": [
         "@doc Simplify prefix_multi configuration for Riak CS. Keep this",
         "commented out unless Riak is configured for Riak CS."
@@ -675,7 +637,6 @@
         "datatype": "integer",
         "hidden": true
       },
-      "rawSchema": "{mapping, \"anti_entropy.tree.build_limit.number\", \"riak_kv.anti_entropy_build_limit\", [ {default, 1}, {datatype, integer}, hidden ]}.",
       "comment": [
         "@doc Restrict how fast AAE can build hash trees. Building the tree",
         "for a given partition requires a full scan over that partition's",
@@ -698,7 +659,6 @@
         },
         "hidden": true
       },
-      "rawSchema": "{mapping, \"anti_entropy.tree.build_limit.per_timespan\", \"riak_kv.anti_entropy_build_limit\", [ {default, \"1h\"}, {datatype, {duration, ms}}, hidden ]}.",
       "comment": [
         "@see anti_entropy.build_limit.number"
       ],
@@ -723,7 +683,6 @@
         ],
         "hidden": true
       },
-      "rawSchema": "{mapping, \"anti_entropy.tree.expiry\", \"riak_kv.anti_entropy_expire\", [ {default, \"1w\"}, {datatype, [{duration, ms}, {atom, never}]}, hidden ]}.",
       "comment": [
         "@doc Determine how often hash trees are expired after being built.",
         "Periodically expiring a hash tree ensures the on-disk hash tree",
@@ -742,7 +701,6 @@
         "datatype": "integer",
         "hidden": true
       },
-      "rawSchema": "{mapping, \"anti_entropy.concurrency_limit\", \"riak_kv.anti_entropy_concurrency\", [ {default, 2}, {datatype, integer}, hidden ]}.",
       "comment": [
         "@doc Limit how many AAE exchanges or builds can happen concurrently."
       ],
@@ -758,7 +716,6 @@
         },
         "hidden": true
       },
-      "rawSchema": "{mapping, \"anti_entropy.trigger_interval\", \"riak_kv.anti_entropy_tick\", [ {default, \"15s\"}, {datatype, {duration, ms}}, hidden ]}.",
       "comment": [
         "@doc The tick determines how often the AAE manager looks for work",
         "to do (building/expiring trees, triggering exchanges, etc).",
@@ -775,7 +732,6 @@
         "hidden": true,
         "datatype": "directory"
       },
-      "rawSchema": "{mapping, \"anti_entropy.data_dir\", \"riak_kv.anti_entropy_data_dir\", [ {default, \"$(platform_data_dir)/anti_entropy\"}, hidden, {datatype, directory} ]}.",
       "comment": [
         "@doc The directory where AAE hash trees are stored."
       ],
@@ -788,7 +744,6 @@
         "datatype": "bytesize",
         "hidden": true
       },
-      "rawSchema": "{mapping, \"anti_entropy.write_buffer_size\", \"riak_kv.anti_entropy_leveldb_opts.write_buffer_size\", [ {default, \"4MB\"}, {datatype, bytesize}, hidden ]}.",
       "comment": [
         "@doc The LevelDB options used by AAE to generate the LevelDB-backed",
         "on-disk hashtrees.",
@@ -803,7 +758,6 @@
         "datatype": "integer",
         "hidden": true
       },
-      "rawSchema": "{mapping, \"anti_entropy.max_open_files\", \"riak_kv.anti_entropy_leveldb_opts.max_open_files\", [ {default, 20}, {datatype, integer}, hidden ]}.",
       "comment": [],
       "configName": "anti_entropy.max_open_files",
       "settingName": "riak_kv.anti_entropy_leveldb_opts.max_open_files"
@@ -814,7 +768,6 @@
         "datatype": "flag",
         "hidden": true
       },
-      "rawSchema": "{mapping, \"anti_entropy.throttle\", \"riak_kv.aae_throttle_enabled\", [ {default, on}, {datatype, flag}, hidden ]}.",
       "comment": [
         "@doc Whether the distributed throttle for active anti-entropy is",
         "enabled."
@@ -833,7 +786,6 @@
           }
         ]
       },
-      "rawSchema": "{mapping, \"anti_entropy.throttle.$tier.mailbox_size\", \"riak_kv.aae_throttle_limits\", [ {datatype, integer}, hidden, {validators, [\"non_negative\"]} ]}.",
       "comment": [
         "@doc Sets the throttling tiers for active anti-entropy. Each tier",
         "is a minimum vnode mailbox size and a time-delay that the throttle",
@@ -859,7 +811,6 @@
         },
         "hidden": true
       },
-      "rawSchema": "{mapping, \"anti_entropy.throttle.$tier.delay\", \"riak_kv.aae_throttle_limits\", [ {datatype, {duration, ms}}, hidden ]}.",
       "comment": [
         "@see anti_entropy.throttle.$tier.mailbox_size"
       ],
@@ -872,7 +823,6 @@
         "datatype": "flag",
         "hidden": true
       },
-      "rawSchema": "{mapping, \"anti_entropy.bloomfilter\", \"riak_kv.anti_entropy_leveldb_opts.use_bloomfilter\", [ {default, on}, {datatype, flag}, hidden ]}.",
       "comment": [
         "@see leveldb.bloomfilter"
       ],
@@ -894,7 +844,6 @@
         ],
         "hidden": true
       },
-      "rawSchema": "{mapping, \"max_concurrent_requests\", \"riak_kv.fsm_limit\", [ {default, 50000}, {datatype, [integer, {atom, infinite}]}, hidden ]}.",
       "comment": [
         "We left riak_kv.add_paths out on purpose.",
         "@doc The maximum number of concurrent requests of each type (get or",
@@ -912,7 +861,6 @@
         "datatype": "flag",
         "hidden": true
       },
-      "rawSchema": "{mapping, \"retry_put_coordinator_failure\", \"riak_kv.retry_put_coordinator_failure\", [ {default, on}, {datatype, flag}, hidden ]}.",
       "comment": [
         "@doc If forwarding to a replica-local coordinator on PUT fails,",
         "this setting will retry the operation when set to 'on'.",
@@ -928,7 +876,6 @@
         "datatype": "flag",
         "hidden": true
       },
-      "rawSchema": "{mapping, \"mbox_check_enabled\", \"riak_kv.mbox_check_enabled\", [ {default, on}, {datatype, flag}, hidden ]}.",
       "comment": [
         "@doc Enable or disable mbox_check on PUTs",
         "By default mbox_checks are performed so that vnodes with long queues",
@@ -959,7 +906,6 @@
           }
         ]
       },
-      "rawSchema": "{mapping, \"object.format\", \"riak_kv.object_format\", [ {default, 1}, {datatype, [{integer, 1}, {integer, 0}]} ]}.",
       "comment": [
         "@doc Controls which binary representation of a riak value is stored",
         "on disk.",
@@ -987,7 +933,6 @@
         "%% disabled by default": true,
         "256KB is a reasonable value hidden": true
       },
-      "rawSchema": "{mapping, \"metadata_cache_size\", \"riak_kv.vnode_md_cache_size\", [ {datatype, [{atom, off}, bytesize]}, {default, off}, %% disabled by default, 256KB is a reasonable value hidden ]}.",
       "comment": [
         "@doc Controls the size of the metadata cache for each vnode. Set to",
         "'off' to disable the cache.  This shouldn't be necessary on-disk",
@@ -1007,7 +952,6 @@
         "datatype": "bytesize",
         "hidden": true
       },
-      "rawSchema": "{mapping, \"memory_backend.max_memory_per_vnode\", \"riak_kv.memory_backend.max_memory\", [ {datatype, bytesize}, hidden ]}.",
       "comment": [
         "%% Memory backend section",
         "@doc The maximum amount of memory consumed per vnode by the memory",
@@ -1021,7 +965,6 @@
         "datatype": "bytesize",
         "hidden": true
       },
-      "rawSchema": "{mapping, \"multi_backend.$name.memory_backend.max_memory_per_vnode\", \"riak_kv.multi_backend\", [ {datatype, bytesize}, hidden ]}.",
       "comment": [
         "@see memory_backend.max_memory"
       ],
@@ -1036,7 +979,6 @@
         },
         "hidden": true
       },
-      "rawSchema": "{mapping, \"memory_backend.ttl\", \"riak_kv.memory_backend.ttl\", [ {datatype, {duration, s}}, hidden ]}.",
       "comment": [
         "@doc Each value written will be written with this \"time to",
         "live\". Once that object's time is up, it will be deleted on the",
@@ -1053,7 +995,6 @@
         },
         "hidden": true
       },
-      "rawSchema": "{mapping, \"multi_backend.$name.memory_backend.ttl\", \"riak_kv.multi_backend\", [ {datatype, {duration, s}}, hidden ]}.",
       "comment": [
         "@see memory_backend.ttl"
       ],
@@ -1066,7 +1007,6 @@
         "default": "on",
         "hidden": true
       },
-      "rawSchema": "{mapping, \"secure_referer_check\", \"riak_kv.secure_referer_check\", [ {datatype, flag}, {default, on}, hidden ]}.",
       "comment": [
         "@doc Measures were added to Riak 1.2 to counteract cross-site",
         "scripting and request-forgery attacks. Some reverse-proxies cannot",
@@ -1083,7 +1023,6 @@
         "default": "off",
         "hidden": true
       },
-      "rawSchema": "{mapping, \"jmx\", \"riak_kv.jmx_dummy\", [ {datatype, flag}, {default, off}, hidden ]}.",
       "comment": [
         "@doc a dummy value added to riak 2.2.5 to handle upgrades from",
         "older riak_ee installs that have `jmx` in their riak.conf"
@@ -1096,7 +1035,6 @@
         "datatype": "bytesize",
         "default": "5MB"
       },
-      "rawSchema": "{mapping, \"object.size.warning_threshold\", \"riak_kv.warn_object_size\", [ {datatype, bytesize}, {default, \"5MB\"} ]}.",
       "comment": [
         "@doc Reading or writing objects bigger than this size will write a",
         "warning in the logs."
@@ -1109,7 +1047,6 @@
         "datatype": "bytesize",
         "default": "50MB"
       },
-      "rawSchema": "{mapping, \"object.size.maximum\", \"riak_kv.max_object_size\", [ {datatype, bytesize}, {default, \"50MB\"} ]}.",
       "comment": [
         "@doc Writing an object bigger than this will send a failure to the",
         "client."
@@ -1122,7 +1059,6 @@
         "datatype": "integer",
         "default": "25"
       },
-      "rawSchema": "{mapping, \"object.siblings.warning_threshold\", \"riak_kv.warn_siblings\", [ {datatype, integer}, {default, 25} ]}.",
       "comment": [
         "@doc Writing an object with more than this number of siblings will",
         "generate a warning in the logs."
@@ -1135,7 +1071,6 @@
         "datatype": "integer",
         "default": "100"
       },
-      "rawSchema": "{mapping, \"object.siblings.maximum\", \"riak_kv.max_siblings\", [ {datatype, integer}, {default, 100} ]}.",
       "comment": [
         "@doc Writing an object with more than this number of siblings will",
         "send a failure to the client."
@@ -1153,7 +1088,6 @@
         },
         "hidden": true
       },
-      "rawSchema": "{mapping, \"buckets.default.merge_strategy\", \"riak_core.default_bucket_props.dvv_enabled\", [ {default, '1'}, {datatype, {flag, '2', '1'}}, hidden ]}.",
       "comment": [
         "@doc The strategy used when merging objects that potentially have",
         "conflicts.",
@@ -1181,7 +1115,6 @@
         "default": "0",
         "hidden": true
       },
-      "rawSchema": "{mapping, \"buckets.default.pr\", \"riak_core.default_bucket_props.pr\", [ {datatype, [integer, {enum, [quorum, all]}]}, {default, 0}, hidden ]}.",
       "comment": [
         "@doc The number of primary replicas (non-fallback) that must reply",
         "to a read request."
@@ -1204,7 +1137,6 @@
         "default": "quorum",
         "hidden": true
       },
-      "rawSchema": "{mapping, \"buckets.default.r\", \"riak_core.default_bucket_props.r\", [ {datatype, [{enum, [quorum, all]}, integer]}, {default, quorum}, hidden ]}.",
       "comment": [
         "@doc The number of replicas which must reply to a read request."
       ],
@@ -1226,7 +1158,6 @@
         "default": "quorum",
         "hidden": true
       },
-      "rawSchema": "{mapping, \"buckets.default.w\", \"riak_core.default_bucket_props.w\", [ {datatype, [{enum, [quorum, all]}, integer]}, {default, quorum}, hidden ]}.",
       "comment": [
         "@doc The number of replicas which must reply to a write request,",
         "indicating that the write was received."
@@ -1249,7 +1180,6 @@
         "default": "0",
         "hidden": true
       },
-      "rawSchema": "{mapping, \"buckets.default.pw\", \"riak_core.default_bucket_props.pw\", [ {datatype, [integer, {enum, [quorum, all]}]}, {default, 0}, hidden ]}.",
       "comment": [
         "@doc The number of primary replicas (non-fallback) which must reply",
         "to a write request."
@@ -1272,7 +1202,6 @@
         "default": "quorum",
         "hidden": true
       },
-      "rawSchema": "{mapping, \"buckets.default.dw\", \"riak_core.default_bucket_props.dw\", [ {datatype, [{enum, [quorum, all]}, integer]}, {default, quorum}, hidden ]}.",
       "comment": [
         "@doc The number of replicas which must reply to a write request,",
         "indicating that the write was committed to durable storage."
@@ -1295,7 +1224,6 @@
         "default": "quorum",
         "hidden": true
       },
-      "rawSchema": "{mapping, \"buckets.default.rw\", \"riak_core.default_bucket_props.rw\", [ {datatype, [{enum, [quorum, all]}, integer]}, {default, quorum}, hidden ]}.",
       "comment": [
         "@doc The number of replicas which must reply to a delete request."
       ],
@@ -1314,7 +1242,6 @@
         },
         "hidden": true
       },
-      "rawSchema": "{mapping, \"buckets.default.notfound_ok\", \"riak_core.default_bucket_props.notfound_ok\", [ {default, true}, {datatype, {enum, [true, false]}}, hidden ]}.",
       "comment": [
         "@doc Whether not-founds will count toward a quorum of reads."
       ],
@@ -1333,7 +1260,6 @@
         },
         "hidden": true
       },
-      "rawSchema": "{mapping, \"buckets.default.basic_quorum\", \"riak_core.default_bucket_props.basic_quorum\", [ {default, false}, {datatype, {enum, [true, false]}}, hidden ]}.",
       "comment": [
         "@doc Whether not-founds will invoke the \"basic quorum\"",
         "optimization. This setting will short-circuit fetches where the",
@@ -1355,7 +1281,6 @@
         "default": "false",
         "hidden": true
       },
-      "rawSchema": "{mapping, \"buckets.default.allow_mult\", \"riak_core.default_bucket_props.allow_mult\", [ {datatype, {enum, [true, false]}}, {default, false}, hidden ]}.",
       "comment": [
         "@doc Whether or not siblings are allowed, by default, for untyped buckets.",
         "Note: See Vector Clocks for a discussion of sibling resolution."
@@ -1375,7 +1300,6 @@
         "default": "false",
         "hidden": true
       },
-      "rawSchema": "{mapping, \"buckets.default.last_write_wins\", \"riak_core.default_bucket_props.last_write_wins\", [ {datatype, {enum, [true, false]}}, {default, false}, hidden ]}.",
       "comment": [
         "@doc Whether conflicting writes resolve via timestamp."
       ],
@@ -1386,7 +1310,6 @@
       "properties": {
         "hidden": true
       },
-      "rawSchema": "{mapping, \"buckets.default.precommit\", \"riak_core.default_bucket_props.precommit\", [ hidden ]}.",
       "comment": [
         "@doc A space delimited list of functions that will be run before a",
         "value is stored, and that can abort the write. For Erlang",
@@ -1400,7 +1323,6 @@
       "properties": {
         "hidden": true
       },
-      "rawSchema": "{mapping, \"buckets.default.postcommit\", \"riak_core.default_bucket_props.postcommit\", [ hidden ]}.",
       "comment": [
         "@doc A space delimited list of functions that will be run after a",
         "value is stored. Only Erlang functions are allowed, using the",
@@ -1424,7 +1346,6 @@
         ],
         "hidden": true
       },
-      "rawSchema": "{mapping, \"datatypes.compression_level\", \"riak_dt.binary_compression\", [ {datatype, [integer, flag]}, {default, 1}, {validators, [\"is_compression_value\"]}, hidden ]}.",
       "comment": [
         "@doc Whether serialized datatypes will use compression, and at what",
         "level. When an integer, this refers to the aggressiveness (and",
@@ -1440,7 +1361,6 @@
         "default": "off",
         "hidden": true
       },
-      "rawSchema": "{mapping, \"handoff.use_background_manager\", \"riak_kv.handoff_use_background_manager\", [ {datatype, flag}, {default, off}, hidden ]}.",
       "comment": [
         "@doc Whether to use the background manager to limit KV handoff.",
         "This will help to prevent system response degradation under times",
@@ -1457,7 +1377,6 @@
         "default": "6",
         "hidden": true
       },
-      "rawSchema": "{mapping, \"handoff.max_rejects\", \"riak_kv.handoff_rejected_max\", [ {datatype, integer}, {default, \"6\"}, hidden ]}.",
       "comment": [
         "@doc The maximum number of times that a secondary system like Riak",
         "Search 2.0 can block handoff of primary key-value data. The",
@@ -1476,7 +1395,6 @@
         "default": "off",
         "hidden": true
       },
-      "rawSchema": "{mapping, \"anti_entropy.use_background_manager\", \"riak_kv.aae_use_background_manager\", [ {datatype, flag}, {default, off}, hidden ]}.",
       "comment": [
         "@doc Whether to use the background manager to limit AAE tree",
         "rebuilds. This will help to prevent system response degradation",
@@ -1496,7 +1414,6 @@
         },
         "hidden": true
       },
-      "rawSchema": "{mapping, \"bitcask.merge_check_interval\", \"riak_kv.bitcask_merge_check_interval\", [ {default, \"3m\"}, {datatype, {duration, ms}}, hidden ]}.",
       "comment": [
         "@doc Time in between the checks that trigger Bitcask merges."
       ],
@@ -1515,7 +1432,6 @@
         },
         "hidden": true
       },
-      "rawSchema": "{mapping, \"bitcask.merge_check_jitter\", \"riak_kv.bitcask_merge_check_jitter\", [ {default, \"30%\"}, {datatype, {percent, float}}, hidden ]}.",
       "comment": [
         "@doc Jitter used to randomize the time in between the checks that trigger",
         "Bitcask merges."
@@ -1529,7 +1445,6 @@
         "datatype": "bytesize",
         "hidden": true
       },
-      "rawSchema": "{mapping, \"bitcask.max_merge_size\", \"riak_kv.bitcask_max_merge_size\", [ {default, \"100GB\"}, {datatype, bytesize}, hidden ]}.",
       "comment": [
         "@doc Maximum amount of data to merge in one go in the Bitcask backend."
       ],
@@ -1547,7 +1462,6 @@
         "default": "enabled",
         "commented": "enabled"
       },
-      "rawSchema": "{mapping, \"cluster.job.riak_kv.list_buckets\", \"riak_core.job_accept_class\", [ merge, {datatype, {flag, enabled, disabled}}, {default, enabled}, {commented, enabled} ]}.",
       "comment": [
         "@doc Whether to allow list buckets."
       ],
@@ -1565,7 +1479,6 @@
         "default": "enabled",
         "commented": "enabled"
       },
-      "rawSchema": "{mapping, \"cluster.job.riak_kv.stream_list_buckets\", \"riak_core.job_accept_class\", [ merge, {datatype, {flag, enabled, disabled}}, {default, enabled}, {commented, enabled} ]}.",
       "comment": [
         "@doc Whether to allow streaming list buckets."
       ],
@@ -1583,7 +1496,6 @@
         "default": "enabled",
         "commented": "enabled"
       },
-      "rawSchema": "{mapping, \"cluster.job.riak_kv.list_keys\", \"riak_core.job_accept_class\", [ merge, {datatype, {flag, enabled, disabled}}, {default, enabled}, {commented, enabled} ]}.",
       "comment": [
         "@doc Whether to allow list keys."
       ],
@@ -1601,7 +1513,6 @@
         "default": "enabled",
         "commented": "enabled"
       },
-      "rawSchema": "{mapping, \"cluster.job.riak_kv.stream_list_keys\", \"riak_core.job_accept_class\", [ merge, {datatype, {flag, enabled, disabled}}, {default, enabled}, {commented, enabled} ]}.",
       "comment": [
         "@doc Whether to allow streaming list keys."
       ],
@@ -1619,7 +1530,6 @@
         "default": "enabled",
         "commented": "enabled"
       },
-      "rawSchema": "{mapping, \"cluster.job.riak_kv.secondary_index\", \"riak_core.job_accept_class\", [ merge, {datatype, {flag, enabled, disabled}}, {default, enabled}, {commented, enabled} ]}.",
       "comment": [
         "@doc Whether to allow secondary index queries."
       ],
@@ -1637,7 +1547,6 @@
         "default": "enabled",
         "commented": "enabled"
       },
-      "rawSchema": "{mapping, \"cluster.job.riak_kv.stream_secondary_index\", \"riak_core.job_accept_class\", [ merge, {datatype, {flag, enabled, disabled}}, {default, enabled}, {commented, enabled} ]}.",
       "comment": [
         "@doc Whether to allow streaming secondary index queries."
       ],
@@ -1655,7 +1564,6 @@
         "default": "enabled",
         "commented": "enabled"
       },
-      "rawSchema": "{mapping, \"cluster.job.riak_kv.map_reduce\", \"riak_core.job_accept_class\", [ merge, {datatype, {flag, enabled, disabled}}, {default, enabled}, {commented, enabled} ]}.",
       "comment": [
         "@doc Whether to allow term-based map-reduce."
       ],
@@ -1673,7 +1581,6 @@
         "default": "enabled",
         "commented": "enabled"
       },
-      "rawSchema": "{mapping, \"cluster.job.riak_kv.map_reduce_js\", \"riak_core.job_accept_class\", [ merge, {datatype, {flag, enabled, disabled}}, {default, enabled}, {commented, enabled} ]}.",
       "comment": [
         "@doc Whether to allow JavaScript map-reduce."
       ],
@@ -1693,7 +1600,6 @@
         },
         "default": "disabled"
       },
-      "rawSchema": "{mapping, \"ttaaefs_scope\", \"riak_kv.ttaaefs_scope\", [ {datatype, {enum, [all, bucket, type, disabled]}}, {default, disabled} ]}.",
       "comment": [
         "@doc For Tictac full-sync does all data need to be sync'd, or should a",
         "specific bucket be sync'd (bucket), or a specific bucket type (type).",
@@ -1709,7 +1615,6 @@
         "datatype": "atom",
         "default": "q1_ttaaefs"
       },
-      "rawSchema": "{mapping, \"ttaaefs_queuename\", \"riak_kv.ttaaefs_queuename\", [ {datatype, atom}, {default, q1_ttaaefs} ]}.",
       "comment": [
         "@doc For tictac full-sync what registered queue name on this cluster should",
         "be use for passing references to data which needs to be replicated for AAE",
@@ -1726,7 +1631,6 @@
         "default": "disabled",
         "commented": "q1_ttaaefs"
       },
-      "rawSchema": "{mapping, \"ttaaefs_queuename_peer\", \"riak_kv.ttaaefs_queuename_peer\", [ {datatype, atom}, {default, disabled}, {commented, q1_ttaaefs} ]}.",
       "comment": [
         "@doc Tictac full-sync repair is by default uni-directional - each full-sync",
         "operation managed from a given cluster will only attempt to prompt repair",
@@ -1746,7 +1650,6 @@
         "datatype": "integer",
         "default": "1"
       },
-      "rawSchema": "{mapping, \"ttaaefs_cluster_slice\", \"riak_kv.ttaaefs_cluster_slice\", [ {datatype, integer}, {default, 1} ]}.",
       "comment": [
         "@doc Tictac cluster slice number.  Each cluster can be configued with a",
         "slice number to space out full-sync events.  The numbers can be 1..4.  For",
@@ -1761,7 +1664,6 @@
         "datatype": "integer",
         "default": "32"
       },
-      "rawSchema": "{mapping, \"ttaaefs_maxresults\", \"riak_kv.ttaaefs_maxresults\", [ {datatype, integer}, {default, 32} ]}.",
       "comment": [
         "@doc For tictac full-sync what is the maximum number of AAE segments to be",
         "compared per exchange.  Reducing this will speed up clock compare queries,",
@@ -1783,7 +1685,6 @@
         "datatype": "integer",
         "default": "16"
       },
-      "rawSchema": "{mapping, \"ttaaefs_rangeboost\", \"riak_kv.ttaaefs_rangeboost\", [ {datatype, integer}, {default, 16} ]}.",
       "comment": [
         "@doc For tictac full-sync what is the maximum number of AAE segments to be",
         "compared per exchange.  When running a range_check query this will be the",
@@ -1800,7 +1701,6 @@
         "datatype": "string",
         "commented": "sample_bucketname"
       },
-      "rawSchema": "{mapping, \"ttaaefs_bucketfilter_name\", \"riak_kv.ttaaefs_bucketfilter_name\", [ {datatype, string}, {commented, \"sample_bucketname\"} ]}.",
       "comment": [
         "@doc For Tictac bucket full-sync which bucket should be sync'd by this",
         "node.  Only ascii string bucket definitions supported (which will be",
@@ -1814,7 +1714,6 @@
         "datatype": "string",
         "commented": "default"
       },
-      "rawSchema": "{mapping, \"ttaaefs_bucketfilter_type\", \"riak_kv.ttaaefs_bucketfilter_type\", [ {datatype, string}, {commented, \"default\"} ]}.",
       "comment": [
         "@doc For Tictac bucket full-sync what is the bucket type of the bucket name.",
         "Only ascii string type bucket definitions supported (these",
@@ -1827,7 +1726,6 @@
       "properties": {
         "datatype": "string"
       },
-      "rawSchema": "{mapping, \"ttaaefs_buckettype\", \"riak_kv.ttaaefs_buckettype\", [ {datatype, string} ]}.",
       "comment": [
         "@doc For Tictac bucket-type full-sync what is the bucket type to be sync'd.",
         "Only ascii string type bucket definitions supported (these",
@@ -1842,7 +1740,6 @@
         "datatype": "integer",
         "default": "3"
       },
-      "rawSchema": "{mapping, \"ttaaefs_localnval\", \"riak_kv.ttaaefs_localnval\", [ {datatype, integer}, {default, 3} ]}.",
       "comment": [
         "@doc For Tictac all full-sync which NVAL should be sync'd by this node.",
         "This is the `local` nval, as the data in the remote cluster may have an",
@@ -1856,7 +1753,6 @@
         "datatype": "integer",
         "default": "3"
       },
-      "rawSchema": "{mapping, \"ttaaefs_remotenval\", \"riak_kv.ttaaefs_remotenval\", [ {datatype, integer}, {default, 3} ]}.",
       "comment": [
         "@doc For Tictac all full-sync which NVAL should be sync'd in the remote",
         "cluster."
@@ -1875,7 +1771,6 @@
           }
         ]
       },
-      "rawSchema": "{mapping, \"ttaaefs_peerip\", \"riak_kv.ttaaefs_peerip\", [ {datatype, string}, {commented, \"127.0.0.1\"}, {validators, [\"valid_ipaddr\"]} ]}.",
       "comment": [
         "@doc The network address of the peer node in the cluster with which this",
         "node will connect to for full_sync purposes.  If this peer node is",
@@ -1891,7 +1786,6 @@
         "datatype": "integer",
         "commented": "8087"
       },
-      "rawSchema": "{mapping, \"ttaaefs_peerport\", \"riak_kv.ttaaefs_peerport\", [ {datatype, integer}, {commented, 8087} ]}.",
       "comment": [
         "@doc The port to be used when connecting to the remote peer cluster"
       ],
@@ -1909,7 +1803,6 @@
         },
         "default": "pb"
       },
-      "rawSchema": "{mapping, \"ttaaefs_peerprotocol\", \"riak_kv.ttaaefs_peerprotocol\", [ {datatype, {enum, [http, pb]}}, {default, pb} ]}.",
       "comment": [
         "@doc The protocol to be used when conecting to the peer in the remote",
         "cluster.  Could be http or pb, with pb being relatively efficient.  Adding",
@@ -1927,7 +1820,6 @@
       "properties": {
         "datatype": "string"
       },
-      "rawSchema": "{mapping, \"repl_cacert_filename\", \"riak_kv.repl_cacert_filename\", [ {datatype, string} ]}.",
       "comment": [
         "@doc The filepath for the ca certificate to validate the ssl connection",
         "to the remote peer."
@@ -1939,7 +1831,6 @@
       "properties": {
         "datatype": "string"
       },
-      "rawSchema": "{mapping, \"repl_cert_filename\", \"riak_kv.repl_cert_filename\", [ {datatype, string} ]}.",
       "comment": [
         "@doc The filepath for the certificate to be used by this node when acting",
         "as a client for replication.  Must be trusted by the cluster with security",
@@ -1952,7 +1843,6 @@
       "properties": {
         "datatype": "string"
       },
-      "rawSchema": "{mapping, \"repl_key_filename\", \"riak_kv.repl_key_filename\", [ {datatype, string} ]}.",
       "comment": [
         "@doc The filepath for the key to related to the certificate in",
         "repl_cert_filename"
@@ -1964,7 +1854,6 @@
       "properties": {
         "datatype": "string"
       },
-      "rawSchema": "{mapping, \"repl_username\", \"riak_kv.repl_username\", [ {datatype, string} ]}.",
       "comment": [
         "@doc When security is enabled on the remote cluster for replication as",
         "username is required to identify the replication client.  This username",
@@ -1978,7 +1867,6 @@
         "datatype": "integer",
         "default": "0"
       },
-      "rawSchema": "{mapping, \"ttaaefs_allcheck\", \"riak_kv.ttaaefs_allcheck\", [ {datatype, integer}, {default, 0} ]}.",
       "comment": [
         "@doc How many times per 24hour period should all the data be checked to",
         "confirm it is fully sync'd.  When running a full (i.e. nval) sync this will",
@@ -2001,7 +1889,6 @@
         "datatype": "integer",
         "default": "0"
       },
-      "rawSchema": "{mapping, \"ttaaefs_nocheck\", \"riak_kv.ttaaefs_nocheck\", [ {datatype, integer}, {default, 0} ]}.",
       "comment": [
         "@doc How many times per 24hour period should no data be checked to",
         "confirm it is fully sync'd.  Use nochecks to align the number of checks",
@@ -2016,7 +1903,6 @@
         "datatype": "integer",
         "default": "0"
       },
-      "rawSchema": "{mapping, \"ttaaefs_hourcheck\", \"riak_kv.ttaaefs_hourcheck\", [ {datatype, integer}, {default, 0} ]}.",
       "comment": [
         "@doc How many times per 24hour period should the last hours data be checked",
         "to confirm it is fully sync'd.",
@@ -2036,7 +1922,6 @@
         "datatype": "integer",
         "default": "0"
       },
-      "rawSchema": "{mapping, \"ttaaefs_daycheck\", \"riak_kv.ttaaefs_daycheck\", [ {datatype, integer}, {default, 0} ]}.",
       "comment": [
         "@doc How many times per 24hour period should the last 24-hours of data be",
         "checked to confirm it is fully sync'd.",
@@ -2056,7 +1941,6 @@
         "datatype": "integer",
         "default": "0"
       },
-      "rawSchema": "{mapping, \"ttaaefs_rangecheck\", \"riak_kv.ttaaefs_rangecheck\", [ {datatype, integer}, {default, 0} ]}.",
       "comment": [
         "@doc How many times per 24hour period should the a range_check be run.  The",
         "range_check is intended to be a smart check, in that it will:",
@@ -2081,7 +1965,6 @@
         "datatype": "integer",
         "default": "24"
       },
-      "rawSchema": "{mapping, \"ttaaefs_autocheck\", \"riak_kv.ttaaefs_autocheck\", [ {datatype, integer}, {default, 24} ]}.",
       "comment": [
         "@doc How many times per 24hour period should the an autocheck be run.  The",
         "autocheck is intended to be an adaptive check, in that it will:",
@@ -2112,7 +1995,6 @@
           ]
         }
       },
-      "rawSchema": "{mapping, \"ttaaefs_allcheck.policy\", \"riak_kv.ttaaefs_allcheck_window\", [ {default, always}, {datatype, {enum, [always, never, window]}} ]}.",
       "comment": [
         "@doc Lets you specify when during the day autocheck may run allcheck",
         "rather than the less expensive daycheck, when no range has been identified.",
@@ -2141,7 +2023,6 @@
         "datatype": "integer",
         "hidden": true
       },
-      "rawSchema": "{mapping, \"ttaaefs_allcheck.window.start\", \"riak_kv.ttaaefs_allcheck_window\", [ {default, 0}, {datatype, integer}, hidden ]}.",
       "comment": [
         "@see All check window"
       ],
@@ -2154,7 +2035,6 @@
         "datatype": "integer",
         "hidden": true
       },
-      "rawSchema": "{mapping, \"ttaaefs_allcheck.window.end\", \"riak_kv.ttaaefs_allcheck_window\", [ {default, 23}, {datatype, integer}, hidden ]}.",
       "comment": [
         "@see All check window"
       ],
@@ -2171,7 +2051,6 @@
         "default": "disabled",
         "commented": "enabled"
       },
-      "rawSchema": "{mapping, \"ttaaefs_logrepairs\", \"riak_kv.ttaaefs_logrepairs\", [ {datatype, {flag, enabled, disabled}}, {default, disabled}, {commented, enabled} ]}.",
       "comment": [
         "@doc If Tictac AAE full-sync discovers keys to be repaired, should each key",
         "that is repaired be logged"
@@ -2189,7 +2068,6 @@
         "default": "disabled",
         "commented": "enabled"
       },
-      "rawSchema": "{mapping, \"aae_fetchclocks_repair\", \"riak_kv.aae_fetchclocks_repair\", [ {datatype, {flag, enabled, disabled}}, {default, disabled}, {commented, enabled} ]}.",
       "comment": [
         "@doc If Tictac AAE sees difference in trees (for nval-based full",
         "comparisons) only, should it attempt to repair those trees as well as",
@@ -2209,7 +2087,6 @@
         "default": "disabled",
         "commented": "enabled"
       },
-      "rawSchema": "{mapping, \"replrtq_enablesrc\", \"riak_kv.replrtq_enablesrc\", [ {datatype, {flag, enabled, disabled}}, {default, disabled}, {commented, enabled} ]}.",
       "comment": [
         "@doc Enable this node to act as a real-time replication source"
       ],
@@ -2228,7 +2105,6 @@
         },
         "default": "one"
       },
-      "rawSchema": "{mapping, \"replrtq_vnodecheck\", \"riak_kv.replrtq_vnodecheck\", [ {datatype, {enum, [one, quorum, all]}}, {default, one} ]}.",
       "comment": [
         "@doc For queue-based replication what should be the r value on fetches,",
         "and the w value on pushes.  Default is to use `one` but `quorum` or `all`",
@@ -2243,7 +2119,6 @@
         "datatype": "integer",
         "default": "1000"
       },
-      "rawSchema": "{mapping, \"replrtq_srcobjectlimit\", \"riak_kv.replrtq_srcobjectlimit\", [ {datatype, integer}, {default, 1000} ]}.",
       "comment": [
         "@doc Limit the number of objects to be cached on the replication queue,",
         "with objects queued when the priority queue is beyond this limit stored as",
@@ -2257,7 +2132,6 @@
         "datatype": "bytesize",
         "default": "200KB"
       },
-      "rawSchema": "{mapping, \"replrtq_srcobjectsize\", \"riak_kv.replrtq_srcobjectsize\", [ {datatype, bytesize}, {default, \"200KB\"} ]}.",
       "comment": [
         "@doc Limit the size of an object which may be pushed to the replication",
         "queue.  Objects larger than this will still be replicated, but by being",
@@ -2273,7 +2147,6 @@
         "datatype": "string",
         "default": "q1_ttaaefs:block_rtq"
       },
-      "rawSchema": "{mapping, \"replrtq_srcqueue\", \"riak_kv.replrtq_srcqueue\", [ {datatype, string}, {default, \"q1_ttaaefs:block_rtq\"} ]}.",
       "comment": [
         "@doc Queue definitions",
         "Queues should be defined using a pipe '|' delimited string, of two",
@@ -2307,7 +2180,6 @@
         "default": "disabled",
         "commented": "enabled"
       },
-      "rawSchema": "{mapping, \"replrtq_compressonwire\", \"riak_kv.replrtq_compressonwire\", [ {datatype, {flag, enabled, disabled}}, {default, disabled}, {commented, enabled} ]}.",
       "comment": [
         "@doc Enable this node to zlib compress objects over the wire"
       ],
@@ -2324,7 +2196,6 @@
         "default": "disabled",
         "commented": "enabled"
       },
-      "rawSchema": "{mapping, \"repl_reap\", \"riak_kv.repl_reap\", [ {datatype, {flag, enabled, disabled}}, {default, disabled}, {commented, enabled} ]}.",
       "comment": [
         "@doc Enable this node to replicate reap requests to other clusters"
       ],
@@ -2341,7 +2212,6 @@
         "default": "disabled",
         "commented": "enabled"
       },
-      "rawSchema": "{mapping, \"replrtq_enablesink\", \"riak_kv.replrtq_enablesink\", [ {datatype, {flag, enabled, disabled}}, {default, disabled}, {commented, enabled} ]}.",
       "comment": [
         "@doc Enable this node to act as a sink and consume from a src cluster"
       ],
@@ -2353,7 +2223,6 @@
         "datatype": "atom",
         "default": "q1_ttaaefs"
       },
-      "rawSchema": "{mapping, \"replrtq_sinkqueue\", \"riak_kv.replrtq_sinkqueue\", [ {datatype, atom}, {default, q1_ttaaefs} ]}.",
       "comment": [
         "@doc Queue name  to be used for peers (replrtq_sinkpeers) that are",
         "defined without a queue name.  Each node is expected to have a single",
@@ -2372,7 +2241,6 @@
         "datatype": "string",
         "commented": "127.0.0.1:8087:pb"
       },
-      "rawSchema": "{mapping, \"replrtq_sinkpeers\", \"riak_kv.replrtq_sinkpeers\", [ {datatype, string}, {commented, \"127.0.0.1:8087:pb\"} ]}.",
       "comment": [
         "@doc A list of peers is required to inform the sink node how to reach the",
         "src.  All src nodes will need to have entries consumed - so it is",
@@ -2391,7 +2259,6 @@
         "datatype": "integer",
         "default": "24"
       },
-      "rawSchema": "{mapping, \"replrtq_sinkworkers\", \"riak_kv.replrtq_sinkworkers\", [ {datatype, integer}, {default, 24} ]}.",
       "comment": [
         "@doc The number of workers to be used for each queue must be configured."
       ],
@@ -2403,7 +2270,6 @@
         "datatype": "integer",
         "commented": "24"
       },
-      "rawSchema": "{mapping, \"replrtq_sinkpeerlimit\", \"riak_kv.replrtq_sinkpeerlimit\", [ {datatype, integer}, {commented, 24} ]}.",
       "comment": [
         "@doc The maximum number of workers to be for any given peer may be",
         "configured - if not configured will default to the number of sinkworkers"
@@ -2421,7 +2287,6 @@
         "default": "disabled",
         "commented": "enabled"
       },
-      "rawSchema": "{mapping, \"replrtq_peer_discovery\", \"riak_kv.replrtq_peer_discovery\", [ {datatype, {flag, enabled, disabled}}, {default, disabled}, {commented, enabled} ]}.",
       "comment": [
         "@doc Enable this node to perform peer discovery for real time replication",
         "With peer discovery the configured peers will be used to discover more peers",
@@ -2439,7 +2304,6 @@
         "datatype": "integer",
         "commented": "900"
       },
-      "rawSchema": "{mapping, \"replrtq_prompt_max_seconds\", \"riak_kv.replrtq_prompt_max_seconds\", [ {datatype, integer}, {commented, 900} ]}.",
       "comment": [
         "@doc The maximum number of seconds to wait before re-prompting peer",
         "discovery.  Defaults to 15 minutes.  An immediate cluster-wide update can be",
@@ -2458,7 +2322,6 @@
         "default": "disabled",
         "commented": "enabled"
       },
-      "rawSchema": "{mapping, \"leveled_reload_recalc\", \"riak_kv.leveled_reload_recalc\", [ {datatype, {flag, enabled, disabled}}, {default, disabled}, {commented, enabled} ]}.",
       "comment": [
         "@doc Enable the `recalc` compaction strategy within the leveled backend in",
         "riak.  The default (when disabled) is `retain`, but this will leave",
@@ -2488,7 +2351,6 @@
         "default": "disabled",
         "commented": "enabled"
       },
-      "rawSchema": "{mapping, \"log_index_fsm\", \"riak_kv.log_index_fsm\", [ {datatype, {flag, enabled, disabled}}, {default, disabled}, {commented, enabled} ]}.",
       "comment": [
         "@doc Enable logging of query timings in the index_fsm"
       ],
@@ -2500,7 +2362,6 @@
         "datatype": "integer",
         "default": "5"
       },
-      "rawSchema": "{mapping, \"worker_pool_size\", \"riak_kv.worker_pool_size\", [ {datatype, integer}, {default, 5} ]}.",
       "comment": [
         "@doc Set the vnode worker pool size",
         "This is a pool of workers per-vnode, to be used for general queries, in",
@@ -2532,7 +2393,6 @@
         "default": "300000",
         "hidden": true
       },
-      "rawSchema": "{mapping, \"replrtq_srcqueuelimit\", \"riak_kv.replrtq_srcqueuelimit\", [ {datatype, integer}, {default, 300000}, hidden ]}.",
       "comment": [
         "@doc Limit the size of replication queues (for a queue and priority, i.e.",
         "each priority on each queue will have this as the limit)",
@@ -2552,7 +2412,6 @@
         },
         "default": "disabled"
       },
-      "rawSchema": "{mapping, \"read_repair_primaryonly\", \"riak_kv.read_repair_primaryonly\", [ {datatype, {flag, enabled, disabled}}, {default, disabled} ]}.",
       "comment": [
         "@doc Choose to read repair to primary vnodes only",
         "When fallback vnodes are elected, then read repair will by default repair",
@@ -2583,7 +2442,6 @@
         "default": "disabled",
         "hidden": true
       },
-      "rawSchema": "{mapping, \"read_repair_log\", \"riak_kv.read_repair_log\", [ {datatype, {flag, enabled, disabled}}, {default, disabled}, hidden ]}.",
       "comment": [
         "@doc If reads discovers keys to be repaired, should each key",
         "that is repaired be logged"
@@ -2600,7 +2458,6 @@
         },
         "default": "disabled"
       },
-      "rawSchema": "{mapping, \"handoff_deletes\", \"riak_kv.handoff_deletes\", [ {datatype, {flag, enabled, disabled}}, {default, disabled} ]}.",
       "comment": [
         "@doc When doing handoffs, forward delete requests so that if the delete_mode",
         "is not keep, tombstones will still be reaped."
@@ -2613,7 +2470,6 @@
         "datatype": "integer",
         "default": "0"
       },
-      "rawSchema": "{mapping, \"secondary_index_timeout\", \"riak_kv.secondary_index_timeout\", [ {datatype, integer}, {default, 0} ]}.",
       "comment": [
         "@doc Default Secondary Index Timeout (milliseconds)",
         "Set the default timeout for running secondary index queries in millisceconds",
@@ -2636,7 +2492,6 @@
         },
         "default": "otp"
       },
-      "rawSchema": "{mapping, \"secondary_index_json\", \"riak_kv.secondary_index_json\", [ {datatype, {enum, [otp, mochijson]}}, {default, otp} ]}.",
       "comment": [
         "@doc Json library for 2i results",
         "Prior to Riak KV 3.2.1 the mochijson2 library was used to json encode 2i",
@@ -2658,7 +2513,6 @@
         },
         "default": "enabled"
       },
-      "rawSchema": "{mapping, \"dollarkey_readtombs\", \"riak_kv.dollarkey_readtombs\", [ {datatype, {flag, enabled, disabled}}, {default, enabled} ]}.",
       "comment": [
         "@doc For $key index queries, should keys which are tombstones be returned.",
         "This config will only make a difference with the leveled backend, it is",
@@ -2672,70 +2526,60 @@
   "translations": {
     "riak_kv.anti_entropy": {
       "properties": {},
-      "rawSchema": "{translation, \"riak_kv.anti_entropy\", fun(Conf) -> Setting = cuttlefish:conf_get(\"anti_entropy\", Conf), case Setting of active -> {on, []}; 'active-debug' -> {on, [debug]}; passive -> {off, []}; _Default -> {on, []} end end }.",
       "comment": [],
       "configName": "riak_kv.anti_entropy",
       "settingName": "fun(Conf) -> Setting = cuttlefish:conf_get(\"anti_entropy\", Conf), case Setting of active -> {on, []}; 'active-debug' -> {on, [debug]}; passive -> {off, []}; _Default -> {on, []} end end "
     },
     "riak_kv.storage_backend": {
       "properties": {},
-      "rawSchema": "{translation, \"riak_kv.storage_backend\", fun(Conf) -> Setting = cuttlefish:conf_get(\"storage_backend\", Conf), case Setting of bitcask -> riak_kv_bitcask_backend; leveldb -> riak_kv_eleveldb_backend; leveled -> riak_kv_leveled_backend; memory -> riak_kv_memory_backend; multi -> riak_kv_multi_backend; prefix_multi -> riak_kv_multi_prefix_backend; _Default -> riak_kv_bitcask_backend end end}.",
       "comment": [],
       "configName": "riak_kv.storage_backend",
       "settingName": "fun(Conf) -> Setting = cuttlefish:conf_get(\"storage_backend\", Conf), case Setting of bitcask -> riak_kv_bitcask_backend; leveldb -> riak_kv_eleveldb_backend; leveled -> riak_kv_leveled_backend; memory -> riak_kv_memory_backend; multi -> riak_kv_multi_backend; prefix_multi -> riak_kv_multi_prefix_backend; _Default -> riak_kv_bitcask_backend end end"
     },
     "riak_kv.anti_entropy_build_limit": {
       "properties": {},
-      "rawSchema": "{translation, \"riak_kv.anti_entropy_build_limit\", fun(Conf) -> {cuttlefish:conf_get(\"anti_entropy.tree.build_limit.number\", Conf), cuttlefish:conf_get(\"anti_entropy.tree.build_limit.per_timespan\", Conf)} end}.",
       "comment": [],
       "configName": "riak_kv.anti_entropy_build_limit",
       "settingName": "fun(Conf) -> {cuttlefish:conf_get(\"anti_entropy.tree.build_limit.number\", Conf), cuttlefish:conf_get(\"anti_entropy.tree.build_limit.per_timespan\", Conf)} end"
     },
     "riak_kv.aae_throttle_limits": {
       "properties": {},
-      "rawSchema": "{translation, \"riak_kv.aae_throttle_limits\", riak_core_throttle:create_limits_translator_fun(\"anti_entropy\", \"mailbox_size\") }.",
       "comment": [],
       "configName": "riak_kv.aae_throttle_limits",
       "settingName": "riak_core_throttle:create_limits_translator_fun(\"anti_entropy\", \"mailbox_size\") "
     },
     "riak_kv.fsm_limit": {
       "properties": {},
-      "rawSchema": "{translation, \"riak_kv.fsm_limit\", fun(Conf) -> TheLimit = cuttlefish:conf_get(\"max_concurrent_requests\", Conf), case TheLimit of infinite -> undefined; Int when is_integer(Int) -> Int; _ -> cuttlefish:invalid(\"max_concurrent_requests must be an integer or 'infinite'\") end end }.",
       "comment": [],
       "configName": "riak_kv.fsm_limit",
       "settingName": "fun(Conf) -> TheLimit = cuttlefish:conf_get(\"max_concurrent_requests\", Conf), case TheLimit of infinite -> undefined; Int when is_integer(Int) -> Int; _ -> cuttlefish:invalid(\"max_concurrent_requests must be an integer or 'infinite'\") end end "
     },
     "riak_kv.object_format": {
       "properties": {},
-      "rawSchema": "{translation, \"riak_kv.object_format\", fun(Conf) -> case cuttlefish:conf_get(\"object.format\", Conf) of 0 -> v0; 1 -> v1; _ -> cuttlefish:invalid(\"invalid object format version\") end end }.",
       "comment": [],
       "configName": "riak_kv.object_format",
       "settingName": "fun(Conf) -> case cuttlefish:conf_get(\"object.format\", Conf) of 0 -> v0; 1 -> v1; _ -> cuttlefish:invalid(\"invalid object format version\") end end "
     },
     "riak_kv.memory_backend.max_memory": {
       "properties": {},
-      "rawSchema": "{translation, \"riak_kv.memory_backend.max_memory\", fun(Conf) -> Bytes = cuttlefish:conf_get(\"memory_backend.max_memory_per_vnode\", Conf), cuttlefish_util:ceiling(Bytes / 1048576) end }.",
       "comment": [],
       "configName": "riak_kv.memory_backend.max_memory",
       "settingName": "fun(Conf) -> Bytes = cuttlefish:conf_get(\"memory_backend.max_memory_per_vnode\", Conf), cuttlefish_util:ceiling(Bytes / 1048576) end "
     },
     "riak_core.default_bucket_props.precommit": {
       "properties": {},
-      "rawSchema": "{translation, \"riak_core.default_bucket_props.precommit\", fun(Conf) -> RawString = cuttlefish:conf_get(\"buckets.default.precommit\", Conf, []), StringList = string:tokens(RawString, \" \"), [ begin case string:tokens(String, \":\") of %% Javascript make this:  {struct, [{<<\"name\">>, <<\"SomeJS.nonsense\">>}]} [JavascriptFunction] -> {struct, [{<<\"name\">>, list_to_binary(JavascriptFunction)}]}; %% Erlang make this: {struct, [{<<\"mod\">>, <<\"module\">>}, {<<\"fun\">>,<<\"function\">>}]} [Module, Function] -> {struct, [ {<<\"mod\">>, list_to_binary(Module)}, {<<\"fun\">>, list_to_binary(Function)} ]}; _ -> cuttlefish:invalid(\"incorrect hook format '\" ++ String ++ \"'\") end end || String <- StringList] end }.",
       "comment": [],
       "configName": "riak_core.default_bucket_props.precommit",
       "settingName": "fun(Conf) -> RawString = cuttlefish:conf_get(\"buckets.default.precommit\", Conf, []), StringList = string:tokens(RawString, \" \"), [ begin case string:tokens(String, \":\") of %% Javascript make this:  {struct, [{<<\"name\">>, <<\"SomeJS.nonsense\">>}]} [JavascriptFunction] -> {struct, [{<<\"name\">>, list_to_binary(JavascriptFunction)}]}; %% Erlang make this: {struct, [{<<\"mod\">>, <<\"module\">>}, {<<\"fun\">>,<<\"function\">>}]} [Module, Function] -> {struct, [ {<<\"mod\">>, list_to_binary(Module)}, {<<\"fun\">>, list_to_binary(Function)} ]}; _ -> cuttlefish:invalid(\"incorrect hook format '\" ++ String ++ \"'\") end end || String <- StringList] end "
     },
     "riak_core.default_bucket_props.postcommit": {
       "properties": {},
-      "rawSchema": "{translation, \"riak_core.default_bucket_props.postcommit\", fun(Conf) -> RawString = cuttlefish:conf_get(\"buckets.default.postcommit\", Conf, []), StringList = string:tokens(RawString, \" \"), [ begin case string:tokens(String, \":\") of [Module, Function] -> {struct, [ {<<\"mod\">>, list_to_binary(Module)}, {<<\"fun\">>, list_to_binary(Function)} ]}; _ -> cuttlefish:invalid(\"incorrect hook format '\" ++ String ++ \"'\") end end ||  String <- StringList] end }.",
       "comment": [],
       "configName": "riak_core.default_bucket_props.postcommit",
       "settingName": "fun(Conf) -> RawString = cuttlefish:conf_get(\"buckets.default.postcommit\", Conf, []), StringList = string:tokens(RawString, \" \"), [ begin case string:tokens(String, \":\") of [Module, Function] -> {struct, [ {<<\"mod\">>, list_to_binary(Module)}, {<<\"fun\">>, list_to_binary(Function)} ]}; _ -> cuttlefish:invalid(\"incorrect hook format '\" ++ String ++ \"'\") end end ||  String <- StringList] end "
     },
     "riak_kv.ttaaefs_allcheck_window": {
       "properties": {},
-      "rawSchema": "{translation, \"riak_kv.ttaaefs_allcheck_window\", fun(Conf) -> Setting = cuttlefish:conf_get(\"ttaaefs_allcheck.policy\", Conf), case Setting of always -> always; never -> never; window -> Start = cuttlefish:conf_get(\"ttaaefs_allcheck.window.start\", Conf, undefined), End = cuttlefish:conf_get(\"ttaaefs_allcheck.window.end\", Conf, undefined), {Start, End}; _Default -> always end end}.",
       "comment": [],
       "configName": "riak_kv.ttaaefs_allcheck_window",
       "settingName": "fun(Conf) -> Setting = cuttlefish:conf_get(\"ttaaefs_allcheck.policy\", Conf), case Setting of always -> always; never -> never; window -> Start = cuttlefish:conf_get(\"ttaaefs_allcheck.window.start\", Conf, undefined), End = cuttlefish:conf_get(\"ttaaefs_allcheck.window.end\", Conf, undefined), {Start, End}; _Default -> always end end"
@@ -2744,7 +2588,6 @@
   "validators": {
     "undefined": {
       "properties": {},
-      "rawSchema": "{validator, \"valid_ipaddr\", \"must be a valid IP address\", fun(AddrString) -> case inet_parse:address(AddrString) of {ok, _} -> true; {error, _} -> false end end}.",
       "comment": [],
       "name": "valid_ipaddr",
       "description": "must be a valid IP address",

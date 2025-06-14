@@ -6,7 +6,6 @@
         "default": "$(platform_data_dir)/leveldb",
         "hidden": true
       },
-      "rawSchema": "{mapping, \"leveldb.data_root\", \"eleveldb.data_root\", [ {datatype, directory}, {default, \"$(platform_data_dir)/leveldb\"}, hidden ]}.",
       "comment": [
         "@doc Where LevelDB will store its data."
       ],
@@ -18,7 +17,6 @@
         "default": "70",
         "datatype": "integer"
       },
-      "rawSchema": "{mapping, \"leveldb.maximum_memory.percent\", \"eleveldb.total_leveldb_mem_percent\", [ {default, \"70\"}, {datatype, integer} ]}.",
       "comment": [
         "@doc This parameter defines the percentage of total server memory",
         "to assign to LevelDB. LevelDB will dynamically adjust its internal",
@@ -35,7 +33,6 @@
         "datatype": "bytesize",
         "hidden": true
       },
-      "rawSchema": "{mapping, \"leveldb.maximum_memory\", \"eleveldb.total_leveldb_mem\", [ {datatype, bytesize}, hidden ]}.",
       "comment": [
         "@doc This parameter defines the number of bytes of server memory to",
         "assign to LevelDB. LevelDB will dynamically adjust its internal",
@@ -53,7 +50,6 @@
         "datatype": "flag",
         "hidden": true
       },
-      "rawSchema": "{mapping, \"leveldb.sync_on_write\", \"eleveldb.sync\", [ {default, off}, {datatype, flag}, hidden ]}.",
       "comment": [
         "@doc Whether LevelDB will flush after every write. Note: If you are",
         "familiar with fsync, this is analagous to calling fsync after every",
@@ -68,7 +64,6 @@
         "datatype": "flag",
         "hidden": true
       },
-      "rawSchema": "{mapping, \"leveldb.limited_developer_mem\", \"eleveldb.limited_developer_mem\", [ {default, off}, {datatype, flag}, hidden ]}.",
       "comment": [
         "@doc limited_developer_mem is a Riak specific option that is used",
         "when a developer is testing a high number of vnodes and/or several",
@@ -85,7 +80,6 @@
         "datatype": "bytesize",
         "hidden": true
       },
-      "rawSchema": "{mapping, \"leveldb.write_buffer_size_min\", \"eleveldb.write_buffer_size_min\", [ {default, \"30MB\"}, {datatype, bytesize}, hidden ]}.",
       "comment": [
         "@doc Each vnode first stores new key/value data in a memory based",
         "write buffer. This write buffer is in parallel to the recovery log",
@@ -104,7 +98,6 @@
         "datatype": "bytesize",
         "hidden": true
       },
-      "rawSchema": "{mapping, \"leveldb.write_buffer_size_max\", \"eleveldb.write_buffer_size_max\", [ {default, \"60MB\"}, {datatype, bytesize}, hidden ]}.",
       "comment": [
         "@see leveldb.write_buffer_size_min"
       ],
@@ -117,7 +110,6 @@
         "datatype": "flag",
         "hidden": true
       },
-      "rawSchema": "{mapping, \"leveldb.bloomfilter\", \"eleveldb.use_bloomfilter\", [ {default, on}, {datatype, flag}, hidden ]}.",
       "comment": [
         "@doc Each database .sst table file can include an optional \"bloom",
         "filter\" that is highly effective in shortcutting data queries that",
@@ -134,7 +126,6 @@
         "datatype": "bytesize",
         "hidden": true
       },
-      "rawSchema": "{mapping, \"leveldb.block_cache_threshold\", \"eleveldb.block_cache_threshold\", [ {default, \"32MB\"}, {datatype, bytesize}, hidden ]}.",
       "comment": [
         "@doc Defines the limit where block cache memory can no longer be",
         "released in favor of the page cache.  This has no impact with",
@@ -150,7 +141,6 @@
         "datatype": "bytesize",
         "hidden": true
       },
-      "rawSchema": "{mapping, \"leveldb.block.size\", \"eleveldb.sst_block_size\", [ {default, \"4KB\"}, {datatype, bytesize}, hidden ]}.",
       "comment": [
         "@doc Defines the size threshold for a block / chunk of data within",
         "one .sst table file. Each new block gets an index entry in the .sst",
@@ -165,7 +155,6 @@
         "datatype": "integer",
         "hidden": true
       },
-      "rawSchema": "{mapping, \"leveldb.block.restart_interval\", \"eleveldb.block_restart_interval\", [ {default, 16}, {datatype, integer}, hidden ]}.",
       "comment": [
         "@doc Defines the key count threshold for a new key entry in the key",
         "index for a block. Most deployments should leave this parameter",
@@ -180,7 +169,6 @@
         "datatype": "integer",
         "hidden": true
       },
-      "rawSchema": "{mapping, \"leveldb.block.size_steps\", \"eleveldb.block_size_steps\", [ {default, 16}, {datatype, integer}, hidden ]}.",
       "comment": [
         "@doc Defines the number of incremental adjustments to attempt",
         "between the block.size value and the maximum block.size for an .sst",
@@ -197,7 +185,6 @@
         "datatype": "flag",
         "hidden": true
       },
-      "rawSchema": "{mapping, \"leveldb.verify_checksums\", \"eleveldb.verify_checksums\", [ {default, on}, {datatype, flag}, hidden ]}.",
       "comment": [
         "@doc Enables or disables the verification of the data fetched from",
         "LevelDB against internal checksums."
@@ -211,7 +198,6 @@
         "datatype": "flag",
         "hidden": true
       },
-      "rawSchema": "{mapping, \"leveldb.verify_compaction\", \"eleveldb.verify_compaction\", [ {default, on}, {datatype, flag}, hidden ]}.",
       "comment": [
         "@doc Enables or disables the verification of LevelDB data during",
         "compaction."
@@ -225,7 +211,6 @@
         "datatype": "integer",
         "hidden": true
       },
-      "rawSchema": "{mapping, \"leveldb.threads\", \"eleveldb.eleveldb_threads\", [ {default, 71}, {datatype, integer}, hidden ]}.",
       "comment": [
         "@doc The number of worker threads performing LevelDB operations."
       ],
@@ -244,7 +229,6 @@
         },
         "hidden": true
       },
-      "rawSchema": "{mapping, \"leveldb.fadvise_willneed\", \"eleveldb.fadvise_willneed\", [ {default, false}, {datatype, {enum, [true, false]}}, hidden ]}.",
       "comment": [
         "@doc Option to override LevelDB's use of fadvise(DONTNEED) with",
         "fadvise(WILLNEED) instead.  WILLNEED can reduce disk activity on",
@@ -258,7 +242,6 @@
         "default": "on",
         "datatype": "flag"
       },
-      "rawSchema": "{mapping, \"leveldb.compression\", \"eleveldb.compression\", [ {default, on}, {datatype, flag} ]}.",
       "comment": [
         "@doc Enables or disables the compression of data on disk.",
         "Enabling (default) saves disk space.  Disabling may reduce read",
@@ -280,7 +263,6 @@
           ]
         }
       },
-      "rawSchema": "{mapping, \"leveldb.compression.algorithm\", \"eleveldb.compression\", [ {new_conf_value, lz4}, {datatype, {enum, [snappy, lz4]}} ]}.",
       "comment": [
         "@doc Selection of compression algorithms.  snappy is",
         "original compression supplied for leveldb.  lz4 is new",
@@ -305,7 +287,6 @@
         ],
         "hidden": true
       },
-      "rawSchema": "{mapping, \"leveldb.compaction.trigger.tombstone_count\", \"eleveldb.delete_threshold\", [ {default, 1000}, {datatype, [integer, {atom, off}]}, hidden ]}.",
       "comment": [
         "@doc Controls when a background compaction initiates solely",
         "due to the number of delete tombstones within an individual",
@@ -370,7 +351,6 @@
         ],
         "hidden": true
       },
-      "rawSchema": "{mapping, \"leveldb.tiered\", \"eleveldb.tiered_slow_level\", [ {default, off}, {datatype, [ {atom, off}, {integer, 1}, {integer, 2}, {integer, 3}, {integer, 4}, {integer, 5}, {integer, 6} ]}, hidden ]}.",
       "comment": [
         "@doc leveldb can be configured to use different mounts for",
         "different levels. This tiered option defaults to off, but you can",
@@ -394,7 +374,6 @@
         "datatype": "directory",
         "hidden": true
       },
-      "rawSchema": "{mapping, \"leveldb.tiered.path.fast\", \"eleveldb.tiered_fast_prefix\", [ {datatype, directory}, hidden ]}.",
       "comment": [
         "@see leveldb.tiered"
       ],
@@ -406,7 +385,6 @@
         "datatype": "directory",
         "hidden": true
       },
-      "rawSchema": "{mapping, \"leveldb.tiered.path.slow\", \"eleveldb.tiered_slow_prefix\", [ {datatype, directory}, hidden ]}.",
       "comment": [
         "@see leveldb.tiered"
       ],
@@ -425,7 +403,6 @@
         },
         "hidden": true
       },
-      "rawSchema": "{mapping, \"leveldb.cache_object_warming\", \"eleveldb.cache_object_warming\", [ {default, true}, {datatype, {enum, [true, false]}}, hidden ]}.",
       "comment": [
         "@doc This parameter enables/disables logic that saves a list",
         "of cached objects (currently only open .sst file names) at",
@@ -442,7 +419,6 @@
         "datatype": "flag",
         "hidden": true
       },
-      "rawSchema": "{mapping, \"leveldb.expiration\", \"eleveldb.expiry_enabled\", [ {default, off}, {datatype, flag}, hidden ]}.",
       "comment": [
         "@doc Enable global expiry.  All leveldb databases / vnodes",
         "will use same retention_time and/or whole_file_expiry settings.",
@@ -469,7 +445,6 @@
         ],
         "hidden": true
       },
-      "rawSchema": "{mapping, \"leveldb.expiration.retention_time\", \"eleveldb.expiry_minutes\", [ {default, unlimited}, {datatype, [{duration, m}, {atom, unlimited}]}, hidden ]}.",
       "comment": [
         "@doc Minutes until object expires.  Gives number of minutes",
         "a stored key/value will stay within the database before automatic",
@@ -488,7 +463,6 @@
         },
         "hidden": true
       },
-      "rawSchema": "{mapping, \"leveldb.expiration.mode\", \"eleveldb.whole_file_expiry\", [ {default, whole_file}, {datatype, {flag, whole_file, normal}}, hidden ]}.",
       "comment": [
         "@doc Expire entire .sst table file.  Authorizes leveldb to",
         "eliminate entire files that contain expired data (delete files",
@@ -501,28 +475,24 @@
   "translations": {
     "eleveldb.compression": {
       "properties": {},
-      "rawSchema": "{translation, \"eleveldb.compression\", fun(Conf) -> Setting = cuttlefish:conf_get(\"leveldb.compression\", Conf), case Setting of false -> false; true -> cuttlefish:conf_get(\"leveldb.compression.algorithm\", Conf, snappy) end end}.",
       "comment": [],
       "configName": "eleveldb.compression",
       "settingName": "fun(Conf) -> Setting = cuttlefish:conf_get(\"leveldb.compression\", Conf), case Setting of false -> false; true -> cuttlefish:conf_get(\"leveldb.compression.algorithm\", Conf, snappy) end end"
     },
     "eleveldb.delete_threshold": {
       "properties": {},
-      "rawSchema": "{translation, \"eleveldb.delete_threshold\", fun(Conf) -> case cuttlefish:conf_get(\"leveldb.compaction.trigger.tombstone_count\", Conf) of off -> 0; Int -> Int end end}.",
       "comment": [],
       "configName": "eleveldb.delete_threshold",
       "settingName": "fun(Conf) -> case cuttlefish:conf_get(\"leveldb.compaction.trigger.tombstone_count\", Conf) of off -> 0; Int -> Int end end"
     },
     "eleveldb.tiered_slow_level": {
       "properties": {},
-      "rawSchema": "{translation, \"eleveldb.tiered_slow_level\", fun(Conf) -> case cuttlefish:conf_get(\"leveldb.tiered\", Conf) of off -> 0; I -> I end end }.",
       "comment": [],
       "configName": "eleveldb.tiered_slow_level",
       "settingName": "fun(Conf) -> case cuttlefish:conf_get(\"leveldb.tiered\", Conf) of off -> 0; I -> I end end "
     },
     "eleveldb.expiry_minutes": {
       "properties": {},
-      "rawSchema": "{translation, \"eleveldb.expiry_minutes\", fun(Conf) -> case cuttlefish:conf_get(\"leveldb.expiration.retention_time\", Conf) of unlimited -> 0; I -> I end end }.",
       "comment": [],
       "configName": "eleveldb.expiry_minutes",
       "settingName": "fun(Conf) -> case cuttlefish:conf_get(\"leveldb.expiration.retention_time\", Conf) of unlimited -> 0; I -> I end end "

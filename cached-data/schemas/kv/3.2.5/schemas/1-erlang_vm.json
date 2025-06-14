@@ -13,7 +13,6 @@
         },
         "hidden": true
       },
-      "rawSchema": "{mapping, \"erlang.smp\", \"vm_args.-smp\", [ {default, enable}, {datatype, {enum, [enable, auto, disable]}}, hidden ]}.",
       "comment": [
         "@doc Starts the Erlang runtime system with SMP support",
         "enabled. This may fail if no runtime system with SMP support is",
@@ -38,7 +37,6 @@
         "default": "w",
         "hidden": true
       },
-      "rawSchema": "{mapping, \"erlang.W\", \"vm_args.+W\", [ {default, \"w\"}, hidden ]}.",
       "comment": [
         "@doc Sets the mapping of warning messages for error_logger.",
         "Messages sent to the error logger using one of the warning",
@@ -59,7 +57,6 @@
           }
         ]
       },
-      "rawSchema": "{mapping, \"erlang.schedulers.total\", \"vm_args.+S\", [ {default, undefined}, {datatype, integer}, {validators, [\"=<1024\"]} ]}.",
       "comment": [
         "@doc Sets the number of scheduler threads to create and scheduler",
         "threads to set online when erlang.smp support has been enabled. The",
@@ -100,7 +97,6 @@
           }
         ]
       },
-      "rawSchema": "{mapping, \"erlang.schedulers.online\", \"vm_args.+S\", [ {default, undefined}, {datatype, integer}, {validators, [\"=<1024\"]} ]}.",
       "comment": [
         "@see erlang.schedulers.total"
       ],
@@ -113,7 +109,6 @@
         "datatype": "flag",
         "hidden": true
       },
-      "rawSchema": "{mapping, \"erlang.K\", \"vm_args.+K\", [ {default, on}, {datatype, flag}, hidden ]}.",
       "comment": [
         "@doc Enables or disables the kernel poll functionality if the",
         "emulator supports it. If the emulator does not support kernel poll,",
@@ -129,7 +124,6 @@
       "properties": {
         "default": "{{node}}"
       },
-      "rawSchema": "{mapping, \"nodename\", \"vm_args.-name\", [ {default, \"{{node}}\"} ]}.",
       "comment": [
         "%% Tunables",
         "@doc Name of the Erlang node"
@@ -141,7 +135,6 @@
       "properties": {
         "default": "erlang"
       },
-      "rawSchema": "{mapping, \"distributed_cookie\", \"vm_args.-setcookie\", [ {default, \"erlang\"} ]}.",
       "comment": [
         "@doc Cookie for distributed node communication.  All nodes in the",
         "same cluster should use the same cookie or they will not be able to",
@@ -161,7 +154,6 @@
           }
         ]
       },
-      "rawSchema": "{mapping, \"erlang.async_threads\", \"vm_args.+A\", [ {default, 64}, {datatype, integer}, {validators, [\"range:0-1024\"]} ]}.",
       "comment": [
         "@doc Sets the number of threads in async thread pool, valid range",
         "is 0-1024. If thread support is available, the default is 64.",
@@ -186,7 +178,6 @@
         ],
         "hidden": true
       },
-      "rawSchema": "{mapping, \"erlang.async_threads.stack_size\", \"vm_args.+a\", [ {datatype, bytesize}, {validators, [ \"stack-size-divisible\", \"stack-size-range\"]}, hidden ]}.",
       "comment": [
         "@doc Suggested stack size, in bytes, for threads in the",
         "async-thread pool. Valid range is 16-8192 kilowords. The default",
@@ -215,7 +206,6 @@
           }
         ]
       },
-      "rawSchema": "{mapping, \"erlang.fullsweep_after\", \"vm_args.-env ERL_FULLSWEEP_AFTER\", [ {default, 0}, {datatype, integer}, hidden, {validators, [\"positive_integer\"]} ]}.",
       "comment": [
         "@doc A non-negative integer which indicates how many times",
         "generational garbage collections can be done without forcing a",
@@ -235,7 +225,6 @@
         "datatype": "file",
         "hidden": true
       },
-      "rawSchema": "{mapping, \"erlang.crash_dump\", \"vm_args.-env ERL_CRASH_DUMP\", [ {default, \"{{crash_dump}}\"}, {datatype, file}, hidden ]}.",
       "comment": [
         "@doc Set the location of crash dumps"
       ],
@@ -248,7 +237,6 @@
         "default": "256000",
         "hidden": true
       },
-      "rawSchema": "{mapping, \"erlang.process_limit\", \"vm_args.+P\", [ {datatype, integer}, {default, 256000}, hidden ]}.",
       "comment": [
         "Note: OTP R15 and earlier uses -env ERL_MAX_ETS_TABLES,",
         "R16+ uses +e",
@@ -270,7 +258,6 @@
           }
         ]
       },
-      "rawSchema": "{mapping, \"erlang.distribution_buffer_size\", \"vm_args.+zdbbl\", [ {datatype, bytesize}, {commented, \"32MB\"}, hidden, {validators, [\"zdbbl_range\"]} ]}.",
       "comment": [
         "@doc For nodes with many busy_dist_port events, Basho recommends",
         "raising the sender-side network distribution buffer size.",
@@ -287,7 +274,6 @@
         "commented": "500",
         "datatype": "integer"
       },
-      "rawSchema": "{mapping, \"erlang.schedulers.force_wakeup_interval\", \"vm_args.+sfwi\", [ {commented, 500}, {datatype, integer} ]}.",
       "comment": [
         "@doc Set scheduler forced wakeup interval. All run queues will be",
         "scanned each Interval milliseconds. While there are sleeping",
@@ -314,7 +300,6 @@
           ]
         }
       },
-      "rawSchema": "{mapping, \"erlang.schedulers.compaction_of_load\", \"vm_args.+scl\", [ {commented, \"false\"}, {datatype, {enum, [true, false]}} ]}.",
       "comment": [
         "@doc Enable or disable scheduler compaction of load. By default",
         "scheduler compaction of load is enabled. When enabled, load",
@@ -342,7 +327,6 @@
           ]
         }
       },
-      "rawSchema": "{mapping, \"erlang.schedulers.utilization_balancing\", \"vm_args.+sub\", [ {commented, \"true\"}, {datatype, {enum, [true, false]}} ]}.",
       "comment": [
         "@doc Enable or disable scheduler utilization balancing of load. By",
         "default scheduler utilization balancing is disabled and instead",
@@ -364,7 +348,6 @@
         "datatype": "integer",
         "hidden": true
       },
-      "rawSchema": "{mapping, \"erlang.distribution.port_range.minimum\", \"kernel.inet_dist_listen_min\", [ {commented, 6000}, {datatype, integer}, hidden ]}.",
       "comment": [
         "@doc For ease of firewall configuration, the Erlang distribution",
         "can be bound to a limited range of TCP ports. If this is set, and",
@@ -385,7 +368,6 @@
         "datatype": "integer",
         "hidden": true
       },
-      "rawSchema": "{mapping, \"erlang.distribution.port_range.maximum\", \"kernel.inet_dist_listen_max\", [ {commented, 7999}, {datatype, integer}, hidden ]}.",
       "comment": [
         "@see erlang.distribution.port_range.minimum"
       ],
@@ -404,7 +386,6 @@
         ],
         "hidden": true
       },
-      "rawSchema": "{mapping, \"erlang.distribution.interface\", \"kernel.inet_dist_use_interface\", [ {commented, \"true\"}, {datatype, string}, {validators, [\"ip_strict\"]}, hidden ]}.",
       "comment": [
         "@doc Set the interface/IP to listen for distributed Erlang connections.",
         "",
@@ -419,7 +400,6 @@
         "datatype": "integer",
         "hidden": true
       },
-      "rawSchema": "{mapping, \"erlang.distribution.net_ticktime\", \"vm_args.-kernel net_ticktime\", [ {commented, 60}, {datatype, integer}, hidden ]}.",
       "comment": [
         "@doc Set the net_kernel's net_ticktime.",
         "",
@@ -433,28 +413,24 @@
   "translations": {
     "vm_args.+S": {
       "properties": {},
-      "rawSchema": "{translation, \"vm_args.+S\", fun(Conf) -> Total = cuttlefish:conf_get(\"erlang.schedulers.total\", Conf, undefined), Online = cuttlefish:conf_get(\"erlang.schedulers.online\", Conf, undefined), case {Total, Online} of {undefined, undefined} -> cuttlefish:unset(); {undefined, O} -> \":\" ++ integer_to_list(O); {T, undefined} -> integer_to_list(T); _ -> integer_to_list(Total) ++ \":\" ++ integer_to_list(Online) end end }.",
       "comment": [],
       "configName": "vm_args.+S",
       "settingName": "fun(Conf) -> Total = cuttlefish:conf_get(\"erlang.schedulers.total\", Conf, undefined), Online = cuttlefish:conf_get(\"erlang.schedulers.online\", Conf, undefined), case {Total, Online} of {undefined, undefined} -> cuttlefish:unset(); {undefined, O} -> \":\" ++ integer_to_list(O); {T, undefined} -> integer_to_list(T); _ -> integer_to_list(Total) ++ \":\" ++ integer_to_list(Online) end end "
     },
     "vm_args.+a": {
       "properties": {},
-      "rawSchema": "{translation, \"vm_args.+a\", fun(Conf) -> RawValue = cuttlefish:conf_get(\"erlang.async_threads.stack_size\", Conf), RawValue div (1024 * erlang:system_info({wordsize, external})) end}.",
       "comment": [],
       "configName": "vm_args.+a",
       "settingName": "fun(Conf) -> RawValue = cuttlefish:conf_get(\"erlang.async_threads.stack_size\", Conf), RawValue div (1024 * erlang:system_info({wordsize, external})) end"
     },
     "vm_args.+zdbbl": {
       "properties": {},
-      "rawSchema": "{translation, \"vm_args.+zdbbl\", fun(Conf) -> ZDBBL = cuttlefish:conf_get(\"erlang.distribution_buffer_size\", Conf, undefined), case ZDBBL of undefined -> undefined; X when is_integer(X) -> cuttlefish_util:ceiling(X / 1024); %% Bytes to Kilobytes; _ -> undefined end end }.",
       "comment": [],
       "configName": "vm_args.+zdbbl",
       "settingName": "fun(Conf) -> ZDBBL = cuttlefish:conf_get(\"erlang.distribution_buffer_size\", Conf, undefined), case ZDBBL of undefined -> undefined; X when is_integer(X) -> cuttlefish_util:ceiling(X / 1024); %% Bytes to Kilobytes; _ -> undefined end end "
     },
     "kernel.inet_dist_use_interface": {
       "properties": {},
-      "rawSchema": "{translation, \"kernel.inet_dist_use_interface\", fun(Conf) -> IPStr = cuttlefish:conf_get(\"erlang.distribution.interface\", Conf), {ok, IP_address} = inet:parse_strict_address(IPStr), IP_address end }.",
       "comment": [],
       "configName": "kernel.inet_dist_use_interface",
       "settingName": "fun(Conf) -> IPStr = cuttlefish:conf_get(\"erlang.distribution.interface\", Conf), {ok, IP_address} = inet:parse_strict_address(IPStr), IP_address end "
@@ -463,7 +439,6 @@
   "validators": {
     "undefined": {
       "properties": {},
-      "rawSchema": "{validator, \"ip_strict\", \"must be a valid IPv4 or IPv6 address\", fun(String) -> try inet:parse_strict_address(String) of {ok,{_,_,_,_}} -> true; {ok,{_,_,_,_,_,_,_,_}} -> true; _ -> false catch  _:_ -> false end end}.",
       "comment": [],
       "name": "ip_strict",
       "description": "must be a valid IPv4 or IPv6 address",
