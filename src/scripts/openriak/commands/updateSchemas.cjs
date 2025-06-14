@@ -14,12 +14,15 @@ const {
 const { 
   convertGithubToRawUrl, 
   downloadFile} = require('../lib/netHelpers.cjs');
-const {simplifySchemaJSON} = require("./simplifySchemaJSON.cjs");
+const {simplifySchemaJSON} = require("../lib/simplifySchemaJSON.cjs");
 const path = require('path');
+const {mergeCloneTest, mergeClone} = require("../lib/mergeClone.cjs");
+
 
 function updateSchemas(project, version) {
   updateSchemaFiles(project, version);
-  updateTemplateFiles(project, version)
+  //updateTemplateFiles(project, version);
+  //mergeCloneTest();
 }
 
 function updateSchemaFiles(project, version) {
@@ -91,6 +94,7 @@ function updateSchemaFiles(project, version) {
       console.log(`❌ Unable to find repos for all schemas.`);
       process.exit(1);
     }
+    const results = [];
 
     desiredSchemas.forEach((schemaName, index) => {
       const repoInfo = versionRepoMappings[schemaName];
@@ -107,8 +111,9 @@ function updateSchemaFiles(project, version) {
       const rawObjectSavePath = path.join(versionRoot, 'schemas', `${index}-${schemaName}.raw.json`);
       const objectSavePath = path.join(versionRoot, 'schemas', `${index}-${schemaName}.json`);
       setFileContent(rawObjectSavePath, JSON.stringify(schemaObject, null, 2));
+      const simplerSchemaObject = simplifySchemaJSON(schemaObject);
+      results.push(simplerSchemaObject);
       try {
-        const simplerSchemaObject = simplifySchemaJSON(schemaObject);
         setFileContent(objectSavePath, JSON.stringify(simplerSchemaObject, null, 2));
       } catch (err) {
         console.error(`❌ Error when simplifying JSON schema object: ${err.message}`);
@@ -117,8 +122,20 @@ function updateSchemaFiles(project, version) {
       console.log(`✅ Converted and saved to ${objectSavePath}.`);
     });
 
+    const mergedResultSavePath = path.join(versionRoot, 'schemas', `allSchemas.json`);
+    try {
+      var mergedResult = {}
+      for (result of results) {
+        mergedResult = mergeClone(0, result, mergedResult);
+      }
+      setFileContent(mergedResultSavePath, JSON.stringify(mergedResult, null, 2));
+    } catch (err) {
+      console.error(`❌ Error when merging and saving JSON schema objects: ${err.message}`);
+      throw err;
+      //process.exit(1);
+    }
+    console.log(`✅ Merged and saved to ${mergedResultSavePath}.`);
   }
-
 }
 
 function updateTemplateFiles(project, version) {

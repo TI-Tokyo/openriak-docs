@@ -33,7 +33,7 @@ function simplifyValidator(validatorObject) {
         switch (fieldName) {
             case 'type': break; // ignore as we already know it's validator
             case 'comment': result.comment = fieldValue; break;
-            case 'rawSchema': result.rawSchema = fieldValue; break;
+            case 'rawSchema': break; //result.rawSchema = fieldValue; break;
             case 'name': result.name = fieldValue; break;
             case 'description': result.description = fieldValue; break;
             case 'func': result.settingName = fieldValue; break;
@@ -52,7 +52,7 @@ function simplifyTranslation(translationObject) {
         switch (fieldName) {
             case 'type': break; // ignore as we already know it's translation
             case 'comment': result.comment = fieldValue; break;
-            case 'rawSchema': result.rawSchema = fieldValue; break;
+            case 'rawSchema': break; result.rawSchema = fieldValue; break;
             case 'configName': result.configName = fieldValue; break;
             case 'func': result.settingName = fieldValue; break;
             default:
@@ -71,7 +71,7 @@ function simplifyMapping(mappingObject) {
         switch (fieldName) {
             case 'type': break; // ignore as we already know it's mapping
             case 'comment': result.comment = fieldValue; break;
-            case 'rawSchema': result.rawSchema = fieldValue; break;
+            case 'rawSchema': break; //result.rawSchema = fieldValue; break;
             case 'configName': result.configName = fieldValue; break;
             case 'settingName': result.settingName = fieldValue; break;
             case 'properties': 
