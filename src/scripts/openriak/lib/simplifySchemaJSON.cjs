@@ -36,7 +36,7 @@ function simplifyValidator(validatorObject) {
             case 'rawSchema': break; //result.rawSchema = fieldValue; break;
             case 'name': result.name = fieldValue; break;
             case 'description': result.description = fieldValue; break;
-            case 'func': result.settingName = fieldValue; break;
+            case 'func': result.func = fieldValue; break;
             default:
                 throw Error(`❌ Unknown validator field "${fieldName}" in: ${JSON.stringify(validatorObject, null, 0)}`);
         }
@@ -54,7 +54,7 @@ function simplifyTranslation(translationObject) {
             case 'comment': result.comment = fieldValue; break;
             case 'rawSchema': break; result.rawSchema = fieldValue; break;
             case 'configName': result.configName = fieldValue; break;
-            case 'func': result.settingName = fieldValue; break;
+            case 'func': result.func = fieldValue; break;
             default:
                 throw Error(`❌ Unknown translation field "${fieldName}" in: ${JSON.stringify(translationObject, null, 0)}`);
         }
@@ -113,11 +113,21 @@ function simplifyProperty(propertyObject) {
             if (propertyObject.value && propertyObject.value.length === 2 && propertyObject.value[0].type === 'atom') {
                 switch (propertyObject.value[0].value) {
                     case 'default': 
-                        return {
-                            type: "key-value",
-                            name: propertyObject.value[0].value,
-                            value: propertyObject.value[1].value
-                        };
+                        if (propertyObject.value[1].type === 'template') {
+                            // add the {{ }} expected of a temaplte
+                            // note that palceholders in quoted strings are considered text so this is not needed
+                            return {
+                                type: "key-value",
+                                name: propertyObject.value[0].value,
+                                value: `{{${propertyObject.value[1].value}}}`
+                            };
+                        } else {
+                            return {
+                                type: "key-value",
+                                name: propertyObject.value[0].value,
+                                value: propertyObject.value[1].value
+                            };
+                        }
                     case 'datatype': 
                         return {
                             type: "key-value",

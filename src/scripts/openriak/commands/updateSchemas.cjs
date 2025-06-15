@@ -2,7 +2,8 @@
 
 const { 
   getFileContent, 
-  setFileContent } = require('../lib/fileHelpers.cjs');
+  setFileContent, 
+  doesFileExist} = require('../lib/fileHelpers.cjs');
 const { 
   getVersionRoot, 
   getSchemaDefinitions, 
@@ -15,14 +16,43 @@ const {
   convertGithubToRawUrl, 
   downloadFile} = require('../lib/netHelpers.cjs');
 const {simplifySchemaJSON} = require("../lib/simplifySchemaJSON.cjs");
+const {mergeClone} = require("../lib/mergeClone.cjs");
 const path = require('path');
-const {mergeCloneTest, mergeClone} = require("../lib/mergeClone.cjs");
-
 
 function updateSchemas(project, version) {
   updateSchemaFiles(project, version);
-  //updateTemplateFiles(project, version);
-  //mergeCloneTest();
+  updateTemplateFiles(project, version);
+  updateSchemaOSFiles(project, version);
+}
+
+function updateSchemaOSFiles(project, desiredVersion) {
+  const schemas = getSchemaDefinitions(project, desiredVersion);
+  const versionsToUpdate = getVersionsToUpdate(schemas, desiredVersion)
+  for (const [version, object] of Object.entries(versionsToUpdate)) {
+    const versionRoot = getVersionRoot(project, version);
+    const schemaFile = path.join(versionRoot, 'schemas', 'allSchemas.json');
+    if (!doesFileExist(schemaFile)) {
+      console.error(`❌ Error: Cannot find schemas file for project "${project}" version "${version}" at "${schemaFile}".`)
+      process.exit(1);
+    }
+    var allSchemas = getFileContent(schemaFile);
+
+    for (name of Object.keys(schemas.templates)) {
+      if (name.startsWith('#')) { continue; }
+      const templateFileName = path.join(versionRoot, 'templates', name + `.templatePlaceholders.json`);
+      const templateFile = getFileContent(templateFileName);
+      const templateObject = JSON.parse(templateFile);
+      for ([key, value] of Object.entries(templateObject)) {
+        var safeValue = JSON.stringify(value, null, 0);
+        safeValue = safeValue.replace(/^(['"])(.*)\1$/, '$2');
+        //console.log(`Replacing {{${key}}} with "${safeValue}".`);
+        allSchemas = allSchemas.replaceAll(`{{${key}}}`, safeValue);
+      }
+      const schemaOSFileName  = path.join(versionRoot, `openriak-${project}-${version}.${name}.schema.json`);
+      setFileContent(schemaOSFileName, allSchemas);
+      console.log(`✅ Schema file for project "${project}" version "${version}" created at ${schemaOSFileName}.`);
+    }
+  }
 }
 
 function updateSchemaFiles(project, version) {
@@ -204,14 +234,6 @@ function updateTemplateFiles(project, version) {
         }
       }
 
-      // order by name to make it more human readable
-      const sortedTemplatePlaceholdersObject = Object.keys(templatePlaceholdersObject)
-        .sort() // Sort keys alphabetically
-        .reduce((acc, key) => {
-          acc[key] = templatePlaceholdersObject[key]; // Rebuild object with sorted keys
-          return acc;
-        }, {});
-
       //console.log(`ℹ️  sortedTemplatePlaceholdersObject: `, sortedTemplatePlaceholdersObject);
 
 
@@ -243,13 +265,23 @@ function updateTemplateFiles(project, version) {
         templatePlaceholdersObject[name] = newValue;
       }
 
+
+      // order by name to make it more human readable
+      const sortedTemplatePlaceholdersObject = Object.keys(templatePlaceholdersObject)
+        .sort() // Sort keys alphabetically
+        .reduce((acc, key) => {
+          acc[key] = templatePlaceholdersObject[key]; // Rebuild object with sorted keys
+          return acc;
+        }, {});
+
+
       const templatePlaceholdersSavePath = path.join(versionRoot, 'templates', `${templateName}.templatePlaceholders.json`);
-      setFileContent(templatePlaceholdersSavePath, JSON.stringify(templatePlaceholdersObject, null, 2));
+      setFileContent(templatePlaceholdersSavePath, JSON.stringify(sortedTemplatePlaceholdersObject, null, 2));
 //      console.log(`✅ Converted var.config named "${templateName}" for project "${project}" version "${version}" and saved to ${templatePlaceholdersSavePath}`);
       console.log(`✅ Converted and saved to ${templatePlaceholdersSavePath}`);
     }
   }
 }
 
-module.exports = { updateSchemas, updateSchemaFiles, updateTemplateFiles };
+module.exports = { updateSchemas, updateSchemaFiles, updateTemplateFiles, updateSchemaOSFiles };
 

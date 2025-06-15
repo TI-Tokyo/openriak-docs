@@ -348,9 +348,9 @@ function parseTemplatePlaceholders(templateSavePath, version, config) {
         blockLines.push(line);
       }
 
-      const mappingBlock = blockLines.join(' ').trim();
+      const templateBlock = blockLines.join(' ').trim();
 
-      const templateMatch = mappingBlock.match(/^\{\s*([^,]+)\s*,\s*"([^"]+)"\s*\}\.$/s);
+      const templateMatch = templateBlock.match(/^\{\s*([^,]+)\s*,\s*"?([^"]+)"?\s*\}\.$/s);
       if (!templateMatch) continue;
 
       //console.log("ℹ️  Template match: ", JSON.stringify(templateMatch, null, 2));
