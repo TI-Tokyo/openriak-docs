@@ -49,6 +49,13 @@ const config: Config = {
           // Remove this to remove the "edit this page" links.
           editUrl:
             'https://github.com/openriak/openriak-docs/tree/develop/kv/',
+          lastVersion: 'current',
+          versions: {
+            current: {
+              label: 'The last 3.2 release aka 3.2.5',
+              path: '3.2.5',
+            },
+          },
         },
         cs: {
           id: "cs",
