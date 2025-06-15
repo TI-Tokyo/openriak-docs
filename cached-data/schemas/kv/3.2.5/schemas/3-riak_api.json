@@ -240,37 +240,37 @@
       "properties": {},
       "comment": [],
       "configName": "riak_api.http",
-      "settingName": "fun(Conf) -> HTTP = cuttlefish_variable:filter_by_prefix(\"listener.http\", Conf), [ IP || {_, IP} <- HTTP] end "
+      "func": "fun(Conf) -> HTTP = cuttlefish_variable:filter_by_prefix(\"listener.http\", Conf), [ IP || {_, IP} <- HTTP] end "
     },
     "riak_api.pb": {
       "properties": {},
       "comment": [],
       "configName": "riak_api.pb",
-      "settingName": "fun(Conf) -> PB = cuttlefish_variable:filter_by_prefix(\"listener.protobuf\", Conf), [ IP || {_, IP} <- PB] end "
+      "func": "fun(Conf) -> PB = cuttlefish_variable:filter_by_prefix(\"listener.protobuf\", Conf), [ IP || {_, IP} <- PB] end "
     },
     "riak_api.https": {
       "properties": {},
       "comment": [],
       "configName": "riak_api.https",
-      "settingName": "fun(Conf) -> HTTPS = cuttlefish_variable:filter_by_prefix(\"listener.https\", Conf), [ IP || {_, IP} <- HTTPS] end "
+      "func": "fun(Conf) -> HTTPS = cuttlefish_variable:filter_by_prefix(\"listener.https\", Conf), [ IP || {_, IP} <- HTTPS] end "
     },
     "riak_api.honor_cipher_order": {
       "properties": {},
       "comment": [],
       "configName": "riak_api.honor_cipher_order",
-      "settingName": "fun(Conf) -> CipherOrder = cuttlefish:conf_get(\"honor_cipher_order\", Conf), case CipherOrder of on  -> true; off -> false end end "
+      "func": "fun(Conf) -> CipherOrder = cuttlefish:conf_get(\"honor_cipher_order\", Conf), case CipherOrder of on  -> true; off -> false end end "
     },
     "riak_api.tls_protocols": {
       "properties": {},
       "comment": [],
       "configName": "riak_api.tls_protocols",
-      "settingName": "fun(Conf) -> Protocols = cuttlefish_variable:filter_by_prefix(\"tls_protocols\", Conf), [begin case Key of [\"tls_protocols\",\"sslv3\"] -> sslv3; [\"tls_protocols\",\"tlsv1\"] -> tlsv1; [\"tls_protocols\",\"tlsv1\", \"1\"] -> 'tlsv1.1'; [\"tls_protocols\",\"tlsv1\", \"2\"] -> 'tlsv1.2' end end || {Key, Value} <- Protocols, Value == on] end "
+      "func": "fun(Conf) -> Protocols = cuttlefish_variable:filter_by_prefix(\"tls_protocols\", Conf), [begin case Key of [\"tls_protocols\",\"sslv3\"] -> sslv3; [\"tls_protocols\",\"tlsv1\"] -> tlsv1; [\"tls_protocols\",\"tlsv1\", \"1\"] -> 'tlsv1.1'; [\"tls_protocols\",\"tlsv1\", \"2\"] -> 'tlsv1.2' end end || {Key, Value} <- Protocols, Value == on] end "
     },
     "riak_api.check_crl": {
       "properties": {},
       "comment": [],
       "configName": "riak_api.check_crl",
-      "settingName": "fun(Conf) -> CheckCRL = cuttlefish:conf_get(\"check_crl\", Conf), case CheckCRL of on -> true; off -> false end end "
+      "func": "fun(Conf) -> CheckCRL = cuttlefish:conf_get(\"check_crl\", Conf), case CheckCRL of on -> true; off -> false end end "
     }
   },
   "validators": {
@@ -279,7 +279,7 @@
       "comment": [],
       "name": "greater_than_zero",
       "description": "must be greater than zero",
-      "settingName": "fun(Value) -> Value > 0 end"
+      "func": "fun(Value) -> Value > 0 end"
     }
   }
 }

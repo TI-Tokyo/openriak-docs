@@ -415,25 +415,25 @@
       "properties": {},
       "comment": [],
       "configName": "vm_args.+S",
-      "settingName": "fun(Conf) -> Total = cuttlefish:conf_get(\"erlang.schedulers.total\", Conf, undefined), Online = cuttlefish:conf_get(\"erlang.schedulers.online\", Conf, undefined), case {Total, Online} of {undefined, undefined} -> cuttlefish:unset(); {undefined, O} -> \":\" ++ integer_to_list(O); {T, undefined} -> integer_to_list(T); _ -> integer_to_list(Total) ++ \":\" ++ integer_to_list(Online) end end "
+      "func": "fun(Conf) -> Total = cuttlefish:conf_get(\"erlang.schedulers.total\", Conf, undefined), Online = cuttlefish:conf_get(\"erlang.schedulers.online\", Conf, undefined), case {Total, Online} of {undefined, undefined} -> cuttlefish:unset(); {undefined, O} -> \":\" ++ integer_to_list(O); {T, undefined} -> integer_to_list(T); _ -> integer_to_list(Total) ++ \":\" ++ integer_to_list(Online) end end "
     },
     "vm_args.+a": {
       "properties": {},
       "comment": [],
       "configName": "vm_args.+a",
-      "settingName": "fun(Conf) -> RawValue = cuttlefish:conf_get(\"erlang.async_threads.stack_size\", Conf), RawValue div (1024 * erlang:system_info({wordsize, external})) end"
+      "func": "fun(Conf) -> RawValue = cuttlefish:conf_get(\"erlang.async_threads.stack_size\", Conf), RawValue div (1024 * erlang:system_info({wordsize, external})) end"
     },
     "vm_args.+zdbbl": {
       "properties": {},
       "comment": [],
       "configName": "vm_args.+zdbbl",
-      "settingName": "fun(Conf) -> ZDBBL = cuttlefish:conf_get(\"erlang.distribution_buffer_size\", Conf, undefined), case ZDBBL of undefined -> undefined; X when is_integer(X) -> cuttlefish_util:ceiling(X / 1024); %% Bytes to Kilobytes; _ -> undefined end end "
+      "func": "fun(Conf) -> ZDBBL = cuttlefish:conf_get(\"erlang.distribution_buffer_size\", Conf, undefined), case ZDBBL of undefined -> undefined; X when is_integer(X) -> cuttlefish_util:ceiling(X / 1024); %% Bytes to Kilobytes; _ -> undefined end end "
     },
     "kernel.inet_dist_use_interface": {
       "properties": {},
       "comment": [],
       "configName": "kernel.inet_dist_use_interface",
-      "settingName": "fun(Conf) -> IPStr = cuttlefish:conf_get(\"erlang.distribution.interface\", Conf), {ok, IP_address} = inet:parse_strict_address(IPStr), IP_address end "
+      "func": "fun(Conf) -> IPStr = cuttlefish:conf_get(\"erlang.distribution.interface\", Conf), {ok, IP_address} = inet:parse_strict_address(IPStr), IP_address end "
     }
   },
   "validators": {
@@ -442,7 +442,7 @@
       "comment": [],
       "name": "ip_strict",
       "description": "must be a valid IPv4 or IPv6 address",
-      "settingName": "fun(String) -> try inet:parse_strict_address(String) of {ok,{_,_,_,_}} -> true; {ok,{_,_,_,_,_,_,_,_}} -> true; _ -> false catch  _:_ -> false end end"
+      "func": "fun(String) -> try inet:parse_strict_address(String) of {ok,{_,_,_,_}} -> true; {ok,{_,_,_,_,_,_,_,_}} -> true; _ -> false catch  _:_ -> false end end"
     }
   }
 }

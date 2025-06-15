@@ -2,7 +2,7 @@
   "mappings": {
     "logger.level": {
       "properties": {
-        "default": "logger_level",
+        "default": "{{logger_level}}",
         "datatype": {
           "type": "enum",
           "possibleValues": [
@@ -1335,7 +1335,7 @@
     },
     "handoff.port": {
       "properties": {
-        "default": "handoff_port",
+        "default": "{{handoff_port}}",
         "datatype": "integer",
         "hidden": true
       },
@@ -2481,7 +2481,7 @@
     },
     "storage_backend": {
       "properties": {
-        "default": "storage_backend",
+        "default": "{{storage_backend}}",
         "datatype": {
           "type": "enum",
           "possibleValues": [
@@ -7137,49 +7137,49 @@
       "properties": {},
       "comment": [],
       "configName": "kernel.logger",
-      "settingName": "fun(Conf) -> LogFile = cuttlefish:conf_get(\"logger.file\", Conf), MaxNumBytes = cuttlefish:conf_get(\"logger.max_file_size\", Conf), MaxNumFiles = cuttlefish:conf_get(\"logger.max_files\", Conf),  DefaultFormatStr = cuttlefish:conf_get(\"logger.format\", Conf), DefaultFormatTerm = case erl_scan:string(DefaultFormatStr) of {ok, DefaultTokens, _} -> case erl_parse:parse_term(DefaultTokens) of {ok, DefaultTerm} -> DefaultTerm; {error, {_, _, DefaultError}} -> cuttlefish:error(foo) end; {error, {_, _, DefaultScanError}} -> cuttlefish:error(foo) end, ConfigMap0 = #{config => #{file => LogFile, max_no_bytes => MaxNumBytes, max_no_files => MaxNumFiles}, formatter => {logger_formatter, #{template => DefaultFormatTerm} } },  [{handler, default, logger_std_h, ConfigMap0}]  end "
+      "func": "fun(Conf) -> LogFile = cuttlefish:conf_get(\"logger.file\", Conf), MaxNumBytes = cuttlefish:conf_get(\"logger.max_file_size\", Conf), MaxNumFiles = cuttlefish:conf_get(\"logger.max_files\", Conf),  DefaultFormatStr = cuttlefish:conf_get(\"logger.format\", Conf), DefaultFormatTerm = case erl_scan:string(DefaultFormatStr) of {ok, DefaultTokens, _} -> case erl_parse:parse_term(DefaultTokens) of {ok, DefaultTerm} -> DefaultTerm; {error, {_, _, DefaultError}} -> cuttlefish:error(foo) end; {error, {_, _, DefaultScanError}} -> cuttlefish:error(foo) end, ConfigMap0 = #{config => #{file => LogFile, max_no_bytes => MaxNumBytes, max_no_files => MaxNumFiles}, formatter => {logger_formatter, #{template => DefaultFormatTerm} } },  [{handler, default, logger_std_h, ConfigMap0}]  end "
     },
     "vm_args.+B": {
       "properties": {},
       "comment": [],
       "configName": "vm_args.+B",
-      "settingName": "fun(Conf) -> Setting = cuttlefish:conf_get(\"erlang.vm.ignore_break_signal\", Conf), case Setting of true -> \"i\"; false -> cuttlefish:unset() end end "
+      "func": "fun(Conf) -> Setting = cuttlefish:conf_get(\"erlang.vm.ignore_break_signal\", Conf), case Setting of true -> \"i\"; false -> cuttlefish:unset() end end "
     },
     "vm_args.+hmbs": {
       "properties": {},
       "comment": [],
       "configName": "vm_args.+hmbs",
-      "settingName": "fun(Conf) -> Setting = cuttlefish:conf_get(\"erlang.virtual_heap.hmbs\", Conf), case Setting of Setting when is_integer(Setting) -> Setting; otp -> cuttlefish:unset() end end "
+      "func": "fun(Conf) -> Setting = cuttlefish:conf_get(\"erlang.virtual_heap.hmbs\", Conf), case Setting of Setting when is_integer(Setting) -> Setting; otp -> cuttlefish:unset() end end "
     },
     "vm_args.+hms": {
       "properties": {},
       "comment": [],
       "configName": "vm_args.+hms",
-      "settingName": "fun(Conf) -> Setting = cuttlefish:conf_get(\"erlang.virtual_heap.hms\", Conf), case Setting of Setting when is_integer(Setting) -> Setting; otp -> cuttlefish:unset() end end "
+      "func": "fun(Conf) -> Setting = cuttlefish:conf_get(\"erlang.virtual_heap.hms\", Conf), case Setting of Setting when is_integer(Setting) -> Setting; otp -> cuttlefish:unset() end end "
     },
     "vm_args.+S": {
       "properties": {},
       "comment": [],
       "configName": "vm_args.+S",
-      "settingName": "fun(Conf) -> Total = cuttlefish:conf_get(\"erlang.schedulers.total\", Conf, undefined), Online = cuttlefish:conf_get(\"erlang.schedulers.online\", Conf, undefined), case {Total, Online} of {undefined, undefined} -> cuttlefish:unset(); {undefined, O} -> \":\" ++ integer_to_list(O); {T, undefined} -> integer_to_list(T); _ -> integer_to_list(Total) ++ \":\" ++ integer_to_list(Online) end end "
+      "func": "fun(Conf) -> Total = cuttlefish:conf_get(\"erlang.schedulers.total\", Conf, undefined), Online = cuttlefish:conf_get(\"erlang.schedulers.online\", Conf, undefined), case {Total, Online} of {undefined, undefined} -> cuttlefish:unset(); {undefined, O} -> \":\" ++ integer_to_list(O); {T, undefined} -> integer_to_list(T); _ -> integer_to_list(Total) ++ \":\" ++ integer_to_list(Online) end end "
     },
     "vm_args.+a": {
       "properties": {},
       "comment": [],
       "configName": "vm_args.+a",
-      "settingName": "fun(Conf) -> RawValue = cuttlefish:conf_get(\"erlang.async_threads.stack_size\", Conf), RawValue div (1024 * erlang:system_info({wordsize, external})) end"
+      "func": "fun(Conf) -> RawValue = cuttlefish:conf_get(\"erlang.async_threads.stack_size\", Conf), RawValue div (1024 * erlang:system_info({wordsize, external})) end"
     },
     "vm_args.+zdbbl": {
       "properties": {},
       "comment": [],
       "configName": "vm_args.+zdbbl",
-      "settingName": "fun(Conf) -> ZDBBL = cuttlefish:conf_get(\"erlang.distribution_buffer_size\", Conf, undefined), case ZDBBL of undefined -> undefined; X when is_integer(X) -> cuttlefish_util:ceiling(X / 1024); %% Bytes to Kilobytes; _ -> undefined end end "
+      "func": "fun(Conf) -> ZDBBL = cuttlefish:conf_get(\"erlang.distribution_buffer_size\", Conf, undefined), case ZDBBL of undefined -> undefined; X when is_integer(X) -> cuttlefish_util:ceiling(X / 1024); %% Bytes to Kilobytes; _ -> undefined end end "
     },
     "kernel.inet_dist_use_interface": {
       "properties": {},
       "comment": [],
       "configName": "kernel.inet_dist_use_interface",
-      "settingName": "fun(Conf) -> IPStr = cuttlefish:conf_get(\"erlang.distribution.interface\", Conf), {ok, IP_address} = inet:parse_strict_address(IPStr), IP_address end "
+      "func": "fun(Conf) -> IPStr = cuttlefish:conf_get(\"erlang.distribution.interface\", Conf), {ok, IP_address} = inet:parse_strict_address(IPStr), IP_address end "
     },
     "riak_core.job_accept_class": {
       "properties": {},
@@ -7222,205 +7222,205 @@
         ""
       ],
       "configName": "riak_core.job_accept_class",
-      "settingName": "fun(Conf) -> Fold = fun({[_, _, Mod, Op], true}, Result) -> [{erlang:list_to_atom(Mod), erlang:list_to_atom(Op)} | Result]; ({[_, _, _, _], false}, Result) -> Result; ({[_, _, _, _], _} = Setting, _) -> cuttlefish:invalid(io_lib:format(\"~p\", [Setting])); (_, Result) -> Result end, lists:sort(lists:foldl(Fold, [], cuttlefish_variable:filter_by_prefix([\"cluster\", \"job\"], Conf))) end"
+      "func": "fun(Conf) -> Fold = fun({[_, _, Mod, Op], true}, Result) -> [{erlang:list_to_atom(Mod), erlang:list_to_atom(Op)} | Result]; ({[_, _, _, _], false}, Result) -> Result; ({[_, _, _, _], _} = Setting, _) -> cuttlefish:invalid(io_lib:format(\"~p\", [Setting])); (_, Result) -> Result end, lists:sort(lists:foldl(Fold, [], cuttlefish_variable:filter_by_prefix([\"cluster\", \"job\"], Conf))) end"
     },
     "riak_api.http": {
       "properties": {},
       "comment": [],
       "configName": "riak_api.http",
-      "settingName": "fun(Conf) -> HTTP = cuttlefish_variable:filter_by_prefix(\"listener.http\", Conf), [ IP || {_, IP} <- HTTP] end "
+      "func": "fun(Conf) -> HTTP = cuttlefish_variable:filter_by_prefix(\"listener.http\", Conf), [ IP || {_, IP} <- HTTP] end "
     },
     "riak_api.pb": {
       "properties": {},
       "comment": [],
       "configName": "riak_api.pb",
-      "settingName": "fun(Conf) -> PB = cuttlefish_variable:filter_by_prefix(\"listener.protobuf\", Conf), [ IP || {_, IP} <- PB] end "
+      "func": "fun(Conf) -> PB = cuttlefish_variable:filter_by_prefix(\"listener.protobuf\", Conf), [ IP || {_, IP} <- PB] end "
     },
     "riak_api.https": {
       "properties": {},
       "comment": [],
       "configName": "riak_api.https",
-      "settingName": "fun(Conf) -> HTTPS = cuttlefish_variable:filter_by_prefix(\"listener.https\", Conf), [ IP || {_, IP} <- HTTPS] end "
+      "func": "fun(Conf) -> HTTPS = cuttlefish_variable:filter_by_prefix(\"listener.https\", Conf), [ IP || {_, IP} <- HTTPS] end "
     },
     "riak_api.honor_cipher_order": {
       "properties": {},
       "comment": [],
       "configName": "riak_api.honor_cipher_order",
-      "settingName": "fun(Conf) -> CipherOrder = cuttlefish:conf_get(\"honor_cipher_order\", Conf), case CipherOrder of on  -> true; off -> false end end "
+      "func": "fun(Conf) -> CipherOrder = cuttlefish:conf_get(\"honor_cipher_order\", Conf), case CipherOrder of on  -> true; off -> false end end "
     },
     "riak_api.tls_protocols": {
       "properties": {},
       "comment": [],
       "configName": "riak_api.tls_protocols",
-      "settingName": "fun(Conf) -> Protocols = cuttlefish_variable:filter_by_prefix(\"tls_protocols\", Conf), [begin case Key of [\"tls_protocols\",\"sslv3\"] -> sslv3; [\"tls_protocols\",\"tlsv1\"] -> tlsv1; [\"tls_protocols\",\"tlsv1\", \"1\"] -> 'tlsv1.1'; [\"tls_protocols\",\"tlsv1\", \"2\"] -> 'tlsv1.2' end end || {Key, Value} <- Protocols, Value == on] end "
+      "func": "fun(Conf) -> Protocols = cuttlefish_variable:filter_by_prefix(\"tls_protocols\", Conf), [begin case Key of [\"tls_protocols\",\"sslv3\"] -> sslv3; [\"tls_protocols\",\"tlsv1\"] -> tlsv1; [\"tls_protocols\",\"tlsv1\", \"1\"] -> 'tlsv1.1'; [\"tls_protocols\",\"tlsv1\", \"2\"] -> 'tlsv1.2' end end || {Key, Value} <- Protocols, Value == on] end "
     },
     "riak_api.check_crl": {
       "properties": {},
       "comment": [],
       "configName": "riak_api.check_crl",
-      "settingName": "fun(Conf) -> CheckCRL = cuttlefish:conf_get(\"check_crl\", Conf), case CheckCRL of on -> true; off -> false end end "
+      "func": "fun(Conf) -> CheckCRL = cuttlefish:conf_get(\"check_crl\", Conf), case CheckCRL of on -> true; off -> false end end "
     },
     "riak_kv.anti_entropy": {
       "properties": {},
       "comment": [],
       "configName": "riak_kv.anti_entropy",
-      "settingName": "fun(Conf) -> Setting = cuttlefish:conf_get(\"anti_entropy\", Conf), case Setting of active -> {on, []}; 'active-debug' -> {on, [debug]}; passive -> {off, []}; _Default -> {on, []} end end "
+      "func": "fun(Conf) -> Setting = cuttlefish:conf_get(\"anti_entropy\", Conf), case Setting of active -> {on, []}; 'active-debug' -> {on, [debug]}; passive -> {off, []}; _Default -> {on, []} end end "
     },
     "riak_kv.storage_backend": {
       "properties": {},
       "comment": [],
       "configName": "riak_kv.storage_backend",
-      "settingName": "fun(Conf) -> Setting = cuttlefish:conf_get(\"storage_backend\", Conf), case Setting of bitcask -> riak_kv_bitcask_backend; leveldb -> riak_kv_eleveldb_backend; leveled -> riak_kv_leveled_backend; memory -> riak_kv_memory_backend; multi -> riak_kv_multi_backend; prefix_multi -> riak_kv_multi_prefix_backend; _Default -> riak_kv_bitcask_backend end end"
+      "func": "fun(Conf) -> Setting = cuttlefish:conf_get(\"storage_backend\", Conf), case Setting of bitcask -> riak_kv_bitcask_backend; leveldb -> riak_kv_eleveldb_backend; leveled -> riak_kv_leveled_backend; memory -> riak_kv_memory_backend; multi -> riak_kv_multi_backend; prefix_multi -> riak_kv_multi_prefix_backend; _Default -> riak_kv_bitcask_backend end end"
     },
     "riak_kv.anti_entropy_build_limit": {
       "properties": {},
       "comment": [],
       "configName": "riak_kv.anti_entropy_build_limit",
-      "settingName": "fun(Conf) -> {cuttlefish:conf_get(\"anti_entropy.tree.build_limit.number\", Conf), cuttlefish:conf_get(\"anti_entropy.tree.build_limit.per_timespan\", Conf)} end"
+      "func": "fun(Conf) -> {cuttlefish:conf_get(\"anti_entropy.tree.build_limit.number\", Conf), cuttlefish:conf_get(\"anti_entropy.tree.build_limit.per_timespan\", Conf)} end"
     },
     "riak_kv.aae_throttle_limits": {
       "properties": {},
       "comment": [],
       "configName": "riak_kv.aae_throttle_limits",
-      "settingName": "riak_core_throttle:create_limits_translator_fun(\"anti_entropy\", \"mailbox_size\") "
+      "func": "riak_core_throttle:create_limits_translator_fun(\"anti_entropy\", \"mailbox_size\") "
     },
     "riak_kv.fsm_limit": {
       "properties": {},
       "comment": [],
       "configName": "riak_kv.fsm_limit",
-      "settingName": "fun(Conf) -> TheLimit = cuttlefish:conf_get(\"max_concurrent_requests\", Conf), case TheLimit of infinite -> undefined; Int when is_integer(Int) -> Int; _ -> cuttlefish:invalid(\"max_concurrent_requests must be an integer or 'infinite'\") end end "
+      "func": "fun(Conf) -> TheLimit = cuttlefish:conf_get(\"max_concurrent_requests\", Conf), case TheLimit of infinite -> undefined; Int when is_integer(Int) -> Int; _ -> cuttlefish:invalid(\"max_concurrent_requests must be an integer or 'infinite'\") end end "
     },
     "riak_kv.object_format": {
       "properties": {},
       "comment": [],
       "configName": "riak_kv.object_format",
-      "settingName": "fun(Conf) -> case cuttlefish:conf_get(\"object.format\", Conf) of 0 -> v0; 1 -> v1; _ -> cuttlefish:invalid(\"invalid object format version\") end end "
+      "func": "fun(Conf) -> case cuttlefish:conf_get(\"object.format\", Conf) of 0 -> v0; 1 -> v1; _ -> cuttlefish:invalid(\"invalid object format version\") end end "
     },
     "riak_kv.memory_backend.max_memory": {
       "properties": {},
       "comment": [],
       "configName": "riak_kv.memory_backend.max_memory",
-      "settingName": "fun(Conf) -> Bytes = cuttlefish:conf_get(\"memory_backend.max_memory_per_vnode\", Conf), cuttlefish_util:ceiling(Bytes / 1048576) end "
+      "func": "fun(Conf) -> Bytes = cuttlefish:conf_get(\"memory_backend.max_memory_per_vnode\", Conf), cuttlefish_util:ceiling(Bytes / 1048576) end "
     },
     "riak_core.default_bucket_props.precommit": {
       "properties": {},
       "comment": [],
       "configName": "riak_core.default_bucket_props.precommit",
-      "settingName": "fun(Conf) -> RawString = cuttlefish:conf_get(\"buckets.default.precommit\", Conf, []), StringList = string:tokens(RawString, \" \"), [ begin case string:tokens(String, \":\") of %% Javascript make this:  {struct, [{<<\"name\">>, <<\"SomeJS.nonsense\">>}]} [JavascriptFunction] -> {struct, [{<<\"name\">>, list_to_binary(JavascriptFunction)}]}; %% Erlang make this: {struct, [{<<\"mod\">>, <<\"module\">>}, {<<\"fun\">>,<<\"function\">>}]} [Module, Function] -> {struct, [ {<<\"mod\">>, list_to_binary(Module)}, {<<\"fun\">>, list_to_binary(Function)} ]}; _ -> cuttlefish:invalid(\"incorrect hook format '\" ++ String ++ \"'\") end end || String <- StringList] end "
+      "func": "fun(Conf) -> RawString = cuttlefish:conf_get(\"buckets.default.precommit\", Conf, []), StringList = string:tokens(RawString, \" \"), [ begin case string:tokens(String, \":\") of %% Javascript make this:  {struct, [{<<\"name\">>, <<\"SomeJS.nonsense\">>}]} [JavascriptFunction] -> {struct, [{<<\"name\">>, list_to_binary(JavascriptFunction)}]}; %% Erlang make this: {struct, [{<<\"mod\">>, <<\"module\">>}, {<<\"fun\">>,<<\"function\">>}]} [Module, Function] -> {struct, [ {<<\"mod\">>, list_to_binary(Module)}, {<<\"fun\">>, list_to_binary(Function)} ]}; _ -> cuttlefish:invalid(\"incorrect hook format '\" ++ String ++ \"'\") end end || String <- StringList] end "
     },
     "riak_core.default_bucket_props.postcommit": {
       "properties": {},
       "comment": [],
       "configName": "riak_core.default_bucket_props.postcommit",
-      "settingName": "fun(Conf) -> RawString = cuttlefish:conf_get(\"buckets.default.postcommit\", Conf, []), StringList = string:tokens(RawString, \" \"), [ begin case string:tokens(String, \":\") of [Module, Function] -> {struct, [ {<<\"mod\">>, list_to_binary(Module)}, {<<\"fun\">>, list_to_binary(Function)} ]}; _ -> cuttlefish:invalid(\"incorrect hook format '\" ++ String ++ \"'\") end end ||  String <- StringList] end "
+      "func": "fun(Conf) -> RawString = cuttlefish:conf_get(\"buckets.default.postcommit\", Conf, []), StringList = string:tokens(RawString, \" \"), [ begin case string:tokens(String, \":\") of [Module, Function] -> {struct, [ {<<\"mod\">>, list_to_binary(Module)}, {<<\"fun\">>, list_to_binary(Function)} ]}; _ -> cuttlefish:invalid(\"incorrect hook format '\" ++ String ++ \"'\") end end ||  String <- StringList] end "
     },
     "riak_kv.ttaaefs_allcheck_window": {
       "properties": {},
       "comment": [],
       "configName": "riak_kv.ttaaefs_allcheck_window",
-      "settingName": "fun(Conf) -> Setting = cuttlefish:conf_get(\"ttaaefs_allcheck.policy\", Conf), case Setting of always -> always; never -> never; window -> Start = cuttlefish:conf_get(\"ttaaefs_allcheck.window.start\", Conf, undefined), End = cuttlefish:conf_get(\"ttaaefs_allcheck.window.end\", Conf, undefined), {Start, End}; _Default -> always end end"
+      "func": "fun(Conf) -> Setting = cuttlefish:conf_get(\"ttaaefs_allcheck.policy\", Conf), case Setting of always -> always; never -> never; window -> Start = cuttlefish:conf_get(\"ttaaefs_allcheck.window.start\", Conf, undefined), End = cuttlefish:conf_get(\"ttaaefs_allcheck.window.end\", Conf, undefined), {Start, End}; _Default -> always end end"
     },
     "riak_sysmon.gc_ms_limit": {
       "properties": {},
       "comment": [],
       "configName": "riak_sysmon.gc_ms_limit",
-      "settingName": "fun(Conf) -> case cuttlefish:conf_get(\"runtime_health.triggers.process.garbage_collection\", Conf) of off -> 0; Int -> Int end end"
+      "func": "fun(Conf) -> case cuttlefish:conf_get(\"runtime_health.triggers.process.garbage_collection\", Conf) of off -> 0; Int -> Int end end"
     },
     "riak_sysmon.schedule_ms_limit": {
       "properties": {},
       "comment": [],
       "configName": "riak_sysmon.schedule_ms_limit",
-      "settingName": "fun(Conf) -> case cuttlefish:conf_get(\"runtime_health.triggers.process.long_schedule\", Conf) of off -> 0; Int -> Int end end"
+      "func": "fun(Conf) -> case cuttlefish:conf_get(\"runtime_health.triggers.process.long_schedule\", Conf) of off -> 0; Int -> Int end end"
     },
     "riak_sysmon.heap_word_limit": {
       "properties": {},
       "comment": [],
       "configName": "riak_sysmon.heap_word_limit",
-      "settingName": "fun(Conf) -> case cuttlefish:conf_get(\"runtime_health.triggers.process.heap_size\", Conf) of off -> 0; Bytes -> WordSize = erlang:system_info(wordsize), Bytes div WordSize end end"
+      "func": "fun(Conf) -> case cuttlefish:conf_get(\"runtime_health.triggers.process.heap_size\", Conf) of off -> 0; Bytes -> WordSize = erlang:system_info(wordsize), Bytes div WordSize end end"
     },
     "bitcask.sync_strategy": {
       "properties": {},
       "comment": [],
       "configName": "bitcask.sync_strategy",
-      "settingName": "fun(Conf) -> Setting = cuttlefish:conf_get(\"bitcask.sync.strategy\", Conf), case Setting of none -> none; o_sync -> o_sync; interval -> Interval = cuttlefish:conf_get(\"bitcask.sync.interval\", Conf, undefined), {seconds, Interval}; _Default -> none end end"
+      "func": "fun(Conf) -> Setting = cuttlefish:conf_get(\"bitcask.sync.strategy\", Conf), case Setting of none -> none; o_sync -> o_sync; interval -> Interval = cuttlefish:conf_get(\"bitcask.sync.interval\", Conf, undefined), {seconds, Interval}; _Default -> none end end"
     },
     "bitcask.merge_window": {
       "properties": {},
       "comment": [],
       "configName": "bitcask.merge_window",
-      "settingName": "fun(Conf) -> Setting = cuttlefish:conf_get(\"bitcask.merge.policy\", Conf), case Setting of always -> always; never -> never; window -> Start = cuttlefish:conf_get(\"bitcask.merge.window.start\", Conf, undefined), End = cuttlefish:conf_get(\"bitcask.merge.window.end\", Conf, undefined), {Start, End}; _Default -> always end end"
+      "func": "fun(Conf) -> Setting = cuttlefish:conf_get(\"bitcask.merge.policy\", Conf), case Setting of always -> always; never -> never; window -> Start = cuttlefish:conf_get(\"bitcask.merge.window.start\", Conf, undefined), End = cuttlefish:conf_get(\"bitcask.merge.window.end\", Conf, undefined), {Start, End}; _Default -> always end end"
     },
     "bitcask.max_fold_age": {
       "properties": {},
       "comment": [],
       "configName": "bitcask.max_fold_age",
-      "settingName": "fun(Conf) -> case cuttlefish:conf_get(\"bitcask.fold.max_age\", Conf) of unlimited -> -1; I when is_integer(I) -> %% app.config expects microseconds I * 1000; _ -> -1 %% The default, for safety end end "
+      "func": "fun(Conf) -> case cuttlefish:conf_get(\"bitcask.fold.max_age\", Conf) of unlimited -> -1; I when is_integer(I) -> %% app.config expects microseconds I * 1000; _ -> -1 %% The default, for safety end end "
     },
     "bitcask.max_fold_puts": {
       "properties": {},
       "comment": [],
       "configName": "bitcask.max_fold_puts",
-      "settingName": "fun(Conf) -> case cuttlefish:conf_get(\"bitcask.fold.max_puts\", Conf) of unlimited -> -1; I when is_integer(I) -> I; _ -> 0 %% default catch end end "
+      "func": "fun(Conf) -> case cuttlefish:conf_get(\"bitcask.fold.max_puts\", Conf) of unlimited -> -1; I when is_integer(I) -> I; _ -> 0 %% default catch end end "
     },
     "bitcask.expiry_secs": {
       "properties": {},
       "comment": [],
       "configName": "bitcask.expiry_secs",
-      "settingName": "fun(Conf) -> case cuttlefish:conf_get(\"bitcask.expiry\", Conf) of off -> -1; I when is_integer(I) -> I; _ -> -1 end end "
+      "func": "fun(Conf) -> case cuttlefish:conf_get(\"bitcask.expiry\", Conf) of off -> -1; I when is_integer(I) -> I; _ -> -1 end end "
     },
     "bitcask.require_hint_crc": {
       "properties": {},
       "comment": [],
       "configName": "bitcask.require_hint_crc",
-      "settingName": "fun(Conf) -> case cuttlefish:conf_get(\"bitcask.hintfile_checksums\", Conf) of strict -> true; allow_missing -> false; _ -> true end end"
+      "func": "fun(Conf) -> case cuttlefish:conf_get(\"bitcask.hintfile_checksums\", Conf) of strict -> true; allow_missing -> false; _ -> true end end"
     },
     "eleveldb.compression": {
       "properties": {},
       "comment": [],
       "configName": "eleveldb.compression",
-      "settingName": "fun(Conf) -> Setting = cuttlefish:conf_get(\"leveldb.compression\", Conf), case Setting of false -> false; true -> cuttlefish:conf_get(\"leveldb.compression.algorithm\", Conf, snappy) end end"
+      "func": "fun(Conf) -> Setting = cuttlefish:conf_get(\"leveldb.compression\", Conf), case Setting of false -> false; true -> cuttlefish:conf_get(\"leveldb.compression.algorithm\", Conf, snappy) end end"
     },
     "eleveldb.delete_threshold": {
       "properties": {},
       "comment": [],
       "configName": "eleveldb.delete_threshold",
-      "settingName": "fun(Conf) -> case cuttlefish:conf_get(\"leveldb.compaction.trigger.tombstone_count\", Conf) of off -> 0; Int -> Int end end"
+      "func": "fun(Conf) -> case cuttlefish:conf_get(\"leveldb.compaction.trigger.tombstone_count\", Conf) of off -> 0; Int -> Int end end"
     },
     "eleveldb.tiered_slow_level": {
       "properties": {},
       "comment": [],
       "configName": "eleveldb.tiered_slow_level",
-      "settingName": "fun(Conf) -> case cuttlefish:conf_get(\"leveldb.tiered\", Conf) of off -> 0; I -> I end end "
+      "func": "fun(Conf) -> case cuttlefish:conf_get(\"leveldb.tiered\", Conf) of off -> 0; I -> I end end "
     },
     "eleveldb.expiry_minutes": {
       "properties": {},
       "comment": [],
       "configName": "eleveldb.expiry_minutes",
-      "settingName": "fun(Conf) -> case cuttlefish:conf_get(\"leveldb.expiration.retention_time\", Conf) of unlimited -> 0; I -> I end end "
+      "func": "fun(Conf) -> case cuttlefish:conf_get(\"leveldb.expiration.retention_time\", Conf) of unlimited -> 0; I -> I end end "
     },
     "riak_kv.multi_backend_default": {
       "properties": {},
       "comment": [],
       "configName": "riak_kv.multi_backend_default",
-      "settingName": "fun(Conf) -> list_to_binary(cuttlefish:conf_get([\"multi_backend\", \"default\"], Conf)) end"
+      "func": "fun(Conf) -> list_to_binary(cuttlefish:conf_get([\"multi_backend\", \"default\"], Conf)) end"
     },
     "riak_kv.multi_backend": {
       "properties": {},
       "comment": [],
       "configName": "riak_kv.multi_backend",
-      "settingName": "fun(Conf, Schema) -> GenerateSubConfig = fun(Name, Prefix, ProplistKey, ModuleName) -> BackendConfigName = [\"multi_backend\", Name], BackendConfigPrefix = BackendConfigName ++ [Prefix], SubConf = [ begin {lists:nthtail(2, Key), Value} end || {Key, Value} <- cuttlefish_variable:filter_by_prefix(BackendConfigPrefix, Conf)],  case cuttlefish_generator:map(Schema, SubConf) of {error, _Phase, _Errors} -> cuttlefish:invalid( lists:flatten(io_lib:format( \"Error processing multi_backend configuration for backend ~s\", [Name]))); BackendProplist -> Proplist = lists:foldl( fun(K, Acc) -> proplists:get_value(K, Acc, []) end, BackendProplist, ProplistKey), {ModuleName, Proplist} end end, %% group by $name into list, also cut the \"multi_backend.$name\" off every key BackendNames = cuttlefish_variable:fuzzy_matches([\"multi_backend\",\"$name\",\"storage_backend\"], Conf), %% for each in list, case statement on backend type Backends = [ begin BackendConfigName = [\"multi_backend\", Name], {BackendModule, BackendConfig} = case cuttlefish:conf_get(BackendConfigName ++ [\"storage_backend\"], Conf) of bitcask -> GenerateSubConfig(Name, \"bitcask\", [bitcask], riak_kv_bitcask_backend); leveldb -> GenerateSubConfig(Name, \"leveldb\", [eleveldb], riak_kv_eleveldb_backend); leveled -> GenerateSubConfig(Name, \"leveled\", [leveled], riak_kv_leveled_backend); memory -> GenerateSubConfig(Name, \"memory_backend\", [riak_kv, memory_backend], riak_kv_memory_backend) end, {list_to_binary(Name),  BackendModule, BackendConfig} end || {\"$name\", Name} <- BackendNames], case Backends of [] -> throw(unset); _ -> Backends end end "
+      "func": "fun(Conf, Schema) -> GenerateSubConfig = fun(Name, Prefix, ProplistKey, ModuleName) -> BackendConfigName = [\"multi_backend\", Name], BackendConfigPrefix = BackendConfigName ++ [Prefix], SubConf = [ begin {lists:nthtail(2, Key), Value} end || {Key, Value} <- cuttlefish_variable:filter_by_prefix(BackendConfigPrefix, Conf)],  case cuttlefish_generator:map(Schema, SubConf) of {error, _Phase, _Errors} -> cuttlefish:invalid( lists:flatten(io_lib:format( \"Error processing multi_backend configuration for backend ~s\", [Name]))); BackendProplist -> Proplist = lists:foldl( fun(K, Acc) -> proplists:get_value(K, Acc, []) end, BackendProplist, ProplistKey), {ModuleName, Proplist} end end, %% group by $name into list, also cut the \"multi_backend.$name\" off every key BackendNames = cuttlefish_variable:fuzzy_matches([\"multi_backend\",\"$name\",\"storage_backend\"], Conf), %% for each in list, case statement on backend type Backends = [ begin BackendConfigName = [\"multi_backend\", Name], {BackendModule, BackendConfig} = case cuttlefish:conf_get(BackendConfigName ++ [\"storage_backend\"], Conf) of bitcask -> GenerateSubConfig(Name, \"bitcask\", [bitcask], riak_kv_bitcask_backend); leveldb -> GenerateSubConfig(Name, \"leveldb\", [eleveldb], riak_kv_eleveldb_backend); leveled -> GenerateSubConfig(Name, \"leveled\", [leveled], riak_kv_leveled_backend); memory -> GenerateSubConfig(Name, \"memory_backend\", [riak_kv, memory_backend], riak_kv_memory_backend) end, {list_to_binary(Name),  BackendModule, BackendConfig} end || {\"$name\", Name} <- BackendNames], case Backends of [] -> throw(unset); _ -> Backends end end "
     },
     "riak_repl.fullsync_interval": {
       "properties": {},
       "comment": [],
       "configName": "riak_repl.fullsync_interval",
-      "settingName": "fun(Conf) -> Minute = fun(Millis) -> Millis div 60000 end, FullSyncIntervals = cuttlefish_variable:filter_by_prefix(\"mdc.fullsync_interval\", Conf), case proplists:get_value([\"mdc\", \"fullsync_interval\", \"all\"], FullSyncIntervals) of undefined -> [ {list_to_atom(Name), Minute(Value)} || {[\"mdc\", \"fullsync_interval\", Name], Value} <- FullSyncIntervals]; X -> Minute(X) end end"
+      "func": "fun(Conf) -> Minute = fun(Millis) -> Millis div 60000 end, FullSyncIntervals = cuttlefish_variable:filter_by_prefix(\"mdc.fullsync_interval\", Conf), case proplists:get_value([\"mdc\", \"fullsync_interval\", \"all\"], FullSyncIntervals) of undefined -> [ {list_to_atom(Name), Minute(Value)} || {[\"mdc\", \"fullsync_interval\", Name], Value} <- FullSyncIntervals]; X -> Minute(X) end end"
     },
     "riak_repl.proxy_get": {
       "properties": {},
       "comment": [],
       "configName": "riak_repl.proxy_get",
-      "settingName": "fun(Conf) -> case cuttlefish:conf_get(\"mdc.proxy_get\", Conf) of on -> enabled; off -> disabled; _ -> disabled end end"
+      "func": "fun(Conf) -> case cuttlefish:conf_get(\"mdc.proxy_get\", Conf) of on -> enabled; off -> disabled; _ -> disabled end end"
     }
   },
   "validators": {
@@ -7429,7 +7429,7 @@
       "comment": [],
       "name": "scheduler_absolute",
       "description": "must be 1 to 1024",
-      "settingName": "fun(Value) -> is_integer(Value) andalso Value =< 1024 andalso Value >= 1 end"
+      "func": "fun(Value) -> is_integer(Value) andalso Value =< 1024 andalso Value >= 1 end"
     }
   }
 }

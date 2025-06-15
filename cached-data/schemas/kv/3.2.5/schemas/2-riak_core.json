@@ -181,7 +181,7 @@
     },
     "handoff.port": {
       "properties": {
-        "default": "handoff_port",
+        "default": "{{handoff_port}}",
         "datatype": "integer",
         "hidden": true
       },
@@ -543,7 +543,7 @@
         ""
       ],
       "configName": "riak_core.job_accept_class",
-      "settingName": "fun(Conf) -> Fold = fun({[_, _, Mod, Op], true}, Result) -> [{erlang:list_to_atom(Mod), erlang:list_to_atom(Op)} | Result]; ({[_, _, _, _], false}, Result) -> Result; ({[_, _, _, _], _} = Setting, _) -> cuttlefish:invalid(io_lib:format(\"~p\", [Setting])); (_, Result) -> Result end, lists:sort(lists:foldl(Fold, [], cuttlefish_variable:filter_by_prefix([\"cluster\", \"job\"], Conf))) end"
+      "func": "fun(Conf) -> Fold = fun({[_, _, Mod, Op], true}, Result) -> [{erlang:list_to_atom(Mod), erlang:list_to_atom(Op)} | Result]; ({[_, _, _, _], false}, Result) -> Result; ({[_, _, _, _], _} = Setting, _) -> cuttlefish:invalid(io_lib:format(\"~p\", [Setting])); (_, Result) -> Result end, lists:sort(lists:foldl(Fold, [], cuttlefish_variable:filter_by_prefix([\"cluster\", \"job\"], Conf))) end"
     }
   },
   "validators": {
@@ -552,7 +552,7 @@
       "comment": [],
       "name": "target_nval_min",
       "description": "must be at least 1",
-      "settingName": "fun(Size) -> Size >= 1 end"
+      "func": "fun(Size) -> Size >= 1 end"
     }
   }
 }

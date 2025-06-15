@@ -419,37 +419,37 @@
       "properties": {},
       "comment": [],
       "configName": "bitcask.sync_strategy",
-      "settingName": "fun(Conf) -> Setting = cuttlefish:conf_get(\"bitcask.sync.strategy\", Conf), case Setting of none -> none; o_sync -> o_sync; interval -> Interval = cuttlefish:conf_get(\"bitcask.sync.interval\", Conf, undefined), {seconds, Interval}; _Default -> none end end"
+      "func": "fun(Conf) -> Setting = cuttlefish:conf_get(\"bitcask.sync.strategy\", Conf), case Setting of none -> none; o_sync -> o_sync; interval -> Interval = cuttlefish:conf_get(\"bitcask.sync.interval\", Conf, undefined), {seconds, Interval}; _Default -> none end end"
     },
     "bitcask.merge_window": {
       "properties": {},
       "comment": [],
       "configName": "bitcask.merge_window",
-      "settingName": "fun(Conf) -> Setting = cuttlefish:conf_get(\"bitcask.merge.policy\", Conf), case Setting of always -> always; never -> never; window -> Start = cuttlefish:conf_get(\"bitcask.merge.window.start\", Conf, undefined), End = cuttlefish:conf_get(\"bitcask.merge.window.end\", Conf, undefined), {Start, End}; _Default -> always end end"
+      "func": "fun(Conf) -> Setting = cuttlefish:conf_get(\"bitcask.merge.policy\", Conf), case Setting of always -> always; never -> never; window -> Start = cuttlefish:conf_get(\"bitcask.merge.window.start\", Conf, undefined), End = cuttlefish:conf_get(\"bitcask.merge.window.end\", Conf, undefined), {Start, End}; _Default -> always end end"
     },
     "bitcask.max_fold_age": {
       "properties": {},
       "comment": [],
       "configName": "bitcask.max_fold_age",
-      "settingName": "fun(Conf) -> case cuttlefish:conf_get(\"bitcask.fold.max_age\", Conf) of unlimited -> -1; I when is_integer(I) -> %% app.config expects microseconds I * 1000; _ -> -1 %% The default, for safety end end "
+      "func": "fun(Conf) -> case cuttlefish:conf_get(\"bitcask.fold.max_age\", Conf) of unlimited -> -1; I when is_integer(I) -> %% app.config expects microseconds I * 1000; _ -> -1 %% The default, for safety end end "
     },
     "bitcask.max_fold_puts": {
       "properties": {},
       "comment": [],
       "configName": "bitcask.max_fold_puts",
-      "settingName": "fun(Conf) -> case cuttlefish:conf_get(\"bitcask.fold.max_puts\", Conf) of unlimited -> -1; I when is_integer(I) -> I; _ -> 0 %% default catch end end "
+      "func": "fun(Conf) -> case cuttlefish:conf_get(\"bitcask.fold.max_puts\", Conf) of unlimited -> -1; I when is_integer(I) -> I; _ -> 0 %% default catch end end "
     },
     "bitcask.expiry_secs": {
       "properties": {},
       "comment": [],
       "configName": "bitcask.expiry_secs",
-      "settingName": "fun(Conf) -> case cuttlefish:conf_get(\"bitcask.expiry\", Conf) of off -> -1; I when is_integer(I) -> I; _ -> -1 end end "
+      "func": "fun(Conf) -> case cuttlefish:conf_get(\"bitcask.expiry\", Conf) of off -> -1; I when is_integer(I) -> I; _ -> -1 end end "
     },
     "bitcask.require_hint_crc": {
       "properties": {},
       "comment": [],
       "configName": "bitcask.require_hint_crc",
-      "settingName": "fun(Conf) -> case cuttlefish:conf_get(\"bitcask.hintfile_checksums\", Conf) of strict -> true; allow_missing -> false; _ -> true end end"
+      "func": "fun(Conf) -> case cuttlefish:conf_get(\"bitcask.hintfile_checksums\", Conf) of strict -> true; allow_missing -> false; _ -> true end end"
     }
   },
   "validators": {
@@ -458,7 +458,7 @@
       "comment": [],
       "name": "is_percentage",
       "description": "must be a percentage",
-      "settingName": "fun(Value) -> Value >= 0 andalso Value =< 100 end"
+      "func": "fun(Value) -> Value >= 0 andalso Value =< 100 end"
     }
   }
 }

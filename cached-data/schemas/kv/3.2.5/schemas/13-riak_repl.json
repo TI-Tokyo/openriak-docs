@@ -270,13 +270,13 @@
       "properties": {},
       "comment": [],
       "configName": "riak_repl.fullsync_interval",
-      "settingName": "fun(Conf) -> Minute = fun(Millis) -> Millis div 60000 end, FullSyncIntervals = cuttlefish_variable:filter_by_prefix(\"mdc.fullsync_interval\", Conf), case proplists:get_value([\"mdc\", \"fullsync_interval\", \"all\"], FullSyncIntervals) of undefined -> [ {list_to_atom(Name), Minute(Value)} || {[\"mdc\", \"fullsync_interval\", Name], Value} <- FullSyncIntervals]; X -> Minute(X) end end"
+      "func": "fun(Conf) -> Minute = fun(Millis) -> Millis div 60000 end, FullSyncIntervals = cuttlefish_variable:filter_by_prefix(\"mdc.fullsync_interval\", Conf), case proplists:get_value([\"mdc\", \"fullsync_interval\", \"all\"], FullSyncIntervals) of undefined -> [ {list_to_atom(Name), Minute(Value)} || {[\"mdc\", \"fullsync_interval\", Name], Value} <- FullSyncIntervals]; X -> Minute(X) end end"
     },
     "riak_repl.proxy_get": {
       "properties": {},
       "comment": [],
       "configName": "riak_repl.proxy_get",
-      "settingName": "fun(Conf) -> case cuttlefish:conf_get(\"mdc.proxy_get\", Conf) of on -> enabled; off -> disabled; _ -> disabled end end"
+      "func": "fun(Conf) -> case cuttlefish:conf_get(\"mdc.proxy_get\", Conf) of on -> enabled; off -> disabled; _ -> disabled end end"
     }
   },
   "validators": {}

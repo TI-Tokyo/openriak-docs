@@ -593,7 +593,7 @@
     },
     "storage_backend": {
       "properties": {
-        "default": "storage_backend",
+        "default": "{{storage_backend}}",
         "datatype": {
           "type": "enum",
           "possibleValues": [
@@ -2528,61 +2528,61 @@
       "properties": {},
       "comment": [],
       "configName": "riak_kv.anti_entropy",
-      "settingName": "fun(Conf) -> Setting = cuttlefish:conf_get(\"anti_entropy\", Conf), case Setting of active -> {on, []}; 'active-debug' -> {on, [debug]}; passive -> {off, []}; _Default -> {on, []} end end "
+      "func": "fun(Conf) -> Setting = cuttlefish:conf_get(\"anti_entropy\", Conf), case Setting of active -> {on, []}; 'active-debug' -> {on, [debug]}; passive -> {off, []}; _Default -> {on, []} end end "
     },
     "riak_kv.storage_backend": {
       "properties": {},
       "comment": [],
       "configName": "riak_kv.storage_backend",
-      "settingName": "fun(Conf) -> Setting = cuttlefish:conf_get(\"storage_backend\", Conf), case Setting of bitcask -> riak_kv_bitcask_backend; leveldb -> riak_kv_eleveldb_backend; leveled -> riak_kv_leveled_backend; memory -> riak_kv_memory_backend; multi -> riak_kv_multi_backend; prefix_multi -> riak_kv_multi_prefix_backend; _Default -> riak_kv_bitcask_backend end end"
+      "func": "fun(Conf) -> Setting = cuttlefish:conf_get(\"storage_backend\", Conf), case Setting of bitcask -> riak_kv_bitcask_backend; leveldb -> riak_kv_eleveldb_backend; leveled -> riak_kv_leveled_backend; memory -> riak_kv_memory_backend; multi -> riak_kv_multi_backend; prefix_multi -> riak_kv_multi_prefix_backend; _Default -> riak_kv_bitcask_backend end end"
     },
     "riak_kv.anti_entropy_build_limit": {
       "properties": {},
       "comment": [],
       "configName": "riak_kv.anti_entropy_build_limit",
-      "settingName": "fun(Conf) -> {cuttlefish:conf_get(\"anti_entropy.tree.build_limit.number\", Conf), cuttlefish:conf_get(\"anti_entropy.tree.build_limit.per_timespan\", Conf)} end"
+      "func": "fun(Conf) -> {cuttlefish:conf_get(\"anti_entropy.tree.build_limit.number\", Conf), cuttlefish:conf_get(\"anti_entropy.tree.build_limit.per_timespan\", Conf)} end"
     },
     "riak_kv.aae_throttle_limits": {
       "properties": {},
       "comment": [],
       "configName": "riak_kv.aae_throttle_limits",
-      "settingName": "riak_core_throttle:create_limits_translator_fun(\"anti_entropy\", \"mailbox_size\") "
+      "func": "riak_core_throttle:create_limits_translator_fun(\"anti_entropy\", \"mailbox_size\") "
     },
     "riak_kv.fsm_limit": {
       "properties": {},
       "comment": [],
       "configName": "riak_kv.fsm_limit",
-      "settingName": "fun(Conf) -> TheLimit = cuttlefish:conf_get(\"max_concurrent_requests\", Conf), case TheLimit of infinite -> undefined; Int when is_integer(Int) -> Int; _ -> cuttlefish:invalid(\"max_concurrent_requests must be an integer or 'infinite'\") end end "
+      "func": "fun(Conf) -> TheLimit = cuttlefish:conf_get(\"max_concurrent_requests\", Conf), case TheLimit of infinite -> undefined; Int when is_integer(Int) -> Int; _ -> cuttlefish:invalid(\"max_concurrent_requests must be an integer or 'infinite'\") end end "
     },
     "riak_kv.object_format": {
       "properties": {},
       "comment": [],
       "configName": "riak_kv.object_format",
-      "settingName": "fun(Conf) -> case cuttlefish:conf_get(\"object.format\", Conf) of 0 -> v0; 1 -> v1; _ -> cuttlefish:invalid(\"invalid object format version\") end end "
+      "func": "fun(Conf) -> case cuttlefish:conf_get(\"object.format\", Conf) of 0 -> v0; 1 -> v1; _ -> cuttlefish:invalid(\"invalid object format version\") end end "
     },
     "riak_kv.memory_backend.max_memory": {
       "properties": {},
       "comment": [],
       "configName": "riak_kv.memory_backend.max_memory",
-      "settingName": "fun(Conf) -> Bytes = cuttlefish:conf_get(\"memory_backend.max_memory_per_vnode\", Conf), cuttlefish_util:ceiling(Bytes / 1048576) end "
+      "func": "fun(Conf) -> Bytes = cuttlefish:conf_get(\"memory_backend.max_memory_per_vnode\", Conf), cuttlefish_util:ceiling(Bytes / 1048576) end "
     },
     "riak_core.default_bucket_props.precommit": {
       "properties": {},
       "comment": [],
       "configName": "riak_core.default_bucket_props.precommit",
-      "settingName": "fun(Conf) -> RawString = cuttlefish:conf_get(\"buckets.default.precommit\", Conf, []), StringList = string:tokens(RawString, \" \"), [ begin case string:tokens(String, \":\") of %% Javascript make this:  {struct, [{<<\"name\">>, <<\"SomeJS.nonsense\">>}]} [JavascriptFunction] -> {struct, [{<<\"name\">>, list_to_binary(JavascriptFunction)}]}; %% Erlang make this: {struct, [{<<\"mod\">>, <<\"module\">>}, {<<\"fun\">>,<<\"function\">>}]} [Module, Function] -> {struct, [ {<<\"mod\">>, list_to_binary(Module)}, {<<\"fun\">>, list_to_binary(Function)} ]}; _ -> cuttlefish:invalid(\"incorrect hook format '\" ++ String ++ \"'\") end end || String <- StringList] end "
+      "func": "fun(Conf) -> RawString = cuttlefish:conf_get(\"buckets.default.precommit\", Conf, []), StringList = string:tokens(RawString, \" \"), [ begin case string:tokens(String, \":\") of %% Javascript make this:  {struct, [{<<\"name\">>, <<\"SomeJS.nonsense\">>}]} [JavascriptFunction] -> {struct, [{<<\"name\">>, list_to_binary(JavascriptFunction)}]}; %% Erlang make this: {struct, [{<<\"mod\">>, <<\"module\">>}, {<<\"fun\">>,<<\"function\">>}]} [Module, Function] -> {struct, [ {<<\"mod\">>, list_to_binary(Module)}, {<<\"fun\">>, list_to_binary(Function)} ]}; _ -> cuttlefish:invalid(\"incorrect hook format '\" ++ String ++ \"'\") end end || String <- StringList] end "
     },
     "riak_core.default_bucket_props.postcommit": {
       "properties": {},
       "comment": [],
       "configName": "riak_core.default_bucket_props.postcommit",
-      "settingName": "fun(Conf) -> RawString = cuttlefish:conf_get(\"buckets.default.postcommit\", Conf, []), StringList = string:tokens(RawString, \" \"), [ begin case string:tokens(String, \":\") of [Module, Function] -> {struct, [ {<<\"mod\">>, list_to_binary(Module)}, {<<\"fun\">>, list_to_binary(Function)} ]}; _ -> cuttlefish:invalid(\"incorrect hook format '\" ++ String ++ \"'\") end end ||  String <- StringList] end "
+      "func": "fun(Conf) -> RawString = cuttlefish:conf_get(\"buckets.default.postcommit\", Conf, []), StringList = string:tokens(RawString, \" \"), [ begin case string:tokens(String, \":\") of [Module, Function] -> {struct, [ {<<\"mod\">>, list_to_binary(Module)}, {<<\"fun\">>, list_to_binary(Function)} ]}; _ -> cuttlefish:invalid(\"incorrect hook format '\" ++ String ++ \"'\") end end ||  String <- StringList] end "
     },
     "riak_kv.ttaaefs_allcheck_window": {
       "properties": {},
       "comment": [],
       "configName": "riak_kv.ttaaefs_allcheck_window",
-      "settingName": "fun(Conf) -> Setting = cuttlefish:conf_get(\"ttaaefs_allcheck.policy\", Conf), case Setting of always -> always; never -> never; window -> Start = cuttlefish:conf_get(\"ttaaefs_allcheck.window.start\", Conf, undefined), End = cuttlefish:conf_get(\"ttaaefs_allcheck.window.end\", Conf, undefined), {Start, End}; _Default -> always end end"
+      "func": "fun(Conf) -> Setting = cuttlefish:conf_get(\"ttaaefs_allcheck.policy\", Conf), case Setting of always -> always; never -> never; window -> Start = cuttlefish:conf_get(\"ttaaefs_allcheck.window.start\", Conf, undefined), End = cuttlefish:conf_get(\"ttaaefs_allcheck.window.end\", Conf, undefined), {Start, End}; _Default -> always end end"
     }
   },
   "validators": {
@@ -2591,7 +2591,7 @@
       "comment": [],
       "name": "valid_ipaddr",
       "description": "must be a valid IP address",
-      "settingName": "fun(AddrString) -> case inet_parse:address(AddrString) of {ok, _} -> true; {error, _} -> false end end"
+      "func": "fun(AddrString) -> case inet_parse:address(AddrString) of {ok, _} -> true; {error, _} -> false end end"
     }
   }
 }

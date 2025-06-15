@@ -477,25 +477,25 @@
       "properties": {},
       "comment": [],
       "configName": "eleveldb.compression",
-      "settingName": "fun(Conf) -> Setting = cuttlefish:conf_get(\"leveldb.compression\", Conf), case Setting of false -> false; true -> cuttlefish:conf_get(\"leveldb.compression.algorithm\", Conf, snappy) end end"
+      "func": "fun(Conf) -> Setting = cuttlefish:conf_get(\"leveldb.compression\", Conf), case Setting of false -> false; true -> cuttlefish:conf_get(\"leveldb.compression.algorithm\", Conf, snappy) end end"
     },
     "eleveldb.delete_threshold": {
       "properties": {},
       "comment": [],
       "configName": "eleveldb.delete_threshold",
-      "settingName": "fun(Conf) -> case cuttlefish:conf_get(\"leveldb.compaction.trigger.tombstone_count\", Conf) of off -> 0; Int -> Int end end"
+      "func": "fun(Conf) -> case cuttlefish:conf_get(\"leveldb.compaction.trigger.tombstone_count\", Conf) of off -> 0; Int -> Int end end"
     },
     "eleveldb.tiered_slow_level": {
       "properties": {},
       "comment": [],
       "configName": "eleveldb.tiered_slow_level",
-      "settingName": "fun(Conf) -> case cuttlefish:conf_get(\"leveldb.tiered\", Conf) of off -> 0; I -> I end end "
+      "func": "fun(Conf) -> case cuttlefish:conf_get(\"leveldb.tiered\", Conf) of off -> 0; I -> I end end "
     },
     "eleveldb.expiry_minutes": {
       "properties": {},
       "comment": [],
       "configName": "eleveldb.expiry_minutes",
-      "settingName": "fun(Conf) -> case cuttlefish:conf_get(\"leveldb.expiration.retention_time\", Conf) of unlimited -> 0; I -> I end end "
+      "func": "fun(Conf) -> case cuttlefish:conf_get(\"leveldb.expiration.retention_time\", Conf) of unlimited -> 0; I -> I end end "
     }
   },
   "validators": {}

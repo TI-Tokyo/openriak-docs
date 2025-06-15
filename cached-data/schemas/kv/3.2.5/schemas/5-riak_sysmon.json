@@ -139,19 +139,19 @@
       "properties": {},
       "comment": [],
       "configName": "riak_sysmon.gc_ms_limit",
-      "settingName": "fun(Conf) -> case cuttlefish:conf_get(\"runtime_health.triggers.process.garbage_collection\", Conf) of off -> 0; Int -> Int end end"
+      "func": "fun(Conf) -> case cuttlefish:conf_get(\"runtime_health.triggers.process.garbage_collection\", Conf) of off -> 0; Int -> Int end end"
     },
     "riak_sysmon.schedule_ms_limit": {
       "properties": {},
       "comment": [],
       "configName": "riak_sysmon.schedule_ms_limit",
-      "settingName": "fun(Conf) -> case cuttlefish:conf_get(\"runtime_health.triggers.process.long_schedule\", Conf) of off -> 0; Int -> Int end end"
+      "func": "fun(Conf) -> case cuttlefish:conf_get(\"runtime_health.triggers.process.long_schedule\", Conf) of off -> 0; Int -> Int end end"
     },
     "riak_sysmon.heap_word_limit": {
       "properties": {},
       "comment": [],
       "configName": "riak_sysmon.heap_word_limit",
-      "settingName": "fun(Conf) -> case cuttlefish:conf_get(\"runtime_health.triggers.process.heap_size\", Conf) of off -> 0; Bytes -> WordSize = erlang:system_info(wordsize), Bytes div WordSize end end"
+      "func": "fun(Conf) -> case cuttlefish:conf_get(\"runtime_health.triggers.process.heap_size\", Conf) of off -> 0; Bytes -> WordSize = erlang:system_info(wordsize), Bytes div WordSize end end"
     }
   },
   "validators": {}

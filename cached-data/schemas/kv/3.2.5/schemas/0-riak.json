@@ -2,7 +2,7 @@
   "mappings": {
     "logger.level": {
       "properties": {
-        "default": "logger_level",
+        "default": "{{logger_level}}",
         "datatype": {
           "type": "enum",
           "possibleValues": [
@@ -833,25 +833,25 @@
       "properties": {},
       "comment": [],
       "configName": "kernel.logger",
-      "settingName": "fun(Conf) -> LogFile = cuttlefish:conf_get(\"logger.file\", Conf), MaxNumBytes = cuttlefish:conf_get(\"logger.max_file_size\", Conf), MaxNumFiles = cuttlefish:conf_get(\"logger.max_files\", Conf),  DefaultFormatStr = cuttlefish:conf_get(\"logger.format\", Conf), DefaultFormatTerm = case erl_scan:string(DefaultFormatStr) of {ok, DefaultTokens, _} -> case erl_parse:parse_term(DefaultTokens) of {ok, DefaultTerm} -> DefaultTerm; {error, {_, _, DefaultError}} -> cuttlefish:error(foo) end; {error, {_, _, DefaultScanError}} -> cuttlefish:error(foo) end, ConfigMap0 = #{config => #{file => LogFile, max_no_bytes => MaxNumBytes, max_no_files => MaxNumFiles}, formatter => {logger_formatter, #{template => DefaultFormatTerm} } },  [{handler, default, logger_std_h, ConfigMap0}]  end "
+      "func": "fun(Conf) -> LogFile = cuttlefish:conf_get(\"logger.file\", Conf), MaxNumBytes = cuttlefish:conf_get(\"logger.max_file_size\", Conf), MaxNumFiles = cuttlefish:conf_get(\"logger.max_files\", Conf),  DefaultFormatStr = cuttlefish:conf_get(\"logger.format\", Conf), DefaultFormatTerm = case erl_scan:string(DefaultFormatStr) of {ok, DefaultTokens, _} -> case erl_parse:parse_term(DefaultTokens) of {ok, DefaultTerm} -> DefaultTerm; {error, {_, _, DefaultError}} -> cuttlefish:error(foo) end; {error, {_, _, DefaultScanError}} -> cuttlefish:error(foo) end, ConfigMap0 = #{config => #{file => LogFile, max_no_bytes => MaxNumBytes, max_no_files => MaxNumFiles}, formatter => {logger_formatter, #{template => DefaultFormatTerm} } },  [{handler, default, logger_std_h, ConfigMap0}]  end "
     },
     "vm_args.+B": {
       "properties": {},
       "comment": [],
       "configName": "vm_args.+B",
-      "settingName": "fun(Conf) -> Setting = cuttlefish:conf_get(\"erlang.vm.ignore_break_signal\", Conf), case Setting of true -> \"i\"; false -> cuttlefish:unset() end end "
+      "func": "fun(Conf) -> Setting = cuttlefish:conf_get(\"erlang.vm.ignore_break_signal\", Conf), case Setting of true -> \"i\"; false -> cuttlefish:unset() end end "
     },
     "vm_args.+hmbs": {
       "properties": {},
       "comment": [],
       "configName": "vm_args.+hmbs",
-      "settingName": "fun(Conf) -> Setting = cuttlefish:conf_get(\"erlang.virtual_heap.hmbs\", Conf), case Setting of Setting when is_integer(Setting) -> Setting; otp -> cuttlefish:unset() end end "
+      "func": "fun(Conf) -> Setting = cuttlefish:conf_get(\"erlang.virtual_heap.hmbs\", Conf), case Setting of Setting when is_integer(Setting) -> Setting; otp -> cuttlefish:unset() end end "
     },
     "vm_args.+hms": {
       "properties": {},
       "comment": [],
       "configName": "vm_args.+hms",
-      "settingName": "fun(Conf) -> Setting = cuttlefish:conf_get(\"erlang.virtual_heap.hms\", Conf), case Setting of Setting when is_integer(Setting) -> Setting; otp -> cuttlefish:unset() end end "
+      "func": "fun(Conf) -> Setting = cuttlefish:conf_get(\"erlang.virtual_heap.hms\", Conf), case Setting of Setting when is_integer(Setting) -> Setting; otp -> cuttlefish:unset() end end "
     }
   },
   "validators": {
@@ -860,7 +860,7 @@
       "comment": [],
       "name": "scheduler_absolute",
       "description": "must be 1 to 1024",
-      "settingName": "fun(Value) -> is_integer(Value) andalso Value =< 1024 andalso Value >= 1 end"
+      "func": "fun(Value) -> is_integer(Value) andalso Value =< 1024 andalso Value >= 1 end"
     }
   }
 }
