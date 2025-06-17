@@ -1,0 +1,173 @@
+{
+  "mappings": {
+    "runtime_health.thresholds.busy_processes": {
+      "properties": {
+        "default": "30",
+        "datatype": {
+          "type": "atom",
+          "value": "integer"
+        },
+        "hidden": true
+      },
+      "comment": [
+        "@doc The threshold at which to warn about the number of processes",
+        "that are overly busy. Processes with large heaps or that take a",
+        "long time to garbage collect will count toward this threshold."
+      ],
+      "configName": "runtime_health.thresholds.busy_processes",
+      "settingName": "riak_sysmon.process_limit"
+    },
+    "runtime_health.thresholds.busy_ports": {
+      "properties": {
+        "default": "2",
+        "datatype": {
+          "type": "atom",
+          "value": "integer"
+        },
+        "hidden": true
+      },
+      "comment": [
+        "@doc The threshold at which to warn about the number of ports that",
+        "are overly busy. Ports with full input buffers count toward this",
+        "threshold."
+      ],
+      "configName": "runtime_health.thresholds.busy_ports",
+      "settingName": "riak_sysmon.port_limit"
+    },
+    "runtime_health.triggers.process.garbage_collection": {
+      "properties": {
+        "default": "off",
+        "datatype": [
+          {
+            "type": "atom",
+            "value": {
+              "type": "atom",
+              "value": "off"
+            }
+          },
+          {
+            "type": "duration",
+            "unit": "ms"
+          }
+        ],
+        "hidden": true
+      },
+      "comment": [
+        "@doc A process will become busy when it exceeds this amount of time",
+        "doing garbage collection.",
+        "",
+        "NOTE: Enabling this setting can cause performance problems on",
+        "multi-core systems.",
+        "@see runtime_health.thresholds.busy_processes"
+      ],
+      "configName": "runtime_health.triggers.process.garbage_collection",
+      "settingName": "riak_sysmon.gc_ms_limit"
+    },
+    "runtime_health.triggers.process.long_schedule": {
+      "properties": {
+        "default": "off",
+        "datatype": [
+          {
+            "type": "atom",
+            "value": {
+              "type": "atom",
+              "value": "off"
+            }
+          },
+          {
+            "type": "duration",
+            "unit": "ms"
+          }
+        ],
+        "hidden": true
+      },
+      "comment": [
+        "@doc A process will become busy when it exceeds this amount of time",
+        "during a single process scheduling & execution cycle."
+      ],
+      "configName": "runtime_health.triggers.process.long_schedule",
+      "settingName": "riak_sysmon.schedule_ms_limit"
+    },
+    "runtime_health.triggers.process.heap_size": {
+      "properties": {
+        "default": "160444000",
+        "datatype": [
+          {
+            "type": "atom",
+            "value": "bytesize"
+          },
+          {
+            "type": "atom",
+            "value": {
+              "type": "atom",
+              "value": "off"
+            }
+          }
+        ],
+        "hidden": true
+      },
+      "comment": [
+        "@doc A process will become busy when its heap exceeds this size.",
+        "@see runtime_health.thresholds.busy_processes"
+      ],
+      "configName": "runtime_health.triggers.process.heap_size",
+      "settingName": "riak_sysmon.heap_word_limit"
+    },
+    "runtime_health.triggers.port": {
+      "properties": {
+        "default": "on",
+        "datatype": {
+          "type": "atom",
+          "value": "flag"
+        },
+        "hidden": true
+      },
+      "comment": [
+        "@doc Whether ports with full input buffers will be counted as",
+        "busy. Ports can represent open files or network sockets.",
+        "@see runtime_health.thresholds.busy_ports"
+      ],
+      "configName": "runtime_health.triggers.port",
+      "settingName": "riak_sysmon.busy_port"
+    },
+    "runtime_health.triggers.distribution_port": {
+      "properties": {
+        "default": "on",
+        "datatype": {
+          "type": "atom",
+          "value": "flag"
+        },
+        "hidden": true
+      },
+      "comment": [
+        "@doc Whether distribution ports with full input buffers will be",
+        "counted as busy. Distribution ports connect Riak nodes within a",
+        "single cluster.",
+        "@see runtime_health.thresholds.busy_ports"
+      ],
+      "configName": "runtime_health.triggers.distribution_port",
+      "settingName": "riak_sysmon.busy_dist_port"
+    }
+  },
+  "translations": {
+    "riak_sysmon.gc_ms_limit": {
+      "properties": {},
+      "comment": [],
+      "configName": "riak_sysmon.gc_ms_limit",
+      "func": "fun(Conf) -> case cuttlefish:conf_get(\"runtime_health.triggers.process.garbage_collection\", Conf) of off -> 0; Int -> Int end end"
+    },
+    "riak_sysmon.schedule_ms_limit": {
+      "properties": {},
+      "comment": [],
+      "configName": "riak_sysmon.schedule_ms_limit",
+      "func": "fun(Conf) -> case cuttlefish:conf_get(\"runtime_health.triggers.process.long_schedule\", Conf) of off -> 0; Int -> Int end end"
+    },
+    "riak_sysmon.heap_word_limit": {
+      "properties": {},
+      "comment": [],
+      "configName": "riak_sysmon.heap_word_limit",
+      "func": "fun(Conf) -> case cuttlefish:conf_get(\"runtime_health.triggers.process.heap_size\", Conf) of off -> 0; Bytes -> WordSize = erlang:system_info(wordsize), Bytes div WordSize end end"
+    }
+  },
+  "validators": {}
+}
