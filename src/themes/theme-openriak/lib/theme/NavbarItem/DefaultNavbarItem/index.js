@@ -10,6 +10,7 @@ import DefaultNavbarItemDesktop from '@theme/NavbarItem/DefaultNavbarItem/Deskto
 export default function DefaultNavbarItem({
   mobile = false,
   position, // Need to destructure position from props so that it doesn't get passed on.
+  sidebarPath, // Need to destructure position from props so that it doesn't get passed on.
   ...props
 }) {
   const Comp = mobile ? DefaultNavbarItemMobile : DefaultNavbarItemDesktop;

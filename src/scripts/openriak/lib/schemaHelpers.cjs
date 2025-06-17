@@ -5,7 +5,7 @@ const { downloadFile, convertGithubToRawUrl } = require('./netHelpers.cjs');
 const path = require('path');
 
 function getSchemaRoot(project) {
-  const schemaRoot = path.join('cached-data', 'schemas', project);
+  const schemaRoot = path.join('static', 'cached-data', 'schemas', project);
   // Ensure folder exists
   ensureFolderExists(schemaRoot);
   return schemaRoot;

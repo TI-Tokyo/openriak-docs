@@ -112,21 +112,40 @@ function simplifyProperty(propertyObject) {
         case 'tuple':
             if (propertyObject.value && propertyObject.value.length === 2 && propertyObject.value[0].type === 'atom') {
                 switch (propertyObject.value[0].value) {
+                    case 'commented': 
                     case 'default': 
-                        if (propertyObject.value[1].type === 'template') {
-                            // add the {{ }} expected of a temaplte
-                            // note that palceholders in quoted strings are considered text so this is not needed
-                            return {
-                                type: "key-value",
-                                name: propertyObject.value[0].value,
-                                value: `{{${propertyObject.value[1].value}}}`
-                            };
-                        } else {
-                            return {
-                                type: "key-value",
-                                name: propertyObject.value[0].value,
-                                value: propertyObject.value[1].value
-                            };
+                        const defaultType = propertyObject.value[1].type;
+                        const defaultValue = propertyObject.value[1].value;
+                        switch (defaultType) {
+                            case 'tuple':
+                                const realDefault = defaultValue.map(subDefaultItem => {
+                                    switch (subDefaultItem.type) {
+                                        case 'text': return subDefaultItem.value;
+                                        case 'template': return `{{${subDefaultItem.value}}}`;
+                                        default: 
+                                            throw Error(`❌ Unknown default value tuple structure: ${JSON.stringify(propertyObject, null, 0)}`);
+                                    }
+                                }).join(':');
+                                return {
+                                    type: "key-value",
+                                    name: propertyObject.value[0].value,
+                                    value: realDefault,
+                                }
+                            case 'template': 
+                                return {
+                                    type: "key-value",
+                                    name: propertyObject.value[0].value,
+                                    value: `{{${defaultValue}}}`
+                                };
+                            case 'text':
+                            case 'atom':
+                                return {
+                                    type: "key-value",
+                                    name: propertyObject.value[0].value,
+                                    value: defaultValue,
+                                }
+                            default:
+                                throw Error(`❌ Unknown default value structure: ${JSON.stringify(propertyObject, null, 0)}`);
                         }
                     case 'datatype': 
                         return {
@@ -157,8 +176,8 @@ function simplifyProperty(propertyObject) {
             break;
         default:
             throw Error(`❌ Unknown property type "${propertyObject.type}" in: ${JSON.stringify(propertyObject, null, 0)}`);
-
     }
+    throw Error(`❌ Unknown property in: ${JSON.stringify(propertyObject, null, 0)}`);
 }
 
 function simplifyPropertyDataType(propertyObject) {
@@ -167,7 +186,7 @@ function simplifyPropertyDataType(propertyObject) {
             // keep the same structure
             return propertyObject;
         case 'atom':
-            return propertyObject.value;
+            return propertyObject;
         case 'tuple':
             if (propertyObject.value && propertyObject.value.length === 2 && propertyObject.value[0].type === 'atom') {
                 switch (propertyObject.value[0].value) {
@@ -176,6 +195,7 @@ function simplifyPropertyDataType(propertyObject) {
                     case 'enum':
                         return { "type": propertyObject.value[0].value, "possibleValues": simplifyPropertyDataType(propertyObject.value[1]) }
                     case 'integer':
+                        return { "type": propertyObject.value[0].value, "value": propertyObject.value[1].value };
                     case 'atom':
                         return { "type": propertyObject.value[0].value, "value": propertyObject.value[1] };
                     case 'percent':
