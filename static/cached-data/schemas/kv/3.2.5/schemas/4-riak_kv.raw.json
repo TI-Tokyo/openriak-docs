@@ -10,6 +10,19 @@
       "* active-debug: like active, but outputs verbose debugging",
       "  information"
     ],
+    "docText": [
+      "How Riak will repair out-of-sync keys. Some features require",
+      "this to be set to 'active', including search.",
+      "",
+      "* active: out-of-sync keys will be repaired in the background",
+      "* passive: out-of-sync keys are only repaired on read",
+      "* active-debug: like active, but outputs verbose debugging",
+      "  information"
+    ],
+    "docSections": [],
+    "docRelateds": [],
+    "docSees": [],
+    "docOther": [],
     "type": "mapping",
     "configName": "anti_entropy",
     "settingName": "riak_kv.anti_entropy",
@@ -67,6 +80,11 @@
   {
     "rawSchema": "{translation, \"riak_kv.anti_entropy\", fun(Conf) -> Setting = cuttlefish:conf_get(\"anti_entropy\", Conf), case Setting of active -> {on, []}; 'active-debug' -> {on, [debug]}; passive -> {off, []}; _Default -> {on, []} end end }.",
     "comment": [],
+    "docText": [],
+    "docSections": [],
+    "docRelateds": [],
+    "docSees": [],
+    "docOther": [],
     "type": "translation",
     "configName": "riak_kv.anti_entropy",
     "func": "fun(Conf) -> Setting = cuttlefish:conf_get(\"anti_entropy\", Conf), case Setting of active -> {on, []}; 'active-debug' -> {on, [debug]}; passive -> {off, []}; _Default -> {on, []} end end "
@@ -74,6 +92,11 @@
   {
     "rawSchema": "{mapping, \"tictacaae_active\", \"riak_kv.tictacaae_active\", [ {datatype, {enum, [active, passive]}}, {default, passive} ]}.",
     "comment": [],
+    "docText": [],
+    "docSections": [],
+    "docRelateds": [],
+    "docSees": [],
+    "docOther": [],
     "type": "mapping",
     "configName": "tictacaae_active",
     "settingName": "riak_kv.tictacaae_active",
@@ -133,6 +156,17 @@
       "the PUT has been completed.  This use aae_ping with tictac_aae, and a full",
       "sync block with legacy anti-entropy"
     ],
+    "docText": [
+      "Use hashtree tokens for anti-entropy throttling",
+      "To hold-up the vnode when there is a backlog of activity on the AAE store",
+      "hashtree token bucket may be used to block the vnode every 90 puts until",
+      "the PUT has been completed.  This use aae_ping with tictac_aae, and a full",
+      "sync block with legacy anti-entropy"
+    ],
+    "docSections": [],
+    "docRelateds": [],
+    "docSees": [],
+    "docOther": [],
     "type": "mapping",
     "configName": "aae_tokenbucket",
     "settingName": "riak_kv.aae_tokenbucket",
@@ -199,6 +233,16 @@
       "and using per-bucket full-sync.",
       "Temporary option - will be removed in 3.6"
     ],
+    "docText": [
+      "Use legacy-format tictac tree",
+      "Should only be required when perfoming a rolling upgrade to 3.4.0 or 3.2.3,",
+      "and using per-bucket full-sync.",
+      "Temporary option - will be removed in 3.6"
+    ],
+    "docSections": [],
+    "docRelateds": [],
+    "docSees": [],
+    "docOther": [],
     "type": "mapping",
     "configName": "legacyformat_tictacaae_tree",
     "settingName": "riak_kv.legacyformat_tictacaae_tree",
@@ -253,6 +297,13 @@
     "comment": [
       "@doc A path under which aae data files will be stored."
     ],
+    "docText": [
+      "A path under which aae data files will be stored."
+    ],
+    "docSections": [],
+    "docRelateds": [],
+    "docSees": [],
+    "docOther": [],
     "type": "mapping",
     "configName": "tictacaae_dataroot",
     "settingName": "riak_kv.tictacaae_dataroot",
@@ -290,6 +341,13 @@
     "comment": [
       "@doc A path under which the eraser overload queue will be stored."
     ],
+    "docText": [
+      "A path under which the eraser overload queue will be stored."
+    ],
+    "docSections": [],
+    "docRelateds": [],
+    "docSees": [],
+    "docOther": [],
     "type": "mapping",
     "configName": "eraser_dataroot",
     "settingName": "riak_kv.eraser_dataroot",
@@ -327,6 +385,13 @@
     "comment": [
       "@doc A path under which the reaper overload queue will be stored."
     ],
+    "docText": [
+      "A path under which the reaper overload queue will be stored."
+    ],
+    "docSections": [],
+    "docRelateds": [],
+    "docSees": [],
+    "docOther": [],
     "type": "mapping",
     "configName": "reaper_dataroot",
     "settingName": "riak_kv.reaper_dataroot",
@@ -364,6 +429,13 @@
     "comment": [
       "@doc A path under which the reader overload queue will be stored."
     ],
+    "docText": [
+      "A path under which the reader overload queue will be stored."
+    ],
+    "docSections": [],
+    "docRelateds": [],
+    "docSees": [],
+    "docOther": [],
     "type": "mapping",
     "configName": "reader_dataroot",
     "settingName": "riak_kv.reader_dataroot",
@@ -402,6 +474,14 @@
       "@doc A path under which the repl real-time overload queue will be stored.",
       "@doc A path under which the reaper overload queue will be stored."
     ],
+    "docText": [
+      "A path under which the repl real-time overload queue will be stored.",
+      "A path under which the reaper overload queue will be stored."
+    ],
+    "docSections": [],
+    "docRelateds": [],
+    "docSees": [],
+    "docOther": [],
     "type": "mapping",
     "configName": "replrtq_dataroot",
     "settingName": "riak_kv.replrtq_dataroot",
@@ -443,6 +523,17 @@
       "remote_console, then `riak_kv_eraser:clear_queue()` can be called to clear",
       "the existing queue and start a new queue with the new limit."
     ],
+    "docText": [
+      "The maximum size of the overflow queue for the eraser.  If the queue",
+      "goes beyond this point, new additions will be discarded.",
+      "To update this at run-time, the configuration item can be changed via",
+      "remote_console, then `riak_kv_eraser:clear_queue()` can be called to clear",
+      "the existing queue and start a new queue with the new limit."
+    ],
+    "docSections": [],
+    "docRelateds": [],
+    "docSees": [],
+    "docOther": [],
     "type": "mapping",
     "configName": "eraser_overflow_limit",
     "settingName": "riak_kv.eraser_overflow_limit",
@@ -484,6 +575,17 @@
       "remote_console, then `riak_kv_reaper:clear_queue()` can be called to clear",
       "the existing queue and start a new queue with the new limit."
     ],
+    "docText": [
+      "The maximum size of the overflow queue for the reaper.  If the queue",
+      "goes beyond this point, new additions will be discarded.",
+      "To update this at run-time, the configuration item can be changed via",
+      "remote_console, then `riak_kv_reaper:clear_queue()` can be called to clear",
+      "the existing queue and start a new queue with the new limit."
+    ],
+    "docSections": [],
+    "docRelateds": [],
+    "docSees": [],
+    "docOther": [],
     "type": "mapping",
     "configName": "reaper_overflow_limit",
     "settingName": "riak_kv.reaper_overflow_limit",
@@ -529,6 +631,21 @@
       "remote_console, then `riak_kv_replrtq_src:clear_rtq(QueueName)` can be",
       "called to clear the existing queue and start a new queue with the new limit."
     ],
+    "docText": [
+      "The maximum size of the overflow queue for the real-time replication",
+      "queue (nextgen repl only).  If the queue goes beyond this point, new",
+      "additions will be discarded.",
+      "For replrtq the queue is sized per QueueName (and priority), so differently",
+      "named queues on the host will each independently inherit this limit, for",
+      "each of the queue priorities.",
+      "To update this at run-time, the configuration item can be changed via",
+      "remote_console, then `riak_kv_replrtq_src:clear_rtq(QueueName)` can be",
+      "called to clear the existing queue and start a new queue with the new limit."
+    ],
+    "docSections": [],
+    "docRelateds": [],
+    "docSees": [],
+    "docOther": [],
     "type": "mapping",
     "configName": "replrtq_overflow_limit",
     "settingName": "riak_kv.replrtq_overflow_limit",
@@ -571,6 +688,18 @@
       "leveled_so (leveled and segment ordered).",
       "When running in native mode, this setting is ignored"
     ],
+    "docText": [
+      "Parallel key store type",
+      "When running in parallel mode, which will be the default if the backend does",
+      "not support native tictac aae (i.e. is not leveled), what type of parallel",
+      "key store should be kept - leveled_ko (leveled and key-ordered), or",
+      "leveled_so (leveled and segment ordered).",
+      "When running in native mode, this setting is ignored"
+    ],
+    "docSections": [],
+    "docRelateds": [],
+    "docSees": [],
+    "docOther": [],
     "type": "mapping",
     "configName": "tictacaae_parallelstore",
     "settingName": "riak_kv.tictacaae_parallelstore",
@@ -641,6 +770,15 @@
       "The minimum number of hours to wait between rebuilds.  Default value is 12",
       "weeks"
     ],
+    "docText": [
+      "Minimum Rebuild Wait",
+      "The minimum number of hours to wait between rebuilds.  Default value is 12",
+      "weeks"
+    ],
+    "docSections": [],
+    "docRelateds": [],
+    "docSees": [],
+    "docOther": [],
     "type": "mapping",
     "configName": "tictacaae_rebuildwait",
     "settingName": "riak_kv.tictacaae_rebuildwait",
@@ -682,6 +820,17 @@
       "at the same time, they will actually rebuild randomly between 0 an this",
       "value (in seconds) after the rebuild time. Default value is 30 days"
     ],
+    "docText": [
+      "Maximum Rebuild Delay",
+      "The number of seconds which represents the length of the period in which the",
+      "next rebuild will be scheduled.  So if all vnodes are scheduled to rebuild",
+      "at the same time, they will actually rebuild randomly between 0 an this",
+      "value (in seconds) after the rebuild time. Default value is 30 days"
+    ],
+    "docSections": [],
+    "docRelateds": [],
+    "docSees": [],
+    "docOther": [],
     "type": "mapping",
     "configName": "tictacaae_rebuilddelay",
     "settingName": "riak_kv.tictacaae_rebuilddelay",
@@ -723,6 +872,17 @@
       "Alternatively, the cost of the parallel key store can be reduced by storing",
       "only a minimal data set necessary for AAE and monitoring"
     ],
+    "docText": [
+      "Store heads in parallel key stores",
+      "If running a parallel key store, the whole \"head\" object may be stored to",
+      "allow for fold_heads queries to be run against the parallel store.",
+      "Alternatively, the cost of the parallel key store can be reduced by storing",
+      "only a minimal data set necessary for AAE and monitoring"
+    ],
+    "docSections": [],
+    "docRelateds": [],
+    "docSees": [],
+    "docOther": [],
     "type": "mapping",
     "configName": "tictacaae_storeheads",
     "settingName": "riak_kv.tictacaae_storeheads",
@@ -793,6 +953,20 @@
       "should also be reduced or handoffs may be blocked.  To be safe the",
       "vnode_inactivity_timeout must be < 0.5 * the tictacaae_exchangetick."
     ],
+    "docText": [
+      "Frequency to prompt exchange per vnode (milliseconds)",
+      "The number of milliseconds which the vnode must wait between self-pokes to",
+      "maybe prompt the next exchange. Default is 8 minutes - check all partitions",
+      "when n=3 once every hour (in each direction).  A cycle of exchanges will",
+      "take (n - 1) * n + 1 exchange ticks for each nval.",
+      "Note if this is to be reduced further the riak_core vnode_inactivity_timeout",
+      "should also be reduced or handoffs may be blocked.  To be safe the",
+      "vnode_inactivity_timeout must be < 0.5 * the tictacaae_exchangetick."
+    ],
+    "docSections": [],
+    "docRelateds": [],
+    "docSees": [],
+    "docOther": [],
     "type": "mapping",
     "configName": "tictacaae_exchangetick",
     "settingName": "riak_kv.tictacaae_exchangetick",
@@ -839,6 +1013,18 @@
       "increase this tick prior to the reintroduction.  This will reduce",
       "the concurrency of some activity e.g. handoffs and rebuilds"
     ],
+    "docText": [
+      "Frequency to prompt rebuild check per vnode (milliseconds)",
+      "The number of milliseconds which the vnode must wait between self-pokes to",
+      "maybe prompt the next rebuild. Default is 60 minutes.",
+      "When a node is being re-introduced to a cluster following a long delay, then",
+      "increase this tick prior to the reintroduction.  This will reduce",
+      "the concurrency of some activity e.g. handoffs and rebuilds"
+    ],
+    "docSections": [],
+    "docRelateds": [],
+    "docSees": [],
+    "docOther": [],
     "type": "mapping",
     "configName": "tictacaae_rebuildtick",
     "settingName": "riak_kv.tictacaae_rebuildtick",
@@ -887,6 +1073,20 @@
       "the risk of miscalculation will be accepted in preference to having a longer",
       "block"
     ],
+    "docText": [
+      "Block vnode for tree rebuild (milliseconds)",
+      "When rebuilding a vnode's tree cache, the vnode can be blocked while the",
+      "snapshot is taken - to eliminate race conditions that might otherwise cause",
+      "a segment to be miscalculated.  By default the vnode block is always",
+      "released within 1000ms i.e. should a process crash or there be a delay in",
+      "the expected release, the block will still be released after this delay, and",
+      "the risk of miscalculation will be accepted in preference to having a longer",
+      "block"
+    ],
+    "docSections": [],
+    "docRelateds": [],
+    "docSees": [],
+    "docOther": [],
     "type": "mapping",
     "configName": "tictacaae_rebuild_blocktime",
     "settingName": "riak_kv.tictacaae_rebuild_blocktime",
@@ -936,6 +1136,21 @@
       "factor that is likely to result in a relatively predictable (and linear)",
       "outcome in terms of both CPU cost and repair speed."
     ],
+    "docText": [
+      "Max number of leaf IDs per exchange",
+      "To control the length of time for each exchange, only a subset of the",
+      "conflicting leaves will be compared on each exchange.  If there are issues",
+      "with query timeouts this may be halved.  Large backlogs may be reduced",
+      "faster by doubling.  There are 1M segments in a standard tree overall.",
+      "Performance tuning can also be made by adjusting the `tictacaae_repairloops`",
+      "and `tictacaae_rangeboost` - but `tictacaae_maxresults` is the simplest",
+      "factor that is likely to result in a relatively predictable (and linear)",
+      "outcome in terms of both CPU cost and repair speed."
+    ],
+    "docSections": [],
+    "docRelateds": [],
+    "docSees": [],
+    "docOther": [],
     "type": "mapping",
     "configName": "tictacaae_maxresults",
     "settingName": "riak_kv.tictacaae_maxresults",
@@ -983,6 +1198,23 @@
       "Problems related to invalid hash trees will need to be detected through the",
       "initial loop of the exchange, not repair loops"
     ],
+    "docText": [
+      "Max number of repair loops per exchange",
+      "Each exchange will attempt a repair of tictacaae_maxresults, and will",
+      "analyse those repairs to see if there exists the potential for more repairs.",
+      "If there exists this potential, then repair loops will be run, but in these",
+      "repair loops a more efficient repair will be run:",
+      "- with a bucket, key_range or last_modified range (at least) to restrict the",
+      "scope of the fetch_clocks queries",
+      "- without rebuilding the segments in the AAE hash tree",
+      "- without checking for presence of the object in the journal",
+      "Problems related to invalid hash trees will need to be detected through the",
+      "initial loop of the exchange, not repair loops"
+    ],
+    "docSections": [],
+    "docRelateds": [],
+    "docSees": [],
+    "docOther": [],
     "type": "mapping",
     "configName": "tictacaae_repairloops",
     "settingName": "riak_kv.tictacaae_repairloops",
@@ -1036,6 +1268,25 @@
       "segments can be fetched without creating significant CPU overheads, hence",
       "the use of this boost to maxresults."
     ],
+    "docText": [
+      "Multiplier to the `tictcaaae_maxresults` when following an initial AAE",
+      "exchange with a range-limited exchange.",
+      "After each exchange, where sufficient deltas are discovered there will be a",
+      "`tictacaae_repairloops` number of range-limited queries (assuming",
+      "sufficient results continue to be found).  Each of these may have the",
+      "the number of max results boosted by this integer factor.",
+      "For example, if `tictacaae_maxresuts` is set to 64, and",
+      "`tictacaae_repairloops` is set to 4, and the `tictacaae_rangeboost` is set",
+      "to 2 - the initial loop will use `tictacaae_maxresuts` of 64, but any",
+      "AAE exchanges on loops 1 to 4 will use 128.",
+      "Exchanges with range-limited queries are more efficient, and so more tree",
+      "segments can be fetched without creating significant CPU overheads, hence",
+      "the use of this boost to maxresults."
+    ],
+    "docSections": [],
+    "docRelateds": [],
+    "docSees": [],
+    "docOther": [],
     "type": "mapping",
     "configName": "tictacaae_rangeboost",
     "settingName": "riak_kv.tictacaae_rangeboost",
@@ -1079,6 +1330,15 @@
       "Setting this to false allows Tictac AAE exchanges between both primary and",
       "fallback vnodes."
     ],
+    "docText": [
+      "Exchange only between primary vnodes",
+      "Setting this to false allows Tictac AAE exchanges between both primary and",
+      "fallback vnodes."
+    ],
+    "docSections": [],
+    "docRelateds": [],
+    "docSees": [],
+    "docOther": [],
     "type": "mapping",
     "configName": "tictacaae_primaryonly",
     "settingName": "riak_kv.tictacaae_primaryonly",
@@ -1124,6 +1384,17 @@
       "only change logging in parallel-mode aae backends, not of leveled when",
       "running as a vnode backend"
     ],
+    "docText": [
+      "Tictacaae - change log level of parallel keystore",
+      "Backend logging within leveled is relatively verbose, so in some cases",
+      "there may be a preference of running leveled at warning not info.  This will",
+      "only change logging in parallel-mode aae backends, not of leveled when",
+      "running as a vnode backend"
+    ],
+    "docSections": [],
+    "docRelateds": [],
+    "docSees": [],
+    "docOther": [],
     "type": "mapping",
     "configName": "tictacaae_backendloglevel",
     "settingName": "riak_kv.tictacaae_backendloglevel",
@@ -1185,6 +1456,15 @@
       "Set the log level for each aae_controller, and also for aae exchanges.  It",
       "is strongly recommended to keep this at info."
     ],
+    "docText": [
+      "Tictacaae - change log level of tictacaae",
+      "Set the log level for each aae_controller, and also for aae exchanges.  It",
+      "is strongly recommended to keep this at info."
+    ],
+    "docSections": [],
+    "docRelateds": [],
+    "docSees": [],
+    "docOther": [],
     "type": "mapping",
     "configName": "tictacaae_loglevel",
     "settingName": "riak_kv.tictacaae_loglevel",
@@ -1249,6 +1529,18 @@
       "This will only change compression in parallel-mode aae backends, not of",
       "leveled when running as a vnode backend"
     ],
+    "docText": [
+      "Tictacaae - change compression method of parallel keystore",
+      "Better performance is expected when using the NIF-based zstd compression.",
+      "Actual compression achieved is similar to native (zlib).  Native will",
+      "compress using the built-in compression option for Erlang term_to_binary.",
+      "This will only change compression in parallel-mode aae backends, not of",
+      "leveled when running as a vnode backend"
+    ],
+    "docSections": [],
+    "docRelateds": [],
+    "docSees": [],
+    "docOther": [],
     "type": "mapping",
     "configName": "tictacaae_backendcompression",
     "settingName": "riak_kv.tictacaae_backendcompression",
@@ -1305,6 +1597,14 @@
       "@doc Pool Strategy - should a single node_worker_pool or multiple pools be",
       "used for queueing potentially longer-running \"background\" queries"
     ],
+    "docText": [
+      "Pool Strategy - should a single node_worker_pool or multiple pools be",
+      "used for queueing potentially longer-running \"background\" queries"
+    ],
+    "docSections": [],
+    "docRelateds": [],
+    "docSees": [],
+    "docOther": [],
     "type": "mapping",
     "configName": "worker_pool_strategy",
     "settingName": "riak_kv.worker_pool_strategy",
@@ -1385,6 +1685,21 @@
       "(merge_tree_range, fetch_clock_range).  The be_pool is used only for tictac",
       "AAE rebuilds at present"
     ],
+    "docText": [
+      "Pool Sizes - sizes for individual node_worker_pools",
+      "Only relevant if single or dscp strategy chosen.  Set",
+      "`node_worker_pool_size` if a `single` pool strategy is being used, or set",
+      "`af_worker_pool_size` and `be_worker_pool_size` if a multiple pool strategy",
+      "has been chosen.",
+      "Separate assured forwarding pools will be used of `af_worker_pool_size` for",
+      "informational aae_folds (find_keys, object_stats) and functional folds",
+      "(merge_tree_range, fetch_clock_range).  The be_pool is used only for tictac",
+      "AAE rebuilds at present"
+    ],
+    "docSections": [],
+    "docRelateds": [],
+    "docSees": [],
+    "docOther": [],
     "type": "mapping",
     "configName": "node_worker_pool_size",
     "settingName": "riak_kv.node_worker_pool_size",
@@ -1420,6 +1735,11 @@
   {
     "rawSchema": "{mapping, \"af1_worker_pool_size\", \"riak_kv.af1_worker_pool_size\", [ {datatype, integer}, {default, 2} ]}.",
     "comment": [],
+    "docText": [],
+    "docSections": [],
+    "docRelateds": [],
+    "docSees": [],
+    "docOther": [],
     "type": "mapping",
     "configName": "af1_worker_pool_size",
     "settingName": "riak_kv.af1_worker_pool_size",
@@ -1455,6 +1775,11 @@
   {
     "rawSchema": "{mapping, \"af2_worker_pool_size\", \"riak_kv.af2_worker_pool_size\", [ {datatype, integer}, {default, 1} ]}.",
     "comment": [],
+    "docText": [],
+    "docSections": [],
+    "docRelateds": [],
+    "docSees": [],
+    "docOther": [],
     "type": "mapping",
     "configName": "af2_worker_pool_size",
     "settingName": "riak_kv.af2_worker_pool_size",
@@ -1490,6 +1815,11 @@
   {
     "rawSchema": "{mapping, \"af3_worker_pool_size\", \"riak_kv.af3_worker_pool_size\", [ {datatype, integer}, {default, 4} ]}.",
     "comment": [],
+    "docText": [],
+    "docSections": [],
+    "docRelateds": [],
+    "docSees": [],
+    "docOther": [],
     "type": "mapping",
     "configName": "af3_worker_pool_size",
     "settingName": "riak_kv.af3_worker_pool_size",
@@ -1525,6 +1855,11 @@
   {
     "rawSchema": "{mapping, \"af4_worker_pool_size\", \"riak_kv.af4_worker_pool_size\", [ {datatype, integer}, {default, 1} ]}.",
     "comment": [],
+    "docText": [],
+    "docSections": [],
+    "docRelateds": [],
+    "docSees": [],
+    "docOther": [],
     "type": "mapping",
     "configName": "af4_worker_pool_size",
     "settingName": "riak_kv.af4_worker_pool_size",
@@ -1560,6 +1895,11 @@
   {
     "rawSchema": "{mapping, \"be_worker_pool_size\", \"riak_kv.be_worker_pool_size\", [ {datatype, integer}, {default, 1} ]}.",
     "comment": [],
+    "docText": [],
+    "docSections": [],
+    "docRelateds": [],
+    "docSees": [],
+    "docOther": [],
     "type": "mapping",
     "configName": "be_worker_pool_size",
     "settingName": "riak_kv.be_worker_pool_size",
@@ -1600,6 +1940,16 @@
       "the vnode pause for?  This is measured in ms, and currently only applies",
       "to the leveled backend"
     ],
+    "docText": [
+      "Backend PUT Pause (ms).",
+      "If the backend PUT has resulted in a pause request, then how long should",
+      "the vnode pause for?  This is measured in ms, and currently only applies",
+      "to the leveled backend"
+    ],
+    "docSections": [],
+    "docRelateds": [],
+    "docSees": [],
+    "docOther": [],
     "type": "mapping",
     "configName": "backend_pause_ms",
     "settingName": "riak_kv.backend_pause_ms",
@@ -1655,6 +2005,18 @@
       "delete_mode is used, allowing for more time for the tombstone to propogate.",
       "The pause is in milliseconds."
     ],
+    "docText": [
+      "Tombstone Pause (ms)",
+      "The pause has a dual-purpose.  It slows both the riak_kv_reaper and",
+      "riak_kv_eraser process, as the pause is imposed on each delete or reap.",
+      "The pause also reduces the probability of a failure to reap when a non-keep",
+      "delete_mode is used, allowing for more time for the tombstone to propogate.",
+      "The pause is in milliseconds."
+    ],
+    "docSections": [],
+    "docRelateds": [],
+    "docSees": [],
+    "docOther": [],
     "type": "mapping",
     "configName": "tombstone_pause",
     "settingName": "riak_kv.tombstone_pause",
@@ -1709,6 +2071,17 @@
       "in coverage queries, as their information may be incomplete (e.g. 2i",
       "issues seen in these circumstances)."
     ],
+    "docText": [
+      "Whether to allow node to participate in coverage queries.",
+      "This is used as a manual switch to stop nodes in incomplete states",
+      "(E.g. doing a full partition repair, or node replace) from participating",
+      "in coverage queries, as their information may be incomplete (e.g. 2i",
+      "issues seen in these circumstances)."
+    ],
+    "docSections": [],
+    "docRelateds": [],
+    "docSees": [],
+    "docOther": [],
     "type": "mapping",
     "configName": "participate_in_coverage",
     "settingName": "riak_core.participate_in_coverage",
@@ -1773,6 +2146,14 @@
       "@doc Specifies the storage engine used for Riak's key-value data",
       "and secondary indexes (if supported)."
     ],
+    "docText": [
+      "Specifies the storage engine used for Riak's key-value data",
+      "and secondary indexes (if supported)."
+    ],
+    "docSections": [],
+    "docRelateds": [],
+    "docSees": [],
+    "docOther": [],
     "type": "mapping",
     "configName": "storage_backend",
     "settingName": "riak_kv.storage_backend",
@@ -1842,6 +2223,11 @@
   {
     "rawSchema": "{translation, \"riak_kv.storage_backend\", fun(Conf) -> Setting = cuttlefish:conf_get(\"storage_backend\", Conf), case Setting of bitcask -> riak_kv_bitcask_backend; leveldb -> riak_kv_eleveldb_backend; leveled -> riak_kv_leveled_backend; memory -> riak_kv_memory_backend; multi -> riak_kv_multi_backend; prefix_multi -> riak_kv_multi_prefix_backend; _Default -> riak_kv_bitcask_backend end end}.",
     "comment": [],
+    "docText": [],
+    "docSections": [],
+    "docRelateds": [],
+    "docSees": [],
+    "docOther": [],
     "type": "translation",
     "configName": "riak_kv.storage_backend",
     "func": "fun(Conf) -> Setting = cuttlefish:conf_get(\"storage_backend\", Conf), case Setting of bitcask -> riak_kv_bitcask_backend; leveldb -> riak_kv_eleveldb_backend; leveled -> riak_kv_leveled_backend; memory -> riak_kv_memory_backend; multi -> riak_kv_multi_backend; prefix_multi -> riak_kv_multi_prefix_backend; _Default -> riak_kv_bitcask_backend end end"
@@ -1852,6 +2238,14 @@
       "@doc Simplify prefix_multi configuration for Riak CS. Keep this",
       "commented out unless Riak is configured for Riak CS."
     ],
+    "docText": [
+      "Simplify prefix_multi configuration for Riak CS. Keep this",
+      "commented out unless Riak is configured for Riak CS."
+    ],
+    "docSections": [],
+    "docRelateds": [],
+    "docSees": [],
+    "docOther": [],
     "type": "mapping",
     "configName": "cs_version",
     "settingName": "riak_kv.riak_cs_version",
@@ -1905,6 +2299,11 @@
   {
     "rawSchema": "{validator, \"verify_cs_backend\", \"must be later than CS 2.0.0\", fun(Value) when is_integer(Value) andalso Value >= 20000-> true; (_) -> false end}.",
     "comment": [],
+    "docText": [],
+    "docSections": [],
+    "docRelateds": [],
+    "docSees": [],
+    "docOther": [],
     "type": "validator",
     "name": "verify_cs_backend",
     "description": "must be later than CS 2.0.0",
@@ -1922,6 +2321,20 @@
       "",
       "Default is 1 build per hour."
     ],
+    "docText": [
+      "Restrict how fast AAE can build hash trees. Building the tree",
+      "for a given partition requires a full scan over that partition's",
+      "data. Once built, trees stay built until they are expired.",
+      "* .number is the number of builds",
+      "* .per_timespan is the amount of time in which that .number of builds",
+      "  occurs",
+      "",
+      "Default is 1 build per hour."
+    ],
+    "docSections": [],
+    "docRelateds": [],
+    "docSees": [],
+    "docOther": [],
     "type": "mapping",
     "configName": "anti_entropy.tree.build_limit.number",
     "settingName": "riak_kv.anti_entropy_build_limit",
@@ -1963,6 +2376,13 @@
     "comment": [
       "@see anti_entropy.build_limit.number"
     ],
+    "docText": [],
+    "docSections": [],
+    "docRelateds": [],
+    "docSees": [
+      "anti_entropy.build_limit.number"
+    ],
+    "docOther": [],
     "type": "mapping",
     "configName": "anti_entropy.tree.build_limit.per_timespan",
     "settingName": "riak_kv.anti_entropy_build_limit",
@@ -2011,6 +2431,11 @@
   {
     "rawSchema": "{translation, \"riak_kv.anti_entropy_build_limit\", fun(Conf) -> {cuttlefish:conf_get(\"anti_entropy.tree.build_limit.number\", Conf), cuttlefish:conf_get(\"anti_entropy.tree.build_limit.per_timespan\", Conf)} end}.",
     "comment": [],
+    "docText": [],
+    "docSections": [],
+    "docRelateds": [],
+    "docSees": [],
+    "docOther": [],
     "type": "translation",
     "configName": "riak_kv.anti_entropy_build_limit",
     "func": "fun(Conf) -> {cuttlefish:conf_get(\"anti_entropy.tree.build_limit.number\", Conf), cuttlefish:conf_get(\"anti_entropy.tree.build_limit.per_timespan\", Conf)} end"
@@ -2026,6 +2451,19 @@
       "infrequent for performance reasons. The time is specified in",
       "milliseconds."
     ],
+    "docText": [
+      "Determine how often hash trees are expired after being built.",
+      "Periodically expiring a hash tree ensures the on-disk hash tree",
+      "data stays consistent with the actual k/v backend data. It also",
+      "helps Riak identify silent disk failures and bit rot. However,",
+      "expiration is not needed for normal AAE operation and should be",
+      "infrequent for performance reasons. The time is specified in",
+      "milliseconds."
+    ],
+    "docSections": [],
+    "docRelateds": [],
+    "docSees": [],
+    "docOther": [],
     "type": "mapping",
     "configName": "anti_entropy.tree.expiry",
     "settingName": "riak_kv.anti_entropy_expire",
@@ -2094,6 +2532,13 @@
     "comment": [
       "@doc Limit how many AAE exchanges or builds can happen concurrently."
     ],
+    "docText": [
+      "Limit how many AAE exchanges or builds can happen concurrently."
+    ],
+    "docSections": [],
+    "docRelateds": [],
+    "docSees": [],
+    "docOther": [],
     "type": "mapping",
     "configName": "anti_entropy.concurrency_limit",
     "settingName": "riak_kv.anti_entropy_concurrency",
@@ -2139,6 +2584,17 @@
       "speedup the rate that all replicas are synced across the cluster.",
       "Increasing the value is not recommended."
     ],
+    "docText": [
+      "The tick determines how often the AAE manager looks for work",
+      "to do (building/expiring trees, triggering exchanges, etc).",
+      "The default is every 15 seconds. Lowering this value will",
+      "speedup the rate that all replicas are synced across the cluster.",
+      "Increasing the value is not recommended."
+    ],
+    "docSections": [],
+    "docRelateds": [],
+    "docSees": [],
+    "docOther": [],
     "type": "mapping",
     "configName": "anti_entropy.trigger_interval",
     "settingName": "riak_kv.anti_entropy_tick",
@@ -2189,6 +2645,13 @@
     "comment": [
       "@doc The directory where AAE hash trees are stored."
     ],
+    "docText": [
+      "The directory where AAE hash trees are stored."
+    ],
+    "docSections": [],
+    "docRelateds": [],
+    "docSees": [],
+    "docOther": [],
     "type": "mapping",
     "configName": "anti_entropy.data_dir",
     "settingName": "riak_kv.anti_entropy_data_dir",
@@ -2232,6 +2695,16 @@
       "on-disk hashtrees.",
       "@see leveldb.write_buffer_size"
     ],
+    "docText": [
+      "The LevelDB options used by AAE to generate the LevelDB-backed",
+      "on-disk hashtrees."
+    ],
+    "docSections": [],
+    "docRelateds": [],
+    "docSees": [
+      "leveldb.write_buffer_size"
+    ],
+    "docOther": [],
     "type": "mapping",
     "configName": "anti_entropy.write_buffer_size",
     "settingName": "riak_kv.anti_entropy_leveldb_opts.write_buffer_size",
@@ -2271,6 +2744,11 @@
   {
     "rawSchema": "{mapping, \"anti_entropy.max_open_files\", \"riak_kv.anti_entropy_leveldb_opts.max_open_files\", [ {default, 20}, {datatype, integer}, hidden ]}.",
     "comment": [],
+    "docText": [],
+    "docSections": [],
+    "docRelateds": [],
+    "docSees": [],
+    "docOther": [],
     "type": "mapping",
     "configName": "anti_entropy.max_open_files",
     "settingName": "riak_kv.anti_entropy_leveldb_opts.max_open_files",
@@ -2313,6 +2791,14 @@
       "@doc Whether the distributed throttle for active anti-entropy is",
       "enabled."
     ],
+    "docText": [
+      "Whether the distributed throttle for active anti-entropy is",
+      "enabled."
+    ],
+    "docSections": [],
+    "docRelateds": [],
+    "docSees": [],
+    "docOther": [],
     "type": "mapping",
     "configName": "anti_entropy.throttle",
     "settingName": "riak_kv.aae_throttle_enabled",
@@ -2365,6 +2851,25 @@
       "of 0. Both .mailbox_size and .delay must be set for each tier.",
       "@see anti_entropy.throttle"
     ],
+    "docText": [
+      "Sets the throttling tiers for active anti-entropy. Each tier",
+      "is a minimum vnode mailbox size and a time-delay that the throttle",
+      "should observe at that size and above. For example:",
+      "",
+      "    anti_entropy.throttle.tier1.mailbox_size = 0",
+      "    anti_entropy.throttle.tier1.delay = 0ms",
+      "    anti_entropy.throttle.tier2.mailbox_size = 40",
+      "    anti_entropy.throttle.tier2.delay = 5ms",
+      "",
+      "If configured, there must be a tier which includes a mailbox size",
+      "of 0. Both .mailbox_size and .delay must be set for each tier."
+    ],
+    "docSections": [],
+    "docRelateds": [],
+    "docSees": [
+      "anti_entropy.throttle"
+    ],
+    "docOther": [],
     "type": "mapping",
     "configName": "anti_entropy.throttle.$tier.mailbox_size",
     "settingName": "riak_kv.aae_throttle_limits",
@@ -2411,6 +2916,13 @@
     "comment": [
       "@see anti_entropy.throttle.$tier.mailbox_size"
     ],
+    "docText": [],
+    "docSections": [],
+    "docRelateds": [],
+    "docSees": [
+      "anti_entropy.throttle.$tier.mailbox_size"
+    ],
+    "docOther": [],
     "type": "mapping",
     "configName": "anti_entropy.throttle.$tier.delay",
     "settingName": "riak_kv.aae_throttle_limits",
@@ -2446,6 +2958,11 @@
   {
     "rawSchema": "{validator, \"non_negative\", \"must be greater than or equal to 0\", fun(Value) -> Value >= 0 end}.",
     "comment": [],
+    "docText": [],
+    "docSections": [],
+    "docRelateds": [],
+    "docSees": [],
+    "docOther": [],
     "type": "validator",
     "name": "non_negative",
     "description": "must be greater than or equal to 0",
@@ -2454,6 +2971,11 @@
   {
     "rawSchema": "{translation, \"riak_kv.aae_throttle_limits\", riak_core_throttle:create_limits_translator_fun(\"anti_entropy\", \"mailbox_size\") }.",
     "comment": [],
+    "docText": [],
+    "docSections": [],
+    "docRelateds": [],
+    "docSees": [],
+    "docOther": [],
     "type": "translation",
     "configName": "riak_kv.aae_throttle_limits",
     "func": "riak_core_throttle:create_limits_translator_fun(\"anti_entropy\", \"mailbox_size\") "
@@ -2463,6 +2985,13 @@
     "comment": [
       "@see leveldb.bloomfilter"
     ],
+    "docText": [],
+    "docSections": [],
+    "docRelateds": [],
+    "docSees": [
+      "leveldb.bloomfilter"
+    ],
+    "docOther": [],
     "type": "mapping",
     "configName": "anti_entropy.bloomfilter",
     "settingName": "riak_kv.anti_entropy_leveldb_opts.use_bloomfilter",
@@ -2508,6 +3037,20 @@
       "overload protection. The 'erlang.process_limit' should be at least",
       "3 times more than this setting.",
       "@see erlang.process_limit"
+    ],
+    "docText": [
+      "The maximum number of concurrent requests of each type (get or",
+      "put) that is allowed. Setting this value to infinite disables",
+      "overload protection. The 'erlang.process_limit' should be at least",
+      "3 times more than this setting."
+    ],
+    "docSections": [],
+    "docRelateds": [],
+    "docSees": [
+      "erlang.process_limit"
+    ],
+    "docOther": [
+      "We left riak_kv.add_paths out on purpose."
     ],
     "type": "mapping",
     "configName": "max_concurrent_requests",
@@ -2566,6 +3109,11 @@
   {
     "rawSchema": "{translation, \"riak_kv.fsm_limit\", fun(Conf) -> TheLimit = cuttlefish:conf_get(\"max_concurrent_requests\", Conf), case TheLimit of infinite -> undefined; Int when is_integer(Int) -> Int; _ -> cuttlefish:invalid(\"max_concurrent_requests must be an integer or 'infinite'\") end end }.",
     "comment": [],
+    "docText": [],
+    "docSections": [],
+    "docRelateds": [],
+    "docSees": [],
+    "docOther": [],
     "type": "translation",
     "configName": "riak_kv.fsm_limit",
     "func": "fun(Conf) -> TheLimit = cuttlefish:conf_get(\"max_concurrent_requests\", Conf), case TheLimit of infinite -> undefined; Int when is_integer(Int) -> Int; _ -> cuttlefish:invalid(\"max_concurrent_requests must be an integer or 'infinite'\") end end "
@@ -2578,6 +3126,16 @@
       "  * on = Riak 2.0 behavior (strongly recommended)",
       "  * off = Riak 1.x behavior"
     ],
+    "docText": [
+      "If forwarding to a replica-local coordinator on PUT fails,",
+      "this setting will retry the operation when set to 'on'.",
+      "  * on = Riak 2.0 behavior (strongly recommended)",
+      "  * off = Riak 1.x behavior"
+    ],
+    "docSections": [],
+    "docRelateds": [],
+    "docSees": [],
+    "docOther": [],
     "type": "mapping",
     "configName": "retry_put_coordinator_failure",
     "settingName": "riak_kv.retry_put_coordinator_failure",
@@ -2623,6 +3181,17 @@
       "of not checking, this can be disabled.  The mbox_check may add additional",
       "latency to PUTs in some environments."
     ],
+    "docText": [
+      "Enable or disable mbox_check on PUTs",
+      "By default mbox_checks are performed so that vnodes with long queues",
+      "will not be used as put coordinators.  To return to the pre-2.9 behaviour",
+      "of not checking, this can be disabled.  The mbox_check may add additional",
+      "latency to PUTs in some environments."
+    ],
+    "docSections": [],
+    "docRelateds": [],
+    "docSees": [],
+    "docOther": [],
     "type": "mapping",
     "configName": "mbox_check_enabled",
     "settingName": "riak_kv.mbox_check_enabled",
@@ -2669,6 +3238,18 @@
       "If using the leveled backend object_format 1 will always be used, when",
       "persisting data into the backend - even if 0 has been configured here"
     ],
+    "docText": [
+      "Controls which binary representation of a riak value is stored",
+      "on disk.",
+      "* 0: Original erlang:term_to_binary format. Higher space overhead.",
+      "* 1: New format for more compact storage of small values.",
+      "If using the leveled backend object_format 1 will always be used, when",
+      "persisting data into the backend - even if 0 has been configured here"
+    ],
+    "docSections": [],
+    "docRelateds": [],
+    "docSees": [],
+    "docOther": [],
     "type": "mapping",
     "configName": "object.format",
     "settingName": "riak_kv.object_format",
@@ -2731,6 +3312,11 @@
   {
     "rawSchema": "{translation, \"riak_kv.object_format\", fun(Conf) -> case cuttlefish:conf_get(\"object.format\", Conf) of 0 -> v0; 1 -> v1; _ -> cuttlefish:invalid(\"invalid object format version\") end end }.",
     "comment": [],
+    "docText": [],
+    "docSections": [],
+    "docRelateds": [],
+    "docSees": [],
+    "docOther": [],
     "type": "translation",
     "configName": "riak_kv.object_format",
     "func": "fun(Conf) -> case cuttlefish:conf_get(\"object.format\", Conf) of 0 -> v0; 1 -> v1; _ -> cuttlefish:invalid(\"invalid object format version\") end end "
@@ -2748,6 +3334,21 @@
       "",
       "Caution: Do not use without extensive benchmarking."
     ],
+    "docText": [
+      "Controls the size of the metadata cache for each vnode. Set to",
+      "'off' to disable the cache.  This shouldn't be necessary on-disk",
+      "based backends, but can help performance in some cases (i.e. memory",
+      "backend, data fits in block cache, etc). Note that this is the size",
+      "of the ETS table, rather than the actual data, to keep the size",
+      "calculation simple, thus more space may be used than the simple",
+      "size * vnode_count calculation would imply.",
+      "",
+      "Caution: Do not use without extensive benchmarking."
+    ],
+    "docSections": [],
+    "docRelateds": [],
+    "docSees": [],
+    "docOther": [],
     "type": "mapping",
     "configName": "metadata_cache_size",
     "settingName": "riak_kv.vnode_md_cache_size",
@@ -2813,6 +3414,16 @@
       "@doc The maximum amount of memory consumed per vnode by the memory",
       "storage backend.  Minimum: 1MB"
     ],
+    "docText": [
+      "The maximum amount of memory consumed per vnode by the memory",
+      "storage backend.  Minimum: 1MB"
+    ],
+    "docSections": [],
+    "docRelateds": [],
+    "docSees": [],
+    "docOther": [
+      "%% Memory backend section"
+    ],
     "type": "mapping",
     "configName": "memory_backend.max_memory_per_vnode",
     "settingName": "riak_kv.memory_backend.max_memory",
@@ -2841,6 +3452,13 @@
     "comment": [
       "@see memory_backend.max_memory"
     ],
+    "docText": [],
+    "docSections": [],
+    "docRelateds": [],
+    "docSees": [
+      "memory_backend.max_memory"
+    ],
+    "docOther": [],
     "type": "mapping",
     "configName": "multi_backend.$name.memory_backend.max_memory_per_vnode",
     "settingName": "riak_kv.multi_backend",
@@ -2867,6 +3485,11 @@
   {
     "rawSchema": "{translation, \"riak_kv.memory_backend.max_memory\", fun(Conf) -> Bytes = cuttlefish:conf_get(\"memory_backend.max_memory_per_vnode\", Conf), cuttlefish_util:ceiling(Bytes / 1048576) end }.",
     "comment": [],
+    "docText": [],
+    "docSections": [],
+    "docRelateds": [],
+    "docSees": [],
+    "docOther": [],
     "type": "translation",
     "configName": "riak_kv.memory_backend.max_memory",
     "func": "fun(Conf) -> Bytes = cuttlefish:conf_get(\"memory_backend.max_memory_per_vnode\", Conf), cuttlefish_util:ceiling(Bytes / 1048576) end "
@@ -2878,6 +3501,15 @@
       "live\". Once that object's time is up, it will be deleted on the",
       "next read of its key. Minimum: 1s"
     ],
+    "docText": [
+      "Each value written will be written with this \"time to",
+      "live\". Once that object's time is up, it will be deleted on the",
+      "next read of its key. Minimum: 1s"
+    ],
+    "docSections": [],
+    "docRelateds": [],
+    "docSees": [],
+    "docOther": [],
     "type": "mapping",
     "configName": "memory_backend.ttl",
     "settingName": "riak_kv.memory_backend.ttl",
@@ -2915,6 +3547,13 @@
     "comment": [
       "@see memory_backend.ttl"
     ],
+    "docText": [],
+    "docSections": [],
+    "docRelateds": [],
+    "docSees": [
+      "memory_backend.ttl"
+    ],
+    "docOther": [],
     "type": "mapping",
     "configName": "multi_backend.$name.memory_backend.ttl",
     "settingName": "riak_kv.multi_backend",
@@ -2956,6 +3595,17 @@
       "impossible. Turning secure_referer_check = off disables this",
       "security check."
     ],
+    "docText": [
+      "Measures were added to Riak 1.2 to counteract cross-site",
+      "scripting and request-forgery attacks. Some reverse-proxies cannot",
+      "remove the Referer header and make serving data directly from Riak",
+      "impossible. Turning secure_referer_check = off disables this",
+      "security check."
+    ],
+    "docSections": [],
+    "docRelateds": [],
+    "docSees": [],
+    "docOther": [],
     "type": "mapping",
     "configName": "secure_referer_check",
     "settingName": "riak_kv.secure_referer_check",
@@ -2998,6 +3648,14 @@
       "@doc a dummy value added to riak 2.2.5 to handle upgrades from",
       "older riak_ee installs that have `jmx` in their riak.conf"
     ],
+    "docText": [
+      "a dummy value added to riak 2.2.5 to handle upgrades from",
+      "older riak_ee installs that have `jmx` in their riak.conf"
+    ],
+    "docSections": [],
+    "docRelateds": [],
+    "docSees": [],
+    "docOther": [],
     "type": "mapping",
     "configName": "jmx",
     "settingName": "riak_kv.jmx_dummy",
@@ -3040,6 +3698,14 @@
       "@doc Reading or writing objects bigger than this size will write a",
       "warning in the logs."
     ],
+    "docText": [
+      "Reading or writing objects bigger than this size will write a",
+      "warning in the logs."
+    ],
+    "docSections": [],
+    "docRelateds": [],
+    "docSees": [],
+    "docOther": [],
     "type": "mapping",
     "configName": "object.size.warning_threshold",
     "settingName": "riak_kv.warn_object_size",
@@ -3078,6 +3744,14 @@
       "@doc Writing an object bigger than this will send a failure to the",
       "client."
     ],
+    "docText": [
+      "Writing an object bigger than this will send a failure to the",
+      "client."
+    ],
+    "docSections": [],
+    "docRelateds": [],
+    "docSees": [],
+    "docOther": [],
     "type": "mapping",
     "configName": "object.size.maximum",
     "settingName": "riak_kv.max_object_size",
@@ -3116,6 +3790,14 @@
       "@doc Writing an object with more than this number of siblings will",
       "generate a warning in the logs."
     ],
+    "docText": [
+      "Writing an object with more than this number of siblings will",
+      "generate a warning in the logs."
+    ],
+    "docSections": [],
+    "docRelateds": [],
+    "docSees": [],
+    "docOther": [],
     "type": "mapping",
     "configName": "object.siblings.warning_threshold",
     "settingName": "riak_kv.warn_siblings",
@@ -3154,6 +3836,14 @@
       "@doc Writing an object with more than this number of siblings will",
       "send a failure to the client."
     ],
+    "docText": [
+      "Writing an object with more than this number of siblings will",
+      "send a failure to the client."
+    ],
+    "docSections": [],
+    "docRelateds": [],
+    "docSees": [],
+    "docOther": [],
     "type": "mapping",
     "configName": "object.siblings.maximum",
     "settingName": "riak_kv.max_siblings",
@@ -3197,6 +3887,19 @@
       "* 1: Riak 1.4, default buckets, and earlier default - may duplicate siblings",
       "     from interleaved writes (sibling explosion.)"
     ],
+    "docText": [
+      "The strategy used when merging objects that potentially have",
+      "conflicts.",
+      "",
+      "* 2: Riak 2.0 typed bucket default - reduces sibling creation through additional",
+      "     metadata on each sibling (also known as dotted version vectors)",
+      "* 1: Riak 1.4, default buckets, and earlier default - may duplicate siblings",
+      "     from interleaved writes (sibling explosion.)"
+    ],
+    "docSections": [],
+    "docRelateds": [],
+    "docSees": [],
+    "docOther": [],
     "type": "mapping",
     "configName": "buckets.default.merge_strategy",
     "settingName": "riak_core.default_bucket_props.dvv_enabled",
@@ -3252,6 +3955,14 @@
       "@doc The number of primary replicas (non-fallback) that must reply",
       "to a read request."
     ],
+    "docText": [
+      "The number of primary replicas (non-fallback) that must reply",
+      "to a read request."
+    ],
+    "docSections": [],
+    "docRelateds": [],
+    "docSees": [],
+    "docOther": [],
     "type": "mapping",
     "configName": "buckets.default.pr",
     "settingName": "riak_core.default_bucket_props.pr",
@@ -3320,6 +4031,13 @@
     "comment": [
       "@doc The number of replicas which must reply to a read request."
     ],
+    "docText": [
+      "The number of replicas which must reply to a read request."
+    ],
+    "docSections": [],
+    "docRelateds": [],
+    "docSees": [],
+    "docOther": [],
     "type": "mapping",
     "configName": "buckets.default.r",
     "settingName": "riak_core.default_bucket_props.r",
@@ -3389,6 +4107,14 @@
       "@doc The number of replicas which must reply to a write request,",
       "indicating that the write was received."
     ],
+    "docText": [
+      "The number of replicas which must reply to a write request,",
+      "indicating that the write was received."
+    ],
+    "docSections": [],
+    "docRelateds": [],
+    "docSees": [],
+    "docOther": [],
     "type": "mapping",
     "configName": "buckets.default.w",
     "settingName": "riak_core.default_bucket_props.w",
@@ -3458,6 +4184,14 @@
       "@doc The number of primary replicas (non-fallback) which must reply",
       "to a write request."
     ],
+    "docText": [
+      "The number of primary replicas (non-fallback) which must reply",
+      "to a write request."
+    ],
+    "docSections": [],
+    "docRelateds": [],
+    "docSees": [],
+    "docOther": [],
     "type": "mapping",
     "configName": "buckets.default.pw",
     "settingName": "riak_core.default_bucket_props.pw",
@@ -3527,6 +4261,14 @@
       "@doc The number of replicas which must reply to a write request,",
       "indicating that the write was committed to durable storage."
     ],
+    "docText": [
+      "The number of replicas which must reply to a write request,",
+      "indicating that the write was committed to durable storage."
+    ],
+    "docSections": [],
+    "docRelateds": [],
+    "docSees": [],
+    "docOther": [],
     "type": "mapping",
     "configName": "buckets.default.dw",
     "settingName": "riak_core.default_bucket_props.dw",
@@ -3595,6 +4337,13 @@
     "comment": [
       "@doc The number of replicas which must reply to a delete request."
     ],
+    "docText": [
+      "The number of replicas which must reply to a delete request."
+    ],
+    "docSections": [],
+    "docRelateds": [],
+    "docSees": [],
+    "docOther": [],
     "type": "mapping",
     "configName": "buckets.default.rw",
     "settingName": "riak_core.default_bucket_props.rw",
@@ -3663,6 +4412,13 @@
     "comment": [
       "@doc Whether not-founds will count toward a quorum of reads."
     ],
+    "docText": [
+      "Whether not-founds will count toward a quorum of reads."
+    ],
+    "docSections": [],
+    "docRelateds": [],
+    "docSees": [],
+    "docOther": [],
     "type": "mapping",
     "configName": "buckets.default.notfound_ok",
     "settingName": "riak_core.default_bucket_props.notfound_ok",
@@ -3725,6 +4481,16 @@
       "majority of replicas report that the key is not found. Only used",
       "when notfound_ok = false."
     ],
+    "docText": [
+      "Whether not-founds will invoke the \"basic quorum\"",
+      "optimization. This setting will short-circuit fetches where the",
+      "majority of replicas report that the key is not found. Only used",
+      "when notfound_ok = false."
+    ],
+    "docSections": [],
+    "docRelateds": [],
+    "docSees": [],
+    "docOther": [],
     "type": "mapping",
     "configName": "buckets.default.basic_quorum",
     "settingName": "riak_core.default_bucket_props.basic_quorum",
@@ -3785,6 +4551,14 @@
       "@doc Whether or not siblings are allowed, by default, for untyped buckets.",
       "Note: See Vector Clocks for a discussion of sibling resolution."
     ],
+    "docText": [
+      "Whether or not siblings are allowed, by default, for untyped buckets.",
+      "Note: See Vector Clocks for a discussion of sibling resolution."
+    ],
+    "docSections": [],
+    "docRelateds": [],
+    "docSees": [],
+    "docOther": [],
     "type": "mapping",
     "configName": "buckets.default.allow_mult",
     "settingName": "riak_core.default_bucket_props.allow_mult",
@@ -3844,6 +4618,13 @@
     "comment": [
       "@doc Whether conflicting writes resolve via timestamp."
     ],
+    "docText": [
+      "Whether conflicting writes resolve via timestamp."
+    ],
+    "docSections": [],
+    "docRelateds": [],
+    "docSees": [],
+    "docOther": [],
     "type": "mapping",
     "configName": "buckets.default.last_write_wins",
     "settingName": "riak_core.default_bucket_props.last_write_wins",
@@ -3906,6 +4687,16 @@
       "functions, use \"module:function\" and for JavaScript, use",
       "\"functionName\"."
     ],
+    "docText": [
+      "A space delimited list of functions that will be run before a",
+      "value is stored, and that can abort the write. For Erlang",
+      "functions, use \"module:function\" and for JavaScript, use",
+      "\"functionName\"."
+    ],
+    "docSections": [],
+    "docRelateds": [],
+    "docSees": [],
+    "docOther": [],
     "type": "mapping",
     "configName": "buckets.default.precommit",
     "settingName": "riak_core.default_bucket_props.precommit",
@@ -3919,6 +4710,11 @@
   {
     "rawSchema": "{translation, \"riak_core.default_bucket_props.precommit\", fun(Conf) -> RawString = cuttlefish:conf_get(\"buckets.default.precommit\", Conf, []), StringList = string:tokens(RawString, \" \"), [ begin case string:tokens(String, \":\") of %% Javascript make this:  {struct, [{<<\"name\">>, <<\"SomeJS.nonsense\">>}]} [JavascriptFunction] -> {struct, [{<<\"name\">>, list_to_binary(JavascriptFunction)}]}; %% Erlang make this: {struct, [{<<\"mod\">>, <<\"module\">>}, {<<\"fun\">>,<<\"function\">>}]} [Module, Function] -> {struct, [ {<<\"mod\">>, list_to_binary(Module)}, {<<\"fun\">>, list_to_binary(Function)} ]}; _ -> cuttlefish:invalid(\"incorrect hook format '\" ++ String ++ \"'\") end end || String <- StringList] end }.",
     "comment": [],
+    "docText": [],
+    "docSections": [],
+    "docRelateds": [],
+    "docSees": [],
+    "docOther": [],
     "type": "translation",
     "configName": "riak_core.default_bucket_props.precommit",
     "func": "fun(Conf) -> RawString = cuttlefish:conf_get(\"buckets.default.precommit\", Conf, []), StringList = string:tokens(RawString, \" \"), [ begin case string:tokens(String, \":\") of %% Javascript make this:  {struct, [{<<\"name\">>, <<\"SomeJS.nonsense\">>}]} [JavascriptFunction] -> {struct, [{<<\"name\">>, list_to_binary(JavascriptFunction)}]}; %% Erlang make this: {struct, [{<<\"mod\">>, <<\"module\">>}, {<<\"fun\">>,<<\"function\">>}]} [Module, Function] -> {struct, [ {<<\"mod\">>, list_to_binary(Module)}, {<<\"fun\">>, list_to_binary(Function)} ]}; _ -> cuttlefish:invalid(\"incorrect hook format '\" ++ String ++ \"'\") end end || String <- StringList] end "
@@ -3930,6 +4726,15 @@
       "value is stored. Only Erlang functions are allowed, using the",
       "\"module:function\" format."
     ],
+    "docText": [
+      "A space delimited list of functions that will be run after a",
+      "value is stored. Only Erlang functions are allowed, using the",
+      "\"module:function\" format."
+    ],
+    "docSections": [],
+    "docRelateds": [],
+    "docSees": [],
+    "docOther": [],
     "type": "mapping",
     "configName": "buckets.default.postcommit",
     "settingName": "riak_core.default_bucket_props.postcommit",
@@ -3943,6 +4748,11 @@
   {
     "rawSchema": "{translation, \"riak_core.default_bucket_props.postcommit\", fun(Conf) -> RawString = cuttlefish:conf_get(\"buckets.default.postcommit\", Conf, []), StringList = string:tokens(RawString, \" \"), [ begin case string:tokens(String, \":\") of [Module, Function] -> {struct, [ {<<\"mod\">>, list_to_binary(Module)}, {<<\"fun\">>, list_to_binary(Function)} ]}; _ -> cuttlefish:invalid(\"incorrect hook format '\" ++ String ++ \"'\") end end ||  String <- StringList] end }.",
     "comment": [],
+    "docText": [],
+    "docSections": [],
+    "docRelateds": [],
+    "docSees": [],
+    "docOther": [],
     "type": "translation",
     "configName": "riak_core.default_bucket_props.postcommit",
     "func": "fun(Conf) -> RawString = cuttlefish:conf_get(\"buckets.default.postcommit\", Conf, []), StringList = string:tokens(RawString, \" \"), [ begin case string:tokens(String, \":\") of [Module, Function] -> {struct, [ {<<\"mod\">>, list_to_binary(Module)}, {<<\"fun\">>, list_to_binary(Function)} ]}; _ -> cuttlefish:invalid(\"incorrect hook format '\" ++ String ++ \"'\") end end ||  String <- StringList] end "
@@ -3955,6 +4765,16 @@
       "slowness) of compression, on a scale from 0 to 9. 'on' is",
       "equivalent to 6, 'off' is equivalent to 0."
     ],
+    "docText": [
+      "Whether serialized datatypes will use compression, and at what",
+      "level. When an integer, this refers to the aggressiveness (and",
+      "slowness) of compression, on a scale from 0 to 9. 'on' is",
+      "equivalent to 6, 'off' is equivalent to 0."
+    ],
+    "docSections": [],
+    "docRelateds": [],
+    "docSees": [],
+    "docOther": [],
     "type": "mapping",
     "configName": "datatypes.compression_level",
     "settingName": "riak_dt.binary_compression",
@@ -4021,6 +4841,11 @@
   {
     "rawSchema": "{validator, \"is_compression_value\", \"must be on/off or a value between 0 and 9\", fun(Value)-> is_boolean(Value) orelse (is_integer(Value) andalso Value =< 9 andalso Value >= 0) end}.",
     "comment": [],
+    "docText": [],
+    "docSections": [],
+    "docRelateds": [],
+    "docSees": [],
+    "docOther": [],
     "type": "validator",
     "name": "is_compression_value",
     "description": "must be on/off or a value between 0 and 9",
@@ -4035,6 +4860,18 @@
       "same resources.",
       "@see background_manager"
     ],
+    "docText": [
+      "Whether to use the background manager to limit KV handoff.",
+      "This will help to prevent system response degradation under times",
+      "of heavy load from multiple background tasks that contend for the",
+      "same resources."
+    ],
+    "docSections": [],
+    "docRelateds": [],
+    "docSees": [
+      "background_manager"
+    ],
+    "docOther": [],
     "type": "mapping",
     "configName": "handoff.use_background_manager",
     "settingName": "riak_kv.handoff_use_background_manager",
@@ -4082,6 +4919,20 @@
       "blocked by a secondary system set this value to 0.",
       "@see vnode_management_timer"
     ],
+    "docText": [
+      "The maximum number of times that a secondary system like Riak",
+      "Search 2.0 can block handoff of primary key-value data. The",
+      "approximate maximum duration handoff of a vnode can be blocked for",
+      "can be determined by multiplying this number by the value of",
+      "\"vnode_management_timer\". To prevent handoff from ever being",
+      "blocked by a secondary system set this value to 0."
+    ],
+    "docSections": [],
+    "docRelateds": [],
+    "docSees": [
+      "vnode_management_timer"
+    ],
+    "docOther": [],
     "type": "mapping",
     "configName": "handoff.max_rejects",
     "settingName": "riak_kv.handoff_rejected_max",
@@ -4127,6 +4978,18 @@
       "contend for the same resources.",
       "@see background_manager"
     ],
+    "docText": [
+      "Whether to use the background manager to limit AAE tree",
+      "rebuilds. This will help to prevent system response degradation",
+      "under times of heavy load from multiple background tasks that",
+      "contend for the same resources."
+    ],
+    "docSections": [],
+    "docRelateds": [],
+    "docSees": [
+      "background_manager"
+    ],
+    "docOther": [],
     "type": "mapping",
     "configName": "anti_entropy.use_background_manager",
     "settingName": "riak_kv.aae_use_background_manager",
@@ -4168,6 +5031,13 @@
     "comment": [
       "@doc Time in between the checks that trigger Bitcask merges."
     ],
+    "docText": [
+      "Time in between the checks that trigger Bitcask merges."
+    ],
+    "docSections": [],
+    "docRelateds": [],
+    "docSees": [],
+    "docOther": [],
     "type": "mapping",
     "configName": "bitcask.merge_check_interval",
     "settingName": "riak_kv.bitcask_merge_check_interval",
@@ -4219,6 +5089,14 @@
       "@doc Jitter used to randomize the time in between the checks that trigger",
       "Bitcask merges."
     ],
+    "docText": [
+      "Jitter used to randomize the time in between the checks that trigger",
+      "Bitcask merges."
+    ],
+    "docSections": [],
+    "docRelateds": [],
+    "docSees": [],
+    "docOther": [],
     "type": "mapping",
     "configName": "bitcask.merge_check_jitter",
     "settingName": "riak_kv.bitcask_merge_check_jitter",
@@ -4269,6 +5147,13 @@
     "comment": [
       "@doc Maximum amount of data to merge in one go in the Bitcask backend."
     ],
+    "docText": [
+      "Maximum amount of data to merge in one go in the Bitcask backend."
+    ],
+    "docSections": [],
+    "docRelateds": [],
+    "docSees": [],
+    "docOther": [],
     "type": "mapping",
     "configName": "bitcask.max_merge_size",
     "settingName": "riak_kv.bitcask_max_merge_size",
@@ -4310,6 +5195,13 @@
     "comment": [
       "@doc Whether to allow list buckets."
     ],
+    "docText": [
+      "Whether to allow list buckets."
+    ],
+    "docSections": [],
+    "docRelateds": [],
+    "docSees": [],
+    "docOther": [],
     "type": "mapping",
     "configName": "cluster.job.riak_kv.list_buckets",
     "settingName": "riak_core.job_accept_class",
@@ -4377,6 +5269,13 @@
     "comment": [
       "@doc Whether to allow streaming list buckets."
     ],
+    "docText": [
+      "Whether to allow streaming list buckets."
+    ],
+    "docSections": [],
+    "docRelateds": [],
+    "docSees": [],
+    "docOther": [],
     "type": "mapping",
     "configName": "cluster.job.riak_kv.stream_list_buckets",
     "settingName": "riak_core.job_accept_class",
@@ -4444,6 +5343,13 @@
     "comment": [
       "@doc Whether to allow list keys."
     ],
+    "docText": [
+      "Whether to allow list keys."
+    ],
+    "docSections": [],
+    "docRelateds": [],
+    "docSees": [],
+    "docOther": [],
     "type": "mapping",
     "configName": "cluster.job.riak_kv.list_keys",
     "settingName": "riak_core.job_accept_class",
@@ -4511,6 +5417,13 @@
     "comment": [
       "@doc Whether to allow streaming list keys."
     ],
+    "docText": [
+      "Whether to allow streaming list keys."
+    ],
+    "docSections": [],
+    "docRelateds": [],
+    "docSees": [],
+    "docOther": [],
     "type": "mapping",
     "configName": "cluster.job.riak_kv.stream_list_keys",
     "settingName": "riak_core.job_accept_class",
@@ -4578,6 +5491,13 @@
     "comment": [
       "@doc Whether to allow secondary index queries."
     ],
+    "docText": [
+      "Whether to allow secondary index queries."
+    ],
+    "docSections": [],
+    "docRelateds": [],
+    "docSees": [],
+    "docOther": [],
     "type": "mapping",
     "configName": "cluster.job.riak_kv.secondary_index",
     "settingName": "riak_core.job_accept_class",
@@ -4645,6 +5565,13 @@
     "comment": [
       "@doc Whether to allow streaming secondary index queries."
     ],
+    "docText": [
+      "Whether to allow streaming secondary index queries."
+    ],
+    "docSections": [],
+    "docRelateds": [],
+    "docSees": [],
+    "docOther": [],
     "type": "mapping",
     "configName": "cluster.job.riak_kv.stream_secondary_index",
     "settingName": "riak_core.job_accept_class",
@@ -4712,6 +5639,13 @@
     "comment": [
       "@doc Whether to allow term-based map-reduce."
     ],
+    "docText": [
+      "Whether to allow term-based map-reduce."
+    ],
+    "docSections": [],
+    "docRelateds": [],
+    "docSees": [],
+    "docOther": [],
     "type": "mapping",
     "configName": "cluster.job.riak_kv.map_reduce",
     "settingName": "riak_core.job_accept_class",
@@ -4779,6 +5713,13 @@
     "comment": [
       "@doc Whether to allow JavaScript map-reduce."
     ],
+    "docText": [
+      "Whether to allow JavaScript map-reduce."
+    ],
+    "docSections": [],
+    "docRelateds": [],
+    "docSees": [],
+    "docOther": [],
     "type": "mapping",
     "configName": "cluster.job.riak_kv.map_reduce_js",
     "settingName": "riak_core.job_accept_class",
@@ -4850,6 +5791,17 @@
       "a subset of data - as cached AAE trees will be used.",
       "TODO: type is not yet implemented."
     ],
+    "docText": [
+      "For Tictac full-sync does all data need to be sync'd, or should a",
+      "specific bucket be sync'd (bucket), or a specific bucket type (type).",
+      "Note that in most cases sync of all data is lower overhead than sync of",
+      "a subset of data - as cached AAE trees will be used.",
+      "TODO: type is not yet implemented."
+    ],
+    "docSections": [],
+    "docRelateds": [],
+    "docSees": [],
+    "docOther": [],
     "type": "mapping",
     "configName": "ttaaefs_scope",
     "settingName": "riak_kv.ttaaefs_scope",
@@ -4917,6 +5869,17 @@
       "`riak_kv.replq<n>_queuename`, but need not be exlusive to full-sync (i.e. a",
       "real-time replication queue may be used as well)"
     ],
+    "docText": [
+      "For tictac full-sync what registered queue name on this cluster should",
+      "be use for passing references to data which needs to be replicated for AAE",
+      "full-sync.  This queue name must be defined as a",
+      "`riak_kv.replq<n>_queuename`, but need not be exlusive to full-sync (i.e. a",
+      "real-time replication queue may be used as well)"
+    ],
+    "docSections": [],
+    "docRelateds": [],
+    "docSees": [],
+    "docOther": [],
     "type": "mapping",
     "configName": "ttaaefs_queuename",
     "settingName": "riak_kv.ttaaefs_queuename",
@@ -4962,6 +5925,21 @@
       "lead to repair activity.  To revert back to pre-3.0.10 uni-directional",
       "behaviour use the keyword disabled as the peer queuename."
     ],
+    "docText": [
+      "Tictac full-sync repair is by default uni-directional - each full-sync",
+      "operation managed from a given cluster will only attempt to prompt repair",
+      "where that cluster is in advance (i.e the src of a more advanced value).",
+      "From Riak 3.0.10 it can be bi-directional, and by configuring the queuename",
+      "of the remote peer that this cluster is consuming from, repairs will be",
+      "prompted in both directions.",
+      "This change reduces the waste associated with discovery work that does not",
+      "lead to repair activity.  To revert back to pre-3.0.10 uni-directional",
+      "behaviour use the keyword disabled as the peer queuename."
+    ],
+    "docSections": [],
+    "docRelateds": [],
+    "docSees": [],
+    "docOther": [],
     "type": "mapping",
     "configName": "ttaaefs_queuename_peer",
     "settingName": "riak_kv.ttaaefs_queuename_peer",
@@ -5015,6 +5993,16 @@
       "example when doing bi-directional replication give one cluster a slice",
       "number of 1, and another a slice number of 3 (or alternatively use 2 and 4)"
     ],
+    "docText": [
+      "Tictac cluster slice number.  Each cluster can be configued with a",
+      "slice number to space out full-sync events.  The numbers can be 1..4.  For",
+      "example when doing bi-directional replication give one cluster a slice",
+      "number of 1, and another a slice number of 3 (or alternatively use 2 and 4)"
+    ],
+    "docSections": [],
+    "docRelateds": [],
+    "docSees": [],
+    "docOther": [],
     "type": "mapping",
     "configName": "ttaaefs_cluster_slice",
     "settingName": "riak_kv.ttaaefs_cluster_slice",
@@ -5062,6 +6050,23 @@
       "and af3 queue sizes - but this will be at the risk of there being a bigger",
       "impact on KV performance when repairs are required."
     ],
+    "docText": [
+      "For tictac full-sync what is the maximum number of AAE segments to be",
+      "compared per exchange.  Reducing this will speed up clock compare queries,",
+      "but will increase the number of exchanges required to complete a repair.",
+      "If using range_check to speed-up repairs, this can be reduced as the",
+      "range_check maxresults will be boosted by the ttaaefs_rangeboost  When using",
+      "range_check a value of 64 is recommended, which may be reduced to 32 or 16",
+      "if the cluster has a very large volume of keys and/or limited capacity.",
+      "Only reduce below 16 in exceptional circumstances.",
+      "More capacity to process sync queries can be added by increaseing the af2",
+      "and af3 queue sizes - but this will be at the risk of there being a bigger",
+      "impact on KV performance when repairs are required."
+    ],
+    "docSections": [],
+    "docRelateds": [],
+    "docSees": [],
+    "docOther": [],
     "type": "mapping",
     "configName": "ttaaefs_maxresults",
     "settingName": "riak_kv.ttaaefs_maxresults",
@@ -5104,6 +6109,18 @@
       "other *_check syncs as discovery queries (to find the range_check for the",
       "range_check to do the heavy lifting)"
     ],
+    "docText": [
+      "For tictac full-sync what is the maximum number of AAE segments to be",
+      "compared per exchange.  When running a range_check query this will be the",
+      "ttaaefs_max results * ttaaefs_rangeboost.",
+      "When using range_check, a small maxresults can be used, in effect using",
+      "other *_check syncs as discovery queries (to find the range_check for the",
+      "range_check to do the heavy lifting)"
+    ],
+    "docSections": [],
+    "docRelateds": [],
+    "docSees": [],
+    "docOther": [],
     "type": "mapping",
     "configName": "ttaaefs_rangeboost",
     "settingName": "riak_kv.ttaaefs_rangeboost",
@@ -5143,6 +6160,15 @@
       "node.  Only ascii string bucket definitions supported (which will be",
       "converted using list_to_binary)."
     ],
+    "docText": [
+      "For Tictac bucket full-sync which bucket should be sync'd by this",
+      "node.  Only ascii string bucket definitions supported (which will be",
+      "converted using list_to_binary)."
+    ],
+    "docSections": [],
+    "docRelateds": [],
+    "docSees": [],
+    "docOther": [],
     "type": "mapping",
     "configName": "ttaaefs_bucketfilter_name",
     "settingName": "riak_kv.ttaaefs_bucketfilter_name",
@@ -5182,6 +6208,15 @@
       "Only ascii string type bucket definitions supported (these",
       "definitions will be converted to binary using list_to_binary)"
     ],
+    "docText": [
+      "For Tictac bucket full-sync what is the bucket type of the bucket name.",
+      "Only ascii string type bucket definitions supported (these",
+      "definitions will be converted to binary using list_to_binary)"
+    ],
+    "docSections": [],
+    "docRelateds": [],
+    "docSees": [],
+    "docOther": [],
     "type": "mapping",
     "configName": "ttaaefs_bucketfilter_type",
     "settingName": "riak_kv.ttaaefs_bucketfilter_type",
@@ -5222,6 +6257,16 @@
       "definitions will be converted to binary using list_to_binary).",
       "TODO: Type-based filtering is not yet supported"
     ],
+    "docText": [
+      "For Tictac bucket-type full-sync what is the bucket type to be sync'd.",
+      "Only ascii string type bucket definitions supported (these",
+      "definitions will be converted to binary using list_to_binary).",
+      "TODO: Type-based filtering is not yet supported"
+    ],
+    "docSections": [],
+    "docRelateds": [],
+    "docSees": [],
+    "docOther": [],
     "type": "mapping",
     "configName": "ttaaefs_buckettype",
     "settingName": "riak_kv.ttaaefs_buckettype",
@@ -5248,6 +6293,15 @@
       "This is the `local` nval, as the data in the remote cluster may have an",
       "alternative nval."
     ],
+    "docText": [
+      "For Tictac all full-sync which NVAL should be sync'd by this node.",
+      "This is the `local` nval, as the data in the remote cluster may have an",
+      "alternative nval."
+    ],
+    "docSections": [],
+    "docRelateds": [],
+    "docSees": [],
+    "docOther": [],
     "type": "mapping",
     "configName": "ttaaefs_localnval",
     "settingName": "riak_kv.ttaaefs_localnval",
@@ -5286,6 +6340,14 @@
       "@doc For Tictac all full-sync which NVAL should be sync'd in the remote",
       "cluster."
     ],
+    "docText": [
+      "For Tictac all full-sync which NVAL should be sync'd in the remote",
+      "cluster."
+    ],
+    "docSections": [],
+    "docRelateds": [],
+    "docSees": [],
+    "docOther": [],
     "type": "mapping",
     "configName": "ttaaefs_remotenval",
     "settingName": "riak_kv.ttaaefs_remotenval",
@@ -5327,6 +6389,17 @@
       "so alternative peer addresses should eb configured in other nodes.  The",
       "peer address may be a load-balanced IP to avoid this issue."
     ],
+    "docText": [
+      "The network address of the peer node in the cluster with which this",
+      "node will connect to for full_sync purposes.  If this peer node is",
+      "unavailable, then this local node will not perform any full-sync actions,",
+      "so alternative peer addresses should eb configured in other nodes.  The",
+      "peer address may be a load-balanced IP to avoid this issue."
+    ],
+    "docSections": [],
+    "docRelateds": [],
+    "docSees": [],
+    "docOther": [],
     "type": "mapping",
     "configName": "ttaaefs_peerip",
     "settingName": "riak_kv.ttaaefs_peerip",
@@ -5380,6 +6453,11 @@
   {
     "rawSchema": "{validator, \"valid_ipaddr\", \"must be a valid IP address\", fun(AddrString) -> case inet_parse:address(AddrString) of {ok, _} -> true; {error, _} -> false end end}.",
     "comment": [],
+    "docText": [],
+    "docSections": [],
+    "docRelateds": [],
+    "docSees": [],
+    "docOther": [],
     "type": "validator",
     "name": "valid_ipaddr",
     "description": "must be a valid IP address",
@@ -5390,6 +6468,13 @@
     "comment": [
       "@doc The port to be used when connecting to the remote peer cluster"
     ],
+    "docText": [
+      "The port to be used when connecting to the remote peer cluster"
+    ],
+    "docSections": [],
+    "docRelateds": [],
+    "docSees": [],
+    "docOther": [],
     "type": "mapping",
     "configName": "ttaaefs_peerport",
     "settingName": "riak_kv.ttaaefs_peerport",
@@ -5434,6 +6519,20 @@
       "- riak_kv, repl_key_filename,",
       "- riak_kv, repl_username"
     ],
+    "docText": [
+      "The protocol to be used when conecting to the peer in the remote",
+      "cluster.  Could be http or pb, with pb being relatively efficient.  Adding",
+      "TLS security is possible with the pb protocol by setting the following",
+      "configuration items:",
+      "- riak_kv, repl_cacert_filename",
+      "- riak_kv, repl_cert_filename",
+      "- riak_kv, repl_key_filename,",
+      "- riak_kv, repl_username"
+    ],
+    "docSections": [],
+    "docRelateds": [],
+    "docSees": [],
+    "docOther": [],
     "type": "mapping",
     "configName": "ttaaefs_peerprotocol",
     "settingName": "riak_kv.ttaaefs_peerprotocol",
@@ -5490,6 +6589,14 @@
       "@doc The filepath for the ca certificate to validate the ssl connection",
       "to the remote peer."
     ],
+    "docText": [
+      "The filepath for the ca certificate to validate the ssl connection",
+      "to the remote peer."
+    ],
+    "docSections": [],
+    "docRelateds": [],
+    "docSees": [],
+    "docOther": [],
     "type": "mapping",
     "configName": "repl_cacert_filename",
     "settingName": "riak_kv.repl_cacert_filename",
@@ -5516,6 +6623,15 @@
       "as a client for replication.  Must be trusted by the cluster with security",
       "enabled"
     ],
+    "docText": [
+      "The filepath for the certificate to be used by this node when acting",
+      "as a client for replication.  Must be trusted by the cluster with security",
+      "enabled"
+    ],
+    "docSections": [],
+    "docRelateds": [],
+    "docSees": [],
+    "docOther": [],
     "type": "mapping",
     "configName": "repl_cert_filename",
     "settingName": "riak_kv.repl_cert_filename",
@@ -5541,6 +6657,14 @@
       "@doc The filepath for the key to related to the certificate in",
       "repl_cert_filename"
     ],
+    "docText": [
+      "The filepath for the key to related to the certificate in",
+      "repl_cert_filename"
+    ],
+    "docSections": [],
+    "docRelateds": [],
+    "docSees": [],
+    "docOther": [],
     "type": "mapping",
     "configName": "repl_key_filename",
     "settingName": "riak_kv.repl_key_filename",
@@ -5567,6 +6691,15 @@
       "username is required to identify the replication client.  This username",
       "must be configured on the remote cluster with appropriate access rights"
     ],
+    "docText": [
+      "When security is enabled on the remote cluster for replication as",
+      "username is required to identify the replication client.  This username",
+      "must be configured on the remote cluster with appropriate access rights"
+    ],
+    "docSections": [],
+    "docRelateds": [],
+    "docSees": [],
+    "docOther": [],
     "type": "mapping",
     "configName": "repl_username",
     "settingName": "riak_kv.repl_username",
@@ -5602,6 +6735,24 @@
       "For per-bucket replication all is a reference to all of the data for that",
       "bucket, and warnings about sizing are specially relevant."
     ],
+    "docText": [
+      "How many times per 24hour period should all the data be checked to",
+      "confirm it is fully sync'd.  When running a full (i.e. nval) sync this will",
+      "check all the data under that nval between the clusters, and when the trees",
+      "are out of alignment, will check across all data where the nval matches the",
+      "specified nval.",
+      "On large clusters (in terms of key count), this may take a long time - so",
+      "allcheck should be scheduled infrequently, as other checks may be delayed by",
+      "consumption of queue resource by the allcheck.",
+      "The af3_queue size, and the ttaaefs_maxresults, both need to be tuned to",
+      "ensure that the allcheck can run wihtin the 30 minute timeout.",
+      "For per-bucket replication all is a reference to all of the data for that",
+      "bucket, and warnings about sizing are specially relevant."
+    ],
+    "docSections": [],
+    "docRelateds": [],
+    "docSees": [],
+    "docOther": [],
     "type": "mapping",
     "configName": "ttaaefs_allcheck",
     "settingName": "riak_kv.ttaaefs_allcheck",
@@ -5642,6 +6793,16 @@
       "done by each node - if each node has the same number of slots, they will",
       "naurally space their checks within the period of the slot."
     ],
+    "docText": [
+      "How many times per 24hour period should no data be checked to",
+      "confirm it is fully sync'd.  Use nochecks to align the number of checks",
+      "done by each node - if each node has the same number of slots, they will",
+      "naurally space their checks within the period of the slot."
+    ],
+    "docSections": [],
+    "docRelateds": [],
+    "docSees": [],
+    "docOther": [],
     "type": "mapping",
     "configName": "ttaaefs_nocheck",
     "settingName": "riak_kv.ttaaefs_nocheck",
@@ -5687,6 +6848,21 @@
       "Once deltas are outside of the last hour, an hourcheck can do",
       "nothing to resolve the data, but will still consume resource."
     ],
+    "docText": [
+      "How many times per 24hour period should the last hours data be checked",
+      "to confirm it is fully sync'd.",
+      "For per-bucket replication, the tree comparison prompted by this will be",
+      "constrained by the time period, as well as the keys and clocks checked for",
+      "repair. For full, nval, replication - the tree comparison is across all",
+      "time, but the keys and clocks checked for repair are constrained by the time",
+      "period.",
+      "Once deltas are outside of the last hour, an hourcheck can do",
+      "nothing to resolve the data, but will still consume resource."
+    ],
+    "docSections": [],
+    "docRelateds": [],
+    "docSees": [],
+    "docOther": [],
     "type": "mapping",
     "configName": "ttaaefs_hourcheck",
     "settingName": "riak_kv.ttaaefs_hourcheck",
@@ -5732,6 +6908,21 @@
       "Once deltas are outside of the last hour, a daycheck can do",
       "nothing to resolve the data, but will still consume resource."
     ],
+    "docText": [
+      "How many times per 24hour period should the last 24-hours of data be",
+      "checked to confirm it is fully sync'd.",
+      "For per-bucket replication, the tree comparison prompted by this will be",
+      "constrained by the time period, as well as the keys and clocks checked for",
+      "repair. For full, nval, replication - the tree comparison is across all",
+      "time, but the keys and clocks checked for repair are constrained by the time",
+      "period.",
+      "Once deltas are outside of the last hour, a daycheck can do",
+      "nothing to resolve the data, but will still consume resource."
+    ],
+    "docSections": [],
+    "docRelateds": [],
+    "docSees": [],
+    "docOther": [],
     "type": "mapping",
     "configName": "ttaaefs_daycheck",
     "settingName": "riak_kv.ttaaefs_daycheck",
@@ -5782,6 +6973,26 @@
       "for objects to repair - the tree comparison is always between all data for",
       "that nval."
     ],
+    "docText": [
+      "How many times per 24hour period should the a range_check be run.  The",
+      "range_check is intended to be a smart check, in that it will:",
+      "- use a last_modified range starting from the last successful check as its",
+      "range if the last check was successful (i.e. showed the clusters to be",
+      "in sync);",
+      "- use a range identified by the last check (a last modified range, and",
+      "perhaps also a specific Bucket) if a range to limit the issues has been",
+      "identified by a previous failure",
+      "- Not run at all if the clusters are out of sync and no range has been",
+      "discovered (this may be the case when running on a sink which is behind a",
+      "source cluster).",
+      "For full, nval, sync operations the range is only relevant to the search",
+      "for objects to repair - the tree comparison is always between all data for",
+      "that nval."
+    ],
+    "docSections": [],
+    "docRelateds": [],
+    "docSees": [],
+    "docOther": [],
     "type": "mapping",
     "configName": "ttaaefs_rangecheck",
     "settingName": "riak_kv.ttaaefs_rangecheck",
@@ -5831,6 +7042,25 @@
       "for objects to repair, the tree comparison is always between all data for",
       "that nval."
     ],
+    "docText": [
+      "How many times per 24hour period should the an autocheck be run.  The",
+      "autocheck is intended to be an adaptive check, in that it will:",
+      "- use a rangecheck if the previous check has identified a range, or;",
+      "- use a rangecheck if the previous check was a successful sync, using the",
+      "timestamp of the previous success as low modified date, or;",
+      "- use a nocheck if the previous check did not sync, but also did not lead",
+      "to any repairs (e.g. because the sink was ahead), or;",
+      "- use an allcheck if no range is identified, and the current time is inside",
+      "the all_check window, or;",
+      "- use a daycheck otherwise",
+      "For full, nval, sync operations the range is only relevant to the search",
+      "for objects to repair, the tree comparison is always between all data for",
+      "that nval."
+    ],
+    "docSections": [],
+    "docRelateds": [],
+    "docSees": [],
+    "docOther": [],
     "type": "mapping",
     "configName": "ttaaefs_autocheck",
     "settingName": "riak_kv.ttaaefs_autocheck",
@@ -5884,6 +7114,29 @@
       "or your cluster has quiet periods in which little storage activity",
       "occurs, you may want to change this setting from the default."
     ],
+    "docText": [
+      "Lets you specify when during the day autocheck may run allcheck",
+      "rather than the less expensive daycheck, when no range has been identified.",
+      "This restricts the fixing entropy between clusters of non recently-modified",
+      "data to this window (and hence ensures the cost of fixing this entropy does",
+      "not fall in prime hours).  Note this window applies to `ttaaefs_autocheck`,",
+      "which will adapt to the window - any `ttaaefs_allcheck` count that has been",
+      "configured will ignore the window:",
+      "",
+      "* `always` (default) No restrictions",
+      "* `never` never convert an auto_check to an all_check",
+      "* `window` Hours during which merging is permitted, where",
+      "  `ttaaefs_allcheck.window.start` and `ttaaefs_allcheck.window.end` are",
+      "  integers between 0 and 23.",
+      "",
+      "If all_check has a significant impact on performance of your cluster,",
+      "or your cluster has quiet periods in which little storage activity",
+      "occurs, you may want to change this setting from the default."
+    ],
+    "docSections": [],
+    "docRelateds": [],
+    "docSees": [],
+    "docOther": [],
     "type": "mapping",
     "configName": "ttaaefs_allcheck.policy",
     "settingName": "riak_kv.ttaaefs_allcheck_window",
@@ -5943,6 +7196,13 @@
     "comment": [
       "@see All check window"
     ],
+    "docText": [],
+    "docSections": [],
+    "docRelateds": [],
+    "docSees": [
+      "All check window"
+    ],
+    "docOther": [],
     "type": "mapping",
     "configName": "ttaaefs_allcheck.window.start",
     "settingName": "riak_kv.ttaaefs_allcheck_window",
@@ -5984,6 +7244,13 @@
     "comment": [
       "@see All check window"
     ],
+    "docText": [],
+    "docSections": [],
+    "docRelateds": [],
+    "docSees": [
+      "All check window"
+    ],
+    "docOther": [],
     "type": "mapping",
     "configName": "ttaaefs_allcheck.window.end",
     "settingName": "riak_kv.ttaaefs_allcheck_window",
@@ -6023,6 +7290,11 @@
   {
     "rawSchema": "{translation, \"riak_kv.ttaaefs_allcheck_window\", fun(Conf) -> Setting = cuttlefish:conf_get(\"ttaaefs_allcheck.policy\", Conf), case Setting of always -> always; never -> never; window -> Start = cuttlefish:conf_get(\"ttaaefs_allcheck.window.start\", Conf, undefined), End = cuttlefish:conf_get(\"ttaaefs_allcheck.window.end\", Conf, undefined), {Start, End}; _Default -> always end end}.",
     "comment": [],
+    "docText": [],
+    "docSections": [],
+    "docRelateds": [],
+    "docSees": [],
+    "docOther": [],
     "type": "translation",
     "configName": "riak_kv.ttaaefs_allcheck_window",
     "func": "fun(Conf) -> Setting = cuttlefish:conf_get(\"ttaaefs_allcheck.policy\", Conf), case Setting of always -> always; never -> never; window -> Start = cuttlefish:conf_get(\"ttaaefs_allcheck.window.start\", Conf, undefined), End = cuttlefish:conf_get(\"ttaaefs_allcheck.window.end\", Conf, undefined), {Start, End}; _Default -> always end end"
@@ -6033,6 +7305,14 @@
       "@doc If Tictac AAE full-sync discovers keys to be repaired, should each key",
       "that is repaired be logged"
     ],
+    "docText": [
+      "If Tictac AAE full-sync discovers keys to be repaired, should each key",
+      "that is repaired be logged"
+    ],
+    "docSections": [],
+    "docRelateds": [],
+    "docSees": [],
+    "docOther": [],
     "type": "mapping",
     "configName": "ttaaefs_logrepairs",
     "settingName": "riak_kv.ttaaefs_logrepairs",
@@ -6099,6 +7379,16 @@
       "repairing any deltas.  Enabling this setting will change the concurrency",
       "of fetch_clock_nval queries run to find repairs."
     ],
+    "docText": [
+      "If Tictac AAE sees difference in trees (for nval-based full",
+      "comparisons) only, should it attempt to repair those trees as well as",
+      "repairing any deltas.  Enabling this setting will change the concurrency",
+      "of fetch_clock_nval queries run to find repairs."
+    ],
+    "docSections": [],
+    "docRelateds": [],
+    "docSees": [],
+    "docOther": [],
     "type": "mapping",
     "configName": "aae_fetchclocks_repair",
     "settingName": "riak_kv.aae_fetchclocks_repair",
@@ -6162,6 +7452,13 @@
     "comment": [
       "@doc Enable this node to act as a real-time replication source"
     ],
+    "docText": [
+      "Enable this node to act as a real-time replication source"
+    ],
+    "docSections": [],
+    "docRelateds": [],
+    "docSees": [],
+    "docOther": [],
     "type": "mapping",
     "configName": "replrtq_enablesrc",
     "settingName": "riak_kv.replrtq_enablesrc",
@@ -6228,6 +7525,16 @@
       "can be used should there be issues with vnode stress that will otherwise",
       "generate anti-entropy workloads (e.g. with mailbox overloads)"
     ],
+    "docText": [
+      "For queue-based replication what should be the r value on fetches,",
+      "and the w value on pushes.  Default is to use `one` but `quorum` or `all`",
+      "can be used should there be issues with vnode stress that will otherwise",
+      "generate anti-entropy workloads (e.g. with mailbox overloads)"
+    ],
+    "docSections": [],
+    "docRelateds": [],
+    "docSees": [],
+    "docOther": [],
     "type": "mapping",
     "configName": "replrtq_vnodecheck",
     "settingName": "riak_kv.replrtq_vnodecheck",
@@ -6289,6 +7596,15 @@
       "with objects queued when the priority queue is beyond this limit stored as",
       "clocks only to be fetched on replication"
     ],
+    "docText": [
+      "Limit the number of objects to be cached on the replication queue,",
+      "with objects queued when the priority queue is beyond this limit stored as",
+      "clocks only to be fetched on replication"
+    ],
+    "docSections": [],
+    "docRelateds": [],
+    "docSees": [],
+    "docOther": [],
     "type": "mapping",
     "configName": "replrtq_srcobjectlimit",
     "settingName": "riak_kv.replrtq_srcobjectlimit",
@@ -6330,6 +7646,17 @@
       "gives a theoretical maximum for the total memory consumed by the",
       "riak_kv_rpelrtq (in terms of objects).  Default of this product is 200MB."
     ],
+    "docText": [
+      "Limit the size of an object which may be pushed to the replication",
+      "queue.  Objects larger than this will still be replicated, but by being",
+      "re-fetched.  The product of replrtq_objectsize and replrtq_srcobjectlimit",
+      "gives a theoretical maximum for the total memory consumed by the",
+      "riak_kv_rpelrtq (in terms of objects).  Default of this product is 200MB."
+    ],
+    "docSections": [],
+    "docRelateds": [],
+    "docSees": [],
+    "docOther": [],
     "type": "mapping",
     "configName": "replrtq_srcobjectsize",
     "settingName": "riak_kv.replrtq_srcobjectsize",
@@ -6384,6 +7711,30 @@
       "Example configurtaion might be:",
       "cluster_a:any|cluster_b:block_rtq|cluster_c:bucketprefix.user"
     ],
+    "docText": [
+      "Queue definitions",
+      "Queues should be defined using a pipe '|' delimited string, of two",
+      "colon ':' delimited elements.  The first part of each queue definition is",
+      "the ascii name of the queue, the second part indicated the filter to be",
+      "applied which should be either:",
+      "- any (all real-time modifications to be replicated via this queue)",
+      "- block_rtq (no real-time modifications to be replicated)",
+      "- bucketname.<name_of_bucket>",
+      "- bucketprefix.<prefix_for_bucket>",
+      "- buckettype.<name_of_type>",
+      "The latter three options allow for specific buckets to be supported by the",
+      "queue, or only buckets with certain prefixes, or for just buckets of a given",
+      "type.",
+      "If a list of buckets or types need to be supported, then either multiple",
+      "queues need to be defined, or non-persistent extended definitions can be",
+      "made at runtime used the riak_kv_replrtq_src API.",
+      "Example configurtaion might be:",
+      "cluster_a:any|cluster_b:block_rtq|cluster_c:bucketprefix.user"
+    ],
+    "docSections": [],
+    "docRelateds": [],
+    "docSees": [],
+    "docOther": [],
     "type": "mapping",
     "configName": "replrtq_srcqueue",
     "settingName": "riak_kv.replrtq_srcqueue",
@@ -6421,6 +7772,13 @@
     "comment": [
       "@doc Enable this node to zlib compress objects over the wire"
     ],
+    "docText": [
+      "Enable this node to zlib compress objects over the wire"
+    ],
+    "docSections": [],
+    "docRelateds": [],
+    "docSees": [],
+    "docOther": [],
     "type": "mapping",
     "configName": "replrtq_compressonwire",
     "settingName": "riak_kv.replrtq_compressonwire",
@@ -6484,6 +7842,13 @@
     "comment": [
       "@doc Enable this node to replicate reap requests to other clusters"
     ],
+    "docText": [
+      "Enable this node to replicate reap requests to other clusters"
+    ],
+    "docSections": [],
+    "docRelateds": [],
+    "docSees": [],
+    "docOther": [],
     "type": "mapping",
     "configName": "repl_reap",
     "settingName": "riak_kv.repl_reap",
@@ -6547,6 +7912,13 @@
     "comment": [
       "@doc Enable this node to act as a sink and consume from a src cluster"
     ],
+    "docText": [
+      "Enable this node to act as a sink and consume from a src cluster"
+    ],
+    "docSections": [],
+    "docRelateds": [],
+    "docSees": [],
+    "docOther": [],
     "type": "mapping",
     "configName": "replrtq_enablesink",
     "settingName": "riak_kv.replrtq_enablesink",
@@ -6617,6 +7989,20 @@
       "also be extended to add different queue names into definitions - however",
       "it is strongly recommended to use a single sinkqueue name per node."
     ],
+    "docText": [
+      "Queue name  to be used for peers (replrtq_sinkpeers) that are",
+      "defined without a queue name.  Each node is expected to have a single",
+      "queue from which it will consume (by name).  This queue may be consumed",
+      "from multiple peers - and those peers may sit on multiple clusters.",
+      "If more than one queue name is to be consumed from, real-time changes can",
+      "be made through `riak_kv_replrtq_snk:add_snkqueue/3`.  The peer list can",
+      "also be extended to add different queue names into definitions - however",
+      "it is strongly recommended to use a single sinkqueue name per node."
+    ],
+    "docSections": [],
+    "docRelateds": [],
+    "docSees": [],
+    "docOther": [],
     "type": "mapping",
     "configName": "replrtq_sinkqueue",
     "settingName": "riak_kv.replrtq_sinkqueue",
@@ -6661,6 +8047,20 @@
       "queuename:host:port:protocol - but restricting the definitions of queuename",
       "to the single queue specified in replrtq_sinkqueue is strongly recommended."
     ],
+    "docText": [
+      "A list of peers is required to inform the sink node how to reach the",
+      "src.  All src nodes will need to have entries consumed - so it is",
+      "recommended that each src node is referred to in multiple sink node",
+      "configurations.",
+      "The list of peers is tokenised as host:port:protocol",
+      "In exceptional circumstances this definition can be extended to",
+      "queuename:host:port:protocol - but restricting the definitions of queuename",
+      "to the single queue specified in replrtq_sinkqueue is strongly recommended."
+    ],
+    "docSections": [],
+    "docRelateds": [],
+    "docSees": [],
+    "docOther": [],
     "type": "mapping",
     "configName": "replrtq_sinkpeers",
     "settingName": "riak_kv.replrtq_sinkpeers",
@@ -6698,6 +8098,13 @@
     "comment": [
       "@doc The number of workers to be used for each queue must be configured."
     ],
+    "docText": [
+      "The number of workers to be used for each queue must be configured."
+    ],
+    "docSections": [],
+    "docRelateds": [],
+    "docSees": [],
+    "docOther": [],
     "type": "mapping",
     "configName": "replrtq_sinkworkers",
     "settingName": "riak_kv.replrtq_sinkworkers",
@@ -6736,6 +8143,14 @@
       "@doc The maximum number of workers to be for any given peer may be",
       "configured - if not configured will default to the number of sinkworkers"
     ],
+    "docText": [
+      "The maximum number of workers to be for any given peer may be",
+      "configured - if not configured will default to the number of sinkworkers"
+    ],
+    "docSections": [],
+    "docRelateds": [],
+    "docSees": [],
+    "docOther": [],
     "type": "mapping",
     "configName": "replrtq_sinkpeerlimit",
     "settingName": "riak_kv.replrtq_sinkpeerlimit",
@@ -6779,6 +8194,19 @@
       "being ignored.  If disabled the peer discovery process will be initialised,",
       "but will remain idle"
     ],
+    "docText": [
+      "Enable this node to perform peer discovery for real time replication",
+      "With peer discovery the configured peers will be used to discover more peers",
+      "within those clusters.  The peer discovery process will re-discover at a",
+      "random interval between 60s and `replrtq_prompt_max_seconds`.  Unexpected",
+      "events will result in the configured peers being used, and discovered peers",
+      "being ignored.  If disabled the peer discovery process will be initialised,",
+      "but will remain idle"
+    ],
+    "docSections": [],
+    "docRelateds": [],
+    "docSees": [],
+    "docOther": [],
     "type": "mapping",
     "configName": "replrtq_peer_discovery",
     "settingName": "riak_kv.replrtq_peer_discovery",
@@ -6844,6 +8272,15 @@
       "discovery.  Defaults to 15 minutes.  An immediate cluster-wide update can be",
       "prompted via `remote_console` using `riak_client:replrtq_reset_all_peers/1`."
     ],
+    "docText": [
+      "The maximum number of seconds to wait before re-prompting peer",
+      "discovery.  Defaults to 15 minutes.  An immediate cluster-wide update can be",
+      "prompted via `remote_console` using `riak_client:replrtq_reset_all_peers/1`."
+    ],
+    "docSections": [],
+    "docRelateds": [],
+    "docSees": [],
+    "docOther": [],
     "type": "mapping",
     "configName": "replrtq_prompt_max_seconds",
     "settingName": "riak_kv.replrtq_prompt_max_seconds",
@@ -6894,6 +8331,26 @@
       "journal, whereas the `recalc` strategy discards that history, but will redo",
       "a diff_index_specs calculation when reloading each object."
     ],
+    "docText": [
+      "Enable the `recalc` compaction strategy within the leveled backend in",
+      "riak.  The default (when disabled) is `retain`, but this will leave",
+      "uncollected garbage within the, journal.",
+      "It is now recommended from Riak KV 2.9.2 to consider the `recalc` strategy.",
+      "This strategy has a side effect of slower startups, and slower recovery",
+      "from a wiped ledger - but it will not keep an overhead of garbage within",
+      "the Journal.",
+      "It should be possible to move from `retain` to `recalc` via configuration",
+      "change.  However, it is not possible to switch from `recalc` back to",
+      "`retain`.  This switch can only be made for new nodes receiving data",
+      "through riak transfers (not inheriting data on disk).",
+      "The default `retain` strategy retains a history of key changes in the",
+      "journal, whereas the `recalc` strategy discards that history, but will redo",
+      "a diff_index_specs calculation when reloading each object."
+    ],
+    "docSections": [],
+    "docRelateds": [],
+    "docSees": [],
+    "docOther": [],
     "type": "mapping",
     "configName": "leveled_reload_recalc",
     "settingName": "riak_kv.leveled_reload_recalc",
@@ -6957,6 +8414,13 @@
     "comment": [
       "@doc Enable logging of query timings in the index_fsm"
     ],
+    "docText": [
+      "Enable logging of query timings in the index_fsm"
+    ],
+    "docSections": [],
+    "docRelateds": [],
+    "docSees": [],
+    "docOther": [],
     "type": "mapping",
     "configName": "log_index_fsm",
     "settingName": "riak_kv.log_index_fsm",
@@ -7039,6 +8503,32 @@
       "node_worker_pool, unless none is used for the worker_pool_strategy, in which",
       "case the vnode pool is also used for aae_folds."
     ],
+    "docText": [
+      "Set the vnode worker pool size",
+      "This is a pool of workers per-vnode, to be used for general queries, in",
+      "particular secondary index queries.  This now defaults to 5 workers, prior",
+      "to release 3.0.9 it was set to a default of 10.",
+      "The number of concurrent index queries that can be supported in the cluster",
+      "will be equal to n_val * worker_count.",
+      "The statistic worker_vnode_pool_worktime_mean tracks the average time",
+      "each worker is taking per query in microseconds, so the overall queries",
+      "per second supported will be:",
+      " (1000000 div worker_vnode_pool_worktime) * n_val * worker_count",
+      "It should normally be possible to support >> 100 queries per second with",
+      "just a single worker per vnode.",
+      "The statistic worker_vnode_pool_queuetime_mean will track the average time",
+      "a query is spending on a queue, should the vnode pool be exhausted.",
+      "If using tictac_aae this should be set to at least 2, as tree rebuilds use",
+      "this pool as well as queries.  Also consider that long-running legacy",
+      "queries (list keys and list buckets, not using aae_fold) also use",
+      "this pool.  All aae_fold type queries will use the alternative",
+      "node_worker_pool, unless none is used for the worker_pool_strategy, in which",
+      "case the vnode pool is also used for aae_folds."
+    ],
+    "docSections": [],
+    "docRelateds": [],
+    "docSees": [],
+    "docOther": [],
     "type": "mapping",
     "configName": "worker_pool_size",
     "settingName": "riak_kv.worker_pool_size",
@@ -7080,6 +8570,17 @@
       "converted to an overflow queue as part of this release.  Instead use",
       "`replrtq_overflow_limit` to control the queue size, including on-disk size."
     ],
+    "docText": [
+      "Limit the size of replication queues (for a queue and priority, i.e.",
+      "each priority on each queue will have this as the limit)",
+      "This option will be ignored from Release 3.0.10, as the queue has been",
+      "converted to an overflow queue as part of this release.  Instead use",
+      "`replrtq_overflow_limit` to control the queue size, including on-disk size."
+    ],
+    "docSections": [],
+    "docRelateds": [],
+    "docSees": [],
+    "docOther": [],
     "type": "mapping",
     "configName": "replrtq_srcqueuelimit",
     "settingName": "riak_kv.replrtq_srcqueuelimit",
@@ -7135,6 +8636,27 @@
       "provide additional data resilience, and potentially improved performance",
       "where the same objects are repeatedly fetched."
     ],
+    "docText": [
+      "Choose to read repair to primary vnodes only",
+      "When fallback vnodes are elected, then read repair will by default repair",
+      "any missing data from the vnode - i.e. every GET while the fallback is in",
+      "play will lead to a PUT to add the requested object to the fallback vnode,",
+      "as the fallback by default starts empty.",
+      "If the expectation is that failed vnodes are replaced quickly, as would be",
+      "possible in a Cloud scenario, this may not be desirable.  Read repair to",
+      "fallbacks reduce throughput in failure scenarios, and then the hinted",
+      "handoffs following recovery are impaired by the historic data which is",
+      "already in the recovered node, and has to be handed off as well as the",
+      "fresh updates received since the failure.",
+      "When fallback vnodes are expected to be in place for a long period, the",
+      "default setting of read repairing fallbacks may be preferred, as it will",
+      "provide additional data resilience, and potentially improved performance",
+      "where the same objects are repeatedly fetched."
+    ],
+    "docSections": [],
+    "docRelateds": [],
+    "docSees": [],
+    "docOther": [],
     "type": "mapping",
     "configName": "read_repair_primaryonly",
     "settingName": "riak_kv.read_repair_primaryonly",
@@ -7186,6 +8708,14 @@
       "@doc If reads discovers keys to be repaired, should each key",
       "that is repaired be logged"
     ],
+    "docText": [
+      "If reads discovers keys to be repaired, should each key",
+      "that is repaired be logged"
+    ],
+    "docSections": [],
+    "docRelateds": [],
+    "docSees": [],
+    "docOther": [],
     "type": "mapping",
     "configName": "read_repair_log",
     "settingName": "riak_kv.read_repair_log",
@@ -7241,6 +8771,14 @@
       "@doc When doing handoffs, forward delete requests so that if the delete_mode",
       "is not keep, tombstones will still be reaped."
     ],
+    "docText": [
+      "When doing handoffs, forward delete requests so that if the delete_mode",
+      "is not keep, tombstones will still be reaped."
+    ],
+    "docSections": [],
+    "docRelateds": [],
+    "docSees": [],
+    "docOther": [],
     "type": "mapping",
     "configName": "handoff_deletes",
     "settingName": "riak_kv.handoff_deletes",
@@ -7296,6 +8834,18 @@
       "this timeout.  Setting to 0 (default) implies no timeout.",
       "On hitting the timeout a 503 error will be returned on the HTTP API"
     ],
+    "docText": [
+      "Default Secondary Index Timeout (milliseconds)",
+      "Set the default timeout for running secondary index queries in millisceconds",
+      "This is the time to run the query, and collate the results - the encoding of",
+      "those results for dispatch back to the client is outside of the scope of",
+      "this timeout.  Setting to 0 (default) implies no timeout.",
+      "On hitting the timeout a 503 error will be returned on the HTTP API"
+    ],
+    "docSections": [],
+    "docRelateds": [],
+    "docSees": [],
+    "docOther": [],
     "type": "mapping",
     "configName": "secondary_index_timeout",
     "settingName": "riak_kv.secondary_index_timeout",
@@ -7339,6 +8889,19 @@
       "different order (i.e. the continuation key may now be before the results",
       "key).  To reverse back to mochijson, then reset to mochijson here."
     ],
+    "docText": [
+      "Json library for 2i results",
+      "Prior to Riak KV 3.2.1 the mochijson2 library was used to json encode 2i",
+      "results.  For larger results, the performance of this library is slower",
+      "when compared to alternatives (e.g. otp).  A back-ported version of the",
+      "OTP 27 proposed Json library is now the default - but may return keys in a",
+      "different order (i.e. the continuation key may now be before the results",
+      "key).  To reverse back to mochijson, then reset to mochijson here."
+    ],
+    "docSections": [],
+    "docRelateds": [],
+    "docSees": [],
+    "docOther": [],
     "type": "mapping",
     "configName": "secondary_index_json",
     "settingName": "riak_kv.secondary_index_json",
@@ -7397,6 +8960,16 @@
       "ignored on other backends.  Disable to change default behaviour and stop",
       "returning keys of tombstones in $key queries"
     ],
+    "docText": [
+      "For $key index queries, should keys which are tombstones be returned.",
+      "This config will only make a difference with the leveled backend, it is",
+      "ignored on other backends.  Disable to change default behaviour and stop",
+      "returning keys of tombstones in $key queries"
+    ],
+    "docSections": [],
+    "docRelateds": [],
+    "docSees": [],
+    "docOther": [],
     "type": "mapping",
     "configName": "dollarkey_readtombs",
     "settingName": "riak_kv.dollarkey_readtombs",

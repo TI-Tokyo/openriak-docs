@@ -45,8 +45,8 @@
           ]
         }
       },
-      "comment": [
-        "@doc The severity level of the console log, default is 'info'."
+      "docText": [
+        "The severity level of the console log, default is 'info'."
       ],
       "configName": "logger.level",
       "settingName": "kernel.logger_level"
@@ -55,8 +55,8 @@
       "properties": {
         "default": "[time,\\\" [\\\",level,\\\"] \\\",pid,\\\"@\\\",mfa,\\\":\\\",line,\\\" \\\",msg,\\\"\\\\n\\\"]."
       },
-      "comment": [
-        "@doc Format string for the messages emitted to default log. The string is passed into",
+      "docText": [
+        "Format string for the messages emitted to default log. The string is passed into",
         "the handler as a logger_formatter template, the format is a list containing strings",
         "and atoms. The atoms denote the keys for retrieving metadata from the logger events.",
         "More information on default metadata can be found here (https://www.erlang.org/doc/man/logger_formatter.html#type-template)."
@@ -72,8 +72,8 @@
           "value": "file"
         }
       },
-      "comment": [
-        "@doc Filename to use for log files."
+      "docText": [
+        "Filename to use for log files."
       ],
       "configName": "logger.file",
       "settingName": "kernel.logger"
@@ -86,8 +86,8 @@
           "value": "integer"
         }
       },
-      "comment": [
-        "@doc With log rotation enabled, this decides the maximum number of log",
+      "docText": [
+        "With log rotation enabled, this decides the maximum number of log",
         "files to store."
       ],
       "configName": "logger.max_files",
@@ -101,8 +101,8 @@
           "value": "bytesize"
         }
       },
-      "comment": [
-        "@doc The maximum size of a single log file. Total size used for log files will",
+      "docText": [
+        "The maximum size of a single log file. Total size used for log files will",
         "be max_file_size * max_files."
       ],
       "configName": "logger.max_file_size",
@@ -112,8 +112,8 @@
       "properties": {
         "default": "riak"
       },
-      "comment": [
-        "@doc Cookie for distributed node communication.  All nodes in the",
+      "docText": [
+        "Cookie for distributed node communication.  All nodes in the",
         "same cluster should use the same cookie or they will not be able to",
         "communicate."
       ],
@@ -137,11 +137,19 @@
           }
         ]
       },
-      "comment": [
+      "docOther": [
         "override zdbbl from 1mb to 32mb"
       ],
       "configName": "erlang.distribution_buffer_size",
-      "settingName": "vm_args.+zdbbl"
+      "settingName": "vm_args.+zdbbl",
+      "docText": [
+        "For nodes with many busy_dist_port events, Basho recommends",
+        "raising the sender-side network distribution buffer size.",
+        "32MB may not be sufficient for some workloads and is a suggested",
+        "starting point. Erlangers may know this as +zdbbl.",
+        "The Erlang/OTP default is 1024 (1 megabyte).",
+        "See: http://www.erlang.org/doc/man/erl.html#%2bzdbbl"
+      ]
     },
     "erlang.schedulers.force_wakeup_interval": {
       "properties": {
@@ -153,8 +161,8 @@
         "merge": true,
         "commented": "500"
       },
-      "comment": [
-        "@doc Riak changes the VM default wakeup interval in order to reduce the",
+      "docText": [
+        "Riak changes the VM default wakeup interval in order to reduce the",
         "risk of scheduler collapse, prior to the availability of Dirty NIFs in",
         "later OTP versions. When using the leveled backend exclusively (either for",
         "AAE or object storage) this change is likely unnecessary, and the VM default",
@@ -182,8 +190,8 @@
           ]
         }
       },
-      "comment": [
-        "@doc Riak changes the compaction_of_load default from true to false. This",
+      "docText": [
+        "Riak changes the compaction_of_load default from true to false. This",
         "is part of the strategy for preventing scheduler collapse in older VMs.",
         "When using the leveled backend exclusively (either for AAE or object",
         "storage), this change from the standard BEAM defaults is likely unnecessary",
@@ -207,8 +215,8 @@
         ],
         "merge": true
       },
-      "comment": [
-        "@doc Sets the number of threads in async thread pool, valid range",
+      "docText": [
+        "Sets the number of threads in async thread pool, valid range",
         "is 0-1024. If thread support is available, the default is 64.",
         "",
         "More information at: http://erlang.org/doc/man/erl.html",
@@ -238,8 +246,8 @@
         },
         "merge": true
       },
-      "comment": [
-        "@doc VM emulator ignore break signal (prevent ^C / ^Gq)"
+      "docText": [
+        "VM emulator ignore break signal (prevent ^C / ^Gq)"
       ],
       "configName": "erlang.vm.ignore_break_signal",
       "settingName": "vm_args.+B"
@@ -262,8 +270,8 @@
         ],
         "merge": true
       },
-      "comment": [
-        "@doc Default binary virtual heap size (words)",
+      "docText": [
+        "Default binary virtual heap size (words)",
         "The default value in OTP 24 is 32768.  Default is value VH_DEFAULT_SIZE in:",
         "https://github.com/erlang/otp/blob/master/erts/emulator/beam/erl_vm.h",
         "Setting to otp will use default in OTP.  Some performance improvements may",
@@ -290,8 +298,8 @@
         ],
         "merge": true
       },
-      "comment": [
-        "@doc Default virtual heap size (words)",
+      "docText": [
+        "Default virtual heap size (words)",
         "The default value in OTP 24 is 233.  Default is value H_DEFAULT_SIZE in:",
         "https://github.com/erlang/otp/blob/master/erts/emulator/beam/erl_vm.h",
         "Setting to otp will use default in OTP.  The default is a number in the",
@@ -309,8 +317,8 @@
         },
         "merge": true
       },
-      "comment": [
-        "@doc The VM single block carrier threshold (KB) for process heap"
+      "docText": [
+        "The VM single block carrier threshold (KB) for process heap"
       ],
       "configName": "erlang.eheap_memory.sbct",
       "settingName": "vm_args.+MHsbct"
@@ -324,8 +332,8 @@
         },
         "merge": true
       },
-      "comment": [
-        "@doc The VM single block carrier threshold (KB) for binary heap"
+      "docText": [
+        "The VM single block carrier threshold (KB) for binary heap"
       ],
       "configName": "erlang.binary_memory.sbct",
       "settingName": "vm_args.+MBsbct"
@@ -339,8 +347,8 @@
         },
         "merge": true
       },
-      "comment": [
-        "@doc The VM multi block carrier large size for process heap"
+      "docText": [
+        "The VM multi block carrier large size for process heap"
       ],
       "configName": "erlang.eheap_memory.lmbcs",
       "settingName": "vm_args.+MHlmbcs"
@@ -354,8 +362,8 @@
         },
         "merge": true
       },
-      "comment": [
-        "@doc The VM multi block carrier large size for binary heap"
+      "docText": [
+        "The VM multi block carrier large size for binary heap"
       ],
       "configName": "erlang.binary_memory.lmbcs",
       "settingName": "vm_args.+MBlmbcs"
@@ -369,8 +377,8 @@
         },
         "merge": true
       },
-      "comment": [
-        "@doc The VM multi block carrier small size for process heap"
+      "docText": [
+        "The VM multi block carrier small size for process heap"
       ],
       "configName": "erlang.eheap_memory.smbcs",
       "settingName": "vm_args.+MHsmbcs"
@@ -384,8 +392,8 @@
         },
         "merge": true
       },
-      "comment": [
-        "@doc The VM multi block carrier small size for binary heap"
+      "docText": [
+        "The VM multi block carrier small size for binary heap"
       ],
       "configName": "erlang.binary_memory.smbcs",
       "settingName": "vm_args.+MBsmbcs"
@@ -436,8 +444,8 @@
         },
         "merge": true
       },
-      "comment": [
-        "@doc Set allocation strategy for binary multiblock carriers.  Default is",
+      "docText": [
+        "Set allocation strategy for binary multiblock carriers.  Default is",
         "not predictable - do not rely on aoffcbf being the default.  For more info",
         "see:",
         "https://github.com/erlang/otp/blob/master/erts/emulator/internal_doc/CarrierMigration.md"
@@ -491,8 +499,8 @@
         },
         "merge": true
       },
-      "comment": [
-        "@doc Set allocation strategy for process multiblock carriers.  Default is",
+      "docText": [
+        "Set allocation strategy for process multiblock carriers.  Default is",
         "not predictable - do not rely on aoffcbf being the default.  For more info",
         "see:",
         "https://github.com/erlang/otp/blob/master/erts/emulator/internal_doc/CarrierMigration.md"
@@ -518,8 +526,8 @@
         },
         "merge": true
       },
-      "comment": [
-        "@doc Set scheduler binding.  This is either unbound (default - u) or can be",
+      "docText": [
+        "Set scheduler binding.  This is either unbound (default - u) or can be",
         "set to whatever the default binding condition is, in the deployed release of",
         "OTP (db).",
         "For more info see: https://www.erlang.org/doc/man/erl.html#+sbt",
@@ -570,8 +578,8 @@
         },
         "merge": true
       },
-      "comment": [
-        "@doc Busy wait of schedulers",
+      "docText": [
+        "Busy wait of schedulers",
         "Sets scheduler busy wait threshold. Defaults to medium. The threshold",
         "determines how long schedulers are to busy wait when running out of work",
         "before going to sleep.",
@@ -615,8 +623,8 @@
         },
         "merge": true
       },
-      "comment": [
-        "@doc Busy wait of dirty cpu schedulers",
+      "docText": [
+        "Busy wait of dirty cpu schedulers",
         "Sets scheduler busy wait threshold. Defaults to short. The threshold",
         "determines how long schedulers are to busy wait when running out of work",
         "before going to sleep.",
@@ -660,8 +668,8 @@
         },
         "merge": true
       },
-      "comment": [
-        "@doc Busy wait of dirty io schedulers",
+      "docText": [
+        "Busy wait of dirty io schedulers",
         "Sets scheduler busy wait threshold. Defaults to short. The threshold",
         "determines how long schedulers are to busy wait when running out of work",
         "before going to sleep.",
@@ -682,8 +690,8 @@
         ],
         "merge": true
       },
-      "comment": [
-        "@doc Set the Percentage of Schedulers to be online",
+      "docText": [
+        "Set the Percentage of Schedulers to be online",
         "For every vCPU in the system, what percentage should have a scheduler, and",
         "what percentage of those schedulers should be online by default.",
         "Do not set unless guided by perfomance tests for the specific setup and",
@@ -703,8 +711,8 @@
         ],
         "merge": true
       },
-      "comment": [
-        "@doc Set the Percentage of Dirty CPU Schedulers to be online",
+      "docText": [
+        "Set the Percentage of Dirty CPU Schedulers to be online",
         "When using the leveled backend a relatievly low number of dirty schedulers",
         "(e.g. 25%) are likely to be required due to the low proportion of NIFs in",
         "use.",
@@ -731,8 +739,8 @@
         ],
         "merge": true
       },
-      "comment": [
-        "@doc Set the absolute limit of Dirty IO Schedulers to be online",
+      "docText": [
+        "Set the absolute limit of Dirty IO Schedulers to be online",
         "When using the leveled backend a relatievly high number of dirty schedulers",
         "may be required relative to the CPU count, depending on the concurrent disk",
         "throughput possible.",
@@ -755,12 +763,19 @@
         },
         "hidden": true
       },
-      "comment": [
+      "docOther": [
         "Because of the 'merge' keyword in the proplist below, the docs and datatype",
         "are pulled from the leveldb schema."
       ],
       "configName": "leveldb.limited_developer_mem",
-      "settingName": "eleveldb.limited_developer_mem"
+      "settingName": "eleveldb.limited_developer_mem",
+      "docText": [
+        "limited_developer_mem is a Riak specific option that is used",
+        "when a developer is testing a high number of vnodes and/or several",
+        "VMs on a machine with limited physical memory.  Do NOT use this",
+        "option if making performance measurements.  This option overwrites",
+        "values given to write_buffer_size_min and write_buffer_size_max."
+      ]
     },
     "erlang.shutdown_time": {
       "properties": {
@@ -770,8 +785,8 @@
           "unit": "ms"
         }
       },
-      "comment": [
-        "@doc erlang vm shutdown_time is useful when running a riak_test devrel"
+      "docText": [
+        "erlang vm shutdown_time is useful when running a riak_test devrel"
       ],
       "configName": "erlang.shutdown_time",
       "settingName": "vm_args.-shutdown_time"
@@ -802,9 +817,11 @@
         "default": "off",
         "hidden": true
       },
-      "comment": [
-        "Unused log items",
-        "@doc Unused item - kept for backwards compatability"
+      "docText": [
+        "Unused item - kept for backwards compatability"
+      ],
+      "docOther": [
+        "Unused log items"
       ],
       "configName": "log.console",
       "settingName": "legacy.handlers.console"
@@ -855,8 +872,8 @@
         "default": "none",
         "hidden": true
       },
-      "comment": [
-        "@doc Unused item - kept for backwards compatability"
+      "docText": [
+        "Unused item - kept for backwards compatability"
       ],
       "configName": "log.console.level",
       "settingName": "legacy.handlers.console.level"
@@ -870,8 +887,8 @@
         },
         "hidden": true
       },
-      "comment": [
-        "@doc Unused item - kept for backwards compatability"
+      "docText": [
+        "Unused item - kept for backwards compatability"
       ],
       "configName": "log.console.file",
       "settingName": "legacy.handlers.console.file"
@@ -885,8 +902,8 @@
         },
         "hidden": true
       },
-      "comment": [
-        "@doc Unused item - kept for backwards compatability"
+      "docText": [
+        "Unused item - kept for backwards compatability"
       ],
       "configName": "log.error.file",
       "settingName": "legacy.handlers.error.file"
@@ -900,8 +917,8 @@
         },
         "hidden": true
       },
-      "comment": [
-        "@doc Unused item - kept for backwards compatability"
+      "docText": [
+        "Unused item - kept for backwards compatability"
       ],
       "configName": "log.syslog",
       "settingName": "legacy.handlers.syslog"
@@ -915,8 +932,8 @@
         },
         "hidden": true
       },
-      "comment": [
-        "@doc Unused item - kept for backwards compatability"
+      "docText": [
+        "Unused item - kept for backwards compatability"
       ],
       "configName": "log.syslog.ident",
       "settingName": "legacy.handlers.syslog.ident"
@@ -1015,8 +1032,8 @@
         "default": "daemon",
         "hidden": true
       },
-      "comment": [
-        "@doc Unused item - kept for backwards compatability"
+      "docText": [
+        "Unused item - kept for backwards compatability"
       ],
       "configName": "log.syslog.facility",
       "settingName": "legacy.handlers.syslog.facility"
@@ -1067,8 +1084,8 @@
         "default": "none",
         "hidden": true
       },
-      "comment": [
-        "@doc Unused item - kept for backwards compatability"
+      "docText": [
+        "Unused item - kept for backwards compatability"
       ],
       "configName": "log.syslog.level",
       "settingName": "legacy.handlers.syslog.level"
@@ -1082,8 +1099,8 @@
         },
         "hidden": true
       },
-      "comment": [
-        "@doc Unused item - kept for backwards compatability"
+      "docText": [
+        "Unused item - kept for backwards compatability"
       ],
       "configName": "sasl",
       "settingName": "legacy.sasl.sasl_error_logger"
@@ -1097,8 +1114,8 @@
         },
         "hidden": true
       },
-      "comment": [
-        "@doc Unused item - kept for backwards compatability"
+      "docText": [
+        "Unused item - kept for backwards compatability"
       ],
       "configName": "log.crash",
       "settingName": "legacy.crash_log"
@@ -1112,8 +1129,8 @@
         },
         "hidden": true
       },
-      "comment": [
-        "@doc Unused item - kept for backwards compatability"
+      "docText": [
+        "Unused item - kept for backwards compatability"
       ],
       "configName": "log.crash.file",
       "settingName": "legacy.crash_log_file"
@@ -1127,8 +1144,8 @@
         },
         "hidden": true
       },
-      "comment": [
-        "@doc Unused item - kept for backwards compatability"
+      "docText": [
+        "Unused item - kept for backwards compatability"
       ],
       "configName": "log.crash.maximum_message_size",
       "settingName": "legacy.crash_log_msg_size"
@@ -1142,8 +1159,8 @@
         },
         "hidden": true
       },
-      "comment": [
-        "@doc Unused item - kept for backwards compatability"
+      "docText": [
+        "Unused item - kept for backwards compatability"
       ],
       "configName": "log.crash.size",
       "settingName": "legacy.crash_log_size"
@@ -1166,8 +1183,8 @@
         "default": "current",
         "hidden": true
       },
-      "comment": [
-        "@doc Unused item - kept for backwards compatability"
+      "docText": [
+        "Unused item - kept for backwards compatability"
       ],
       "configName": "log.crash.rotation.keep",
       "settingName": "legacy.crash_log_count"
@@ -1177,8 +1194,8 @@
         "default": "$D0",
         "hidden": true
       },
-      "comment": [
-        "@doc Unused item - kept for backwards compatability"
+      "docText": [
+        "Unused item - kept for backwards compatability"
       ],
       "configName": "log.crash.rotation",
       "settingName": "legacy.crash_log_date"
@@ -1192,8 +1209,8 @@
         "default": "off",
         "hidden": true
       },
-      "comment": [
-        "@doc Unused item - kept for backwards compatability"
+      "docText": [
+        "Unused item - kept for backwards compatability"
       ],
       "configName": "log.error.redirect",
       "settingName": "legacy.error_logger_redirect"
@@ -1207,8 +1224,8 @@
         "default": "100",
         "hidden": true
       },
-      "comment": [
-        "@doc Unused item - kept for backwards compatability"
+      "docText": [
+        "Unused item - kept for backwards compatability"
       ],
       "configName": "log.error.messages_per_second",
       "settingName": "legacy.error_logger_hwm"
@@ -1235,8 +1252,8 @@
         },
         "hidden": true
       },
-      "comment": [
-        "@doc Starts the Erlang runtime system with SMP support",
+      "docText": [
+        "Starts the Erlang runtime system with SMP support",
         "enabled. This may fail if no runtime system with SMP support is",
         "available. The 'auto' setting starts the Erlang runtime system with",
         "SMP support enabled if it is available and more than one logical",
@@ -1259,8 +1276,8 @@
         "default": "w",
         "hidden": true
       },
-      "comment": [
-        "@doc Sets the mapping of warning messages for error_logger.",
+      "docText": [
+        "Sets the mapping of warning messages for error_logger.",
         "Messages sent to the error logger using one of the warning",
         "routines can be mapped either to errors (default), warnings",
         "(w - default), or info reports (i)."
@@ -1282,8 +1299,8 @@
           }
         ]
       },
-      "comment": [
-        "@doc Sets the number of scheduler threads to create and scheduler",
+      "docText": [
+        "Sets the number of scheduler threads to create and scheduler",
         "threads to set online when erlang.smp support has been enabled. The",
         "maximum for both values is 1024. If the Erlang runtime system is",
         "able to determine the amount of logical processors configured and",
@@ -1325,8 +1342,8 @@
           }
         ]
       },
-      "comment": [
-        "@see erlang.schedulers.total"
+      "docSees": [
+        "erlang.schedulers.total"
       ],
       "configName": "erlang.schedulers.online",
       "settingName": "vm_args.+S"
@@ -1340,8 +1357,8 @@
         },
         "hidden": true
       },
-      "comment": [
-        "@doc Enables or disables the kernel poll functionality if the",
+      "docText": [
+        "Enables or disables the kernel poll functionality if the",
         "emulator supports it. If the emulator does not support kernel poll,",
         "and the K flag is passed to the emulator, a warning is issued at",
         "startup.",
@@ -1355,9 +1372,11 @@
       "properties": {
         "default": "{{node}}"
       },
-      "comment": [
-        "%% Tunables",
-        "@doc Name of the Erlang node"
+      "docText": [
+        "Name of the Erlang node"
+      ],
+      "docOther": [
+        "%% Tunables"
       ],
       "configName": "nodename",
       "settingName": "vm_args.-name"
@@ -1380,8 +1399,8 @@
         ],
         "hidden": true
       },
-      "comment": [
-        "@doc Suggested stack size, in bytes, for threads in the",
+      "docText": [
+        "Suggested stack size, in bytes, for threads in the",
         "async-thread pool. Valid range is 16-8192 kilowords. The default",
         "suggested stack size is 16 kilowords, i.e, 64 kilobyte on 32-bit",
         "architectures. This small default size has been chosen since the",
@@ -1411,8 +1430,8 @@
           }
         ]
       },
-      "comment": [
-        "@doc A non-negative integer which indicates how many times",
+      "docText": [
+        "A non-negative integer which indicates how many times",
         "generational garbage collections can be done without forcing a",
         "fullsweep collection. In low-memory systems (especially without",
         "virtual memory), setting the value to 0 can help to conserve",
@@ -1433,8 +1452,8 @@
         },
         "hidden": true
       },
-      "comment": [
-        "@doc Set the location of crash dumps"
+      "docText": [
+        "Set the location of crash dumps"
       ],
       "configName": "erlang.crash_dump",
       "settingName": "vm_args.-env ERL_CRASH_DUMP"
@@ -1448,11 +1467,13 @@
         "default": "256000",
         "hidden": true
       },
-      "comment": [
+      "docText": [
+        "Raise the ETS table limit",
+        "Raise the default erlang process limit"
+      ],
+      "docOther": [
         "Note: OTP R15 and earlier uses -env ERL_MAX_ETS_TABLES,",
-        "R16+ uses +e",
-        "@doc Raise the ETS table limit",
-        "@doc Raise the default erlang process limit"
+        "R16+ uses +e"
       ],
       "configName": "erlang.process_limit",
       "settingName": "vm_args.+P"
@@ -1474,8 +1495,8 @@
           ]
         }
       },
-      "comment": [
-        "@doc Enable or disable scheduler utilization balancing of load. By",
+      "docText": [
+        "Enable or disable scheduler utilization balancing of load. By",
         "default scheduler utilization balancing is disabled and instead",
         "scheduler compaction of load is enabled which will strive for a",
         "load distribution which causes as many scheduler threads as",
@@ -1498,8 +1519,8 @@
         },
         "hidden": true
       },
-      "comment": [
-        "@doc For ease of firewall configuration, the Erlang distribution",
+      "docText": [
+        "For ease of firewall configuration, the Erlang distribution",
         "can be bound to a limited range of TCP ports. If this is set, and",
         "erlang.distribution.port_range.maximum is *unset*, only this port",
         "will be used. If the minimum is *unset*, no restriction will be",
@@ -1521,8 +1542,8 @@
         },
         "hidden": true
       },
-      "comment": [
-        "@see erlang.distribution.port_range.minimum"
+      "docSees": [
+        "erlang.distribution.port_range.minimum"
       ],
       "configName": "erlang.distribution.port_range.maximum",
       "settingName": "kernel.inet_dist_listen_max"
@@ -1542,8 +1563,8 @@
         ],
         "hidden": true
       },
-      "comment": [
-        "@doc Set the interface/IP to listen for distributed Erlang connections.",
+      "docText": [
+        "Set the interface/IP to listen for distributed Erlang connections.",
         "",
         "More information: http://erlang.org/doc/man/kernel_app.html"
       ],
@@ -1559,8 +1580,8 @@
         },
         "hidden": true
       },
-      "comment": [
-        "@doc Set the net_kernel's net_ticktime.",
+      "docText": [
+        "Set the net_kernel's net_ticktime.",
         "",
         "More information: http://www.erlang.org/doc/man/kernel_app.html#net_ticktime",
         "and http://www.erlang.org/doc/man/net_kernel.html#set_net_ticktime-1"
@@ -1577,11 +1598,13 @@
         "default": "3",
         "hidden": true
       },
-      "comment": [
-        "Default Bucket Properties",
-        "@doc The number of replicas stored. Note: See Replication",
+      "docText": [
+        "The number of replicas stored. Note: See Replication",
         "Properties for further discussion.",
         "http://docs.basho.com/riak/latest/dev/advanced/cap-controls/"
+      ],
+      "docOther": [
+        "Default Bucket Properties"
       ],
       "configName": "buckets.default.n_val",
       "settingName": "riak_core.default_bucket_props.n_val"
@@ -1609,8 +1632,8 @@
         ],
         "commented": "64"
       },
-      "comment": [
-        "@doc Number of partitions in the cluster (only valid when first",
+      "docText": [
+        "Number of partitions in the cluster (only valid when first",
         "creating the cluster). Must be a power of 2, minimum 8 and maximum",
         "1024."
       ],
@@ -1626,8 +1649,8 @@
         "default": "2",
         "commented": "2"
       },
-      "comment": [
-        "@doc Number of concurrent node-to-node transfers allowed.",
+      "docText": [
+        "Number of concurrent node-to-node transfers allowed.",
         "It is generally safe to raise this number to increase concurrency.  A",
         "common value to use would be 8.  However, it is necessary to monitor for",
         "handoff timeouts.  If handoff timeouts occur, reduce the",
@@ -1648,8 +1671,8 @@
         "default": "500",
         "commented": "500"
       },
-      "comment": [
-        "@doc Handoff batch threshold count",
+      "docText": [
+        "Handoff batch threshold count",
         "The maximum number of objects allowed in a single handoff batch.  If there",
         "are issues with handoff timeouts, then the first change should be to reduce",
         "this count - making the system more responsive to back-pressure."
@@ -1666,8 +1689,8 @@
         "default": "120000",
         "commented": "120000"
       },
-      "comment": [
-        "@doc Handoff timeout (milliseconds)",
+      "docText": [
+        "Handoff timeout (milliseconds)",
         "The timeout to wait for acknowledgement of the previous handoff batch"
       ],
       "configName": "handoff_timeout",
@@ -1682,8 +1705,8 @@
         "default": "$(platform_data_dir)/ring",
         "hidden": true
       },
-      "comment": [
-        "@doc Default location of ringstate"
+      "docText": [
+        "Default location of ringstate"
       ],
       "configName": "ring.state_dir",
       "settingName": "riak_core.ring_state_dir"
@@ -1696,8 +1719,8 @@
         },
         "commented": "$(platform_etc_dir)/cert.pem"
       },
-      "comment": [
-        "@doc Default cert location for https can be overridden",
+      "docText": [
+        "Default cert location for https can be overridden",
         "with the ssl config variable, for example:"
       ],
       "configName": "ssl.certfile",
@@ -1711,8 +1734,8 @@
         },
         "commented": "$(platform_etc_dir)/key.pem"
       },
-      "comment": [
-        "@doc Default key location for https can be overridden with the ssl",
+      "docText": [
+        "Default key location for https can be overridden with the ssl",
         "config variable, for example:"
       ],
       "configName": "ssl.keyfile",
@@ -1726,8 +1749,8 @@
         },
         "commented": "$(platform_etc_dir)/cacertfile.pem"
       },
-      "comment": [
-        "@doc Default signing authority location for https can be overridden",
+      "docText": [
+        "Default signing authority location for https can be overridden",
         "with the ssl config variable, for example:"
       ],
       "configName": "ssl.cacertfile",
@@ -1748,8 +1771,8 @@
         ],
         "hidden": true
       },
-      "comment": [
-        "@doc handoff.ip is the network address that Riak binds to for",
+      "docText": [
+        "handoff.ip is the network address that Riak binds to for",
         "intra-cluster data handoff."
       ],
       "configName": "handoff.ip",
@@ -1764,8 +1787,8 @@
         },
         "hidden": true
       },
-      "comment": [
-        "@doc handoff.port is the TCP port that Riak uses for",
+      "docText": [
+        "handoff.port is the TCP port that Riak uses for",
         "intra-cluster data handoff."
       ],
       "configName": "handoff.port",
@@ -1781,8 +1804,8 @@
         },
         "hidden": true
       },
-      "comment": [
-        "@doc To encrypt riak_core intra-cluster data handoff traffic,",
+      "docText": [
+        "To encrypt riak_core intra-cluster data handoff traffic,",
         "uncomment the following line and edit its path to an appropriate",
         "certfile and keyfile.  (This example uses a single file with both",
         "items concatenated together.)"
@@ -1798,8 +1821,8 @@
         },
         "hidden": true
       },
-      "comment": [
-        "@doc if you need a seperate keyfile for handoff"
+      "docText": [
+        "if you need a seperate keyfile for handoff"
       ],
       "configName": "handoff.ssl.keyfile",
       "settingName": "riak_core.handoff_ssl_options.keyfile"
@@ -1814,8 +1837,8 @@
         },
         "hidden": true
       },
-      "comment": [
-        "@doc Enables/disables outbound handoff transfers for this node. If you",
+      "docText": [
+        "Enables/disables outbound handoff transfers for this node. If you",
         "turn this setting off at runtime with riak-admin, it will kill any",
         "outbound handoffs currently running."
       ],
@@ -1832,8 +1855,8 @@
         },
         "hidden": true
       },
-      "comment": [
-        "@doc Enables/disables inbound handoff transfers for this node. If you",
+      "docText": [
+        "Enables/disables inbound handoff transfers for this node. If you",
         "turn this setting off at runtime with riak-admin, it will kill any",
         "inbound handoffs currently running."
       ],
@@ -1848,8 +1871,8 @@
           "value": "flag"
         }
       },
-      "comment": [
-        "@doc DTrace support Do not enable 'dtrace' unless your Erlang/OTP",
+      "docText": [
+        "DTrace support Do not enable 'dtrace' unless your Erlang/OTP",
         "runtime is compiled to support DTrace.  DTrace is available in",
         "R15B01 (supported by the Erlang/OTP official source package) and in",
         "R14B04 via a custom source repository & branch."
@@ -1865,8 +1888,8 @@
         },
         "default": "{{platform_bin_dir}}"
       },
-      "comment": [
-        "@doc Platform-specific installation paths (substituted by rebar)"
+      "docText": [
+        "Platform-specific installation paths (substituted by rebar)"
       ],
       "configName": "platform_bin_dir",
       "settingName": "riak_core.platform_bin_dir"
@@ -1879,8 +1902,8 @@
         },
         "default": "{{platform_data_dir}}"
       },
-      "comment": [
-        "@see platform_bin_dir"
+      "docSees": [
+        "platform_bin_dir"
       ],
       "configName": "platform_data_dir",
       "settingName": "riak_core.platform_data_dir"
@@ -1893,8 +1916,8 @@
         },
         "default": "{{platform_etc_dir}}"
       },
-      "comment": [
-        "@see platform_bin_dir"
+      "docSees": [
+        "platform_bin_dir"
       ],
       "configName": "platform_etc_dir",
       "settingName": "riak_core.platform_etc_dir"
@@ -1907,8 +1930,8 @@
         },
         "default": "{{platform_lib_dir}}"
       },
-      "comment": [
-        "@see platform_bin_dir"
+      "docSees": [
+        "platform_bin_dir"
       ],
       "configName": "platform_lib_dir",
       "settingName": "riak_core.platform_lib_dir"
@@ -1921,8 +1944,8 @@
         },
         "default": "{{platform_log_dir}}"
       },
-      "comment": [
-        "@see platform_bin_dir"
+      "docSees": [
+        "platform_bin_dir"
       ],
       "configName": "platform_log_dir",
       "settingName": "riak_core.platform_log_dir"
@@ -1936,8 +1959,8 @@
         "default": "off",
         "commented": "on"
       },
-      "comment": [
-        "@doc Enable consensus subsystem. Set to 'on' to enable the",
+      "docText": [
+        "Enable consensus subsystem. Set to 'on' to enable the",
         "consensus subsystem used for strongly consistent Riak operations."
       ],
       "configName": "strong_consistency",
@@ -1952,8 +1975,8 @@
         "default": "off",
         "hidden": true
       },
-      "comment": [
-        "@doc Whether to enable the background manager globally. When",
+      "docText": [
+        "Whether to enable the background manager globally. When",
         "enabled, participating Riak subsystems will coordinate access to",
         "shared resources. This will help to prevent system response",
         "degradation under times of heavy load from multiple background",
@@ -1972,8 +1995,8 @@
         },
         "hidden": true
       },
-      "comment": [
-        "@doc Interval of time between vnode management",
+      "docText": [
+        "Interval of time between vnode management",
         "activities. Modifying this will change the amount of time between",
         "attemps to trigger handoff between this node and any other member",
         "of the cluster."
@@ -2003,8 +2026,8 @@
         },
         "merge": true
       },
-      "comment": [
-        "@doc Choose claim function",
+      "docText": [
+        "Choose claim function",
         "Claim function to be used when handling joins to the cluster.",
         "There are three supported functions:",
         "- choose_claim_v2 (the default) designed for environments without location",
@@ -2038,8 +2061,8 @@
         ],
         "commented": "4"
       },
-      "comment": [
-        "@doc Target N Val for Cluster Administration",
+      "docText": [
+        "Target N Val for Cluster Administration",
         "Cluster change operations such as joins and leaves will use a target_n_val",
         "to control spacing of preflists across physical nodes.  The default value",
         "is 4, which is the default bucket propery for n_val + 1.  This means that",
@@ -2077,8 +2100,8 @@
         ],
         "commented": "3"
       },
-      "comment": [
-        "@doc Target Location N Val for Cluster Administration",
+      "docText": [
+        "Target Location N Val for Cluster Administration",
         "Cluster change operations such as joins and leaves will use a",
         "target_location_n_val to control spacing of preflists across locations. This",
         "is to support clusters which have a concept of `location` failure as well as",
@@ -2109,8 +2132,8 @@
         },
         "default": "off"
       },
-      "comment": [
-        "@doc On cluster leave - force full rebalance partitions",
+      "docText": [
+        "On cluster leave - force full rebalance partitions",
         "By default on a cluster leave there will first be an attempt to handoff",
         "vnodes to safe (in terms of target_n_val) locations.  In small clusters,",
         "there may be insufficient safe locations, and a temporary state can be",
@@ -2136,10 +2159,12 @@
         },
         "include_default": "internal"
       },
-      "comment": [
-        "HTTP Listeners",
-        "@doc listener.http.<name> is an IP address and TCP port that the Riak",
+      "docText": [
+        "listener.http.<name> is an IP address and TCP port that the Riak",
         "HTTP interface will bind."
+      ],
+      "docOther": [
+        "HTTP Listeners"
       ],
       "configName": "listener.http.$name",
       "settingName": "riak_api.http"
@@ -2153,8 +2178,8 @@
         },
         "include_default": "internal"
       },
-      "comment": [
-        "@doc listener.protobuf.<name> is an IP address and TCP port that the Riak",
+      "docText": [
+        "listener.protobuf.<name> is an IP address and TCP port that the Riak",
         "Protocol Buffers interface will bind."
       ],
       "configName": "listener.protobuf.$name",
@@ -2175,8 +2200,8 @@
           }
         ]
       },
-      "comment": [
-        "@doc The maximum length to which the queue of pending connections",
+      "docText": [
+        "The maximum length to which the queue of pending connections",
         "may grow. If set, it must be an integer > 0. If you anticipate a",
         "huge number of connections being initialized *simultaneously*, set",
         "this number higher."
@@ -2194,8 +2219,8 @@
         "default": "off",
         "hidden": true
       },
-      "comment": [
-        "@doc Turns off Nagle's algorithm for Protocol Buffers",
+      "docText": [
+        "Turns off Nagle's algorithm for Protocol Buffers",
         "connections. This is equivalent to setting the TCP_NODELAY option",
         "on the socket."
       ],
@@ -2211,8 +2236,8 @@
         "default": "on",
         "hidden": true
       },
-      "comment": [
-        "@doc Turns on TCP keepalive for Protocol Buffers connections.",
+      "docText": [
+        "Turns on TCP keepalive for Protocol Buffers connections.",
         "This is equivalent to setting the SO_KEEPALIVE option on the socket."
       ],
       "configName": "protobuf.keepalive",
@@ -2227,8 +2252,8 @@
         },
         "include_default": "internal"
       },
-      "comment": [
-        "@doc listener.https.<name> is an IP address and TCP port that the Riak",
+      "docText": [
+        "listener.https.<name> is an IP address and TCP port that the Riak",
         "HTTPS interface will bind."
       ],
       "configName": "listener.https.$name",
@@ -2252,8 +2277,8 @@
         "default": "off",
         "hidden": true
       },
-      "comment": [
-        "@doc Whether to prefer the order in which the server lists its",
+      "docText": [
+        "Whether to prefer the order in which the server lists its",
         "ciphers. When set to 'off', the client's preferred cipher order",
         "dictates which cipher is chosen."
       ],
@@ -2278,8 +2303,8 @@
         "default": "off",
         "hidden": true
       },
-      "comment": [
-        "@doc Determine which SSL/TLS versions are allowed. By default only TLS 1.2",
+      "docText": [
+        "Determine which SSL/TLS versions are allowed. By default only TLS 1.2",
         "is allowed, but other versions can be enabled if clients don't support the",
         "latest TLS standard. It is *strongly* recommended that SSLv3 is not enabled",
         "unless absolutely necessary. More than one protocol can be enabled at once."
@@ -2305,8 +2330,8 @@
         "default": "off",
         "hidden": true
       },
-      "comment": [
-        "@see tls_protocols.sslv3"
+      "docSees": [
+        "tls_protocols.sslv3"
       ],
       "configName": "tls_protocols.tlsv1",
       "settingName": "riak_api.tls_protocols"
@@ -2329,8 +2354,8 @@
         "default": "off",
         "hidden": true
       },
-      "comment": [
-        "@see tls_protocols.sslv3"
+      "docSees": [
+        "tls_protocols.sslv3"
       ],
       "configName": "tls_protocols.tlsv1.1",
       "settingName": "riak_api.tls_protocols"
@@ -2353,8 +2378,8 @@
         "default": "on",
         "hidden": true
       },
-      "comment": [
-        "@see tls_protocols.sslv3"
+      "docSees": [
+        "tls_protocols.sslv3"
       ],
       "configName": "tls_protocols.tlsv1.2",
       "settingName": "riak_api.tls_protocols"
@@ -2377,8 +2402,8 @@
         "default": "on",
         "hidden": true
       },
-      "comment": [
-        "@doc Whether to check the CRL of a client certificate. This defaults to",
+      "docText": [
+        "Whether to check the CRL of a client certificate. This defaults to",
         "on but some CAs may not maintain or define a CRL, so this can be disabled",
         "if no CRL is available."
       ],
@@ -2406,8 +2431,8 @@
         },
         "default": "active"
       },
-      "comment": [
-        "@doc How Riak will repair out-of-sync keys. Some features require",
+      "docText": [
+        "How Riak will repair out-of-sync keys. Some features require",
         "this to be set to 'active', including search.",
         "",
         "* active: out-of-sync keys will be repaired in the background",
@@ -2435,7 +2460,6 @@
         },
         "default": "passive"
       },
-      "comment": [],
       "configName": "tictacaae_active",
       "settingName": "riak_kv.tictacaae_active"
     },
@@ -2449,8 +2473,8 @@
         "default": "enabled",
         "commented": "enabled"
       },
-      "comment": [
-        "@doc Use hashtree tokens for anti-entropy throttling",
+      "docText": [
+        "Use hashtree tokens for anti-entropy throttling",
         "To hold-up the vnode when there is a backlog of activity on the AAE store",
         "hashtree token bucket may be used to block the vnode every 90 puts until",
         "the PUT has been completed.  This use aae_ping with tictac_aae, and a full",
@@ -2469,8 +2493,8 @@
         "default": "disabled",
         "hidden": true
       },
-      "comment": [
-        "@doc Use legacy-format tictac tree",
+      "docText": [
+        "Use legacy-format tictac tree",
         "Should only be required when perfoming a rolling upgrade to 3.4.0 or 3.2.3,",
         "and using per-bucket full-sync.",
         "Temporary option - will be removed in 3.6"
@@ -2486,8 +2510,8 @@
           "value": "directory"
         }
       },
-      "comment": [
-        "@doc A path under which aae data files will be stored."
+      "docText": [
+        "A path under which aae data files will be stored."
       ],
       "configName": "tictacaae_dataroot",
       "settingName": "riak_kv.tictacaae_dataroot"
@@ -2500,8 +2524,8 @@
           "value": "directory"
         }
       },
-      "comment": [
-        "@doc A path under which the eraser overload queue will be stored."
+      "docText": [
+        "A path under which the eraser overload queue will be stored."
       ],
       "configName": "eraser_dataroot",
       "settingName": "riak_kv.eraser_dataroot"
@@ -2514,8 +2538,8 @@
           "value": "directory"
         }
       },
-      "comment": [
-        "@doc A path under which the reaper overload queue will be stored."
+      "docText": [
+        "A path under which the reaper overload queue will be stored."
       ],
       "configName": "reaper_dataroot",
       "settingName": "riak_kv.reaper_dataroot"
@@ -2528,8 +2552,8 @@
           "value": "directory"
         }
       },
-      "comment": [
-        "@doc A path under which the reader overload queue will be stored."
+      "docText": [
+        "A path under which the reader overload queue will be stored."
       ],
       "configName": "reader_dataroot",
       "settingName": "riak_kv.reader_dataroot"
@@ -2542,9 +2566,9 @@
           "value": "directory"
         }
       },
-      "comment": [
-        "@doc A path under which the repl real-time overload queue will be stored.",
-        "@doc A path under which the reaper overload queue will be stored."
+      "docText": [
+        "A path under which the repl real-time overload queue will be stored.",
+        "A path under which the reaper overload queue will be stored."
       ],
       "configName": "replrtq_dataroot",
       "settingName": "riak_kv.replrtq_dataroot"
@@ -2557,8 +2581,8 @@
           "value": "integer"
         }
       },
-      "comment": [
-        "@doc The maximum size of the overflow queue for the eraser.  If the queue",
+      "docText": [
+        "The maximum size of the overflow queue for the eraser.  If the queue",
         "goes beyond this point, new additions will be discarded.",
         "To update this at run-time, the configuration item can be changed via",
         "remote_console, then `riak_kv_eraser:clear_queue()` can be called to clear",
@@ -2575,8 +2599,8 @@
           "value": "integer"
         }
       },
-      "comment": [
-        "@doc The maximum size of the overflow queue for the reaper.  If the queue",
+      "docText": [
+        "The maximum size of the overflow queue for the reaper.  If the queue",
         "goes beyond this point, new additions will be discarded.",
         "To update this at run-time, the configuration item can be changed via",
         "remote_console, then `riak_kv_reaper:clear_queue()` can be called to clear",
@@ -2593,8 +2617,8 @@
           "value": "integer"
         }
       },
-      "comment": [
-        "@doc The maximum size of the overflow queue for the real-time replication",
+      "docText": [
+        "The maximum size of the overflow queue for the real-time replication",
         "queue (nextgen repl only).  If the queue goes beyond this point, new",
         "additions will be discarded.",
         "For replrtq the queue is sized per QueueName (and priority), so differently",
@@ -2625,8 +2649,8 @@
         "default": "leveled_ko",
         "commented": "leveled_ko"
       },
-      "comment": [
-        "@doc Parallel key store type",
+      "docText": [
+        "Parallel key store type",
         "When running in parallel mode, which will be the default if the backend does",
         "not support native tictac aae (i.e. is not leveled), what type of parallel",
         "key store should be kept - leveled_ko (leveled and key-ordered), or",
@@ -2644,8 +2668,8 @@
         },
         "default": "2016"
       },
-      "comment": [
-        "@doc Minimum Rebuild Wait",
+      "docText": [
+        "Minimum Rebuild Wait",
         "The minimum number of hours to wait between rebuilds.  Default value is 12",
         "weeks"
       ],
@@ -2660,8 +2684,8 @@
         },
         "default": "2592000"
       },
-      "comment": [
-        "@doc Maximum Rebuild Delay",
+      "docText": [
+        "Maximum Rebuild Delay",
         "The number of seconds which represents the length of the period in which the",
         "next rebuild will be scheduled.  So if all vnodes are scheduled to rebuild",
         "at the same time, they will actually rebuild randomly between 0 an this",
@@ -2680,8 +2704,8 @@
         "default": "disabled",
         "commented": "disabled"
       },
-      "comment": [
-        "@doc Store heads in parallel key stores",
+      "docText": [
+        "Store heads in parallel key stores",
         "If running a parallel key store, the whole \"head\" object may be stored to",
         "allow for fold_heads queries to be run against the parallel store.",
         "Alternatively, the cost of the parallel key store can be reduced by storing",
@@ -2699,8 +2723,8 @@
         "default": "480000",
         "hidden": true
       },
-      "comment": [
-        "@doc Frequency to prompt exchange per vnode (milliseconds)",
+      "docText": [
+        "Frequency to prompt exchange per vnode (milliseconds)",
         "The number of milliseconds which the vnode must wait between self-pokes to",
         "maybe prompt the next exchange. Default is 8 minutes - check all partitions",
         "when n=3 once every hour (in each direction).  A cycle of exchanges will",
@@ -2721,8 +2745,8 @@
         "default": "3600000",
         "hidden": true
       },
-      "comment": [
-        "@doc Frequency to prompt rebuild check per vnode (milliseconds)",
+      "docText": [
+        "Frequency to prompt rebuild check per vnode (milliseconds)",
         "The number of milliseconds which the vnode must wait between self-pokes to",
         "maybe prompt the next rebuild. Default is 60 minutes.",
         "When a node is being re-introduced to a cluster following a long delay, then",
@@ -2741,8 +2765,8 @@
         "default": "1000",
         "hidden": true
       },
-      "comment": [
-        "@doc Block vnode for tree rebuild (milliseconds)",
+      "docText": [
+        "Block vnode for tree rebuild (milliseconds)",
         "When rebuilding a vnode's tree cache, the vnode can be blocked while the",
         "snapshot is taken - to eliminate race conditions that might otherwise cause",
         "a segment to be miscalculated.  By default the vnode block is always",
@@ -2762,8 +2786,8 @@
         },
         "default": "64"
       },
-      "comment": [
-        "@doc Max number of leaf IDs per exchange",
+      "docText": [
+        "Max number of leaf IDs per exchange",
         "To control the length of time for each exchange, only a subset of the",
         "conflicting leaves will be compared on each exchange.  If there are issues",
         "with query timeouts this may be halved.  Large backlogs may be reduced",
@@ -2785,8 +2809,8 @@
         "default": "4",
         "hidden": true
       },
-      "comment": [
-        "@doc Max number of repair loops per exchange",
+      "docText": [
+        "Max number of repair loops per exchange",
         "Each exchange will attempt a repair of tictacaae_maxresults, and will",
         "analyse those repairs to see if there exists the potential for more repairs.",
         "If there exists this potential, then repair loops will be run, but in these",
@@ -2810,8 +2834,8 @@
         "default": "2",
         "hidden": true
       },
-      "comment": [
-        "@doc Multiplier to the `tictcaaae_maxresults` when following an initial AAE",
+      "docText": [
+        "Multiplier to the `tictcaaae_maxresults` when following an initial AAE",
         "exchange with a range-limited exchange.",
         "After each exchange, where sufficient deltas are discovered there will be a",
         "`tictacaae_repairloops` number of range-limited queries (assuming",
@@ -2837,8 +2861,8 @@
         "default": "on",
         "hidden": true
       },
-      "comment": [
-        "@doc Exchange only between primary vnodes",
+      "docText": [
+        "Exchange only between primary vnodes",
         "Setting this to false allows Tictac AAE exchanges between both primary and",
         "fallback vnodes."
       ],
@@ -2866,8 +2890,8 @@
         },
         "default": "info"
       },
-      "comment": [
-        "@doc Tictacaae - change log level of parallel keystore",
+      "docText": [
+        "Tictacaae - change log level of parallel keystore",
         "Backend logging within leveled is relatively verbose, so in some cases",
         "there may be a preference of running leveled at warning not info.  This will",
         "only change logging in parallel-mode aae backends, not of leveled when",
@@ -2894,8 +2918,8 @@
         "default": "info",
         "hidden": true
       },
-      "comment": [
-        "@doc Tictacaae - change log level of tictacaae",
+      "docText": [
+        "Tictacaae - change log level of tictacaae",
         "Set the log level for each aae_controller, and also for aae exchanges.  It",
         "is strongly recommended to keep this at info."
       ],
@@ -2919,8 +2943,8 @@
         },
         "default": "native"
       },
-      "comment": [
-        "@doc Tictacaae - change compression method of parallel keystore",
+      "docText": [
+        "Tictacaae - change compression method of parallel keystore",
         "Better performance is expected when using the NIF-based zstd compression.",
         "Actual compression achieved is similar to native (zlib).  Native will",
         "compress using the built-in compression option for Erlang term_to_binary.",
@@ -2952,8 +2976,8 @@
         "default": "dscp",
         "commented": "dscp"
       },
-      "comment": [
-        "@doc Pool Strategy - should a single node_worker_pool or multiple pools be",
+      "docText": [
+        "Pool Strategy - should a single node_worker_pool or multiple pools be",
         "used for queueing potentially longer-running \"background\" queries"
       ],
       "configName": "worker_pool_strategy",
@@ -2967,8 +2991,8 @@
         },
         "default": "4"
       },
-      "comment": [
-        "@doc Pool Sizes - sizes for individual node_worker_pools",
+      "docText": [
+        "Pool Sizes - sizes for individual node_worker_pools",
         "Only relevant if single or dscp strategy chosen.  Set",
         "`node_worker_pool_size` if a `single` pool strategy is being used, or set",
         "`af_worker_pool_size` and `be_worker_pool_size` if a multiple pool strategy",
@@ -2989,7 +3013,6 @@
         },
         "default": "2"
       },
-      "comment": [],
       "configName": "af1_worker_pool_size",
       "settingName": "riak_kv.af1_worker_pool_size"
     },
@@ -3001,7 +3024,6 @@
         },
         "default": "1"
       },
-      "comment": [],
       "configName": "af2_worker_pool_size",
       "settingName": "riak_kv.af2_worker_pool_size"
     },
@@ -3013,7 +3035,6 @@
         },
         "default": "4"
       },
-      "comment": [],
       "configName": "af3_worker_pool_size",
       "settingName": "riak_kv.af3_worker_pool_size"
     },
@@ -3025,7 +3046,6 @@
         },
         "default": "1"
       },
-      "comment": [],
       "configName": "af4_worker_pool_size",
       "settingName": "riak_kv.af4_worker_pool_size"
     },
@@ -3037,7 +3057,6 @@
         },
         "default": "1"
       },
-      "comment": [],
       "configName": "be_worker_pool_size",
       "settingName": "riak_kv.be_worker_pool_size"
     },
@@ -3050,8 +3069,8 @@
         "default": "10",
         "commented": "10"
       },
-      "comment": [
-        "@doc Backend PUT Pause (ms).",
+      "docText": [
+        "Backend PUT Pause (ms).",
         "If the backend PUT has resulted in a pause request, then how long should",
         "the vnode pause for?  This is measured in ms, and currently only applies",
         "to the leveled backend"
@@ -3068,8 +3087,8 @@
         "default": "2",
         "commented": "2"
       },
-      "comment": [
-        "@doc Tombstone Pause (ms)",
+      "docText": [
+        "Tombstone Pause (ms)",
         "The pause has a dual-purpose.  It slows both the riak_kv_reaper and",
         "riak_kv_eraser process, as the pause is imposed on each delete or reap.",
         "The pause also reduces the probability of a failure to reap when a non-keep",
@@ -3089,8 +3108,8 @@
         "default": "enabled",
         "commented": "enabled"
       },
-      "comment": [
-        "@doc Whether to allow node to participate in coverage queries.",
+      "docText": [
+        "Whether to allow node to participate in coverage queries.",
         "This is used as a manual switch to stop nodes in incomplete states",
         "(E.g. doing a full partition repair, or node replace) from participating",
         "in coverage queries, as their information may be incomplete (e.g. 2i",
@@ -3132,8 +3151,8 @@
           ]
         }
       },
-      "comment": [
-        "@doc Specifies the storage engine used for Riak's key-value data",
+      "docText": [
+        "Specifies the storage engine used for Riak's key-value data",
         "and secondary indexes (if supported)."
       ],
       "configName": "storage_backend",
@@ -3153,8 +3172,8 @@
           }
         ]
       },
-      "comment": [
-        "@doc Simplify prefix_multi configuration for Riak CS. Keep this",
+      "docText": [
+        "Simplify prefix_multi configuration for Riak CS. Keep this",
         "commented out unless Riak is configured for Riak CS."
       ],
       "configName": "cs_version",
@@ -3169,8 +3188,8 @@
         },
         "hidden": true
       },
-      "comment": [
-        "@doc Restrict how fast AAE can build hash trees. Building the tree",
+      "docText": [
+        "Restrict how fast AAE can build hash trees. Building the tree",
         "for a given partition requires a full scan over that partition's",
         "data. Once built, trees stay built until they are expired.",
         "* .number is the number of builds",
@@ -3191,8 +3210,8 @@
         },
         "hidden": true
       },
-      "comment": [
-        "@see anti_entropy.build_limit.number"
+      "docSees": [
+        "anti_entropy.build_limit.number"
       ],
       "configName": "anti_entropy.tree.build_limit.per_timespan",
       "settingName": "riak_kv.anti_entropy_build_limit"
@@ -3215,8 +3234,8 @@
         ],
         "hidden": true
       },
-      "comment": [
-        "@doc Determine how often hash trees are expired after being built.",
+      "docText": [
+        "Determine how often hash trees are expired after being built.",
         "Periodically expiring a hash tree ensures the on-disk hash tree",
         "data stays consistent with the actual k/v backend data. It also",
         "helps Riak identify silent disk failures and bit rot. However,",
@@ -3236,8 +3255,8 @@
         },
         "hidden": true
       },
-      "comment": [
-        "@doc Limit how many AAE exchanges or builds can happen concurrently."
+      "docText": [
+        "Limit how many AAE exchanges or builds can happen concurrently."
       ],
       "configName": "anti_entropy.concurrency_limit",
       "settingName": "riak_kv.anti_entropy_concurrency"
@@ -3251,8 +3270,8 @@
         },
         "hidden": true
       },
-      "comment": [
-        "@doc The tick determines how often the AAE manager looks for work",
+      "docText": [
+        "The tick determines how often the AAE manager looks for work",
         "to do (building/expiring trees, triggering exchanges, etc).",
         "The default is every 15 seconds. Lowering this value will",
         "speedup the rate that all replicas are synced across the cluster.",
@@ -3270,8 +3289,8 @@
           "value": "directory"
         }
       },
-      "comment": [
-        "@doc The directory where AAE hash trees are stored."
+      "docText": [
+        "The directory where AAE hash trees are stored."
       ],
       "configName": "anti_entropy.data_dir",
       "settingName": "riak_kv.anti_entropy_data_dir"
@@ -3285,10 +3304,12 @@
         },
         "hidden": true
       },
-      "comment": [
-        "@doc The LevelDB options used by AAE to generate the LevelDB-backed",
-        "on-disk hashtrees.",
-        "@see leveldb.write_buffer_size"
+      "docText": [
+        "The LevelDB options used by AAE to generate the LevelDB-backed",
+        "on-disk hashtrees."
+      ],
+      "docSees": [
+        "leveldb.write_buffer_size"
       ],
       "configName": "anti_entropy.write_buffer_size",
       "settingName": "riak_kv.anti_entropy_leveldb_opts.write_buffer_size"
@@ -3302,7 +3323,6 @@
         },
         "hidden": true
       },
-      "comment": [],
       "configName": "anti_entropy.max_open_files",
       "settingName": "riak_kv.anti_entropy_leveldb_opts.max_open_files"
     },
@@ -3315,8 +3335,8 @@
         },
         "hidden": true
       },
-      "comment": [
-        "@doc Whether the distributed throttle for active anti-entropy is",
+      "docText": [
+        "Whether the distributed throttle for active anti-entropy is",
         "enabled."
       ],
       "configName": "anti_entropy.throttle",
@@ -3336,8 +3356,8 @@
           }
         ]
       },
-      "comment": [
-        "@doc Sets the throttling tiers for active anti-entropy. Each tier",
+      "docText": [
+        "Sets the throttling tiers for active anti-entropy. Each tier",
         "is a minimum vnode mailbox size and a time-delay that the throttle",
         "should observe at that size and above. For example:",
         "",
@@ -3347,8 +3367,10 @@
         "    anti_entropy.throttle.tier2.delay = 5ms",
         "",
         "If configured, there must be a tier which includes a mailbox size",
-        "of 0. Both .mailbox_size and .delay must be set for each tier.",
-        "@see anti_entropy.throttle"
+        "of 0. Both .mailbox_size and .delay must be set for each tier."
+      ],
+      "docSees": [
+        "anti_entropy.throttle"
       ],
       "configName": "anti_entropy.throttle.$tier.mailbox_size",
       "settingName": "riak_kv.aae_throttle_limits"
@@ -3361,8 +3383,8 @@
         },
         "hidden": true
       },
-      "comment": [
-        "@see anti_entropy.throttle.$tier.mailbox_size"
+      "docSees": [
+        "anti_entropy.throttle.$tier.mailbox_size"
       ],
       "configName": "anti_entropy.throttle.$tier.delay",
       "settingName": "riak_kv.aae_throttle_limits"
@@ -3376,8 +3398,8 @@
         },
         "hidden": true
       },
-      "comment": [
-        "@see leveldb.bloomfilter"
+      "docSees": [
+        "leveldb.bloomfilter"
       ],
       "configName": "anti_entropy.bloomfilter",
       "settingName": "riak_kv.anti_entropy_leveldb_opts.use_bloomfilter"
@@ -3400,13 +3422,17 @@
         ],
         "hidden": true
       },
-      "comment": [
-        "We left riak_kv.add_paths out on purpose.",
-        "@doc The maximum number of concurrent requests of each type (get or",
+      "docText": [
+        "The maximum number of concurrent requests of each type (get or",
         "put) that is allowed. Setting this value to infinite disables",
         "overload protection. The 'erlang.process_limit' should be at least",
-        "3 times more than this setting.",
-        "@see erlang.process_limit"
+        "3 times more than this setting."
+      ],
+      "docSees": [
+        "erlang.process_limit"
+      ],
+      "docOther": [
+        "We left riak_kv.add_paths out on purpose."
       ],
       "configName": "max_concurrent_requests",
       "settingName": "riak_kv.fsm_limit"
@@ -3420,8 +3446,8 @@
         },
         "hidden": true
       },
-      "comment": [
-        "@doc If forwarding to a replica-local coordinator on PUT fails,",
+      "docText": [
+        "If forwarding to a replica-local coordinator on PUT fails,",
         "this setting will retry the operation when set to 'on'.",
         "  * on = Riak 2.0 behavior (strongly recommended)",
         "  * off = Riak 1.x behavior"
@@ -3438,8 +3464,8 @@
         },
         "hidden": true
       },
-      "comment": [
-        "@doc Enable or disable mbox_check on PUTs",
+      "docText": [
+        "Enable or disable mbox_check on PUTs",
         "By default mbox_checks are performed so that vnodes with long queues",
         "will not be used as put coordinators.  To return to the pre-2.9 behaviour",
         "of not checking, this can be disabled.  The mbox_check may add additional",
@@ -3462,8 +3488,8 @@
           }
         ]
       },
-      "comment": [
-        "@doc Controls which binary representation of a riak value is stored",
+      "docText": [
+        "Controls which binary representation of a riak value is stored",
         "on disk.",
         "* 0: Original erlang:term_to_binary format. Higher space overhead.",
         "* 1: New format for more compact storage of small values.",
@@ -3492,8 +3518,8 @@
         "%% disabled by default": true,
         "256KB is a reasonable value hidden": true
       },
-      "comment": [
-        "@doc Controls the size of the metadata cache for each vnode. Set to",
+      "docText": [
+        "Controls the size of the metadata cache for each vnode. Set to",
         "'off' to disable the cache.  This shouldn't be necessary on-disk",
         "based backends, but can help performance in some cases (i.e. memory",
         "backend, data fits in block cache, etc). Note that this is the size",
@@ -3514,10 +3540,12 @@
         },
         "hidden": true
       },
-      "comment": [
-        "%% Memory backend section",
-        "@doc The maximum amount of memory consumed per vnode by the memory",
+      "docText": [
+        "The maximum amount of memory consumed per vnode by the memory",
         "storage backend.  Minimum: 1MB"
+      ],
+      "docOther": [
+        "%% Memory backend section"
       ],
       "configName": "memory_backend.max_memory_per_vnode",
       "settingName": "riak_kv.memory_backend.max_memory"
@@ -3530,8 +3558,8 @@
         },
         "hidden": true
       },
-      "comment": [
-        "@see memory_backend.max_memory"
+      "docSees": [
+        "memory_backend.max_memory"
       ],
       "configName": "multi_backend.$name.memory_backend.max_memory_per_vnode",
       "settingName": "riak_kv.multi_backend"
@@ -3544,8 +3572,8 @@
         },
         "hidden": true
       },
-      "comment": [
-        "@doc Each value written will be written with this \"time to",
+      "docText": [
+        "Each value written will be written with this \"time to",
         "live\". Once that object's time is up, it will be deleted on the",
         "next read of its key. Minimum: 1s"
       ],
@@ -3560,8 +3588,8 @@
         },
         "hidden": true
       },
-      "comment": [
-        "@see memory_backend.ttl"
+      "docSees": [
+        "memory_backend.ttl"
       ],
       "configName": "multi_backend.$name.memory_backend.ttl",
       "settingName": "riak_kv.multi_backend"
@@ -3575,8 +3603,8 @@
         "default": "on",
         "hidden": true
       },
-      "comment": [
-        "@doc Measures were added to Riak 1.2 to counteract cross-site",
+      "docText": [
+        "Measures were added to Riak 1.2 to counteract cross-site",
         "scripting and request-forgery attacks. Some reverse-proxies cannot",
         "remove the Referer header and make serving data directly from Riak",
         "impossible. Turning secure_referer_check = off disables this",
@@ -3594,8 +3622,8 @@
         "default": "off",
         "hidden": true
       },
-      "comment": [
-        "@doc a dummy value added to riak 2.2.5 to handle upgrades from",
+      "docText": [
+        "a dummy value added to riak 2.2.5 to handle upgrades from",
         "older riak_ee installs that have `jmx` in their riak.conf"
       ],
       "configName": "jmx",
@@ -3609,8 +3637,8 @@
         },
         "default": "5MB"
       },
-      "comment": [
-        "@doc Reading or writing objects bigger than this size will write a",
+      "docText": [
+        "Reading or writing objects bigger than this size will write a",
         "warning in the logs."
       ],
       "configName": "object.size.warning_threshold",
@@ -3624,8 +3652,8 @@
         },
         "default": "50MB"
       },
-      "comment": [
-        "@doc Writing an object bigger than this will send a failure to the",
+      "docText": [
+        "Writing an object bigger than this will send a failure to the",
         "client."
       ],
       "configName": "object.size.maximum",
@@ -3639,8 +3667,8 @@
         },
         "default": "25"
       },
-      "comment": [
-        "@doc Writing an object with more than this number of siblings will",
+      "docText": [
+        "Writing an object with more than this number of siblings will",
         "generate a warning in the logs."
       ],
       "configName": "object.siblings.warning_threshold",
@@ -3654,8 +3682,8 @@
         },
         "default": "100"
       },
-      "comment": [
-        "@doc Writing an object with more than this number of siblings will",
+      "docText": [
+        "Writing an object with more than this number of siblings will",
         "send a failure to the client."
       ],
       "configName": "object.siblings.maximum",
@@ -3671,8 +3699,8 @@
         },
         "hidden": true
       },
-      "comment": [
-        "@doc The strategy used when merging objects that potentially have",
+      "docText": [
+        "The strategy used when merging objects that potentially have",
         "conflicts.",
         "",
         "* 2: Riak 2.0 typed bucket default - reduces sibling creation through additional",
@@ -3707,8 +3735,8 @@
         "default": "0",
         "hidden": true
       },
-      "comment": [
-        "@doc The number of primary replicas (non-fallback) that must reply",
+      "docText": [
+        "The number of primary replicas (non-fallback) that must reply",
         "to a read request."
       ],
       "configName": "buckets.default.pr",
@@ -3738,8 +3766,8 @@
         "default": "quorum",
         "hidden": true
       },
-      "comment": [
-        "@doc The number of replicas which must reply to a read request."
+      "docText": [
+        "The number of replicas which must reply to a read request."
       ],
       "configName": "buckets.default.r",
       "settingName": "riak_core.default_bucket_props.r"
@@ -3768,8 +3796,8 @@
         "default": "quorum",
         "hidden": true
       },
-      "comment": [
-        "@doc The number of replicas which must reply to a write request,",
+      "docText": [
+        "The number of replicas which must reply to a write request,",
         "indicating that the write was received."
       ],
       "configName": "buckets.default.w",
@@ -3799,8 +3827,8 @@
         "default": "0",
         "hidden": true
       },
-      "comment": [
-        "@doc The number of primary replicas (non-fallback) which must reply",
+      "docText": [
+        "The number of primary replicas (non-fallback) which must reply",
         "to a write request."
       ],
       "configName": "buckets.default.pw",
@@ -3830,8 +3858,8 @@
         "default": "quorum",
         "hidden": true
       },
-      "comment": [
-        "@doc The number of replicas which must reply to a write request,",
+      "docText": [
+        "The number of replicas which must reply to a write request,",
         "indicating that the write was committed to durable storage."
       ],
       "configName": "buckets.default.dw",
@@ -3861,8 +3889,8 @@
         "default": "quorum",
         "hidden": true
       },
-      "comment": [
-        "@doc The number of replicas which must reply to a delete request."
+      "docText": [
+        "The number of replicas which must reply to a delete request."
       ],
       "configName": "buckets.default.rw",
       "settingName": "riak_core.default_bucket_props.rw"
@@ -3885,8 +3913,8 @@
         },
         "hidden": true
       },
-      "comment": [
-        "@doc Whether not-founds will count toward a quorum of reads."
+      "docText": [
+        "Whether not-founds will count toward a quorum of reads."
       ],
       "configName": "buckets.default.notfound_ok",
       "settingName": "riak_core.default_bucket_props.notfound_ok"
@@ -3909,8 +3937,8 @@
         },
         "hidden": true
       },
-      "comment": [
-        "@doc Whether not-founds will invoke the \"basic quorum\"",
+      "docText": [
+        "Whether not-founds will invoke the \"basic quorum\"",
         "optimization. This setting will short-circuit fetches where the",
         "majority of replicas report that the key is not found. Only used",
         "when notfound_ok = false."
@@ -3936,8 +3964,8 @@
         "default": "false",
         "hidden": true
       },
-      "comment": [
-        "@doc Whether or not siblings are allowed, by default, for untyped buckets.",
+      "docText": [
+        "Whether or not siblings are allowed, by default, for untyped buckets.",
         "Note: See Vector Clocks for a discussion of sibling resolution."
       ],
       "configName": "buckets.default.allow_mult",
@@ -3961,8 +3989,8 @@
         "default": "false",
         "hidden": true
       },
-      "comment": [
-        "@doc Whether conflicting writes resolve via timestamp."
+      "docText": [
+        "Whether conflicting writes resolve via timestamp."
       ],
       "configName": "buckets.default.last_write_wins",
       "settingName": "riak_core.default_bucket_props.last_write_wins"
@@ -3971,8 +3999,8 @@
       "properties": {
         "hidden": true
       },
-      "comment": [
-        "@doc A space delimited list of functions that will be run before a",
+      "docText": [
+        "A space delimited list of functions that will be run before a",
         "value is stored, and that can abort the write. For Erlang",
         "functions, use \"module:function\" and for JavaScript, use",
         "\"functionName\"."
@@ -3984,8 +4012,8 @@
       "properties": {
         "hidden": true
       },
-      "comment": [
-        "@doc A space delimited list of functions that will be run after a",
+      "docText": [
+        "A space delimited list of functions that will be run after a",
         "value is stored. Only Erlang functions are allowed, using the",
         "\"module:function\" format."
       ],
@@ -4013,8 +4041,8 @@
         ],
         "hidden": true
       },
-      "comment": [
-        "@doc Whether serialized datatypes will use compression, and at what",
+      "docText": [
+        "Whether serialized datatypes will use compression, and at what",
         "level. When an integer, this refers to the aggressiveness (and",
         "slowness) of compression, on a scale from 0 to 9. 'on' is",
         "equivalent to 6, 'off' is equivalent to 0."
@@ -4031,12 +4059,14 @@
         "default": "off",
         "hidden": true
       },
-      "comment": [
-        "@doc Whether to use the background manager to limit KV handoff.",
+      "docText": [
+        "Whether to use the background manager to limit KV handoff.",
         "This will help to prevent system response degradation under times",
         "of heavy load from multiple background tasks that contend for the",
-        "same resources.",
-        "@see background_manager"
+        "same resources."
+      ],
+      "docSees": [
+        "background_manager"
       ],
       "configName": "handoff.use_background_manager",
       "settingName": "riak_kv.handoff_use_background_manager"
@@ -4050,14 +4080,16 @@
         "default": "6",
         "hidden": true
       },
-      "comment": [
-        "@doc The maximum number of times that a secondary system like Riak",
+      "docText": [
+        "The maximum number of times that a secondary system like Riak",
         "Search 2.0 can block handoff of primary key-value data. The",
         "approximate maximum duration handoff of a vnode can be blocked for",
         "can be determined by multiplying this number by the value of",
         "\"vnode_management_timer\". To prevent handoff from ever being",
-        "blocked by a secondary system set this value to 0.",
-        "@see vnode_management_timer"
+        "blocked by a secondary system set this value to 0."
+      ],
+      "docSees": [
+        "vnode_management_timer"
       ],
       "configName": "handoff.max_rejects",
       "settingName": "riak_kv.handoff_rejected_max"
@@ -4071,12 +4103,14 @@
         "default": "off",
         "hidden": true
       },
-      "comment": [
-        "@doc Whether to use the background manager to limit AAE tree",
+      "docText": [
+        "Whether to use the background manager to limit AAE tree",
         "rebuilds. This will help to prevent system response degradation",
         "under times of heavy load from multiple background tasks that",
-        "contend for the same resources.",
-        "@see background_manager"
+        "contend for the same resources."
+      ],
+      "docSees": [
+        "background_manager"
       ],
       "configName": "anti_entropy.use_background_manager",
       "settingName": "riak_kv.aae_use_background_manager"
@@ -4090,8 +4124,8 @@
         },
         "hidden": true
       },
-      "comment": [
-        "@doc Time in between the checks that trigger Bitcask merges."
+      "docText": [
+        "Time in between the checks that trigger Bitcask merges."
       ],
       "configName": "bitcask.merge_check_interval",
       "settingName": "riak_kv.bitcask_merge_check_interval"
@@ -4108,8 +4142,8 @@
         },
         "hidden": true
       },
-      "comment": [
-        "@doc Jitter used to randomize the time in between the checks that trigger",
+      "docText": [
+        "Jitter used to randomize the time in between the checks that trigger",
         "Bitcask merges."
       ],
       "configName": "bitcask.merge_check_jitter",
@@ -4124,8 +4158,8 @@
         },
         "hidden": true
       },
-      "comment": [
-        "@doc Maximum amount of data to merge in one go in the Bitcask backend."
+      "docText": [
+        "Maximum amount of data to merge in one go in the Bitcask backend."
       ],
       "configName": "bitcask.max_merge_size",
       "settingName": "riak_kv.bitcask_max_merge_size"
@@ -4141,8 +4175,8 @@
         "default": "enabled",
         "commented": "enabled"
       },
-      "comment": [
-        "@doc Whether to allow list buckets."
+      "docText": [
+        "Whether to allow list buckets."
       ],
       "configName": "cluster.job.riak_kv.list_buckets",
       "settingName": "riak_core.job_accept_class"
@@ -4158,8 +4192,8 @@
         "default": "enabled",
         "commented": "enabled"
       },
-      "comment": [
-        "@doc Whether to allow streaming list buckets."
+      "docText": [
+        "Whether to allow streaming list buckets."
       ],
       "configName": "cluster.job.riak_kv.stream_list_buckets",
       "settingName": "riak_core.job_accept_class"
@@ -4175,8 +4209,8 @@
         "default": "enabled",
         "commented": "enabled"
       },
-      "comment": [
-        "@doc Whether to allow list keys."
+      "docText": [
+        "Whether to allow list keys."
       ],
       "configName": "cluster.job.riak_kv.list_keys",
       "settingName": "riak_core.job_accept_class"
@@ -4192,8 +4226,8 @@
         "default": "enabled",
         "commented": "enabled"
       },
-      "comment": [
-        "@doc Whether to allow streaming list keys."
+      "docText": [
+        "Whether to allow streaming list keys."
       ],
       "configName": "cluster.job.riak_kv.stream_list_keys",
       "settingName": "riak_core.job_accept_class"
@@ -4209,8 +4243,8 @@
         "default": "enabled",
         "commented": "enabled"
       },
-      "comment": [
-        "@doc Whether to allow secondary index queries."
+      "docText": [
+        "Whether to allow secondary index queries."
       ],
       "configName": "cluster.job.riak_kv.secondary_index",
       "settingName": "riak_core.job_accept_class"
@@ -4226,8 +4260,8 @@
         "default": "enabled",
         "commented": "enabled"
       },
-      "comment": [
-        "@doc Whether to allow streaming secondary index queries."
+      "docText": [
+        "Whether to allow streaming secondary index queries."
       ],
       "configName": "cluster.job.riak_kv.stream_secondary_index",
       "settingName": "riak_core.job_accept_class"
@@ -4243,8 +4277,8 @@
         "default": "enabled",
         "commented": "enabled"
       },
-      "comment": [
-        "@doc Whether to allow term-based map-reduce."
+      "docText": [
+        "Whether to allow term-based map-reduce."
       ],
       "configName": "cluster.job.riak_kv.map_reduce",
       "settingName": "riak_core.job_accept_class"
@@ -4260,8 +4294,8 @@
         "default": "enabled",
         "commented": "enabled"
       },
-      "comment": [
-        "@doc Whether to allow JavaScript map-reduce."
+      "docText": [
+        "Whether to allow JavaScript map-reduce."
       ],
       "configName": "cluster.job.riak_kv.map_reduce_js",
       "settingName": "riak_core.job_accept_class"
@@ -4291,8 +4325,8 @@
         },
         "default": "disabled"
       },
-      "comment": [
-        "@doc For Tictac full-sync does all data need to be sync'd, or should a",
+      "docText": [
+        "For Tictac full-sync does all data need to be sync'd, or should a",
         "specific bucket be sync'd (bucket), or a specific bucket type (type).",
         "Note that in most cases sync of all data is lower overhead than sync of",
         "a subset of data - as cached AAE trees will be used.",
@@ -4309,8 +4343,8 @@
         },
         "default": "q1_ttaaefs"
       },
-      "comment": [
-        "@doc For tictac full-sync what registered queue name on this cluster should",
+      "docText": [
+        "For tictac full-sync what registered queue name on this cluster should",
         "be use for passing references to data which needs to be replicated for AAE",
         "full-sync.  This queue name must be defined as a",
         "`riak_kv.replq<n>_queuename`, but need not be exlusive to full-sync (i.e. a",
@@ -4328,8 +4362,8 @@
         "default": "disabled",
         "commented": "q1_ttaaefs"
       },
-      "comment": [
-        "@doc Tictac full-sync repair is by default uni-directional - each full-sync",
+      "docText": [
+        "Tictac full-sync repair is by default uni-directional - each full-sync",
         "operation managed from a given cluster will only attempt to prompt repair",
         "where that cluster is in advance (i.e the src of a more advanced value).",
         "From Riak 3.0.10 it can be bi-directional, and by configuring the queuename",
@@ -4350,8 +4384,8 @@
         },
         "default": "1"
       },
-      "comment": [
-        "@doc Tictac cluster slice number.  Each cluster can be configued with a",
+      "docText": [
+        "Tictac cluster slice number.  Each cluster can be configued with a",
         "slice number to space out full-sync events.  The numbers can be 1..4.  For",
         "example when doing bi-directional replication give one cluster a slice",
         "number of 1, and another a slice number of 3 (or alternatively use 2 and 4)"
@@ -4367,8 +4401,8 @@
         },
         "default": "32"
       },
-      "comment": [
-        "@doc For tictac full-sync what is the maximum number of AAE segments to be",
+      "docText": [
+        "For tictac full-sync what is the maximum number of AAE segments to be",
         "compared per exchange.  Reducing this will speed up clock compare queries,",
         "but will increase the number of exchanges required to complete a repair.",
         "If using range_check to speed-up repairs, this can be reduced as the",
@@ -4391,8 +4425,8 @@
         },
         "default": "16"
       },
-      "comment": [
-        "@doc For tictac full-sync what is the maximum number of AAE segments to be",
+      "docText": [
+        "For tictac full-sync what is the maximum number of AAE segments to be",
         "compared per exchange.  When running a range_check query this will be the",
         "ttaaefs_max results * ttaaefs_rangeboost.",
         "When using range_check, a small maxresults can be used, in effect using",
@@ -4410,8 +4444,8 @@
         },
         "commented": "sample_bucketname"
       },
-      "comment": [
-        "@doc For Tictac bucket full-sync which bucket should be sync'd by this",
+      "docText": [
+        "For Tictac bucket full-sync which bucket should be sync'd by this",
         "node.  Only ascii string bucket definitions supported (which will be",
         "converted using list_to_binary)."
       ],
@@ -4426,8 +4460,8 @@
         },
         "commented": "default"
       },
-      "comment": [
-        "@doc For Tictac bucket full-sync what is the bucket type of the bucket name.",
+      "docText": [
+        "For Tictac bucket full-sync what is the bucket type of the bucket name.",
         "Only ascii string type bucket definitions supported (these",
         "definitions will be converted to binary using list_to_binary)"
       ],
@@ -4441,8 +4475,8 @@
           "value": "string"
         }
       },
-      "comment": [
-        "@doc For Tictac bucket-type full-sync what is the bucket type to be sync'd.",
+      "docText": [
+        "For Tictac bucket-type full-sync what is the bucket type to be sync'd.",
         "Only ascii string type bucket definitions supported (these",
         "definitions will be converted to binary using list_to_binary).",
         "TODO: Type-based filtering is not yet supported"
@@ -4458,8 +4492,8 @@
         },
         "default": "3"
       },
-      "comment": [
-        "@doc For Tictac all full-sync which NVAL should be sync'd by this node.",
+      "docText": [
+        "For Tictac all full-sync which NVAL should be sync'd by this node.",
         "This is the `local` nval, as the data in the remote cluster may have an",
         "alternative nval."
       ],
@@ -4474,8 +4508,8 @@
         },
         "default": "3"
       },
-      "comment": [
-        "@doc For Tictac all full-sync which NVAL should be sync'd in the remote",
+      "docText": [
+        "For Tictac all full-sync which NVAL should be sync'd in the remote",
         "cluster."
       ],
       "configName": "ttaaefs_remotenval",
@@ -4495,8 +4529,8 @@
           }
         ]
       },
-      "comment": [
-        "@doc The network address of the peer node in the cluster with which this",
+      "docText": [
+        "The network address of the peer node in the cluster with which this",
         "node will connect to for full_sync purposes.  If this peer node is",
         "unavailable, then this local node will not perform any full-sync actions,",
         "so alternative peer addresses should eb configured in other nodes.  The",
@@ -4513,8 +4547,8 @@
         },
         "commented": "8087"
       },
-      "comment": [
-        "@doc The port to be used when connecting to the remote peer cluster"
+      "docText": [
+        "The port to be used when connecting to the remote peer cluster"
       ],
       "configName": "ttaaefs_peerport",
       "settingName": "riak_kv.ttaaefs_peerport"
@@ -4536,8 +4570,8 @@
         },
         "default": "pb"
       },
-      "comment": [
-        "@doc The protocol to be used when conecting to the peer in the remote",
+      "docText": [
+        "The protocol to be used when conecting to the peer in the remote",
         "cluster.  Could be http or pb, with pb being relatively efficient.  Adding",
         "TLS security is possible with the pb protocol by setting the following",
         "configuration items:",
@@ -4556,8 +4590,8 @@
           "value": "string"
         }
       },
-      "comment": [
-        "@doc The filepath for the ca certificate to validate the ssl connection",
+      "docText": [
+        "The filepath for the ca certificate to validate the ssl connection",
         "to the remote peer."
       ],
       "configName": "repl_cacert_filename",
@@ -4570,8 +4604,8 @@
           "value": "string"
         }
       },
-      "comment": [
-        "@doc The filepath for the certificate to be used by this node when acting",
+      "docText": [
+        "The filepath for the certificate to be used by this node when acting",
         "as a client for replication.  Must be trusted by the cluster with security",
         "enabled"
       ],
@@ -4585,8 +4619,8 @@
           "value": "string"
         }
       },
-      "comment": [
-        "@doc The filepath for the key to related to the certificate in",
+      "docText": [
+        "The filepath for the key to related to the certificate in",
         "repl_cert_filename"
       ],
       "configName": "repl_key_filename",
@@ -4599,8 +4633,8 @@
           "value": "string"
         }
       },
-      "comment": [
-        "@doc When security is enabled on the remote cluster for replication as",
+      "docText": [
+        "When security is enabled on the remote cluster for replication as",
         "username is required to identify the replication client.  This username",
         "must be configured on the remote cluster with appropriate access rights"
       ],
@@ -4615,8 +4649,8 @@
         },
         "default": "0"
       },
-      "comment": [
-        "@doc How many times per 24hour period should all the data be checked to",
+      "docText": [
+        "How many times per 24hour period should all the data be checked to",
         "confirm it is fully sync'd.  When running a full (i.e. nval) sync this will",
         "check all the data under that nval between the clusters, and when the trees",
         "are out of alignment, will check across all data where the nval matches the",
@@ -4640,8 +4674,8 @@
         },
         "default": "0"
       },
-      "comment": [
-        "@doc How many times per 24hour period should no data be checked to",
+      "docText": [
+        "How many times per 24hour period should no data be checked to",
         "confirm it is fully sync'd.  Use nochecks to align the number of checks",
         "done by each node - if each node has the same number of slots, they will",
         "naurally space their checks within the period of the slot."
@@ -4657,8 +4691,8 @@
         },
         "default": "0"
       },
-      "comment": [
-        "@doc How many times per 24hour period should the last hours data be checked",
+      "docText": [
+        "How many times per 24hour period should the last hours data be checked",
         "to confirm it is fully sync'd.",
         "For per-bucket replication, the tree comparison prompted by this will be",
         "constrained by the time period, as well as the keys and clocks checked for",
@@ -4679,8 +4713,8 @@
         },
         "default": "0"
       },
-      "comment": [
-        "@doc How many times per 24hour period should the last 24-hours of data be",
+      "docText": [
+        "How many times per 24hour period should the last 24-hours of data be",
         "checked to confirm it is fully sync'd.",
         "For per-bucket replication, the tree comparison prompted by this will be",
         "constrained by the time period, as well as the keys and clocks checked for",
@@ -4701,8 +4735,8 @@
         },
         "default": "0"
       },
-      "comment": [
-        "@doc How many times per 24hour period should the a range_check be run.  The",
+      "docText": [
+        "How many times per 24hour period should the a range_check be run.  The",
         "range_check is intended to be a smart check, in that it will:",
         "- use a last_modified range starting from the last successful check as its",
         "range if the last check was successful (i.e. showed the clusters to be",
@@ -4728,8 +4762,8 @@
         },
         "default": "24"
       },
-      "comment": [
-        "@doc How many times per 24hour period should the an autocheck be run.  The",
+      "docText": [
+        "How many times per 24hour period should the an autocheck be run.  The",
         "autocheck is intended to be an adaptive check, in that it will:",
         "- use a rangecheck if the previous check has identified a range, or;",
         "- use a rangecheck if the previous check was a successful sync, using the",
@@ -4767,8 +4801,8 @@
           ]
         }
       },
-      "comment": [
-        "@doc Lets you specify when during the day autocheck may run allcheck",
+      "docText": [
+        "Lets you specify when during the day autocheck may run allcheck",
         "rather than the less expensive daycheck, when no range has been identified.",
         "This restricts the fixing entropy between clusters of non recently-modified",
         "data to this window (and hence ensures the cost of fixing this entropy does",
@@ -4798,8 +4832,8 @@
         },
         "hidden": true
       },
-      "comment": [
-        "@see All check window"
+      "docSees": [
+        "All check window"
       ],
       "configName": "ttaaefs_allcheck.window.start",
       "settingName": "riak_kv.ttaaefs_allcheck_window"
@@ -4813,8 +4847,8 @@
         },
         "hidden": true
       },
-      "comment": [
-        "@see All check window"
+      "docSees": [
+        "All check window"
       ],
       "configName": "ttaaefs_allcheck.window.end",
       "settingName": "riak_kv.ttaaefs_allcheck_window"
@@ -4829,8 +4863,8 @@
         "default": "disabled",
         "commented": "enabled"
       },
-      "comment": [
-        "@doc If Tictac AAE full-sync discovers keys to be repaired, should each key",
+      "docText": [
+        "If Tictac AAE full-sync discovers keys to be repaired, should each key",
         "that is repaired be logged"
       ],
       "configName": "ttaaefs_logrepairs",
@@ -4846,8 +4880,8 @@
         "default": "disabled",
         "commented": "enabled"
       },
-      "comment": [
-        "@doc If Tictac AAE sees difference in trees (for nval-based full",
+      "docText": [
+        "If Tictac AAE sees difference in trees (for nval-based full",
         "comparisons) only, should it attempt to repair those trees as well as",
         "repairing any deltas.  Enabling this setting will change the concurrency",
         "of fetch_clock_nval queries run to find repairs."
@@ -4865,8 +4899,8 @@
         "default": "disabled",
         "commented": "enabled"
       },
-      "comment": [
-        "@doc Enable this node to act as a real-time replication source"
+      "docText": [
+        "Enable this node to act as a real-time replication source"
       ],
       "configName": "replrtq_enablesrc",
       "settingName": "riak_kv.replrtq_enablesrc"
@@ -4892,8 +4926,8 @@
         },
         "default": "one"
       },
-      "comment": [
-        "@doc For queue-based replication what should be the r value on fetches,",
+      "docText": [
+        "For queue-based replication what should be the r value on fetches,",
         "and the w value on pushes.  Default is to use `one` but `quorum` or `all`",
         "can be used should there be issues with vnode stress that will otherwise",
         "generate anti-entropy workloads (e.g. with mailbox overloads)"
@@ -4909,8 +4943,8 @@
         },
         "default": "1000"
       },
-      "comment": [
-        "@doc Limit the number of objects to be cached on the replication queue,",
+      "docText": [
+        "Limit the number of objects to be cached on the replication queue,",
         "with objects queued when the priority queue is beyond this limit stored as",
         "clocks only to be fetched on replication"
       ],
@@ -4925,8 +4959,8 @@
         },
         "default": "200KB"
       },
-      "comment": [
-        "@doc Limit the size of an object which may be pushed to the replication",
+      "docText": [
+        "Limit the size of an object which may be pushed to the replication",
         "queue.  Objects larger than this will still be replicated, but by being",
         "re-fetched.  The product of replrtq_objectsize and replrtq_srcobjectlimit",
         "gives a theoretical maximum for the total memory consumed by the",
@@ -4943,8 +4977,8 @@
         },
         "default": "q1_ttaaefs:block_rtq"
       },
-      "comment": [
-        "@doc Queue definitions",
+      "docText": [
+        "Queue definitions",
         "Queues should be defined using a pipe '|' delimited string, of two",
         "colon ':' delimited elements.  The first part of each queue definition is",
         "the ascii name of the queue, the second part indicated the filter to be",
@@ -4976,8 +5010,8 @@
         "default": "disabled",
         "commented": "enabled"
       },
-      "comment": [
-        "@doc Enable this node to zlib compress objects over the wire"
+      "docText": [
+        "Enable this node to zlib compress objects over the wire"
       ],
       "configName": "replrtq_compressonwire",
       "settingName": "riak_kv.replrtq_compressonwire"
@@ -4992,8 +5026,8 @@
         "default": "disabled",
         "commented": "enabled"
       },
-      "comment": [
-        "@doc Enable this node to replicate reap requests to other clusters"
+      "docText": [
+        "Enable this node to replicate reap requests to other clusters"
       ],
       "configName": "repl_reap",
       "settingName": "riak_kv.repl_reap"
@@ -5008,8 +5042,8 @@
         "default": "disabled",
         "commented": "enabled"
       },
-      "comment": [
-        "@doc Enable this node to act as a sink and consume from a src cluster"
+      "docText": [
+        "Enable this node to act as a sink and consume from a src cluster"
       ],
       "configName": "replrtq_enablesink",
       "settingName": "riak_kv.replrtq_enablesink"
@@ -5022,8 +5056,8 @@
         },
         "default": "q1_ttaaefs"
       },
-      "comment": [
-        "@doc Queue name  to be used for peers (replrtq_sinkpeers) that are",
+      "docText": [
+        "Queue name  to be used for peers (replrtq_sinkpeers) that are",
         "defined without a queue name.  Each node is expected to have a single",
         "queue from which it will consume (by name).  This queue may be consumed",
         "from multiple peers - and those peers may sit on multiple clusters.",
@@ -5043,8 +5077,8 @@
         },
         "commented": "127.0.0.1:8087:pb"
       },
-      "comment": [
-        "@doc A list of peers is required to inform the sink node how to reach the",
+      "docText": [
+        "A list of peers is required to inform the sink node how to reach the",
         "src.  All src nodes will need to have entries consumed - so it is",
         "recommended that each src node is referred to in multiple sink node",
         "configurations.",
@@ -5064,8 +5098,8 @@
         },
         "default": "24"
       },
-      "comment": [
-        "@doc The number of workers to be used for each queue must be configured."
+      "docText": [
+        "The number of workers to be used for each queue must be configured."
       ],
       "configName": "replrtq_sinkworkers",
       "settingName": "riak_kv.replrtq_sinkworkers"
@@ -5078,8 +5112,8 @@
         },
         "commented": "24"
       },
-      "comment": [
-        "@doc The maximum number of workers to be for any given peer may be",
+      "docText": [
+        "The maximum number of workers to be for any given peer may be",
         "configured - if not configured will default to the number of sinkworkers"
       ],
       "configName": "replrtq_sinkpeerlimit",
@@ -5095,8 +5129,8 @@
         "default": "disabled",
         "commented": "enabled"
       },
-      "comment": [
-        "@doc Enable this node to perform peer discovery for real time replication",
+      "docText": [
+        "Enable this node to perform peer discovery for real time replication",
         "With peer discovery the configured peers will be used to discover more peers",
         "within those clusters.  The peer discovery process will re-discover at a",
         "random interval between 60s and `replrtq_prompt_max_seconds`.  Unexpected",
@@ -5115,8 +5149,8 @@
         },
         "commented": "900"
       },
-      "comment": [
-        "@doc The maximum number of seconds to wait before re-prompting peer",
+      "docText": [
+        "The maximum number of seconds to wait before re-prompting peer",
         "discovery.  Defaults to 15 minutes.  An immediate cluster-wide update can be",
         "prompted via `remote_console` using `riak_client:replrtq_reset_all_peers/1`."
       ],
@@ -5133,8 +5167,8 @@
         "default": "disabled",
         "commented": "enabled"
       },
-      "comment": [
-        "@doc Enable the `recalc` compaction strategy within the leveled backend in",
+      "docText": [
+        "Enable the `recalc` compaction strategy within the leveled backend in",
         "riak.  The default (when disabled) is `retain`, but this will leave",
         "uncollected garbage within the, journal.",
         "It is now recommended from Riak KV 2.9.2 to consider the `recalc` strategy.",
@@ -5162,8 +5196,8 @@
         "default": "disabled",
         "commented": "enabled"
       },
-      "comment": [
-        "@doc Enable logging of query timings in the index_fsm"
+      "docText": [
+        "Enable logging of query timings in the index_fsm"
       ],
       "configName": "log_index_fsm",
       "settingName": "riak_kv.log_index_fsm"
@@ -5176,8 +5210,8 @@
         },
         "default": "5"
       },
-      "comment": [
-        "@doc Set the vnode worker pool size",
+      "docText": [
+        "Set the vnode worker pool size",
         "This is a pool of workers per-vnode, to be used for general queries, in",
         "particular secondary index queries.  This now defaults to 5 workers, prior",
         "to release 3.0.9 it was set to a default of 10.",
@@ -5210,8 +5244,8 @@
         "default": "300000",
         "hidden": true
       },
-      "comment": [
-        "@doc Limit the size of replication queues (for a queue and priority, i.e.",
+      "docText": [
+        "Limit the size of replication queues (for a queue and priority, i.e.",
         "each priority on each queue will have this as the limit)",
         "This option will be ignored from Release 3.0.10, as the queue has been",
         "converted to an overflow queue as part of this release.  Instead use",
@@ -5229,8 +5263,8 @@
         },
         "default": "disabled"
       },
-      "comment": [
-        "@doc Choose to read repair to primary vnodes only",
+      "docText": [
+        "Choose to read repair to primary vnodes only",
         "When fallback vnodes are elected, then read repair will by default repair",
         "any missing data from the vnode - i.e. every GET while the fallback is in",
         "play will lead to a PUT to add the requested object to the fallback vnode,",
@@ -5259,8 +5293,8 @@
         "default": "disabled",
         "hidden": true
       },
-      "comment": [
-        "@doc If reads discovers keys to be repaired, should each key",
+      "docText": [
+        "If reads discovers keys to be repaired, should each key",
         "that is repaired be logged"
       ],
       "configName": "read_repair_log",
@@ -5275,8 +5309,8 @@
         },
         "default": "disabled"
       },
-      "comment": [
-        "@doc When doing handoffs, forward delete requests so that if the delete_mode",
+      "docText": [
+        "When doing handoffs, forward delete requests so that if the delete_mode",
         "is not keep, tombstones will still be reaped."
       ],
       "configName": "handoff_deletes",
@@ -5290,8 +5324,8 @@
         },
         "default": "0"
       },
-      "comment": [
-        "@doc Default Secondary Index Timeout (milliseconds)",
+      "docText": [
+        "Default Secondary Index Timeout (milliseconds)",
         "Set the default timeout for running secondary index queries in millisceconds",
         "This is the time to run the query, and collate the results - the encoding of",
         "those results for dispatch back to the client is outside of the scope of",
@@ -5318,8 +5352,8 @@
         },
         "default": "otp"
       },
-      "comment": [
-        "@doc Json library for 2i results",
+      "docText": [
+        "Json library for 2i results",
         "Prior to Riak KV 3.2.1 the mochijson2 library was used to json encode 2i",
         "results.  For larger results, the performance of this library is slower",
         "when compared to alternatives (e.g. otp).  A back-ported version of the",
@@ -5339,8 +5373,8 @@
         },
         "default": "enabled"
       },
-      "comment": [
-        "@doc For $key index queries, should keys which are tombstones be returned.",
+      "docText": [
+        "For $key index queries, should keys which are tombstones be returned.",
         "This config will only make a difference with the leveled backend, it is",
         "ignored on other backends.  Disable to change default behaviour and stop",
         "returning keys of tombstones in $key queries"
@@ -5357,8 +5391,8 @@
         },
         "hidden": true
       },
-      "comment": [
-        "@doc The threshold at which to warn about the number of processes",
+      "docText": [
+        "The threshold at which to warn about the number of processes",
         "that are overly busy. Processes with large heaps or that take a",
         "long time to garbage collect will count toward this threshold."
       ],
@@ -5374,8 +5408,8 @@
         },
         "hidden": true
       },
-      "comment": [
-        "@doc The threshold at which to warn about the number of ports that",
+      "docText": [
+        "The threshold at which to warn about the number of ports that",
         "are overly busy. Ports with full input buffers count toward this",
         "threshold."
       ],
@@ -5400,13 +5434,15 @@
         ],
         "hidden": true
       },
-      "comment": [
-        "@doc A process will become busy when it exceeds this amount of time",
+      "docText": [
+        "A process will become busy when it exceeds this amount of time",
         "doing garbage collection.",
         "",
         "NOTE: Enabling this setting can cause performance problems on",
-        "multi-core systems.",
-        "@see runtime_health.thresholds.busy_processes"
+        "multi-core systems."
+      ],
+      "docSees": [
+        "runtime_health.thresholds.busy_processes"
       ],
       "configName": "runtime_health.triggers.process.garbage_collection",
       "settingName": "riak_sysmon.gc_ms_limit"
@@ -5429,8 +5465,8 @@
         ],
         "hidden": true
       },
-      "comment": [
-        "@doc A process will become busy when it exceeds this amount of time",
+      "docText": [
+        "A process will become busy when it exceeds this amount of time",
         "during a single process scheduling & execution cycle."
       ],
       "configName": "runtime_health.triggers.process.long_schedule",
@@ -5454,9 +5490,11 @@
         ],
         "hidden": true
       },
-      "comment": [
-        "@doc A process will become busy when its heap exceeds this size.",
-        "@see runtime_health.thresholds.busy_processes"
+      "docText": [
+        "A process will become busy when its heap exceeds this size."
+      ],
+      "docSees": [
+        "runtime_health.thresholds.busy_processes"
       ],
       "configName": "runtime_health.triggers.process.heap_size",
       "settingName": "riak_sysmon.heap_word_limit"
@@ -5470,10 +5508,12 @@
         },
         "hidden": true
       },
-      "comment": [
-        "@doc Whether ports with full input buffers will be counted as",
-        "busy. Ports can represent open files or network sockets.",
-        "@see runtime_health.thresholds.busy_ports"
+      "docText": [
+        "Whether ports with full input buffers will be counted as",
+        "busy. Ports can represent open files or network sockets."
+      ],
+      "docSees": [
+        "runtime_health.thresholds.busy_ports"
       ],
       "configName": "runtime_health.triggers.port",
       "settingName": "riak_sysmon.busy_port"
@@ -5487,11 +5527,13 @@
         },
         "hidden": true
       },
-      "comment": [
-        "@doc Whether distribution ports with full input buffers will be",
+      "docText": [
+        "Whether distribution ports with full input buffers will be",
         "counted as busy. Distribution ports connect Riak nodes within a",
-        "single cluster.",
-        "@see runtime_health.thresholds.busy_ports"
+        "single cluster."
+      ],
+      "docSees": [
+        "runtime_health.thresholds.busy_ports"
       ],
       "configName": "runtime_health.triggers.distribution_port",
       "settingName": "riak_sysmon.busy_dist_port"
@@ -5504,10 +5546,12 @@
           "value": "directory"
         }
       },
-      "comment": [
+      "docText": [
+        "A path under which bitcask data files will be stored."
+      ],
+      "docOther": [
         "-*- erlang -*-",
-        "%% bitcask",
-        "@doc A path under which bitcask data files will be stored."
+        "%% bitcask"
       ],
       "configName": "bitcask.data_root",
       "settingName": "bitcask.data_root"
@@ -5521,8 +5565,8 @@
         },
         "hidden": true
       },
-      "comment": [
-        "@doc Specifies the maximum time Bitcask will block on startup while",
+      "docText": [
+        "Specifies the maximum time Bitcask will block on startup while",
         "attempting to create or open the data directory. You generally need",
         "not change this value. If for some reason the timeout is exceeded",
         "on open you'll see a log message of the form: \"Failed to start",
@@ -5554,8 +5598,8 @@
         },
         "hidden": true
       },
-      "comment": [
-        "@doc Changes the durability of writes by specifying when to",
+      "docText": [
+        "Changes the durability of writes by specifying when to",
         "synchronize data to disk. The default setting protects against data",
         "loss in the event of application failure (process death) but leaves",
         "open a small window wherein data could be lost in the event of",
@@ -5593,8 +5637,8 @@
         },
         "hidden": true
       },
-      "comment": [
-        "@see bitcask.sync.strategy"
+      "docSees": [
+        "bitcask.sync.strategy"
       ],
       "configName": "bitcask.sync.interval",
       "settingName": "bitcask.sync_strategy"
@@ -5608,8 +5652,8 @@
         },
         "hidden": true
       },
-      "comment": [
-        "@doc Describes the maximum permitted size for any single data file",
+      "docText": [
+        "Describes the maximum permitted size for any single data file",
         "in the Bitcask directory. If a write causes the current file to",
         "exceed this size threshold then that file is closed, and a new file",
         "is opened for writes."
@@ -5639,8 +5683,8 @@
         },
         "hidden": true
       },
-      "comment": [
-        "@doc Lets you specify when during the day merge operations are",
+      "docText": [
+        "Lets you specify when during the day merge operations are",
         "allowed to be triggered. Valid options are:",
         "",
         "* `always` (default) No restrictions",
@@ -5665,8 +5709,8 @@
         },
         "hidden": true
       },
-      "comment": [
-        "@see bitcask.merge.policy"
+      "docSees": [
+        "bitcask.merge.policy"
       ],
       "configName": "bitcask.merge.window.start",
       "settingName": "bitcask.merge_window"
@@ -5680,8 +5724,8 @@
         },
         "hidden": true
       },
-      "comment": [
-        "@see bitcask.merge.policy"
+      "docSees": [
+        "bitcask.merge.policy"
       ],
       "configName": "bitcask.merge.window.end",
       "settingName": "bitcask.merge_window"
@@ -5701,8 +5745,8 @@
           }
         ]
       },
-      "comment": [
-        "@doc Describes what ratio of dead keys to total keys in a file will",
+      "docText": [
+        "Describes what ratio of dead keys to total keys in a file will",
         "trigger merging. The value of this setting is a percentage",
         "(0-100). For example, if a data file contains 6 dead keys and 4",
         "live keys, then merge will be triggered at the default",
@@ -5724,8 +5768,8 @@
         "hidden": true,
         "default": "512MB"
       },
-      "comment": [
-        "@doc Describes how much data stored for dead keys in a single file",
+      "docText": [
+        "Describes how much data stored for dead keys in a single file",
         "will trigger merging. The value is in bytes. If a file meets or",
         "exceeds the trigger value for dead bytes, merge will be",
         "triggered. Increasing the value will cause merging to occur less",
@@ -5755,8 +5799,8 @@
           }
         ]
       },
-      "comment": [
-        "@doc Describes what ratio of dead keys to total keys in a file will",
+      "docText": [
+        "Describes what ratio of dead keys to total keys in a file will",
         "cause it to be included in the merge. The value of this setting is",
         "a percentage (0-100). For example, if a data file contains 4 dead",
         "keys and 6 live keys, it will be included in the merge at the",
@@ -5777,8 +5821,8 @@
         "hidden": true,
         "default": "128MB"
       },
-      "comment": [
-        "@doc Describes the minimum amount of data occupied by dead keys in",
+      "docText": [
+        "Describes the minimum amount of data occupied by dead keys in",
         "a file to cause it to be included in the merge. Increasing the",
         "value will cause fewer files to be merged, decreasing the value",
         "will cause more files to be merged.",
@@ -5797,8 +5841,8 @@
         "hidden": true,
         "default": "10MB"
       },
-      "comment": [
-        "@doc Describes the minimum size a file must have to be _excluded_",
+      "docText": [
+        "Describes the minimum size a file must have to be _excluded_",
         "from the merge. Files smaller than the threshold will be",
         "included. Increasing the value will cause _more_ files to be",
         "merged, decreasing the value will cause _fewer_ files to be merged.",
@@ -5826,8 +5870,8 @@
         "hidden": true,
         "default": "unlimited"
       },
-      "comment": [
-        "@doc Fold keys thresholds will reuse the keydir if another fold was",
+      "docText": [
+        "Fold keys thresholds will reuse the keydir if another fold was",
         "started less than `fold.max_age` ago and there were less than",
         "`fold.max_puts` updates.  Otherwise it will wait until all current",
         "fold keys complete and then start.  Set either option to unlimited",
@@ -5854,8 +5898,8 @@
         "hidden": true,
         "default": "0"
       },
-      "comment": [
-        "@see bitcask.fold.max_age"
+      "docSees": [
+        "bitcask.fold.max_age"
       ],
       "configName": "bitcask.fold.max_puts",
       "settingName": "bitcask.max_fold_puts"
@@ -5878,8 +5922,8 @@
         "hidden": true,
         "default": "off"
       },
-      "comment": [
-        "@doc By default, Bitcask keeps all of your data around. If your",
+      "docText": [
+        "By default, Bitcask keeps all of your data around. If your",
         "data has limited time-value, or if for space reasons you need to",
         "purge data, you can set the `expiry` option. If you needed to",
         "purge data automatically after 1 day, set the value to `1d`.",
@@ -5907,8 +5951,8 @@
         },
         "hidden": true
       },
-      "comment": [
-        "@doc Require the CRC to be present at the end of hintfiles.",
+      "docText": [
+        "Require the CRC to be present at the end of hintfiles.",
         "Setting this to `allow_missing` runs Bitcask in a backward",
         "compatible mode where old hint files will still be accepted without",
         "CRC signatures."
@@ -5925,8 +5969,8 @@
         "hidden": true,
         "default": "0"
       },
-      "comment": [
-        "@doc By default, Bitcask will trigger a merge whenever a data file",
+      "docText": [
+        "By default, Bitcask will trigger a merge whenever a data file",
         "contains an expired key. This may result in excessive merging under",
         "some usage patterns. To prevent this you can set the",
         "`bitcask.expiry.grace_time` option.  Bitcask will defer triggering",
@@ -5956,8 +6000,8 @@
           ]
         }
       },
-      "comment": [
-        "@doc Configure how Bitcask writes data to disk.",
+      "docText": [
+        "Configure how Bitcask writes data to disk.",
         "  erlang: Erlang's built-in file API",
         "     nif: Direct calls to the POSIX C API",
         "",
@@ -5977,10 +6021,12 @@
           "value": "directory"
         }
       },
-      "comment": [
+      "docSees": [
+        "bitcask.data_root"
+      ],
+      "docOther": [
         "-*- erlang -*-",
-        "%% bitcask multi",
-        "@see bitcask.data_root"
+        "%% bitcask multi"
       ],
       "configName": "multi_backend.$name.bitcask.data_root",
       "settingName": "riak_kv.multi_backend"
@@ -5994,8 +6040,8 @@
         },
         "hidden": true
       },
-      "comment": [
-        "@see bitcask.open_timeout"
+      "docSees": [
+        "bitcask.open_timeout"
       ],
       "configName": "multi_backend.$name.bitcask.open_timeout",
       "settingName": "riak_kv.multi_backend"
@@ -6022,8 +6068,8 @@
         },
         "hidden": true
       },
-      "comment": [
-        "@see bitcask.sync.strategy"
+      "docSees": [
+        "bitcask.sync.strategy"
       ],
       "configName": "multi_backend.$name.bitcask.sync.strategy",
       "settingName": "riak_kv.multi_backend"
@@ -6036,8 +6082,8 @@
         },
         "hidden": true
       },
-      "comment": [
-        "@see bitcask.sync.strategy"
+      "docSees": [
+        "bitcask.sync.strategy"
       ],
       "configName": "multi_backend.$name.bitcask.sync.interval",
       "settingName": "riak_kv.multi_backend"
@@ -6051,8 +6097,8 @@
         },
         "hidden": true
       },
-      "comment": [
-        "@see bitcask.max_file_size"
+      "docSees": [
+        "bitcask.max_file_size"
       ],
       "configName": "multi_backend.$name.bitcask.max_file_size",
       "settingName": "riak_kv.multi_backend"
@@ -6079,8 +6125,8 @@
         },
         "hidden": true
       },
-      "comment": [
-        "@see bitcask.merge.policy"
+      "docSees": [
+        "bitcask.merge.policy"
       ],
       "configName": "multi_backend.$name.bitcask.merge.policy",
       "settingName": "riak_kv.multi_backend"
@@ -6094,8 +6140,8 @@
         },
         "hidden": true
       },
-      "comment": [
-        "@see bitcask.merge.policy"
+      "docSees": [
+        "bitcask.merge.policy"
       ],
       "configName": "multi_backend.$name.bitcask.merge.window.start",
       "settingName": "riak_kv.multi_backend"
@@ -6109,8 +6155,8 @@
         },
         "hidden": true
       },
-      "comment": [
-        "@see bitcask.merge.policy"
+      "docSees": [
+        "bitcask.merge.policy"
       ],
       "configName": "multi_backend.$name.bitcask.merge.window.end",
       "settingName": "riak_kv.multi_backend"
@@ -6130,8 +6176,8 @@
           }
         ]
       },
-      "comment": [
-        "@see bitcask.merge.triggers.fragmentation"
+      "docSees": [
+        "bitcask.merge.triggers.fragmentation"
       ],
       "configName": "multi_backend.$name.bitcask.merge.triggers.fragmentation",
       "settingName": "riak_kv.multi_backend"
@@ -6145,8 +6191,8 @@
         "hidden": true,
         "default": "512MB"
       },
-      "comment": [
-        "@see bitcask.merge.triggers.dead_bytes"
+      "docSees": [
+        "bitcask.merge.triggers.dead_bytes"
       ],
       "configName": "multi_backend.$name.bitcask.merge.triggers.dead_bytes",
       "settingName": "riak_kv.multi_backend"
@@ -6166,8 +6212,8 @@
           }
         ]
       },
-      "comment": [
-        "@see bitcask.merge.thresholds.fragmentation"
+      "docSees": [
+        "bitcask.merge.thresholds.fragmentation"
       ],
       "configName": "multi_backend.$name.bitcask.merge.thresholds.fragmentation",
       "settingName": "riak_kv.multi_backend"
@@ -6181,8 +6227,8 @@
         "hidden": true,
         "default": "128MB"
       },
-      "comment": [
-        "@see bitcask.merge.thresholds.dead_bytes"
+      "docSees": [
+        "bitcask.merge.thresholds.dead_bytes"
       ],
       "configName": "multi_backend.$name.bitcask.merge.thresholds.dead_bytes",
       "settingName": "riak_kv.multi_backend"
@@ -6196,8 +6242,8 @@
         "hidden": true,
         "default": "10MB"
       },
-      "comment": [
-        "@see bitcask.merge.thresholds.small_file"
+      "docSees": [
+        "bitcask.merge.thresholds.small_file"
       ],
       "configName": "multi_backend.$name.bitcask.merge.thresholds.small_file",
       "settingName": "riak_kv.multi_backend"
@@ -6220,8 +6266,8 @@
         "hidden": true,
         "default": "unlimited"
       },
-      "comment": [
-        "@see bitcask.fold.max_age"
+      "docSees": [
+        "bitcask.fold.max_age"
       ],
       "configName": "multi_backend.$name.bitcask.fold.max_age",
       "settingName": "riak_kv.multi_backend"
@@ -6244,8 +6290,8 @@
         "hidden": true,
         "default": "0"
       },
-      "comment": [
-        "@see bitcask.fold.max_age"
+      "docSees": [
+        "bitcask.fold.max_age"
       ],
       "configName": "multi_backend.$name.bitcask.fold.max_puts",
       "settingName": "riak_kv.multi_backend"
@@ -6268,8 +6314,8 @@
         "hidden": true,
         "default": "off"
       },
-      "comment": [
-        "@see bitcask.expiry"
+      "docSees": [
+        "bitcask.expiry"
       ],
       "configName": "multi_backend.$name.bitcask.expiry",
       "settingName": "riak_kv.multi_backend"
@@ -6292,8 +6338,8 @@
         },
         "hidden": true
       },
-      "comment": [
-        "@see bitcask.hintfile_checksums"
+      "docSees": [
+        "bitcask.hintfile_checksums"
       ],
       "configName": "multi_backend.$name.bitcask.hintfile_checksums",
       "settingName": "riak_kv.multi_backend"
@@ -6307,8 +6353,8 @@
         "hidden": true,
         "default": "0"
       },
-      "comment": [
-        "@see bitcask.expiry.grace_time"
+      "docSees": [
+        "bitcask.expiry.grace_time"
       ],
       "configName": "multi_backend.$name.bitcask.expiry.grace_time",
       "settingName": "riak_kv.multi_backend"
@@ -6331,8 +6377,8 @@
         },
         "hidden": true
       },
-      "comment": [
-        "@see bitcask.io_mode"
+      "docSees": [
+        "bitcask.io_mode"
       ],
       "configName": "multi_backend.$name.bitcask.io_mode",
       "settingName": "riak_kv.multi_backend"
@@ -6346,8 +6392,8 @@
         "default": "$(platform_data_dir)/leveldb",
         "hidden": true
       },
-      "comment": [
-        "@doc Where LevelDB will store its data."
+      "docText": [
+        "Where LevelDB will store its data."
       ],
       "configName": "leveldb.data_root",
       "settingName": "eleveldb.data_root"
@@ -6360,13 +6406,15 @@
           "value": "integer"
         }
       },
-      "comment": [
-        "@doc This parameter defines the percentage of total server memory",
+      "docText": [
+        "This parameter defines the percentage of total server memory",
         "to assign to LevelDB. LevelDB will dynamically adjust its internal",
         "cache sizes to stay within this size.  The memory size can",
         "alternately be assigned as a byte count via leveldb.maximum_memory",
-        "instead.",
-        "@see leveldb.maximum_memory"
+        "instead."
+      ],
+      "docSees": [
+        "leveldb.maximum_memory"
       ],
       "configName": "leveldb.maximum_memory.percent",
       "settingName": "eleveldb.total_leveldb_mem_percent"
@@ -6379,13 +6427,15 @@
         },
         "hidden": true
       },
-      "comment": [
-        "@doc This parameter defines the number of bytes of server memory to",
+      "docText": [
+        "This parameter defines the number of bytes of server memory to",
         "assign to LevelDB. LevelDB will dynamically adjust its internal",
         "cache sizes to stay within this size. The memory size can",
         "alternately be assigned as percentage of total server memory via",
-        "leveldb.maximum_memory.percent.",
-        "@see leveldb.maximum_memory.percent"
+        "leveldb.maximum_memory.percent."
+      ],
+      "docSees": [
+        "leveldb.maximum_memory.percent"
       ],
       "configName": "leveldb.maximum_memory",
       "settingName": "eleveldb.total_leveldb_mem"
@@ -6399,8 +6449,8 @@
         },
         "hidden": true
       },
-      "comment": [
-        "@doc Whether LevelDB will flush after every write. Note: If you are",
+      "docText": [
+        "Whether LevelDB will flush after every write. Note: If you are",
         "familiar with fsync, this is analagous to calling fsync after every",
         "write."
       ],
@@ -6416,14 +6466,16 @@
         },
         "hidden": true
       },
-      "comment": [
-        "@doc Each vnode first stores new key/value data in a memory based",
+      "docText": [
+        "Each vnode first stores new key/value data in a memory based",
         "write buffer. This write buffer is in parallel to the recovery log",
         "mentioned in the \"sync\" parameter. Riak creates each vnode with a",
         "randomly sized write buffer for performance reasons. The random",
         "size is somewhere between write_buffer_size_min and",
-        "write_buffer_size_max.",
-        "@see leveldb.sync"
+        "write_buffer_size_max."
+      ],
+      "docSees": [
+        "leveldb.sync"
       ],
       "configName": "leveldb.write_buffer_size_min",
       "settingName": "eleveldb.write_buffer_size_min"
@@ -6437,8 +6489,8 @@
         },
         "hidden": true
       },
-      "comment": [
-        "@see leveldb.write_buffer_size_min"
+      "docSees": [
+        "leveldb.write_buffer_size_min"
       ],
       "configName": "leveldb.write_buffer_size_max",
       "settingName": "eleveldb.write_buffer_size_max"
@@ -6452,8 +6504,8 @@
         },
         "hidden": true
       },
-      "comment": [
-        "@doc Each database .sst table file can include an optional \"bloom",
+      "docText": [
+        "Each database .sst table file can include an optional \"bloom",
         "filter\" that is highly effective in shortcutting data queries that",
         "are destined to not find the requested key. The Bloom filter",
         "typically increases the size of an .sst table file by about",
@@ -6471,8 +6523,8 @@
         },
         "hidden": true
       },
-      "comment": [
-        "@doc Defines the limit where block cache memory can no longer be",
+      "docText": [
+        "Defines the limit where block cache memory can no longer be",
         "released in favor of the page cache.  This has no impact with",
         "regard to release in favor of file cache.  The value is per",
         "vnode."
@@ -6489,8 +6541,8 @@
         },
         "hidden": true
       },
-      "comment": [
-        "@doc Defines the size threshold for a block / chunk of data within",
+      "docText": [
+        "Defines the size threshold for a block / chunk of data within",
         "one .sst table file. Each new block gets an index entry in the .sst",
         "table file's master index."
       ],
@@ -6506,8 +6558,8 @@
         },
         "hidden": true
       },
-      "comment": [
-        "@doc Defines the key count threshold for a new key entry in the key",
+      "docText": [
+        "Defines the key count threshold for a new key entry in the key",
         "index for a block. Most deployments should leave this parameter",
         "alone."
       ],
@@ -6523,12 +6575,14 @@
         },
         "hidden": true
       },
-      "comment": [
-        "@doc Defines the number of incremental adjustments to attempt",
+      "docText": [
+        "Defines the number of incremental adjustments to attempt",
         "between the block.size value and the maximum block.size for an .sst",
         "table file.  Value of zero disables the underlying dynamic",
-        "block_size feature.",
-        "@see leveldb.block.size"
+        "block_size feature."
+      ],
+      "docSees": [
+        "leveldb.block.size"
       ],
       "configName": "leveldb.block.size_steps",
       "settingName": "eleveldb.block_size_steps"
@@ -6542,8 +6596,8 @@
         },
         "hidden": true
       },
-      "comment": [
-        "@doc Enables or disables the verification of the data fetched from",
+      "docText": [
+        "Enables or disables the verification of the data fetched from",
         "LevelDB against internal checksums."
       ],
       "configName": "leveldb.verify_checksums",
@@ -6558,8 +6612,8 @@
         },
         "hidden": true
       },
-      "comment": [
-        "@doc Enables or disables the verification of LevelDB data during",
+      "docText": [
+        "Enables or disables the verification of LevelDB data during",
         "compaction."
       ],
       "configName": "leveldb.verify_compaction",
@@ -6574,8 +6628,8 @@
         },
         "hidden": true
       },
-      "comment": [
-        "@doc The number of worker threads performing LevelDB operations."
+      "docText": [
+        "The number of worker threads performing LevelDB operations."
       ],
       "configName": "leveldb.threads",
       "settingName": "eleveldb.eleveldb_threads"
@@ -6598,8 +6652,8 @@
         },
         "hidden": true
       },
-      "comment": [
-        "@doc Option to override LevelDB's use of fadvise(DONTNEED) with",
+      "docText": [
+        "Option to override LevelDB's use of fadvise(DONTNEED) with",
         "fadvise(WILLNEED) instead.  WILLNEED can reduce disk activity on",
         "systems where physical memory exceeds the database size."
       ],
@@ -6614,8 +6668,8 @@
           "value": "flag"
         }
       },
-      "comment": [
-        "@doc Enables or disables the compression of data on disk.",
+      "docText": [
+        "Enables or disables the compression of data on disk.",
         "Enabling (default) saves disk space.  Disabling may reduce read",
         "latency but increase overall disk activity.  Option can be",
         "changed at any time, but will not impact data on disk until",
@@ -6641,8 +6695,8 @@
           ]
         }
       },
-      "comment": [
-        "@doc Selection of compression algorithms.  snappy is",
+      "docText": [
+        "Selection of compression algorithms.  snappy is",
         "original compression supplied for leveldb.  lz4 is new",
         "algorithm that compresses to similar volume but averages twice",
         "as fast on writes and four times as fast on reads."
@@ -6668,8 +6722,8 @@
         ],
         "hidden": true
       },
-      "comment": [
-        "@doc Controls when a background compaction initiates solely",
+      "docText": [
+        "Controls when a background compaction initiates solely",
         "due to the number of delete tombstones within an individual",
         ".sst table file.  Value of 'off' disables the feature."
       ],
@@ -6714,8 +6768,8 @@
         ],
         "hidden": true
       },
-      "comment": [
-        "@doc leveldb can be configured to use different mounts for",
+      "docText": [
+        "leveldb can be configured to use different mounts for",
         "different levels. This tiered option defaults to off, but you can",
         "configure it to trigger at levels 1-6. If you do this, anything",
         "stored at the chosen level or greater will be stored on",
@@ -6725,9 +6779,11 @@
         "WARNING: There is no dynamic reallocation of leveldb",
         "data across mounts.  If you change this setting without manually",
         "moving the level files to the correct mounts, leveldb will act in",
-        "an unexpected state.",
-        "@see leveldb.tiered.mounts.fast",
-        "@see leveldb.tiered.mounts.slow"
+        "an unexpected state."
+      ],
+      "docSees": [
+        "leveldb.tiered.mounts.fast",
+        "leveldb.tiered.mounts.slow"
       ],
       "configName": "leveldb.tiered",
       "settingName": "eleveldb.tiered_slow_level"
@@ -6740,8 +6796,8 @@
         },
         "hidden": true
       },
-      "comment": [
-        "@see leveldb.tiered"
+      "docSees": [
+        "leveldb.tiered"
       ],
       "configName": "leveldb.tiered.path.fast",
       "settingName": "eleveldb.tiered_fast_prefix"
@@ -6754,8 +6810,8 @@
         },
         "hidden": true
       },
-      "comment": [
-        "@see leveldb.tiered"
+      "docSees": [
+        "leveldb.tiered"
       ],
       "configName": "leveldb.tiered.path.slow",
       "settingName": "eleveldb.tiered_slow_prefix"
@@ -6778,8 +6834,8 @@
         },
         "hidden": true
       },
-      "comment": [
-        "@doc This parameter enables/disables logic that saves a list",
+      "docText": [
+        "This parameter enables/disables logic that saves a list",
         "of cached objects (currently only open .sst file names) at",
         "database close.  The list is used on the next open to pre-populate",
         "the cache.  This typically eliminates heavy latencies associated",
@@ -6797,8 +6853,8 @@
         },
         "hidden": true
       },
-      "comment": [
-        "@doc Enable global expiry.  All leveldb databases / vnodes",
+      "docText": [
+        "Enable global expiry.  All leveldb databases / vnodes",
         "will use same retention_time and/or whole_file_expiry settings.",
         "Settings are unique for each leveldb instances in multi_backend."
       ],
@@ -6823,8 +6879,8 @@
         ],
         "hidden": true
       },
-      "comment": [
-        "@doc Minutes until object expires.  Gives number of minutes",
+      "docText": [
+        "Minutes until object expires.  Gives number of minutes",
         "a stored key/value will stay within the database before automatic",
         "deletion.  Set to unlimited to disable age based expiry."
       ],
@@ -6841,8 +6897,8 @@
         },
         "hidden": true
       },
-      "comment": [
-        "@doc Expire entire .sst table file.  Authorizes leveldb to",
+      "docText": [
+        "Expire entire .sst table file.  Authorizes leveldb to",
         "eliminate entire files that contain expired data (delete files",
         "instead of removing expired key/values during compaction)."
       ],
@@ -6857,8 +6913,8 @@
         },
         "hidden": true
       },
-      "comment": [
-        "@see leveldb.data_root"
+      "docSees": [
+        "leveldb.data_root"
       ],
       "configName": "multi_backend.$name.leveldb.data_root",
       "settingName": "riak_kv.multi_backend"
@@ -6872,8 +6928,8 @@
         },
         "hidden": true
       },
-      "comment": [
-        "@see leveldb.maximum_memory.percent"
+      "docSees": [
+        "leveldb.maximum_memory.percent"
       ],
       "configName": "multi_backend.$name.leveldb.maximum_memory.percent",
       "settingName": "riak_kv.multi_backend"
@@ -6886,8 +6942,8 @@
         },
         "hidden": true
       },
-      "comment": [
-        "@see leveldb.maximum_memory"
+      "docSees": [
+        "leveldb.maximum_memory"
       ],
       "configName": "multi_backend.$name.leveldb.maximum_memory",
       "settingName": "riak_kv.multi_backend"
@@ -6901,8 +6957,8 @@
         },
         "hidden": true
       },
-      "comment": [
-        "@see leveldb.sync"
+      "docSees": [
+        "leveldb.sync"
       ],
       "configName": "multi_backend.$name.leveldb.sync_on_write",
       "settingName": "riak_kv.multi_backend"
@@ -6916,8 +6972,8 @@
         },
         "hidden": true
       },
-      "comment": [
-        "@see leveldb.limited_developer_mem"
+      "docSees": [
+        "leveldb.limited_developer_mem"
       ],
       "configName": "multi_backend.$name.leveldb.limited_developer_mem",
       "settingName": "riak_kv.multi_backend"
@@ -6931,8 +6987,8 @@
         },
         "hidden": true
       },
-      "comment": [
-        "@see leveldb.write_buffer_size_min"
+      "docSees": [
+        "leveldb.write_buffer_size_min"
       ],
       "configName": "multi_backend.$name.leveldb.write_buffer_size_min",
       "settingName": "riak_kv.multi_backend"
@@ -6946,8 +7002,8 @@
         },
         "hidden": true
       },
-      "comment": [
-        "@see leveldb.write_buffer_size_min"
+      "docSees": [
+        "leveldb.write_buffer_size_min"
       ],
       "configName": "multi_backend.$name.leveldb.write_buffer_size_max",
       "settingName": "riak_kv.multi_backend"
@@ -6961,8 +7017,8 @@
         },
         "hidden": true
       },
-      "comment": [
-        "@see leveldb.bloomfilter"
+      "docSees": [
+        "leveldb.bloomfilter"
       ],
       "configName": "multi_backend.$name.leveldb.bloomfilter",
       "settingName": "riak_kv.multi_backend"
@@ -6976,8 +7032,8 @@
         },
         "hidden": true
       },
-      "comment": [
-        "@see leveldb.block_cache_threshold"
+      "docSees": [
+        "leveldb.block_cache_threshold"
       ],
       "configName": "multi_backend.$name.leveldb.block_cache_threshold",
       "settingName": "riak_kv.multi_backend"
@@ -6991,8 +7047,8 @@
         },
         "hidden": true
       },
-      "comment": [
-        "@see leveldb.block.size"
+      "docSees": [
+        "leveldb.block.size"
       ],
       "configName": "multi_backend.$name.leveldb.block.size",
       "settingName": "riak_kv.multi_backend"
@@ -7006,8 +7062,8 @@
         },
         "hidden": true
       },
-      "comment": [
-        "@see leveldb.block.restart_interval"
+      "docSees": [
+        "leveldb.block.restart_interval"
       ],
       "configName": "multi_backend.$name.leveldb.block.restart_interval",
       "settingName": "riak_kv.multi_backend"
@@ -7021,8 +7077,8 @@
         },
         "hidden": true
       },
-      "comment": [
-        "@see leveldb.block.size_steps"
+      "docSees": [
+        "leveldb.block.size_steps"
       ],
       "configName": "multi_backend.$name.leveldb.block.size_steps",
       "settingName": "riak_kv.multi_backend"
@@ -7036,8 +7092,8 @@
         },
         "hidden": true
       },
-      "comment": [
-        "@see leveldb.verify_checksums"
+      "docSees": [
+        "leveldb.verify_checksums"
       ],
       "configName": "multi_backend.$name.leveldb.verify_checksums",
       "settingName": "riak_kv.multi_backend"
@@ -7051,8 +7107,8 @@
         },
         "hidden": true
       },
-      "comment": [
-        "@see leveldb.verify_compaction"
+      "docSees": [
+        "leveldb.verify_compaction"
       ],
       "configName": "multi_backend.$name.leveldb.verify_compaction",
       "settingName": "riak_kv.multi_backend"
@@ -7066,8 +7122,8 @@
         },
         "hidden": true
       },
-      "comment": [
-        "@see leveldb.threads"
+      "docSees": [
+        "leveldb.threads"
       ],
       "configName": "multi_backend.$name.leveldb.threads",
       "settingName": "riak_kv.multi_backend"
@@ -7090,8 +7146,8 @@
         },
         "hidden": true
       },
-      "comment": [
-        "@see leveldb.fadvise_willneed"
+      "docSees": [
+        "leveldb.fadvise_willneed"
       ],
       "configName": "multi_backend.$name.leveldb.fadvise_willneed",
       "settingName": "riak_kv.multi_backend"
@@ -7105,8 +7161,8 @@
           "value": "flag"
         }
       },
-      "comment": [
-        "@see leveldb.compression"
+      "docSees": [
+        "leveldb.compression"
       ],
       "configName": "multi_backend.$name.leveldb.compression",
       "settingName": "riak_kv.multi_backend"
@@ -7128,7 +7184,6 @@
           ]
         }
       },
-      "comment": [],
       "configName": "multi_backend.$name.leveldb.compression.algorithm",
       "settingName": "riak_kv.multi_backend"
     },
@@ -7149,8 +7204,8 @@
         ],
         "hidden": true
       },
-      "comment": [
-        "@see leveldb.delete_threshold"
+      "docSees": [
+        "leveldb.delete_threshold"
       ],
       "configName": "multi_backend.$name.leveldb.compaction.trigger.tombstone_count",
       "settingName": "riak_kv.multi_backend"
@@ -7193,8 +7248,8 @@
         ],
         "hidden": true
       },
-      "comment": [
-        "@see leveldb.tiered"
+      "docSees": [
+        "leveldb.tiered"
       ],
       "configName": "multi_backend.$name.leveldb.tiered",
       "settingName": "riak_kv.multi_backend"
@@ -7207,8 +7262,8 @@
         },
         "hidden": true
       },
-      "comment": [
-        "@see leveldb.tiered"
+      "docSees": [
+        "leveldb.tiered"
       ],
       "configName": "multi_backend.$name.leveldb.tiered.mountpoint.fast",
       "settingName": "riak_kv.multi_backend"
@@ -7221,8 +7276,8 @@
         },
         "hidden": true
       },
-      "comment": [
-        "@see leveldb.tiered"
+      "docSees": [
+        "leveldb.tiered"
       ],
       "configName": "multi_backend.$name.leveldb.tiered.mountpoint.slow",
       "settingName": "riak_kv.multi_backend"
@@ -7245,8 +7300,8 @@
         },
         "hidden": true
       },
-      "comment": [
-        "@see leveldb.cache_object_warming"
+      "docSees": [
+        "leveldb.cache_object_warming"
       ],
       "configName": "multi_backend.$name.leveldb.cache_object_warming",
       "settingName": "riak_kv.multi_backend"
@@ -7260,8 +7315,8 @@
         },
         "hidden": true
       },
-      "comment": [
-        "@see leveldb.expiry_enabled"
+      "docSees": [
+        "leveldb.expiry_enabled"
       ],
       "configName": "multi_backend.$name.leveldb.expiration",
       "settingName": "riak_kv.multi_backend"
@@ -7284,8 +7339,8 @@
         ],
         "hidden": true
       },
-      "comment": [
-        "@see leveldb.expiry_minutes"
+      "docSees": [
+        "leveldb.expiry_minutes"
       ],
       "configName": "multi_backend.$name.leveldb.expiration.retention_time",
       "settingName": "riak_kv.multi_backend"
@@ -7300,8 +7355,8 @@
         },
         "hidden": true
       },
-      "comment": [
-        "@see leveldb.whole_file_expiry"
+      "docSees": [
+        "leveldb.whole_file_expiry"
       ],
       "configName": "multi_backend.$name.leveldb.expiration.mode",
       "settingName": "riak_kv.multi_backend"
@@ -7314,10 +7369,12 @@
           "value": "directory"
         }
       },
-      "comment": [
+      "docText": [
+        "A path under which leveled data files will be stored."
+      ],
+      "docOther": [
         "-*- erlang -*-",
-        "%% leveled",
-        "@doc A path under which leveled data files will be stored."
+        "%% leveled"
       ],
       "configName": "leveled.data_root",
       "settingName": "leveled.data_root"
@@ -7330,8 +7387,8 @@
           "value": "atom"
         }
       },
-      "comment": [
-        "@doc Strategy for flushing data to disk",
+      "docText": [
+        "Strategy for flushing data to disk",
         "Can be set to riak_sync, sync (if OTP > 16) or none.  Use none, and the OS",
         "will flush when most efficient.  Use riak_sync or sync to flush after every",
         "PUT (not recommended without some hardware support e.g. flash drives and/or",
@@ -7349,8 +7406,8 @@
         },
         "hidden": true
       },
-      "comment": [
-        "@doc The key size of the Bookie's in-memory cache"
+      "docText": [
+        "The key size of the Bookie's in-memory cache"
       ],
       "configName": "leveled.cache_size",
       "settingName": "leveled.cache_size"
@@ -7364,8 +7421,8 @@
         },
         "hidden": true
       },
-      "comment": [
-        "@doc The maximum size of the bookie's cache before each new PUT results in",
+      "docText": [
+        "The maximum size of the bookie's cache before each new PUT results in",
         "a slow-offer pause.  Prior to Riak 3.0.10 this defaulted to 4"
       ],
       "configName": "leveled.cache_multiple",
@@ -7380,8 +7437,8 @@
         },
         "hidden": true
       },
-      "comment": [
-        "@doc The key size of the Penciller's in-memory cache"
+      "docText": [
+        "The key size of the Penciller's in-memory cache"
       ],
       "configName": "leveled.penciller_cache_size",
       "settingName": "leveled.penciller_cache_size"
@@ -7411,8 +7468,8 @@
         },
         "default": "native"
       },
-      "comment": [
-        "@doc Compression method",
+      "docText": [
+        "Compression method",
         "Can be lz4, zstd or native (which will use the Erlang native zlib",
         "compression) within term_to_binary"
       ],
@@ -7448,8 +7505,8 @@
         },
         "default": "as_store"
       },
-      "comment": [
-        "@doc Ledger compression",
+      "docText": [
+        "Ledger compression",
         "If an alternative compression method is preferred specifically for the",
         "ledger, it can be specified here.  Default is as_store - use whatever method",
         "has been defined in leveled.compression.method.  Alternatives are native,",
@@ -7466,8 +7523,8 @@
           "value": "atom"
         }
       },
-      "comment": [
-        "@doc Compression point",
+      "docText": [
+        "Compression point",
         "The point at which compression is applied to the Journal (the Ledger is",
         "always compressed).  Use on_receipt or on_compact.  on_compact is suitable",
         "when values are unlikely to yield much benefit from compression",
@@ -7491,8 +7548,8 @@
         ],
         "hidden": true
       },
-      "comment": [
-        "@doc Compresstion Level (Ledger LSM)",
+      "docText": [
+        "Compresstion Level (Ledger LSM)",
         "Specify the level in the LSM tree from which compression should occur.",
         "Defaults to L1, so only L0 writes are uncompressed."
       ],
@@ -7507,8 +7564,8 @@
           "value": "atom"
         }
       },
-      "comment": [
-        "@doc Log level",
+      "docText": [
+        "Log level",
         "Can be debug, info, warn, error or critical",
         "Set the minimum log level to be used within leveled.  Leveled will log many",
         "lines to allow for stats to be etracted by those using log indexers such as",
@@ -7525,8 +7582,8 @@
           "value": "integer"
         }
       },
-      "comment": [
-        "@doc The approximate size (in bytes) when a Journal file should be rolled.",
+      "docText": [
+        "The approximate size (in bytes) when a Journal file should be rolled.",
         "Normally keep this as around the size of o(100K) objects.  Default is 1GB.",
         "Note that on startup an actual maximum size will be chosen which varies by",
         "a random factor from this point - to avoid coordination of roll events",
@@ -7543,8 +7600,8 @@
           "value": "integer"
         }
       },
-      "comment": [
-        "@doc The approximate count of objects when a Journal file should be rolled.",
+      "docText": [
+        "The approximate count of objects when a Journal file should be rolled.",
         "This time measured in object count, a file will be rolled if either the",
         "object count or the journal size limit is reached.  Default 200K.",
         "Note that on startup an actual maximum size will be chosen which varies by",
@@ -7562,8 +7619,8 @@
           "value": "integer"
         }
       },
-      "comment": [
-        "@doc The level of the ledger to be pre-loaded into the page cache",
+      "docText": [
+        "The level of the ledger to be pre-loaded into the page cache",
         "Depending on how much memory is available for the page cache, and how much",
         "disk I/O activity can be tolerated at startup - then the level at which the",
         "ledger is forced into the page cache can be controlled by configuration."
@@ -7579,8 +7636,8 @@
           "value": "integer"
         }
       },
-      "comment": [
-        "@doc The number of journal compactions per vnode per day",
+      "docText": [
+        "The number of journal compactions per vnode per day",
         "The higher the value, the more compaction runs, and the sooner space is",
         "recovered.  But each run has a cost"
       ],
@@ -7595,8 +7652,8 @@
           "value": "integer"
         }
       },
-      "comment": [
-        "@doc The number of times per day to score an individual file for compaction.",
+      "docText": [
+        "The number of times per day to score an individual file for compaction.",
         "The default value will lead to each file, on average, being scored once",
         "every 12 hours"
       ],
@@ -7611,8 +7668,8 @@
           "value": "integer"
         }
       },
-      "comment": [
-        "@doc Compaction Low Hour",
+      "docText": [
+        "Compaction Low Hour",
         "The hour of the day in which journal compaction can start.  Use Low hour",
         "of 0 and High hour of 23 to have no compaction window (i.e. always compact",
         "regardless of time of day)"
@@ -7628,8 +7685,8 @@
           "value": "integer"
         }
       },
-      "comment": [
-        "@doc Compaction Top Hour",
+      "docText": [
+        "Compaction Top Hour",
         "The hour of the day, after which journal compaction should stop.",
         "If low hour > top hour then, compaction will work overnight between low",
         "hour and top hour (inclusive).  Timings rely on server's view of local time"
@@ -7645,8 +7702,8 @@
           "value": "integer"
         }
       },
-      "comment": [
-        "@doc Max Journal Files Per Compaction Run",
+      "docText": [
+        "Max Journal Files Per Compaction Run",
         "In a single compaction run, what is the maximum number of consecutive files",
         "which may be compacted.  If increasing this value, the average number of",
         "files per run may decrease, unless adjustments are also made to the",
@@ -7664,8 +7721,8 @@
         },
         "hidden": true
       },
-      "comment": [
-        "@doc Target Percentage for Max Run",
+      "docText": [
+        "Target Percentage for Max Run",
         "What is the target score for a maximum run of files, to qualify for",
         "compaction.  If less than this percentage would be retained after compaction",
         "then it is a candidate (e.g. in default case if 25% of space would be",
@@ -7683,8 +7740,8 @@
         },
         "hidden": true
       },
-      "comment": [
-        "@doc Target Percentage for Single File",
+      "docText": [
+        "Target Percentage for Single File",
         "What is the target score for a run of a single file, to qualify for",
         "compaction.  If less than this percentage would be retained after compaction",
         "then it is a candidate (e.g. in default case if 75% of space would be",
@@ -7702,8 +7759,8 @@
         },
         "hidden": true
       },
-      "comment": [
-        "@doc Snapshot timeout (short)",
+      "docText": [
+        "Snapshot timeout (short)",
         "Maximum expected time for an index query.  A query which is taking longer",
         "than this may fail as it will be released - potentially allowing for some",
         "file processes to delete.  Timeout is in seconds."
@@ -7720,8 +7777,8 @@
         },
         "hidden": true
       },
-      "comment": [
-        "@doc Snapshot timeout (long)",
+      "docText": [
+        "Snapshot timeout (long)",
         "Maximum expected time for any other fold.  A fold which is taking longer",
         "than this may fail as it will be released - potentially allowing for some",
         "file processes to delete.  Timeout is in seconds."
@@ -7743,8 +7800,8 @@
           }
         ]
       },
-      "comment": [
-        "@doc Statistic monitoring proportion",
+      "docText": [
+        "Statistic monitoring proportion",
         "The proportion of requests to be convered by stats, an integer between",
         "0 and 100.  There is no flow control, so setting this too high could",
         "possibly overflow the leveled_monitor mailbox."
@@ -7760,8 +7817,8 @@
           "value": "integer"
         }
       },
-      "comment": [
-        "@doc Statistic log frequency (seconds)",
+      "docText": [
+        "Statistic log frequency (seconds)",
         "The wait in seconds between logs from each leveled_monitor (there is one",
         "monitor per vnode)"
       ],
@@ -7777,10 +7834,12 @@
         },
         "hidden": true
       },
-      "comment": [
+      "docText": [
+        "A path under which leveled data files will be stored."
+      ],
+      "docOther": [
         "-*- erlang -*-",
-        "%% leveled",
-        "@doc A path under which leveled data files will be stored."
+        "%% leveled"
       ],
       "configName": "multi_backend.$name.leveled.data_root",
       "settingName": "riak_kv.multi_backend"
@@ -7794,8 +7853,8 @@
         },
         "hidden": true
       },
-      "comment": [
-        "@doc Strategy for flushing data to disk",
+      "docText": [
+        "Strategy for flushing data to disk",
         "Can be set to riak_sync, sync (if OTP > 16) or none.  Use none, and the OS",
         "will flush when most efficient.  Use riak_sync or sync to flush after every",
         "PUT (not recommended without some hardware support e.g. flash drives and/or",
@@ -7813,8 +7872,8 @@
         },
         "hidden": true
       },
-      "comment": [
-        "@doc The key size of the Bookie's in-memory cache"
+      "docText": [
+        "The key size of the Bookie's in-memory cache"
       ],
       "configName": "multi_backend.$name.leveled.cache_size",
       "settingName": "riak_kv.multi_backend"
@@ -7828,8 +7887,8 @@
         },
         "hidden": true
       },
-      "comment": [
-        "@doc The key size of the Penciller's in-memory cache"
+      "docText": [
+        "The key size of the Penciller's in-memory cache"
       ],
       "configName": "multi_backend.$name.leveled.penciller_cache_size",
       "settingName": "riak_kv.multi_backend"
@@ -7860,8 +7919,8 @@
         "default": "native",
         "hidden": true
       },
-      "comment": [
-        "@doc Compression method",
+      "docText": [
+        "Compression method",
         "Can be lz4 or native (which will use the Erlang native zlib compression)",
         "within term_to_binary"
       ],
@@ -7897,8 +7956,8 @@
         },
         "default": "as_store"
       },
-      "comment": [
-        "@doc Ledger compression",
+      "docText": [
+        "Ledger compression",
         "If an alternative compression method is preferred specifically for the",
         "ledger, it can be specified here.  Default is as_store - use whatever method",
         "has been defined in leveled.compression.method.  Alternatives are native,",
@@ -7916,8 +7975,8 @@
         },
         "hidden": true
       },
-      "comment": [
-        "@doc Compression point",
+      "docText": [
+        "Compression point",
         "The point at which compression is applied to the Journal (the Ledger is",
         "always compressed).  Use on_receipt or on_compact.  on_compact is suitable",
         "when values are unlikely to yield much benefit from compression",
@@ -7941,8 +8000,8 @@
         ],
         "hidden": true
       },
-      "comment": [
-        "@doc Compresstion Level (Ledger LSM)",
+      "docText": [
+        "Compresstion Level (Ledger LSM)",
         "Specify the level in the LSM tree from which compression should occur.",
         "Defaults to L1, so only L0 writes are uncompressed."
       ],
@@ -7957,8 +8016,8 @@
           "value": "integer"
         }
       },
-      "comment": [
-        "@doc The approximate size (in bytes) when a Journal file should be rolled.",
+      "docText": [
+        "The approximate size (in bytes) when a Journal file should be rolled.",
         "Normally keep this as around the size of o(100K) objects.  Default is 1GB.",
         "Note that on startup an actual maximum size will be chosen which varies by",
         "a random factor from this point - to avoid coordination of roll events",
@@ -7975,8 +8034,8 @@
           "value": "integer"
         }
       },
-      "comment": [
-        "@doc The approximate count of objects when a Journal file should be rolled.",
+      "docText": [
+        "The approximate count of objects when a Journal file should be rolled.",
         "This time measured in object count, a file will be rolled if either the",
         "object count or the journal size limit is reached.  Default 200K.",
         "Note that on startup an actual maximum size will be chosen which varies by",
@@ -7994,8 +8053,8 @@
           "value": "integer"
         }
       },
-      "comment": [
-        "@doc The level of the ledger to be pre-loaded into the page cache",
+      "docText": [
+        "The level of the ledger to be pre-loaded into the page cache",
         "Depending on how much memory is available for the page cache, and how much",
         "disk I/O activity can be tolerated at startup - then the level at which the",
         "ledger is forced into the page cache can be controlled by configuration."
@@ -8012,8 +8071,8 @@
         },
         "hidden": true
       },
-      "comment": [
-        "@doc The number of journal compactions per vnode per day",
+      "docText": [
+        "The number of journal compactions per vnode per day",
         "The higher the value, the more compaction runs, and the sooner space is",
         "recovered.  But each run has a cost"
       ],
@@ -8028,8 +8087,8 @@
           "value": "integer"
         }
       },
-      "comment": [
-        "@doc The number of times per day to score an individual file for compaction",
+      "docText": [
+        "The number of times per day to score an individual file for compaction",
         "The default value will lead to each file, on average, being scored once",
         "every 12 hours"
       ],
@@ -8045,8 +8104,8 @@
         },
         "hidden": true
       },
-      "comment": [
-        "@doc Compaction Low Hour",
+      "docText": [
+        "Compaction Low Hour",
         "The hour of the day in which journal compaction can start.  Use Low hour",
         "of 0 and High hour of 23 to have no compaction window (i.e. always compact",
         "regardless of time of day)"
@@ -8063,8 +8122,8 @@
         },
         "hidden": true
       },
-      "comment": [
-        "@doc Compaction Top Hour",
+      "docText": [
+        "Compaction Top Hour",
         "The hour of the day, after which journal compaction should stop.",
         "If low hour > top hour then, compaction will work overnight between low",
         "hour and top hour (inclusive).  Timings rely on server's view of local time"
@@ -8081,8 +8140,8 @@
         },
         "hidden": true
       },
-      "comment": [
-        "@doc Max Journal Files Per Compaction Run",
+      "docText": [
+        "Max Journal Files Per Compaction Run",
         "In a single compaction run, what is the maximum number of consecutive files",
         "which may be compacted.  If increasing this value, the average number of",
         "files per run may decrease, unless adjustments are also made to the",
@@ -8100,8 +8159,8 @@
         },
         "hidden": true
       },
-      "comment": [
-        "@doc Target Percentage for Max Run",
+      "docText": [
+        "Target Percentage for Max Run",
         "What is the target score for a maximum run of files, to qualify for",
         "compaction.  If less than this percentage would be retained after compaction",
         "then it is a candidate (e.g. in default case if 25% of space would be",
@@ -8119,8 +8178,8 @@
         },
         "hidden": true
       },
-      "comment": [
-        "@doc Target Percentage for Single File",
+      "docText": [
+        "Target Percentage for Single File",
         "What is the target score for a run of a single file, to qualify for",
         "compaction.  If less than this percentage would be retained after compaction",
         "then it is a candidate (e.g. in default case if 25% of space would be",
@@ -8138,8 +8197,8 @@
         },
         "hidden": true
       },
-      "comment": [
-        "@doc Snapshot timeout (short)",
+      "docText": [
+        "Snapshot timeout (short)",
         "Maximum expected time for an index query.  A query which is taking longer",
         "than this may fail as it will be released - potentially allowing for some",
         "file processes to delete.  Timeout is in seconds."
@@ -8156,8 +8215,8 @@
         },
         "hidden": true
       },
-      "comment": [
-        "@doc Snapshot timeout (long)",
+      "docText": [
+        "Snapshot timeout (long)",
         "Maximum expected time for any other fold.  A fold which is taking longer",
         "than this may fail as it will be released - potentially allowing for some",
         "file processes to delete.  Timeout is in seconds."
@@ -8180,8 +8239,8 @@
         ],
         "hidden": true
       },
-      "comment": [
-        "@doc Statistic monitoring proportion",
+      "docText": [
+        "Statistic monitoring proportion",
         "The proportion of requests to be convered by stats, an integer between",
         "0 and 100.  There is no flow control, so setting this too high could",
         "possibly overflow the leveled_monitor mailbox."
@@ -8198,8 +8257,8 @@
         },
         "hidden": true
       },
-      "comment": [
-        "@doc Statistic log frequency (seconds)",
+      "docText": [
+        "Statistic log frequency (seconds)",
         "The wait in seconds between logs from each leveled_monitor (there is one",
         "monitor per vnode)"
       ],
@@ -8210,8 +8269,8 @@
       "properties": {
         "hidden": true
       },
-      "comment": [
-        "@doc The default name of a backend when one is not specified."
+      "docText": [
+        "The default name of a backend when one is not specified."
       ],
       "configName": "multi_backend.default",
       "settingName": "riak_kv.multi_backend_default"
@@ -8242,8 +8301,8 @@
         },
         "hidden": true
       },
-      "comment": [
-        "@doc Storage_backend specifies the Erlang module defining the storage",
+      "docText": [
+        "Storage_backend specifies the Erlang module defining the storage",
         "mechanism that will be used on this node."
       ],
       "configName": "multi_backend.$name.storage_backend",
@@ -8253,10 +8312,12 @@
       "properties": {
         "default": "{{repl_data_root}}"
       },
-      "comment": [
-        "Replication config",
-        "@doc Path (relative or absolute) to the working directory for the",
+      "docText": [
+        "Path (relative or absolute) to the working directory for the",
         "replication process"
+      ],
+      "docOther": [
+        "Replication config"
       ],
       "configName": "mdc.data_root",
       "settingName": "riak_repl.data_root"
@@ -8269,8 +8330,8 @@
           "value": "ip"
         }
       },
-      "comment": [
-        "@doc The cluster manager will listen for connections from remote",
+      "docText": [
+        "The cluster manager will listen for connections from remote",
         "clusters on this ip and port. Every node runs one cluster manager,",
         "but only the cluster manager running on the cluster_leader will",
         "service requests. This can change as nodes enter and leave the",
@@ -8288,8 +8349,8 @@
         },
         "default": "5"
       },
-      "comment": [
-        "@doc The hard limit of fullsync workers that will be running on the",
+      "docText": [
+        "The hard limit of fullsync workers that will be running on the",
         "source side of a cluster across all nodes on that cluster for a",
         "fullsync to a sink cluster. This means if one has configured",
         "fullsync for two different clusters, both with a",
@@ -8308,8 +8369,8 @@
         },
         "default": "1"
       },
-      "comment": [
-        "@doc Limits the number of fullsync workers that will be running on",
+      "docText": [
+        "Limits the number of fullsync workers that will be running on",
         "each individual node in a source cluster. This is a hard limit for",
         "all fullsyncs enabled; additional fullsync configurations will not",
         "increase the number of fullsync workers allowed to run on any node.",
@@ -8327,8 +8388,8 @@
         },
         "default": "100"
       },
-      "comment": [
-        "@doc Limits the number of \"soft_exist\" that the fullsynce",
+      "docText": [
+        "Limits the number of \"soft_exist\" that the fullsynce",
         "coordinator will handle before failing a partition from",
         "fullsync. The soft_retries is per-fullsync, not per-partition.",
         "Only affects nodes on the source cluster on which this parameter is",
@@ -8345,8 +8406,8 @@
         },
         "default": "60s"
       },
-      "comment": [
-        "@doc Adds a retry wait time. To be used in conjunction with",
+      "docText": [
+        "Adds a retry wait time. To be used in conjunction with",
         "soft_retries. When a partition fails to fullsync with a soft_exit,",
         "it is added to a queue to be retried. The retry wait time is the",
         "minimum amount of time to elapse before a fullsync is re-attempted",
@@ -8369,8 +8430,8 @@
         },
         "default": "1"
       },
-      "comment": [
-        "@doc Limits the number of fullsync workers allowed to run on each",
+      "docText": [
+        "Limits the number of fullsync workers allowed to run on each",
         "individual node in a sink cluster. This is a hard limit for all",
         "fullsync sources interacting with the sink cluster. Thus, multiple",
         "simultaneous source connections to the sink cluster will have to",
@@ -8398,8 +8459,8 @@
         },
         "default": "true"
       },
-      "comment": [
-        "@doc Whether to initiate a fullsync on initial connection from the",
+      "docText": [
+        "Whether to initiate a fullsync on initial connection from the",
         "secondary cluster"
       ],
       "configName": "mdc.fullsync_on_connect",
@@ -8414,8 +8475,8 @@
         "include_default": "all",
         "commented": "30m"
       },
-      "comment": [
-        "@doc a single integer value representing the duration to wait in",
+      "docText": [
+        "a single integer value representing the duration to wait in",
         "minutes between fullsyncs, or a list of {clustername,",
         "time_in_minutes} pairs for each sink participating in fullsync",
         "replication."
@@ -8431,8 +8492,8 @@
         },
         "default": "100MB"
       },
-      "comment": [
-        "@doc The maximum size the realtime replication queue can grow to",
+      "docText": [
+        "The maximum size the realtime replication queue can grow to",
         "before new objects are dropped. Defaults to 100MB. Dropped objects",
         "will need to be replication with a fullsync."
       ],
@@ -8456,8 +8517,8 @@
         },
         "default": "off"
       },
-      "comment": [
-        "@doc Enable Riak CS proxy_get and block filter."
+      "docText": [
+        "Enable Riak CS proxy_get and block filter."
       ],
       "configName": "mdc.proxy_get",
       "settingName": "riak_repl.proxy_get"
@@ -8470,8 +8531,8 @@
         },
         "default": "15s"
       },
-      "comment": [
-        "@doc A heartbeat message is sent from the source to the sink every",
+      "docText": [
+        "A heartbeat message is sent from the source to the sink every",
         "heartbeat_interval. Setting heartbeat_interval to undefined",
         "disables the realtime heartbeat. This feature is only available in",
         "Riak Enterprise 1.3.2+."
@@ -8487,8 +8548,8 @@
         },
         "default": "15s"
       },
-      "comment": [
-        "@doc If a heartbeat response is not received in",
+      "docText": [
+        "If a heartbeat response is not received in",
         "rt_heartbeat_timeout seconds, then the source connection exits and",
         "will be re-established.  This feature is only available in Riak",
         "Enterprise 1.3.2+."
@@ -8514,8 +8575,8 @@
         "default": "false",
         "hidden": true
       },
-      "comment": [
-        "@doc By default, fullsync replication will try to coordinate with other",
+      "docText": [
+        "By default, fullsync replication will try to coordinate with other",
         "riak subsystems that may be contending for the same resources. This will help",
         "to prevent system response degradation under times of heavy load from multiple",
         "background tasks. To disable background coordination, set this parameter to false.",
@@ -8532,8 +8593,8 @@
         },
         "commented": "1m"
       },
-      "comment": [
-        "@doc How frequently the stats for fullsync source processes should be",
+      "docText": [
+        "How frequently the stats for fullsync source processes should be",
         "gathered. Requests for fullsync status always returned the most recently",
         "gathered data, and thus can be at most as old as this value."
       ],
@@ -8544,55 +8605,47 @@
   "translations": {
     "kernel.logger": {
       "properties": {},
-      "comment": [],
       "configName": "kernel.logger",
       "func": "fun(Conf) -> LogFile = cuttlefish:conf_get(\"logger.file\", Conf), MaxNumBytes = cuttlefish:conf_get(\"logger.max_file_size\", Conf), MaxNumFiles = cuttlefish:conf_get(\"logger.max_files\", Conf),  DefaultFormatStr = cuttlefish:conf_get(\"logger.format\", Conf), DefaultFormatTerm = case erl_scan:string(DefaultFormatStr) of {ok, DefaultTokens, _} -> case erl_parse:parse_term(DefaultTokens) of {ok, DefaultTerm} -> DefaultTerm; {error, {_, _, DefaultError}} -> cuttlefish:error(foo) end; {error, {_, _, DefaultScanError}} -> cuttlefish:error(foo) end, ConfigMap0 = #{config => #{file => LogFile, max_no_bytes => MaxNumBytes, max_no_files => MaxNumFiles}, formatter => {logger_formatter, #{template => DefaultFormatTerm} } },  [{handler, default, logger_std_h, ConfigMap0}]  end "
     },
     "vm_args.+B": {
       "properties": {},
-      "comment": [],
       "configName": "vm_args.+B",
       "func": "fun(Conf) -> Setting = cuttlefish:conf_get(\"erlang.vm.ignore_break_signal\", Conf), case Setting of true -> \"i\"; false -> cuttlefish:unset() end end "
     },
     "vm_args.+hmbs": {
       "properties": {},
-      "comment": [],
       "configName": "vm_args.+hmbs",
       "func": "fun(Conf) -> Setting = cuttlefish:conf_get(\"erlang.virtual_heap.hmbs\", Conf), case Setting of Setting when is_integer(Setting) -> Setting; otp -> cuttlefish:unset() end end "
     },
     "vm_args.+hms": {
       "properties": {},
-      "comment": [],
       "configName": "vm_args.+hms",
       "func": "fun(Conf) -> Setting = cuttlefish:conf_get(\"erlang.virtual_heap.hms\", Conf), case Setting of Setting when is_integer(Setting) -> Setting; otp -> cuttlefish:unset() end end "
     },
     "vm_args.+S": {
       "properties": {},
-      "comment": [],
       "configName": "vm_args.+S",
       "func": "fun(Conf) -> Total = cuttlefish:conf_get(\"erlang.schedulers.total\", Conf, undefined), Online = cuttlefish:conf_get(\"erlang.schedulers.online\", Conf, undefined), case {Total, Online} of {undefined, undefined} -> cuttlefish:unset(); {undefined, O} -> \":\" ++ integer_to_list(O); {T, undefined} -> integer_to_list(T); _ -> integer_to_list(Total) ++ \":\" ++ integer_to_list(Online) end end "
     },
     "vm_args.+a": {
       "properties": {},
-      "comment": [],
       "configName": "vm_args.+a",
       "func": "fun(Conf) -> RawValue = cuttlefish:conf_get(\"erlang.async_threads.stack_size\", Conf), RawValue div (1024 * erlang:system_info({wordsize, external})) end"
     },
     "vm_args.+zdbbl": {
       "properties": {},
-      "comment": [],
       "configName": "vm_args.+zdbbl",
       "func": "fun(Conf) -> ZDBBL = cuttlefish:conf_get(\"erlang.distribution_buffer_size\", Conf, undefined), case ZDBBL of undefined -> undefined; X when is_integer(X) -> cuttlefish_util:ceiling(X / 1024); %% Bytes to Kilobytes; _ -> undefined end end "
     },
     "kernel.inet_dist_use_interface": {
       "properties": {},
-      "comment": [],
       "configName": "kernel.inet_dist_use_interface",
       "func": "fun(Conf) -> IPStr = cuttlefish:conf_get(\"erlang.distribution.interface\", Conf), {ok, IP_address} = inet:parse_strict_address(IPStr), IP_address end "
     },
     "riak_core.job_accept_class": {
       "properties": {},
-      "comment": [
+      "docOther": [
         "Async Job Management",
         "",
         "This is a translation for mappings that appear in other schema files.",
@@ -8635,210 +8688,297 @@
     },
     "riak_api.http": {
       "properties": {},
-      "comment": [],
       "configName": "riak_api.http",
       "func": "fun(Conf) -> HTTP = cuttlefish_variable:filter_by_prefix(\"listener.http\", Conf), [ IP || {_, IP} <- HTTP] end "
     },
     "riak_api.pb": {
       "properties": {},
-      "comment": [],
       "configName": "riak_api.pb",
       "func": "fun(Conf) -> PB = cuttlefish_variable:filter_by_prefix(\"listener.protobuf\", Conf), [ IP || {_, IP} <- PB] end "
     },
     "riak_api.https": {
       "properties": {},
-      "comment": [],
       "configName": "riak_api.https",
       "func": "fun(Conf) -> HTTPS = cuttlefish_variable:filter_by_prefix(\"listener.https\", Conf), [ IP || {_, IP} <- HTTPS] end "
     },
     "riak_api.honor_cipher_order": {
       "properties": {},
-      "comment": [],
       "configName": "riak_api.honor_cipher_order",
       "func": "fun(Conf) -> CipherOrder = cuttlefish:conf_get(\"honor_cipher_order\", Conf), case CipherOrder of on  -> true; off -> false end end "
     },
     "riak_api.tls_protocols": {
       "properties": {},
-      "comment": [],
       "configName": "riak_api.tls_protocols",
       "func": "fun(Conf) -> Protocols = cuttlefish_variable:filter_by_prefix(\"tls_protocols\", Conf), [begin case Key of [\"tls_protocols\",\"sslv3\"] -> sslv3; [\"tls_protocols\",\"tlsv1\"] -> tlsv1; [\"tls_protocols\",\"tlsv1\", \"1\"] -> 'tlsv1.1'; [\"tls_protocols\",\"tlsv1\", \"2\"] -> 'tlsv1.2' end end || {Key, Value} <- Protocols, Value == on] end "
     },
     "riak_api.check_crl": {
       "properties": {},
-      "comment": [],
       "configName": "riak_api.check_crl",
       "func": "fun(Conf) -> CheckCRL = cuttlefish:conf_get(\"check_crl\", Conf), case CheckCRL of on -> true; off -> false end end "
     },
     "riak_kv.anti_entropy": {
       "properties": {},
-      "comment": [],
       "configName": "riak_kv.anti_entropy",
       "func": "fun(Conf) -> Setting = cuttlefish:conf_get(\"anti_entropy\", Conf), case Setting of active -> {on, []}; 'active-debug' -> {on, [debug]}; passive -> {off, []}; _Default -> {on, []} end end "
     },
     "riak_kv.storage_backend": {
       "properties": {},
-      "comment": [],
       "configName": "riak_kv.storage_backend",
       "func": "fun(Conf) -> Setting = cuttlefish:conf_get(\"storage_backend\", Conf), case Setting of bitcask -> riak_kv_bitcask_backend; leveldb -> riak_kv_eleveldb_backend; leveled -> riak_kv_leveled_backend; memory -> riak_kv_memory_backend; multi -> riak_kv_multi_backend; prefix_multi -> riak_kv_multi_prefix_backend; _Default -> riak_kv_bitcask_backend end end"
     },
     "riak_kv.anti_entropy_build_limit": {
       "properties": {},
-      "comment": [],
       "configName": "riak_kv.anti_entropy_build_limit",
       "func": "fun(Conf) -> {cuttlefish:conf_get(\"anti_entropy.tree.build_limit.number\", Conf), cuttlefish:conf_get(\"anti_entropy.tree.build_limit.per_timespan\", Conf)} end"
     },
     "riak_kv.aae_throttle_limits": {
       "properties": {},
-      "comment": [],
       "configName": "riak_kv.aae_throttle_limits",
       "func": "riak_core_throttle:create_limits_translator_fun(\"anti_entropy\", \"mailbox_size\") "
     },
     "riak_kv.fsm_limit": {
       "properties": {},
-      "comment": [],
       "configName": "riak_kv.fsm_limit",
       "func": "fun(Conf) -> TheLimit = cuttlefish:conf_get(\"max_concurrent_requests\", Conf), case TheLimit of infinite -> undefined; Int when is_integer(Int) -> Int; _ -> cuttlefish:invalid(\"max_concurrent_requests must be an integer or 'infinite'\") end end "
     },
     "riak_kv.object_format": {
       "properties": {},
-      "comment": [],
       "configName": "riak_kv.object_format",
       "func": "fun(Conf) -> case cuttlefish:conf_get(\"object.format\", Conf) of 0 -> v0; 1 -> v1; _ -> cuttlefish:invalid(\"invalid object format version\") end end "
     },
     "riak_kv.memory_backend.max_memory": {
       "properties": {},
-      "comment": [],
       "configName": "riak_kv.memory_backend.max_memory",
       "func": "fun(Conf) -> Bytes = cuttlefish:conf_get(\"memory_backend.max_memory_per_vnode\", Conf), cuttlefish_util:ceiling(Bytes / 1048576) end "
     },
     "riak_core.default_bucket_props.precommit": {
       "properties": {},
-      "comment": [],
       "configName": "riak_core.default_bucket_props.precommit",
       "func": "fun(Conf) -> RawString = cuttlefish:conf_get(\"buckets.default.precommit\", Conf, []), StringList = string:tokens(RawString, \" \"), [ begin case string:tokens(String, \":\") of %% Javascript make this:  {struct, [{<<\"name\">>, <<\"SomeJS.nonsense\">>}]} [JavascriptFunction] -> {struct, [{<<\"name\">>, list_to_binary(JavascriptFunction)}]}; %% Erlang make this: {struct, [{<<\"mod\">>, <<\"module\">>}, {<<\"fun\">>,<<\"function\">>}]} [Module, Function] -> {struct, [ {<<\"mod\">>, list_to_binary(Module)}, {<<\"fun\">>, list_to_binary(Function)} ]}; _ -> cuttlefish:invalid(\"incorrect hook format '\" ++ String ++ \"'\") end end || String <- StringList] end "
     },
     "riak_core.default_bucket_props.postcommit": {
       "properties": {},
-      "comment": [],
       "configName": "riak_core.default_bucket_props.postcommit",
       "func": "fun(Conf) -> RawString = cuttlefish:conf_get(\"buckets.default.postcommit\", Conf, []), StringList = string:tokens(RawString, \" \"), [ begin case string:tokens(String, \":\") of [Module, Function] -> {struct, [ {<<\"mod\">>, list_to_binary(Module)}, {<<\"fun\">>, list_to_binary(Function)} ]}; _ -> cuttlefish:invalid(\"incorrect hook format '\" ++ String ++ \"'\") end end ||  String <- StringList] end "
     },
     "riak_kv.ttaaefs_allcheck_window": {
       "properties": {},
-      "comment": [],
       "configName": "riak_kv.ttaaefs_allcheck_window",
       "func": "fun(Conf) -> Setting = cuttlefish:conf_get(\"ttaaefs_allcheck.policy\", Conf), case Setting of always -> always; never -> never; window -> Start = cuttlefish:conf_get(\"ttaaefs_allcheck.window.start\", Conf, undefined), End = cuttlefish:conf_get(\"ttaaefs_allcheck.window.end\", Conf, undefined), {Start, End}; _Default -> always end end"
     },
     "riak_sysmon.gc_ms_limit": {
       "properties": {},
-      "comment": [],
       "configName": "riak_sysmon.gc_ms_limit",
       "func": "fun(Conf) -> case cuttlefish:conf_get(\"runtime_health.triggers.process.garbage_collection\", Conf) of off -> 0; Int -> Int end end"
     },
     "riak_sysmon.schedule_ms_limit": {
       "properties": {},
-      "comment": [],
       "configName": "riak_sysmon.schedule_ms_limit",
       "func": "fun(Conf) -> case cuttlefish:conf_get(\"runtime_health.triggers.process.long_schedule\", Conf) of off -> 0; Int -> Int end end"
     },
     "riak_sysmon.heap_word_limit": {
       "properties": {},
-      "comment": [],
       "configName": "riak_sysmon.heap_word_limit",
       "func": "fun(Conf) -> case cuttlefish:conf_get(\"runtime_health.triggers.process.heap_size\", Conf) of off -> 0; Bytes -> WordSize = erlang:system_info(wordsize), Bytes div WordSize end end"
     },
     "bitcask.sync_strategy": {
       "properties": {},
-      "comment": [],
       "configName": "bitcask.sync_strategy",
       "func": "fun(Conf) -> Setting = cuttlefish:conf_get(\"bitcask.sync.strategy\", Conf), case Setting of none -> none; o_sync -> o_sync; interval -> Interval = cuttlefish:conf_get(\"bitcask.sync.interval\", Conf, undefined), {seconds, Interval}; _Default -> none end end"
     },
     "bitcask.merge_window": {
       "properties": {},
-      "comment": [],
       "configName": "bitcask.merge_window",
       "func": "fun(Conf) -> Setting = cuttlefish:conf_get(\"bitcask.merge.policy\", Conf), case Setting of always -> always; never -> never; window -> Start = cuttlefish:conf_get(\"bitcask.merge.window.start\", Conf, undefined), End = cuttlefish:conf_get(\"bitcask.merge.window.end\", Conf, undefined), {Start, End}; _Default -> always end end"
     },
     "bitcask.max_fold_age": {
       "properties": {},
-      "comment": [],
       "configName": "bitcask.max_fold_age",
       "func": "fun(Conf) -> case cuttlefish:conf_get(\"bitcask.fold.max_age\", Conf) of unlimited -> -1; I when is_integer(I) -> %% app.config expects microseconds I * 1000; _ -> -1 %% The default, for safety end end "
     },
     "bitcask.max_fold_puts": {
       "properties": {},
-      "comment": [],
       "configName": "bitcask.max_fold_puts",
       "func": "fun(Conf) -> case cuttlefish:conf_get(\"bitcask.fold.max_puts\", Conf) of unlimited -> -1; I when is_integer(I) -> I; _ -> 0 %% default catch end end "
     },
     "bitcask.expiry_secs": {
       "properties": {},
-      "comment": [],
       "configName": "bitcask.expiry_secs",
       "func": "fun(Conf) -> case cuttlefish:conf_get(\"bitcask.expiry\", Conf) of off -> -1; I when is_integer(I) -> I; _ -> -1 end end "
     },
     "bitcask.require_hint_crc": {
       "properties": {},
-      "comment": [],
       "configName": "bitcask.require_hint_crc",
       "func": "fun(Conf) -> case cuttlefish:conf_get(\"bitcask.hintfile_checksums\", Conf) of strict -> true; allow_missing -> false; _ -> true end end"
     },
     "eleveldb.compression": {
       "properties": {},
-      "comment": [],
       "configName": "eleveldb.compression",
       "func": "fun(Conf) -> Setting = cuttlefish:conf_get(\"leveldb.compression\", Conf), case Setting of false -> false; true -> cuttlefish:conf_get(\"leveldb.compression.algorithm\", Conf, snappy) end end"
     },
     "eleveldb.delete_threshold": {
       "properties": {},
-      "comment": [],
       "configName": "eleveldb.delete_threshold",
       "func": "fun(Conf) -> case cuttlefish:conf_get(\"leveldb.compaction.trigger.tombstone_count\", Conf) of off -> 0; Int -> Int end end"
     },
     "eleveldb.tiered_slow_level": {
       "properties": {},
-      "comment": [],
       "configName": "eleveldb.tiered_slow_level",
       "func": "fun(Conf) -> case cuttlefish:conf_get(\"leveldb.tiered\", Conf) of off -> 0; I -> I end end "
     },
     "eleveldb.expiry_minutes": {
       "properties": {},
-      "comment": [],
       "configName": "eleveldb.expiry_minutes",
       "func": "fun(Conf) -> case cuttlefish:conf_get(\"leveldb.expiration.retention_time\", Conf) of unlimited -> 0; I -> I end end "
     },
     "riak_kv.multi_backend_default": {
       "properties": {},
-      "comment": [],
       "configName": "riak_kv.multi_backend_default",
       "func": "fun(Conf) -> list_to_binary(cuttlefish:conf_get([\"multi_backend\", \"default\"], Conf)) end"
     },
     "riak_kv.multi_backend": {
       "properties": {},
-      "comment": [],
       "configName": "riak_kv.multi_backend",
       "func": "fun(Conf, Schema) -> GenerateSubConfig = fun(Name, Prefix, ProplistKey, ModuleName) -> BackendConfigName = [\"multi_backend\", Name], BackendConfigPrefix = BackendConfigName ++ [Prefix], SubConf = [ begin {lists:nthtail(2, Key), Value} end || {Key, Value} <- cuttlefish_variable:filter_by_prefix(BackendConfigPrefix, Conf)],  case cuttlefish_generator:map(Schema, SubConf) of {error, _Phase, _Errors} -> cuttlefish:invalid( lists:flatten(io_lib:format( \"Error processing multi_backend configuration for backend ~s\", [Name]))); BackendProplist -> Proplist = lists:foldl( fun(K, Acc) -> proplists:get_value(K, Acc, []) end, BackendProplist, ProplistKey), {ModuleName, Proplist} end end, %% group by $name into list, also cut the \"multi_backend.$name\" off every key BackendNames = cuttlefish_variable:fuzzy_matches([\"multi_backend\",\"$name\",\"storage_backend\"], Conf), %% for each in list, case statement on backend type Backends = [ begin BackendConfigName = [\"multi_backend\", Name], {BackendModule, BackendConfig} = case cuttlefish:conf_get(BackendConfigName ++ [\"storage_backend\"], Conf) of bitcask -> GenerateSubConfig(Name, \"bitcask\", [bitcask], riak_kv_bitcask_backend); leveldb -> GenerateSubConfig(Name, \"leveldb\", [eleveldb], riak_kv_eleveldb_backend); leveled -> GenerateSubConfig(Name, \"leveled\", [leveled], riak_kv_leveled_backend); memory -> GenerateSubConfig(Name, \"memory_backend\", [riak_kv, memory_backend], riak_kv_memory_backend) end, {list_to_binary(Name),  BackendModule, BackendConfig} end || {\"$name\", Name} <- BackendNames], case Backends of [] -> throw(unset); _ -> Backends end end "
     },
     "riak_repl.fullsync_interval": {
       "properties": {},
-      "comment": [],
       "configName": "riak_repl.fullsync_interval",
       "func": "fun(Conf) -> Minute = fun(Millis) -> Millis div 60000 end, FullSyncIntervals = cuttlefish_variable:filter_by_prefix(\"mdc.fullsync_interval\", Conf), case proplists:get_value([\"mdc\", \"fullsync_interval\", \"all\"], FullSyncIntervals) of undefined -> [ {list_to_atom(Name), Minute(Value)} || {[\"mdc\", \"fullsync_interval\", Name], Value} <- FullSyncIntervals]; X -> Minute(X) end end"
     },
     "riak_repl.proxy_get": {
       "properties": {},
-      "comment": [],
       "configName": "riak_repl.proxy_get",
       "func": "fun(Conf) -> case cuttlefish:conf_get(\"mdc.proxy_get\", Conf) of on -> enabled; off -> disabled; _ -> disabled end end"
     }
   },
   "validators": {
-    "undefined": {
+    "scheduler_percentage": {
       "properties": {},
-      "comment": [],
+      "name": "scheduler_percentage",
+      "description": "must be A:B when B =< A and both A and B 1 < x =< 100",
+      "func": "fun(PercPerc) -> case string:tokens(PercPerc, \":\") of [A, B] -> AV = list_to_integer(A), BV = list_to_integer(B), AV =< 100 andalso AV > 0 andalso BV =< 100 andalso BV > 0; _ -> false end end"
+    },
+    "scheduler_absolute": {
+      "properties": {},
       "name": "scheduler_absolute",
       "description": "must be 1 to 1024",
       "func": "fun(Value) -> is_integer(Value) andalso Value =< 1024 andalso Value >= 1 end"
+    },
+    "=<1024": {
+      "properties": {},
+      "name": "=<1024",
+      "description": "has a maximum value of 1024",
+      "func": "fun(X) -> X =< 1024 end"
+    },
+    "range:0-1024": {
+      "properties": {},
+      "name": "range:0-1024",
+      "description": "must be 0 to 1024",
+      "func": "fun(X) -> X >= 0 andalso X =< 1024 end"
+    },
+    "range4ports": {
+      "properties": {},
+      "docText": [
+        "The number of concurrent ports/sockets",
+        "Valid range is 1024-134217727"
+      ],
+      "docOther": [
+        "Note: OTP R15 and earlier uses -env ERL_MAX_PORTS, R16+ uses +Q"
+      ],
+      "name": "range4ports",
+      "description": "must be 1024 to 134217727",
+      "func": "fun(X) -> X >= 1024 andalso X =< 134217727 end"
+    },
+    "positive_integer": {
+      "properties": {},
+      "name": "positive_integer",
+      "description": "must be a positive integer",
+      "func": "fun(X) -> X >= 0 end"
+    },
+    "zdbbl_range": {
+      "properties": {},
+      "name": "zdbbl_range",
+      "description": "must be between 1KB and 2097151KB",
+      "func": "fun(ZDBBL) -> %% 2097151KB = 2147482624 ZDBBL >= 1024 andalso ZDBBL =< 2147482624 end "
+    },
+    "ip_strict": {
+      "properties": {},
+      "name": "ip_strict",
+      "description": "must be a valid IPv4 or IPv6 address",
+      "func": "fun(String) -> try inet:parse_strict_address(String) of {ok,{_,_,_,_}} -> true; {ok,{_,_,_,_,_,_,_,_}} -> true; _ -> false catch  _:_ -> false end end"
+    },
+    "ring_size_max": {
+      "properties": {},
+      "docOther": [
+        "ring_size validators"
+      ],
+      "name": "ring_size_max",
+      "description": "2048 and larger are supported, but considered advanced config",
+      "func": "fun(Size) -> Size =< 1024 end"
+    },
+    "ring_size^2": {
+      "properties": {},
+      "name": "ring_size^2",
+      "description": "not a power of 2",
+      "func": "fun(Size) -> (Size band (Size-1) =:= 0) end"
+    },
+    "ring_size_min": {
+      "properties": {},
+      "name": "ring_size_min",
+      "description": "must be at least 8",
+      "func": "fun(Size) -> Size >= 8 end"
+    },
+    "valid_ipaddr": {
+      "properties": {},
+      "name": "valid_ipaddr",
+      "description": "must be a valid IP address",
+      "func": "fun(AddrString) -> case inet_parse:address(AddrString) of {ok, _} -> true; {error, _} -> false end end"
+    },
+    "target_nval_max": {
+      "properties": {},
+      "docOther": [
+        "ring_size validators"
+      ],
+      "name": "target_nval_max",
+      "description": "7 and larger are supported, but considered advanced config",
+      "func": "fun(Size) -> Size =< 6 end"
+    },
+    "target_nval_min": {
+      "properties": {},
+      "name": "target_nval_min",
+      "description": "must be at least 1",
+      "func": "fun(Size) -> Size >= 1 end"
+    },
+    "greater_than_zero": {
+      "properties": {},
+      "name": "greater_than_zero",
+      "description": "must be greater than zero",
+      "func": "fun(Value) -> Value > 0 end"
+    },
+    "verify_cs_backend": {
+      "properties": {},
+      "name": "verify_cs_backend",
+      "description": "must be later than CS 2.0.0",
+      "func": "fun(Value) when is_integer(Value) andalso Value >= 20000-> true; (_) -> false end"
+    },
+    "non_negative": {
+      "properties": {},
+      "name": "non_negative",
+      "description": "must be greater than or equal to 0",
+      "func": "fun(Value) -> Value >= 0 end"
+    },
+    "is_compression_value": {
+      "properties": {},
+      "name": "is_compression_value",
+      "description": "must be on/off or a value between 0 and 9",
+      "func": "fun(Value)-> is_boolean(Value) orelse (is_integer(Value) andalso Value =< 9 andalso Value >= 0) end"
+    },
+    "is_percentage": {
+      "properties": {},
+      "name": "is_percentage",
+      "description": "must be a percentage",
+      "func": "fun(Value) -> Value >= 0 andalso Value =< 100 end"
     }
   }
 }

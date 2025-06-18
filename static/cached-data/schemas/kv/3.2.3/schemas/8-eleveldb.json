@@ -9,8 +9,8 @@
         "default": "$(platform_data_dir)/leveldb",
         "hidden": true
       },
-      "comment": [
-        "@doc Where LevelDB will store its data."
+      "docText": [
+        "Where LevelDB will store its data."
       ],
       "configName": "leveldb.data_root",
       "settingName": "eleveldb.data_root"
@@ -23,13 +23,15 @@
           "value": "integer"
         }
       },
-      "comment": [
-        "@doc This parameter defines the percentage of total server memory",
+      "docText": [
+        "This parameter defines the percentage of total server memory",
         "to assign to LevelDB. LevelDB will dynamically adjust its internal",
         "cache sizes to stay within this size.  The memory size can",
         "alternately be assigned as a byte count via leveldb.maximum_memory",
-        "instead.",
-        "@see leveldb.maximum_memory"
+        "instead."
+      ],
+      "docSees": [
+        "leveldb.maximum_memory"
       ],
       "configName": "leveldb.maximum_memory.percent",
       "settingName": "eleveldb.total_leveldb_mem_percent"
@@ -42,13 +44,15 @@
         },
         "hidden": true
       },
-      "comment": [
-        "@doc This parameter defines the number of bytes of server memory to",
+      "docText": [
+        "This parameter defines the number of bytes of server memory to",
         "assign to LevelDB. LevelDB will dynamically adjust its internal",
         "cache sizes to stay within this size. The memory size can",
         "alternately be assigned as percentage of total server memory via",
-        "leveldb.maximum_memory.percent.",
-        "@see leveldb.maximum_memory.percent"
+        "leveldb.maximum_memory.percent."
+      ],
+      "docSees": [
+        "leveldb.maximum_memory.percent"
       ],
       "configName": "leveldb.maximum_memory",
       "settingName": "eleveldb.total_leveldb_mem"
@@ -62,8 +66,8 @@
         },
         "hidden": true
       },
-      "comment": [
-        "@doc Whether LevelDB will flush after every write. Note: If you are",
+      "docText": [
+        "Whether LevelDB will flush after every write. Note: If you are",
         "familiar with fsync, this is analagous to calling fsync after every",
         "write."
       ],
@@ -79,8 +83,8 @@
         },
         "hidden": true
       },
-      "comment": [
-        "@doc limited_developer_mem is a Riak specific option that is used",
+      "docText": [
+        "limited_developer_mem is a Riak specific option that is used",
         "when a developer is testing a high number of vnodes and/or several",
         "VMs on a machine with limited physical memory.  Do NOT use this",
         "option if making performance measurements.  This option overwrites",
@@ -98,14 +102,16 @@
         },
         "hidden": true
       },
-      "comment": [
-        "@doc Each vnode first stores new key/value data in a memory based",
+      "docText": [
+        "Each vnode first stores new key/value data in a memory based",
         "write buffer. This write buffer is in parallel to the recovery log",
         "mentioned in the \"sync\" parameter. Riak creates each vnode with a",
         "randomly sized write buffer for performance reasons. The random",
         "size is somewhere between write_buffer_size_min and",
-        "write_buffer_size_max.",
-        "@see leveldb.sync"
+        "write_buffer_size_max."
+      ],
+      "docSees": [
+        "leveldb.sync"
       ],
       "configName": "leveldb.write_buffer_size_min",
       "settingName": "eleveldb.write_buffer_size_min"
@@ -119,8 +125,8 @@
         },
         "hidden": true
       },
-      "comment": [
-        "@see leveldb.write_buffer_size_min"
+      "docSees": [
+        "leveldb.write_buffer_size_min"
       ],
       "configName": "leveldb.write_buffer_size_max",
       "settingName": "eleveldb.write_buffer_size_max"
@@ -134,8 +140,8 @@
         },
         "hidden": true
       },
-      "comment": [
-        "@doc Each database .sst table file can include an optional \"bloom",
+      "docText": [
+        "Each database .sst table file can include an optional \"bloom",
         "filter\" that is highly effective in shortcutting data queries that",
         "are destined to not find the requested key. The Bloom filter",
         "typically increases the size of an .sst table file by about",
@@ -153,8 +159,8 @@
         },
         "hidden": true
       },
-      "comment": [
-        "@doc Defines the limit where block cache memory can no longer be",
+      "docText": [
+        "Defines the limit where block cache memory can no longer be",
         "released in favor of the page cache.  This has no impact with",
         "regard to release in favor of file cache.  The value is per",
         "vnode."
@@ -171,8 +177,8 @@
         },
         "hidden": true
       },
-      "comment": [
-        "@doc Defines the size threshold for a block / chunk of data within",
+      "docText": [
+        "Defines the size threshold for a block / chunk of data within",
         "one .sst table file. Each new block gets an index entry in the .sst",
         "table file's master index."
       ],
@@ -188,8 +194,8 @@
         },
         "hidden": true
       },
-      "comment": [
-        "@doc Defines the key count threshold for a new key entry in the key",
+      "docText": [
+        "Defines the key count threshold for a new key entry in the key",
         "index for a block. Most deployments should leave this parameter",
         "alone."
       ],
@@ -205,12 +211,14 @@
         },
         "hidden": true
       },
-      "comment": [
-        "@doc Defines the number of incremental adjustments to attempt",
+      "docText": [
+        "Defines the number of incremental adjustments to attempt",
         "between the block.size value and the maximum block.size for an .sst",
         "table file.  Value of zero disables the underlying dynamic",
-        "block_size feature.",
-        "@see leveldb.block.size"
+        "block_size feature."
+      ],
+      "docSees": [
+        "leveldb.block.size"
       ],
       "configName": "leveldb.block.size_steps",
       "settingName": "eleveldb.block_size_steps"
@@ -224,8 +232,8 @@
         },
         "hidden": true
       },
-      "comment": [
-        "@doc Enables or disables the verification of the data fetched from",
+      "docText": [
+        "Enables or disables the verification of the data fetched from",
         "LevelDB against internal checksums."
       ],
       "configName": "leveldb.verify_checksums",
@@ -240,8 +248,8 @@
         },
         "hidden": true
       },
-      "comment": [
-        "@doc Enables or disables the verification of LevelDB data during",
+      "docText": [
+        "Enables or disables the verification of LevelDB data during",
         "compaction."
       ],
       "configName": "leveldb.verify_compaction",
@@ -256,8 +264,8 @@
         },
         "hidden": true
       },
-      "comment": [
-        "@doc The number of worker threads performing LevelDB operations."
+      "docText": [
+        "The number of worker threads performing LevelDB operations."
       ],
       "configName": "leveldb.threads",
       "settingName": "eleveldb.eleveldb_threads"
@@ -280,8 +288,8 @@
         },
         "hidden": true
       },
-      "comment": [
-        "@doc Option to override LevelDB's use of fadvise(DONTNEED) with",
+      "docText": [
+        "Option to override LevelDB's use of fadvise(DONTNEED) with",
         "fadvise(WILLNEED) instead.  WILLNEED can reduce disk activity on",
         "systems where physical memory exceeds the database size."
       ],
@@ -296,8 +304,8 @@
           "value": "flag"
         }
       },
-      "comment": [
-        "@doc Enables or disables the compression of data on disk.",
+      "docText": [
+        "Enables or disables the compression of data on disk.",
         "Enabling (default) saves disk space.  Disabling may reduce read",
         "latency but increase overall disk activity.  Option can be",
         "changed at any time, but will not impact data on disk until",
@@ -323,8 +331,8 @@
           ]
         }
       },
-      "comment": [
-        "@doc Selection of compression algorithms.  snappy is",
+      "docText": [
+        "Selection of compression algorithms.  snappy is",
         "original compression supplied for leveldb.  lz4 is new",
         "algorithm that compresses to similar volume but averages twice",
         "as fast on writes and four times as fast on reads."
@@ -350,8 +358,8 @@
         ],
         "hidden": true
       },
-      "comment": [
-        "@doc Controls when a background compaction initiates solely",
+      "docText": [
+        "Controls when a background compaction initiates solely",
         "due to the number of delete tombstones within an individual",
         ".sst table file.  Value of 'off' disables the feature."
       ],
@@ -396,8 +404,8 @@
         ],
         "hidden": true
       },
-      "comment": [
-        "@doc leveldb can be configured to use different mounts for",
+      "docText": [
+        "leveldb can be configured to use different mounts for",
         "different levels. This tiered option defaults to off, but you can",
         "configure it to trigger at levels 1-6. If you do this, anything",
         "stored at the chosen level or greater will be stored on",
@@ -407,9 +415,11 @@
         "WARNING: There is no dynamic reallocation of leveldb",
         "data across mounts.  If you change this setting without manually",
         "moving the level files to the correct mounts, leveldb will act in",
-        "an unexpected state.",
-        "@see leveldb.tiered.mounts.fast",
-        "@see leveldb.tiered.mounts.slow"
+        "an unexpected state."
+      ],
+      "docSees": [
+        "leveldb.tiered.mounts.fast",
+        "leveldb.tiered.mounts.slow"
       ],
       "configName": "leveldb.tiered",
       "settingName": "eleveldb.tiered_slow_level"
@@ -422,8 +432,8 @@
         },
         "hidden": true
       },
-      "comment": [
-        "@see leveldb.tiered"
+      "docSees": [
+        "leveldb.tiered"
       ],
       "configName": "leveldb.tiered.path.fast",
       "settingName": "eleveldb.tiered_fast_prefix"
@@ -436,8 +446,8 @@
         },
         "hidden": true
       },
-      "comment": [
-        "@see leveldb.tiered"
+      "docSees": [
+        "leveldb.tiered"
       ],
       "configName": "leveldb.tiered.path.slow",
       "settingName": "eleveldb.tiered_slow_prefix"
@@ -460,8 +470,8 @@
         },
         "hidden": true
       },
-      "comment": [
-        "@doc This parameter enables/disables logic that saves a list",
+      "docText": [
+        "This parameter enables/disables logic that saves a list",
         "of cached objects (currently only open .sst file names) at",
         "database close.  The list is used on the next open to pre-populate",
         "the cache.  This typically eliminates heavy latencies associated",
@@ -479,8 +489,8 @@
         },
         "hidden": true
       },
-      "comment": [
-        "@doc Enable global expiry.  All leveldb databases / vnodes",
+      "docText": [
+        "Enable global expiry.  All leveldb databases / vnodes",
         "will use same retention_time and/or whole_file_expiry settings.",
         "Settings are unique for each leveldb instances in multi_backend."
       ],
@@ -505,8 +515,8 @@
         ],
         "hidden": true
       },
-      "comment": [
-        "@doc Minutes until object expires.  Gives number of minutes",
+      "docText": [
+        "Minutes until object expires.  Gives number of minutes",
         "a stored key/value will stay within the database before automatic",
         "deletion.  Set to unlimited to disable age based expiry."
       ],
@@ -523,8 +533,8 @@
         },
         "hidden": true
       },
-      "comment": [
-        "@doc Expire entire .sst table file.  Authorizes leveldb to",
+      "docText": [
+        "Expire entire .sst table file.  Authorizes leveldb to",
         "eliminate entire files that contain expired data (delete files",
         "instead of removing expired key/values during compaction)."
       ],
@@ -535,25 +545,21 @@
   "translations": {
     "eleveldb.compression": {
       "properties": {},
-      "comment": [],
       "configName": "eleveldb.compression",
       "func": "fun(Conf) -> Setting = cuttlefish:conf_get(\"leveldb.compression\", Conf), case Setting of false -> false; true -> cuttlefish:conf_get(\"leveldb.compression.algorithm\", Conf, snappy) end end"
     },
     "eleveldb.delete_threshold": {
       "properties": {},
-      "comment": [],
       "configName": "eleveldb.delete_threshold",
       "func": "fun(Conf) -> case cuttlefish:conf_get(\"leveldb.compaction.trigger.tombstone_count\", Conf) of off -> 0; Int -> Int end end"
     },
     "eleveldb.tiered_slow_level": {
       "properties": {},
-      "comment": [],
       "configName": "eleveldb.tiered_slow_level",
       "func": "fun(Conf) -> case cuttlefish:conf_get(\"leveldb.tiered\", Conf) of off -> 0; I -> I end end "
     },
     "eleveldb.expiry_minutes": {
       "properties": {},
-      "comment": [],
       "configName": "eleveldb.expiry_minutes",
       "func": "fun(Conf) -> case cuttlefish:conf_get(\"leveldb.expiration.retention_time\", Conf) of unlimited -> 0; I -> I end end "
     }

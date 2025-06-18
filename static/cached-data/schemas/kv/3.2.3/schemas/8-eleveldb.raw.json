@@ -4,6 +4,13 @@
     "comment": [
       "@doc Where LevelDB will store its data."
     ],
+    "docText": [
+      "Where LevelDB will store its data."
+    ],
+    "docSections": [],
+    "docRelateds": [],
+    "docSees": [],
+    "docOther": [],
     "type": "mapping",
     "configName": "leveldb.data_root",
     "settingName": "eleveldb.data_root",
@@ -50,6 +57,19 @@
       "instead.",
       "@see leveldb.maximum_memory"
     ],
+    "docText": [
+      "This parameter defines the percentage of total server memory",
+      "to assign to LevelDB. LevelDB will dynamically adjust its internal",
+      "cache sizes to stay within this size.  The memory size can",
+      "alternately be assigned as a byte count via leveldb.maximum_memory",
+      "instead."
+    ],
+    "docSections": [],
+    "docRelateds": [],
+    "docSees": [
+      "leveldb.maximum_memory"
+    ],
+    "docOther": [],
     "type": "mapping",
     "configName": "leveldb.maximum_memory.percent",
     "settingName": "eleveldb.total_leveldb_mem_percent",
@@ -92,6 +112,19 @@
       "leveldb.maximum_memory.percent.",
       "@see leveldb.maximum_memory.percent"
     ],
+    "docText": [
+      "This parameter defines the number of bytes of server memory to",
+      "assign to LevelDB. LevelDB will dynamically adjust its internal",
+      "cache sizes to stay within this size. The memory size can",
+      "alternately be assigned as percentage of total server memory via",
+      "leveldb.maximum_memory.percent."
+    ],
+    "docSections": [],
+    "docRelateds": [],
+    "docSees": [
+      "leveldb.maximum_memory.percent"
+    ],
+    "docOther": [],
     "type": "mapping",
     "configName": "leveldb.maximum_memory",
     "settingName": "eleveldb.total_leveldb_mem",
@@ -122,6 +155,15 @@
       "familiar with fsync, this is analagous to calling fsync after every",
       "write."
     ],
+    "docText": [
+      "Whether LevelDB will flush after every write. Note: If you are",
+      "familiar with fsync, this is analagous to calling fsync after every",
+      "write."
+    ],
+    "docSections": [],
+    "docRelateds": [],
+    "docSees": [],
+    "docOther": [],
     "type": "mapping",
     "configName": "leveldb.sync_on_write",
     "settingName": "eleveldb.sync",
@@ -167,6 +209,17 @@
       "option if making performance measurements.  This option overwrites",
       "values given to write_buffer_size_min and write_buffer_size_max."
     ],
+    "docText": [
+      "limited_developer_mem is a Riak specific option that is used",
+      "when a developer is testing a high number of vnodes and/or several",
+      "VMs on a machine with limited physical memory.  Do NOT use this",
+      "option if making performance measurements.  This option overwrites",
+      "values given to write_buffer_size_min and write_buffer_size_max."
+    ],
+    "docSections": [],
+    "docRelateds": [],
+    "docSees": [],
+    "docOther": [],
     "type": "mapping",
     "configName": "leveldb.limited_developer_mem",
     "settingName": "eleveldb.limited_developer_mem",
@@ -214,6 +267,20 @@
       "write_buffer_size_max.",
       "@see leveldb.sync"
     ],
+    "docText": [
+      "Each vnode first stores new key/value data in a memory based",
+      "write buffer. This write buffer is in parallel to the recovery log",
+      "mentioned in the \"sync\" parameter. Riak creates each vnode with a",
+      "randomly sized write buffer for performance reasons. The random",
+      "size is somewhere between write_buffer_size_min and",
+      "write_buffer_size_max."
+    ],
+    "docSections": [],
+    "docRelateds": [],
+    "docSees": [
+      "leveldb.sync"
+    ],
+    "docOther": [],
     "type": "mapping",
     "configName": "leveldb.write_buffer_size_min",
     "settingName": "eleveldb.write_buffer_size_min",
@@ -255,6 +322,13 @@
     "comment": [
       "@see leveldb.write_buffer_size_min"
     ],
+    "docText": [],
+    "docSections": [],
+    "docRelateds": [],
+    "docSees": [
+      "leveldb.write_buffer_size_min"
+    ],
+    "docOther": [],
     "type": "mapping",
     "configName": "leveldb.write_buffer_size_max",
     "settingName": "eleveldb.write_buffer_size_max",
@@ -300,6 +374,17 @@
       "typically increases the size of an .sst table file by about",
       "2%."
     ],
+    "docText": [
+      "Each database .sst table file can include an optional \"bloom",
+      "filter\" that is highly effective in shortcutting data queries that",
+      "are destined to not find the requested key. The Bloom filter",
+      "typically increases the size of an .sst table file by about",
+      "2%."
+    ],
+    "docSections": [],
+    "docRelateds": [],
+    "docSees": [],
+    "docOther": [],
     "type": "mapping",
     "configName": "leveldb.bloomfilter",
     "settingName": "eleveldb.use_bloomfilter",
@@ -344,6 +429,16 @@
       "regard to release in favor of file cache.  The value is per",
       "vnode."
     ],
+    "docText": [
+      "Defines the limit where block cache memory can no longer be",
+      "released in favor of the page cache.  This has no impact with",
+      "regard to release in favor of file cache.  The value is per",
+      "vnode."
+    ],
+    "docSections": [],
+    "docRelateds": [],
+    "docSees": [],
+    "docOther": [],
     "type": "mapping",
     "configName": "leveldb.block_cache_threshold",
     "settingName": "eleveldb.block_cache_threshold",
@@ -387,6 +482,15 @@
       "one .sst table file. Each new block gets an index entry in the .sst",
       "table file's master index."
     ],
+    "docText": [
+      "Defines the size threshold for a block / chunk of data within",
+      "one .sst table file. Each new block gets an index entry in the .sst",
+      "table file's master index."
+    ],
+    "docSections": [],
+    "docRelateds": [],
+    "docSees": [],
+    "docOther": [],
     "type": "mapping",
     "configName": "leveldb.block.size",
     "settingName": "eleveldb.sst_block_size",
@@ -430,6 +534,15 @@
       "index for a block. Most deployments should leave this parameter",
       "alone."
     ],
+    "docText": [
+      "Defines the key count threshold for a new key entry in the key",
+      "index for a block. Most deployments should leave this parameter",
+      "alone."
+    ],
+    "docSections": [],
+    "docRelateds": [],
+    "docSees": [],
+    "docOther": [],
     "type": "mapping",
     "configName": "leveldb.block.restart_interval",
     "settingName": "eleveldb.block_restart_interval",
@@ -475,6 +588,18 @@
       "block_size feature.",
       "@see leveldb.block.size"
     ],
+    "docText": [
+      "Defines the number of incremental adjustments to attempt",
+      "between the block.size value and the maximum block.size for an .sst",
+      "table file.  Value of zero disables the underlying dynamic",
+      "block_size feature."
+    ],
+    "docSections": [],
+    "docRelateds": [],
+    "docSees": [
+      "leveldb.block.size"
+    ],
+    "docOther": [],
     "type": "mapping",
     "configName": "leveldb.block.size_steps",
     "settingName": "eleveldb.block_size_steps",
@@ -517,6 +642,14 @@
       "@doc Enables or disables the verification of the data fetched from",
       "LevelDB against internal checksums."
     ],
+    "docText": [
+      "Enables or disables the verification of the data fetched from",
+      "LevelDB against internal checksums."
+    ],
+    "docSections": [],
+    "docRelateds": [],
+    "docSees": [],
+    "docOther": [],
     "type": "mapping",
     "configName": "leveldb.verify_checksums",
     "settingName": "eleveldb.verify_checksums",
@@ -559,6 +692,14 @@
       "@doc Enables or disables the verification of LevelDB data during",
       "compaction."
     ],
+    "docText": [
+      "Enables or disables the verification of LevelDB data during",
+      "compaction."
+    ],
+    "docSections": [],
+    "docRelateds": [],
+    "docSees": [],
+    "docOther": [],
     "type": "mapping",
     "configName": "leveldb.verify_compaction",
     "settingName": "eleveldb.verify_compaction",
@@ -600,6 +741,13 @@
     "comment": [
       "@doc The number of worker threads performing LevelDB operations."
     ],
+    "docText": [
+      "The number of worker threads performing LevelDB operations."
+    ],
+    "docSections": [],
+    "docRelateds": [],
+    "docSees": [],
+    "docOther": [],
     "type": "mapping",
     "configName": "leveldb.threads",
     "settingName": "eleveldb.eleveldb_threads",
@@ -643,6 +791,15 @@
       "fadvise(WILLNEED) instead.  WILLNEED can reduce disk activity on",
       "systems where physical memory exceeds the database size."
     ],
+    "docText": [
+      "Option to override LevelDB's use of fadvise(DONTNEED) with",
+      "fadvise(WILLNEED) instead.  WILLNEED can reduce disk activity on",
+      "systems where physical memory exceeds the database size."
+    ],
+    "docSections": [],
+    "docRelateds": [],
+    "docSees": [],
+    "docOther": [],
     "type": "mapping",
     "configName": "leveldb.fadvise_willneed",
     "settingName": "eleveldb.fadvise_willneed",
@@ -706,6 +863,17 @@
       "changed at any time, but will not impact data on disk until",
       "next time a file requires compaction."
     ],
+    "docText": [
+      "Enables or disables the compression of data on disk.",
+      "Enabling (default) saves disk space.  Disabling may reduce read",
+      "latency but increase overall disk activity.  Option can be",
+      "changed at any time, but will not impact data on disk until",
+      "next time a file requires compaction."
+    ],
+    "docSections": [],
+    "docRelateds": [],
+    "docSees": [],
+    "docOther": [],
     "type": "mapping",
     "configName": "leveldb.compression",
     "settingName": "eleveldb.compression",
@@ -746,6 +914,16 @@
       "algorithm that compresses to similar volume but averages twice",
       "as fast on writes and four times as fast on reads."
     ],
+    "docText": [
+      "Selection of compression algorithms.  snappy is",
+      "original compression supplied for leveldb.  lz4 is new",
+      "algorithm that compresses to similar volume but averages twice",
+      "as fast on writes and four times as fast on reads."
+    ],
+    "docSections": [],
+    "docRelateds": [],
+    "docSees": [],
+    "docOther": [],
     "type": "mapping",
     "configName": "leveldb.compression.algorithm",
     "settingName": "eleveldb.compression",
@@ -799,6 +977,11 @@
   {
     "rawSchema": "{translation, \"eleveldb.compression\", fun(Conf) -> Setting = cuttlefish:conf_get(\"leveldb.compression\", Conf), case Setting of false -> false; true -> cuttlefish:conf_get(\"leveldb.compression.algorithm\", Conf, snappy) end end}.",
     "comment": [],
+    "docText": [],
+    "docSections": [],
+    "docRelateds": [],
+    "docSees": [],
+    "docOther": [],
     "type": "translation",
     "configName": "eleveldb.compression",
     "func": "fun(Conf) -> Setting = cuttlefish:conf_get(\"leveldb.compression\", Conf), case Setting of false -> false; true -> cuttlefish:conf_get(\"leveldb.compression.algorithm\", Conf, snappy) end end"
@@ -810,6 +993,15 @@
       "due to the number of delete tombstones within an individual",
       ".sst table file.  Value of 'off' disables the feature."
     ],
+    "docText": [
+      "Controls when a background compaction initiates solely",
+      "due to the number of delete tombstones within an individual",
+      ".sst table file.  Value of 'off' disables the feature."
+    ],
+    "docSections": [],
+    "docRelateds": [],
+    "docSees": [],
+    "docOther": [],
     "type": "mapping",
     "configName": "leveldb.compaction.trigger.tombstone_count",
     "settingName": "eleveldb.delete_threshold",
@@ -867,6 +1059,11 @@
   {
     "rawSchema": "{translation, \"eleveldb.delete_threshold\", fun(Conf) -> case cuttlefish:conf_get(\"leveldb.compaction.trigger.tombstone_count\", Conf) of off -> 0; Int -> Int end end}.",
     "comment": [],
+    "docText": [],
+    "docSections": [],
+    "docRelateds": [],
+    "docSees": [],
+    "docOther": [],
     "type": "translation",
     "configName": "eleveldb.delete_threshold",
     "func": "fun(Conf) -> case cuttlefish:conf_get(\"leveldb.compaction.trigger.tombstone_count\", Conf) of off -> 0; Int -> Int end end"
@@ -888,6 +1085,26 @@
       "@see leveldb.tiered.mounts.fast",
       "@see leveldb.tiered.mounts.slow"
     ],
+    "docText": [
+      "leveldb can be configured to use different mounts for",
+      "different levels. This tiered option defaults to off, but you can",
+      "configure it to trigger at levels 1-6. If you do this, anything",
+      "stored at the chosen level or greater will be stored on",
+      "leveldb.tiered.mounts.slow, while everything at the levels below will",
+      "be stored on leveldb.tiered.mounts.fast",
+      "Levels 3 or 4 are recommended settings.",
+      "WARNING: There is no dynamic reallocation of leveldb",
+      "data across mounts.  If you change this setting without manually",
+      "moving the level files to the correct mounts, leveldb will act in",
+      "an unexpected state."
+    ],
+    "docSections": [],
+    "docRelateds": [],
+    "docSees": [
+      "leveldb.tiered.mounts.fast",
+      "leveldb.tiered.mounts.slow"
+    ],
+    "docOther": [],
     "type": "mapping",
     "configName": "leveldb.tiered",
     "settingName": "eleveldb.tiered_slow_level",
@@ -1019,6 +1236,11 @@
   {
     "rawSchema": "{translation, \"eleveldb.tiered_slow_level\", fun(Conf) -> case cuttlefish:conf_get(\"leveldb.tiered\", Conf) of off -> 0; I -> I end end }.",
     "comment": [],
+    "docText": [],
+    "docSections": [],
+    "docRelateds": [],
+    "docSees": [],
+    "docOther": [],
     "type": "translation",
     "configName": "eleveldb.tiered_slow_level",
     "func": "fun(Conf) -> case cuttlefish:conf_get(\"leveldb.tiered\", Conf) of off -> 0; I -> I end end "
@@ -1028,6 +1250,13 @@
     "comment": [
       "@see leveldb.tiered"
     ],
+    "docText": [],
+    "docSections": [],
+    "docRelateds": [],
+    "docSees": [
+      "leveldb.tiered"
+    ],
+    "docOther": [],
     "type": "mapping",
     "configName": "leveldb.tiered.path.fast",
     "settingName": "eleveldb.tiered_fast_prefix",
@@ -1056,6 +1285,13 @@
     "comment": [
       "@see leveldb.tiered"
     ],
+    "docText": [],
+    "docSections": [],
+    "docRelateds": [],
+    "docSees": [
+      "leveldb.tiered"
+    ],
+    "docOther": [],
     "type": "mapping",
     "configName": "leveldb.tiered.path.slow",
     "settingName": "eleveldb.tiered_slow_prefix",
@@ -1088,6 +1324,17 @@
       "the cache.  This typically eliminates heavy latencies associated",
       "with .sst files opening for early user requests."
     ],
+    "docText": [
+      "This parameter enables/disables logic that saves a list",
+      "of cached objects (currently only open .sst file names) at",
+      "database close.  The list is used on the next open to pre-populate",
+      "the cache.  This typically eliminates heavy latencies associated",
+      "with .sst files opening for early user requests."
+    ],
+    "docSections": [],
+    "docRelateds": [],
+    "docSees": [],
+    "docOther": [],
     "type": "mapping",
     "configName": "leveldb.cache_object_warming",
     "settingName": "eleveldb.cache_object_warming",
@@ -1149,6 +1396,15 @@
       "will use same retention_time and/or whole_file_expiry settings.",
       "Settings are unique for each leveldb instances in multi_backend."
     ],
+    "docText": [
+      "Enable global expiry.  All leveldb databases / vnodes",
+      "will use same retention_time and/or whole_file_expiry settings.",
+      "Settings are unique for each leveldb instances in multi_backend."
+    ],
+    "docSections": [],
+    "docRelateds": [],
+    "docSees": [],
+    "docOther": [],
     "type": "mapping",
     "configName": "leveldb.expiration",
     "settingName": "eleveldb.expiry_enabled",
@@ -1192,6 +1448,15 @@
       "a stored key/value will stay within the database before automatic",
       "deletion.  Set to unlimited to disable age based expiry."
     ],
+    "docText": [
+      "Minutes until object expires.  Gives number of minutes",
+      "a stored key/value will stay within the database before automatic",
+      "deletion.  Set to unlimited to disable age based expiry."
+    ],
+    "docSections": [],
+    "docRelateds": [],
+    "docSees": [],
+    "docOther": [],
     "type": "mapping",
     "configName": "leveldb.expiration.retention_time",
     "settingName": "eleveldb.expiry_minutes",
@@ -1258,6 +1523,11 @@
   {
     "rawSchema": "{translation, \"eleveldb.expiry_minutes\", fun(Conf) -> case cuttlefish:conf_get(\"leveldb.expiration.retention_time\", Conf) of unlimited -> 0; I -> I end end }.",
     "comment": [],
+    "docText": [],
+    "docSections": [],
+    "docRelateds": [],
+    "docSees": [],
+    "docOther": [],
     "type": "translation",
     "configName": "eleveldb.expiry_minutes",
     "func": "fun(Conf) -> case cuttlefish:conf_get(\"leveldb.expiration.retention_time\", Conf) of unlimited -> 0; I -> I end end "
@@ -1269,6 +1539,15 @@
       "eliminate entire files that contain expired data (delete files",
       "instead of removing expired key/values during compaction)."
     ],
+    "docText": [
+      "Expire entire .sst table file.  Authorizes leveldb to",
+      "eliminate entire files that contain expired data (delete files",
+      "instead of removing expired key/values during compaction)."
+    ],
+    "docSections": [],
+    "docRelateds": [],
+    "docSees": [],
+    "docOther": [],
     "type": "mapping",
     "configName": "leveldb.expiration.mode",
     "settingName": "eleveldb.whole_file_expiry",

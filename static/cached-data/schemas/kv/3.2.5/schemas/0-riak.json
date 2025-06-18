@@ -45,8 +45,8 @@
           ]
         }
       },
-      "comment": [
-        "@doc The severity level of the console log, default is 'info'."
+      "docText": [
+        "The severity level of the console log, default is 'info'."
       ],
       "configName": "logger.level",
       "settingName": "kernel.logger_level"
@@ -55,8 +55,8 @@
       "properties": {
         "default": "[time,\\\" [\\\",level,\\\"] \\\",pid,\\\"@\\\",mfa,\\\":\\\",line,\\\" \\\",msg,\\\"\\\\n\\\"]."
       },
-      "comment": [
-        "@doc Format string for the messages emitted to default log. The string is passed into",
+      "docText": [
+        "Format string for the messages emitted to default log. The string is passed into",
         "the handler as a logger_formatter template, the format is a list containing strings",
         "and atoms. The atoms denote the keys for retrieving metadata from the logger events.",
         "More information on default metadata can be found here (https://www.erlang.org/doc/man/logger_formatter.html#type-template)."
@@ -72,8 +72,8 @@
           "value": "file"
         }
       },
-      "comment": [
-        "@doc Filename to use for log files."
+      "docText": [
+        "Filename to use for log files."
       ],
       "configName": "logger.file",
       "settingName": "kernel.logger"
@@ -86,8 +86,8 @@
           "value": "integer"
         }
       },
-      "comment": [
-        "@doc With log rotation enabled, this decides the maximum number of log",
+      "docText": [
+        "With log rotation enabled, this decides the maximum number of log",
         "files to store."
       ],
       "configName": "logger.max_files",
@@ -101,8 +101,8 @@
           "value": "bytesize"
         }
       },
-      "comment": [
-        "@doc The maximum size of a single log file. Total size used for log files will",
+      "docText": [
+        "The maximum size of a single log file. Total size used for log files will",
         "be max_file_size * max_files."
       ],
       "configName": "logger.max_file_size",
@@ -112,8 +112,8 @@
       "properties": {
         "default": "riak"
       },
-      "comment": [
-        "@doc Cookie for distributed node communication.  All nodes in the",
+      "docText": [
+        "Cookie for distributed node communication.  All nodes in the",
         "same cluster should use the same cookie or they will not be able to",
         "communicate."
       ],
@@ -125,7 +125,7 @@
         "default": "32MB",
         "merge": true
       },
-      "comment": [
+      "docOther": [
         "override zdbbl from 1mb to 32mb"
       ],
       "configName": "erlang.distribution_buffer_size",
@@ -140,8 +140,8 @@
         },
         "merge": true
       },
-      "comment": [
-        "@doc Riak changes the VM default wakeup interval in order to reduce the",
+      "docText": [
+        "Riak changes the VM default wakeup interval in order to reduce the",
         "risk of scheduler collapse, prior to the availability of Dirty NIFs in",
         "later OTP versions. When using the leveled backend exclusively (either for",
         "AAE or object storage) this change is likely unnecessary, and the VM default",
@@ -155,8 +155,8 @@
         "default": "false",
         "merge": true
       },
-      "comment": [
-        "@doc Riak changes the compaction_of_load default from true to false. This",
+      "docText": [
+        "Riak changes the compaction_of_load default from true to false. This",
         "is part of the strategy for preventing scheduler collapse in older VMs.",
         "When using the leveled backend exclusively (either for AAE or object",
         "storage), this change from the standard BEAM defaults is likely unnecessary",
@@ -180,8 +180,8 @@
         ],
         "merge": true
       },
-      "comment": [
-        "@doc Sets the number of threads in async thread pool, valid range",
+      "docText": [
+        "Sets the number of threads in async thread pool, valid range",
         "is 0-1024. If thread support is available, the default is 64.",
         "",
         "More information at: http://erlang.org/doc/man/erl.html",
@@ -211,8 +211,8 @@
         },
         "merge": true
       },
-      "comment": [
-        "@doc VM emulator ignore break signal (prevent ^C / ^Gq)"
+      "docText": [
+        "VM emulator ignore break signal (prevent ^C / ^Gq)"
       ],
       "configName": "erlang.vm.ignore_break_signal",
       "settingName": "vm_args.+B"
@@ -235,8 +235,8 @@
         ],
         "merge": true
       },
-      "comment": [
-        "@doc Default binary virtual heap size (words)",
+      "docText": [
+        "Default binary virtual heap size (words)",
         "The default value in OTP 24 is 32768.  Default is value VH_DEFAULT_SIZE in:",
         "https://github.com/erlang/otp/blob/master/erts/emulator/beam/erl_vm.h",
         "Setting to otp will use default in OTP.  Some performance improvements may",
@@ -263,8 +263,8 @@
         ],
         "merge": true
       },
-      "comment": [
-        "@doc Default virtual heap size (words)",
+      "docText": [
+        "Default virtual heap size (words)",
         "The default value in OTP 24 is 233.  Default is value H_DEFAULT_SIZE in:",
         "https://github.com/erlang/otp/blob/master/erts/emulator/beam/erl_vm.h",
         "Setting to otp will use default in OTP.  The default is a number in the",
@@ -282,8 +282,8 @@
         },
         "merge": true
       },
-      "comment": [
-        "@doc The VM single block carrier threshold (KB) for process heap"
+      "docText": [
+        "The VM single block carrier threshold (KB) for process heap"
       ],
       "configName": "erlang.eheap_memory.sbct",
       "settingName": "vm_args.+MHsbct"
@@ -297,8 +297,8 @@
         },
         "merge": true
       },
-      "comment": [
-        "@doc The VM single block carrier threshold (KB) for binary heap"
+      "docText": [
+        "The VM single block carrier threshold (KB) for binary heap"
       ],
       "configName": "erlang.binary_memory.sbct",
       "settingName": "vm_args.+MBsbct"
@@ -312,8 +312,8 @@
         },
         "merge": true
       },
-      "comment": [
-        "@doc The VM multi block carrier large size for process heap"
+      "docText": [
+        "The VM multi block carrier large size for process heap"
       ],
       "configName": "erlang.eheap_memory.lmbcs",
       "settingName": "vm_args.+MHlmbcs"
@@ -327,8 +327,8 @@
         },
         "merge": true
       },
-      "comment": [
-        "@doc The VM multi block carrier large size for binary heap"
+      "docText": [
+        "The VM multi block carrier large size for binary heap"
       ],
       "configName": "erlang.binary_memory.lmbcs",
       "settingName": "vm_args.+MBlmbcs"
@@ -342,8 +342,8 @@
         },
         "merge": true
       },
-      "comment": [
-        "@doc The VM multi block carrier small size for process heap"
+      "docText": [
+        "The VM multi block carrier small size for process heap"
       ],
       "configName": "erlang.eheap_memory.smbcs",
       "settingName": "vm_args.+MHsmbcs"
@@ -357,8 +357,8 @@
         },
         "merge": true
       },
-      "comment": [
-        "@doc The VM multi block carrier small size for binary heap"
+      "docText": [
+        "The VM multi block carrier small size for binary heap"
       ],
       "configName": "erlang.binary_memory.smbcs",
       "settingName": "vm_args.+MBsmbcs"
@@ -409,8 +409,8 @@
         },
         "merge": true
       },
-      "comment": [
-        "@doc Set allocation strategy for binary multiblock carriers.  Default is",
+      "docText": [
+        "Set allocation strategy for binary multiblock carriers.  Default is",
         "not predictable - do not rely on aoffcbf being the default.  For more info",
         "see:",
         "https://github.com/erlang/otp/blob/master/erts/emulator/internal_doc/CarrierMigration.md"
@@ -464,8 +464,8 @@
         },
         "merge": true
       },
-      "comment": [
-        "@doc Set allocation strategy for process multiblock carriers.  Default is",
+      "docText": [
+        "Set allocation strategy for process multiblock carriers.  Default is",
         "not predictable - do not rely on aoffcbf being the default.  For more info",
         "see:",
         "https://github.com/erlang/otp/blob/master/erts/emulator/internal_doc/CarrierMigration.md"
@@ -491,8 +491,8 @@
         },
         "merge": true
       },
-      "comment": [
-        "@doc Set scheduler binding.  This is either unbound (default - u) or can be",
+      "docText": [
+        "Set scheduler binding.  This is either unbound (default - u) or can be",
         "set to whatever the default binding condition is, in the deployed release of",
         "OTP (db).",
         "For more info see: https://www.erlang.org/doc/man/erl.html#+sbt",
@@ -543,8 +543,8 @@
         },
         "merge": true
       },
-      "comment": [
-        "@doc Busy wait of schedulers",
+      "docText": [
+        "Busy wait of schedulers",
         "Sets scheduler busy wait threshold. Defaults to medium. The threshold",
         "determines how long schedulers are to busy wait when running out of work",
         "before going to sleep.",
@@ -588,8 +588,8 @@
         },
         "merge": true
       },
-      "comment": [
-        "@doc Busy wait of dirty cpu schedulers",
+      "docText": [
+        "Busy wait of dirty cpu schedulers",
         "Sets scheduler busy wait threshold. Defaults to short. The threshold",
         "determines how long schedulers are to busy wait when running out of work",
         "before going to sleep.",
@@ -633,8 +633,8 @@
         },
         "merge": true
       },
-      "comment": [
-        "@doc Busy wait of dirty io schedulers",
+      "docText": [
+        "Busy wait of dirty io schedulers",
         "Sets scheduler busy wait threshold. Defaults to short. The threshold",
         "determines how long schedulers are to busy wait when running out of work",
         "before going to sleep.",
@@ -655,8 +655,8 @@
         ],
         "merge": true
       },
-      "comment": [
-        "@doc Set the Percentage of Schedulers to be online",
+      "docText": [
+        "Set the Percentage of Schedulers to be online",
         "For every vCPU in the system, what percentage should have a scheduler, and",
         "what percentage of those schedulers should be online by default.",
         "Do not set unless guided by perfomance tests for the specific setup and",
@@ -676,8 +676,8 @@
         ],
         "merge": true
       },
-      "comment": [
-        "@doc Set the Percentage of Dirty CPU Schedulers to be online",
+      "docText": [
+        "Set the Percentage of Dirty CPU Schedulers to be online",
         "When using the leveled backend a relatievly low number of dirty schedulers",
         "(e.g. 25%) are likely to be required due to the low proportion of NIFs in",
         "use.",
@@ -704,8 +704,8 @@
         ],
         "merge": true
       },
-      "comment": [
-        "@doc Set the absolute limit of Dirty IO Schedulers to be online",
+      "docText": [
+        "Set the absolute limit of Dirty IO Schedulers to be online",
         "When using the leveled backend a relatievly high number of dirty schedulers",
         "may be required relative to the CPU count, depending on the concurrent disk",
         "throughput possible.",
@@ -723,7 +723,7 @@
         "level": "basic",
         "merge": true
       },
-      "comment": [
+      "docOther": [
         "Because of the 'merge' keyword in the proplist below, the docs and datatype",
         "are pulled from the leveldb schema."
       ],
@@ -738,8 +738,8 @@
           "unit": "ms"
         }
       },
-      "comment": [
-        "@doc erlang vm shutdown_time is useful when running a riak_test devrel"
+      "docText": [
+        "erlang vm shutdown_time is useful when running a riak_test devrel"
       ],
       "configName": "erlang.shutdown_time",
       "settingName": "vm_args.-shutdown_time"
@@ -770,9 +770,11 @@
         "default": "off",
         "hidden": true
       },
-      "comment": [
-        "Unused log items",
-        "@doc Unused item - kept for backwards compatability"
+      "docText": [
+        "Unused item - kept for backwards compatability"
+      ],
+      "docOther": [
+        "Unused log items"
       ],
       "configName": "log.console",
       "settingName": "legacy.handlers.console"
@@ -823,8 +825,8 @@
         "default": "none",
         "hidden": true
       },
-      "comment": [
-        "@doc Unused item - kept for backwards compatability"
+      "docText": [
+        "Unused item - kept for backwards compatability"
       ],
       "configName": "log.console.level",
       "settingName": "legacy.handlers.console.level"
@@ -838,8 +840,8 @@
         },
         "hidden": true
       },
-      "comment": [
-        "@doc Unused item - kept for backwards compatability"
+      "docText": [
+        "Unused item - kept for backwards compatability"
       ],
       "configName": "log.console.file",
       "settingName": "legacy.handlers.console.file"
@@ -853,8 +855,8 @@
         },
         "hidden": true
       },
-      "comment": [
-        "@doc Unused item - kept for backwards compatability"
+      "docText": [
+        "Unused item - kept for backwards compatability"
       ],
       "configName": "log.error.file",
       "settingName": "legacy.handlers.error.file"
@@ -868,8 +870,8 @@
         },
         "hidden": true
       },
-      "comment": [
-        "@doc Unused item - kept for backwards compatability"
+      "docText": [
+        "Unused item - kept for backwards compatability"
       ],
       "configName": "log.syslog",
       "settingName": "legacy.handlers.syslog"
@@ -883,8 +885,8 @@
         },
         "hidden": true
       },
-      "comment": [
-        "@doc Unused item - kept for backwards compatability"
+      "docText": [
+        "Unused item - kept for backwards compatability"
       ],
       "configName": "log.syslog.ident",
       "settingName": "legacy.handlers.syslog.ident"
@@ -983,8 +985,8 @@
         "default": "daemon",
         "hidden": true
       },
-      "comment": [
-        "@doc Unused item - kept for backwards compatability"
+      "docText": [
+        "Unused item - kept for backwards compatability"
       ],
       "configName": "log.syslog.facility",
       "settingName": "legacy.handlers.syslog.facility"
@@ -1035,8 +1037,8 @@
         "default": "none",
         "hidden": true
       },
-      "comment": [
-        "@doc Unused item - kept for backwards compatability"
+      "docText": [
+        "Unused item - kept for backwards compatability"
       ],
       "configName": "log.syslog.level",
       "settingName": "legacy.handlers.syslog.level"
@@ -1050,8 +1052,8 @@
         },
         "hidden": true
       },
-      "comment": [
-        "@doc Unused item - kept for backwards compatability"
+      "docText": [
+        "Unused item - kept for backwards compatability"
       ],
       "configName": "sasl",
       "settingName": "legacy.sasl.sasl_error_logger"
@@ -1065,8 +1067,8 @@
         },
         "hidden": true
       },
-      "comment": [
-        "@doc Unused item - kept for backwards compatability"
+      "docText": [
+        "Unused item - kept for backwards compatability"
       ],
       "configName": "log.crash",
       "settingName": "legacy.crash_log"
@@ -1080,8 +1082,8 @@
         },
         "hidden": true
       },
-      "comment": [
-        "@doc Unused item - kept for backwards compatability"
+      "docText": [
+        "Unused item - kept for backwards compatability"
       ],
       "configName": "log.crash.file",
       "settingName": "legacy.crash_log_file"
@@ -1095,8 +1097,8 @@
         },
         "hidden": true
       },
-      "comment": [
-        "@doc Unused item - kept for backwards compatability"
+      "docText": [
+        "Unused item - kept for backwards compatability"
       ],
       "configName": "log.crash.maximum_message_size",
       "settingName": "legacy.crash_log_msg_size"
@@ -1110,8 +1112,8 @@
         },
         "hidden": true
       },
-      "comment": [
-        "@doc Unused item - kept for backwards compatability"
+      "docText": [
+        "Unused item - kept for backwards compatability"
       ],
       "configName": "log.crash.size",
       "settingName": "legacy.crash_log_size"
@@ -1134,8 +1136,8 @@
         "default": "current",
         "hidden": true
       },
-      "comment": [
-        "@doc Unused item - kept for backwards compatability"
+      "docText": [
+        "Unused item - kept for backwards compatability"
       ],
       "configName": "log.crash.rotation.keep",
       "settingName": "legacy.crash_log_count"
@@ -1145,8 +1147,8 @@
         "default": "$D0",
         "hidden": true
       },
-      "comment": [
-        "@doc Unused item - kept for backwards compatability"
+      "docText": [
+        "Unused item - kept for backwards compatability"
       ],
       "configName": "log.crash.rotation",
       "settingName": "legacy.crash_log_date"
@@ -1160,8 +1162,8 @@
         "default": "off",
         "hidden": true
       },
-      "comment": [
-        "@doc Unused item - kept for backwards compatability"
+      "docText": [
+        "Unused item - kept for backwards compatability"
       ],
       "configName": "log.error.redirect",
       "settingName": "legacy.error_logger_redirect"
@@ -1175,8 +1177,8 @@
         "default": "100",
         "hidden": true
       },
-      "comment": [
-        "@doc Unused item - kept for backwards compatability"
+      "docText": [
+        "Unused item - kept for backwards compatability"
       ],
       "configName": "log.error.messages_per_second",
       "settingName": "legacy.error_logger_hwm"
@@ -1185,33 +1187,34 @@
   "translations": {
     "kernel.logger": {
       "properties": {},
-      "comment": [],
       "configName": "kernel.logger",
       "func": "fun(Conf) -> LogFile = cuttlefish:conf_get(\"logger.file\", Conf), MaxNumBytes = cuttlefish:conf_get(\"logger.max_file_size\", Conf), MaxNumFiles = cuttlefish:conf_get(\"logger.max_files\", Conf),  DefaultFormatStr = cuttlefish:conf_get(\"logger.format\", Conf), DefaultFormatTerm = case erl_scan:string(DefaultFormatStr) of {ok, DefaultTokens, _} -> case erl_parse:parse_term(DefaultTokens) of {ok, DefaultTerm} -> DefaultTerm; {error, {_, _, DefaultError}} -> cuttlefish:error(foo) end; {error, {_, _, DefaultScanError}} -> cuttlefish:error(foo) end, ConfigMap0 = #{config => #{file => LogFile, max_no_bytes => MaxNumBytes, max_no_files => MaxNumFiles}, formatter => {logger_formatter, #{template => DefaultFormatTerm} } },  [{handler, default, logger_std_h, ConfigMap0}]  end "
     },
     "vm_args.+B": {
       "properties": {},
-      "comment": [],
       "configName": "vm_args.+B",
       "func": "fun(Conf) -> Setting = cuttlefish:conf_get(\"erlang.vm.ignore_break_signal\", Conf), case Setting of true -> \"i\"; false -> cuttlefish:unset() end end "
     },
     "vm_args.+hmbs": {
       "properties": {},
-      "comment": [],
       "configName": "vm_args.+hmbs",
       "func": "fun(Conf) -> Setting = cuttlefish:conf_get(\"erlang.virtual_heap.hmbs\", Conf), case Setting of Setting when is_integer(Setting) -> Setting; otp -> cuttlefish:unset() end end "
     },
     "vm_args.+hms": {
       "properties": {},
-      "comment": [],
       "configName": "vm_args.+hms",
       "func": "fun(Conf) -> Setting = cuttlefish:conf_get(\"erlang.virtual_heap.hms\", Conf), case Setting of Setting when is_integer(Setting) -> Setting; otp -> cuttlefish:unset() end end "
     }
   },
   "validators": {
-    "undefined": {
+    "scheduler_percentage": {
       "properties": {},
-      "comment": [],
+      "name": "scheduler_percentage",
+      "description": "must be A:B when B =< A and both A and B 1 < x =< 100",
+      "func": "fun(PercPerc) -> case string:tokens(PercPerc, \":\") of [A, B] -> AV = list_to_integer(A), BV = list_to_integer(B), AV =< 100 andalso AV > 0 andalso BV =< 100 andalso BV > 0; _ -> false end end"
+    },
+    "scheduler_absolute": {
+      "properties": {},
       "name": "scheduler_absolute",
       "description": "must be 1 to 1024",
       "func": "fun(Value) -> is_integer(Value) andalso Value =< 1024 andalso Value >= 1 end"

@@ -4,6 +4,13 @@
     "comment": [
       "@doc The severity level of the console log, default is 'info'."
     ],
+    "docText": [
+      "The severity level of the console log, default is 'info'."
+    ],
+    "docSections": [],
+    "docRelateds": [],
+    "docSees": [],
+    "docOther": [],
     "type": "mapping",
     "configName": "logger.level",
     "settingName": "kernel.logger_level",
@@ -90,6 +97,16 @@
       "and atoms. The atoms denote the keys for retrieving metadata from the logger events.",
       "More information on default metadata can be found here (https://www.erlang.org/doc/man/logger_formatter.html#type-template)."
     ],
+    "docText": [
+      "Format string for the messages emitted to default log. The string is passed into",
+      "the handler as a logger_formatter template, the format is a list containing strings",
+      "and atoms. The atoms denote the keys for retrieving metadata from the logger events.",
+      "More information on default metadata can be found here (https://www.erlang.org/doc/man/logger_formatter.html#type-template)."
+    ],
+    "docSections": [],
+    "docRelateds": [],
+    "docSees": [],
+    "docOther": [],
     "type": "mapping",
     "configName": "logger.format",
     "settingName": "kernel.logger",
@@ -114,6 +131,13 @@
     "comment": [
       "@doc Filename to use for log files."
     ],
+    "docText": [
+      "Filename to use for log files."
+    ],
+    "docSections": [],
+    "docRelateds": [],
+    "docSees": [],
+    "docOther": [],
     "type": "mapping",
     "configName": "logger.file",
     "settingName": "kernel.logger",
@@ -152,6 +176,14 @@
       "@doc With log rotation enabled, this decides the maximum number of log",
       "files to store."
     ],
+    "docText": [
+      "With log rotation enabled, this decides the maximum number of log",
+      "files to store."
+    ],
+    "docSections": [],
+    "docRelateds": [],
+    "docSees": [],
+    "docOther": [],
     "type": "mapping",
     "configName": "logger.max_files",
     "settingName": "kernel.logger",
@@ -190,6 +222,14 @@
       "@doc The maximum size of a single log file. Total size used for log files will",
       "be max_file_size * max_files."
     ],
+    "docText": [
+      "The maximum size of a single log file. Total size used for log files will",
+      "be max_file_size * max_files."
+    ],
+    "docSections": [],
+    "docRelateds": [],
+    "docSees": [],
+    "docOther": [],
     "type": "mapping",
     "configName": "logger.max_file_size",
     "settingName": "kernel.logger",
@@ -225,6 +265,11 @@
   {
     "rawSchema": "{translation, \"kernel.logger\", fun(Conf) -> LogFile = cuttlefish:conf_get(\"logger.file\", Conf), MaxNumBytes = cuttlefish:conf_get(\"logger.max_file_size\", Conf), MaxNumFiles = cuttlefish:conf_get(\"logger.max_files\", Conf),  DefaultFormatStr = cuttlefish:conf_get(\"logger.format\", Conf), DefaultFormatTerm = case erl_scan:string(DefaultFormatStr) of {ok, DefaultTokens, _} -> case erl_parse:parse_term(DefaultTokens) of {ok, DefaultTerm} -> DefaultTerm; {error, {_, _, DefaultError}} -> cuttlefish:error(foo) end; {error, {_, _, DefaultScanError}} -> cuttlefish:error(foo) end, ConfigMap0 = #{config => #{file => LogFile, max_no_bytes => MaxNumBytes, max_no_files => MaxNumFiles}, formatter => {logger_formatter, #{template => DefaultFormatTerm} } },  [{handler, default, logger_std_h, ConfigMap0}]  end }.",
     "comment": [],
+    "docText": [],
+    "docSections": [],
+    "docRelateds": [],
+    "docSees": [],
+    "docOther": [],
     "type": "translation",
     "configName": "kernel.logger",
     "func": "fun(Conf) -> LogFile = cuttlefish:conf_get(\"logger.file\", Conf), MaxNumBytes = cuttlefish:conf_get(\"logger.max_file_size\", Conf), MaxNumFiles = cuttlefish:conf_get(\"logger.max_files\", Conf),  DefaultFormatStr = cuttlefish:conf_get(\"logger.format\", Conf), DefaultFormatTerm = case erl_scan:string(DefaultFormatStr) of {ok, DefaultTokens, _} -> case erl_parse:parse_term(DefaultTokens) of {ok, DefaultTerm} -> DefaultTerm; {error, {_, _, DefaultError}} -> cuttlefish:error(foo) end; {error, {_, _, DefaultScanError}} -> cuttlefish:error(foo) end, ConfigMap0 = #{config => #{file => LogFile, max_no_bytes => MaxNumBytes, max_no_files => MaxNumFiles}, formatter => {logger_formatter, #{template => DefaultFormatTerm} } },  [{handler, default, logger_std_h, ConfigMap0}]  end "
@@ -236,6 +281,15 @@
       "same cluster should use the same cookie or they will not be able to",
       "communicate."
     ],
+    "docText": [
+      "Cookie for distributed node communication.  All nodes in the",
+      "same cluster should use the same cookie or they will not be able to",
+      "communicate."
+    ],
+    "docSections": [],
+    "docRelateds": [],
+    "docSees": [],
+    "docOther": [],
     "type": "mapping",
     "configName": "distributed_cookie",
     "settingName": "vm_args.-setcookie",
@@ -258,6 +312,13 @@
   {
     "rawSchema": "{mapping, \"erlang.distribution_buffer_size\", \"vm_args.+zdbbl\", [ {default, \"32MB\"}, merge ]}.",
     "comment": [
+      "override zdbbl from 1mb to 32mb"
+    ],
+    "docText": [],
+    "docSections": [],
+    "docRelateds": [],
+    "docSees": [],
+    "docOther": [
       "override zdbbl from 1mb to 32mb"
     ],
     "type": "mapping",
@@ -292,6 +353,17 @@
       "AAE or object storage) this change is likely unnecessary, and the VM default",
       "of 0 can be used."
     ],
+    "docText": [
+      "Riak changes the VM default wakeup interval in order to reduce the",
+      "risk of scheduler collapse, prior to the availability of Dirty NIFs in",
+      "later OTP versions. When using the leveled backend exclusively (either for",
+      "AAE or object storage) this change is likely unnecessary, and the VM default",
+      "of 0 can be used."
+    ],
+    "docSections": [],
+    "docRelateds": [],
+    "docSees": [],
+    "docOther": [],
     "type": "mapping",
     "configName": "erlang.schedulers.force_wakeup_interval",
     "settingName": "vm_args.+sfwi",
@@ -337,6 +409,17 @@
       "storage), this change from the standard BEAM defaults is likely unnecessary",
       "- and compaction_of_load can be re-enabled."
     ],
+    "docText": [
+      "Riak changes the compaction_of_load default from true to false. This",
+      "is part of the strategy for preventing scheduler collapse in older VMs.",
+      "When using the leveled backend exclusively (either for AAE or object",
+      "storage), this change from the standard BEAM defaults is likely unnecessary",
+      "- and compaction_of_load can be re-enabled."
+    ],
+    "docSections": [],
+    "docRelateds": [],
+    "docSees": [],
+    "docOther": [],
     "type": "mapping",
     "configName": "erlang.schedulers.compaction_of_load",
     "settingName": "vm_args.+scl",
@@ -372,6 +455,20 @@
       "the leveled backend due to dirty NIFs, and so can be set to a much smaller",
       "value (potentially 1)."
     ],
+    "docText": [
+      "Sets the number of threads in async thread pool, valid range",
+      "is 0-1024. If thread support is available, the default is 64.",
+      "",
+      "More information at: http://erlang.org/doc/man/erl.html",
+      "",
+      "Large async_thread pools are likely now unnecessary if exclusively using",
+      "the leveled backend due to dirty NIFs, and so can be set to a much smaller",
+      "value (potentially 1)."
+    ],
+    "docSections": [],
+    "docRelateds": [],
+    "docSees": [],
+    "docOther": [],
     "type": "mapping",
     "configName": "erlang.async_threads",
     "settingName": "vm_args.+A",
@@ -431,6 +528,13 @@
     "comment": [
       "@doc VM emulator ignore break signal (prevent ^C / ^Gq)"
     ],
+    "docText": [
+      "VM emulator ignore break signal (prevent ^C / ^Gq)"
+    ],
+    "docSections": [],
+    "docRelateds": [],
+    "docSees": [],
+    "docOther": [],
     "type": "mapping",
     "configName": "erlang.vm.ignore_break_signal",
     "settingName": "vm_args.+B",
@@ -488,6 +592,11 @@
   {
     "rawSchema": "{translation, \"vm_args.+B\", fun(Conf) -> Setting = cuttlefish:conf_get(\"erlang.vm.ignore_break_signal\", Conf), case Setting of true -> \"i\"; false -> cuttlefish:unset() end end }.",
     "comment": [],
+    "docText": [],
+    "docSections": [],
+    "docRelateds": [],
+    "docSees": [],
+    "docOther": [],
     "type": "translation",
     "configName": "vm_args.+B",
     "func": "fun(Conf) -> Setting = cuttlefish:conf_get(\"erlang.vm.ignore_break_signal\", Conf), case Setting of true -> \"i\"; false -> cuttlefish:unset() end end "
@@ -501,6 +610,17 @@
       "Setting to otp will use default in OTP.  Some performance improvements may",
       "be seen with leveled by increasing this to 131072."
     ],
+    "docText": [
+      "Default binary virtual heap size (words)",
+      "The default value in OTP 24 is 32768.  Default is value VH_DEFAULT_SIZE in:",
+      "https://github.com/erlang/otp/blob/master/erts/emulator/beam/erl_vm.h",
+      "Setting to otp will use default in OTP.  Some performance improvements may",
+      "be seen with leveled by increasing this to 131072."
+    ],
+    "docSections": [],
+    "docRelateds": [],
+    "docSees": [],
+    "docOther": [],
     "type": "mapping",
     "configName": "erlang.virtual_heap.hmbs",
     "settingName": "vm_args.+hmbs",
@@ -558,6 +678,11 @@
   {
     "rawSchema": "{translation, \"vm_args.+hmbs\", fun(Conf) -> Setting = cuttlefish:conf_get(\"erlang.virtual_heap.hmbs\", Conf), case Setting of Setting when is_integer(Setting) -> Setting; otp -> cuttlefish:unset() end end }.",
     "comment": [],
+    "docText": [],
+    "docSections": [],
+    "docRelateds": [],
+    "docSees": [],
+    "docOther": [],
     "type": "translation",
     "configName": "vm_args.+hmbs",
     "func": "fun(Conf) -> Setting = cuttlefish:conf_get(\"erlang.virtual_heap.hmbs\", Conf), case Setting of Setting when is_integer(Setting) -> Setting; otp -> cuttlefish:unset() end end "
@@ -571,6 +696,17 @@
       "Setting to otp will use default in OTP.  The default is a number in the",
       "Fibonacci sequence"
     ],
+    "docText": [
+      "Default virtual heap size (words)",
+      "The default value in OTP 24 is 233.  Default is value H_DEFAULT_SIZE in:",
+      "https://github.com/erlang/otp/blob/master/erts/emulator/beam/erl_vm.h",
+      "Setting to otp will use default in OTP.  The default is a number in the",
+      "Fibonacci sequence"
+    ],
+    "docSections": [],
+    "docRelateds": [],
+    "docSees": [],
+    "docOther": [],
     "type": "mapping",
     "configName": "erlang.virtual_heap.hms",
     "settingName": "vm_args.+hms",
@@ -628,6 +764,11 @@
   {
     "rawSchema": "{translation, \"vm_args.+hms\", fun(Conf) -> Setting = cuttlefish:conf_get(\"erlang.virtual_heap.hms\", Conf), case Setting of Setting when is_integer(Setting) -> Setting; otp -> cuttlefish:unset() end end }.",
     "comment": [],
+    "docText": [],
+    "docSections": [],
+    "docRelateds": [],
+    "docSees": [],
+    "docOther": [],
     "type": "translation",
     "configName": "vm_args.+hms",
     "func": "fun(Conf) -> Setting = cuttlefish:conf_get(\"erlang.virtual_heap.hms\", Conf), case Setting of Setting when is_integer(Setting) -> Setting; otp -> cuttlefish:unset() end end "
@@ -637,6 +778,13 @@
     "comment": [
       "@doc The VM single block carrier threshold (KB) for process heap"
     ],
+    "docText": [
+      "The VM single block carrier threshold (KB) for process heap"
+    ],
+    "docSections": [],
+    "docRelateds": [],
+    "docSees": [],
+    "docOther": [],
     "type": "mapping",
     "configName": "erlang.eheap_memory.sbct",
     "settingName": "vm_args.+MHsbct",
@@ -678,6 +826,13 @@
     "comment": [
       "@doc The VM single block carrier threshold (KB) for binary heap"
     ],
+    "docText": [
+      "The VM single block carrier threshold (KB) for binary heap"
+    ],
+    "docSections": [],
+    "docRelateds": [],
+    "docSees": [],
+    "docOther": [],
     "type": "mapping",
     "configName": "erlang.binary_memory.sbct",
     "settingName": "vm_args.+MBsbct",
@@ -719,6 +874,13 @@
     "comment": [
       "@doc The VM multi block carrier large size for process heap"
     ],
+    "docText": [
+      "The VM multi block carrier large size for process heap"
+    ],
+    "docSections": [],
+    "docRelateds": [],
+    "docSees": [],
+    "docOther": [],
     "type": "mapping",
     "configName": "erlang.eheap_memory.lmbcs",
     "settingName": "vm_args.+MHlmbcs",
@@ -760,6 +922,13 @@
     "comment": [
       "@doc The VM multi block carrier large size for binary heap"
     ],
+    "docText": [
+      "The VM multi block carrier large size for binary heap"
+    ],
+    "docSections": [],
+    "docRelateds": [],
+    "docSees": [],
+    "docOther": [],
     "type": "mapping",
     "configName": "erlang.binary_memory.lmbcs",
     "settingName": "vm_args.+MBlmbcs",
@@ -801,6 +970,13 @@
     "comment": [
       "@doc The VM multi block carrier small size for process heap"
     ],
+    "docText": [
+      "The VM multi block carrier small size for process heap"
+    ],
+    "docSections": [],
+    "docRelateds": [],
+    "docSees": [],
+    "docOther": [],
     "type": "mapping",
     "configName": "erlang.eheap_memory.smbcs",
     "settingName": "vm_args.+MHsmbcs",
@@ -842,6 +1018,13 @@
     "comment": [
       "@doc The VM multi block carrier small size for binary heap"
     ],
+    "docText": [
+      "The VM multi block carrier small size for binary heap"
+    ],
+    "docSections": [],
+    "docRelateds": [],
+    "docSees": [],
+    "docOther": [],
     "type": "mapping",
     "configName": "erlang.binary_memory.smbcs",
     "settingName": "vm_args.+MBsmbcs",
@@ -886,6 +1069,16 @@
       "see:",
       "https://github.com/erlang/otp/blob/master/erts/emulator/internal_doc/CarrierMigration.md"
     ],
+    "docText": [
+      "Set allocation strategy for binary multiblock carriers.  Default is",
+      "not predictable - do not rely on aoffcbf being the default.  For more info",
+      "see:",
+      "https://github.com/erlang/otp/blob/master/erts/emulator/internal_doc/CarrierMigration.md"
+    ],
+    "docSections": [],
+    "docRelateds": [],
+    "docSees": [],
+    "docOther": [],
     "type": "mapping",
     "configName": "erlang.binary_memory.as",
     "settingName": "vm_args.+MBas",
@@ -976,6 +1169,16 @@
       "see:",
       "https://github.com/erlang/otp/blob/master/erts/emulator/internal_doc/CarrierMigration.md"
     ],
+    "docText": [
+      "Set allocation strategy for process multiblock carriers.  Default is",
+      "not predictable - do not rely on aoffcbf being the default.  For more info",
+      "see:",
+      "https://github.com/erlang/otp/blob/master/erts/emulator/internal_doc/CarrierMigration.md"
+    ],
+    "docSections": [],
+    "docRelateds": [],
+    "docSees": [],
+    "docOther": [],
     "type": "mapping",
     "configName": "erlang.eheap_memory.as",
     "settingName": "vm_args.+MHas",
@@ -1075,6 +1278,25 @@
       "and view:",
       "`erlang:system_info(scheduler_bindings).`"
     ],
+    "docText": [
+      "Set scheduler binding.  This is either unbound (default - u) or can be",
+      "set to whatever the default binding condition is, in the deployed release of",
+      "OTP (db).",
+      "For more info see: https://www.erlang.org/doc/man/erl.html#+sbt",
+      "Note that if non-Riak work is activated on the same node - e.g. as part",
+      "of batch operational jobs, or monitoring - allowing schedulers to be bound",
+      "can result in significant and unpredictable negative outcomes.  There may be",
+      "other ways of achieving similar performance improvements - e.g. by",
+      "right-sizing scheduler counts - that are lower risk than scheduler binding.",
+      "If a CPU topology cannot be determined, the binding will default to unbound",
+      "even when a binding is configured.  To confirm binding, use `remote_console`",
+      "and view:",
+      "`erlang:system_info(scheduler_bindings).`"
+    ],
+    "docSections": [],
+    "docRelateds": [],
+    "docSees": [],
+    "docOther": [],
     "type": "mapping",
     "configName": "erlang.schedulers_binding",
     "settingName": "vm_args.+stbt",
@@ -1139,6 +1361,18 @@
       "Significant improvements in efficiency may be gained by disabling busy",
       "waiting"
     ],
+    "docText": [
+      "Busy wait of schedulers",
+      "Sets scheduler busy wait threshold. Defaults to medium. The threshold",
+      "determines how long schedulers are to busy wait when running out of work",
+      "before going to sleep.",
+      "Significant improvements in efficiency may be gained by disabling busy",
+      "waiting"
+    ],
+    "docSections": [],
+    "docRelateds": [],
+    "docSees": [],
+    "docOther": [],
     "type": "mapping",
     "configName": "erlang.schedulers_busywait",
     "settingName": "vm_args.+sbwt",
@@ -1219,6 +1453,18 @@
       "Significant improvements in efficiency may be gained by disabling busy",
       "waiting"
     ],
+    "docText": [
+      "Busy wait of dirty cpu schedulers",
+      "Sets scheduler busy wait threshold. Defaults to short. The threshold",
+      "determines how long schedulers are to busy wait when running out of work",
+      "before going to sleep.",
+      "Significant improvements in efficiency may be gained by disabling busy",
+      "waiting"
+    ],
+    "docSections": [],
+    "docRelateds": [],
+    "docSees": [],
+    "docOther": [],
     "type": "mapping",
     "configName": "erlang.schedulers_busywait_dirtycpu",
     "settingName": "vm_args.+sbwtdcpu",
@@ -1299,6 +1545,18 @@
       "Significant improvements in efficiency may be gained by disabling busy",
       "waiting"
     ],
+    "docText": [
+      "Busy wait of dirty io schedulers",
+      "Sets scheduler busy wait threshold. Defaults to short. The threshold",
+      "determines how long schedulers are to busy wait when running out of work",
+      "before going to sleep.",
+      "Significant improvements in efficiency may be gained by disabling busy",
+      "waiting"
+    ],
+    "docSections": [],
+    "docRelateds": [],
+    "docSees": [],
+    "docOther": [],
     "type": "mapping",
     "configName": "erlang.schedulers_busywait_dirtyio",
     "settingName": "vm_args.+sbwtdio",
@@ -1378,6 +1636,17 @@
       "Do not set unless guided by perfomance tests for the specific setup and",
       "workload."
     ],
+    "docText": [
+      "Set the Percentage of Schedulers to be online",
+      "For every vCPU in the system, what percentage should have a scheduler, and",
+      "what percentage of those schedulers should be online by default.",
+      "Do not set unless guided by perfomance tests for the specific setup and",
+      "workload."
+    ],
+    "docSections": [],
+    "docRelateds": [],
+    "docSees": [],
+    "docOther": [],
     "type": "mapping",
     "configName": "erlang.schedulers_online_percentage",
     "settingName": "vm_args.+SP",
@@ -1431,6 +1700,20 @@
       "Do not set unless guided by perfomance tests for the specific setup and",
       "workload."
     ],
+    "docText": [
+      "Set the Percentage of Dirty CPU Schedulers to be online",
+      "When using the leveled backend a relatievly low number of dirty schedulers",
+      "(e.g. 25%) are likely to be required due to the low proportion of NIFs in",
+      "use.",
+      "The percentages cannot exceed those of the schedulers_online_percentage",
+      "which will default to 100% of CPU.",
+      "Do not set unless guided by perfomance tests for the specific setup and",
+      "workload."
+    ],
+    "docSections": [],
+    "docRelateds": [],
+    "docSees": [],
+    "docOther": [],
     "type": "mapping",
     "configName": "erlang.schedulers_dirtycpu_online_percentage",
     "settingName": "vm_args.+SDPcpu",
@@ -1484,6 +1767,20 @@
       "Do not set unless guided by perfomance tests for the specific setup and",
       "workload."
     ],
+    "docText": [
+      "Set the absolute limit of Dirty IO Schedulers to be online",
+      "When using the leveled backend a relatievly high number of dirty schedulers",
+      "may be required relative to the CPU count, depending on the concurrent disk",
+      "throughput possible.",
+      "Unlike the scheduler percentages, this is set as an abolute number between",
+      "1 and 1024 (default is 10).",
+      "Do not set unless guided by perfomance tests for the specific setup and",
+      "workload."
+    ],
+    "docSections": [],
+    "docRelateds": [],
+    "docSees": [],
+    "docOther": [],
     "type": "mapping",
     "configName": "erlang.schedulers_dirtyio_online",
     "settingName": "vm_args.+SDio",
@@ -1541,6 +1838,11 @@
   {
     "rawSchema": "{validator, \"scheduler_percentage\", \"must be A:B when B =< A and both A and B 1 < x =< 100\", fun(PercPerc) -> case string:tokens(PercPerc, \":\") of [A, B] -> AV = list_to_integer(A), BV = list_to_integer(B), AV =< 100 andalso AV > 0 andalso BV =< 100 andalso BV > 0; _ -> false end end}.",
     "comment": [],
+    "docText": [],
+    "docSections": [],
+    "docRelateds": [],
+    "docSees": [],
+    "docOther": [],
     "type": "validator",
     "name": "scheduler_percentage",
     "description": "must be A:B when B =< A and both A and B 1 < x =< 100",
@@ -1549,6 +1851,11 @@
   {
     "rawSchema": "{validator, \"scheduler_absolute\", \"must be 1 to 1024\", fun(Value) -> is_integer(Value) andalso Value =< 1024 andalso Value >= 1 end}.",
     "comment": [],
+    "docText": [],
+    "docSections": [],
+    "docRelateds": [],
+    "docSees": [],
+    "docOther": [],
     "type": "validator",
     "name": "scheduler_absolute",
     "description": "must be 1 to 1024",
@@ -1557,6 +1864,14 @@
   {
     "rawSchema": "{mapping, \"leveldb.limited_developer_mem\", \"eleveldb.limited_developer_mem\", [ {default, on}, {level, basic}, merge ]}.",
     "comment": [
+      "Because of the 'merge' keyword in the proplist below, the docs and datatype",
+      "are pulled from the leveldb schema."
+    ],
+    "docText": [],
+    "docSections": [],
+    "docRelateds": [],
+    "docSees": [],
+    "docOther": [
       "Because of the 'merge' keyword in the proplist below, the docs and datatype",
       "are pulled from the leveldb schema."
     ],
@@ -1601,6 +1916,13 @@
     "comment": [
       "@doc erlang vm shutdown_time is useful when running a riak_test devrel"
     ],
+    "docText": [
+      "erlang vm shutdown_time is useful when running a riak_test devrel"
+    ],
+    "docSections": [],
+    "docRelateds": [],
+    "docSees": [],
+    "docOther": [],
     "type": "mapping",
     "configName": "erlang.shutdown_time",
     "settingName": "vm_args.-shutdown_time",
@@ -1647,6 +1969,15 @@
     "comment": [
       "Unused log items",
       "@doc Unused item - kept for backwards compatability"
+    ],
+    "docText": [
+      "Unused item - kept for backwards compatability"
+    ],
+    "docSections": [],
+    "docRelateds": [],
+    "docSees": [],
+    "docOther": [
+      "Unused log items"
     ],
     "type": "mapping",
     "configName": "log.console",
@@ -1715,6 +2046,13 @@
     "comment": [
       "@doc Unused item - kept for backwards compatability"
     ],
+    "docText": [
+      "Unused item - kept for backwards compatability"
+    ],
+    "docSections": [],
+    "docRelateds": [],
+    "docSees": [],
+    "docOther": [],
     "type": "mapping",
     "configName": "log.console.level",
     "settingName": "legacy.handlers.console.level",
@@ -1802,6 +2140,13 @@
     "comment": [
       "@doc Unused item - kept for backwards compatability"
     ],
+    "docText": [
+      "Unused item - kept for backwards compatability"
+    ],
+    "docSections": [],
+    "docRelateds": [],
+    "docSees": [],
+    "docOther": [],
     "type": "mapping",
     "configName": "log.console.file",
     "settingName": "legacy.handlers.console.file",
@@ -1843,6 +2188,13 @@
     "comment": [
       "@doc Unused item - kept for backwards compatability"
     ],
+    "docText": [
+      "Unused item - kept for backwards compatability"
+    ],
+    "docSections": [],
+    "docRelateds": [],
+    "docSees": [],
+    "docOther": [],
     "type": "mapping",
     "configName": "log.error.file",
     "settingName": "legacy.handlers.error.file",
@@ -1884,6 +2236,13 @@
     "comment": [
       "@doc Unused item - kept for backwards compatability"
     ],
+    "docText": [
+      "Unused item - kept for backwards compatability"
+    ],
+    "docSections": [],
+    "docRelateds": [],
+    "docSees": [],
+    "docOther": [],
     "type": "mapping",
     "configName": "log.syslog",
     "settingName": "legacy.handlers.syslog",
@@ -1925,6 +2284,13 @@
     "comment": [
       "@doc Unused item - kept for backwards compatability"
     ],
+    "docText": [
+      "Unused item - kept for backwards compatability"
+    ],
+    "docSections": [],
+    "docRelateds": [],
+    "docSees": [],
+    "docOther": [],
     "type": "mapping",
     "configName": "log.syslog.ident",
     "settingName": "legacy.handlers.syslog.ident",
@@ -1966,6 +2332,13 @@
     "comment": [
       "@doc Unused item - kept for backwards compatability"
     ],
+    "docText": [
+      "Unused item - kept for backwards compatability"
+    ],
+    "docSections": [],
+    "docRelateds": [],
+    "docSees": [],
+    "docOther": [],
     "type": "mapping",
     "configName": "log.syslog.facility",
     "settingName": "legacy.handlers.syslog.facility",
@@ -2101,6 +2474,13 @@
     "comment": [
       "@doc Unused item - kept for backwards compatability"
     ],
+    "docText": [
+      "Unused item - kept for backwards compatability"
+    ],
+    "docSections": [],
+    "docRelateds": [],
+    "docSees": [],
+    "docOther": [],
     "type": "mapping",
     "configName": "log.syslog.level",
     "settingName": "legacy.handlers.syslog.level",
@@ -2188,6 +2568,13 @@
     "comment": [
       "@doc Unused item - kept for backwards compatability"
     ],
+    "docText": [
+      "Unused item - kept for backwards compatability"
+    ],
+    "docSections": [],
+    "docRelateds": [],
+    "docSees": [],
+    "docOther": [],
     "type": "mapping",
     "configName": "sasl",
     "settingName": "legacy.sasl.sasl_error_logger",
@@ -2229,6 +2616,13 @@
     "comment": [
       "@doc Unused item - kept for backwards compatability"
     ],
+    "docText": [
+      "Unused item - kept for backwards compatability"
+    ],
+    "docSections": [],
+    "docRelateds": [],
+    "docSees": [],
+    "docOther": [],
     "type": "mapping",
     "configName": "log.crash",
     "settingName": "legacy.crash_log",
@@ -2270,6 +2664,13 @@
     "comment": [
       "@doc Unused item - kept for backwards compatability"
     ],
+    "docText": [
+      "Unused item - kept for backwards compatability"
+    ],
+    "docSections": [],
+    "docRelateds": [],
+    "docSees": [],
+    "docOther": [],
     "type": "mapping",
     "configName": "log.crash.file",
     "settingName": "legacy.crash_log_file",
@@ -2311,6 +2712,13 @@
     "comment": [
       "@doc Unused item - kept for backwards compatability"
     ],
+    "docText": [
+      "Unused item - kept for backwards compatability"
+    ],
+    "docSections": [],
+    "docRelateds": [],
+    "docSees": [],
+    "docOther": [],
     "type": "mapping",
     "configName": "log.crash.maximum_message_size",
     "settingName": "legacy.crash_log_msg_size",
@@ -2352,6 +2760,13 @@
     "comment": [
       "@doc Unused item - kept for backwards compatability"
     ],
+    "docText": [
+      "Unused item - kept for backwards compatability"
+    ],
+    "docSections": [],
+    "docRelateds": [],
+    "docSees": [],
+    "docOther": [],
     "type": "mapping",
     "configName": "log.crash.size",
     "settingName": "legacy.crash_log_size",
@@ -2393,6 +2808,13 @@
     "comment": [
       "@doc Unused item - kept for backwards compatability"
     ],
+    "docText": [
+      "Unused item - kept for backwards compatability"
+    ],
+    "docSections": [],
+    "docRelateds": [],
+    "docSees": [],
+    "docOther": [],
     "type": "mapping",
     "configName": "log.crash.rotation.keep",
     "settingName": "legacy.crash_log_count",
@@ -2452,6 +2874,13 @@
     "comment": [
       "@doc Unused item - kept for backwards compatability"
     ],
+    "docText": [
+      "Unused item - kept for backwards compatability"
+    ],
+    "docSections": [],
+    "docRelateds": [],
+    "docSees": [],
+    "docOther": [],
     "type": "mapping",
     "configName": "log.crash.rotation",
     "settingName": "legacy.crash_log_date",
@@ -2480,6 +2909,13 @@
     "comment": [
       "@doc Unused item - kept for backwards compatability"
     ],
+    "docText": [
+      "Unused item - kept for backwards compatability"
+    ],
+    "docSections": [],
+    "docRelateds": [],
+    "docSees": [],
+    "docOther": [],
     "type": "mapping",
     "configName": "log.error.redirect",
     "settingName": "legacy.error_logger_redirect",
@@ -2521,6 +2957,13 @@
     "comment": [
       "@doc Unused item - kept for backwards compatability"
     ],
+    "docText": [
+      "Unused item - kept for backwards compatability"
+    ],
+    "docSections": [],
+    "docRelateds": [],
+    "docSees": [],
+    "docOther": [],
     "type": "mapping",
     "configName": "log.error.messages_per_second",
     "settingName": "legacy.error_logger_hwm",

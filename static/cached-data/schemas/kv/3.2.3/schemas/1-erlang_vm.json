@@ -22,8 +22,8 @@
         },
         "hidden": true
       },
-      "comment": [
-        "@doc Starts the Erlang runtime system with SMP support",
+      "docText": [
+        "Starts the Erlang runtime system with SMP support",
         "enabled. This may fail if no runtime system with SMP support is",
         "available. The 'auto' setting starts the Erlang runtime system with",
         "SMP support enabled if it is available and more than one logical",
@@ -46,8 +46,8 @@
         "default": "w",
         "hidden": true
       },
-      "comment": [
-        "@doc Sets the mapping of warning messages for error_logger.",
+      "docText": [
+        "Sets the mapping of warning messages for error_logger.",
         "Messages sent to the error logger using one of the warning",
         "routines can be mapped either to errors (default), warnings",
         "(w - default), or info reports (i)."
@@ -69,8 +69,8 @@
           }
         ]
       },
-      "comment": [
-        "@doc Sets the number of scheduler threads to create and scheduler",
+      "docText": [
+        "Sets the number of scheduler threads to create and scheduler",
         "threads to set online when erlang.smp support has been enabled. The",
         "maximum for both values is 1024. If the Erlang runtime system is",
         "able to determine the amount of logical processors configured and",
@@ -112,8 +112,8 @@
           }
         ]
       },
-      "comment": [
-        "@see erlang.schedulers.total"
+      "docSees": [
+        "erlang.schedulers.total"
       ],
       "configName": "erlang.schedulers.online",
       "settingName": "vm_args.+S"
@@ -127,8 +127,8 @@
         },
         "hidden": true
       },
-      "comment": [
-        "@doc Enables or disables the kernel poll functionality if the",
+      "docText": [
+        "Enables or disables the kernel poll functionality if the",
         "emulator supports it. If the emulator does not support kernel poll,",
         "and the K flag is passed to the emulator, a warning is issued at",
         "startup.",
@@ -142,9 +142,11 @@
       "properties": {
         "default": "{{node}}"
       },
-      "comment": [
-        "%% Tunables",
-        "@doc Name of the Erlang node"
+      "docText": [
+        "Name of the Erlang node"
+      ],
+      "docOther": [
+        "%% Tunables"
       ],
       "configName": "nodename",
       "settingName": "vm_args.-name"
@@ -153,8 +155,8 @@
       "properties": {
         "default": "erlang"
       },
-      "comment": [
-        "@doc Cookie for distributed node communication.  All nodes in the",
+      "docText": [
+        "Cookie for distributed node communication.  All nodes in the",
         "same cluster should use the same cookie or they will not be able to",
         "communicate."
       ],
@@ -175,8 +177,8 @@
           }
         ]
       },
-      "comment": [
-        "@doc Sets the number of threads in async thread pool, valid range",
+      "docText": [
+        "Sets the number of threads in async thread pool, valid range",
         "is 0-1024. If thread support is available, the default is 64.",
         "",
         "More information at: http://erlang.org/doc/man/erl.html"
@@ -202,8 +204,8 @@
         ],
         "hidden": true
       },
-      "comment": [
-        "@doc Suggested stack size, in bytes, for threads in the",
+      "docText": [
+        "Suggested stack size, in bytes, for threads in the",
         "async-thread pool. Valid range is 16-8192 kilowords. The default",
         "suggested stack size is 16 kilowords, i.e, 64 kilobyte on 32-bit",
         "architectures. This small default size has been chosen since the",
@@ -233,8 +235,8 @@
           }
         ]
       },
-      "comment": [
-        "@doc A non-negative integer which indicates how many times",
+      "docText": [
+        "A non-negative integer which indicates how many times",
         "generational garbage collections can be done without forcing a",
         "fullsweep collection. In low-memory systems (especially without",
         "virtual memory), setting the value to 0 can help to conserve",
@@ -255,8 +257,8 @@
         },
         "hidden": true
       },
-      "comment": [
-        "@doc Set the location of crash dumps"
+      "docText": [
+        "Set the location of crash dumps"
       ],
       "configName": "erlang.crash_dump",
       "settingName": "vm_args.-env ERL_CRASH_DUMP"
@@ -270,11 +272,13 @@
         "default": "256000",
         "hidden": true
       },
-      "comment": [
+      "docText": [
+        "Raise the ETS table limit",
+        "Raise the default erlang process limit"
+      ],
+      "docOther": [
         "Note: OTP R15 and earlier uses -env ERL_MAX_ETS_TABLES,",
-        "R16+ uses +e",
-        "@doc Raise the ETS table limit",
-        "@doc Raise the default erlang process limit"
+        "R16+ uses +e"
       ],
       "configName": "erlang.process_limit",
       "settingName": "vm_args.+P"
@@ -294,8 +298,8 @@
           }
         ]
       },
-      "comment": [
-        "@doc For nodes with many busy_dist_port events, Basho recommends",
+      "docText": [
+        "For nodes with many busy_dist_port events, Basho recommends",
         "raising the sender-side network distribution buffer size.",
         "32MB may not be sufficient for some workloads and is a suggested",
         "starting point. Erlangers may know this as +zdbbl.",
@@ -313,8 +317,8 @@
           "value": "integer"
         }
       },
-      "comment": [
-        "@doc Set scheduler forced wakeup interval. All run queues will be",
+      "docText": [
+        "Set scheduler forced wakeup interval. All run queues will be",
         "scanned each Interval milliseconds. While there are sleeping",
         "schedulers in the system, one scheduler will be woken for each",
         "non-empty run queue found. An Interval of zero disables this",
@@ -345,8 +349,8 @@
           ]
         }
       },
-      "comment": [
-        "@doc Enable or disable scheduler compaction of load. By default",
+      "docText": [
+        "Enable or disable scheduler compaction of load. By default",
         "scheduler compaction of load is enabled. When enabled, load",
         "balancing will strive for a load distribution which causes as many",
         "scheduler threads as possible to be fully loaded (i.e., not run out",
@@ -378,8 +382,8 @@
           ]
         }
       },
-      "comment": [
-        "@doc Enable or disable scheduler utilization balancing of load. By",
+      "docText": [
+        "Enable or disable scheduler utilization balancing of load. By",
         "default scheduler utilization balancing is disabled and instead",
         "scheduler compaction of load is enabled which will strive for a",
         "load distribution which causes as many scheduler threads as",
@@ -402,8 +406,8 @@
         },
         "hidden": true
       },
-      "comment": [
-        "@doc For ease of firewall configuration, the Erlang distribution",
+      "docText": [
+        "For ease of firewall configuration, the Erlang distribution",
         "can be bound to a limited range of TCP ports. If this is set, and",
         "erlang.distribution.port_range.maximum is *unset*, only this port",
         "will be used. If the minimum is *unset*, no restriction will be",
@@ -425,8 +429,8 @@
         },
         "hidden": true
       },
-      "comment": [
-        "@see erlang.distribution.port_range.minimum"
+      "docSees": [
+        "erlang.distribution.port_range.minimum"
       ],
       "configName": "erlang.distribution.port_range.maximum",
       "settingName": "kernel.inet_dist_listen_max"
@@ -446,8 +450,8 @@
         ],
         "hidden": true
       },
-      "comment": [
-        "@doc Set the interface/IP to listen for distributed Erlang connections.",
+      "docText": [
+        "Set the interface/IP to listen for distributed Erlang connections.",
         "",
         "More information: http://erlang.org/doc/man/kernel_app.html"
       ],
@@ -463,8 +467,8 @@
         },
         "hidden": true
       },
-      "comment": [
-        "@doc Set the net_kernel's net_ticktime.",
+      "docText": [
+        "Set the net_kernel's net_ticktime.",
         "",
         "More information: http://www.erlang.org/doc/man/kernel_app.html#net_ticktime",
         "and http://www.erlang.org/doc/man/net_kernel.html#set_net_ticktime-1"
@@ -476,33 +480,65 @@
   "translations": {
     "vm_args.+S": {
       "properties": {},
-      "comment": [],
       "configName": "vm_args.+S",
       "func": "fun(Conf) -> Total = cuttlefish:conf_get(\"erlang.schedulers.total\", Conf, undefined), Online = cuttlefish:conf_get(\"erlang.schedulers.online\", Conf, undefined), case {Total, Online} of {undefined, undefined} -> cuttlefish:unset(); {undefined, O} -> \":\" ++ integer_to_list(O); {T, undefined} -> integer_to_list(T); _ -> integer_to_list(Total) ++ \":\" ++ integer_to_list(Online) end end "
     },
     "vm_args.+a": {
       "properties": {},
-      "comment": [],
       "configName": "vm_args.+a",
       "func": "fun(Conf) -> RawValue = cuttlefish:conf_get(\"erlang.async_threads.stack_size\", Conf), RawValue div (1024 * erlang:system_info({wordsize, external})) end"
     },
     "vm_args.+zdbbl": {
       "properties": {},
-      "comment": [],
       "configName": "vm_args.+zdbbl",
       "func": "fun(Conf) -> ZDBBL = cuttlefish:conf_get(\"erlang.distribution_buffer_size\", Conf, undefined), case ZDBBL of undefined -> undefined; X when is_integer(X) -> cuttlefish_util:ceiling(X / 1024); %% Bytes to Kilobytes; _ -> undefined end end "
     },
     "kernel.inet_dist_use_interface": {
       "properties": {},
-      "comment": [],
       "configName": "kernel.inet_dist_use_interface",
       "func": "fun(Conf) -> IPStr = cuttlefish:conf_get(\"erlang.distribution.interface\", Conf), {ok, IP_address} = inet:parse_strict_address(IPStr), IP_address end "
     }
   },
   "validators": {
-    "undefined": {
+    "=<1024": {
       "properties": {},
-      "comment": [],
+      "name": "=<1024",
+      "description": "has a maximum value of 1024",
+      "func": "fun(X) -> X =< 1024 end"
+    },
+    "range:0-1024": {
+      "properties": {},
+      "name": "range:0-1024",
+      "description": "must be 0 to 1024",
+      "func": "fun(X) -> X >= 0 andalso X =< 1024 end"
+    },
+    "range4ports": {
+      "properties": {},
+      "docText": [
+        "The number of concurrent ports/sockets",
+        "Valid range is 1024-134217727"
+      ],
+      "docOther": [
+        "Note: OTP R15 and earlier uses -env ERL_MAX_PORTS, R16+ uses +Q"
+      ],
+      "name": "range4ports",
+      "description": "must be 1024 to 134217727",
+      "func": "fun(X) -> X >= 1024 andalso X =< 134217727 end"
+    },
+    "positive_integer": {
+      "properties": {},
+      "name": "positive_integer",
+      "description": "must be a positive integer",
+      "func": "fun(X) -> X >= 0 end"
+    },
+    "zdbbl_range": {
+      "properties": {},
+      "name": "zdbbl_range",
+      "description": "must be between 1KB and 2097151KB",
+      "func": "fun(ZDBBL) -> %% 2097151KB = 2147482624 ZDBBL >= 1024 andalso ZDBBL =< 2147482624 end "
+    },
+    "ip_strict": {
+      "properties": {},
       "name": "ip_strict",
       "description": "must be a valid IPv4 or IPv6 address",
       "func": "fun(String) -> try inet:parse_strict_address(String) of {ok,{_,_,_,_}} -> true; {ok,{_,_,_,_,_,_,_,_}} -> true; _ -> false catch  _:_ -> false end end"

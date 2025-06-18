@@ -8,10 +8,12 @@
           "value": "directory"
         }
       },
-      "comment": [
+      "docText": [
+        "A path under which leveled data files will be stored."
+      ],
+      "docOther": [
         "-*- erlang -*-",
-        "%% leveled",
-        "@doc A path under which leveled data files will be stored."
+        "%% leveled"
       ],
       "configName": "leveled.data_root",
       "settingName": "leveled.data_root"
@@ -24,8 +26,8 @@
           "value": "atom"
         }
       },
-      "comment": [
-        "@doc Strategy for flushing data to disk",
+      "docText": [
+        "Strategy for flushing data to disk",
         "Can be set to riak_sync, sync (if OTP > 16) or none.  Use none, and the OS",
         "will flush when most efficient.  Use riak_sync or sync to flush after every",
         "PUT (not recommended without some hardware support e.g. flash drives and/or",
@@ -43,8 +45,8 @@
         },
         "hidden": true
       },
-      "comment": [
-        "@doc The key size of the Bookie's in-memory cache"
+      "docText": [
+        "The key size of the Bookie's in-memory cache"
       ],
       "configName": "leveled.cache_size",
       "settingName": "leveled.cache_size"
@@ -58,8 +60,8 @@
         },
         "hidden": true
       },
-      "comment": [
-        "@doc The maximum size of the bookie's cache before each new PUT results in",
+      "docText": [
+        "The maximum size of the bookie's cache before each new PUT results in",
         "a slow-offer pause.  Prior to Riak 3.0.10 this defaulted to 4"
       ],
       "configName": "leveled.cache_multiple",
@@ -74,8 +76,8 @@
         },
         "hidden": true
       },
-      "comment": [
-        "@doc The key size of the Penciller's in-memory cache"
+      "docText": [
+        "The key size of the Penciller's in-memory cache"
       ],
       "configName": "leveled.penciller_cache_size",
       "settingName": "leveled.penciller_cache_size"
@@ -105,8 +107,8 @@
         },
         "default": "native"
       },
-      "comment": [
-        "@doc Compression method",
+      "docText": [
+        "Compression method",
         "Can be lz4, zstd or native (which will use the Erlang native zlib",
         "compression) within term_to_binary"
       ],
@@ -142,8 +144,8 @@
         },
         "default": "as_store"
       },
-      "comment": [
-        "@doc Ledger compression",
+      "docText": [
+        "Ledger compression",
         "If an alternative compression method is preferred specifically for the",
         "ledger, it can be specified here.  Default is as_store - use whatever method",
         "has been defined in leveled.compression.method.  Alternatives are native,",
@@ -160,8 +162,8 @@
           "value": "atom"
         }
       },
-      "comment": [
-        "@doc Compression point",
+      "docText": [
+        "Compression point",
         "The point at which compression is applied to the Journal (the Ledger is",
         "always compressed).  Use on_receipt or on_compact.  on_compact is suitable",
         "when values are unlikely to yield much benefit from compression",
@@ -185,8 +187,8 @@
         ],
         "hidden": true
       },
-      "comment": [
-        "@doc Compresstion Level (Ledger LSM)",
+      "docText": [
+        "Compresstion Level (Ledger LSM)",
         "Specify the level in the LSM tree from which compression should occur.",
         "Defaults to L1, so only L0 writes are uncompressed."
       ],
@@ -201,8 +203,8 @@
           "value": "atom"
         }
       },
-      "comment": [
-        "@doc Log level",
+      "docText": [
+        "Log level",
         "Can be debug, info, warn, error or critical",
         "Set the minimum log level to be used within leveled.  Leveled will log many",
         "lines to allow for stats to be etracted by those using log indexers such as",
@@ -219,8 +221,8 @@
           "value": "integer"
         }
       },
-      "comment": [
-        "@doc The approximate size (in bytes) when a Journal file should be rolled.",
+      "docText": [
+        "The approximate size (in bytes) when a Journal file should be rolled.",
         "Normally keep this as around the size of o(100K) objects.  Default is 1GB.",
         "Note that on startup an actual maximum size will be chosen which varies by",
         "a random factor from this point - to avoid coordination of roll events",
@@ -237,8 +239,8 @@
           "value": "integer"
         }
       },
-      "comment": [
-        "@doc The approximate count of objects when a Journal file should be rolled.",
+      "docText": [
+        "The approximate count of objects when a Journal file should be rolled.",
         "This time measured in object count, a file will be rolled if either the",
         "object count or the journal size limit is reached.  Default 200K.",
         "Note that on startup an actual maximum size will be chosen which varies by",
@@ -256,8 +258,8 @@
           "value": "integer"
         }
       },
-      "comment": [
-        "@doc The level of the ledger to be pre-loaded into the page cache",
+      "docText": [
+        "The level of the ledger to be pre-loaded into the page cache",
         "Depending on how much memory is available for the page cache, and how much",
         "disk I/O activity can be tolerated at startup - then the level at which the",
         "ledger is forced into the page cache can be controlled by configuration."
@@ -273,8 +275,8 @@
           "value": "integer"
         }
       },
-      "comment": [
-        "@doc The number of journal compactions per vnode per day",
+      "docText": [
+        "The number of journal compactions per vnode per day",
         "The higher the value, the more compaction runs, and the sooner space is",
         "recovered.  But each run has a cost"
       ],
@@ -289,8 +291,8 @@
           "value": "integer"
         }
       },
-      "comment": [
-        "@doc The number of times per day to score an individual file for compaction.",
+      "docText": [
+        "The number of times per day to score an individual file for compaction.",
         "The default value will lead to each file, on average, being scored once",
         "every 12 hours"
       ],
@@ -305,8 +307,8 @@
           "value": "integer"
         }
       },
-      "comment": [
-        "@doc Compaction Low Hour",
+      "docText": [
+        "Compaction Low Hour",
         "The hour of the day in which journal compaction can start.  Use Low hour",
         "of 0 and High hour of 23 to have no compaction window (i.e. always compact",
         "regardless of time of day)"
@@ -322,8 +324,8 @@
           "value": "integer"
         }
       },
-      "comment": [
-        "@doc Compaction Top Hour",
+      "docText": [
+        "Compaction Top Hour",
         "The hour of the day, after which journal compaction should stop.",
         "If low hour > top hour then, compaction will work overnight between low",
         "hour and top hour (inclusive).  Timings rely on server's view of local time"
@@ -339,8 +341,8 @@
           "value": "integer"
         }
       },
-      "comment": [
-        "@doc Max Journal Files Per Compaction Run",
+      "docText": [
+        "Max Journal Files Per Compaction Run",
         "In a single compaction run, what is the maximum number of consecutive files",
         "which may be compacted.  If increasing this value, the average number of",
         "files per run may decrease, unless adjustments are also made to the",
@@ -358,8 +360,8 @@
         },
         "hidden": true
       },
-      "comment": [
-        "@doc Target Percentage for Max Run",
+      "docText": [
+        "Target Percentage for Max Run",
         "What is the target score for a maximum run of files, to qualify for",
         "compaction.  If less than this percentage would be retained after compaction",
         "then it is a candidate (e.g. in default case if 25% of space would be",
@@ -377,8 +379,8 @@
         },
         "hidden": true
       },
-      "comment": [
-        "@doc Target Percentage for Single File",
+      "docText": [
+        "Target Percentage for Single File",
         "What is the target score for a run of a single file, to qualify for",
         "compaction.  If less than this percentage would be retained after compaction",
         "then it is a candidate (e.g. in default case if 75% of space would be",
@@ -396,8 +398,8 @@
         },
         "hidden": true
       },
-      "comment": [
-        "@doc Snapshot timeout (short)",
+      "docText": [
+        "Snapshot timeout (short)",
         "Maximum expected time for an index query.  A query which is taking longer",
         "than this may fail as it will be released - potentially allowing for some",
         "file processes to delete.  Timeout is in seconds."
@@ -414,8 +416,8 @@
         },
         "hidden": true
       },
-      "comment": [
-        "@doc Snapshot timeout (long)",
+      "docText": [
+        "Snapshot timeout (long)",
         "Maximum expected time for any other fold.  A fold which is taking longer",
         "than this may fail as it will be released - potentially allowing for some",
         "file processes to delete.  Timeout is in seconds."
@@ -437,8 +439,8 @@
           }
         ]
       },
-      "comment": [
-        "@doc Statistic monitoring proportion",
+      "docText": [
+        "Statistic monitoring proportion",
         "The proportion of requests to be convered by stats, an integer between",
         "0 and 100.  There is no flow control, so setting this too high could",
         "possibly overflow the leveled_monitor mailbox."
@@ -454,8 +456,8 @@
           "value": "integer"
         }
       },
-      "comment": [
-        "@doc Statistic log frequency (seconds)",
+      "docText": [
+        "Statistic log frequency (seconds)",
         "The wait in seconds between logs from each leveled_monitor (there is one",
         "monitor per vnode)"
       ],
