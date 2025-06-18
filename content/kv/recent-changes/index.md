@@ -1,11 +1,11 @@
 ---
 sidebar_position: 2
-title: About OpenRiak KV
-sidebar_label: About
+title: Recent Changes to OpenRiak KV
+sidebar_label: Recent Changes
 sidebar_custom_props:
   icon: information
-pagination_label: About OpenRiak KV
-sidebar_class_name: kv-configure
+pagination_label: Recent Changes to OpenRiak KV
+sidebar_class_name: kv-recentChanges
 ---
 
 # What's New

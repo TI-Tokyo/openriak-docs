@@ -1,11 +1,11 @@
 ---
-sidebar_position: 4
+sidebar_position: 1
 title: Planning your OpenRiak KV cluster
 sidebar_label: Plan
 sidebar_custom_props:
   icon: todo-list
 pagination_label: Planning
-sidebar_class_name: kv-plan
+sidebar_class_name: kv-setup-plan
 ---
 
 # Planning your OpenRiak KV cluster
