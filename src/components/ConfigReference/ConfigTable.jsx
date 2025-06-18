@@ -97,7 +97,7 @@ export function ConfigTable({schemaData}) {
                 alignItems: 'start',
               }}
             >
-              <span key="valueInfo-hidden-label">Status:</span>
+              <span key="valueInfo-hidden-label">Location:</span>
               {!info.getValue().properties?.hidden &&
                 <span key="valueInfo-hidden-value" style={{ paddingLeft: '1em', borderLeftWidth: '1px', borderLeftStyle: 'dotted', borderLeftColor: '#666' }}>In <i>riak.conf</i>.</span>
               }
@@ -159,7 +159,7 @@ export function ConfigTable({schemaData}) {
     data: filteredData,
     columns,
     state: {
-      sorting,
+      sorting,//: [{ id: 'configName', desc: false }],
       globalFilter,
       columnFilters,
     },
@@ -182,6 +182,7 @@ export function ConfigTable({schemaData}) {
       <table className="table" style={{ 
         width: '100%', 
         borderCollapse: 'collapse',
+        borderWidth: '0.125rem'
       }}>
         <thead>
           {table.getHeaderGroups().map(headerGroup => (
