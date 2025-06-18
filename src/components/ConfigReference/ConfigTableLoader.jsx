@@ -3,7 +3,7 @@ import { useLocation } from '@docusaurus/router';
 import useBaseUrl from '@docusaurus/useBaseUrl';
 import { ConfigTable } from './ConfigTable';
 
-export function ConfigTableLoader() {
+export function ConfigTableLoader({sectionName}) {
   const location = useLocation();
   const [schemaData, setSchemaData] = useState(null);
   const [, project, version] = location.pathname.match(/^\/docs\/([^\/]+)\/([0-9]+\.[0-9]+\.[0-9]+)\/.*$/s);
@@ -18,6 +18,16 @@ export function ConfigTableLoader() {
         //console.log(url);
         const res = await fetch(url); // relative to site root
         const json = await res.json();
+        //console.log(json);
+
+        if (sectionName) {
+          const filteredMappings = Object.fromEntries(
+            Object.entries(json.mappings).filter(([key, value]) => {
+              return (value.docSections && value.docSections.includes(sectionName));
+            })
+          );
+          json.mappings = filteredMappings;
+        }
         //console.log(json);
         setSchemaData(json);
       } catch (error) {

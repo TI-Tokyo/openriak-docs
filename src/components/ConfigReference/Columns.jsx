@@ -1,7 +1,55 @@
 import React from "react";
+import Link from "@docusaurus/Link";
+
+export function getAnchorFromName(name) {
+  return name.replace(/[^a-zA-Z0-9-_]/g, '_');
+}
+
+export function getComments(info) {
+    const item = info.getValue();
+    const textProperty = item?.docText ?? '';
+
+    const outputItems = [];
+
+    if (textProperty) {
+        var textBuffer = [];
+        textProperty.map((text, index) => {
+            if (text) {
+                textBuffer.push(text);
+            } else {
+                if (textBuffer.length > 0) {
+                    outputItems.push(<p key={'docText-'+index}>{textBuffer.join(' ')}</p>);
+                }
+                textBuffer = [];
+            }
+        })
+        if (textBuffer.length > 0) {
+            outputItems.push(<p className="docText-final" key={'docText-final'}>{textBuffer.join(' ')}</p>);
+        }
+    }
+    return outputItems;
+}
+
+export function getSees(info) {
+    const item = info.getValue();
+    const seesProperty = item?.docSees ?? '';
+
+    const outputItems = [];
+
+    if (seesProperty) {
+        seesProperty.map((text, index) => {
+            const anchor = getAnchorFromName(text);
+            outputItems.push(<Link key={'alsoSeeLink-'+index} to={'#'+anchor}>{text}</Link>);
+        })
+    }
+
+    return outputItems;
+}
+
 
 export function getDefaultValue(info) {
-    const properties = info.getValue();
+    const item = info.getValue();
+    const properties = item?.properties ?? '';
     var defaultProperty = properties?.default ?? '';
 
     var defaultPropertyOutput = <></>;
@@ -36,7 +84,8 @@ export function getDefaultValue(info) {
 }
 
 export function getDataTypeList(info) {
-    const properties = info.getValue();
+    const item = info.getValue();
+    const properties = item?.properties ?? '';
     const datatypeProperty = properties?.datatype ?? '';
 
     const returnedElements = [];
