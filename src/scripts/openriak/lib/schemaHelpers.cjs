@@ -130,7 +130,7 @@ function convertErlangTuplePairsToObject(erlang) {
 
   return result;
 }
-
+/*
 function parseErlangToObject(input) {
   var cleanInput = input.trim();
   if (!cleanInput) {
@@ -218,7 +218,7 @@ function parseErlangToObject(input) {
   }
   return results;
 }
-
+*/
 
 function findClosingQuote(input, from, quoteChar) {
   //console.log(`ℹ️  Finding quote <<${quoteChar}>> in <<${input.slice(from)}>>.`)
@@ -495,6 +495,57 @@ function convertErlangTuplePairsToObject(erlang) {
   return result;
 }
 
+function parseComments(comments) {
+  const docText = [];
+  const docSections = [];
+  const docRelateds = [];
+  const docSees = [];
+  const docOther = [];
+
+  var inDocText = false;
+
+  for (const line of comments) {
+    var cleanLine = line.trim();
+    if (cleanLine.startsWith('@doc')) {
+      inDocText = true;
+      cleanLine = cleanLine.replace('@doc','').trim();
+      docText.push(cleanLine);
+      continue;
+    }
+    if (cleanLine.startsWith('@see')) {
+      inDocText = false;
+      cleanLine = cleanLine.replace('@see','').trim();
+      docSees.push(cleanLine);
+      continue;
+    }
+    if (cleanLine.startsWith('@related')) {
+      inDocText = false;
+      cleanLine = cleanLine.replace('@related','').trim();
+      docRelateds.push(cleanLine);
+      continue;
+    }
+    if (cleanLine.startsWith('@section')) {
+      inDocText = false;
+      cleanLine = cleanLine.replace('@section','').trim();
+      docSections.push(cleanLine);
+      continue;
+    }
+    if (inDocText) {
+      docText.push(line);
+    } else {
+      docOther.push(line);
+    }
+  }
+  
+  return {
+    docText: docText,
+    docSections: docSections,
+    docRelateds: docRelateds,
+    docSees: docSees,
+    docOther: docOther,
+  }
+}
+
 function parseCuttlefishSchema(filePath) {
   const raw = getFileContent(filePath);
 
@@ -537,9 +588,16 @@ function parseCuttlefishSchema(filePath) {
       const settingName = mappingObject[2].value;
       const properties  = mappingObject[3].value;
 
+      const parsedComments = parseComments(commentBuffer);
+
       results.push({
         rawSchema: mappingBlock,
         comment: commentBuffer,
+        docText: parsedComments.docText,
+        docSections: parsedComments.docSections,
+        docRelateds: parsedComments.docRelateds,
+        docSees: parsedComments.docSees,
+        docOther: parsedComments.docOther,
         type: blockType,
         configName: configName,
         settingName: settingName,
@@ -563,9 +621,16 @@ function parseCuttlefishSchema(filePath) {
 
       const [rawTranslationBlock, blockType, configName, func] = translationMatch;
       
+      const parsedComments = parseComments(commentBuffer);
+
       results.push({
         rawSchema: rawTranslationBlock,
         comment: commentBuffer,
+        docText: parsedComments.docText,
+        docSections: parsedComments.docSections,
+        docRelateds: parsedComments.docRelateds,
+        docSees: parsedComments.docSees,
+        docOther: parsedComments.docOther,
         type: blockType,
         configName: configName,
         func: func,
@@ -588,9 +653,16 @@ function parseCuttlefishSchema(filePath) {
 
       const [rawValidatorBlock, blockType, name, description, func] = validatorMatch;
       
+      const parsedComments = parseComments(commentBuffer);
+
       results.push({
         rawSchema: rawValidatorBlock,
         comment: commentBuffer,
+        docText: parsedComments.docText,
+        docSections: parsedComments.docSections,
+        docRelateds: parsedComments.docRelateds,
+        docSees: parsedComments.docSees,
+        docOther: parsedComments.docOther,
         type: blockType,
         name: name,
         description: description,
@@ -691,7 +763,6 @@ function parseErlangToObject(input) {
   }
   return results;
 }
-
 
 module.exports = { 
   convertErlangTuplePairsToObject, 

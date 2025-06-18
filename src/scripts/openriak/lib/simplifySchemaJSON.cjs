@@ -11,11 +11,17 @@ function simplifySchemaJSON(schemaInputObject) {
             case 'translation':
                 const translationName = topLevelBlock.configName;
                 const translationValue = simplifyTranslation(topLevelBlock);
+                if (result.translations[translationName]) {
+                    throw Error(`❌ Translation "${translationName}" already exists.`);    
+                }
                 result.translations[translationName] = translationValue;
                 break;
             case 'validator':
-                const validatorName = topLevelBlock.configName;
+                const validatorName = topLevelBlock.name;
                 const validatorValue = simplifyValidator(topLevelBlock);
+                if (result.validators[validatorName]) {
+                    throw Error(`❌ Validator "${validatorName}" already exists.`);    
+                }
                 result.validators[validatorName] = validatorValue;
                 break;
             default:
@@ -32,7 +38,12 @@ function simplifyValidator(validatorObject) {
     for ([fieldName, fieldValue] of Object.entries(validatorObject)) {
         switch (fieldName) {
             case 'type': break; // ignore as we already know it's validator
-            case 'comment': result.comment = fieldValue; break;
+            case 'comment': break; // result.comment = fieldValue; break;
+            case 'docText': if (fieldValue && Array.isArray(fieldValue) && fieldValue.length > 0) { result.docText = fieldValue; } break;
+            case 'docSections': if (fieldValue && Array.isArray(fieldValue) && fieldValue.length > 0) { result.docSections = fieldValue; } break;
+            case 'docRelateds': if (fieldValue && Array.isArray(fieldValue) && fieldValue.length > 0) { result.docRelateds = fieldValue; } break;
+            case 'docSees': if (fieldValue && Array.isArray(fieldValue) && fieldValue.length > 0) { result.docSees = fieldValue; } break;
+            case 'docOther': if (fieldValue && Array.isArray(fieldValue) && fieldValue.length > 0) { result.docOther = fieldValue; } break;
             case 'rawSchema': break; //result.rawSchema = fieldValue; break;
             case 'name': result.name = fieldValue; break;
             case 'description': result.description = fieldValue; break;
@@ -51,7 +62,12 @@ function simplifyTranslation(translationObject) {
     for ([fieldName, fieldValue] of Object.entries(translationObject)) {
         switch (fieldName) {
             case 'type': break; // ignore as we already know it's translation
-            case 'comment': result.comment = fieldValue; break;
+            case 'comment': break; // result.comment = fieldValue; break;
+            case 'docText': if (fieldValue && Array.isArray(fieldValue) && fieldValue.length > 0) { result.docText = fieldValue; } break;
+            case 'docSections': if (fieldValue && Array.isArray(fieldValue) && fieldValue.length > 0) { result.docSections = fieldValue; } break;
+            case 'docRelateds': if (fieldValue && Array.isArray(fieldValue) && fieldValue.length > 0) { result.docRelateds = fieldValue; } break;
+            case 'docSees': if (fieldValue && Array.isArray(fieldValue) && fieldValue.length > 0) { result.docSees = fieldValue; } break;
+            case 'docOther': if (fieldValue && Array.isArray(fieldValue) && fieldValue.length > 0) { result.docOther = fieldValue; } break;
             case 'rawSchema': break; result.rawSchema = fieldValue; break;
             case 'configName': result.configName = fieldValue; break;
             case 'func': result.func = fieldValue; break;
@@ -70,7 +86,12 @@ function simplifyMapping(mappingObject) {
     for ([fieldName, fieldValue] of Object.entries(mappingObject)) {
         switch (fieldName) {
             case 'type': break; // ignore as we already know it's mapping
-            case 'comment': result.comment = fieldValue; break;
+            case 'comment': break; // result.comment = fieldValue; break;
+            case 'docText': if (fieldValue && Array.isArray(fieldValue) && fieldValue.length > 0) { result.docText = fieldValue; } break;
+            case 'docSections': if (fieldValue && Array.isArray(fieldValue) && fieldValue.length > 0) { result.docSections = fieldValue; } break;
+            case 'docRelateds': if (fieldValue && Array.isArray(fieldValue) && fieldValue.length > 0) { result.docRelateds = fieldValue; } break;
+            case 'docSees': if (fieldValue && Array.isArray(fieldValue) && fieldValue.length > 0) { result.docSees = fieldValue; } break;
+            case 'docOther': if (fieldValue && Array.isArray(fieldValue) && fieldValue.length > 0) { result.docOther = fieldValue; } break;
             case 'rawSchema': break; //result.rawSchema = fieldValue; break;
             case 'configName': result.configName = fieldValue; break;
             case 'settingName': result.settingName = fieldValue; break;
