@@ -20,7 +20,7 @@ function getVersionRoot(project, version) {
 
 function getSchemaDefinitions(project, version) {
   const schemaRoot = getSchemaRoot(project);
-  const schemaPath = path.join(schemaRoot, 'schemas.json');
+  const schemaPath = path.join('src','scripts','openriak','schemas.json');
 
   // Check that the file exists
   if (!doesFileExist(schemaPath)) {
