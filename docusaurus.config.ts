@@ -1,6 +1,7 @@
 import {themes as prismThemes} from 'prism-react-renderer';
 import type {Config} from '@docusaurus/types';
 import type * as Preset from 'src/themes/preset-openriak';
+import pluginIncludeMarkdown from './src/remark/include-md';
 
 // This runs in Node.js - Don't use client-side code here (browser APIs, JSX...)
 
@@ -54,8 +55,9 @@ const config: Config = {
             current: {
               label: 'The last 3.2 release aka 3.2.5',
               path: '3.2.5',
-            },
+            }
           },
+          remarkPlugins: [pluginIncludeMarkdown]
         },
         cs: {
           id: "cs",
@@ -66,6 +68,13 @@ const config: Config = {
           // Remove this to remove the "edit this page" links.
           editUrl:
             'https://github.com/openriak/openriak-docs/tree/develop/cs/',
+          lastVersion: 'current',
+          versions: {
+            current: {
+              label: '3.0.1',
+              path: '3.0.1'
+            }
+          }
         },
         ts: {
           id: "ts",
@@ -76,6 +85,13 @@ const config: Config = {
           // Remove this to remove the "edit this page" links.
           editUrl:
             'https://github.com/openriak/openriak-docs/tree/develop/ts/',
+          lastVersion: 'current',
+          versions: {
+            current: {
+              label: '3.0.0',
+              path: '3.0.0',
+            }
+          }
         },
         community: {
           id: "community",
@@ -104,49 +120,22 @@ const config: Config = {
           customCss: './src/css/custom.css',
         },
       } satisfies Preset.Options,
-    ],
+    ]
   ],
 
   themeConfig: {
     // Replace with your project's social card
     image: 'img/docusaurus-social-card.jpg',
     navbar: {
-      title: 'OpenRiak Docs',
+      title: '/Docs',
       logo: {
-        alt: 'OpenRiak Logo',
-        src: 'img/logo.svg',
+        alt: 'OpenRiak',
+        src: 'img/openriak-logo.svg',
       },
       items: [
-        {
-          type: 'docSidebar',
-          id: "kv",
-          docsPluginId: "kv",
-          sidebarId: 'kvSidebar',
-          position: 'left',
-          label: 'KV',
-          sidebarPath: require.resolve('./src/sidebars/sidebarsKV.ts'),
-          //docsPluginId: "kv", // ← must match the plugin `id`
-        },
-        {
-          type: 'docSidebar',
-          id: "cs",
-          docsPluginId: "cs",
-          sidebarId: 'csSidebar',
-          position: 'left',
-          label: 'CS',
-          sidebarPath: require.resolve('./src/sidebars/sidebarsCS.ts'),
-          //docsPluginId: "kv", // ← must match the plugin `id`
-        },
-        {
-          type: 'docSidebar',
-          id: "ts",
-          docsPluginId: "ts",
-          sidebarId: 'tsSidebar',
-          position: 'left',
-          label: 'TS',
-          sidebarPath: require.resolve('./src/sidebars/sidebarsTS.ts'),
-          //docsPluginId: "kv", // ← must match the plugin `id`
-        },
+        {to: '/kv/3.2.5/intro', label: 'KV', position: 'left'},
+        {to: '/cs/intro', label: 'CS', position: 'left'},
+        {to: '/ts/intro', label: 'TS', position: 'left'},
         {to: '/community', label: 'Community', position: 'left'},
         {to: '/blog', label: 'Blog', position: 'left'},
         {

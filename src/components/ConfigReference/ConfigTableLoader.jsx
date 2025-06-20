@@ -5,31 +5,44 @@ import { ConfigTable } from './ConfigTable';
 
 export function ConfigTableLoader({sectionName}) {
   const location = useLocation();
-  const [schemaData, setSchemaData] = useState(null);
   const [, project, version] = location.pathname.match(/^\/docs\/([^\/]+)\/([0-9]+\.[0-9]+\.[0-9]+)\/.*$/s);
-  const schemaDataPath = `cached-data/schemas/${project}/${version}/openriak-${project}-${version}.default.schema.json`;
-  const url = useBaseUrl(schemaDataPath);
+
+  const [configurationOptions, setConfigurationOptions] = useState(null);
+  const configurationOptionsDataPath = `metadata/config-reference/openriak-${project}-${version}.config-reference.default.json`;
+  const configurationOptionsURL = useBaseUrl(configurationOptionsDataPath);
+
+  const [relatedPages, setRelatedPages] = useState(null);
+  const relatedPagesDataPath = `metadata/config-reference/openriak-${project}-${version}.related-pages.json`;
+  const relatedPagesURL = useBaseUrl(relatedPagesDataPath);
   
   // Fetch JSON data from a URL
   useEffect(() => {
-    if (!schemaData) {
+    if (!configurationOptions) {
     const fetchData = async () => {
       try {
         //console.log(url);
-        const res = await fetch(url); // relative to site root
-        const json = await res.json();
+        const configurationOptionsRes = await fetch(configurationOptionsURL);
+        const configurationOptionsJson = await configurationOptionsRes.json();
         //console.log(json);
 
         if (sectionName) {
           const filteredMappings = Object.fromEntries(
-            Object.entries(json.mappings).filter(([key, value]) => {
+            Object.entries(configurationOptionsJson.mappings).filter(([key, value]) => {
               return (value.docSections && value.docSections.includes(sectionName));
             })
           );
-          json.mappings = filteredMappings;
+          configurationOptionsJson.mappings = filteredMappings;
         }
         //console.log(json);
-        setSchemaData(json);
+        configurationOptionsJson.mappings = Object.fromEntries(
+          Object.entries(configurationOptionsJson.mappings)
+          .sort(([keyA], [keyB]) => keyA.localeCompare(keyB))
+        );
+
+        const relatedPagesRes = await fetch(relatedPagesURL);
+        const relatedPagesJson = await relatedPagesRes.json();
+        setRelatedPages(relatedPagesJson);
+        setConfigurationOptions(configurationOptionsJson);
       } catch (error) {
         console.error('Failed to load configuration reference data:', error);
       }
@@ -39,7 +52,7 @@ export function ConfigTableLoader({sectionName}) {
   }
   }, []);
 
-  if (!schemaData) return <div>Loading...</div>;
+  if (!configurationOptions) return <div>Loading...</div>;
 
-  return <ConfigTable schemaData={schemaData} />;
+  return <ConfigTable configurationOptions={configurationOptions} relatedPages={relatedPages}/>;
 }

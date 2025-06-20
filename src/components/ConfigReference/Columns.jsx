@@ -1,14 +1,19 @@
 import React from "react";
 import Link from "@docusaurus/Link";
+import MarkdownRenderer from './MarkdownRenderer';
 
 export function getAnchorFromName(name) {
-  return name.replace(/[^a-zA-Z0-9-_]/g, '_');
+    return name.replace(/[^a-zA-Z0-9-_]/g, '_');
 }
 
 export function getComments(info) {
     const item = info.getValue();
     const textProperty = item?.docText ?? '';
 
+    if (textProperty) {
+        return <MarkdownRenderer markdown={textProperty.join('\n')} />;
+    }
+/*
     const outputItems = [];
 
     if (textProperty) {
@@ -28,9 +33,10 @@ export function getComments(info) {
         }
     }
     return outputItems;
+*/
 }
 
-export function getSees(info) {
+export function getSees(info, relatedPages) {
     const item = info.getValue();
     const seesProperty = item?.docSees ?? '';
 
@@ -41,6 +47,12 @@ export function getSees(info) {
             const anchor = getAnchorFromName(text);
             outputItems.push(<Link key={'alsoSeeLink-'+index} to={'#'+anchor}>{text}</Link>);
         })
+    }
+
+    if (relatedPages && item.configName && relatedPages[item.configName] && relatedPages[item.configName].relatedPages) {
+        relatedPages[item.configName].relatedPages.map((item, index) => {
+            outputItems.push(<Link key={'relatedPages-'+index} to={item.url}>{item.text}</Link>);
+        });
     }
 
     return outputItems;

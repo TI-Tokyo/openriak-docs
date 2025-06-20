@@ -1,4 +1,3 @@
-import './ConfigTable.css';
 import React, { useState, useMemo } from 'react';
 import {
   useReactTable,
@@ -9,7 +8,7 @@ import {
 import { getDataTypeList, getDefaultValue, getComments, getSees, getAnchorFromName } from '@site/src/components/ConfigReference/Columns'
 import { CollapsibleDatatypeSection } from '@site/src/components/ConfigReference/CollapsibleDatatypeSection'
 
-export function ConfigTable({schemaData}) {
+export function ConfigTable({configurationOptions, relatedPages}) {
   //console.log(schemaData);
   const [globalFilter, setGlobalFilter] = useState('');
   const [columnFilters, setColumnFilters] = useState([]);
@@ -38,7 +37,7 @@ export function ConfigTable({schemaData}) {
         const defaultContents = getDefaultValue(info);
         const datatypeContents = getDataTypeList(info);
         const commentContents = getComments(info);
-        const alsoSeeContents = getSees(info);
+        const alsoSeeContents = getSees(info, relatedPages);
         //console.log(alsoSeeContents);
 
         return (
@@ -65,7 +64,7 @@ export function ConfigTable({schemaData}) {
               <span key="valueInfo-datatypes-label">Valid datatype:</span>
               <span key="valueInfo-datatypes-value" style={{ paddingLeft: '1em', borderLeftWidth: '1px', borderLeftStyle: 'dotted', borderLeftColor: '#666' }}>{datatypeContents}</span>
             </div>
-            {commentContents.length > 0 && 
+            {commentContents && 
             <div
               key="valueInfo-comments"
               style={{
@@ -75,7 +74,7 @@ export function ConfigTable({schemaData}) {
               }}
             >
               <span key="valueInfo-comments-label">Comments:</span>
-              <span key="valueInfo-comments-value" style={{ paddingLeft: '1em', borderLeftWidth: '1px', borderLeftStyle: 'dotted', borderLeftColor: '#666' }}>{commentContents}</span>
+              <span key="valueInfo-comments-value" className="comments-value" style={{ paddingLeft: '1em', borderLeftWidth: '1px', borderLeftStyle: 'dotted', borderLeftColor: '#666' }}>{commentContents}</span>
             </div>}
             {alsoSeeContents.length > 0 && 
             <div
@@ -118,7 +117,7 @@ export function ConfigTable({schemaData}) {
 */
   ], []);
 
-  const dataSource = Object.values(schemaData.mappings);
+  const dataSource = Object.values(configurationOptions.mappings);
 
   function doesItemMatch(item, terms) {
     if (typeof item === 'string') {

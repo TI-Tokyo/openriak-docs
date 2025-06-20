@@ -5,6 +5,7 @@ const {
   setFileContent, 
   doesFileExist} = require('../lib/fileHelpers.cjs');
 const { 
+  getMetadataRoot, 
   getVersionRoot, 
   getSchemaDefinitions, 
   getVersionsToUpdate, 
@@ -48,7 +49,9 @@ function updateSchemaOSFiles(project, desiredVersion) {
         //console.log(`Replacing {{${key}}} with "${safeValue}".`);
         allSchemas = allSchemas.replaceAll(`{{${key}}}`, safeValue);
       }
-      const schemaOSFileName  = path.join(versionRoot, `openriak-${project}-${version}.${name}.schema.json`);
+      const schemaOSFileName = path.join(getMetadataRoot(), 'config-reference', `openriak-${project}-${version}.config-reference.${name}.json`);
+
+      //const schemaOSFileName  = path.join(versionRoot, `openriak-${project}-${version}.config-reference.${name}.json`);
       setFileContent(schemaOSFileName, allSchemas);
       console.log(`✅ Schema file for project "${project}" version "${version}" created at ${schemaOSFileName}.`);
     }

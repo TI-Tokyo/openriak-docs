@@ -20,7 +20,7 @@ function preset(context, opts = {}) {
     const isProd = process.env.NODE_ENV === 'production';
     const { debug, kv, cs, ts, blog, community, pages, sitemap, svgr, theme, googleAnalytics, gtag, googleTagManager, ...rest } = opts;
     const themes = [];
-    themes.push(makePluginConfig('theme-openriak', theme));
+    themes.push(makePluginConfig('@docusaurus/theme-classic', theme));
     if (algolia) {
         themes.push(require.resolve('@docusaurus/theme-search-algolia'));
     }

@@ -13,7 +13,7 @@ import type {Options as SVGRPluginOptions} from '@docusaurus/plugin-svgr';
 import type {Options as GAPluginOptions} from '@docusaurus/plugin-google-analytics';
 import type {Options as GtagPluginOptions} from '@docusaurus/plugin-google-gtag';
 import type {Options as GTMPluginOptions} from '@docusaurus/plugin-google-tag-manager';
-import type {Options as ThemeOptions} from 'theme-openriak';
+import type {Options as ThemeOptions} from '@docusaurus/theme-classic';
 import type {ThemeConfig as BaseThemeConfig} from '@docusaurus/types';
 import type {UserThemeConfig as OpenRiakThemeConfig} from '@docusaurus/theme-common';
 import type {UserThemeConfig as AlgoliaThemeConfig} from '@docusaurus/theme-search-algolia';
@@ -34,7 +34,7 @@ export type Options = {
   sitemap?: false | SitemapPluginOptions;
   /** Options for `@docusaurus/plugin-svgr`. Use `false` to disable. */
   svgr?: false | SVGRPluginOptions;
-  /** Options for `@docusaurus/theme-openriak`. */
+  /** Options for `@docusaurus/theme-classic`. */
   theme?: ThemeOptions;
   /**
    * Options for `@docusaurus/plugin-google-analytics`. Only enabled when the

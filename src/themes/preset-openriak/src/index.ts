@@ -27,6 +27,7 @@ export default function preset(
   context: LoadContext,
   opts: Options = {},
 ): Preset {
+  console.log("Starting preset-openriak!");
   const {siteConfig} = context;
   const {themeConfig} = siteConfig;
   const {algolia} = themeConfig as Partial<ThemeConfig>;
@@ -44,9 +45,9 @@ export default function preset(
     googleTagManager,
     ...rest
   } = opts;
-
+  
   const themes: PluginConfig[] = [];
-  themes.push(makePluginConfig('theme-openriak', theme));
+  themes.push(makePluginConfig('theme-classic', theme));
   if (algolia) {
     themes.push(require.resolve('@docusaurus/theme-search-algolia'));
   }
@@ -70,7 +71,11 @@ export default function preset(
   }
 
   if (docs !== false) {
+    console.log("There are 'docs' options!");
+    console.log(docs);
     plugins.push(makePluginConfig('@docusaurus/plugin-content-docs', docs));
+  } else {
+    console.log("There are no 'docs' options!");
   }
   if (blog !== false) {
     plugins.push(makePluginConfig('@docusaurus/plugin-content-blog', blog));
@@ -111,7 +116,9 @@ export default function preset(
     );
   }
 
-  return {themes, plugins};
+  return {
+    themes, 
+    plugins};
 }
 
 export type {Options, ThemeConfig};

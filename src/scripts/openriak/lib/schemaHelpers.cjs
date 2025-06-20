@@ -4,6 +4,13 @@ const { getFileContent, setFileContent, doesFileExist, ensureFolderExists } = re
 const { downloadFile, convertGithubToRawUrl } = require('./netHelpers.cjs');
 const path = require('path');
 
+function getMetadataRoot() {
+  const metadataRoot = path.join('static', 'metadata');
+  // Ensure folder exists
+  ensureFolderExists(metadataRoot);
+  return metadataRoot;
+}
+
 function getSchemaRoot(project) {
   const schemaRoot = path.join('static', 'cached-data', 'schemas', project);
   // Ensure folder exists
@@ -767,6 +774,7 @@ function parseErlangToObject(input) {
 module.exports = { 
   convertErlangTuplePairsToObject, 
   getSchemaDefinitions, 
+  getMetadataRoot,
   getVersionRoot, 
   getSchemaRoot, 
   getVersionsToUpdate, 
