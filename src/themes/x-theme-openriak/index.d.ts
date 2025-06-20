@@ -5,7 +5,7 @@
  * LICENSE file in the root directory of this source tree.
  */
 import type { LoadContext, Plugin } from '@docusaurus/types';
-import type { PluginOptions } from 'theme-openriak';
+import type { PluginOptions } from '@docusaurus/theme-classictheme-classic';
 export default function themeOpenRiak(context: LoadContext, options: PluginOptions): Plugin<undefined>;
 export { default as getSwizzleConfig } from './getSwizzleConfig';
 export { validateThemeConfig, validateOptions } from './options';
