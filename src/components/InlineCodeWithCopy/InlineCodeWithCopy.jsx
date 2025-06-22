@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import clsx from 'clsx';
 import styles from './inlineCodeWithCopy.module.css';
-import { CopyIcon, CopiedIcon } from '../icons/CopyIcons';
+import { CopyIcon, CopiedIcon } from './CopyIcons';
 
 export default function InlineCodeWithCopy({ children }) {
   const [copied, setCopied] = useState(false);
