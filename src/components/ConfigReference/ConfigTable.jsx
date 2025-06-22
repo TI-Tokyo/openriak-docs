@@ -6,26 +6,26 @@ import {
   flexRender,
 } from '@tanstack/react-table';
 import { getDataTypeList, getDefaultValue, getComments, getSees, getAnchorFromName } from '@site/src/components/ConfigReference/Columns'
-import { CollapsibleDatatypeSection } from '@site/src/components/ConfigReference/CollapsibleDatatypeSection'
+import InlineCodeWithCopy from "@site/src/components/InlineCodeWithCopy/InlineCodeWithCopy";
+import { useResource } from './ConfigReferenceContext';
 
-export function ConfigTable({configurationOptions, relatedPages}) {
-  //console.log(schemaData);
+export function ConfigTable(sectionName, configNamePattern) {
+  const { configurationOptions, extras, loading, error } = useResource();
   const [globalFilter, setGlobalFilter] = useState('');
   const [columnFilters, setColumnFilters] = useState([]);
   const [sorting, setSorting] = useState([]);
- 
   const columns = useMemo(() => [
     {
       header: 'Config Name',
       accessorKey: 'configName',
       cell: info => {
         const configName = info.row.original.configName;
-        const settingName = info.row.original.settingName || 'UNKNOWN';
+        const settingName = info.row.original.settingName || '';
         const anchor = getAnchorFromName(configName);
         return (
           <div>
-            <code id={anchor} style={{ fontSize: '1em' }}>{configName}</code><br />
-            <i style={{ fontSize: '0.85em', color: '#666' }}>maps to <code>{settingName}</code></i>
+            <InlineCodeWithCopy id={anchor} style={{ fontSize: '1em' }}>{configName}</InlineCodeWithCopy><br />
+            {settingName && <i style={{ fontSize: '0.85em', color: '#666' }}>maps to <InlineCodeWithCopy>{settingName}</InlineCodeWithCopy></i>}
           </div>
         );
       },
@@ -34,11 +34,11 @@ export function ConfigTable({configurationOptions, relatedPages}) {
       accessorFn: row => {return (row ?? '')},
       header: 'Details',
       cell: info => {
+        const { configurationOptions, extras, loading, error } = useResource();
         const defaultContents = getDefaultValue(info);
         const datatypeContents = getDataTypeList(info);
         const commentContents = getComments(info);
-        const alsoSeeContents = getSees(info, relatedPages);
-        //console.log(alsoSeeContents);
+        const alsoSeeContents = getSees(info, extras);
 
         return (
           <div key="valueInfo" style={{ display: 'grid', rowGap: '0.5rem' }}>
@@ -107,23 +107,13 @@ export function ConfigTable({configurationOptions, relatedPages}) {
           </div>
           )
       },
-    },
-/*
-    {
-      accessorKey: 'comment',
-      header: 'Comments',
-      cell: info => (info.getValue() || []).map(line => <p>{line}</p>),
-    },
-*/
+    }
   ], []);
-
-  const dataSource = Object.values(configurationOptions.mappings);
 
   function doesItemMatch(item, terms) {
     if (typeof item === 'string') {
       for (const term of terms) {
         if (item.toLowerCase().includes(term)) {
-          //console.log(item + ' includes ' + term);
           return true;
         }
       }
@@ -145,14 +135,15 @@ export function ConfigTable({configurationOptions, relatedPages}) {
   }  
 
   const filteredData = useMemo(() => {
+    if (!configurationOptions || !configurationOptions.mappings) return;
+    const dataSource = Object.values(configurationOptions.mappings)
     if (!globalFilter) return dataSource;
-   
+ 
     const searchResults = dataSource.filter(item => {
-      return doesItemMatch(item, [globalFilter.trim()])
+      return doesItemMatch(item, [globalFilter.trim().toLowerCase()])
       });
-    //console.log(searchResults);
     return searchResults;
-  }, [globalFilter]);
+  }, [globalFilter, configurationOptions]);
 
   const table = useReactTable({
     data: filteredData,
@@ -168,6 +159,10 @@ export function ConfigTable({configurationOptions, relatedPages}) {
     getCoreRowModel: getCoreRowModel(),
     getSortedRowModel: getSortedRowModel(),
   });
+
+  if (loading) return <p>Loading…</p>;
+  if (error) return <p>Error: {error.message}</p>;
+  if (!table.getRowModel().rows) return <p>Loading table…</p>;
 
   return (
     <>

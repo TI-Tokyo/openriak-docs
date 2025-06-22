@@ -10,17 +10,9 @@ sidebar_class_name: kv-configure
 
 # Configure your OpenRiak KV cluster
 
-## Environment
-
-:::include ./_includes/my-snippet.md:::
-
-:::include ./_includes/example.md:::
-
-## Riak.conf
-
-
-## Advanced.config
-
-## Reference
+## Configuration Reference
 
 See [Configuration Reference](./reference)
+
+## Backends
+

@@ -36,20 +36,19 @@ function updateSchemaOSFiles(project, desiredVersion) {
       console.error(`❌ Error: Cannot find schemas file for project "${project}" version "${version}" at "${schemaFile}".`)
       process.exit(1);
     }
-    var allSchemas = getFileContent(schemaFile);
 
-    for (name of Object.keys(schemas.templates)) {
-      if (name.startsWith('#')) { continue; }
-      const templateFileName = path.join(versionRoot, 'templates', name + `.templatePlaceholders.json`);
+    for (templateName of Object.keys(schemas.templates)) {
+      var allSchemas = getFileContent(schemaFile);
+      if (templateName.startsWith('#')) { continue; }
+      const templateFileName = path.join(versionRoot, 'templates', templateName + `.templatePlaceholders.json`);
       const templateFile = getFileContent(templateFileName);
       const templateObject = JSON.parse(templateFile);
       for ([key, value] of Object.entries(templateObject)) {
         var safeValue = JSON.stringify(value, null, 0);
         safeValue = safeValue.replace(/^(['"])(.*)\1$/, '$2');
-        //console.log(`Replacing {{${key}}} with "${safeValue}".`);
         allSchemas = allSchemas.replaceAll(`{{${key}}}`, safeValue);
       }
-      const schemaOSFileName = path.join(getMetadataRoot(), 'config-reference', `openriak-${project}-${version}.config-reference.${name}.json`);
+      const schemaOSFileName = path.join(getMetadataRoot(), 'config-reference', `openriak-${project}-${version}.config-reference.${templateName}.json`);
 
       //const schemaOSFileName  = path.join(versionRoot, `openriak-${project}-${version}.config-reference.${name}.json`);
       setFileContent(schemaOSFileName, allSchemas);
@@ -161,6 +160,14 @@ function updateSchemaFiles(project, version) {
       for (result of results) {
         mergedResult = mergeClone(0, result, mergedResult);
       }
+      
+      // tag mappins with default fields that have placeholders
+      Object.values(mergedResult.mappings).filter(item => {
+        return (item.properties?.default && item.properties?.default.includes('{{'))
+      }).map(item => {
+        item.properties.defaultHasPlaceholder = true;
+      });
+      
       setFileContent(mergedResultSavePath, JSON.stringify(mergedResult, null, 2));
     } catch (err) {
       console.error(`❌ Error when merging and saving JSON schema objects: ${err.message}`);

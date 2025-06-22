@@ -3,6 +3,9 @@
  * bundles Infima by default. Infima is a CSS framework designed to
  * work well for content-centric websites.
  */
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
 
 /* You can override the default Infima variables here. */
 :root {
@@ -34,8 +37,53 @@
   [class*="docs-doc-id-configure/reference"] .main-wrapper .container>.row>div {
     max-width: 100% !important;
   }
+
+  aside.theme-doc-sidebar-container>div>div {
+    padding-top: 1em;
+  }
+  
+  aside.theme-doc-sidebar-container>div>div:first-child {
+      padding-top: var(--ifm-navbar-height) !important;
+  }
 }
 
 .comments-value p:last-child {
     margin-bottom: 0;
+}
+
+a.relatedPage {
+  display: block;
+}
+
+article>div a:not(.hash-link)::after {
+  content: " ➡️";
+}
+
+div.configListings div.config-name>span>code {
+  font-size: 1.25em;
+}
+
+div.configListings span.config-datatypes-value ul {
+  list-style: none; 
+  padding: 0;
+  margin: 0; 
+  display: inline;
+}
+
+div.configListings span.config-datatypes-value li {
+  display: inline;
+}
+
+div.configListings span.config-datatypes-value i {
+  padding-right: 0.5em;
+}
+
+div.configListings span.config-datatypes-value li::after {
+  padding-left: 0.5em;
+  padding-right: 0.5em;
+  content: '/';
+}
+
+div.configListings span.config-datatypes-value li:last-child::after {
+  content: '';
 }

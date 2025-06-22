@@ -1,6 +1,6 @@
 import {themes as prismThemes} from 'prism-react-renderer';
 import type {Config} from '@docusaurus/types';
-import type * as Preset from 'src/themes/preset-openriak';
+import type * as Preset from './src/themes/preset-openriak';
 import pluginIncludeMarkdown from './src/remark/include-md';
 
 // This runs in Node.js - Don't use client-side code here (browser APIs, JSX...)
@@ -125,6 +125,9 @@ const config: Config = {
 
   themeConfig: {
     // Replace with your project's social card
+    codeBlock: {
+      showCopyButton: true,
+    },
     image: 'img/docusaurus-social-card.jpg',
     navbar: {
       title: '/Docs',
@@ -226,7 +229,19 @@ const config: Config = {
     prism: {
       theme: prismThemes.github,
       darkTheme: prismThemes.dracula,
-    },
+      additionalLanguages: [
+        'bash',
+        'elixir',
+        'erlang',
+        'ini',
+        'java',
+        'javascript',
+        'powershell',
+        'protobuf',
+        'regex',
+        'rust',
+      ]
+    }
   } satisfies Preset.ThemeConfig,
 };
 

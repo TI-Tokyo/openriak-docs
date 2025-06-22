@@ -8,10 +8,7 @@ pagination_label: Use OpenRiak KV
 sidebar_class_name: kv-use
 ---
 
-# OpenRiak KV 3.2.5
+# Use OpenRiak KV 3.2.5
 
-OpenRiak KV 3.2.5 has some nice new features such as X, and Y and even Z!
+How to use OpenRiak KV 3.2.5
 
-## Release Notes
-
-See the [Release Notes](./release-notes) for everything!
