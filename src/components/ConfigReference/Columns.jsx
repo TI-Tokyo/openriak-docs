@@ -4,6 +4,7 @@ import MarkdownRenderer from './MarkdownRenderer';
 import InlineCodeWithCopy from "@site/src/components/InlineCodeWithCopy/InlineCodeWithCopy";
 import ChosenOS from "@site/src/components/OSSelection/ChosenOS";
 import { useLocation } from '@docusaurus/router';
+import ScrollToClosestLink from './ScrollToClosestLink';
 
 export function getAnchorFromName(name) {
     return name.replace(/[^a-zA-Z0-9-_]/g, '_');
@@ -44,7 +45,7 @@ export function getSeesFromItem(item, extras) {
     if (seesProperty) {
         seesProperty.map((text, index) => {
             const anchor = getAnchorFromName(text);
-            outputItems.push(<Link className="relatedPage seeAlso" key={'alsoSeeLink-'+index} to={'#'+anchor}>{text}</Link>);
+            outputItems.push(<ScrollToClosestLink className="relatedPage seeAlso" key={'alsoSeeLink-'+index} linkText={text} targetId={anchor} closestSelector="tr" />);
         })
     }
 

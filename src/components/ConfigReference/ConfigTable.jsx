@@ -23,8 +23,8 @@ export function ConfigTable(sectionName, configNamePattern) {
         const settingName = info.row.original.settingName || '';
         const anchor = getAnchorFromName(configName);
         return (
-          <div>
-            <InlineCodeWithCopy id={anchor} style={{ fontSize: '1em' }}>{configName}</InlineCodeWithCopy><br />
+          <div id={anchor} >
+            <InlineCodeWithCopy style={{ fontSize: '1em' }}>{configName}</InlineCodeWithCopy><br />
             {settingName && <i style={{ fontSize: '0.85em', color: '#666' }}>maps to <InlineCodeWithCopy>{settingName}</InlineCodeWithCopy></i>}
           </div>
         );
