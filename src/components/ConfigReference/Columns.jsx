@@ -74,10 +74,10 @@ export function getSeesFromItem(item, extras) {
 
 export function getDefaultValue(info) {
     const item = info.getValue();
-    return getDefaultValueFromItem(item);
+    return getDefaultValueFromItem(item, false);
 }
 
-export function getDefaultValueFromItem(item) {
+export function getDefaultValueFromItem(item, hidePlatform) {
     const properties = item?.properties ?? '';
     var defaultProperty = properties?.default ?? '';
 
@@ -109,7 +109,7 @@ export function getDefaultValueFromItem(item) {
         defaultPropertyOutput = <i>no default value</i>;
     } 
 
-    if (properties.defaultHasPlaceholder === true) {
+    if (properties.defaultHasPlaceholder === true && !hidePlatform) {
         return <>{defaultPropertyOutput} on <ChosenOS /></>
     } else {
         return defaultPropertyOutput;

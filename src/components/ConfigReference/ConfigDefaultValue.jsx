@@ -4,13 +4,13 @@ import InlineCodeWithCopy from "@site/src/components/InlineCodeWithCopy/InlineCo
 import { useResource } from './ConfigReferenceContext';
 import { ConfigReferenceProvider } from './ConfigReferenceContext';
 
-export function ConfigDefaultValue({name}) {
+export function ConfigDefaultValue({name, hidePlatform}) {
   const { configurationOptions, extras, loading, error } = useResource();
 
   if (!configurationOptions) {
     return <>Loading...</>
   }
 
-  const defValue = getDefaultValueFromItem(configurationOptions.mappings[name]);
+  const defValue = getDefaultValueFromItem(configurationOptions.mappings[name], hidePlatform);
   return <>{defValue}</>
 }

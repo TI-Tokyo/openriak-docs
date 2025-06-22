@@ -25,8 +25,7 @@ storage_backend = leveled
 leveled.data_root = "$(platform_data_dir)/leveled"
 ```
 
-Note: `$(platform_data_dir)` will be replaced at run-time with the value for the configuration setting `platform_data_dir`. This varies by operating system. For your chosen operating system (<ChosenOS type="plaintext" />) it is <ConfigDefaultValue name="platform_data_dir" />.
-
+Note: `$(platform_data_dir)` will be replaced at run-time with the value for the configuration setting `platform_data_dir`. This varies by operating system. For <ChosenOS type="plaintext" /> the default is <ConfigDefaultValue name="platform_data_dir" hidePlatform="true" />.
 
 ## Quick Config Reference
 
