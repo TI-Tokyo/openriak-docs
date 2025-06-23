@@ -7,6 +7,7 @@ import { OSSelectionProvider } from '@site/src/components/OSSelection/OSSelectio
 type Props = WrapperProps<typeof LayoutType>;
 
 export default function LayoutWrapper(props: Props): ReactNode {
+  //console.log("Doing page layout");
   return (
     <OSSelectionProvider>
       <Layout {...props} />

@@ -35,6 +35,9 @@ export default function preset(
   const {
     debug,
     docs,
+    kv,
+    cs,
+    ts,
     blog,
     pages,
     sitemap,
@@ -76,6 +79,27 @@ export default function preset(
     plugins.push(makePluginConfig('@docusaurus/plugin-content-docs', docs));
   } else {
     console.log("There are no 'docs' options!");
+  }
+  if (kv !== false) {
+    console.log("There are 'kv' options!");
+    console.log(kv);
+    plugins.push(makePluginConfig('@docusaurus/plugin-content-docs', kv));
+  } else {
+    console.log("There are no 'kv' options!");
+  }
+  if (cs !== false) {
+    console.log("There are 'cs' options!");
+    console.log(cs);
+    plugins.push(makePluginConfig('@docusaurus/plugin-content-docs', cs));
+  } else {
+    console.log("There are no 'cs' options!");
+  }
+  if (ts !== false) {
+    console.log("There are 'ts' options!");
+    console.log(ts);
+    plugins.push(makePluginConfig('@docusaurus/plugin-content-docs', ts));
+  } else {
+    console.log("There are no 'ts' options!");
   }
   if (blog !== false) {
     plugins.push(makePluginConfig('@docusaurus/plugin-content-blog', blog));

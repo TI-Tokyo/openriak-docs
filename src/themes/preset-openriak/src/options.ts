@@ -26,6 +26,9 @@ export type Options = {
   debug?: boolean;
   /** Options for `@docusaurus/plugin-content-docs`. Use `false` to disable. */
   docs?: false | DocsPluginOptions;
+  kv?: false | DocsPluginOptions;
+  ts?: false | DocsPluginOptions;
+  cs?: false | DocsPluginOptions;
   /** Options for `@docusaurus/plugin-content-blog`. Use `false` to disable. */
   blog?: false | BlogPluginOptions;
   /** Options for `@docusaurus/plugin-content-pages`. Use `false` to disable. */

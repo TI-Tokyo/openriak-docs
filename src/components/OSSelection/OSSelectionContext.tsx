@@ -9,6 +9,7 @@ type OSSelectionContextType = {
 const OSSelectionContext = createContext<OSSelectionContextType | null>(null);
 
 export const OSSelectionProvider = ({ children }) => {
+  //console.log("Doing OSSelectionProvider");
   const [selected, setSelected] = useState(null);
   if (!selected) {
     setSelected(osOptions[0]);
@@ -25,6 +26,7 @@ export const OSSelectionProvider = ({ children }) => {
       localStorage.setItem('osSelection', JSON.stringify(selected));
     }
   }, [selected]);
+  //console.log("Returning useOSSelection");
 
   return (
     <OSSelectionContext.Provider value={{ selected, setSelected }}>

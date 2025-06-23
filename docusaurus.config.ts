@@ -1,7 +1,8 @@
-import {themes as prismThemes} from 'prism-react-renderer';
-import type {Config} from '@docusaurus/types';
+import { themes as prismThemes } from 'prism-react-renderer';
+import type { Config } from '@docusaurus/types';
 import type * as Preset from './src/themes/preset-openriak';
 import pluginIncludeMarkdown from './src/remark/include-md';
+import type { DeepPartial, Overwrite } from 'utility-types';
 
 // This runs in Node.js - Don't use client-side code here (browser APIs, JSX...)
 
@@ -29,6 +30,12 @@ const config: Config = {
   onBrokenLinks: 'warn',
   onBrokenMarkdownLinks: 'warn',
 
+  customFields: {
+    configReference: {
+      fallbackVersion: "3.2.5"
+    }
+  },
+
   // Even if you don't use internationalization, you can use this field to set
   // useful metadata like html lang. For example, if your site is Chinese, you
   // may want to replace "en" with "zh-Hans".
@@ -36,6 +43,29 @@ const config: Config = {
     defaultLocale: 'en',
     locales: ['en'],
   },
+
+  plugins: [
+    [
+      '@docusaurus/plugin-client-redirects',
+      {
+        redirects: [
+/*
+          {
+            from: '/kv/latest/',
+            to: '/kv/',
+          },
+*/
+        ],
+        createRedirects: (path) => {
+          // Match all /kv/latest/* paths
+          if (path.startsWith('/kv/latest/')) {
+            return [path.replace('/kv/latest', '/kv')];
+          }
+          return [];
+        },
+      },
+    ],
+  ],
 
   presets: [
     [
@@ -46,15 +76,12 @@ const config: Config = {
           path: "content/kv",
           routeBasePath: "kv",
           sidebarPath: require.resolve('./src/sidebars/sidebarsKV.ts'),
-          // Please change this to your repo.
-          // Remove this to remove the "edit this page" links.
           editUrl:
             'https://github.com/openriak/openriak-docs/tree/develop/kv/',
           lastVersion: 'current',
           versions: {
             current: {
               label: 'The last 3.2 release aka 3.2.5',
-              path: '3.2.5',
             }
           },
           remarkPlugins: [pluginIncludeMarkdown]
@@ -136,11 +163,29 @@ const config: Config = {
         src: 'img/openriak-logo.svg',
       },
       items: [
-        {to: '/kv/3.2.5/intro', label: 'KV', position: 'left'},
-        {to: '/cs/intro', label: 'CS', position: 'left'},
-        {to: '/ts/intro', label: 'TS', position: 'left'},
-        {to: '/community', label: 'Community', position: 'left'},
-        {to: '/blog', label: 'Blog', position: 'left'},
+        {
+          type: 'docsVersionDropdown',
+          position: 'right',
+          dropdownActiveClassDisabled: true, // optional
+          docsPluginId: 'kv',
+        },
+        {
+          type: 'docsVersionDropdown',
+          position: 'right',
+          dropdownActiveClassDisabled: true, // optional
+          docsPluginId: 'cs',
+        },
+        {
+          type: 'docsVersionDropdown',
+          position: 'right',
+          dropdownActiveClassDisabled: true, // optional
+          docsPluginId: 'ts',
+        },
+        { to: '/kv/latest/intro', label: 'KV', position: 'left' },
+        { to: '/cs/latest/intro', label: 'CS', position: 'left' },
+        { to: '/ts/latest/intro', label: 'TS', position: 'left' },
+        { to: '/community', label: 'Community', position: 'left' },
+        { to: '/blog', label: 'Blog', position: 'left' },
         {
           href: 'https://github.com/openriak/openriak-docs',
           label: 'GitHub',
@@ -156,15 +201,15 @@ const config: Config = {
           items: [
             {
               label: 'OpenRiak KV',
-              to: '/kv/intro',
+              to: '/kv/latest/intro',
             },
             {
               label: 'OpenRiak CS',
-              to: '/cs/intro',
+              to: '/cs/latest/intro',
             },
             {
               label: 'OpenRiak TS',
-              to: '/ts/intro',
+              to: '/ts/latest/intro',
             },
           ],
         },

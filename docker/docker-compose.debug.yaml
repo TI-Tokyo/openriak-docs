@@ -16,7 +16,7 @@ services:
     volumes:
        - ..:/openriak-docs
     command: >
-     sh -c "node --inspect=0.0.0.0:9229 $(which npx) docusaurus start --host 0.0.0.0"
+     sh -c "$(which npm) run clear && DEBUG=docusaurus:* node --inspect=0.0.0.0:9229 $(which npx) docusaurus start --host 0.0.0.0"
     restart: "no"          # don't restart the container
     working_dir: /openriak-docs
   openriak-docs-web:
@@ -25,5 +25,5 @@ services:
     ports:
       - "3001:80"      # website
     volumes:
-       - ../build:/usr/local/apache2/htdocs/docs/:ro
+       - ../build:/usr/local/apache2/htdocs:ro
     restart: "no"          # don't restart the container

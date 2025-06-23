@@ -20,10 +20,21 @@
 			},
     },
     {
+      "label": "Remove Docker Container",
+      "type": "shell",
+      "command": "docker container rm -f openriak-docs || true",
+ 			"options": {
+   			"env": {
+			    "DOCKER_BUILDKIT": "1",
+   				"COMPOSE_BAKE": "true",
+   			}			
+			},
+    },    
+    {
       "label": "Start Docker Container (Debug)",
       "type": "shell",
       "command": "docker compose -f ./docker/docker-compose.debug.yaml up",
-      "dependsOn": ["Clean Docusaurus Cache", "Build Docker Container (Debug)"],
+      "dependsOn": ["Clean Docusaurus Cache", "Remove Docker Container", "Build Docker Container (Debug)"],
  			"options": {
    			"env": {
 			    "DOCKER_BUILDKIT": "1",
@@ -53,7 +64,7 @@
       "label": "Start Docker Container (No Build) (Debug)",
       "type": "shell",
       "command": "docker compose -f ./docker/docker-compose.debug.yaml up",
-      "dependsOn": ["Clean Docusaurus Cache"],
+      "dependsOn": ["Clean Docusaurus Cache", "Remove Docker Container", ],
  			"options": {
    			"env": {
 			    "DOCKER_BUILDKIT": "1",
