@@ -77,8 +77,17 @@ a.relatedPage {
   display: block;
 }
 
-article>div a:not(.hash-link)::after {
+article>div a:not(.hash-link):not(.recentFilterLink):not(.clearRecentFilter)::after {
   content: " ➔";
+}
+
+article>div a.clearRecentFilter {
+  font-size: 0.7em;
+  padding-right: 0.5em;
+}
+
+article>div a.recentFilterLink:first-of-type {
+  padding-left: 0.5em;
 }
 
 div.configListings div.config-name>span>code {

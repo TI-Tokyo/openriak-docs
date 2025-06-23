@@ -8,6 +8,8 @@ import {
 import { getDataTypeList, getDefaultValue, getComments, getSees, getAnchorFromName } from '@site/src/components/ConfigReference/Columns'
 import InlineCodeWithCopy from "@site/src/components/InlineCodeWithCopy/InlineCodeWithCopy";
 import { useResource } from './ConfigReferenceContext';
+import SetStateLink from './SetStateLink';
+import DebouncedInput from './DebouncedInput';
 
 export function ConfigTable(sectionName, configNamePattern) {
   const { configurationOptions, extras, loading, error } = useResource();
@@ -31,7 +33,7 @@ export function ConfigTable(sectionName, configNamePattern) {
       },
     },
     {
-      accessorFn: row => {return (row ?? '')},
+      accessorFn: row => { return (row ?? '') },
       header: 'Details',
       cell: info => {
         const { configurationOptions, extras, loading, error } = useResource();
@@ -64,30 +66,30 @@ export function ConfigTable(sectionName, configNamePattern) {
               <span key="valueInfo-datatypes-label">Valid datatype:</span>
               <span key="valueInfo-datatypes-value" style={{ paddingLeft: '1em', borderLeftWidth: '1px', borderLeftStyle: 'dotted', borderLeftColor: '#666' }}>{datatypeContents}</span>
             </div>
-            {commentContents && 
-            <div
-              key="valueInfo-comments"
-              style={{
-                display: 'grid',
-                gridTemplateColumns: '120px 1fr',
-                alignItems: 'start',
-              }}
-            >
-              <span key="valueInfo-comments-label">Comments:</span>
-              <span key="valueInfo-comments-value" className="comments-value" style={{ paddingLeft: '1em', borderLeftWidth: '1px', borderLeftStyle: 'dotted', borderLeftColor: '#666' }}>{commentContents}</span>
-            </div>}
-            {alsoSeeContents.length > 0 && 
-            <div
-              key="valueInfo-alsosees"
-              style={{
-                display: 'grid',
-                gridTemplateColumns: '120px 1fr',
-                alignItems: 'start',
-              }}
-            >
-              <span key="valueInfo-alsosees-label">Also see:</span>
-              <span key="valueInfo-alsosees-value" style={{ paddingLeft: '1em', borderLeftWidth: '1px', borderLeftStyle: 'dotted', borderLeftColor: '#666' }}>{alsoSeeContents}</span>
-            </div>}
+            {commentContents &&
+              <div
+                key="valueInfo-comments"
+                style={{
+                  display: 'grid',
+                  gridTemplateColumns: '120px 1fr',
+                  alignItems: 'start',
+                }}
+              >
+                <span key="valueInfo-comments-label">Comments:</span>
+                <span key="valueInfo-comments-value" className="comments-value" style={{ paddingLeft: '1em', borderLeftWidth: '1px', borderLeftStyle: 'dotted', borderLeftColor: '#666' }}>{commentContents}</span>
+              </div>}
+            {alsoSeeContents.length > 0 &&
+              <div
+                key="valueInfo-alsosees"
+                style={{
+                  display: 'grid',
+                  gridTemplateColumns: '120px 1fr',
+                  alignItems: 'start',
+                }}
+              >
+                <span key="valueInfo-alsosees-label">Also see:</span>
+                <span key="valueInfo-alsosees-value" style={{ paddingLeft: '1em', borderLeftWidth: '1px', borderLeftStyle: 'dotted', borderLeftColor: '#666' }}>{alsoSeeContents}</span>
+              </div>}
             <div
               key="hidden-hidden"
               style={{
@@ -105,7 +107,7 @@ export function ConfigTable(sectionName, configNamePattern) {
               }
             </div>
           </div>
-          )
+        )
       },
     }
   ], []);
@@ -124,24 +126,59 @@ export function ConfigTable(sectionName, configNamePattern) {
         }
       }
     } else if (typeof item == 'object') {
-      for (const [key,value] of Object.entries(item)) {
-        if (doesItemMatch(key, terms)) { return true;}
-        if (doesItemMatch(value, terms)) { return true;}
+      for (const [key, value] of Object.entries(item)) {
+        if (doesItemMatch(key, terms)) { return true; }
+        if (doesItemMatch(value, terms)) { return true; }
       }
     } else {
       return doesItemMatch(JSON.stringify(item), terms);
     }
     return false;
-  }  
+  }
+
+  const [recentFilters, setRecentFilters] = useState(getSavedRecentFilters());
+
+  function removeFromRecentFilters(removeItem) {
+    if (!removeItem.trim()) return;
+
+    // Remove duplicates and add to front
+    const updated = [...recentFilters.filter(item => item !== removeItem)];
+
+    // Keep only the last 10
+    const trimmed = updated.slice(0, 10);
+
+    localStorage.setItem('recentConfigFilters', JSON.stringify(trimmed));
+    setRecentFilters(trimmed);
+  }
+
+  function saveToRecentFilters(input) {
+    if (!input.trim()) return;
+
+    // Remove duplicates and add to front
+    const updated = [input, ...recentFilters.filter(item => item !== input)];
+
+    // Keep only the last 10
+    const trimmed = updated.slice(0, 10);
+
+    localStorage.setItem('recentConfigFilters', JSON.stringify(trimmed));
+    setRecentFilters(trimmed);
+  }
+
+  function getSavedRecentFilters() {
+    const stored = localStorage.getItem('recentConfigFilters');
+    return stored ? JSON.parse(stored) : [];
+  }
 
   const filteredData = useMemo(() => {
     if (!configurationOptions || !configurationOptions.mappings) return;
     const dataSource = Object.values(configurationOptions.mappings)
     if (!globalFilter) return dataSource;
- 
+
+    saveToRecentFilters(globalFilter);
+
     const searchResults = dataSource.filter(item => {
       return doesItemMatch(item, [globalFilter.trim().toLowerCase()])
-      });
+    });
     return searchResults;
   }, [globalFilter, configurationOptions]);
 
@@ -164,17 +201,31 @@ export function ConfigTable(sectionName, configNamePattern) {
   if (error) return <p>Error: {error.message}</p>;
   if (!table.getRowModel().rows) return <p>Loading table…</p>;
 
+  //setRecentFilters(getSavedRecentFilters());
+  
+  const recentFiltersOutput = [];
+  if (recentFilters.length > 0) {
+    recentFiltersOutput.push(<span key="recentFilterLabel">Recently used filters:</span>);
+    recentFilters.map((item, index) => {
+      recentFiltersOutput.push(<SetStateLink key={'recentFilter-'+index} className="recentFilterLink" linkText={item} setValue={item} setMethod={setGlobalFilter} />);
+      recentFiltersOutput.push(<a key={'clearRecentFilter-'+index} className="clearRecentFilter" href="#" onClick={(e) => { e.preventDefault(); removeFromRecentFilters(item);}}>❌</a>);
+    });
+  } else {
+    recentFiltersOutput.push(<React.Fragment key="noRecentFiltersLabel">There are no recently used filters.</React.Fragment>);
+  }
+
   return (
     <>
-      <input
+      <DebouncedInput
         value={globalFilter ?? ''}
-        onChange={e => setGlobalFilter(e.target.value)}
+        onChange={setGlobalFilter}
         placeholder="🔍 Search..."
-        style={{ padding: '0.5rem', width: '100%', marginBottom: '1rem' }}
+        style={{ padding: '0.5rem', width: '100%', marginBottom: '0.125rem' }}
+        delay="500"
       />
-
-      <table className="table" style={{ 
-        width: '100%', 
+      <div className="recentFilters" style={{ paddingLeft: '1rem', marginBottom: '0.5rem' }}>{recentFiltersOutput}</div>
+      <table className="table" style={{
+        width: '100%',
         borderCollapse: 'collapse',
         borderWidth: '0.125rem'
       }}>
