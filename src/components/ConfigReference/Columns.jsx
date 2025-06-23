@@ -50,22 +50,22 @@ export function getSeesFromItem(item, extras) {
     }
 
     if (extras && extras.configs && extras.links) {
-        Object.entries(extras.configs).filter(([key,value]) => {
+        extras.configs.filter((extra,index) => {
             try {
-                const regExp = new RegExp(key);
+                const regExp = new RegExp(extra.pattern);
                 return (item.configName.match(regExp));
             } catch (err) {
                 console.log(err);
                 throw err;
             }
-        }).map(([key, value], entryIndex) => {
-            const relatedPages = value.relatedPages || [];
+        }).map((extra, extraIndex) => {
+            const relatedPages = extra.relatedPages || [];
             relatedPages.map((relatedPage, index) => {
                 // PJAC
                 const relatedPageLink = extras.links[relatedPage];
                 if (relatedPageLink) {
                     const url = relatedPageLink.url;
-                    outputItems.push(<Link className="relatedPage extra" key={'relatedPage-'+entryIndex+'-'+index} to={location + relatedPageLink.url}>{relatedPageLink.text}</Link>);
+                    outputItems.push(<Link className="relatedPage extra" key={'relatedPage-'+extraIndex+'-'+index} to={location + relatedPageLink.url}>{relatedPageLink.text}</Link>);
                 }
             });
         });
