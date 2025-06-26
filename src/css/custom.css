@@ -18,6 +18,7 @@
   --ifm-color-primary-lightest: #ffd195;
   --ifm-code-font-size: 95%;
   --docusaurus-highlighted-code-line-bg: rgba(0, 0, 0, 0.1);
+  --openriak-popupbackdrop: #f7f7f7;
 /*
   --ifm-color-primary: #2e8555;
   --ifm-color-primary-dark: #29784c;
@@ -39,9 +40,9 @@
   --ifm-color-primary-darkest: #3e6c73;
   --ifm-color-primary-light: #5c9ea7;
   --ifm-color-primary-lighter: #85b6bd;
-  --ifm-color-primary-lightest: #9fc6cb;
+  --ifm-color-primary-lightest: #8fc6cb;
   --docusaurus-highlighted-code-line-bg: rgba(0, 0, 0, 0.3);
-
+  --openriak-popupbackdrop: #3e6c73;
 /*
   --ifm-color-primary: #25c2a0;
   --ifm-color-primary-dark: #21af90;
@@ -65,7 +66,7 @@
   }
   
   aside.theme-doc-sidebar-container>div>div:first-child {
-      padding-top: var(--ifm-navbar-height) !important;
+    padding-top: var(--ifm-navbar-height) !important;
   }
 }
 
@@ -130,4 +131,158 @@ a.menu__link--active {
 a:hover,
 div.menu__list-item-collapsible:hover {
   color: var(--ifm-color-primary);
+}
+
+.osPicker-trigger,
+.versionPicker-trigger {
+  display: flex;
+  margin: 1rem;
+  font-size: 1.2rem;
+  width: calc(100% - 2rem);
+  background-color: var(--ifm-color-primary-lightest);
+  border-color: var(--ifm-color-primary-darkest); 
+  border-width: 0;
+  border-radius: 0.125rem;
+  padding: 0.5rem;
+  cursor: pointer;
+}
+
+[data-theme='dark'] {
+  .osPicker-trigger,
+  .versionPicker-trigger {
+    background-color: var(--ifm-color-primary-darkest);
+  }
+}
+
+.osPicker-trigger {
+  margin-bottom: 0.5rem;
+}
+
+.versionPicker-trigger {
+  margin-top: 0;
+  margin-bottom: 0.5rem;
+}
+
+.osPicker-triggerContent,
+.versionPicker-triggerContent {
+  display: flex;
+  align-items: center;
+}
+
+.push-right {
+  margin-left: auto;
+}
+
+.versionPicker-optionsPortal {
+  
+}
+
+.osPicker-content,
+.versionPicker-optionsContent {
+  background: var(--openriak-popupbackdrop);
+  border: 2px solid var(--ifm-color-primary-darker);
+  border-radius: 0 0 10px 10px;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+  top: 1rem;
+}
+
+.osPicker-portal,
+.versionPicker-portal {
+}
+
+.osPicker-viewport {
+}
+
+.osPicker-item {
+  display: grid;
+  row-gap: 0.5rem;
+  padding: 0 0.5em;
+}
+
+.osPicker-item:hover {
+  background: var(--ifm-color-primary-light);
+}
+
+.osPicker-arrow,
+.versionPicker-arrow {
+  fill: var(--ifm-color-primary-darker);
+}
+
+.theme-doc-sidebar-container>div>div:has(nav) {
+  padding-top: 0;
+}
+
+.theme-doc-sidebar-container>div>div>nav {
+  padding-top: 0;
+}
+
+.versionPicker-subProject {
+  display: grid;
+  row-gap: 0.5rem;
+  padding: 0 0.5em;
+}
+
+.versionPicker-versionFamily {
+  display: flow;
+  align-items: center;
+  padding: 0 1.5rem 0 0;
+}
+
+.versionPicker-versionFamily:last-child {
+  padding-bottom: 0.5rem;
+}
+
+.versionPicker-subProject-Title:first-child {
+  padding-top: 0.5rem;
+}
+
+
+.versionPicker-version {
+  background: var(--ifm-color-primary-lighter);
+  padding: 0.125rem 0.5rem;
+  border: 0;
+  margin-right: 0.25em;
+}
+
+.versionPicker-lts {
+  background: var(--ifm-color-primary-light);
+  font-weight: bold;
+}
+
+.versionPicker-version a {
+  color: black;
+}
+
+[data-theme='dark'] {
+  .versionPicker-version a {
+    color: white;
+  }
+}
+
+.versionPicker-version:hover:not(.versionPicker-lts) {
+  background: var(--ifm-color-primary-dark);
+}
+
+.versionPicker-version:hover a {
+  text-decoration: none;
+}
+
+.versionPicker-version:first-child {
+  border-radius: 0.75rem 0 0 0.75rem;
+}
+
+.versionPicker-version:last-child {
+  border-radius: 0 0.75rem 0.75rem 0;
+  margin-right: 0;
+}
+
+.versionPicker-activeVersion {
+  background: var(--ifm-color-primary-dark);
+}
+
+.menu {
+  max-height: calc(100vh - 210px - 60px);
+  overflow-y: auto;
+  position: sticky;
+  top: 0;
 }

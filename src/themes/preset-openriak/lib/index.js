@@ -38,7 +38,7 @@ function preset(context, opts = {}) {
     }
     if (kv !== false) {
         const kvConfig = makePluginConfig('@docusaurus/plugin-content-docs', kv);
-        console.log(kvConfig);
+        //console.log(kvConfig);
         plugins.push(kvConfig);
     }
     if (cs !== false) {

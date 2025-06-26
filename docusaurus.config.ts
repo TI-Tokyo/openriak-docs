@@ -21,6 +21,9 @@ const config: Config = {
   // Set the /<baseUrl>/ pathname under which your site is served
   // For GitHub pages deployment, it is often '/<projectName>/'
   baseUrl: '/docs',
+  
+  // ensure that all pages end in a slash to make relative URLs work consistently
+  trailingSlash: true,
 
   // GitHub pages deployment config.
   // If you aren't using GitHub pages, you don't need these.
@@ -31,8 +34,69 @@ const config: Config = {
   onBrokenMarkdownLinks: 'warn',
 
   customFields: {
+    versionPicker: {
+      fallbackVersion: "3.2.5",
+      versions: {
+        "kv": [
+          {
+            logoLight: "/img/openriak-logo-and-text.svg",
+            logoDark: "/img/openriak-logo-and-text.svg",
+            current: "3.2.5",
+            ltsVersions: ["3.2"],
+            versions: [
+              "3.2.5"
+            ],
+          },
+          {
+            path: "/archived/riak-kv",
+            logoLight: "/img/riak-kv-dark.png",
+            logoDark: "/img/riak-kv-light.png",
+            ltsVersions: ["2.9", "3.0", "3.2"],
+            versions: [
+              "3.2.3", "3.2.4",
+              // 3.0
+              "3.0.1", "3.0.2", "3.0.3", "3.0.4", "3.0.6",
+              "3.0.7", "3.0.8", "3.0.9", "3.0.10", "3.0.11",
+              "3.0.12", "3.0.13", "3.0.14", "3.0.15",
+              "3.0.16",
+              // 2.9
+              "2.9.0", "2.9.1", "2.9.2", "2.9.4", "2.9.7",
+              "2.9.8", "2.9.9", "2.9.10",
+            ]
+          }
+          /*,
+          {
+            path: "/archived/riak-kv",
+            name: "KV",
+            logo: "/img/riak-kv-logo-and-text.svg",
+            ltsVersions: ["2.9", "3.0"],
+            versions: [
+
+              // 3.0
+              "3.0.1", "3.0.2", "3.0.3", "3.0.4", "3.0.6",
+              "3.0.7", "3.0.8", "3.0.9", "3.0.10", "3.0.11",
+              "3.0.12", "3.0.13", "3.0.14", "3.0.15",
+              "3.0.16",
+
+              // 2.9
+              "2.9.0", "2.9.1", "2.9.2", "2.9.4", "2.9.7",
+              "2.9.8", "2.9.9", "2.9.10",
+
+              // 2.2
+              "2.2.0", "2.2.1", "2.2.3", "2.2.6",
+
+              // 2.1
+              "2.1.1", "2.1.3", "2.1.4",
+
+              // 2.0
+              "2.0.0", "2.0.1", "2.0.2", "2.0.4", "2.0.5",
+              "2.0.6", "2.0.7", "2.0.8", "2.0.9"
+            ],
+          }*/
+        ]
+      }
+    },
     configReference: {
-      fallbackVersion: "3.2.5"
     }
   },
 
@@ -49,17 +113,19 @@ const config: Config = {
       '@docusaurus/plugin-client-redirects',
       {
         redirects: [
-/*
-          {
-            from: '/kv/latest/',
-            to: '/kv/',
-          },
-*/
+          /*
+                    {
+                      from: '/kv/latest/',
+                      to: '/kv/',
+                    },
+          */
         ],
-        createRedirects: (path) => {
-          // Match all /kv/latest/* paths
-          if (path.startsWith('/kv/latest/')) {
-            return [path.replace('/kv/latest', '/kv')];
+        // return is "from", path is "to"
+        createRedirects: (path: string) => {
+          if (path.endsWith('/')) {
+            // if ends is a slash, then add redirect from not-slash to slash
+            // e.g. /kv to /kv/
+            return [path.slice(0,-1)];
           }
           return [];
         },
@@ -98,8 +164,7 @@ const config: Config = {
           lastVersion: 'current',
           versions: {
             current: {
-              label: '3.0.1',
-              path: '3.0.1'
+              label: '3.0.1'              
             }
           }
         },
@@ -115,8 +180,7 @@ const config: Config = {
           lastVersion: 'current',
           versions: {
             current: {
-              label: '3.0.0',
-              path: '3.0.0',
+              label: '3.0.0'
             }
           }
         },
@@ -160,9 +224,10 @@ const config: Config = {
       title: '/Docs',
       logo: {
         alt: 'OpenRiak',
-        src: 'img/openriak-logo.svg',
+        src: 'img/openriak-logo-and-text.svg',
       },
       items: [
+/*
         {
           type: 'docsVersionDropdown',
           position: 'right',
@@ -181,9 +246,10 @@ const config: Config = {
           dropdownActiveClassDisabled: true, // optional
           docsPluginId: 'ts',
         },
-        { to: '/kv/latest/intro', label: 'KV', position: 'left' },
-        { to: '/cs/latest/intro', label: 'CS', position: 'left' },
-        { to: '/ts/latest/intro', label: 'TS', position: 'left' },
+*/
+        { to: '/kv', label: 'KV', position: 'left' },
+        { to: '/cs', label: 'CS', position: 'left' },
+        { to: '/ts', label: 'TS', position: 'left' },
         { to: '/community', label: 'Community', position: 'left' },
         { to: '/blog', label: 'Blog', position: 'left' },
         {
@@ -201,15 +267,15 @@ const config: Config = {
           items: [
             {
               label: 'OpenRiak KV',
-              to: '/kv/latest/intro',
+              to: '/kv',
             },
             {
               label: 'OpenRiak CS',
-              to: '/cs/latest/intro',
+              to: '/cs',
             },
             {
               label: 'OpenRiak TS',
-              to: '/ts/latest/intro',
+              to: '/ts',
             },
           ],
         },

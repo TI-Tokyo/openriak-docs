@@ -4,7 +4,11 @@ const {
   updateSchemas, 
   updateSchemaFiles,
   updateTemplateFiles,
-  updateSchemaOSFiles } = require('./commands/updateSchemas.cjs');
+  updateSchemaOSFiles,
+ } = require('./commands/updateSchemas.cjs');
+const {
+  migrateRiakDocs
+} = require('./commands/migrateRiakDocs.cjs');
 
 const commands = {
   updateSchemas: {
@@ -26,6 +30,11 @@ const commands = {
     description: 'Updates the per-OS merged schema files for a project, either for all versions or a specific version.',
     usage: 'updateSchemaOSFiles <project> [version]',
     example: '"updateSchemaOSFiles kv 1.0.0" will update cuttlefish OS-specific schema files for OpenRiak KV version 1.0.0.'
+  },
+  migrateRiakDocs: {
+    description: 'Imports an old RiakDocs markdown version from a source path to specific version. Note that this is destructive of the destination!',
+    usage: 'updateSchemaOSFiles sourcePath project version',
+    example: '"updateSchemaOSFiles \'../riak-docs-fork/content/kv/3.0.16\' kv 3.0.16" will try to import from the path to project kv version 3.0.16.'
   },
   help: {
     description: 'Show usage information',
@@ -62,6 +71,29 @@ function main() {
 
   // Dispatch command
   switch (command) {
+    case 'migrateRiakDocs':
+      if (args.length === 0 || args.length > 3) {
+        console.error(`❌ Please provide only the source path and destination project and version.\n`);
+        console.log(`Usage: ${commands[command].usage}`);
+        process.exit(1);
+      }
+      const sourcePath = args[0];
+      const destinationProject = args[1];
+      const destinationVersion = args[2];
+
+      if (!['kv','cs','ts'].includes(destinationProject)) {
+        console.error(`❌ Unknown project ${destinationProject}.\n`);
+        process.exit(1);
+      }
+
+      if (!destinationVersion.match(/^[0-9]\.[0-9]\.[0-9]{1,2}$/s)) {
+        console.error(`❌ Invalid version ${destinationVersion}.\n`);
+        process.exit(1);
+      }
+
+      console.log(`Importing RiakDocs from ${sourcePath} to project ${destinationProject} version ${destinationVersion}`);
+      migrateRiakDocs(sourcePath, destinationProject, destinationVersion);
+      break;
     case 'updateSchemas':
     case 'updateSchemaFiles':
     case 'updateTemplateFiles':

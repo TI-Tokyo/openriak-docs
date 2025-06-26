@@ -13,17 +13,10 @@ services:
       - "9229:9229"      # Node.js debug port
     environment:
       NODE_ENV: development
+      NODE_OPTIONS: --max-old-space-size=16384
     volumes:
        - ..:/openriak-docs
     command: >
      sh -c "$(which npm) run clear && DEBUG=docusaurus:* node --inspect=0.0.0.0:9229 $(which npx) docusaurus start --host 0.0.0.0"
     restart: "no"          # don't restart the container
     working_dir: /openriak-docs
-  openriak-docs-web:
-    image: httpd:latest
-    container_name: openriak-docs-web
-    ports:
-      - "3001:80"      # website
-    volumes:
-       - ../build:/usr/local/apache2/htdocs:ro
-    restart: "no"          # don't restart the container
