@@ -123,7 +123,7 @@ export default function VersionPicker() {
           <img src={useBaseUrl(activeSubProjectLogoUrl)} style={{height: "1.5em"}} alt={activeSubProjectName} />
           <span style={{paddingLeft:'0.3em'}}>{activeSubProjectName}</span>
           <span className="push-right">
-            <span style={{paddingRight:'0.3em'}}>{activeVersion}</span>
+            <span style={{paddingRight:'0.3em', fontWeight: 'bold'}}>{activeVersion}</span>
             <CaretDownIcon className="push-right" />
           </span>
         </div>
