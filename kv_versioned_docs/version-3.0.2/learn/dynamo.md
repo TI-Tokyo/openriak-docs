@@ -13,6 +13,8 @@ import RiakDocsNote from '@site/src/components/RiakDocs/RiakDocsNote';
 import RiakDocsFigure from '@site/src/components/RiakDocs/RiakDocsFigure';
 
 
+[client libraries]: ./../../developing/client-libraries
+
 <div style={{textAlign: 'center', fontStyle: 'italic'}}>
   Giuseppe DeCandia, Deniz Hastorun, Madan Jampani, Gunavardhan Kakulapati,
   Avinash Lakshman, Alex Pilchin, Swaminathan Sivasubramanian, Peter Vosshall
@@ -628,8 +630,8 @@ Handling temporary failures
 Sloppy Quorum and hinted handoff
 </td>
     <td>
-Provides high availability and durability guarantee when some of the
-        replicas are not available.
+        Provides high availability and durability guarantee when some of the
+        replicas are not available
 </td>
   </tr>
   <tr>
@@ -651,8 +653,8 @@ Membership and failure detection
 Gossip-based membership protocol and failure detection.
 </td>
     <td>
-Preserves symmetry and avoids having a centralized registry for storing
-        membership and node liveness information.
+        Preserves symmetry and avoids having a centralized registry for storing
+        membership and node liveness information
 </td>
   </tr>
 </table>
@@ -1741,8 +1743,6 @@ using timestamps based versioning.
 >
 > Note that the Riak clients do not coordinate with Riak's preference list, but
 > simply round-robin requests, letting the Riak cluster handle routing.
-
-[client libraries]: ./../../developing/client-libraries
 
 An important advantage of the client-driven coordination approach is that a load
 balancer is no longer required to uniformly distribute client load. Fair load

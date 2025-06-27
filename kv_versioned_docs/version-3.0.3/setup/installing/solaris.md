@@ -11,7 +11,7 @@ last_update:
 import RiakDocsNote from '@site/src/components/RiakDocs/RiakDocsNote';
 
 
-[install verify]: ./../../../2.9.0p5/setup/installing/verify
+[install verify]: ./../../../../2.9.0/setup/installing/verify
 
 <RiakDocsNote title="Solaris End of Life (EOL) for Riak KV 2.2.0">
 Solaris is no longer supported in Riak KV 2.2.1+. If you are interested in using Riak KV on Solaris, you can still [build from source](../source). The steps below have been left here for reference only and are no longer maintained.

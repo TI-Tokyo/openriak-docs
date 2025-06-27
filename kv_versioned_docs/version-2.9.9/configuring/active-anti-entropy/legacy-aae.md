@@ -59,7 +59,7 @@ debugging information will be output.
 </td>
 <td>
 Whether the distributed throttle for Active Anti-Entropy is
-enabled.
+enabled
 </td>
 <td>
 <code>on</code>
@@ -82,7 +82,8 @@ configured, there must be a tier which includes a mailbox size of 0.
 Both <code>.mailbox_size</code> and <code>.delay</code> must be set for
 each tier.
 </td>
-<td></td>
+<td>
+</td>
 </tr>
 
 <tr>
@@ -91,9 +92,10 @@ each tier.
 </td>
 <td>
 See the description for
-<code>anti_entropy.throttle.$tier.mailbox_size</code> above.
+<code>anti_entropy.throttle.$tier.mailbox_size</code> above
 </td>
-<td></td>
+<td>
+</td>
 </tr>
 
 <tr>
@@ -114,7 +116,8 @@ entail a small performance cost.
 <td>
 <code>anti_entropy.max_open_files</code>
 </td>
-<td></td>
+<td>
+</td>
 <td>
 <code>20</code>
 </td>
@@ -126,7 +129,7 @@ entail a small performance cost.
 </td>
 <td>
 The LevelDB options used by Active Anti-Entropy to generate the
-LevelDB-backed on-disk hashtrees.
+LevelDB-backed on-disk hashtrees
 </td>
 <td>
 <code>4MB</code>
@@ -154,7 +157,6 @@ The tick determines how often the Active Anti-Entropy manager looks
 for work to do (building/expiring trees, triggering exchanges, etc).
 Lowering this value will speed up the rate at which all replicas are
 synced across the cluster. Increasing the value is not recommended.
-
 </td>
 <td>
 <code>15s</code>
@@ -167,7 +169,7 @@ synced across the cluster. Increasing the value is not recommended.
 </td>
 <td>
 Limit how many Active Anti-Entropy exchanges or builds can happen
-concurrently.
+concurrently
 </td>
 <td>
 <code>2</code>
@@ -196,7 +198,8 @@ milliseconds.
 <td>
 <code>anti_entropy.tree.build_limit.per_timespan</code>
 </td>
-<td></td>
+<td>
+</td>
 <td>
 <code>1h</code>
 </td>
@@ -228,7 +231,6 @@ rebuilds. If set to <code>on</code>, this will help to prevent system
 response degradation under times of heavy load from multiple background
 tasks that contend for the same system resources; setting this parameter
 to <code>off</code> can cut down on system resource usage.
-
 </td>
 <td>
 <code>off</code>

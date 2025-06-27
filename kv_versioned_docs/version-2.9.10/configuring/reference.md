@@ -255,7 +255,7 @@ executables are stored.
 </td>
 <td>
 The directory in which Riak stores its storage backend data, as well
-as <a href="/kv/2.9.10/learn/glossary/#active-anti-entropy-aae">active anti-entropy</a> data, and cluster metadata.
+as <a href="/kv/2.9.10/learn/glossary/#active-anti-entropy-aae">active anti-entropy</a> data, and cluster metadata
 </td>
 <td>
 <code>./data</code>
@@ -383,7 +383,7 @@ Set to <code>off</code> to disable the admin panel.
 </td>
 <td>
 Authentication mode used for access to the admin panel. Options are
-<code>off</code> (which is the default) or <code>userlist</code>.
+<code>off</code> (which is the default) or <code>userlist</code>
 </td>
 <td>
 <code>off</code>
@@ -400,7 +400,8 @@ If Riak Control's authentication mode
 this is the list of usernames and passwords for access to the admin
 panel.
 </td>
-<td></td>
+<td>
+</td>
 </tr>
 
 </tbody>
@@ -428,7 +429,6 @@ operating system.
 <td>
 Whether distribution ports with full input buffers will be counted
 as busy. Distribution ports connect Riak nodes within a single cluster.
-
 </td>
 <td>
 <code>on</code>
@@ -441,7 +441,7 @@ as busy. Distribution ports connect Riak nodes within a single cluster.
 </td>
 <td>
 Whether ports with full input buffers will be counted as busy.
-Ports can represent open files or network sockets.
+Ports can represent open files or network sockets
 </td>
 <td>
 <code>on</code>
@@ -453,8 +453,8 @@ Ports can represent open files or network sockets.
 <code>runtime_health.triggers.process.heap_size</code>
 </td>
 <td>
-A process will become busy when its heap exceeds this size
-(in bytes).
+ process will become busy when its heap exceeds this size
+(in bytes)
 </td>
 <td>
 <code>160444000</code>
@@ -648,7 +648,8 @@ A space-delimited list of functions that will be run after a value
 is stored. Only Erlang functions are allowed, using the
 <code>module:function</code> format.
 </td>
-<td></td>
+<td>
+</td>
 </tr>
 
 <tr>
@@ -660,7 +661,8 @@ A space-delimited list of functions that will be run before a value
 is stored, and that can abort the write. Only Erlang functions are
 allowed, using the <code>module:function</code> format.
 </td>
-<td></td>
+<td>
+</td>
 </tr>
 
 <tr>
@@ -669,7 +671,7 @@ allowed, using the <code>module:function</code> format.
 </td>
 <td>
 The number of primary, non-fallback replicas that must reply to a
-read request.
+read request
 </td>
 <td>
 <code>0</code>
@@ -682,7 +684,7 @@ read request.
 </td>
 <td>
 The number of primary, non-fallback replicas which must reply to a
-write request.
+write request
 </td>
 <td>
 <code>0</code>
@@ -707,7 +709,7 @@ The number of replicas which must reply to a read request.
 </td>
 <td>
 The number of replicas which must reply to a write request,
-indicating that the write was received.
+indicating that the write was received
 </td>
 <td>
 <code>quorum</code>
@@ -765,7 +767,7 @@ format for more compact storage of small values.
 </td>
 <td>
 Writing an object with more than this number of siblings will send
-a failure to the client.
+a failure to the client
 </td>
 <td>
 <code>100</code>
@@ -778,7 +780,7 @@ a failure to the client.
 </td>
 <td>
 Writing an object with more than this number of siblings will
-generate a warning in the logs.
+generate a warning in the logs
 </td>
 <td>
 <code>25</code>
@@ -791,7 +793,7 @@ generate a warning in the logs.
 </td>
 <td>
 Writing an object larger than this will send a failure to the
-client.
+client
 </td>
 <td>
 <code>50MB</code>
@@ -804,7 +806,7 @@ client.
 </td>
 <td>
 Reading or writing objects larger than this size will write a
-warning in the logs.
+warning in the logs
 </td>
 <td>
 <code>5MB</code>
@@ -842,7 +844,6 @@ parameter will have no impact; if thread support is available, the
 default value is 64. This is the equivalent of the <code>+A</code> flag.
 More information can be found <a
 href="http://erlang.org/doc/man/erl.html#async_thread_pool_size)">here</a>.
-
 </td>
 <td>
 <code>64</code> (if thread support is available)
@@ -867,7 +868,8 @@ enough to accommodate drivers that use the <code>driver_async()</code>
 functionality, documented <a
 href="http://www.erlang.org/doc/man/erl_driver.html">here</a>.
 </td>
-<td></td>
+<td>
+</td>
 </tr>
 
 <tr>
@@ -883,7 +885,8 @@ parameter determines that frequency for every <code>N</code>. If you set
 this parameter to <code>10</code>, for example, the tick will occur once
 every 10 seconds.
 </td>
-<td></td>
+<td>
+</td>
 </tr>
 
 <tr>
@@ -900,7 +903,8 @@ high-numbered port. More information <a
 href="http://www.erlang.org/faq/how_do_i.html#id55090">here</a> and <a
 href="http://www.erlang.org/doc/man/kernel_app.html">here</a>.
 </td>
-<td></td>
+<td>
+</td>
 </tr>
 
 <tr>
@@ -910,9 +914,9 @@ href="http://www.erlang.org/doc/man/kernel_app.html">here</a>.
 <td>
 See the description for
 <code>erlang.distribution.port_range.minimum</code> directly above.
-
 </td>
-<td></td>
+<td>
+</td>
 </tr>
 
 <tr>
@@ -929,7 +933,8 @@ native code, and native code that does not properly bump reductions.
 More information <a
 href="http://www.erlang.org/doc/man/erl.html#+sfwi">here</a>.
 </td>
-<td></td>
+<td>
+</td>
 </tr>
 
 <tr>
@@ -1034,7 +1039,6 @@ garbage collections can be done without forcing a fullsweep collection.
 In low-memory systems (especially without virtual memory), setting the
 value to <code>0</code> can help to conserve memory. More information <a
 href="http://www.erlang.org/doc/man/erlang.html#system_flag-2">here</a>.
-
 </td>
 <td>
 <code>0</code>
@@ -1047,7 +1051,7 @@ href="http://www.erlang.org/doc/man/erlang.html#system_flag-2">here</a>.
 </td>
 <td>
 The number of concurrent ports/sockets. The valid range is 1024 to
-134217727.
+134217727
 </td>
 <td>
 <code>65536</code>
@@ -1094,9 +1098,9 @@ scheduler threads online respective to its default value. This option
 is ignored if the emulator doesn't have SMP support enabled (see the
 <code>erlang.smp</code> flag). More information
 <a href="http://www.erlang.org/doc/man/erl.html#+S">here</a>.
-
 </td>
-<td></td>
+<td>
+</td>
 </tr>
 
 <tr>
@@ -1105,9 +1109,10 @@ is ignored if the emulator doesn't have SMP support enabled (see the
 </td>
 <td>
 See the description for <code>erlang.schedulers.total</code>
-directly above.
+directly above
 </td>
-<td></td>
+<td>
+</td>
 </tr>
 
 <tr>
@@ -1152,7 +1157,7 @@ href="http://erlang.org/doc/man/erl.html#smp">here</a>.
 </td>
 <td>
 Limits how long the Erlang VM spends shutting down. After the
-specified duration elapses, all existing processes are killed.
+specified duration elapses, all existing processes are killed
 </td>
 <td>
 <code>10s</code>
@@ -1182,10 +1187,11 @@ Configurable parameters for Riak's now-deprecated JavaScript
 <code>javascript.source_dir</code>
 </td>
 <td>
-A directory containing the Javascript source files which will be
-loaded by Riak when it initializes Javascript VMs.
+ directory containing the Javascript source files which will be
+loaded by Riak when it initializes Javascript VMs
 </td>
-<td></td>
+<td>
+</td>
 </tr>
 
 <tr>
@@ -1194,7 +1200,7 @@ loaded by Riak when it initializes Javascript VMs.
 </td>
 <td>
 The maximum amount of thread stack memory to allocate to each
-JavaScript virtual machine.
+JavaScript virtual machine
 </td>
 <td>
 <code>16MB</code>
@@ -1207,7 +1213,7 @@ JavaScript virtual machine.
 </td>
 <td>
 The maximum amount of memory allocated to each JavaScript virtual
-machine.
+machine
 </td>
 <td>
 <code>8MB</code>
@@ -1220,7 +1226,7 @@ machine.
 </td>
 <td>
 The number of JavaScript virtual machines available for executing
-pre-commit hook functions.
+pre-commit hook functions
 </td>
 <td>
 <code>2</code>
@@ -1233,7 +1239,7 @@ pre-commit hook functions.
 </td>
 <td>
 The number of JavaScript virtual machines available for executing
-reduce functions.
+reduce functions
 </td>
 <td>
 <code>6</code>
@@ -1246,7 +1252,7 @@ reduce functions.
 </td>
 <td>
 The number of JavaScript virtual machines available for executing
-map functions.
+map functions
 </td>
 <td>
 <code>8</code>
@@ -1359,7 +1365,8 @@ be used to turn different versions on and off.
 <td>
 <code>tls_protocols.tlsv1.2</code>
 </td>
-<td></td>
+<td>
+</td>
 <td>
 <code>on</code>
 </td>
@@ -1369,7 +1376,8 @@ be used to turn different versions on and off.
 <td>
 <code>tls_protocols.tlsv1.1</code>
 </td>
-<td></td>
+<td>
+</td>
 <td>
 <code>off</code>
 </td>
@@ -1379,7 +1387,8 @@ be used to turn different versions on and off.
 <td>
 <code>tls_protocols.tlsv1</code>
 </td>
-<td></td>
+<td>
+</td>
 <td>
 <code>off</code>
 </td>
@@ -1452,10 +1461,10 @@ simultaneously, set this number higher.
 </td>
 <td>
 This is the IP address and TCP port to which the Riak Protocol
-Buffers interface will bind.
+Buffers interface will bind
 </td>
 <td>
-<code>{"127.0.0.1",8087}</code>
+<code>&#123;"127.0.0.1",8087&#125;</code>
 </td>
 </tr>
 
@@ -1465,10 +1474,10 @@ Buffers interface will bind.
 </td>
 <td>
 This is the IP address and TCP port to which the Riak HTTP
-interface will bind.
+interface will bind
 </td>
 <td>
-<code>{"127.0.0.1",8098}</code>
+<code>&#123;"127.0.0.1",8098&#125;</code>
 </td>
 </tr>
 
@@ -1478,9 +1487,10 @@ interface will bind.
 </td>
 <td>
 This is the IP address and TCP port to which the Riak HTTPS
-interface will bind.
+interface will bind
 </td>
-<td></td>
+<td>
+</td>
 </tr>
 
 </tbody>
@@ -1572,7 +1582,7 @@ Whether to enable the crash log
 </td>
 <td>
 If the crash log is enabled, the file where its messages will be
-written
+writte
 </td>
 <td>
 <code>./log/crash.log</code>
@@ -1598,7 +1608,6 @@ Maximum size of individual messages in the crash log
 <td>
 The schedule on which to rotate the crash log. More information <a
 href="https://github.com/basho/lager/blob/master/README.md#internal-log-rotation">here</a>.
-
 </td>
 <td>
 <code>$D0</code>
@@ -1649,7 +1658,7 @@ The file where error messages will be logged.
 </td>
 <td>
 Maximum number of <code>error_logger</code> messages to handle per
-second
+secon
 </td>
 <td>
 <code>100</code>
@@ -1662,7 +1671,7 @@ second
 </td>
 <td>
 Whether to redirect <code>error_logger</code> messages into
-lager
+lage
 </td>
 <td>
 <code>on</code>
@@ -1711,7 +1720,7 @@ through <code>local7</code>.
 </td>
 <td>
 If <code>log.syslog</code> is set to <code>on</code>, this setting
-determines the prefix appended to each syslog message.
+determines the prefix appended to each syslog message
 </td>
 <td>
 <code>riak</code>
@@ -1789,7 +1798,7 @@ debugging information will be output.
 </td>
 <td>
 Whether the distributed throttle for Active Anti-Entropy is
-enabled.
+enabled
 </td>
 <td>
 <code>on</code>
@@ -1812,7 +1821,8 @@ configured, there must be a tier which includes a mailbox size of 0.
 Both <code>.mailbox_size</code> and <code>.delay</code> must be set for
 each tier.
 </td>
-<td></td>
+<td>
+</td>
 </tr>
 
 <tr>
@@ -1821,9 +1831,10 @@ each tier.
 </td>
 <td>
 See the description for
-<code>anti_entropy.throttle.$tier.mailbox_size</code> above.
+<code>anti_entropy.throttle.$tier.mailbox_size</code> above
 </td>
-<td></td>
+<td>
+</td>
 </tr>
 
 <tr>
@@ -1844,7 +1855,8 @@ entail a small performance cost.
 <td>
 <code>anti_entropy.max_open_files</code>
 </td>
-<td></td>
+<td>
+</td>
 <td>
 <code>20</code>
 </td>
@@ -1856,7 +1868,7 @@ entail a small performance cost.
 </td>
 <td>
 The LevelDB options used by Active Anti-Entropy to generate the
-LevelDB-backed on-disk hashtrees.
+LevelDB-backed on-disk hashtrees
 </td>
 <td>
 <code>4MB</code>
@@ -1884,7 +1896,6 @@ The tick determines how often the Active Anti-Entropy manager looks
 for work to do (building/expiring trees, triggering exchanges, etc).
 Lowering this value will speed up the rate at which all replicas are
 synced across the cluster. Increasing the value is not recommended.
-
 </td>
 <td>
 <code>15s</code>
@@ -1897,7 +1908,7 @@ synced across the cluster. Increasing the value is not recommended.
 </td>
 <td>
 Limit how many Active Anti-Entropy exchanges or builds can happen
-concurrently.
+concurrently
 </td>
 <td>
 <code>2</code>
@@ -1926,7 +1937,8 @@ milliseconds.
 <td>
 <code>anti_entropy.tree.build_limit.per_timespan</code>
 </td>
-<td></td>
+<td>
+</td>
 <td>
 <code>1h</code>
 </td>
@@ -1958,7 +1970,6 @@ rebuilds. If set to <code>on</code>, this will help to prevent system
 response degradation under times of heavy load from multiple background
 tasks that contend for the same system resources; setting this parameter
 to <code>off</code> can cut down on system resource usage.
-
 </td>
 <td>
 <code>off</code>
@@ -1985,8 +1996,7 @@ to <code>off</code> can cut down on system resource usage.
 <code>tictacaae_active</code>
 </td>
 <td>
-Changes TicTacAAE from Passive or Active. If you want to run TicTac AAE alongside legacy AAE, set both to Active. Can be <code>active</code> or <code>passive</code>
-
+$1
 </td>
 <td>
 <code>passive</code>
@@ -2082,7 +2092,7 @@ ever being blocked by a secondary system, set this parameter to
 </td>
 <td>
 Whether inbound handoff is enabled on the node. Possible values are
-<code>on</code> or <code>off</code>.
+<code>on</code> or <code>off</code>
 </td>
 <td>
 <code>on</code>
@@ -2095,7 +2105,7 @@ Whether inbound handoff is enabled on the node. Possible values are
 </td>
 <td>
 Whether outbound handoff is enabled on the node. Possible values are
-<code>on</code> or <code>off</code>.
+<code>on</code> or <code>off</code>
 </td>
 <td>
 <code>on</code>
@@ -2108,7 +2118,7 @@ Whether outbound handoff is enabled on the node. Possible values are
 </td>
 <td>
 Specifies the TCP port that Riak uses for intra-cluster data
-handoff.
+handoff
 </td>
 <td>
 <code>8099</code>
@@ -2124,7 +2134,8 @@ To encrypt <code>riak_core</code> intra-cluster data handoff
 traffic, uncomment this line and edit its path to an appropriate
 certfile and keyfile.
 </td>
-<td></td>
+<td>
+</td>
 </tr>
 
 <tr>
@@ -2133,9 +2144,10 @@ certfile and keyfile.
 </td>
 <td>
 The keyfile paired with the certfile specified in
-<code>.certfile</code>.
+<code>.certfile</code>
 </td>
-<td></td>
+<td>
+</td>
 </tr>
 
 <tr>
@@ -2229,7 +2241,7 @@ node's `riak.conf` file.
 </td>
 <td>
 Enables the consensus subsystem used for strongly consistent Riak
-operations if set to <code>on</code>.
+operations if set to <code>on</code>
 </td>
 <td>
 <code>off</code>
@@ -2298,7 +2310,6 @@ refreshed (in milliseconds). This should be set higher than the
 <code>ensemble_tick</code> setting (listed above) so that leaders have
 time to refresh their leases before they time out, and it must be set
 lower than the <code>follower_timeout</code> setting (listed below).
-
 </td>
 <td>
 <code>ensemble_tick</code> * 3/2
@@ -2634,7 +2645,7 @@ related to Riak's `riak_repl` subsystem.
 </td>
 <td>
 Path (relative or absolute) to the working directory for the
-replication process.
+replication process
 </td>
 <td>
 <code>/var/db/riak/riak_repl/</code>
@@ -2670,7 +2681,6 @@ limit for all fullsyncs enabled; additional fullsync configurations will
 not increase the number of fullsync workers allowed to run on any node.
 This only affects nodes on the source cluster on which this parameter is
 defined, either via the configuration file or command line.
-
 </td>
 <td>
 <code>1</code>
@@ -2700,7 +2710,7 @@ either via the configuration file or command line.
 </td>
 <td>
 Whether to initiate a fullsync on initial connection from the sink
-cluster.
+cluster
 </td>
 <td>
 <code>true</code>
@@ -2742,7 +2752,7 @@ replicated with a fullsync.
 </td>
 <td>
 Whether to enable Riak CS <code>proxy_get</code> and block
-filter.
+filter
 </td>
 <td>
 <code>disabled</code>
@@ -2867,7 +2877,8 @@ the paths to any compiled <code>.beam</code> files that you wish to use.
 This is expressed as a list of absolute paths on the node's filesystem,
 e.g. <code>[ "/tmp", "/other" ]</code>.
 </td>
-<td></td>
+<td>
+</td>
 </tr>
 
 <tr>
@@ -2884,7 +2895,7 @@ the cluster manager running on the cluster leader will service requests.
 This can change as nodes enter and leave the cluster.
 </td>
 <td>
-<code>{"127.0.0.1", 9080}</code>
+<code>&#123;"127.0.0.1", 9080&#125;</code>
 </td>
 </tr>
 

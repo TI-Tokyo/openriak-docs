@@ -30,4 +30,4 @@ This release adds a number of features built on top of the Tictac AAE feature ma
 
 ## Previous Release Notes
 
-Please see the KV 2.9.0p5 release notes [here](./../2.9.0p5/release-notes), and the KV 2.2.6 release notes [here](./../../2.2.6/release-notes).
+Please see the KV 2.9.0p5 release notes [here](./../../2.9.0/release-notes), and the KV 2.2.6 release notes [here](./../../2.2.6/release-notes).

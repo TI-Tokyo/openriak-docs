@@ -85,14 +85,11 @@ using multiple keys (e.g. a UUID or email address),
 <table class="use-cases__image-links">
   <tr>
     <td>
-
       <a href="https://player.vimeo.com/video/42744689" target="_blank" title="Scaling Riak at Kiip">
         <img src="http://b.vimeocdn.com/ts/296/624/29662.9.0_960.jpg" />
       </a>
-    
-</td>
+    </td>
     <td>
-
       <a href="https://player.vimeo.com/video/42744689" target="_blank" title="Riak at OpenX">Scaling Riak at Kiip</a>
       <br />
       In this talk, recorded at the May 2012 San Francisco Riak Meetup, Armon
@@ -102,8 +99,7 @@ using multiple keys (e.g. a UUID or email address),
       read the blog post and catch the slides <a
       href="http://basho.com/posts/business/Scaling-Riak-At-Kiip/" class="riak"
       target="_blank">here.</a>
-    
-</td>
+    </td>
   </tr>
 </table>
 
@@ -130,14 +126,11 @@ advertising traffic, which primarily involves serving reads.
 <table class="use-cases__image-links">
   <tr>
     <td>
-
       <a href="http://player.vimeo.com/video/49775483" target="_blank" title="Riak at OpenX">
         <img src="http://b.vimeocdn.com/ts/343/417/343417336_960.jpg" />
       </a>
-    
-</td>
+    </td>
     <td>
-
       <a href="http://player.vimeo.com/video/49775483" target="_blank" title="Riak at OpenX">Riak at OpenX</a>
       <br />
       Los Angeles-based OpenX will serves trillions of ads a year. In this talk,
@@ -145,8 +138,7 @@ advertising traffic, which primarily involves serving reads.
       how they've built their system, and why/how they're switching to Riak for
       data storage after using databases like CouchDB and Cassandra in
       production.
-    
-</td>
+    </td>
   </tr>
 </table>
 
@@ -181,17 +173,13 @@ higher performance and yield more predictable latency.
 <table class="use-cases__image-links">
   <tr>
     <td>
-
       <a href="http://www.simonbuckle.com/2011/08/27/analyzing-apache-logs-with-riak/" target="_blank" title="Riak at OpenX">
         <img src="/riakdocs-resources/images/simon-analyzing-logs.png" />
       </a>
-    
-</td>
+    </td>
     <td>
-
       Simon Buckle on <a href="http://www.simonbuckle.com/2011/08/27/analyzing-apache-logs-with-riak/" target="_blank">analyzing Apache logs with Riak.</a>
-    
-</td>
+    </td>
   </tr>
 </table>
 
@@ -256,14 +244,11 @@ ahead and either set up additional secondary indexes.
 <table class="use-cases__image-links">
   <tr>
     <td>
-
       <a href="https://player.vimeo.com/video/47535803" target="_blank" title="Riak at Braintree">
         <img class="vid_img"src="http://b.vimeocdn.com/ts/329/711/329711886_640.jpg" />
       </a>
-    
-</td>
+    </td>
     <td>
-
       <a href="https://player.vimeo.com/video/47535803" target="_blank" title="Riak at Braintree">Riak at Braintree</a>
       <br />
       Ben Mills, a developer at Braintree, discusses how their backend team came
@@ -271,8 +256,7 @@ ahead and either set up additional secondary indexes.
       They also cover their model and repository framework for Ruby, Curator.
       Check out more details and slides on the
       <a href="http://basho.com/posts/business/riak-at-braintree/" target="_blank">Riak blog.</a>
-    
-</td>
+    </td>
   </tr>
 </table>
 
@@ -310,14 +294,11 @@ and writing back the new value.
 <table class="use-cases__image-links">
   <tr>
     <td>
-
       <a href="http://player.vimeo.com/video/21598799" target="_blank" title="Riak at Yammer">
       <img src="http://b.vimeocdn.com/ts/139/033/139033664_640.jpg" />
       </a>
-    
-</td>
+    </td>
     <td>
-
       <a href="http://player.vimeo.com/video/21598799" target="_blank" title="Riak at Yammer">Riak at Yammer</a>
       <br />
       This video was recorded at the March 2012 San Francisco Riak Meetup and is
@@ -326,19 +307,15 @@ and writing back the new value.
       notifications, why Riak was the right choice, and the lessons learned in
       the process. Read more and get the slides in the Riak blog
       <a href="http://basho.com/posts/business/Riak-And-Scala-At-Yammer/" target="_blank">here.</a>
-    
-</td>
+    </td>
   </tr>
   <tr>
     <td>
-
       <a href="http://player.vimeo.com/video/44498491" target="_blank" title="Riak at Voxer">
         <img src="http://b.vimeocdn.com/ts/309/154/309154350_960.jpg" />
       </a>
-    
-</td>
+    </td>
     <td>
-
       <a href="http://player.vimeo.com/video/44498491" target="_blank" title="Riak at Voxer">Riak at Voxer</a>
       <br />
       The team at Voxer has long relied on Riak as their primary data store for
@@ -348,8 +325,7 @@ and writing back the new value.
       also love them because they open-sourced their Node.js client. Read more
       and get the slides in the Riak blog
       <a href="http://basho.com/posts/business/Riak-in-Production-at-Voxer/" target="_blank">here.</a>
-    
-</td>
+    </td>
   </tr>
 </table>
 
@@ -392,31 +368,23 @@ or other pieces of information useful for later retrieval.
 <table class="use-cases__image-links">
   <tr>
     <td>
-
       <a href="http://media.basho.com/pdf/Linkfluence-Case-Study-v2-1.pdf" class="vid_img" link target="_blank">
         <img src="/riakdocs-resources/images/linkfluence-case-study.png" title="Milking Performance" />
       </a>
-    
-</td>
+    </td>
     <td>
-
       Linkfluence case study on using Riak to <a href="http://media.basho.com/pdf/Linkfluence-Case-Study-v2-1.pdf" target="_blank">store social web content</a>.
-    
-</td>
+    </td>
   </tr>
   <tr>
     <td>
-
       <a href="http://basho.com/assets/Basho-Case-Study-ideeli.pdf" class="vid_img" link target="_blank">
         <img src="/riakdocs-resources/images/ideeli-case-study.png" title="Milking Performance" />
       </a>
-    
-</td>
+    </td>
     <td>
-
       ideeli case study on <a href="http://basho.com/assets/Basho-Case-Study-ideeli.pdf" target="_blank">serving web pages with Riak</a>.
-    
-</td>
+    </td>
   </tr>
 </table>
 

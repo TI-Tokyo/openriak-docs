@@ -39,7 +39,6 @@ Configurable parameters for Riak's [LevelDB][plan backend leveldb] storage backe
 This setting defines the limit past which block cache memory can no
 longer be released in favor of the page cache. This setting has no
 impact in favor of file cache. The value is set on a per-vnode basis.
-
 </td>
 <td>
 <code>32MB</code>
@@ -94,7 +93,6 @@ This setting is used to select which compression algorithm
 <td>
 <code>lz4</code> in new riak.conf files<br /><br />
 	<code>snappy</code> when not provided
-
 </td>
 </tr>
 
@@ -173,7 +171,7 @@ The number of worker threads performing LevelDB operations.
 </td>
 <td>
 Enables or disables the verification of the data fetched from
-LevelDB against internal checksums.
+LevelDB against internal checksums
 </td>
 <td>
 <code>on</code>
@@ -186,7 +184,7 @@ LevelDB against internal checksums.
 </td>
 <td>
 Enables or disables the verification of LevelDB data during
-compaction.
+compaction
 </td>
 <td>
 <code>on</code>
@@ -215,7 +213,6 @@ underlying dynamic <code>block_size</code> feature.
 <td>
 Defines the key count threshold for a new key entry in the key
 index for a block. Most deployments should leave this parameter alone.
-
 </td>
 <td>
 <code>16</code>
@@ -332,9 +329,10 @@ feature.
 </td>
 <td>
 The path prefix for <code>.sst</code> files below the level set by
-<code>leveldb.tiered</code>.
+<code>leveldb.tiered</code>
 </td>
-<td></td>
+<td>
+</td>
 </tr>
 
 <tr>
@@ -343,9 +341,10 @@ The path prefix for <code>.sst</code> files below the level set by
 </td>
 <td>
 The path prefix for <code>.sst</code> files below the level set by
-<code>leveldb.tiered</code>.
+<code>leveldb.tiered</code>
 </td>
-<td></td>
+<td>
+</td>
 </tr>
 
 </tbody>
@@ -365,7 +364,6 @@ Configurable Parameters for Riak's [leveled][plan backend leveled] storage backe
 </thead>
 <tbody>
 
-
 <tr>
 <td>
 <code>leveled.data_root</code>
@@ -374,23 +372,17 @@ Configurable Parameters for Riak's [leveled][plan backend leveled] storage backe
 A path under which leveled data files will be stored.
 </td>
 <td>
-
-
 <code>$(platform_data_dir)/leveled</code>
-
-
 </td>
 </tr>
 
 <tr>
 <td>
 <code>leveled.sync_strategy</code>
-
-
 </td>
 <td>
-Strategy for flushing data to disk - Can be set to <code>riak_sync</code>, <code>sync</code> (if OTP > 16) or <code>none</code>. Use <code>none</code>, and the OS will flush when most efficient. Use <code>riak_sync</code> or <code>sync</code> to flush after every PUT (not recommended wihtout some hardware support e.g. flash drives and/or
-Flash-backed Write Caches)
+Strategy for flushing data to disk - Can be set to <code>riak_sync</code>, <code>sync</code> (if OTP > 16) or <code>none</code>. Use <code>none</code>, and the OS will flush when most efficient. Use <code>riak_sync</code> or <code>sync</code> to flush after every PUT (not recommended without some hardware support e.g. flash drives and/or
+Flash-backed Write Caches
 </td>
 <td>
 <code>none</code>
@@ -415,7 +407,7 @@ Can be lz4 or native (which will use the Erlang native zlib compression) within 
 </td>
 <td>
 The point at which compression is applied to the Journal (the Ledger is always compressed).  Use on_receipt or on_compact.  on_compact is suitable
-when values are unlikely to yield much benefit from compression(compression is only attempted when compacting)
+when values are unlikely to yield much benefit from compression(compression is only attempted when compacting
 </td>
 <td>
 <code>on_receipt</code>
@@ -507,10 +499,6 @@ Enable the `recalc` compaction strategy within the leveled backend in riak.
 </tr>
 </table>
 
-
-</tbody>
-</table>
-
 ## Bitcask
 
 Configurable parameters for Riak's [Bitcask][plan backend bitcask] storage backend.
@@ -548,7 +536,6 @@ set to <code>nif</code>, writes are made via direct calls to the POSIX C
 API. The <code>nif</code> mode provides higher throughput for certain
 workloads, but has the potential to negatively impact the Erlang VM,
 leading to higher worst-case latencies and possible throughput collapse
-
 </td>
 <td>
 <code>erlang</code>
@@ -610,7 +597,7 @@ without CRC signatures.
 </td>
 <td>
 See the description for the <code>bitcask.fold.max_age</code>
-config directly below.
+config directly below
 </td>
 <td>
 <code>0</code>
@@ -720,7 +707,7 @@ value will cause merging to happen more often.
 </td>
 <td>
 See the description of the <code>bitcask.merge.policy</code> config
-below.
+below
 </td>
 <td>
 <code>23</code>
@@ -733,7 +720,7 @@ below.
 </td>
 <td>
 See the description of the <code>bitcask.merge.policy</code> config
-below.
+below
 </td>
 <td>
 <code>0</code>
@@ -783,7 +770,6 @@ etc.
 In order to prevent merge operations from taking place on different
 nodes at the same time, Riak can apply random variance to merge times,
 expressed as a percentage of <code>bitcask.merge_check_interval</code>.
-
 </td>
 <td>
 <code>30%</code>
@@ -795,8 +781,7 @@ expressed as a percentage of <code>bitcask.merge_check_interval</code>.
 <code>bitcask.max_merge_size</code>
 </td>
 <td>
-Maximum amount of data to merge in one go in the Bitcask backend.
-
+$1
 </td>
 <td>
 <code>100GB</code>
@@ -824,9 +809,10 @@ writes.
 </td>
 <td>
 See the description of the <code>bitcask.sync.strategy</code>
-directly below.
+directly below
 </td>
-<td></td>
+<td>
+</td>
 </tr>
 
 <tr>
@@ -868,7 +854,6 @@ attempting to create or open the data directory. You generally need not
 change this value. If for some reason the timeout is exceeded on open
 you'll see a log message of the form <code>Failed to start bitcask
 backend: .... </code>. Only then should you consider a longer timeout.
-
 </td>
 <td>
 <code>4s</code>
@@ -901,7 +886,8 @@ Each value written will be written with this "time to live." Once
 that object's time is up, it will be deleted on the next read of its
 key. Minimum: <code>1s</code>.
 </td>
-<td></td>
+<td>
+</td>
 </tr>
 
 <tr>
@@ -910,9 +896,10 @@ key. Minimum: <code>1s</code>.
 </td>
 <td>
 The maximum amount of memory consumed per vnode by the memory
-storage backend. Minimum: <code>1MB</code>.
+storage backend. Minimum: <code>1MB</code>
 </td>
-<td></td>
+<td>
+</td>
 </tr>
 
 </tbody>
@@ -954,7 +941,7 @@ Below is a listing of the available parameters:
 </td>
 <td>
 This parameter specifies the Erlang module defining the storage
-mechanism that will be used on this node.
+mechanism that will be used on this node
 </td>
 <td>
 <code>bitcask</code>
@@ -968,7 +955,8 @@ mechanism that will be used on this node.
 <td>
 The default name of a backend when one is not specified.
 </td>
-<td></td>
+<td>
+</td>
 </tr>
 
 </tbody>

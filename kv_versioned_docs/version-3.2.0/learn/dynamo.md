@@ -13,6 +13,8 @@ import RiakDocsNote from '@site/src/components/RiakDocs/RiakDocsNote';
 import RiakDocsFigure from '@site/src/components/RiakDocs/RiakDocsFigure';
 
 
+[client libraries]: ./../../developing/client-libraries
+
 <div style={{textAlign: 'center', fontStyle: 'italic'}}>
   Giuseppe DeCandia, Deniz Hastorun, Madan Jampani, Gunavardhan Kakulapati,
   Avinash Lakshman, Alex Pilchin, Swaminathan Sivasubramanian, Peter Vosshall
@@ -600,60 +602,34 @@ Dynamo uses and their respective advantages.
     <th>Advantage</th>
   </tr>
   <tr>
+    <td>Partitioning</td>
+    <td>Consistent Hashing</td>
+    <td>Incremental Scalability</td>
+  </tr>
+  <tr>
+    <td>High Availability for writes</td>
+    <td>Vector clocks with reconciliation during reads</td>
+    <td>Version size is decoupled from update rates.</td>
+  </tr>
+  <tr>
+    <td>Handling temporary failures</td>
+    <td>Sloppy Quorum and hinted handoff</td>
     <td>
-Partitioning
-</td>
-    <td>
-Consistent Hashing
-</td>
-    <td>
-Incremental Scalability
+        Provides high availability and durability guarantee when some of the
+        replicas are not available
 </td>
   </tr>
   <tr>
-    <td>
-High Availability for writes
-</td>
-    <td>
-Vector clocks with reconciliation during reads
-</td>
-    <td>
-Version size is decoupled from update rates.
-</td>
+    <td>Recovering from permanent failures</td>
+    <td>Anti-entropy using Merkle trees</td>
+    <td>Synchronizes divergent replicas in the background.</td>
   </tr>
   <tr>
+    <td>Membership and failure detection</td>
+    <td>Gossip-based membership protocol and failure detection.</td>
     <td>
-Handling temporary failures
-</td>
-    <td>
-Sloppy Quorum and hinted handoff
-</td>
-    <td>
-Provides high availability and durability guarantee when some of the
-        replicas are not available.
-</td>
-  </tr>
-  <tr>
-    <td>
-Recovering from permanent failures
-</td>
-    <td>
-Anti-entropy using Merkle trees
-</td>
-    <td>
-Synchronizes divergent replicas in the background.
-</td>
-  </tr>
-  <tr>
-    <td>
-Membership and failure detection
-</td>
-    <td>
-Gossip-based membership protocol and failure detection.
-</td>
-    <td>
-Preserves symmetry and avoids having a centralized registry for storing
-        membership and node liveness information.
+        Preserves symmetry and avoids having a centralized registry for storing
+        membership and node liveness information
 </td>
   </tr>
 </table>
@@ -1743,8 +1719,6 @@ using timestamps based versioning.
 > Note that the Riak clients do not coordinate with Riak's preference list, but
 > simply round-robin requests, letting the Riak cluster handle routing.
 
-[client libraries]: ./../../developing/client-libraries
-
 An important advantage of the client-driven coordination approach is that a load
 balancer is no longer required to uniformly distribute client load. Fair load
 distribution is implicitly guaranteed by the near uniform assignment of keys to
@@ -1786,33 +1760,17 @@ is higher for the 99.9th percentile than the average.
   </tr>
   <tr>
     <th>Server-driven</th>
-    <td>
-68.9
-</td>
-    <td>
-68.5
-</td>
-    <td>
-3.9
-</td>
-    <td>
-4.02
-</td>
+    <td>68.9</td>
+    <td>68.5</td>
+    <td>3.9</td>
+    <td>4.02</td>
   </tr>
   <tr>
     <th>Client-driven</th>
-    <td>
-30.4
-</td>
-    <td>
-30.4
-</td>
-    <td>
-1.55
-</td>
-    <td>
-1.9
-</td>
+    <td>30.4</td>
+    <td>30.4</td>
+    <td>1.55</td>
+    <td>1.9</td>
   </tr>
 </table>
 
