@@ -303,6 +303,7 @@ function migrateRiakDocs(sourcePath, project, version) {
     md.rawContent = md.rawContent.replaceAll(`</figure>**`, `</figure>`);
     */
 
+    // replace the <figure> code with a React component
     var useRiakDocsFigure = false;
     const figureRegExp = /\*\*<figure\s+id="([^"]+)"[^>]+>\s+<img\s+src="([^"]+)"[^>]*\/?>\s+<figcaption>\s*([^<]+)\s*<\/figcaption>\s*<\/figure>\*\*/gsm;
     //const figureRegExp = /figure/gm;
@@ -321,56 +322,10 @@ function migrateRiakDocs(sourcePath, project, version) {
       md.rawContent = `import RiakDocsFigure from '@site/src/components/RiakDocs/RiakDocsFigure';\n\n` + md.rawContent;
     }
 
-    md.rawContent = md.rawContent.replaceAll(`<http://127.0.0.1:8098/admin></a>`, `[http://127.0.0.1:8098/admin](http://127.0.0.1:8098/admin)`);
-    md.rawContent = md.rawContent.replaceAll(`<https://localhost:8069/admin>`, `[https://localhost:8069/admin](https://localhost:8069/admin)`);
-/*
-    md.rawContent = md.rawContent.replaceAll(
-      `    <div class=info>
-    <div class=title>`,
-      `    <div class="info">
-    <div class="title">`
-    )
-*/
-    md.rawContent = md.rawContent.replaceAll(`<\`PID\`>`, `&lt;\`PID\`&gt;`);
+    // replace the { with html entity}
     md.rawContent = md.rawContent.replaceAll(`[...{almost_current_function,...]`, `[...&#123;almost_current_function,...]`);
 
-/*
-    md.rawContent = md.rawContent.replaceAll(
-      `\`Could not parse field
-<Field>, value <Value>.\``,
-      `\`Could not parse field <Field>, value <Value>.\``
-    );
-*/
-    const wrapWithBackticks = [
-      `{total_count,100}`,
-      `{total_size,500000}`,
-      `{sizes,[{1,90},{2,5},{3,4}]}`,
-      `{siblings,[{1,90},{2,6},{3,4}]}`,
-      `[{"ID",KBytes_Used,Percent_Util}]`,
-      `{riak_kv_multi_backend, undefined_backend, BackendName}`,
-      `{suppressed,port_events,1}`,
-      `{suppressed,port_events,1}`,
-      `{error,eaddrinuse}`,
-      `{Bucket, Key, Clock, {tombstone, Object}};`,
-      `{Bucket, Key, Clock, {object, Object}};`,
-      `{Bucket, Key, Clock, to_fetch}.`,
-      `riak admin transfer-limit <limit>`,
-      `{'EXIT', {badarg, [{ets,lookup, [schema_table,<<"search-example">>], []} {riak_search_config,get_schema,1, [{file,"src/riak_search_config.erl"}, {line,69}]} ...`,
-    ]
-    for (block of wrapWithBackticks) {
-      //console.log(`Fixing: ${block}`);
-      md.rawContent = md.rawContent.replaceAll(block, `\`` + block.trim() + `\``);
-    }
-
-    const wrapWithSpacesAndBackticks = [
-      `{object, Object}`,
-    ]
-    for (block of wrapWithSpacesAndBackticks) {
-      //console.log(`Fixing: ${block}`);
-      md.rawContent = md.rawContent.replaceAll(` ` + block + ` `, ` \`` + block.trim() + `\` `);
-    }
-
-
+    // convert to JSX styles
     md.rawContent = md.rawContent.replaceAll(
       `style="width: 100%; border-spacing: 0px;"`,
       `style={{width: '100%', borderSpacing: '0px'}}`
@@ -390,11 +345,6 @@ function migrateRiakDocs(sourcePath, project, version) {
     md.rawContent = md.rawContent.replaceAll(
       `style="text-align:center;"`,
       `style={{textAlign: 'center'}}`
-    );
-
-    md.rawContent = md.rawContent.replaceAll(
-      `<cod>`,
-      `<code>`
     );
 
     // add RiakDocsNote import to all
