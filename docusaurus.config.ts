@@ -21,7 +21,7 @@ const config: Config = {
   // Set the /<baseUrl>/ pathname under which your site is served
   // For GitHub pages deployment, it is often '/<projectName>/'
   baseUrl: '/docs',
-  
+
   // ensure that all pages end in a slash to make relative URLs work consistently
   trailingSlash: true,
 
@@ -35,25 +35,49 @@ const config: Config = {
 
   customFields: {
     versionPicker: {
-      fallbackVersion: "3.2.5",
-      versions: {
-        "kv": [
+      "ts": {
+        current: "3.0.1",
+        versions: [
           {
             logoLight: "/img/openriak-logo-and-text.svg",
             logoDark: "/img/openriak-logo-and-text.svg",
-            current: "3.2.5",
-            ltsVersions: ["3.2"],
+            ltsVersions: ["3.0"],
             versions: [
-              "3.2.5"
+              "3.0.0", "3.0.1"
+            ],
+          },
+        ]
+      },
+      "cs": {
+        current: "3.0.2",
+        versions: [
+          {
+            logoLight: "/img/openriak-logo-and-text.svg",
+            logoDark: "/img/openriak-logo-and-text.svg",
+            ltsVersions: ["3.0"],
+            versions: [
+              "3.0.2", "3.0.1"
+            ],
+          },
+        ]
+      },
+      "kv": {
+        current: "3.4.0",
+        versions: [
+          {
+            logoLight: "/img/openriak-logo-and-text.svg",
+            logoDark: "/img/openriak-logo-and-text.svg",
+            ltsVersions: ["3.4"],
+            versions: [
+              "3.4.0"
             ],
           },
           {
-            path: "/archived/riak-kv",
             logoLight: "/img/riak-kv-dark.png",
             logoDark: "/img/riak-kv-light.png",
             ltsVersions: ["2.9", "3.0", "3.2"],
             versions: [
-              "3.2.3", "3.2.4",
+              "3.2.3", "3.2.4", "3.2.5",
               // 3.0
               "3.0.1", "3.0.2", "3.0.3", "3.0.4", "3.0.6",
               "3.0.7", "3.0.8", "3.0.9", "3.0.10", "3.0.11",
@@ -62,42 +86,22 @@ const config: Config = {
               // 2.9
               "2.9.0", "2.9.1", "2.9.2", "2.9.4", "2.9.7",
               "2.9.8", "2.9.9", "2.9.10",
-            ]
-          }
-          /*,
-          {
-            path: "/archived/riak-kv",
-            name: "KV",
-            logo: "/img/riak-kv-logo-and-text.svg",
-            ltsVersions: ["2.9", "3.0"],
-            versions: [
-
-              // 3.0
-              "3.0.1", "3.0.2", "3.0.3", "3.0.4", "3.0.6",
-              "3.0.7", "3.0.8", "3.0.9", "3.0.10", "3.0.11",
-              "3.0.12", "3.0.13", "3.0.14", "3.0.15",
-              "3.0.16",
-
-              // 2.9
-              "2.9.0", "2.9.1", "2.9.2", "2.9.4", "2.9.7",
-              "2.9.8", "2.9.9", "2.9.10",
-
               // 2.2
               "2.2.0", "2.2.1", "2.2.3", "2.2.6",
 
               // 2.1
               "2.1.1", "2.1.3", "2.1.4",
 
+              /*,
               // 2.0
               "2.0.0", "2.0.1", "2.0.2", "2.0.4", "2.0.5",
               "2.0.6", "2.0.7", "2.0.8", "2.0.9"
-            ],
-          }*/
+              */
+            ]
+          }
         ]
       }
     },
-    configReference: {
-    }
   },
 
   // Even if you don't use internationalization, you can use this field to set
@@ -109,15 +113,16 @@ const config: Config = {
   },
 
   plugins: [
+    require.resolve('./src/plugins/custom-webpack'),
     [
       '@docusaurus/plugin-client-redirects',
       {
         redirects: [
           /*
-                    {
-                      from: '/kv/latest/',
-                      to: '/kv/',
-                    },
+          {
+            from: '/kv/latest/',
+            to: '/kv/',
+          },
           */
         ],
         // return is "from", path is "to"
@@ -125,7 +130,7 @@ const config: Config = {
           if (path.endsWith('/')) {
             // if ends is a slash, then add redirect from not-slash to slash
             // e.g. /kv to /kv/
-            return [path.slice(0,-1)];
+            return [path.slice(0, -1)];
           }
           return [];
         },
@@ -147,7 +152,7 @@ const config: Config = {
           lastVersion: 'current',
           versions: {
             current: {
-              label: 'The last 3.2 release aka 3.2.5',
+              label: '3.4.0',
             }
           },
           remarkPlugins: [pluginIncludeMarkdown]
@@ -164,7 +169,7 @@ const config: Config = {
           lastVersion: 'current',
           versions: {
             current: {
-              label: '3.0.1'              
+              label: '3.0.1'
             }
           }
         },
@@ -227,26 +232,6 @@ const config: Config = {
         src: 'img/openriak-logo-and-text.svg',
       },
       items: [
-/*
-        {
-          type: 'docsVersionDropdown',
-          position: 'right',
-          dropdownActiveClassDisabled: true, // optional
-          docsPluginId: 'kv',
-        },
-        {
-          type: 'docsVersionDropdown',
-          position: 'right',
-          dropdownActiveClassDisabled: true, // optional
-          docsPluginId: 'cs',
-        },
-        {
-          type: 'docsVersionDropdown',
-          position: 'right',
-          dropdownActiveClassDisabled: true, // optional
-          docsPluginId: 'ts',
-        },
-*/
         { to: '/kv', label: 'KV', position: 'left' },
         { to: '/cs', label: 'CS', position: 'left' },
         { to: '/ts', label: 'TS', position: 'left' },

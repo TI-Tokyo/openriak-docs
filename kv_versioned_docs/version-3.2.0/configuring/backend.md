@@ -497,6 +497,7 @@ Enable the `recalc` compaction strategy within the leveled backend in riak.
 <code>disabled</code>
 </td>
 </tr>
+</tbody>
 </table>
 
 ## Bitcask

@@ -1,0 +1,304 @@
+{
+  "mappings": {
+    "listener.http.$name": {
+      "properties": {
+        "default": "{{web_ip}}:{{web_port}}",
+        "datatype": {
+          "type": "atom",
+          "value": "ip"
+        },
+        "include_default": "internal"
+      },
+      "docText": [
+        "listener.http.<name> is an IP address and TCP port that the Riak",
+        "HTTP interface will bind."
+      ],
+      "docOther": [
+        "HTTP Listeners"
+      ],
+      "configName": "listener.http.$name",
+      "settingName": "riak_api.http"
+    },
+    "listener.protobuf.$name": {
+      "properties": {
+        "default": "{{pb_ip}}:{{pb_port}}",
+        "datatype": {
+          "type": "atom",
+          "value": "ip"
+        },
+        "include_default": "internal"
+      },
+      "docText": [
+        "listener.protobuf.<name> is an IP address and TCP port that the Riak",
+        "Protocol Buffers interface will bind."
+      ],
+      "configName": "listener.protobuf.$name",
+      "settingName": "riak_api.pb"
+    },
+    "protobuf.backlog": {
+      "properties": {
+        "datatype": {
+          "type": "atom",
+          "value": "integer"
+        },
+        "default": "128",
+        "commented": "128",
+        "validators": [
+          {
+            "type": "text",
+            "value": "greater_than_zero"
+          }
+        ]
+      },
+      "docText": [
+        "The maximum length to which the queue of pending connections",
+        "may grow. If set, it must be an integer > 0. If you anticipate a",
+        "huge number of connections being initialized *simultaneously*, set",
+        "this number higher."
+      ],
+      "configName": "protobuf.backlog",
+      "settingName": "riak_api.pb_backlog"
+    },
+    "protobuf.nagle": {
+      "properties": {
+        "datatype": {
+          "type": "flag",
+          "falseValue": "off",
+          "trueValue": "on"
+        },
+        "default": "off",
+        "hidden": true
+      },
+      "docText": [
+        "Turns off Nagle's algorithm for Protocol Buffers",
+        "connections. This is equivalent to setting the TCP_NODELAY option",
+        "on the socket."
+      ],
+      "configName": "protobuf.nagle",
+      "settingName": "riak_api.disable_pb_nagle"
+    },
+    "protobuf.keepalive": {
+      "properties": {
+        "datatype": {
+          "type": "atom",
+          "value": "flag"
+        },
+        "default": "on",
+        "hidden": true
+      },
+      "docText": [
+        "Turns on TCP keepalive for Protocol Buffers connections.",
+        "This is equivalent to setting the SO_KEEPALIVE option on the socket."
+      ],
+      "configName": "protobuf.keepalive",
+      "settingName": "riak_api.pb_keepalive"
+    },
+    "listener.https.$name": {
+      "properties": {
+        "commented": "{{web_ip}}:{{web_port}}",
+        "datatype": {
+          "type": "atom",
+          "value": "ip"
+        },
+        "include_default": "internal"
+      },
+      "docText": [
+        "listener.https.<name> is an IP address and TCP port that the Riak",
+        "HTTPS interface will bind."
+      ],
+      "configName": "listener.https.$name",
+      "settingName": "riak_api.https"
+    },
+    "honor_cipher_order": {
+      "properties": {
+        "datatype": {
+          "type": "enum",
+          "possibleValues": [
+            {
+              "type": "atom",
+              "value": "on"
+            },
+            {
+              "type": "atom",
+              "value": "off"
+            }
+          ]
+        },
+        "default": "off",
+        "hidden": true
+      },
+      "docText": [
+        "Whether to prefer the order in which the server lists its",
+        "ciphers. When set to 'off', the client's preferred cipher order",
+        "dictates which cipher is chosen."
+      ],
+      "configName": "honor_cipher_order",
+      "settingName": "riak_api.honor_cipher_order"
+    },
+    "tls_protocols.sslv3": {
+      "properties": {
+        "datatype": {
+          "type": "enum",
+          "possibleValues": [
+            {
+              "type": "atom",
+              "value": "on"
+            },
+            {
+              "type": "atom",
+              "value": "off"
+            }
+          ]
+        },
+        "default": "off",
+        "hidden": true
+      },
+      "docText": [
+        "Determine which SSL/TLS versions are allowed. By default only TLS 1.2",
+        "is allowed, but other versions can be enabled if clients don't support the",
+        "latest TLS standard. It is *strongly* recommended that SSLv3 is not enabled",
+        "unless absolutely necessary. More than one protocol can be enabled at once."
+      ],
+      "configName": "tls_protocols.sslv3",
+      "settingName": "riak_api.tls_protocols"
+    },
+    "tls_protocols.tlsv1": {
+      "properties": {
+        "datatype": {
+          "type": "enum",
+          "possibleValues": [
+            {
+              "type": "atom",
+              "value": "on"
+            },
+            {
+              "type": "atom",
+              "value": "off"
+            }
+          ]
+        },
+        "default": "off",
+        "hidden": true
+      },
+      "docSees": [
+        "tls_protocols.sslv3"
+      ],
+      "configName": "tls_protocols.tlsv1",
+      "settingName": "riak_api.tls_protocols"
+    },
+    "tls_protocols.tlsv1.1": {
+      "properties": {
+        "datatype": {
+          "type": "enum",
+          "possibleValues": [
+            {
+              "type": "atom",
+              "value": "on"
+            },
+            {
+              "type": "atom",
+              "value": "off"
+            }
+          ]
+        },
+        "default": "off",
+        "hidden": true
+      },
+      "docSees": [
+        "tls_protocols.sslv3"
+      ],
+      "configName": "tls_protocols.tlsv1.1",
+      "settingName": "riak_api.tls_protocols"
+    },
+    "tls_protocols.tlsv1.2": {
+      "properties": {
+        "datatype": {
+          "type": "enum",
+          "possibleValues": [
+            {
+              "type": "atom",
+              "value": "on"
+            },
+            {
+              "type": "atom",
+              "value": "off"
+            }
+          ]
+        },
+        "default": "on",
+        "hidden": true
+      },
+      "docSees": [
+        "tls_protocols.sslv3"
+      ],
+      "configName": "tls_protocols.tlsv1.2",
+      "settingName": "riak_api.tls_protocols"
+    },
+    "check_crl": {
+      "properties": {
+        "datatype": {
+          "type": "enum",
+          "possibleValues": [
+            {
+              "type": "atom",
+              "value": "on"
+            },
+            {
+              "type": "atom",
+              "value": "off"
+            }
+          ]
+        },
+        "default": "on",
+        "hidden": true
+      },
+      "docText": [
+        "Whether to check the CRL of a client certificate. This defaults to",
+        "on but some CAs may not maintain or define a CRL, so this can be disabled",
+        "if no CRL is available."
+      ],
+      "configName": "check_crl",
+      "settingName": "riak_api.check_crl"
+    }
+  },
+  "translations": {
+    "riak_api.http": {
+      "properties": {},
+      "configName": "riak_api.http",
+      "func": "fun(Conf) -> HTTP = cuttlefish_variable:filter_by_prefix(\"listener.http\", Conf), [ IP || {_, IP} <- HTTP] end "
+    },
+    "riak_api.pb": {
+      "properties": {},
+      "configName": "riak_api.pb",
+      "func": "fun(Conf) -> PB = cuttlefish_variable:filter_by_prefix(\"listener.protobuf\", Conf), [ IP || {_, IP} <- PB] end "
+    },
+    "riak_api.https": {
+      "properties": {},
+      "configName": "riak_api.https",
+      "func": "fun(Conf) -> HTTPS = cuttlefish_variable:filter_by_prefix(\"listener.https\", Conf), [ IP || {_, IP} <- HTTPS] end "
+    },
+    "riak_api.honor_cipher_order": {
+      "properties": {},
+      "configName": "riak_api.honor_cipher_order",
+      "func": "fun(Conf) -> CipherOrder = cuttlefish:conf_get(\"honor_cipher_order\", Conf), case CipherOrder of on  -> true; off -> false end end "
+    },
+    "riak_api.tls_protocols": {
+      "properties": {},
+      "configName": "riak_api.tls_protocols",
+      "func": "fun(Conf) -> Protocols = cuttlefish_variable:filter_by_prefix(\"tls_protocols\", Conf), [begin case Key of [\"tls_protocols\",\"sslv3\"] -> sslv3; [\"tls_protocols\",\"tlsv1\"] -> tlsv1; [\"tls_protocols\",\"tlsv1\", \"1\"] -> 'tlsv1.1'; [\"tls_protocols\",\"tlsv1\", \"2\"] -> 'tlsv1.2' end end || {Key, Value} <- Protocols, Value == on] end "
+    },
+    "riak_api.check_crl": {
+      "properties": {},
+      "configName": "riak_api.check_crl",
+      "func": "fun(Conf) -> CheckCRL = cuttlefish:conf_get(\"check_crl\", Conf), case CheckCRL of on -> true; off -> false end end "
+    }
+  },
+  "validators": {
+    "greater_than_zero": {
+      "properties": {},
+      "name": "greater_than_zero",
+      "description": "must be greater than zero",
+      "func": "fun(Value) -> Value > 0 end"
+    }
+  }
+}

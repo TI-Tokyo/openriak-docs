@@ -67,7 +67,7 @@ handoff.ssl.keyfile = /ssl_dir/key.pem
 ```
 
 ```appconfig
-{riak_core, [
+&#123;riak_core, [
     %% Other configs
     {handoff_ssl_options, [
         {certfile, "/ssl_dir/cert.pem"},
@@ -88,7 +88,7 @@ handoff.port = 9000
 ```
 
 ```appconfig
-{riak_core, [
+&#123;riak_core, [
     %% Other configs
     {handoff_port, 9000},
     %% Other configs
@@ -151,7 +151,7 @@ transfer_limit = 5
 ```
 
 ```appconfig
-{riak_core, [
+&#123;riak_core, [
     %% Other configs
     {handoff_concurrency, 5},
     %% Other configs
@@ -176,7 +176,7 @@ handoff.inbound = off
 ```
 
 ```appconfig
-{riak_core, [
+&#123;riak_core, [
     %% Other configs
     {disable_outbound_handoff, true},
     {disable_inbound_handoff, true},
