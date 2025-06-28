@@ -183,6 +183,7 @@ function migrateRiakDocs(sourcePath, project, version) {
     // handle exampledomain and security email
     md.rawContent = md.rawContent.replaceAll(`{{% exampledomain %}}`, `a-riak-user.com`);
     md.rawContent = md.rawContent.replace(`{{<securitycontactusemail>}}`, `security@openriak.org`);
+    md.rawContent = md.rawContent.replace(`{{<contactusemail>}}`, `contact@openriak.org`);
 
     // handle notes
     md.rawContent = md.rawContent.replaceAll(/{{% note title="([^"]+)" %}}((?:(?!\{\{%).)*){{% \/note %}}/gs, `<RiakDocsNote title="$1">$2</RiakDocsNote>`);
