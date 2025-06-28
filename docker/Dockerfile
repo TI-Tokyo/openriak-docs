@@ -13,7 +13,6 @@ LABEL org.opencontainers.image.title="OpenRiak Docs" \
 RUN echo "fs.file-max = 65535" >> /etc/sysctl.conf
 RUN sysctl -p
 
-ENV DEBUG=docusaurus:*
 RUN npm install -g npm@latest
 RUN npm config set update-notifier false
 
