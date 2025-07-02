@@ -157,7 +157,7 @@ const config: Config = {
   },
 
   plugins: [
-    require.resolve('./src/plugins/custom-webpack'),
+    //require.resolve('./src/plugins/custom-webpack'),
     [
       '@docusaurus/plugin-client-redirects',
       {
