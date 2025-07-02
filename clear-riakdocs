@@ -23,25 +23,15 @@ for dir in "$SOURCE_DIR"/*/; do
   # Strip 'pX' suffix from version (e.g., 3.2.5p1 -> 3.2.5)
   TARGET_VERSION=$(echo "$DIR_NAME" | sed -E 's/p[0-9]+$//')
 
-  echo "Running migration for $REL_PATH (targetVersion: $TARGET_VERSION)..."
-
   TARGET_DIR=$(echo "$TARGET_DIR_ROOT/version-$TARGET_VERSION")
+
+  echo "Clearing $TARGET_DIR..."
 
   rm -r "$TARGET_DIR/"
   mkdir "$TARGET_DIR"
-
-  # Capture command output
-  OUTPUT=$(./docker-npm run openriak migrateRiakDocs "$REL_PATH" kv "$TARGET_VERSION" 2>&1)
-
-  echo " "
-  echo "$OUTPUT"
-  echo " "
-
-  # Check if output contains error triggers
-  if echo "$OUTPUT" | grep -qE '\{\{ found|exception'; then
-    echo "❌ Error detected in output. Aborting."
-    exit 1
-  fi
+  
+  echo "Placeholder for Riak KV $TARGET_VERSION" > $(echo "$TARGET_DIR/index.md")
+ 
 done
 
 #./docker-npm run openriak migrateRiakDocs .riakdocs/content/riak/kv/2.0.1 kv 2.1.3
