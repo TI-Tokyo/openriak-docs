@@ -32,12 +32,13 @@ const VersionLink: React.FC<VersionLinkProps> = ({
 
   const pluginData = allDocsData[pluginId];
   if (!pluginData) return null;
-  console.log("[VersionLink] D");
+  //console.log("[VersionLink] D");
   const searchVersion = isCurrent?'current':(toVersion);
   const targetVersion = pluginData.versions.find((v) => v.name === searchVersion);
-  console.log(targetVersion);
+  //console.log("[VersionLink] Target Version: " + targetVersion );
+  //console.log(targetVersion);
   if (!targetVersion) return null;
-  console.log("[VersionLink] E");
+  //console.log("[VersionLink] E");
 
   var targetDoc = targetVersion.docs.find((d) => d.id === currentDocId);
   if (!targetDoc) {
@@ -50,12 +51,12 @@ const VersionLink: React.FC<VersionLinkProps> = ({
   } else {
     targetDocLink = targetVersion.path
   }
-  console.log("[VersionLink] F");
+  //console.log("[VersionLink] F");
 
   //console.log(targetDoc);
 
   return (
-    <div className={className} style={{ display: 'inline-block' }}>
+    <div className={className}>
       <Link to={targetDocLink}>{toVersion}</Link>
     </div>
   )

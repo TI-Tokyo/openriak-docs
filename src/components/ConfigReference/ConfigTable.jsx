@@ -139,34 +139,44 @@ export function ConfigTable(sectionName, configNamePattern) {
   const [recentFilters, setRecentFilters] = useState(getSavedRecentFilters());
 
   function removeFromRecentFilters(removeItem) {
-    if (!removeItem.trim()) return;
+    if (localStorage) {
+      if (!removeItem.trim()) return;
 
-    // Remove duplicates and add to front
-    const updated = [...recentFilters.filter(item => item !== removeItem)];
+      // Remove duplicates and add to front
+      const updated = [...recentFilters.filter(item => item !== removeItem)];
 
-    // Keep only the last 10
-    const trimmed = updated.slice(0, 10);
+      // Keep only the last 10
+      const trimmed = updated.slice(0, 10);
 
-    localStorage.setItem('recentConfigFilters', JSON.stringify(trimmed));
-    setRecentFilters(trimmed);
+      localStorage.setItem('recentConfigFilters', JSON.stringify(trimmed));
+      setRecentFilters(trimmed);
+    }
   }
 
   function saveToRecentFilters(input) {
-    if (!input.trim()) return;
+    if (localStorage) {
+      if (!input.trim()) return;
 
-    // Remove duplicates and add to front
-    const updated = [input, ...recentFilters.filter(item => item !== input)];
+      // Remove duplicates and add to front
+      const updated = [input, ...recentFilters.filter(item => item !== input)];
 
-    // Keep only the last 10
-    const trimmed = updated.slice(0, 10);
+      // Keep only the last 10
+      const trimmed = updated.slice(0, 10);
 
-    localStorage.setItem('recentConfigFilters', JSON.stringify(trimmed));
-    setRecentFilters(trimmed);
+      localStorage.setItem('recentConfigFilters', JSON.stringify(trimmed));
+      setRecentFilters(trimmed);
+    }
   }
 
   function getSavedRecentFilters() {
-    const stored = localStorage.getItem('recentConfigFilters');
-    return stored ? JSON.parse(stored) : [];
+    if (localStorage) {
+      const stored = localStorage?.getItem('recentConfigFilters') ?? [];
+      console.log(stored);
+      if (!stored || stored.length === 0) return [];
+      return stored ? JSON.parse(stored) : [];
+    } else {
+      return [];
+    }
   }
 
   const filteredData = useMemo(() => {

@@ -186,6 +186,10 @@ div.menu__list-item-collapsible:hover {
   top: 1rem;
 }
 
+.versionPicker-optionsContent {
+    width: calc(var(--radix-popover-trigger-width)*1);
+}
+
 .osPicker-portal,
 .versionPicker-portal {
 }
@@ -216,37 +220,78 @@ div.menu__list-item-collapsible:hover {
   padding-top: 0;
 }
 
-.versionPicker-subProject {
+.versionPicker-brand {
+/*
   display: grid;
   row-gap: 0.5rem;
-  padding: 0 0.5em;
+*/
+  padding: 0 0.5em 0.5em 0.5em;
+  display: grid;
+  grid-template-columns: auto 1fr;
+  row-gap: 0.5rem; /* spacing between rows */
+  column-gap: 0.125rem;
 }
 
-.versionPicker-versionFamily {
-  display: flow;
-  align-items: center;
-  padding: 0 1.5rem 0 0;
+.versionPicker-label {
+  //gap: 0.125rem;
+  //align-items: flex-start;
 }
 
-.versionPicker-versionFamily:last-child {
-  padding-bottom: 0.5rem;
+.versionPicker-brandGroup {
+/*
+  display: flex;
+  gap: 0.125rem;
+  align-items: flex-start;
+*/
+/*
+  display: grid;
+  grid-template-columns: auto 1fr;
+  align-items: start;
+  column-gap: 0.125rem;
+  row-gap: 0.125rem;
+*/
+  display: contents;
 }
 
-.versionPicker-subProject-Title:first-child {
+.versionPicker-brand-Title {
+  grid-column: 1 / -1;
   padding-top: 0.5rem;
+  display: flex;
+  align-items: center;
 }
 
+.versionPicker-versions-nolabel {
+  grid-column: 1 / -1;
+}
 
+.toggleButtonForHiddenItems,
 .versionPicker-version {
   background: var(--ifm-color-primary-lighter);
   padding: 0.125rem 0.5rem;
   border: 0;
-  margin-right: 0.25em;
+  font-size: 1.1em;
 }
 
-.versionPicker-lts {
+.versionPicker-label {
+  flex: 0 0 auto;
   background: var(--ifm-color-primary-light);
   font-weight: bold;
+  padding: 0.125rem 0.5rem;
+  border: 0;
+  border-radius: 0.75rem 0 0 0;
+  white-space: nowrap;
+}
+
+.versionPicker-versions-nolabel .versionPicker-version:first-of-type {
+  border-radius: 0.75rem 0 0 0;
+}
+
+.versionPicker-versions {
+  flex: 1 1 0;
+  min-width: 0;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.125rem;
 }
 
 .versionPicker-version a {
@@ -259,7 +304,8 @@ div.menu__list-item-collapsible:hover {
   }
 }
 
-.versionPicker-version:hover:not(.versionPicker-lts) {
+.toggleButtonForHiddenItems:hover,
+.versionPicker-version:hover {
   background: var(--ifm-color-primary-dark);
 }
 
@@ -268,11 +314,17 @@ div.menu__list-item-collapsible:hover {
 }
 
 .versionPicker-version:first-child {
+  //border-radius: 0.75rem 0 0 0.75rem;
+}
+
+// if no lts then curve
+.versionPicker-brandGroup > .versionPicker-version:first-of-type {
   border-radius: 0.75rem 0 0 0.75rem;
 }
 
+.toggleButtonForHiddenItems,
 .versionPicker-version:last-child {
-  border-radius: 0 0.75rem 0.75rem 0;
+  border-radius: 0 0 0.75rem 0;
   margin-right: 0;
 }
 
@@ -285,4 +337,31 @@ div.menu__list-item-collapsible:hover {
   overflow-y: auto;
   position: sticky;
   top: 0;
+}
+
+.versionPicker-brand .versionPicker-brand-Logo {
+  height: 1.6rem;
+}
+
+.versionPicker-brand:first-child .versionPicker-brand-Logo {
+  height: 2.5rem;
+}
+
+.versionPicker-version-hidden {
+  display: none;
+}
+
+.versionPicker-brandGroup-displayName {
+  margin-right: 0.25em;
+}
+
+.toggleButtonForHiddenItems {
+  color: black;
+  display: flex;
+  align-items: center;
+}
+
+.toggleButtonForHiddenItems svg {
+  height: 1.5em;
+  width: 1.5em;
 }

@@ -46,13 +46,28 @@ export const ConfigReferenceProvider = ({ sectionName ='', configNamePattern = '
   
   //console.log(siteConfig.customFields);
 
-  if (!version || !siteConfig.customFields?.versionPicker) {
+  if (!siteConfig.customFields) {
+    throw new Error("'customFields' is missing.");
+  }
+
+  if (!siteConfig.customFields.versionPicker) {
+    throw new Error("'customFields.versionPicker' is missing.");
+  }
+
+  if (!siteConfig.customFields.versionPicker[project]) {
+    throw new Error(`'customFields.versionPicker.$project' is missing.`);
+  }
+
+  const activeProjectConfig = siteConfig.customFields.versionPicker[project];
+  const currentVersion = activeProjectConfig["current"] ?? '';
+
+  if (!version) {
     //console.log(`Using fallback version for project "${project}".`)
-    version = siteConfig.customFields.versionPicker?.["fallbackVersion"] ?? '';
+    version = currentVersion ?? '';
   }
 
   if (!version) {
-    throw new Error("No version could be found from the current location or from 'customFields.versionPicker.fallbackVersion'.");
+    throw new Error(`No version could be found from the current location or from 'customFields.versionPicker.${project}.current'.`);
   }
 
   //console.log(`Loading configuration reference data for project "${project}" version "${version}".`)

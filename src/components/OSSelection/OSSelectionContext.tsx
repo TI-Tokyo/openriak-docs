@@ -16,13 +16,17 @@ export const OSSelectionProvider = ({ children }) => {
   }
   // Load selection from localStorage after mount
   useEffect(() => {
-    const stored = localStorage.getItem('osSelection');
-    setSelected(stored ? JSON.parse(stored) : osOptions[0]);
+    const stored = localStorage?.getItem('osSelection') ?? '';
+    if (stored) {
+      setSelected(JSON.parse(stored))
+    } else {
+      setSelected(osOptions[0])
+    }
   }, []);
 
   // Save selection to localStorage when it changes
   useEffect(() => {
-    if (selected !== null) {
+    if (localStorage && selected !== null) {
       localStorage.setItem('osSelection', JSON.stringify(selected));
     }
   }, [selected]);

@@ -1,136 +1,168 @@
 import * as React from "react";
 import * as Popover from '@radix-ui/react-popover';
-import { CheckIcon, CaretDownIcon, CaretUpIcon, Cross2Icon } from '@radix-ui/react-icons';
+import { CheckIcon, CaretDownIcon, CaretUpIcon, Cross2Icon, ButtonIcon } from '@radix-ui/react-icons';
 import { useLocation } from '@docusaurus/router';
 import useDocusaurusContext from '@docusaurus/useDocusaurusContext';
 import VersionLink from './VersionLink';
 import useBaseUrl from '@docusaurus/useBaseUrl';
 import semver from 'semver';
 import { useColorMode } from '@docusaurus/theme-common';
+import ToggleButtonForHiddenItems from './ToggleButtonForHiddenItems';
 
 export default function VersionPicker() {
   const { siteConfig } = useDocusaurusContext();
   const location = useLocation();
   const locationMatch = location.pathname?.match(/^\/docs\/([^\/]+)(\/(([0-9]+\.[0-9]+\.[0-9]+)\/?)?.*)?$/s);
-  const project = locationMatch?.[1] ?? '';
-  var activeVersion = locationMatch?.[4] ?? '';
+  const pageProject = locationMatch?.[1] ?? '';
+  var pageVersion = locationMatch?.[4] ?? '';
   const { colorMode } = useColorMode(); // returns 'light' or 'dark'
   const isDarkTheme = colorMode === 'dark';
 
-  if (!project) {
+  if (!pageProject) {
     throw new Error("No project could be found from the current location.");
   }
   //console.log(siteConfig.customFields);
 
-  if (!siteConfig.customFields?.versionPicker) {
-    throw new Error("'customFields.versionPicker' is missing.");
+  if (!siteConfig.customFields) throw new Error("'customFields' is missing.");
+  if (!siteConfig.customFields.versionPicker) throw new Error("'customFields.versionPicker' is missing.");
+  if (!siteConfig.customFields.versionPicker[pageProject]) throw new Error(`'customFields.versionPicker.${pageProject}' is missing.`);
+
+  const pageProjectConfig = siteConfig.customFields.versionPicker[pageProject];
+
+  const projectCurrentVersion = pageProjectConfig["current"];
+  if (!pageVersion) pageVersion = projectCurrentVersion ?? '';
+  if (!pageVersion) throw new Error("No version could be found from the current location or from 'customFields.versionPicker.current'.");
+
+  const projectBrands = pageProjectConfig.brands ?? [];
+  if (projectBrands.length === 0) {
+    console.log(`No brands could be found for project ${pageProject} under 'customFields.versionPicker.${pageProject}.brands'.`);
   }
 
-  if (!activeVersion) {
-    console.log(`Using fallback version for project "${project}".`)
-    activeVersion = siteConfig.customFields.versionPicker?.["fallbackVersion"] ?? '';
-  }
-
-  if (!activeVersion) {
-    throw new Error("No version could be found from the current location or from 'customFields.versionPicker.fallbackVersion'.");
-  }
-
-  const projectVersions = siteConfig.customFields.versionPicker.versions?.[project] ?? [];
-  if (projectVersions.length === 0) {
-    throw new Error(`No versions could be found for project ${project} under 'customFields.versionPicker.versions'.`);
-  }
-  console.log(`Rendering versions for project "${project}" with active version of "${activeVersion}".`)
-
-  const activeSubProject = projectVersions.find(value => value.versions.includes(activeVersion));
+  const pageBrand = projectBrands.find(brand => {
+    return brand.groups.find(group => group.versions.includes(pageVersion));
+  });
+  //console.log("Active Brand:");
+  //console.log(pageBrand);
   
-  const activeSubProjectLogoUrl = activeSubProject?useBaseUrl(isDarkTheme?activeSubProject.logoDark:activeSubProject.logoLight):null;
-  const activeSubProjectName = activeSubProject?.name ?? '';
+  const pageBrandLogoUrl = pageBrand?useBaseUrl(isDarkTheme?pageBrand.logoDark:pageBrand.logoLight):null;
+  const pageBrandName = pageBrand?.name ?? '';
 
-  const subProjects = [];
+  const brandsOutput = [];
+  // loop over brands, e.g. OpenRiak and RiakKV
+  projectBrands.map((brand, brandIndex) => {
+    const brandName = brand.name ?? '';
+    const brandLogo = (isDarkTheme?brand.logoDark:brand.logoLight) || null;
+    const brandLogoUrl = brandLogo ? useBaseUrl(brandLogo) : null;
 
-  projectVersions.map((subProject, subProjectIndex) => {
-    const name = subProject.name ?? '';
-    const logo = subProject.logoLight || subProject.logoDark || null;
-    const logoUrl = logo ? useBaseUrl(isDarkTheme?subProject.logoDark:subProject.logoLight) : null;
-    const currentVersion = subProject.current ?? '';
-    const ltsVersions = subProject.ltsVersions ?? [];
-    // sort descending, so rcompare instead of compare
-    const displayVersions = subProject.versions.sort(semver.rcompare);
+    const brandGroupOutput = [];
+    
+    //console.log(brand.groups);
+    
+    // loop over the brand's groups e.g. 3.0 and 3.2
+    brand.groups.map((brandGroup, brandGroupIndex) => {
+      // get the brand metadata ready for later
+      const displayName = brandGroup.displayName || '';
+      const isLTS = brandGroup.lts || false;
+      const groupVersions = brandGroup.versions.sort(semver.rcompare);
+      if (groupVersions.length === 0) throw new Error(`Brand has no group!`)
+      const collapseBelow = brandGroup.collapseBelow || groupVersions[groupVersions.length-1];
 
-    const groupedDisplayVersions = {};
-
-    for (const displayVersion of displayVersions) {
-      const parsed = semver.parse(displayVersion);
-      if (!parsed) continue;
-
-      const key = `${parsed.major}.${parsed.minor}`;
-      if (!groupedDisplayVersions[key]) {
-        groupedDisplayVersions[key] = [];
-      }
-      groupedDisplayVersions[key].push(displayVersion);
-    }
-
-    const versionGroupOutput = [];
-    for (const key of Object.keys(groupedDisplayVersions).sort((a, b) => semver.rcompare(`${a}.0`, `${b}.0`))) {
-      const versionsOutput = [];
-      const isLTS = ltsVersions.includes(key);
-      if (isLTS) {
-        versionsOutput.push(
-          <div className='versionPicker versionPicker-version versionPicker-lts' style={{ display: 'inline-block' }}>LTS</div>
-        );
-      }
-      //console.log(groupedDisplayVersions[key]);
-
-      groupedDisplayVersions[key].map((toVersion, versionIndex) => {
-        const isActive = activeVersion === toVersion.toString();
-        const classNames = `versionPicker versionPicker-version ${isActive?' versionPicker-activeVersion':''}`;
-        const versionLink = <VersionLink className={classNames} key={'toVersion-' + versionIndex} pluginId={project} toVersion={toVersion.toString()} isCurrent={toVersion.toString()===currentVersion} />;
-        if (versionLink) {
-          versionsOutput.push(versionLink);
+      // split the versions into shown and collaspsed
+      const groupVersionsOutput = [];
+      // we need to show the collapsed versions when the current page is one
+      var useCollapsedSection = true;
+      var hasCollapsedItems = false;
+      //console.log(groupVersions);
+      if (groupVersions.includes(pageVersion)) {
+        // pageVersion is in this group
+        if (semver.lt(pageVersion, collapseBelow)) {
+          // pageVersion is in this group and should be hidden as in the collapsed versions
+          // therefore - don't collapse them!
+          useCollapsedSection = false;
         }
-      });
-      //console.log("versionsOutput");
-      //console.log(versionsOutput);
-
-      if ((isLTS && versionsOutput.length > 1) || (!isLTS && versionsOutput.length > 0)) {
-        versionGroupOutput.push(
-          <div key={'versionFamily-' + key} className="versionPicker versionPicker-versionFamily">
-            {versionsOutput}
-          </div>
-        )
       }
-    }
-    if (versionGroupOutput.length > 0) {
-      const subProjectOutput = (
-        <div key={'subProject-' + subProjectIndex} className="versionPicker versionPicker-subProject">
-          <div key={'title-' + subProjectIndex} className="versionPicker versionPicker-subProject-Title" style={{ display: 'flex', alignItems: 'center' }}>
-            {logoUrl && <img key={'logo-' + subProjectIndex} className="versionPicker versionPicker-subProject-Logo" src={logoUrl} alt={name} style={{ height: '2.5em' }} />}
-            {name && <span key={'name-' + subProjectIndex} className="versionPicker versionPicker-subProject-Name" style={{ fontSize: '2em' }}>{name}</span>}
+
+      const selectorClass = `versionPicker-brand-${brandIndex}-group-${brandGroupIndex}`;
+      const hiddenClass = "versionPicker-version-hidden";
+      // loop over the group's versions e.g. 3.0.1 and 3.0.2
+      groupVersions.map((groupVersion, groupVersionIndex) => {
+        const isPageVersion = (pageVersion === groupVersion.toString());
+        var classNames = 'versionPicker versionPicker-version';
+        classNames += ' ' + selectorClass;
+        // tag is the active version
+        if (isPageVersion) classNames += ' versionPicker-activeVersion';
+        // tag if we are NOT showing collased versions AND this version is below the collapse point
+        const isCollapsed = useCollapsedSection && semver.lt(groupVersion, collapseBelow);
+        if (isCollapsed) {
+          classNames += ' ' + hiddenClass;
+          hasCollapsedItems = true;
+        }
+        
+        const versionLink = <VersionLink 
+          className={classNames} 
+          key={`brand-${brandIndex}-group-${brandGroupIndex}-version-${groupVersionIndex}`} 
+          pluginId={pageProject} 
+          toVersion={groupVersion.toString()} 
+          isCurrent={projectCurrentVersion === groupVersion.toString()} 
+        />;
+        groupVersionsOutput.push(versionLink);
+      });
+      //console.log(groupVersionsOutput);
+
+      // is there a collapsed section?
+      if (hasCollapsedItems) {
+        // we need a button to make other visisble
+        groupVersionsOutput.push(<ToggleButtonForHiddenItems selectorClass={selectorClass} hiddenClassName={hiddenClass} />);
+        //shownVersionsOutput.push([...collapsedVersionsOutput]);
+      }
+      //console.log(groupVersionsOutput);
+
+      // do we have a header?
+      const label = <>
+        {displayName && <span key={'brandGroup-name-' + brandGroupIndex}className="versionPicker versionPicker-brandGroup-displayName">{displayName}</span>}
+        {isLTS && <span key={'brandGroup-lts-' + brandGroupIndex} title="Long Term Support" className="versionPicker versionPicker-brandGroup-lts">LTS</span>}
+        </>;
+      const versionClassNames = "versionPicker versionPicker-versions" + ((!displayName && !isLTS)?" versionPicker-versions-nolabel":"");
+      brandGroupOutput.push(
+        <div key={'brandGroup-' + brandGroupIndex} className="versionPicker versionPicker-brandGroup">
+          {(displayName || isLTS) && <div key={'brandGroupLabel-' + brandGroupIndex} className='versionPicker versionPicker-label'>{label}</div>}
+          <div key={'brandGroupVersions-' + brandGroupIndex} className={versionClassNames}>
+            {groupVersionsOutput}
           </div>
-          {versionGroupOutput}
+        </div>
+      );
+    });
+
+    if (brandGroupOutput.length > 0) {
+      const brandOutput = (
+        <div key={'brand-' + brandIndex} className="versionPicker versionPicker-brand">
+          <div key={'title-' + brandIndex} className="versionPicker versionPicker-brand-Title">
+            {brandLogoUrl && <img key={'logo-' + brandIndex} className="versionPicker versionPicker-brand-Logo" src={brandLogoUrl} alt={brandName} />}
+            {brandName && <span key={'name-' + brandIndex} className="versionPicker versionPicker-brand-Name">{brandName}</span>}
+          </div>
+          {brandGroupOutput}
         </div>
       );
 
-      subProjects.push(subProjectOutput);
+      brandsOutput.push(brandOutput);
     }
   });
-  //return <>{subProjects}</>
 
   return (
     <Popover.Root>
       <Popover.Trigger asChild className="versionPicker versionPicker-trigger">
         <div className="versionPicker versionPicker-triggerContent">
-          <img src={useBaseUrl(activeSubProjectLogoUrl)} style={{height: "1.5em"}} alt={activeSubProjectName} />
-          <span style={{paddingLeft:'0.3em'}}>{activeSubProjectName}</span>
+          <img src={useBaseUrl(pageBrandLogoUrl)} style={{height: "1.5em"}} alt={pageBrandName} />
+          <span style={{paddingLeft:'0.3em'}}>{pageBrandName}</span>
           <span className="push-right">
-            <span style={{paddingRight:'0.3em', fontWeight: 'bold'}}>{activeVersion}</span>
+            <span style={{paddingRight:'0.3em', fontWeight: 'bold'}}>{pageVersion}</span>
             <CaretDownIcon className="push-right" />
           </span>
         </div>
       </Popover.Trigger>
       <Popover.Portal className="versionPicker versionPicker-optionsPortal">
-        <Popover.Content className="versionPicker versionPicker-optionsContent w-[var(--radix-popover-trigger-width)]" sideOffset={0}>
-          {subProjects}
+        <Popover.Content className="versionPicker versionPicker-optionsContent" sideOffset={0}>
+          {brandsOutput}
           <Popover.Arrow className="versionPicker versionPicker-arrow" width={'1rem'} height={'0.5rem'}/>
         </Popover.Content>
       </Popover.Portal>
