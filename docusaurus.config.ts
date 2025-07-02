@@ -2,7 +2,7 @@ import { themes as prismThemes } from 'prism-react-renderer';
 import type { Config } from '@docusaurus/types';
 import type * as Preset from './src/themes/preset-openriak';
 import pluginIncludeMarkdown from './src/remark/include-md';
-import type { DeepPartial, Overwrite } from 'utility-types';
+//import OpenRiakDocsVersionsSidebarItemsGenerator from './src/sidebars/OpenRiakDocsVersionsSidebarItemsGenerator';
 
 // This runs in Node.js - Don't use client-side code here (browser APIs, JSX...)
 
@@ -37,7 +37,7 @@ const config: Config = {
     versionPicker: {
       "ts": {
         current: "3.0.1",
-        versions: [
+        brands: [
           {
             logoLight: "/img/openriak-logo-and-text.svg",
             logoDark: "/img/openriak-logo-and-text.svg",
@@ -50,53 +50,97 @@ const config: Config = {
       },
       "cs": {
         current: "3.0.2",
-        versions: [
+        brands: [
           {
             logoLight: "/img/openriak-logo-and-text.svg",
             logoDark: "/img/openriak-logo-and-text.svg",
-            ltsVersions: ["3.0"],
-            versions: [
-              "3.0.2", "3.0.1"
-            ],
+            groups: [
+              {
+                displayName: "3.0",
+                lts: true,
+                versions: [
+                  "3.0.1", "3.0.2"
+                ],
+                collapseBelow: "3.0.0"
+              }
+            ]
           },
         ]
       },
       "kv": {
         current: "3.4.0",
-        versions: [
+        brands: [ 
           {
             logoLight: "/img/openriak-logo-and-text.svg",
             logoDark: "/img/openriak-logo-and-text.svg",
-            ltsVersions: ["3.4"],
-            versions: [
-              "3.4.0"
-            ],
+            groups: [
+              {
+                displayName: "3.4",
+                lts: true,
+                versions: [
+                  "3.4.0"
+                ],
+                collapseBelow: "3.4.0"
+              }
+            ]
           },
           {
             logoLight: "/img/riak-kv-dark.png",
             logoDark: "/img/riak-kv-light.png",
-            ltsVersions: ["2.9", "3.0", "3.2"],
-            versions: [
-              "3.2.3", "3.2.4", "3.2.5",
-              // 3.0
-              "3.0.1", "3.0.2", "3.0.3", "3.0.4", "3.0.6",
-              "3.0.7", "3.0.8", "3.0.9", "3.0.10", "3.0.11",
-              "3.0.12", "3.0.13", "3.0.14", "3.0.15",
-              "3.0.16",
-              // 2.9
-              "2.9.0", "2.9.1", "2.9.2", "2.9.4", "2.9.7",
-              "2.9.8", "2.9.9", "2.9.10",
-              // 2.2
-              "2.2.0", "2.2.1", "2.2.3", "2.2.6",
-
-              // 2.1
-              "2.1.1", "2.1.3", "2.1.4",
-
-              /*,
-              // 2.0
-              "2.0.0", "2.0.1", "2.0.2", "2.0.4", "2.0.5",
-              "2.0.6", "2.0.7", "2.0.8", "2.0.9"
-              */
+            groups: [
+              {
+                displayName: "3.2",
+                lts: true,
+                versions: [
+                  "3.2.0", "3.2.3", "3.2.4", "3.2.5"
+                ],
+                collapseBelow: "3.2.5"
+              },
+              {
+                displayName: "3.0",
+                lts: true,
+                versions: [
+                  "3.0.1", "3.0.2", "3.0.3", "3.0.4", "3.0.6",
+                  "3.0.7", "3.0.8", "3.0.9", "3.0.10", "3.0.11",
+                  "3.0.12", "3.0.13", "3.0.14", "3.0.15",
+                  "3.0.16"
+                ],
+                collapseBelow: "3.0.16"
+              },
+              {
+                displayName: "2.9",
+                lts: false,
+                versions: [
+                  "2.9.0", "2.9.1", "2.9.2", "2.9.4", "2.9.7",
+                  "2.9.8", "2.9.9", "2.9.10",
+                ],
+                collapseBelow: "2.9.99"
+              },
+              {
+                displayName: "2.2",
+                lts: false,
+                versions: [
+                  "2.2.0", "2.2.1", "2.2.3", "2.2.6",
+                ],
+                collapseBelow: "2.2.99"
+              },
+              {
+                displayName: "2.1",
+                lts: false,
+                versions: [
+                  "2.1.1", "2.1.3", "2.1.4",
+                ],
+                collapseBelow: "2.1.99"
+              },
+              {
+                displayName: "2.0",
+                lts: false,
+                versions: [
+                  "2.0.0", "2.0.1", "2.0.2", "2.0.4", "2.0.5",
+                  "2.0.6", "2.0.7", "2.0.8", "2.0.9"
+                ],
+                collapseBelow: "2.0.99"
+              },
             ]
           }
         ]
@@ -147,6 +191,7 @@ const config: Config = {
           path: "content/kv",
           routeBasePath: "kv",
           sidebarPath: require.resolve('./src/sidebars/sidebarsKV.ts'),
+          //sidebarItemsGenerator: OpenRiakDocsVersionsSidebarItemsGenerator,
           editUrl:
             'https://github.com/openriak/openriak-docs/tree/develop/kv/',
           lastVersion: 'current',
