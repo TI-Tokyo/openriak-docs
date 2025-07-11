@@ -8,7 +8,10 @@ pagination_label: Begin Here
 sidebar_class_name: kv-quickstart
 ---
 
+[quick-start-with-docker]: ./docker
+
 # Quick Start
 
 Let's get **OpenRiak KV** running FAST.
 
+The fastest way to get an instance of Riak up is to use Docker. See [Quick Start with Docker][quick-start-with-docker] for details.
