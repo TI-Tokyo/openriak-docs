@@ -1,0 +1,654 @@
+{
+  "mappings": {
+    "buckets.default.n_val": {
+      "properties": {
+        "datatype": {
+          "type": "atom",
+          "value": "integer"
+        },
+        "default": "3",
+        "hidden": true
+      },
+      "docText": [
+        "The number of replicas stored. Note: See Replication",
+        "Properties for further discussion.",
+        "http://docs.basho.com/riak/latest/dev/advanced/cap-controls/"
+      ],
+      "docOther": [
+        "Default Bucket Properties"
+      ],
+      "configName": "buckets.default.n_val",
+      "settingName": "riak_core.default_bucket_props.n_val"
+    },
+    "ring_size": {
+      "properties": {
+        "datatype": {
+          "type": "atom",
+          "value": "integer"
+        },
+        "default": "64",
+        "validators": [
+          {
+            "type": "text",
+            "value": "ring_size^2"
+          },
+          {
+            "type": "text",
+            "value": "ring_size_max"
+          },
+          {
+            "type": "text",
+            "value": "ring_size_min"
+          }
+        ],
+        "commented": "64"
+      },
+      "docText": [
+        "Number of partitions in the cluster (only valid when first",
+        "creating the cluster). Must be a power of 2, minimum 8 and maximum",
+        "1024."
+      ],
+      "configName": "ring_size",
+      "settingName": "riak_core.ring_creation_size"
+    },
+    "transfer_limit": {
+      "properties": {
+        "datatype": {
+          "type": "atom",
+          "value": "integer"
+        },
+        "default": "2",
+        "commented": "2"
+      },
+      "docText": [
+        "Number of concurrent node-to-node transfers allowed.",
+        "It is generally safe to raise this number to increase concurrency.  A",
+        "common value to use would be 8.  However, it is necessary to monitor for",
+        "handoff timeouts.  If handoff timeouts occur, reduce the",
+        "handoff_batch_threshold_count.  If timeouts continue to occur, even with a",
+        "low value for the handoff_batch_threshold_count (e.g. 200), then raise the",
+        "handoff_timeout.  Further, if using the leveled backend in Riak KV",
+        "investigate raising the the backend_pause."
+      ],
+      "configName": "transfer_limit",
+      "settingName": "riak_core.handoff_concurrency"
+    },
+    "handoff_batch_threshold_count": {
+      "properties": {
+        "datatype": {
+          "type": "atom",
+          "value": "integer"
+        },
+        "default": "500",
+        "commented": "500"
+      },
+      "docText": [
+        "Handoff batch threshold count",
+        "The maximum number of objects allowed in a single handoff batch.  If there",
+        "are issues with handoff timeouts, then the first change should be to reduce",
+        "this count - making the system more responsive to back-pressure."
+      ],
+      "configName": "handoff_batch_threshold_count",
+      "settingName": "riak_core.handoff_batch_threshold_count"
+    },
+    "handoff_timeout": {
+      "properties": {
+        "datatype": {
+          "type": "atom",
+          "value": "integer"
+        },
+        "default": "120000",
+        "commented": "120000"
+      },
+      "docText": [
+        "Handoff timeout (milliseconds)",
+        "The timeout to wait for acknowledgement of the previous handoff batch"
+      ],
+      "configName": "handoff_timeout",
+      "settingName": "riak_core.handoff_timeout"
+    },
+    "ring.state_dir": {
+      "properties": {
+        "datatype": {
+          "type": "atom",
+          "value": "directory"
+        },
+        "default": "$(platform_data_dir)/ring",
+        "hidden": true
+      },
+      "docText": [
+        "Default location of ringstate"
+      ],
+      "configName": "ring.state_dir",
+      "settingName": "riak_core.ring_state_dir"
+    },
+    "ssl.certfile": {
+      "properties": {
+        "datatype": {
+          "type": "atom",
+          "value": "file"
+        },
+        "commented": "$(platform_etc_dir)/cert.pem"
+      },
+      "docText": [
+        "Default cert location for https can be overridden",
+        "with the ssl config variable, for example:"
+      ],
+      "configName": "ssl.certfile",
+      "settingName": "riak_core.ssl.certfile"
+    },
+    "ssl.keyfile": {
+      "properties": {
+        "datatype": {
+          "type": "atom",
+          "value": "file"
+        },
+        "commented": "$(platform_etc_dir)/key.pem"
+      },
+      "docText": [
+        "Default key location for https can be overridden with the ssl",
+        "config variable, for example:"
+      ],
+      "configName": "ssl.keyfile",
+      "settingName": "riak_core.ssl.keyfile"
+    },
+    "ssl.cacertfile": {
+      "properties": {
+        "datatype": {
+          "type": "atom",
+          "value": "file"
+        },
+        "commented": "$(platform_etc_dir)/cacertfile.pem"
+      },
+      "docText": [
+        "Default signing authority location for https can be overridden",
+        "with the ssl config variable, for example:"
+      ],
+      "configName": "ssl.cacertfile",
+      "settingName": "riak_core.ssl.cacertfile"
+    },
+    "handoff.ip": {
+      "properties": {
+        "default": "{{handoff_ip}}",
+        "datatype": {
+          "type": "atom",
+          "value": "string"
+        },
+        "validators": [
+          {
+            "type": "text",
+            "value": "valid_ipaddr"
+          }
+        ],
+        "hidden": true
+      },
+      "docText": [
+        "handoff.ip is the network address that Riak binds to for",
+        "intra-cluster data handoff."
+      ],
+      "configName": "handoff.ip",
+      "settingName": "riak_core.handoff_ip"
+    },
+    "handoff.port": {
+      "properties": {
+        "default": "{{handoff_port}}",
+        "datatype": {
+          "type": "atom",
+          "value": "integer"
+        },
+        "hidden": true
+      },
+      "docText": [
+        "handoff.port is the TCP port that Riak uses for",
+        "intra-cluster data handoff."
+      ],
+      "configName": "handoff.port",
+      "settingName": "riak_core.handoff_port"
+    },
+    "handoff.ssl.certfile": {
+      "properties": {
+        "%%  {commented": true,
+        "}": true,
+        "datatype": {
+          "type": "atom",
+          "value": "file"
+        },
+        "hidden": true
+      },
+      "docText": [
+        "To encrypt riak_core intra-cluster data handoff traffic,",
+        "uncomment the following line and edit its path to an appropriate",
+        "certfile and keyfile.  (This example uses a single file with both",
+        "items concatenated together.)"
+      ],
+      "configName": "handoff.ssl.certfile",
+      "settingName": "riak_core.handoff_ssl_options.certfile"
+    },
+    "handoff.ssl.keyfile": {
+      "properties": {
+        "datatype": {
+          "type": "atom",
+          "value": "file"
+        },
+        "hidden": true
+      },
+      "docText": [
+        "if you need a seperate keyfile for handoff"
+      ],
+      "configName": "handoff.ssl.keyfile",
+      "settingName": "riak_core.handoff_ssl_options.keyfile"
+    },
+    "handoff.outbound": {
+      "properties": {
+        "default": "on",
+        "datatype": {
+          "type": "flag",
+          "falseValue": "off",
+          "trueValue": "on"
+        },
+        "hidden": true
+      },
+      "docText": [
+        "Enables/disables outbound handoff transfers for this node. If you",
+        "turn this setting off at runtime with riak-admin, it will kill any",
+        "outbound handoffs currently running."
+      ],
+      "configName": "handoff.outbound",
+      "settingName": "riak_core.disable_outbound_handoff"
+    },
+    "handoff.inbound": {
+      "properties": {
+        "default": "on",
+        "datatype": {
+          "type": "flag",
+          "falseValue": "off",
+          "trueValue": "on"
+        },
+        "hidden": true
+      },
+      "docText": [
+        "Enables/disables inbound handoff transfers for this node. If you",
+        "turn this setting off at runtime with riak-admin, it will kill any",
+        "inbound handoffs currently running."
+      ],
+      "configName": "handoff.inbound",
+      "settingName": "riak_core.disable_inbound_handoff"
+    },
+    "dtrace": {
+      "properties": {
+        "default": "off",
+        "datatype": {
+          "type": "atom",
+          "value": "flag"
+        }
+      },
+      "docText": [
+        "DTrace support Do not enable 'dtrace' unless your Erlang/OTP",
+        "runtime is compiled to support DTrace.  DTrace is available in",
+        "R15B01 (supported by the Erlang/OTP official source package) and in",
+        "R14B04 via a custom source repository & branch."
+      ],
+      "configName": "dtrace",
+      "settingName": "riak_core.dtrace_support"
+    },
+    "platform_bin_dir": {
+      "properties": {
+        "datatype": {
+          "type": "atom",
+          "value": "directory"
+        },
+        "default": "{{platform_bin_dir}}"
+      },
+      "docText": [
+        "Platform-specific installation paths (substituted by rebar)"
+      ],
+      "configName": "platform_bin_dir",
+      "settingName": "riak_core.platform_bin_dir"
+    },
+    "platform_data_dir": {
+      "properties": {
+        "datatype": {
+          "type": "atom",
+          "value": "directory"
+        },
+        "default": "{{platform_data_dir}}"
+      },
+      "docSees": [
+        "platform_bin_dir"
+      ],
+      "configName": "platform_data_dir",
+      "settingName": "riak_core.platform_data_dir"
+    },
+    "platform_etc_dir": {
+      "properties": {
+        "datatype": {
+          "type": "atom",
+          "value": "directory"
+        },
+        "default": "{{platform_etc_dir}}"
+      },
+      "docSees": [
+        "platform_bin_dir"
+      ],
+      "configName": "platform_etc_dir",
+      "settingName": "riak_core.platform_etc_dir"
+    },
+    "platform_lib_dir": {
+      "properties": {
+        "datatype": {
+          "type": "atom",
+          "value": "directory"
+        },
+        "default": "{{platform_lib_dir}}"
+      },
+      "docSees": [
+        "platform_bin_dir"
+      ],
+      "configName": "platform_lib_dir",
+      "settingName": "riak_core.platform_lib_dir"
+    },
+    "platform_log_dir": {
+      "properties": {
+        "datatype": {
+          "type": "atom",
+          "value": "directory"
+        },
+        "default": "{{platform_log_dir}}"
+      },
+      "docSees": [
+        "platform_bin_dir"
+      ],
+      "configName": "platform_log_dir",
+      "settingName": "riak_core.platform_log_dir"
+    },
+    "strong_consistency": {
+      "properties": {
+        "datatype": {
+          "type": "atom",
+          "value": "flag"
+        },
+        "default": "off",
+        "commented": "on"
+      },
+      "docText": [
+        "Enable consensus subsystem. Set to 'on' to enable the",
+        "consensus subsystem used for strongly consistent Riak operations."
+      ],
+      "configName": "strong_consistency",
+      "settingName": "riak_core.enable_consensus"
+    },
+    "background_manager": {
+      "properties": {
+        "datatype": {
+          "type": "atom",
+          "value": "flag"
+        },
+        "default": "off",
+        "hidden": true
+      },
+      "docText": [
+        "Whether to enable the background manager globally. When",
+        "enabled, participating Riak subsystems will coordinate access to",
+        "shared resources. This will help to prevent system response",
+        "degradation under times of heavy load from multiple background",
+        "tasks. Specific subsystems may also have their own controls over",
+        "use of the background manager."
+      ],
+      "configName": "background_manager",
+      "settingName": "riak_core.use_background_manager"
+    },
+    "vnode_management_timer": {
+      "properties": {
+        "default": "10s",
+        "datatype": {
+          "type": "duration",
+          "unit": "ms"
+        },
+        "hidden": true
+      },
+      "docText": [
+        "Interval of time between vnode management",
+        "activities. Modifying this will change the amount of time between",
+        "attemps to trigger handoff between this node and any other member",
+        "of the cluster."
+      ],
+      "configName": "vnode_management_timer",
+      "settingName": "riak_core.vnode_management_timer"
+    },
+    "choose_claim_fun": {
+      "properties": {
+        "commented": "choose_claim_v2",
+        "datatype": {
+          "type": "enum",
+          "possibleValues": [
+            {
+              "type": "atom",
+              "value": "choose_claim_v2"
+            },
+            {
+              "type": "atom",
+              "value": "choose_claim_v3"
+            },
+            {
+              "type": "atom",
+              "value": "choose_claim_v4"
+            }
+          ]
+        },
+        "merge": true
+      },
+      "docText": [
+        "Choose claim function",
+        "Claim function to be used when handling joins to the cluster.",
+        "There are three supported functions:",
+        "- choose_claim_v2 (the default) designed for environments without location",
+        "awareness as a requirement",
+        "- choose_claim_v3 (deprecated) a claim function which treats claim as an",
+        "optimisation problem. It creates a number of possible claim plans and",
+        "evaluates them for violations, balance and diversity, choosing the 'best'",
+        "plan.  claim_v3 is not location aware",
+        "- choose_claim_v4 a claim algorithm which refactors v2 to improve location",
+        "awareness"
+      ],
+      "configName": "choose_claim_fun",
+      "settingName": "riak_core.choose_claim_fun"
+    },
+    "target_n_val": {
+      "properties": {
+        "datatype": {
+          "type": "atom",
+          "value": "integer"
+        },
+        "default": "4",
+        "validators": [
+          {
+            "type": "text",
+            "value": "target_nval_max"
+          },
+          {
+            "type": "text",
+            "value": "target_nval_min"
+          }
+        ],
+        "commented": "4"
+      },
+      "docText": [
+        "Target N Val for Cluster Administration",
+        "Cluster change operations such as joins and leaves will use a target_n_val",
+        "to control spacing of preflists across physical nodes.  The default value",
+        "is 4, which is the default bucket propery for n_val + 1.  This means that",
+        "the target for a cluster change operation is to make sure that all preflists",
+        "of n_val 3 are on 3 deperate physical devices, even when a single failure",
+        "has occurred.",
+        "If the target_n_val is not met by a cluster chnage operation, the failure is",
+        "not blocking -  a warning will be printed in the cluster plan, but the plan",
+        "will not be prevented from being committed.",
+        "In some cases, by reducing the target_n_val it may be possible to reduce the",
+        "number of transfers necessary to complete a cluster change operation.",
+        "In clusters with a large number of nodes, larger target_n_val values can be",
+        "supported, and may result to a better spread of load across the cluster",
+        "when node failure occurs."
+      ],
+      "configName": "target_n_val",
+      "settingName": "riak_core.target_n_val"
+    },
+    "target_location_n_val": {
+      "properties": {
+        "datatype": {
+          "type": "atom",
+          "value": "integer"
+        },
+        "default": "3",
+        "validators": [
+          {
+            "type": "text",
+            "value": "target_nval_max"
+          },
+          {
+            "type": "text",
+            "value": "target_nval_min"
+          }
+        ],
+        "commented": "3"
+      },
+      "docText": [
+        "Target Location N Val for Cluster Administration",
+        "Cluster change operations such as joins and leaves will use a",
+        "target_location_n_val to control spacing of preflists across locations. This",
+        "is to support clusters which have a concept of `location` failure as well as",
+        "Node failure (e.g. rack awareness is required, or support for AWS placement",
+        "groups).",
+        "In this case, nodes are assigned to locations, and as well as supporting",
+        "the splitting of data replicas across nodes, attempts will also be made",
+        "during cluster chnage operations to split preflists across locations.",
+        "If the target_location_n_val is not met by a cluster chnage operation, the failure is",
+        "not blocking -  a warning will be printed in the cluster plan, but the plan",
+        "will not be prevented from being committed.",
+        "In some cases, by reducing the target_location_n_val it may be possible to",
+        "reduce the number of transfers necessary to complete a cluster change",
+        "operation.",
+        "In clusters with a large number of nodes, larger target_location_n_val",
+        "values can be supported.",
+        "If the target_location_nval is greater than the target_nval, the target_nval",
+        "will be used."
+      ],
+      "configName": "target_location_n_val",
+      "settingName": "riak_core.target_location_n_val"
+    },
+    "full_rebalance_onleave": {
+      "properties": {
+        "datatype": {
+          "type": "atom",
+          "value": "flag"
+        },
+        "default": "off"
+      },
+      "docText": [
+        "On cluster leave - force full rebalance partitions",
+        "By default on a cluster leave there will first be an attempt to handoff",
+        "vnodes to safe (in terms of target_n_val) locations.  In small clusters,",
+        "there may be insufficient safe locations, and a temporary state can be",
+        "created where a single node has a large number of vnodes.",
+        "To mitigate this, a full rebalance (a re-assignment that does not optimise",
+        "based on the starting position), can be forced by setting this option on",
+        "all nodes.",
+        "Please carefully consider any cluster plan created with this option before",
+        "committing",
+        "If cluster planning with locations enabled, then `full_rebalance_onleave`",
+        "should also be enabled.  With claim_v4 this should result in a cluster",
+        "plan which is correct, but also relatively efficient."
+      ],
+      "configName": "full_rebalance_onleave",
+      "settingName": "riak_core.full_rebalance_onleave"
+    }
+  },
+  "translations": {
+    "riak_core.job_accept_class": {
+      "properties": {},
+      "docOther": [
+        "Async Job Management",
+        "",
+        "This is a translation for mappings that appear in other schema files.",
+        "Mappings are from \"cluster.job.$namespace.$operation\"* to",
+        "\"riak_core.job_accept_class\" with required attributes",
+        " [merge, {datatype, {flag, enabled, disabled}}].**",
+        "*  Mappings are only performed on elements with exactly the number of",
+        "   segments shown - any other number of elements, even with a matching",
+        "   prefix, is ignored.",
+        "** The 'datatype' should be 'flag', and 'enabled'/'disabled' are our",
+        "   conventions, but any OnFlag/OffFlag pair can be used as long as they map",
+        "   to boolean values.",
+        "Other attributes, such as 'hidden' or {default, X} are fine, since they",
+        "don't make it down the stack to here.",
+        "Job classes that should be enabled by default MUST have a {default, enabled}",
+        "attribute, as the runtime filter only defaults to accept when no values have",
+        "been set from ANY schema file.",
+        "",
+        "Example:",
+        " {mapping, \"cluster.job.harry.fold\", \"riak_core.job_accept_class\", [",
+        "     merge,",
+        "     {datatype, {flag, enabled, disabled}},",
+        "     {default, enabled}",
+        " ]}.",
+        " {mapping, \"cluster.job.alice.list\", \"riak_core.job_accept_class\", [",
+        "     merge,",
+        "     {datatype, {flag, enabled, disabled}},",
+        "     {default, disabled}",
+        " ]}.",
+        "Results in:",
+        " {riak_core, [",
+        "     ...",
+        "     {job_accept_class, [{harry, fold}]}",
+        "     ...",
+        " ]}.",
+        ""
+      ],
+      "configName": "riak_core.job_accept_class",
+      "func": "fun(Conf) -> Fold = fun({[_, _, Mod, Op], true}, Result) -> [{erlang:list_to_atom(Mod), erlang:list_to_atom(Op)} | Result]; ({[_, _, _, _], false}, Result) -> Result; ({[_, _, _, _], _} = Setting, _) -> cuttlefish:invalid(io_lib:format(\"~p\", [Setting])); (_, Result) -> Result end, lists:sort(lists:foldl(Fold, [], cuttlefish_variable:filter_by_prefix([\"cluster\", \"job\"], Conf))) end"
+    }
+  },
+  "validators": {
+    "ring_size_max": {
+      "properties": {},
+      "docOther": [
+        "ring_size validators"
+      ],
+      "name": "ring_size_max",
+      "description": "2048 and larger are supported, but considered advanced config",
+      "func": "fun(Size) -> Size =< 1024 end"
+    },
+    "ring_size^2": {
+      "properties": {},
+      "name": "ring_size^2",
+      "description": "not a power of 2",
+      "func": "fun(Size) -> (Size band (Size-1) =:= 0) end"
+    },
+    "ring_size_min": {
+      "properties": {},
+      "name": "ring_size_min",
+      "description": "must be at least 8",
+      "func": "fun(Size) -> Size >= 8 end"
+    },
+    "valid_ipaddr": {
+      "properties": {},
+      "name": "valid_ipaddr",
+      "description": "must be a valid IP address",
+      "func": "fun(AddrString) -> case inet_parse:address(AddrString) of {ok, _} -> true; {error, _} -> false end end"
+    },
+    "target_nval_max": {
+      "properties": {},
+      "docOther": [
+        "ring_size validators"
+      ],
+      "name": "target_nval_max",
+      "description": "7 and larger are supported, but considered advanced config",
+      "func": "fun(Size) -> Size =< 6 end"
+    },
+    "target_nval_min": {
+      "properties": {},
+      "name": "target_nval_min",
+      "description": "must be at least 1",
+      "func": "fun(Size) -> Size >= 1 end"
+    }
+  }
+}

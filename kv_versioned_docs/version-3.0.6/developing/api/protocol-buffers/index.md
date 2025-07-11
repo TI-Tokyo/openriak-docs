@@ -1,0 +1,167 @@
+---
+title: "Protocol Buffers Client API"
+sidebar_position: 103
+sidebar_label: Protocol Buffers API
+pagination_label: "Protocol Buffers Client API"
+hide_table_of_contents: true
+last_update:
+  author: RiakDocs
+  date: 2021-05-07
+---
+import RiakDocsNote from '@site/src/components/RiakDocs/RiakDocsNote';
+
+
+This is an overview of the operations you can perform using the
+[Protocol Buffers](https://code.google.com/p/protobuf/) Client (PBC)
+interface to Riak, and can be used as a guide for developing a
+PBC-compliant Riak client.
+
+## Protocol
+
+Riak listens on a TCP port (8087 by default) for incoming connections.
+Once connected, the client can send a stream of requests on the same
+connection.
+
+Each operation consists of a [request message](https://developers.google.com/protocol-buffers/docs/encoding) and one or more response messages. Messages are all encoded the same way, consisting of:
+
+* 32-bit length of message code + Protocol Buffers message in network
+  order
+* 8-bit message code to identify the Protocol Buffers message
+* N bytes of Protocol Buffers-encoded message
+
+### Example
+
+```
+00 00 00 07 09 0A 01 62 12 01 6B
+|----Len---|MC|----Message-----|
+
+Len = 0x07
+Message Code (MC) = 0x09 = RpbGetReq
+RpbGetReq Message = 0x0A 0x01 0x62 0x12 0x01 0x6B
+
+Decoded Message:
+bucket: "b"
+key: "k"
+```
+
+## Message Codes
+
+Code | Message |
+:----|:--------|
+0 | `RpbErrorResp` |
+1 | `RpbPingReq` |
+2 | `RpbPingResp` |
+3 | `RpbGetClientIdReq` |
+4 | `RpbGetClientIdResp` |
+5 | `RpbSetClientIdReq` |
+6 | `RpbSetClientIdResp` |
+7 | `RpbGetServerInfoReq` |
+8 | `RpbGetServerInfoResp` |
+9 | `RpbGetReq` |
+10 | `RpbGetResp` |
+11 | `RpbPutReq` |
+12 | `RpbPutResp` |
+13 | `RpbDelReq` |
+14 | `RpbDelResp` |
+15 | `RpbListBucketsReq` |
+16 | `RpbListBucketsResp` |
+17 | `RpbListKeysReq` |
+18 | `RpbListKeysResp` |
+19 | `RpbGetBucketReq` |
+20 | `RpbGetBucketResp` |
+21 | `RpbSetBucketReq` |
+22 | `RpbSetBucketResp` |
+23 | `RpbMapRedReq` |
+24 | `RpbMapRedResp` |
+25 | `RpbIndexReq` |
+26 | `RpbIndexResp` |
+27 | `RpbSearchQueryReq` |
+28 | `RbpSearchQueryResp` |
+29 | `RpbResetBucketReq` |
+30 | `RpbResetBucketResp` |
+31 | `RpbGetBucketTypeReq` |
+32 | `RpbSetBucketTypeResp` |
+40 | `RpbCSBucketReq` |
+41 | `RpbCSUpdateReq` |
+50 | `RpbCounterUpdateReq` |
+51 | `RpbCounterUpdateResp` |
+52 | `RpbCounterGetReq` |
+53 | `RpbCounterGetResp` |
+80 | `DtFetchReq` |
+81 | `DtFetchResp` |
+82 | `DtUpdateReq` |
+83 | `DtUpdateResp` |
+253 | `RpbAuthReq` |
+254 | `RpbAuthResp` |
+255 | `RpbStartTls` |
+
+<RiakDocsNote title="Message Definitions">
+All Protocol Buffers messages are defined in the `riak.proto` and other
+`.proto` files in the `/src` directory of the
+<a href="https://github.com/basho/riak_pb">RiakPB</a> project.
+</RiakDocsNote>
+
+### Error Response
+
+If the request does not result in an error, Riak will return one of a
+variety of response messages, e.g. `RpbGetResp` or `RpbPutResp`,
+depending on which request message is sent.
+
+If the server experiences an error processing a request, however, it
+will return an `RpbErrorResp` message instead of the response expected
+for the given request (e.g. `RbpGetResp` is the expected response to
+`RbpGetReq`). Error messages contain an error string and an error code,
+like this:
+
+```protobuf
+message RpbErrorResp {
+    required bytes errmsg = 1;
+    required uint32 errcode = 2;
+}
+```
+
+### Values
+
+* `errmsg` - A string representation of what went wrong
+* `errcode` - A numeric code. Currently, only `RIAKC_ERR_GENERAL=1`
+  is defined.
+
+## Bucket Operations
+
+* [PBC List Buckets](./list-buckets)
+* [PBC List Keys](./list-keys)
+* [PBC Get Bucket Properties](./get-bucket-props)
+* [PBC Set Bucket Properties](./set-bucket-props)
+* [PBC Reset Bucket Properties](./reset-bucket-props)
+
+## Object/Key Operations
+
+* [PBC Fetch Object](./fetch-object)
+* [PBC Store Object](./store-object)
+* [PBC Delete Object](./delete-object)
+
+## Query Operations
+
+* [PBC MapReduce](./mapreduce)
+* [PBC Secondary Indexes](./secondary-indexes)
+* [PBC Search](./search)
+
+## Server Operations
+
+* [PBC Ping](./ping)
+* [PBC Server Info](./server-info)
+
+## Bucket Type Operations
+
+* [PBC Get Bucket Type](./get-bucket-type)
+* [PBC Set Bucket Type](./set-bucket-type)
+
+## Data Type Operations
+
+* [PBC Data Type Fetch](./dt-fetch)
+* [PBC Data Type Union](./dt-union)
+* [PBC Data Type Store](./dt-store)
+* [PBC Data Type Counter Store](./dt-counter-store)
+* [PBC Data Type Set Store](./dt-set-store)
+* [PBC Data Type Map Store](./dt-map-store)
+

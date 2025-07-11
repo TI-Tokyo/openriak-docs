@@ -1,0 +1,37 @@
+#!/bin/bash
+
+# Set the directory to loop over (configure this)
+SOURCE_DIR=".riakdocs/content/riak/kv/"
+TARGET_DIR_ROOT="kv_versioned_docs"
+
+# Loop over subdirectories
+for dir in "$SOURCE_DIR"/*/; do
+  # Skip if not a directory
+  [ -d "$dir" ] || continue
+
+  # Get the base directory name
+  DIR_NAME=$(basename "$dir")
+
+  # Skip 'latest'
+  if [[ "$DIR_NAME" == "latest" ]]; then
+    continue
+  fi
+
+  # Get relative path to current working directory
+  REL_PATH=$(realpath --relative-to="$(pwd)" "$dir")
+
+  # Strip 'pX' suffix from version (e.g., 3.2.5p1 -> 3.2.5)
+  TARGET_VERSION=$(echo "$DIR_NAME" | sed -E 's/p[0-9]+$//')
+
+  TARGET_DIR=$(echo "$TARGET_DIR_ROOT/version-$TARGET_VERSION")
+
+  echo "Clearing $TARGET_DIR..."
+
+  rm -r "$TARGET_DIR/"
+  mkdir "$TARGET_DIR"
+  
+  echo "Placeholder for Riak KV $TARGET_VERSION" > $(echo "$TARGET_DIR/index.md")
+ 
+done
+
+#./docker-npm run openriak migrateRiakDocs .riakdocs/content/riak/kv/2.0.1 kv 2.1.3

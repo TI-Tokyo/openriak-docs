@@ -1,0 +1,377 @@
+%%-*- mode: erlang -*-
+%% Default Bucket Properties
+
+%% @doc The number of replicas stored. Note: See Replication
+%% Properties for further discussion.
+%% http://docs.basho.com/riak/latest/dev/advanced/cap-controls/
+{mapping, "buckets.default.n_val", "riak_core.default_bucket_props.n_val", [
+  {datatype, integer},
+  {default, 3},
+  hidden
+]}.
+
+%% @doc Number of partitions in the cluster (only valid when first
+%% creating the cluster). Must be a power of 2, minimum 8 and maximum
+%% 1024.
+{mapping, "ring_size", "riak_core.ring_creation_size", [
+  {datatype, integer},
+  {default, 64},
+  {validators, ["ring_size^2", "ring_size_max", "ring_size_min"]},
+  {commented, 64}
+]}.
+
+%% ring_size validators
+{validator, "ring_size_max",
+ "2048 and larger are supported, but considered advanced config",
+ fun(Size) ->
+  Size =< 1024
+ end}.
+
+{validator, "ring_size^2", "not a power of 2",
+ fun(Size) ->
+  (Size band (Size-1) =:= 0)
+ end}.
+
+{validator, "ring_size_min", "must be at least 8",
+ fun(Size) ->
+  Size >= 8
+ end}.
+
+%% @doc Number of concurrent node-to-node transfers allowed.
+%% It is generally safe to raise this number to increase concurrency.  A
+%% common value to use would be 8.  However, it is necessary to monitor for
+%% handoff timeouts.  If handoff timeouts occur, reduce the 
+%% handoff_batch_threshold_count.  If timeouts continue to occur, even with a
+%% low value for the handoff_batch_threshold_count (e.g. 200), then raise the
+%% handoff_timeout.  Further, if using the leveled backend in Riak KV
+%% investigate raising the the backend_pause.
+{mapping, "transfer_limit", "riak_core.handoff_concurrency", [
+  {datatype, integer},
+  {default, 2},
+  {commented, 2}
+]}.
+
+%% @doc Handoff batch threshold count
+%% The maximum number of objects allowed in a single handoff batch.  If there
+%% are issues with handoff timeouts, then the first change should be to reduce
+%% this count - making the system more responsive to back-pressure.
+{mapping, "handoff_batch_threshold_count", "riak_core.handoff_batch_threshold_count", [
+    {datatype, integer},
+    {default, 500},
+    {commented, 500}
+]}.
+
+%% @doc Handoff timeout (milliseconds)
+%% The timeout to wait for acknowledgement of the previous handoff batch
+{mapping, "handoff_timeout", "riak_core.handoff_timeout", [
+    {datatype, integer},
+    {default, 120000},
+    {commented, 120000}
+]}.
+
+%% @doc Default location of ringstate
+{mapping, "ring.state_dir", "riak_core.ring_state_dir", [
+  {datatype, directory},
+  {default, "$(platform_data_dir)/ring"},
+  hidden
+]}.
+
+%% @doc Default cert location for https can be overridden
+%% with the ssl config variable, for example:
+{mapping, "ssl.certfile", "riak_core.ssl.certfile", [
+  {datatype, file},
+  {commented, "$(platform_etc_dir)/cert.pem"}
+]}.
+
+%% @doc Default key location for https can be overridden with the ssl
+%% config variable, for example:
+{mapping, "ssl.keyfile", "riak_core.ssl.keyfile", [
+  {datatype, file},
+  {commented, "$(platform_etc_dir)/key.pem"}
+]}.
+
+%% @doc Default signing authority location for https can be overridden
+%% with the ssl config variable, for example:
+{mapping, "ssl.cacertfile", "riak_core.ssl.cacertfile", [
+  {datatype, file},
+  {commented, "$(platform_etc_dir)/cacertfile.pem"}
+]}.
+
+%% @doc handoff.ip is the network address that Riak binds to for
+%% intra-cluster data handoff.
+{mapping, "handoff.ip", "riak_core.handoff_ip", [
+  {default, "{{handoff_ip}}" },
+  {datatype, string},
+  {validators, ["valid_ipaddr"]},
+  hidden
+]}.
+
+{validator,
+  "valid_ipaddr",
+  "must be a valid IP address",
+  fun(AddrString) ->
+    case inet_parse:address(AddrString) of
+      {ok, _} -> true;
+      {error, _} -> false
+    end
+  end}.
+
+%% @doc handoff.port is the TCP port that Riak uses for
+%% intra-cluster data handoff.
+{mapping, "handoff.port", "riak_core.handoff_port", [
+  {default, {{handoff_port}} },
+  {datatype, integer},
+  hidden
+]}.
+
+%% @doc To encrypt riak_core intra-cluster data handoff traffic,
+%% uncomment the following line and edit its path to an appropriate
+%% certfile and keyfile.  (This example uses a single file with both
+%% items concatenated together.)
+{mapping, "handoff.ssl.certfile", "riak_core.handoff_ssl_options.certfile", [
+%%  {commented, "/tmp/erlserver.pem"},
+  {datatype, file},
+  hidden
+]}.
+
+%% @doc if you need a seperate keyfile for handoff
+{mapping, "handoff.ssl.keyfile", "riak_core.handoff_ssl_options.keyfile", [
+  {datatype, file},
+  hidden
+]}.
+
+%% @doc Enables/disables outbound handoff transfers for this node. If you
+%% turn this setting off at runtime with riak-admin, it will kill any
+%% outbound handoffs currently running.
+{mapping, "handoff.outbound", "riak_core.disable_outbound_handoff", [
+  {default, on},
+  {datatype, {flag, off, on}},
+  hidden
+]}.
+
+%% @doc Enables/disables inbound handoff transfers for this node. If you
+%% turn this setting off at runtime with riak-admin, it will kill any
+%% inbound handoffs currently running.
+{mapping, "handoff.inbound", "riak_core.disable_inbound_handoff", [
+  {default, on},
+  {datatype, {flag, off, on}},
+  hidden
+]}.
+
+%% @doc DTrace support Do not enable 'dtrace' unless your Erlang/OTP
+%% runtime is compiled to support DTrace.  DTrace is available in
+%% R15B01 (supported by the Erlang/OTP official source package) and in
+%% R14B04 via a custom source repository & branch.
+{mapping, "dtrace", "riak_core.dtrace_support", [
+  {default, off},
+  {datatype, flag}
+]}.
+
+%% @doc Platform-specific installation paths (substituted by rebar)
+{mapping, "platform_bin_dir", "riak_core.platform_bin_dir", [
+  {datatype, directory},
+  {default, "{{platform_bin_dir}}"}
+]}.
+
+%% @see platform_bin_dir
+{mapping, "platform_data_dir", "riak_core.platform_data_dir", [
+  {datatype, directory},
+  {default, "{{platform_data_dir}}"}
+]}.
+
+%% @see platform_bin_dir
+{mapping, "platform_etc_dir", "riak_core.platform_etc_dir", [
+  {datatype, directory},
+  {default, "{{platform_etc_dir}}"}
+]}.
+
+%% @see platform_bin_dir
+{mapping, "platform_lib_dir", "riak_core.platform_lib_dir", [
+  {datatype, directory},
+  {default, "{{platform_lib_dir}}"}
+]}.
+
+%% @see platform_bin_dir
+{mapping, "platform_log_dir", "riak_core.platform_log_dir", [
+  {datatype, directory},
+  {default, "{{platform_log_dir}}"}
+]}.
+
+%% @doc Enable consensus subsystem. Set to 'on' to enable the
+%% consensus subsystem used for strongly consistent Riak operations.
+{mapping, "strong_consistency", "riak_core.enable_consensus", [
+  {datatype, flag},
+  {default, off},
+  {commented, on}
+]}.
+
+%% @doc Whether to enable the background manager globally. When
+%% enabled, participating Riak subsystems will coordinate access to
+%% shared resources. This will help to prevent system response
+%% degradation under times of heavy load from multiple background
+%% tasks. Specific subsystems may also have their own controls over
+%% use of the background manager.
+{mapping, "background_manager", "riak_core.use_background_manager", [
+    {datatype, flag},
+    {default, off},
+    hidden
+]}.
+
+%% @doc Interval of time between vnode management
+%% activities. Modifying this will change the amount of time between
+%% attemps to trigger handoff between this node and any other member
+%% of the cluster.
+{mapping, "vnode_management_timer", "riak_core.vnode_management_timer", [
+    {default, "10s"},
+    {datatype, {duration, ms}},
+    hidden
+]}.
+
+%% @doc Choose claim function
+%% Claim function to be used when handling joins to the cluster.
+%% There are three supported functions:
+%% - choose_claim_v2 (the default) designed for environments without location
+%% awareness as a requirement
+%% - choose_claim_v3 (deprecated) a claim function which treats claim as an
+%% optimisation problem. It creates a number of possible claim plans and
+%% evaluates them for violations, balance and diversity, choosing the 'best'
+%% plan.  claim_v3 is not location aware
+%% - choose_claim_v4 a claim algorithm which refactors v2 to improve location
+%% awareness
+{mapping, "choose_claim_fun", "riak_core.choose_claim_fun", [
+    {commented, "choose_claim_v2"},
+    {datatype, {enum, [choose_claim_v2, choose_claim_v3, choose_claim_v4]}},
+    merge
+]}.
+
+%% @doc Target N Val for Cluster Administration
+%% Cluster change operations such as joins and leaves will use a target_n_val
+%% to control spacing of preflists across physical nodes.  The default value
+%% is 4, which is the default bucket propery for n_val + 1.  This means that
+%% the target for a cluster change operation is to make sure that all preflists
+%% of n_val 3 are on 3 deperate physical devices, even when a single failure
+%% has occurred.
+%% If the target_n_val is not met by a cluster chnage operation, the failure is
+%% not blocking -  a warning will be printed in the cluster plan, but the plan
+%% will not be prevented from being committed.
+%% In some cases, by reducing the target_n_val it may be possible to reduce the
+%% number of transfers necessary to complete a cluster change operation.
+%% In clusters with a large number of nodes, larger target_n_val values can be
+%% supported, and may result to a better spread of load across the cluster
+%% when node failure occurs.
+{mapping, "target_n_val", "riak_core.target_n_val", [
+  {datatype, integer},
+  {default, 4},
+  {validators, ["target_nval_max", "target_nval_min"]},
+  {commented, 4}
+]}.
+
+%% ring_size validators
+{validator, "target_nval_max",
+ "7 and larger are supported, but considered advanced config",
+ fun(Size) ->
+  Size =< 6
+ end}.
+
+{validator, "target_nval_min", "must be at least 1",
+ fun(Size) ->
+  Size >= 1
+ end}.
+
+%% @doc Target Location N Val for Cluster Administration
+%% Cluster change operations such as joins and leaves will use a
+%% target_location_n_val to control spacing of preflists across locations. This
+%% is to support clusters which have a concept of `location` failure as well as
+%% Node failure (e.g. rack awareness is required, or support for AWS placement
+%% groups).
+%% In this case, nodes are assigned to locations, and as well as supporting
+%% the splitting of data replicas across nodes, attempts will also be made
+%% during cluster chnage operations to split preflists across locations.
+%% If the target_location_n_val is not met by a cluster chnage operation, the failure is
+%% not blocking -  a warning will be printed in the cluster plan, but the plan
+%% will not be prevented from being committed.
+%% In some cases, by reducing the target_location_n_val it may be possible to
+%% reduce the number of transfers necessary to complete a cluster change
+%% operation.
+%% In clusters with a large number of nodes, larger target_location_n_val
+%% values can be supported.
+%% If the target_location_nval is greater than the target_nval, the target_nval
+%% will be used.
+{mapping, "target_location_n_val", "riak_core.target_location_n_val", [
+  {datatype, integer},
+  {default, 3},
+  {validators, ["target_nval_max", "target_nval_min"]},
+  {commented, 3}
+]}.
+
+%% @doc On cluster leave - force full rebalance partitions
+%% By default on a cluster leave there will first be an attempt to handoff
+%% vnodes to safe (in terms of target_n_val) locations.  In small clusters,
+%% there may be insufficient safe locations, and a temporary state can be
+%% created where a single node has a large number of vnodes.
+%% To mitigate this, a full rebalance (a re-assignment that does not optimise
+%% based on the starting position), can be forced by setting this option on
+%% all nodes.
+%% Please carefully consider any cluster plan created with this option before
+%% committing
+%% If cluster planning with locations enabled, then `full_rebalance_onleave`
+%% should also be enabled.  With claim_v4 this should result in a cluster
+%% plan which is correct, but also relatively efficient.
+{mapping, "full_rebalance_onleave", "riak_core.full_rebalance_onleave", [
+    {datatype, flag},
+    {default, off}
+]}.
+
+
+%% Async Job Management
+%%
+%% This is a translation for mappings that appear in other schema files.
+%% Mappings are from "cluster.job.$namespace.$operation"* to
+%% "riak_core.job_accept_class" with required attributes
+%%  [merge, {datatype, {flag, enabled, disabled}}].**
+%% *  Mappings are only performed on elements with exactly the number of
+%%    segments shown - any other number of elements, even with a matching
+%%    prefix, is ignored.
+%% ** The 'datatype' should be 'flag', and 'enabled'/'disabled' are our
+%%    conventions, but any OnFlag/OffFlag pair can be used as long as they map
+%%    to boolean values.
+%% Other attributes, such as 'hidden' or {default, X} are fine, since they
+%% don't make it down the stack to here.
+%% Job classes that should be enabled by default MUST have a {default, enabled}
+%% attribute, as the runtime filter only defaults to accept when no values have
+%% been set from ANY schema file.
+%%
+%% Example:
+%%  {mapping, "cluster.job.harry.fold", "riak_core.job_accept_class", [
+%%      merge,
+%%      {datatype, {flag, enabled, disabled}},
+%%      {default, enabled}
+%%  ]}.
+%%  {mapping, "cluster.job.alice.list", "riak_core.job_accept_class", [
+%%      merge,
+%%      {datatype, {flag, enabled, disabled}},
+%%      {default, disabled}
+%%  ]}.
+%% Results in:
+%%  {riak_core, [
+%%      ...
+%%      {job_accept_class, [{harry, fold}]}
+%%      ...
+%%  ]}.
+%%
+{translation,
+ "riak_core.job_accept_class",
+ fun(Conf) ->
+    Fold =
+     fun({[_, _, Mod, Op], true}, Result) ->
+            [{erlang:list_to_atom(Mod), erlang:list_to_atom(Op)} | Result];
+        ({[_, _, _, _], false}, Result) ->
+            Result;
+        ({[_, _, _, _], _} = Setting, _) ->
+            cuttlefish:invalid(io_lib:format("~p", [Setting]));
+        (_, Result) ->
+            Result
+    end,
+    lists:sort(lists:foldl(Fold, [],
+        cuttlefish_variable:filter_by_prefix(["cluster", "job"], Conf)))
+ end}.

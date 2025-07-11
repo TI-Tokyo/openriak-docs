@@ -1,0 +1,22 @@
+name: openriak-docs
+
+services:
+  openriak-docs:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    image: openriak-docs:latest
+    user: "node"
+    container_name: openriak-docs
+    ports:
+      - "3000:3000"      # Docusauraus website
+      - "9229:9229"      # Node.js debug port
+    environment:
+      NODE_ENV: development
+      NODE_OPTIONS: --max-old-space-size=16384
+    volumes:
+       - ..:/openriak-docs
+    command: >
+     sh -c "$(which npm) run clear && DEBUG=docusaurus:* node --inspect=0.0.0.0:9229 $(which npx) docusaurus start --host 0.0.0.0"
+    restart: "no"          # don't restart the container
+    working_dir: /openriak-docs
