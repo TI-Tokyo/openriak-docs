@@ -12,9 +12,9 @@ sidebar_label: "Use Ubuntu"
 
 This guide provides the steps for installing OpenRiak KV on the most recent version of Ubuntu/Debian.
 
-## Installing Riak
+## Installing OpenRiak
 
-1. From a terminal window download the Riak pack with the following:
+1. From a terminal window download the OpenRiak package with the following:
 
 
 `wget https://files.tiot.jp/riak/kv/3.2/3.2.5/ubuntu/noble64/riak_3.2.5-OTP25_amd64.deb`
