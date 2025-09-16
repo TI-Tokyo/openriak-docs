@@ -2,9 +2,24 @@ import { themes as prismThemes } from 'prism-react-renderer';
 import type { Config } from '@docusaurus/types';
 import type * as Preset from './src/themes/preset-openriak';
 import pluginIncludeMarkdown from './src/remark/include-md';
+import semver from 'semver';
 //import OpenRiakDocsVersionsSidebarItemsGenerator from './src/sidebars/OpenRiakDocsVersionsSidebarItemsGenerator';
 
 // This runs in Node.js - Don't use client-side code here (browser APIs, JSX...)
+
+const latestKV = '3.4.0';
+const latestCS = '3.0.1';
+const latestTS = '3.0.0';
+const latestKVFamily = `${semver.parse(latestKV).major}.${semver.parse(latestKV).minor}`;
+const latestCSFamily = `${semver.parse(latestCS).major}.${semver.parse(latestCS).minor}`;
+const latestTSFamily = `${semver.parse(latestTS).major}.${semver.parse(latestTS).minor}`;
+
+const includeKV       = process.env.OPENRIAK_KV_VERSION_FAMILY?true:false;
+const includeCS       = process.env.OPENRIAK_CS_VERSION_FAMILY?true:false;
+const includeTS       = process.env.OPENRIAK_TS_VERSION_FAMILY?true:false;
+const kvVersionFamily = process.env.OPENRIAK_KV_VERSION_FAMILY || '3.4';
+const csVersionFamily = process.env.OPENRIAK_CS_VERSION_FAMILY || '3.0';
+const tsVersionFamily = process.env.OPENRIAK_TS_VERSION_FAMILY || '3.0';
 
 const config: Config = {
   title: 'OpenRiak Docs',
