@@ -25,7 +25,7 @@ wget https://files.tiot.jp/riak/kv/3.2/3.2.5/raspbian/bullseye/riak-dbgsym_3.2.5
 2. Next, you can use the following command to install the package:
 
 ```
-sudo dpkg -i riak_3.2.5-OTP22_arm64.deb
+sudo dpkg -i riak-dbgsym_3.2.5-OTP25_arm64.deb
 ```
 
 ## Next steps - Verifying OpenRiak install
