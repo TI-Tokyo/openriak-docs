@@ -16,7 +16,7 @@ Once OpenRiak has been installed, we would recommend that each node be check to 
  Once you've done this, you can start the node and move onto the next steps!
  
  
-## 2. Starting an OpenRiak node
+## 2. Starting a OpenRiak node
 
 To start a OpenRiak node:
 
@@ -72,7 +72,7 @@ Just swap out 127.0.0.1 in the example above with the IP address or fully qualif
 < HTTP/1.1 200 OK
 < Vary: Accept-Encoding
 < Server: MochiWeb/1.1 WebMachine/1.9.0 (someone had painted it blue)
-< Date: Wed, 26 Dec 2012 15:50:20 GMT
+< Date: Wed, 01 Jan 2025 15:50:20 GMT
 < Content-Type: application/json
 < Content-Length: 422
 <

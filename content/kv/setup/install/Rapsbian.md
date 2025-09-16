@@ -1,59 +1,31 @@
 ---
 sidebar_position: 2
-title:Installing On RHEL
-sidebar_label: "Use RHEL"
+title:Installing On Raspbian
+sidebar_label: "Use Raspbian"
 ---
 
 [setup-using-docker]: ../../setup/install/docker
 [docker]: https://www.docker.com/
 [leveled]: ../../configure/guides/backends/configure-leveled
 
-# Installing OpenRiak KV on RHEL
+# Installing OpenRiak KV on Raspbian
 
 This guide provides the steps for installing OpenRiak KV on the most recent version of Raspbian.
 
-## Installing on RHEL 8
+## Installing on Raspbian
 
 1. From a terminal window download the OpenRiak package with the following:
 
 
-`wget https://files.tiot.jp/riak/kv/3.2/3.2.5/rhel/8/riak-3.2.5.OTP25-1.el8.x86_64.rpm`
-
-
-2. From here, there are two methods for installing RHEL:
- 
-Using Yum which we recommend:
-
 ```
-sudo yum localinstall -y riak-3.2.5.OTP25-1.el8.x86_64.rpm
+wget https://files.tiot.jp/riak/kv/3.2/3.2.5/raspbian/bullseye/riak-dbgsym_3.2.5-OTP25_arm64.deb
 ```
 
-Or install the package manually with:
+
+2. Next, you can use the following command to install the package:
 
 ```
-sudo rpm -Uvh riak-3.2.5.OTP25-1.el8.x86_64.rpm
-```
-
-# Installing on RHEL 9
-
-1. From a terminal window download the OpenRiak package with the following:
-
-
-`wget https://files.tiot.jp/riak/kv/3.2/3.2.5/rhel/9/riak-3.2.5.OTP25-1.el9.x86_64.rpm`
-
-
-2. From here, there are two methods for installing RHEL:
- 
-Using Yum which we recommend:
-
-```
-sudo yum localinstall -y riak-3.2.5.OTP25-1.el9.x86_64.rpm
-```
-
-Or install the package manually with:
-
-```
-sudo rpm -Uvh riak-3.2.5.OTP25-1.el9.x86_64.rpm
+sudo dpkg -i riak_3.2.5-OTP22_arm64.deb
 ```
 
 ## Next steps - Verifying OpenRiak install
