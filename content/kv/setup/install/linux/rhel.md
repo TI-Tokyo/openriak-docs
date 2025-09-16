@@ -1,7 +1,8 @@
 ---
-sidebar_position: 2
-title:Installing On RHEL
+sidebar_position: 5
+title: Installing On RHEL
 sidebar_label: "Use RHEL"
+date: 2025-09-16
 ---
 
 [setup-using-docker]: ../../setup/install/docker

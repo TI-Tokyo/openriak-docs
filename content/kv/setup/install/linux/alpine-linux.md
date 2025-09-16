@@ -1,7 +1,8 @@
 
-sidebar_position: 2
+sidebar_position: 1
 title:Installing On Alpine Linux
 sidebar_label: "Use Alpine Linux"
+date: 2025-09-16
 ---
 
 # Installing OpenRiak KV on Alpine Linux

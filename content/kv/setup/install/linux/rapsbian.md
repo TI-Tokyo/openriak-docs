@@ -1,7 +1,8 @@
 ---
-sidebar_position: 2
-title:Installing On Raspbian
+sidebar_position: 4
+title: Installing On Raspbian
 sidebar_label: "Use Raspbian"
+date: 2025-09-16
 ---
 
 [setup-using-docker]: ../../setup/install/docker

@@ -6,6 +6,7 @@ sidebar_custom_props:
   icon: rocket
 pagination_label: Begin Here
 sidebar_class_name: kv-quickstart
+date: 2025-09-16
 ---
 
 [quick-start-with-docker]: ./docker

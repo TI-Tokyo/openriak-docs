@@ -5,6 +5,8 @@ sidebar_label: "Use Docker"
 date: 2025-09-16
 ---
 
+TODO: this was copied from quick start and needs enormous cleanups!
+
 [setup-using-docker]: ../../setup/install/docker
 [docker]: https://www.docker.com/
 [leveled]: ../../configure/guides/backends/configure-leveled

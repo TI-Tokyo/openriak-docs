@@ -1,17 +1,15 @@
 ---
-sidebar_position: 2
+sidebar_position: 3
 title: Install OpenRiak KV
 sidebar_label: Install
 sidebar_custom_props:
   icon: software
 pagination_label: Install
-sidebar_class_name: kv-setup-install
+sidebar_class_name: kv-setup-install-linux
 date: 2025-09-16
 ---
 
-# Install your OpenRiak KV cluster
-
-Platform picker - choose Linux, Docker, Cloud
+# Install your OpenRiak KV cluster on Linux
 
 - Linux
   - Alpine # -> actual page
@@ -21,11 +19,3 @@ Platform picker - choose Linux, Docker, Cloud
   - RedHat Enterprise Linux
   - Rocky
   - Ubuntu
-- Docker
-  - Alpine
-  - Rocky
-  - Ubuntu
-- Cloud Appliances
-  - AWS Marketplace
-  - Azure Marketplace
-  - Others?

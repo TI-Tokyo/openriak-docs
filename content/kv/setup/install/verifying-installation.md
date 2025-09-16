@@ -2,6 +2,7 @@
 sidebar_position: 2
 title:Verifying an OpenRiak installation
 sidebar_label: "Verifying Install"
+date: 2025-09-16
 ---
 
 Once OpenRiak has been installed, we would recommend that each node be check to ensure it is responding properly. There are a number of steps you can take for this.

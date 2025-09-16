@@ -6,6 +6,7 @@ sidebar_custom_props:
   icon: todo-list
 pagination_label: Planning
 sidebar_class_name: kv-setup-plan
+date: 2025-09-16
 ---
 
 # Planning your OpenRiak KV cluster

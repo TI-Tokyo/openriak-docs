@@ -2,6 +2,7 @@
 sidebar_position: 2
 title: Quick Start using Ubuntu
 sidebar_label: "Use Ubuntu"
+date: 2025-09-16
 ---
 
 
