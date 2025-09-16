@@ -1,6 +1,6 @@
 ---
 sidebar_position: 2
-title:Installing On Ubuntu or Debian
+title: Installing On Ubuntu or Debian
 sidebar_label: "Use Ubuntu"
 ---
 
