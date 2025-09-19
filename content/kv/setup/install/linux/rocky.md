@@ -5,9 +5,7 @@ sidebar_label: "Rocky Linux"
 date: 2025-09-16
 ---
 
-[setup-using-docker]: ../../setup/install/docker
-[docker]: https://www.docker.com/
-[leveled]: ../../configure/guides/backends/configure-leveled
+[verifying-installation]: : ../../setup/install/verify
 
 # Installing OpenRiak KV on Ubuntu
 
@@ -35,32 +33,54 @@ wget https://files.tiot.jp/riak/kv/3.2/3.2.5/oracle/9/riak-3.2.5.OTP25-1.el9.x86
 sudo yum install -y riak-3.2.5.OTP25-1.el9.x86_64.rpm
 ``` 
 
-TODO: JOM
-You should see as the last line this:
+3. You should see as the last line this:
 
-TODO: JOM
-```bash
-OpenRiak has been installed.
+```
+Complete!
 ```
 
-TODO: JOM
-3. Confirm the install completed by running:
+If you see that message, OpenRiak has installed successfully.
 
-TODO: check if sudo is needed
+4. Confirm the install completed by running:
+
 ```bash
-sudo riak
+riak
 ```
 
 You should see this as the result:
 
-TODO: check what the actual output on this OS is
+
 ```bash
-$ riak
-riak is a banana
-Please run riak with a or b c
-- a
-- b
-- c
+$riak
+
+Usage: riak [COMMAND] [ARGS]
+
+Commands:
+
+  foreground              Start release with output to stdout
+  remote_console          Connect remote shell to running node
+  rpc [Mod [Fun [Args]]]] Run apply(Mod, Fun, Args) on running node
+  eval [Exprs]            Run expressions on running node
+  stop                    Stop the running node
+  restart                 Restart the applications but not the VM
+  reboot                  Reboot the entire VM
+  pid                     Print the PID of the OS process
+  ping                    Print pong if the node is alive
+  console                 Start the release with an interactive shell
+  console_clean           Start an interactive shell without the release's applications
+  console_boot [File]     Start an interactive shell for boot script [File]
+  daemon                  Start release in the background with run_erl (named pipes)
+  daemon_boot [File]      Start boot script [File] in the background with run_erl (named pipes)
+  daemon_attach           Connect to node started as daemon with to_erl (named pipes)
+  upgrade [Version]       Upgrade the running release to a new version
+  downgrade [Version]     Downgrade the running release to a new version
+  install [Version]       Install a release
+  uninstall [Version]     Uninstall a release
+  unpack [Version]        Unpack a release tarball
+  versions                Print versions of the release available
+  escript                 Run an escript in the same environment as the release
+  status                  Verify node is running and then run status hook scripts
+  admin|repl|debug|chkconfig
 ```
 
 ## Next steps - Verifying OpenRiak install
