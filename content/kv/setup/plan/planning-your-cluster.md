@@ -37,7 +37,7 @@ The following Operating systems have packages available:
 * Rocky Linux
 * Ubuntu/Debian
 * Raspbian OS
-* Oracle linux
+* Oracle Linux
 * Amazon Linux
 
 ## Backend
