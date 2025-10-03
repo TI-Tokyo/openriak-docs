@@ -1,5 +1,5 @@
 ---
-sidebar_position: 2
+sidebar_position: 3
 title: Leveled backend
 sidebar_label: Leveled
 pagination_label: Planning
