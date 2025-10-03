@@ -26,10 +26,10 @@ The Memory storage backend relies entirely on in-memory tables to hold data, whi
 
 OpenRiak comes packaged with memory backend, so there is no need for further steps to install it.
 
-You can select memory as your backend by changing the value of `storage_backend` in your `riak.conf` file to `leveled` as it appears below:
+You can select memory as your backend by changing the value of `storage_backend` in your `riak.conf` file to `memory` as it appears below:
 
 ```
-storage_backend = leveled
+storage_backend = memory
 ```
 
 ### Note: If you replace the existing specified backend by removing it or commenting it out as shown in the above example, data belonging to the previously specified backend will still be preserved on the filesystem but will no longer be accessible through Riak unless the backend is enabled again.
