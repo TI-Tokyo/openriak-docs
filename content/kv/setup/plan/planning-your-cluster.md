@@ -25,7 +25,7 @@ There are a number of factors that should be considered when planning a new Open
 
 ## Operating System
 
-The [operating system] you choose will largely not influence Openriak's performance, however there are some important things that should be considered when choosing.
+The [operating-system] you choose will largely not influence Openriak's performance, however there are some important things that should be considered when choosing.
 
 1. Support community - Distributions with smaller communities will have less support easily accessible for problems.
 2. Long Term Support (LTS) - Long term support for updates is essential to minimise disruption to your system and to help keep it secure. Choosing a distribution with a short LTS date will leave your system vulnerable to any future security holes found after support has ended without upgrading.
