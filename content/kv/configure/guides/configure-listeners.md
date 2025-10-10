@@ -1,5 +1,5 @@
 ---
-sidebar_position: 110
+sidebar_position: 2
 title: How to Configure API Listeners
 sidebar_label: API Listeners
 sidebar_custom_props:

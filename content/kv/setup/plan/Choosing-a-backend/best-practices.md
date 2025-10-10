@@ -13,7 +13,6 @@ OpenRiak KV is designed for easy operation and scaling. The following document c
 
 1. General Resource Usage
 2. Disk Capacity Leeway
-3. CPU Capacity
 4. Network capacity
 5. When to Add Nodes
 6. How to Add Nodes (to confirm?)

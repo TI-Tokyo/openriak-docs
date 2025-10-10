@@ -1,14 +1,14 @@
 ---
-sidebar_position: 110
+sidebar_position: 1
 title: Basic Configuration
 sidebar_label: "Basic Configuration"
 ---
 
-## Contents
+# Contents
 
-1. [Ring Size](#Ring-Size)
-2. Backend
-3. Enabling TicTac Active Anti-Entropy
+1. [Ring Size](#ring-size)
+2. [Backend](#backend)
+3. [Enabling TicTac Active Anti-Entropy](Enabling-TicTac-Active-Anti-Entropy)
 
 ## Ring Size
 
