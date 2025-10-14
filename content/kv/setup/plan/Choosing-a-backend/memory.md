@@ -8,21 +8,22 @@ date: 2025-10-02
 ---
 [configuring-memory]: : ../../setup/install/plan/choosing-a-backend/memory
 
-## Contents
+# Contents
 
-1. Introduction
-2. Weaknesses
-4. Installing and enabling
+1. [Introduction](#introduction)
+2. [Weaknesses](#weaknesses)
+3. [Installing and enabling](#installing-and-enabling)
+4. [Configuring Memory backend](#configuring-memory-backend)
 
-## Introduction
+# Introduction
 
 The Memory storage backend relies entirely on in-memory tables to hold data, which means nothing is ever saved to disk or any other storage medium. It's ideally suited for testing Riak clusters or managing small, temporary data in live production environments. It is generally not recommended for long-term data storage use in production.
 
-## Weaknesses
+# Weaknesses
 
 1. Memory backend means all data is store in-memory, nothing is saved to disk, so a sudden loss of power or hardware failure could lead to significant/total data loss.
 
-## Installing and enabling
+# Installing and enabling
 
 OpenRiak comes packaged with memory backend, so there is no need for further steps to install it.
 
@@ -84,7 +85,7 @@ $ sudo riak admin show storage_backend -all
 ok
 ```
 
-## Configuring memory backend
+# Configuring memory backend
 
 The Memory backend enables you to configure two fundamental aspects of object storage: maximum memory usage per vnode and object expiry.
 
