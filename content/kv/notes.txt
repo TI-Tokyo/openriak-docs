@@ -10,12 +10,13 @@ OpenRiak KV Version 3.4.0 root at /docs/kv/3.4.0/
   - Vagrant                 # Dev node on Vagrant
   - Windows HyperVisor      # Dev node on Windows HyperVisor
 - Setup                     # Create a new cluster intended for actual use
+  - Production Checklist    # Checklist with links to each item's page
   - Plan                    # What decisions to make and how to make them
   - Install                 # Links to specific guides for each supported OS
     - Ubuntu                # Download and run commands to install on Ubuntu latest at time of publishing
     - ...etc
   - Verify                  # How to verify that OpenRiak is installed and your config is syntactically correct
-- Configure                 # Overview of configuration options and where they are set
+- Configure                 # Before starting Riak - Overview of configuration options and where they are set
   - Reference               # Master table of all reference options with descriptions from schema files and links to relevant guides with inline search
   - Basic                   # Node name, ring size, default bucket properties, tuning, etc...
   - Networking              # Listeners, TCP/IP options, SSL, load balancers
@@ -35,22 +36,23 @@ OpenRiak KV Version 3.4.0 root at /docs/kv/3.4.0/
   - Basics                  # Things you should always do with links to each relevant configuration options
   - Networking              # Things you should do for specific network environments with links to each relevant configuration options
   - Users                   # Things you need to do to use OpenRiak users with links to each relevant admin command
-- Admin                     # How to administrate a cluster - all CLI and console commands
+- Admin                     # After starting Riak - How to administrate a cluster - all CLI and console commands
   - Reference               # Refernce table of all CLI and console commands as table with inline search
   - Node control            # Commands related to controlling and inspecting the current node
   - Ring changes            # Add, remove or replace nodes, reip, status, handoffs
   - Buckets and Types       # Create/activate bucket type, add or update properties, list buckets
   - 2i                      # Repair 2i, change format, etc
-  - Logging                 # Control logging levels and locations, link to "riak admin status"
+  - Logging                 # Control logging levels and locations
+  - Monitoring              # How to gather metrics and what they mean, link to "riak admin status"
   - ------
   - Backup                  # Backup data showing backend locations (from ref) and if hot-backups work
   - Restore                 # Restore data (as backups above)
   - ------
-  - Upgrade                 # How to upgrade from earlier versions to this version
-  - Downgrade               # How to downgrade from this version to earlier versions
+  - Upgrade                 # How to upgrade from earlier versions to this version with upgrade-specifc checklist
+  - Downgrade               # How to downgrade from this version to earlier versions with downgrade-specifc checklist
 - APIs and Clients
-  - Protocol Buffers        # Developer documentation on using the Protocol Buffer API directly
-  - HTTP/S                  # Developer documentation on using the HTTP/S API directly
+  - Protocol Buffers        # Developer documentation on using the Protocol Buffer API directly, light guidance on writing own clients
+  - HTTP/S                  # Developer documentation on using the HTTP/S API directly, light guidance on writing own clients
   - Java                    # Developer documentation on using the Java client
   - GoLang                  # Developer documentation on using the GoLang client
   - Rust                    # Developer documentation on using the Rust client
@@ -61,7 +63,7 @@ OpenRiak KV Version 3.4.0 root at /docs/kv/3.4.0/
   - Corruption              # For when Riak replies with incorrect/old/corrupt objects
   - Crashes                 # For when Riak stops working after a while
   - Performance             # A node or the cluster is performing slowly
-  - Replication             # For when your not replication
+  - Replication             # For when you're not replicating properly
   - Startup                 # For when Riak doesn't start or crashes very quickly
 
 Reference configuration: {{ reference/config "ring_size" }}
