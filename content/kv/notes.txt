@@ -45,8 +45,12 @@ OpenRiak KV Version 3.4.0 root at /docs/kv/3.4.0/
   - Logging                 # Control logging levels and locations
   - Monitoring              # How to gather metrics and what they mean, link to "riak admin status"
   - ------
-  - Backup                  # Backup data showing backend locations (from ref) and if hot-backups work
-  - Restore                 # Restore data (as backups above)
+  - Backup a node           # Backup data showing backend locations (from ref) and if hot-backups work, plus what needs to be backed up (ring, data, config)
+  - Recovery                # Fix a node or cluster that has failed
+    - Recover from crash    # Recover a node which still works but has stopped for some reason (remove from coverage/lb, has data, no data, no data but backup, repair partition for speed)
+    - Replace a node        # Replace a node which has failed (remove from coverage/lb, no data, data from backup, repair partition for speed)
+    - Recover mutiple nodes # Overall process but point to recover/replace as above
+    - Replace a cluster     # All nodes lost, recover from bacups - first node do reip, start, other nodes use force-replace (JOM/PJAC test this to make sure no reip needed)
   - ------
   - Upgrade                 # How to upgrade from earlier versions to this version with upgrade-specifc checklist
   - Downgrade               # How to downgrade from this version to earlier versions with downgrade-specifc checklist
