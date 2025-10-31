@@ -19,10 +19,10 @@ Depending on the versions involved in the downgrade, there are additional steps 
 
 The following is an example process for downgrading with Ubuntu/Debian based systems. You should adjust and test the commands for your specific OS>
 
-### Note
-While the cluster contains mixed version members, if you have not set the cluster to use the legacy AAE tree format, you will see the bad_version error emitted to the log any time nodes with differing versions attempt to exchange AAE data (including AAE fullsync).
+### To-Note - change this to link to FAQ page/reference
+While the cluster contains mixed version members, if you have not set the cluster to use the legacy AAE tree format, you will see the `bad_version` error emitted to the log any time nodes with differing versions attempt to exchange AAE data (including AAE fullsync).
 
-This is benign and similar to the not_built and already_locked errors which can be seen during normal AAE operation. These events will stop once the downgrade is complete.
+This is benign and similar to the `not_built` and `already_locked` errors which can be seen during normal AAE operation. These events will stop once the downgrade is complete.
 
 ## Stop OpenRiak KV and make a back up.
 
