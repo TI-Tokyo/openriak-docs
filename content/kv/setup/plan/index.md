@@ -17,4 +17,3 @@ You should decide in advance some important settings that are hard to change onc
 - physical layout (multi-rack, multi-availability-zone, multi-vm-on-box)
 - how many copies of your data you want (3 is recommended and the default)
 - what type of backend, and where should it store your data
-

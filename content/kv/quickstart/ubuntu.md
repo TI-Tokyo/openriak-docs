@@ -4,7 +4,10 @@ title: Quick Start using Ubuntu
 sidebar_label: "Use Ubuntu"
 date: 2025-09-16
 ---
-
+import { ConfigReferenceProvider } from '@site/src/components/ConfigReference/ConfigReferenceContext';
+import { ConfigListing }             from '@site/src/components/ConfigReference/ConfigListing';
+import { ConfigDefaultValue }      from '@site/src/components/ConfigReference/ConfigDefaultValue';
+import InlineCodeWithCopy          from '@site/src/components/InlineCodeWithCopy/InlineCodeWithCopy';
 
 # A ubuntu based dev cluster
 

@@ -1,6 +1,6 @@
 ---
-title: Basic Security
-sidebar_label: "Basic Security"
+title: Replication
+sidebar_label: "Replication"
 ---
 import { ConfigReferenceProvider } from '@site/src/components/ConfigReference/ConfigReferenceContext';
 import { ConfigListing }             from '@site/src/components/ConfigReference/ConfigListing';

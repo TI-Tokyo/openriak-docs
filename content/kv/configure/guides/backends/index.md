@@ -31,6 +31,8 @@ The default backend is <ConfigDefaultValue name="storage_backend" />, but you sh
 
 ```ini
 # Set OpenRiak KV to use the "leveled" storage backend
+
+```bash
 storage_backend = leveled
 ```
 

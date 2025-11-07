@@ -85,4 +85,4 @@ Commands:
 
 ## Next steps - Verifying OpenRiak install
 
-Once the node has been installed, we recommend verifying the node is able to start and respond to requests by following the steps [here](: ../../setup/install/verify).
+Once the node has been installed, we recommend verifying the node is able to start and respond to requests by following the steps [here](: ../../setup/install/verifyying-installation).

@@ -43,7 +43,15 @@ The following Operating systems have packages available:
 ## Backend
 
 Choosing a backend can be the biggest decision you make in cluster planning. The wrong backend for your use-case could lead to poor performance for your users.
-[PLACEHOLDER]
+
+The following are options for backends available within OpenRiak:
+
+* Bitcask - Bitcask is an Erlang application that provides an API for storing and retrieving key/value data using log-structured hash tables that provide very fast access
+* leveldb - eLevelDB is an Erlang application that encapsulates LevelDB, an open-source, on-disk key/value store created by Google Fellows Jeffrey Dean and Sanjay Ghemawat.
+* leveled - Leveled is a simple Key-Value store based on the concept of Log-Structured Merge Trees
+* Memory - The Memory storage backend uses in-memory tables to store all data. This data is never persisted to disk or to any other storage mechanism. 
+* Multi-backend - OpenRiak allows you to run multiple backends within a single OpenRiak cluster. Selecting the Multi backend enables you to use different storage backends for different buckets. 
+
 Different backends allow you to select a storage engine that suits for your operations needs. For example, if your use case requires maximum throughput, data persistence, and a bounded keyspace, then Bitcask is a good choice. On the other hand, if you need to store a large number of keys or to use secondary indexes, LevelDB is likely a better choice.
 
 ## Capacity

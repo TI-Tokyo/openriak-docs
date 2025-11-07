@@ -43,7 +43,6 @@ riak
 
 You should see this as the result:
 
-
 ```bash
 $riak
 
@@ -76,6 +75,7 @@ Commands:
   status                  Verify node is running and then run status hook scripts
   admin|repl|debug|chkconfig
 ```
+
 ## Next steps - Verifying OpenRiak install
 
-Once the node has been installed, we recommend verifying the node is able to start and respond to requests by following the steps [here](: ../../setup/install/verify).
+Once the node has been installed, we recommend verifying the node is able to start and respond to requests by following the steps [here](: ../../setup/install/verifyying-installation).
