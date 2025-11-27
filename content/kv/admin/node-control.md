@@ -7,6 +7,8 @@ sidebar_label: "Node Control"
 
 # Overview
 
+This section covers the various commands used in general control of your node, including starting and stopping a node, inspecting the node and other operations.
+
 # Starting and stopping a node
 
 ## Starting a node
