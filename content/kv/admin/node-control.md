@@ -98,7 +98,7 @@ The `riak-debug` command can be used to identify and diagnose common problems wi
 Extensive use of `riak-debug` as part of regular monitoring is strongly not recommended as it can lead to overloads if a node is already in an unhealthy state. Operators should utilise alternative methods listed in this document to inspect their node regularly.
 ---
 
-You can see an example of the use of `riak-dbug` and the output from the command below:
+You can see an example of the use of `riak-debug` and the output from the command below:
 
 ```bash
 $ riak-debug
