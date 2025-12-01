@@ -7,7 +7,7 @@ date: 2025-09-16
 
 [verifying-installation]: : ../../setup/install/verify
 
-# Installing OpenRiak KV on Ubuntu
+## Installing OpenRiak KV on Ubuntu
 
 This guide provides the steps for installing OpenRiak KV on Rocky Linux v10.0 (Red Quartz, dated 2025-06-11).
 

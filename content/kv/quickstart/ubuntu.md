@@ -9,7 +9,7 @@ import { ConfigListing }             from '@site/src/components/ConfigReference/
 import { ConfigDefaultValue }      from '@site/src/components/ConfigReference/ConfigDefaultValue';
 import InlineCodeWithCopy          from '@site/src/components/InlineCodeWithCopy/InlineCodeWithCopy';
 
-# A ubuntu based dev cluster
+## A ubuntu based dev cluster
 
 This quickp-start guide is aimed at getting a local five-node cluster of OpenRiak KV for local testing and development.
 
@@ -52,7 +52,7 @@ The Node name should include the address that this node is reachable at. For thi
 
 For the `nodename` section, we will change the name to our nodes IP. For this example, we are `nodename = riak@172.0.0.10`.
 
-# Note: It is important that you *only* change the section of the node name after the `riak@` part of the nodename. If you remove `riak@` from the name, then the node will be unreachable.
+## Note: It is important that you *only* change the section of the node name after the `riak@` part of the nodename. If you remove `riak@` from the name, then the node will be unreachable.
 
 * Change the value of `anti_entropy` from `active` to `passive`
 
@@ -66,7 +66,7 @@ Then save and exit.
 
 5. Once you have made the above changes, you should be able to start your first node with `riak start`
 
-# Note: Once the node has been installed, we recommend verifying the node is able to start and respond to requests by following the steps [here](: ../../setup/install/verify).
+## Note: Once the node has been installed, we recommend verifying the node is able to start and respond to requests by following the steps [here](: ../../setup/install/verify).
 
 6. Repeat thse steps for each of the nodes in your cluster.
 

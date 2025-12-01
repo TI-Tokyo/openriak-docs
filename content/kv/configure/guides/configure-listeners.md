@@ -15,7 +15,7 @@ import Link from "@docusaurus/Link";
 
 <ConfigReferenceProvider configNamePattern='^(listener\.).*'>
 
-# How to Configure API Listeners
+## How to Configure API Listeners
 
 ## Quick Config Reference
 

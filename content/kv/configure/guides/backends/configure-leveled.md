@@ -14,7 +14,7 @@ import { ConfigDefaultValue }      from '@site/src/components/ConfigReference/Co
 
 <ConfigReferenceProvider configNamePattern='^(storage_backend|leveled\.|platform_data_dir).*'>
 
-# How to Configure Leveled
+## How to Configure Leveled
 
 ## Recommended Configuration
 

@@ -8,7 +8,7 @@ date: 2025-09-25
 ---
 [configuring-bitcask]: : ../../setup/install/plan/choosing-a-backend/bitcask
 
-# Contents
+## Contents
 
 1. [Introduction](#introduction)
 2. [Strengths](#strengths)
@@ -16,11 +16,11 @@ date: 2025-09-25
 4. [Installing and enabling](#installing-and-enabling)
 5. [Configuring Bitcask](#configuring-bitcask)
 
-# Introduction
+## Introduction
 
 Bitcask is an erlang-based application that provides fast access via an API for storage & retrival of key/value data using log-structured hash tables.
 
-# Strengths
+## Strengths
 
 * Low per-item read/write latency due to write-once, append only nature of bitcask.
 
@@ -40,13 +40,13 @@ Bitcask is an erlang-based application that provides fast access via an API for 
 
   Bitcasks append-only, write-once format makes backups easy and simple for any backup utility that copies files in disk-block order.
 
-# Weaknesses
+## Weaknesses
 
 * Keys must fit in memory
 
 The major weaknesses for Bitcask is that it keeps all the keys in memory at all times, which means the system must have enough memory for the entire keyspace plus the required amount for the operating system and other system components.
 
-# Installing and enabling
+## Installing and enabling
 
 OpenRiak comes packaged with Bitcask and is the default backend for OpenRiak. You can verify that Bitcask is currently being used as the storage backend by checking the `riak.conf` file for the following line:
 
@@ -100,7 +100,7 @@ $ sudo riak admin show storage_backend -all
 ok
 ```
 
-# Configuring Bitcask
+## Configuring Bitcask
 
 The following are the default Bitcask configuration values available in `riak.conf`. Additional options are available, which are in the [configuring bitcask][configuring-bitcask] section.
 

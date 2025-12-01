@@ -7,25 +7,25 @@ import { ConfigListing }             from '@site/src/components/ConfigReference/
 import { ConfigDefaultValue }      from '@site/src/components/ConfigReference/ConfigDefaultValue';
 import InlineCodeWithCopy          from '@site/src/components/InlineCodeWithCopy/InlineCodeWithCopy';
 
-# Basic OpenRiak KV node configuration
+## Basic OpenRiak KV node configuration
 
 This page covers the most baisc configuration changes to be made when setting up a new OpenRiak node/cluster.
 All the configuration values discussed here are maintained in the configuration file (`riak.conf`) on each node, and a node will require a restart for any changes to take effect.
 
-# Contents
+## Contents
 
 1. [Erlang VM Tunings](#erlang-vm-tunings)
 2. [Ring Size](#ring-size)
 3. [Backend](#backend)
 4. [Default Bucket Properties](#default-bucket-properties)
 
-# Erlang VM Tunings
+## Erlang VM Tunings
 
 Before building your cluster, there are Erlang-VM changes that should be made in your node's configuration files.
 
 <insert link to erland vm changes here>
 
-# Ring Size
+## Ring Size
 
 The ring size, in OpenRiak parlance, is the number of data partitions that comprise the cluster. This quantity impacts the scalability and performance of a cluster and, importantly, it should be established before the cluster starts receiving data.
 
@@ -84,7 +84,7 @@ If `ring_num_partitions` and `ring_creation_size` do not agree, that means that 
 
 ### Note: OpenRiak will not allow two nodes with different ring sizes to be joined into a cluster.
 
-# Backend
+## Backend
 
 Another critical decision to be made is the backend to use. The choice of backend strongly influences the performance characteristics and feature set for a Riak environment.
 
@@ -94,7 +94,7 @@ See (choosing a backend)[.../setup/plan/choosing-a-backend] for details on which
 
 As with ring size, changing the backend will result in all data being inaccessible until the backend is changed back, so spend the necessary time up front to evaluate and benchmark backends or planning a method to migrate.
 
-# Default Bucket Properties
+## Default Bucket Properties
 
 Bucket properties are also very important factors in Riak’s performance and general behavior. The properties for any individual bucket can be configured dynamically using bucket types, but default values for those properties can be defined in your configuration files.
 

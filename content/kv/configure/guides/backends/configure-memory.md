@@ -12,7 +12,7 @@ import { ConfigListing }           from '@site/src/components/ConfigReference/Co
 
 <ConfigReferenceProvider configNamePattern='^(storage_backend|memory_backend\.).*'>
 
-# How to Configure Memory
+## How to Configure Memory
 
 ## Quick Config Reference
 

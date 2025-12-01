@@ -3,13 +3,13 @@ title: Node Control
 sidebar_label: "Node Control"
 ---
 
-# Contents
+## Contents
 
-# Overview
+## Overview
 
 This section covers the various commands used in general control of your node, including starting and stopping a node, inspecting the node and other operations.
 
-# Starting and stopping a node
+## Starting and stopping a node
 
 ## Starting a node
 
@@ -51,7 +51,7 @@ If a node is not running or has crashed, you will see:
 Node riak@127.0.0.1 is not responding to pings
 ```
 
-# Inspecting your node
+## Inspecting your node
 
 There are a variety of ways to inspect your node for a variety of reasons, from checking it can read and write, to reviewing the performance statistics.
 

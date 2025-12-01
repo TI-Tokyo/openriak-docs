@@ -8,7 +8,7 @@ date: 2025-10-01
 ---
 [configuring-leveled]: : ../../setup/install/plan/choosing-a-backend/leveled
 
-# Contents
+## Contents
 
 1. [Introduction](#introduction)
 2. [Strengths](#strengths)
@@ -16,7 +16,7 @@ date: 2025-10-01
 4. [Installing and enabling](#installing-and-enabling)
 5. [Configuring leveled](#configuring-leveled)
 
-# Introduction
+## Introduction
 
 (Leveled)[https://github.com/martinsumner/leveled] is an open source project that has been developed specifically as a backend option for Riak/OpenRiak, rather than a generic backend.
 
@@ -36,7 +36,7 @@ date: 2025-10-01
 * Low cost specifically where there is a need to scan across keys and metadata (not values).
 * Written in Erlang as a message passing system between Actors.
 
-# Strengths
+## Strengths
 
 1. Leveled was developed specifically for OpenRiak, with specific features included by default:
 
@@ -51,13 +51,13 @@ date: 2025-10-01
 4. Support for low-cost clones without locking to provide for scanning queries (e.g. secondary indexes).
 
 
-# Weaknesses
+## Weaknesses
 
 1. Leveled is still a comparatively new technology and more likely to suffer from edge case issues than Bitcask or LevelDB simply because they’ve been around longer and have been more thoroughly tested via usage in customer environments.
 
 2. Leveled works better with medium to larger sized objects. It works perfectly well with small objects but the additional diskspace overhead may render LevelDB a better choice if disk space is at a premium and all of your data will be exclusively limited a few KB or less. This may change as Leveled matures though.
 
-# Installing and enabling
+## Installing and enabling
 
 OpenRiak comes packaged with leveled, so there is no need for further steps to install it.
 
@@ -119,7 +119,7 @@ $ sudo riak admin show storage_backend -all
 ok
 ```
 
-# Configuring leveled
+## Configuring leveled
 
 Leveled's default behavior can be changed by adding and modifying the following parameters in the leveled section of `riak.conf`.
 

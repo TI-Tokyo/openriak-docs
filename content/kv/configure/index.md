@@ -8,7 +8,7 @@ pagination_label: Begin Here
 sidebar_class_name: kv-configure
 ---
 
-# Configure your OpenRiak KV cluster
+## Configure your OpenRiak KV cluster
 
 ## Configuration Reference
 

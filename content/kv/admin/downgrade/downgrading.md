@@ -4,18 +4,18 @@ title: Downgrading OpenRiak
 sidebar_label: "Downgrading"
 ---
 
-# Contents
+## Contents
 
 1.[Introduction](#introduction)
 2.[The downgrade process](#2-the-downgrade-process)
 
-# Introduction
+## Introduction
 
 Downgrades of OpenRiak KV are generally tested and supported for the most recent LTS version of the operating system supporter and the previous version to that.
 
 Depending on the versions involved in the downgrade, there are additional steps to be performed before, during, and after the upgrade on on each node. These steps are related to changes or new features that are not present in the downgraded version.
 
-# The downgrade process
+## The downgrade process
 
 The following is an example process for downgrading with Ubuntu/Debian based systems. You should adjust and test the commands for your specific OS>
 

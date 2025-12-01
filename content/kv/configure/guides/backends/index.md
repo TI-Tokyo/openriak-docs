@@ -21,7 +21,7 @@ import InlineCodeWithCopy          from '@site/src/components/InlineCodeWithCopy
 
 <ConfigReferenceProvider configNamePattern='^(storage_backend).*'>
 
-# How to Choose a Backend
+## How to Choose a Backend
 
 OpenRiak KV comes with several different backends with different performance characteristics.
 
@@ -30,7 +30,7 @@ The default backend is <ConfigDefaultValue name="storage_backend" />, but you sh
 ## Recommended Configuration
 
 ```ini
-# Set OpenRiak KV to use the "leveled" storage backend
+## Set OpenRiak KV to use the "leveled" storage backend
 
 ```bash
 storage_backend = leveled
@@ -47,7 +47,7 @@ The configuration options relating to the all storage backends are listed below.
 See: [How to Configure the Bitcask Backend](./backends/configure-leveldb)
 
 ```ini
-# Set OpenRiak KV to use the "bitcask" storage backend
+## Set OpenRiak KV to use the "bitcask" storage backend
 storage_backend = bitcask
 ```
 
@@ -58,7 +58,7 @@ In addition to this setting, there are several other configuration values that c
 See: [How to Configure the LevelDB Backend](./backends/configure-leveldb)
 
 ```ini
-# Set OpenRiak KV to use the "leveldb" storage backend
+## Set OpenRiak KV to use the "leveldb" storage backend
 storage_backend = leveldb
 ```
 
@@ -69,7 +69,7 @@ In addition to this setting, there are several other configuration values that c
 See: [How to Configure the Leveled Backend](./backends/configure-leveled')
 
 ```ini
-# Set OpenRiak KV to use the "leveled" storage backend
+## Set OpenRiak KV to use the "leveled" storage backend
 storage_backend = leveled
 ```
 
@@ -80,7 +80,7 @@ In addition to this setting, there are several other configuration values that c
 See: [How to Configure the Memory Backend](./backends/configure-leveldb)
 
 ```ini
-# Set OpenRiak KV to use the "memory" storage backend
+## Set OpenRiak KV to use the "memory" storage backend
 storage_backend = memory
 ```
 
@@ -92,7 +92,7 @@ In addition to this setting, there are several other configuration values that c
 See: [How to Configure the Multi Backend](./backends/configure-leveldb)
 
 ```ini
-# Set OpenRiak KV to use multiple backends
+## Set OpenRiak KV to use multiple backends
 storage_backend = multi
 ```
 
@@ -107,7 +107,7 @@ In addition to this setting, you must set other configuration values to configur
 See: [How to Configure the Prefix_Multi Backend](./configure-prefix_multi).
 
 ```ini
-# Set OpenRiak KV to use multiple backends with automatic backend selection
+## Set OpenRiak KV to use multiple backends with automatic backend selection
 storage_backend = prefix_multi
 ```
 

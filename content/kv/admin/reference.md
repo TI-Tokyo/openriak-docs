@@ -7,13 +7,13 @@ import { ConfigTable } from '@site/src/components/ConfigReference/ConfigTable';
 import Link from "@docusaurus/Link";
 
 
-# Contents
+## Contents
 
-# Overview
+## Overview
 
 This document contains a list of all commands and relevant sub-commands and their expected outputs/formats.
 
-# riak command reference
+## riak command reference
 
-# riak admin command reference
+## riak admin command reference
 

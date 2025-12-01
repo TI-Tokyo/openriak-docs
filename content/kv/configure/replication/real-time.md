@@ -23,7 +23,7 @@ NextGenRepl relies on [TicTac-AAE](: ../../configure/replication/) , so this mus
 
 ---
 
-# Overview
+## Overview
 
 As changes occur on the source cluster, NextGenRepl’s RealTime replication system will add them to one or more configurable queues within the replication queuing system.
 
@@ -35,7 +35,7 @@ As of writing, all changes listed in this documentation to NextGenRepl must be m
 
 ---
 
-# Enable RealTime
+## Enable RealTime
 
 RealTime changes are added to the queuing system by setting:
 
@@ -45,7 +45,7 @@ replrtq_enablesrc = enabled
 
 By default, RealTime is turned off (`disabled`).
 
-# Queues
+## Queues
 
 At least one replication queue should allow RealTime objects to be added. The easiest way to do this is to have a queue filter of any, but other options are available, see the page on [queues](: ../..//configure/replication/queue).
 

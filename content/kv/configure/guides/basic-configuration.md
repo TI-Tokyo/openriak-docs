@@ -4,7 +4,7 @@ title: Basic Configuration
 sidebar_label: "Basic Configuration"
 ---
 
-# Contents
+## Contents
 
 1. [Ring Size](#ring-size)
 2. [Backend](#backend)
@@ -69,4 +69,4 @@ ring_creation_size : 64
 
 If `ring_num_partitions` and `ring_creation_size` do not agree, that means that the `ring_creation_size` value was changed too late and that the proper steps were not taken to start over with a new ring.
 
-# Note: Riak will not allow two nodes with different ring sizes to be joined into a cluster.
+## Note: Riak will not allow two nodes with different ring sizes to be joined into a cluster.

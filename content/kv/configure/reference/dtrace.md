@@ -12,7 +12,7 @@ import { ConfigTable }             from '@site/src/components/ConfigReference/Co
 
 <ConfigReferenceProvider sectionName="Section with dtrace">
 
-# Configuration Reference for dtrace
+## Configuration Reference for dtrace
 
 This page lists all configuration options available to the application in the doc section "Section with dtrace".
 

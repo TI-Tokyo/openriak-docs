@@ -4,19 +4,19 @@ title: Upgrading OpenRiak
 sidebar_label: "Upgrading"
 ---
 
-# Contents
+## Contents
 1. [Before upgrading](#before-upgrading)
 2. [Example upgrade steps for Debian/Ubuntu](#example-upgrade-steps-for-debian/ubuntu)
 3. [Example upgrade steps for Oracle Linux](#example-upgrade-steps-for-oracle-linux)
 
-# Before upgrading
+## Before upgrading
 
 Before upgrading you should review the following important notes:
 
 * If you are using OpenRiak Control, you should ensure this is disabled during the rolling upgrade process
 * Do not skip the process of backing up your /etc and /data directories, as losing these could be fatal to your node/cluster should something go wrong during the upgrade process.
 
-# Example upgrade steps for Debian/Ubuntu
+## Example upgrade steps for Debian/Ubuntu
 
 The following is an example of how to ugprade an OpenRiak KV cluster running on Debian/ubuntu.
 
@@ -53,7 +53,7 @@ riak versions
 You should see an output that reports your installed version, check that this matches your intended final version such as below:
 
 ```bash
-# riak versions
+## riak versions
 Installed versions:
 * 3.2.5 permanent
 ```
@@ -81,7 +81,7 @@ riak admin transfers
 When transfers have complete, you will see the following output:
 
 ```bash
-# riak admin transfers
+## riak admin transfers
 
 No transfers active
 
@@ -95,7 +95,7 @@ ok
 
 9. If in use, re-enable OpenRiak Control for the cluster once everything is complete.
 
-# Example upgrade steps for Oracle Linux
+## Example upgrade steps for Oracle Linux
 
 The following is an example of how to ugprade an OpenRiak KV cluster running on Debian/ubuntu.
 
@@ -132,7 +132,7 @@ riak versions
 You should see an output that reports your installed version, check that this matches your intended final version such as below:
 
 ```bash
-# riak versions
+## riak versions
 Installed versions:
 * 3.2.5 permanent
 ```
@@ -160,7 +160,7 @@ riak admin transfers
 When transfers have complete, you will see the following output:
 
 ```bash
-# riak admin transfers
+## riak admin transfers
 
 No transfers active
 

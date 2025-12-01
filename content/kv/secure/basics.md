@@ -15,7 +15,7 @@ This section covers security basics for OpenRiak with more indepth pages for var
 3. [Groups](: ../../configure/secure/groups)
 4. [Sources](: ../../configure/secure/security-sources)
 
-# Introduction
+## Introduction
 
 OpenRiak administrators can selectively apportion access to a wide variety of OpenRiak’s functionality, including accessing, modifying, and deleting objects, changing bucket properties, and running MapReduce jobs.
 
@@ -26,7 +26,7 @@ OpenRiak administrators can selectively apportion access to a wide variety of Op
 * Users can be authenticated and authorized; permissions (authorization) may be granted directly or via group membership. See [here](: ../../configure/secure/users) for further information.
 * Sources are used to define authentication mechanisms. A user cannot be authenticated to OpenRiak until a source is defined.
 
-# Security Checklist
+## Security Checklist
 
 There are a few key steps that all applications will need to undertake when turning on OpenRiak security. Missing one of these steps will almost certainly break your application, so make sure that you have done each of the following before enabling security:
 
@@ -46,7 +46,7 @@ Security should be enabled only after all of the above steps have been performed
 
 Clients that use Protocol Buffers will typically have to be reconfigured/restarted with the proper credentials once security is enabled.
 
-# Security Basics
+## Security Basics
 
 OpenRiak security may be checked, enabled, or disabled by an administrator through the command line. This allows an administrator to change security settings for the whole cluster quickly without needing to change settings on a node-by-node basis.
 
@@ -83,7 +83,7 @@ riak admin security disable
 
 ### Note: While security is disabled, clients will need to be reconfigured to no longer require TLS and send credentials.
 
-# Managing Permissions
+## Managing Permissions
 
 This section gives a general over view of how to grant/revoke permissions from a user, group etc. For more details on manage users see [here](: ../../configure/secure/users).
 
@@ -136,7 +136,7 @@ riak admin security add-user client
 riak admin security grant riak_kv.get,riak_kv.put on any to client
 ```
 
-# MapReduce Permissions
+## MapReduce Permissions
 
 Permission to perform MapReduce jobs can be assigned using `riak_kv.mapreduce`. The following example grants MapReduce permissions to the user `mapreduce-power-user` for all buckets and bucket types:
 
@@ -144,7 +144,7 @@ Permission to perform MapReduce jobs can be assigned using `riak_kv.mapreduce`. 
 riak admin security grant riak_kv.mapreduce on any to mapreduce-power-user
 ```
 
-# Bucket Type Permissions
+## Bucket Type Permissions
 
 |----------------------------|-----------------------------------------------------------|
 | Permission                 | Operation                                                 |
@@ -156,7 +156,7 @@ riak admin security grant riak_kv.mapreduce on any to mapreduce-power-user
 |----------------------------|-----------------------------------------------------------|
 
 
-# Managing Sources
+## Managing Sources
 
 While user management enables you to control authorization with regard to users, security sources provide you with an interface for managing means of authentication. If you create users and grant them access to some or all of Riak’s functionality as described in the [User](: ../../configure/secure/users) section, you will then need to define security sources required for authentication.
 
@@ -175,13 +175,13 @@ OpenRiak security sources may be applied to a specific user, multiple users, or 
 | certificate | Authenticate using a client certificate                                                                         |
 |-------------|-----------------------------------------------------------------------------------------------------------------|
 
-# Security Ciphers
+## Security Ciphers
 
-# Enabling SSL
+## Enabling SSL
 
-# TLS Settings
+## TLS Settings
 
-# Certificate Configuration
+## Certificate Configuration
 
-# Referer Checks and Certificate Revocation Lists
+## Referer Checks and Certificate Revocation Lists
 

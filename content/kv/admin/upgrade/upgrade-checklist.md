@@ -4,7 +4,7 @@ title: Upgrade Checklist
 sidebar_label: "Upgrade Checklist"
 ---
 
-# Contents
+## Contents
 1. [System](#system)
 2. [Network](#network)
 3. [Operations](#operations)
@@ -13,14 +13,14 @@ sidebar_label: "Upgrade Checklist"
 
 Deploying OpenRiak to a production environment can be a complex process so it is important that you ensure you have the proper checks in place for both OpenRiak and it's respective host systems. Though there are a considerable number of variables depending on your systems design, we have compiled a list of items to consider and check.
 
-# System
+## System
 
 Improperly configured systems are one of the biggest reasons for failures in new deployments, so it is essential they are thoroughly checked.
 
 * Are all systems in your cluster as close to identical as possible in terms of both hardware and software?
 * Have you set appropriate open files limits on all systems?
 
-# Network
+## Network
 
 Correct network configuration is essential to allowing all your OpenRiak nodes to properly communicate with eachother and with outside systems. Incorrect configurations could lead to individual nodes dropping out, cascades or other network-related failures.
 
@@ -38,7 +38,7 @@ Correct network configuration is essential to allowing all your OpenRiak nodes t
 * Is the load balancer configured to balance connections with roundrobin or a similarly random distribution scheme?
 
 
-# Operations
+## Operations
 
 * Does your monitoring system ensure that NTP is running?
 * Are you collecting time series data on the whole cluster?
@@ -63,7 +63,7 @@ Correct network configuration is essential to allowing all your OpenRiak nodes t
     * Basic system status
     * Median and 95th and 99th percentile latencies (as these tend to be leading indicators of trouble)
 
-# Testing and load with your application
+## Testing and load with your application
 
 Inadaquate load testing of clusters and applications can lead to a significant amount of problems with a new/upgraded OpenRiak cluster. You should review the following (but not exhaustive) list of items to check.
 
@@ -71,5 +71,5 @@ Inadaquate load testing of clusters and applications can lead to a significant a
 * Are the client libraries used by your application on the correct version/in need of an update?
 * Do the client libraries you are using support the deployed version of OpenRiak KV
 
-# OpenRiak KV
+## OpenRiak KV
 

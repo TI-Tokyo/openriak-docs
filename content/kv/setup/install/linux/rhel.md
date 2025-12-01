@@ -7,7 +7,7 @@ date: 2025-09-19
 
 [verifying-installation]: : ../../setup/install/verify
 
-# Installing OpenRiak KV on RHEL
+## Installing OpenRiak KV on RHEL
 
 This guide provides the steps for installing OpenRiak KV on the most recent version of Raspbian.
 
@@ -83,7 +83,7 @@ Commands:
   admin|repl|debug|chkconfig
 ```
 
-# Installing on RHEL 9
+## Installing on RHEL 9
 
 1. From a terminal window download the OpenRiak package with the following:
 

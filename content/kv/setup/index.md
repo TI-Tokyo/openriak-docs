@@ -9,5 +9,5 @@ sidebar_class_name: kv-setup
 date: 2025-09-16
 ---
 
-# Setup your OpenRiak KV cluster
+## Setup your OpenRiak KV cluster
 

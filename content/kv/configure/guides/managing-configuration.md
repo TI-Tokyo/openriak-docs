@@ -8,13 +8,13 @@ import { ConfigListing }             from '@site/src/components/ConfigReference/
 import { ConfigDefaultValue }      from '@site/src/components/ConfigReference/ConfigDefaultValue';
 import InlineCodeWithCopy          from '@site/src/components/InlineCodeWithCopy/InlineCodeWithCopy';
 
-# Contents
+## Contents
 
 - [Retrieving a configuration value](#retrieving-configuration-value)
 - [Checking your Conf](#checking-your-config)
 
 
-# Retrieving Configuration value
+## Retrieving Configuration value
 
 You can retrieve the value of any configuration option with the following command:
 
@@ -63,7 +63,7 @@ ok
 You can also use this to check multiple options at once by listing them simultaneously such as this:
 
 ```bash
-# riak admin show anti_entropy storage_backend -all
+## riak admin show anti_entropy storage_backend -all
 +-----------------+------------+-----------------------+
 |      node       |anti_entropy|    storage_backend    |
 +-----------------+------------+-----------------------+
@@ -79,7 +79,7 @@ ok
 
 This combination of commands allows you to quickly check that the values are consistent across one or all your nodes at the same time.
 
-# Checking your config
+## Checking your config
 
 There is a command that can be performed via the command line that allows you to run a check whether the syntax in your configuration file is correct. 
 

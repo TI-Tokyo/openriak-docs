@@ -3,7 +3,7 @@ title: Buckets and Bucket-types
 sidebar_label: "Buckets and Bucket-types"
 ---
 
-# Buckets
+## Buckets
 
 Buckets are essentially a flat namespace in OpenRiak. They allow the same key name to exist in multiple buckets and enable you to apply configurations across keys.
 
@@ -13,7 +13,7 @@ Buckets come with virtually no cost except for when you modify the default bucke
 
 In OpenRiak/Legacy Riak versions 2.0 and later, it is suggested that you use bucket types to namespace and configure all buckets you use. Bucket types have a lower overhead within the cluster than the default bucket namespace but require an additional setup step on the command line.
 
-# Bucket types
+## Bucket types
 
 ## Creating a Bucket Type
 When creating a new bucket type, you can create a bucket type without any properties and set individual buckets to be indexed. The step below creates and activates the bucket type:

@@ -11,7 +11,7 @@ date: 2025-09-16
 
 [quick-start-with-docker]: ./docker
 
-# Quick Start
+## Quick Start
 
 Let's get **OpenRiak KV** running FAST.
 

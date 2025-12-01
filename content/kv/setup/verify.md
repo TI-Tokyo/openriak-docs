@@ -8,7 +8,7 @@ After you’ve installed OpenRiak KV, we recommend checking the status of each n
 
 This section covers way to test that your OpenRiak nodes are operating correctly, including: Starting the node, running a test, and checking the config files.
 
-# riak chkconfig
+## riak chkconfig
 
 It is generally recommended to run `riak chkconfig` before starting your node for the first time and after any significant changes/replaced nodes.
 This command will output an syntax issues with your config files.
@@ -22,7 +22,7 @@ config is OK
 ### Note: The `chkconfig` command will *not* check that the nodename is correct or that there are no performance or other behavioural issues with the configuration file.
 
 
-# Starting an OpenRiak node
+## Starting an OpenRiak node
 
 The quickest and easiest way to check that OpenRiak has install properly is to start the node and ping it, though this will not allow you to check for config problems before hand.
 
@@ -54,7 +54,7 @@ Node <nodename> not responding to pings
 
 If you see the second response, then your first step will be to check your configuration file and ensure everything is properly configured.
 
-# Testing the nodes ability to read and write.
+## Testing the nodes ability to read and write.
 
 ## Testing with admin test
 

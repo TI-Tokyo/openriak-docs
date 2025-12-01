@@ -9,7 +9,7 @@ sidebar_class_name: kv-setup-plan
 date: 2025-09-16
 ---
 
-# Planning your OpenRiak KV cluster
+## Planning your OpenRiak KV cluster
 
 You should decide in advance some important settings that are hard to change once your cluster is up.
 

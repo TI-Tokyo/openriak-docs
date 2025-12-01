@@ -8,4 +8,4 @@ pagination_label: Manage
 sidebar_class_name: kv-manage
 ---
 
-# Manage your OpenRiak KV cluster
+## Manage your OpenRiak KV cluster

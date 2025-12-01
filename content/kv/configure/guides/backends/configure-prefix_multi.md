@@ -12,7 +12,7 @@ import { ConfigListing }           from '@site/src/components/ConfigReference/Co
 
 <ConfigReferenceProvider configNamePattern='^(storage_backend|multi_backend\.).*'>
 
-# How to Configure Prefix_Multi Backend
+## How to Configure Prefix_Multi Backend
 
 ## Quick Config Reference
 

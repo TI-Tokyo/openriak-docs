@@ -8,7 +8,7 @@ import { ConfigListing }             from '@site/src/components/ConfigReference/
 import { ConfigDefaultValue }      from '@site/src/components/ConfigReference/ConfigDefaultValue';
 import InlineCodeWithCopy          from '@site/src/components/InlineCodeWithCopy/InlineCodeWithCopy';
 
-# Contents
+## Contents
 
 1. [Configure the First Node](#Configure-the-first-node)
 2. [Adding nodes to your cluster](#adding-nodes-to-your-cluster)
@@ -16,7 +16,7 @@ import InlineCodeWithCopy          from '@site/src/components/InlineCodeWithCopy
 
 All configuration changes in this document take place in your nodes `riak.conf` file unless otherwise stated.
 
-# Configure the first node
+## Configure the first node
 
 First, stop your Riak node if it is currently running:
 
@@ -73,7 +73,7 @@ As with all cluster changes, you need to view the planned changes by running `ri
 
 The node is now properly set up to join other nodes for cluster participation. You can proceed to adding a second node to the cluster.
 
-# Adding nodes to your cluster
+## Adding nodes to your cluster
 
 You can repeat the above steps for each new node you are creating. Once you've started your node, you need to stage the node to join the cluster with the following:
 
@@ -155,4 +155,4 @@ Alternatively, you can check via `riak attach` which opens an Erlang shell:
 ['riak@192.168.1.10','riak@192.168.1.11','riak@192.168.1.12','riak@192.168.1.13','riak@192.168.1.14`]
 ```
 
-# Multiple clusters on one host
+## Multiple clusters on one host

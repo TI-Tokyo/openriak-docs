@@ -9,7 +9,7 @@ sidebar_class_name: kv-setup-install-cloud
 date: 2025-09-16
 ---
 
-# Install your OpenRiak KV cluster in the Cloud
+## Install your OpenRiak KV cluster in the Cloud
 
 - Cloud
   - AWS Marketplace

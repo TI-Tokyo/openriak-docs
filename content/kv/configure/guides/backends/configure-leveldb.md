@@ -12,7 +12,7 @@ import { ConfigListing }           from '@site/src/components/ConfigReference/Co
 
 <ConfigReferenceProvider configNamePattern='^(storage_backend|leveldb\.).*'>
 
-# How to Configure LevelDB
+## How to Configure LevelDB
 
 ## Quick Config Reference
 

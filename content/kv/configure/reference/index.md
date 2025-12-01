@@ -12,7 +12,7 @@ import { ConfigTable }             from '@site/src/components/ConfigReference/Co
 
 <ConfigReferenceProvider>
 
-# Configuration Reference
+## Configuration Reference
 
 This page lists all configuration options available to the application. These are all set in <i>riak.conf</i>, and require a restart of an OpenRiak KV node to take effect. 
 

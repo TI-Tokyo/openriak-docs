@@ -7,17 +7,17 @@ sidebar_class_name: kv-setup-plan
 date: 2025-10-13
 ---
 
-# Contents
+## Contents
 1. [Introduction](#introduction)
 2. [Enabling Multiple backends](#enabling-multiple-backends)
 3. [Configuring multiple backends](#configuring-multiple-backends)
 
-# Introduction 
+## Introduction 
 
 OpenRiak allows you to run multiple backends within a single OpenRiak cluster. Selecting the Multi backend enables you to use different storage backends for different buckets. Any combination of the three available backends — Bitcask, LevelDB, and Memory can be used.
 
 
-# Enabling Multiple Backends
+## Enabling Multiple Backends
 
 You can enable Multi backend by changing the value of `storage_backend` in your `riak.conf` file to the following:
 
@@ -25,7 +25,7 @@ You can enable Multi backend by changing the value of `storage_backend` in your 
 storage_backend = multi
 ```
 
-# Configuring multiple Backends
+## Configuring multiple Backends
 
 Once you've enabled multiple backends, you need to configure each backend on its own. All the normal configuration options for a chosen memory backend are available to your when using multi-backend.
 
@@ -42,7 +42,7 @@ multi_backend.leveldb.bloomfilter = off
 multi_backend.bitcask.io_mode = nif
 ```
 
-# Using Multiple Backends
+## Using Multiple Backends
 
 In OpenRiak 3.2.5 and later, we recommend using multiple backends by applying them to buckets using [bucket types](). Assuming that the cluster has already been configured to use the multi backend, this process involves three steps:
 

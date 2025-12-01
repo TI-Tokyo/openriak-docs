@@ -10,7 +10,7 @@ sidebar_class_name: kv-configure-guides
 
 import Link from "@docusaurus/Link";
 
-# Guides go here
+## Guides go here
 
 ## Basic Options
 

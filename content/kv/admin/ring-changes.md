@@ -3,11 +3,11 @@ title: Ring Changes
 sidebar_label: "Ring Changes"
 ---
 
-# Overview
+## Overview
 
 This page covers the variety of methods for performing ring changes within an OpenRiak cluster, whether that be adding a node, removing a node or replacing nodes.
 
-# Adding a node
+## Adding a node
 
 Adding a node to your cluster is a relatively simple process, assuming this is a brand new node you are adding. Once you've set your nodename and made any other changes to your `riak.conf` that you need to make, follow these steps:
 
@@ -70,7 +70,7 @@ Cluster changes committed
 
 4. You can then monitor the process of the node(s) joining with `riak admin transfers`.
 
-# Removing a node
+## Removing a node
 
 Removing a node from a cluster is a relatively simple process if your cluster is in a healthy state. If your cluster is not in a healthy state, further investigation should be done before removing a node to ensure you do not overload the remaining nodes.
 
@@ -161,7 +161,7 @@ riak admin transfers
 
 This should complete the node leave process.
 
-# Replacing a node
+## Replacing a node
 
 Replacing a node is a similar process to adding a node to your cluster, except that it has an extra step.
 

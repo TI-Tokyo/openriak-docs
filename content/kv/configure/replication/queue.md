@@ -7,7 +7,7 @@ import { ConfigListing }             from '@site/src/components/ConfigReference/
 import { ConfigDefaultValue }      from '@site/src/components/ConfigReference/ConfigDefaultValue';
 import InlineCodeWithCopy          from '@site/src/components/InlineCodeWithCopy/InlineCodeWithCopy';
 
-# Contents
+## Contents
 1. [Overview](#overview)
 2. [Maximum queue length](#maximum-queue-length)
 3. [Maximum number and size of objects](#Maximum-number-and-size-of-objects)
@@ -18,7 +18,7 @@ import InlineCodeWithCopy          from '@site/src/components/InlineCodeWithCopy
 
 NextGenRepl’s Queuing feature is the heart of the replication engine. It stores all changes to be replicated using multiple configuarble queues. It’s limits and size can be configured for your specific NextGenRepl use case.
 
-# Overview
+## Overview
 You can have as many queues are you like with different filters on each queue.
 
 Each queue has 3 levels of priority:
@@ -36,13 +36,13 @@ The queuing system is always active.
 Currently all changes listed in this documentation to NextGenRepl must be made by changing the values in the `riak.conf` file.
 ---
 
-# Maximum queue length
+## Maximum queue length
 
 The default limit of the number of objects stored in a specific queue is 300000 OpenRiak objects. Once this limit is reached, any new items will not be added to the queue.
 
 This can value can be configured on a per-node basis by setting the replrtq_srcqueuelimit value to a posiitive integer.
 
-# Maximum number and size of objects
+## Maximum number and size of objects
 
 When items are added to a queue, the normal mode is to add them as a reference to the OpenRiak object and not the OpenRiak object itself. However, as a performance boost for RealTime updates, a queue will contain a copy of the actual OpenRiak object instead of a reference.
 
@@ -52,7 +52,7 @@ The maximum number of these objects can be set through `replrtq_srcobjectlimit` 
 
 The maximum size of these objects can be set through `replrtq_srcobjectsize` as positive interger. The default is 200KB.
 
-# Queue filters
+## Queue filters
 
 A queue can be filtered in various ways using replrtq_srcqueue. As each sink node can only pull from one queue, this needs to be carefully planned. To replicate multiple queues to a specific sink cluster, then different sink cluster nodes will need to be configured to use different queue names.
 
@@ -70,7 +70,7 @@ For example, you could set `replrtq_srcqueue` to:
 * `for_tokyo_cluster:bucketprefix:users_` to have a queue called `for_tokyo_cluster` that will replicate all changes to any bucket with the prefix `users_`.
 * `backup_cluster:buckettype:financialtransactions` to have a queue called `backup_cluster` that will replicate all changes to any bucket with the bucket type of `financialtransactions`.
 
-# Multiple queues
+## Multiple queues
 
 You can specific multiple queues by deliminating with the | character.
 
@@ -80,10 +80,10 @@ For example, this will create two queues - one with realtime updates called `all
 replrtq_srcqueue = allupdates:any|offsite_backup:block_rtq
 ```
 
-# Transmission compression
+## Transmission compression
 
 If bandwidth is a concern, objects can be compressed when they are requested by a sink peer. This can be turned on (enabled) and off (disabled) using replrtq_compressonwire.
 
-# Configuration reference
+## Configuration reference
 
 Please check the NextGenRepl configuration reference for a complete reference.

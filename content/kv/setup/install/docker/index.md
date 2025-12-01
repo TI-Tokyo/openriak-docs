@@ -9,7 +9,7 @@ sidebar_class_name: kv-setup-install-docker
 date: 2025-09-16
 ---
 
-# Install your OpenRiak KV cluster on Linux
+## Install your OpenRiak KV cluster on Linux
 
 - Docker
   - Alpine

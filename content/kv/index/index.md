@@ -9,7 +9,7 @@ pagination_label: Recent Changes to OpenRiak KV
 sidebar_class_name: kv-recentChanges
 ---
 
-# What's New
+## What's New
 
 OpenRiak KV 3.2.5 has some nice new features such as X, and Y and even Z!
 
@@ -25,12 +25,12 @@ This was a surprise to us all, but Y has finally be revealed!
 
 Z was a dark sleeper feature for over 240 years, but it's finally ready for production!
 
-# What's Fixed
+## What's Fixed
 
 As usual, small fixes have been applied. These include:
 
 - You can no longer accidentally lose the Moon by removing the "earth" node from the "solar-system" cluster. The Moon will now automatically migrate to another planet.
 
-# Release Notes
+## Release Notes
 
 See the [Release Notes](./release-notes) for everything!

@@ -12,7 +12,7 @@ import { ConfigListing }           from '@site/src/components/ConfigReference/Co
 
 <ConfigReferenceProvider configNamePattern='^(storage_backend|bitcask\.).*'>
 
-# How to Configure Bitcask
+## How to Configure Bitcask
 
 ## Quick Config Reference
 
