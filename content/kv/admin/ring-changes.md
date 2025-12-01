@@ -3,72 +3,136 @@ title: Ring Changes
 sidebar_label: "Ring Changes"
 ---
 
+[root site]: [!site]
+[root project]: [!project]
+[root version]: [!version]
+
+[example values]: #values-used-in-these-examples
+[node add]: #adding-a-node
+[node remove]: #removing-a-node
+[node replace]: #replacing-a-node
+[node naming]: [!version]configure/basics#nodename
+[node restore]: [!version]admin/recovery/replace-a-node
+[config reference]: [!version]configure/reference
+[partition transfers]: #monitor-transfers
+
 ## Overview
 
-This page covers the variety of methods for performing ring changes within an OpenRiak cluster, whether that be adding a node, removing a node or replacing nodes.
+This page covers the variety of methods for performing ring changes within an OpenRiak cluster, whether that be [adding a node][node add], [removing a node][node remove] or [replacing nodes][node replace].
 
-## Adding a node
+> [!INFO]
+> Applications can continue using the cluster as normal while these operations are occuring.
 
-Adding a node to your cluster is a relatively simple process, assuming this is a brand new node you are adding. Once you've set your nodename and made any other changes to your `riak.conf` that you need to make, follow these steps:
+> [!Tip] Values used in these examples
+> Read about the [values used in these examples][example values].
 
-1. On the node you wish to add to the cluster run:
+## Adding a new node
 
-```bash
-riak admin cluster join riak@192.168.1.11 riak@192.168.1.10
-```
+> [!CODE] `riak admin cluster` commands
+>
+> ```bash
+> riak admin cluster join <nodename>
+> riak admin cluster plan
+> riak admin cluster commit
+> ```
 
-2. Check that the node has been staged to join the cluster with:
+Adding new nodes to your cluster is a relatively simple process. 
 
-```bash
-riak admin cluster plan
-```
-You can use this method to stage multiple nodes to join a single cluster at once.
-You will see an output similar to below:
+> [!WARNING]- What if this is not a new node?
+>
+> If your node has existing data, then that data will not be accessible after it has joined the cluster and the data may be lost.
+>
+> Do not join a node with pre-existing data to a cluster unless you are performing a [restore from backup][node restore].
 
-```bash
-=============================== Staged Changes ================================
-Action         Details(s)
--------------------------------------------------------------------------------
-join           'riak@192.168.1.11'
-join           'riak@192.168.1.12'
-join           'riak@192.168.1.13'
-join           'riak@192.168.1.14'
--------------------------------------------------------------------------------
+1. Copy over the [config files][config reference] from an existing node in the cluster.
+
+   The exact mechanism for doing this will depend on your environment. We assume from this point on that your config files are identical to an existing node's config files.
+
+2. On the new node, update the config files
+
+   It is essential to change:
+     - `nodename` to reflect the IPv4, IPv6 or FQDN of the new node
+     - the `listener` group of settings
+   
+   Optional changes include:
+    - data storage paths if these are different to your existing nodes
+   
+   Never change `ring_size` as that has to be consistant on all nodes in your cluster.
+   
+3. On the new node, tell it to ask to join a cluster using an existing node (in this case `riak@10.0.20.1`):
+
+  ```bash
+  riak admin cluster join riak@10.0.20.1
+  ```
+
+  The correct response will be similar to this:
+
+  ```bash
+  Success: staged join request for 'riak@10.0.20.4' to 'riak@10.0.20.1'
+  ```
+
+  The node has not yet joined the existing cluster, but it has requested to join the cluster. The node is said to be "staged" to join the cluster.
+
+4. Repeat steps 1-3 on all the new nodes you wish to ask to join to the cluster.
+
+5. On any node, existing or staged, tell the cluster to create a plan to actually add the new nodes:
+   
+    ```bash
+    riak admin cluster plan
+    ```
+    
+    You can run this after joining each new node, or once after you have joined them all.
+   
+    You will see an output similar to below:
+
+    ```bash
+    =============================== Staged Changes ================================
+    Action         Details(s)
+    -------------------------------------------------------------------------------
+    join           'riak@10.0.20.4'
+    join           'riak@10.0.20.5'
+    join           'riak@10.0.20.6'
+    -------------------------------------------------------------------------------
 
 
-NOTE: Applying these changes will result in 1 cluster transition
+    NOTE: Applying these changes will result in 1 cluster transition
 
-###############################################################################
-                         After cluster transition 1/1
-###############################################################################
+    ###############################################################################
+                            After cluster transition 1/1
+    ###############################################################################
 
-================================= Membership ==================================
-Status     Ring    Pending    Node
--------------------------------------------------------------------------------
-valid     100.0%     20.3%    'riak@192.168.1.10'
-valid       0.0%     20.3%    'riak@192.168.1.11'
-valid       0.0%     20.3%    'riak@192.168.1.12'
-valid       0.0%     20.3%    'riak@192.168.1.13'
-valid       0.0%     18.8%    'riak@192.168.1.14'
--------------------------------------------------------------------------------
-Valid:5 / Leaving:0 / Exiting:0 / Joining:0 / Down:0
-```
+    ================================= Membership ==================================
+    Status     Ring    Pending    Node
+    -------------------------------------------------------------------------------
+    valid      33.4%     16.7%    'riak@10.0.20.1'
+    valid      33.3%     16.7%    'riak@10.0.20.2'
+    valid      33.3%     16.6%    'riak@10.0.20.3'
+    valid       0.0%     16.7%    'riak@10.0.20.4'
+    valid       0.0%     16.7%    'riak@10.0.20.5'
+    valid       0.0%     16.6%    'riak@10.0.20.6'
+    -------------------------------------------------------------------------------
+    Valid:6 / Leaving:0 / Exiting:0 / Joining:0 / Down:0
+    ```
 
-You can see from the above output that after the staged changes are committed the ring will rebalance around the new member.
+    The above output shows that after the staged changes are committed the ring will rebalance around the new nodes (aka the new cluster members) and each node will now be responsible for an equal share of data.
 
-3. If the changes look correct to you (i.e. the node is joining the correct cluster) then you will need to commit the changes:
+    If there are any expected new nodes that are not listed, go back and check steps 1-3 on that node and re-run this step.
 
-```bash
-riak admin cluster commit
-```
+6. On any node, existing or staged, tell the cluster to actually add the new nodes:
 
-Which produces the following output:
+    ```bash
+    riak admin cluster commit
+    ```
 
-```bash
-Cluster changes committed
-```
+    Which produces the following output:
 
-4. You can then monitor the process of the node(s) joining with `riak admin transfers`.
+    ```bash
+    Cluster changes committed
+    ```
+
+    The nodes will be now be considered part of the cluster, however the cluster's data will not yet be spread over the new nodes. This will happen automatically, but you should wait until it is finished before performing any further significant admin actions.
+
+7. Monitor the process of rebalancing the cluster's data `riak admin transfers` as detailed [here][partition transfers].
 
 ## Removing a node
 
@@ -272,4 +336,31 @@ You’ll need to make sure that no other ring changes occur between the time whe
 
 The ring is considered settled when the new node reports `true` when you run the `riak admin ringready` command.
 ---
+
+## Values used in these examples
+
+> [!NOTE]
+> The examples use IPv4 node names. You can also use IPv6 and Fully Qualified Domain Name (FQDN) node names.
+>
+> For more information about node naming conventions, please check out the [node name][node naming] section.
+
+### Existing nodes
+
+This is a node which is already part of the OpenRiak cluster. A new node can use any of these existing nodes to join a cluster.
+
+| Node ID | Type of name   | Example          |
+|:--------|:---------------|:-----------------|
+| 1       | IPv4 address   | `riak@10.0.20.1` | 
+| 2       | IPv4 address   | `riak@10.0.20.2` | 
+| 3       | IPv4 address   | `riak@10.0.20.3` | 
+
+### New nodes
+
+These are nodes which have not joined an OpenRiak cluster yet.
+
+| Node ID | Type of name   | Example          |
+|:--------|:---------------|:-----------------|
+| 4       | IPv4 address   | `riak@10.0.20.4` | 
+| 5       | IPv4 address   | `riak@10.0.20.5` | 
+| 6       | IPv4 address   | `riak@10.0.20.6` | 
 
