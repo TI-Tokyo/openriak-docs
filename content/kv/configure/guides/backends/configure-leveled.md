@@ -18,14 +18,16 @@ import { ConfigDefaultValue }      from '@site/src/components/ConfigReference/Co
 
 ## Recommended Configuration
 
-The defaults for Leveled are designed for most use-cases. As such, you only need to set these two values:
+  The defaults for Leveled are designed for most use-cases. As such, you only need to set these two values:
 
-```
-storage_backend = leveled
-leveled.data_root = "$(platform_data_dir)/leveled"
-```
+  ```bash
+    storage_backend = leveled
+    leveled.data_root = "$(platform_data_dir)/leveled"
+  ```
 
-Note: `$(platform_data_dir)` will be replaced at run-time with the value for the configuration setting `platform_data_dir`. This varies by operating system. For <ChosenOS type="plaintext" /> the default is <ConfigDefaultValue name="platform_data_dir" hidePlatform="true" />.
+>[!NOTE]
+>`$(platform_data_dir)` will be replaced at run-time with the value for the configuration setting `platform_data_dir`. This varies by operating system. For <ChosenOS type="plaintext" /> the default is <ConfigDefaultValue name="platform_data_dir" hidePlatform="true" />.
+>
 
 ## Quick Config Reference
 

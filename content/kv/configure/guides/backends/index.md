@@ -19,6 +19,19 @@ import { ConfigListing }             from '@site/src/components/ConfigReference/
 import { ConfigDefaultValue }      from '@site/src/components/ConfigReference/ConfigDefaultValue';
 import InlineCodeWithCopy          from '@site/src/components/InlineCodeWithCopy/InlineCodeWithCopy';
 
+[root site]: [!site]
+[root project]: [!project]
+[root version]: [!version]
+
+[choosing backend]: #how-to-choose-a-backend
+[config reference]: #quick-config-reference
+[bitcask]: #bitcask
+[leveldb]: #leveldb
+[leveled]: #leveled
+[memory]: #memory
+[multi]: #multi
+[prefix multi]: #prefix_multi
+
 <ConfigReferenceProvider configNamePattern='^(storage_backend).*'>
 
 ## How to Choose a Backend
@@ -29,12 +42,12 @@ The default backend is <ConfigDefaultValue name="storage_backend" />, but you sh
 
 ## Recommended Configuration
 
-```ini
-## Set OpenRiak KV to use the "leveled" storage backend
+  ```ini
+    ## Set OpenRiak KV to use the "leveled" storage backend
 
-```bash
-storage_backend = leveled
-```
+  ```bash
+    storage_backend = leveled
+  ```
 
 ## Quick Config Reference
 
@@ -46,76 +59,76 @@ The configuration options relating to the all storage backends are listed below.
 
 See: [How to Configure the Bitcask Backend](./backends/configure-leveldb)
 
-```ini
-## Set OpenRiak KV to use the "bitcask" storage backend
-storage_backend = bitcask
-```
+  ```ini
+    ## Set OpenRiak KV to use the "bitcask" storage backend
+    storage_backend = bitcask
+  ```
 
-In addition to this setting, there are several other configuration values that can be set to configure and tune the Bitcask backend. You can learn more in the [relevant guide](./configure-bitcask).
+  In addition to this setting, there are several other configuration values that can be set to configure and tune the Bitcask backend. You can learn more in the [relevant guide](./configure-bitcask).
 
 ## LevelDB
 
-See: [How to Configure the LevelDB Backend](./backends/configure-leveldb)
+  See: [How to Configure the LevelDB Backend](./backends/configure-leveldb)
 
-```ini
-## Set OpenRiak KV to use the "leveldb" storage backend
-storage_backend = leveldb
-```
+  ```ini
+    ## Set OpenRiak KV to use the "leveldb" storage backend
+    storage_backend = leveldb
+  ```
 
-In addition to this setting, there are several other configuration values that can be set to configure and tune the LevelDB backend. You can learn more in the [relevant guide](./configure-leveldb).
+  In addition to this setting, there are several other configuration values that can be set to configure and tune the LevelDB backend. You can learn more in the [relevant guide](./configure-leveldb).
 
 ## Leveled
 
-See: [How to Configure the Leveled Backend](./backends/configure-leveled')
+  See: [How to Configure the Leveled Backend](./backends/configure-leveled')
 
-```ini
-## Set OpenRiak KV to use the "leveled" storage backend
-storage_backend = leveled
-```
+  ```ini
+    ## Set OpenRiak KV to use the "leveled" storage backend
+    storage_backend = leveled
+  ```
 
-In addition to this setting, there are several other configuration values that can be set to configure and tune the Leveled backend. You can learn more in the [relevant guide](./configure-leveled).
+  In addition to this setting, there are several other configuration values that can be set to configure and tune the Leveled backend. You can learn more in the [relevant guide](./configure-leveled).
 
 ## Memory
 
-See: [How to Configure the Memory Backend](./backends/configure-leveldb)
+  See: [How to Configure the Memory Backend](./backends/configure-leveldb)
 
-```ini
-## Set OpenRiak KV to use the "memory" storage backend
-storage_backend = memory
-```
+  ```ini
+    ## Set OpenRiak KV to use the "memory" storage backend
+    storage_backend = memory
+  ```
 
-In addition to this setting, there are several other configuration values that can be set to configure and tune the memory backend. You can learn more in the [relevant guide](./configure-memory).
+  In addition to this setting, there are several other configuration values that can be set to configure and tune the memory backend. You can learn more in the [relevant guide](./configure-memory).
 
 
 ## Multi
 
-See: [How to Configure the Multi Backend](./backends/configure-leveldb)
+  See: [How to Configure the Multi Backend](./backends/configure-leveldb)
 
-```ini
-## Set OpenRiak KV to use multiple backends
-storage_backend = multi
-```
+  ```ini
+    ## Set OpenRiak KV to use multiple backends
+    storage_backend = multi
+  ```
 
-This is an advanced option, and allows you to create multiple backends of the same or different types. Each backend can be configured individually.
+  This is an advanced option, and allows you to create multiple backends of the same or different types. Each backend can be configured individually.
 
-Each bucket type will need a property to tell it which backend to use.
+  Each bucket type will need a property to tell it which backend to use.
 
-In addition to this setting, you must set other configuration values to configure and tune the multiple backends you create. You can learn more in the [relevant guide](./configure-multi).
+  In addition to this setting, you must set other configuration values to configure and tune the multiple backends you create. You can learn more in the [relevant guide](./configure-multi).
 
 ## Prefix_Multi
 
-See: [How to Configure the Prefix_Multi Backend](./configure-prefix_multi).
+  See: [How to Configure the Prefix_Multi Backend](./configure-prefix_multi).
 
-```ini
-## Set OpenRiak KV to use multiple backends with automatic backend selection
-storage_backend = prefix_multi
-```
+  ```ini
+    ## Set OpenRiak KV to use multiple backends with automatic backend selection
+    storage_backend = prefix_multi
+  ```
 
-This is an advanced option, and allows you to create multiple backends of the same or different types. Each backend can be configured individually.
+  This is an advanced option, and allows you to create multiple backends of the same or different types. Each backend can be configured individually.
 
-As part of the configuration, you can define which backend should be used based on bucket name.
+  As part of the configuration, you can define which backend should be used based on bucket name.
 
-In addition to this setting, you must set other configuration values to configure and tune the multiple backends you create. You can learn more in the [relevant guide](./configure-prefix_multi).
+  In addition to this setting, you must set other configuration values to configure and tune the multiple backends you create. You can learn more in the [relevant guide](./configure-prefix_multi).
 
 
 </ConfigReferenceProvider>

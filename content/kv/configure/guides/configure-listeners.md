@@ -9,6 +9,10 @@ sidebar_class_name: kv-configure-guides-listeners
 linkFromConfigNames:
   - "listener.*"
 ---
+[root site]: [!site]
+[root project]: [!project]
+[root version]: [!version]
+
 import { ConfigReferenceProvider } from '@site/src/components/ConfigReference/ConfigReferenceContext';
 import { ConfigTable } from '@site/src/components/ConfigReference/ConfigTable';
 import Link from "@docusaurus/Link";

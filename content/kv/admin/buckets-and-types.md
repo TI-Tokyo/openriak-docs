@@ -2,6 +2,9 @@
 title: Buckets and Bucket-types
 sidebar_label: "Buckets and Bucket-types"
 ---
+[root site]: [!site]
+[root project]: [!project]
+[root version]: [!version]
 
 ## Buckets
 
@@ -16,36 +19,38 @@ In OpenRiak/Legacy Riak versions 2.0 and later, it is suggested that you use buc
 ## Bucket types
 
 ## Creating a Bucket Type
+
 When creating a new bucket type, you can create a bucket type without any properties and set individual buckets to be indexed. The step below creates and activates the bucket type:
 
-```bash
-riak admin bucket-type create animals '{"props":{}}'
-riak admin bucket-type activate animals
-```
+    ```bash
+        riak admin bucket-type create animals '{"props":{}}'
+        riak admin bucket-type activate animals
+    ```
 This will produce the following outputs:
 
-```bash
-riak admin bucket-type create animals '{"props":{}}'
-animals created
+    ```bash
+        riak admin bucket-type create animals '{"props":{}}'
+        animals created
 
-WARNING: After activating animals, nodes in this cluster
-can no longer be downgraded to a version of Riak prior to 2.0
-ok
-```
+        WARNING: After activating animals, nodes in this cluster
+        can no longer be downgraded to a version of Riak prior to 2.0
+        ok
+    ```
+
 and
 
-```bash
-riak admin bucket-type activate animals
-animals has been activated
+    ```bash
+        riak admin bucket-type activate animals
+        animals has been activated
 
-WARNING: Nodes in this cluster can no longer be
-downgraded to a version of Riak prior to 2.0
-ok
-```
+        WARNING: Nodes in this cluster can no longer be
+        downgraded to a version of Riak prior to 2.0
+        ok
+    ```
 
 Another possibility is to set the search_index as a default property of the bucket type. This means any bucket under that type will inherit that setting and have its values indexed.
 
-```bash
-riak admin bucket-type create animals '{"props":{"search_index":"famous"}}'
-riak admin bucket-type activate animals
-```
+    ```bash
+        riak admin bucket-type create animals '{"props":{"search_index":"famous"}}'
+        riak admin bucket-type activate animals
+    ```

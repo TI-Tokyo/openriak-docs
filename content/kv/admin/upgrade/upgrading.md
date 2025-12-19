@@ -4,6 +4,10 @@ title: Upgrading OpenRiak
 sidebar_label: "Upgrading"
 ---
 
+[root site]: [!site]
+[root project]: [!project]
+[root version]: [!version]
+
 ## Contents
 1. [Before upgrading](#before-upgrading)
 2. [Example upgrade steps for Debian/Ubuntu](#example-upgrade-steps-for-debian/ubuntu)
@@ -22,74 +26,75 @@ The following is an example of how to ugprade an OpenRiak KV cluster running on 
 
 1. Stop Riak KV:
 
-```bash
-riak stop
-```
+
+    ```bash
+        riak stop
+    ```
 
 2. Back up the Riak KV node’s /etc and /data directories:
 
-```bash
-sudo tar -czf riak_backup.tar.gz /var/lib/riak /etc/riak
-```
+    ```bash
+        sudo tar -czf riak_backup.tar.gz /var/lib/riak /etc/riak
+    ```
 
 3. Upgrade Riak KV:
 
-```bash
-sudo dpkg -i <riak_package_name>.deb
-```
+    ```bash
+        sudo dpkg -i <riak_package_name>.deb
+    ```
 
 4. Restart Riak KV:
 
-```bash
-riak start
-```
+    ```bash
+        riak start
+    ```
 
 5. Verify Riak KV is running the new version:
 
-```bash
-riak versions
-```
+    ```bash
+        riak versions
+    ```
 
-You should see an output that reports your installed version, check that this matches your intended final version such as below:
+    You should see an output that reports your installed version, check that this matches your intended final version such as below:
 
-```bash
-## riak versions
-Installed versions:
-* 3.2.5 permanent
-```
+    ```bash
+        ## riak versions
+        Installed versions:
+        * 3.2.5 permanent
+    ```
 
 6. Wait for the riak_kv service to start:
 
-```bash
-riak admin wait-for-service riak_kv »target_node«»target_node« is the node which you have just upgraded (e.g. riak@192.168.1.11)
-```
+    ```bash
+        riak admin wait-for-service riak_kv »target_node«»target_node« is the node which you have just upgraded (e.g. riak@192.168.1.11)
+    ```
 
-When it is complete, you will see the following output:
+    When it is complete, you will see the following output:
 
-```bash
-riak_kv is up
-```
+    ```bash
+        riak_kv is up
+    ```
 
 7. Wait for any hinted handoff transfers to complete:
 
-While the node was offline, other nodes may have accepted writes on its behalf. This data is transferred to the node when it becomes available. We do this with the follow:
+    While the node was offline, other nodes may have accepted writes on its behalf. This data is transferred to the node when it becomes available. We do this with the follow:
 
-```bash
-riak admin transfers
-```
+    ```bash
+        riak admin transfers
+    ```
 
-When transfers have complete, you will see the following output:
+    When transfers have complete, you will see the following output:
 
-```bash
-## riak admin transfers
+    ```bash
+        ## riak admin transfers
 
-No transfers active
+        No transfers active
 
-Active Transfers:
+        Active Transfers:
 
 
-ok
-```
+        ok
+    ```
 
 8. Repeat the process for the remaining nodes in the cluster.
 
@@ -101,74 +106,74 @@ The following is an example of how to ugprade an OpenRiak KV cluster running on 
 
 1. Stop Riak KV:
 
-```bash
-riak stop
-```
+    ```bash
+        riak stop
+    ```
 
 2. Back up the Riak KV node’s /etc and /data directories:
 
-```bash
-sudo tar -czf riak_backup.tar.gz /var/lib/riak /etc/riak
-```
+    ```bash
+        sudo tar -czf riak_backup.tar.gz /var/lib/riak /etc/riak
+        ```
 
 3. Upgrade Riak KV:
 
-```bash
-sudo dpkg -i <riak_package_name>.deb
-```
+    ```bash
+        sudo dpkg -i <riak_package_name>.deb
+    ```
 
 4. Restart Riak KV:
 
-```bash
-riak start
-```
+    ```bash
+        riak start
+    ```
 
 5. Verify Riak KV is running the new version:
 
-```bash
-riak versions
-```
+    ```bash
+        riak versions
+    ```
 
-You should see an output that reports your installed version, check that this matches your intended final version such as below:
+    You should see an output that reports your installed version, check that this matches your intended final version such as below:
 
-```bash
-## riak versions
-Installed versions:
-* 3.2.5 permanent
-```
+    ```bash
+        ## riak versions
+        Installed versions:
+        * 3.2.5 permanent
+    ```
 
 6. Wait for the riak_kv service to start:
 
-```bash
-riak admin wait-for-service riak_kv »target_node«»target_node« is the node which you have just upgraded (e.g. riak@192.168.1.11)
-```
+    ```bash
+        riak admin wait-for-service riak_kv »target_node«»target_node« is the node which you have just upgraded (e.g. riak@192.168.1.11)
+    ```
 
-When it is complete, you will see the following output:
+    When it is complete, you will see the following output:
 
-```bash
-riak_kv is up
-```
+    ```bash
+        riak_kv is up
+    ```
 
 7. Wait for any hinted handoff transfers to complete:
 
-While the node was offline, other nodes may have accepted writes on its behalf. This data is transferred to the node when it becomes available. We do this with the follow:
+    While the node was offline, other nodes may have accepted writes on its behalf. This data is transferred to the node when it becomes available. We do this with the follow:
 
-```bash
-riak admin transfers
-```
+    ```bash
+        riak admin transfers
+    ```
 
-When transfers have complete, you will see the following output:
+    When transfers have complete, you will see the following output:
 
-```bash
-## riak admin transfers
+    ```bash
+        ## riak admin transfers
 
-No transfers active
+        No transfers active
 
-Active Transfers:
+        Active Transfers:
 
 
-ok
-```
+        ok
+    ```
 
 8. Repeat the process for the remaining nodes in the cluster.
 

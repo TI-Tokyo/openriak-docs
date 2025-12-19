@@ -7,6 +7,13 @@ import { ConfigListing }             from '@site/src/components/ConfigReference/
 import { ConfigDefaultValue }      from '@site/src/components/ConfigReference/ConfigDefaultValue';
 import InlineCodeWithCopy          from '@site/src/components/InlineCodeWithCopy/InlineCodeWithCopy';
 
+[root site]: [!site]
+[root project]: [!project]
+[root version]: [!version]
+[overview]: #overview
+[enable realtime]: #enable-realtime
+[queues]: #queues
+
 Other pages in this section:
 
 1. [Queues](: ../../configure/replication/queue)

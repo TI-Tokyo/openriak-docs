@@ -7,18 +7,23 @@ import { ConfigListing }             from '@site/src/components/ConfigReference/
 import { ConfigDefaultValue }      from '@site/src/components/ConfigReference/ConfigDefaultValue';
 import InlineCodeWithCopy          from '@site/src/components/InlineCodeWithCopy/InlineCodeWithCopy';
 
-## Contents
-1. [Overview](#overview)
-2. [Maximum queue length](#maximum-queue-length)
-3. [Maximum number and size of objects](#Maximum-number-and-size-of-objects)
-4. [Queue filters](#queue-filters)
-5. [Multiple queues](#multiple-queues)
-6. [Transmission Compression](#transmission-compression)
-7. [Configuration Refrence](#configuration-reference)
+[root site]: [!site]
+[root project]: [!project]
+[root version]: [!version]
+
+[overview]: #overview
+[Max queue length]: #maximum-queue-length
+[max num size]: #maximum-number-and-size-of-objects
+[queue filters]: #queue-filters
+[multiple queues]: #multiple-queues
+[transmission compression]: #transmission-compression
+[configuration reference]: #configuration-reference
+
+
+## Overview
 
 NextGenRepl’s Queuing feature is the heart of the replication engine. It stores all changes to be replicated using multiple configuarble queues. It’s limits and size can be configured for your specific NextGenRepl use case.
 
-## Overview
 You can have as many queues are you like with different filters on each queue.
 
 Each queue has 3 levels of priority:
@@ -31,10 +36,9 @@ The sink side replication manager will connect to its list of replication source
 
 The queuing system is always active.
 
----
-**Note**
-Currently all changes listed in this documentation to NextGenRepl must be made by changing the values in the `riak.conf` file.
----
+>[!NOTE]
+>Currently all changes listed in this documentation to NextGenRepl must be made by changing the values in the `riak.conf` file.
+
 
 ## Maximum queue length
 
@@ -76,9 +80,9 @@ You can specific multiple queues by deliminating with the | character.
 
 For example, this will create two queues - one with realtime updates called `allupdates` and one without realtime updates called `offsite_backup`:
 
-```bash
-replrtq_srcqueue = allupdates:any|offsite_backup:block_rtq
-```
+    ```bash
+    replrtq_srcqueue = allupdates:any|offsite_backup:block_rtq
+    ```
 
 ## Transmission compression
 

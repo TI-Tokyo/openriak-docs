@@ -16,6 +16,8 @@ sidebar_label: "Ring Changes"
 [config reference]: [!version]configure/reference
 [partition transfers]: #monitor-transfers
 
+# Ring Changes 
+
 ## Overview
 
 This page covers the variety of methods for performing ring changes within an OpenRiak cluster, whether that be [adding a node][node add], [removing a node][node remove] or [replacing nodes][node replace].
@@ -142,88 +144,88 @@ To remove a node from a cluster:
 
 1. Assuming your cluster is healthy and able to sustain a node leave request, run the following command:
 
-```bash
-riak admin cluster leave
-```
+  ```bash
+    riak admin cluster leave
+  ```
 
 You will see an output similar to below:
 
-```bash
-Success: staged leave request for 'riak@192.168.1.11'
-ok
-```
+  ```bash
+    Success: staged leave request for 'riak@192.168.1.11'
+    ok
+  ```
 
 2. Check the resulting output of cluster plan: 
 
-```bash
-riak admin cluster plan
-```
+  ```bash
+    riak admin cluster plan
+  ```
 
 Expected output of a 2 node cluster:
 
-```bash
-=============================== Staged Changes ================================
-Action         Details(s)
--------------------------------------------------------------------------------
-leave          'riak@192.168.1.11'
--------------------------------------------------------------------------------
+  ```bash
+    =============================== Staged Changes ================================
+    Action         Details(s)
+    -------------------------------------------------------------------------------
+    leave          'riak@192.168.1.11'
+    -------------------------------------------------------------------------------
 
 
-NOTE: Applying these changes will result in 2 cluster transitions
+    NOTE: Applying these changes will result in 2 cluster transitions
 
-###############################################################################
+    ###############################################################################
                          After cluster transition 1/2
-###############################################################################
+    ###############################################################################
 
-================================= Membership ==================================
-Status     Ring    Pending    Node
--------------------------------------------------------------------------------
-leaving    50.0%      0.0%    riak@192.168.1.10
-valid      50.0%    100.0%    riak@192.168.1.11
--------------------------------------------------------------------------------
-Valid:1 / Leaving:1 / Exiting:0 / Joining:0 / Down:0
+    ================================= Membership ==================================
+    Status     Ring    Pending    Node
+    -------------------------------------------------------------------------------
+    leaving    50.0%      0.0%    riak@192.168.1.10
+    valid      50.0%    100.0%    riak@192.168.1.11
+    -------------------------------------------------------------------------------
+    Valid:1 / Leaving:1 / Exiting:0 / Joining:0 / Down:0
 
-WARNING: Not all replicas will be on distinct nodes
+    WARNING: Not all replicas will be on distinct nodes
 
-Transfers resulting from cluster changes: 32
-  32 transfers from 'riak@172.17.0.3' to 'riak@172.17.0.2'
+    Transfers resulting from cluster changes: 32
+    32 transfers from 'riak@172.17.0.3' to 'riak@172.17.0.2'
 
-###############################################################################
+    ###############################################################################
                          After cluster transition 2/2
-###############################################################################
+    ###############################################################################
 
-================================= Membership ==================================
-Status     Ring    Pending    Node
--------------------------------------------------------------------------------
-valid     100.0%      --      riak@192.168.1.11
--------------------------------------------------------------------------------
-Valid:1 / Leaving:0 / Exiting:0 / Joining:0 / Down:0
+    ================================= Membership ==================================
+    Status     Ring    Pending    Node
+    -------------------------------------------------------------------------------
+    valid     100.0%      --      riak@192.168.1.11
+    -------------------------------------------------------------------------------
+    Valid:1 / Leaving:0 / Exiting:0 / Joining:0 / Down:0
 
-WARNING: Not all replicas will be on distinct nodes
+    WARNING: Not all replicas will be on distinct nodes
 
-ok
-```
+    ok
+  ```
 
 3. If the plan looks correct, commit the plan:
 
-```bash
-riak admin cluster commit
-```
+  ```bash
+    riak admin cluster commit
+  ```
 
-With an expected output of:
+  With an expected output of:
 
-```bash
-Cluster changes committed
-ok
-```
+  ```bash
+    Cluster changes committed
+    ok
+  ```
 
 4. Monitor transfers until complete with:
 
-```bash
-riak admin transfers
-```
+  ```bash
+    riak admin transfers
+  ```
 
-This should complete the node leave process.
+  This should complete the node leave process.
 
 ## Replacing a node
 
@@ -231,111 +233,107 @@ Replacing a node is a similar process to adding a node to your cluster, except t
 
 1. First we need to backup the data directory on the node being replaced:
 
-```bash
-sudo tar -czf riak_backup.tar.gz /var/lib/riak /etc/riak
-```
+  ```bash
+    sudo tar -czf riak_backup.tar.gz /var/lib/riak /etc/riak
+  ```
 
-If you run into problems while replacing the node, you can restore the data for the node from this.
+  If you run into problems while replacing the node, you can restore the data for the node from this.
 
 2. Follow the steps above for creating and setting up a new node.
 
 3. Start the new node
 
-```bash
-riak start
-```
+  ```bash
+    riak start
+  ```
 
 4. Plan the join of the new node to the existing cluster. 
 
-```bash
-riak admin cluster join riak@192.168.1.10
-```
+  ```bash
+    riak admin cluster join riak@192.168.1.10
+  ```
 
 5. Plan the replacement of the existing node with the new node:
 
-```bash
-riak admin cluster replace riak@192.168.1.11 riak@192.168.1.12
-```
+  ```bash
+    riak admin cluster replace riak@192.168.1.11 riak@192.168.1.12
+  ```
 
 6. Check the changes with `riak admin cluster plan`:
 
-```bash
-=============================== Staged Changes ================================
-Action         Details(s)
--------------------------------------------------------------------------------
-replace        'riak@192.168.1.11' with 'riak@192.168.1.12'
-join           'riak@192.168.1.10'
--------------------------------------------------------------------------------
+  ```bash
+    =============================== Staged Changes ================================
+    Action         Details(s)
+    -------------------------------------------------------------------------------
+    replace        'riak@192.168.1.11' with 'riak@192.168.1.12'
+    join           'riak@192.168.1.10'
+    -------------------------------------------------------------------------------
 
 
-NOTE: Applying these changes will result in 2 cluster transitions
+    NOTE: Applying these changes will result in 2 cluster transitions
 
-###############################################################################
-                         After cluster transition 1/2
-###############################################################################
+    ###############################################################################
+                             After cluster transition 1/2
+    ###############################################################################
 
-================================= Membership ==================================
-Status     Ring    Pending    Node
--------------------------------------------------------------------------------
-leaving    50.0%      0.0%    riak@192.168.1.10
-valid      50.0%     50.0%    riak@192.168.1.11
-valid       0.0%     50.0%    riak@192.168.1.12
--------------------------------------------------------------------------------
-Valid:2 / Leaving:1 / Exiting:0 / Joining:0 / Down:0
+    ================================= Membership ==================================
+    Status     Ring    Pending    Node
+    -------------------------------------------------------------------------------
+    leaving    50.0%      0.0%    riak@192.168.1.10
+    valid      50.0%     50.0%    riak@192.168.1.11
+    valid       0.0%     50.0%    riak@192.168.1.12
+    -------------------------------------------------------------------------------
+    Valid:2 / Leaving:1 / Exiting:0 / Joining:0 / Down:0
 
-WARNING: Not all replicas will be on distinct nodes
+    WARNING: Not all replicas will be on distinct nodes
 
-Transfers resulting from cluster changes: 32
-  32 transfers from 'riak@192.168.1.11' to 'riak@192.168.1.12'
+    Transfers resulting from cluster changes: 32
+      32 transfers from 'riak@192.168.1.11' to 'riak@192.168.1.12'
 
-###############################################################################
-                         After cluster transition 2/2
-###############################################################################
+    ###############################################################################
+                             After cluster transition 2/2
+    ###############################################################################
 
-================================= Membership ==================================
-Status     Ring    Pending    Node
--------------------------------------------------------------------------------
-valid      50.0%      --      riak@192.168.1.10
-valid      50.0%      --      riak@192.168.1.12
--------------------------------------------------------------------------------
-Valid:2 / Leaving:0 / Exiting:0 / Joining:0 / Down:0
+    ================================= Membership ==================================
+    Status     Ring    Pending    Node
+    -------------------------------------------------------------------------------
+    valid      50.0%      --      riak@192.168.1.10
+    valid      50.0%      --      riak@192.168.1.12
+    -------------------------------------------------------------------------------
+    Valid:2 / Leaving:0 / Exiting:0 / Joining:0 / Down:0
 
-WARNING: Not all replicas will be on distinct nodes
+    WARNING: Not all replicas will be on distinct nodes
 
-ok
-```
+    ok
+  ```
 
----
-**Note**
-You will notice that compared to a normal node join operation, there is an extra step where all 3 nodes are present. This is a temporary step while the data of the exiting node is transfered to the replacement one.
----
+>[!NOTE]
+>You will notice that compared to a normal node join operation, there is an extra step where all 3 nodes are present. This is a temporary step while the data of the exiting node is transfered to the replacement one.
+>
 
 7. Assuming everything looks correct, commit the plan:
 
-```bash
-riak admin cluster commit
-```
+  ```bash
+    riak admin cluster commit
+    ```
 
 You should see the following:
 
-```bash 
-Cluster changes committed
-ok
-```
+  ```bash 
+    Cluster changes committed
+  ok
+  ```
 
 8. If the plan does not look correct, you can clear it with the following command and start again:
 
-```bash
-riak admin cluster clear
-```
+  ```bash
+    riak admin cluster clear
+  ```
 
----
-**Note on Ring Settling**
-
-You’ll need to make sure that no other ring changes occur between the time when you start the new node and the ring settles with the new IP info.
-
-The ring is considered settled when the new node reports `true` when you run the `riak admin ringready` command.
----
+>[!NOTE] Note on ring settings
+>You’ll need to make sure that no other ring changes occur between the time when you start the new node and the ring settles with the new IP info.
+>
+>The ring is considered settled when the new node reports `true` when you run the `riak admin ringready` command.
 
 ## Values used in these examples
 
@@ -346,21 +344,21 @@ The ring is considered settled when the new node reports `true` when you run the
 
 ### Existing nodes
 
-This is a node which is already part of the OpenRiak cluster. A new node can use any of these existing nodes to join a cluster.
+  This is a node which is already part of the OpenRiak cluster. A new node can use any of these existing nodes to join a cluster.
 
-| Node ID | Type of name   | Example          |
-|:--------|:---------------|:-----------------|
-| 1       | IPv4 address   | `riak@10.0.20.1` | 
-| 2       | IPv4 address   | `riak@10.0.20.2` | 
-| 3       | IPv4 address   | `riak@10.0.20.3` | 
+  | Node ID | Type of name   | Example          |
+  |:--------|:---------------|:-----------------|
+  | 1       | IPv4 address   | `riak@10.0.20.1` | 
+  | 2       | IPv4 address   | `riak@10.0.20.2` | 
+  | 3       | IPv4 address   | `riak@10.0.20.3` | 
 
 ### New nodes
 
-These are nodes which have not joined an OpenRiak cluster yet.
+  These are nodes which have not joined an OpenRiak cluster yet.
 
-| Node ID | Type of name   | Example          |
-|:--------|:---------------|:-----------------|
-| 4       | IPv4 address   | `riak@10.0.20.4` | 
-| 5       | IPv4 address   | `riak@10.0.20.5` | 
-| 6       | IPv4 address   | `riak@10.0.20.6` | 
+  | Node ID | Type of name   | Example          |
+  |:--------|:---------------|:-----------------|
+  | 4       | IPv4 address   | `riak@10.0.20.4` | 
+  | 5       | IPv4 address   | `riak@10.0.20.5` | 
+  | 6       | IPv4 address   | `riak@10.0.20.6` | 
 
