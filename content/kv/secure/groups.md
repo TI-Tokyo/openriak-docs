@@ -19,9 +19,10 @@ import InlineCodeWithCopy          from '@site/src/components/InlineCodeWithCopy
 
 This section covers group management for OpenRiak security, the following pages cover other sections of OpenRiak security:
 
-1. [Basics](: ../../configure/secure/basics)
-2. [Networking](: ../../configure/secure/networking)
-4. [Sources](: ../../configure/secure/security-sources)
+    1. [Basics](: ../../configure/secure/basics)
+    2. [Networking](: ../../configure/secure/networking)
+    3. [Users](: ../../configure/secure/users)
+    4. [Sources](: ../../configure/secure/security-sources)
 
 Groups within OpenRiak Security allow for easy management of permissions for multiple users at once, without having to make the changes individually.
 
