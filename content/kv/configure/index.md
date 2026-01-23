@@ -7,6 +7,9 @@ sidebar_custom_props:
 pagination_label: Begin Here
 sidebar_class_name: kv-configure
 ---
+[root site]: [!site]
+[root project]: [!project]
+[root version]: [!version]
 
 ## Configure your OpenRiak KV cluster
 

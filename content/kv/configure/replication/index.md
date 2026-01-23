@@ -60,14 +60,14 @@ Only Riak objects are replicated, not bucket properties or bucket types. Please 
 
 These will be replicated:
 
-* Riak objects
-* Riak Tombstones
-* 2i indexes
+    * Riak objects
+    * Riak Tombstones
+    * 2i indexes
 
 These will not be replicated:
 
-* Bucket types
-* Bucket properties
+    * Bucket types
+    * Bucket properties
 
 ## Queuing System
 
@@ -77,9 +77,9 @@ You can have as many queues as you like with different filters on each queue.
 
 Each queue has 3 levels of priority:
 
-* RealTime changes - these are normally copies of the Riak object, but can be references to the Riak object if the queue gets too large. These are populated automatically when a PUT (which includes inserts, updates and deletes) occurs.
-* FullSync changes - these are references to Riak objects and are populated on the source cluster when the FullSync manager finds differences between the source cluster and the sink cluster.
-* Admin changes - these are references to Riak objects and are populated when the administrator performs actions via the TicTac AAE Fold commands.
+    * RealTime changes - these are normally copies of the Riak object, but can be references to the Riak object if the queue gets too large. These are populated automatically when a PUT (which includes inserts, updates and deletes) occurs.
+    * FullSync changes - these are references to Riak objects and are populated on the source cluster when the FullSync manager finds differences between the source cluster and the sink cluster.
+    * Admin changes - these are references to Riak objects and are populated when the administrator performs actions via the TicTac AAE Fold commands.
 
 The sink side replication manager will connect to its list of replication sources and replicate objects using these priorities - so RealTime changes first, FullSync differences second, and finally the admin changes.
 

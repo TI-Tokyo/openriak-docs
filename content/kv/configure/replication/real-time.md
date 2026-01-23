@@ -24,11 +24,10 @@ NextGenRepl’s RealTime feature provides a considerable improvement over the le
 
 RealTime will ensure that the data in the sink cluster is updated as quickly as possible from the source clusters.
 
----
+>![NOTE]Note on NextGenRepl and TicTac AAE
+>NextGenRepl relies on [TicTac-AAE](: ../../configure/replication/) , so this must be enabled.
 
-NextGenRepl relies on [TicTac-AAE](: ../../configure/replication/) , so this must be enabled.
 
----
 
 ## Overview
 
@@ -36,17 +35,15 @@ As changes occur on the source cluster, NextGenRepl’s RealTime replication sys
 
 A source node can be the source for multiple sink clusters by using multiple queues.
 
----
+>![NOTE]
+>As of writing, all changes listed in this documentation to NextGenRepl must be made by changing the values in the `riak.conf` file.
 
-As of writing, all changes listed in this documentation to NextGenRepl must be made by changing the values in the `riak.conf` file.
-
----
 
 ## Enable RealTime
 
 RealTime changes are added to the queuing system by setting:
 
-```bash
+        ```bash
 replrtq_enablesrc = enabled
 ```
 

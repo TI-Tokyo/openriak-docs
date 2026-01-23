@@ -8,6 +8,14 @@ sidebar_custom_props:
 pagination_label: Release Notes
 sidebar_class_name: kv-about-releasenotes
 ---
+import { ConfigReferenceProvider } from '@site/src/components/ConfigReference/ConfigReferenceContext';
+import { ConfigListing }             from '@site/src/components/ConfigReference/ConfigListing';
+import { ConfigDefaultValue }      from '@site/src/components/ConfigReference/ConfigDefaultValue';
+import InlineCodeWithCopy          from '@site/src/components/InlineCodeWithCopy/InlineCodeWithCopy';
+[root site]: [!site]
+[root project]: [!project]
+[root version]: [!version]
+
 
 ## Release Notes for 3.2.5
 
