@@ -28,9 +28,9 @@ You can have as many queues are you like with different filters on each queue.
 
 Each queue has 3 levels of priority:
 
-1. RealTime changes - these are normally copies of the OpenRiak object, but can be references to the OpenRiak object if the queue gets too large. These are populated automatically when a PUT (which includes inserts, updartes and deletes) occurs.
-2. FullSync changes - these are references to OpenRiak objects and are populated on the source cluster when the FullSync manager finds differenecs betweem the source cluster and the sink cluster.
-3. Admin changes - these are references to OpenRiak objects and are populated when the administrator performs actions via the TicTac AAE Fold commands.
+    1. RealTime changes - these are normally copies of the OpenRiak object, but can be references to the OpenRiak object if the queue gets too large. These are populated automatically when a PUT (which includes inserts, updartes and deletes) occurs.
+    2. FullSync changes - these are references to OpenRiak objects and are populated on the source cluster when the FullSync manager finds differenecs betweem the source cluster and the sink cluster.
+    3. Admin changes - these are references to OpenRiak objects and are populated when the administrator performs actions via the TicTac AAE Fold commands.
 
 The sink side replication manager will connect to its list of replication sources and replicate objects using these priorities - so RealTime changes first, FullSync differences second, and finally the admin changes.
 
@@ -62,17 +62,17 @@ A queue can be filtered in various ways using replrtq_srcqueue. As each sink nod
 
 The filters are:
 
-* any: every RealTime, FullSync and AAE Fold update will be replicated.
-* block_rtq: RealTime updates are blocked - only FullSync and AAE Fold updates will be replicated.
-* bucketname: every RealTime, FullSync and AAE Fold update in any bucket matching this name (regardless of bucket type) will be replicated.
-* bucketprefix: every RealTime, FullSync and AAE Fold update in any bucket name where the name starts with the configured ascii string (regardless of bucket type) will be replicated.
-* buckettype: every RealTime, FullSync and AAE Fold update in any bucket of the given bucket type will be replicated.
+    * any: every RealTime, FullSync and AAE Fold update will be replicated.
+    * block_rtq: RealTime updates are blocked - only FullSync and AAE Fold updates will be replicated.
+    * bucketname: every RealTime, FullSync and AAE Fold update in any bucket matching this name (regardless of bucket type) will be replicated.
+    * bucketprefix: every RealTime, FullSync and AAE Fold update in any bucket name where the name starts with the configured ascii string (regardless of bucket type) will be replicated.
+    * buckettype: every RealTime, FullSync and AAE Fold update in any bucket of the given bucket type will be replicated.
 
 For example, you could set `replrtq_srcqueue` to:
 
-* `q1_ttaaefs:block_rtq` to have a queue called `q1_ttaaefs` that only has FullSync and AAE Fold updates. This is the default.
-* `for_tokyo_cluster:bucketprefix:users_` to have a queue called `for_tokyo_cluster` that will replicate all changes to any bucket with the prefix `users_`.
-* `backup_cluster:buckettype:financialtransactions` to have a queue called `backup_cluster` that will replicate all changes to any bucket with the bucket type of `financialtransactions`.
+    * `q1_ttaaefs:block_rtq` to have a queue called `q1_ttaaefs` that only has FullSync and AAE Fold updates. This is the default.
+    * `for_tokyo_cluster:bucketprefix:users_` to have a queue called `for_tokyo_cluster` that will replicate all changes to any bucket with the prefix `users_`.
+    * `backup_cluster:buckettype:financialtransactions` to have a queue called `backup_cluster` that will replicate all changes to any bucket with the bucket type of `financialtransactions`.
 
 ## Multiple queues
 

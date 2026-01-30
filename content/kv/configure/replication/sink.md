@@ -61,9 +61,9 @@ The list of source nodes for the sink node to connect to is specified in replrtq
 
 Some examples of a single peer connection string would be:
 
-* `node01.source-cluster.mynetwork.com:8098:http` - connect to the FQDN `node01.source-cluster.mynetwork.com` on port `8098` using the HTTP API.
-* `node01.source-cluster.mynetwork.com:8087:pb` - connect to the FQDN `node01.source-cluster.mynetwork.com` on port `8087` using the Protocol Buffer API.
-* `10.2.34.56:8098:http` - connect to the IP address `10.2.34.56` on port `8098` using the HTTP API.
+    * `node01.source-cluster.mynetwork.com:8098:http` - connect to the FQDN `node01.source-cluster.mynetwork.com` on port `8098` using the HTTP API.
+    * `node01.source-cluster.mynetwork.com:8087:pb` - connect to the FQDN `node01.source-cluster.mynetwork.com` on port `8087` using the Protocol Buffer API.
+    * `10.2.34.56:8098:http` - connect to the IP address `10.2.34.56` on port `8098` using the HTTP API.
 
 To specify multiple peer connection strings in replrtq_sinkpeers, join the individual peer connection strings together with a |. For example, this will connect to three nodes in the same source cluster using Procotol Buffers:
 

@@ -44,8 +44,8 @@ A source node can be the source for multiple sink clusters by using multiple que
 RealTime changes are added to the queuing system by setting:
 
         ```bash
-replrtq_enablesrc = enabled
-```
+                replrtq_enablesrc = enabled
+        ```
 
 By default, RealTime is turned off (`disabled`).
 
@@ -55,18 +55,18 @@ At least one replication queue should allow RealTime objects to be added. The ea
 
 By default, there is no queue setup for RealTime. To set the default queue to also allow RealTime queues, change the following:
 
-```bash
-replrtq_srcqueue = q1_ttaaefs:block_rtq
-```
+        ```bash
+                replrtq_srcqueue = q1_ttaaefs:block_rtq
+        ```
 
 to 
 
-```bash
-replrtq_srcqueue = q1_ttaaefs:any
-```
+        ```bash
+                replrtq_srcqueue = q1_ttaaefs:any
+        ```
 
 To add a new queue called `my-replication-queue` that allowed RealTime replication for any bucket, you would add `my-replication-queue:any` to the `replrtq_srcqueue` setting. For example, to keep the default FullSync-only queue and add a second queue for RealTime you would set:
 
-```bash
-replrtq_srcqueue = q1_ttaaefs:block_rtq|my-replication-queue:any
-```
+        ```bash
+                replrtq_srcqueue = q1_ttaaefs:block_rtq|my-replication-queue:any
+        ```
