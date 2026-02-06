@@ -14,7 +14,10 @@ import InlineCodeWithCopy          from '@site/src/components/InlineCodeWithCopy
 [ubuntu]: #a-ubuntu-based-dev-cluster
 [assumptions]: #assumptions
 [settings]: #settings
-[install]: #installing-riak
+[install]: #installing-openriak
+[firstsetup]: #setting-openriak-up-for-the-first-time
+[joining]: #joining-the-nodes-together
+[nextsteps]: #next-steps
 [leveled]: ../../configure/guides/backends/configure-leveled
 
 ## A ubuntu based dev cluster
@@ -38,9 +41,9 @@ This quickp-start guide is aimed at getting a local five-node cluster of OpenRia
   6. We will make both Web (HTTP) and Protocol Buffer API interfaces available.
   7. We will listen on `127.0.0.1` on the default ports (`8098` for web and `8087` for Protocol Buffers).
 
-## Installing Riak
+## Installing OpenRiak
 
-1. From a terminal window download the Riak pack with the following:
+  1. From a terminal window download the Riak pack with the following:
 
 
   ```bash
@@ -48,9 +51,9 @@ This quickp-start guide is aimed at getting a local five-node cluster of OpenRia
   ```
 
 
-2. In the same terminal window, run `dpkg -i riak_3.2.5-OTP25_amd64.deb` to install the Riak package, answering any prompts in the process.
+  2. In the same terminal window, run `dpkg -i riak_3.2.5-OTP25_amd64.deb` to install the Riak package, answering any prompts in the process.
 
-## Setting Riak up for the first time
+## Setting OpenRiak up for the first time
 
   1. Next we need to make some changes to the `riak.conf` file, so we will change to that directory with `cd /etc/riak/`
 
@@ -58,12 +61,13 @@ This quickp-start guide is aimed at getting a local five-node cluster of OpenRia
 
 Once we have the file open, we need to adjust the following configuration values:
 
->[NOTE!]Note on configuration values
+>[!NOTE]Note on configuration values
 >The Node name should include the address that this node is reachable at. For this example we'll use variations of 127.0.0.x, but you should confirm your nodes external IP address.
 
   3. For the `nodename` section, we will change the name to our nodes IP. For this example, we are `nodename = riak@172.0.0.10`.
 
-## Note: It is important that you *only* change the section of the node name after the `riak@` part of the nodename. If you remove `riak@` from the name, then the node will be unreachable.
+>[!NOTE]Note on renaming nodes
+>It is important that you *only* change the section of the node name after the `riak@` part of the nodename. If you remove `riak@` from the name, then the node will be unreachable.
 
   * Change the value of `anti_entropy` from `active` to `passive`
 
@@ -77,7 +81,8 @@ Then save and exit.
 
   4. Once you have made the above changes, you should be able to start your first node with `riak start`
 
-## Note: Once the node has been installed, we recommend verifying the node is able to start and respond to requests by following the steps [here](: ../../setup/install/verify).
+>[!NOTE] Note on Verifying install
+>Once the node has been installed, we recommend verifying the node is able to start and respond to requests by following the steps [here](: ../../setup/install/verify).
 
   1. Repeat thse steps for each of the nodes in your cluster.
 

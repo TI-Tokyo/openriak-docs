@@ -4,7 +4,12 @@ title: Installing On Rocky Linux
 sidebar_label: "Rocky Linux"
 date: 2025-09-16
 ---
-
+[root site]: [!site]
+[root project]: [!project]
+[root version]: [!version]
+[beforeinstall]: #before-installing-openriak
+[Installing]: #installing-openriak
+[verify]: #next-steps---verifying-openriak-install
 [verifying-installation]: : ../../setup/install/verify
 
 ## Installing OpenRiak KV on Ubuntu
@@ -15,73 +20,72 @@ This guide provides the steps for installing OpenRiak KV on Rocky Linux v10.0 (R
 
 Before installing Riak on Oracle Linux 9, we need to add some Erlang dependencies from EPEL first by installing the EPEL repository with the following:
 
-```bash
-sudo yum install -y epel-release
-```
+    ```bash
+      sudo yum install -y epel-release
+    ```
 
 ## Installing OpenRiak
 
-1. From a terminal window download the OpenRiak package with the following:
+  1. From a terminal window download the OpenRiak package with the following:
 
-```bash
-wget https://files.tiot.jp/riak/kv/3.2/3.2.5/oracle/9/riak-3.2.5.OTP25-1.el9.x86_64.rpm
-```
+    ```bash
+      wget https://files.tiot.jp/riak/kv/3.2/3.2.5/oracle/9/riak-3.2.5.OTP25-1.el9.x86_64.rpm
+    ```
 
-2. In the same terminal window, to install the OpenRiak package run this and answer any prompts in the process.
+  2. In the same terminal window, to install the OpenRiak package run this and answer any prompts in the process.
 
-```bash
-sudo yum install -y riak-3.2.5.OTP25-1.el9.x86_64.rpm
-``` 
+    ```bash
+      sudo yum install -y riak-3.2.5.OTP25-1.el9.x86_64.rpm
+    ``` 
 
-3. You should see as the last line this:
+  3. You should see as the last line this:
 
-```
-Complete!
-```
+    ```
+      Complete!
+    ```
 
-If you see that message, OpenRiak has installed successfully.
+  If you see that message, OpenRiak has installed successfully.
 
-4. Confirm the install completed by running:
+  4. Confirm the install completed by running:
 
-```bash
-riak
-```
+    ```bash
+      riak
+    ```
 
 You should see this as the result:
 
+    ```bash
+      $riak
 
-```bash
-$riak
+      Usage: riak [COMMAND] [ARGS]
 
-Usage: riak [COMMAND] [ARGS]
+      Commands:
 
-Commands:
-
-  foreground              Start release with output to stdout
-  remote_console          Connect remote shell to running node
-  rpc [Mod [Fun [Args]]]] Run apply(Mod, Fun, Args) on running node
-  eval [Exprs]            Run expressions on running node
-  stop                    Stop the running node
-  restart                 Restart the applications but not the VM
-  reboot                  Reboot the entire VM
-  pid                     Print the PID of the OS process
-  ping                    Print pong if the node is alive
-  console                 Start the release with an interactive shell
-  console_clean           Start an interactive shell without the release's applications
-  console_boot [File]     Start an interactive shell for boot script [File]
-  daemon                  Start release in the background with run_erl (named pipes)
-  daemon_boot [File]      Start boot script [File] in the background with run_erl (named pipes)
-  daemon_attach           Connect to node started as daemon with to_erl (named pipes)
-  upgrade [Version]       Upgrade the running release to a new version
-  downgrade [Version]     Downgrade the running release to a new version
-  install [Version]       Install a release
-  uninstall [Version]     Uninstall a release
-  unpack [Version]        Unpack a release tarball
-  versions                Print versions of the release available
-  escript                 Run an escript in the same environment as the release
-  status                  Verify node is running and then run status hook scripts
-  admin|repl|debug|chkconfig
-```
+        foreground              Start release with output to stdout
+        remote_console          Connect remote shell to running node
+        rpc [Mod [Fun [Args]]]] Run apply(Mod, Fun, Args) on running node
+        eval [Exprs]            Run expressions on running node
+        stop                    Stop the running node
+        restart                 Restart the applications but not the VM
+        reboot                  Reboot the entire VM
+        pid                     Print the PID of the OS process
+        ping                    Print pong if the node is alive
+        console                 Start the release with an interactive shell
+        console_clean           Start an interactive shell without the release's applications
+        console_boot [File]     Start an interactive shell for boot script [File]
+        daemon                  Start release in the background with run_erl (named pipes)
+        daemon_boot [File]      Start boot script [File] in the background with run_erl (named pipes)
+        daemon_attach           Connect to node started as daemon with to_erl (named pipes)
+        upgrade [Version]       Upgrade the running release to a new version
+        downgrade [Version]     Downgrade the running release to a new version
+        install [Version]       Install a release
+        uninstall [Version]     Uninstall a release
+        unpack [Version]        Unpack a release tarball
+        versions                Print versions of the release available
+        escript                 Run an escript in the same environment as the release
+        status                  Verify node is running and then run status hook scripts
+        admin|repl|debug|chkconfig
+    ```
 
 ## Next steps - Verifying OpenRiak install
 
