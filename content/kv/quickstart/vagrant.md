@@ -13,6 +13,7 @@ date: 2025-11-07
 [create]: #creating-the-vagrant-file
 [additional]: #creating-additional-nodes
 [finalnode]: #adding-the-final-node-and-joining-all-the-nodes-together
+[next]: #next-steps
 
 ## A vagrant-ubuntu based dev cluster
 
@@ -84,10 +85,15 @@ cp riak* /vagrant/data
 ```ruby
 # Install Riak
 sudo dpkg -i riak_3.4.0-OTP26_amd64.deb || sudo apt-get -f install -y
+
+# Adjust riak.config values for Nodename, listener IPs.
 sudo sed -i "s/nodename = riak@127.0.0.1/nodename = riak@192.168.56.20/" /etc/riak/riak.conf
 sudo sed -i "s/listener.http.internal = 127.0.0.1:8098/listener.http.internal = 192.168.56.20:8098/" /etc/riak/riak.conf
+
+# Disable Active Entropy, and enable Tictac AAE and change backend to leveled
 sudo sed -i "s/anti_entropy = active/anti_entropy = passive/" /etc/riak/riak.conf
 sudo sed -i "s/storage_backend = bitcask/storage_backend = leveled/" /etc/riak/riak.conf
+sudo sed -i "s/tictacaae_active = passive/tictacaae_active = active/" /etc/riak/riak.conf
 sudo rm -rf /tmp/erl_pipes
 
 # OS tweak for better Riak performance
@@ -95,9 +101,10 @@ echo "* soft nofile 65536" | sudo tee -a /etc/security/limits.conf
 echo "* hard nofile 65536" | sudo tee -a /etc/security/limits.conf
 ```
 
-This section willoutut the following to the console:
+This section will out put the following to the console:
 
 ```bash
+# Set nofile limits
   riak1: * soft nofile 65536
   riak1: * hard nofile 65536
 ```
@@ -175,7 +182,7 @@ This section can be repeated for nodes 2, 3 and 4.
 We've added a function for the command line to wait 20 seconds before running `riak admin cluster join` as this allows for OpenRiak to fully start on the backend, otherwise this function will fail.
 
 
-# Adding the final node and joining all the nodes together
+## Adding the final node and joining all the nodes together
 
 The final node creation process also includes the following commands:
 
@@ -229,12 +236,14 @@ sleep 20
 sudo riak admin cluster join riak@127.0.0.1
 sudo riak admin cluster plan
 sudo riak admin cluster commit
-
+echo "Cluster built and joined!"
 SHELL
   end
 end
 ```
 
-### Next Steps
+When the final node has been built, the console will output "riak5: Cluster built and joined!" to indicate all tasks are complete.
+
+# Next Steps
 
 That's it! you've now got a fully functional 5 node OpenRiak KV cluster operational. You can now add data and perform other functions as you wish.
