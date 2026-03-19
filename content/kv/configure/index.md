@@ -13,6 +13,7 @@ sidebar_class_name: kv-configure
 
 ## Configure your OpenRiak KV cluster
 
+For the basics on 
 ## Configuration Reference
 
 See [Configuration Reference](./reference)

@@ -7,13 +7,11 @@ sidebar_label: "Basic Configuration"
 [root project]: [!project]
 [root version]: [!version]
 
-[overview]: #overview
 [ring-size]: #ring-size
 [verify ring size]: #verifying-ring-size
 
-## Overview
-
-This page covers the following: [Ring Size][ring-size], [Backend][backend] and [Enabling TicTac Active Anti-Entropy][enable-TTAAE]
+>[!IDEA]Overview
+>This page covers the following: [Ring Size][ring-size], [Backend][backend] and [Enabling TicTac Active Anti-Entropy][enable-TTAAE]
 
 ## Ring Size
 

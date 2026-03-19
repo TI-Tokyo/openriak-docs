@@ -9,7 +9,8 @@ sidebar_class_name: kv-configure-guides-backends-leveldb
 ---
 import { ConfigReferenceProvider } from '@site/src/components/ConfigReference/ConfigReferenceContext';
 import { ConfigListing }           from '@site/src/components/ConfigReference/ConfigListing';
-
+import ChosenOS                    from '@site/src/components/OSSelection/ChosenOS';
+import { ConfigDefaultValue }      from '@site/src/components/ConfigReference/ConfigDefaultValue';
 <ConfigReferenceProvider configNamePattern='^(storage_backend|leveldb\.).*'>
 
 ## How to Configure LevelDB

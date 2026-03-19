@@ -16,3 +16,5 @@ date: 2025-09-16
 Let's get **OpenRiak KV** running FAST.
 
 The fastest way to get an instance of OpenRiak up is to use Docker. See [Quick Start with Docker][quick-start-with-docker] for details.
+
+We also provide two quick-start options for [Vagrant][vagrant], [Azure][azure] and [AWS][aws].
