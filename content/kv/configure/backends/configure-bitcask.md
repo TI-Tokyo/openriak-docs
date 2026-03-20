@@ -21,17 +21,24 @@ import { ConfigDefaultValue }      from '@site/src/components/ConfigReference/Co
 [hintfiles]: #hint-file-crc-check
 [I/Omode]: #io-mode
 [osync]: #o_sync-on-linux
-
+[policy]: #merge-policy
+[thresholds]: #merge-thresholds
+[interval]: #merge-interval
+[foldthreshold]: #fold-keys-threshold
+[expiration]: #automatic-expiration
 
 <ConfigReferenceProvider configNamePattern='^(storage_backend|bitcask\.).*'>
 
 ## How to Configure Bitcask
+
 The default configuration values for Bitcask are as follows:
 
   ```bash
     bitcask.data_root = ./data/bitcask
     bitcask.io_mode = erlang
   ```
+
+Bitcask is the Default backend for OpenRiak currently, so there is no need to make any changes to your `riak.conf` file to run it on first start.
 
 All of the other available settings listed below can be added to your `riak.conf file`.
 
