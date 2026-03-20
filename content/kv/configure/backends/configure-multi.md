@@ -5,7 +5,7 @@ sidebar_label: Multi Backend
 sidebar_custom_props:
   icon: settings
 pagination_label: Configure Multi Backend
-sidebar_class_name: kv-configure-guides-backends-multi
+sidebar_class_name: kv-configure-backends-multi
 ---
 import { ConfigReferenceProvider } from '@site/src/components/ConfigReference/ConfigReferenceContext';
 import { ConfigListing }           from '@site/src/components/ConfigReference/ConfigListing';

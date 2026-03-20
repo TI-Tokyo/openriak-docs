@@ -5,7 +5,7 @@ sidebar_label: Prefix_Multi Backend
 sidebar_custom_props:
   icon: settings
 pagination_label: Configure Prefix_Multi Backend
-sidebar_class_name: kv-configure-guides-backends-prefix_multi
+sidebar_class_name: kv-configure-backends-prefix_multi
 ---
 import { ConfigReferenceProvider } from '@site/src/components/ConfigReference/ConfigReferenceContext';
 import { ConfigListing }           from '@site/src/components/ConfigReference/ConfigListing';

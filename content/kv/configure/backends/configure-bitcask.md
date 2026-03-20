@@ -5,7 +5,7 @@ sidebar_label: Bitcask Backend
 sidebar_custom_props:
   icon: settings
 pagination_label: Configure Bitcask
-sidebar_class_name: kv-configure-guides-backends-bitcask
+sidebar_class_name: kv-configure-backends-bitcask
 ---
 import { ConfigReferenceProvider } from '@site/src/components/ConfigReference/ConfigReferenceContext';
 import { ConfigListing }           from '@site/src/components/ConfigReference/ConfigListing';
@@ -50,9 +50,10 @@ In general, you will not need to adjust this setting. If, however, you begin to 
 
 Open timeout is specified using the `bitcask.sync.open_timeout` parameter, and can be set in terms of seconds, minutes, hours, etc. The following example sets the parameter to 10 seconds:
 
-  ```
+  ```bash
     bitcask.sync.open_timeout = 10s
   ```
+
 ### Sync Strategy
 
 Bitcask allows you to configure the durability of writes by defining when to synchronize data to disk, this is known as a Sync Strategy. By default, this is set to `none` which means that the data will be written to disk when the Operating System flushes it's buffers. The risk with this setting is that if the system fails for any reasons (such as sudden power loss), then any data left in those buffers is lost.

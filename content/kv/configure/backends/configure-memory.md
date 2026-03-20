@@ -5,7 +5,7 @@ sidebar_label: Memory Backend
 sidebar_custom_props:
   icon: settings
 pagination_label: Configure Memory
-sidebar_class_name: kv-configure-guides-backends-memory
+sidebar_class_name: kv-configure-backends-memory
 ---
 import { ConfigReferenceProvider } from '@site/src/components/ConfigReference/ConfigReferenceContext';
 import { ConfigListing }           from '@site/src/components/ConfigReference/ConfigListing';

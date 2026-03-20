@@ -5,7 +5,7 @@ sidebar_label: Leveled Backend
 sidebar_custom_props:
   icon: settings
 pagination_label: Configure Leveled
-sidebar_class_name: kv-configure-guides-backends-leveled
+sidebar_class_name: kv-configure-backends-leveled
 ---
 import { ConfigReferenceProvider } from '@site/src/components/ConfigReference/ConfigReferenceContext';
 import { ConfigListing }           from '@site/src/components/ConfigReference/ConfigListing';

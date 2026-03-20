@@ -5,7 +5,7 @@ sidebar_label: LevelDB Backend
 sidebar_custom_props:
   icon: settings
 pagination_label: Configure LevelDB
-sidebar_class_name: kv-configure-guides-backends-leveldb
+sidebar_class_name: kv-configure-backends-leveldb
 ---
 import { ConfigReferenceProvider } from '@site/src/components/ConfigReference/ConfigReferenceContext';
 import { ConfigListing }           from '@site/src/components/ConfigReference/ConfigListing';
