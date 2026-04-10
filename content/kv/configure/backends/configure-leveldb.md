@@ -15,9 +15,9 @@ import { ConfigDefaultValue }      from '@site/src/components/ConfigReference/Co
 [root project]: [!project]
 [root version]: [!version]
 [howconfigure]: #how-to-configure-leveldb
+[recommendations]: #recommended-settings
 [quickref]: #quick-config-reference
 <ConfigReferenceProvider configNamePattern='^(storage_backend|leveldb\.).*'>
-
 
 ## How to Configure LevelDB
 
@@ -26,6 +26,10 @@ To enable levelDB in your `riak.conf` file, you need to chane the `storage_backe
   ```bash
     storage_backend = leveldb
   ```
+
+>[!NOTE]Note on replacing an existing backend
+>If you replace the existing specified backend by removing it or commenting it out as shown in the above example, data belonging to the previously specified backend will still be preserved on the filesystem but will no longer be accessible through OpenRiak unless the backend is enabled again.
+>If you require multiple backends in your configuration, please consult the [Multi-backend(: ../../configure/backends/configure-multi)] documentation.
 
 LevelDB's default values can be adjusted by adding/changing the following values in the leveldb section of the `riak.conf`.
 
@@ -40,6 +44,29 @@ Additional Configuration values are available and can be added to your `riak.con
 
 ## Recommended settings
 
+### Block Device Scheduler
+
+Beginning with the 2.6 kernel, Linux gives you a choice of four I/O elevator models. We recommend using the NOOP elevator. You can do this by changing the scheduler on the Linux boot line: `elevator=noop`.
+
+### ext4 filesystem Options
+
+The ext4 filesystem defaults include two options that increase integrity but slow performance. Because OpenRiak’s integrity is based on multiple nodes holding the same data, these two options can be changed to boost LevelDB’s performance. We recommend setting: `barrier`=0 and `data`=writeback.
+
+### CPU Throttling
+
+If CPU throttling is enabled, disabling it can boost LevelDB performance in some cases.
+
+### No Entropy
+
+If you are using https protocol, the 2.6 kernel is widely known for stalling programs waiting for SSL entropy bits. If you are using https, we recommend installing the [HAVEGE](https://www.irisa.fr/caps/projects/hipsor/) package for pseudorandom number generation.
+
+### clocksource
+
+We recommend setting `clocksource=hpet` on your Linux kernel’s `boot` line. The TSC clocksource has been identified to cause issues on machines with multiple physical processors and/or CPU throttling.
+
+### swappiness
+
+We recommend setting `vm.swappiness=0` in `/etc/sysctl.conf`. The `vm.swappiness default` is 60, which is aimed toward laptop users with application windows. This was a key change for MySQL servers and is often referenced in database performance literature.
 
 ## Quick Config Reference
 

@@ -40,6 +40,10 @@ The default configuration values for Bitcask are as follows:
 
 Bitcask is the Default backend for OpenRiak currently, so there is no need to make any changes to your `riak.conf` file to run it on first start.
 
+>[!NOTE]Note on replacing an existing backend
+>If you replace the existing specified backend by removing it or commenting it out as shown in the above example, data belonging to the previously specified backend will still be preserved on the filesystem but will no longer be accessible through OpenRiak unless the backend is enabled again.
+>If you require multiple backends in your configuration, please consult the [Multi-backend(: ../../configure/backends/configure-multi)] documentation.
+
 All of the other available settings listed below can be added to your `riak.conf file`.
 
 ### Open Timeout
