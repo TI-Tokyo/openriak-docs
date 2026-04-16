@@ -182,3 +182,12 @@ Performs a read-repair on the keys that meet the filter parameters.
 You can read more [here](./repair-keys.md)
 
 ### Other functions
+
+`aae_fold` has a number of functions not listed above that can be called, but these are mostly for internal use by OpenRiak. We do not recommend using these functions without a good understanding of the source code:
+
+** `fetch_clocks_nval`
+** `fetch_clocks_range`
+** `merge_branch_nval`
+** `merge_root_nval`
+** `merge_tree_range`
+** `repl_keys_range`
