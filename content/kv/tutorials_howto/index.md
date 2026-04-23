@@ -1,17 +1,16 @@
 ---
-sidebar_position: 3
-title: Quick Start
-sidebar_label: Quick Start
+sidebar_position: 1
+title: Tutorials
+sidebar_label: Tutorials
 sidebar_custom_props:
   icon: rocket
 pagination_label: Begin Here
-sidebar_class_name: kv-quickstart
-date: 2025-09-16
+sidebar_class_name: kv-tutorials
+date: 2026-04-22
 ---
 
-[quick-start-with-docker]: ./docker
 
-## Quick Start
+## Tutorials
 
 Let's get **OpenRiak KV** running FAST.
 

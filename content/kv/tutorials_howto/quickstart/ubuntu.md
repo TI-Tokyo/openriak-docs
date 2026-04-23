@@ -45,11 +45,9 @@ This quickp-start guide is aimed at getting a local five-node cluster of OpenRia
 
   1. From a terminal window download the Riak pack with the following:
 
-
   ```bash
     wget https://files.tiot.jp/riak/kv/3.2/3.2.5/ubuntu/noble64/riak_3.2.5-OTP25_amd64.deb
   ```
-
 
   2. In the same terminal window, run `dpkg -i riak_3.2.5-OTP25_amd64.deb` to install the Riak package, answering any prompts in the process.
 

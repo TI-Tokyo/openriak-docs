@@ -21,6 +21,7 @@ date: 2025-09-16
 [docker]: https://www.docker.com/
 [leveled]: ../../configure/guides/backends/configure-leveled
 
+>
 ## A Dev Node in under 5 mins!
 
 This Quick Start guide is aimed at getting a local single-node cluster of OpenRiak KV for local testing and development.
