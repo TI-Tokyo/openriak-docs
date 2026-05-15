@@ -294,7 +294,8 @@ Vagrant.configure("2") do |config|
   # Riak 1 #
   ##########
   config.vm.define "riak1" do |riak|
-    riak.vm.box = "rockylinux/10"
+    riak1.vm.box = "generic/rocky9"
+    config.vm.box_version = "4.3.12"
     riak.vm.hostname = "riak1"
     riak.vm.network :private_network, ip: "127.0.0.1"
 
