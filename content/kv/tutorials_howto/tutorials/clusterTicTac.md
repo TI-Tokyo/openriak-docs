@@ -55,7 +55,7 @@ The following section will show the intended structure of each cluster and the n
 |       riak5b      | 192.168.56.24 |
 | ------------------|---------------|
 
-## Gettin started - Installing OpenRiak
+## Getting started - Installing OpenRiak
 
 This guide assumes you are using a clean Ubuntu image intended for an enterprise environment.
 
