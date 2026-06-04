@@ -6,15 +6,16 @@ pagination_label: Planning
 sidebar_class_name: kv-setup-plan
 date: 2025-10-13
 ---
+[root site]: [!site]
+[root project]: [!project]
+[root version]: [!version]
+[strengths]: #strengths
+[weaknesses]: #weaknesses
+[enable]: #enabling-multiple-backends
+[confiuring]: #configuring-multiple-backends
 
-## Contents
-1. [Introduction](#introduction)
-2. [Enabling Multiple backends](#enabling-multiple-backends)
-3. [Configuring multiple backends](#configuring-multiple-backends)
-
-## Introduction 
-
-OpenRiak allows you to run multiple backends within a single OpenRiak cluster. Selecting the Multi backend enables you to use different storage backends for different buckets. Any combination of the three available backends — Bitcask, LevelDB, and Memory can be used.
+>[!MEMO] Introduction to Multi-Backend
+>OpenRiak allows you to run multiple backends within a single OpenRiak cluster. Selecting the Multi backend enables you to use different storage backends for different buckets. Any combination of the three available backends — Bitcask, LevelDB, and Memory can be used.
 
 
 ## Enabling Multiple Backends

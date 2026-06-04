@@ -4,18 +4,19 @@ title: Memory backend
 sidebar_label: Memory
 pagination_label: Planning
 sidebar_class_name: kv-setup-plan
-date: 2025-10-02
+date: 2026-06-04
 ---
+[root site]: [!site]
+[root project]: [!project]
+[root version]: [!version]
+[strengths]: #strengths
+[weaknesses]: #weaknesses
+[installenable]: #installing-and-enabling
+[confiuring]: #configuring-memory-backend
+
 [configuring-memory]: : ../../setup/install/plan/choosing-a-backend/memory
 
-## Contents
-
-1. [Introduction](#introduction)
-2. [Weaknesses](#weaknesses)
-3. [Installing and enabling](#installing-and-enabling)
-4. [Configuring Memory backend](#configuring-memory-backend)
-
-## Introduction
+>[!MEMO]Introduction to Memory backend
 
 The Memory storage backend relies entirely on in-memory tables to hold data, which means nothing is ever saved to disk or any other storage medium. It's ideally suited for testing Riak clusters or managing small, temporary data in live production environments. It is generally not recommended for long-term data storage use in production.
 
@@ -29,61 +30,61 @@ OpenRiak comes packaged with memory backend, so there is no need for further ste
 
 You can select memory as your backend by changing the value of `storage_backend` in your `riak.conf` file to `memory` as it appears below:
 
-```
-storage_backend = memory
-```
+    ```bash
+        storage_backend = memory
+    ```
 
 ### Note: If you replace the existing specified backend by removing it or commenting it out as shown in the above example, data belonging to the previously specified backend will still be preserved on the filesystem but will no longer be accessible through Riak unless the backend is enabled again.
 
  You can verify that memory is currently being used as the storage backend on an active cluster by checking the `riak.conf` file for the following line:
 
-```
-storage_backend = memory
-```
+    ```bash
+        storage_backend = memory
+    ```
 
 If the value of `storage_backend` does not match above, then OpenRiak is not using memory as it's backend.
 
 You can also use the following command to check this value for a single node or all nodes in a cluster:
 
-```bash
-$ sudo riak admin show storage_backend
-```
+    ```bash
+        $ sudo riak admin show storage_backend
+    ```
 
 The output for a single node should appear as follows:
 
-```
-+--------------+-----------------------+
-|     node     |    storage_backend    |
-+--------------+-----------------------+
-|riak@127.0.0.1|riak_kv_memory_backend|
-+--------------+-----------------------+
+    ```bash
+        +--------------+-----------------------+
+        |     node     |    storage_backend    |
+        +--------------+-----------------------+
+        |riak@127.0.0.1|riak_kv_memory_backend|
+        +--------------+-----------------------+
 
-ok
-```
+        ok
+    ```
 
 To check the value on every node, you need to add the -all flag as follows:
 
-```bash
-$ sudo riak admin show storage_backend -all
-```
+    ```bash
+        $ sudo riak admin show storage_backend -all
+    ```
 
-```
-+--------------+-----------------------+
-|     node     |    storage_backend    |
-+--------------+-----------------------+
-|riak@127.0.0.1|riak_kv_memory_backend|
-+--------------+-----------------------+
-|riak@127.0.0.2|riak_kv_memory_backend|
-+--------------+-----------------------+
-|riak@127.0.0.3|riak_kv_memory_backend|
-+--------------+-----------------------+
-|riak@127.0.0.4|riak_kv_memory_backend|
-+--------------+-----------------------+
-|riak@127.0.0.5|riak_kv_memory_backend|
-+--------------+-----------------------+
+    ```bash
+        +--------------+-----------------------+
+        |     node     |    storage_backend    |
+        +--------------+-----------------------+
+        |riak@127.0.0.1|riak_kv_memory_backend|
+        +--------------+-----------------------+
+        |riak@127.0.0.2|riak_kv_memory_backend|
+        +--------------+-----------------------+
+        |riak@127.0.0.3|riak_kv_memory_backend|
+        +--------------+-----------------------+
+        |riak@127.0.0.4|riak_kv_memory_backend|
+        +--------------+-----------------------+
+        |riak@127.0.0.5|riak_kv_memory_backend|
+        +--------------+-----------------------+
 
-ok
-```
+        ok
+    ```
 
 ## Configuring memory backend
 
@@ -98,19 +99,19 @@ You can configure maximum memory using the `memory_backend.max_memory_per_vnode`
 
 The following are all possible settings:
 
-```
-memory_backend.max_memory_per_vnode = 500KB
-memory_backend.max_memory_per_vnode = 10MB
-memory_backend.max_memory_per_vnode = 2GB
-```
+    ```bash
+        memory_backend.max_memory_per_vnode = 500KB
+        memory_backend.max_memory_per_vnode = 10MB
+        memory_backend.max_memory_per_vnode = 2GB
+    ```
 
 ### Time-To-Live (TTL)
 
 The time-to-live (TTL) parameter specifies the amount of time an object remains in memory before it expires. The minimum time is one second. You can specify the value in seconds, minutes, hours, days etc. The following are possible values for the parameters:
 
-```
-memory_backend.ttl = 1s
-memory_backend.ttl = 10m
-memory_backend.ttl = 3h
-memory_backend.ttl = 1d
-```
+    ```bash
+        memory_backend.ttl = 1s
+        memory_backend.ttl = 10m
+        memory_backend.ttl = 3h
+        memory_backend.ttl = 1d
+    ```

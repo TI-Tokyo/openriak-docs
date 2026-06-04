@@ -12,7 +12,6 @@ date: 2026-06-02
 [joinmultiple]: #joining-multiple-nodes-together-into-a-cluster
 [removeanode]: #removing-a-node-from-a-cluster
 
-
 >[!MEMO] Introduction
 >This tutorial is intended to teach you how to add or remove a node from a cluster, or to join a group of nodes together at once.
 
