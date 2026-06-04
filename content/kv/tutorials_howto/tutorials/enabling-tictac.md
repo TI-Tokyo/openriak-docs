@@ -131,5 +131,6 @@ This means you will need to wait for those partitions to finish before continuin
 
 4. Once you have completed the above on your first node, you can move onto the next node in the sequence.
 
+That's it! Once you've completed this, assuming no issues, you'll be good to go!
 
 

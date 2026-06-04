@@ -8,6 +8,8 @@ date: 2025-09-16
 [root project]: [!project]
 [root version]: [!version]
 [assumptions]: #assumptions
+[design]: #cluster-design
+[installingg]: #getting-started---installing-openriak
 
 >[!MEMO] Introduction
 >This page is intended to provide a detailed guide on setting up 2 full OpenRiak clusters of 5 nodes each, running TicTAc AAE on the leveled backend, with Nextgen Replication running
@@ -87,3 +89,4 @@ This guide assumes you are using a clean Ubuntu image intended for an enterprise
         Setting up riak (3.4.0-OTP26) ...
     ```
 
+3.
