@@ -8,6 +8,9 @@ date: 2026-06-02
 [root project]: [!project]
 [root version]: [!version]
 [assumptions]: #assumptions
+[joinanode]: #joining-a-node-to-an-existing-cluster
+[joinmultiple]: #joining-multiple-nodes-together-into-a-cluster
+[removeanode]: #removing-a-node-from-a-cluster
 
 
 >[!MEMO] Introduction
@@ -141,6 +144,106 @@ Once transfers have completed, you'll see the following:
     ```
 
 This indicates the join process has been completed!
+
+## Joining multiple nodes together into a cluster:
+
+Before you join any nodes, for the sake of simplicity, you should select one node to act as the leader for the join activities. This is the node that the rest of the nodes in this cluster will be joining. We will call this node the "leader" which is represented by the nodename `riak@192.168.0.20`.
+
+1. Prepare the first node to join your leader., ensuring that the contents of `riak.conf` file are configured correctly and, where needed, identical to the other nodes in the cluster you are intending to form.
+
+2. On the first node you are joining to the cluster, run the following command, replacing the nodenames with the ones for your nodes:
+
+    ```bash
+        riak admin cluster join riak@192.168.0.20
+    ```
+
+This will produce the following output:
+
+    ```bash
+        Success: staged join request for 'riak@192.168.0.21' to 'riak@192.168.0.20'
+        ok
+    ```
+
+3. Assuming the previous steps have worked correctly, you need to check the cluster plan:
+
+    ```bash
+        riak admin cluster plan
+    ```
+
+You will see a similar output to below:
+
+    ```bash
+        =============================== Staged Changes ================================
+        Action         Details(s)
+        -------------------------------------------------------------------------------
+        join           'riak@192.168.56.21'
+        join           'riak@192.168.56.22'
+        join           'riak@192.168.56.23'
+        join           'riak@192.168.56.24'
+        -------------------------------------------------------------------------------
+
+
+        NOTE: Applying these changes will result in 1 cluster transition
+
+        ###############################################################################
+                                 After cluster transition 1/1
+        ###############################################################################
+
+        ================================= Membership ==================================
+        Status     Ring    Pending    Node
+        -------------------------------------------------------------------------------
+        valid     100.0%     20.3%    riak@192.168.56.20
+        valid       0.0%     20.3%    riak@192.168.56.21
+        valid       0.0%     20.3%    riak@192.168.56.22
+        valid       0.0%     20.3%    riak@192.168.56.23
+        valid       0.0%     18.8%    riak@192.168.56.24
+        -------------------------------------------------------------------------------
+        Valid:5 / Leaving:0 / Exiting:0 / Joining:0 / Down:0
+
+        Transfers resulting from cluster changes: 51
+        13 transfers from 'riak@192.168.56.20' to 'riak@192.168.56.23'
+        13 transfers from 'riak@192.168.56.20' to 'riak@192.168.56.22'
+        13 transfers from 'riak@192.168.56.20' to 'riak@192.168.56.21'
+        12 transfers from 'riak@192.168.56.20' to 'riak@192.168.56.24'
+
+        ok
+    ```
+
+This plan shows you what notes are joining your leader, and the layout of the ring after the plan is commited.
+You should check this plan thoroughly to ensure it is correct configured.
+
+4. Once you've checked the plan, you can commit the changes:
+
+    ```bash
+        riak admin cluster commit
+    ```
+
+You will see the following output:
+
+    ```bash
+        Cluster changes committed
+        ok
+    ```
+
+5. You will now need to monitor transfers, using the following:
+
+    ```bash
+        riak admin transfers
+    ```
+
+Once transfers have completed, you'll see the following:
+
+    ```bash
+        No transfers active
+
+        Active Transfers:
+
+
+        ok
+    ```
+
+This indicates the join process has been completed and you can now continue with your cluster!
+
 
 ## Removing a node from a cluster
 
