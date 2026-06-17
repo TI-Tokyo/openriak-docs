@@ -1,7 +1,7 @@
 ---
 title: Running a Cluster
 sidebar_label: "Running a Cluster"
-date: 2025-11-13
+date: 2026-06-16
 ---
 import { ConfigReferenceProvider } from '@site/src/components/ConfigReference/ConfigReferenceContext';
 import { ConfigListing }             from '@site/src/components/ConfigReference/ConfigListing';
@@ -12,7 +12,6 @@ import InlineCodeWithCopy          from '@site/src/components/InlineCodeWithCopy
 [namenode]: #name-your-node
 [start]: #start-the-node
 [addnode]: #adding-nodes-to-your-cluster
-
 
 
 All configuration changes in this document take place in your nodes `riak.conf` file unless otherwise stated.
