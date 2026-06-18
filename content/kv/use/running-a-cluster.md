@@ -7,6 +7,9 @@ import { ConfigReferenceProvider } from '@site/src/components/ConfigReference/Co
 import { ConfigListing }             from '@site/src/components/ConfigReference/ConfigListing';
 import { ConfigDefaultValue }      from '@site/src/components/ConfigReference/ConfigDefaultValue';
 import InlineCodeWithCopy          from '@site/src/components/InlineCodeWithCopy/InlineCodeWithCopy';
+[root site]: [!site]
+[root project]: [!project]
+[root version]: [!version]
 [configure]: #configure-the-first-node
 [setipport]: #set-your-listener-ip-address-and-port
 [namenode]: #name-your-node
