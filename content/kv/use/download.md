@@ -1,18 +1,28 @@
 ---
-sidebar_position: 8
+sidebar_position: 1
 title: Download OpenRiak KV
-sidebar_label: Download
-sidebar_custom_props:
-  icon: use
-pagination_label: Use OpenRiak KV
-sidebar_class_name: kv-download
+sidebar_label: "Download"
+date: 2026-06-24
 ---
+[root site]: [!site]
+[root project]: [!project]
+[root version]: [!version]
+[downloading]: #downloading-openriak-kv-325
+[supported]: #supported-operating-systems
+[alpine]: #alpine-linux
+[Amazon]: #amazon-linux
+[CentOS]: #centos
+[debian]: #debian
+[oracle]: #oracle-linux
+[redhat]: #red-hat
+[rapsbian]: #raspbian
+[ubuntu]: #ubuntu
 
-## Downloading OpenRiak KV 3.2.5
+# Downloading OpenRiak KV 3.2.5
 
 OpenRiak KV is a distributed NoSQL database designed to deliver maximum data availability by distributing data across multiple servers. As long as your OpenRiak KV client can reach one Riak node, it should be able to write data.
 
-## Supported Operating Systems
+# Supported Operating Systems
 
 The following Operating systems have been tested with the most recent version of OpenRiak KV
 
