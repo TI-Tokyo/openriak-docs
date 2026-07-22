@@ -1,6 +1,7 @@
 ---
 title: Ring Changes
 sidebar_label: "Ring Changes"
+date: 2026-07-22
 ---
 
 [root site]: [!site]

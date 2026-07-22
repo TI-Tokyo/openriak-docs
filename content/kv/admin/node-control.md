@@ -1,7 +1,7 @@
 ---
 title: Node Control
 sidebar_label: "Node Control"
-date: 2026-06-25
+date: 2026-07-07
 ---
 [root site]: [!site]
 [root project]: [!project]
@@ -17,8 +17,9 @@ date: 2026-06-25
 [member]: #checking-member-status
 [clusterstatus]: #checking-cluster-status
 [ringstatus]: #checking-ring-status
+[debug]: #checking-with-riak-debug
 
-## Overview
+>[!MEMO]Node Control
 
 This section covers the various commands used in general control of your node, including [starting a node][start node], [stopping a node][stop node], [inspecting your node][inspect node] and other operations.
 
