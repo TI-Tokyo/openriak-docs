@@ -29,3 +29,7 @@ This API allows applications to register replication hooks to control the follow
 
     * when extra objects need to be replicated along with the current object.
     * when an object should not be replicated.
+
+## AAE Fold API
+
+The AAE fold API allows you to execute a variety of actions/operations within Riak in accordance with your Applications requirements.
