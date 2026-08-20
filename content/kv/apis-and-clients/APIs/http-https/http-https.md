@@ -1,7 +1,19 @@
 ---
-title: HttP/HTTPS
+title: HTTP/HTTPS
 sidebar_label: "HTTP/HTTPS"
+date: 2026-08-20
 ---
+[root site]: [!site]
+[root project]: [!project]
+[root version]: [!version]
+[part1]: #part-1---object-identifier---the-url
+[part2]: #part-2---request-body
+[part3]: #part-3---request-and-response-headers
+[getput]: #get-and-put-options
+[conditional]: #conditional-requests
+[requestheader]: #request-headers
+[APIdefinition]: #httphttps-api-definition
+[legacy]: #accessing-legacy-objects
 
 >[!MEMO] The HTTP/HTTPS API
 >The HTTP(S) API is split into two major sections, the Oject API and the Query API. There are also interactions with the AAE_fold API that can come via the HTTP(S) API>
@@ -77,7 +89,7 @@ An object will always be presented (in a GET response) with all its index entrie
 
 If an object results in an unresolved conflict, the index entries for the object within the database will be the union of the index entries for all sibling content items.
 
-## GET and PUT Options
+# GET and PUT Options
 
 It is recommended that the options supported in the Object API should be set via (bucket properties)[/admin/buckets-and-types.md] wherever possible (except where the option is a per-request option rather than a property e.g. `vtag`). It is best practice to define the expectations for managing a request within the properties of the type, and only use options in exceptional cases to override those definitions.
 
@@ -96,106 +108,121 @@ There are four other potential PUT and GET options related to the balance betwee
 
 >![NOTE]`sync_on_write` is only available from OpenRiak KV 3.0.8 onwards
 
-Conditional Requests Available from OpenRiak 3.4.0
+# Conditional Requests
+
 Conditional updates are very useful when looking to prevent siblings. By default, any concurrent updates will lead to sibling generation, and handling siblings within application code may be expensive (and in some cases may require user intervention). This can be controlled by making PUT requests conditional, with configurable degrees of strictness on how the condition will be checked to prevent concurrent changes.
 
 Conditional updates allow for improved consistency, but not formal consistency.
 
 There are four levels of strictness to the application of conditions:
 
-api_only;
-this is the loosest check; in this case when the PUT request has been received and parsed by OpenRiak, it will check that the object has not changed (if_not_modified) or does not exist (if_none_match).
-there remains broad scope for parallel writes leading to siblings in this case.
-prefer_token and head_only;
-in this form, the process controlling the PUT within OpenRiak must first get a token for the object key from the token manager, and the token manager will only grant a token to one process at a time;
-the granting of tokens is managed by the node at the head of the preflist, and only the node at the head of the preflist;
-in a cluster without failure or administrative cluster changes this will prevent concurrent writes, with a minimal performance overhead.
-prefer_token and basic_consensus;
-in this form, the process controlling the PUT within OpenRiak must first get a token for the object key from the token manager, and the token manager will only grant a token to one process at a time;
-the granting of tokens is managed by consensus between available unique nodes in the preflist (either primary or fallback);
-in a cluster without failure or administrative cluster changes this will prevent concurrent writes;
-tokens can still be granted in a wide range of failure scenarios safely, but with a risk of duplicate grants, in particular should a cluster be partitioned.
-prefer_token and primary_consensus;
-in this form, the process controlling the PUT within OpenRiak must first get a token for the object key from the token manager, and the token manager will only grant a token to one process at a time;
-the granting of tokens is managed by consensus between 3 of 5 primary nodes in a preflist;
-to use this node, the cluster must be built with a target_n_val of at least 5;
-in a cluster without failure or administrative cluster changes this will prevent concurrent writes
-the chance of duplicate grants in this scenario is very small, but non-zero;
-there will be no failure to grant as long as there are no more than two nodes down or unreachable within the cluster.
-The level of strictness is set for the entire cluster, using the conditional_put_mode and token_request_mode configuration items in riak.conf:
+* `api_only`
+    * This is the loosest check; in this case when the PUT request has been received and parsed by OpenRiak, it will check that the object has not changed (`if_not_modified`) or does not exist (`if_none_match`).
+    * With this level of strictness, there is a good chance for parallel writes leading to siblings as a result.
+* `prefer_token` and `head_only`
+    * In this form, the process gets a token for the object key from the token manager, with the token manager only providing a token to one process at a time.
+    * The granting of tokens is managed by the node at the head of the preflist;
+    * In a cluster operating normally, with no failures or other changes, this will prevent concurrent writes, with a minimal performance overhead.
+* `prefer_token` and `basic_consensus`
+    * In this form, the process gets a token for the object key from the token manager, with the token manager only providing a token to one process at a time;
+    * Tokens are granted by consensus between available unique nodes in the preflist
+    * In a cluster without failure or administrative cluster changes this will prevent concurrent writes;
+    * Tokens can still be granted in a wide range of failure scenarios safely, but with a risk of duplicate grants, such as if a cluster is partitioned.
+* `prefer_token` and `primary_consensus`
+    * In this form, the process gets a token for the object key from the token manager, with the token manager only providing a token to one process at a time.
+    * Tokens are provided by consensus between 3 of 5 primary nodes in a preflist. 
+    * To use this option, the cluster must be built with a `target_n_val` of at least `5` to allow for a proper consesus.
+    * In a cluster operating normally with no failed nodes or ownership changes this will prevent concurrent writes
+    * The chance of duplicate grants in this scenario is very small, but non-zero.
+    * There will be no failure to grant as long as there are no more than two nodes down or unreachable within the cluster.
 
-riak admin describe conditional_put_mode
-riak admin describe token_request_mode
+The level of strictness is set for the entire cluster, which is done using the `conditional_put_mode` and `token_request_mode` config options in `riak.conf`:
 
-A failure of a conditional request will result in a 412: Precondition Failed response. Note, that data is not secure at this point, and is vulnerable to the failure of the application, if it was not stored already in a OpenRiak cluster prior to making the conditional change (e.g. when using OpenRiak in an Event Source / CQRS model).
+`riak admin describe conditional_put_mode`
+`riak admin describe token_request_mode`
+
+>[!NOTE]Note on failures of conditional requests
+> A failure of a conditional request will result in a `412: Precondition Failed` response. It is important to note that data is not stored at this point in time, and a failure of OpenRisk would lead to loss of this data.
 
 Tests have verified that in non-exceptional scenarios, simple failure events and cluster administration changes will lead to the promise of consensus being upheld (with both basic and primary consensus). This however, is not equal to strong consistency by any formal definition. There will be complex and potentially unexpected scenarios where the condition will not be applied in a serialised way. OpenRiak remains an eventually consistent store, to protect data in all scenarios still requires the setting of allow_mult = true and the potential return of multiple (sibling) content values to an object read request.
 
-There are three scenarios where the conditional check will be weakened:
+Stronger conditional updates can be made via either API through the use of `if-none-match` and the OpenRiak-bespoke `if-not-modified` headers. Use of the HTTP-standard `if-unmodified-since` header or of the `if-match` header will result only in weak api_only checks, and is not fully supported.
 
-The token granting system uses an internal queue method, and requests made whilst the token has been currently granted will be notified to re-request for a grant when it is their turn for the grant. So sending multiple requests in parallel will generally result in one update succeeding, and then all other parallel requests failing due to the precondition check in rapid succession as they gain ownership of the token when the previous request releases. There is though a timeout, beyond which a process will not wait, and on timeout a process will revert to an api_only check.
-The token granting system is enforced as an honesty system, it is the role of the application to ensure that all objects that require token protection have conditions added to update requests. Updates without condition checks will be accepted in parallel to updates with condition checks, and there may be unresolved conflicts as a consequence.
-When using multi-data centre replication, there is no cross-checking between clusters before granting tokens. If running multiple clusters in active/active mode, then token consensus offers no protection against parallel writes, unless there is natural isolation within the application (e.g. should objects have a natural association with a region that would make inter-cluster concurrent writes unexpected).
-Stronger conditional updates can be made via either API through the use of “if-none-match” and the OpenRiak-bespoke “if-not-modified” headers (or options in the case of the PB API). Use of the HTTP-standard “if-unmodified-since” header or of the “if-match” header will result only in weak api_only checks, and is not fully supported.
+# Request Headers
 
-Use of Request Header - If-None-Match
+## If-None-Match
+
 The use of if-none-match is tested on update operations only. It uses the standard HTTP request header, but ignores the value - setting the request header to any content will be treated as if-none-match: *. The purpose of if-none-match is simply to check that there is no object present before accepting the update.
 
-Use of Request Header - X-Riak-If-Not-Modified (non-standard OpenRiak header)
-The use of X-Riak-If-Not-Modified varies from the standard behaviour of the If-Unmodified-Since/If-Match HTTP request. For OpenRiak the X-Riak-If-Not-Modified header should be used as a modification check, and the value of the header should be set to the encoded version vector that had been read prior to the update. The PUT will then be conditional on the object being at this state before the change is applied.
+## X-Riak-If-Not-Modified (non-standard OpenRiak header)
 
-For the standard HTTP headers, If-Unmodified-Since checks on the last-modified date, but this is not a sufficiently accurate check in OpenRiak. This option may be ignored in future releases. The If-Match header matches against the ETag of an object, however in OpenRiak due to siblings, an object may have multiple tags (ETag in HTTP is mapped to vtag in the OpenRiak object space). The use of If-Match is not recommended, and will be clarified in a future release.
+The use of `X-Riak-If-Not-Modified` varies from the standard behaviour of the `If-Unmodified-Since/If-Match` HTTP request. For OpenRiak the `X-Riak-If-Not-Modified` header should be used as a modification check, and the value of the header should be set to the encoded version vector that had been read prior to the update. The PUT will then be conditional on the object being at this state before the change is applied.
 
-Conditional requests and latch objects
-There may be circumstances where it is necessary to prevent multiple application processes working on the same set of objects concurrently - e.g. where there are two processes for batching objects, and only one should be batching at a time so the batches don’t overlap. Although conditional requests are intended to provide consensus over individual objects, the application developer may define individual objects in such a way so that they can be used as part of a system to provide broader pseudo-serialisation of activity.
+For the standard HTTP headers, `If-Unmodified-Since` checks on the `last-modified` date, but this is not a sufficiently accurate check in OpenRiak. The `If-Match` header matches against the `ETag` of an object, however in OpenRiak due to siblings, an object may have multiple tags (`ETag` in HTTP is mapped to `vtag` in the OpenRiak object space).
 
-Commit Hooks
-For store requests it is possible, via bucket properties, to configure “commit hooks” - functions that will be applied either pre-commit (before the PUT has coordinated), or post-commit (after coordination and before response to the client). This may have uses such as: value validation; updating inverted index objects; triggering actions in external systems.
+>[!NOTE]Note on the use of the `if-unmodified-since` and the `if-match` headers
+>These headers are not considered sufficient to guarantee the last modified date of an object and may be ignored/clarified in a future release of Openriak.
 
-Commit hooks are an expert feature, and should not be added without an understanding of the OpenRiak codebase.
+# Commit Hooks
 
-HTTP API Definition - Store
+For store requests it is possible, via bucket properties, to configure “commit hooks” - These are functions that will be applied either pre-commit (before the PUT has coordinated), or post-commit (after coordination and before response to the client). This can be used in a variety of ways such as: value validation; updating inverted index objects; triggering actions in external systems. 
+
+Commit hooks are an expert feature, and should not be added without an understanding of the OpenRiak codebase to prevent issues that could lead to catastrophic system failure.
+
+# HTTP/HTTPS\ API Definition
+
 Store requests should be sent using the PUT method, although the POST method is supported.
 
 Supported HTTP request headers for PUT:
 
-x-riak-vclock; should be provided when mutating existing objects, should be set to the value of the x-riak-vclock response header of the object, as read prior to update. If a new object is being inserted, then no x-riak-vclock request header should be provided. The content of the clock is encoded within the header value, the application is not required to decode that value, but to simply pass it as-is to provide context information for the update to OpenRiak.
-x-riak-if-not-modified; optional, for conditional requests.
-if-none-match: *; optional, for conditional requests.
-authorization; optional, for tls-protected requests only when OpenRiak security is enabled.
-x-riak-meta-<key>: <value>; optional, multiple keys may be provided, and will be mapped to user metadata.
-x-riak-index-<field> : <value1>, <value2>; optional add multiple index fields, with multiple values in each field where those values are comma (and whitespace) separated. Index fields should have the suffix _bin or _int.
-content-type: <content_type>; optional, specify the content-type of the value to be stored, to be provided in response to future GET requests.
-Example PUT request
-curl -v -XPUT
- -d '{"bar":"baz"}'
- -H "Content-Type: application/json"
- -H "x-riak-index-twitter_bin: jsmith123"
- -H "x-riak-index-email_bin: jsmith@riak.com, jsmith_personal@btinternet.com"
- -H "X-Riak-Vclock: a85hYGBgzGDKBVIszMk55zKYEhnzWBlKIniO8mUBAA=="
- http://127.0.0.1:8098/types/BType/buckets/BTest/keys/TestKey
+* `x-riak-vclock`; should be provided when mutating existing objects, should be set to the value of the x-riak-vclock response header of the object, as read prior to update. If a new object is being inserted, then no x-riak-vclock request header should be provided. The content of the clock is encoded within the header value, the application is not required to decode that value, but to simply pass it as-is to provide context information for the update to OpenRiak.
+* `x-riak-if-not-modified`; optional, for conditional requests.
+* `if-none-matc: *`; optional, for conditional requests.
+* `authorization`; optional, for tls-protected requests only when OpenRiak security is enabled.
+* `x-riak-meta-<key>: <value>`; optional, multiple keys may be provided, and will be mapped to user metadata.
+* `x-riak-index-<field> : <value1>, <value2>`; optional add multiple index fields, with multiple values in each field where those values are comma (and whitespace) separated. Index fields should have the suffix _bin or _int.
+* `content-type: <content_type>`; optional, specify the content-type of the value to be stored, to be provided in response to future GET requests.
 
-HTTP API Definition - Fetch
-Fetch requests for objects should be sent using the GET method, or the HEAD method.
+Below is an example PUT request that includes various headers:
 
-When using the HEAD method the request will still result in the object value being read by OpenRiak, but the value will be stripped before returning the object - the process is not currently optimised. A HEAD response may not contain a valid content-length.
+    ```bash
+        curl -v -XPUT
+        -d '{"bar":"baz"}'
+        -H "Content-Type: application/json"
+        -H "x-riak-index-twitter_bin: jsmith123"
+        -H "x-riak-index-email_bin: jsmith@riak.com, jsmith_personal@btinternet.com"
+        -H "X-Riak-Vclock: a85hYGBgzGDKBVIszMk55zKYEhnzWBlKIniO8mUBAA=="
+        http://127.0.0.1:8098/types/BType/buckets/BTest/keys/TestKey
+    ```
+
+## HTTP/HTTPS API Definition - Fetch
+
+Fetch requests for objects should be sent using the `GET` method, or the `HEAD` method.
+
+When using the `HEAD` method the request will still result in the object value being read by OpenRiak, but the value will be stripped before returning the object - the process is not currently optimised. A `HEAD` response may not contain a valid content-length.
 
 Supported HTTP request headers for GET:
 
-authorization; optional, for tls-protected requests only when OpenRiak security is enabled.
-accept: multipart/mixed; optional, will cause results in a conflicted state to return all siblings as one multipart-mime object body. Without this option a list of sibling vtags will be returned, and each vtag may be fetched using the vtag=<vtag> query parameter in the URL.
-Expected HTTP response headers for GET:
+* `authorization`; optional, for tls-protected requests only when OpenRiak security is enabled.
+* `accept: multipart/mixed`; optional, will cause results in a conflicted state to return all siblings as one multipart-mime object body. Without this option a list of sibling vtags will be returned, and each `vtag` may be fetched using the `vtag=<vtag>` query parameter in the URL.
 
-x-riak-vclock; an encoded representation of the version_vector, must be provided in any subsequent update message to indicate which version of the object is to be updated.
-x-riak-meta-<key>: <value>; potentially multiple headers representing the user metadata for the object.
-x-riak-index-<field> : <value1>, <value2>; potentially multiple headers representing the current index values for the object.
-content-type: <content_type>; the content-type provided when the object was stored.
-Example GET request
-curl -v
-  http://127.0.0.1:8098/types/BType/buckets/BTest/keys/TestKey
-  -H "Accept: multipart/mixed"
+### Expected HTTP response headers for GET:
 
-HTTP API Definition - Delete
+* `x-riak-vclock`; an encoded representation of the version_vector, must be provided in any subsequent update message to indicate which version of the object is to be updated.
+* `x-riak-meta-<key>: <value>`; potentially multiple headers representing the user metadata for the object.
+* `x-riak-index-<field> : <value1>, <value2>`; potentially multiple headers representing the current index values for the object.
+* `content-type: <content_type>`; the content-type provided when the object was stored.
+
+
+Below is an example GET request using the `accept: multipart/mixed` header:
+
+    ```bash
+        curl -v
+          http://127.0.0.1:8098/types/BType/buckets/BTest/keys/TestKey
+          -H "Accept: multipart/mixed"
+    ```
+
+## HTTP API Definition - Delete
 Delete requests should be sent using the DELETE method. As with PUT requests, DELETE requests should include the x-riak-vclock header with the value of the entry that was read.
 
 Without providing version information, the delete will first read the current version of the object, and then attempt to delete the object using that discovered version information. This may not be the same version of the object that prompted the delete request. DELETE with no x-riak-vclock is “delete regardless”, whereas with a x-riak-vclock it is a request to delete only the object at that version.
@@ -216,6 +243,6 @@ Example DELETE request
             -H "X-Riak-Vclock: a85hYGBgzGDKBVIszMk55zKYEhnzWBlKIniO8mUBAA=="
     ```
 
-### Accessing Legacy Objects
+# Accessing Legacy Objects
 
 As well as typed buckets, OpenRiak offers support for untyped buckets for backwards compatibility. Using the HTTP API for such buckets is the same as using typed buckets, except that the URI for keys in untyped buckets is buckets/Bucket/keys/Key (i.e. as before but without the prefix of types\TypedBucket).
