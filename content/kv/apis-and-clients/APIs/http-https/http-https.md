@@ -230,10 +230,10 @@ Without providing version information, the delete will first read the current ve
 Supported HTTP request headers for DELETE:
 
 
-x-riak-vclock; see above.
-x-riak-if-not-modified; optional, for conditional requests.
-if-none-match: *; optional, for conditional requests.
-authorization; optional, for tls-protected requests only when OpenRiak security is enabled.
+* `x-riak-vclock`; An encoded representation of the version_vector, must be provided in any subsequent update message to indicate which version of the object is to be updated.
+* `x-riak-if-not-modified`; optional, for conditional requests.
+* `if-none-match: *`; optional, for conditional requests.
+* `authorization`; optional, for tls-protected requests only when OpenRiak security is enabled.
 
 Example DELETE request
 
