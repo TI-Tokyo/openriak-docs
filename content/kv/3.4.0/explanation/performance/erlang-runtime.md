@@ -52,8 +52,8 @@ State what this explanation does not cover, call out 3.4.0 versus 3.4.1 differen
 
 ## In this section
 
-- [Performance concepts](/kv/3.4.0/explanation/performance/) — Introduce the resource, topology, workload, and runtime factors that shape OpenRiak performance.
-- [Latency, throughput, and capacity](/kv/3.4.0/explanation/performance/latency-throughput-and-capacity/) — Explain latency, throughput, and capacity and how its trade-offs influence measurement and tuning decisions.
-- [Multi-datacenter performance](/kv/3.4.0/explanation/performance/multi-datacenter-performance/) — Explain multi-datacenter performance and how its trade-offs influence measurement and tuning decisions.
-- [Query execution performance](/kv/3.4.0/explanation/performance/query-execution/) — Explain how query distribution, scanning, filtering, buffering, and collation affect latency and capacity.
-- [Storage and filesystem effects](/kv/3.4.0/explanation/performance/storage-and-filesystem-effects/) — Explain storage and filesystem effects and how its trade-offs influence measurement and tuning decisions.
+- [Performance concepts]({{< baseurl >}}kv/3.4.0/explanation/performance/) — Introduce the resource, topology, workload, and runtime factors that shape OpenRiak performance.
+- [Latency, throughput, and capacity]({{< baseurl >}}kv/3.4.0/explanation/performance/latency-throughput-and-capacity/) — Explain latency, throughput, and capacity and how its trade-offs influence measurement and tuning decisions.
+- [Multi-datacenter performance]({{< baseurl >}}kv/3.4.0/explanation/performance/multi-datacenter-performance/) — Explain multi-datacenter performance and how its trade-offs influence measurement and tuning decisions.
+- [Query execution performance]({{< baseurl >}}kv/3.4.0/explanation/performance/query-execution/) — Explain how query distribution, scanning, filtering, buffering, and collation affect latency and capacity.
+- [Storage and filesystem effects]({{< baseurl >}}kv/3.4.0/explanation/performance/storage-and-filesystem-effects/) — Explain storage and filesystem effects and how its trade-offs influence measurement and tuning decisions.

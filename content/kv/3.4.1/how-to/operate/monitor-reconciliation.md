@@ -33,7 +33,7 @@ A healthy cluster, current backups, and access to cluster status and logs. Recor
 
 ### Monitoring inter-cluster reconciliation
 
-For information on monitoring inter-cluster reconciliation and repair [refer to the NextGen Repl guide](/kv/3.4.1/how-to/operate/monitor-reconciliation/).
+For information on monitoring inter-cluster reconciliation and repair [refer to the NextGen Repl guide]({{< baseurl >}}kv/3.4.1/how-to/operate/monitor-reconciliation/).
 
 #### Monitoring real-time replication via logs
 

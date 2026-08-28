@@ -252,7 +252,7 @@ curl -q http://127.0.0.1:8098/riak repl/stats | json_pp
 
 #### Statistics available via Riak stats
 
-The [Riak status statistics](/kv/3.4.1/reference/operations/statistics-and-monitoring/) set includes stats relevant to monitoring replication:
+The [Riak status statistics]({{< baseurl >}}kv/3.4.1/reference/operations/statistics-and-monitoring/) set includes stats relevant to monitoring replication:
 
 The following counters track activity on real-time replication sources:
 

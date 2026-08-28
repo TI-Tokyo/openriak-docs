@@ -55,7 +55,7 @@ Sometimes, even in those situations, the leveled backend may be more efficient a
 
 > The bitcask backend is the preferred long-term solution for immutable, unsorted, data storage in Riak.
 
-Use of multi-backend should generally be avoided, unless as a multi-bitcask backend (e.g. for tiered storage).  It may also be used to manage multiple expiry schedules across multiple bitcask backends through the backend TTL support; but not if anti-entropy requirements exist beyond read-repair or if inter-cluster reconciliation is required.  In these cases managing expiry [through the use of the eraser process is preferred](/kv/3.4.1/how-to/plan/choose-deletion-policy/).
+Use of multi-backend should generally be avoided, unless as a multi-bitcask backend (e.g. for tiered storage).  It may also be used to manage multiple expiry schedules across multiple bitcask backends through the backend TTL support; but not if anti-entropy requirements exist beyond read-repair or if inter-cluster reconciliation is required.  In these cases managing expiry [through the use of the eraser process is preferred]({{< baseurl >}}kv/3.4.1/how-to/plan/choose-deletion-policy/).
 
 ## Verify the result
 

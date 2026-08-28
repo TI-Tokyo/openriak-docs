@@ -59,7 +59,7 @@ message RpbGetReq {
 > **Note on defaults and special values**
 >
 > All of the optional parameters below have default values determined on a
-per-bucket basis. Please refer to the documentation on [setting bucket properties](/kv/3.4.1/reference/protocol-buffers/set-bucket-properties/) for more information.
+per-bucket basis. Please refer to the documentation on [setting bucket properties]({{< baseurl >}}kv/3.4.1/reference/protocol-buffers/set-bucket-properties/) for more information.
 >
 > Furthermore, you can assign an integer value to the `r` and
 `pr` parameters, provided that that integer value is less than or
@@ -99,7 +99,7 @@ Value | Description
 The <code>content</code> entries hold the object value and any metadata.
 Below is the structure of a <code>RpbContent</code> message, which is
 included in GET/PUT responses (`RpbGetResp` (above) and
-[`RpbPutResp`](/kv/3.4.1/reference/protocol-buffers/store-object/), respectively):
+[`RpbPutResp`]({{< baseurl >}}kv/3.4.1/reference/protocol-buffers/store-object/), respectively):
 
 ```protobuf
 message RpbContent {
@@ -126,7 +126,7 @@ of the following optional parameters:
 * `charset` - The character encoding of the object, e.g. `utf-8`
 * `content_encoding` - The content encoding of the object, e.g.
   `video/mp4`
-* `vtag` - The object's [vtag](/kv/3.4.1/explanation/foundations/glossary/#vector-clock)
+* `vtag` - The object's [vtag]({{< baseurl >}}kv/3.4.1/explanation/foundations/glossary/#vector-clock)
 * `links` - This parameter is associated with the now-deprecated link
   walking feature and should not be used by Riak clients
 * `last_mod` - A timestamp for when the object was last modified, in
@@ -144,7 +144,7 @@ of the following optional parameters:
     }
     ```
     Notice that both a key and value can be stored or just a key.
-    `RpbPair` messages are also used to attach [secondary indexes](/kv/3.4.1/how-to/develop/query-secondary-indexes/) to objects (in the optional
+    `RpbPair` messages are also used to attach [secondary indexes]({{< baseurl >}}kv/3.4.1/how-to/develop/query-secondary-indexes/) to objects (in the optional
     `indexes` field).
 * `deleted` - Whether the object has been deleted (i.e. whether a
   tombstone for the object has been found under the specified key)

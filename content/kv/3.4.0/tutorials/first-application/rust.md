@@ -50,12 +50,12 @@ Link to the relevant how-to guides for real tasks, explanation pages for the und
 
 ## In this section
 
-- [Build a first OpenRiak application with C#](/kv/3.4.0/tutorials/first-application/csharp/) — Guide a developer through modeling, storing, retrieving, querying, and updating a small dataset with C#.
-- [Build a first OpenRiak application with Erlang](/kv/3.4.0/tutorials/first-application/erlang/) — Guide a developer through modeling, storing, retrieving, querying, and updating a small dataset with Erlang.
-- [Build a first OpenRiak application with Go](/kv/3.4.0/tutorials/first-application/golang/) — Guide a developer through modeling, storing, retrieving, querying, and updating a small dataset with Go.
-- [Build a first OpenRiak application](/kv/3.4.0/tutorials/first-application/) — Introduce language-specific learning paths for storing, reading, updating, querying, and deleting data.
-- [Build a first OpenRiak application with Java](/kv/3.4.0/tutorials/first-application/java/) — Guide a developer through modeling, storing, retrieving, querying, and updating a small dataset with Java.
-- [Build a first OpenRiak application with Node.js](/kv/3.4.0/tutorials/first-application/nodejs/) — Guide a developer through modeling, storing, retrieving, querying, and updating a small dataset with Node.js.
-- [Build a first OpenRiak application with PHP](/kv/3.4.0/tutorials/first-application/php/) — Guide a developer through modeling, storing, retrieving, querying, and updating a small dataset with PHP.
-- [Build a first OpenRiak application with Python](/kv/3.4.0/tutorials/first-application/python/) — Guide a developer through modeling, storing, retrieving, querying, and updating a small dataset with Python.
-- [Build a first OpenRiak application with Ruby](/kv/3.4.0/tutorials/first-application/ruby/) — Guide a developer through modeling, storing, retrieving, querying, and updating a small dataset with Ruby.
+- [Build a first OpenRiak application with C#]({{< baseurl >}}kv/3.4.0/tutorials/first-application/csharp/) — Guide a developer through modeling, storing, retrieving, querying, and updating a small dataset with C#.
+- [Build a first OpenRiak application with Erlang]({{< baseurl >}}kv/3.4.0/tutorials/first-application/erlang/) — Guide a developer through modeling, storing, retrieving, querying, and updating a small dataset with Erlang.
+- [Build a first OpenRiak application with Go]({{< baseurl >}}kv/3.4.0/tutorials/first-application/golang/) — Guide a developer through modeling, storing, retrieving, querying, and updating a small dataset with Go.
+- [Build a first OpenRiak application]({{< baseurl >}}kv/3.4.0/tutorials/first-application/) — Introduce language-specific learning paths for storing, reading, updating, querying, and deleting data.
+- [Build a first OpenRiak application with Java]({{< baseurl >}}kv/3.4.0/tutorials/first-application/java/) — Guide a developer through modeling, storing, retrieving, querying, and updating a small dataset with Java.
+- [Build a first OpenRiak application with Node.js]({{< baseurl >}}kv/3.4.0/tutorials/first-application/nodejs/) — Guide a developer through modeling, storing, retrieving, querying, and updating a small dataset with Node.js.
+- [Build a first OpenRiak application with PHP]({{< baseurl >}}kv/3.4.0/tutorials/first-application/php/) — Guide a developer through modeling, storing, retrieving, querying, and updating a small dataset with PHP.
+- [Build a first OpenRiak application with Python]({{< baseurl >}}kv/3.4.0/tutorials/first-application/python/) — Guide a developer through modeling, storing, retrieving, querying, and updating a small dataset with Python.
+- [Build a first OpenRiak application with Ruby]({{< baseurl >}}kv/3.4.0/tutorials/first-application/ruby/) — Guide a developer through modeling, storing, retrieving, querying, and updating a small dataset with Ruby.

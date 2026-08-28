@@ -51,8 +51,8 @@ State what this explanation does not cover, call out 3.4.0 versus 3.4.1 differen
 
 ## In this section
 
-- [The Erlang runtime and OpenRiak](/kv/3.4.0/explanation/performance/erlang-runtime/) — Explain the erlang runtime and openriak and how its trade-offs influence measurement and tuning decisions.
-- [Performance concepts](/kv/3.4.0/explanation/performance/) — Introduce the resource, topology, workload, and runtime factors that shape OpenRiak performance.
-- [Latency, throughput, and capacity](/kv/3.4.0/explanation/performance/latency-throughput-and-capacity/) — Explain latency, throughput, and capacity and how its trade-offs influence measurement and tuning decisions.
-- [Query execution performance](/kv/3.4.0/explanation/performance/query-execution/) — Explain how query distribution, scanning, filtering, buffering, and collation affect latency and capacity.
-- [Storage and filesystem effects](/kv/3.4.0/explanation/performance/storage-and-filesystem-effects/) — Explain storage and filesystem effects and how its trade-offs influence measurement and tuning decisions.
+- [The Erlang runtime and OpenRiak]({{< baseurl >}}kv/3.4.0/explanation/performance/erlang-runtime/) — Explain the erlang runtime and openriak and how its trade-offs influence measurement and tuning decisions.
+- [Performance concepts]({{< baseurl >}}kv/3.4.0/explanation/performance/) — Introduce the resource, topology, workload, and runtime factors that shape OpenRiak performance.
+- [Latency, throughput, and capacity]({{< baseurl >}}kv/3.4.0/explanation/performance/latency-throughput-and-capacity/) — Explain latency, throughput, and capacity and how its trade-offs influence measurement and tuning decisions.
+- [Query execution performance]({{< baseurl >}}kv/3.4.0/explanation/performance/query-execution/) — Explain how query distribution, scanning, filtering, buffering, and collation affect latency and capacity.
+- [Storage and filesystem effects]({{< baseurl >}}kv/3.4.0/explanation/performance/storage-and-filesystem-effects/) — Explain storage and filesystem effects and how its trade-offs influence measurement and tuning decisions.

@@ -31,7 +31,7 @@ Guide a developer through modeling, storing, retrieving, querying, and updating 
 
 ### Getting Started with Java
 
-If you haven't set up an OpenRiak node and started it, please visit [Running A Cluster](/kv/3.4.0/how-to/operate/) first.
+If you haven't set up an OpenRiak node and started it, please visit [Running A Cluster]({{< baseurl >}}kv/3.4.0/how-to/operate/) first.
 
 To try this flavor of Riak, a working installation of Java is required.
 
@@ -99,7 +99,7 @@ RiakClient client = new RiakClient(cluster);
 
 #### Next Steps
 
-[CRUD Operations](/kv/3.4.0/tutorials/first-application/java/)
+[CRUD Operations]({{< baseurl >}}kv/3.4.0/tutorials/first-application/java/)
 
 ### CRUD Operations with Java
 
@@ -157,8 +157,8 @@ StoreValue.Response updateOpResp = client.execute(updateOp);
 ```
 
 For more in depth information on updating objects and sibling resolution in
-Riak, see [Updating Objects](/kv/3.4.0/how-to/develop/update-object/)
-and [Conflict Resolution](/kv/3.4.0/how-to/develop/resolve-conflicts/)
+Riak, see [Updating Objects]({{< baseurl >}}kv/3.4.0/how-to/develop/update-object/)
+and [Conflict Resolution]({{< baseurl >}}kv/3.4.0/how-to/develop/resolve-conflicts/)
 documentation.
 
 #### Deleting Objects
@@ -268,8 +268,8 @@ UpdateValue.Response response = client.execute(updateValue);
 ```
 
 For more in depth information on updating objects and sibling resolution in
-Riak, see [Updating Objects](/kv/3.4.0/how-to/develop/update-object/)
-and [Conflict Resolution](/kv/3.4.0/how-to/develop/resolve-conflicts/)
+Riak, see [Updating Objects]({{< baseurl >}}kv/3.4.0/how-to/develop/update-object/)
+and [Conflict Resolution]({{< baseurl >}}kv/3.4.0/how-to/develop/resolve-conflicts/)
 documention.
 
 ### Object Modeling with Java
@@ -846,9 +846,9 @@ intrinsic relationships.
 #### Secondary Indexes
 
 **Note:**
-Secondary indexes in OpenRiak KV require a sorted backend: [Memory](/kv/3.4.0/explanation/storage/memory/) or [LevelDB](/kv/3.4.0/explanation/storage/leveldb/). [Bitcask](/kv/3.4.0/explanation/storage/bitcask/) does not support secondary indexes.
+Secondary indexes in OpenRiak KV require a sorted backend: [Memory]({{< baseurl >}}kv/3.4.0/explanation/storage/memory/) or [LevelDB]({{< baseurl >}}kv/3.4.0/explanation/storage/leveldb/). [Bitcask]({{< baseurl >}}kv/3.4.0/explanation/storage/bitcask/) does not support secondary indexes.
 
-See [Using Secondary Indexes (2i)](/kv/3.4.0/how-to/develop/query-secondary-indexes/) for more information on developing with secondary indexes.
+See [Using Secondary Indexes (2i)]({{< baseurl >}}kv/3.4.0/how-to/develop/query-secondary-indexes/) for more information on developing with secondary indexes.
 
 If you're coming from an SQL world, Secondary Indexes (2i) are a lot
 like SQL indexes. They are a way to quickly look up objects based on a

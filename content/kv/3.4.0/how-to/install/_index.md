@@ -77,14 +77,14 @@ A guide on downgrading your OpenRiak KV cluster.
 
 ### Installing OpenRiak KV
 
-[install aws]: /kv/3.4.0/how-to/install/amazon-linux/
-[install alpine]: /kv/3.4.0/how-to/install/alpine-linux/
-[install debian & ubuntu]: /kv/3.4.0/how-to/install/debian-ubuntu/
-[install raspbian]: /kv/3.4.0/how-to/install/debian-ubuntu/#raspbian-bullseye
-[install rhel & centos]: /kv/3.4.0/how-to/install/rhel-rocky/
-[install oracle linux]: /kv/3.4.0/how-to/install/rhel-rocky/
-[install source index]: /kv/3.4.0/how-to/install/source/
-[upgrade index]: /kv/3.4.0/how-to/operate/upgrade-cluster/
+[install aws]: {{< baseurl >}}kv/3.4.0/how-to/install/amazon-linux/
+[install alpine]: {{< baseurl >}}kv/3.4.0/how-to/install/alpine-linux/
+[install debian & ubuntu]: {{< baseurl >}}kv/3.4.0/how-to/install/debian-ubuntu/
+[install raspbian]: {{< baseurl >}}kv/3.4.0/how-to/install/debian-ubuntu/#raspbian-bullseye
+[install rhel & centos]: {{< baseurl >}}kv/3.4.0/how-to/install/rhel-rocky/
+[install oracle linux]: {{< baseurl >}}kv/3.4.0/how-to/install/rhel-rocky/
+[install source index]: {{< baseurl >}}kv/3.4.0/how-to/install/source/
+[upgrade index]: {{< baseurl >}}kv/3.4.0/how-to/operate/upgrade-cluster/
 
 #### Supported Platforms
 

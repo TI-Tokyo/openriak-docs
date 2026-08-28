@@ -59,7 +59,7 @@ logger.default_filters = crash, error, progress, report, sasl, background, backe
 logger.additional_handlers = crash, error, background, backend
 ```
 
-It is possible to change logging at run time via [`remote_console`](/kv/3.4.1/how-to/operate/use-remote-console/) by following the [standard Erlang logger guide](https://www.erlang.org/doc/apps/kernel/logger_chapter#example-add-a-handler-to-log-info-events-to-file).
+It is possible to change logging at run time via [`remote_console`]({{< baseurl >}}kv/3.4.1/how-to/operate/use-remote-console/) by following the [standard Erlang logger guide](https://www.erlang.org/doc/apps/kernel/logger_chapter#example-add-a-handler-to-log-info-events-to-file).
 
 The `background` filter and handler is targeted at `tictacaae` logs, and recurring metric logs which are triggered by frequent ticks.  The `backend` filter and handler will presently only handle leveled logs.  The leveled log level can be set independently to the general log level in `riak.conf` using `leveled.log_level`: though it will not be possible to alter this log level at run-time as with the general log (e.g. the module log level cannot be reduced to a lower log level than the `leveled.log_loglevel` for leveled logs, the leveled filter is applied before the kernel logger filter).
 

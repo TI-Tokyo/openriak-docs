@@ -33,7 +33,7 @@ Guide an operator through enabling TicTac AAE and replicating test data between 
 ### Quickstart
 
 **Deprecation Warning**
-v2 Multi-Datacenter Replication is deprecated and will be removed in a future version. Please use [v3](/kv/3.4.0/tutorials/replication/two-cluster-replication/) instead.
+v2 Multi-Datacenter Replication is deprecated and will be removed in a future version. Please use [v3]({{< baseurl >}}kv/3.4.0/tutorials/replication/two-cluster-replication/) instead.
 
 The Riak Multi-Datacenter Replication Quick Start will walk you through
 the process of configuring OpenRiak's version 2 Replication to perform
@@ -348,9 +348,9 @@ available in the [MDC Operations][cluster ops v2 mdc] documentation.
 
 ### Quickstart
 
-[perf index]: /kv/3.4.0/how-to/tune/
-[config v3 mdc]: /kv/3.4.0/how-to/configure/replication/configure-v3-multi-datacenter/
-[cluster ops v3 mdc]: /kv/3.4.0/reference/replication-api/runtime-controls/
+[perf index]: {{< baseurl >}}kv/3.4.0/how-to/tune/
+[config v3 mdc]: {{< baseurl >}}kv/3.4.0/how-to/configure/replication/configure-v3-multi-datacenter/
+[cluster ops v3 mdc]: {{< baseurl >}}kv/3.4.0/reference/replication-api/runtime-controls/
 
 This guide will walk you through the process of configuring OpenRiak's v3
 Replication to perform replication between two sample Riak clusters on
@@ -490,9 +490,9 @@ Once this is done, bidirectional replication should be operating.
 For a full list of commands, you may enter `riak repl` to see full
 instructions on usage, or check the [Operations][cluster ops v3 mdc] documentation.
 
-[assumptions]: /kv/3.4.0/tutorials/replication/two-cluster-replication/
-[design]: /kv/3.4.0/tutorials/replication/two-cluster-replication/
-[installingg]: /kv/3.4.0/tutorials/replication/two-cluster-replication/
+[assumptions]: {{< baseurl >}}kv/3.4.0/tutorials/replication/two-cluster-replication/
+[design]: {{< baseurl >}}kv/3.4.0/tutorials/replication/two-cluster-replication/
+[installingg]: {{< baseurl >}}kv/3.4.0/tutorials/replication/two-cluster-replication/
 
 ## What you will learn
 

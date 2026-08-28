@@ -33,8 +33,8 @@ Administrative access to the nodes you will change; a copy of the current config
 
 ### V3 Multi-Datacenter Replication
 
-[config reference#advanced]: /kv/3.4.0/reference/configuration/#advanced-configuration
-[config v3 ssl#verify-peer]: /kv/3.4.0/how-to/configure/replication/secure-replication/#verifying-peer-certificates
+[config reference#advanced]: {{< baseurl >}}kv/3.4.0/reference/configuration/#advanced-configuration
+[config v3 ssl#verify-peer]: {{< baseurl >}}kv/3.4.0/how-to/configure/replication/secure-replication/#verifying-peer-certificates
 
 > **Note on the `cluster_mgr` setting**
 >

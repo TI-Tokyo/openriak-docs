@@ -38,7 +38,7 @@ A healthy cluster, current backups, and access to cluster status and logs. Recor
 ### Replacing a Node
 
 At some point, for various reasons, you might need to replace a node in
-your OpenRiak cluster (which is different from [recovering a failed node](/kv/3.4.1/explanation/operations/node-failure-and-recovery/)). Here is the recommended way to go
+your OpenRiak cluster (which is different from [recovering a failed node]({{< baseurl >}}kv/3.4.1/explanation/operations/node-failure-and-recovery/)). Here is the recommended way to go
 about replacing a node.
 
 1. Back up your data directory on the node in question. In this example
@@ -56,21 +56,21 @@ If you have any unforeseen issues at any point in the node
 cluster and have it replace the `riak4` node. We'll call the new node
 `riak7` for the purpose of this example.
 
-3. Start the new `riak7` node with [`riak start`](/kv/3.4.1/reference/commands/riak/):
+3. Start the new `riak7` node with [`riak start`]({{< baseurl >}}kv/3.4.1/reference/commands/riak/):
 
 ```bash
     riak start
     ```
 
 4. Plan the join of the new `riak7` node to an existing node already
-participating in the cluster; for example `riak0` with the [`riak admin cluster join`](/kv/3.4.1/reference/commands/riak-admin/#cluster) command executed on the new `riak7` node:
+participating in the cluster; for example `riak0` with the [`riak admin cluster join`]({{< baseurl >}}kv/3.4.1/reference/commands/riak-admin/#cluster) command executed on the new `riak7` node:
 
 ```bash
     riak admin cluster join riak0
     ```
 
 5. Plan the replacement of the existing `riak4` node with the new
-`riak7` node using the [`riak admin cluster replace`](/kv/3.4.1/reference/commands/riak-admin/#cluster) command:
+`riak7` node using the [`riak admin cluster replace`]({{< baseurl >}}kv/3.4.1/reference/commands/riak-admin/#cluster) command:
 
 ```bash
     riak admin cluster replace riak4 riak7
@@ -85,7 +85,7 @@ participating in the cluster; for example `riak0` with the [`riak admin cluster 
     the node has not been joined to a cluster.
     </div>
 
-6. Examine the proposed cluster changes with the [`riak admin cluster plan`](/kv/3.4.1/reference/commands/riak-admin/#cluster) command executed on the new
+6. Examine the proposed cluster changes with the [`riak admin cluster plan`]({{< baseurl >}}kv/3.4.1/reference/commands/riak-admin/#cluster) command executed on the new
 `riak7` node:
 
 ```bash
@@ -93,13 +93,13 @@ participating in the cluster; for example `riak0` with the [`riak admin cluster 
     ```
 
 7. If the changes are correct, you can commit them with the
-[`riak admin cluster commit`](/kv/3.4.1/reference/commands/riak-admin/#cluster) command:
+[`riak admin cluster commit`]({{< baseurl >}}kv/3.4.1/reference/commands/riak-admin/#cluster) command:
 
 ```bash
     riak admin cluster commit
     ```
 
-If you need to clear the proposed plan and start over, use [`riak admin cluster clear`](/kv/3.4.1/reference/commands/riak-admin/#cluster):
+If you need to clear the proposed plan and start over, use [`riak admin cluster clear`]({{< baseurl >}}kv/3.4.1/reference/commands/riak-admin/#cluster):
 
 ```bash
     riak admin cluster clear
@@ -107,8 +107,8 @@ If you need to clear the proposed plan and start over, use [`riak admin cluster 
 
 Once you have successfully replaced the node, it should begin leaving
 the cluster. You can check on ring readiness after replacing the node
-with the [`riak admin ringready`](/kv/3.4.1/reference/commands/riak-admin/#ringready)
-and [`riak admin member-status`](/kv/3.4.1/reference/commands/riak-admin/#member-status)
+with the [`riak admin ringready`]({{< baseurl >}}kv/3.4.1/reference/commands/riak-admin/#ringready)
+and [`riak admin member-status`]({{< baseurl >}}kv/3.4.1/reference/commands/riak-admin/#member-status)
 commands.
 
 **Ring Settling**
@@ -126,9 +126,9 @@ If a node has failed following an incident, and all data on the node is lost, th
 
 Recovery of such a lost node requires a reactive replacement.  There are three stages to replace and recover the node:
 
-- [ensuring the node is downed](/kv/3.4.1/how-to/operate/replace-node/);
-- [forcing the replace](/kv/3.4.1/how-to/operate/replace-node/);
-- [repairing the new node](/kv/3.4.1/how-to/troubleshoot/recover-failed-node/).
+- [ensuring the node is downed]({{< baseurl >}}kv/3.4.1/how-to/operate/replace-node/);
+- [forcing the replace]({{< baseurl >}}kv/3.4.1/how-to/operate/replace-node/);
+- [repairing the new node]({{< baseurl >}}kv/3.4.1/how-to/troubleshoot/recover-failed-node/).
 
 #### Administratively Downing a Node
 
@@ -150,7 +150,7 @@ When replacing a failed node, the situation differs depending on whether the new
 
 If `force_replace` has been used, then the replacement node can be renamed at a later date using `riak admin reip_manual`.
 
-The new node should be started with [`participate_in_coverage` disabled](/kv/3.4.1/reference/operations/remote-console/), as it will at this stage be a full member of the cluster but have no data.  It is also more efficient to suspend anti-entropy until the repair is complete.
+The new node should be started with [`participate_in_coverage` disabled]({{< baseurl >}}kv/3.4.1/reference/operations/remote-console/), as it will at this stage be a full member of the cluster but have no data.  It is also more efficient to suspend anti-entropy until the repair is complete.
 
 ```console
 riak eval "riak_client:tictacaae_suspend_node()."

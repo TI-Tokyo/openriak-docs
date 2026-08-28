@@ -28,7 +28,7 @@ Document the Protocol Buffers contract for this operation, including messages, f
 
 ### PBC Get Bucket Type
 
-Gets the bucket properties associated with a [bucket type](/kv/3.4.1/how-to/operate/manage-bucket-types/).
+Gets the bucket properties associated with a [bucket type]({{< baseurl >}}kv/3.4.1/how-to/operate/manage-bucket-types/).
 
 #### Request
 
@@ -43,4 +43,4 @@ Only the name of the bucket type needs to be specified (under `name`).
 #### Response
 
 A bucket type's properties will be sent to the client as part of an
-[`RpbBucketProps`](/kv/3.4.1/reference/protocol-buffers/get-bucket-properties/) message.
+[`RpbBucketProps`]({{< baseurl >}}kv/3.4.1/reference/protocol-buffers/get-bucket-properties/) message.

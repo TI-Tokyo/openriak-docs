@@ -41,10 +41,10 @@ Explain how leveled stores data, its constraints, and the workloads for which it
 
 ### Leveled
 
-[glossary vnode]: /kv/3.4.1/explanation/foundations/glossary/#vnode
-[config reference]: /kv/3.4.1/reference/configuration/
-[perf index]: /kv/3.4.1/how-to/tune/
-[config reference#aae]: /kv/3.4.1/reference/configuration/#active-anti-entropy
+[glossary vnode]: {{< baseurl >}}kv/3.4.1/explanation/foundations/glossary/#vnode
+[config reference]: {{< baseurl >}}kv/3.4.1/reference/configuration/
+[perf index]: {{< baseurl >}}kv/3.4.1/how-to/tune/
+[config reference#aae]: {{< baseurl >}}kv/3.4.1/reference/configuration/#active-anti-entropy
 
 [leveled](https://github.com/martinsumner/leveled)
 
@@ -176,7 +176,7 @@ The leveled backend has the following characteristics and features:
 - Guarding against out-of-memory errors is an operator responsibility.  The cluster should be expanded if the memory limit is close, the per-vnode memory overhead will not be proactively reduced.
   - Makes use of any spare memory of the system through proactive hints to the file-system page cache.
 
-For further details on the design and implementation of the leveled backend refer to [the Riak Theory Guide](/kv/3.4.1/explanation/storage/leveled/).
+For further details on the design and implementation of the leveled backend refer to [the Riak Theory Guide]({{< baseurl >}}kv/3.4.1/explanation/storage/leveled/).
 
 #### The leveled backend
 
@@ -297,5 +297,5 @@ Should the Ledger be corrupted or lost in `head-only` mode, then it must be reco
 
 [strengths]: #strengths
 [weaknesses]: #weaknesses
-[installenable]: /kv/3.4.1/explanation/storage/leveled/
+[installenable]: {{< baseurl >}}kv/3.4.1/explanation/storage/leveled/
 [confiuring]: #configuring-leveled

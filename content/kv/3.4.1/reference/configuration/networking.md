@@ -48,7 +48,7 @@ Riak is partition tolerant, in that during partition events data can still be st
 
 If there are weaknesses in resilience in the network architecture, then that resilience should be reflected in the configuration of locations.  For example, if nodes are only connected to a single network switch, then all nodes on the same switch should be configured to be in the same location.
 
-In assessing the bandwidth needs of Riak deployments, the flow of requests using [the Object API](/kv/3.4.1/reference/http-api/) should be considered:
+In assessing the bandwidth needs of Riak deployments, the flow of requests using [the Object API]({{< baseurl >}}kv/3.4.1/reference/http-api/) should be considered:
 
 - For every GET from Riak, the value will normally be fetched once within the cluster (the majority of the time from within the same location) generating an intra-cluster network bandwidth requirement.
 - For every PUT the value will normally be sent three times within the cluster.  Between replicating clusters GETs do not create network bandwidth needs, but each PUT requires a single transfer of the value.

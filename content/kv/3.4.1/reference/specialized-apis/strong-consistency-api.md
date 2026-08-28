@@ -30,25 +30,25 @@ Define strongly consistent operations, request fields, responses, constraints, a
 
 ### Strong Consistency
 
-[use ref strong consistency]: /kv/3.4.1/reference/specialized-apis/strong-consistency-api/
-[concept eventual consistency]: /kv/3.4.1/explanation/consistency/eventual-consistency/
-[use ref strong consistency#trade-offs]: /kv/3.4.1/reference/specialized-apis/strong-consistency-api/#trade-offs
-[glossary vnode]: /kv/3.4.1/explanation/foundations/glossary/#vnode
-[config strong consistency#enable]: /kv/3.4.1/how-to/configure/strong-consistency/#enabling-strong-consistency
-[usage bucket types]: /kv/3.4.1/how-to/develop/use-bucket-types/
-[cluster ops bucket types]: /kv/3.4.1/how-to/operate/manage-bucket-types/
-[apps replication properties]: /kv/3.4.1/explanation/replication/references-and-triggers/
-[config strong consistency]: /kv/3.4.1/how-to/configure/strong-consistency/
-[config strong consistency#fault]: /kv/3.4.1/how-to/configure/strong-consistency/#fault-tolerance
-[concept causal context]: /kv/3.4.1/explanation/data-model/causal-context/
-[concept causal context#vector]: /kv/3.4.1/explanation/data-model/causal-context/#vector-clocks
-[concept version vector]: /kv/3.4.1/explanation/data-model/causal-context/#dotted-version-vectors
-[usage conflict resolution]: /kv/3.4.1/how-to/develop/resolve-conflicts/
-[usage update objects]: /kv/3.4.1/how-to/develop/update-object/
-[use ref strong consistency#vs]: /kv/3.4.1/reference/specialized-apis/strong-consistency-api/
-[dev client libraries]: /kv/3.4.1/reference/client-libraries/
-[getting started]: /kv/3.4.1/tutorials/first-application/
-[config strong consistency#details]: /kv/3.4.1/how-to/configure/strong-consistency/#implementation-details
+[use ref strong consistency]: {{< baseurl >}}kv/3.4.1/reference/specialized-apis/strong-consistency-api/
+[concept eventual consistency]: {{< baseurl >}}kv/3.4.1/explanation/consistency/eventual-consistency/
+[use ref strong consistency#trade-offs]: {{< baseurl >}}kv/3.4.1/reference/specialized-apis/strong-consistency-api/#trade-offs
+[glossary vnode]: {{< baseurl >}}kv/3.4.1/explanation/foundations/glossary/#vnode
+[config strong consistency#enable]: {{< baseurl >}}kv/3.4.1/how-to/configure/strong-consistency/#enabling-strong-consistency
+[usage bucket types]: {{< baseurl >}}kv/3.4.1/how-to/develop/use-bucket-types/
+[cluster ops bucket types]: {{< baseurl >}}kv/3.4.1/how-to/operate/manage-bucket-types/
+[apps replication properties]: {{< baseurl >}}kv/3.4.1/explanation/replication/references-and-triggers/
+[config strong consistency]: {{< baseurl >}}kv/3.4.1/how-to/configure/strong-consistency/
+[config strong consistency#fault]: {{< baseurl >}}kv/3.4.1/how-to/configure/strong-consistency/#fault-tolerance
+[concept causal context]: {{< baseurl >}}kv/3.4.1/explanation/data-model/causal-context/
+[concept causal context#vector]: {{< baseurl >}}kv/3.4.1/explanation/data-model/causal-context/#vector-clocks
+[concept version vector]: {{< baseurl >}}kv/3.4.1/explanation/data-model/causal-context/#dotted-version-vectors
+[usage conflict resolution]: {{< baseurl >}}kv/3.4.1/how-to/develop/resolve-conflicts/
+[usage update objects]: {{< baseurl >}}kv/3.4.1/how-to/develop/update-object/
+[use ref strong consistency#vs]: {{< baseurl >}}kv/3.4.1/reference/specialized-apis/strong-consistency-api/
+[dev client libraries]: {{< baseurl >}}kv/3.4.1/reference/client-libraries/
+[getting started]: {{< baseurl >}}kv/3.4.1/tutorials/first-application/
+[config strong consistency#details]: {{< baseurl >}}kv/3.4.1/how-to/configure/strong-consistency/#implementation-details
 
 > **Please Note:**
 >
@@ -273,10 +273,10 @@ consistent operations.
 
 ### Strong Consistency Reference
 
-[usage bucket types]: /kv/3.4.1/how-to/develop/use-bucket-types/
-[concept eventual consistency]: /kv/3.4.1/explanation/consistency/eventual-consistency/
+[usage bucket types]: {{< baseurl >}}kv/3.4.1/how-to/develop/use-bucket-types/
+[concept eventual consistency]: {{< baseurl >}}kv/3.4.1/explanation/consistency/eventual-consistency/
 
-Riak was originally designed as an [eventually consistent](/kv/3.4.1/explanation/consistency/eventual-consistency/) system, fundamentally geared toward providing partition
+Riak was originally designed as an [eventually consistent]({{< baseurl >}}kv/3.4.1/explanation/consistency/eventual-consistency/) system, fundamentally geared toward providing partition
 (i.e. fault) tolerance and high read and write availability.
 
 While this focus on high availability is a great fit for many data
@@ -287,7 +287,7 @@ In Riak, strong consistency is applied [using bucket types][usage bucket types],
 enables developers to apply strong consistency guarantees on a per-key
 basis.
 
-Elsewhere in the documentation there are instructions for [enabling and using](/kv/3.4.1/reference/specialized-apis/strong-consistency-api/) strong consistency, as well as a [guide for operators](/kv/3.4.1/how-to/configure/strong-consistency/) looking to manage,
+Elsewhere in the documentation there are instructions for [enabling and using]({{< baseurl >}}kv/3.4.1/reference/specialized-apis/strong-consistency-api/) strong consistency, as well as a [guide for operators]({{< baseurl >}}kv/3.4.1/how-to/configure/strong-consistency/) looking to manage,
 configure, and monitor strong consistency.
 
 #### Strong vs. Eventual Consistency
@@ -395,20 +395,20 @@ tolerance. Consistent operations can still succeed when a minority of
 replicas in each ensemble can be offline, faulty, or unreachable. In
 other words, **strongly consistent operations will succeed as long as
 quorum is maintained**. A fuller discussion can be found in the
-[operations](/kv/3.4.1/how-to/configure/strong-consistency/#fault-tolerance)
+[operations]({{< baseurl >}}kv/3.4.1/how-to/configure/strong-consistency/#fault-tolerance)
 documentation.
 
 A second trade-off regards performance. OpenRiak's implementation of strong
-consistency involves a complex [consensus subsystem](/kv/3.4.1/reference/specialized-apis/strong-consistency-api/) that typically requires more communication between Riak nodes than eventually consistent operations,
+consistency involves a complex [consensus subsystem]({{< baseurl >}}kv/3.4.1/reference/specialized-apis/strong-consistency-api/) that typically requires more communication between Riak nodes than eventually consistent operations,
 which can entail a performance hit of varying proportions, depending on
 a variety of factors.
 
-Ways to address this issue can be found in [strong consistency and performance](/kv/3.4.1/how-to/configure/strong-consistency/#performance).
+Ways to address this issue can be found in [strong consistency and performance]({{< baseurl >}}kv/3.4.1/how-to/configure/strong-consistency/#performance).
 
 #### Strong Consistency API
 
 The use of the strong consistency API is deprecated in Riak 3.4, and the API will be retired in Riak 4.0.
 
-From Riak 4.0, Riak will only have support for eventual consistency, but protection for conflicts can be improved through [conditional PUTs with token-based consensus](/kv/3.4.1/reference/http-api/conditional-requests/).
+From Riak 4.0, Riak will only have support for eventual consistency, but protection for conflicts can be improved through [conditional PUTs with token-based consensus]({{< baseurl >}}kv/3.4.1/reference/http-api/conditional-requests/).
 
 The functionality of Strong Consistency is unchanged since Riak 2.2.3, so refer to the [legacy documentation](https://docs.riak.com/riak/kv/2.2.3/developing/app-guide/strong-consistency/index.html) for further information.

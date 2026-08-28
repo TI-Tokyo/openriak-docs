@@ -31,9 +31,9 @@ Explain version vectors and siblings, its trade-offs, and its effect on applicat
 
 ### Version Vector
 
-The Riak [version vector](/kv/3.4.0/explanation/data-model/version-vectors-and-siblings/) is relevant to the database, but generally opaque to the application.  The application should read the version vector (which will be presented base64 encoded), and present the read version vector when updating an object.  The application does not need to understand the contents of the version vector.
+The Riak [version vector]({{< baseurl >}}kv/3.4.0/explanation/data-model/version-vectors-and-siblings/) is relevant to the database, but generally opaque to the application.  The application should read the version vector (which will be presented base64 encoded), and present the read version vector when updating an object.  The application does not need to understand the contents of the version vector.
 
-The version vector is referred to in the API as a `vector clock` (or `vclock`).  This vector is used internally within Riak to track which content is most up-to-date - to differentiate between content that is superseded (i.e. where an update had seen the content) or genuinely concurrent (the writes were made in parallel).  Parallel writes will lead to unresolvable conflict, and how this is handled is defined within the [bucket properties](/kv/3.4.0/reference/configuration/bucket-properties/).
+The version vector is referred to in the API as a `vector clock` (or `vclock`).  This vector is used internally within Riak to track which content is most up-to-date - to differentiate between content that is superseded (i.e. where an update had seen the content) or genuinely concurrent (the writes were made in parallel).  Parallel writes will lead to unresolvable conflict, and how this is handled is defined within the [bucket properties]({{< baseurl >}}kv/3.4.0/reference/configuration/bucket-properties/).
 
 #### Siblings
 

@@ -49,8 +49,8 @@ Mapreduce jobs can be encoded in two different ways
 * `application/json` - JSON-encoded MapReduce job
 * `application/x-erlang-binary` - Erlang external term format
 
-The JSON encoding is the same as [REST API](/kv/3.4.1/how-to/develop/run-mapreduce/) and
-the external term format is the same as the [local Erlang API](/kv/3.4.1/how-to/develop/run-mapreduce/)
+The JSON encoding is the same as [REST API]({{< baseurl >}}kv/3.4.1/how-to/develop/run-mapreduce/) and
+the external term format is the same as the [local Erlang API]({{< baseurl >}}kv/3.4.1/how-to/develop/run-mapreduce/)
 
 #### Response
 

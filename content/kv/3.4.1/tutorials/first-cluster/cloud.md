@@ -49,7 +49,7 @@ Link to the relevant how-to guides for real tasks, explanation pages for the und
 
 ## In this section
 
-- [Build a first OpenRiak cluster with Docker](/kv/3.4.1/tutorials/first-cluster/docker/) — Guide a newcomer from an empty Docker environment to a working cluster and a verified read and write.
-- [Learn OpenRiak with a first cluster](/kv/3.4.1/tutorials/first-cluster/) — Introduce supported learning environments for creating a disposable first cluster.
-- [Build a first OpenRiak cluster on Ubuntu](/kv/3.4.1/tutorials/first-cluster/ubuntu/) — Guide a newcomer through installing, joining, and exercising a small Ubuntu development cluster.
-- [Build a first OpenRiak cluster with Vagrant](/kv/3.4.1/tutorials/first-cluster/vagrant/) — Guide a newcomer through creating a repeatable multi-node development cluster with Vagrant.
+- [Build a first OpenRiak cluster with Docker]({{< baseurl >}}kv/3.4.1/tutorials/first-cluster/docker/) — Guide a newcomer from an empty Docker environment to a working cluster and a verified read and write.
+- [Learn OpenRiak with a first cluster]({{< baseurl >}}kv/3.4.1/tutorials/first-cluster/) — Introduce supported learning environments for creating a disposable first cluster.
+- [Build a first OpenRiak cluster on Ubuntu]({{< baseurl >}}kv/3.4.1/tutorials/first-cluster/ubuntu/) — Guide a newcomer through installing, joining, and exercising a small Ubuntu development cluster.
+- [Build a first OpenRiak cluster with Vagrant]({{< baseurl >}}kv/3.4.1/tutorials/first-cluster/vagrant/) — Guide a newcomer through creating a repeatable multi-node development cluster with Vagrant.

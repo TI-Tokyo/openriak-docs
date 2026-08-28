@@ -39,8 +39,8 @@ Administrative access to the nodes you will change; a copy of the current config
 
 ### Managing Your Configuration
 
-[use admin riak cli]: /kv/3.4.1/reference/commands/riak/
-[use admin riak cli#chkconfig]: /kv/3.4.1/reference/commands/riak/#chkconfig
+[use admin riak cli]: {{< baseurl >}}kv/3.4.1/reference/commands/riak/
+[use admin riak cli#chkconfig]: {{< baseurl >}}kv/3.4.1/reference/commands/riak/#chkconfig
 
 #### Retrieving a Configuration Listing
 
@@ -135,8 +135,8 @@ From the command line it is possible to view the current description of a config
 
 Note that the result of `describe` request is the current schema documentation of an option; whereas if a `riak.conf` file has been kept in place between upgrades, that `riak.conf` file may not have the up to date description.  The command-line `describe` is a more reliable way of understanding the present advice for a configuration option.
 
-[retrieve conf val]: /kv/3.4.1/how-to/configure/manage-configuration/
-[check config]: /kv/3.4.1/how-to/configure/manage-configuration/
+[retrieve conf val]: {{< baseurl >}}kv/3.4.1/how-to/configure/manage-configuration/
+[check config]: {{< baseurl >}}kv/3.4.1/how-to/configure/manage-configuration/
 
 ## Verify the result
 

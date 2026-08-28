@@ -36,10 +36,10 @@ Administrative access to the nodes you will change; a copy of the current config
 
 ### V2 Multi-Datacenter Replication
 
-[config v2 ssl]: /kv/3.4.1/how-to/configure/replication/secure-replication/
+[config v2 ssl]: {{< baseurl >}}kv/3.4.1/how-to/configure/replication/secure-replication/
 
 **Deprecation Warning**
-v2 Multi-Datacenter Replication is deprecated and will be removed in a future version. Please use [v3](/kv/3.4.1/how-to/configure/replication/configure-v3-multi-datacenter/) instead.
+v2 Multi-Datacenter Replication is deprecated and will be removed in a future version. Please use [v3]({{< baseurl >}}kv/3.4.1/how-to/configure/replication/configure-v3-multi-datacenter/) instead.
 
 OpenRiak's Multi-Datacenter Replication capabilities offer a
 variety of configurable parameters.

@@ -51,15 +51,15 @@ Link to the complete configuration or API reference, the explanation of the unde
 
 ## In this section
 
-- [Troubleshoot API errors](/kv/3.4.0/how-to/troubleshoot/api-errors/) — Show practitioners how to troubleshoot api errors from evidence gathering through verification.
-- [Troubleshoot client errors](/kv/3.4.0/how-to/troubleshoot/client-errors/) — Show practitioners how to troubleshoot client errors from evidence gathering through verification.
-- [Troubleshoot through the Erlang virtual machine](/kv/3.4.0/how-to/troubleshoot/erlang-vm/) — Show advanced operators how to use Recon, microstate accounting, Eprof, and tracing during diagnosis.
-- [Troubleshoot unexpected HTTP 204 responses](/kv/3.4.0/how-to/troubleshoot/http-204/) — Show practitioners how to troubleshoot unexpected http 204 responses from evidence gathering through verification.
-- [Troubleshoot OpenRiak](/kv/3.4.0/how-to/troubleshoot/) — Route readers from observed symptoms to focused diagnostic and recovery procedures.
-- [Troubleshoot node crashes](/kv/3.4.0/how-to/troubleshoot/node-crashes/) — Show practitioners how to troubleshoot node crashes from evidence gathering through verification.
-- [Recover from a cluster-wide failure](/kv/3.4.0/how-to/troubleshoot/recover-cluster-failure/) — Show practitioners how to recover from a cluster-wide failure from evidence gathering through verification.
-- [Recover a failed node](/kv/3.4.0/how-to/troubleshoot/recover-failed-node/) — Show practitioners how to recover a failed node from evidence gathering through verification.
-- [Repair secondary indexes](/kv/3.4.0/how-to/troubleshoot/repair-secondary-indexes/) — Show practitioners how to repair secondary indexes from evidence gathering through verification.
-- [Troubleshoot replication failures](/kv/3.4.0/how-to/troubleshoot/replication-failures/) — Show practitioners how to troubleshoot replication failures from evidence gathering through verification.
-- [Troubleshoot startup failures](/kv/3.4.0/how-to/troubleshoot/startup-failures/) — Show practitioners how to troubleshoot startup failures from evidence gathering through verification.
-- [Troubleshoot unexpected or stale data](/kv/3.4.0/how-to/troubleshoot/unexpected-or-stale-data/) — Show practitioners how to troubleshoot unexpected or stale data from evidence gathering through verification.
+- [Troubleshoot API errors]({{< baseurl >}}kv/3.4.0/how-to/troubleshoot/api-errors/) — Show practitioners how to troubleshoot api errors from evidence gathering through verification.
+- [Troubleshoot client errors]({{< baseurl >}}kv/3.4.0/how-to/troubleshoot/client-errors/) — Show practitioners how to troubleshoot client errors from evidence gathering through verification.
+- [Troubleshoot through the Erlang virtual machine]({{< baseurl >}}kv/3.4.0/how-to/troubleshoot/erlang-vm/) — Show advanced operators how to use Recon, microstate accounting, Eprof, and tracing during diagnosis.
+- [Troubleshoot unexpected HTTP 204 responses]({{< baseurl >}}kv/3.4.0/how-to/troubleshoot/http-204/) — Show practitioners how to troubleshoot unexpected http 204 responses from evidence gathering through verification.
+- [Troubleshoot OpenRiak]({{< baseurl >}}kv/3.4.0/how-to/troubleshoot/) — Route readers from observed symptoms to focused diagnostic and recovery procedures.
+- [Troubleshoot node crashes]({{< baseurl >}}kv/3.4.0/how-to/troubleshoot/node-crashes/) — Show practitioners how to troubleshoot node crashes from evidence gathering through verification.
+- [Recover from a cluster-wide failure]({{< baseurl >}}kv/3.4.0/how-to/troubleshoot/recover-cluster-failure/) — Show practitioners how to recover from a cluster-wide failure from evidence gathering through verification.
+- [Recover a failed node]({{< baseurl >}}kv/3.4.0/how-to/troubleshoot/recover-failed-node/) — Show practitioners how to recover a failed node from evidence gathering through verification.
+- [Repair secondary indexes]({{< baseurl >}}kv/3.4.0/how-to/troubleshoot/repair-secondary-indexes/) — Show practitioners how to repair secondary indexes from evidence gathering through verification.
+- [Troubleshoot replication failures]({{< baseurl >}}kv/3.4.0/how-to/troubleshoot/replication-failures/) — Show practitioners how to troubleshoot replication failures from evidence gathering through verification.
+- [Troubleshoot startup failures]({{< baseurl >}}kv/3.4.0/how-to/troubleshoot/startup-failures/) — Show practitioners how to troubleshoot startup failures from evidence gathering through verification.
+- [Troubleshoot unexpected or stale data]({{< baseurl >}}kv/3.4.0/how-to/troubleshoot/unexpected-or-stale-data/) — Show practitioners how to troubleshoot unexpected or stale data from evidence gathering through verification.

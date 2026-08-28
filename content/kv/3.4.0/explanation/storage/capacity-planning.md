@@ -30,7 +30,7 @@ Explain storage capacity planning, its constraints, and the workloads for which 
 
 ### Bitcask Capacity Calculator
 
-[plan backend bitcask]: /kv/3.4.0/explanation/storage/bitcask/
+[plan backend bitcask]: {{< baseurl >}}kv/3.4.0/explanation/storage/bitcask/
 
 These calculators will assist you in sizing your cluster if you plan to
 use the default [Bitcask][plan backend bitcask] storage back end.
@@ -116,13 +116,13 @@ available for your filesystem cache.
 
 ### Cluster Capacity Planning
 
-[plan backend leveldb]: /kv/3.4.0/explanation/storage/leveldb/
-[plan bitcask capacity]: /kv/3.4.0/explanation/storage/capacity-planning/
-[plan index]: /kv/3.4.0/how-to/plan/
-[concept replication]: /kv/3.4.0/explanation/replication/
-[use admin riak admin#cluster]: /kv/3.4.0/reference/commands/riak-admin/#cluster
-[config reference]: /kv/3.4.0/reference/configuration/
-[perf benchmark]: /kv/3.4.0/how-to/tune/benchmark-cluster/
+[plan backend leveldb]: {{< baseurl >}}kv/3.4.0/explanation/storage/leveldb/
+[plan bitcask capacity]: {{< baseurl >}}kv/3.4.0/explanation/storage/capacity-planning/
+[plan index]: {{< baseurl >}}kv/3.4.0/how-to/plan/
+[concept replication]: {{< baseurl >}}kv/3.4.0/explanation/replication/
+[use admin riak admin#cluster]: {{< baseurl >}}kv/3.4.0/reference/commands/riak-admin/#cluster
+[config reference]: {{< baseurl >}}kv/3.4.0/reference/configuration/
+[perf benchmark]: {{< baseurl >}}kv/3.4.0/how-to/tune/benchmark-cluster/
 [LVM]: http://en.wikipedia.org/wiki/Logical_Volume_Manager_(Linux)
 
 This document outlines the various elements and variables to keep in mind when planning your OpenRiak cluster. Your use case and environment variables will be specific to what you're building, but this document should set you on the right path when planning and launching an OpenRiak cluster.

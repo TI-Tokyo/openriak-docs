@@ -29,7 +29,7 @@ Guide an operator through adding and removing disposable nodes while observing r
 
 ## Adding / Removing Nodes
 
-[use running cluster]: /kv/3.4.0/how-to/operate/
+[use running cluster]: {{< baseurl >}}kv/3.4.0/how-to/operate/
 
 This page describes the process of adding and removing nodes to and from
 an OpenRiak KV cluster. For information on creating a cluster check out [Running a Cluster][use running cluster].
@@ -40,7 +40,7 @@ Just like the initial configuration steps, this step has to be repeated
 for every node in your cluster. Before a node can join an existing
 cluster it needs to be started. Depending on your mode of installation,
 use either the init scripts installed by the Riak binary packages or
-simply the script [`riak`](/kv/3.4.0/reference/commands/riak/):
+simply the script [`riak`]({{< baseurl >}}kv/3.4.0/reference/commands/riak/):
 
 ```bash
 /etc/init.d/riak start
@@ -226,4 +226,4 @@ Repeat the completed workflow, inspect the stored or operational result, and con
 
 ## Next steps
 
-- [Practice changing a storage backend](/kv/3.4.0/tutorials/operations/change-storage-backend/)
+- [Practice changing a storage backend]({{< baseurl >}}kv/3.4.0/tutorials/operations/change-storage-backend/)

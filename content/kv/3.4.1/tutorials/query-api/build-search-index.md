@@ -39,7 +39,7 @@ Guide a developer through designing, loading, querying, and evaluating a small Q
 
 Querying in Riak is based around secondary indexes.  A Riak secondary index entry is a combination of a field, a term and an object key: where a field is a name for an index within a bucket, and a term is a sortable binary string that represents a value for a given key on that index, and the object key is the standard result of the query.  All indexes and queries are limited to the scope of a single Bucket.
 
-Indexes are added using [the Object API](/kv/3.4.1/reference/data/secondary-indexes/).
+Indexes are added using [the Object API]({{< baseurl >}}kv/3.4.1/reference/data/secondary-indexes/).
 
 - When an object is PUT into Riak, the PUT should include ALL the index entries for that object - the entirety of the current expected state.  Internally Riak will calculate the delta from the previously stored index entries, and only make the necessary key changes.
 - An individual object can have an unlimited number of index entries in total, and an unlimited number of terms on any given field.
@@ -47,7 +47,7 @@ Indexes are added using [the Object API](/kv/3.4.1/reference/data/secondary-inde
 
 There is no direct support for schema management within Riak, as Riak is designed to act independently of the format and the content of the application-provided object body.  It is expected that for an application to make use of secondary indexes within Riak, the object-handling logic within the application will require an extension; where that extension will examine the object body, and calculate the required index entries before completing a PUT.  As the schema is managed externally to Riak, schema changes are also required to be managed within the application.  Consideration of how to make such schema changes is the responsibility of the application designer e.g. versioning, rolling updates, querying-planning during transition etc.
 
-The design of secondary indexes in Riak make them best suited to environments where the query demands are relatively predictable in advance, and also the approximate cardinality of the data elements.  The [expected performance of queries is governed by the factors highlighted in the performance section](/kv/3.4.1/explanation/performance/query-execution/), and consideration of those factors is required when defining the indexes and planning the queries to be used.  Riak contains no query planning logic; the optimal path to resolve a query needs to be determined by the application.
+The design of secondary indexes in Riak make them best suited to environments where the query demands are relatively predictable in advance, and also the approximate cardinality of the data elements.  The [expected performance of queries is governed by the factors highlighted in the performance section]({{< baseurl >}}kv/3.4.1/explanation/performance/query-execution/), and consideration of those factors is required when defining the indexes and planning the queries to be used.  Riak contains no query planning logic; the optimal path to resolve a query needs to be determined by the application.
 
 Index entries can be made up of simple sort keys:
 
@@ -57,7 +57,7 @@ Index terms can be extended by projecting additional attributes onto the sort ke
 
 e.g. `surnamedob_bin: SMITH|19790613`
 
-There is no pre-defined way to map project attributes onto an index term in Riak; the definition, formatting and appending of projected attributes is the responsibility of the application.  Projected attributes are extracted from index terms at query time, normally using an `evaluation_expression` within the Query API; and so index entries should be added so that the extraction is supported by the [expression language](/kv/3.4.1/reference/query-api/expressions/).
+There is no pre-defined way to map project attributes onto an index term in Riak; the definition, formatting and appending of projected attributes is the responsibility of the application.  Projected attributes are extracted from index terms at query time, normally using an `evaluation_expression` within the Query API; and so index entries should be added so that the extraction is supported by the [expression language]({{< baseurl >}}kv/3.4.1/reference/query-api/expressions/).
 
 Different extraction functions within the Query API `evaluation_expression` have different costs at query time, but also have differing impacts with regards to flexibility in support of schema change.  For example, using an `index` evaluation function is more efficient than a `kvsplit` function at query time, but when changing the schema the use of `kvsplit` may simplify the management of that change.
 
@@ -330,7 +330,7 @@ The query definition above will search for every SMITH born in the first 6 month
 
 The query definition above will search for anyone who was born in the first 6 months of 1964, and was living in the LS9 postal area on 1st January 1980.
 
-To query across both indexes, a combination query is required.  The following query could be managed on a single query with the [previous strategy](/kv/3.4.1/tutorials/query-api/build-search-index/), however, in this strategy the family name and address information is split across different indexes. Multiple queries combined through an aggregation expression are now required to search for only the SMITHs that meet the address criteria.
+To query across both indexes, a combination query is required.  The following query could be managed on a single query with the [previous strategy]({{< baseurl >}}kv/3.4.1/tutorials/query-api/build-search-index/), however, in this strategy the family name and address information is split across different indexes. Multiple queries combined through an aggregation expression are now required to search for only the SMITHs that meet the address criteria.
 
 ```json
     {
@@ -416,7 +416,7 @@ If the same results are required, but this time a count by age at today's date (
 
 #### Example (3) - Simple Variations and Limitations
 
-In using report-style queries, counting results or grouping counts by a projected attribute - the type of `accumulation_option` used is important.  There is support for both `raw` and non-`raw` forms of each `accumulation_option`.  The `raw` form of each accumulator [will be significantly more efficient when covering large result sets](/kv/3.4.1/explanation/performance/query-execution/), but it will not deduplicate the result set by object key before counting.
+In using report-style queries, counting results or grouping counts by a projected attribute - the type of `accumulation_option` used is important.  There is support for both `raw` and non-`raw` forms of each `accumulation_option`.  The `raw` form of each accumulator [will be significantly more efficient when covering large result sets]({{< baseurl >}}kv/3.4.1/explanation/performance/query-execution/), but it will not deduplicate the result set by object key before counting.
 
 ## What you will learn
 

@@ -53,13 +53,13 @@ Repeat the completed workflow, inspect the stored or operational result, and con
 
 ## Next steps
 
-- [Build a first OpenRiak cluster in the cloud](/kv/3.4.0/tutorials/first-cluster/cloud/)
-- [Build a first OpenRiak cluster with Docker](/kv/3.4.0/tutorials/first-cluster/docker/)
-- [Build a first OpenRiak cluster on Ubuntu](/kv/3.4.0/tutorials/first-cluster/ubuntu/)
+- [Build a first OpenRiak cluster in the cloud]({{< baseurl >}}kv/3.4.0/tutorials/first-cluster/cloud/)
+- [Build a first OpenRiak cluster with Docker]({{< baseurl >}}kv/3.4.0/tutorials/first-cluster/docker/)
+- [Build a first OpenRiak cluster on Ubuntu]({{< baseurl >}}kv/3.4.0/tutorials/first-cluster/ubuntu/)
 
 ## In this section
 
-- [Build a first OpenRiak cluster in the cloud](/kv/3.4.0/tutorials/first-cluster/cloud/) — Guide a newcomer through deploying and testing a disposable cluster on a supported cloud platform.
-- [Build a first OpenRiak cluster with Docker](/kv/3.4.0/tutorials/first-cluster/docker/) — Guide a newcomer from an empty Docker environment to a working cluster and a verified read and write.
-- [Build a first OpenRiak cluster on Ubuntu](/kv/3.4.0/tutorials/first-cluster/ubuntu/) — Guide a newcomer through installing, joining, and exercising a small Ubuntu development cluster.
-- [Build a first OpenRiak cluster with Vagrant](/kv/3.4.0/tutorials/first-cluster/vagrant/) — Guide a newcomer through creating a repeatable multi-node development cluster with Vagrant.
+- [Build a first OpenRiak cluster in the cloud]({{< baseurl >}}kv/3.4.0/tutorials/first-cluster/cloud/) — Guide a newcomer through deploying and testing a disposable cluster on a supported cloud platform.
+- [Build a first OpenRiak cluster with Docker]({{< baseurl >}}kv/3.4.0/tutorials/first-cluster/docker/) — Guide a newcomer from an empty Docker environment to a working cluster and a verified read and write.
+- [Build a first OpenRiak cluster on Ubuntu]({{< baseurl >}}kv/3.4.0/tutorials/first-cluster/ubuntu/) — Guide a newcomer through installing, joining, and exercising a small Ubuntu development cluster.
+- [Build a first OpenRiak cluster with Vagrant]({{< baseurl >}}kv/3.4.0/tutorials/first-cluster/vagrant/) — Guide a newcomer through creating a repeatable multi-node development cluster with Vagrant.

@@ -37,7 +37,7 @@ The data can then be recovered from the other nodes in the cluster issuing the `
 
 The combination of `repair_span = double_pair, repair_deferred = enabled` is significantly more effective when repairing under load.  With these configuration options, it should be noted that repairs will happen in key order, not in reverse order of receipt (the default).  With these changes, using the leveled backend, non-functional testing demonstrates that repairs can complete efficiently even when nodes are persistently at 100% CPU utilisation due to the handling of application requests.
 
-Repair uses handoffs, and so can be tracked as with other cluster change operations.  Once handoffs are complete, Tictac AAE should be re-enabled, e.g. by using `riak_client:tictacaae_resume_node().`.  Once Tictac AAE confirms all vnodes are in-sync - then [`participate_in_coverage` can be re-enabled](/kv/3.4.0/reference/operations/remote-console/).
+Repair uses handoffs, and so can be tracked as with other cluster change operations.  Once handoffs are complete, Tictac AAE should be re-enabled, e.g. by using `riak_client:tictacaae_resume_node().`.  Once Tictac AAE confirms all vnodes are in-sync - then [`participate_in_coverage` can be re-enabled]({{< baseurl >}}kv/3.4.0/reference/operations/remote-console/).
 
 The progress of repairs can be inspected with `riak admin node repair status`, and stopped with `riak admin node repair stop`.
 
@@ -45,9 +45,9 @@ The progress of repairs can be inspected with `riak admin node repair status`, a
 
 Storage backends make use of CRC checks to detect and respond to corruption (by impacting individual objects not the whole store).  If an object, or a block of keys, becomes corrupted due to an issue with file storage then this should be detected by CRC checks.  The result of a failed CRC check, will be to respond as if the object in question is missing, rather than trigger a failure of the whole vnode.
 
-Where such corruption is limited to a leveled ledger, then [a repair via leveled rebuild](/kv/3.4.0/how-to/operate/repair-leveled-store/) can be used to recover.  However, in other backends, or with a corruption in the leveled journal - it may be preferable to repair a whole vnode rather than wait for other anti-entropy processes to eventually resolve the impact of the corruption (by repairing each impacted object).
+Where such corruption is limited to a leveled ledger, then [a repair via leveled rebuild]({{< baseurl >}}kv/3.4.0/how-to/operate/repair-leveled-store/) can be used to recover.  However, in other backends, or with a corruption in the leveled journal - it may be preferable to repair a whole vnode rather than wait for other anti-entropy processes to eventually resolve the impact of the corruption (by repairing each impacted object).
 
-The process to [complete a full node repair](/kv/3.4.0/how-to/troubleshoot/recover-failed-node/) can be targeted at an individual vnode to repair just that vnode.  To prompt the repair of an individual vnode, the partition number - the [integer identifier of a vnode](/kv/3.4.0/explanation/foundations/clusters-rings-and-partitions/) - must be passed to the vnode repair function.  The vnode repair function (`riak_kv_vnode_repair/1`) can be called by using the [`remote_console`](/kv/3.4.0/how-to/operate/use-remote-console/) or directly from the command line through the `riak eval` CLI call:
+The process to [complete a full node repair]({{< baseurl >}}kv/3.4.0/how-to/troubleshoot/recover-failed-node/) can be targeted at an individual vnode to repair just that vnode.  To prompt the repair of an individual vnode, the partition number - the [integer identifier of a vnode]({{< baseurl >}}kv/3.4.0/explanation/foundations/clusters-rings-and-partitions/) - must be passed to the vnode repair function.  The vnode repair function (`riak_kv_vnode_repair/1`) can be called by using the [`remote_console`]({{< baseurl >}}kv/3.4.0/how-to/operate/use-remote-console/) or directly from the command line through the `riak eval` CLI call:
 
 ```console
 riak eval "riak_kv_vnode:repair(<partition_number>)."

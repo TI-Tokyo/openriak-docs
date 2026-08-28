@@ -49,21 +49,21 @@ slashes. Use a URL-escaping library or replace slashes with `%2F`.
 
 Method | URL | Doc
 :------|:----|:---
-`GET` | `/types/<type>/buckets/<bucket>/props` | [HTTP Get Bucket Properties](/kv/3.4.1/reference/http-api/get-bucket-properties/)
-`PUT` | `/types/<type>/buckets/<bucket>/props` | [HTTP Set Bucket Properties](/kv/3.4.1/reference/http-api/set-bucket-properties/)
-`DELETE` | `/types/<type>/buckets/<bucket>/props` | [HTTP Reset Bucket Properties](/kv/3.4.1/reference/http-api/reset-bucket-properties/)
-`GET` | `/types/<type>/buckets?buckets=true` | [HTTP List Buckets](/kv/3.4.1/reference/http-api/list-buckets/)
-`GET` | `/types/<type>/buckets/<bucket>/keys?keys=true` | [HTTP List Keys](/kv/3.4.1/reference/http-api/list-keys/)
+`GET` | `/types/<type>/buckets/<bucket>/props` | [HTTP Get Bucket Properties]({{< baseurl >}}kv/3.4.1/reference/http-api/get-bucket-properties/)
+`PUT` | `/types/<type>/buckets/<bucket>/props` | [HTTP Set Bucket Properties]({{< baseurl >}}kv/3.4.1/reference/http-api/set-bucket-properties/)
+`DELETE` | `/types/<type>/buckets/<bucket>/props` | [HTTP Reset Bucket Properties]({{< baseurl >}}kv/3.4.1/reference/http-api/reset-bucket-properties/)
+`GET` | `/types/<type>/buckets?buckets=true` | [HTTP List Buckets]({{< baseurl >}}kv/3.4.1/reference/http-api/list-buckets/)
+`GET` | `/types/<type>/buckets/<bucket>/keys?keys=true` | [HTTP List Keys]({{< baseurl >}}kv/3.4.1/reference/http-api/list-keys/)
 
 #### Object-related Operations
 
 Method | URL | Doc
 :------|:----|:---
-`GET` | `/types/<type>/buckets/<bucket>/keys/<key>` | [HTTP Fetch Object](/kv/3.4.1/reference/http-api/fetch-object/)
-`POST` | `/types/<type>/buckets/<bucket>/keys` | [HTTP Store Object](/kv/3.4.1/reference/http-api/store-object/)
-`PUT` | `/types/<type>/buckets/<bucket>/keys/<key>` | [HTTP Store Object](/kv/3.4.1/reference/http-api/store-object/)
-`POST` | `/types/<type>/buckets/<bucket>/keys/<key>` | [HTTP Store Object](/kv/3.4.1/reference/http-api/store-object/)
-`DELETE` | `/types/<type>/buckets/<bucket>/keys/<key>` | [HTTP Delete Object](/kv/3.4.1/reference/http-api/delete-object/)
+`GET` | `/types/<type>/buckets/<bucket>/keys/<key>` | [HTTP Fetch Object]({{< baseurl >}}kv/3.4.1/reference/http-api/fetch-object/)
+`POST` | `/types/<type>/buckets/<bucket>/keys` | [HTTP Store Object]({{< baseurl >}}kv/3.4.1/reference/http-api/store-object/)
+`PUT` | `/types/<type>/buckets/<bucket>/keys/<key>` | [HTTP Store Object]({{< baseurl >}}kv/3.4.1/reference/http-api/store-object/)
+`POST` | `/types/<type>/buckets/<bucket>/keys/<key>` | [HTTP Store Object]({{< baseurl >}}kv/3.4.1/reference/http-api/store-object/)
+`DELETE` | `/types/<type>/buckets/<bucket>/keys/<key>` | [HTTP Delete Object]({{< baseurl >}}kv/3.4.1/reference/http-api/delete-object/)
 
 #### Riak-Data-Type-related Operations
 
@@ -73,9 +73,9 @@ Method | URL
 `POST` | `/types/<type>/buckets/<bucket>/datatypes`
 `POST` | `/types/<type>/buckets/<bucket>/datatypes/<key>`
 
-For documentation on the HTTP API for [Riak Data Types](/kv/3.4.1/explanation/data-model/distributed-data-types/),
-see the `curl` examples in [Using Data Types](/kv/3.4.1/reference/data/distributed-data-types/#usage-examples)
-and subpages e.g. [sets](/kv/3.4.1/how-to/develop/use-sets/).
+For documentation on the HTTP API for [Riak Data Types]({{< baseurl >}}kv/3.4.1/explanation/data-model/distributed-data-types/),
+see the `curl` examples in [Using Data Types]({{< baseurl >}}kv/3.4.1/reference/data/distributed-data-types/#usage-examples)
+and subpages e.g. [sets]({{< baseurl >}}kv/3.4.1/how-to/develop/use-sets/).
 
 Advanced users may consult the technical documentation inside the Riak
 KV internal module `riak_kv_wm_crdt`.
@@ -84,29 +84,29 @@ KV internal module `riak_kv_wm_crdt`.
 
 Method | URL | Doc
 :------|:----|:---
-`POST` | `/mapred` | [HTTP MapReduce](/kv/3.4.1/reference/http-api/mapreduce/)
-`GET` | `/types/<type>/buckets/<bucket>/index/<index>/<value>` | [HTTP Secondary Indexes](/kv/3.4.1/reference/http-api/secondary-indexes/)
-`GET` | `/types/<type>/buckets/<bucket>/index/<index>/<start>/<end>` | [HTTP Secondary Indexes](/kv/3.4.1/reference/http-api/secondary-indexes/)
+`POST` | `/mapred` | [HTTP MapReduce]({{< baseurl >}}kv/3.4.1/reference/http-api/mapreduce/)
+`GET` | `/types/<type>/buckets/<bucket>/index/<index>/<value>` | [HTTP Secondary Indexes]({{< baseurl >}}kv/3.4.1/reference/http-api/secondary-indexes/)
+`GET` | `/types/<type>/buckets/<bucket>/index/<index>/<start>/<end>` | [HTTP Secondary Indexes]({{< baseurl >}}kv/3.4.1/reference/http-api/secondary-indexes/)
 
 #### Server-related Operations
 
 Method | URL | Doc
 :------|:----|:---
-`GET` | `/ping` | [HTTP Ping](/kv/3.4.1/reference/http-api/ping/)
-`GET` | `/stats` | [HTTP Status](/kv/3.4.1/reference/http-api/status/)
-`GET` | `/` | [HTTP List Resources](/kv/3.4.1/reference/http-api/list-resources/)
+`GET` | `/ping` | [HTTP Ping]({{< baseurl >}}kv/3.4.1/reference/http-api/ping/)
+`GET` | `/stats` | [HTTP Status]({{< baseurl >}}kv/3.4.1/reference/http-api/status/)
+`GET` | `/` | [HTTP List Resources]({{< baseurl >}}kv/3.4.1/reference/http-api/list-resources/)
 
 #### Search-related Operations
 
 Method | URL | Doc
 :------|:----|:---
-`GET` | `/search/query/<index_name>` | [HTTP Search Query](/kv/3.4.1/reference/specialized-apis/legacy-query-api/)
-`GET` | `/search/index` | [HTTP Search Index Info](/kv/3.4.1/reference/specialized-apis/legacy-query-api/)
-`GET` | `/search/index/<index_name>` | [HTTP Fetch Search Index](/kv/3.4.1/reference/specialized-apis/legacy-query-api/)
-`PUT` | `/search/index/<index_name>` | [HTTP Store Search Index](/kv/3.4.1/reference/specialized-apis/legacy-query-api/)
-`DELETE` | `/search/index/<index_name>` | [HTTP Delete Search Index](/kv/3.4.1/reference/specialized-apis/legacy-query-api/)
-`GET` | `/search/schema/<schema_name>` | [HTTP Fetch Search Schema](/kv/3.4.1/reference/specialized-apis/legacy-query-api/)
-`PUT` | `/search/schema/<schema_name>` | [HTTP Store Search Schema](/kv/3.4.1/reference/specialized-apis/legacy-query-api/)
+`GET` | `/search/query/<index_name>` | [HTTP Search Query]({{< baseurl >}}kv/3.4.1/reference/specialized-apis/legacy-query-api/)
+`GET` | `/search/index` | [HTTP Search Index Info]({{< baseurl >}}kv/3.4.1/reference/specialized-apis/legacy-query-api/)
+`GET` | `/search/index/<index_name>` | [HTTP Fetch Search Index]({{< baseurl >}}kv/3.4.1/reference/specialized-apis/legacy-query-api/)
+`PUT` | `/search/index/<index_name>` | [HTTP Store Search Index]({{< baseurl >}}kv/3.4.1/reference/specialized-apis/legacy-query-api/)
+`DELETE` | `/search/index/<index_name>` | [HTTP Delete Search Index]({{< baseurl >}}kv/3.4.1/reference/specialized-apis/legacy-query-api/)
+`GET` | `/search/schema/<schema_name>` | [HTTP Fetch Search Schema]({{< baseurl >}}kv/3.4.1/reference/specialized-apis/legacy-query-api/)
+`PUT` | `/search/schema/<schema_name>` | [HTTP Store Search Schema]({{< baseurl >}}kv/3.4.1/reference/specialized-apis/legacy-query-api/)
 
 #### OpenRiak KV - Object API
 
@@ -126,16 +126,16 @@ The [PB Object API is described in the riak_pb repository](https://github.com/Op
 
 The Riak Object HTTP API is described here:
 
-- [The URL](/kv/3.4.1/reference/data/keys-and-objects/)
-- [The body](/kv/3.4.1/reference/data/keys-and-objects/)
-- [The request and response headers](/kv/3.4.1/reference/data/object-metadata/)
-- [Adding options to a request - query parameters](/kv/3.4.1/reference/http-api/object-request-options/)
-- [Conditional requests](/kv/3.4.1/reference/http-api/conditional-requests/)
-- [Commit hooks](/kv/3.4.1/how-to/develop/write-commit-hook/)
-- [Storing an object](/kv/3.4.1/reference/http-api/store-object/)
-- [Fetching an object](/kv/3.4.1/reference/http-api/fetch-object/)
-- [Deleting an object](/kv/3.4.1/reference/http-api/delete-object/)
-- [Legacy objects](/kv/3.4.1/reference/http-api/fetch-object/)
+- [The URL]({{< baseurl >}}kv/3.4.1/reference/data/keys-and-objects/)
+- [The body]({{< baseurl >}}kv/3.4.1/reference/data/keys-and-objects/)
+- [The request and response headers]({{< baseurl >}}kv/3.4.1/reference/data/object-metadata/)
+- [Adding options to a request - query parameters]({{< baseurl >}}kv/3.4.1/reference/http-api/object-request-options/)
+- [Conditional requests]({{< baseurl >}}kv/3.4.1/reference/http-api/conditional-requests/)
+- [Commit hooks]({{< baseurl >}}kv/3.4.1/how-to/develop/write-commit-hook/)
+- [Storing an object]({{< baseurl >}}kv/3.4.1/reference/http-api/store-object/)
+- [Fetching an object]({{< baseurl >}}kv/3.4.1/reference/http-api/fetch-object/)
+- [Deleting an object]({{< baseurl >}}kv/3.4.1/reference/http-api/delete-object/)
+- [Legacy objects]({{< baseurl >}}kv/3.4.1/reference/http-api/fetch-object/)
 
 #### Object Identifier - the URL
 
@@ -149,7 +149,7 @@ Internally within Riak all three elements are binary identifiers.  With the Obje
 
 > Although it is possible to use identifiers that are not URL-safe through the Protocol Buffer API, it is important not to do so - as any object using such an identifier may not be accessible via the HTTP API.  Guidelines for the safe use of Unicode in cross-API identifiers, will be clarified in a future Riak release.
 
-The [Bucket Type](/kv/3.4.1/reference/configuration/bucket-properties/) is used to describe the properties of the object.  Properties are associated with a Bucket Type, and all Objects in the Buckets under that type will inherit those properties.
+The [Bucket Type]({{< baseurl >}}kv/3.4.1/reference/configuration/bucket-properties/) is used to describe the properties of the object.  Properties are associated with a Bucket Type, and all Objects in the Buckets under that type will inherit those properties.
 
 A Bucket Type cannot be used via the API until it has been created and activated, to do this see:
 
@@ -166,20 +166,20 @@ Keys are unique identifiers of an object within a Bucket.
 
 ## In this section
 
-- [Conditional object request reference](/kv/3.4.1/reference/http-api/conditional-requests/) — Define conditional request headers, validator behavior, status codes, and latch-object semantics.
-- [Use counters with the HTTP API](/kv/3.4.1/reference/http-api/counters/) — Document the complete HTTP contract for this operation, including parameters, representations, examples, and errors.
-- [Delete an object with the HTTP API](/kv/3.4.1/reference/http-api/delete-object/) — Document the complete HTTP contract for this operation, including parameters, representations, examples, and errors.
-- [Fetch an object with the HTTP API](/kv/3.4.1/reference/http-api/fetch-object/) — Document the complete HTTP contract for this operation, including parameters, representations, examples, and errors.
-- [Get bucket properties with the HTTP API](/kv/3.4.1/reference/http-api/get-bucket-properties/) — Document the complete HTTP contract for this operation, including parameters, representations, examples, and errors.
-- [Walk links with the HTTP API](/kv/3.4.1/reference/http-api/link-walking/) — Document the complete HTTP contract for this operation, including parameters, representations, examples, and errors.
-- [List buckets with the HTTP API](/kv/3.4.1/reference/http-api/list-buckets/) — Document the complete HTTP contract for this operation, including parameters, representations, examples, and errors.
-- [List keys with the HTTP API](/kv/3.4.1/reference/http-api/list-keys/) — Document the complete HTTP contract for this operation, including parameters, representations, examples, and errors.
-- [List resources with the HTTP API](/kv/3.4.1/reference/http-api/list-resources/) — Document the complete HTTP contract for this operation, including parameters, representations, examples, and errors.
-- [Run MapReduce with the HTTP API](/kv/3.4.1/reference/http-api/mapreduce/) — Document the complete HTTP contract for this operation, including parameters, representations, examples, and errors.
-- [Object request options](/kv/3.4.1/reference/http-api/object-request-options/) — Define common OpenRiak Object API GET and PUT parameters, defaults, and response behavior.
-- [Ping with the HTTP API](/kv/3.4.1/reference/http-api/ping/) — Document the complete HTTP contract for this operation, including parameters, representations, examples, and errors.
-- [Reset bucket properties with the HTTP API](/kv/3.4.1/reference/http-api/reset-bucket-properties/) — Document the complete HTTP contract for this operation, including parameters, representations, examples, and errors.
-- [Query secondary indexes with the HTTP API](/kv/3.4.1/reference/http-api/secondary-indexes/) — Document the complete HTTP contract for this operation, including parameters, representations, examples, and errors.
-- [Set bucket properties with the HTTP API](/kv/3.4.1/reference/http-api/set-bucket-properties/) — Document the complete HTTP contract for this operation, including parameters, representations, examples, and errors.
-- [Status with the HTTP API](/kv/3.4.1/reference/http-api/status/) — Document the complete HTTP contract for this operation, including parameters, representations, examples, and errors.
-- [Store an object with the HTTP API](/kv/3.4.1/reference/http-api/store-object/) — Document the complete HTTP contract for this operation, including parameters, representations, examples, and errors.
+- [Conditional object request reference]({{< baseurl >}}kv/3.4.1/reference/http-api/conditional-requests/) — Define conditional request headers, validator behavior, status codes, and latch-object semantics.
+- [Use counters with the HTTP API]({{< baseurl >}}kv/3.4.1/reference/http-api/counters/) — Document the complete HTTP contract for this operation, including parameters, representations, examples, and errors.
+- [Delete an object with the HTTP API]({{< baseurl >}}kv/3.4.1/reference/http-api/delete-object/) — Document the complete HTTP contract for this operation, including parameters, representations, examples, and errors.
+- [Fetch an object with the HTTP API]({{< baseurl >}}kv/3.4.1/reference/http-api/fetch-object/) — Document the complete HTTP contract for this operation, including parameters, representations, examples, and errors.
+- [Get bucket properties with the HTTP API]({{< baseurl >}}kv/3.4.1/reference/http-api/get-bucket-properties/) — Document the complete HTTP contract for this operation, including parameters, representations, examples, and errors.
+- [Walk links with the HTTP API]({{< baseurl >}}kv/3.4.1/reference/http-api/link-walking/) — Document the complete HTTP contract for this operation, including parameters, representations, examples, and errors.
+- [List buckets with the HTTP API]({{< baseurl >}}kv/3.4.1/reference/http-api/list-buckets/) — Document the complete HTTP contract for this operation, including parameters, representations, examples, and errors.
+- [List keys with the HTTP API]({{< baseurl >}}kv/3.4.1/reference/http-api/list-keys/) — Document the complete HTTP contract for this operation, including parameters, representations, examples, and errors.
+- [List resources with the HTTP API]({{< baseurl >}}kv/3.4.1/reference/http-api/list-resources/) — Document the complete HTTP contract for this operation, including parameters, representations, examples, and errors.
+- [Run MapReduce with the HTTP API]({{< baseurl >}}kv/3.4.1/reference/http-api/mapreduce/) — Document the complete HTTP contract for this operation, including parameters, representations, examples, and errors.
+- [Object request options]({{< baseurl >}}kv/3.4.1/reference/http-api/object-request-options/) — Define common OpenRiak Object API GET and PUT parameters, defaults, and response behavior.
+- [Ping with the HTTP API]({{< baseurl >}}kv/3.4.1/reference/http-api/ping/) — Document the complete HTTP contract for this operation, including parameters, representations, examples, and errors.
+- [Reset bucket properties with the HTTP API]({{< baseurl >}}kv/3.4.1/reference/http-api/reset-bucket-properties/) — Document the complete HTTP contract for this operation, including parameters, representations, examples, and errors.
+- [Query secondary indexes with the HTTP API]({{< baseurl >}}kv/3.4.1/reference/http-api/secondary-indexes/) — Document the complete HTTP contract for this operation, including parameters, representations, examples, and errors.
+- [Set bucket properties with the HTTP API]({{< baseurl >}}kv/3.4.1/reference/http-api/set-bucket-properties/) — Document the complete HTTP contract for this operation, including parameters, representations, examples, and errors.
+- [Status with the HTTP API]({{< baseurl >}}kv/3.4.1/reference/http-api/status/) — Document the complete HTTP contract for this operation, including parameters, representations, examples, and errors.
+- [Store an object with the HTTP API]({{< baseurl >}}kv/3.4.1/reference/http-api/store-object/) — Document the complete HTTP contract for this operation, including parameters, representations, examples, and errors.

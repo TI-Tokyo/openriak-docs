@@ -30,7 +30,7 @@ A healthy cluster, current backups, and access to cluster status and logs. Recor
 
 ### Re-replicating keys for a given time period
 
-The aae_fold `repl_keys_range` will replicate any key within the defined range to the clusters consuming from a defined queue.  See the [AAE fold API documentation](/kv/3.4.1/reference/aae-fold-api/) for more information on using `repl_key_range`.
+The aae_fold `repl_keys_range` will replicate any key within the defined range to the clusters consuming from a defined queue.  See the [AAE fold API documentation]({{< baseurl >}}kv/3.4.1/reference/aae-fold-api/) for more information on using `repl_key_range`.
 
 ## Verify the result
 

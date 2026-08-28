@@ -44,6 +44,6 @@ Before using data-types, there are important caveats within the current implemen
   - The correct handling of failure of an individual request is not presently defined.
 - Riak is designed for the storing of many keys, where the load of object requests is spread roughly evenly across the key-space; this is also true for CRDTs.  Do not use individual counters, for example a single hit counter for an application, that may create a __hot__ key that is accessed much more frequently than other keys.
 - Both sets and maps have specific constraints in Riak 3.4 where the growth of components within an object is not handled efficiently.
-- There is no in-built support for querying data within data-types, the Data Type API is incompatible with the [Query API](/kv/3.4.1/tutorials/query-api/).
+- There is no in-built support for querying data within data-types, the Data Type API is incompatible with the [Query API]({{< baseurl >}}kv/3.4.1/tutorials/query-api/).
 
 > The approach to supporting data types is expected to be evolved significantly in future Riak releases; which may result in significant changes to both sets and maps, and change the use of those data types in those releases.

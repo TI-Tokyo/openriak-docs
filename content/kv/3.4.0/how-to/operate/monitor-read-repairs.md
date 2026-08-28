@@ -34,7 +34,7 @@ Read repairs will be invoked directly when a user GET request reveals an out-of-
 
 > Although GETs will by default respond to the client on quorum responses, all GET processes continue until all responses have returned or timed out.  The read repair is then triggered if required, based on all responses not just the quorum.
 
-Each read repair, will update the `read_repairs` and `read_repairs_total` statistic available [via riak stats](/kv/3.4.0/reference/operations/statistics-and-monitoring/).  Other stats updates are also made:
+Each read repair, will update the `read_repairs` and `read_repairs_total` statistic available [via riak stats]({{< baseurl >}}kv/3.4.0/reference/operations/statistics-and-monitoring/).  Other stats updates are also made:
 
 - `read_repairs_fallback_notfound`;
 - `read_repairs_fallback_outofdate`;
@@ -43,7 +43,7 @@ Each read repair, will update the `read_repairs` and `read_repairs_total` statis
 
 These stats indicate whether the vnode in need of repair was a primary or fallback, and whether it has been repaired as it had an out of date object, or the object was not found in that vnode.
 
-During a node failure, `n_val` fallback vnodes will be started for every unavailable primary vnode.  As the fallback vnodes start empty, a large number of read repairs may be immediately triggered, assuming the cluster is subject to application read requests.  This will in the short term impact performance, and in the long term impact handoff times when the node recovers - but in the medium term it will mean that the vnode has frequently accessed data to contribute to quorum.  The [`read_repair_primaryonly` configuration option](/kv/3.4.0/how-to/configure/basic-node-settings/) can be enabled to stop repairing fallback vnodes through read repair.
+During a node failure, `n_val` fallback vnodes will be started for every unavailable primary vnode.  As the fallback vnodes start empty, a large number of read repairs may be immediately triggered, assuming the cluster is subject to application read requests.  This will in the short term impact performance, and in the long term impact handoff times when the node recovers - but in the medium term it will mean that the vnode has frequently accessed data to contribute to quorum.  The [`read_repair_primaryonly` configuration option]({{< baseurl >}}kv/3.4.0/how-to/configure/basic-node-settings/) can be enabled to stop repairing fallback vnodes through read repair.
 
 Read repairs are also invoked by active anti-entropy.  When an intra-cluster AAE process detects a delta, it does not prompt it directly, it instead will prompt a GET request so that read repair will happen indirectly.
 

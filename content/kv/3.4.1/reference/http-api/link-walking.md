@@ -32,8 +32,8 @@ This feature is deprecated and will be removed in a future version.
 
 Link walking (traversal) finds and returns objects by following links attached
 to them, starting from the object specified by the bucket and key portion.  It
-is a special case of [MapReduce](/kv/3.4.1/how-to/develop/run-mapreduce/), and can be expressed more verbosely as such.
-[Read more about Links](/kv/3.4.1/explanation/foundations/glossary/).
+is a special case of [MapReduce]({{< baseurl >}}kv/3.4.1/how-to/develop/run-mapreduce/), and can be expressed more verbosely as such.
+[Read more about Links]({{< baseurl >}}kv/3.4.1/explanation/foundations/glossary/).
 
 #### Request
 
@@ -78,7 +78,7 @@ single object that was found. If no objects were found or "keep" was not set on
 the phase, no chunks will be present in that phase.  Objects inside phase
 results will include `Location` headers that can be used to determine
 bucket and key. In fact, you can treat each object-chunk similarly to a complete
-response from [fetching the object](/kv/3.4.1/reference/http-api/fetch-object/), without the status
+response from [fetching the object]({{< baseurl >}}kv/3.4.1/reference/http-api/fetch-object/), without the status
 code.
 
 #### Example

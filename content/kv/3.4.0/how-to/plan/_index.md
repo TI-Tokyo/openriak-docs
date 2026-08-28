@@ -81,10 +81,10 @@ A set of best practices that will enable you to improve performance and reliabil
 
 ### Start Planning
 
-[plan backend]: /kv/3.4.0/explanation/storage/choosing-backend/
-[plan cluster capacity]: /kv/3.4.0/explanation/storage/capacity-planning/
-[plan backend bitcask]: /kv/3.4.0/explanation/storage/bitcask/
-[plan bitcask capacity]: /kv/3.4.0/explanation/storage/capacity-planning/
+[plan backend]: {{< baseurl >}}kv/3.4.0/explanation/storage/choosing-backend/
+[plan cluster capacity]: {{< baseurl >}}kv/3.4.0/explanation/storage/capacity-planning/
+[plan backend bitcask]: {{< baseurl >}}kv/3.4.0/explanation/storage/bitcask/
+[plan bitcask capacity]: {{< baseurl >}}kv/3.4.0/explanation/storage/capacity-planning/
 
 Here are some steps and recommendations designing and configuring your
 OpenRiak cluster.
@@ -125,19 +125,19 @@ following should work adequately:
 
 This guide is split into two parts:
 
-- [The considerations to make when choosing infrastructure for Riak](/kv/3.4.0/how-to/plan/size-cluster/)
-- [The practical steps to actually make and expand a cluster](/kv/3.4.0/how-to/operate/add-node/)
+- [The considerations to make when choosing infrastructure for Riak]({{< baseurl >}}kv/3.4.0/how-to/plan/size-cluster/)
+- [The practical steps to actually make and expand a cluster]({{< baseurl >}}kv/3.4.0/how-to/operate/add-node/)
 
 #### OpenRiak KV - Initial Design Decisions
 
 There are six initial design decisions that need to be considered at the outset of an OpenRiak KV  project.  The priority design choices are:
 
-- [Database backend](/kv/3.4.0/how-to/plan/choose-storage-backend/)
-- [Ring size](/kv/3.4.0/how-to/plan/choose-ring-size/)
-- [Intra-cluster data resilience](/kv/3.4.0/how-to/plan/choose-intra-cluster-resilience/)
-- [Interconnecting multiple clusters](/kv/3.4.0/how-to/plan/choose-multi-cluster-topology/)
-- [Deleting data](/kv/3.4.0/how-to/plan/choose-deletion-policy/)
-- [Mapping data to objects](/kv/3.4.0/how-to/plan/map-data-to-objects/)
+- [Database backend]({{< baseurl >}}kv/3.4.0/how-to/plan/choose-storage-backend/)
+- [Ring size]({{< baseurl >}}kv/3.4.0/how-to/plan/choose-ring-size/)
+- [Intra-cluster data resilience]({{< baseurl >}}kv/3.4.0/how-to/plan/choose-intra-cluster-resilience/)
+- [Interconnecting multiple clusters]({{< baseurl >}}kv/3.4.0/how-to/plan/choose-multi-cluster-topology/)
+- [Deleting data]({{< baseurl >}}kv/3.4.0/how-to/plan/choose-deletion-policy/)
+- [Mapping data to objects]({{< baseurl >}}kv/3.4.0/how-to/plan/map-data-to-objects/)
 
 It is not always possible to get all decisions correct first-time in the design phase.  Within this page, as well as supporting information for making the choice, there is also guidance and how to transition to an alternative configuration.
 

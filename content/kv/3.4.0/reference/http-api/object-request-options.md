@@ -28,7 +28,7 @@ Define common OpenRiak Object API GET and PUT parameters, defaults, and response
 
 The GET and PUT API allow for options to be passed in the HTTP API via [HTTP query parameters appended to the URI](https://www.rfc-editor.org/rfc/rfc3986#section-3.4).
 
-It is recommended that the options supported in the Object API should be set via [bucket properties](/kv/3.4.0/reference/configuration/bucket-properties/) wherever possible (except where the option is a per-request option rather than a property e.g. `vtag`).  It is best practice to define the expectations for managing a request within the properties of the type, and only use options in exceptional cases to override those definitions.
+It is recommended that the options supported in the Object API should be set via [bucket properties]({{< baseurl >}}kv/3.4.0/reference/configuration/bucket-properties/) wherever possible (except where the option is a per-request option rather than a property e.g. `vtag`).  It is best practice to define the expectations for managing a request within the properties of the type, and only use options in exceptional cases to override those definitions.
 
 The most common options used are:
 

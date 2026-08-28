@@ -40,4 +40,4 @@ message RpbAuthReq {
 }
 ```
 
-For more on authentication, see our documentation on [Authentication and Authorization](/kv/3.4.1/how-to/secure/enable-security/).
+For more on authentication, see our documentation on [Authentication and Authorization]({{< baseurl >}}kv/3.4.1/how-to/secure/enable-security/).

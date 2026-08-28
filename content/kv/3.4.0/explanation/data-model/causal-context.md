@@ -29,18 +29,18 @@ Explain causal context, its trade-offs, and its effect on application design.
 
 ### Causal Context
 
-[concept aae]: /kv/3.4.0/explanation/replication/active-anti-entropy/
-[concept clusters]: /kv/3.4.0/explanation/foundations/clusters-rings-and-partitions/
-[concept eventual consistency]: /kv/3.4.0/explanation/consistency/eventual-consistency/
+[concept aae]: {{< baseurl >}}kv/3.4.0/explanation/replication/active-anti-entropy/
+[concept clusters]: {{< baseurl >}}kv/3.4.0/explanation/foundations/clusters-rings-and-partitions/
+[concept eventual consistency]: {{< baseurl >}}kv/3.4.0/explanation/consistency/eventual-consistency/
 [CRM]: http://en.wikipedia.org/wiki/Customer_relationship_management
-[dev api http]: /kv/3.4.0/reference/http-api/
-[dev key value]: /kv/3.4.0/how-to/plan/map-data-to-objects/
-[glossary read rep]: /kv/3.4.0/explanation/foundations/glossary/#read-repair
-[perf latency reduc]: /kv/3.4.0/how-to/tune/reduce-latency/
-[usage bucket types]: /kv/3.4.0/how-to/develop/use-bucket-types/
-[usage conflict resolution]: /kv/3.4.0/how-to/develop/resolve-conflicts/
-[usage protocol buffers]: /kv/3.4.0/reference/protocol-buffers/
-[usage updating objects]: /kv/3.4.0/how-to/develop/update-object/
+[dev api http]: {{< baseurl >}}kv/3.4.0/reference/http-api/
+[dev key value]: {{< baseurl >}}kv/3.4.0/how-to/plan/map-data-to-objects/
+[glossary read rep]: {{< baseurl >}}kv/3.4.0/explanation/foundations/glossary/#read-repair
+[perf latency reduc]: {{< baseurl >}}kv/3.4.0/how-to/tune/reduce-latency/
+[usage bucket types]: {{< baseurl >}}kv/3.4.0/how-to/develop/use-bucket-types/
+[usage conflict resolution]: {{< baseurl >}}kv/3.4.0/how-to/develop/resolve-conflicts/
+[usage protocol buffers]: {{< baseurl >}}kv/3.4.0/reference/protocol-buffers/
+[usage updating objects]: {{< baseurl >}}kv/3.4.0/how-to/develop/update-object/
 [Vector Clocks on Wikipedia]: http://en.wikipedia.org/wiki/Vector_clock
 [Why Vector Clocks are Easy]: http://basho.com/posts/technical/why-vector-clocks-are-easy/
 [Why Vector Clocks are Hard]: http://basho.com/posts/technical/why-vector-clocks-are-hard/
@@ -85,7 +85,7 @@ Causal context comes in two forms in Riak: **vector clocks** and
 **dotted version vectors**. More information in both can be found in the
 sections below.
 
-In the case of outcome 2, the choice between **a**, **b** and **c** is determined by settings. If you set the `allow_mult` parameter to `true` for a [bucket type](/kv/3.4.0/how-to/develop/use-bucket-types/), all non-CRDT writes to that bucket type will create siblings in the case of concurrent writes (and occasionally under other
+In the case of outcome 2, the choice between **a**, **b** and **c** is determined by settings. If you set the `allow_mult` parameter to `true` for a [bucket type]({{< baseurl >}}kv/3.4.0/how-to/develop/use-bucket-types/), all non-CRDT writes to that bucket type will create siblings in the case of concurrent writes (and occasionally under other
 scenarios, e.g. healed network partitions).
 
 If, however, `allow_mult` is set to `false`, then Riak will not generate

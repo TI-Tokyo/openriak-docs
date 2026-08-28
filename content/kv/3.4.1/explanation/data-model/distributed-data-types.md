@@ -30,20 +30,20 @@ Explain conflict-free replicated data types, its trade-offs, and its effect on a
 ### Data Types
 
 [crdts pdf]: http://hal.upmc.fr/docs/00/55/55/88/PDF/techreport.pdf
-[data types converg]: /kv/3.4.1/explanation/data-model/distributed-data-types/#convergence
+[data types converg]: {{< baseurl >}}kv/3.4.1/explanation/data-model/distributed-data-types/#convergence
 [crdts reading list]: http://christophermeiklejohn.com/crdt/2014/07/22/readings-in-crdts.html
-[data types impl]: /kv/3.4.1/explanation/data-model/distributed-data-types/#implementation
-[concept causal context dvv]: /kv/3.4.1/explanation/data-model/causal-context/#dotted-version-vectors
-[concept causal context sib]: /kv/3.4.1/explanation/data-model/causal-context/#siblings
-[concept causal context vc]: /kv/3.4.1/explanation/data-model/causal-context/#vector-clocks
-[concept eventual consistency]: /kv/3.4.1/explanation/consistency/eventual-consistency/
-[concept strong consistency]: /kv/3.4.1/explanation/consistency/strong-consistency/
-[dev data types]: /kv/3.4.1/reference/data/distributed-data-types/
+[data types impl]: {{< baseurl >}}kv/3.4.1/explanation/data-model/distributed-data-types/#implementation
+[concept causal context dvv]: {{< baseurl >}}kv/3.4.1/explanation/data-model/causal-context/#dotted-version-vectors
+[concept causal context sib]: {{< baseurl >}}kv/3.4.1/explanation/data-model/causal-context/#siblings
+[concept causal context vc]: {{< baseurl >}}kv/3.4.1/explanation/data-model/causal-context/#vector-clocks
+[concept eventual consistency]: {{< baseurl >}}kv/3.4.1/explanation/consistency/eventual-consistency/
+[concept strong consistency]: {{< baseurl >}}kv/3.4.1/explanation/consistency/strong-consistency/
+[dev data types]: {{< baseurl >}}kv/3.4.1/reference/data/distributed-data-types/
 [riak_dt]: https://github.com/basho/riak_dt
-[dev data types context]: /kv/3.4.1/reference/data/distributed-data-types/#data-types-and-context
-[glossary node]: /kv/3.4.1/explanation/foundations/glossary/#node
-[glossary vnode]: /kv/3.4.1/explanation/foundations/glossary/#vnode
-[usage conflict resolution]: /kv/3.4.1/how-to/develop/resolve-conflicts/
+[dev data types context]: {{< baseurl >}}kv/3.4.1/reference/data/distributed-data-types/#data-types-and-context
+[glossary node]: {{< baseurl >}}kv/3.4.1/explanation/foundations/glossary/#node
+[glossary vnode]: {{< baseurl >}}kv/3.4.1/explanation/foundations/glossary/#vnode
+[usage conflict resolution]: {{< baseurl >}}kv/3.4.1/how-to/develop/resolve-conflicts/
 
 Riak Data Types are convergent replicated data types (CRDTs), inspired by the work of [Marc Shapiro, Nuno Preguiça, Carlos Baquero, and Marek Zawirski][crdts pdf]. OpenRiak KV supports the following eventually-convergent data types, described in later sections:
 

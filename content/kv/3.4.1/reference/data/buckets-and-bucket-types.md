@@ -34,7 +34,7 @@ Define the fields, limits, supported operations, representations, and compatibil
 
 Bucket types allow groups of buckets to share configuration details and
 for Riak users to manage bucket properties more efficiently than in the
-older configuration system based on [bucket properties](/kv/3.4.1/how-to/develop/use-bucket-types/).
+older configuration system based on [bucket properties]({{< baseurl >}}kv/3.4.1/how-to/develop/use-bucket-types/).
 
 **Important note on cluster downgrades**
 If you upgrade a Riak to version 2.0 or later, you can still downgrade the
@@ -46,7 +46,7 @@ activated, you can no longer downgrade the cluster to a pre-2.0 version.
 
 The older configuration system, based on bucket properties, involves
 setting bucket properties for specific buckets either through
-[HTTP](/kv/3.4.1/reference/http-api/set-bucket-properties/) or [Protocol Buffers](/kv/3.4.1/reference/protocol-buffers/set-bucket-properties/). With this approach, you can take any given bucket and
+[HTTP]({{< baseurl >}}kv/3.4.1/reference/http-api/set-bucket-properties/) or [Protocol Buffers]({{< baseurl >}}kv/3.4.1/reference/protocol-buffers/set-bucket-properties/). With this approach, you can take any given bucket and
 modify a wide range of properties, from `n_val` to `allow_mult` and far
 beyond.
 
@@ -58,13 +58,13 @@ with a few crucial differences:
   previous system required configuration to be set on a per-bucket basis
 * Nearly all bucket properties can be updated using bucket types, except the
   `datatype` and `consistent` properties, related to
-  [Riak data types](/kv/3.4.1/reference/data/distributed-data-types/), and [strong consistency](/kv/3.4.1/reference/specialized-apis/strong-consistency-api/) respectively
+  [Riak data types]({{< baseurl >}}kv/3.4.1/reference/data/distributed-data-types/), and [strong consistency]({{< baseurl >}}kv/3.4.1/reference/specialized-apis/strong-consistency-api/) respectively
 * Bucket types are more performant than bucket properties because
   divergence from OpenRiak's defaults doesn't have to be gossiped around the
   cluster for every bucket, which means less computational overhead
 
 It is important to note that buckets are not assigned types in the same
-way that they are configured when using [bucket properties](/kv/3.4.1/how-to/develop/use-bucket-types/). You cannot simply take a
+way that they are configured when using [bucket properties]({{< baseurl >}}kv/3.4.1/how-to/develop/use-bucket-types/). You cannot simply take a
 bucket `my_bucket` and assign it a type the way that you would, say,
 set `allow_mult` to `false` or `n_val` to `5`, because there is no
 `type` parameter contained within the bucket's properties (i.e.
@@ -137,7 +137,7 @@ object of the following form:
 
 > **Getting started with Riak clients**
 >
-> If you are connecting to Riak using one of Basho's official [client libraries](/kv/3.4.1/reference/client-libraries/), you can find more information about getting started with your client in our [Developing with OpenRiak KV: Getting Started](/kv/3.4.1/tutorials/first-application/) section.
+> If you are connecting to Riak using one of Basho's official [client libraries]({{< baseurl >}}kv/3.4.1/reference/client-libraries/), you can find more information about getting started with your client in our [Developing with OpenRiak KV: Getting Started]({{< baseurl >}}kv/3.4.1/tutorials/first-application/) section.
 
 If creation is successful, you should see the following output:
 
@@ -532,7 +532,7 @@ associated with the `default` bucket type:
 
 #### Bucket Types and the `allow_mult` Setting
 
-Prior to Riak 2.0, Riak created [siblings](/kv/3.4.1/explanation/data-model/causal-context/#siblings) in the case of conflicting updates only when explicitly instructed to do so, i.e. when `allow_mult` is to `true`. The default `allow_mult` setting was `false`.
+Prior to Riak 2.0, Riak created [siblings]({{< baseurl >}}kv/3.4.1/explanation/data-model/causal-context/#siblings) in the case of conflicting updates only when explicitly instructed to do so, i.e. when `allow_mult` is to `true`. The default `allow_mult` setting was `false`.
 
 In version 2.0, this is changing in a subtle way. Now, there are two
 different default settings for `allow_mult` in play:
@@ -545,7 +545,7 @@ different default settings for `allow_mult` in play:
 
 The consequence is that applications that have previously ignored
 conflict resolutions in certain buckets (or all buckets) can continue to
-do so. New applications, however, are encouraged to retain and [resolve siblings](/kv/3.4.1/how-to/develop/resolve-conflicts/) with the appropriate application-side business logic.
+do so. New applications, however, are encouraged to retain and [resolve siblings]({{< baseurl >}}kv/3.4.1/how-to/develop/resolve-conflicts/) with the appropriate application-side business logic.
 
 To give an example, let's have a look at the properties associated with
 the `default` bucket type:
@@ -596,8 +596,8 @@ riak admin bucket-type update n_val_of_2 '{"props":{"allow_mult":false}}'
 #### Bucket Type Example
 
 Let's say that you'd like to create a bucket type called
-`user_account_bucket` with a [pre-commit hook](/kv/3.4.1/how-to/develop/write-commit-hook/#pre-commit-hooks) called `syntax_check` and two [post-commit
-hooks](/kv/3.4.1/how-to/develop/write-commit-hook/) called `welcome_email` and `update_registry`. This would involve four steps:
+`user_account_bucket` with a [pre-commit hook]({{< baseurl >}}kv/3.4.1/how-to/develop/write-commit-hook/#pre-commit-hooks) called `syntax_check` and two [post-commit
+hooks]({{< baseurl >}}kv/3.4.1/how-to/develop/write-commit-hook/) called `welcome_email` and `update_registry`. This would involve four steps:
 
 1. Creating a JavaScript object containing the appropriate `props`
    settings:
@@ -725,7 +725,7 @@ curl -XPUT \
 In this example, the bucket `sensitive_user_data` bears the
 configuration established by the `no_siblings` bucket type, and it bears
 that configuration _on the basis of the query's structure_. This is
-because buckets act as a [separate namespace](/kv/3.4.1/reference/data/buckets-and-bucket-types/#buckets-as-namespaces) in Riak, in addition to [buckets](/kv/3.4.1/explanation/data-model/keys-objects-and-buckets/) and [keys](/kv/3.4.1/explanation/data-model/keys-objects-and-buckets/).
+because buckets act as a [separate namespace]({{< baseurl >}}kv/3.4.1/reference/data/buckets-and-bucket-types/#buckets-as-namespaces) in Riak, in addition to [buckets]({{< baseurl >}}kv/3.4.1/explanation/data-model/keys-objects-and-buckets/) and [keys]({{< baseurl >}}kv/3.4.1/explanation/data-model/keys-objects-and-buckets/).
 
 Let's say that we're using Riak to store internet memes. We've been
 using a bucket called `current_memes` using the bucket type
@@ -828,11 +828,11 @@ use four bucket type/bucket pairs:
 All four of these pairs are isolated keyspaces. The key `favorite_meme`
 could hold different values in all four bucket type/bucket spaces.
 
-[buckets]: /kv/3.4.1/reference/data/buckets-and-bucket-types/
-[howmany]: /kv/3.4.1/reference/data/buckets-and-bucket-types/
+[buckets]: {{< baseurl >}}kv/3.4.1/reference/data/buckets-and-bucket-types/
+[howmany]: {{< baseurl >}}kv/3.4.1/reference/data/buckets-and-bucket-types/
 [buckettypes]: #bucket-types
-[howwork]: /kv/3.4.1/reference/data/buckets-and-bucket-types/
+[howwork]: {{< baseurl >}}kv/3.4.1/reference/data/buckets-and-bucket-types/
 [when]: #when-to-use-bucket-types
-[createactivate]: /kv/3.4.1/reference/data/buckets-and-bucket-types/
-[namespace]: /kv/3.4.1/reference/data/buckets-and-bucket-types/
-[allowmulti]: /kv/3.4.1/reference/data/buckets-and-bucket-types/
+[createactivate]: {{< baseurl >}}kv/3.4.1/reference/data/buckets-and-bucket-types/
+[namespace]: {{< baseurl >}}kv/3.4.1/reference/data/buckets-and-bucket-types/
+[allowmulti]: {{< baseurl >}}kv/3.4.1/reference/data/buckets-and-bucket-types/

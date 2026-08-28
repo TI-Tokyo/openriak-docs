@@ -39,15 +39,15 @@ A non-production OpenRiak KV cluster, client credentials, and disposable test da
 
 ### Conflict Resolution
 
-[usage bucket types]: /kv/3.4.1/how-to/develop/use-bucket-types/
-[use ref strong consistency]: /kv/3.4.1/reference/specialized-apis/strong-consistency-api/
+[usage bucket types]: {{< baseurl >}}kv/3.4.1/how-to/develop/use-bucket-types/
+[use ref strong consistency]: {{< baseurl >}}kv/3.4.1/reference/specialized-apis/strong-consistency-api/
 
-One of OpenRiak's [central goals](../../../learn/why-riak-kv) is high availability. It was built as a [clustered](/kv/3.4.1/explanation/foundations/clusters-rings-and-partitions/) system in which any [node](/kv/3.4.1/explanation/foundations/glossary/#node) is capable of receiving requests without requiring that
+One of OpenRiak's [central goals](../../../learn/why-riak-kv) is high availability. It was built as a [clustered]({{< baseurl >}}kv/3.4.1/explanation/foundations/clusters-rings-and-partitions/) system in which any [node]({{< baseurl >}}kv/3.4.1/explanation/foundations/glossary/#node) is capable of receiving requests without requiring that
 every node participate in each request.
 
-If you are using Riak in an [eventually consistent](/kv/3.4.1/explanation/consistency/eventual-consistency/) way, conflicts between object values on different nodes is
+If you are using Riak in an [eventually consistent]({{< baseurl >}}kv/3.4.1/explanation/consistency/eventual-consistency/) way, conflicts between object values on different nodes is
 unavoidable. Often, Riak can resolve these conflicts on its own
-internally if you use causal context, i.e. [vector clocks](/kv/3.4.1/explanation/data-model/causal-context/#vector-clocks) or [dotted version vectors](/kv/3.4.1/explanation/data-model/causal-context/#dotted-version-vectors), when updating objects. Instructions on this can be found in the section [below](#siblings).
+internally if you use causal context, i.e. [vector clocks]({{< baseurl >}}kv/3.4.1/explanation/data-model/causal-context/#vector-clocks) or [dotted version vectors]({{< baseurl >}}kv/3.4.1/explanation/data-model/causal-context/#dotted-version-vectors), when updating objects. Instructions on this can be found in the section [below](#siblings).
 
 **Important note on terminology**
 In versions of Riak prior to 2.0, vector clocks were the only causal context
@@ -62,12 +62,12 @@ But even when you use causal context, Riak cannot always decide which
 value is most causally recent, especially in cases involving concurrent
 updates to an object. So how does Riak behave when it can't decide on a
 single most-up-to-date value? **That is your choice**. A full listing of
-available options can be found in the [section below](/kv/3.4.1/how-to/develop/resolve-conflicts/). For now,
+available options can be found in the [section below]({{< baseurl >}}kv/3.4.1/how-to/develop/resolve-conflicts/). For now,
 though, please bear in mind that we strongly recommend one of the
 following two options:
 
 1. If your data can be modeled as one of the currently available [Riak
-   Data Types](/kv/3.4.1/reference/data/distributed-data-types/), we recommend using one of these types,
+   Data Types]({{< baseurl >}}kv/3.4.1/reference/data/distributed-data-types/), we recommend using one of these types,
    because all of them have conflict resolution _built in_, completely
    relieving applications of the need to engage in conflict resolution.
 2. If your data cannot be modeled as one of the available Data Types,
@@ -86,8 +86,8 @@ a strongly consistent fashion. This document pertains to usage of Riak
 as an _eventually_ consistent system. If you'd like to use OpenRiak's
 strong consistency feature, please refer to the following documents:
 >
-> * [Using Strong Consistency](/kv/3.4.1/reference/specialized-apis/strong-consistency-api/) - A guide for developers
-> * [Managing Strong Consistency](/kv/3.4.1/how-to/configure/strong-consistency/) - A guide for operators
+> * [Using Strong Consistency]({{< baseurl >}}kv/3.4.1/reference/specialized-apis/strong-consistency-api/) - A guide for developers
+> * [Managing Strong Consistency]({{< baseurl >}}kv/3.4.1/how-to/configure/strong-consistency/) - A guide for operators
 > * [strong consistency][use ref strong consistency] - A more theoretical explication of strong
   consistency
 
@@ -95,10 +95,10 @@ strong consistency feature, please refer to the following documents:
 
 OpenRiak's eventual consistency model is powerful because Riak is
 fundamentally non-opinionated about how data resolution takes place.
-While Riak _does_ have a set of [defaults](/kv/3.4.1/explanation/replication/references-and-triggers/#available-parameters), there are a variety of general
+While Riak _does_ have a set of [defaults]({{< baseurl >}}kv/3.4.1/explanation/replication/references-and-triggers/#available-parameters), there are a variety of general
 approaches to conflict resolution that are available. In Riak, you can
 mix and match conflict resolution strategies at the bucket level,
-[using bucket types][usage bucket types]. The most important [bucket properties](/kv/3.4.1/explanation/data-model/keys-objects-and-buckets/)
+[using bucket types][usage bucket types]. The most important [bucket properties]({{< baseurl >}}kv/3.4.1/explanation/data-model/keys-objects-and-buckets/)
 to consider when reasoning about conflict resolution are the
 `allow_mult` and `last_write_wins` properties.
 
@@ -110,7 +110,7 @@ If the [`allow_mult`](#siblings) parameter is set to
 `false`, Riak resolves all object replica conflicts internally and does
 not return siblings to the client. How Riak resolves those conflicts
 depends on the value that you set for a different bucket property,
-[`last_write_wins`](/kv/3.4.1/explanation/data-model/keys-objects-and-buckets/). If `last_write_wins` is set to `false`,
+[`last_write_wins`]({{< baseurl >}}kv/3.4.1/explanation/data-model/keys-objects-and-buckets/). If `last_write_wins` is set to `false`,
 Riak will resolve all conflicts on the basis of
 [timestamps](http://en.wikipedia.org/wiki/Timestamp), which are
 attached to all Riak objects as metadata.
@@ -163,20 +163,20 @@ made in accordance with your data model(s), business needs, and use
 cases. For examples of client-side sibling resolution, see the following
 client-library-specific docs:
 
-* [Java](/kv/3.4.1/how-to/develop/resolve-conflicts/)
-* [Ruby](/kv/3.4.1/how-to/develop/resolve-conflicts/)
-* [Python](/kv/3.4.1/how-to/develop/resolve-conflicts/)
-* [C#](/kv/3.4.1/how-to/develop/resolve-conflicts/)
-* [Node.js](/kv/3.4.1/how-to/develop/resolve-conflicts/)
+* [Java]({{< baseurl >}}kv/3.4.1/how-to/develop/resolve-conflicts/)
+* [Ruby]({{< baseurl >}}kv/3.4.1/how-to/develop/resolve-conflicts/)
+* [Python]({{< baseurl >}}kv/3.4.1/how-to/develop/resolve-conflicts/)
+* [C#]({{< baseurl >}}kv/3.4.1/how-to/develop/resolve-conflicts/)
+* [Node.js]({{< baseurl >}}kv/3.4.1/how-to/develop/resolve-conflicts/)
 
 In Riak versions 2.0 and later, `allow_mult` is set to `true` by default
-for any [bucket types](/kv/3.4.1/how-to/develop/use-bucket-types/) that you create. This means
+for any [bucket types]({{< baseurl >}}kv/3.4.1/how-to/develop/use-bucket-types/) that you create. This means
 that if you wish to avoid client-side sibling resolution, you have a few
 options:
 
-* Explicitly create and activate [bucket types](/kv/3.4.1/how-to/develop/use-bucket-types/)
+* Explicitly create and activate [bucket types]({{< baseurl >}}kv/3.4.1/how-to/develop/use-bucket-types/)
   that set `allow_mult` to `false`
-* Use OpenRiak's [Configuration Files](/kv/3.4.1/reference/configuration/) to change the [default bucket properties](/kv/3.4.1/reference/configuration/#default-bucket-properties) for your
+* Use OpenRiak's [Configuration Files]({{< baseurl >}}kv/3.4.1/reference/configuration/) to change the [default bucket properties]({{< baseurl >}}kv/3.4.1/reference/configuration/#default-bucket-properties) for your
   cluster. If you set the `buckets.default.allow_mult` parameter to
   `false`, all bucket types that you create will have `allow_mult` set
   to `false` by default.
@@ -186,7 +186,7 @@ options:
 When a value is stored in Riak, it is tagged with a piece of metadata
 called a **causal context** which establishes the object's initial
 version. Causal context comes in one of two possible forms, depending
-on what value you set for `dvv_enabled`. If set to `true`, [dotted version vectors](/kv/3.4.1/explanation/data-model/causal-context/#dotted-version-vectors) will be used; if set to `false` (the default), [vector clocks](/kv/3.4.1/explanation/data-model/causal-context/#vector-clocks) will be used.
+on what value you set for `dvv_enabled`. If set to `true`, [dotted version vectors]({{< baseurl >}}kv/3.4.1/explanation/data-model/causal-context/#dotted-version-vectors) will be used; if set to `false` (the default), [vector clocks]({{< baseurl >}}kv/3.4.1/explanation/data-model/causal-context/#vector-clocks) will be used.
 
 Causal context essentially enables Riak to compare the different values
 of objects stored in Riak and to determine a number of important things
@@ -211,11 +211,11 @@ If `allow_mult` is set to `true`, you should _always_ use causal context
 when updating objects, _unless you are certain that no object exists
 under that key_. Failing to use causal context with mutable data,
 especially for objects that are frequently updated, can lead to
-[sibling explosion](/kv/3.4.1/how-to/tune/reduce-latency/#siblings), which can
+[sibling explosion]({{< baseurl >}}kv/3.4.1/how-to/tune/reduce-latency/#siblings), which can
 produce a variety of problems in your cluster. Fortunately, much of the
 work involved with using causal context is handled automatically by
-Basho's official [client libraries](/kv/3.4.1/reference/client-libraries/). Examples can be found for each
-client library in the [Object Updates](/kv/3.4.1/how-to/develop/update-object/) document.
+Basho's official [client libraries]({{< baseurl >}}kv/3.4.1/reference/client-libraries/). Examples can be found for each
+client library in the [Object Updates]({{< baseurl >}}kv/3.4.1/how-to/develop/update-object/) document.
 
 ##### Siblings
 
@@ -230,7 +230,7 @@ clients, Riak may not be able to choose a single value to store, in
 which case the object will be given a sibling. These writes could happen
 on the same node or on different nodes.
 2. **Stale causal context** - Writes from any client using a stale
-[causal context](/kv/3.4.1/explanation/data-model/causal-context/). This is a less likely scenario if a client updates
+[causal context]({{< baseurl >}}kv/3.4.1/explanation/data-model/causal-context/). This is a less likely scenario if a client updates
 the object by reading the object first, fetching the causal context
 currently attached to the object, and then returning that causal context
 to Riak when performing the update (fortunately, our client libraries
@@ -379,7 +379,7 @@ curl -XPUT http://localhost:8098/types/siblings_allowed/nickolodeon/whatever/key
 > **Getting started with OpenRiak KV clients**
 >
 > If you are connecting to Riak using one of Basho's official
-[client libraries](/kv/3.4.1/reference/client-libraries/), you can find more information about getting started with your client in [Developing with OpenRiak KV: Getting Started](/kv/3.4.1/tutorials/first-application/) section.
+[client libraries]({{< baseurl >}}kv/3.4.1/reference/client-libraries/), you can find more information about getting started with your client in [Developing with OpenRiak KV: Getting Started]({{< baseurl >}}kv/3.4.1/tutorials/first-application/) section.
 
 At this point, multiple objects have been stored in the same key without
 passing any causal context to Riak. Let's see what happens if we try to
@@ -620,7 +620,7 @@ once that limit has been exceeded.
 Sibling explosion occurs when an object rapidly collects siblings
 without being reconciled. This can lead to myriad issues. Having an
 enormous object in your node can cause reads of that object to crash
-the entire node. Other issues include [increased cluster latency](/kv/3.4.1/how-to/tune/reduce-latency/) as the object is replicated and out-of-memory errors.
+the entire node. Other issues include [increased cluster latency]({{< baseurl >}}kv/3.4.1/how-to/tune/reduce-latency/) as the object is replicated and out-of-memory errors.
 
 ###### Vector Clock Explosion
 
@@ -674,7 +674,7 @@ Parameter | Default value | Description
 This diagram shows how the values of these parameters dictate the vector
 clock pruning process:
 
-![Vclock Pruning](/images/vclock-pruning.png)
+![Vclock Pruning]({{< baseurl >}}images/vclock-pruning.png)
 
 ##### More Information
 
@@ -687,7 +687,7 @@ Additional background information on vector clocks:
 
 ### C Sharp
 
-For reasons explained in the [Introduction to conflict resolution](/kv/3.4.1/how-to/develop/resolve-conflicts/), we strongly recommend adopting a conflict resolution strategy that requires applications to resolve siblings according to use-case-specific
+For reasons explained in the [Introduction to conflict resolution]({{< baseurl >}}kv/3.4.1/how-to/develop/resolve-conflicts/), we strongly recommend adopting a conflict resolution strategy that requires applications to resolve siblings according to use-case-specific
 criteria. Here, we'll provide a brief guide to conflict resolution using the
 official [Riak .NET client][riak_dotnet_client].
 
@@ -753,7 +753,7 @@ Debug.Assert(updatedObject.Siblings.Count == 0);
 
 ### Go
 
-For reasons explained in the [Introduction to conflict resolution](/kv/3.4.1/how-to/develop/resolve-conflicts/), we strongly recommend adopting a conflict resolution strategy that
+For reasons explained in the [Introduction to conflict resolution]({{< baseurl >}}kv/3.4.1/how-to/develop/resolve-conflicts/), we strongly recommend adopting a conflict resolution strategy that
 requires applications to resolve siblings according to usecase-specific
 criteria. Here, we'll provide a brief guide to conflict resolution using the
 official [Riak Go client](https://github.com/basho/riak-go-client).
@@ -791,7 +791,7 @@ sibling is chosen as the canonical value via a conflict resolution type.
 
 ### Java
 
-For reasons explained in the [Introduction to conflict resolution](/kv/3.4.1/how-to/develop/resolve-conflicts/), we strongly recommend adopting a
+For reasons explained in the [Introduction to conflict resolution]({{< baseurl >}}kv/3.4.1/how-to/develop/resolve-conflicts/), we strongly recommend adopting a
 conflict resolution strategy that requires applications to resolve
 siblings according to use-case-specific criteria. Here, we'll provide a
 brief guide to conflict resolution using the official [Riak Java
@@ -829,7 +829,7 @@ Let's say that we're building a social network application and storing
 lists of usernames representing each user's "friends" in the network.
 Each user will bear the class `User`, which we'll create below. All of
 the data for our application will be stored in buckets that bear the
-[bucket type](/kv/3.4.1/how-to/develop/use-bucket-types/) `siblings`, and for this bucket type
+[bucket type]({{< baseurl >}}kv/3.4.1/how-to/develop/use-bucket-types/) `siblings`, and for this bucket type
 `allow_mult` is set to `true`, which means that Riak will generate
 siblings in certain cases---siblings that our application will need to
 be equipped to resolve when they arise.
@@ -959,7 +959,7 @@ step is the subject of this tutorial)
 made
 
 You can find more on writing objects to Riak, including examples from
-the official Java client library, in the [Developing with OpenRiak KV: Usage](/kv/3.4.1/how-to/develop/) section.
+the official Java client library, in the [Developing with OpenRiak KV: Usage]({{< baseurl >}}kv/3.4.1/how-to/develop/) section.
 
 #### More Advanced Example
 
@@ -1028,9 +1028,9 @@ always carry potential drawbacks of this sort.
 #### Riak Data Types
 
 An important thing to always bear in mind when working with conflict
-resolution is that Riak offers a variety of [Data Types](/kv/3.4.1/reference/data/distributed-data-types/) that have
+resolution is that Riak offers a variety of [Data Types]({{< baseurl >}}kv/3.4.1/reference/data/distributed-data-types/) that have
 specific conflict resolution mechanics built in. If you have data that
-can be modeled as a [counter](/kv/3.4.1/reference/data/distributed-data-types/), [set](/kv/3.4.1/reference/data/distributed-data-types/), or [map](/kv/3.4.1/reference/data/distributed-data-types/), then you should seriously
+can be modeled as a [counter]({{< baseurl >}}kv/3.4.1/reference/data/distributed-data-types/), [set]({{< baseurl >}}kv/3.4.1/reference/data/distributed-data-types/), or [map]({{< baseurl >}}kv/3.4.1/reference/data/distributed-data-types/), then you should seriously
 consider using those Data Types instead of creating your own
 application-side resolution logic.
 
@@ -1039,11 +1039,11 @@ set, in particular the `friends` list associated with each `User`
 object. The merge operation that we built to handle conflict resolution
 is analogous to the resolution logic that is built into Riak sets. For
 more information on how you could potentially replace the client-side
-resolution that we implemented above, see our [tutorial on Riak sets](/kv/3.4.1/reference/data/distributed-data-types/).
+resolution that we implemented above, see our [tutorial on Riak sets]({{< baseurl >}}kv/3.4.1/reference/data/distributed-data-types/).
 
 ### NodeJS
 
-For reasons explained in the [Introduction to conflict resolution](/kv/3.4.1/how-to/develop/resolve-conflicts/), we strongly recommend adopting a conflict resolution strategy that
+For reasons explained in the [Introduction to conflict resolution]({{< baseurl >}}kv/3.4.1/how-to/develop/resolve-conflicts/), we strongly recommend adopting a conflict resolution strategy that
 requires applications to resolve siblings according to use-case-specific
 criteria. Here, we'll provide a brief guide to conflict resolution using the
 official [OpenRiak node.js client](https://github.com/basho/riak-nodejs-client).
@@ -1079,7 +1079,7 @@ sibling is chosen as the canonical value via a conflict resolution function.
 
 ### PHP
 
-For reasons explained in the [Introduction to conflict resolution](/kv/3.4.1/how-to/develop/resolve-conflicts/), we strongly recommend adopting a
+For reasons explained in the [Introduction to conflict resolution]({{< baseurl >}}kv/3.4.1/how-to/develop/resolve-conflicts/), we strongly recommend adopting a
 conflict resolution strategy that requires applications to resolve
 siblings according to use-case-specific criteria. Here, we'll provide a
 brief guide to conflict resolution using the official [Riak PHP
@@ -1198,7 +1198,7 @@ list. This means that our application can now use a "correct" value
 instead of having to deal with multiple values.
 
 You can find more on writing objects to Riak, including examples from
-the official PHP client library, in the [Developing with OpenRiak KV: Usage](/kv/3.4.1/how-to/develop/) section.
+the official PHP client library, in the [Developing with OpenRiak KV: Usage]({{< baseurl >}}kv/3.4.1/how-to/develop/) section.
 
 Resolving sibling `User` values on the basis of which user has the longest
 friends list has the benefit of being simple but it's probably not a
@@ -1225,7 +1225,7 @@ always carry potential drawbacks of this sort.
 
 ### Python
 
-For reasons explained in the [Introduction to conflict resolution](/kv/3.4.1/how-to/develop/resolve-conflicts/), we strongly recommend adopting a
+For reasons explained in the [Introduction to conflict resolution]({{< baseurl >}}kv/3.4.1/how-to/develop/resolve-conflicts/), we strongly recommend adopting a
 conflict resolution strategy that requires applications to resolve
 siblings according to use-case-specific criteria. Here, we'll provide a
 brief guide to conflict resolution using the official [Riak Python
@@ -1260,7 +1260,7 @@ below.
 Let's say that we're building a social network application and storing
 lists of usernames representing each user's "friends." Each user will
 be of the class `User`, which we'll create below. All of the data for our
-application will be stored in buckets that bear the [bucket type](/kv/3.4.1/how-to/develop/use-bucket-types/) `siblings`, and for this bucket type `allow_mult` is set
+application will be stored in buckets that bear the [bucket type]({{< baseurl >}}kv/3.4.1/how-to/develop/use-bucket-types/) `siblings`, and for this bucket type `allow_mult` is set
 to `true`, which means that Riak will generate siblings in certain
 cases---siblings that our application will need to be equipped to
 resolve when necessary.
@@ -1376,7 +1376,7 @@ object have been made and the application is ready to persist the state
 of the object in Riak.
 
 You can find more on writing objects to Riak, including code examples
-from the official Python client library, in the [Developing with OpenRiak KV: Usage](/kv/3.4.1/how-to/develop/) section.
+from the official Python client library, in the [Developing with OpenRiak KV: Usage]({{< baseurl >}}kv/3.4.1/how-to/develop/) section.
 
 ##### More Advanced Example
 
@@ -1423,7 +1423,7 @@ def longest_friends_list_resolver(riak_object):
 
 ### Ruby
 
-For reasons explained in the [Introduction to conflict resolution](/kv/3.4.1/how-to/develop/resolve-conflicts/), we strongly recommend adopting a
+For reasons explained in the [Introduction to conflict resolution]({{< baseurl >}}kv/3.4.1/how-to/develop/resolve-conflicts/), we strongly recommend adopting a
 conflict resolution strategy that requires applications to resolve
 siblings according to use-case-specific criteria. Here, we'll provide a
 brief guide to conflict resolution using the official [Riak Ruby
@@ -1523,7 +1523,7 @@ bashobunny = fetch_user_by_username('bashobunny')
 ```
 
 You can find more on writing objects to Riak, including examples from
-the official Ruby client library, in the [Developing with OpenRiak KV: Usage](/kv/3.4.1/how-to/develop/) section.
+the official Ruby client library, in the [Developing with OpenRiak KV: Usage]({{< baseurl >}}kv/3.4.1/how-to/develop/) section.
 
 Resolving sibling User values on the basis of which user has the longest
 friends list has the benefit of being simple but it's probably not a
@@ -1569,7 +1569,7 @@ set, in particular the `friends` list associated with each `User`
 object. The merge operation that we built to handle conflict resolution
 is analogous to the resolution logic that is built into Riak sets. For
 more information on how you could potentially replace the client-side
-resolution that we implemented above, see our [tutorial on Riak sets](/kv/3.4.1/reference/data/distributed-data-types/).
+resolution that we implemented above, see our [tutorial on Riak sets]({{< baseurl >}}kv/3.4.1/reference/data/distributed-data-types/).
 
 ## Verify the result
 

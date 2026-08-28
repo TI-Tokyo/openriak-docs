@@ -32,15 +32,15 @@ Explain virtual nodes and why it matters when designing or operating OpenRiak sy
 
 ### Vnodes
 
-[concept causal context]: /kv/3.4.0/explanation/data-model/causal-context/
-[concept clusters ring]: /kv/3.4.0/explanation/foundations/clusters-rings-and-partitions/#the-ring
-[concept replication]: /kv/3.4.0/explanation/replication/
-[concept strong consistency]: /kv/3.4.0/explanation/consistency/strong-consistency/
-[glossary node]: /kv/3.4.0/explanation/foundations/glossary/#node
-[glossary ring]: /kv/3.4.0/explanation/foundations/glossary/#ring
-[plan backend]: /kv/3.4.0/explanation/storage/choosing-backend/
-[plan cluster capacity]: /kv/3.4.0/explanation/storage/capacity-planning/
-[use admin riak cli]: /kv/3.4.0/reference/commands/riak/
+[concept causal context]: {{< baseurl >}}kv/3.4.0/explanation/data-model/causal-context/
+[concept clusters ring]: {{< baseurl >}}kv/3.4.0/explanation/foundations/clusters-rings-and-partitions/#the-ring
+[concept replication]: {{< baseurl >}}kv/3.4.0/explanation/replication/
+[concept strong consistency]: {{< baseurl >}}kv/3.4.0/explanation/consistency/strong-consistency/
+[glossary node]: {{< baseurl >}}kv/3.4.0/explanation/foundations/glossary/#node
+[glossary ring]: {{< baseurl >}}kv/3.4.0/explanation/foundations/glossary/#ring
+[plan backend]: {{< baseurl >}}kv/3.4.0/explanation/storage/choosing-backend/
+[plan cluster capacity]: {{< baseurl >}}kv/3.4.0/explanation/storage/capacity-planning/
+[use admin riak cli]: {{< baseurl >}}kv/3.4.0/reference/commands/riak/
 
 Virtual nodes, more commonly referred to as **vnodes**, are processes
 that manage partitions in the Riak [ring][glossary ring]. Each data
@@ -95,7 +95,7 @@ of all such values. The illustration below provides a visual
 representation of the Riak ring:
 
 ![The Riak
-Ring](/images/shared/riak-ring.png)
+Ring]({{< baseurl >}}images/shared/riak-ring.png)
 
 You can think of vnodes as managers, responsible for handling incoming
 requests from other nodes/vnodes, storing objects in the appropriate
@@ -117,7 +117,7 @@ asynchronous tasks on behalf of the vnode.
 
 If you're navigating through the file system of an OpenRiak node, you'll
 notice that each node's `/data` directory holds a variety of
-subdirectories. If you're using, say, [Bitcask](/kv/3.4.0/explanation/storage/bitcask/) as a backend, navigate
+subdirectories. If you're using, say, [Bitcask]({{< baseurl >}}kv/3.4.0/explanation/storage/bitcask/) as a backend, navigate
 into the `/bitcask` directory (you'll also see a `/ring` directory and
 several others). If you open up the `/bitcask` directory, you'll see a
 wide assortment of directories with numbers as names, e.g. `0` or

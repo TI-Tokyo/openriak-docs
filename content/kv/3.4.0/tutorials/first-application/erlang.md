@@ -31,7 +31,7 @@ Guide a developer through modeling, storing, retrieving, querying, and updating 
 
 ### Getting Started with Erlang
 
-If you haven't set up an OpenRiak node and started it, please visit [Running A Cluster](/kv/3.4.0/how-to/operate/) first.
+If you haven't set up an OpenRiak node and started it, please visit [Running A Cluster]({{< baseurl >}}kv/3.4.0/how-to/operate/) first.
 
 To try this flavor of Riak, a working installation of Erlang is
 required. You can also use the `erts` Erlang installation that comes
@@ -68,7 +68,7 @@ We are now ready to start interacting with Riak.
 
 #### Next Steps
 
-[CRUD Operations](/kv/3.4.0/tutorials/first-application/erlang/)
+[CRUD Operations]({{< baseurl >}}kv/3.4.0/tutorials/first-application/erlang/)
 
 ### CRUD Operations with Erlang
 
@@ -252,7 +252,7 @@ here for brevity.
 -record(timeline, {owner, msg_type, msgs}).
 ```
 
-We'll be using the bucket `Users` to store our data. We won't be [using bucket types](/kv/3.4.0/how-to/develop/use-bucket-types/) here, so we don't need to specify one.
+We'll be using the bucket `Users` to store our data. We won't be [using bucket types]({{< baseurl >}}kv/3.4.0/how-to/develop/use-bucket-types/) here, so we don't need to specify one.
 
 To use these records to store data, we will first have to create a user
 record. Then, when a user creates a message, we will append that message
@@ -554,7 +554,7 @@ data to having fields in your data that are related by name. These
 querying methods will introduce you to some ways of laying out your data
 in Riak, along with how to query it back.
 
-A more comprehensive discussion can be found in [Key/Value Modeling](/kv/3.4.0/how-to/plan/map-data-to-objects/).
+A more comprehensive discussion can be found in [Key/Value Modeling]({{< baseurl >}}kv/3.4.0/how-to/plan/map-data-to-objects/).
 
 #### Denormalization
 
@@ -742,9 +742,9 @@ intrinsic relationships.
 #### Secondary Indexes
 
 **Note:**
-Secondary indexes in OpenRiak KV require a sorted backend: [Memory](/kv/3.4.0/explanation/storage/memory/) or [LevelDB](/kv/3.4.0/explanation/storage/leveldb/). [Bitcask](/kv/3.4.0/explanation/storage/bitcask/) does not support secondary indexes.
+Secondary indexes in OpenRiak KV require a sorted backend: [Memory]({{< baseurl >}}kv/3.4.0/explanation/storage/memory/) or [LevelDB]({{< baseurl >}}kv/3.4.0/explanation/storage/leveldb/). [Bitcask]({{< baseurl >}}kv/3.4.0/explanation/storage/bitcask/) does not support secondary indexes.
 
-See [Using Secondary Indexes (2i)](/kv/3.4.0/how-to/develop/query-secondary-indexes/) for more information on developing with secondary indexes.
+See [Using Secondary Indexes (2i)]({{< baseurl >}}kv/3.4.0/how-to/develop/query-secondary-indexes/) for more information on developing with secondary indexes.
 
 If you're coming from an SQL world, Secondary Indexes (2i) are a lot
 like SQL indexes. They are a way to quickly look up objects based on a

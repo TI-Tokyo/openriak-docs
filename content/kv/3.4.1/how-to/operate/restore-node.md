@@ -32,7 +32,7 @@ A healthy cluster, current backups, and access to cluster status and logs. Recor
 
 ### Leveled - restore a backup
 
-If the database is stopped, and the contents of the `data/leveled` folders replaced by the content of the `data/backup` folders, then when Riak is restarted each vnode on each node will [rebuild the leveled ledger](/kv/3.4.1/how-to/operate/repair-leveled-store/), as the ledger is not part of the backup. The cluster will then return to the same distributed consensus as when the backup was taken (given the constraint that the backup coverage plan took time to be distributed).
+If the database is stopped, and the contents of the `data/leveled` folders replaced by the content of the `data/backup` folders, then when Riak is restarted each vnode on each node will [rebuild the leveled ledger]({{< baseurl >}}kv/3.4.1/how-to/operate/repair-leveled-store/), as the ledger is not part of the backup. The cluster will then return to the same distributed consensus as when the backup was taken (given the constraint that the backup coverage plan took time to be distributed).
 
 ## Verify the result
 

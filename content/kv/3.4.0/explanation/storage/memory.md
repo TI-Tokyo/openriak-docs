@@ -37,10 +37,10 @@ Explain how the memory backend stores data, its constraints, and the workloads f
 
 ### Memory
 
-[config reference]: /kv/3.4.0/reference/configuration/
-[plan backend multi]: /kv/3.4.0/explanation/storage/multi-backend/
-[glossary vnode]: /kv/3.4.0/explanation/foundations/glossary/#vnode
-[plan backend leveldb]: /kv/3.4.0/explanation/storage/leveldb/
+[config reference]: {{< baseurl >}}kv/3.4.0/reference/configuration/
+[plan backend multi]: {{< baseurl >}}kv/3.4.0/explanation/storage/multi-backend/
+[glossary vnode]: {{< baseurl >}}kv/3.4.0/explanation/foundations/glossary/#vnode
+[plan backend leveldb]: {{< baseurl >}}kv/3.4.0/explanation/storage/leveldb/
 
 The Memory storage backend uses in-memory tables to store all data.
 This data is never persisted to disk or to any other storage mechanism.
@@ -169,7 +169,7 @@ multiple Memory backends using the Multi backend, each with different
 The in-memory backend has the following characteristics and features:
 
 - Not persisted, all data on an individual node will be lost on restart.
-  - Note that Riak clusters are resilient to the loss of data on a single node, but constraining the ability to perform [rolling restarts](/kv/3.4.0/how-to/operate/rolling-restart/) of Riak due to data loss, may cause operational overheads.
+  - Note that Riak clusters are resilient to the loss of data on a single node, but constraining the ability to perform [rolling restarts]({{< baseurl >}}kv/3.4.0/how-to/operate/rolling-restart/) of Riak due to data loss, may cause operational overheads.
 - Based on the erlang ETS tables.
 - Has crude and imperfect handling of out-of-memory issues to help limit the size of each individual vnode store.
 - Supports secondary index entries, but will not support the full Riak Query API.

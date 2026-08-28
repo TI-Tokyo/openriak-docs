@@ -32,19 +32,19 @@ Explain openriak use cases and why it matters when designing or operating OpenRi
 
 ### Use Cases For OpenRiak KV
 
-[dev data model articles etc]: /kv/3.4.1/how-to/plan/map-data-to-objects/
-[dev data model log data]: /kv/3.4.1/how-to/plan/map-data-to-objects/
-[dev data model sensor data]: /kv/3.4.1/how-to/plan/map-data-to-objects/
-[dev data model serve advertisements]: /kv/3.4.1/how-to/plan/map-data-to-objects/
-[dev data model sess storage]: /kv/3.4.1/how-to/plan/map-data-to-objects/
-[dev data model user acct]: /kv/3.4.1/how-to/plan/map-data-to-objects/
-[dev data model user events]: /kv/3.4.1/how-to/plan/map-data-to-objects/
-[dev data model user settings]: /kv/3.4.1/how-to/plan/map-data-to-objects/
-[dev data types]: /kv/3.4.1/reference/data/distributed-data-types/
-[plan backend bitcask]: /kv/3.4.1/explanation/storage/bitcask/
-[replication properties]: /kv/3.4.1/explanation/replication/references-and-triggers/
-[usage mapreduce]: /kv/3.4.1/how-to/develop/run-mapreduce/
-[usage secondary-indexes]: /kv/3.4.1/how-to/develop/query-secondary-indexes/
+[dev data model articles etc]: {{< baseurl >}}kv/3.4.1/how-to/plan/map-data-to-objects/
+[dev data model log data]: {{< baseurl >}}kv/3.4.1/how-to/plan/map-data-to-objects/
+[dev data model sensor data]: {{< baseurl >}}kv/3.4.1/how-to/plan/map-data-to-objects/
+[dev data model serve advertisements]: {{< baseurl >}}kv/3.4.1/how-to/plan/map-data-to-objects/
+[dev data model sess storage]: {{< baseurl >}}kv/3.4.1/how-to/plan/map-data-to-objects/
+[dev data model user acct]: {{< baseurl >}}kv/3.4.1/how-to/plan/map-data-to-objects/
+[dev data model user events]: {{< baseurl >}}kv/3.4.1/how-to/plan/map-data-to-objects/
+[dev data model user settings]: {{< baseurl >}}kv/3.4.1/how-to/plan/map-data-to-objects/
+[dev data types]: {{< baseurl >}}kv/3.4.1/reference/data/distributed-data-types/
+[plan backend bitcask]: {{< baseurl >}}kv/3.4.1/explanation/storage/bitcask/
+[replication properties]: {{< baseurl >}}kv/3.4.1/explanation/replication/references-and-triggers/
+[usage mapreduce]: {{< baseurl >}}kv/3.4.1/how-to/develop/run-mapreduce/
+[usage secondary-indexes]: {{< baseurl >}}kv/3.4.1/how-to/develop/query-secondary-indexes/
 
 Riak is a flexible data storage technology capable of addressing a wide variety
 of problems in a scalable way. In this guide, we'll list a number of use cases
@@ -195,7 +195,7 @@ higher performance and yield more predictable latency.
   <tr>
     <td>
       <a href="http://www.simonbuckle.com/2011/08/27/analyzing-apache-logs-with-riak/" target="_blank" title="Riak at OpenX">
-        <img src="/images/simon-analyzing-logs.png" />
+        <img src="{{< baseurl >}}images/simon-analyzing-logs.png" />
       </a>
     </td>
     <td>
@@ -390,7 +390,7 @@ or other pieces of information useful for later retrieval.
   <tr>
     <td>
       <a href="http://media.basho.com/pdf/Linkfluence-Case-Study-v2-1.pdf" class="vid_img" link target="_blank">
-        <img src="/images/linkfluence-case-study.png" title="Milking Performance" />
+        <img src="{{< baseurl >}}images/linkfluence-case-study.png" title="Milking Performance" />
       </a>
     </td>
     <td>
@@ -400,7 +400,7 @@ or other pieces of information useful for later retrieval.
   <tr>
     <td>
       <a href="http://basho.com/assets/Basho-Case-Study-ideeli.pdf" class="vid_img" link target="_blank">
-        <img src="/images/ideeli-case-study.png" title="Milking Performance" />
+        <img src="{{< baseurl >}}images/ideeli-case-study.png" title="Milking Performance" />
       </a>
     </td>
     <td>

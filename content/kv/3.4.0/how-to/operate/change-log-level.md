@@ -34,7 +34,7 @@ A healthy cluster, current backups, and access to cluster status and logs. Recor
 
 If you'd like to enable debug logging on the current node, i.e. set the
 console log level to `debug`, you can do so without restarting the node
-by accessing the Erlang console directly using the [`riak attach`](/kv/3.4.0/reference/commands/riak/#attach) command. Once you run this command and drop into the console, enter the following:
+by accessing the Erlang console directly using the [`riak attach`]({{< baseurl >}}kv/3.4.0/reference/commands/riak/#attach) command. Once you run this command and drop into the console, enter the following:
 
 ```erlang
 lager:set_loglevel(lager_file_backend, "/var/log/riak/console.log", debug).

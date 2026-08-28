@@ -32,12 +32,12 @@ Access to the affected OpenRiak KV environment, the exact product version, a rec
 ### Developing with OpenRiak Redis Add-on
 
 [redis-clients]: http://redis.io/clients
-[usage bucket types]: /kv/3.4.1/how-to/develop/use-bucket-types/
-[dev api http]: /kv/3.4.1/reference/http-api/
+[usage bucket types]: {{< baseurl >}}kv/3.4.1/how-to/develop/use-bucket-types/
+[dev api http]: {{< baseurl >}}kv/3.4.1/reference/http-api/
 [config-behaviors]: http://basho.com/posts/technical/riaks-config-behaviors-part-4/
-[apps replication properties]: /kv/3.4.1/explanation/replication/references-and-triggers/
-[usage commit hooks]: /kv/3.4.1/how-to/develop/write-commit-hook/
-[concept causal context]: /kv/3.4.1/explanation/data-model/causal-context/
+[apps replication properties]: {{< baseurl >}}kv/3.4.1/explanation/replication/references-and-triggers/
+[usage commit hooks]: {{< baseurl >}}kv/3.4.1/how-to/develop/write-commit-hook/
+[concept causal context]: {{< baseurl >}}kv/3.4.1/explanation/data-model/causal-context/
 [ee]: https://www.tiot.jp/en/about-us/contact-us/
 
 This page will walk you through setting up your environment for development with Riak Redis Add-on (RRA), as well as present examples and configuration parameters for basic development operations.

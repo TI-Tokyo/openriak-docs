@@ -33,10 +33,10 @@ Explain how leveldb stores data, its constraints, and the workloads for which it
 ### LevelDB
 
 [upgrade 2.0#upgrading-leveldB]: /
-[glossary vnode]: /kv/3.4.0/explanation/foundations/glossary/#vnode
-[config reference]: /kv/3.4.0/reference/configuration/
-[perf index]: /kv/3.4.0/how-to/tune/
-[config reference#aae]: /kv/3.4.0/reference/configuration/#active-anti-entropy
+[glossary vnode]: {{< baseurl >}}kv/3.4.0/explanation/foundations/glossary/#vnode
+[config reference]: {{< baseurl >}}kv/3.4.0/reference/configuration/
+[perf index]: {{< baseurl >}}kv/3.4.0/how-to/tune/
+[config reference#aae]: {{< baseurl >}}kv/3.4.0/reference/configuration/#active-anti-entropy
 
 > **Note on upgrading to 2.0**
 >

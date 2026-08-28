@@ -41,10 +41,10 @@ A supported operating system and package source, verified backups, release notes
 
 ### Debian and Ubuntu
 
-[install source index]: /kv/3.4.0/how-to/install/source/
-[security index]: /kv/3.4.0/how-to/secure/
-[install source erlang]: /kv/3.4.0/how-to/install/source/
-[install verify]: /kv/3.4.0/how-to/install/verify-installation/
+[install source index]: {{< baseurl >}}kv/3.4.0/how-to/install/source/
+[security index]: {{< baseurl >}}kv/3.4.0/how-to/secure/
+[install source erlang]: {{< baseurl >}}kv/3.4.0/how-to/install/source/
+[install verify]: {{< baseurl >}}kv/3.4.0/how-to/install/verify-installation/
 
 OpenRiak KV can be installed on Debian or Ubuntu-based systems using a binary
 package or by compiling from source code.

@@ -51,8 +51,8 @@ Link to adjacent commands, configuration keys, APIs, data types, and the how-to 
 
 ## In this section
 
-- [AAE command reference](/kv/3.4.0/reference/commands/aae/) — List 3.4.0 command-line operations for AAE status, tree rebuilding, fold execution, and result retrieval.
-- [Command reference](/kv/3.4.0/reference/commands/) — Define command syntax, options, output fields, exit behavior, and required privileges.
-- [riak admin command reference](/kv/3.4.0/reference/commands/riak-admin/) — List every supported riak admin command with syntax, options, output, and safety notes.
-- [Riak Control reference](/kv/3.4.0/reference/commands/riak-control/) — List Riak Control capabilities, configuration, access requirements, and operational constraints.
-- [riak command reference](/kv/3.4.0/reference/commands/riak/) — List every supported riak command with syntax, options, output, and exit behavior.
+- [AAE command reference]({{< baseurl >}}kv/3.4.0/reference/commands/aae/) — List 3.4.0 command-line operations for AAE status, tree rebuilding, fold execution, and result retrieval.
+- [Command reference]({{< baseurl >}}kv/3.4.0/reference/commands/) — Define command syntax, options, output fields, exit behavior, and required privileges.
+- [riak admin command reference]({{< baseurl >}}kv/3.4.0/reference/commands/riak-admin/) — List every supported riak admin command with syntax, options, output, and safety notes.
+- [Riak Control reference]({{< baseurl >}}kv/3.4.0/reference/commands/riak-control/) — List Riak Control capabilities, configuration, access requirements, and operational constraints.
+- [riak command reference]({{< baseurl >}}kv/3.4.0/reference/commands/riak/) — List every supported riak command with syntax, options, output, and exit behavior.

@@ -26,19 +26,19 @@ Answer common OpenRiak KV development and operational questions.
 
 ### Frequently Asked Questions
 
-[Basho Bench]: /kv/3.4.1/how-to/tune/benchmark-cluster/
-[Bitcask]: /kv/3.4.1/explanation/storage/bitcask/
-[Bucket Properties]: /kv/3.4.1/how-to/develop/
+[Basho Bench]: {{< baseurl >}}kv/3.4.1/how-to/tune/benchmark-cluster/
+[Bitcask]: {{< baseurl >}}kv/3.4.1/explanation/storage/bitcask/
+[Bucket Properties]: {{< baseurl >}}kv/3.4.1/how-to/develop/
 [built-in functions list]: https://github.com/basho/riak_kv/blob/master/priv/mapred_builtins.js
-[commit hooks]: /kv/3.4.1/how-to/develop/write-commit-hook/
-[Configuration Files]: /kv/3.4.1/reference/configuration/
+[commit hooks]: {{< baseurl >}}kv/3.4.1/how-to/develop/write-commit-hook/
+[Configuration Files]: {{< baseurl >}}kv/3.4.1/reference/configuration/
 [contrib.basho.com]: https://github.com/basho/riak_function_contrib
-[Erlang Riak Client]: /kv/3.4.1/reference/client-libraries/
-[MapReduce]: /kv/3.4.1/how-to/develop/run-mapreduce/
-[Memory]: /kv/3.4.1/explanation/storage/memory/
-[Riak CS]: /riak/cs/2.1.1
-[System Planning]: /kv/3.4.1/how-to/plan/#network-configuration-load-balancing
-[vector clocks]: /kv/3.4.1/explanation/data-model/causal-context/#vector-clocks
+[Erlang Riak Client]: {{< baseurl >}}kv/3.4.1/reference/client-libraries/
+[MapReduce]: {{< baseurl >}}kv/3.4.1/how-to/develop/run-mapreduce/
+[Memory]: {{< baseurl >}}kv/3.4.1/explanation/storage/memory/
+[Riak CS]: {{< baseurl >}}riak/cs/2.1.1
+[System Planning]: {{< baseurl >}}kv/3.4.1/how-to/plan/#network-configuration-load-balancing
+[vector clocks]: {{< baseurl >}}kv/3.4.1/explanation/data-model/causal-context/#vector-clocks
 
 #### General
 

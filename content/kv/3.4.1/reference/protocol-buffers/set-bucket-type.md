@@ -28,8 +28,8 @@ Document the Protocol Buffers contract for this operation, including messages, f
 
 ### PBC Set Bucket Type
 
-Assigns a set of [bucket properties](/kv/3.4.1/reference/protocol-buffers/set-bucket-properties/) to a
-[bucket type](/kv/3.4.1/how-to/develop/use-bucket-types/).
+Assigns a set of [bucket properties]({{< baseurl >}}kv/3.4.1/reference/protocol-buffers/set-bucket-properties/) to a
+[bucket type]({{< baseurl >}}kv/3.4.1/how-to/develop/use-bucket-types/).
 
 #### Request
 
@@ -41,4 +41,4 @@ message RpbSetBucketTypeReq {
 ```
 
 The `type` field specifies the name of the bucket type as a binary. The
-`props` field contains an [`RpbBucketProps`](/kv/3.4.1/reference/protocol-buffers/get-bucket-properties/).
+`props` field contains an [`RpbBucketProps`]({{< baseurl >}}kv/3.4.1/reference/protocol-buffers/get-bucket-properties/).

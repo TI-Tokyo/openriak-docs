@@ -49,4 +49,4 @@ Link to the relevant how-to guides for real tasks, explanation pages for the und
 
 ## In this section
 
-- [Build a replicated two-cluster environment](/kv/3.4.1/tutorials/replication/two-cluster-replication/) — Guide an operator through enabling TicTac AAE and replicating test data between two disposable clusters.
+- [Build a replicated two-cluster environment]({{< baseurl >}}kv/3.4.1/tutorials/replication/two-cluster-replication/) — Guide an operator through enabling TicTac AAE and replicating test data between two disposable clusters.

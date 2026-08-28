@@ -50,12 +50,12 @@ Link to adjacent commands, configuration keys, APIs, data types, and the how-to 
 
 ## In this section
 
-- [C# client](/kv/3.4.1/reference/client-libraries/csharp/) — Record installation, supported versions, connection options, feature coverage, and upstream API links for the C# client.
-- [Erlang client](/kv/3.4.1/reference/client-libraries/erlang/) — Record installation, supported versions, connection options, feature coverage, and upstream API links for the Erlang client.
-- [Go client](/kv/3.4.1/reference/client-libraries/golang/) — Record installation, supported versions, connection options, feature coverage, and upstream API links for the Go client.
-- [Client library reference](/kv/3.4.1/reference/client-libraries/) — List supported clients, compatibility, installation packages, API documentation, and maintenance status.
-- [Java client](/kv/3.4.1/reference/client-libraries/java/) — Record installation, supported versions, connection options, feature coverage, and upstream API links for the Java client.
-- [PHP client](/kv/3.4.1/reference/client-libraries/php/) — Record installation, supported versions, connection options, feature coverage, and upstream API links for the PHP client.
-- [Python client](/kv/3.4.1/reference/client-libraries/python/) — Record installation, supported versions, connection options, feature coverage, and upstream API links for the Python client.
-- [Ruby client](/kv/3.4.1/reference/client-libraries/ruby/) — Record installation, supported versions, connection options, feature coverage, and upstream API links for the Ruby client.
-- [Rust client](/kv/3.4.1/reference/client-libraries/rust/) — Record installation, supported versions, connection options, feature coverage, and upstream API links for the Rust client.
+- [C# client]({{< baseurl >}}kv/3.4.1/reference/client-libraries/csharp/) — Record installation, supported versions, connection options, feature coverage, and upstream API links for the C# client.
+- [Erlang client]({{< baseurl >}}kv/3.4.1/reference/client-libraries/erlang/) — Record installation, supported versions, connection options, feature coverage, and upstream API links for the Erlang client.
+- [Go client]({{< baseurl >}}kv/3.4.1/reference/client-libraries/golang/) — Record installation, supported versions, connection options, feature coverage, and upstream API links for the Go client.
+- [Client library reference]({{< baseurl >}}kv/3.4.1/reference/client-libraries/) — List supported clients, compatibility, installation packages, API documentation, and maintenance status.
+- [Java client]({{< baseurl >}}kv/3.4.1/reference/client-libraries/java/) — Record installation, supported versions, connection options, feature coverage, and upstream API links for the Java client.
+- [PHP client]({{< baseurl >}}kv/3.4.1/reference/client-libraries/php/) — Record installation, supported versions, connection options, feature coverage, and upstream API links for the PHP client.
+- [Python client]({{< baseurl >}}kv/3.4.1/reference/client-libraries/python/) — Record installation, supported versions, connection options, feature coverage, and upstream API links for the Python client.
+- [Ruby client]({{< baseurl >}}kv/3.4.1/reference/client-libraries/ruby/) — Record installation, supported versions, connection options, feature coverage, and upstream API links for the Ruby client.
+- [Rust client]({{< baseurl >}}kv/3.4.1/reference/client-libraries/rust/) — Record installation, supported versions, connection options, feature coverage, and upstream API links for the Rust client.

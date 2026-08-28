@@ -55,8 +55,8 @@ object when read.
 * `X-Riak-Meta-*` - any additional metadata headers that should be stored with
 the object.
 * `X-Riak-Index-*` - index entries under which this object should be indexed.
-[Read more about Secondary Indexing](/kv/3.4.1/reference/http-api/secondary-indexes/)
-* `Link` - user and system-defined links to other resources. [Read more about Links.](/kv/3.4.1/reference/http-api/link-walking/)
+[Read more about Secondary Indexing]({{< baseurl >}}kv/3.4.1/reference/http-api/secondary-indexes/)
+* `Link` - user and system-defined links to other resources. [Read more about Links.]({{< baseurl >}}kv/3.4.1/reference/http-api/link-walking/)
 
 Optional headers (only valid on `PUT`):
 
@@ -100,7 +100,7 @@ Important headers:
 * `Location` a relative URL to the newly-created object (when submitting without
 a key)
 
-If `returnbody=true`, any of the response headers expected from [HTTP Fetch Object](/kv/3.4.1/reference/http-api/fetch-object/) may be present. Like when fetching the object, `300 Multiple Choices`
+If `returnbody=true`, any of the response headers expected from [HTTP Fetch Object]({{< baseurl >}}kv/3.4.1/reference/http-api/fetch-object/) may be present. Like when fetching the object, `300 Multiple Choices`
 may be returned if siblings existed or were created as part of the operation,
 and the response can be dealt with similarly.
 
@@ -169,7 +169,7 @@ Supported HTTP request headers for PUT:
 - `x-riak-vclock`; should be provided when mutating existing objects, should be set to the value of the `x-riak-vclock` response header of the object, as read prior to update.  If a new object is being inserted, then no `x-riak-vclock` request header should be provided.  The content of the clock is encoded within the header value, the application is not required to decode that value, but to simply pass it as-is to provide context information for the update to Riak.
 - `x-riak-if-not-modified`; optional, for conditional requests.
 - `if-none-match: *`; optional, for conditional requests.
-- `authorization`; optional, for tls-protected requests only when [Riak security is enabled](/kv/3.4.1/how-to/secure/).
+- `authorization`; optional, for tls-protected requests only when [Riak security is enabled]({{< baseurl >}}kv/3.4.1/how-to/secure/).
 - `x-riak-meta-<key>: <value>`; optional, multiple keys may be provided, and will be mapped to user metadata.
 - `x-riak-index-<field> : <value1>, <value2>`; optional add multiple index fields, with multiple values in each field where those values are comma (and whitespace) separated.  Index fields should have the suffix `_bin` or `_int`.
 - `content-type: <content_type>`; optional, specify the content-type of the value to be stored, to be provided in response to future GET requests.

@@ -40,12 +40,12 @@ Explain choosing a storage backend, its constraints, and the workloads for which
 
 ### Choosing a Backend
 
-[plan backend bitcask]: /kv/3.4.0/explanation/storage/bitcask/
-[plan backend leveldb]: /kv/3.4.0/explanation/storage/leveldb/
-[plan backend memory]: /kv/3.4.0/explanation/storage/memory/
-[plan backend multi]: /kv/3.4.0/explanation/storage/multi-backend/
-[plan backend leveled]: /kv/3.4.0/explanation/storage/leveled/
-[dev api backend]: /kv/3.4.0/reference/specialized-apis/backend-api/
+[plan backend bitcask]: {{< baseurl >}}kv/3.4.0/explanation/storage/bitcask/
+[plan backend leveldb]: {{< baseurl >}}kv/3.4.0/explanation/storage/leveldb/
+[plan backend memory]: {{< baseurl >}}kv/3.4.0/explanation/storage/memory/
+[plan backend multi]: {{< baseurl >}}kv/3.4.0/explanation/storage/multi-backend/
+[plan backend leveled]: {{< baseurl >}}kv/3.4.0/explanation/storage/leveled/
+[dev api backend]: {{< baseurl >}}kv/3.4.0/reference/specialized-apis/backend-api/
 
 Pluggable storage backends are a key feature of OpenRiak KV. They enable you to
 choose a low-level storage engine that suits specific operational needs.

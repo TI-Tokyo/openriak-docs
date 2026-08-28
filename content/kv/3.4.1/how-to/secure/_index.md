@@ -36,10 +36,10 @@ Secure administrative access, an inventory of identities and certificates involv
 
 ### Security & Firewalls
 
-[config v3 ssl]: /kv/3.4.1/how-to/configure/replication/secure-replication/
+[config v3 ssl]: {{< baseurl >}}kv/3.4.1/how-to/configure/replication/secure-replication/
 [JMX]: http://www.oracle.com/technetwork/java/javase/tech/javamanagement-140525.html
-[security basics]: /kv/3.4.1/how-to/secure/enable-security/
-[security managing]: /kv/3.4.1/how-to/secure/manage-sources/
+[security basics]: {{< baseurl >}}kv/3.4.1/how-to/secure/enable-security/
+[security managing]: {{< baseurl >}}kv/3.4.1/how-to/secure/manage-sources/
 [Solr]: http://lucene.apache.org/solr/
 
 > **Internal security**
@@ -211,9 +211,9 @@ Riak does have the optional capability to enable additional security controls, w
 
 There are three parts to Riak's security mechanism:
 
-- [TLS enablement](/kv/3.4.1/how-to/secure/configure-tls/);
-- [Enabling Security and restricting the Source of requests](/kv/3.4.1/how-to/secure/enable-security/);
-- [Granting permissions for specific actions](/kv/3.4.1/how-to/secure/manage-permissions/).
+- [TLS enablement]({{< baseurl >}}kv/3.4.1/how-to/secure/configure-tls/);
+- [Enabling Security and restricting the Source of requests]({{< baseurl >}}kv/3.4.1/how-to/secure/enable-security/);
+- [Granting permissions for specific actions]({{< baseurl >}}kv/3.4.1/how-to/secure/manage-permissions/).
 
 ## Verify the result
 
@@ -221,11 +221,11 @@ Test permitted and denied access separately, validate certificate and identity d
 
 ## In this section
 
-- [Apply security best practices](/kv/3.4.1/how-to/secure/best-practices/) — Show operators how to apply security hardening practices to an OpenRiak deployment.
-- [Configure TLS certificates and ciphers](/kv/3.4.1/how-to/secure/configure-tls/) — Show security engineers how to configure tls certificates and ciphers and test the resulting controls.
-- [Enable OpenRiak security](/kv/3.4.1/how-to/secure/enable-security/) — Show security engineers how to enable openriak security and test the resulting controls.
-- [Manage groups](/kv/3.4.1/how-to/secure/manage-groups/) — Show security engineers how to manage groups and test the resulting controls.
-- [Grant and revoke permissions](/kv/3.4.1/how-to/secure/manage-permissions/) — Show security engineers how to grant and revoke permissions and test the resulting controls.
-- [Manage authentication sources](/kv/3.4.1/how-to/secure/manage-sources/) — Show security engineers how to manage authentication sources and test the resulting controls.
-- [Manage users](/kv/3.4.1/how-to/secure/manage-users/) — Show security engineers how to manage users and test the resulting controls.
-- [Harden OpenRiak network access](/kv/3.4.1/how-to/secure/secure-networking/) — Show security engineers how to harden openriak network access and test the resulting controls.
+- [Apply security best practices]({{< baseurl >}}kv/3.4.1/how-to/secure/best-practices/) — Show operators how to apply security hardening practices to an OpenRiak deployment.
+- [Configure TLS certificates and ciphers]({{< baseurl >}}kv/3.4.1/how-to/secure/configure-tls/) — Show security engineers how to configure tls certificates and ciphers and test the resulting controls.
+- [Enable OpenRiak security]({{< baseurl >}}kv/3.4.1/how-to/secure/enable-security/) — Show security engineers how to enable openriak security and test the resulting controls.
+- [Manage groups]({{< baseurl >}}kv/3.4.1/how-to/secure/manage-groups/) — Show security engineers how to manage groups and test the resulting controls.
+- [Grant and revoke permissions]({{< baseurl >}}kv/3.4.1/how-to/secure/manage-permissions/) — Show security engineers how to grant and revoke permissions and test the resulting controls.
+- [Manage authentication sources]({{< baseurl >}}kv/3.4.1/how-to/secure/manage-sources/) — Show security engineers how to manage authentication sources and test the resulting controls.
+- [Manage users]({{< baseurl >}}kv/3.4.1/how-to/secure/manage-users/) — Show security engineers how to manage users and test the resulting controls.
+- [Harden OpenRiak network access]({{< baseurl >}}kv/3.4.1/how-to/secure/secure-networking/) — Show security engineers how to harden openriak network access and test the resulting controls.

@@ -39,13 +39,13 @@ Explain how multiple backends work, its constraints, and the workloads for which
 
 ### Multi-backend
 
-[concept buckets]: /kv/3.4.0/explanation/data-model/keys-objects-and-buckets/
-[plan backend bitcask]: /kv/3.4.0/explanation/storage/bitcask/
-[plan backend leveldb]: /kv/3.4.0/explanation/storage/leveldb/
-[plan backend memory]: /kv/3.4.0/explanation/storage/memory/
-[config reference]: /kv/3.4.0/reference/configuration/
-[usage bucket types]: /kv/3.4.0/how-to/develop/use-bucket-types/
-[use admin riak admin cli]: /kv/3.4.0/reference/commands/riak/ admin
+[concept buckets]: {{< baseurl >}}kv/3.4.0/explanation/data-model/keys-objects-and-buckets/
+[plan backend bitcask]: {{< baseurl >}}kv/3.4.0/explanation/storage/bitcask/
+[plan backend leveldb]: {{< baseurl >}}kv/3.4.0/explanation/storage/leveldb/
+[plan backend memory]: {{< baseurl >}}kv/3.4.0/explanation/storage/memory/
+[config reference]: {{< baseurl >}}kv/3.4.0/reference/configuration/
+[usage bucket types]: {{< baseurl >}}kv/3.4.0/how-to/develop/use-bucket-types/
+[use admin riak admin cli]: {{< baseurl >}}kv/3.4.0/reference/commands/riak/ admin
 
 Riak allows you to run multiple backends within a single OpenRiak cluster.
 Selecting the Multi backend enables you to use different storage

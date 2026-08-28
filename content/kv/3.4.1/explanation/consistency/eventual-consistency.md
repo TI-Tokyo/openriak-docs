@@ -32,14 +32,14 @@ Explain eventual consistency, convergence, quorums, and the application behavior
 
 ### Eventual Consistency
 
-[concept buckets]: /kv/3.4.1/explanation/data-model/keys-objects-and-buckets/
-[concept causal context vc]: /kv/3.4.1/explanation/data-model/causal-context/#vector-clocks
-[concept clusters]: /kv/3.4.1/explanation/foundations/clusters-rings-and-partitions/
-[concept replication]: /kv/3.4.1/explanation/replication/
-[glossary node]: /kv/3.4.1/explanation/foundations/glossary/#node
-[glossary read rep]: /kv/3.4.1/explanation/foundations/glossary/#read-repair
-[usage bucket types]: /kv/3.4.1/how-to/develop/use-bucket-types/
-[usage conflict resolution]: /kv/3.4.1/how-to/develop/resolve-conflicts/
+[concept buckets]: {{< baseurl >}}kv/3.4.1/explanation/data-model/keys-objects-and-buckets/
+[concept causal context vc]: {{< baseurl >}}kv/3.4.1/explanation/data-model/causal-context/#vector-clocks
+[concept clusters]: {{< baseurl >}}kv/3.4.1/explanation/foundations/clusters-rings-and-partitions/
+[concept replication]: {{< baseurl >}}kv/3.4.1/explanation/replication/
+[glossary node]: {{< baseurl >}}kv/3.4.1/explanation/foundations/glossary/#node
+[glossary read rep]: {{< baseurl >}}kv/3.4.1/explanation/foundations/glossary/#read-repair
+[usage bucket types]: {{< baseurl >}}kv/3.4.1/how-to/develop/use-bucket-types/
+[usage conflict resolution]: {{< baseurl >}}kv/3.4.1/how-to/develop/resolve-conflicts/
 
 In a distributed and fault-tolerant system like Riak, server and network
 failures are expected. Riak is designed to respond to requests even when
@@ -67,14 +67,14 @@ defaults if you want to employ a different strategy.
 
 Among those strategies, you can enable Riak to resolve object conflicts
 automatically, whether via internal [vector clocks][concept causal context vc], timestamps, or
-special eventually consistent [Data Types](/kv/3.4.1/reference/data/distributed-data-types/), or you can resolve those
+special eventually consistent [Data Types]({{< baseurl >}}kv/3.4.1/reference/data/distributed-data-types/), or you can resolve those
 conflicts on the application side by employing a use case-specific logic
 of your choosing. More information on this can be found in our guide to
 [conflict resolution][usage conflict resolution].
 
 This variety of options enables you to manage OpenRiak's eventually
 consistent behavior in accordance with your application's [data model
-or models](/kv/3.4.1/how-to/plan/map-data-to-objects/).
+or models]({{< baseurl >}}kv/3.4.1/how-to/plan/map-data-to-objects/).
 
 #### Replication Properties and Request Tuning
 
@@ -221,7 +221,7 @@ Riak is designed to be eventually consistent, in that it is:
   - but also because it is continuously reconciled, with background process that efficiently analyse the overall system for discrepancies and proactively heal those deltas without operator intervention,
   - where that continuous reconciliation occurs both within and between clusters.
 
-It should be noted that Riak offers the same guarantees of zero-intervention eventual-consistency for both multi-cluster environments as well as single cluster environments.  However, within a cluster it is possible to enforce conditions on writes to make Riak less permissive, but less likely to result in conflict e.g. through the use of [conditional PUTs with token-based consensus](/kv/3.4.1/reference/http-api/conditional-requests/).
+It should be noted that Riak offers the same guarantees of zero-intervention eventual-consistency for both multi-cluster environments as well as single cluster environments.  However, within a cluster it is possible to enforce conditions on writes to make Riak less permissive, but less likely to result in conflict e.g. through the use of [conditional PUTs with token-based consensus]({{< baseurl >}}kv/3.4.1/reference/http-api/conditional-requests/).
 
 Care may be taken by the Riak user to avoid conflict; but inevitably there will be some object values that eventually end-up in conflict.  When in a conflicted state, an object may have two values where the database cannot determine which is the most current, often as updates were made concurrently by two different application instances.
 

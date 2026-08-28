@@ -30,7 +30,7 @@ Document the complete HTTP contract for this operation, including parameters, re
 
 ### HTTP MapReduce
 
-[MapReduce](/kv/3.4.1/how-to/develop/run-mapreduce/) is a generic way to query Riak by specifying inputs and constructing a set of map, reduce, and link phases through which data will flow.
+[MapReduce]({{< baseurl >}}kv/3.4.1/how-to/develop/run-mapreduce/) is a generic way to query Riak by specifying inputs and constructing a set of map, reduce, and link phases through which data will flow.
 
 #### Request
 
@@ -39,7 +39,7 @@ POST /mapred
 ```
 
 Important headers:
-* `Content-Type` - must always be `application/json`.  The format of the request body is described in detail on the [MapReduce](/kv/3.4.1/how-to/develop/run-mapreduce/) page.
+* `Content-Type` - must always be `application/json`.  The format of the request body is described in detail on the [MapReduce]({{< baseurl >}}kv/3.4.1/how-to/develop/run-mapreduce/) page.
 
 Optional query parameters:
 * `chunked` - when set to `true`, results will be returned as they are received in `multipart/mixed` format using chunked-encoding.
@@ -90,4 +90,4 @@ The use of Map/Reduce API is deprecated in Riak 3.4, and the API will be retired
 
 For using Map/Reduce with Erlang functions, the API is unchanged since Riak 2.2.3, so refer to the [legacy documentation](https://docs.riak.com/riak/kv/2.2.3/developing/app-guide/advanced-mapreduce/index.html) for further information.  The Map/Reduce API no longer supports JavaScript functions.
 
-> For querying data the [Query API](/kv/3.4.1/tutorials/query-api/) should be used in preference to the Map/Reduce API.  The Query API is under active development to expand the number of Map/Reduce use cases it covers, in particular the ability to prompt the fetching of multiple objects.
+> For querying data the [Query API]({{< baseurl >}}kv/3.4.1/tutorials/query-api/) should be used in preference to the Map/Reduce API.  The Query API is under active development to expand the number of Map/Reduce use cases it covers, in particular the ability to prompt the fetching of multiple objects.

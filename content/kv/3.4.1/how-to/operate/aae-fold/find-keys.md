@@ -206,7 +206,7 @@ These filters will reduce the number of objects included in the statistics:
 Outputs a list of keys in the bucket where the object has either a sibling_count or a size (in bytes) that exceeds a certain threshold, potentially limited by key range or modified date range.
 
 - Commonly used as an operational query (e.g. "find all objects modified in the past 24 hours with more than one sibling").
-- May also be used to list keys, where using a `$key` query is not supported.  It is much slower (but potentially safer) than `$key` query due to the constraints of the [node_worker_pools](/kv/3.4.1/how-to/operate/monitor-worker-pools/).
+- May also be used to list keys, where using a `$key` query is not supported.  It is much slower (but potentially safer) than `$key` query due to the constraints of the [node_worker_pools]({{< baseurl >}}kv/3.4.1/how-to/operate/monitor-worker-pools/).
 - Uses the AF4 queue when running node worker pools in `dscp` mode.
 
 ## Verify the result

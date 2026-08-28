@@ -50,17 +50,17 @@ Link to the complete configuration or API reference, the explanation of the unde
 
 ## In this section
 
-- [Extend configuration with advanced.config](/kv/3.4.0/how-to/configure/advanced-configuration/) — Show operators how to add advanced configuration without obscuring settings managed in riak.conf.
-- [Configure API listeners](/kv/3.4.0/how-to/configure/api-listeners/) — Show operators how to configure api listeners and verify the result.
-- [Configure storage backends](/kv/3.4.0/how-to/configure/backends/) — Introduce backend configuration procedures after the reader has selected a suitable storage engine.
-- [Configure basic node settings](/kv/3.4.0/how-to/configure/basic-node-settings/) — Show operators how to configure basic node settings and verify the result.
-- [Configure global object expiration](/kv/3.4.0/how-to/configure/global-object-expiration/) — Show operators how to configure global object expiration and verify the result.
-- [Configure OpenRiak](/kv/3.4.0/how-to/configure/) — Introduce task-focused configuration procedures and link each setting to authoritative reference material.
-- [Configure a load-balancing proxy](/kv/3.4.0/how-to/configure/load-balancing-proxy/) — Show operators how to configure a load-balancing proxy and verify the result.
-- [Configure logging](/kv/3.4.0/how-to/configure/logging/) — Show operators how to configure logging and verify the result.
-- [Inspect and manage configuration](/kv/3.4.0/how-to/configure/manage-configuration/) — Show operators how to inspect and manage configuration and verify the result.
-- [Configure MapReduce](/kv/3.4.0/how-to/configure/mapreduce/) — Show operators how to configure mapreduce and verify the result.
-- [Configure replication](/kv/3.4.0/how-to/configure/replication/) — Introduce procedures for configuring anti-entropy and replication within and between clusters.
-- [Set runtime environment variables](/kv/3.4.0/how-to/configure/runtime-environment-variables/) — Show operators how to set supported runtime environment variables and verify their effective values.
-- [Enable strong consistency](/kv/3.4.0/how-to/configure/strong-consistency/) — Show operators how to enable strong consistency and verify the result.
-- [Verify configuration before startup](/kv/3.4.0/how-to/configure/verify-configuration/) — Show operators how to verify configuration before startup and verify the result.
+- [Extend configuration with advanced.config]({{< baseurl >}}kv/3.4.0/how-to/configure/advanced-configuration/) — Show operators how to add advanced configuration without obscuring settings managed in riak.conf.
+- [Configure API listeners]({{< baseurl >}}kv/3.4.0/how-to/configure/api-listeners/) — Show operators how to configure api listeners and verify the result.
+- [Configure storage backends]({{< baseurl >}}kv/3.4.0/how-to/configure/backends/) — Introduce backend configuration procedures after the reader has selected a suitable storage engine.
+- [Configure basic node settings]({{< baseurl >}}kv/3.4.0/how-to/configure/basic-node-settings/) — Show operators how to configure basic node settings and verify the result.
+- [Configure global object expiration]({{< baseurl >}}kv/3.4.0/how-to/configure/global-object-expiration/) — Show operators how to configure global object expiration and verify the result.
+- [Configure OpenRiak]({{< baseurl >}}kv/3.4.0/how-to/configure/) — Introduce task-focused configuration procedures and link each setting to authoritative reference material.
+- [Configure a load-balancing proxy]({{< baseurl >}}kv/3.4.0/how-to/configure/load-balancing-proxy/) — Show operators how to configure a load-balancing proxy and verify the result.
+- [Configure logging]({{< baseurl >}}kv/3.4.0/how-to/configure/logging/) — Show operators how to configure logging and verify the result.
+- [Inspect and manage configuration]({{< baseurl >}}kv/3.4.0/how-to/configure/manage-configuration/) — Show operators how to inspect and manage configuration and verify the result.
+- [Configure MapReduce]({{< baseurl >}}kv/3.4.0/how-to/configure/mapreduce/) — Show operators how to configure mapreduce and verify the result.
+- [Configure replication]({{< baseurl >}}kv/3.4.0/how-to/configure/replication/) — Introduce procedures for configuring anti-entropy and replication within and between clusters.
+- [Set runtime environment variables]({{< baseurl >}}kv/3.4.0/how-to/configure/runtime-environment-variables/) — Show operators how to set supported runtime environment variables and verify their effective values.
+- [Enable strong consistency]({{< baseurl >}}kv/3.4.0/how-to/configure/strong-consistency/) — Show operators how to enable strong consistency and verify the result.
+- [Verify configuration before startup]({{< baseurl >}}kv/3.4.0/how-to/configure/verify-configuration/) — Show operators how to verify configuration before startup and verify the result.

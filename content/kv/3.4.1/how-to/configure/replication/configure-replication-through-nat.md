@@ -34,10 +34,10 @@ Administrative access to the nodes you will change; a copy of the current config
 
 ### With NAT
 
-[config v2 ssl]: /kv/3.4.1/how-to/configure/replication/secure-replication/
+[config v2 ssl]: {{< baseurl >}}kv/3.4.1/how-to/configure/replication/secure-replication/
 
 **Deprecation Warning**
-v2 Multi-Datacenter Replication is deprecated and will be removed in a future version. Please use [v3](/kv/3.4.1/how-to/configure/replication/configure-replication-through-nat/) instead.
+v2 Multi-Datacenter Replication is deprecated and will be removed in a future version. Please use [v3]({{< baseurl >}}kv/3.4.1/how-to/configure/replication/configure-replication-through-nat/) instead.
 
 Riak supports replication of data on networks that use static
 NAT. This capability can be used for replicating data over the internet
@@ -95,7 +95,7 @@ riak repl add-site 192.168.1.10 9010 server_a_to_c
 
 ### With NAT
 
-[config v3 ssl]: /kv/3.4.1/how-to/configure/replication/secure-replication/
+[config v3 ssl]: {{< baseurl >}}kv/3.4.1/how-to/configure/replication/secure-replication/
 
 OpenRiak's Version 3 Replication supports replication of data on
 networks that use static NAT.

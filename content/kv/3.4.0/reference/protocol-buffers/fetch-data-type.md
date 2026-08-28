@@ -28,7 +28,7 @@ Document the Protocol Buffers contract for this operation, including messages, f
 
 ### PBC Data Type Fetch
 
-The equivalent of [`RpbGetReq`](/kv/3.4.0/reference/protocol-buffers/fetch-object/) for [Riak Data Types](/kv/3.4.0/reference/data/distributed-data-types/). This request results in a `DtFetchResp`
+The equivalent of [`RpbGetReq`]({{< baseurl >}}kv/3.4.0/reference/protocol-buffers/fetch-object/) for [Riak Data Types]({{< baseurl >}}kv/3.4.0/reference/data/distributed-data-types/). This request results in a `DtFetchResp`
 message (explained in the **Response** section below).
 
 #### Request
@@ -55,14 +55,14 @@ Parameter | Description
 :---------|:-----------
 `bucket` | The name of the bucket in which the Data Type is stored
 `key` | The key where the Data Type is stored
-`type` | The [Using Bucket Types](/kv/3.4.0/how-to/operate/manage-bucket-types/) of the bucket in which the Data Type is stored, _not_ the type of Data Type (i.e. counter, set, or map)
+`type` | The [Using Bucket Types]({{< baseurl >}}kv/3.4.0/how-to/operate/manage-bucket-types/) of the bucket in which the Data Type is stored, _not_ the type of Data Type (i.e. counter, set, or map)
 
 ###### Optional Parameters
 
 > **Note on defaults and special values**
 >
 > All of the optional parameters below have default values determined on a
-per-bucket basis. Please refer to the documentation on [setting bucket properties](/kv/3.4.0/reference/protocol-buffers/set-bucket-properties/) for more information.
+per-bucket basis. Please refer to the documentation on [setting bucket properties]({{< baseurl >}}kv/3.4.0/reference/protocol-buffers/set-bucket-properties/) for more information.
 
 Furthermore, you can assign an integer value to the `r` and
 `pr`, provided that that integer value is less than or equal
@@ -85,7 +85,7 @@ Parameter | Description
 
 #### Response
 
-The response to a fetch request ([`DtFetchReq`](/kv/3.4.0/reference/protocol-buffers/fetch-data-type/)) is a `DtFetchResp` message.
+The response to a fetch request ([`DtFetchReq`]({{< baseurl >}}kv/3.4.0/reference/protocol-buffers/fetch-data-type/)) is a `DtFetchResp` message.
 
 ```protobuf
 message DtFetchResp {
@@ -104,7 +104,7 @@ optional bytes    context = 1;
 If the `include_context` option is specified, an opaque "context" value
 will be returned along with the user-readable data. When sending an
 update request, the client should send this context as well, just as one
-would send a [vclock](/kv/3.4.0/explanation/foundations/glossary/#vector-clock) for standard KV updates.
+would send a [vclock]({{< baseurl >}}kv/3.4.0/explanation/foundations/glossary/#vector-clock) for standard KV updates.
 
 The type of the Data Type is specified in the `type` field, and must be
 one of the three possible values of the `DataType` enum (`COUNTER`,

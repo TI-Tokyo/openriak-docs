@@ -31,7 +31,7 @@ Guide a developer through modeling, storing, retrieving, querying, and updating 
 
 ### Getting Started with Python
 
-If you haven't set up an OpenRiak node and started it, please visit [Running A Cluster](/kv/3.4.1/how-to/operate/) first.
+If you haven't set up an OpenRiak node and started it, please visit [Running A Cluster]({{< baseurl >}}kv/3.4.1/how-to/operate/) first.
 
 To try this flavor of Riak, a working installation of Python is
 required, with Python 2.7 preferred. One of the Python package managers,
@@ -110,7 +110,7 @@ We are now ready to start interacting with Riak.
 
 ##### Next Steps
 
-[CRUD Operations](/kv/3.4.1/tutorials/first-application/python/)
+[CRUD Operations]({{< baseurl >}}kv/3.4.1/tutorials/first-application/python/)
 
 ### CRUD Operations with Python
 
@@ -645,9 +645,9 @@ While this pattern is very easy and extremely fast with respect to queries and c
 ###### Secondary Indexes
 
 **Note:**
-Secondary indexes in OpenRiak KV require a sorted backend: [Memory](/kv/3.4.1/explanation/storage/memory/) or [LevelDB](/kv/3.4.1/explanation/storage/leveldb/). [Bitcask](/kv/3.4.1/explanation/storage/bitcask/) does not support secondary indexes.
+Secondary indexes in OpenRiak KV require a sorted backend: [Memory]({{< baseurl >}}kv/3.4.1/explanation/storage/memory/) or [LevelDB]({{< baseurl >}}kv/3.4.1/explanation/storage/leveldb/). [Bitcask]({{< baseurl >}}kv/3.4.1/explanation/storage/bitcask/) does not support secondary indexes.
 
-See [Using Secondary Indexes (2i)](/kv/3.4.1/how-to/develop/query-secondary-indexes/) for more information on developing with secondary indexes.
+See [Using Secondary Indexes (2i)]({{< baseurl >}}kv/3.4.1/how-to/develop/query-secondary-indexes/) for more information on developing with secondary indexes.
 
 If you're coming from a SQL world, Secondary Indexes (2i) are a lot like SQL indexes.  They are a way to quickly lookup objects based on a secondary key, without scanning through the whole dataset.  This makes it very easy to find groups of related data by values, or even ranges of values.  To properly show this off, we will now add some more data to our application, and add some secondary index entries at the same time.
 

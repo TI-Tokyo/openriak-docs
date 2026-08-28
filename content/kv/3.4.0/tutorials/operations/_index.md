@@ -49,5 +49,5 @@ Link to the relevant how-to guides for real tasks, explanation pages for the und
 
 ## In this section
 
-- [Practice changing cluster membership](/kv/3.4.0/tutorials/operations/change-cluster-membership/) — Guide an operator through adding and removing disposable nodes while observing ring and handoff behavior.
-- [Practice changing a storage backend](/kv/3.4.0/tutorials/operations/change-storage-backend/) — Guide an operator through a safe backend change in a disposable cluster and verify the resulting behavior.
+- [Practice changing cluster membership]({{< baseurl >}}kv/3.4.0/tutorials/operations/change-cluster-membership/) — Guide an operator through adding and removing disposable nodes while observing ring and handoff behavior.
+- [Practice changing a storage backend]({{< baseurl >}}kv/3.4.0/tutorials/operations/change-storage-backend/) — Guide an operator through a safe backend change in a disposable cluster and verify the resulting behavior.

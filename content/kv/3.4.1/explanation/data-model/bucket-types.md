@@ -51,15 +51,15 @@ State what this explanation does not cover, call out 3.4.0 versus 3.4.1 differen
 
 ## In this section
 
-- [Causal context](/kv/3.4.1/explanation/data-model/causal-context/) — Explain causal context, its trade-offs, and its effect on application design.
-- [Conflict resolution strategies](/kv/3.4.1/explanation/data-model/conflict-resolution/) — Explain conflict resolution strategies, its trade-offs, and its effect on application design.
-- [Deletion policies and tombstone retention](/kv/3.4.1/explanation/data-model/deletion-policies/) — Explain how delete mode, tombstones, reaping, erasure, and compaction affect data removal.
-- [Conflict-free replicated data types](/kv/3.4.1/explanation/data-model/distributed-data-types/) — Explain conflict-free replicated data types, its trade-offs, and its effect on application design.
-- [Data model concepts](/kv/3.4.1/explanation/data-model/) — Introduce the concepts and trade-offs behind OpenRiak data modeling.
-- [Keys, objects, and buckets](/kv/3.4.1/explanation/data-model/keys-objects-and-buckets/) — Explain keys, objects, and buckets, its trade-offs, and its effect on application design.
-- [Latch objects](/kv/3.4.1/explanation/data-model/latch-objects/) — Explain how latch objects support conditional requests and which concurrency guarantees they provide.
-- [MapReduce in OpenRiak](/kv/3.4.1/explanation/data-model/mapreduce/) — Explain mapreduce in openriak, its trade-offs, and its effect on application design.
-- [Object merge strategies](/kv/3.4.1/explanation/data-model/merge-strategies/) — Explain how merge strategies resolve concurrent object versions and where application policy is required.
-- [Query API design](/kv/3.4.1/explanation/data-model/query-api/) — Explain the Query API execution pipeline, expressiveness, consistency, and performance trade-offs.
-- [Secondary index design](/kv/3.4.1/explanation/data-model/secondary-indexes/) — Explain secondary index design, its trade-offs, and its effect on application design.
-- [Version vectors and siblings](/kv/3.4.1/explanation/data-model/version-vectors-and-siblings/) — Explain version vectors and siblings, its trade-offs, and its effect on application design.
+- [Causal context]({{< baseurl >}}kv/3.4.1/explanation/data-model/causal-context/) — Explain causal context, its trade-offs, and its effect on application design.
+- [Conflict resolution strategies]({{< baseurl >}}kv/3.4.1/explanation/data-model/conflict-resolution/) — Explain conflict resolution strategies, its trade-offs, and its effect on application design.
+- [Deletion policies and tombstone retention]({{< baseurl >}}kv/3.4.1/explanation/data-model/deletion-policies/) — Explain how delete mode, tombstones, reaping, erasure, and compaction affect data removal.
+- [Conflict-free replicated data types]({{< baseurl >}}kv/3.4.1/explanation/data-model/distributed-data-types/) — Explain conflict-free replicated data types, its trade-offs, and its effect on application design.
+- [Data model concepts]({{< baseurl >}}kv/3.4.1/explanation/data-model/) — Introduce the concepts and trade-offs behind OpenRiak data modeling.
+- [Keys, objects, and buckets]({{< baseurl >}}kv/3.4.1/explanation/data-model/keys-objects-and-buckets/) — Explain keys, objects, and buckets, its trade-offs, and its effect on application design.
+- [Latch objects]({{< baseurl >}}kv/3.4.1/explanation/data-model/latch-objects/) — Explain how latch objects support conditional requests and which concurrency guarantees they provide.
+- [MapReduce in OpenRiak]({{< baseurl >}}kv/3.4.1/explanation/data-model/mapreduce/) — Explain mapreduce in openriak, its trade-offs, and its effect on application design.
+- [Object merge strategies]({{< baseurl >}}kv/3.4.1/explanation/data-model/merge-strategies/) — Explain how merge strategies resolve concurrent object versions and where application policy is required.
+- [Query API design]({{< baseurl >}}kv/3.4.1/explanation/data-model/query-api/) — Explain the Query API execution pipeline, expressiveness, consistency, and performance trade-offs.
+- [Secondary index design]({{< baseurl >}}kv/3.4.1/explanation/data-model/secondary-indexes/) — Explain secondary index design, its trade-offs, and its effect on application design.
+- [Version vectors and siblings]({{< baseurl >}}kv/3.4.1/explanation/data-model/version-vectors-and-siblings/) — Explain version vectors and siblings, its trade-offs, and its effect on application design.

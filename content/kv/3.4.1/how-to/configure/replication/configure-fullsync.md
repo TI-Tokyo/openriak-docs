@@ -264,7 +264,7 @@ ttaaefs_cluster_slice = 1
 ### V2 Scheduling Fullsync
 
 **Deprecation Warning**
-v2 Multi-Datacenter Replication is deprecated and will be removed in a future version. Please use [v3](/kv/3.4.1/reference/replication-api/runtime-controls/) instead.
+v2 Multi-Datacenter Replication is deprecated and will be removed in a future version. Please use [v3]({{< baseurl >}}kv/3.4.1/reference/replication-api/runtime-controls/) instead.
 
 With the `pause` and `resume` commands it is possible to limit the
 fullsync operation to off-peak times. First, disable `fullsync_interval`
@@ -298,7 +298,7 @@ riak repl pause-fullsync
 ### V2 Multi-Datacenter Replication Reference: Scheduling Fullsync
 
 **Deprecation Warning**
-v2 Multi-Datacenter Replication is deprecated and will be removed in a future version. Please use [v3](/kv/3.4.1/how-to/configure/replication/configure-fullsync/) instead.
+v2 Multi-Datacenter Replication is deprecated and will be removed in a future version. Please use [v3]({{< baseurl >}}kv/3.4.1/how-to/configure/replication/configure-fullsync/) instead.
 
 #### Scheduling Fullsync Operation
 
@@ -310,7 +310,7 @@ v2 Multi-Datacenter Replication is deprecated and will be removed in a future ve
 
 ### Scheduling Fullsync
 
-[config reference#advanced]: /kv/3.4.1/reference/configuration/#advanced-configuration
+[config reference#advanced]: {{< baseurl >}}kv/3.4.1/reference/configuration/#advanced-configuration
 
 The `fullsync_interval` parameter can be configured in the `riak repl`
 section of [`advanced.config`][config reference#advanced] with either:
@@ -362,7 +362,7 @@ Additional fullsync stats per sink have been added in Riak.
 
 #### Configuration of All-Cluster Reconciliation
 
-It is commonly most efficient to reconcile all data, rather than partial data.  If all data is not required, then [per-bucket reconciliation](/kv/3.4.1/how-to/configure/replication/per-bucket-reconciliation/) can be enabled.  All-cluster reconciliation is much more common than per-bucket reconciliation in production systems, as it commonly has lower overheads.
+It is commonly most efficient to reconcile all data, rather than partial data.  If all data is not required, then [per-bucket reconciliation]({{< baseurl >}}kv/3.4.1/how-to/configure/replication/per-bucket-reconciliation/) can be enabled.  All-cluster reconciliation is much more common than per-bucket reconciliation in production systems, as it commonly has lower overheads.
 
 #### Initial Configuration
 
@@ -401,7 +401,7 @@ To set up a peer relationship to another cluster, the following configuration is
 - `ttaaefs_peerip = <ip_addr>`;
 - `ttaaefs_peerport = <port>`;
 - `ttaaefs_peerprotocol = pb|http`;
-- For security the [settings for real-time replication](/kv/3.4.1/how-to/configure/replication/configure-real-time-replication/) are used e.g. `repl_cacert_filename` etc.
+- For security the [settings for real-time replication]({{< baseurl >}}kv/3.4.1/how-to/configure/replication/configure-real-time-replication/) are used e.g. `repl_cacert_filename` etc.
 
 #### Enabling Checks
 
@@ -411,7 +411,7 @@ Reconciliation requires the scheduling of checks.  Each check will perform a ful
 - `branch_compare`;
 - `clock_compare`.
 
-The root to be compared is the root of [the merkle tree](/kv/3.4.1/explanation/replication/active-anti-entropy/) representing the state of the whole tree in 1,024 4-byte hashes.  The roots are merged across all partitions, to provide a representation of cluster state in a single 4KB integer.
+The root to be compared is the root of [the merkle tree]({{< baseurl >}}kv/3.4.1/explanation/replication/active-anti-entropy/) representing the state of the whole tree in 1,024 4-byte hashes.  The roots are merged across all partitions, to provide a representation of cluster state in a single 4KB integer.
 
 If these roots match between the clusters, the clusters are considered to be reconciled - `in_sync = true` is the result of the exchange, and `{root_compare, 0}` is the final state of the exchange.  If not, the `root_compare` is repeated, and on the repeated check only deltas in the same 4-byte hash as the previous compare need to be considered a potential mismatch.  The `root_compare` will be repeated until the intersection of deltas is empty (all 1,024 hashes, have a some stage in the loop, matched between roots), or there exists a stable set of branches in the root, which differ on every comparison.  An empty set of deltas will be considered an `in_sync = true` result, otherwise the next phase is required.
 
@@ -439,9 +439,9 @@ The schedule of reconciliation jobs is configured for each peer by setting:
   - `ttaaefs_allcheck`, `ttaaefs_hourcheck`, `ttaaefs_daycheck` - these are checks where the time range is hard-coded.  The `ttaaefs_nocheck` and `ttaaefs_rangecheck` are legacy settings that solved problems that existed prior to the introduction of `ttaaefs_autocheck`.
 
 [overview]: #overview
-[enable fullsync]: /kv/3.4.1/how-to/configure/replication/configure-fullsync/
+[enable fullsync]: {{< baseurl >}}kv/3.4.1/how-to/configure/replication/configure-fullsync/
 [queues]: #queues
-[read write values]: /kv/3.4.1/how-to/configure/replication/configure-fullsync/
+[read write values]: {{< baseurl >}}kv/3.4.1/how-to/configure/replication/configure-fullsync/
 [connections]: #connections
 [tls encryption]: #tls-encryption
 

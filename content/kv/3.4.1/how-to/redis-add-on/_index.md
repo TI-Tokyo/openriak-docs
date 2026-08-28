@@ -36,7 +36,7 @@ Access to the affected OpenRiak KV environment, the exact product version, a rec
 
 In the days of Basho, integrations between OpenRiak KV and other best-of-breed components were developed for your application stack. Each integration, called an add-on, is explained in this section, from installation to feature-set.
 
-* [Riak Redis Add-on](/kv/3.4.1/how-to/redis-add-on/)
+* [Riak Redis Add-on]({{< baseurl >}}kv/3.4.1/how-to/redis-add-on/)
 
 ### OpenRiak Redis Add-on
 
@@ -85,10 +85,10 @@ RRA is compatible with the following services:
 ### OpenRiak Redis Add-on Features
 
 [ee]: https://www.tiot.jp/en/about-us/contact-us/
-[GET-sequence]: /images/redis/GET_seq.msc.png
-[SET-sequence]: /images/redis/SET_seq.msc.png
-[DEL-sequence]: /images/redis/DEL_seq.msc.png
-[Object-lifetime]: /images/redis/Object_lifetime.msc.png
+[GET-sequence]: {{< baseurl >}}images/redis/GET_seq.msc.png
+[SET-sequence]: {{< baseurl >}}images/redis/SET_seq.msc.png
+[DEL-sequence]: {{< baseurl >}}images/redis/DEL_seq.msc.png
+[Object-lifetime]: {{< baseurl >}}images/redis/Object_lifetime.msc.png
 [redis docs]: http://redis.io/commands
 [twemproxy docs]: https://github.com/twitter/twemproxy/blob/master/notes/redis.md
 
@@ -140,7 +140,7 @@ Implementing caching strategies in the cache proxy service reduces the cost of i
 The read-through cache strategy of the GET command is represented by the
 following sequence diagram:
 
-![GET command sequence diagram](/images/redis/GET_seq.msc.png)
+![GET command sequence diagram]({{< baseurl >}}images/redis/GET_seq.msc.png)
 
 The `CACHE_TTL` configuration option establishes how long the cache takes to
 become consistent with the backend server during a write (DELETE or PUT) to the
@@ -166,12 +166,12 @@ expected to be followed by several accurate cache hits.
 The write-around cache strategy of the SET command is represented by the
 following sequence diagram:
 
-![SET command sequence diagram](/images/redis/SET_seq.msc.png)
+![SET command sequence diagram]({{< baseurl >}}images/redis/SET_seq.msc.png)
 
 The write-around cache strategy of the DEL command is represented by the
 following sequence diagram:
 
-![DEL command sequence diagram](/images/redis/DEL_seq.msc.png)
+![DEL command sequence diagram]({{< baseurl >}}images/redis/DEL_seq.msc.png)
 
 #### Commands
 
@@ -198,7 +198,7 @@ With the combination of read-through and write-around cache strategies, the
 full object lifetime for a key-value is represented by the following
 sequence diagram:
 
-![Object lifetime sequence diagram](/images/redis/Object_lifetime.msc.png)
+![Object lifetime sequence diagram]({{< baseurl >}}images/redis/Object_lifetime.msc.png)
 
 ## Verify the result
 
@@ -206,6 +206,6 @@ Confirm the requested outcome, inspect cluster health and logs, and test the rel
 
 ## In this section
 
-- [Extend the Redis add-on](/kv/3.4.1/how-to/redis-add-on/develop/) — Show developers how to add and test a supported Redis add-on feature.
-- [Set up the Redis add-on](/kv/3.4.1/how-to/redis-add-on/set-up/) — Show operators how to deploy the Redis add-on in a supported topology and verify connectivity.
-- [Use the Redis add-on](/kv/3.4.1/how-to/redis-add-on/use/) — Show developers how to perform supported Redis operations against OpenRiak.
+- [Extend the Redis add-on]({{< baseurl >}}kv/3.4.1/how-to/redis-add-on/develop/) — Show developers how to add and test a supported Redis add-on feature.
+- [Set up the Redis add-on]({{< baseurl >}}kv/3.4.1/how-to/redis-add-on/set-up/) — Show operators how to deploy the Redis add-on in a supported topology and verify connectivity.
+- [Use the Redis add-on]({{< baseurl >}}kv/3.4.1/how-to/redis-add-on/use/) — Show developers how to perform supported Redis operations against OpenRiak.

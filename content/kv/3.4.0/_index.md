@@ -34,14 +34,14 @@ Orient readers to OpenRiak KV and route them to learning, task, lookup, or conce
 ### OpenRiak KV 3.2.5
 
 [aboutenterprise]: https://www.tiot.jp/en/about-us/contact-us/
-[config index]: /kv/3.4.0/how-to/configure/
-[downloads]: /kv/3.4.0/reference/releases/downloads/
-[install index]: /kv/3.4.0/how-to/install/
-[plan index]: /kv/3.4.0/how-to/plan/
-[perf open files]: /kv/3.4.0/how-to/tune/set-open-files-limit/
-[install debian & ubuntu]: /kv/3.4.0/how-to/install/debian-ubuntu/
-[getting started]: /kv/3.4.0/tutorials/first-application/
-[dev client libraries]: /kv/3.4.0/reference/client-libraries/
+[config index]: {{< baseurl >}}kv/3.4.0/how-to/configure/
+[downloads]: {{< baseurl >}}kv/3.4.0/reference/releases/downloads/
+[install index]: {{< baseurl >}}kv/3.4.0/how-to/install/
+[plan index]: {{< baseurl >}}kv/3.4.0/how-to/plan/
+[perf open files]: {{< baseurl >}}kv/3.4.0/how-to/tune/set-open-files-limit/
+[install debian & ubuntu]: {{< baseurl >}}kv/3.4.0/how-to/install/debian-ubuntu/
+[getting started]: {{< baseurl >}}kv/3.4.0/tutorials/first-application/
+[dev client libraries]: {{< baseurl >}}kv/3.4.0/reference/client-libraries/
 
 OpenRiak KV is a distributed NoSQL database designed to deliver maximum data availability by distributing data across multiple servers. As long as your OpenRiak KV client can reach one Riak server, it should be able to write data.
 
@@ -73,7 +73,7 @@ Are you brand new to OpenRiak KV? Start by [downloading][downloads] OpenRiak KV,
 3. [Configure OpenRiak KV for your needs][config index]
 
 **Developing with OpenRiak KV**
-If you are looking to integrate OpenRiak KV with your existing tools, check out the [Developing with OpenRiak KV](/kv/3.4.0/how-to/develop/) docs. They provide instructions and examples for languages such as: Java, Ruby, Python, Go, Haskell, NodeJS, Erlang, and more.
+If you are looking to integrate OpenRiak KV with your existing tools, check out the [Developing with OpenRiak KV]({{< baseurl >}}kv/3.4.0/how-to/develop/) docs. They provide instructions and examples for languages such as: Java, Ruby, Python, Go, Haskell, NodeJS, Erlang, and more.
 
 #### Popular Docs
 
@@ -90,7 +90,7 @@ This site provides overview documentation for the OpenRiak community release of 
 
 ## In this section
 
-- [Explanation](/kv/3.4.0/explanation/) — Route readers to concepts, architecture, rationale, trade-offs, and operational mental models.
-- [How-to guides](/kv/3.4.0/how-to/) — Route practitioners to focused procedures for installing, configuring, operating, securing, and troubleshooting OpenRiak.
-- [Reference](/kv/3.4.0/reference/) — Route readers to authoritative configuration, command, API, data, client, and compatibility facts.
-- [Tutorials](/kv/3.4.0/tutorials/) — Introduce the guided learning paths and state what readers will build in each one.
+- [Explanation]({{< baseurl >}}kv/3.4.0/explanation/) — Route readers to concepts, architecture, rationale, trade-offs, and operational mental models.
+- [How-to guides]({{< baseurl >}}kv/3.4.0/how-to/) — Route practitioners to focused procedures for installing, configuring, operating, securing, and troubleshooting OpenRiak.
+- [Reference]({{< baseurl >}}kv/3.4.0/reference/) — Route readers to authoritative configuration, command, API, data, client, and compatibility facts.
+- [Tutorials]({{< baseurl >}}kv/3.4.0/tutorials/) — Introduce the guided learning paths and state what readers will build in each one.

@@ -26,7 +26,7 @@ Record the legacy query interface, compatibility boundaries, and migration guida
 
 ### Legacy Query API
 
-Prior to the introduction of the [Riak Query API](/kv/3.4.1/tutorials/query-api/), there existed a simple REST-based API for querying index entries in Riak.  This API is deprecated, use of the Query API is preferred to support new queries.
+Prior to the introduction of the [Riak Query API]({{< baseurl >}}kv/3.4.1/tutorials/query-api/), there existed a simple REST-based API for querying index entries in Riak.  This API is deprecated, use of the Query API is preferred to support new queries.
 
 The binary secondary indexes supported by the legacy index queries, are compatible with the new Query API - anything that could be queried and filtered in the old API can be achieved using the expressions in the new API.
 

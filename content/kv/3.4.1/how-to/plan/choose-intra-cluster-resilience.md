@@ -36,10 +36,10 @@ Access to the affected OpenRiak KV environment, the exact product version, a rec
 
 There are two primary aspects to data resilience within a cluster:
 
-- [Configuring data distribution guarantees](/kv/3.4.1/how-to/plan/choose-intra-cluster-resilience/);
-- [Enabling proactive reconciliation](/kv/3.4.1/explanation/replication/active-anti-entropy/).
+- [Configuring data distribution guarantees]({{< baseurl >}}kv/3.4.1/how-to/plan/choose-intra-cluster-resilience/);
+- [Enabling proactive reconciliation]({{< baseurl >}}kv/3.4.1/explanation/replication/active-anti-entropy/).
 
-Further guidance on the infrastructure requirements for a cluster, and the planning of cluster changes, can be found within the [guide to building and scaling a cluster](/kv/3.4.1/how-to/plan/).
+Further guidance on the infrastructure requirements for a cluster, and the planning of cluster changes, can be found within the [guide to building and scaling a cluster]({{< baseurl >}}kv/3.4.1/how-to/plan/).
 
 #### Data distribution guarantees
 
@@ -53,7 +53,7 @@ There are three configurable elements that control the resilience of the data di
 
 > The use of locations is optional within Riak, but may be useful even when the infrastructure has no physical distinction between nodes; as locations can also be used as a method for defining maintenance groups.  Maintenance groups are collections of nodes within a cluster which can be stopped or changed concurrently, as the loss of the whole group will only lead to the loss of one copy of the data.
 
-The target `n_val` settings are used by the cluster claim algorithm, which is invoked [whenever a cluster change is planned](/kv/3.4.1/how-to/operate/plan-and-commit-cluster-change/) (e.g. joining or leaving a node), to redistribute the vnodes around the cluster where required.  There are three usable versions of the cluster claim algorithm - versions 2, 3 and 4.  To use both `target_location_n_val` and `target_n_val` the cluster claim algorithm should be changed from version 2 (the default) to version 4.
+The target `n_val` settings are used by the cluster claim algorithm, which is invoked [whenever a cluster change is planned]({{< baseurl >}}kv/3.4.1/how-to/operate/plan-and-commit-cluster-change/) (e.g. joining or leaving a node), to redistribute the vnodes around the cluster where required.  There are three usable versions of the cluster claim algorithm - versions 2, 3 and 4.  To use both `target_location_n_val` and `target_n_val` the cluster claim algorithm should be changed from version 2 (the default) to version 4.
 
 To discover what combinations may be supported given a cluster (given a count of nodes and distribution of nodes around locations), then the [offline ring calculator](https://github.com/OpenRiak/ring_calculator) may be used, to test settings before planning them with version 4 of the algorithm.  The bigger the `target_n_val` and `target_location_n_val` chosen, the more efficient and resilient the eventual cluster setup will be.
 

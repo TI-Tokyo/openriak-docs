@@ -40,7 +40,7 @@ Internally within Riak all three elements are binary identifiers.  With the Obje
 
 > Although it is possible to use identifiers that are not URL-safe through the Protocol Buffer API, it is important not to do so - as any object using such an identifier may not be accessible via the HTTP API.  Guidelines for the safe use of Unicode in cross-API identifiers, will be clarified in a future Riak release.
 
-The [Bucket Type](/kv/3.4.0/reference/configuration/bucket-properties/) is used to describe the properties of the object.  Properties are associated with a Bucket Type, and all Objects in the Buckets under that type will inherit those properties.
+The [Bucket Type]({{< baseurl >}}kv/3.4.0/reference/configuration/bucket-properties/) is used to describe the properties of the object.  Properties are associated with a Bucket Type, and all Objects in the Buckets under that type will inherit those properties.
 
 A Bucket Type cannot be used via the API until it has been created and activated, to do this see:
 
@@ -62,4 +62,4 @@ The size of the values is managed by the application, not the database; there is
 
 > Typically values stored in Riak are between o(1KB) and o(1MB) in size, but are not constrained by these limits.
 
-In standard Riak operations the database does not require knowledge of the structure of the value, however Riak does have support for [data-types](/kv/3.4.0/reference/specialized-apis/data-type-api/). These types, [also referred to as CRDTs](https://en.wikipedia.org/wiki/Conflict-free_replicated_data_type), are specially formatted values where the handling of conflict is deterministic and managed within the database, so the application does not see siblings even when [`allow_mult` is set to `true`](/kv/3.4.0/reference/configuration/bucket-properties/) and concurrent changes are made to the same object.  The performance and scalability of Riak is improved when values are externally managed, rather than internally constrained through the use of these types.
+In standard Riak operations the database does not require knowledge of the structure of the value, however Riak does have support for [data-types]({{< baseurl >}}kv/3.4.0/reference/specialized-apis/data-type-api/). These types, [also referred to as CRDTs](https://en.wikipedia.org/wiki/Conflict-free_replicated_data_type), are specially formatted values where the handling of conflict is deterministic and managed within the database, so the application does not see siblings even when [`allow_mult` is set to `true`]({{< baseurl >}}kv/3.4.0/reference/configuration/bucket-properties/) and concurrent changes are made to the same object.  The performance and scalability of Riak is improved when values are externally managed, rather than internally constrained through the use of these types.

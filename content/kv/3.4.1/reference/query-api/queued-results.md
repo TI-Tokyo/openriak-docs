@@ -50,9 +50,9 @@ Link to adjacent commands, configuration keys, APIs, data types, and the how-to 
 
 ## In this section
 
-- [Query API accumulation options](/kv/3.4.1/reference/query-api/accumulation-options/) — Define the 3.4.1 modes for keys, terms, counts, grouped counts, and disk-backed queued results.
-- [Query API expression reference](/kv/3.4.1/reference/query-api/expressions/) — Define supported Query API expressions, operators, composition rules, and Unicode behavior.
-- [Query API reference](/kv/3.4.1/reference/query-api/) — Define Query API endpoints, request expressions, responses, limits, and consistency behavior.
-- [Query API limits and performance](/kv/3.4.1/reference/query-api/limits/) — Record Query API scanning, filtering, buffering, aggregation, collation, and transformation limits.
-- [Query API request reference](/kv/3.4.1/reference/query-api/request/) — Define Query API request paths, JSON fields, defaults, and validation rules.
-- [Query API response reference](/kv/3.4.1/reference/query-api/responses/) — Define Query API response fields, ordering, pagination, and error representations.
+- [Query API accumulation options]({{< baseurl >}}kv/3.4.1/reference/query-api/accumulation-options/) — Define the 3.4.1 modes for keys, terms, counts, grouped counts, and disk-backed queued results.
+- [Query API expression reference]({{< baseurl >}}kv/3.4.1/reference/query-api/expressions/) — Define supported Query API expressions, operators, composition rules, and Unicode behavior.
+- [Query API reference]({{< baseurl >}}kv/3.4.1/reference/query-api/) — Define Query API endpoints, request expressions, responses, limits, and consistency behavior.
+- [Query API limits and performance]({{< baseurl >}}kv/3.4.1/reference/query-api/limits/) — Record Query API scanning, filtering, buffering, aggregation, collation, and transformation limits.
+- [Query API request reference]({{< baseurl >}}kv/3.4.1/reference/query-api/request/) — Define Query API request paths, JSON fields, defaults, and validation rules.
+- [Query API response reference]({{< baseurl >}}kv/3.4.1/reference/query-api/responses/) — Define Query API response fields, ordering, pagination, and error representations.

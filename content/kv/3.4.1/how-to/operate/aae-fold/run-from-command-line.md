@@ -32,7 +32,7 @@ A healthy cluster, current backups, and access to cluster status and logs. Recor
 
 ### Running AAE Folds
 
-Refer to the [API guide for AAE Fold](/kv/3.4.1/reference/aae-fold-api/) for information on triggering an AAE fold from `riak remote_console`.
+Refer to the [API guide for AAE Fold]({{< baseurl >}}kv/3.4.1/reference/aae-fold-api/) for information on triggering an AAE fold from `riak remote_console`.
 
 #### AAE Folds via the Command Line
 

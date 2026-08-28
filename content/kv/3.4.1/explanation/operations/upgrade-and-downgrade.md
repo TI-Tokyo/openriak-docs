@@ -29,7 +29,7 @@ Explain upgrade and downgrade behavior, including relevant state transitions, ri
 
 ### Upgrading a node
 
-Riak upgrades are all designed to support in-place rolling upgrades across the cluster - a [rolling restart](/kv/3.4.1/how-to/operate/rolling-restart/) with a package deployment between the stop and start.
+Riak upgrades are all designed to support in-place rolling upgrades across the cluster - a [rolling restart]({{< baseurl >}}kv/3.4.1/how-to/operate/rolling-restart/) with a package deployment between the stop and start.
 
 The following upgrade path has been specifically tested:
 
@@ -41,7 +41,7 @@ More direct upgrade paths skipping steps may be possible.  New features are adde
 
 It is not possible via rolling restart to upgrade from an OTP version 22 or prior, to an upgrade with an OTP version of 25 or higher.  For example, direct upgrades from `3.0.n` to `3.4.n` are not supported unless `3.0.n` is built with OTP 22, and `3.4.n` is built with OTP 24.
 
-It is recommended to test all upgrades in pre-production environments.  If no pre-production environment is available, then a pilot node should be upgraded first in the cluster for an agreed time period (e.g. 24 hours).  If there are issues with the upgrade, then the pilot node can be stopped, cleared and [repaired](/kv/3.4.1/how-to/operate/replace-node/).  Most large-scale production users of Riak rely on pre-production testing or pilot nodes to assure changes, and do not depend on a [backup/restore safety net](/kv/3.4.1/explanation/operations/backups-and-restores/) during a rolling upgrade.
+It is recommended to test all upgrades in pre-production environments.  If no pre-production environment is available, then a pilot node should be upgraded first in the cluster for an agreed time period (e.g. 24 hours).  If there are issues with the upgrade, then the pilot node can be stopped, cleared and [repaired]({{< baseurl >}}kv/3.4.1/how-to/operate/replace-node/).  Most large-scale production users of Riak rely on pre-production testing or pilot nodes to assure changes, and do not depend on a [backup/restore safety net]({{< baseurl >}}kv/3.4.1/explanation/operations/backups-and-restores/) during a rolling upgrade.
 
 If local changes have been made to `riak.conf`, the package manager should leave the `riak.conf` file unchanged during an upgrade.  A release change may alter a default value in configuration, and if that default value was originally added to the `riak.conf` uncommented - the new default will not take effect following the upgrade, as the `riak.conf` is not altered.
 

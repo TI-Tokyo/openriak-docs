@@ -50,6 +50,6 @@ Riak carries metadata about an object, primarily:
   - internally within Riak this is a timestamp to microsecond accuracy,
   - when presented via the HTTP API the accuracy is truncated to a second.
 - the deleted status (does the object represent a current value or a record of deletion).
-- the ["dot" for each content item](/kv/3.4.1/reference/data/version-vectors/) - this is not returned via the API;
+- the ["dot" for each content item]({{< baseurl >}}kv/3.4.1/reference/data/version-vectors/) - this is not returned via the API;
 - the content type
   - the content type is never validated, it may be added to an update, and will be returned as-is regardless of the nature of the value.

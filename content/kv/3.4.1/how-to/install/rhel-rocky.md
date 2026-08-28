@@ -42,9 +42,9 @@ A supported operating system and package source, verified backups, release notes
 
 ### Oracle Linux
 
-[install source index]: /kv/3.4.1/how-to/install/source/
-[install source erlang]: /kv/3.4.1/how-to/install/source/
-[install verify]: /kv/3.4.1/how-to/install/verify-installation/
+[install source index]: {{< baseurl >}}kv/3.4.1/how-to/install/source/
+[install source erlang]: {{< baseurl >}}kv/3.4.1/how-to/install/source/
+[install verify]: {{< baseurl >}}kv/3.4.1/how-to/install/verify-installation/
 
 #### Installing From Package
 

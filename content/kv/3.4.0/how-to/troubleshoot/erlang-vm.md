@@ -34,7 +34,7 @@ The failing request or symptom, timestamps, relevant logs, and a recovery plan. 
 
 ### Advanced - troubleshoot via the Erlang VM
 
-For more advanced troubleshooting, [the `remote_console`](/kv/3.4.0/how-to/operate/use-remote-console/) can be used to access specialist troubleshooting tools.
+For more advanced troubleshooting, [the `remote_console`]({{< baseurl >}}kv/3.4.0/how-to/operate/use-remote-console/) can be used to access specialist troubleshooting tools.
 
 #### Recon
 

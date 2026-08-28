@@ -40,9 +40,9 @@ A supported operating system and package source, verified backups, release notes
 
 ### Alpine Linux
 
-[security index]: /kv/3.4.0/how-to/secure/
-[install source erlang]: /kv/3.4.0/how-to/install/source/
-[install verify]: /kv/3.4.0/how-to/install/verify-installation/
+[security index]: {{< baseurl >}}kv/3.4.0/how-to/secure/
+[install source erlang]: {{< baseurl >}}kv/3.4.0/how-to/install/source/
+[install verify]: {{< baseurl >}}kv/3.4.0/how-to/install/verify-installation/
 
 OpenRiak KV can be installed on Alpine Linux using a binary
 package from the Riak repository.

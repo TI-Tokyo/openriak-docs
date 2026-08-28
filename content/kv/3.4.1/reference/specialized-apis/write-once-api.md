@@ -29,10 +29,10 @@ Define immutable write requests, responses, constraints, and failure behavior.
 
 ### Write Once
 
-[glossary vnode]: /kv/3.4.1/explanation/foundations/glossary/#vnode
-[bucket type]: /kv/3.4.1/how-to/develop/use-bucket-types/
-[Riak data types]: /kv/3.4.1/reference/data/distributed-data-types/
-[strong consistency]: /kv/3.4.1/reference/specialized-apis/strong-consistency-api/
+[glossary vnode]: {{< baseurl >}}kv/3.4.1/explanation/foundations/glossary/#vnode
+[bucket type]: {{< baseurl >}}kv/3.4.1/how-to/develop/use-bucket-types/
+[Riak data types]: {{< baseurl >}}kv/3.4.1/reference/data/distributed-data-types/
+[strong consistency]: {{< baseurl >}}kv/3.4.1/reference/specialized-apis/strong-consistency-api/
 
 Write-once buckets are buckets whose entries are intended to be written exactly once and never updated or overwritten. Buckets of this type circumvent the normal "coordinated PUT" path, which would otherwise result in a read on the coordinating vnode before the write. Avoiding coordinated PUTs results in higher throughput and lower PUT latency, though at the cost of different semantics in the degenerate case of sibling resolution.
 
@@ -109,7 +109,7 @@ The relationship between the `riak_client`, write-once workers, and vnode
 proxies is illustrated in the following diagram:
 
 <br />
-![Write Once](/images/write_once.png)
+![Write Once]({{< baseurl >}}images/write_once.png)
 <br />
 
 ##### Client Impacts
@@ -157,7 +157,7 @@ LevelDB. Riak will automatically fall back to synchronous writes with all other
 backends.
 
 **Note on the `multi` backend**
-The [Multi](/kv/3.4.1/explanation/storage/multi-backend/) backend does not
+The [Multi]({{< baseurl >}}kv/3.4.1/explanation/storage/multi-backend/) backend does not
 support asynchronous writes. Therefore, if LevelDB is used with the Multi
 backend, it will be used in synchronous mode.
 

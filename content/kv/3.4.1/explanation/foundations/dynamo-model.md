@@ -29,7 +29,7 @@ Explain the dynamo model and why it matters when designing or operating OpenRiak
 
 ### Dynamo: Amazon’s Highly Available Key-value Store
 
-[client libraries]: /kv/3.4.1/reference/client-libraries/
+[client libraries]: {{< baseurl >}}kv/3.4.1/reference/client-libraries/
 
 <div style="text-align:center;font-style:italic">
   Giuseppe DeCandia, Deniz Hastorun, Madan Jampani, Gunavardhan Kakulapati,
@@ -161,8 +161,8 @@ or redistribution.
 >
 > And, nodes can be added and removed from your OpenRiak cluster as needed.
 
-[Consistent Hashing]: /kv/3.4.1/explanation/foundations/glossary/#consistent-hashing
-[Gossip Protocol]: /kv/3.4.1/explanation/foundations/glossary/#gossiping
+[Consistent Hashing]: {{< baseurl >}}kv/3.4.1/explanation/foundations/glossary/#consistent-hashing
+[Gossip Protocol]: {{< baseurl >}}kv/3.4.1/explanation/foundations/glossary/#gossiping
 
 In the past year, Dynamo has been the underlying storage technology for a number
 of the core services in Amazon’s e-commerce platform. It was able to scale to
@@ -344,7 +344,7 @@ services to produce a composite response. Typically, the aggregator services are
 stateless, although they use extensive caching.
 
 **<figure id="figure-1" style="text-align:center;">
-  <img src="/images/dynamo/figure1.png" />
+  <img src="{{< baseurl >}}images/dynamo/figure1.png" />
   <figcaption>
     Figure 1: Service-oriented architecture of Amazon’s platform.
   </figcaption>
@@ -703,8 +703,8 @@ verify the validity of the context object supplied in the put request.
 >
 > OpenRiak KV has two APIs: an [HTTP API] and a [Protocol Buffers API].
 
-[HTTP API]: /kv/3.4.1/reference/http-api/
-[Protocol Buffers API]: /kv/3.4.1/reference/protocol-buffers/
+[HTTP API]: {{< baseurl >}}kv/3.4.1/reference/http-api/
+[Protocol Buffers API]: {{< baseurl >}}kv/3.4.1/reference/protocol-buffers/
 
 Dynamo treats both the key and the object supplied by the caller as an opaque
 array of bytes. It applies a MD5 hash on the key to generate a 128-bit
@@ -779,8 +779,8 @@ capacity, accounting for heterogeneity in the physical infrastructure.
 
 > [Further Reading on Partitioning in OpenRiak KV] and [All about the OpenRiak KV Ring].
 
-[Further Reading on Partitioning in OpenRiak KV]: /kv/3.4.1/explanation/foundations/clusters-rings-and-partitions/
-[All about the OpenRiak KV Ring]: /kv/3.4.1/explanation/foundations/clusters-rings-and-partitions/#the-ring
+[Further Reading on Partitioning in OpenRiak KV]: {{< baseurl >}}kv/3.4.1/explanation/foundations/clusters-rings-and-partitions/
+[All about the OpenRiak KV Ring]: {{< baseurl >}}kv/3.4.1/explanation/foundations/clusters-rings-and-partitions/#the-ring
 
 ##### 4.3 Replication
 
@@ -797,7 +797,7 @@ nodes C and D in addition to storing it locally. Node D will store the keys that
 fall in the ranges (A, B], (B, C], and (C, D].
 
 **<figure id="figure-2" style="text-align:center;">
-  <img src="/images/dynamo/figure2.png" />
+  <img src="{{< baseurl >}}images/dynamo/figure2.png" />
   <figcaption>
     Figure 2: Partitioning and replication of keys in Dynamo ring.
   </figcaption>
@@ -902,7 +902,7 @@ require reconciliation.
 > As you may have already figured out, OpenRiak KV uses vector clocks for object
 > versioning, too. Here are a whole host of resources to keep you busy for a while:
 >
-> [Vector Clock on OpenRiak KV Glossary](/kv/3.4.1/explanation/foundations/glossary/#vector-clock)
+> [Vector Clock on OpenRiak KV Glossary]({{< baseurl >}}kv/3.4.1/explanation/foundations/glossary/#vector-clock)
 >
 > [Why Vector Clocks are Easy](http://basho.com/posts/technical/why-vector-clocks-are-easy/)
 > |
@@ -922,7 +922,7 @@ context is considered to have reconciled the divergent versions and the branches
 are collapsed into a single new version.
 
 **<figure id="figure-3" style="text-align:center;">
-  <img src="/images/dynamo/figure3.png" />
+  <img src="{{< baseurl >}}images/dynamo/figure3.png" />
   <figcaption>
     Figure 3: Version evolution of an object over time.
   </figcaption>
@@ -1026,11 +1026,11 @@ R and W are usually configured to be less than N, to provide better latency.
 >
 >Some more resources on R and W:
 >
->[REST API](/kv/3.4.1/reference/http-api/)
+>[REST API]({{< baseurl >}}kv/3.4.1/reference/http-api/)
 >
->[Writing Data](/kv/3.4.1/how-to/develop/create-object/)
+>[Writing Data]({{< baseurl >}}kv/3.4.1/how-to/develop/create-object/)
 >
->[Reading Data](/kv/3.4.1/how-to/develop/read-object/)
+>[Reading Data]({{< baseurl >}}kv/3.4.1/how-to/develop/read-object/)
 
 Upon receiving a put() request for a key, the coordinator generates the vector
 clock for the new version and writes the new version locally. The coordinator
@@ -1051,7 +1051,7 @@ versions are then reconciled and the reconciled version superseding the current
 versions is written back.
 
 > Same for OpenRiak KV. Reconciling divergent versions in OpenRiak KV is called
-> [Read Repair](/kv/3.4.1/explanation/replication/#read-repair).
+> [Read Repair]({{< baseurl >}}kv/3.4.1/explanation/replication/#read-repair).
 
 ##### 4.6 Handling Failures: Hinted Handoff
 
@@ -1068,8 +1068,8 @@ consistent hashing ring.
 > You can glimpse at OpenRiak KV's preference list (or *preflist*) calculation in
 > the [Replication] walkthrough.
 
-[Hinted handoff]: /kv/3.4.1/explanation/foundations/glossary/#hinted-handoff
-[Replication]: /kv/3.4.1/explanation/replication/
+[Hinted handoff]: {{< baseurl >}}kv/3.4.1/explanation/foundations/glossary/#hinted-handoff
+[Replication]: {{< baseurl >}}kv/3.4.1/explanation/replication/
 
 Consider the example of Dynamo configuration given in <a href="#figure-2">Figure
 2</a> with N=3. In this example, if node A is temporarily down or unreachable
@@ -1109,7 +1109,7 @@ outage.
 > [Multi Datacenter Replication] was previously only implemented in the commercial extension to
 > OpenRiak KV, called [OpenRiak KV Enterprise Edition]. Now it is available in all versions from OpenRiak KV 2.2.6 onwards.
 
-[Multi Datacenter Replication]: /kv/3.4.1/explanation/replication/multi-datacenter-architecture/
+[Multi Datacenter Replication]: {{< baseurl >}}kv/3.4.1/explanation/replication/multi-datacenter-architecture/
 [OpenRiak KV Enterprise Edition]: http://basho.com/products/riak-kv/
 
 ##### 4.7 Handling permanent failures: Replica synchronization
@@ -1158,15 +1158,15 @@ addressed, however, by the refined partitioning scheme described in Section 6.2.
 > This section is well expressed in [Adding and Removing Nodes] and
 > [Failure Scenarios].
 
-[Adding and Removing Nodes]: /kv/3.4.1/tutorials/operations/change-cluster-membership/
-[Failure Scenarios]: /kv/3.4.1/explanation/consistency/eventual-consistency/
+[Adding and Removing Nodes]: {{< baseurl >}}kv/3.4.1/tutorials/operations/change-cluster-membership/
+[Failure Scenarios]: {{< baseurl >}}kv/3.4.1/explanation/consistency/eventual-consistency/
 
 ###### 4.8.1 Ring Membership
 
 > OpenRiak KV operators can trigger node management via the
 > [riak admin command-line tool].
 
-[riak admin command-line tool]: /kv/3.4.1/reference/commands/riak-admin/
+[riak admin command-line tool]: {{< baseurl >}}kv/3.4.1/reference/commands/riak-admin/
 
 In Amazon’s environment node outages (due to failures and maintenance tasks) are
 often transient but may last for extended intervals. A node outage rarely
@@ -1194,7 +1194,7 @@ membership change histories.
 > OpenRiak KV's ring state holds membership information, and is propgated via
 > [gossiping], including random reconciliation, defaulting to once a minute.
 
-[gossiping]: /kv/3.4.1/explanation/foundations/glossary/#gossiping
+[gossiping]: {{< baseurl >}}kv/3.4.1/explanation/foundations/glossary/#gossiping
 
 When a node starts for the first time, it chooses its set of tokens (virtual
 nodes in the consistent hash space) and maps nodes to their respective token
@@ -1228,7 +1228,7 @@ service. Typically seeds are fully functional nodes in the Dynamo ring.
 >
 > See _[The Node Join Process]_ for more.
 
-[The Node Join Process]: /kv/3.4.1/tutorials/operations/change-cluster-membership/#joining-nodes-to-form-a-cluster
+[The Node Join Process]: {{< baseurl >}}kv/3.4.1/tutorials/operations/change-cluster-membership/#joining-nodes-to-form-a-cluster
 
 ###### 4.8.3 Failure Detection
 
@@ -1319,11 +1319,11 @@ majority of Dynamo’s production instances use BDB Transactional Data Store.
 > supports [secondary indexes]). The Memory backend is an excellent choice when
 > speed is important and durability is not. It also has TTL support.
 
-[backend options]: /kv/3.4.1/explanation/storage/choosing-backend/
-[Bitcask]: /kv/3.4.1/explanation/storage/bitcask/
-[LevelDB]: /kv/3.4.1/explanation/storage/leveldb/
-[Memory]: /kv/3.4.1/explanation/storage/memory/
-[secondary indexes]: /kv/3.4.1/how-to/develop/query-secondary-indexes/
+[backend options]: {{< baseurl >}}kv/3.4.1/explanation/storage/choosing-backend/
+[Bitcask]: {{< baseurl >}}kv/3.4.1/explanation/storage/bitcask/
+[LevelDB]: {{< baseurl >}}kv/3.4.1/explanation/storage/leveldb/
+[Memory]: {{< baseurl >}}kv/3.4.1/explanation/storage/memory/
+[secondary indexes]: {{< baseurl >}}kv/3.4.1/how-to/develop/query-secondary-indexes/
 
 The request coordination component is built on top of an event-driven messaging
 substrate where the message processing pipeline is split into multiple stages
@@ -1357,7 +1357,7 @@ relieves the anti-entropy protocol from having to do it.
 
 > OpenRiak KV implements [Read Repair].
 
-[Read Repair]: /kv/3.4.1/explanation/replication/#read-repair
+[Read Repair]: {{< baseurl >}}kv/3.4.1/explanation/replication/#read-repair
 
 As noted earlier, write requests are coordinated by one of the top N nodes in
 the preference list. Although it is desirable always to have the first node
@@ -1380,7 +1380,7 @@ the performance at the 99.9 percentile.
 > [Basho Bench] against your own OpenRiak cluster to discover your own
 > optimal values.
 
-[Basho Bench]: /kv/3.4.1/how-to/tune/benchmark-cluster/
+[Basho Bench]: {{< baseurl >}}kv/3.4.1/how-to/tune/benchmark-cluster/
 
 Dynamo is used by several services with different configurations. These
 instances differ by their version reconciliation logic, and read/write quorum
@@ -1402,7 +1402,7 @@ shopping cart.
 > counters.
 
 [Statebox]: https://github.com/mochi/statebox_riak
-[CRDTs (Commutative Replicated Data Types)]: /kv/3.4.1/reference/data/distributed-data-types/
+[CRDTs (Commutative Replicated Data Types)]: {{< baseurl >}}kv/3.4.1/reference/data/distributed-data-types/
 
 * Timestamp based reconciliation: This case differs from the previous one only
 in the reconciliation mechanism. In case of divergent versions, Dynamo performs
@@ -1491,7 +1491,7 @@ several factors such as variability in request load, object sizes, and locality
 patterns.
 
 **<figure id="figure-4" style="text-align:center;">
-  <img src="/images/dynamo/figure4.png" />
+  <img src="{{< baseurl >}}images/dynamo/figure4.png" />
   <figcaption>
     Figure 4: Average and 99.9 percentiles of latencies for read and write
     requests during our peak request season of December 2006. The intervals
@@ -1525,7 +1525,7 @@ responses, the performance of the write operation is not affected by the
 performance of the durable write operation performed by a single replica.
 
 **<figure id="figure-5" style="text-align:center;">
-  <img src="/images/dynamo/figure5.png" />
+  <img src="{{< baseurl >}}images/dynamo/figure5.png" />
   <figcaption>
     Figure 5: Comparison of performance of 99.9th percentile latencies for
     buffered vs. non-buffered writes over a period of 24 hours. The intervals
@@ -1549,7 +1549,7 @@ strategies on load distribution.
 
 > Riak follows a SHA1 based consistent hashing for [partitioning].
 
-[partitioning]: /kv/3.4.1/explanation/replication/#understanding-replication-by-example
+[partitioning]: {{< baseurl >}}kv/3.4.1/explanation/replication/#understanding-replication-by-example
 
 To study the load imbalance and its correlation with request load, the total
 number of requests received by each node was measured for a period of 24 hours -
@@ -1569,7 +1569,7 @@ distribution of keys the load is evenly distributed. However, during low loads
 accessed, resulting in a higher load imbalance.
 
 **<figure id="figure-6" style="text-align:center;">
-  <img src="/images/dynamo/figure6.png" />
+  <img src="{{< baseurl >}}images/dynamo/figure6.png" />
   <figcaption>
     Figure 6: Fraction of nodes that are out-of-balance (i.e., nodes whose
     request load is above a certain threshold from the average system load) and
@@ -1640,7 +1640,7 @@ enabling the possibility of changing the placement scheme at runtime.
 > random distribution.
 
 **<figure id="figure-7" style="text-align:center;">
-  <img src="/images/dynamo/figure7-small.png" />
+  <img src="{{< baseurl >}}images/dynamo/figure7-small.png" />
   <figcaption>
     Figure 7: Partitioning and placement of keys in the three strategies. A, B,
     and C depict the three unique nodes that form the preference list for the
@@ -1663,8 +1663,8 @@ system in a way that preserves these properties.
 >
 > See [The Node Join Process] and [Replacing a Node].
 
-[The Node Join Process]: /kv/3.4.1/tutorials/operations/change-cluster-membership/#joining-nodes-to-form-a-cluster
-[Replacing a Node]: /kv/3.4.1/how-to/operate/replace-node/
+[The Node Join Process]: {{< baseurl >}}kv/3.4.1/tutorials/operations/change-cluster-membership/#joining-nodes-to-form-a-cluster
+[Replacing a Node]: {{< baseurl >}}kv/3.4.1/how-to/operate/replace-node/
 
 The efficiency of these three strategies is evaluated for a system with S=30 and
 N=3. However, comparing these different strategies in a fair manner is hard as
@@ -1709,7 +1709,7 @@ is that changing the node membership requires coordination in order to preserve
 the properties required of the assignment.
 
 **<figure id="figure-8" style="text-align:center;">
-  <img src="/images/dynamo/figure8.png" />
+  <img src="{{< baseurl >}}images/dynamo/figure8.png" />
   <figcaption>
     Figure 8: Comparison of the load distribution efficiency of different
     strategies for system with 30 nodes and N=3 with equal amount of metadata
@@ -1773,7 +1773,7 @@ on physical timestamps, any node can coordinate a write request.
 >
 > See [Load Balancing] for more information.
 
-[Load Balancing]: /kv/3.4.1/how-to/configure/load-balancing-proxy/
+[Load Balancing]: {{< baseurl >}}kv/3.4.1/how-to/configure/load-balancing-proxy/
 
 An alternative approach to request coordination is to move the state machine to
 the client nodes. In this scheme client applications use a library to perform

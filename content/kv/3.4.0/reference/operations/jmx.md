@@ -28,7 +28,7 @@ Define the names, fields, states, limits, and version applicability for jmx inte
 
 ### JMX Monitoring
 
-Riak exposes monitoring data via JMX.  To enable JMX monitoring, edit the [`app.config`](/kv/3.4.0/reference/configuration/) associated with your Riak installation and set the `enabled` property of the `riak_jmx` section to `true` as shown below.  The TCP port on which the JMX provider listens is also configurable in this section (the default JMX port is `41110`).
+Riak exposes monitoring data via JMX.  To enable JMX monitoring, edit the [`app.config`]({{< baseurl >}}kv/3.4.0/reference/configuration/) associated with your Riak installation and set the `enabled` property of the `riak_jmx` section to `true` as shown below.  The TCP port on which the JMX provider listens is also configurable in this section (the default JMX port is `41110`).
 
 ```erlang
     {riak_jmx, [

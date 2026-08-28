@@ -46,26 +46,26 @@ As well as single queries the API can also handle combination queries.  In combi
 
 For further detail on the Query API:
 
-- [Adding Index Entries to Objects](/kv/3.4.1/reference/data/secondary-indexes/)
-- [Overview of querying those index entries](/kv/3.4.1/how-to/develop/query-with-query-api/)
-- [An example people search](/kv/3.4.1/tutorials/query-api/build-search-index/)
-- [An alternative example for people search](/kv/3.4.1/tutorials/query-api/build-search-index/)
-- [An example using the API for reporting](/kv/3.4.1/tutorials/query-api/build-search-index/)
-- [Setting performance expectations for queries](/kv/3.4.1/explanation/performance/query-execution/)
-- [A more formal description of the Query API](/kv/3.4.1/reference/query-api/request/)
-- [An overview of the expected performance of queries in Riak](/kv/3.4.1/explanation/performance/query-execution/)
-- [Some notes on the underlying implementation](/kv/3.4.1/explanation/data-model/query-api/)
+- [Adding Index Entries to Objects]({{< baseurl >}}kv/3.4.1/reference/data/secondary-indexes/)
+- [Overview of querying those index entries]({{< baseurl >}}kv/3.4.1/how-to/develop/query-with-query-api/)
+- [An example people search]({{< baseurl >}}kv/3.4.1/tutorials/query-api/build-search-index/)
+- [An alternative example for people search]({{< baseurl >}}kv/3.4.1/tutorials/query-api/build-search-index/)
+- [An example using the API for reporting]({{< baseurl >}}kv/3.4.1/tutorials/query-api/build-search-index/)
+- [Setting performance expectations for queries]({{< baseurl >}}kv/3.4.1/explanation/performance/query-execution/)
+- [A more formal description of the Query API]({{< baseurl >}}kv/3.4.1/reference/query-api/request/)
+- [An overview of the expected performance of queries in Riak]({{< baseurl >}}kv/3.4.1/explanation/performance/query-execution/)
+- [Some notes on the underlying implementation]({{< baseurl >}}kv/3.4.1/explanation/data-model/query-api/)
 
 #### Querying - Functional Summary
 
-A query consists of the [following components](/kv/3.4.1/reference/query-api/request/):
+A query consists of the [following components]({{< baseurl >}}kv/3.4.1/reference/query-api/request/):
 
 - An index field (required).
 - A query range (required).
 - An `evaluation_expression` (optional); used to decode projected attributes to provide a map of those attributes to be processed via a filter expression.
 - A `filter_expression` (optional); used to filter results in/out of queries by applying checks to a map of projected attributes discovered on the index entry (i.e. the map being the output of an evaluation expression).
 - A `regular_expression` (optional); a potentially less flexible, but sometimes more performant alternative to evaluation and filter expressions - where a regular expression is used to match against a whole term, including the unevaluated projected attributes, in order to filter the entry into the query results.
-  - The regular expression is primarily provided for backwards compatibility with the [legacy index-query feature used prior to Riak 3.4](/kv/3.4.1/reference/specialized-apis/legacy-query-api/).  The use of evaluation and filter expressions is preferred to the use of regular expressions, and are often at least as performant as regular expressions.
+  - The regular expression is primarily provided for backwards compatibility with the [legacy index-query feature used prior to Riak 3.4]({{< baseurl >}}kv/3.4.1/reference/specialized-apis/legacy-query-api/).  The use of evaluation and filter expressions is preferred to the use of regular expressions, and are often at least as performant as regular expressions.
   - Regular expressions are [PCRE-style regular expressions](https://www.pcre.org/), but are not compiled prior to being used.
   - Escaping regular expressions correctly, so that they can be passed via the JSON-based Query API, may add significant complexity to the development process.
 
@@ -79,7 +79,7 @@ In the filter and evaluation expressions, projected attribute keys are identifie
 
 The API also supports options to govern pagination of results, and timeout of queries.
 
-Query requests are made by posting [a JSON object which defines the query](/kv/3.4.1/reference/query-api/request/) to a HTTP URI on Riak of `types/<BucketType>/buckets/<Bucket>/query`.  The results are returned as a JSON object, the format of those results is determined by the `accumulation_option` requested.
+Query requests are made by posting [a JSON object which defines the query]({{< baseurl >}}kv/3.4.1/reference/query-api/request/) to a HTTP URI on Riak of `types/<BucketType>/buckets/<Bucket>/query`.  The results are returned as a JSON object, the format of those results is determined by the `accumulation_option` requested.
 
 #### Further Improvements
 

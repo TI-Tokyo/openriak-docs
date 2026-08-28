@@ -46,15 +46,15 @@ Define AAE fold request shapes, filters, responses, timeouts, and safety charact
 
 ### OpenRiak KV - Other APIs
 
-The majority of work within OpenRiak KV can be done using the [Object API](/kv/3.4.1/reference/http-api/), and the [Query API](/kv/3.4.1/tutorials/query-api/).  There are though additional APIs, with specific purposes:
+The majority of work within OpenRiak KV can be done using the [Object API]({{< baseurl >}}kv/3.4.1/reference/http-api/), and the [Query API]({{< baseurl >}}kv/3.4.1/tutorials/query-api/).  There are though additional APIs, with specific purposes:
 
-- [The AAE Fold API](/kv/3.4.1/reference/aae-fold-api/)
-- [The Fetch API used to access replication queues](/kv/3.4.1/reference/specialized-apis/fetch-api/)
-- [The Data Type API](/kv/3.4.1/reference/specialized-apis/data-type-api/)
-- [The Map/Reduce API](/kv/3.4.1/reference/http-api/mapreduce/)
-- [The List API](/kv/3.4.1/reference/specialized-apis/list-api/)
-- [The Strong Consistency API](/kv/3.4.1/reference/specialized-apis/strong-consistency-api/)
-- [The Write Once Path API](/kv/3.4.1/reference/specialized-apis/write-once-api/)
+- [The AAE Fold API]({{< baseurl >}}kv/3.4.1/reference/aae-fold-api/)
+- [The Fetch API used to access replication queues]({{< baseurl >}}kv/3.4.1/reference/specialized-apis/fetch-api/)
+- [The Data Type API]({{< baseurl >}}kv/3.4.1/reference/specialized-apis/data-type-api/)
+- [The Map/Reduce API]({{< baseurl >}}kv/3.4.1/reference/http-api/mapreduce/)
+- [The List API]({{< baseurl >}}kv/3.4.1/reference/specialized-apis/list-api/)
+- [The Strong Consistency API]({{< baseurl >}}kv/3.4.1/reference/specialized-apis/strong-consistency-api/)
+- [The Write Once Path API]({{< baseurl >}}kv/3.4.1/reference/specialized-apis/write-once-api/)
 
 #### AAE Fold API
 
@@ -66,15 +66,15 @@ When using any other backend or multi-backend this will require an additional pa
 
 The AAE Fold API:
 
-- Supports [more than ten different fold types](/kv/3.4.1/reference/aae-fold-api/);
-- [Are throttled to minimise the impact on other cluster operations, and have query options that may improve efficiency](/kv/3.4.1/reference/aae-fold-api/).
+- Supports [more than ten different fold types]({{< baseurl >}}kv/3.4.1/reference/aae-fold-api/);
+- [Are throttled to minimise the impact on other cluster operations, and have query options that may improve efficiency]({{< baseurl >}}kv/3.4.1/reference/aae-fold-api/).
 
 The AAE Fold API has four potential interfaces:
 
-- [AAE Folds via the Command Line](/kv/3.4.1/how-to/operate/aae-fold/run-from-command-line/);
-- [AAE Folds via remote_console](/kv/3.4.1/how-to/operate/use-remote-console/);
-- [AAE Folds via HTTP](/kv/3.4.1/reference/aae-fold-api/);
-- [AAE Folds via protocol buffers](/kv/3.4.1/reference/aae-fold-api/).
+- [AAE Folds via the Command Line]({{< baseurl >}}kv/3.4.1/how-to/operate/aae-fold/run-from-command-line/);
+- [AAE Folds via remote_console]({{< baseurl >}}kv/3.4.1/how-to/operate/use-remote-console/);
+- [AAE Folds via HTTP]({{< baseurl >}}kv/3.4.1/reference/aae-fold-api/);
+- [AAE Folds via protocol buffers]({{< baseurl >}}kv/3.4.1/reference/aae-fold-api/).
 
 #### Supported fold types
 
@@ -127,7 +127,7 @@ Used to replicate a range of keys to another cluster (or indeed any consumer of 
 
 #### Performance and Efficiency
 
-The AAE Fold implementation has similarities to [the Query API](/kv/3.4.1/explanation/performance/query-execution/).  The sequence of operations for the fold is:
+The AAE Fold implementation has similarities to [the Query API]({{< baseurl >}}kv/3.4.1/explanation/performance/query-execution/).  The sequence of operations for the fold is:
 
 - On the local node that received the request, a query server is started to orchestrate the fold across the cluster;
   - In Riak 3.4 the query server has a different underlying implementation to the query server used in the Query API; but this may change to use a common implementation in a future release.
@@ -154,7 +154,7 @@ Some considerations on the efficiency of AAE Folds:
   - Use of a contiguous slice is more efficient than selecting random slices, as when checking Segments only the first 15 of the 20 bits (assuming standard tree size) in a segment ID are used.
   - When folds are used with Riak anti-entropy mechanisms, the `max_results` settings are used to control the size of the list of segment IDs passed into a fold.
 
-The AAE folds will scan over blocks of keys and metadata.  The performance of AAE fold requests are impacted by the volume of metadata per key, and the throughput per CPU core is likely to be lower than with the [Query API](/kv/3.4.1/explanation/performance/query-execution/) - where only blocks of index entities need to be scanned.  Unlike the Query API, none of the accumulators are required to deduplicate, so there is no related impact on performance.
+The AAE folds will scan over blocks of keys and metadata.  The performance of AAE fold requests are impacted by the volume of metadata per key, and the throughput per CPU core is likely to be lower than with the [Query API]({{< baseurl >}}kv/3.4.1/explanation/performance/query-execution/) - where only blocks of index entities need to be scanned.  Unlike the Query API, none of the accumulators are required to deduplicate, so there is no related impact on performance.
 
 Where a fold is returning a list of keys, or keys and clocks, it is necessary for the node coordinating the fold to hold the full result-set in memory; and on conclusion of the fold the results will need to be copied at least once to produce an API response.  The performance of the fold will also be impacted by an accumulator which grows with the number of entries covered.
 
@@ -191,13 +191,13 @@ The [PB Object API is described in the riak_pb repository](https://github.com/Op
 
 ## In this section
 
-- [Count keys operation](/kv/3.4.1/reference/aae-fold-api/count-keys/) — Document parameters, filters, response fields, limits, and risks for the count keys operation.
-- [Count tombstones operation](/kv/3.4.1/reference/aae-fold-api/count-tombstones/) — Document parameters, filters, response fields, limits, and risks for the count tombstones operation.
-- [Erase keys operation](/kv/3.4.1/reference/aae-fold-api/erase-keys/) — Document parameters, filters, response fields, limits, and risks for the erase keys operation.
-- [AAE fold filters](/kv/3.4.1/reference/aae-fold-api/filters/) — Document parameters, filters, response fields, limits, and risks for the aae fold filters.
-- [Find keys operation](/kv/3.4.1/reference/aae-fold-api/find-keys/) — Document parameters, filters, response fields, limits, and risks for the find keys operation.
-- [Find tombstones operation](/kv/3.4.1/reference/aae-fold-api/find-tombstones/) — Document parameters, filters, response fields, limits, and risks for the find tombstones operation.
-- [List buckets operation](/kv/3.4.1/reference/aae-fold-api/list-buckets/) — Document parameters, filters, response fields, limits, and risks for the list buckets operation.
-- [Object statistics operation](/kv/3.4.1/reference/aae-fold-api/object-statistics/) — Document parameters, filters, response fields, limits, and risks for the object statistics operation.
-- [Reap tombstones operation](/kv/3.4.1/reference/aae-fold-api/reap-tombstones/) — Document parameters, filters, response fields, limits, and risks for the reap tombstones operation.
-- [Repair key range operation](/kv/3.4.1/reference/aae-fold-api/repair-key-range/) — Document parameters, filters, response fields, limits, and risks for the repair key range operation.
+- [Count keys operation]({{< baseurl >}}kv/3.4.1/reference/aae-fold-api/count-keys/) — Document parameters, filters, response fields, limits, and risks for the count keys operation.
+- [Count tombstones operation]({{< baseurl >}}kv/3.4.1/reference/aae-fold-api/count-tombstones/) — Document parameters, filters, response fields, limits, and risks for the count tombstones operation.
+- [Erase keys operation]({{< baseurl >}}kv/3.4.1/reference/aae-fold-api/erase-keys/) — Document parameters, filters, response fields, limits, and risks for the erase keys operation.
+- [AAE fold filters]({{< baseurl >}}kv/3.4.1/reference/aae-fold-api/filters/) — Document parameters, filters, response fields, limits, and risks for the aae fold filters.
+- [Find keys operation]({{< baseurl >}}kv/3.4.1/reference/aae-fold-api/find-keys/) — Document parameters, filters, response fields, limits, and risks for the find keys operation.
+- [Find tombstones operation]({{< baseurl >}}kv/3.4.1/reference/aae-fold-api/find-tombstones/) — Document parameters, filters, response fields, limits, and risks for the find tombstones operation.
+- [List buckets operation]({{< baseurl >}}kv/3.4.1/reference/aae-fold-api/list-buckets/) — Document parameters, filters, response fields, limits, and risks for the list buckets operation.
+- [Object statistics operation]({{< baseurl >}}kv/3.4.1/reference/aae-fold-api/object-statistics/) — Document parameters, filters, response fields, limits, and risks for the object statistics operation.
+- [Reap tombstones operation]({{< baseurl >}}kv/3.4.1/reference/aae-fold-api/reap-tombstones/) — Document parameters, filters, response fields, limits, and risks for the reap tombstones operation.
+- [Repair key range operation]({{< baseurl >}}kv/3.4.1/reference/aae-fold-api/repair-key-range/) — Document parameters, filters, response fields, limits, and risks for the repair key range operation.

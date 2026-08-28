@@ -45,7 +45,7 @@ Secure administrative access, an inventory of identities and certificates involv
 > **Note on Network security**
 >
 > This document covers only the 2.0 authentication and authorization
-features. For a look at network security in Riak, see [Security and Firewalls](/kv/3.4.1/how-to/secure/manage-sources/).
+features. For a look at network security in Riak, see [Security and Firewalls]({{< baseurl >}}kv/3.4.1/how-to/secure/manage-sources/).
 
 As of version 2.0, Riak administrators can selectively apportion
 access to a wide variety of OpenRiak's functionality, including accessing,
@@ -82,10 +82,10 @@ of the following **before** enabling security:
 1. Check any Erlang MapReduce code for invocations of Riak modules other
    than `riak_kv_mapreduce`. Enabling security will prevent those from
    succeeding unless those modules are available via the `add_path`
-   mechanism documented in [Installing Custom Code](/kv/3.4.1/reference/operations/custom-code/).
+   mechanism documented in [Installing Custom Code]({{< baseurl >}}kv/3.4.1/reference/operations/custom-code/).
 1. Make sure that your client software will work properly:
     * It must pass authentication information with each request
-    * It must support HTTPS or encrypted [Protocol Buffers](/kv/3.4.1/reference/protocol-buffers/)
+    * It must support HTTPS or encrypted [Protocol Buffers]({{< baseurl >}}kv/3.4.1/reference/protocol-buffers/)
       traffic
     * If using HTTPS, the proper port (presumably 443) is open from
       client to server
@@ -98,7 +98,7 @@ of the following **before** enabling security:
 Security should be enabled only after all of the above steps have been
 performed and your security setup has been properly vetted.
 
-Clients that use [Protocol Buffers](/kv/3.4.1/reference/protocol-buffers/) will typically have to be
+Clients that use [Protocol Buffers]({{< baseurl >}}kv/3.4.1/reference/protocol-buffers/) will typically have to be
 reconfigured/restarted with the proper credentials once security is
 enabled.
 
@@ -428,7 +428,7 @@ riak admin security revoke <permissions> on <bucket-type> <bucket> from all|{<us
 ```
 
 If you select `any`, this means that the permission (or set of
-permissions) is granted/revoked for all buckets and [bucket types](/kv/3.4.1/how-to/develop/use-bucket-types/). If you specify a bucket type only, then the permission
+permissions) is granted/revoked for all buckets and [bucket types]({{< baseurl >}}kv/3.4.1/how-to/develop/use-bucket-types/). If you specify a bucket type only, then the permission
 is granted/revoked for all buckets of that type. If you specify a bucket
 type _and_ a bucket, the permission is granted/revoked only for that
 bucket type/bucket combination.
@@ -476,7 +476,7 @@ riak admin security grant riak_kv.get,riak_kv.put on any to client
 
 ###### MapReduce Permissions
 
-Permission to perform [MapReduce](/kv/3.4.1/how-to/develop/run-mapreduce/) jobs can be assigned
+Permission to perform [MapReduce]({{< baseurl >}}kv/3.4.1/how-to/develop/run-mapreduce/) jobs can be assigned
 using `riak_kv.mapreduce`. The following example grants MapReduce
 permissions to the user `mapreduce-power-user` for all buckets and
 bucket types:
@@ -487,7 +487,7 @@ riak admin security grant riak_kv.mapreduce on any to mapreduce-power-user
 
 ###### Bucket Type Permissions
 
-In versions 2.0 and later, Riak users can manage [bucket types](/kv/3.4.1/how-to/develop/use-bucket-types/) in addition to setting bucket properties. `riak admin
+In versions 2.0 and later, Riak users can manage [bucket types]({{< baseurl >}}kv/3.4.1/how-to/develop/use-bucket-types/) in addition to setting bucket properties. `riak admin
 security` allows you to manage the following bucket type-related
 permissions:
 
@@ -507,7 +507,7 @@ access to some or all of OpenRiak's functionality as described in the [User Mana
 you will then need to define security sources required for
 authentication.
 
-An more in-depth tutorial can be found in [Managing Security Sources](/kv/3.4.1/how-to/secure/manage-sources/).
+An more in-depth tutorial can be found in [Managing Security Sources]({{< baseurl >}}kv/3.4.1/how-to/secure/manage-sources/).
 
 ###### Add Source
 
@@ -596,7 +596,7 @@ riak admin security del-source riakuser 127.0.0.1/32 password
 
 This section provides only a very brief overview of the syntax for
 working with sources. For more information on using the `trust`,
-`password`, `pam`, and `certificate` sources, please see our [Managing Security Sources](/kv/3.4.1/how-to/secure/manage-sources/) document.
+`password`, `pam`, and `certificate` sources, please see our [Managing Security Sources]({{< baseurl >}}kv/3.4.1/how-to/secure/manage-sources/) document.
 
 ##### Security Ciphers
 
@@ -662,7 +662,7 @@ documentation](https://wiki.mozilla.org/Security/Server_Side_TLS).
 ###### Client vs. Server Cipher Order
 
 By default, Riak prefers the cipher order that you set on the server,
-i.e. the [`honor_cipher_order`](/kv/3.4.1/reference/configuration/#security) setting is set to `on`. If you prefer, however, that clients' preferred cipher
+i.e. the [`honor_cipher_order`]({{< baseurl >}}kv/3.4.1/reference/configuration/#security) setting is set to `on`. If you prefer, however, that clients' preferred cipher
 order dictate which cipher is chosen, set `honor_cipher_order` to `off`.
 
 > **Note on Erlang versions**
@@ -670,17 +670,17 @@ order dictate which cipher is chosen, set `honor_cipher_order` to `off`.
 > OpenRiak's default cipher order behavior has the potential to crash Erlang
 VMs that do not support it. Erlang VMs that are known to support it
 include Basho's patched version of Erlang R16. Instructions on
-installing it can be found in [Installing Erlang](/kv/3.4.1/how-to/install/source/). This issue should
+installing it can be found in [Installing Erlang]({{< baseurl >}}kv/3.4.1/how-to/install/source/). This issue should
 not affect Erlang 17.0 and later.
 
 ##### Enabling SSL
 
 In order to use any authentication or authorization features, you must
 enable SSL for Riak. **SSL is disabled by default**, but you will need
-to enable it prior to enabling security. If you are using [Protocol Buffers](/kv/3.4.1/reference/protocol-buffers/) as a transport protocol for Riak (which we strongly recommend), enabling SSL on a given node requires only that you specify a [host and port](/kv/3.4.1/reference/configuration/#client-interfaces) for the node
+to enable it prior to enabling security. If you are using [Protocol Buffers]({{< baseurl >}}kv/3.4.1/reference/protocol-buffers/) as a transport protocol for Riak (which we strongly recommend), enabling SSL on a given node requires only that you specify a [host and port]({{< baseurl >}}kv/3.4.1/reference/configuration/#client-interfaces) for the node
 as well as a [certification configuration](#certificate-configuration).
 
-If, however, you are using the [HTTP API](/kv/3.4.1/reference/http-api/) for Riak and would like to
+If, however, you are using the [HTTP API]({{< baseurl >}}kv/3.4.1/reference/http-api/) for Riak and would like to
 configure HTTPS, you will need to not only establish a [certificate configuration](#certificate-configuration) but also specify an HTTPS host
 and port. The following configuration would establish port 8088 on
 `localhost` as the HTTPS port:
@@ -703,7 +703,7 @@ listener.https.$name = 127.0.0.1:8088
 
 When using Riak security, you can choose which versions of SSL/TLS are
 allowed. By default, only TLS 1.2 is allowed, but this version can be
-disabled and others enabled by setting the following [configurable parameters](/kv/3.4.1/reference/configuration/#security) to `on` or `off`:
+disabled and others enabled by setting the following [configurable parameters]({{< baseurl >}}kv/3.4.1/reference/configuration/#security) to `on` or `off`:
 
 * `tls_protocols.tlsv1`
 * `tls_protocols.tlsv1.1`
@@ -720,16 +720,16 @@ Three things to note:
 
 ##### Certificate Configuration
 
-If you are using any of the available [security sources](/kv/3.4.1/how-to/secure/manage-sources/), including [trust-based authentication](/kv/3.4.1/how-to/secure/manage-sources/#trust-based-authentication), you will need to do so
+If you are using any of the available [security sources]({{< baseurl >}}kv/3.4.1/how-to/secure/manage-sources/), including [trust-based authentication]({{< baseurl >}}kv/3.4.1/how-to/secure/manage-sources/#trust-based-authentication), you will need to do so
 over a secure SSL connection. In order to establish a secure connection,
-you will need to ensure that each OpenRiak node's [configuration files](/kv/3.4.1/reference/configuration/#security) point to the proper paths for your
+you will need to ensure that each OpenRiak node's [configuration files]({{< baseurl >}}kv/3.4.1/reference/configuration/#security) point to the proper paths for your
 generated certs. By default, Riak assumes that all certs are stored in
 each node's `/etc` directory.
 
 If you are using the newer, `riak.conf`-based configuration system, you
 can change the location of the `/etc` directory by modifying the
 `platform_etc_dir`. More information can be found in our documentation
-on [configuring directories](/kv/3.4.1/reference/configuration/#directories).
+on [configuring directories]({{< baseurl >}}kv/3.4.1/reference/configuration/#directories).
 
 <table class="riak-conf">
   <thead>
@@ -805,7 +805,7 @@ checks](http://en.wikipedia.org/wiki/HTTP_referer) by default. Those
 checks make it impossible to serve data directly from Riak. To disable
 those checks, set the `secure_referer_check` parameter to `off`.
 
-If you are using [certificate-based authentication](/kv/3.4.1/how-to/secure/manage-sources/#certificate-based-authentication), Riak will check the certificate revocation list (CRL) of connecting clients' certificate by
+If you are using [certificate-based authentication]({{< baseurl >}}kv/3.4.1/how-to/secure/manage-sources/#certificate-based-authentication), Riak will check the certificate revocation list (CRL) of connecting clients' certificate by
 default. To disable this behavior, set the `check_crl` parameter to
 `off`.
 
@@ -822,9 +822,9 @@ Riak does have the optional capability to enable additional security controls, w
 
 There are three parts to Riak's security mechanism:
 
-- [TLS enablement](/kv/3.4.1/how-to/secure/configure-tls/);
-- [Enabling Security and restricting the Source of requests](/kv/3.4.1/how-to/secure/enable-security/);
-- [Granting permissions for specific actions](/kv/3.4.1/how-to/secure/manage-permissions/).
+- [TLS enablement]({{< baseurl >}}kv/3.4.1/how-to/secure/configure-tls/);
+- [Enabling Security and restricting the Source of requests]({{< baseurl >}}kv/3.4.1/how-to/secure/enable-security/);
+- [Granting permissions for specific actions]({{< baseurl >}}kv/3.4.1/how-to/secure/manage-permissions/).
 
 #### Enabling Security and Restricting Source
 

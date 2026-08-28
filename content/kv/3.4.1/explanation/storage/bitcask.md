@@ -38,17 +38,17 @@ Explain how bitcask stores data, its constraints, and the workloads for which it
 
 [github bitcask]: https://github.com/basho/bitcask
 [bitcask design pdf]: http://basho.com/assets/bitcask-intro.pdf
-[use admin riak cli]: /kv/3.4.1/reference/commands/riak/
-[config reference]: /kv/3.4.1/reference/configuration/
-[glossary vnode]: /kv/3.4.1/explanation/foundations/glossary/#vnode
-[learn clusters]: /kv/3.4.1/explanation/foundations/clusters-rings-and-partitions/
-[plan backend multi]: /kv/3.4.1/explanation/storage/multi-backend/
+[use admin riak cli]: {{< baseurl >}}kv/3.4.1/reference/commands/riak/
+[config reference]: {{< baseurl >}}kv/3.4.1/reference/configuration/
+[glossary vnode]: {{< baseurl >}}kv/3.4.1/explanation/foundations/glossary/#vnode
+[learn clusters]: {{< baseurl >}}kv/3.4.1/explanation/foundations/clusters-rings-and-partitions/
+[plan backend multi]: {{< baseurl >}}kv/3.4.1/explanation/storage/multi-backend/
 
-[glossary aae]: /kv/3.4.1/explanation/foundations/glossary/#active-anti-entropy-aae
-[perf open files]: /kv/3.4.1/how-to/tune/set-open-files-limit/
+[glossary aae]: {{< baseurl >}}kv/3.4.1/explanation/foundations/glossary/#active-anti-entropy-aae
+[perf open files]: {{< baseurl >}}kv/3.4.1/how-to/tune/set-open-files-limit/
 
-[plan bitcask capacity]: /kv/3.4.1/explanation/storage/capacity-planning/
-[usage delete objects]: /kv/3.4.1/how-to/develop/delete-object/
+[plan bitcask capacity]: {{< baseurl >}}kv/3.4.1/explanation/storage/capacity-planning/
+[usage delete objects]: {{< baseurl >}}kv/3.4.1/how-to/develop/delete-object/
 
 [Bitcask][github bitcask] is an Erlang application that provides an API for storing and retrieving key/value data using log-structured hash tables that provide very fast access. The [design][bitcask design pdf] of Bitcask was inspired, in part, by log-structured filesystems and log file merging.
 
@@ -1002,7 +1002,7 @@ The bitcask backend has the following characteristics and features:
 - No current support for optimised HEAD requests, which can have significant impact on overall efficiency within Riak.
   - Implementations of bitcask have been produced with this optimisation, and may be open-sourced in the future.
 
-For further details on the design and implementation of the bitcask backend refer to [the Riak Theory Guide](/kv/3.4.1/explanation/storage/bitcask/).
+For further details on the design and implementation of the bitcask backend refer to [the Riak Theory Guide]({{< baseurl >}}kv/3.4.1/explanation/storage/bitcask/).
 
 #### The bitcask backend
 
@@ -1017,7 +1017,7 @@ In Riak 3.4, the bitcask backend does not support three important operations:
 - Native support for anti-entropy, and AAE folds.
   - Parallel-mode (non-native) AAE is required to support AAE folds and all related functionality (e.g. inter-cluster reconciliation via AAE).
 
-[strengths]: /kv/3.4.1/explanation/storage/bitcask/
+[strengths]: {{< baseurl >}}kv/3.4.1/explanation/storage/bitcask/
 [weaknesses]: #weaknesses
-[installenable]: /kv/3.4.1/explanation/storage/bitcask/
+[installenable]: {{< baseurl >}}kv/3.4.1/explanation/storage/bitcask/
 [confiuring]: #configuring-bitcask

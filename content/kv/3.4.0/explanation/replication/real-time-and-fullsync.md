@@ -30,9 +30,9 @@ Explain real-time and fullsync replication, its data flow, failure behavior, and
 
 ### Fullsync via Active Anti-Entropy
 
-[glossary aae]: /kv/3.4.0/explanation/foundations/glossary/#active-anti-entropy-aae
-[config reference#advanced]: /kv/3.4.0/reference/configuration/#advanced-configuration
-[concept clusters]: /kv/3.4.0/explanation/foundations/clusters-rings-and-partitions/
+[glossary aae]: {{< baseurl >}}kv/3.4.0/explanation/foundations/glossary/#active-anti-entropy-aae
+[config reference#advanced]: {{< baseurl >}}kv/3.4.0/reference/configuration/#advanced-configuration
+[concept clusters]: {{< baseurl >}}kv/3.4.0/explanation/foundations/clusters-rings-and-partitions/
 
 > **Note: Technical preview**
 >

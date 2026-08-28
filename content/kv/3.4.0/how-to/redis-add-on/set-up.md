@@ -31,8 +31,8 @@ Show operators how to deploy the Redis add-on in a supported topology and verify
 [addon redis develop]: ../developing-rra/
 [addon redis use]: ../using-rra
 [ee]: https://www.tiot.jp/en/about-us/contact-us/
-[install index]: /kv/3.4.0/how-to/install/
-[perf open files]: /kv/3.4.0/how-to/tune/set-open-files-limit/
+[install index]: {{< baseurl >}}kv/3.4.0/how-to/install/
+[perf open files]: {{< baseurl >}}kv/3.4.0/how-to/tune/set-open-files-limit/
 [lab ansible]: https://github.com/paegun/ansible-cache-proxy
 
 This page will walk you through the process of installing Riak Redis Add-on (RRA) and configuring it to run in your environment. Check the [prerequisites](#prerequisites) before you get started to make sure you have everything you need in order to successfully install and use RRA.
@@ -290,9 +290,9 @@ Get started with some [basic usage][addon redis use] or checkout out more info o
 
 ### OpenRiak Redis Add-on Deployment Models
 
-[Local-deployment]: /images/redis/rra_deployment_local.png
-[Colocated-deployment]: /images/redis/rra_deployment_colocated.png
-[Distributed-deployment]: /images/redis/rra_deployment_distributed.png
+[Local-deployment]: {{< baseurl >}}images/redis/rra_deployment_local.png
+[Colocated-deployment]: {{< baseurl >}}images/redis/rra_deployment_colocated.png
+[Distributed-deployment]: {{< baseurl >}}images/redis/rra_deployment_distributed.png
 
 #### Deployment Models
 
@@ -301,7 +301,7 @@ Get started with some [basic usage][addon redis use] or checkout out more info o
 In a local cache deployment, the RRA and Redis are deployed to the application
 server.
 
-![Local-deployment](/images/redis/rra_deployment_local.png)
+![Local-deployment]({{< baseurl >}}images/redis/rra_deployment_local.png)
 
 Connections:
 
@@ -342,7 +342,7 @@ connections from the application services while deployment costs remain a matter
 of pushing a service and its configuration. In either case, deployment should
 be automated, so are not multiplied by the number of servers.
 
-![Colocated-deployment](/images/redis/rra_deployment_colocated.png)
+![Colocated-deployment]({{< baseurl >}}images/redis/rra_deployment_colocated.png)
 
 Connections:
 
@@ -379,7 +379,7 @@ Disadvantages:
 In a distributed cache deployment, the RRA is deployed to the application server
 and Redis is deployed to standalone servers, separate from OpenRiak cluster nodes.
 
-![Distributed-deployment](/images/redis/rra_deployment_distributed.png)
+![Distributed-deployment]({{< baseurl >}}images/redis/rra_deployment_distributed.png)
 
 Connections:
 

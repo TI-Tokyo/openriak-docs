@@ -51,15 +51,15 @@ State what this explanation does not cover, call out 3.4.0 versus 3.4.1 differen
 
 ## In this section
 
-- [Active anti-entropy](/kv/3.4.0/explanation/replication/active-anti-entropy/) — Explain active anti-entropy, its data flow, failure behavior, and operational trade-offs.
-- [Cascading replication writes](/kv/3.4.0/explanation/replication/cascading-writes/) — Explain cascading replication writes, its data flow, failure behavior, and operational trade-offs.
-- [Replication concepts](/kv/3.4.0/explanation/replication/) — Introduce repair, convergence, and multi-cluster data movement in OpenRiak.
-- [Legacy active anti-entropy](/kv/3.4.0/explanation/replication/legacy-aae/) — Explain legacy active anti-entropy, its data flow, failure behavior, and operational trade-offs.
-- [Multi-datacenter replication architecture](/kv/3.4.0/explanation/replication/multi-datacenter-architecture/) — Explain multi-datacenter replication architecture, its data flow, failure behavior, and operational trade-offs.
-- [Next-generation replication](/kv/3.4.0/explanation/replication/next-generation-replication/) — Explain next-generation replication, its data flow, failure behavior, and operational trade-offs.
-- [Replication queues](/kv/3.4.0/explanation/replication/queues/) — Explain replication queues, its data flow, failure behavior, and operational trade-offs.
-- [Real-time and Fullsync replication](/kv/3.4.0/explanation/replication/real-time-and-fullsync/) — Explain real-time and fullsync replication, its data flow, failure behavior, and operational trade-offs.
-- [Reconciliation scope](/kv/3.4.0/explanation/replication/reconciliation-scope/) — Explain all-cluster, per-bucket, time-window, and key-range reconciliation trade-offs.
-- [Replication references and triggers](/kv/3.4.0/explanation/replication/references-and-triggers/) — Explain how replication references and triggers select, queue, and transmit changes.
-- [TicTac active anti-entropy](/kv/3.4.0/explanation/replication/tictac-aae/) — Explain tictac active anti-entropy, its data flow, failure behavior, and operational trade-offs.
-- [Legacy and current replication generations](/kv/3.4.0/explanation/replication/v2-and-v3-replication/) — Explain legacy and current replication generations, its data flow, failure behavior, and operational trade-offs.
+- [Active anti-entropy]({{< baseurl >}}kv/3.4.0/explanation/replication/active-anti-entropy/) — Explain active anti-entropy, its data flow, failure behavior, and operational trade-offs.
+- [Cascading replication writes]({{< baseurl >}}kv/3.4.0/explanation/replication/cascading-writes/) — Explain cascading replication writes, its data flow, failure behavior, and operational trade-offs.
+- [Replication concepts]({{< baseurl >}}kv/3.4.0/explanation/replication/) — Introduce repair, convergence, and multi-cluster data movement in OpenRiak.
+- [Legacy active anti-entropy]({{< baseurl >}}kv/3.4.0/explanation/replication/legacy-aae/) — Explain legacy active anti-entropy, its data flow, failure behavior, and operational trade-offs.
+- [Multi-datacenter replication architecture]({{< baseurl >}}kv/3.4.0/explanation/replication/multi-datacenter-architecture/) — Explain multi-datacenter replication architecture, its data flow, failure behavior, and operational trade-offs.
+- [Next-generation replication]({{< baseurl >}}kv/3.4.0/explanation/replication/next-generation-replication/) — Explain next-generation replication, its data flow, failure behavior, and operational trade-offs.
+- [Replication queues]({{< baseurl >}}kv/3.4.0/explanation/replication/queues/) — Explain replication queues, its data flow, failure behavior, and operational trade-offs.
+- [Real-time and Fullsync replication]({{< baseurl >}}kv/3.4.0/explanation/replication/real-time-and-fullsync/) — Explain real-time and fullsync replication, its data flow, failure behavior, and operational trade-offs.
+- [Reconciliation scope]({{< baseurl >}}kv/3.4.0/explanation/replication/reconciliation-scope/) — Explain all-cluster, per-bucket, time-window, and key-range reconciliation trade-offs.
+- [Replication references and triggers]({{< baseurl >}}kv/3.4.0/explanation/replication/references-and-triggers/) — Explain how replication references and triggers select, queue, and transmit changes.
+- [TicTac active anti-entropy]({{< baseurl >}}kv/3.4.0/explanation/replication/tictac-aae/) — Explain tictac active anti-entropy, its data flow, failure behavior, and operational trade-offs.
+- [Legacy and current replication generations]({{< baseurl >}}kv/3.4.0/explanation/replication/v2-and-v3-replication/) — Explain legacy and current replication generations, its data flow, failure behavior, and operational trade-offs.

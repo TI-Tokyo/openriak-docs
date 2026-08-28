@@ -32,14 +32,14 @@ automatically recognize the location of the resources for specific operations.
 
 The standard resources are:
 
-* `riak_kv_wm_buckets` - [Bucket Operations](/kv/3.4.0/reference/http-api/)
-* `riak_kv_wm_index` - [HTTP Secondary Indexes](/kv/3.4.0/reference/http-api/secondary-indexes/)
-* `riak_kv_wm_link_walker` - [HTTP Link Walking](/kv/3.4.0/reference/http-api/link-walking/)
-* `riak_kv_wm_mapred` - [HTTP MapReduce](/kv/3.4.0/reference/http-api/mapreduce/)
-* `riak_kv_wm_object`- [Object/Key Operations](/kv/3.4.0/reference/http-api/)
-* `riak_kv_wm_ping` - [HTTP Ping](/kv/3.4.0/reference/http-api/ping/)
-* `riak_kv_wm_props` - [HTTP Set Bucket Properties](/kv/3.4.0/reference/http-api/set-bucket-properties/)
-* `riak_kv_wm_stats` - [HTTP Status](/kv/3.4.0/reference/http-api/status/)
+* `riak_kv_wm_buckets` - [Bucket Operations]({{< baseurl >}}kv/3.4.0/reference/http-api/)
+* `riak_kv_wm_index` - [HTTP Secondary Indexes]({{< baseurl >}}kv/3.4.0/reference/http-api/secondary-indexes/)
+* `riak_kv_wm_link_walker` - [HTTP Link Walking]({{< baseurl >}}kv/3.4.0/reference/http-api/link-walking/)
+* `riak_kv_wm_mapred` - [HTTP MapReduce]({{< baseurl >}}kv/3.4.0/reference/http-api/mapreduce/)
+* `riak_kv_wm_object`- [Object/Key Operations]({{< baseurl >}}kv/3.4.0/reference/http-api/)
+* `riak_kv_wm_ping` - [HTTP Ping]({{< baseurl >}}kv/3.4.0/reference/http-api/ping/)
+* `riak_kv_wm_props` - [HTTP Set Bucket Properties]({{< baseurl >}}kv/3.4.0/reference/http-api/set-bucket-properties/)
+* `riak_kv_wm_stats` - [HTTP Status]({{< baseurl >}}kv/3.4.0/reference/http-api/status/)
 
 #### Request
 

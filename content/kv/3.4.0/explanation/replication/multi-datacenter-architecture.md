@@ -69,7 +69,7 @@ Compares Version 2 and Version 3 of OpenRiak's Multi-Datacenter Replication capa
 ### V2 Multi-Datacenter Replication Reference: Architecture
 
 **Deprecation Warning**
-v2 Multi-Datacenter Replication is deprecated and will be removed in a future version. Please use [v3](/kv/3.4.0/explanation/replication/multi-datacenter-architecture/) instead.
+v2 Multi-Datacenter Replication is deprecated and will be removed in a future version. Please use [v3]({{< baseurl >}}kv/3.4.0/explanation/replication/multi-datacenter-architecture/) instead.
 
 This document provides a basic overview of the architecture undergirding
 OpenRiak's Multi-Datacenter Replication capabilities.
@@ -134,7 +134,7 @@ replication, as illustrated in the Figure below.
 2. The site node in the secondary cluster initiates fullsync replication
    with the primary node by sending a message to the listener node in
    the primary cluster
-3. The site and listener nodes iterate through each [vnode](/kv/3.4.0/explanation/foundations/glossary/#vnode) in their respective clusters and compute a hash for
+3. The site and listener nodes iterate through each [vnode]({{< baseurl >}}kv/3.4.0/explanation/foundations/glossary/#vnode) in their respective clusters and compute a hash for
    each key's object value. The site node on the secondary cluster sends
    its complete list of key/hash pairs to the listener node in the
    primary cluster. The listener node then sequentially compares its
@@ -146,7 +146,7 @@ replication, as illustrated in the Figure below.
    achieve the new object values, completing the fullsync cycle
 
 <br />
-![MDC Fullsync](/images/MDC_Full-sync-small.png)
+![MDC Fullsync]({{< baseurl >}}images/MDC_Full-sync-small.png)
 <br />
 
 #### Realtime Replication
@@ -164,7 +164,7 @@ replication, as illustrated in the Figure below.
    the update
 
 <br />
-![MDC Realtime](/images/MDC-real-time-sync-small.png)
+![MDC Realtime]({{< baseurl >}}images/MDC-real-time-sync-small.png)
 <br />
 
 #### Restrictions
@@ -172,14 +172,14 @@ replication, as illustrated in the Figure below.
 It is important to note that both clusters must have certain attributes
 in common for Multi-Datacenter Replication to work. If you are using
 either fullsync or realtime replication, both clusters must have the
-same [ring size](/kv/3.4.0/explanation/foundations/clusters-rings-and-partitions/#the-ring); if you are using fullsync
-replication, every bucket's [`n_val`](/kv/3.4.0/explanation/replication/references-and-triggers/#n-value-and-replication) must be the same in both the
+same [ring size]({{< baseurl >}}kv/3.4.0/explanation/foundations/clusters-rings-and-partitions/#the-ring); if you are using fullsync
+replication, every bucket's [`n_val`]({{< baseurl >}}kv/3.4.0/explanation/replication/references-and-triggers/#n-value-and-replication) must be the same in both the
 source and sink cluster.
 
 ### Architecture
 
-[glossary vnode]: /kv/3.4.0/explanation/foundations/glossary/#vnode
-[concept clusters]: /kv/3.4.0/explanation/foundations/clusters-rings-and-partitions/
+[glossary vnode]: {{< baseurl >}}kv/3.4.0/explanation/foundations/glossary/#vnode
+[concept clusters]: {{< baseurl >}}kv/3.4.0/explanation/foundations/clusters-rings-and-partitions/
 
 #### How Version 3 Replication Works
 
@@ -268,7 +268,7 @@ This instructs the Riak connection manager to contact the sink
     cluster.
 
 <br />
-    ![MDC fullsync](/images/MDC-v3-realtime1.png)
+    ![MDC fullsync]({{< baseurl >}}images/MDC-v3-realtime1.png)
     <br />
 
 At this point realtime replication commences.
@@ -279,7 +279,7 @@ and replication begins.</li>
 </ol>
 
 <br />
-![MDC fullsync](/images/MDC-v3-realtime2.png)
+![MDC fullsync]({{< baseurl >}}images/MDC-v3-realtime2.png)
 <br />
 
 ##### Realtime queueing and synchronization
@@ -293,7 +293,7 @@ store data updates for synchronization.
 </ol>
 
 <br />
-![MDC fullsync](/images/MDC-v3-realtime3.png)
+![MDC fullsync]({{< baseurl >}}images/MDC-v3-realtime3.png)
 <br />
 
 <ol start="6">
@@ -302,7 +302,7 @@ store data updates for synchronization.
 </ol>
 
 <br />
-![MDC fullsync](/images/MDC-v3-realtime4.png)
+![MDC fullsync]({{< baseurl >}}images/MDC-v3-realtime4.png)
 <br />
 
 <ol start="8">
@@ -311,7 +311,7 @@ nodes.</li>
 </ol>
 
 <br />
-![MDC fullsync](/images/MDC-v3-realtime5.png)
+![MDC fullsync]({{< baseurl >}}images/MDC-v3-realtime5.png)
 <br />
 
 <ol start="9">
@@ -320,7 +320,7 @@ acknowledged and the object removed from the realtime queue.</li>
 </ol>
 
 <br />
-![MDC fullsync](/images/MDC-v3-realtime6.png)
+![MDC fullsync]({{< baseurl >}}images/MDC-v3-realtime6.png)
 <br />
 
 #### Restrictions

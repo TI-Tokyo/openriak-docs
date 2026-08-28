@@ -43,16 +43,16 @@ Each individual schema component can be found in the `priv` folder for that repo
 
 When starting a first cluster to experiment, the following configuration items are of particular importance:
 
-- `ring_size`; refer to the [ring size selection in the design decisions document](/kv/3.4.1/how-to/plan/choose-ring-size/), should be set smaller than the default for test/dev environments and larger than the default for production systems.
-- `tictacaae_active`; refer to the [intra-cluster resilience in the design decisions document](/kv/3.4.1/how-to/plan/choose-intra-cluster-resilience/).  Should be set to active if the active repair of deltas between vnodes is required, otherwise repair will be reactive (i.e. only once a delta has been detected on read).
+- `ring_size`; refer to the [ring size selection in the design decisions document]({{< baseurl >}}kv/3.4.1/how-to/plan/choose-ring-size/), should be set smaller than the default for test/dev environments and larger than the default for production systems.
+- `tictacaae_active`; refer to the [intra-cluster resilience in the design decisions document]({{< baseurl >}}kv/3.4.1/how-to/plan/choose-intra-cluster-resilience/).  Should be set to active if the active repair of deltas between vnodes is required, otherwise repair will be reactive (i.e. only once a delta has been detected on read).
 - `tictacaae_storeheads`; should be enabled when using `tictacaae_active` on a leveled backend if the full scope of AAE Folds are to be used.
 - `anti_entropy`; this is a deprecated anti-entropy system, and should be set to `passive` if using `tictacaae_active`.  It may be set to `active` in parallel to `tictacaae_active` to transition between the services.  The legacy anti-entropy system is quicker and more aggressive at repairing deltas, but offers less functionality and runs at a higher cost when in sync.
-- `storage_backend`; refer to the [backend selection in the design decisions document](/kv/3.4.1/how-to/plan/choose-storage-backend/), but for full Riak functionality must be set to leveled.
+- `storage_backend`; refer to the [backend selection in the design decisions document]({{< baseurl >}}kv/3.4.1/how-to/plan/choose-storage-backend/), but for full Riak functionality must be set to leveled.
 - `read_repair_primaryonly`; will impact the behaviour in failure, by default when a standby vnode replaces a failed vnode, read repair will be triggered on every GET to populate the standby with old writes, but this will have a negative impact performance during both failure and recovery.
 - `buckets.default.merge_strategy`; should always be set to `2`, and `2` will be the only supported option from Riak 4.0.
 - `nodename`; a unique name for the node within the cluster.
 - `platform_data_dir`; where the actual data will be stored, must be a space with sufficient capacity and throughput.
-- `listener.http.internal` or `listener.pb.internal`; the IP address and port for accessing the API. It is recommended to bind this IP address to a specific interface address.  [The Query API](/kv/3.4.1/tutorials/query-api/) requires use of the `http` listener, and performance will differ between the `pb` and `http` transports when using [the Object API](/kv/3.4.1/reference/http-api/).
+- `listener.http.internal` or `listener.pb.internal`; the IP address and port for accessing the API. It is recommended to bind this IP address to a specific interface address.  [The Query API]({{< baseurl >}}kv/3.4.1/tutorials/query-api/) requires use of the `http` listener, and performance will differ between the `pb` and `http` transports when using [the Object API]({{< baseurl >}}kv/3.4.1/reference/http-api/).
 
 In a `riak.conf` file, the last setting of any configuration item is the actual value used in the configuration.  Edits to the riak.conf file don't have to change the configuration in place, defaults may be overwritten by concatenating changes to the end of the file.
 

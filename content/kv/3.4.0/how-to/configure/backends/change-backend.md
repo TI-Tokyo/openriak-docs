@@ -38,11 +38,11 @@ Administrative access to the nodes you will change; a copy of the current config
 
 #### Database backend - changing the choice
 
-The database backend configuration is local to a node.  Migrating the database backend will require a [rolling replacement](/kv/3.4.0/how-to/operate/rolling-replacement/) of one or more nodes at a time.  For example, a multi-backend configuration with bitcask and in-memory backends and parallel-mode Tictac AAE, can be upgraded to a single leveled backend with native Tictac AAE (assuming the TTL capability requirement is not being utilised).
+The database backend configuration is local to a node.  Migrating the database backend will require a [rolling replacement]({{< baseurl >}}kv/3.4.0/how-to/operate/rolling-replacement/) of one or more nodes at a time.  For example, a multi-backend configuration with bitcask and in-memory backends and parallel-mode Tictac AAE, can be upgraded to a single leveled backend with native Tictac AAE (assuming the TTL capability requirement is not being utilised).
 
 > A rolling replacement is a safe and reliable process even when a cluster is under application load; although it would be normal in a large-scale production OpenRiak cluster for a complete rolling replacement to take days and not hours.
 
-Where different backends support different cluster-wide features (e.g. support of the [Riak Query API](/kv/3.4.0/tutorials/query-api/)), then the feature will only be usable when all nodes have updated.
+Where different backends support different cluster-wide features (e.g. support of the [Riak Query API]({{< baseurl >}}kv/3.4.0/tutorials/query-api/)), then the feature will only be usable when all nodes have updated.
 
 ## Verify the result
 

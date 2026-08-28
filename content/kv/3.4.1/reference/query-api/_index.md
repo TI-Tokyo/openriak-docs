@@ -43,15 +43,15 @@ As well as single queries the API can also handle combination queries.  In combi
 
 For further detail on the Query API:
 
-- [Adding Index Entries to Objects](/kv/3.4.1/reference/data/secondary-indexes/)
-- [Overview of querying those index entries](/kv/3.4.1/how-to/develop/query-with-query-api/)
-- [An example people search](/kv/3.4.1/tutorials/query-api/build-search-index/)
-- [An alternative example for people search](/kv/3.4.1/tutorials/query-api/build-search-index/)
-- [An example using the API for reporting](/kv/3.4.1/tutorials/query-api/build-search-index/)
-- [Setting performance expectations for queries](/kv/3.4.1/explanation/performance/query-execution/)
-- [A more formal description of the Query API](/kv/3.4.1/reference/query-api/request/)
-- [An overview of the expected performance of queries in Riak](/kv/3.4.1/explanation/performance/query-execution/)
-- [Some notes on the underlying implementation](/kv/3.4.1/explanation/data-model/query-api/)
+- [Adding Index Entries to Objects]({{< baseurl >}}kv/3.4.1/reference/data/secondary-indexes/)
+- [Overview of querying those index entries]({{< baseurl >}}kv/3.4.1/how-to/develop/query-with-query-api/)
+- [An example people search]({{< baseurl >}}kv/3.4.1/tutorials/query-api/build-search-index/)
+- [An alternative example for people search]({{< baseurl >}}kv/3.4.1/tutorials/query-api/build-search-index/)
+- [An example using the API for reporting]({{< baseurl >}}kv/3.4.1/tutorials/query-api/build-search-index/)
+- [Setting performance expectations for queries]({{< baseurl >}}kv/3.4.1/explanation/performance/query-execution/)
+- [A more formal description of the Query API]({{< baseurl >}}kv/3.4.1/reference/query-api/request/)
+- [An overview of the expected performance of queries in Riak]({{< baseurl >}}kv/3.4.1/explanation/performance/query-execution/)
+- [Some notes on the underlying implementation]({{< baseurl >}}kv/3.4.1/explanation/data-model/query-api/)
 
 #### Secondary Indexes - Querying Index Entries Overview
 
@@ -59,13 +59,13 @@ The Query API is intended to provide flexible and performant functionality in th
 
 > The aim of Riak development is to provide a database that performs efficient, scalable and predictable CRUD operations, and is just-queryable-enough to avoid the need of third party database integration in most use cases.
 
-Riak does support via [an external replication API](/kv/3.4.1/reference/replication-api/), the ability to manage replication and reconciliation to third party query engines (e.g. OpenSearch), should more complex query support be required.  The automation of such integration is outside of the current functional scope of Riak.
+Riak does support via [an external replication API]({{< baseurl >}}kv/3.4.1/reference/replication-api/), the ability to manage replication and reconciliation to third party query engines (e.g. OpenSearch), should more complex query support be required.  The automation of such integration is outside of the current functional scope of Riak.
 
 ## In this section
 
-- [Query API accumulation options](/kv/3.4.1/reference/query-api/accumulation-options/) — Define the 3.4.1 modes for keys, terms, counts, grouped counts, and disk-backed queued results.
-- [Query API expression reference](/kv/3.4.1/reference/query-api/expressions/) — Define supported Query API expressions, operators, composition rules, and Unicode behavior.
-- [Query API limits and performance](/kv/3.4.1/reference/query-api/limits/) — Record Query API scanning, filtering, buffering, aggregation, collation, and transformation limits.
-- [Queued Query API results](/kv/3.4.1/reference/query-api/queued-results/) — Define disk-backed queue_raw_keys and queue_raw_terms results, batching behavior, retrieval, and lifecycle.
-- [Query API request reference](/kv/3.4.1/reference/query-api/request/) — Define Query API request paths, JSON fields, defaults, and validation rules.
-- [Query API response reference](/kv/3.4.1/reference/query-api/responses/) — Define Query API response fields, ordering, pagination, and error representations.
+- [Query API accumulation options]({{< baseurl >}}kv/3.4.1/reference/query-api/accumulation-options/) — Define the 3.4.1 modes for keys, terms, counts, grouped counts, and disk-backed queued results.
+- [Query API expression reference]({{< baseurl >}}kv/3.4.1/reference/query-api/expressions/) — Define supported Query API expressions, operators, composition rules, and Unicode behavior.
+- [Query API limits and performance]({{< baseurl >}}kv/3.4.1/reference/query-api/limits/) — Record Query API scanning, filtering, buffering, aggregation, collation, and transformation limits.
+- [Queued Query API results]({{< baseurl >}}kv/3.4.1/reference/query-api/queued-results/) — Define disk-backed queue_raw_keys and queue_raw_terms results, batching behavior, retrieval, and lifecycle.
+- [Query API request reference]({{< baseurl >}}kv/3.4.1/reference/query-api/request/) — Define Query API request paths, JSON fields, defaults, and validation rules.
+- [Query API response reference]({{< baseurl >}}kv/3.4.1/reference/query-api/responses/) — Define Query API response fields, ordering, pagination, and error representations.

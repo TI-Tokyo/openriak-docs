@@ -50,12 +50,12 @@ Link to the complete configuration or API reference, the explanation of the unde
 
 ## In this section
 
-- [Configure OpenRiak](/kv/3.4.0/how-to/configure/) — Introduce task-focused configuration procedures and link each setting to authoritative reference material.
-- [Develop with OpenRiak](/kv/3.4.0/how-to/develop/) — Introduce task-oriented recipes for application developers using OpenRiak data and APIs.
-- [Install and verify OpenRiak](/kv/3.4.0/how-to/install/) — Introduce installation procedures and their common verification outcome.
-- [Operate a cluster](/kv/3.4.0/how-to/operate/) — Introduce routine cluster administration and lifecycle procedures.
-- [Plan a production cluster](/kv/3.4.0/how-to/plan/) — Introduce planning procedures that turn workload and infrastructure requirements into deployment decisions.
-- [Use the Redis add-on](/kv/3.4.0/how-to/redis-add-on/) — Introduce practical procedures for deploying and using the Redis add-on for OpenRiak.
-- [Secure OpenRiak](/kv/3.4.0/how-to/secure/) — Introduce focused procedures for enabling and administering OpenRiak security.
-- [Troubleshoot OpenRiak](/kv/3.4.0/how-to/troubleshoot/) — Route readers from observed symptoms to focused diagnostic and recovery procedures.
-- [Tune performance](/kv/3.4.0/how-to/tune/) — Introduce measurement-led procedures for improving OpenRiak performance safely.
+- [Configure OpenRiak]({{< baseurl >}}kv/3.4.0/how-to/configure/) — Introduce task-focused configuration procedures and link each setting to authoritative reference material.
+- [Develop with OpenRiak]({{< baseurl >}}kv/3.4.0/how-to/develop/) — Introduce task-oriented recipes for application developers using OpenRiak data and APIs.
+- [Install and verify OpenRiak]({{< baseurl >}}kv/3.4.0/how-to/install/) — Introduce installation procedures and their common verification outcome.
+- [Operate a cluster]({{< baseurl >}}kv/3.4.0/how-to/operate/) — Introduce routine cluster administration and lifecycle procedures.
+- [Plan a production cluster]({{< baseurl >}}kv/3.4.0/how-to/plan/) — Introduce planning procedures that turn workload and infrastructure requirements into deployment decisions.
+- [Use the Redis add-on]({{< baseurl >}}kv/3.4.0/how-to/redis-add-on/) — Introduce practical procedures for deploying and using the Redis add-on for OpenRiak.
+- [Secure OpenRiak]({{< baseurl >}}kv/3.4.0/how-to/secure/) — Introduce focused procedures for enabling and administering OpenRiak security.
+- [Troubleshoot OpenRiak]({{< baseurl >}}kv/3.4.0/how-to/troubleshoot/) — Route readers from observed symptoms to focused diagnostic and recovery procedures.
+- [Tune performance]({{< baseurl >}}kv/3.4.0/how-to/tune/) — Introduce measurement-led procedures for improving OpenRiak performance safely.

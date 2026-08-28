@@ -33,14 +33,14 @@ Explain why openriak kv and why it matters when designing or operating OpenRiak 
 
 ### Why OpenRiak KV?
 
-[apps replication properties]: /kv/3.4.0/explanation/replication/references-and-triggers/
-[Basho Bench]: /kv/3.4.0/how-to/tune/benchmark-cluster/
-[cluster ops strong consistency]: /kv/3.4.0/explanation/consistency/strong-consistency/
-[concept eventual consistency]: /kv/3.4.0/explanation/consistency/eventual-consistency/
+[apps replication properties]: {{< baseurl >}}kv/3.4.0/explanation/replication/references-and-triggers/
+[Basho Bench]: {{< baseurl >}}kv/3.4.0/how-to/tune/benchmark-cluster/
+[cluster ops strong consistency]: {{< baseurl >}}kv/3.4.0/explanation/consistency/strong-consistency/
+[concept eventual consistency]: {{< baseurl >}}kv/3.4.0/explanation/consistency/eventual-consistency/
 [convergent replicated data types]: http://hal.upmc.fr/docs/00/55/55/88/PDF/techreport.pdf
 [Datomic]: http://www.datomic.com/overview.html
-[dev data types]: /kv/3.4.0/reference/data/distributed-data-types/
-[glossary read rep]: /kv/3.4.0/explanation/foundations/glossary/#read-repair
+[dev data types]: {{< baseurl >}}kv/3.4.0/reference/data/distributed-data-types/
+[glossary read rep]: {{< baseurl >}}kv/3.4.0/explanation/foundations/glossary/#read-repair
 
 #### What is Riak?
 

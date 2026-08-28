@@ -51,11 +51,11 @@ State what this explanation does not cover, call out 3.4.0 versus 3.4.1 differen
 
 ## In this section
 
-- [How Bitcask stores data](/kv/3.4.1/explanation/storage/bitcask/) — Explain how bitcask stores data, its constraints, and the workloads for which it is appropriate.
-- [Storage capacity planning](/kv/3.4.1/explanation/storage/capacity-planning/) — Explain storage capacity planning, its constraints, and the workloads for which it is appropriate.
-- [Choosing a storage backend](/kv/3.4.1/explanation/storage/choosing-backend/) — Explain choosing a storage backend, its constraints, and the workloads for which it is appropriate.
-- [Storage architecture](/kv/3.4.1/explanation/storage/) — Introduce storage engine design, workload fit, capacity implications, and backend trade-offs.
-- [How LevelDB stores data](/kv/3.4.1/explanation/storage/leveldb/) — Explain how leveldb stores data, its constraints, and the workloads for which it is appropriate.
-- [How Leveled stores data](/kv/3.4.1/explanation/storage/leveled/) — Explain how leveled stores data, its constraints, and the workloads for which it is appropriate.
-- [How the Memory backend stores data](/kv/3.4.1/explanation/storage/memory/) — Explain how the memory backend stores data, its constraints, and the workloads for which it is appropriate.
-- [How multiple backends work](/kv/3.4.1/explanation/storage/multi-backend/) — Explain how multiple backends work, its constraints, and the workloads for which it is appropriate.
+- [How Bitcask stores data]({{< baseurl >}}kv/3.4.1/explanation/storage/bitcask/) — Explain how bitcask stores data, its constraints, and the workloads for which it is appropriate.
+- [Storage capacity planning]({{< baseurl >}}kv/3.4.1/explanation/storage/capacity-planning/) — Explain storage capacity planning, its constraints, and the workloads for which it is appropriate.
+- [Choosing a storage backend]({{< baseurl >}}kv/3.4.1/explanation/storage/choosing-backend/) — Explain choosing a storage backend, its constraints, and the workloads for which it is appropriate.
+- [Storage architecture]({{< baseurl >}}kv/3.4.1/explanation/storage/) — Introduce storage engine design, workload fit, capacity implications, and backend trade-offs.
+- [How LevelDB stores data]({{< baseurl >}}kv/3.4.1/explanation/storage/leveldb/) — Explain how leveldb stores data, its constraints, and the workloads for which it is appropriate.
+- [How Leveled stores data]({{< baseurl >}}kv/3.4.1/explanation/storage/leveled/) — Explain how leveled stores data, its constraints, and the workloads for which it is appropriate.
+- [How the Memory backend stores data]({{< baseurl >}}kv/3.4.1/explanation/storage/memory/) — Explain how the memory backend stores data, its constraints, and the workloads for which it is appropriate.
+- [How multiple backends work]({{< baseurl >}}kv/3.4.1/explanation/storage/multi-backend/) — Explain how multiple backends work, its constraints, and the workloads for which it is appropriate.

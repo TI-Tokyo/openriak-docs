@@ -35,7 +35,7 @@ List supported operating systems, architectures, runtimes, and lifecycle dates f
 
 ### Operating System Support
 
-[downloads]: /kv/3.4.1/reference/releases/downloads/
+[downloads]: {{< baseurl >}}kv/3.4.1/reference/releases/downloads/
 
 We recommend deploying OpenRiak KV on a mainstream Unix-like operating system.
 Mainstream distributions have larger support communities, making
@@ -64,7 +64,7 @@ Some points to note when installing Erlang:
 - If using OpenRiak KV 3.0.16 and OTP 22.3, Riak does not support Erlang/OTP running in [HIPE mode](https://www.erlang.org/docs/22/man/hipe_app).  HIPE is retired as of OTP 24.
 - There are significant performance advantages in running Riak on OTP 26, when compared with OTP 24.3.
 - The Erlang/OTP team are only committed to fixing issues in the three most recent major versions of Erlang.  Although Erlang 24.3 is mature and very stable, migrating forward to a Riak release running on a presently supported Erlang version is recommended.
-- It is not possible to [migrate directly using a rolling restart](/kv/3.4.1/how-to/operate/upgrade-cluster/) from OpenRiak KV 3.0 to OpenRiak KV 3.4 due to breaking changes in the Erlang distribution protocol.  Migrating directly between these versions with zero down-time can only be managed using [the cluster migration strategy](/kv/3.4.1/how-to/configure/replication/migrate-cluster/).
+- It is not possible to [migrate directly using a rolling restart]({{< baseurl >}}kv/3.4.1/how-to/operate/upgrade-cluster/) from OpenRiak KV 3.0 to OpenRiak KV 3.4 due to breaking changes in the Erlang distribution protocol.  Migrating directly between these versions with zero down-time can only be managed using [the cluster migration strategy]({{< baseurl >}}kv/3.4.1/how-to/configure/replication/migrate-cluster/).
 
 #### Using pre-built packages
 

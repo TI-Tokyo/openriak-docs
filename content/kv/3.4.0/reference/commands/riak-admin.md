@@ -28,27 +28,27 @@ List every supported riak admin command with syntax, options, output, and safety
 
 ### riak admin Command Line Interface
 
-[config reference]: /kv/3.4.0/reference/configuration/
-[use admin commands]: /kv/3.4.0/reference/commands/
-[use admin commands#join]: /kv/3.4.0/reference/commands/#join
-[use admin commands#leave]: /kv/3.4.0/reference/commands/#leave
-[cluster ops backup]: /kv/3.4.0/how-to/operate/back-up-node/
-[config reference#node-metadata]: /kv/3.4.0/reference/configuration/#node-metadata
-[cluster ops change info]: /kv/3.4.0/how-to/operate/change-cluster-information/
-[usage mapreduce]: /kv/3.4.0/how-to/develop/run-mapreduce/
-[usage commit hooks]: /kv/3.4.0/how-to/develop/write-commit-hook/
-[config reference#ring]: /kv/3.4.0/reference/configuration/#ring
-[cluster ops inspect node]: /kv/3.4.0/how-to/operate/inspect-node-and-cluster/
-[use ref monitoring]: /kv/3.4.0/reference/operations/statistics-and-monitoring/
-[downgrade]: /kv/3.4.0/how-to/operate/downgrade-cluster/
-[security index]: /kv/3.4.0/how-to/secure/
-[security managing]: /kv/3.4.0/how-to/secure/manage-sources/
-[cluster ops bucket types]: /kv/3.4.0/how-to/operate/manage-bucket-types/
-[cluster ops 2i]: /kv/3.4.0/reference/data/secondary-indexes/
-[repair recover index]: /kv/3.4.0/explanation/operations/node-failure-and-recovery/
-[cluster ops strong consistency]: /kv/3.4.0/explanation/consistency/strong-consistency/
-[cluster ops handoff]: /kv/3.4.0/how-to/operate/manage-handoffs/
-[use admin riak admin#stats]: /kv/3.4.0/reference/commands/riak-admin/
+[config reference]: {{< baseurl >}}kv/3.4.0/reference/configuration/
+[use admin commands]: {{< baseurl >}}kv/3.4.0/reference/commands/
+[use admin commands#join]: {{< baseurl >}}kv/3.4.0/reference/commands/#join
+[use admin commands#leave]: {{< baseurl >}}kv/3.4.0/reference/commands/#leave
+[cluster ops backup]: {{< baseurl >}}kv/3.4.0/how-to/operate/back-up-node/
+[config reference#node-metadata]: {{< baseurl >}}kv/3.4.0/reference/configuration/#node-metadata
+[cluster ops change info]: {{< baseurl >}}kv/3.4.0/how-to/operate/change-cluster-information/
+[usage mapreduce]: {{< baseurl >}}kv/3.4.0/how-to/develop/run-mapreduce/
+[usage commit hooks]: {{< baseurl >}}kv/3.4.0/how-to/develop/write-commit-hook/
+[config reference#ring]: {{< baseurl >}}kv/3.4.0/reference/configuration/#ring
+[cluster ops inspect node]: {{< baseurl >}}kv/3.4.0/how-to/operate/inspect-node-and-cluster/
+[use ref monitoring]: {{< baseurl >}}kv/3.4.0/reference/operations/statistics-and-monitoring/
+[downgrade]: {{< baseurl >}}kv/3.4.0/how-to/operate/downgrade-cluster/
+[security index]: {{< baseurl >}}kv/3.4.0/how-to/secure/
+[security managing]: {{< baseurl >}}kv/3.4.0/how-to/secure/manage-sources/
+[cluster ops bucket types]: {{< baseurl >}}kv/3.4.0/how-to/operate/manage-bucket-types/
+[cluster ops 2i]: {{< baseurl >}}kv/3.4.0/reference/data/secondary-indexes/
+[repair recover index]: {{< baseurl >}}kv/3.4.0/explanation/operations/node-failure-and-recovery/
+[cluster ops strong consistency]: {{< baseurl >}}kv/3.4.0/explanation/consistency/strong-consistency/
+[cluster ops handoff]: {{< baseurl >}}kv/3.4.0/how-to/operate/manage-handoffs/
+[use admin riak admin#stats]: {{< baseurl >}}kv/3.4.0/reference/commands/riak-admin/
 
 #### `riak admin`
 

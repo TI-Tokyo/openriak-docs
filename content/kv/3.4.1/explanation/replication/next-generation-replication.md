@@ -35,13 +35,13 @@ Explain next-generation replication, its data flow, failure behavior, and operat
 
 ### Next-Gen Replication
 
-[concept TicTac aae]: /kv/3.4.1/explanation/replication/tictac-aae/
-[concept causal context vc]: /kv/3.4.1/explanation/data-model/causal-context/#vector-clocks
-[concept clusters]: /kv/3.4.1/explanation/foundations/clusters-rings-and-partitions/
-[concept vnodes]: /kv/3.4.1/explanation/foundations/virtual-nodes/
-[glossary node]: /kv/3.4.1/explanation/foundations/glossary/#node
-[glossary ring]: /kv/3.4.1/explanation/foundations/glossary/#ring
-[usage replication]: /kv/3.4.1/explanation/replication/
+[concept TicTac aae]: {{< baseurl >}}kv/3.4.1/explanation/replication/tictac-aae/
+[concept causal context vc]: {{< baseurl >}}kv/3.4.1/explanation/data-model/causal-context/#vector-clocks
+[concept clusters]: {{< baseurl >}}kv/3.4.1/explanation/foundations/clusters-rings-and-partitions/
+[concept vnodes]: {{< baseurl >}}kv/3.4.1/explanation/foundations/virtual-nodes/
+[glossary node]: {{< baseurl >}}kv/3.4.1/explanation/foundations/glossary/#node
+[glossary ring]: {{< baseurl >}}kv/3.4.1/explanation/foundations/glossary/#ring
+[usage replication]: {{< baseurl >}}kv/3.4.1/explanation/replication/
 
 #### Next Generation Replication - How it Works
 

@@ -31,7 +31,7 @@ Guide a developer through modeling, storing, retrieving, querying, and updating 
 
 ### Getting Started with Go
 
-If you haven't set up an OpenRiak node and started it, please visit [Running A Cluster](/kv/3.4.1/how-to/operate/) first and ensure you have
+If you haven't set up an OpenRiak node and started it, please visit [Running A Cluster]({{< baseurl >}}kv/3.4.1/how-to/operate/) first and ensure you have
 [a working installation of Go](http://golang.org/doc/install).
 
 #### Client Setup
@@ -91,7 +91,7 @@ We are now ready to start interacting with Riak.
 
 #### Next Steps
 
-[CRUD Operations](/kv/3.4.1/tutorials/first-application/golang/)
+[CRUD Operations]({{< baseurl >}}kv/3.4.1/tutorials/first-application/golang/)
 
 ### Crud Operations
 
@@ -554,7 +554,7 @@ func (t *Timeline) GetId() string {
 }
 ````
 
-We'll be using the bucket `Users` to store our data. We won't be [using bucket types](/kv/3.4.1/how-to/develop/use-bucket-types/) here, so we don't need to specify one.
+We'll be using the bucket `Users` to store our data. We won't be [using bucket types]({{< baseurl >}}kv/3.4.1/how-to/develop/use-bucket-types/) here, so we don't need to specify one.
 
 To use these records to store data, we will first have to create a user
 record. Then, when a user creates a message, we will append that message
@@ -1318,9 +1318,9 @@ While this pattern is very easy and extremely fast with respect to queries and c
 ##### Secondary Indexes
 
 **Note:**
-Secondary indexes in OpenRiak KV require a sorted backend: [Memory](/kv/3.4.1/explanation/storage/memory/) or [LevelDB](/kv/3.4.1/explanation/storage/leveldb/). [Bitcask](/kv/3.4.1/explanation/storage/bitcask/) does not support secondary indexes.
+Secondary indexes in OpenRiak KV require a sorted backend: [Memory]({{< baseurl >}}kv/3.4.1/explanation/storage/memory/) or [LevelDB]({{< baseurl >}}kv/3.4.1/explanation/storage/leveldb/). [Bitcask]({{< baseurl >}}kv/3.4.1/explanation/storage/bitcask/) does not support secondary indexes.
 
-See [Using Secondary Indexes (2i)](/kv/3.4.1/how-to/develop/query-secondary-indexes/) for more information on developing with secondary indexes.
+See [Using Secondary Indexes (2i)]({{< baseurl >}}kv/3.4.1/how-to/develop/query-secondary-indexes/) for more information on developing with secondary indexes.
 
 If you're coming from a SQL world, Secondary Indexes (2i) are a lot like SQL indexes. They are a way to quickly look up objects based on a secondary key, without scanning through the whole dataset. This makes it very easy to find groups of related data by values or ranges of values. To properly show this off, we will add some more data to our application, and add some secondary index entries at the same time:
 

@@ -135,13 +135,13 @@ Finally, commit those changes:
 
 There are seven potential repair and recovery processes for handling different scenarios:
 
-- [Proactive replacement](/kv/3.4.1/how-to/operate/rolling-replacement/)
-- [Reactive replacement](/kv/3.4.1/how-to/operate/replace-node/)
-- [Rolling replacement](/kv/3.4.1/how-to/operate/rolling-replacement/)
-- [Rolling restart](/kv/3.4.1/how-to/operate/rolling-restart/)
-- [Leveled backend repair](/kv/3.4.1/how-to/operate/repair-leveled-store/)
-- [Repairing a single vnode](/kv/3.4.1/how-to/operate/repair-vnode/)
-- [Repairing a key range](/kv/3.4.1/how-to/operate/aae-fold/repair-key-range/)
+- [Proactive replacement]({{< baseurl >}}kv/3.4.1/how-to/operate/rolling-replacement/)
+- [Reactive replacement]({{< baseurl >}}kv/3.4.1/how-to/operate/replace-node/)
+- [Rolling replacement]({{< baseurl >}}kv/3.4.1/how-to/operate/rolling-replacement/)
+- [Rolling restart]({{< baseurl >}}kv/3.4.1/how-to/operate/rolling-restart/)
+- [Leveled backend repair]({{< baseurl >}}kv/3.4.1/how-to/operate/repair-leveled-store/)
+- [Repairing a single vnode]({{< baseurl >}}kv/3.4.1/how-to/operate/repair-vnode/)
+- [Repairing a key range]({{< baseurl >}}kv/3.4.1/how-to/operate/aae-fold/repair-key-range/)
 
 The most common repair requirements are for proactive replace, and reactive replace: testing these processes under load prior to production deployment of Riak is recommended.
 
@@ -155,9 +155,9 @@ If a node has failed following an incident, and all data on the node is lost, th
 
 Recovery of such a lost node requires a reactive replacement.  There are three stages to replace and recover the node:
 
-- [ensuring the node is downed](/kv/3.4.1/how-to/operate/replace-node/);
-- [forcing the replace](/kv/3.4.1/how-to/operate/replace-node/);
-- [repairing the new node](/kv/3.4.1/how-to/troubleshoot/recover-failed-node/).
+- [ensuring the node is downed]({{< baseurl >}}kv/3.4.1/how-to/operate/replace-node/);
+- [forcing the replace]({{< baseurl >}}kv/3.4.1/how-to/operate/replace-node/);
+- [repairing the new node]({{< baseurl >}}kv/3.4.1/how-to/troubleshoot/recover-failed-node/).
 
 #### Completing a Repair
 
@@ -167,7 +167,7 @@ The data can then be recovered from the other nodes in the cluster issuing the `
 
 The combination of `repair_span = double_pair, repair_deferred = enabled` is significantly more effective when repairing under load.  With these configuration options, it should be noted that repairs will happen in key order, not in reverse order of receipt (the default).  With these changes, using the leveled backend, non-functional testing demonstrates that repairs can complete efficiently even when nodes are persistently at 100% CPU utilisation due to the handling of application requests.
 
-Repair uses handoffs, and so can be tracked as with other cluster change operations.  Once handoffs are complete, Tictac AAE should be re-enabled, e.g. by using `riak_client:tictacaae_resume_node().`.  Once Tictac AAE confirms all vnodes are in-sync - then [`participate_in_coverage` can be re-enabled](/kv/3.4.1/reference/operations/remote-console/).
+Repair uses handoffs, and so can be tracked as with other cluster change operations.  Once handoffs are complete, Tictac AAE should be re-enabled, e.g. by using `riak_client:tictacaae_resume_node().`.  Once Tictac AAE confirms all vnodes are in-sync - then [`participate_in_coverage` can be re-enabled]({{< baseurl >}}kv/3.4.1/reference/operations/remote-console/).
 
 The progress of repairs can be inspected with `riak admin node repair status`, and stopped with `riak admin node repair stop`.
 

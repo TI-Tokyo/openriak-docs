@@ -33,7 +33,7 @@ A representative workload, a recorded performance baseline, current capacity mea
 
 ### System Tuning
 
-[perf index]: /kv/3.4.0/how-to/tune/
+[perf index]: {{< baseurl >}}kv/3.4.0/how-to/tune/
 
 Depending on the size of your objects and your replication latency
 needs, you may need to configure your kernel settings to optimize

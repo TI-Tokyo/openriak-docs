@@ -136,7 +136,7 @@ These filters will reduce the number of keys considered for reaping or counting:
 
 Outside of the circumstances covered in the previous sections, it is not expected that there should be a need for operator intervention in the recovery from failure.  There is though an additional process for handling any unexpected scenarios, to allow for cluster wide repair of key ranges.  The `repair_key_range` operation is targeted at a specific bucket, potentially combined with a key range or last modified date range: and triggers via an AAE fold the read repair process within the cluster for that range.
 
-Refer to the [API guide for AAE Fold](/kv/3.4.1/reference/aae-fold-api/) for information on triggering a `repair_key_range` AAE fold.
+Refer to the [API guide for AAE Fold]({{< baseurl >}}kv/3.4.1/reference/aae-fold-api/) for information on triggering a `repair_key_range` AAE fold.
 
 The aae_fold will send repair events to the `riak_kv_reader` queue, and progress can be tracked by tracking the queue's log outputs.  There is an automated background process on each node that will consume repair events from the queue, and trigger read repair (if required) by a clientless GET of the object.  Each node's reader queue is limited to 1M requests, and requests over this limit will be discarded.  This limit is not configurable in Riak 3.4.  The `riak_kv_reader` process will dequeue items from the `riak_kv_reader` queue and prompt an internal GET request; which, should there be a discrepancy, prompt a repair via `read_repair`.
 

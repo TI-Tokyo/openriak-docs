@@ -39,7 +39,7 @@ Administrative access to the nodes you will change; a copy of the current config
 ### SSL
 
 **Deprecation Warning**
-v2 Multi-Datacenter Replication is deprecated and will be removed in a future version. Please use [v3](/kv/3.4.1/how-to/configure/replication/secure-replication/) instead.
+v2 Multi-Datacenter Replication is deprecated and will be removed in a future version. Please use [v3]({{< baseurl >}}kv/3.4.1/how-to/configure/replication/secure-replication/) instead.
 
 #### Features
 
@@ -180,7 +180,7 @@ generate.
 
 ### SSL
 
-[config reference#advanced.config]: /kv/3.4.1/reference/configuration/
+[config reference#advanced.config]: {{< baseurl >}}kv/3.4.1/reference/configuration/
 
 #### Features
 
@@ -356,7 +356,7 @@ nec rubebant pietas, ipsa.
 
 #### Security Configuration
 
-The real-time connections may be secured, by [enabling security on the source cluster](/kv/3.4.1/how-to/secure/).  The securing of communications for replication is supported only with the PB transport in Riak 3.4.
+The real-time connections may be secured, by [enabling security on the source cluster]({{< baseurl >}}kv/3.4.1/how-to/secure/).  The securing of communications for replication is supported only with the PB transport in Riak 3.4.
 
 When communication is secured, then a security-source needs to be defined on the replication-source cluster.  For Riak 3.4, this has been tested only with a `certificate` requirement for authentication.  Authentication by certificate requires the following configuration on the sink nodes:
 

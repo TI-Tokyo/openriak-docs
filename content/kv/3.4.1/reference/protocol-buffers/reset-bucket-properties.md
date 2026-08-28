@@ -40,7 +40,7 @@ message RpbResetBucketReq {
 ```
 
 You must specify the name of the bucket (`bucket`) and optionally a
-[bucket type](/kv/3.4.1/how-to/develop/use-bucket-types/) using the `type` value. If you do not
+[bucket type]({{< baseurl >}}kv/3.4.1/how-to/develop/use-bucket-types/) using the `type` value. If you do not
 specify a bucket type, the `default` bucket type will be used by Riak.
 
 #### Response

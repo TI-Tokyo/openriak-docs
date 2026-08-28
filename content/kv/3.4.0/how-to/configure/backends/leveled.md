@@ -52,7 +52,7 @@ The leveled backend has the following characteristics and features:
 - Guarding against out-of-memory errors is an operator responsibility.  The cluster should be expanded if the memory limit is close, the per-vnode memory overhead will not be proactively reduced.
   - Makes use of any spare memory of the system through proactive hints to the file-system page cache.
 
-For further details on the design and implementation of the leveled backend refer to [the Riak Theory Guide](/kv/3.4.0/explanation/storage/leveled/).
+For further details on the design and implementation of the leveled backend refer to [the Riak Theory Guide]({{< baseurl >}}kv/3.4.0/explanation/storage/leveled/).
 
 #### Configuration of Riak - leveled backend
 
@@ -63,7 +63,7 @@ Compression, decompression and compaction have a potentially significant impact 
 - `leveled.ledger_compression`; if `compression_method` is set to `none`, then compression should still be enabled here e.g. set to `zstd`.
   - the ledger does not store object values, but stores the object keys and metadata in blocks by key order.
   - it is recommended to use some form of compression on the ledger, even when all values are pre-compressed.  The ledger blocks are generally highly compressible, even when the values are not.
-- `leveled.compaction_runs_perday`; refer to the [operations guide](/kv/3.4.0/how-to/configure/backends/leveled-compaction-window/) for more on leveled compaction.
+- `leveled.compaction_runs_perday`; refer to the [operations guide]({{< baseurl >}}kv/3.4.0/how-to/configure/backends/leveled-compaction-window/) for more on leveled compaction.
 
 There are further configurable options within the leveled backend, that can be changed within `riak.conf`.  For a comprehensive view, [refer to the leveled schema file](https://github.com/OpenRiak/leveled/blob/openriak-3.4/priv/leveled.schema).
 

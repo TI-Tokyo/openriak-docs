@@ -62,11 +62,11 @@ Overview of Riak Control, a web-based administrative console for Riak clusters.
 
 ### Cluster Administration Commands
 
-[use admin riak admin#cluster]: /kv/3.4.0/reference/commands/riak-admin/#cluster
-[concept clusters]: /kv/3.4.0/explanation/foundations/clusters-rings-and-partitions/
-[cluster ops add remove node]: /kv/3.4.0/tutorials/operations/change-cluster-membership/
-[use admin riak admin#cluster-plan]: /kv/3.4.0/reference/commands/riak-admin/
-[use admin riak admin#cluster-commit]: /kv/3.4.0/reference/commands/riak-admin/
+[use admin riak admin#cluster]: {{< baseurl >}}kv/3.4.0/reference/commands/riak-admin/#cluster
+[concept clusters]: {{< baseurl >}}kv/3.4.0/explanation/foundations/clusters-rings-and-partitions/
+[cluster ops add remove node]: {{< baseurl >}}kv/3.4.0/tutorials/operations/change-cluster-membership/
+[use admin riak admin#cluster-plan]: {{< baseurl >}}kv/3.4.0/reference/commands/riak-admin/
+[use admin riak admin#cluster-commit]: {{< baseurl >}}kv/3.4.0/reference/commands/riak-admin/
 
 This document explains usage of the [`riak admin cluster`][use admin riak admin#cluster] interface, which enables you to perform a wide
 variety of cluster-level actions.

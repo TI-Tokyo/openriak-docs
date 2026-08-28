@@ -94,7 +94,7 @@ cascade.
 #### Usage
 
 Riak Cascading Writes can be enabled and disabled using the
-`riak repl` command. Please see the [Version 3 Operations guide](/kv/3.4.1/reference/replication-api/runtime-controls/) for more information.
+`riak repl` command. Please see the [Version 3 Operations guide]({{< baseurl >}}kv/3.4.1/reference/replication-api/runtime-controls/) for more information.
 
 To show current the settings:
 

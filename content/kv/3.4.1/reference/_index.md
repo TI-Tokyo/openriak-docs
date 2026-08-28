@@ -56,6 +56,6 @@ Overview of OpenRiak KV's storage backend API.
 
 [Learn More >>][dev api backend]
 
-[https]: /kv/3.4.1/reference/
-[protocol]: /kv/3.4.1/reference/
-[backend]: /kv/3.4.1/reference/
+[https]: {{< baseurl >}}kv/3.4.1/reference/
+[protocol]: {{< baseurl >}}kv/3.4.1/reference/
+[backend]: {{< baseurl >}}kv/3.4.1/reference/

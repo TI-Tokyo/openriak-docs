@@ -33,8 +33,8 @@ Explain strong consistency guarantees, limitations, costs, and suitable workload
 
 ### Strong Consistency
 
-[usage bucket types]: /kv/3.4.0/how-to/develop/use-bucket-types/
-[concept eventual consistency]: /kv/3.4.0/explanation/consistency/eventual-consistency/
+[usage bucket types]: {{< baseurl >}}kv/3.4.0/how-to/develop/use-bucket-types/
+[concept eventual consistency]: {{< baseurl >}}kv/3.4.0/explanation/consistency/eventual-consistency/
 
 **Please Note:**
 OpenRiak KV's strong consistency is an experimental feature and may be removed
@@ -44,7 +44,7 @@ Multi-Datacenter Replication, Bitcask Expiration, LevelDB
 Secondary Indexes, Riak Data Types and Commit Hooks. We do not recommend its
 usage in any production environment.
 
-Riak was originally designed as an [eventually consistent](/kv/3.4.0/explanation/consistency/eventual-consistency/) system, fundamentally geared toward providing partition
+Riak was originally designed as an [eventually consistent]({{< baseurl >}}kv/3.4.0/explanation/consistency/eventual-consistency/) system, fundamentally geared toward providing partition
 (i.e. fault) tolerance and high read and write availability.
 
 While this focus on high availability is a great fit for many data
@@ -55,7 +55,7 @@ In Riak, strong consistency is applied [using bucket types][usage bucket types],
 enables developers to apply strong consistency guarantees on a per-key
 basis.
 
-Elsewhere in the documentation there are instructions for [enabling and using](/kv/3.4.0/reference/specialized-apis/strong-consistency-api/) strong consistency, as well as a [guide for operators](/kv/3.4.0/how-to/configure/strong-consistency/) looking to manage,
+Elsewhere in the documentation there are instructions for [enabling and using]({{< baseurl >}}kv/3.4.0/reference/specialized-apis/strong-consistency-api/) strong consistency, as well as a [guide for operators]({{< baseurl >}}kv/3.4.0/how-to/configure/strong-consistency/) looking to manage,
 configure, and monitor strong consistency.
 
 #### Strong vs. Eventual Consistency
@@ -64,7 +64,7 @@ If you successfully write a value to a key in a strongly consistent
 system, the next successful read of that key is guaranteed to show that
 write. A client will never see out-of-date values. The drawback is that
 some operations may fail if an insufficient number of object replicas
-are available. More on this in the section on [trade-offs](/kv/3.4.0/explanation/consistency/strong-consistency/).
+are available. More on this in the section on [trade-offs]({{< baseurl >}}kv/3.4.0/explanation/consistency/strong-consistency/).
 
 In an eventually consistent system, on the other hand, a read may return
 an out-of-date value, particularly during system or network failures.
@@ -122,10 +122,10 @@ system:
 #### Monitoring Strong Consistency
 
 Riak provides a wide variety of data related to the current operating
-status of a node. This data is available by running the [`riak admin status`](/kv/3.4.0/reference/commands/riak-admin/#status) command. That data now
+status of a node. This data is available by running the [`riak admin status`]({{< baseurl >}}kv/3.4.0/reference/commands/riak-admin/#status) command. That data now
 includes statistics specific to strongly consistent operations.
 
-A full listing of these stats is available in [Inspecting a Node](/kv/3.4.0/how-to/operate/inspect-node-and-cluster/).
+A full listing of these stats is available in [Inspecting a Node]({{< baseurl >}}kv/3.4.0/how-to/operate/inspect-node-and-cluster/).
 All strong consistency-related stats are prefixed with `consistent_`,
 e.g. `consistent_gets`, `consistent_puts`, etc. Many of these stats are
 so-called "one-minute stats," meaning that they reflect node activity in
@@ -172,6 +172,6 @@ Stat | Description
 
 The use of the strong consistency API is deprecated in Riak 3.4, and the API will be retired in Riak 4.0.
 
-From Riak 4.0, Riak will only have support for eventual consistency, but protection for conflicts can be improved through [conditional PUTs with token-based consensus](/kv/3.4.0/reference/http-api/conditional-requests/).
+From Riak 4.0, Riak will only have support for eventual consistency, but protection for conflicts can be improved through [conditional PUTs with token-based consensus]({{< baseurl >}}kv/3.4.0/reference/http-api/conditional-requests/).
 
 The functionality of Strong Consistency is unchanged since Riak 2.2.3, so refer to the [legacy documentation](https://docs.riak.com/riak/kv/2.2.3/developing/app-guide/strong-consistency/index.html) for further information.

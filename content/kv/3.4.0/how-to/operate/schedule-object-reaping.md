@@ -40,9 +40,9 @@ Changing the delete mode is possible, with a restart, but needs to be a coordina
 
 Available from Riak 3.0.10
 
-The `riak_kv_eraser` is a process that receives requests to delete keys, queues those requests, and continuously erases keys from that queue.  Refer to the [API guide for AAE Fold](/kv/3.4.0/reference/aae-fold-api/) for information on triggering a `erase_keys` AAE fold to feed the eraser queue.
+The `riak_kv_eraser` is a process that receives requests to delete keys, queues those requests, and continuously erases keys from that queue.  Refer to the [API guide for AAE Fold]({{< baseurl >}}kv/3.4.0/reference/aae-fold-api/) for information on triggering a `erase_keys` AAE fold to feed the eraser queue.
 
-Likewise the `riak_kv_reaper` process receives requests to delete tombstones, queues those requests, and continuously reaps keys referenced in the queue.  Refer to the [API guide for AAE Fold](/kv/3.4.0/reference/aae-fold-api/) for information on triggering a `reap_tombs` AAE fold to feed the reaper queue.
+Likewise the `riak_kv_reaper` process receives requests to delete tombstones, queues those requests, and continuously reaps keys referenced in the queue.  Refer to the [API guide for AAE Fold]({{< baseurl >}}kv/3.4.0/reference/aae-fold-api/) for information on triggering a `reap_tombs` AAE fold to feed the reaper queue.
 
 Filters within the AAE folds can be used to select specific key_ranges, or last modified date ranges for the erase or reap process.
 

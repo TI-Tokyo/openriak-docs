@@ -66,7 +66,7 @@ GET /buckets/BUCKET/counters/KEY
 
 #### Response
 
-The regular POST/PUT ([HTTP Store Object](/kv/3.4.1/reference/http-api/store-object/)) and GET ([HTTP Fetch Object](/kv/3.4.1/reference/http-api/fetch-object/)) responses apply here.
+The regular POST/PUT ([HTTP Store Object]({{< baseurl >}}kv/3.4.1/reference/http-api/store-object/)) and GET ([HTTP Fetch Object]({{< baseurl >}}kv/3.4.1/reference/http-api/fetch-object/)) responses apply here.
 
 Caveats: Counters have no support for Secondary Indexes (2i), Links or Custom HTTP Metadata.
 

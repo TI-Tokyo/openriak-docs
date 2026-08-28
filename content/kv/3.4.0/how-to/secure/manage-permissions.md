@@ -37,14 +37,14 @@ There are specific actions within the API, to which specific permissions can be 
 
 The actions supported by permission grants are:
 
-- [`riak_kv.get`](/kv/3.4.0/reference/http-api/fetch-object/)
-- [`riak_kv.put`](/kv/3.4.0/reference/http-api/store-object/)
-- [`riak_kv.delete`](/kv/3.4.0/reference/http-api/delete-object/)
-- [`riak_kv.list_keys`](/kv/3.4.0/reference/specialized-apis/list-api/)
-- [`riak_kv.list_buckets`](/kv/3.4.0/reference/specialized-apis/list-api/)
-- [`riak_kv.mapreduce`](/kv/3.4.0/reference/http-api/mapreduce/)
+- [`riak_kv.get`]({{< baseurl >}}kv/3.4.0/reference/http-api/fetch-object/)
+- [`riak_kv.put`]({{< baseurl >}}kv/3.4.0/reference/http-api/store-object/)
+- [`riak_kv.delete`]({{< baseurl >}}kv/3.4.0/reference/http-api/delete-object/)
+- [`riak_kv.list_keys`]({{< baseurl >}}kv/3.4.0/reference/specialized-apis/list-api/)
+- [`riak_kv.list_buckets`]({{< baseurl >}}kv/3.4.0/reference/specialized-apis/list-api/)
+- [`riak_kv.mapreduce`]({{< baseurl >}}kv/3.4.0/reference/http-api/mapreduce/)
 - `riak_kv.index`;
-  - used to control both the [legacy query api](/kv/3.4.0/reference/specialized-apis/legacy-query-api/) and the [Query API](/kv/3.4.0/tutorials/query-api/).
+  - used to control both the [legacy query api]({{< baseurl >}}kv/3.4.0/reference/specialized-apis/legacy-query-api/) and the [Query API]({{< baseurl >}}kv/3.4.0/tutorials/query-api/).
 
 For all other API endpoints, only `source` protection is applied.
 

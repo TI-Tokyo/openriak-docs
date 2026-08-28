@@ -52,7 +52,7 @@ State what this explanation does not cover, call out 3.4.0 versus 3.4.1 differen
 
 ## In this section
 
-- [Authentication sources and trust](/kv/3.4.1/explanation/security/authentication-sources/) — Explain authentication sources and trust and the security decisions administrators must make.
-- [Security concepts](/kv/3.4.1/explanation/security/) — Introduce the OpenRiak security model, trust boundaries, identities, and authorization decisions.
-- [The OpenRiak security model](/kv/3.4.1/explanation/security/security-model/) — Explain the openriak security model and the security decisions administrators must make.
-- [TLS identities and certificate trust](/kv/3.4.1/explanation/security/tls-model/) — Explain tls identities and certificate trust and the security decisions administrators must make.
+- [Authentication sources and trust]({{< baseurl >}}kv/3.4.1/explanation/security/authentication-sources/) — Explain authentication sources and trust and the security decisions administrators must make.
+- [Security concepts]({{< baseurl >}}kv/3.4.1/explanation/security/) — Introduce the OpenRiak security model, trust boundaries, identities, and authorization decisions.
+- [The OpenRiak security model]({{< baseurl >}}kv/3.4.1/explanation/security/security-model/) — Explain the openriak security model and the security decisions administrators must make.
+- [TLS identities and certificate trust]({{< baseurl >}}kv/3.4.1/explanation/security/tls-model/) — Explain tls identities and certificate trust and the security decisions administrators must make.

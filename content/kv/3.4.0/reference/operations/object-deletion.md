@@ -135,6 +135,6 @@ Check out [Deleting Objects][usage delete objects] in the Developing section for
 
 #### Configuration of Riak - Delete Mode
 
-There are three supported [delete modes in Riak](/kv/3.4.0/how-to/plan/choose-deletion-policy/): `keep`, an interval or `immediate`.
+There are three supported [delete modes in Riak]({{< baseurl >}}kv/3.4.0/how-to/plan/choose-deletion-policy/): `keep`, an interval or `immediate`.
 
 If delete_mode is set to `keep`, every delete will be an update to a permanent tombstone that will need to be reaped at a later date (i.e. once tombstones have been securely replicated around connected clusters).  This will minimise the chance that values are resurrected through anti-entropy processes.  An interval will automate the reap process, and can be set to the number of milliseconds after the writing of the tombstone; which should be kept to less than 5 minutes.  Setting the delete mode to `immediate` will bypass the tombstone process, and delete directly without first writing a tombstone.

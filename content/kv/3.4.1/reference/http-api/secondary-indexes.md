@@ -27,7 +27,7 @@ Document the complete HTTP contract for this operation, including parameters, re
 
 ### HTTP Secondary Indexes
 
-[Secondary Indexes](/kv/3.4.1/how-to/develop/query-secondary-indexes/) allows an application to tag a Riak object with one or more field/value pairs. The object is indexed under these field/value pairs, and the application can later query the index to retrieve a list of matching keys.
+[Secondary Indexes]({{< baseurl >}}kv/3.4.1/how-to/develop/query-secondary-indexes/) allows an application to tag a Riak object with one or more field/value pairs. The object is indexed under these field/value pairs, and the application can later query the index to retrieve a list of matching keys.
 
 #### Request
 

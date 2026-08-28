@@ -39,13 +39,13 @@ A healthy cluster, current backups, and access to cluster status and logs. Recor
 
 ### Backing Up
 
-[concept clusters]: /kv/3.4.0/explanation/foundations/clusters-rings-and-partitions/
-[config reference]: /kv/3.4.0/reference/configuration/
-[plan backend leveldb]: /kv/3.4.0/explanation/storage/leveldb/
-[plan backend bitcask]: /kv/3.4.0/explanation/storage/bitcask/
-[use ref strong consistency]: /kv/3.4.0/reference/specialized-apis/strong-consistency-api/
-[concept aae]: /kv/3.4.0/explanation/replication/active-anti-entropy/
-[aae read repair]: /kv/3.4.0/explanation/replication/active-anti-entropy/#read-repair-vs-active-anti-entropy
+[concept clusters]: {{< baseurl >}}kv/3.4.0/explanation/foundations/clusters-rings-and-partitions/
+[config reference]: {{< baseurl >}}kv/3.4.0/reference/configuration/
+[plan backend leveldb]: {{< baseurl >}}kv/3.4.0/explanation/storage/leveldb/
+[plan backend bitcask]: {{< baseurl >}}kv/3.4.0/explanation/storage/bitcask/
+[use ref strong consistency]: {{< baseurl >}}kv/3.4.0/reference/specialized-apis/strong-consistency-api/
+[concept aae]: {{< baseurl >}}kv/3.4.0/explanation/replication/active-anti-entropy/
+[aae read repair]: {{< baseurl >}}kv/3.4.0/explanation/replication/active-anti-entropy/#read-repair-vs-active-anti-entropy
 
 OpenRiak KV is a [clustered][concept clusters] system built to survive a wide range of failure scenarios, including the loss of nodes due to network or hardware failure. Although this is one of OpenRiak KV's core strengths, it cannot withstand all failure scenarios.
 
@@ -70,7 +70,7 @@ Downtime of a node can be significantly reduced by using an OS feature or filesy
 **Backups and eventual consistency**
 Due to OpenRiak KV's eventually consistent nature, backups can become slightly inconsistent from node to node.
 
-Data could exist on some nodes and not others at the exact time a backup is made. Any inconsistency will be corrected once a backup is restored, either by OpenRiak's [active anti-entropy](/kv/3.4.0/explanation/replication/active-anti-entropy/) processes or when the object is read, via [read repair](/kv/3.4.0/explanation/replication/active-anti-entropy/#read-repair-vs-active-anti-entropy).
+Data could exist on some nodes and not others at the exact time a backup is made. Any inconsistency will be corrected once a backup is restored, either by OpenRiak's [active anti-entropy]({{< baseurl >}}kv/3.4.0/explanation/replication/active-anti-entropy/) processes or when the object is read, via [read repair]({{< baseurl >}}kv/3.4.0/explanation/replication/active-anti-entropy/#read-repair-vs-active-anti-entropy).
 
 #### OS-Specific Directory Locations
 
@@ -139,7 +139,7 @@ Strong consistency | `/opt/riak/data/ensembles`
 #### Performing Backups
 
 **Deprecation notice**
-In previous versions of OpenRiak KV, there was a [`riak admin backup`](/kv/3.4.0/reference/commands/riak-admin/#backup) command commonly used for
+In previous versions of OpenRiak KV, there was a [`riak admin backup`]({{< baseurl >}}kv/3.4.0/reference/commands/riak-admin/#backup) command commonly used for
 backups. This functionality is now deprecated. We strongly recommend using the backup procedure documented below instead.
 
 Backups can be accomplished through a variety of common methods. Standard utilities such `cp`, `rsync`, and `tar` can be used, as well as any backup system already in place in your environment.
@@ -201,16 +201,16 @@ node that the restored backup was taken from, you will need to
 additionally:
 
 1. Mark the original instance down in the cluster using
-   [`riak admin down <node>`](/kv/3.4.0/reference/commands/riak-admin/#down)
+   [`riak admin down <node>`]({{< baseurl >}}kv/3.4.0/reference/commands/riak-admin/#down)
 2. Join the restored node to the cluster using
-   [`riak admin cluster join <node>`](/kv/3.4.0/reference/commands/riak-admin/)
+   [`riak admin cluster join <node>`]({{< baseurl >}}kv/3.4.0/reference/commands/riak-admin/)
 3. Replace the original instance with the renamed instance with
-   [`riak admin cluster force-replace <node1> <node2>`](/kv/3.4.0/reference/commands/riak-admin/)
+   [`riak admin cluster force-replace <node1> <node2>`]({{< baseurl >}}kv/3.4.0/reference/commands/riak-admin/)
 4. Plan the changes to the cluster with `riak admin cluster plan`
 5. Finally, commit the cluster changes with `riak admin cluster commit`
 
 **Note:**
-For more information on the `riak admin cluster` commands, refer to our documentation on [cluster administration](/kv/3.4.0/reference/commands/).
+For more information on the `riak admin cluster` commands, refer to our documentation on [cluster administration]({{< baseurl >}}kv/3.4.0/reference/commands/).
 
 For example, if there are five nodes in the cluster with the original node names `riak1.example.com` through `riak5.example.com` and you wish to restore `riak1.example.com` as `riak6.example.com`, you would execute the following commands on `riak6.example.com`.
 
@@ -262,7 +262,7 @@ and for any other nodes whose names have changed:
 
 #### Restoring a Cluster
 
-Restoring a cluster from backups is documented [on its own page](/kv/3.4.0/how-to/troubleshoot/recover-cluster-failure/#cluster-recovery-from-backups).
+Restoring a cluster from backups is documented [on its own page]({{< baseurl >}}kv/3.4.0/how-to/troubleshoot/recover-cluster-failure/#cluster-recovery-from-backups).
 
 #### Backup options
 
@@ -274,7 +274,7 @@ Before considering backups, it is worth noting that as a distributed database th
 
 Production users of Riak commonly have relatively lightweight backup and recovery strategies when compared to traditional database management systems; eventual consistency allows the global recovery of state without the need to focus on recovering state first back to a point in time.  In general, greater effort is placed into building the resilience of the system, and also the management of change within the application i.e. ensuring the application adopts lazy migration strategies for schema changes that don't require large point-in-time migration events.
 
-If an individual node fails, do not restore an individual node from backup.  It is generally much more efficient and reliable to use [the `repair` process](/kv/3.4.0/how-to/operate/replace-node/) to recover data on a node.  It is not normal practice to keep backups simply for the purpose of restoring individual nodes, even where those nodes may rely on ephemeral disks.
+If an individual node fails, do not restore an individual node from backup.  It is generally much more efficient and reliable to use [the `repair` process]({{< baseurl >}}kv/3.4.0/how-to/operate/replace-node/) to recover data on a node.  It is not normal practice to keep backups simply for the purpose of restoring individual nodes, even where those nodes may rely on ephemeral disks.
 
 Note that in cloud environments, if an inefficient backup method is chosen (e.g. snapshots of block-service file-system volumes), then backup costs may consume a dominant proportion of overall Riak infrastructure costs.
 
@@ -290,7 +290,7 @@ Backup clusters are not a prerequisite for taking backups, but they can be a fle
 
 #### Leveled - hot backups
 
-If a cluster uses only the leveled backend, a hot backup may be taken across the cluster using the `riak_client:hotbackup/4` function from [the `remote_console`](/kv/3.4.0/how-to/operate/use-remote-console/) on any node within the cluster.
+If a cluster uses only the leveled backend, a hot backup may be taken across the cluster using the `riak_client:hotbackup/4` function from [the `remote_console`]({{< baseurl >}}kv/3.4.0/how-to/operate/use-remote-console/) on any node within the cluster.
 
 There are four inputs to the function required:
 

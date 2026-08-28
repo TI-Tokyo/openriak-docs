@@ -32,7 +32,7 @@ Explain ring changes and handoffs, including relevant state transitions, risks, 
 The OpenRiak KV store is built on top of a generic platform for building distributed systems called `riak_core`.  The `riak_core` system provides the underlying components for controlling and managing a clustered application:
 
 - `riak_core_ring`
-  - An implementation of [the ring](/kv/3.4.0/explanation/foundations/clusters-rings-and-partitions/), the distribution function in Riak.
+  - An implementation of [the ring]({{< baseurl >}}kv/3.4.0/explanation/foundations/clusters-rings-and-partitions/), the distribution function in Riak.
 - `riak_core_ring_manager`
   - A process that marshals updates to the ring, and ensures that stable versions of the ring are available to database processes via a low latency cache.
 - `riak_core_vnode`

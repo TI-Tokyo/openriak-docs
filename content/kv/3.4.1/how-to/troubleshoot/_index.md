@@ -50,19 +50,19 @@ About the HTTP 204 response.
 
 The following sections provide guidance when operating or troubleshooting an OpenRiak cluster:
 
-- [Handling failure - replace, repair and recover](/kv/3.4.1/explanation/operations/node-failure-and-recovery/)
-- [Upgrading Riak on a node](/kv/3.4.1/how-to/operate/upgrade-cluster/)
-- [Using the remote console](/kv/3.4.1/how-to/operate/use-remote-console/)
-- [Accessing extended configuration options](/kv/3.4.1/how-to/configure/advanced-configuration/)
-- [Making use of logging and statistics](/kv/3.4.1/reference/operations/statistics-and-monitoring/)
-- [Monitoring background operational services](/kv/3.4.1/reference/operations/statistics-and-monitoring/)
-- [Enabling Riak security controls](/kv/3.4.1/how-to/secure/)
-- [Garbage collection - monitoring and tuning](/kv/3.4.1/explanation/operations/garbage-collection/)
-- [Understanding the contents of an OpenRiak cluster](/kv/3.4.1/how-to/operate/inspect-data/)
-- [Volume and performance testing](/kv/3.4.1/how-to/tune/benchmark-cluster/)
-- [Backing up a cluster](/kv/3.4.1/explanation/operations/backups-and-restores/)
-- [Operation checklist](/kv/3.4.1/how-to/operate/routine-operations-checklist/)
-- [Advanced troubleshooting of Riak internals](/kv/3.4.1/how-to/troubleshoot/erlang-vm/)
+- [Handling failure - replace, repair and recover]({{< baseurl >}}kv/3.4.1/explanation/operations/node-failure-and-recovery/)
+- [Upgrading Riak on a node]({{< baseurl >}}kv/3.4.1/how-to/operate/upgrade-cluster/)
+- [Using the remote console]({{< baseurl >}}kv/3.4.1/how-to/operate/use-remote-console/)
+- [Accessing extended configuration options]({{< baseurl >}}kv/3.4.1/how-to/configure/advanced-configuration/)
+- [Making use of logging and statistics]({{< baseurl >}}kv/3.4.1/reference/operations/statistics-and-monitoring/)
+- [Monitoring background operational services]({{< baseurl >}}kv/3.4.1/reference/operations/statistics-and-monitoring/)
+- [Enabling Riak security controls]({{< baseurl >}}kv/3.4.1/how-to/secure/)
+- [Garbage collection - monitoring and tuning]({{< baseurl >}}kv/3.4.1/explanation/operations/garbage-collection/)
+- [Understanding the contents of an OpenRiak cluster]({{< baseurl >}}kv/3.4.1/how-to/operate/inspect-data/)
+- [Volume and performance testing]({{< baseurl >}}kv/3.4.1/how-to/tune/benchmark-cluster/)
+- [Backing up a cluster]({{< baseurl >}}kv/3.4.1/explanation/operations/backups-and-restores/)
+- [Operation checklist]({{< baseurl >}}kv/3.4.1/how-to/operate/routine-operations-checklist/)
+- [Advanced troubleshooting of Riak internals]({{< baseurl >}}kv/3.4.1/how-to/troubleshoot/erlang-vm/)
 
 ## Verify the result
 

@@ -35,8 +35,8 @@ Choose the documentation version that matches the OpenRiak KV release deployed i
 
 Use the documentation version that exactly matches the OpenRiak KV release deployed in the target environment. Commands, defaults, configuration keys, and operational cautions must not be assumed to be interchangeable between releases.
 
-- [OpenRiak KV 3.4.0](/kv/3.4.0/) — Orient readers to OpenRiak KV and route them to learning, task, lookup, or conceptual documentation.
-- [OpenRiak KV 3.4.1](/kv/3.4.1/) — Orient readers to OpenRiak KV and route them to learning, task, lookup, or conceptual documentation.
+- [OpenRiak KV 3.4.0]({{< baseurl >}}kv/3.4.0/) — Orient readers to OpenRiak KV and route them to learning, task, lookup, or conceptual documentation.
+- [OpenRiak KV 3.4.1]({{< baseurl >}}kv/3.4.1/) — Orient readers to OpenRiak KV and route them to learning, task, lookup, or conceptual documentation.
 
 ## What this page still needs
 

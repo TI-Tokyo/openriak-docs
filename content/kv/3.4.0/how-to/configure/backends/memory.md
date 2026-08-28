@@ -40,7 +40,7 @@ Administrative access to the nodes you will change; a copy of the current config
 The in-memory backend has the following characteristics and features:
 
 - Not persisted, all data on an individual node will be lost on restart.
-  - Note that Riak clusters are resilient to the loss of data on a single node, but constraining the ability to perform [rolling restarts](/kv/3.4.0/how-to/operate/rolling-restart/) of Riak due to data loss, may cause operational overheads.
+  - Note that Riak clusters are resilient to the loss of data on a single node, but constraining the ability to perform [rolling restarts]({{< baseurl >}}kv/3.4.0/how-to/operate/rolling-restart/) of Riak due to data loss, may cause operational overheads.
 - Based on the erlang ETS tables.
 - Has crude and imperfect handling of out-of-memory issues to help limit the size of each individual vnode store.
 - Supports secondary index entries, but will not support the full Riak Query API.

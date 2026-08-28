@@ -51,14 +51,14 @@ State what this explanation does not cover, call out 3.4.0 versus 3.4.1 differen
 
 ## In this section
 
-- [Capability negotiation](/kv/3.4.1/explanation/foundations/capability-negotiation/) — Explain capability negotiation and why it matters when designing or operating OpenRiak systems.
-- [Clusters, rings, and partitions](/kv/3.4.1/explanation/foundations/clusters-rings-and-partitions/) — Explain clusters, rings, and partitions and why it matters when designing or operating OpenRiak systems.
-- [The Dynamo model](/kv/3.4.1/explanation/foundations/dynamo-model/) — Explain the dynamo model and why it matters when designing or operating OpenRiak systems.
-- [OpenRiak terminology](/kv/3.4.1/explanation/foundations/glossary/) — Explain openriak terminology and why it matters when designing or operating OpenRiak systems.
-- [Riak and OpenRiak history](/kv/3.4.1/explanation/foundations/history/) — Explain the evolution of Riak from its original release through community stewardship and OpenRiak.
-- [OpenRiak foundations](/kv/3.4.1/explanation/foundations/) — Introduce the ideas that shape OpenRiak behavior and appropriate use.
-- [Intra-cluster data resilience](/kv/3.4.1/explanation/foundations/intra-cluster-resilience/) — Explain how replication, partition ownership, quorums, and repair combine to tolerate node failures.
-- [New to NoSQL](/kv/3.4.1/explanation/foundations/new-to-nosql/) — Introduce the data-model and availability ideas needed by readers coming from relational databases.
-- [OpenRiak use cases](/kv/3.4.1/explanation/foundations/use-cases/) — Explain openriak use cases and why it matters when designing or operating OpenRiak systems.
-- [Virtual nodes](/kv/3.4.1/explanation/foundations/virtual-nodes/) — Explain virtual nodes and why it matters when designing or operating OpenRiak systems.
-- [Why OpenRiak KV](/kv/3.4.1/explanation/foundations/why-openriak/) — Explain why openriak kv and why it matters when designing or operating OpenRiak systems.
+- [Capability negotiation]({{< baseurl >}}kv/3.4.1/explanation/foundations/capability-negotiation/) — Explain capability negotiation and why it matters when designing or operating OpenRiak systems.
+- [Clusters, rings, and partitions]({{< baseurl >}}kv/3.4.1/explanation/foundations/clusters-rings-and-partitions/) — Explain clusters, rings, and partitions and why it matters when designing or operating OpenRiak systems.
+- [The Dynamo model]({{< baseurl >}}kv/3.4.1/explanation/foundations/dynamo-model/) — Explain the dynamo model and why it matters when designing or operating OpenRiak systems.
+- [OpenRiak terminology]({{< baseurl >}}kv/3.4.1/explanation/foundations/glossary/) — Explain openriak terminology and why it matters when designing or operating OpenRiak systems.
+- [Riak and OpenRiak history]({{< baseurl >}}kv/3.4.1/explanation/foundations/history/) — Explain the evolution of Riak from its original release through community stewardship and OpenRiak.
+- [OpenRiak foundations]({{< baseurl >}}kv/3.4.1/explanation/foundations/) — Introduce the ideas that shape OpenRiak behavior and appropriate use.
+- [Intra-cluster data resilience]({{< baseurl >}}kv/3.4.1/explanation/foundations/intra-cluster-resilience/) — Explain how replication, partition ownership, quorums, and repair combine to tolerate node failures.
+- [New to NoSQL]({{< baseurl >}}kv/3.4.1/explanation/foundations/new-to-nosql/) — Introduce the data-model and availability ideas needed by readers coming from relational databases.
+- [OpenRiak use cases]({{< baseurl >}}kv/3.4.1/explanation/foundations/use-cases/) — Explain openriak use cases and why it matters when designing or operating OpenRiak systems.
+- [Virtual nodes]({{< baseurl >}}kv/3.4.1/explanation/foundations/virtual-nodes/) — Explain virtual nodes and why it matters when designing or operating OpenRiak systems.
+- [Why OpenRiak KV]({{< baseurl >}}kv/3.4.1/explanation/foundations/why-openriak/) — Explain why openriak kv and why it matters when designing or operating OpenRiak systems.

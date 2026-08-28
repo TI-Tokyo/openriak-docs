@@ -28,7 +28,7 @@ Document the Protocol Buffers contract for this operation, including messages, f
 
 ### PBC Delete Object
 
-Delete an object in the specified [bucket type](/kv/3.4.0/how-to/operate/manage-bucket-types/)/bucket/key location.
+Delete an object in the specified [bucket type]({{< baseurl >}}kv/3.4.0/how-to/operate/manage-bucket-types/)/bucket/key location.
 
 #### Request
 

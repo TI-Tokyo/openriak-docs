@@ -98,7 +98,7 @@ ok
 #### Other Command-line Tools
 
 In addition to enabling and disabling handoff, the
-[`riak admin`](/kv/3.4.0/reference/commands/riak-admin/) interface enables you to
+[`riak admin`]({{< baseurl >}}kv/3.4.0/reference/commands/riak-admin/) interface enables you to
 retrieve a summary of handoff-related activity and other information.
 
 ##### summary
@@ -136,7 +136,7 @@ ongoing transfers`. Otherwise, you will something like this:
 
 ##### config
 
-This command displays the values for handoff-specific [configurable parameters](/kv/3.4.0/reference/configuration/#intra-cluster-handoff) on each node in
+This command displays the values for handoff-specific [configurable parameters]({{< baseurl >}}kv/3.4.0/reference/configuration/#intra-cluster-handoff) on each node in
 the cluster, including:
 
 * `transfer_limit`

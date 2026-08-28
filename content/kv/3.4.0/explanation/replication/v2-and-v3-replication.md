@@ -40,7 +40,7 @@ Explain legacy and current replication generations, its data flow, failure behav
 [v2 mdc fullsync]: ./scheduling-fullsync
 
 **Deprecation Warning**
-v2 Multi-Datacenter Replication is deprecated and will be removed in a future version. Please use [v3](/kv/3.4.0/explanation/replication/v2-and-v3-replication/) instead.
+v2 Multi-Datacenter Replication is deprecated and will be removed in a future version. Please use [v3]({{< baseurl >}}kv/3.4.0/explanation/replication/v2-and-v3-replication/) instead.
 
 #### In This Section
 

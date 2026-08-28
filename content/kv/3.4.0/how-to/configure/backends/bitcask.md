@@ -50,13 +50,13 @@ The bitcask backend has the following characteristics and features:
 - No current support for optimised HEAD requests, which can have significant impact on overall efficiency within Riak.
   - Implementations of bitcask have been produced with this optimisation, and may be open-sourced in the future.
 
-For further details on the design and implementation of the bitcask backend refer to [the Riak Theory Guide](/kv/3.4.0/explanation/storage/bitcask/).
+For further details on the design and implementation of the bitcask backend refer to [the Riak Theory Guide]({{< baseurl >}}kv/3.4.0/explanation/storage/bitcask/).
 
 #### Configuration of Riak - bitcask backend
 
 For the bitcask backend, the configuration items of notable importance are:
 
-- `bitcask.merge_policy`; refer to the [operations guide](/kv/3.4.0/how-to/configure/backends/bitcask-merge-window/) for more on bitcask compaction.
+- `bitcask.merge_policy`; refer to the [operations guide]({{< baseurl >}}kv/3.4.0/how-to/configure/backends/bitcask-merge-window/) for more on bitcask compaction.
 - `bitcask.io_mode`; should be set to `erlang`, careful consideration is required before moving to `nif`.
 
 There are further configurable options within the bitcask backend, that can be changed within `riak.conf`.  For a comprehensive view, [refer to the bitcask schema file](https://github.com/OpenRiak/bitcask/blob/openriak-3.4/priv/bitcask.schema).

@@ -51,13 +51,13 @@ Link to adjacent commands, configuration keys, APIs, data types, and the how-to 
 
 ## In this section
 
-- [Count tombstones operation](/kv/3.4.0/reference/aae-fold-api/count-tombstones/) — Document parameters, filters, response fields, limits, and risks for the count tombstones operation.
-- [Erase keys operation](/kv/3.4.0/reference/aae-fold-api/erase-keys/) — Document parameters, filters, response fields, limits, and risks for the erase keys operation.
-- [AAE fold filters](/kv/3.4.0/reference/aae-fold-api/filters/) — Document parameters, filters, response fields, limits, and risks for the aae fold filters.
-- [Find keys operation](/kv/3.4.0/reference/aae-fold-api/find-keys/) — Document parameters, filters, response fields, limits, and risks for the find keys operation.
-- [Find tombstones operation](/kv/3.4.0/reference/aae-fold-api/find-tombstones/) — Document parameters, filters, response fields, limits, and risks for the find tombstones operation.
-- [AAE fold API reference](/kv/3.4.0/reference/aae-fold-api/) — Define AAE fold request shapes, filters, responses, timeouts, and safety characteristics.
-- [List buckets operation](/kv/3.4.0/reference/aae-fold-api/list-buckets/) — Document parameters, filters, response fields, limits, and risks for the list buckets operation.
-- [Object statistics operation](/kv/3.4.0/reference/aae-fold-api/object-statistics/) — Document parameters, filters, response fields, limits, and risks for the object statistics operation.
-- [Reap tombstones operation](/kv/3.4.0/reference/aae-fold-api/reap-tombstones/) — Document parameters, filters, response fields, limits, and risks for the reap tombstones operation.
-- [Repair key range operation](/kv/3.4.0/reference/aae-fold-api/repair-key-range/) — Document parameters, filters, response fields, limits, and risks for the repair key range operation.
+- [Count tombstones operation]({{< baseurl >}}kv/3.4.0/reference/aae-fold-api/count-tombstones/) — Document parameters, filters, response fields, limits, and risks for the count tombstones operation.
+- [Erase keys operation]({{< baseurl >}}kv/3.4.0/reference/aae-fold-api/erase-keys/) — Document parameters, filters, response fields, limits, and risks for the erase keys operation.
+- [AAE fold filters]({{< baseurl >}}kv/3.4.0/reference/aae-fold-api/filters/) — Document parameters, filters, response fields, limits, and risks for the aae fold filters.
+- [Find keys operation]({{< baseurl >}}kv/3.4.0/reference/aae-fold-api/find-keys/) — Document parameters, filters, response fields, limits, and risks for the find keys operation.
+- [Find tombstones operation]({{< baseurl >}}kv/3.4.0/reference/aae-fold-api/find-tombstones/) — Document parameters, filters, response fields, limits, and risks for the find tombstones operation.
+- [AAE fold API reference]({{< baseurl >}}kv/3.4.0/reference/aae-fold-api/) — Define AAE fold request shapes, filters, responses, timeouts, and safety characteristics.
+- [List buckets operation]({{< baseurl >}}kv/3.4.0/reference/aae-fold-api/list-buckets/) — Document parameters, filters, response fields, limits, and risks for the list buckets operation.
+- [Object statistics operation]({{< baseurl >}}kv/3.4.0/reference/aae-fold-api/object-statistics/) — Document parameters, filters, response fields, limits, and risks for the object statistics operation.
+- [Reap tombstones operation]({{< baseurl >}}kv/3.4.0/reference/aae-fold-api/reap-tombstones/) — Document parameters, filters, response fields, limits, and risks for the reap tombstones operation.
+- [Repair key range operation]({{< baseurl >}}kv/3.4.0/reference/aae-fold-api/repair-key-range/) — Document parameters, filters, response fields, limits, and risks for the repair key range operation.

@@ -56,7 +56,7 @@ does not necessarily cause data loss, as other replicas of every key are
 available elsewhere in the cluster. Once the node is detected as down,
 other nodes in the cluster will take over its responsibilities
 temporarily and transmit the updated data to it when it eventually
-returns to service (also called [hinted handoff](/kv/3.4.0/explanation/foundations/glossary/#hinted-handoff)).
+returns to service (also called [hinted handoff]({{< baseurl >}}kv/3.4.0/explanation/foundations/glossary/#hinted-handoff)).
 
 More severe data loss scenarios usually relate to hardware failure.
 If data is lost, several options are available for restoring it.
@@ -110,7 +110,7 @@ too much data and growing the cluster may be necessary. Additional RAM
 may also improve latency because more of the active dataset will be
 cached by the operating system.
 
-Sometimes extreme latency spikes can be caused by [sibling explosion](/kv/3.4.0/how-to/develop/resolve-conflicts/#siblings). This condition occurs when the client application does not resolve conflicts properly or in a timely fashion. In that scenario, the size of the value on disk grows in proportion to
+Sometimes extreme latency spikes can be caused by [sibling explosion]({{< baseurl >}}kv/3.4.0/how-to/develop/resolve-conflicts/#siblings). This condition occurs when the client application does not resolve conflicts properly or in a timely fashion. In that scenario, the size of the value on disk grows in proportion to
 the number of siblings, causing longer disk service times and slower
 network responses.
 
@@ -133,7 +133,7 @@ spreading load and increasing available CPU and IOPS.
 
 #### Cluster Recovery From Backups
 
-See [Changing Cluster Information](/kv/3.4.0/how-to/operate/change-cluster-information/#clusters-from-backups) for instructions on cluster recovery.
+See [Changing Cluster Information]({{< baseurl >}}kv/3.4.0/how-to/operate/change-cluster-information/#clusters-from-backups) for instructions on cluster recovery.
 
 **Tip**
 If you are a TI Tokyo Riak supprt customer and require assistance or

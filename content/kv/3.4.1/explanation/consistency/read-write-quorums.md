@@ -29,9 +29,9 @@ Explain how quorum choices affect latency, availability, durability, and stale r
 
 ### Quorum on Read, Write and Query
 
-The default GET and PUT options are based on validating quorum within the cluster before returning a response to the client.  Quorum meaning that a majority of vnodes within a preflist must have provided acknowledged input to the transaction.  So although Riak offers a guarantee that data will be eventually consistent; within a single, stable cluster an application will still [read its own writes](https://jepsen.io/consistency/models/read-your-writes).  There are tunable consistency [properties in Riak](/kv/3.4.1/reference/configuration/bucket-properties/), that can be used to extend this guarantee to clusters during individual node failures.
+The default GET and PUT options are based on validating quorum within the cluster before returning a response to the client.  Quorum meaning that a majority of vnodes within a preflist must have provided acknowledged input to the transaction.  So although Riak offers a guarantee that data will be eventually consistent; within a single, stable cluster an application will still [read its own writes](https://jepsen.io/consistency/models/read-your-writes).  There are tunable consistency [properties in Riak]({{< baseurl >}}kv/3.4.1/reference/configuration/bucket-properties/), that can be used to extend this guarantee to clusters during individual node failures.
 
-> Quorum is the default for [the Object API](/kv/3.4.1/reference/http-api/), but not the default for [the Query API](/kv/3.4.1/tutorials/query-api/).
+> Quorum is the default for [the Object API]({{< baseurl >}}kv/3.4.1/reference/http-api/), but not the default for [the Query API]({{< baseurl >}}kv/3.4.1/tutorials/query-api/).
 
 All index updates within a vnode are transactional to the object change; so that in a single, stable cluster, queries will immediately reflect the latest update.  There is no post-update delay for indices to be updated. However queries have to be distributed across a covering set of primary vnodes, and this covering set will include a single replica of each object.  If a primary vnode is active but not up-to-date (i.e. due to a recent recovery from failure or corruption), query results are not validated by checking results between replicas.
 

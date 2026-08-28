@@ -36,7 +36,7 @@ A non-production OpenRiak KV cluster, client credentials, and disposable test da
 
 ### Updating Objects
 
-[glossary vnode]: /kv/3.4.1/explanation/foundations/glossary/#vnode
+[glossary vnode]: {{< baseurl >}}kv/3.4.1/explanation/foundations/glossary/#vnode
 
 #### Using Causal Context
 
@@ -44,9 +44,9 @@ If an object already exists under a certain key and you want to write a
 new object to that key, Riak needs to know what to do, especially if
 multiple writes are happening at the same time. Which of the objects
 being written should be deemed correct? These kinds of scenarios can
-arise quite frequently in distributed, [eventually consistent](/kv/3.4.1/explanation/consistency/eventual-consistency/) systems.
+arise quite frequently in distributed, [eventually consistent]({{< baseurl >}}kv/3.4.1/explanation/consistency/eventual-consistency/) systems.
 
-Riak decides which object to choose in case of conflict using [causal context](/kv/3.4.1/explanation/data-model/causal-context/). These objects track the causal history of objects.
+Riak decides which object to choose in case of conflict using [causal context]({{< baseurl >}}kv/3.4.1/explanation/data-model/causal-context/). These objects track the causal history of objects.
 They are attached to _all_ Riak objects as metadata, and they are not
 readable by humans. They may sound complex---and they are fairly complex
 behind the scenes---but using them in your application is very simple.
@@ -54,12 +54,12 @@ behind the scenes---but using them in your application is very simple.
 Using causal context in an update would involve the following steps;
 
 1. Fetch the object
-2. Modify the object's value (without modifying the fetched [context object](/kv/3.4.1/explanation/data-model/causal-context/)
+2. Modify the object's value (without modifying the fetched [context object]({{< baseurl >}}kv/3.4.1/explanation/data-model/causal-context/)
 3. Write the new object to Riak
 
 Step 2 is the most important here. All of Basho's official Riak clients
-enable you to modify an object's value without modifying its [causal context](/kv/3.4.1/explanation/data-model/causal-context/). Although a more detailed tutorial on context objects and
-object updates can be found in [Conflict Resolution](/kv/3.4.1/how-to/develop/resolve-conflicts/), we'll walk you
+enable you to modify an object's value without modifying its [causal context]({{< baseurl >}}kv/3.4.1/explanation/data-model/causal-context/). Although a more detailed tutorial on context objects and
+object updates can be found in [Conflict Resolution]({{< baseurl >}}kv/3.4.1/how-to/develop/resolve-conflicts/), we'll walk you
 through a basic example here.
 
 Let's say that the current NBA champion is the Washington Generals.
@@ -323,22 +323,22 @@ recommend that you:
 That cycle looks something like this:
 
 1. **Read** the object from Riak. This step is important for updates
-because this enables you to fetch the object's [causal context](/kv/3.4.1/explanation/data-model/causal-context/), which
+because this enables you to fetch the object's [causal context]({{< baseurl >}}kv/3.4.1/explanation/data-model/causal-context/), which
 is the information that Riak uses to make decisions about which object
 values are most recent (this is especially useful for objects that are
 frequently updated). This context object needs to be passed back to Riak
 when you update the object. This step is handled for you by Basho's
 client libraries as long as you perform a read prior to an update. In
 addition, if you have chosen to allow Riak to generate
-[siblings](/kv/3.4.1/how-to/develop/resolve-conflicts/#siblings) \(which we recommend), you
+[siblings]({{< baseurl >}}kv/3.4.1/how-to/develop/resolve-conflicts/#siblings) \(which we recommend), you
 should **resolve sibling conflicts** upon read if they exist. For more
-on this, please see our documentation on [conflict resolution](/kv/3.4.1/how-to/develop/resolve-conflicts/), along
+on this, please see our documentation on [conflict resolution]({{< baseurl >}}kv/3.4.1/how-to/develop/resolve-conflicts/), along
 with examples from our official client libraries:
-  * [Java](/kv/3.4.1/how-to/develop/resolve-conflicts/)
-  * [Ruby](/kv/3.4.1/how-to/develop/resolve-conflicts/)
-  * [Python](/kv/3.4.1/how-to/develop/resolve-conflicts/)
-  * [C#](/kv/3.4.1/how-to/develop/resolve-conflicts/)
-  * [Go](/kv/3.4.1/how-to/develop/resolve-conflicts/)
+  * [Java]({{< baseurl >}}kv/3.4.1/how-to/develop/resolve-conflicts/)
+  * [Ruby]({{< baseurl >}}kv/3.4.1/how-to/develop/resolve-conflicts/)
+  * [Python]({{< baseurl >}}kv/3.4.1/how-to/develop/resolve-conflicts/)
+  * [C#]({{< baseurl >}}kv/3.4.1/how-to/develop/resolve-conflicts/)
+  * [Go]({{< baseurl >}}kv/3.4.1/how-to/develop/resolve-conflicts/)
 2. **Modify the object** on the application side.
 3. **Write** the new, modified object to Riak. Because you read the
 object first, Riak will receive the object's causal context metadata.
@@ -350,14 +350,14 @@ API.
 
 > **Note on strong consistency**
 >
-> If you are using OpenRiak's [strong consistency](/kv/3.4.1/reference/specialized-apis/strong-consistency-api/) feature, it is not only desirable but also necessary to use the read/modify/write cycle explained in the section above. If you attempt to update an object without fetching the object first, your update operation will necessarily fail. More information can be found in the
-[strong consistency documentation](/kv/3.4.1/reference/specialized-apis/strong-consistency-api/#strongly-consistent-writes).
+> If you are using OpenRiak's [strong consistency]({{< baseurl >}}kv/3.4.1/reference/specialized-apis/strong-consistency-api/) feature, it is not only desirable but also necessary to use the read/modify/write cycle explained in the section above. If you attempt to update an object without fetching the object first, your update operation will necessarily fail. More information can be found in the
+[strong consistency documentation]({{< baseurl >}}kv/3.4.1/reference/specialized-apis/strong-consistency-api/#strongly-consistent-writes).
 
 ###### Updating Deleted Objects
 
 You should use the read-modify-write cycle explained above at all times,
 _even if you're updating deleted objects_. The reasons for that can be
-found in our documentation on [tombstones](/kv/3.4.1/reference/operations/object-deletion/#tombstones).
+found in our documentation on [tombstones]({{< baseurl >}}kv/3.4.1/reference/operations/object-deletion/#tombstones).
 
 There are some modifications that you may need to make if you are
 updating objects that may have been deleted previously. If you are using
@@ -629,7 +629,7 @@ of the new coach; and finally the object is written back to Riak.
 
 The most important thing to bear in mind when updating objects is this:
 you should always read an object prior to updating it _unless_ you are
-certain that no object is stored there. If you are storing [sensor data](/kv/3.4.1/how-to/plan/map-data-to-objects/) in Riak and using timestamps as keys, for example, then you can be sure that keys are not repeated. In that case, making writes to Riak without first reading the object is fine. If
+certain that no object is stored there. If you are storing [sensor data]({{< baseurl >}}kv/3.4.1/how-to/plan/map-data-to-objects/) in Riak and using timestamps as keys, for example, then you can be sure that keys are not repeated. In that case, making writes to Riak without first reading the object is fine. If
 you're not certain, however, then we recommend always reading the object
 first.
 
@@ -742,7 +742,7 @@ The Java client also enables you to construct **no-operation updates**
 that don't actually modify the object and simply write the original
 value back to Riak. What is the use of that, given that it isn't
 changing the value of the object at all? No-operation updates can be
-useful because they can help Riak resolve [sibling conflicts](/kv/3.4.1/how-to/develop/resolve-conflicts/#siblings). If you have an object---or many objects, for that
+useful because they can help Riak resolve [sibling conflicts]({{< baseurl >}}kv/3.4.1/how-to/develop/resolve-conflicts/#siblings). If you have an object---or many objects, for that
 matter---with siblings, a no-operation update will fetch the object _and
 its causal context_ and write the object back to Riak with the same,
 fetched context. This has the effect of telling Riak that you deem this
@@ -790,7 +790,7 @@ Supported HTTP request headers for PUT:
 - `x-riak-vclock`; should be provided when mutating existing objects, should be set to the value of the `x-riak-vclock` response header of the object, as read prior to update.  If a new object is being inserted, then no `x-riak-vclock` request header should be provided.  The content of the clock is encoded within the header value, the application is not required to decode that value, but to simply pass it as-is to provide context information for the update to Riak.
 - `x-riak-if-not-modified`; optional, for conditional requests.
 - `if-none-match: *`; optional, for conditional requests.
-- `authorization`; optional, for tls-protected requests only when [Riak security is enabled](/kv/3.4.1/how-to/secure/).
+- `authorization`; optional, for tls-protected requests only when [Riak security is enabled]({{< baseurl >}}kv/3.4.1/how-to/secure/).
 - `x-riak-meta-<key>: <value>`; optional, multiple keys may be provided, and will be mapped to user metadata.
 - `x-riak-index-<field> : <value1>, <value2>`; optional add multiple index fields, with multiple values in each field where those values are comma (and whitespace) separated.  Index fields should have the suffix `_bin` or `_int`.
 - `content-type: <content_type>`; optional, specify the content-type of the value to be stored, to be provided in response to future GET requests.

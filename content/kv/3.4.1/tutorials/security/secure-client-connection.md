@@ -51,4 +51,4 @@ Link to the relevant how-to guides for real tasks, explanation pages for the und
 
 ## In this section
 
-- [Learn OpenRiak security](/kv/3.4.1/tutorials/security/) — Introduce a guided environment for learning OpenRiak authentication, TLS, and authorization.
+- [Learn OpenRiak security]({{< baseurl >}}kv/3.4.1/tutorials/security/) — Introduce a guided environment for learning OpenRiak authentication, TLS, and authorization.

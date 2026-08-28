@@ -29,48 +29,48 @@ Introduce language-specific learning paths for storing, reading, updating, query
 
 ### OpenRiak KV Application Guide
 
-[usage conflict resolution]: /kv/3.4.0/how-to/develop/resolve-conflicts/
-[dev data model#log]: /kv/3.4.0/how-to/plan/map-data-to-objects/
-[dev data model#sensor]: /kv/3.4.0/how-to/plan/map-data-to-objects/
-[concept eventual consistency]: /kv/3.4.0/explanation/consistency/eventual-consistency/
-[dev data model#user]: /kv/3.4.0/how-to/plan/map-data-to-objects/
-[dev kv model]: /kv/3.4.0/how-to/plan/map-data-to-objects/
-[dev data types]: /kv/3.4.0/reference/data/distributed-data-types/
-[dev data types#counters]: /kv/3.4.0/reference/data/distributed-data-types/
-[dev data types#sets]: /kv/3.4.0/reference/data/distributed-data-types/
-[dev data types#maps]: /kv/3.4.0/reference/data/distributed-data-types/
-[usage create objects]: /kv/3.4.0/how-to/develop/create-object/
-[usage search]: /kv/3.4.0/reference/specialized-apis/legacy-query-api/
-[use ref search]: /kv/3.4.0/reference/specialized-apis/legacy-query-api/
-[usage 2i]: /kv/3.4.0/how-to/develop/query-secondary-indexes/
-[dev client libraries]: /kv/3.4.0/reference/client-libraries/
-[concept crdts]: /kv/3.4.0/explanation/data-model/distributed-data-types/
-[dev data model]: /kv/3.4.0/how-to/plan/map-data-to-objects/
-[usage mapreduce]: /kv/3.4.0/how-to/develop/run-mapreduce/
-[apps mapreduce]: /kv/3.4.0/how-to/develop/run-mapreduce/
-[use ref 2i]: /kv/3.4.0/reference/data/secondary-indexes/
-[plan backend leveldb]: /kv/3.4.0/explanation/storage/leveldb/
-[plan backend bitcask]: /kv/3.4.0/explanation/storage/bitcask/
-[plan backend memory]: /kv/3.4.0/explanation/storage/memory/
-[plan backend leveled]: /kv/3.4.0/explanation/storage/leveled/
-[obj model java]: /kv/3.4.0/tutorials/first-application/java/
-[obj model ruby]: /kv/3.4.0/tutorials/first-application/ruby/
-[obj model python]: /kv/3.4.0/tutorials/first-application/python/
-[obj model csharp]: /kv/3.4.0/tutorials/first-application/csharp/
-[obj model nodejs]: /kv/3.4.0/tutorials/first-application/nodejs/
-[obj model erlang]: /kv/3.4.0/tutorials/first-application/erlang/
-[obj model golang]: /kv/3.4.0/tutorials/first-application/golang/
-[concept strong consistency]: /kv/3.4.0/reference/specialized-apis/strong-consistency-api/
-[use ref strong consistency]: /kv/3.4.0/reference/specialized-apis/strong-consistency-api/
-[cluster ops strong consistency]: /kv/3.4.0/explanation/consistency/strong-consistency/
-[config strong consistency]: /kv/3.4.0/how-to/configure/strong-consistency/
-[apps strong consistency]: /kv/3.4.0/reference/specialized-apis/strong-consistency-api/
-[usage update objects]: /kv/3.4.0/how-to/develop/update-object/
-[apps replication properties]: /kv/3.4.0/explanation/replication/references-and-triggers/
-[install index]: /kv/3.4.0/how-to/install/
-[getting started]: /kv/3.4.0/tutorials/first-application/
-[usage index]: /kv/3.4.0/how-to/develop/
-[glossary]: /kv/3.4.0/explanation/foundations/glossary/
+[usage conflict resolution]: {{< baseurl >}}kv/3.4.0/how-to/develop/resolve-conflicts/
+[dev data model#log]: {{< baseurl >}}kv/3.4.0/how-to/plan/map-data-to-objects/
+[dev data model#sensor]: {{< baseurl >}}kv/3.4.0/how-to/plan/map-data-to-objects/
+[concept eventual consistency]: {{< baseurl >}}kv/3.4.0/explanation/consistency/eventual-consistency/
+[dev data model#user]: {{< baseurl >}}kv/3.4.0/how-to/plan/map-data-to-objects/
+[dev kv model]: {{< baseurl >}}kv/3.4.0/how-to/plan/map-data-to-objects/
+[dev data types]: {{< baseurl >}}kv/3.4.0/reference/data/distributed-data-types/
+[dev data types#counters]: {{< baseurl >}}kv/3.4.0/reference/data/distributed-data-types/
+[dev data types#sets]: {{< baseurl >}}kv/3.4.0/reference/data/distributed-data-types/
+[dev data types#maps]: {{< baseurl >}}kv/3.4.0/reference/data/distributed-data-types/
+[usage create objects]: {{< baseurl >}}kv/3.4.0/how-to/develop/create-object/
+[usage search]: {{< baseurl >}}kv/3.4.0/reference/specialized-apis/legacy-query-api/
+[use ref search]: {{< baseurl >}}kv/3.4.0/reference/specialized-apis/legacy-query-api/
+[usage 2i]: {{< baseurl >}}kv/3.4.0/how-to/develop/query-secondary-indexes/
+[dev client libraries]: {{< baseurl >}}kv/3.4.0/reference/client-libraries/
+[concept crdts]: {{< baseurl >}}kv/3.4.0/explanation/data-model/distributed-data-types/
+[dev data model]: {{< baseurl >}}kv/3.4.0/how-to/plan/map-data-to-objects/
+[usage mapreduce]: {{< baseurl >}}kv/3.4.0/how-to/develop/run-mapreduce/
+[apps mapreduce]: {{< baseurl >}}kv/3.4.0/how-to/develop/run-mapreduce/
+[use ref 2i]: {{< baseurl >}}kv/3.4.0/reference/data/secondary-indexes/
+[plan backend leveldb]: {{< baseurl >}}kv/3.4.0/explanation/storage/leveldb/
+[plan backend bitcask]: {{< baseurl >}}kv/3.4.0/explanation/storage/bitcask/
+[plan backend memory]: {{< baseurl >}}kv/3.4.0/explanation/storage/memory/
+[plan backend leveled]: {{< baseurl >}}kv/3.4.0/explanation/storage/leveled/
+[obj model java]: {{< baseurl >}}kv/3.4.0/tutorials/first-application/java/
+[obj model ruby]: {{< baseurl >}}kv/3.4.0/tutorials/first-application/ruby/
+[obj model python]: {{< baseurl >}}kv/3.4.0/tutorials/first-application/python/
+[obj model csharp]: {{< baseurl >}}kv/3.4.0/tutorials/first-application/csharp/
+[obj model nodejs]: {{< baseurl >}}kv/3.4.0/tutorials/first-application/nodejs/
+[obj model erlang]: {{< baseurl >}}kv/3.4.0/tutorials/first-application/erlang/
+[obj model golang]: {{< baseurl >}}kv/3.4.0/tutorials/first-application/golang/
+[concept strong consistency]: {{< baseurl >}}kv/3.4.0/reference/specialized-apis/strong-consistency-api/
+[use ref strong consistency]: {{< baseurl >}}kv/3.4.0/reference/specialized-apis/strong-consistency-api/
+[cluster ops strong consistency]: {{< baseurl >}}kv/3.4.0/explanation/consistency/strong-consistency/
+[config strong consistency]: {{< baseurl >}}kv/3.4.0/how-to/configure/strong-consistency/
+[apps strong consistency]: {{< baseurl >}}kv/3.4.0/reference/specialized-apis/strong-consistency-api/
+[usage update objects]: {{< baseurl >}}kv/3.4.0/how-to/develop/update-object/
+[apps replication properties]: {{< baseurl >}}kv/3.4.0/explanation/replication/references-and-triggers/
+[install index]: {{< baseurl >}}kv/3.4.0/how-to/install/
+[getting started]: {{< baseurl >}}kv/3.4.0/tutorials/first-application/
+[usage index]: {{< baseurl >}}kv/3.4.0/how-to/develop/
+[glossary]: {{< baseurl >}}kv/3.4.0/explanation/foundations/glossary/
 
 So you've decided to build an application using Riak as a data store. We
 think that this is a wise choice for a broad variety of use cases. But
@@ -133,7 +133,7 @@ Riak may not such be a good choice if you use it to store:
 
 * **Objects that exceed 1-2MB in size** - If you will be
   storing a lot of objects over that size, we would recommend checking
-  out [Riak CS](/riak/cs/latest/) instead, as Riak
+  out [Riak CS]({{< baseurl >}}riak/cs/latest/) instead, as Riak
   CS was built to solve this problem. Storing large objects in Riak will
   typically lead to substandard performance.
 * **Objects with complex interdependencies** - If your data cannot be
@@ -365,8 +365,8 @@ will help you get up and running:
 
 ### Getting Started Overview
 
-[install index]: /kv/3.4.0/how-to/install/
-[dev client libraries]: /kv/3.4.0/reference/client-libraries/
+[install index]: {{< baseurl >}}kv/3.4.0/how-to/install/
+[dev client libraries]: {{< baseurl >}}kv/3.4.0/reference/client-libraries/
 
 Welcome, new Riak developer! This guide will get you started developing
 against OpenRiak KV with minimal fuss.
@@ -383,14 +383,14 @@ for various programming languages and environments. Please select the
 language with which you'd like to proceed:
 
 <ul class="clearfix   client-library-logos">
-  <li class="float-left"><a class="block   client-library-logo" href="java/"><img src="/images/client_library_logos/java.png" alt="Java" /></a></li>
-  <li class="float-left"><a class="block   client-library-logo" href="ruby/"><img src="/images/client_library_logos/ruby_small.png" alt="Ruby" /></a></li>
-  <li class="float-left"><a class="block   client-library-logo" href="python/"><img src="/images/client_library_logos/python.png" alt="Python" /></a></li>
-  <li class="float-left"><a class="block   client-library-logo" href="csharp/"><img src="/images/client_library_logos/c_sharp.png" alt="CSharp" /></a></li>
-  <li class="float-left"><a class="block   client-library-logo" href="nodejs/"><img src="/images/client_library_logos/nodejs.png" alt="Node.js" /></a></li>
-  <li class="float-left"><a class="block   client-library-logo" href="erlang/"><img src="/images/client_library_logos/erlang.png" alt="Erlang" /></a></li>
-  <li class="float-left"><a class="block   client-library-logo" href="php/"><img src="/images/client_library_logos/php.png" alt="PHP" /></a></li>
-  <li class="float-left"><a class="block   client-library-logo" href="golang/"><img src="/images/client_library_logos/golang.png" alt="GoLang" /></a></li>
+  <li class="float-left"><a class="block   client-library-logo" href="java/"><img src="{{< baseurl >}}images/client_library_logos/java.png" alt="Java" /></a></li>
+  <li class="float-left"><a class="block   client-library-logo" href="ruby/"><img src="{{< baseurl >}}images/client_library_logos/ruby_small.png" alt="Ruby" /></a></li>
+  <li class="float-left"><a class="block   client-library-logo" href="python/"><img src="{{< baseurl >}}images/client_library_logos/python.png" alt="Python" /></a></li>
+  <li class="float-left"><a class="block   client-library-logo" href="csharp/"><img src="{{< baseurl >}}images/client_library_logos/c_sharp.png" alt="CSharp" /></a></li>
+  <li class="float-left"><a class="block   client-library-logo" href="nodejs/"><img src="{{< baseurl >}}images/client_library_logos/nodejs.png" alt="Node.js" /></a></li>
+  <li class="float-left"><a class="block   client-library-logo" href="erlang/"><img src="{{< baseurl >}}images/client_library_logos/erlang.png" alt="Erlang" /></a></li>
+  <li class="float-left"><a class="block   client-library-logo" href="php/"><img src="{{< baseurl >}}images/client_library_logos/php.png" alt="PHP" /></a></li>
+  <li class="float-left"><a class="block   client-library-logo" href="golang/"><img src="{{< baseurl >}}images/client_library_logos/golang.png" alt="GoLang" /></a></li>
 </ul>
 
 ##### Community-supported Client Libraries
@@ -412,18 +412,18 @@ Repeat the completed workflow, inspect the stored or operational result, and con
 
 ## Next steps
 
-- [Build a first OpenRiak application with C#](/kv/3.4.0/tutorials/first-application/csharp/)
-- [Build a first OpenRiak application with Erlang](/kv/3.4.0/tutorials/first-application/erlang/)
-- [Build a first OpenRiak application with Go](/kv/3.4.0/tutorials/first-application/golang/)
+- [Build a first OpenRiak application with C#]({{< baseurl >}}kv/3.4.0/tutorials/first-application/csharp/)
+- [Build a first OpenRiak application with Erlang]({{< baseurl >}}kv/3.4.0/tutorials/first-application/erlang/)
+- [Build a first OpenRiak application with Go]({{< baseurl >}}kv/3.4.0/tutorials/first-application/golang/)
 
 ## In this section
 
-- [Build a first OpenRiak application with C#](/kv/3.4.0/tutorials/first-application/csharp/) — Guide a developer through modeling, storing, retrieving, querying, and updating a small dataset with C#.
-- [Build a first OpenRiak application with Erlang](/kv/3.4.0/tutorials/first-application/erlang/) — Guide a developer through modeling, storing, retrieving, querying, and updating a small dataset with Erlang.
-- [Build a first OpenRiak application with Go](/kv/3.4.0/tutorials/first-application/golang/) — Guide a developer through modeling, storing, retrieving, querying, and updating a small dataset with Go.
-- [Build a first OpenRiak application with Java](/kv/3.4.0/tutorials/first-application/java/) — Guide a developer through modeling, storing, retrieving, querying, and updating a small dataset with Java.
-- [Build a first OpenRiak application with Node.js](/kv/3.4.0/tutorials/first-application/nodejs/) — Guide a developer through modeling, storing, retrieving, querying, and updating a small dataset with Node.js.
-- [Build a first OpenRiak application with PHP](/kv/3.4.0/tutorials/first-application/php/) — Guide a developer through modeling, storing, retrieving, querying, and updating a small dataset with PHP.
-- [Build a first OpenRiak application with Python](/kv/3.4.0/tutorials/first-application/python/) — Guide a developer through modeling, storing, retrieving, querying, and updating a small dataset with Python.
-- [Build a first OpenRiak application with Ruby](/kv/3.4.0/tutorials/first-application/ruby/) — Guide a developer through modeling, storing, retrieving, querying, and updating a small dataset with Ruby.
-- [Build a first OpenRiak application with Rust](/kv/3.4.0/tutorials/first-application/rust/) — Guide a developer through modeling, storing, retrieving, querying, and updating a small dataset with Rust.
+- [Build a first OpenRiak application with C#]({{< baseurl >}}kv/3.4.0/tutorials/first-application/csharp/) — Guide a developer through modeling, storing, retrieving, querying, and updating a small dataset with C#.
+- [Build a first OpenRiak application with Erlang]({{< baseurl >}}kv/3.4.0/tutorials/first-application/erlang/) — Guide a developer through modeling, storing, retrieving, querying, and updating a small dataset with Erlang.
+- [Build a first OpenRiak application with Go]({{< baseurl >}}kv/3.4.0/tutorials/first-application/golang/) — Guide a developer through modeling, storing, retrieving, querying, and updating a small dataset with Go.
+- [Build a first OpenRiak application with Java]({{< baseurl >}}kv/3.4.0/tutorials/first-application/java/) — Guide a developer through modeling, storing, retrieving, querying, and updating a small dataset with Java.
+- [Build a first OpenRiak application with Node.js]({{< baseurl >}}kv/3.4.0/tutorials/first-application/nodejs/) — Guide a developer through modeling, storing, retrieving, querying, and updating a small dataset with Node.js.
+- [Build a first OpenRiak application with PHP]({{< baseurl >}}kv/3.4.0/tutorials/first-application/php/) — Guide a developer through modeling, storing, retrieving, querying, and updating a small dataset with PHP.
+- [Build a first OpenRiak application with Python]({{< baseurl >}}kv/3.4.0/tutorials/first-application/python/) — Guide a developer through modeling, storing, retrieving, querying, and updating a small dataset with Python.
+- [Build a first OpenRiak application with Ruby]({{< baseurl >}}kv/3.4.0/tutorials/first-application/ruby/) — Guide a developer through modeling, storing, retrieving, querying, and updating a small dataset with Ruby.
+- [Build a first OpenRiak application with Rust]({{< baseurl >}}kv/3.4.0/tutorials/first-application/rust/) — Guide a developer through modeling, storing, retrieving, querying, and updating a small dataset with Rust.

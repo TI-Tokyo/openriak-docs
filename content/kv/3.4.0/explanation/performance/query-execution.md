@@ -46,7 +46,7 @@ There is a relatively fixed cost per query, even where 0 results are returned; t
 
 Queries that cover large sets of results are possible in a single round trip.  The query process will be greedy for available CPU cores to complete the query, there is no constraint on how many cores a query can use - up to a maximum of `RingSize div n_val` across the cluster.  The Erlang scheduler will balance use between queries and other user requests; there is no specific ring-fencing of resources for the purpose of querying.
 
-Understanding the [detailed guidance about query performance](/kv/3.4.0/explanation/performance/query-execution/) is important, but in summary:
+Understanding the [detailed guidance about query performance]({{< baseurl >}}kv/3.4.0/explanation/performance/query-execution/) is important, but in summary:
 
 - Try to minimise the number of index terms within the range of the query;
 - Use a more efficient `accumulation_option` where possible (i.e. prefer a `raw` option);
@@ -126,7 +126,7 @@ If using the `raw` option is not possible and a large result set is expected, th
 
 Partitioning of results is best done by breaking up the sort key range; the `max_results` option cannot be used on `count`-like queries.
 
-The `max_results` (and then `continuation`) option may be used to partition results into multiple queries, but this is [only supported with the `terms` and `raw_keys` accumulation option](/kv/3.4.0/reference/query-api/request/).
+The `max_results` (and then `continuation`) option may be used to partition results into multiple queries, but this is [only supported with the `terms` and `raw_keys` accumulation option]({{< baseurl >}}kv/3.4.0/reference/query-api/request/).
 
 > When setting `max_results` with a `raw_keys` query, a `terms` query will be run internally, and the terms stripped before sending the keys in the response.  Setting `max_results` on a `raw_keys` query will therefore lead to the performance overheads of a `terms` query i.e. extra data transmitted within the cluster, and a sorting overhead at the query server.
 
@@ -144,7 +144,7 @@ Aggregation queries, which use set expressions to combine results across multipl
 
 > As the query buffer is bypassed a cancelled query will not terminate early for combination queries.
 
-Support for `aggregation_expression`s in Riak 3.4 is a work in progress and may [be optimised in future releases](/kv/3.4.0/explanation/data-model/query-api/).
+Support for `aggregation_expression`s in Riak 3.4 is a work in progress and may [be optimised in future releases]({{< baseurl >}}kv/3.4.0/explanation/data-model/query-api/).
 
 #### Central Collation of Query Results
 

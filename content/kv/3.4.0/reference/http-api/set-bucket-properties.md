@@ -49,8 +49,8 @@ Available properties:
 (concurrent updates)
 * `last_write_wins` (true or false) - whether to ignore object history (vector
 clock) when writing
-* `precommit` - [precommit hooks](/kv/3.4.0/how-to/develop/write-commit-hook/)
-* `postcommit` - [postcommit hooks](/kv/3.4.0/how-to/develop/write-commit-hook/)
+* `precommit` - [precommit hooks]({{< baseurl >}}kv/3.4.0/how-to/develop/write-commit-hook/)
+* `postcommit` - [postcommit hooks]({{< baseurl >}}kv/3.4.0/how-to/develop/write-commit-hook/)
 * `r, w, dw, rw` - default quorum values for operations on keys in the bucket.
 Valid values are:
   * `"all"` - all nodes must respond

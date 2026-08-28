@@ -32,29 +32,29 @@ Administrative access to the nodes you will change; a copy of the current config
 
 ### Implementing Strong Consistency
 
-[apps strong consistency]: /kv/3.4.1/reference/specialized-apis/strong-consistency-api/
-[concept strong consistency]: /kv/3.4.1/reference/specialized-apis/strong-consistency-api/
-[cluster ops add remove node]: /kv/3.4.1/tutorials/operations/change-cluster-membership/
-[config reference#strong-cons]: /kv/3.4.1/reference/configuration/#strong-consistency
-[use admin riak cli]: /kv/3.4.1/reference/commands/riak/
-[concept eventual consistency]: /kv/3.4.1/explanation/consistency/eventual-consistency/
-[plan backend bitcask]: /kv/3.4.1/explanation/storage/bitcask/
-[glossary vnode]: /kv/3.4.1/explanation/foundations/glossary/#vnode
-[concept buckets]: /kv/3.4.1/explanation/data-model/keys-objects-and-buckets/
-[cluster ops bucket types]: /kv/3.4.1/how-to/operate/manage-bucket-types/
-[use admin riak admin#ensemble]: /kv/3.4.1/reference/commands/riak-admin/#ensemble-status
-[use admin riak admin]: /kv/3.4.1/reference/commands/riak-admin/
-[config reference#advanced]: /kv/3.4.1/reference/configuration/#advanced-configuration
-[plan cluster capacity]: /kv/3.4.1/explanation/storage/capacity-planning/
-[cluster ops strong consistency]: /kv/3.4.1/explanation/consistency/strong-consistency/
-[apps replication properties]: /kv/3.4.1/explanation/replication/references-and-triggers/
-[concept causal context]: /kv/3.4.1/explanation/data-model/causal-context/
-[dev data types]: /kv/3.4.1/reference/data/distributed-data-types/
-[glossary aae]: /kv/3.4.1/explanation/foundations/glossary/#active-anti-entropy-aae
-[cluster ops 2i]: /kv/3.4.1/reference/data/secondary-indexes/
-[usage commit hooks]: /kv/3.4.1/how-to/develop/write-commit-hook/
-[cluster ops obj del]: /kv/3.4.1/reference/operations/object-deletion/
-[dev client libraries]: /kv/3.4.1/reference/client-libraries/
+[apps strong consistency]: {{< baseurl >}}kv/3.4.1/reference/specialized-apis/strong-consistency-api/
+[concept strong consistency]: {{< baseurl >}}kv/3.4.1/reference/specialized-apis/strong-consistency-api/
+[cluster ops add remove node]: {{< baseurl >}}kv/3.4.1/tutorials/operations/change-cluster-membership/
+[config reference#strong-cons]: {{< baseurl >}}kv/3.4.1/reference/configuration/#strong-consistency
+[use admin riak cli]: {{< baseurl >}}kv/3.4.1/reference/commands/riak/
+[concept eventual consistency]: {{< baseurl >}}kv/3.4.1/explanation/consistency/eventual-consistency/
+[plan backend bitcask]: {{< baseurl >}}kv/3.4.1/explanation/storage/bitcask/
+[glossary vnode]: {{< baseurl >}}kv/3.4.1/explanation/foundations/glossary/#vnode
+[concept buckets]: {{< baseurl >}}kv/3.4.1/explanation/data-model/keys-objects-and-buckets/
+[cluster ops bucket types]: {{< baseurl >}}kv/3.4.1/how-to/operate/manage-bucket-types/
+[use admin riak admin#ensemble]: {{< baseurl >}}kv/3.4.1/reference/commands/riak-admin/#ensemble-status
+[use admin riak admin]: {{< baseurl >}}kv/3.4.1/reference/commands/riak-admin/
+[config reference#advanced]: {{< baseurl >}}kv/3.4.1/reference/configuration/#advanced-configuration
+[plan cluster capacity]: {{< baseurl >}}kv/3.4.1/explanation/storage/capacity-planning/
+[cluster ops strong consistency]: {{< baseurl >}}kv/3.4.1/explanation/consistency/strong-consistency/
+[apps replication properties]: {{< baseurl >}}kv/3.4.1/explanation/replication/references-and-triggers/
+[concept causal context]: {{< baseurl >}}kv/3.4.1/explanation/data-model/causal-context/
+[dev data types]: {{< baseurl >}}kv/3.4.1/reference/data/distributed-data-types/
+[glossary aae]: {{< baseurl >}}kv/3.4.1/explanation/foundations/glossary/#active-anti-entropy-aae
+[cluster ops 2i]: {{< baseurl >}}kv/3.4.1/reference/data/secondary-indexes/
+[usage commit hooks]: {{< baseurl >}}kv/3.4.1/how-to/develop/write-commit-hook/
+[cluster ops obj del]: {{< baseurl >}}kv/3.4.1/reference/operations/object-deletion/
+[dev client libraries]: {{< baseurl >}}kv/3.4.1/reference/client-libraries/
 
 > **Please Note:**
 >
@@ -348,11 +348,11 @@ The following table provides a guide to `ensemble-status` output:
 
 Item | Meaning
 :----|:-------
-`Enabled` | Whether the consensus subsystem is enabled on the current node, i.e. whether the `strong_consistency` parameter in [`riak.conf`][config reference#strong-cons] has been set to `on`. If this reads `off` and you wish to enable strong consistency, see our documentation on <a href="/kv/3.4.1/reference/configuration/#strong-consistency">enabling strong consistency</a>.
+`Enabled` | Whether the consensus subsystem is enabled on the current node, i.e. whether the `strong_consistency` parameter in [`riak.conf`][config reference#strong-cons] has been set to `on`. If this reads `off` and you wish to enable strong consistency, see our documentation on <a href="{{< baseurl >}}kv/3.4.1/reference/configuration/#strong-consistency">enabling strong consistency</a>.
 `Active` | Whether the consensus subsystem is active, i.e. whether there are enough nodes in the cluster to use strong consistency, which requires at least three nodes.
-`Ring Ready` | If `true`, then all of the [vnodes][glossary vnode] in the cluster have seen the current <a href="/kv/3.4.1/explanation/foundations/clusters-rings-and-partitions/#the-ring">ring</a>, which means that the strong consistency subsystem can be used; if `false`, then the system is not yet ready. If you have recently added or removed one or more nodes to/from the cluster, it may take some time for `Ring Ready` to change.
-`Validation` | This will display `strong` if the `tree_validation` setting in <code><a href="&#123;&#123;<baseurl>&#125;&#125;riak/kv/3.2.5/configuring/reference/#strong-consistency">strong consistency</a></code> has been set to `on` and `weak` if set to `off`.
-`Metadata` | This depends on the value of the `synchronous_tree_updates` setting in <code><a href="&#123;&#123;<baseurl>&#125;&#125;riak/kv/3.2.5/configuring/reference/#strong-consistency">strong consistency</a></code>, which determines whether strong consistency-related Merkle trees are updated synchronously or asynchronously. If `best-effort replication (asynchronous)`, then `synchronous_tree_updates` is set to `false`; if `guaranteed replication (synchronous)` then `synchronous_tree_updates` is set to `true`.
+`Ring Ready` | If `true`, then all of the [vnodes][glossary vnode] in the cluster have seen the current <a href="{{< baseurl >}}kv/3.4.1/explanation/foundations/clusters-rings-and-partitions/#the-ring">ring</a>, which means that the strong consistency subsystem can be used; if `false`, then the system is not yet ready. If you have recently added or removed one or more nodes to/from the cluster, it may take some time for `Ring Ready` to change.
+`Validation` | This will display `strong` if the `tree_validation` setting in [`strong consistency`]({{< baseurl >}}kv/3.4.1/reference/configuration/#strong-consistency) has been set to `on` and `weak` if set to `off`.
+`Metadata` | This depends on the value of the `synchronous_tree_updates` setting in [`strong consistency`]({{< baseurl >}}kv/3.4.1/reference/configuration/#strong-consistency), which determines whether strong consistency-related Merkle trees are updated synchronously or asynchronously. If `best-effort replication (asynchronous)`, then `synchronous_tree_updates` is set to `false`; if `guaranteed replication (synchronous)` then `synchronous_tree_updates` is set to `true`.
 `Ensembles` | This displays a list of all of the currently existing ensembles active in the cluster.<br /><ul><li><code>Ensemble</code> --- The ID of the ensemble</li><li><code>Quorum</code> --- The number of ensemble peers that are either leading or following</li><li><code>Nodes</code> --- The number of nodes currently online</li><li><code>Leader</code> --- The current leader node for the ensemble</li></ul>
 
 **Note**: The **root ensemble**, designated by `root` in the sample

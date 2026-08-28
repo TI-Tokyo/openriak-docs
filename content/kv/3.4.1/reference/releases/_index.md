@@ -36,8 +36,8 @@ Provide factual version, platform, package, compatibility, and change informatio
 
 ## In this section
 
-- [Deprecated features in OpenRiak KV 3.4.1](/kv/3.4.1/reference/releases/deprecations/) — List deprecated features carried into 3.4.1, preferred alternatives, compatibility implications, and possible future removal.
-- [Downloads](/kv/3.4.1/reference/releases/downloads/) — List supported OpenRiak packages, checksums, repositories, and source archives by platform and version.
-- [OpenRiak KV 3.4.1 release notes](/kv/3.4.1/reference/releases/release-notes/) — Summarize the externally visible changes and fixes in OpenRiak KV 3.4.1 relative to 3.4.0.
-- [Supported platforms](/kv/3.4.1/reference/releases/supported-platforms/) — List supported operating systems, architectures, runtimes, and lifecycle dates for this release.
-- [Version compatibility](/kv/3.4.1/reference/releases/version-compatibility/) — Record cluster, client, protocol, and replication compatibility across supported OpenRiak versions.
+- [Deprecated features in OpenRiak KV 3.4.1]({{< baseurl >}}kv/3.4.1/reference/releases/deprecations/) — List deprecated features carried into 3.4.1, preferred alternatives, compatibility implications, and possible future removal.
+- [Downloads]({{< baseurl >}}kv/3.4.1/reference/releases/downloads/) — List supported OpenRiak packages, checksums, repositories, and source archives by platform and version.
+- [OpenRiak KV 3.4.1 release notes]({{< baseurl >}}kv/3.4.1/reference/releases/release-notes/) — Summarize the externally visible changes and fixes in OpenRiak KV 3.4.1 relative to 3.4.0.
+- [Supported platforms]({{< baseurl >}}kv/3.4.1/reference/releases/supported-platforms/) — List supported operating systems, architectures, runtimes, and lifecycle dates for this release.
+- [Version compatibility]({{< baseurl >}}kv/3.4.1/reference/releases/version-compatibility/) — Record cluster, client, protocol, and replication compatibility across supported OpenRiak versions.

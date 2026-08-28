@@ -212,7 +212,7 @@ parameters below.
 <code>platform_bin_dir</code>
 </td>
 <td>
-The directory in which the <a href="../../using/admin/riak admin"><code>riak admin</code></a>,
+The directory in which the [``riak admin``][use admin riak admin],
 <code>riak-debug</code>executables are stored
 </td>
 <td>
@@ -226,7 +226,7 @@ The directory in which the <a href="../../using/admin/riak admin"><code>riak adm
 </td>
 <td>
 The directory in which Riak stores its storage backend data, as well
-as <a href="/kv/3.4.1/explanation/foundations/glossary/#active-anti-entropy-aae">active anti-entropy</a> data, and cluster metadata
+as <a href="{{< baseurl >}}kv/3.4.1/explanation/foundations/glossary/#active-anti-entropy-aae">active anti-entropy</a> data, and cluster metadata
 </td>
 <td>
 <code>./data</code>
@@ -2037,7 +2037,7 @@ abandons the leader (in milliseconds). This must be set greater than the
 </td>
 <td>
 Determines the number of ticks the leader will wait to hear from its
-associated <a href="/kv/3.4.1/explanation/foundations/glossary/#vnode">vnode</a> before assuming that the vnode
+associated <a href="{{< baseurl >}}kv/3.4.1/explanation/foundations/glossary/#vnode">vnode</a> before assuming that the vnode
 is unhealthy and stepping down as leader. If the vnode does not respond
 to the leader before <code>ensemble_tick</code> *
 <code>alive_tokens</code> milliseconds have elapsed, the leader will
@@ -2246,8 +2246,8 @@ package) and in R14B04 via a custom repository and branch.
 </td>
 <td>
 Sets the frequency with which <a
-href="/kv/3.4.1/explanation/foundations/glossary/#vnode">vnodes</a> attempt to trigger <a
-href="/kv/3.4.1/explanation/foundations/glossary/#hinted-handoff">handoff</a> between
+href="{{< baseurl >}}kv/3.4.1/explanation/foundations/glossary/#vnode">vnodes</a> attempt to trigger <a
+href="{{< baseurl >}}kv/3.4.1/explanation/foundations/glossary/#hinted-handoff">handoff</a> between
 this node and other nodes in the cluster.
 </td>
 <td>
@@ -2646,18 +2646,18 @@ Field | Default | Valid values |
 
 ## In this section
 
-- [Active anti-entropy configuration properties](/kv/3.4.1/reference/configuration/active-anti-entropy/) — List active anti-entropy configuration properties with defaults, accepted values, units, dependencies, and version notes.
-- [Bitcask configuration properties](/kv/3.4.1/reference/configuration/bitcask/) — List bitcask configuration properties with defaults, accepted values, units, dependencies, and version notes.
-- [Bucket property reference](/kv/3.4.1/reference/configuration/bucket-properties/) — Define supported bucket properties, defaults, interactions, and version-specific constraints.
-- [DTrace configuration properties](/kv/3.4.1/reference/configuration/dtrace/) — List dtrace configuration properties with defaults, accepted values, units, dependencies, and version notes.
-- [LevelDB configuration properties](/kv/3.4.1/reference/configuration/leveldb/) — List leveldb configuration properties with defaults, accepted values, units, dependencies, and version notes.
-- [Leveled configuration properties](/kv/3.4.1/reference/configuration/leveled/) — List leveled configuration properties with defaults, accepted values, units, dependencies, and version notes.
-- [Logging configuration properties](/kv/3.4.1/reference/configuration/logging/) — List logging configuration properties with defaults, accepted values, units, dependencies, and version notes.
-- [Memory backend configuration properties](/kv/3.4.1/reference/configuration/memory/) — List memory backend configuration properties with defaults, accepted values, units, dependencies, and version notes.
-- [Multi-backend configuration properties](/kv/3.4.1/reference/configuration/multi/) — List multi-backend configuration properties with defaults, accepted values, units, dependencies, and version notes.
-- [Networking configuration properties](/kv/3.4.1/reference/configuration/networking/) — List networking configuration properties with defaults, accepted values, units, dependencies, and version notes.
-- [Node configuration properties](/kv/3.4.1/reference/configuration/node/) — List node configuration properties with defaults, accepted values, units, dependencies, and version notes.
-- [Prefix Multi configuration properties](/kv/3.4.1/reference/configuration/prefix-multi/) — List prefix multi configuration properties with defaults, accepted values, units, dependencies, and version notes.
-- [Repair configuration properties](/kv/3.4.1/reference/configuration/repair/) — Define repair pairing, deferment, concurrency, and workload-control settings in OpenRiak KV 3.4.1.
-- [Replication configuration properties](/kv/3.4.1/reference/configuration/replication/) — List replication configuration properties with defaults, accepted values, units, dependencies, and version notes.
-- [Security configuration properties](/kv/3.4.1/reference/configuration/security/) — List security configuration properties with defaults, accepted values, units, dependencies, and version notes.
+- [Active anti-entropy configuration properties]({{< baseurl >}}kv/3.4.1/reference/configuration/active-anti-entropy/) — List active anti-entropy configuration properties with defaults, accepted values, units, dependencies, and version notes.
+- [Bitcask configuration properties]({{< baseurl >}}kv/3.4.1/reference/configuration/bitcask/) — List bitcask configuration properties with defaults, accepted values, units, dependencies, and version notes.
+- [Bucket property reference]({{< baseurl >}}kv/3.4.1/reference/configuration/bucket-properties/) — Define supported bucket properties, defaults, interactions, and version-specific constraints.
+- [DTrace configuration properties]({{< baseurl >}}kv/3.4.1/reference/configuration/dtrace/) — List dtrace configuration properties with defaults, accepted values, units, dependencies, and version notes.
+- [LevelDB configuration properties]({{< baseurl >}}kv/3.4.1/reference/configuration/leveldb/) — List leveldb configuration properties with defaults, accepted values, units, dependencies, and version notes.
+- [Leveled configuration properties]({{< baseurl >}}kv/3.4.1/reference/configuration/leveled/) — List leveled configuration properties with defaults, accepted values, units, dependencies, and version notes.
+- [Logging configuration properties]({{< baseurl >}}kv/3.4.1/reference/configuration/logging/) — List logging configuration properties with defaults, accepted values, units, dependencies, and version notes.
+- [Memory backend configuration properties]({{< baseurl >}}kv/3.4.1/reference/configuration/memory/) — List memory backend configuration properties with defaults, accepted values, units, dependencies, and version notes.
+- [Multi-backend configuration properties]({{< baseurl >}}kv/3.4.1/reference/configuration/multi/) — List multi-backend configuration properties with defaults, accepted values, units, dependencies, and version notes.
+- [Networking configuration properties]({{< baseurl >}}kv/3.4.1/reference/configuration/networking/) — List networking configuration properties with defaults, accepted values, units, dependencies, and version notes.
+- [Node configuration properties]({{< baseurl >}}kv/3.4.1/reference/configuration/node/) — List node configuration properties with defaults, accepted values, units, dependencies, and version notes.
+- [Prefix Multi configuration properties]({{< baseurl >}}kv/3.4.1/reference/configuration/prefix-multi/) — List prefix multi configuration properties with defaults, accepted values, units, dependencies, and version notes.
+- [Repair configuration properties]({{< baseurl >}}kv/3.4.1/reference/configuration/repair/) — Define repair pairing, deferment, concurrency, and workload-control settings in OpenRiak KV 3.4.1.
+- [Replication configuration properties]({{< baseurl >}}kv/3.4.1/reference/configuration/replication/) — List replication configuration properties with defaults, accepted values, units, dependencies, and version notes.
+- [Security configuration properties]({{< baseurl >}}kv/3.4.1/reference/configuration/security/) — List security configuration properties with defaults, accepted values, units, dependencies, and version notes.

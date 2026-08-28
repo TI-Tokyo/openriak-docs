@@ -33,7 +33,7 @@ Administrative access to the nodes you will change; a copy of the current config
 
 **Available from OpenRiak KV 3.4.0.**
 
-The `aae_tree_exclude` bucket property has a default value of `false` and allows for flexibility when reconciling between clusters using nextgenrepl full-sync.  In general with Riak nextgenrepl it is assumed that clusters aim to contain the same data.  It is possible to replicate specific buckets between specific sources, and also possible to reconcile only individual buckets between clusters - but per-bucket reconciliation is not as efficient as full-cluster reconciliation.  The efficiency of full cluster reconciliation is based on the use of cached and mergeable [AAE (active anti-entropy) merkle trees](/kv/3.4.0/explanation/replication/active-anti-entropy/) that represent all the data in the store.
+The `aae_tree_exclude` bucket property has a default value of `false` and allows for flexibility when reconciling between clusters using nextgenrepl full-sync.  In general with Riak nextgenrepl it is assumed that clusters aim to contain the same data.  It is possible to replicate specific buckets between specific sources, and also possible to reconcile only individual buckets between clusters - but per-bucket reconciliation is not as efficient as full-cluster reconciliation.  The efficiency of full cluster reconciliation is based on the use of cached and mergeable [AAE (active anti-entropy) merkle trees]({{< baseurl >}}kv/3.4.0/explanation/replication/active-anti-entropy/) that represent all the data in the store.
 
 The purpose of `aae_tree_exclude` is to not include the bucket in the cached tree, so that the bucket isn't considered in any all-data reconciliation jobs.  For example, this may help when:
 
@@ -44,7 +44,7 @@ If a bucket is configured to `{aae_tree_exclude, true}`, the keys are still visi
 
 The preferred long-term strategy for temporary objects is to use the eraser and reaper processes to garbage collect objects, rather than relying on backend TTL.  However when migrating from a multi-backend store with TTL-based backends, the migration should be easier if: those temporary buckets are excluded from aae trees, are replicated separately using range_repl, and reconciled using bucket-specific aae full-sync jobs.
 
-The `aae_tree_exclude` bucket property may be cached by processes within a cluster, so changing the property will not have immediate effect.  A change to the `aae_tree_exclude` property should be coordinated with a [rolling restart](/kv/3.4.0/how-to/operate/rolling-restart/).
+The `aae_tree_exclude` bucket property may be cached by processes within a cluster, so changing the property will not have immediate effect.  A change to the `aae_tree_exclude` property should be coordinated with a [rolling restart]({{< baseurl >}}kv/3.4.0/how-to/operate/rolling-restart/).
 
 ## Verify the result
 

@@ -44,4 +44,4 @@ Repeat the completed workflow, inspect the stored or operational result, and con
 
 ## Next steps
 
-- [Practice changing cluster membership](/kv/3.4.1/tutorials/operations/change-cluster-membership/)
+- [Practice changing cluster membership]({{< baseurl >}}kv/3.4.1/tutorials/operations/change-cluster-membership/)

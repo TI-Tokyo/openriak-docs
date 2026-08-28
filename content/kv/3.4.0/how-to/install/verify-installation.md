@@ -43,10 +43,10 @@ A supported operating system and package source, verified backups, release notes
 
 ### Verifying an OpenRiak KV Installation
 
-[client libraries]: /kv/3.4.0/reference/client-libraries/
-[perf open files]: /kv/3.4.0/how-to/tune/set-open-files-limit/
-[cluster ops bucket types]: /kv/3.4.0/how-to/operate/manage-bucket-types/
-[cluster ops inspect node]: /kv/3.4.0/how-to/operate/inspect-node-and-cluster/
+[client libraries]: {{< baseurl >}}kv/3.4.0/reference/client-libraries/
+[perf open files]: {{< baseurl >}}kv/3.4.0/how-to/tune/set-open-files-limit/
+[cluster ops bucket types]: {{< baseurl >}}kv/3.4.0/how-to/operate/manage-bucket-types/
+[cluster ops inspect node]: {{< baseurl >}}kv/3.4.0/how-to/operate/inspect-node-and-cluster/
 
 After you've installed OpenRiak KV, we recommend checking the liveness of
 each node to ensure that requests are being properly served.

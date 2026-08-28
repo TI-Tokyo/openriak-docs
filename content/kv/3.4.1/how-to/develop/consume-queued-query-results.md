@@ -50,24 +50,24 @@ Link to the complete configuration or API reference, the explanation of the unde
 
 ## In this section
 
-- [Authenticate an application client](/kv/3.4.1/how-to/develop/authenticate-client/) — Show developers how to authenticate an application client with a minimal verified example.
-- [Create and store an object](/kv/3.4.1/how-to/develop/create-object/) — Show developers how to create and store an object with a minimal verified example.
-- [Delete an object](/kv/3.4.1/how-to/develop/delete-object/) — Show developers how to delete an object with a minimal verified example.
-- [Develop with OpenRiak](/kv/3.4.1/how-to/develop/) — Introduce task-oriented recipes for application developers using OpenRiak data and APIs.
-- [Query secondary indexes](/kv/3.4.1/how-to/develop/query-secondary-indexes/) — Show developers how to query secondary indexes with a minimal verified example.
-- [Query data with the Query API](/kv/3.4.1/how-to/develop/query-with-query-api/) — Show developers how to issue exact, range, wildcard, and combined Query API expressions.
-- [Read an object](/kv/3.4.1/how-to/develop/read-object/) — Show developers how to read an object with a minimal verified example.
-- [Resolve object conflicts](/kv/3.4.1/how-to/develop/resolve-conflicts/) — Show developers how to resolve object conflicts with a minimal verified example.
-- [Run a MapReduce query](/kv/3.4.1/how-to/develop/run-mapreduce/) — Show developers how to run a mapreduce query with a minimal verified example.
-- [Send a conditional object request](/kv/3.4.1/how-to/develop/send-conditional-object-request/) — Show developers how to use object validators to avoid unintended fetches or writes.
-- [Update an object](/kv/3.4.1/how-to/develop/update-object/) — Show developers how to update an object with a minimal verified example.
-- [Use bucket types in an application](/kv/3.4.1/how-to/develop/use-bucket-types/) — Show developers how to use bucket types in an application with a minimal verified example.
-- [Store content with media types](/kv/3.4.1/how-to/develop/use-content-types/) — Show developers how to store content with media types with a minimal verified example.
-- [Use distributed counters](/kv/3.4.1/how-to/develop/use-counters/) — Show developers how to use distributed counters with a minimal verified example.
-- [Use grow-only sets](/kv/3.4.1/how-to/develop/use-gsets/) — Show developers how to use grow-only sets with a minimal verified example.
-- [Use HyperLogLogs](/kv/3.4.1/how-to/develop/use-hyperloglogs/) — Show developers how to use hyperloglogs with a minimal verified example.
-- [Use distributed maps](/kv/3.4.1/how-to/develop/use-maps/) — Show developers how to use distributed maps with a minimal verified example.
-- [Use distributed sets](/kv/3.4.1/how-to/develop/use-sets/) — Show developers how to use distributed sets with a minimal verified example.
-- [Store immutable data with the write-once path](/kv/3.4.1/how-to/develop/use-write-once-path/) — Show developers how to store immutable objects through the write-once path and verify the result.
-- [Write a commit hook](/kv/3.4.1/how-to/develop/write-commit-hook/) — Show developers how to write a commit hook with a minimal verified example.
-- [Write a replication hook](/kv/3.4.1/how-to/develop/write-replication-hook/) — Show developers how to write a replication hook with a minimal verified example.
+- [Authenticate an application client]({{< baseurl >}}kv/3.4.1/how-to/develop/authenticate-client/) — Show developers how to authenticate an application client with a minimal verified example.
+- [Create and store an object]({{< baseurl >}}kv/3.4.1/how-to/develop/create-object/) — Show developers how to create and store an object with a minimal verified example.
+- [Delete an object]({{< baseurl >}}kv/3.4.1/how-to/develop/delete-object/) — Show developers how to delete an object with a minimal verified example.
+- [Develop with OpenRiak]({{< baseurl >}}kv/3.4.1/how-to/develop/) — Introduce task-oriented recipes for application developers using OpenRiak data and APIs.
+- [Query secondary indexes]({{< baseurl >}}kv/3.4.1/how-to/develop/query-secondary-indexes/) — Show developers how to query secondary indexes with a minimal verified example.
+- [Query data with the Query API]({{< baseurl >}}kv/3.4.1/how-to/develop/query-with-query-api/) — Show developers how to issue exact, range, wildcard, and combined Query API expressions.
+- [Read an object]({{< baseurl >}}kv/3.4.1/how-to/develop/read-object/) — Show developers how to read an object with a minimal verified example.
+- [Resolve object conflicts]({{< baseurl >}}kv/3.4.1/how-to/develop/resolve-conflicts/) — Show developers how to resolve object conflicts with a minimal verified example.
+- [Run a MapReduce query]({{< baseurl >}}kv/3.4.1/how-to/develop/run-mapreduce/) — Show developers how to run a mapreduce query with a minimal verified example.
+- [Send a conditional object request]({{< baseurl >}}kv/3.4.1/how-to/develop/send-conditional-object-request/) — Show developers how to use object validators to avoid unintended fetches or writes.
+- [Update an object]({{< baseurl >}}kv/3.4.1/how-to/develop/update-object/) — Show developers how to update an object with a minimal verified example.
+- [Use bucket types in an application]({{< baseurl >}}kv/3.4.1/how-to/develop/use-bucket-types/) — Show developers how to use bucket types in an application with a minimal verified example.
+- [Store content with media types]({{< baseurl >}}kv/3.4.1/how-to/develop/use-content-types/) — Show developers how to store content with media types with a minimal verified example.
+- [Use distributed counters]({{< baseurl >}}kv/3.4.1/how-to/develop/use-counters/) — Show developers how to use distributed counters with a minimal verified example.
+- [Use grow-only sets]({{< baseurl >}}kv/3.4.1/how-to/develop/use-gsets/) — Show developers how to use grow-only sets with a minimal verified example.
+- [Use HyperLogLogs]({{< baseurl >}}kv/3.4.1/how-to/develop/use-hyperloglogs/) — Show developers how to use hyperloglogs with a minimal verified example.
+- [Use distributed maps]({{< baseurl >}}kv/3.4.1/how-to/develop/use-maps/) — Show developers how to use distributed maps with a minimal verified example.
+- [Use distributed sets]({{< baseurl >}}kv/3.4.1/how-to/develop/use-sets/) — Show developers how to use distributed sets with a minimal verified example.
+- [Store immutable data with the write-once path]({{< baseurl >}}kv/3.4.1/how-to/develop/use-write-once-path/) — Show developers how to store immutable objects through the write-once path and verify the result.
+- [Write a commit hook]({{< baseurl >}}kv/3.4.1/how-to/develop/write-commit-hook/) — Show developers how to write a commit hook with a minimal verified example.
+- [Write a replication hook]({{< baseurl >}}kv/3.4.1/how-to/develop/write-replication-hook/) — Show developers how to write a replication hook with a minimal verified example.

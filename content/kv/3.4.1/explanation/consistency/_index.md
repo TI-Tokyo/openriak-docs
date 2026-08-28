@@ -35,7 +35,7 @@ In failure and recovery scenarios, false negatives are possible (i.e. results ma
 
 ## In this section
 
-- [Conditional requests](/kv/3.4.1/explanation/consistency/conditional-requests/) — Explain how validators and conditional operations reduce races, bandwidth, and unnecessary object reads.
-- [Eventual consistency](/kv/3.4.1/explanation/consistency/eventual-consistency/) — Explain eventual consistency, convergence, quorums, and the application behaviors they produce.
-- [Read and write quorums](/kv/3.4.1/explanation/consistency/read-write-quorums/) — Explain how quorum choices affect latency, availability, durability, and stale reads.
-- [Strong consistency](/kv/3.4.1/explanation/consistency/strong-consistency/) — Explain strong consistency guarantees, limitations, costs, and suitable workloads.
+- [Conditional requests]({{< baseurl >}}kv/3.4.1/explanation/consistency/conditional-requests/) — Explain how validators and conditional operations reduce races, bandwidth, and unnecessary object reads.
+- [Eventual consistency]({{< baseurl >}}kv/3.4.1/explanation/consistency/eventual-consistency/) — Explain eventual consistency, convergence, quorums, and the application behaviors they produce.
+- [Read and write quorums]({{< baseurl >}}kv/3.4.1/explanation/consistency/read-write-quorums/) — Explain how quorum choices affect latency, availability, durability, and stale reads.
+- [Strong consistency]({{< baseurl >}}kv/3.4.1/explanation/consistency/strong-consistency/) — Explain strong consistency guarantees, limitations, costs, and suitable workloads.

@@ -43,9 +43,9 @@ Choosing the infrastructure for a distributed database requires a different appr
 
 The infrastructure selection decision is split into three parts:
 
-- [Node selection, including storage](/kv/3.4.1/how-to/plan/size-cluster/);
-- [Network requirements](/kv/3.4.1/reference/configuration/networking/);
-- [The use of a proxy, WAF or load-balancing gateway](/kv/3.4.1/how-to/configure/load-balancing-proxy/).
+- [Node selection, including storage]({{< baseurl >}}kv/3.4.1/how-to/plan/size-cluster/);
+- [Network requirements]({{< baseurl >}}kv/3.4.1/reference/configuration/networking/);
+- [The use of a proxy, WAF or load-balancing gateway]({{< baseurl >}}kv/3.4.1/how-to/configure/load-balancing-proxy/).
 
 #### Nodes
 

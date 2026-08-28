@@ -50,18 +50,18 @@ Link to adjacent commands, configuration keys, APIs, data types, and the how-to 
 
 ## In this section
 
-- [Active anti-entropy configuration properties](/kv/3.4.1/reference/configuration/active-anti-entropy/) — List active anti-entropy configuration properties with defaults, accepted values, units, dependencies, and version notes.
-- [Bitcask configuration properties](/kv/3.4.1/reference/configuration/bitcask/) — List bitcask configuration properties with defaults, accepted values, units, dependencies, and version notes.
-- [Bucket property reference](/kv/3.4.1/reference/configuration/bucket-properties/) — Define supported bucket properties, defaults, interactions, and version-specific constraints.
-- [DTrace configuration properties](/kv/3.4.1/reference/configuration/dtrace/) — List dtrace configuration properties with defaults, accepted values, units, dependencies, and version notes.
-- [Configuration reference](/kv/3.4.1/reference/configuration/) — Define the scope, defaults, units, validation rules, and version applicability of OpenRiak settings.
-- [LevelDB configuration properties](/kv/3.4.1/reference/configuration/leveldb/) — List leveldb configuration properties with defaults, accepted values, units, dependencies, and version notes.
-- [Leveled configuration properties](/kv/3.4.1/reference/configuration/leveled/) — List leveled configuration properties with defaults, accepted values, units, dependencies, and version notes.
-- [Logging configuration properties](/kv/3.4.1/reference/configuration/logging/) — List logging configuration properties with defaults, accepted values, units, dependencies, and version notes.
-- [Memory backend configuration properties](/kv/3.4.1/reference/configuration/memory/) — List memory backend configuration properties with defaults, accepted values, units, dependencies, and version notes.
-- [Multi-backend configuration properties](/kv/3.4.1/reference/configuration/multi/) — List multi-backend configuration properties with defaults, accepted values, units, dependencies, and version notes.
-- [Networking configuration properties](/kv/3.4.1/reference/configuration/networking/) — List networking configuration properties with defaults, accepted values, units, dependencies, and version notes.
-- [Node configuration properties](/kv/3.4.1/reference/configuration/node/) — List node configuration properties with defaults, accepted values, units, dependencies, and version notes.
-- [Prefix Multi configuration properties](/kv/3.4.1/reference/configuration/prefix-multi/) — List prefix multi configuration properties with defaults, accepted values, units, dependencies, and version notes.
-- [Repair configuration properties](/kv/3.4.1/reference/configuration/repair/) — Define repair pairing, deferment, concurrency, and workload-control settings in OpenRiak KV 3.4.1.
-- [Replication configuration properties](/kv/3.4.1/reference/configuration/replication/) — List replication configuration properties with defaults, accepted values, units, dependencies, and version notes.
+- [Active anti-entropy configuration properties]({{< baseurl >}}kv/3.4.1/reference/configuration/active-anti-entropy/) — List active anti-entropy configuration properties with defaults, accepted values, units, dependencies, and version notes.
+- [Bitcask configuration properties]({{< baseurl >}}kv/3.4.1/reference/configuration/bitcask/) — List bitcask configuration properties with defaults, accepted values, units, dependencies, and version notes.
+- [Bucket property reference]({{< baseurl >}}kv/3.4.1/reference/configuration/bucket-properties/) — Define supported bucket properties, defaults, interactions, and version-specific constraints.
+- [DTrace configuration properties]({{< baseurl >}}kv/3.4.1/reference/configuration/dtrace/) — List dtrace configuration properties with defaults, accepted values, units, dependencies, and version notes.
+- [Configuration reference]({{< baseurl >}}kv/3.4.1/reference/configuration/) — Define the scope, defaults, units, validation rules, and version applicability of OpenRiak settings.
+- [LevelDB configuration properties]({{< baseurl >}}kv/3.4.1/reference/configuration/leveldb/) — List leveldb configuration properties with defaults, accepted values, units, dependencies, and version notes.
+- [Leveled configuration properties]({{< baseurl >}}kv/3.4.1/reference/configuration/leveled/) — List leveled configuration properties with defaults, accepted values, units, dependencies, and version notes.
+- [Logging configuration properties]({{< baseurl >}}kv/3.4.1/reference/configuration/logging/) — List logging configuration properties with defaults, accepted values, units, dependencies, and version notes.
+- [Memory backend configuration properties]({{< baseurl >}}kv/3.4.1/reference/configuration/memory/) — List memory backend configuration properties with defaults, accepted values, units, dependencies, and version notes.
+- [Multi-backend configuration properties]({{< baseurl >}}kv/3.4.1/reference/configuration/multi/) — List multi-backend configuration properties with defaults, accepted values, units, dependencies, and version notes.
+- [Networking configuration properties]({{< baseurl >}}kv/3.4.1/reference/configuration/networking/) — List networking configuration properties with defaults, accepted values, units, dependencies, and version notes.
+- [Node configuration properties]({{< baseurl >}}kv/3.4.1/reference/configuration/node/) — List node configuration properties with defaults, accepted values, units, dependencies, and version notes.
+- [Prefix Multi configuration properties]({{< baseurl >}}kv/3.4.1/reference/configuration/prefix-multi/) — List prefix multi configuration properties with defaults, accepted values, units, dependencies, and version notes.
+- [Repair configuration properties]({{< baseurl >}}kv/3.4.1/reference/configuration/repair/) — Define repair pairing, deferment, concurrency, and workload-control settings in OpenRiak KV 3.4.1.
+- [Replication configuration properties]({{< baseurl >}}kv/3.4.1/reference/configuration/replication/) — List replication configuration properties with defaults, accepted values, units, dependencies, and version notes.

@@ -32,9 +32,9 @@ Administrative access to the nodes you will change; a copy of the current config
 
 ### MapReduce Settings
 
-[usage mapreduce]: /kv/3.4.0/how-to/develop/run-mapreduce/
-[config reference#appconfig]: /kv/3.4.0/reference/configuration/
-[usage secondary-indexes]: /kv/3.4.0/how-to/develop/query-secondary-indexes/
+[usage mapreduce]: {{< baseurl >}}kv/3.4.0/how-to/develop/run-mapreduce/
+[config reference#appconfig]: {{< baseurl >}}kv/3.4.0/reference/configuration/
+[usage secondary-indexes]: {{< baseurl >}}kv/3.4.0/how-to/develop/query-secondary-indexes/
 
 #### Configuring MapReduce
 

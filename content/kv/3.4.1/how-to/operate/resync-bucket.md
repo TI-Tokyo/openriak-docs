@@ -31,7 +31,7 @@ A healthy cluster, current backups, and access to cluster status and logs. Recor
 
 ### Re-Sync a Bucket
 
-Full-sync reconciliation is designed to be fast and efficient for confirming that clusters are in sync, but is relatively slow to resolve deltas between clusters.  The common case, when the delta is associated with a recent window of last-modified-dates (e.g. due to a recent temporary failure of replication or nodes) is optimised through the `auto_check` process; and also [re-replication](/kv/3.4.1/how-to/operate/rereplicate-time-window/) may be used to accelerate this.  However, if the delta is not restricted to a given time range of modified dates, and the delta is large, there is a need for alternative intervention to close the delta in a timely manner.
+Full-sync reconciliation is designed to be fast and efficient for confirming that clusters are in sync, but is relatively slow to resolve deltas between clusters.  The common case, when the delta is associated with a recent window of last-modified-dates (e.g. due to a recent temporary failure of replication or nodes) is optimised through the `auto_check` process; and also [re-replication]({{< baseurl >}}kv/3.4.1/how-to/operate/rereplicate-time-window/) may be used to accelerate this.  However, if the delta is not restricted to a given time range of modified dates, and the delta is large, there is a need for alternative intervention to close the delta in a timely manner.
 
 For small buckets (in terms of object count), simply re-replicating the bucket could be the easiest solution, especially where it is clear the replication failure is uni-directional.  For larger buckets, and for handling bi-directional deltas, then it is possible to manually intervene to re-sync a bucket.
 
@@ -39,7 +39,7 @@ The re-sync can be triggered from any node, from either cluster - assuming that 
 
 A bucket re-sync will suspend the local full-sync process on the node from which it is triggered, and roll through segment slices of the bucket performing bucket-specific `range_check` operations.  As each loop covers only a single slice of the segment space, this is much quicker to repair than the standard full-sync per-bucket check, which needs to read the whole bucket space to build AAE trees for comparison.
 
-The re-sync bucket can be called via [remote_console](/kv/3.4.1/how-to/operate/use-remote-console/):
+The re-sync bucket can be called via [remote_console]({{< baseurl >}}kv/3.4.1/how-to/operate/use-remote-console/):
 
 ```console
 riak_client:resync_bucket({<<"BucketType">>, <<"BucketName">>}).
@@ -55,7 +55,7 @@ riak_client:resync_bucket(<<"BucketName">>).
 
 As well as the helper function in `riak_client`, there is a configurable `riak_kv_ttaaefs_manager:resync_bucket/6` function exported.  For much larger buckets, this configurable version can be used to optimise the process e.g. use a smaller width (the size of the slice of the segment space), fix a specific key range or within a modified date range.
 
-> It is possible to have multiple nodes running resync_bucket concurrently - to sync different buckets, or different key ranges within a bucket.  The limiting factor to horizontal scaling of resync_bucket is usually the size of [AF3 worker pool](/kv/3.4.1/how-to/operate/monitor-worker-pools/).  Once all workers in the pool are continuously busy, no further scaling can be achieved, without running larger pools (on all clusters).
+> It is possible to have multiple nodes running resync_bucket concurrently - to sync different buckets, or different key ranges within a bucket.  The limiting factor to horizontal scaling of resync_bucket is usually the size of [AF3 worker pool]({{< baseurl >}}kv/3.4.1/how-to/operate/monitor-worker-pools/).  Once all workers in the pool are continuously busy, no further scaling can be achieved, without running larger pools (on all clusters).
 
 ## Verify the result
 

@@ -45,23 +45,23 @@ The [PB Object API is described in the riak_pb repository](https://github.com/Op
 
 The Riak Object HTTP API is described here:
 
-- [The URL](/kv/3.4.0/reference/data/keys-and-objects/)
-- [The body](/kv/3.4.0/reference/data/keys-and-objects/)
-- [The request and response headers](/kv/3.4.0/reference/data/object-metadata/)
-- [Adding options to a request - query parameters](/kv/3.4.0/reference/http-api/object-request-options/)
-- [Conditional requests](/kv/3.4.0/reference/http-api/conditional-requests/)
-- [Commit hooks](/kv/3.4.0/how-to/develop/write-commit-hook/)
-- [Storing an object](/kv/3.4.0/reference/http-api/store-object/)
-- [Fetching an object](/kv/3.4.0/reference/http-api/fetch-object/)
-- [Deleting an object](/kv/3.4.0/reference/http-api/delete-object/)
-- [Legacy objects](/kv/3.4.0/reference/http-api/fetch-object/)
+- [The URL]({{< baseurl >}}kv/3.4.0/reference/data/keys-and-objects/)
+- [The body]({{< baseurl >}}kv/3.4.0/reference/data/keys-and-objects/)
+- [The request and response headers]({{< baseurl >}}kv/3.4.0/reference/data/object-metadata/)
+- [Adding options to a request - query parameters]({{< baseurl >}}kv/3.4.0/reference/http-api/object-request-options/)
+- [Conditional requests]({{< baseurl >}}kv/3.4.0/reference/http-api/conditional-requests/)
+- [Commit hooks]({{< baseurl >}}kv/3.4.0/how-to/develop/write-commit-hook/)
+- [Storing an object]({{< baseurl >}}kv/3.4.0/reference/http-api/store-object/)
+- [Fetching an object]({{< baseurl >}}kv/3.4.0/reference/http-api/fetch-object/)
+- [Deleting an object]({{< baseurl >}}kv/3.4.0/reference/http-api/delete-object/)
+- [Legacy objects]({{< baseurl >}}kv/3.4.0/reference/http-api/fetch-object/)
 
 ## In this section
 
-- [Buckets and bucket types](/kv/3.4.0/reference/data/buckets-and-bucket-types/) — Define the fields, limits, supported operations, representations, and compatibility rules for buckets and bucket types.
-- [Content types](/kv/3.4.0/reference/data/content-types/) — Define the fields, limits, supported operations, representations, and compatibility rules for content types.
-- [Distributed data types](/kv/3.4.0/reference/data/distributed-data-types/) — Define the fields, limits, supported operations, representations, and compatibility rules for distributed data types.
-- [Keys and objects](/kv/3.4.0/reference/data/keys-and-objects/) — Define the fields, limits, supported operations, representations, and compatibility rules for keys and objects.
-- [Object metadata](/kv/3.4.0/reference/data/object-metadata/) — Define the fields, limits, supported operations, representations, and compatibility rules for object metadata.
-- [Secondary indexes](/kv/3.4.0/reference/data/secondary-indexes/) — Define the fields, limits, supported operations, representations, and compatibility rules for secondary indexes.
-- [Version vectors](/kv/3.4.0/reference/data/version-vectors/) — Define the fields, limits, supported operations, representations, and compatibility rules for version vectors.
+- [Buckets and bucket types]({{< baseurl >}}kv/3.4.0/reference/data/buckets-and-bucket-types/) — Define the fields, limits, supported operations, representations, and compatibility rules for buckets and bucket types.
+- [Content types]({{< baseurl >}}kv/3.4.0/reference/data/content-types/) — Define the fields, limits, supported operations, representations, and compatibility rules for content types.
+- [Distributed data types]({{< baseurl >}}kv/3.4.0/reference/data/distributed-data-types/) — Define the fields, limits, supported operations, representations, and compatibility rules for distributed data types.
+- [Keys and objects]({{< baseurl >}}kv/3.4.0/reference/data/keys-and-objects/) — Define the fields, limits, supported operations, representations, and compatibility rules for keys and objects.
+- [Object metadata]({{< baseurl >}}kv/3.4.0/reference/data/object-metadata/) — Define the fields, limits, supported operations, representations, and compatibility rules for object metadata.
+- [Secondary indexes]({{< baseurl >}}kv/3.4.0/reference/data/secondary-indexes/) — Define the fields, limits, supported operations, representations, and compatibility rules for secondary indexes.
+- [Version vectors]({{< baseurl >}}kv/3.4.0/reference/data/version-vectors/) — Define the fields, limits, supported operations, representations, and compatibility rules for version vectors.

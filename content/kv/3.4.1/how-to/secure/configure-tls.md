@@ -48,7 +48,7 @@ The process for enabling TLS differs between the HTTP and PB interfaces.  For HT
 
 The configuration will start a HTTPS listener, and any HTTP client will be able to send any supported HTTP request via TLS using that listener.
 
-For the PB interface, it is not possible to enable TLS in isolation without [adding further security measures](/kv/3.4.1/how-to/secure/enable-security/).  The configuration of file paths to certificate and key files is required as a prerequisite for applying those measures.  No independent listener is used for PB when security is enabled, the standard listener will expect TLS negotiation if and only if security is enabled.
+For the PB interface, it is not possible to enable TLS in isolation without [adding further security measures]({{< baseurl >}}kv/3.4.1/how-to/secure/enable-security/).  The configuration of file paths to certificate and key files is required as a prerequisite for applying those measures.  No independent listener is used for PB when security is enabled, the standard listener will expect TLS negotiation if and only if security is enabled.
 
 > Riak does not support any automated certificate management, or notification on pending certificate expiry.
 

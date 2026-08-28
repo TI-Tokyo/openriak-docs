@@ -45,7 +45,7 @@ For the full functionality of [riak_client, see the module code](https://github.
 
 #### Data inspection
 
-To understand more about the data being held in the cluster, information can be found using AAE folds. Refer to the [API guide for AAE Fold](/kv/3.4.0/reference/aae-fold-api/) for information on triggering data inspection folds - `find_keys`, `find_tombs`, `list_buckets` and `object_stats`.
+To understand more about the data being held in the cluster, information can be found using AAE folds. Refer to the [API guide for AAE Fold]({{< baseurl >}}kv/3.4.0/reference/aae-fold-api/) for information on triggering data inspection folds - `find_keys`, `find_tombs`, `list_buckets` and `object_stats`.
 
 ## Verify the result
 

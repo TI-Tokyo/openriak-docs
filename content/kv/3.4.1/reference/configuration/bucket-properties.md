@@ -50,7 +50,7 @@ There are three configurable elements that control the resilience of the data di
 
 > The use of locations is optional within Riak, but may be useful even when the infrastructure has no physical distinction between nodes; as locations can also be used as a method for defining maintenance groups.  Maintenance groups are collections of nodes within a cluster which can be stopped or changed concurrently, as the loss of the whole group will only lead to the loss of one copy of the data.
 
-The target `n_val` settings are used by the cluster claim algorithm, which is invoked [whenever a cluster change is planned](/kv/3.4.1/how-to/operate/plan-and-commit-cluster-change/) (e.g. joining or leaving a node), to redistribute the vnodes around the cluster where required.  There are three usable versions of the cluster claim algorithm - versions 2, 3 and 4.  To use both `target_location_n_val` and `target_n_val` the cluster claim algorithm should be changed from version 2 (the default) to version 4.
+The target `n_val` settings are used by the cluster claim algorithm, which is invoked [whenever a cluster change is planned]({{< baseurl >}}kv/3.4.1/how-to/operate/plan-and-commit-cluster-change/) (e.g. joining or leaving a node), to redistribute the vnodes around the cluster where required.  There are three usable versions of the cluster claim algorithm - versions 2, 3 and 4.  To use both `target_location_n_val` and `target_n_val` the cluster claim algorithm should be changed from version 2 (the default) to version 4.
 
 To discover what combinations may be supported given a cluster (given a count of nodes and distribution of nodes around locations), then the [offline ring calculator](https://github.com/OpenRiak/ring_calculator) may be used, to test settings before planning them with version 4 of the algorithm.  The bigger the `target_n_val` and `target_location_n_val` chosen, the more efficient and resilient the eventual cluster setup will be.
 
@@ -92,7 +92,7 @@ Some changes can be applied using GET/PUT specific parameters, which will overri
 
 #### Property - dvv_enabled
 
-In Riak 2.0 the handling of siblings was improved by the enabling of dotted [version vectors](/kv/3.4.1/explanation/data-model/version-vectors-and-siblings/).  All buckets should use `{dvv_enabled, true}`.  The introduction of DVV did not force non-typed buckets to use DVV, and by default non-typed buckets will continue to use legacy vector clocks.
+In Riak 2.0 the handling of siblings was improved by the enabling of dotted [version vectors]({{< baseurl >}}kv/3.4.1/explanation/data-model/version-vectors-and-siblings/).  All buckets should use `{dvv_enabled, true}`.  The introduction of DVV did not force non-typed buckets to use DVV, and by default non-typed buckets will continue to use legacy vector clocks.
 
 To correct this the following configuration should be added to the `riak.conf`:  `buckets.default.merge_strategy = 2`.
 
@@ -108,7 +108,7 @@ The last_modified_date is a timestamp that depends on the accuracy of the clock 
 
 > Due to the potential use of timestamps to make comparisons when using `{allow_mult, false}`, the use of reliable time sources to co-ordinate time within and across clusters is recommended.
 
-When using [conflict-free replicated data types](/kv/3.4.1/reference/specialized-apis/data-type-api/), `{allow_mult, true}` must always be used.
+When using [conflict-free replicated data types]({{< baseurl >}}kv/3.4.1/reference/specialized-apis/data-type-api/), `{allow_mult, true}` must always be used.
 
 Unless the non-existence of an object can be guaranteed by the application using Riak, it is recommended that applications always read before writing, and include the vector clock from the read in the write.  This ensures that even when using `{allow_mult, false}`, fallback to time comparison is kept to a minimum.
 
@@ -162,7 +162,7 @@ If replicating between clusters and `one` is used as the `sync_on_write` bucket 
 
 **Available from OpenRiak KV 3.4.0.**
 
-The `aae_tree_exclude` bucket property has a default value of `false` and allows for flexibility when reconciling between clusters using nextgenrepl full-sync.  In general with Riak nextgenrepl it is assumed that clusters aim to contain the same data.  It is possible to replicate specific buckets between specific sources, and also possible to reconcile only individual buckets between clusters - but per-bucket reconciliation is not as efficient as full-cluster reconciliation.  The efficiency of full cluster reconciliation is based on the use of cached and mergeable [AAE (active anti-entropy) merkle trees](/kv/3.4.1/explanation/replication/active-anti-entropy/) that represent all the data in the store.
+The `aae_tree_exclude` bucket property has a default value of `false` and allows for flexibility when reconciling between clusters using nextgenrepl full-sync.  In general with Riak nextgenrepl it is assumed that clusters aim to contain the same data.  It is possible to replicate specific buckets between specific sources, and also possible to reconcile only individual buckets between clusters - but per-bucket reconciliation is not as efficient as full-cluster reconciliation.  The efficiency of full cluster reconciliation is based on the use of cached and mergeable [AAE (active anti-entropy) merkle trees]({{< baseurl >}}kv/3.4.1/explanation/replication/active-anti-entropy/) that represent all the data in the store.
 
 The purpose of `aae_tree_exclude` is to not include the bucket in the cached tree, so that the bucket isn't considered in any all-data reconciliation jobs.  For example, this may help when:
 
@@ -173,7 +173,7 @@ If a bucket is configured to `{aae_tree_exclude, true}`, the keys are still visi
 
 The preferred long-term strategy for temporary objects is to use the eraser and reaper processes to garbage collect objects, rather than relying on backend TTL.  However when migrating from a multi-backend store with TTL-based backends, the migration should be easier if: those temporary buckets are excluded from aae trees, are replicated separately using range_repl, and reconciled using bucket-specific aae full-sync jobs.
 
-The `aae_tree_exclude` bucket property may be cached by processes within a cluster, so changing the property will not have immediate effect.  A change to the `aae_tree_exclude` property should be coordinated with a [rolling restart](/kv/3.4.1/how-to/operate/rolling-restart/).
+The `aae_tree_exclude` bucket property may be cached by processes within a cluster, so changing the property will not have immediate effect.  A change to the `aae_tree_exclude` property should be coordinated with a [rolling restart]({{< baseurl >}}kv/3.4.1/how-to/operate/rolling-restart/).
 
 #### Property - small_vclock
 
@@ -193,7 +193,7 @@ It is recommended to set `notfound_ok` to `false`, so that a vnode with a missin
 
 The `pr` and `pw` bucket properties default to `0`, and are used to require primary vnodes to be involved in reads and writes.  Setting higher values may prevent writing to minority partitions, however when `{n_val, 3}` this will probably lead to intermittent failures when only two nodes fail in a cluster.  As clusters grow the probability of two concurrent failures will increase significantly.
 
-Although configuring `pr`/`pw` to values greater than 1 may be used to indirectly set stronger data reliability guarantees, or to adjust consistency guarantees - there are better ways of achieving this in Riak, which have fewer negative side effects.  Consider using [`node_confirms`](/kv/3.4.1/reference/configuration/bucket-properties/) or [`sync_on_write`](/kv/3.4.1/reference/configuration/bucket-properties/) to manage data reliability.  The use of [token-based conditional PUTs](/kv/3.4.1/reference/http-api/conditional-requests/) is the preferred approach, rather than `pr`/`pw` adjustments for tuning consistency.
+Although configuring `pr`/`pw` to values greater than 1 may be used to indirectly set stronger data reliability guarantees, or to adjust consistency guarantees - there are better ways of achieving this in Riak, which have fewer negative side effects.  Consider using [`node_confirms`]({{< baseurl >}}kv/3.4.1/reference/configuration/bucket-properties/) or [`sync_on_write`]({{< baseurl >}}kv/3.4.1/reference/configuration/bucket-properties/) to manage data reliability.  The use of [token-based conditional PUTs]({{< baseurl >}}kv/3.4.1/reference/http-api/conditional-requests/) is the preferred approach, rather than `pr`/`pw` adjustments for tuning consistency.
 
 > It is normally best practice to configure either `{pr, 1}` or `{notfound_ok, false}`, rather than rely on defaults.
 

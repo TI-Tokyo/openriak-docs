@@ -30,7 +30,7 @@ Introduce the resource, topology, workload, and runtime factors that shape OpenR
 
 ### Performance and Efficiency
 
-The AAE Fold implementation has similarities to [the Query API](/kv/3.4.1/explanation/performance/query-execution/).  The sequence of operations for the fold is:
+The AAE Fold implementation has similarities to [the Query API]({{< baseurl >}}kv/3.4.1/explanation/performance/query-execution/).  The sequence of operations for the fold is:
 
 - On the local node that received the request, a query server is started to orchestrate the fold across the cluster;
   - In Riak 3.4 the query server has a different underlying implementation to the query server used in the Query API; but this may change to use a common implementation in a future release.
@@ -57,7 +57,7 @@ Some considerations on the efficiency of AAE Folds:
   - Use of a contiguous slice is more efficient than selecting random slices, as when checking Segments only the first 15 of the 20 bits (assuming standard tree size) in a segment ID are used.
   - When folds are used with Riak anti-entropy mechanisms, the `max_results` settings are used to control the size of the list of segment IDs passed into a fold.
 
-The AAE folds will scan over blocks of keys and metadata.  The performance of AAE fold requests are impacted by the volume of metadata per key, and the throughput per CPU core is likely to be lower than with the [Query API](/kv/3.4.1/explanation/performance/query-execution/) - where only blocks of index entities need to be scanned.  Unlike the Query API, none of the accumulators are required to deduplicate, so there is no related impact on performance.
+The AAE folds will scan over blocks of keys and metadata.  The performance of AAE fold requests are impacted by the volume of metadata per key, and the throughput per CPU core is likely to be lower than with the [Query API]({{< baseurl >}}kv/3.4.1/explanation/performance/query-execution/) - where only blocks of index entities need to be scanned.  Unlike the Query API, none of the accumulators are required to deduplicate, so there is no related impact on performance.
 
 Where a fold is returning a list of keys, or keys and clocks, it is necessary for the node coordinating the fold to hold the full result-set in memory; and on conclusion of the fold the results will need to be copied at least once to produce an API response.  The performance of the fold will also be impacted by an accumulator which grows with the number of entries covered.
 
@@ -65,8 +65,8 @@ Where a fold is returning a list of keys, or keys and clocks, it is necessary fo
 
 ## In this section
 
-- [The Erlang runtime and OpenRiak](/kv/3.4.1/explanation/performance/erlang-runtime/) — Explain the erlang runtime and openriak and how its trade-offs influence measurement and tuning decisions.
-- [Latency, throughput, and capacity](/kv/3.4.1/explanation/performance/latency-throughput-and-capacity/) — Explain latency, throughput, and capacity and how its trade-offs influence measurement and tuning decisions.
-- [Multi-datacenter performance](/kv/3.4.1/explanation/performance/multi-datacenter-performance/) — Explain multi-datacenter performance and how its trade-offs influence measurement and tuning decisions.
-- [Query execution performance](/kv/3.4.1/explanation/performance/query-execution/) — Explain how query distribution, scanning, filtering, buffering, and collation affect latency and capacity.
-- [Storage and filesystem effects](/kv/3.4.1/explanation/performance/storage-and-filesystem-effects/) — Explain storage and filesystem effects and how its trade-offs influence measurement and tuning decisions.
+- [The Erlang runtime and OpenRiak]({{< baseurl >}}kv/3.4.1/explanation/performance/erlang-runtime/) — Explain the erlang runtime and openriak and how its trade-offs influence measurement and tuning decisions.
+- [Latency, throughput, and capacity]({{< baseurl >}}kv/3.4.1/explanation/performance/latency-throughput-and-capacity/) — Explain latency, throughput, and capacity and how its trade-offs influence measurement and tuning decisions.
+- [Multi-datacenter performance]({{< baseurl >}}kv/3.4.1/explanation/performance/multi-datacenter-performance/) — Explain multi-datacenter performance and how its trade-offs influence measurement and tuning decisions.
+- [Query execution performance]({{< baseurl >}}kv/3.4.1/explanation/performance/query-execution/) — Explain how query distribution, scanning, filtering, buffering, and collation affect latency and capacity.
+- [Storage and filesystem effects]({{< baseurl >}}kv/3.4.1/explanation/performance/storage-and-filesystem-effects/) — Explain storage and filesystem effects and how its trade-offs influence measurement and tuning decisions.

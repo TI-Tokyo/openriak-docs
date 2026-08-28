@@ -147,68 +147,68 @@ message RpbErrorResp {
 
 #### Bucket Operations
 
-* [PBC List Buckets](/kv/3.4.0/reference/protocol-buffers/list-buckets/)
-* [PBC List Keys](/kv/3.4.0/reference/protocol-buffers/list-keys/)
-* [PBC Get Bucket Properties](/kv/3.4.0/reference/protocol-buffers/get-bucket-properties/)
-* [PBC Set Bucket Properties](/kv/3.4.0/reference/protocol-buffers/set-bucket-properties/)
-* [PBC Reset Bucket Properties](/kv/3.4.0/reference/protocol-buffers/reset-bucket-properties/)
+* [PBC List Buckets]({{< baseurl >}}kv/3.4.0/reference/protocol-buffers/list-buckets/)
+* [PBC List Keys]({{< baseurl >}}kv/3.4.0/reference/protocol-buffers/list-keys/)
+* [PBC Get Bucket Properties]({{< baseurl >}}kv/3.4.0/reference/protocol-buffers/get-bucket-properties/)
+* [PBC Set Bucket Properties]({{< baseurl >}}kv/3.4.0/reference/protocol-buffers/set-bucket-properties/)
+* [PBC Reset Bucket Properties]({{< baseurl >}}kv/3.4.0/reference/protocol-buffers/reset-bucket-properties/)
 
 #### Object/Key Operations
 
-* [PBC Fetch Object](/kv/3.4.0/reference/protocol-buffers/fetch-object/)
-* [PBC Store Object](/kv/3.4.0/reference/protocol-buffers/store-object/)
-* [PBC Delete Object](/kv/3.4.0/reference/protocol-buffers/delete-object/)
+* [PBC Fetch Object]({{< baseurl >}}kv/3.4.0/reference/protocol-buffers/fetch-object/)
+* [PBC Store Object]({{< baseurl >}}kv/3.4.0/reference/protocol-buffers/store-object/)
+* [PBC Delete Object]({{< baseurl >}}kv/3.4.0/reference/protocol-buffers/delete-object/)
 
 #### Query Operations
 
-* [PBC MapReduce](/kv/3.4.0/reference/protocol-buffers/mapreduce/)
-* [PBC Secondary Indexes](/kv/3.4.0/reference/protocol-buffers/secondary-indexes/)
-* [PBC Search](/kv/3.4.0/reference/specialized-apis/legacy-query-api/)
+* [PBC MapReduce]({{< baseurl >}}kv/3.4.0/reference/protocol-buffers/mapreduce/)
+* [PBC Secondary Indexes]({{< baseurl >}}kv/3.4.0/reference/protocol-buffers/secondary-indexes/)
+* [PBC Search]({{< baseurl >}}kv/3.4.0/reference/specialized-apis/legacy-query-api/)
 
 #### Server Operations
 
-* [PBC Ping](/kv/3.4.0/reference/protocol-buffers/ping/)
-* [PBC Server Info](/kv/3.4.0/reference/protocol-buffers/server-information/)
+* [PBC Ping]({{< baseurl >}}kv/3.4.0/reference/protocol-buffers/ping/)
+* [PBC Server Info]({{< baseurl >}}kv/3.4.0/reference/protocol-buffers/server-information/)
 
 #### Bucket Type Operations
 
-* [PBC Get Bucket Type](/kv/3.4.0/reference/protocol-buffers/get-bucket-type/)
-* [PBC Set Bucket Type](/kv/3.4.0/reference/protocol-buffers/set-bucket-type/)
+* [PBC Get Bucket Type]({{< baseurl >}}kv/3.4.0/reference/protocol-buffers/get-bucket-type/)
+* [PBC Set Bucket Type]({{< baseurl >}}kv/3.4.0/reference/protocol-buffers/set-bucket-type/)
 
 #### Data Type Operations
 
-* [PBC Data Type Fetch](/kv/3.4.0/reference/protocol-buffers/fetch-data-type/)
-* [PBC Data Type Union](/kv/3.4.0/reference/protocol-buffers/union-data-type/)
-* [PBC Data Type Store](/kv/3.4.0/reference/protocol-buffers/store-data-type/)
-* [PBC Data Type Counter Store](/kv/3.4.0/reference/protocol-buffers/update-counter/)
-* [PBC Data Type Set Store](/kv/3.4.0/reference/protocol-buffers/update-set/)
-* [PBC Data Type Map Store](/kv/3.4.0/reference/protocol-buffers/update-map/)
+* [PBC Data Type Fetch]({{< baseurl >}}kv/3.4.0/reference/protocol-buffers/fetch-data-type/)
+* [PBC Data Type Union]({{< baseurl >}}kv/3.4.0/reference/protocol-buffers/union-data-type/)
+* [PBC Data Type Store]({{< baseurl >}}kv/3.4.0/reference/protocol-buffers/store-data-type/)
+* [PBC Data Type Counter Store]({{< baseurl >}}kv/3.4.0/reference/protocol-buffers/update-counter/)
+* [PBC Data Type Set Store]({{< baseurl >}}kv/3.4.0/reference/protocol-buffers/update-set/)
+* [PBC Data Type Map Store]({{< baseurl >}}kv/3.4.0/reference/protocol-buffers/update-map/)
 
 [protocol]: #protocol
-[whatmakesop]: /kv/3.4.0/reference/protocol-buffers/
+[whatmakesop]: {{< baseurl >}}kv/3.4.0/reference/protocol-buffers/
 
 ## In this section
 
-- [Authentication request with Protocol Buffers](/kv/3.4.0/reference/protocol-buffers/authentication/) — Document the Protocol Buffers contract for this operation, including messages, fields, streaming behavior, examples, and errors.
-- [Manage a client identifier with Protocol Buffers](/kv/3.4.0/reference/protocol-buffers/client-id/) — Document the Protocol Buffers contract for this operation, including messages, fields, streaming behavior, examples, and errors.
-- [Run coverage queries with Protocol Buffers](/kv/3.4.0/reference/protocol-buffers/coverage-queries/) — Document the Protocol Buffers contract for this operation, including messages, fields, streaming behavior, examples, and errors.
-- [Delete an object with Protocol Buffers](/kv/3.4.0/reference/protocol-buffers/delete-object/) — Document the Protocol Buffers contract for this operation, including messages, fields, streaming behavior, examples, and errors.
-- [Fetch a data type with Protocol Buffers](/kv/3.4.0/reference/protocol-buffers/fetch-data-type/) — Document the Protocol Buffers contract for this operation, including messages, fields, streaming behavior, examples, and errors.
-- [Fetch an object with Protocol Buffers](/kv/3.4.0/reference/protocol-buffers/fetch-object/) — Document the Protocol Buffers contract for this operation, including messages, fields, streaming behavior, examples, and errors.
-- [Get bucket properties with Protocol Buffers](/kv/3.4.0/reference/protocol-buffers/get-bucket-properties/) — Document the Protocol Buffers contract for this operation, including messages, fields, streaming behavior, examples, and errors.
-- [Get a bucket type with Protocol Buffers](/kv/3.4.0/reference/protocol-buffers/get-bucket-type/) — Document the Protocol Buffers contract for this operation, including messages, fields, streaming behavior, examples, and errors.
-- [List buckets with Protocol Buffers](/kv/3.4.0/reference/protocol-buffers/list-buckets/) — Document the Protocol Buffers contract for this operation, including messages, fields, streaming behavior, examples, and errors.
-- [List keys with Protocol Buffers](/kv/3.4.0/reference/protocol-buffers/list-keys/) — Document the Protocol Buffers contract for this operation, including messages, fields, streaming behavior, examples, and errors.
-- [Run MapReduce with Protocol Buffers](/kv/3.4.0/reference/protocol-buffers/mapreduce/) — Document the Protocol Buffers contract for this operation, including messages, fields, streaming behavior, examples, and errors.
-- [Ping with Protocol Buffers](/kv/3.4.0/reference/protocol-buffers/ping/) — Document the Protocol Buffers contract for this operation, including messages, fields, streaming behavior, examples, and errors.
-- [Reset bucket properties with Protocol Buffers](/kv/3.4.0/reference/protocol-buffers/reset-bucket-properties/) — Document the Protocol Buffers contract for this operation, including messages, fields, streaming behavior, examples, and errors.
-- [Query secondary indexes with Protocol Buffers](/kv/3.4.0/reference/protocol-buffers/secondary-indexes/) — Document the Protocol Buffers contract for this operation, including messages, fields, streaming behavior, examples, and errors.
-- [Server information with Protocol Buffers](/kv/3.4.0/reference/protocol-buffers/server-information/) — Document the Protocol Buffers contract for this operation, including messages, fields, streaming behavior, examples, and errors.
-- [Set bucket properties with Protocol Buffers](/kv/3.4.0/reference/protocol-buffers/set-bucket-properties/) — Document the Protocol Buffers contract for this operation, including messages, fields, streaming behavior, examples, and errors.
-- [Set a bucket type with Protocol Buffers](/kv/3.4.0/reference/protocol-buffers/set-bucket-type/) — Document the Protocol Buffers contract for this operation, including messages, fields, streaming behavior, examples, and errors.
-- [Store a data type with Protocol Buffers](/kv/3.4.0/reference/protocol-buffers/store-data-type/) — Document the Protocol Buffers contract for this operation, including messages, fields, streaming behavior, examples, and errors.
-- [Store an object with Protocol Buffers](/kv/3.4.0/reference/protocol-buffers/store-object/) — Document the Protocol Buffers contract for this operation, including messages, fields, streaming behavior, examples, and errors.
-- [Apply a data type union with Protocol Buffers](/kv/3.4.0/reference/protocol-buffers/union-data-type/) — Document the Protocol Buffers contract for this operation, including messages, fields, streaming behavior, examples, and errors.
-- [Update a counter with Protocol Buffers](/kv/3.4.0/reference/protocol-buffers/update-counter/) — Document the Protocol Buffers contract for this operation, including messages, fields, streaming behavior, examples, and errors.
-- [Update a map with Protocol Buffers](/kv/3.4.0/reference/protocol-buffers/update-map/) — Document the Protocol Buffers contract for this operation, including messages, fields, streaming behavior, examples, and errors.
-- [Update a set with Protocol Buffers](/kv/3.4.0/reference/protocol-buffers/update-set/) — Document the Protocol Buffers contract for this operation, including messages, fields, streaming behavior, examples, and errors.
+- [Authentication request with Protocol Buffers]({{< baseurl >}}kv/3.4.0/reference/protocol-buffers/authentication/) — Document the Protocol Buffers contract for this operation, including messages, fields, streaming behavior, examples, and errors.
+- [Manage a client identifier with Protocol Buffers]({{< baseurl >}}kv/3.4.0/reference/protocol-buffers/client-id/) — Document the Protocol Buffers contract for this operation, including messages, fields, streaming behavior, examples, and errors.
+- [Run coverage queries with Protocol Buffers]({{< baseurl >}}kv/3.4.0/reference/protocol-buffers/coverage-queries/) — Document the Protocol Buffers contract for this operation, including messages, fields, streaming behavior, examples, and errors.
+- [Delete an object with Protocol Buffers]({{< baseurl >}}kv/3.4.0/reference/protocol-buffers/delete-object/) — Document the Protocol Buffers contract for this operation, including messages, fields, streaming behavior, examples, and errors.
+- [Fetch a data type with Protocol Buffers]({{< baseurl >}}kv/3.4.0/reference/protocol-buffers/fetch-data-type/) — Document the Protocol Buffers contract for this operation, including messages, fields, streaming behavior, examples, and errors.
+- [Fetch an object with Protocol Buffers]({{< baseurl >}}kv/3.4.0/reference/protocol-buffers/fetch-object/) — Document the Protocol Buffers contract for this operation, including messages, fields, streaming behavior, examples, and errors.
+- [Get bucket properties with Protocol Buffers]({{< baseurl >}}kv/3.4.0/reference/protocol-buffers/get-bucket-properties/) — Document the Protocol Buffers contract for this operation, including messages, fields, streaming behavior, examples, and errors.
+- [Get a bucket type with Protocol Buffers]({{< baseurl >}}kv/3.4.0/reference/protocol-buffers/get-bucket-type/) — Document the Protocol Buffers contract for this operation, including messages, fields, streaming behavior, examples, and errors.
+- [List buckets with Protocol Buffers]({{< baseurl >}}kv/3.4.0/reference/protocol-buffers/list-buckets/) — Document the Protocol Buffers contract for this operation, including messages, fields, streaming behavior, examples, and errors.
+- [List keys with Protocol Buffers]({{< baseurl >}}kv/3.4.0/reference/protocol-buffers/list-keys/) — Document the Protocol Buffers contract for this operation, including messages, fields, streaming behavior, examples, and errors.
+- [Run MapReduce with Protocol Buffers]({{< baseurl >}}kv/3.4.0/reference/protocol-buffers/mapreduce/) — Document the Protocol Buffers contract for this operation, including messages, fields, streaming behavior, examples, and errors.
+- [Ping with Protocol Buffers]({{< baseurl >}}kv/3.4.0/reference/protocol-buffers/ping/) — Document the Protocol Buffers contract for this operation, including messages, fields, streaming behavior, examples, and errors.
+- [Reset bucket properties with Protocol Buffers]({{< baseurl >}}kv/3.4.0/reference/protocol-buffers/reset-bucket-properties/) — Document the Protocol Buffers contract for this operation, including messages, fields, streaming behavior, examples, and errors.
+- [Query secondary indexes with Protocol Buffers]({{< baseurl >}}kv/3.4.0/reference/protocol-buffers/secondary-indexes/) — Document the Protocol Buffers contract for this operation, including messages, fields, streaming behavior, examples, and errors.
+- [Server information with Protocol Buffers]({{< baseurl >}}kv/3.4.0/reference/protocol-buffers/server-information/) — Document the Protocol Buffers contract for this operation, including messages, fields, streaming behavior, examples, and errors.
+- [Set bucket properties with Protocol Buffers]({{< baseurl >}}kv/3.4.0/reference/protocol-buffers/set-bucket-properties/) — Document the Protocol Buffers contract for this operation, including messages, fields, streaming behavior, examples, and errors.
+- [Set a bucket type with Protocol Buffers]({{< baseurl >}}kv/3.4.0/reference/protocol-buffers/set-bucket-type/) — Document the Protocol Buffers contract for this operation, including messages, fields, streaming behavior, examples, and errors.
+- [Store a data type with Protocol Buffers]({{< baseurl >}}kv/3.4.0/reference/protocol-buffers/store-data-type/) — Document the Protocol Buffers contract for this operation, including messages, fields, streaming behavior, examples, and errors.
+- [Store an object with Protocol Buffers]({{< baseurl >}}kv/3.4.0/reference/protocol-buffers/store-object/) — Document the Protocol Buffers contract for this operation, including messages, fields, streaming behavior, examples, and errors.
+- [Apply a data type union with Protocol Buffers]({{< baseurl >}}kv/3.4.0/reference/protocol-buffers/union-data-type/) — Document the Protocol Buffers contract for this operation, including messages, fields, streaming behavior, examples, and errors.
+- [Update a counter with Protocol Buffers]({{< baseurl >}}kv/3.4.0/reference/protocol-buffers/update-counter/) — Document the Protocol Buffers contract for this operation, including messages, fields, streaming behavior, examples, and errors.
+- [Update a map with Protocol Buffers]({{< baseurl >}}kv/3.4.0/reference/protocol-buffers/update-map/) — Document the Protocol Buffers contract for this operation, including messages, fields, streaming behavior, examples, and errors.
+- [Update a set with Protocol Buffers]({{< baseurl >}}kv/3.4.0/reference/protocol-buffers/update-set/) — Document the Protocol Buffers contract for this operation, including messages, fields, streaming behavior, examples, and errors.

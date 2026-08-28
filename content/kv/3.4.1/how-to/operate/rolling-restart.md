@@ -35,7 +35,7 @@ A healthy cluster, current backups, and access to cluster status and logs. Recor
 
 ### Rolling Restarts
 
-Because Riak functions as a multi-node system, cluster-level [Riak version upgrades](/kv/3.4.1/how-to/operate/upgrade-cluster/) and restarts can be performed on a node-by-node, "rolling" basis.
+Because Riak functions as a multi-node system, cluster-level [Riak version upgrades]({{< baseurl >}}kv/3.4.1/how-to/operate/upgrade-cluster/) and restarts can be performed on a node-by-node, "rolling" basis.
 
 The following steps should be undertaken on each OpenRiak node that you wish to restart:
 

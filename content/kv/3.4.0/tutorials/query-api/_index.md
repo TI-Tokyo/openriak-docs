@@ -40,15 +40,15 @@ As well as single queries the API can also handle combination queries.  In combi
 
 For further detail on the Query API:
 
-- [Adding Index Entries to Objects](/kv/3.4.0/reference/data/secondary-indexes/)
-- [Overview of querying those index entries](/kv/3.4.0/how-to/develop/query-with-query-api/)
-- [An example people search](/kv/3.4.0/tutorials/query-api/build-search-index/)
-- [An alternative example for people search](/kv/3.4.0/tutorials/query-api/build-search-index/)
-- [An example using the API for reporting](/kv/3.4.0/tutorials/query-api/build-search-index/)
-- [Setting performance expectations for queries](/kv/3.4.0/explanation/performance/query-execution/)
-- [A more formal description of the Query API](/kv/3.4.0/reference/query-api/request/)
-- [An overview of the expected performance of queries in Riak](/kv/3.4.0/explanation/performance/query-execution/)
-- [Some notes on the underlying implementation](/kv/3.4.0/explanation/data-model/query-api/)
+- [Adding Index Entries to Objects]({{< baseurl >}}kv/3.4.0/reference/data/secondary-indexes/)
+- [Overview of querying those index entries]({{< baseurl >}}kv/3.4.0/how-to/develop/query-with-query-api/)
+- [An example people search]({{< baseurl >}}kv/3.4.0/tutorials/query-api/build-search-index/)
+- [An alternative example for people search]({{< baseurl >}}kv/3.4.0/tutorials/query-api/build-search-index/)
+- [An example using the API for reporting]({{< baseurl >}}kv/3.4.0/tutorials/query-api/build-search-index/)
+- [Setting performance expectations for queries]({{< baseurl >}}kv/3.4.0/explanation/performance/query-execution/)
+- [A more formal description of the Query API]({{< baseurl >}}kv/3.4.0/reference/query-api/request/)
+- [An overview of the expected performance of queries in Riak]({{< baseurl >}}kv/3.4.0/explanation/performance/query-execution/)
+- [Some notes on the underlying implementation]({{< baseurl >}}kv/3.4.0/explanation/data-model/query-api/)
 
 ## What you will learn
 
@@ -64,8 +64,8 @@ Repeat the completed workflow, inspect the stored or operational result, and con
 
 ## Next steps
 
-- [Build a search index with the Query API](/kv/3.4.0/tutorials/query-api/build-search-index/)
+- [Build a search index with the Query API]({{< baseurl >}}kv/3.4.0/tutorials/query-api/build-search-index/)
 
 ## In this section
 
-- [Build a search index with the Query API](/kv/3.4.0/tutorials/query-api/build-search-index/) — Guide a developer through designing, loading, querying, and evaluating a small Query API search index.
+- [Build a search index with the Query API]({{< baseurl >}}kv/3.4.0/tutorials/query-api/build-search-index/) — Guide a developer through designing, loading, querying, and evaluating a small Query API search index.

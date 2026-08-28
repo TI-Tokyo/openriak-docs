@@ -28,7 +28,7 @@ Document the Protocol Buffers contract for this operation, including messages, f
 
 ### PBC Data Type Counter Store
 
-An operation to update a [counter](/kv/3.4.0/reference/data/distributed-data-types/).
+An operation to update a [counter]({{< baseurl >}}kv/3.4.0/reference/data/distributed-data-types/).
 
 #### Request
 
@@ -41,4 +41,4 @@ message CounterOp {
 The `increment` value specifies how much the counter will be incremented
 or decremented, depending on whether the `increment` value is positive
 or negative. This operation can be used to update counters that are
-stored on their own in a key or [within a map](/kv/3.4.0/reference/protocol-buffers/update-map/).
+stored on their own in a key or [within a map]({{< baseurl >}}kv/3.4.0/reference/protocol-buffers/update-map/).

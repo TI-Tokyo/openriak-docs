@@ -108,7 +108,7 @@ If using the `raw` option is not possible and a large result set is expected, th
 
 Partitioning of results is best done by breaking up the sort key range; the `max_results` option cannot be used on `count`-like queries.
 
-The `max_results` (and then `continuation`) option may be used to partition results into multiple queries, but this is [only supported with the `terms` and `raw_keys` accumulation option](/kv/3.4.1/reference/query-api/request/).
+The `max_results` (and then `continuation`) option may be used to partition results into multiple queries, but this is [only supported with the `terms` and `raw_keys` accumulation option]({{< baseurl >}}kv/3.4.1/reference/query-api/request/).
 
 > When setting `max_results` with a `raw_keys` query, a `terms` query will be run internally, and the terms stripped before sending the keys in the response.  Setting `max_results` on a `raw_keys` query will therefore lead to the performance overheads of a `terms` query i.e. extra data transmitted within the cluster, and a sorting overhead at the query server.
 
@@ -126,7 +126,7 @@ Aggregation queries, which use set expressions to combine results across multipl
 
 > As the query buffer is bypassed a cancelled query will not terminate early for combination queries.
 
-Support for `aggregation_expression`s in Riak 3.4 is a work in progress and may [be optimised in future releases](/kv/3.4.1/explanation/data-model/query-api/).
+Support for `aggregation_expression`s in Riak 3.4 is a work in progress and may [be optimised in future releases]({{< baseurl >}}kv/3.4.1/explanation/data-model/query-api/).
 
 #### Central Collation of Query Results
 

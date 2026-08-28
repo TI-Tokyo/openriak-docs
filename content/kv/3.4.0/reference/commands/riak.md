@@ -28,10 +28,10 @@ List every supported riak command with syntax, options, output, and exit behavio
 
 ### riak Command Line Interface
 
-[configuration file]: /kv/3.4.0/reference/configuration/
+[configuration file]: {{< baseurl >}}kv/3.4.0/reference/configuration/
 [escript]: http://www.erlang.org/doc/man/escript.html
-[`riak admin`]: /kv/3.4.0/reference/commands/riak-admin/#top
-[configuration]: /kv/3.4.0/reference/configuration/
+[`riak admin`]: {{< baseurl >}}kv/3.4.0/reference/commands/riak-admin/#top
+[configuration]: {{< baseurl >}}kv/3.4.0/reference/configuration/
 
 #### riak
 

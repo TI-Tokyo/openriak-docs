@@ -36,11 +36,11 @@ A non-production OpenRiak KV cluster, client credentials, and disposable test da
 
 ### Reading Objects
 
-[glossary vnode]: /kv/3.4.0/explanation/foundations/glossary/#vnode
+[glossary vnode]: {{< baseurl >}}kv/3.4.0/explanation/foundations/glossary/#vnode
 
 You can think of reads in Riak as analogous to HTTP `GET` requests. You
 specify a bucket type, bucket, and key, and Riak either returns the
-object that's stored there---including its [siblings](/kv/3.4.0/how-to/develop/resolve-conflicts/#siblings) \(more on that later)---or it returns `not found` (the
+object that's stored there---including its [siblings]({{< baseurl >}}kv/3.4.0/how-to/develop/resolve-conflicts/#siblings) \(more on that later)---or it returns `not found` (the
 equivalent of an HTTP `404 Object Not Found`).
 
 Here is the basic command form for retrieving a specific key from a
@@ -51,7 +51,7 @@ GET /types/<type>/buckets/<bucket>/keys/<key>
 ```
 
 Here is an example of a read performed on the key `rufus` in the bucket
-`dogs`, which bears the bucket type `animals`. Please note that for this example to work, you must have first created the bucket-type `animals` as per the instructions on the [bucket type](/kv/3.4.0/how-to/operate/manage-bucket-types/) page.
+`dogs`, which bears the bucket type `animals`. Please note that for this example to work, you must have first created the bucket-type `animals` as per the instructions on the [bucket type]({{< baseurl >}}kv/3.4.0/how-to/operate/manage-bucket-types/) page.
 
 ```java
 // In the Java client, it is best to specify a bucket type/bucket/key
@@ -277,7 +277,7 @@ When using the HEAD method the request will still result in the object value bei
 
 Supported HTTP request headers for GET:
 
-- `authorization`; optional, for tls-protected requests only when [Riak security is enabled](/kv/3.4.0/how-to/secure/).
+- `authorization`; optional, for tls-protected requests only when [Riak security is enabled]({{< baseurl >}}kv/3.4.0/how-to/secure/).
 - `accept: multipart/mixed`; optional, will cause results in a conflicted state to return all siblings as one multipart-mime object body.  Without this option a list of sibling vtags will be returned, and each `vtag` may be fetched using the `vtag=<vtag>` query parameter in the URL.
 
 Expected HTTP response headers for GET:

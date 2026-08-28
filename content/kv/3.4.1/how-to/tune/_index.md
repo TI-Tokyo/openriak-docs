@@ -43,7 +43,7 @@ changes are made and when in order to measure the impact of those
 changes.
 
 For performance and tuning recommendations specific to running Riak
-clusters on the Amazon Web Services EC2 environment, see [AWS Performance Tuning](/kv/3.4.1/how-to/tune/tune-aws-deployment/).
+clusters on the Amazon Web Services EC2 environment, see [AWS Performance Tuning]({{< baseurl >}}kv/3.4.1/how-to/tune/tune-aws-deployment/).
 
 **Note on other operating systems**
 Unless otherwise specified, the tunings recommended below are for Linux
@@ -267,15 +267,15 @@ These settings have been tested and benchmarked by Basho in nodes with
 
 Riak and supporting tools can consume a large number of open file
 handles during normal operation. For stability, increasing the number of
-open files limit is necessary. See [Open Files Limit](/kv/3.4.1/how-to/tune/set-open-files-limit/) for more
+open files limit is necessary. See [Open Files Limit]({{< baseurl >}}kv/3.4.1/how-to/tune/set-open-files-limit/) for more
 details.
 
 #### Other Tuning Docs
 
-* [AWS Performance Tuning](/kv/3.4.1/how-to/tune/tune-aws-deployment/)
-* [Erlang VM Tuning](/kv/3.4.1/how-to/tune/tune-erlang-vm/)
-* [Latency Reduction](/kv/3.4.1/how-to/tune/reduce-latency/)
-* [Open Files Limit](/kv/3.4.1/how-to/tune/set-open-files-limit/)
+* [AWS Performance Tuning]({{< baseurl >}}kv/3.4.1/how-to/tune/tune-aws-deployment/)
+* [Erlang VM Tuning]({{< baseurl >}}kv/3.4.1/how-to/tune/tune-erlang-vm/)
+* [Latency Reduction]({{< baseurl >}}kv/3.4.1/how-to/tune/reduce-latency/)
+* [Open Files Limit]({{< baseurl >}}kv/3.4.1/how-to/tune/set-open-files-limit/)
 
 ## Verify the result
 
@@ -283,9 +283,9 @@ Repeat the baseline workload and compare latency, throughput, resource use, and 
 
 ## In this section
 
-- [Benchmark a cluster](/kv/3.4.1/how-to/tune/benchmark-cluster/) — Show performance engineers how to benchmark a cluster using measurable before-and-after checks.
-- [Reduce request latency](/kv/3.4.1/how-to/tune/reduce-latency/) — Show performance engineers how to reduce request latency using measurable before-and-after checks.
-- [Set the open-files limit](/kv/3.4.1/how-to/tune/set-open-files-limit/) — Show performance engineers how to set the open-files limit using measurable before-and-after checks.
-- [Tune an AWS deployment](/kv/3.4.1/how-to/tune/tune-aws-deployment/) — Show performance engineers how to tune an aws deployment using measurable before-and-after checks.
-- [Tune the Erlang virtual machine](/kv/3.4.1/how-to/tune/tune-erlang-vm/) — Show performance engineers how to tune the erlang virtual machine using measurable before-and-after checks.
-- [Tune multi-datacenter replication](/kv/3.4.1/how-to/tune/tune-multi-datacenter/) — Show performance engineers how to tune multi-datacenter replication using measurable before-and-after checks.
+- [Benchmark a cluster]({{< baseurl >}}kv/3.4.1/how-to/tune/benchmark-cluster/) — Show performance engineers how to benchmark a cluster using measurable before-and-after checks.
+- [Reduce request latency]({{< baseurl >}}kv/3.4.1/how-to/tune/reduce-latency/) — Show performance engineers how to reduce request latency using measurable before-and-after checks.
+- [Set the open-files limit]({{< baseurl >}}kv/3.4.1/how-to/tune/set-open-files-limit/) — Show performance engineers how to set the open-files limit using measurable before-and-after checks.
+- [Tune an AWS deployment]({{< baseurl >}}kv/3.4.1/how-to/tune/tune-aws-deployment/) — Show performance engineers how to tune an aws deployment using measurable before-and-after checks.
+- [Tune the Erlang virtual machine]({{< baseurl >}}kv/3.4.1/how-to/tune/tune-erlang-vm/) — Show performance engineers how to tune the erlang virtual machine using measurable before-and-after checks.
+- [Tune multi-datacenter replication]({{< baseurl >}}kv/3.4.1/how-to/tune/tune-multi-datacenter/) — Show performance engineers how to tune multi-datacenter replication using measurable before-and-after checks.

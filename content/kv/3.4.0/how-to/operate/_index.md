@@ -185,7 +185,7 @@ Configuring an OpenRiak cluster involves instructing each node to listen on a
 non-local interface, i.e. not `127.0.0.1`, and then joining all of the
 nodes together to participate in the cluster.
 
-Most configuration changes will be applied to the [configuration file](/kv/3.4.0/reference/configuration/) located in your `rel/riak/etc` directory (if
+Most configuration changes will be applied to the [configuration file]({{< baseurl >}}kv/3.4.0/reference/configuration/) located in your `rel/riak/etc` directory (if
 you compiled from source) or `/etc` (if you used a binary install of
 Riak).
 
@@ -212,7 +212,7 @@ options:
 `ring` directory. This will require rejoining all nodes into a
 cluster again.
 >
-> *Rename the node using the [`riak admin cluster replace`](/kv/3.4.0/reference/commands/riak-admin/) command. This will not work if you have previously only started Riak with a single node.
+> *Rename the node using the [`riak admin cluster replace`]({{< baseurl >}}kv/3.4.0/reference/commands/riak-admin/) command. This will not work if you have previously only started Riak with a single node.
 
 #### Configure the First Node
 
@@ -225,7 +225,7 @@ riak stop
 ##### Select an IP address and port
 
 Let's say that the IP address for your cluster is 192.168.1.10 and that
-you'll be using the default port (8087). If you're using the [Protocol Buffers interface](/kv/3.4.0/reference/protocol-buffers/) to Riak (which we recommend over the HTTP
+you'll be using the default port (8087). If you're using the [Protocol Buffers interface]({{< baseurl >}}kv/3.4.0/reference/protocol-buffers/) to Riak (which we recommend over the HTTP
 interface due to performance gains), you should change your
 configuration file:
 
@@ -315,7 +315,7 @@ preferred.
 >
 > Once a node has been started, in order to change the name you must
 either remove ring files from the `/data/ring` directory or
-[`riak admin cluster force-replace`](/kv/3.4.0/reference/commands/riak-admin/) the node.
+[`riak admin cluster force-replace`]({{< baseurl >}}kv/3.4.0/reference/commands/riak-admin/) the node.
 
 ###### Start the node
 
@@ -410,7 +410,7 @@ into which you can type the following command:
     ```
 
 To join additional nodes to your cluster, repeat the above steps.  You
-can also find more detailed instructions about [adding and removing nodes](/kv/3.4.0/tutorials/operations/change-cluster-membership/) from a cluster.
+can also find more detailed instructions about [adding and removing nodes]({{< baseurl >}}kv/3.4.0/tutorials/operations/change-cluster-membership/) from a cluster.
 
 > **Ring Creation Size**
 >
@@ -547,26 +547,26 @@ different value for `distributed_cookie`.
 
 This guide is split into two parts:
 
-- [The considerations to make when choosing infrastructure for Riak](/kv/3.4.0/how-to/plan/size-cluster/)
-- [The practical steps to actually make and expand a cluster](/kv/3.4.0/how-to/operate/add-node/)
+- [The considerations to make when choosing infrastructure for Riak]({{< baseurl >}}kv/3.4.0/how-to/plan/size-cluster/)
+- [The practical steps to actually make and expand a cluster]({{< baseurl >}}kv/3.4.0/how-to/operate/add-node/)
 
 #### OpenRiak KV - Operations and Troubleshooting
 
 The following sections provide guidance when operating or troubleshooting an OpenRiak cluster:
 
-- [Handling failure - replace, repair and recover](/kv/3.4.0/explanation/operations/node-failure-and-recovery/)
-- [Upgrading Riak on a node](/kv/3.4.0/how-to/operate/upgrade-cluster/)
-- [Using the remote console](/kv/3.4.0/how-to/operate/use-remote-console/)
-- [Accessing extended configuration options](/kv/3.4.0/how-to/configure/advanced-configuration/)
-- [Making use of logging and statistics](/kv/3.4.0/reference/operations/statistics-and-monitoring/)
-- [Monitoring background operational services](/kv/3.4.0/reference/operations/statistics-and-monitoring/)
-- [Enabling Riak security controls](/kv/3.4.0/how-to/secure/)
-- [Garbage collection - monitoring and tuning](/kv/3.4.0/explanation/operations/garbage-collection/)
-- [Understanding the contents of an OpenRiak cluster](/kv/3.4.0/how-to/operate/inspect-data/)
-- [Volume and performance testing](/kv/3.4.0/how-to/tune/benchmark-cluster/)
-- [Backing up a cluster](/kv/3.4.0/explanation/operations/backups-and-restores/)
-- [Operation checklist](/kv/3.4.0/how-to/operate/routine-operations-checklist/)
-- [Advanced troubleshooting of Riak internals](/kv/3.4.0/how-to/troubleshoot/erlang-vm/)
+- [Handling failure - replace, repair and recover]({{< baseurl >}}kv/3.4.0/explanation/operations/node-failure-and-recovery/)
+- [Upgrading Riak on a node]({{< baseurl >}}kv/3.4.0/how-to/operate/upgrade-cluster/)
+- [Using the remote console]({{< baseurl >}}kv/3.4.0/how-to/operate/use-remote-console/)
+- [Accessing extended configuration options]({{< baseurl >}}kv/3.4.0/how-to/configure/advanced-configuration/)
+- [Making use of logging and statistics]({{< baseurl >}}kv/3.4.0/reference/operations/statistics-and-monitoring/)
+- [Monitoring background operational services]({{< baseurl >}}kv/3.4.0/reference/operations/statistics-and-monitoring/)
+- [Enabling Riak security controls]({{< baseurl >}}kv/3.4.0/how-to/secure/)
+- [Garbage collection - monitoring and tuning]({{< baseurl >}}kv/3.4.0/explanation/operations/garbage-collection/)
+- [Understanding the contents of an OpenRiak cluster]({{< baseurl >}}kv/3.4.0/how-to/operate/inspect-data/)
+- [Volume and performance testing]({{< baseurl >}}kv/3.4.0/how-to/tune/benchmark-cluster/)
+- [Backing up a cluster]({{< baseurl >}}kv/3.4.0/explanation/operations/backups-and-restores/)
+- [Operation checklist]({{< baseurl >}}kv/3.4.0/how-to/operate/routine-operations-checklist/)
+- [Advanced troubleshooting of Riak internals]({{< baseurl >}}kv/3.4.0/how-to/troubleshoot/erlang-vm/)
 
 ## Verify the result
 

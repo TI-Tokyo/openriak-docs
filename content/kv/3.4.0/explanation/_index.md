@@ -51,11 +51,11 @@ State what this explanation does not cover, call out 3.4.0 versus 3.4.1 differen
 
 ## In this section
 
-- [Consistency concepts](/kv/3.4.0/explanation/consistency/) — Introduce how OpenRiak balances availability, convergence, and stronger consistency guarantees.
-- [Data model concepts](/kv/3.4.0/explanation/data-model/) — Introduce the concepts and trade-offs behind OpenRiak data modeling.
-- [OpenRiak foundations](/kv/3.4.0/explanation/foundations/) — Introduce the ideas that shape OpenRiak behavior and appropriate use.
-- [Operational concepts](/kv/3.4.0/explanation/operations/) — Introduce the system behaviors operators need to understand before changing or recovering a cluster.
-- [Performance concepts](/kv/3.4.0/explanation/performance/) — Introduce the resource, topology, workload, and runtime factors that shape OpenRiak performance.
-- [Replication concepts](/kv/3.4.0/explanation/replication/) — Introduce repair, convergence, and multi-cluster data movement in OpenRiak.
-- [Security concepts](/kv/3.4.0/explanation/security/) — Introduce the OpenRiak security model, trust boundaries, identities, and authorization decisions.
-- [Storage architecture](/kv/3.4.0/explanation/storage/) — Introduce storage engine design, workload fit, capacity implications, and backend trade-offs.
+- [Consistency concepts]({{< baseurl >}}kv/3.4.0/explanation/consistency/) — Introduce how OpenRiak balances availability, convergence, and stronger consistency guarantees.
+- [Data model concepts]({{< baseurl >}}kv/3.4.0/explanation/data-model/) — Introduce the concepts and trade-offs behind OpenRiak data modeling.
+- [OpenRiak foundations]({{< baseurl >}}kv/3.4.0/explanation/foundations/) — Introduce the ideas that shape OpenRiak behavior and appropriate use.
+- [Operational concepts]({{< baseurl >}}kv/3.4.0/explanation/operations/) — Introduce the system behaviors operators need to understand before changing or recovering a cluster.
+- [Performance concepts]({{< baseurl >}}kv/3.4.0/explanation/performance/) — Introduce the resource, topology, workload, and runtime factors that shape OpenRiak performance.
+- [Replication concepts]({{< baseurl >}}kv/3.4.0/explanation/replication/) — Introduce repair, convergence, and multi-cluster data movement in OpenRiak.
+- [Security concepts]({{< baseurl >}}kv/3.4.0/explanation/security/) — Introduce the OpenRiak security model, trust boundaries, identities, and authorization decisions.
+- [Storage architecture]({{< baseurl >}}kv/3.4.0/explanation/storage/) — Introduce storage engine design, workload fit, capacity implications, and backend trade-offs.

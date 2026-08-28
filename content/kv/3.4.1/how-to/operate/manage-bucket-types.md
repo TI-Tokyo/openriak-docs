@@ -56,7 +56,7 @@ and therefore add to the amount of data sent around the network. In other
 words, buckets using the `default` bucket type are free. More on that in the
 next section.
 
-In Riak versions 2.0 and later, Basho suggests that you [use bucket types](/kv/3.4.1/how-to/develop/use-bucket-types/) to namespace and configure all buckets you use. Bucket types have a lower overhead within the cluster than the
+In Riak versions 2.0 and later, Basho suggests that you [use bucket types]({{< baseurl >}}kv/3.4.1/how-to/develop/use-bucket-types/) to namespace and configure all buckets you use. Bucket types have a lower overhead within the cluster than the
 default bucket namespace but require an additional setup step on the
 command line.
 
@@ -125,7 +125,7 @@ Some changes can be applied using GET/PUT specific parameters, which will overri
 
 #### Property - dvv_enabled
 
-In Riak 2.0 the handling of siblings was improved by the enabling of dotted [version vectors](/kv/3.4.1/explanation/data-model/version-vectors-and-siblings/).  All buckets should use `{dvv_enabled, true}`.  The introduction of DVV did not force non-typed buckets to use DVV, and by default non-typed buckets will continue to use legacy vector clocks.
+In Riak 2.0 the handling of siblings was improved by the enabling of dotted [version vectors]({{< baseurl >}}kv/3.4.1/explanation/data-model/version-vectors-and-siblings/).  All buckets should use `{dvv_enabled, true}`.  The introduction of DVV did not force non-typed buckets to use DVV, and by default non-typed buckets will continue to use legacy vector clocks.
 
 To correct this the following configuration should be added to the `riak.conf`:  `buckets.default.merge_strategy = 2`.
 
@@ -141,7 +141,7 @@ The last_modified_date is a timestamp that depends on the accuracy of the clock 
 
 > Due to the potential use of timestamps to make comparisons when using `{allow_mult, false}`, the use of reliable time sources to co-ordinate time within and across clusters is recommended.
 
-When using [conflict-free replicated data types](/kv/3.4.1/reference/specialized-apis/data-type-api/), `{allow_mult, true}` must always be used.
+When using [conflict-free replicated data types]({{< baseurl >}}kv/3.4.1/reference/specialized-apis/data-type-api/), `{allow_mult, true}` must always be used.
 
 Unless the non-existence of an object can be guaranteed by the application using Riak, it is recommended that applications always read before writing, and include the vector clock from the read in the write.  This ensures that even when using `{allow_mult, false}`, fallback to time comparison is kept to a minimum.
 
@@ -209,7 +209,7 @@ It is recommended to set `notfound_ok` to `false`, so that a vnode with a missin
 
 The `pr` and `pw` bucket properties default to `0`, and are used to require primary vnodes to be involved in reads and writes.  Setting higher values may prevent writing to minority partitions, however when `{n_val, 3}` this will probably lead to intermittent failures when only two nodes fail in a cluster.  As clusters grow the probability of two concurrent failures will increase significantly.
 
-Although configuring `pr`/`pw` to values greater than 1 may be used to indirectly set stronger data reliability guarantees, or to adjust consistency guarantees - there are better ways of achieving this in Riak, which have fewer negative side effects.  Consider using [`node_confirms`](/kv/3.4.1/reference/configuration/bucket-properties/) or [`sync_on_write`](/kv/3.4.1/reference/configuration/bucket-properties/) to manage data reliability.  The use of [token-based conditional PUTs](/kv/3.4.1/reference/http-api/conditional-requests/) is the preferred approach, rather than `pr`/`pw` adjustments for tuning consistency.
+Although configuring `pr`/`pw` to values greater than 1 may be used to indirectly set stronger data reliability guarantees, or to adjust consistency guarantees - there are better ways of achieving this in Riak, which have fewer negative side effects.  Consider using [`node_confirms`]({{< baseurl >}}kv/3.4.1/reference/configuration/bucket-properties/) or [`sync_on_write`]({{< baseurl >}}kv/3.4.1/reference/configuration/bucket-properties/) to manage data reliability.  The use of [token-based conditional PUTs]({{< baseurl >}}kv/3.4.1/reference/http-api/conditional-requests/) is the preferred approach, rather than `pr`/`pw` adjustments for tuning consistency.
 
 > It is normally best practice to configure either `{pr, 1}` or `{notfound_ok, false}`, rather than rely on defaults.
 

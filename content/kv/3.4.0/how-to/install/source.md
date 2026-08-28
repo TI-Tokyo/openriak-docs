@@ -38,13 +38,13 @@ Show operators how to build and install openriak from source and confirm that th
 
 ### OpenRiak KV From Source
 
-[install source erlang]: /kv/3.4.0/how-to/install/source/
-[downloads]: /kv/3.4.0/reference/releases/downloads/
-[install debian & ubuntu#source]: /kv/3.4.0/how-to/install/debian-ubuntu/
-[install freebsd#source]: /kv/3.4.0/reference/releases/supported-platforms/
-[install mac osx#source]: /kv/3.4.0/reference/releases/supported-platforms/
-[install rhel & centos#source]: /kv/3.4.0/how-to/install/rhel-rocky/#installing-from-source
-[install verify]: /kv/3.4.0/how-to/install/verify-installation/
+[install source erlang]: {{< baseurl >}}kv/3.4.0/how-to/install/source/
+[downloads]: {{< baseurl >}}kv/3.4.0/reference/releases/downloads/
+[install debian & ubuntu#source]: {{< baseurl >}}kv/3.4.0/how-to/install/debian-ubuntu/
+[install freebsd#source]: {{< baseurl >}}kv/3.4.0/reference/releases/supported-platforms/
+[install mac osx#source]: {{< baseurl >}}kv/3.4.0/reference/releases/supported-platforms/
+[install rhel & centos#source]: {{< baseurl >}}kv/3.4.0/how-to/install/rhel-rocky/#installing-from-source
+[install verify]: {{< baseurl >}}kv/3.4.0/how-to/install/verify-installation/
 
 Riak should be installed from source if you are building on a platform
 for which a package does not exist or if you are interested in
@@ -111,8 +111,8 @@ Now that Riak is installed, check out [Verifying a Riak Installation][install ve
 
 ### Installing Erlang
 
-[install index]: /kv/3.4.0/how-to/install/
-[security basics]: /kv/3.4.0/how-to/secure/enable-security/
+[install index]: {{< baseurl >}}kv/3.4.0/how-to/install/
+[security basics]: {{< baseurl >}}kv/3.4.0/how-to/secure/enable-security/
 
 Pre-packaged versions of Riak include an Erlang installation. If you are building Riak from source, you will need to install [Basho's patched version of Erlang](https://files.tiot.jp/riak/erlang/otp_src_R16B02-basho10.tar.gz). **If you do not use this version of Erlang, you will not be able to use OpenRiak's [security features][security basics].**
 
@@ -125,10 +125,10 @@ Pre-packaged versions of Riak include an Erlang installation. If you are buildin
 ##### Contents
 
 * [kerl](#kerl-prerequisites)
-* [Debian/Ubuntu](/kv/3.4.0/how-to/install/source/)
-* [FreeBSD/Solaris](/kv/3.4.0/how-to/install/source/)
+* [Debian/Ubuntu]({{< baseurl >}}kv/3.4.0/how-to/install/source/)
+* [FreeBSD/Solaris]({{< baseurl >}}kv/3.4.0/how-to/install/source/)
 * [Mac OS X](#mac-os-x-prerequisites)
-* [RHEL/CentOS](/kv/3.4.0/how-to/install/source/)
+* [RHEL/CentOS]({{< baseurl >}}kv/3.4.0/how-to/install/source/)
 
 To build and install Erlang you must have a GNU-compatible build system and these tools:
 
@@ -254,7 +254,7 @@ sudo apt-get install libwxbase2.8 libwxgtk2.8-dev libqt4-opengl-dev
 
 ##### Next Steps
 
-Once you've installed the prerequisites, continue with [Installing on Debian/Ubuntu](/kv/3.4.0/how-to/install/source/).
+Once you've installed the prerequisites, continue with [Installing on Debian/Ubuntu]({{< baseurl >}}kv/3.4.0/how-to/install/source/).
 
 #### FreeBSD/Solaris Prerequisites
 
@@ -275,7 +275,7 @@ sudo pkg install wx28-gtk2-2.8.12_4
 
 ##### Next Steps
 
-Once you've installed the prerequisites, continue with [Installing on FreeBSD/Solaris](/kv/3.4.0/how-to/install/source/).
+Once you've installed the prerequisites, continue with [Installing on FreeBSD/Solaris]({{< baseurl >}}kv/3.4.0/how-to/install/source/).
 
 #### Mac OS X Prerequisites
 
@@ -329,15 +329,15 @@ sudo yum install wxBase.x86_64
 
 ##### Next Steps
 
-Once you've installed the prerequisites, continue with [Installing on RHEL/CentOS](/kv/3.4.0/how-to/install/source/).
+Once you've installed the prerequisites, continue with [Installing on RHEL/CentOS]({{< baseurl >}}kv/3.4.0/how-to/install/source/).
 
 #### Installation
 
 * [Installing with kerl](#installing-with-kerl)
-* [Installing on Debian/Ubuntu](/kv/3.4.0/how-to/install/source/)
-* [Installing on FreeBSD/Solaris](/kv/3.4.0/how-to/install/source/)
+* [Installing on Debian/Ubuntu]({{< baseurl >}}kv/3.4.0/how-to/install/source/)
+* [Installing on FreeBSD/Solaris]({{< baseurl >}}kv/3.4.0/how-to/install/source/)
 * [Installing on Mac OS X](#installing-on-mac-os-x)
-* [Installing on RHEL/CentOS](/kv/3.4.0/how-to/install/source/)
+* [Installing on RHEL/CentOS]({{< baseurl >}}kv/3.4.0/how-to/install/source/)
 
 #### Installing with kerl
 
@@ -380,7 +380,7 @@ erl
 
 #### Installing on Debian/Ubuntu
 
-First make sure you have installed the necessary dependencies found in [Debian/Ubuntu Prerequisites](/kv/3.4.0/how-to/install/source/).
+First make sure you have installed the necessary dependencies found in [Debian/Ubuntu Prerequisites]({{< baseurl >}}kv/3.4.0/how-to/install/source/).
 
 Next download [Basho's patched version of Erlang](https://files.tiot.jp/riak/erlang/otp_src_R16B02-basho10.tar.gz).
 
@@ -410,7 +410,7 @@ erl
 
 #### Installing on FreeBSD/Solaris
 
-First make sure you installed the necessary dependencies in [FreeBSD/Solaris Prerequisites](/kv/3.4.0/how-to/install/source/).
+First make sure you installed the necessary dependencies in [FreeBSD/Solaris Prerequisites]({{< baseurl >}}kv/3.4.0/how-to/install/source/).
 
 Next download [Basho's patched version of Erlang](https://files.tiot.jp/riak/erlang/otp_src_R16B02-basho10.tar.gz):
 
@@ -519,7 +519,7 @@ erl
 
 #### Installing on RHEL/CentOS
 
-First make sure you have installed the necessary dependencies and prerequisites found in [RHEL/CentOS Prerequisites](/kv/3.4.0/how-to/install/source/).
+First make sure you have installed the necessary dependencies and prerequisites found in [RHEL/CentOS Prerequisites]({{< baseurl >}}kv/3.4.0/how-to/install/source/).
 
 Using `wget`:
 
@@ -558,7 +558,7 @@ Some points to note when installing Erlang:
 - If using OpenRiak KV 3.0.16 and OTP 22.3, Riak does not support Erlang/OTP running in [HIPE mode](https://www.erlang.org/docs/22/man/hipe_app).  HIPE is retired as of OTP 24.
 - There are significant performance advantages in running Riak on OTP 26, when compared with OTP 24.3.
 - The Erlang/OTP team are only committed to fixing issues in the three most recent major versions of Erlang.  Although Erlang 24.3 is mature and very stable, migrating forward to a Riak release running on a presently supported Erlang version is recommended.
-- It is not possible to [migrate directly using a rolling restart](/kv/3.4.0/how-to/operate/upgrade-cluster/) from OpenRiak KV 3.0 to OpenRiak KV 3.4 due to breaking changes in the Erlang distribution protocol.  Migrating directly between these versions with zero down-time can only be managed using [the cluster migration strategy](/kv/3.4.0/how-to/configure/replication/migrate-cluster/).
+- It is not possible to [migrate directly using a rolling restart]({{< baseurl >}}kv/3.4.0/how-to/operate/upgrade-cluster/) from OpenRiak KV 3.0 to OpenRiak KV 3.4 due to breaking changes in the Erlang distribution protocol.  Migrating directly between these versions with zero down-time can only be managed using [the cluster migration strategy]({{< baseurl >}}kv/3.4.0/how-to/configure/replication/migrate-cluster/).
 
 #### Make Riak
 
@@ -582,7 +582,7 @@ To generate a package, running `make package` will build a package for the curre
 
 #### Starting Riak by Make Method
 
-Starting Riak changes depending on how Riak was made - a [local release](/kv/3.4.0/how-to/install/source/) or [local development cluster](/kv/3.4.0/tutorials/first-cluster/), or through [package deployment](/kv/3.4.0/how-to/operate/start-stop-restart-node/).  In all cases Riak is released using [the relx release generator](https://rebar3.org/docs/deployment/releases/), and inherits the control commands from the `relx` extended start script; but the location and method for accessing that script will vary.
+Starting Riak changes depending on how Riak was made - a [local release]({{< baseurl >}}kv/3.4.0/how-to/install/source/) or [local development cluster]({{< baseurl >}}kv/3.4.0/tutorials/first-cluster/), or through [package deployment]({{< baseurl >}}kv/3.4.0/how-to/operate/start-stop-restart-node/).  In all cases Riak is released using [the relx release generator](https://rebar3.org/docs/deployment/releases/), and inherits the control commands from the `relx` extended start script; but the location and method for accessing that script will vary.
 
 ## Verify the result
 

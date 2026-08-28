@@ -189,13 +189,13 @@ to get a complete picture of realtime replication between two clusters.
 
 Riak provides data related to current operating status, which includes
 statistics in the form of counters and histograms. These statistics
-are made available through the HTTP API via the [`/stats`](/kv/3.4.1/reference/http-api/status/) endpoint, or through the [`riak admin`](/kv/3.4.1/reference/commands/riak-admin/) interface, in particular the `stat` and `status` commands.
+are made available through the HTTP API via the [`/stats`]({{< baseurl >}}kv/3.4.1/reference/http-api/status/) endpoint, or through the [`riak admin`]({{< baseurl >}}kv/3.4.1/reference/commands/riak-admin/) interface, in particular the `stat` and `status` commands.
 
 This page presents the most commonly monitored and gathered
 statistics, as well as numerous solutions for monitoring and gathering
 statistics that our customers and community report using successfully
 in OpenRiak cluster environments. You can learn more about the specific
-Riak statistics provided in the [Inspecting a Node](/kv/3.4.1/how-to/operate/inspect-node-and-cluster/) and [HTTP Status](/kv/3.4.1/reference/http-api/status/) documentation.
+Riak statistics provided in the [Inspecting a Node]({{< baseurl >}}kv/3.4.1/how-to/operate/inspect-node-and-cluster/) and [HTTP Status]({{< baseurl >}}kv/3.4.1/reference/http-api/status/) documentation.
 
 #### System Metrics To Graph
 
@@ -219,7 +219,7 @@ We also recommend tracking your system's virtual and
 writebacks. Things like massive flushes of dirty pages or steadily
 climbing writeback volumes can indicate poor virtual memory tuning.
 More information can be found [here][sysctl_vm_txt] and in our
-documentation on [system tuning](/kv/3.4.1/how-to/tune/#storage-and-file-system-tuning).
+documentation on [system tuning]({{< baseurl >}}kv/3.4.1/how-to/tune/#storage-and-file-system-tuning).
 
 #### Riak Metrics to Graph
 
@@ -230,7 +230,7 @@ Riak metrics fall into several general categories:
 3. Erlang resource usage metrics
 4. General Riak load/health metrics
 
-If graphing all of the [available Riak metrics](/kv/3.4.1/how-to/operate/inspect-node-and-cluster/) is
+If graphing all of the [available Riak metrics]({{< baseurl >}}kv/3.4.1/how-to/operate/inspect-node-and-cluster/) is
 not practical, you should pick a minimum relevant subset from these
 categories. Some of the most helpful metrics are discussed below.
 
@@ -309,7 +309,7 @@ Metric | Also | Notes
 
 #### Command-line Interface
 
-The [`riak admin`](/kv/3.4.1/reference/commands/riak-admin/) tool provides two
+The [`riak admin`]({{< baseurl >}}kv/3.4.1/reference/commands/riak-admin/) tool provides two
 interfaces for retrieving statistics and other information: `status`
 and `stat`.
 
@@ -334,14 +334,14 @@ consistent_get_objsize_195 : 0
 ```
 
 A comprehensive list of available stats can be found in the
-[Inspecting a Node](/kv/3.4.1/how-to/operate/inspect-node-and-cluster/#riak admin-status) document.
+[Inspecting a Node]({{< baseurl >}}kv/3.4.1/how-to/operate/inspect-node-and-cluster/#riak admin-status) document.
 
 ##### stat
 
 The `riak admin stat` command is related to the `riak admin status`
 command but provides a more fine-grained interface for interacting with
 stats and information. Full documentation of this command can be found
-in the [Inspecting a Node](/kv/3.4.1/reference/commands/riak-admin/#stat) document.
+in the [Inspecting a Node]({{< baseurl >}}kv/3.4.1/reference/commands/riak-admin/#stat) document.
 
 #### Statistics and Monitoring Tools
 
@@ -387,7 +387,7 @@ troubleshooting issues on Riak nodes.
 
 ###### Riak Control
 
-[Riak Control](/kv/3.4.1/reference/commands/riak-control/) is Basho's REST-driven user-interface for managing Riak
+[Riak Control]({{< baseurl >}}kv/3.4.1/reference/commands/riak-control/) is Basho's REST-driven user-interface for managing Riak
 clusters. It is designed to give you quick insight into the health of
 your cluster and allow for easy management of nodes.
 
@@ -411,7 +411,7 @@ clusters and grids. Customers and community members using Riak have
 reported success in using Ganglia to monitor Riak clusters.
 
 A [Riak Ganglia module][riak_ganglia] for collecting statistics from
-the Riak HTTP [`/stats`](/kv/3.4.1/reference/http-api/status/) endpoint is also available.
+the Riak HTTP [`/stats`]({{< baseurl >}}kv/3.4.1/reference/http-api/status/) endpoint is also available.
 
 ###### Nagios
 
@@ -479,14 +479,14 @@ capacity planning in an OpenRiak cluster environment.
 that can provide information on the current and past states of Riak nodes and
 visualizations of machine generated data such as log files.
 
-A [Riak New Relic Agent][riak_new_relic] for collecting statistics from the Riak HTTP [`/stats`](/kv/3.4.1/reference/http-api/status/) endpoint is also available.
+A [Riak New Relic Agent][riak_new_relic] for collecting statistics from the Riak HTTP [`/stats`]({{< baseurl >}}kv/3.4.1/reference/http-api/status/) endpoint is also available.
 
 ###### Splunk
 
 [Splunk](http://www.splunk.com) is available as downloadable software or
 as a service, and provides tools for visualization of machine generated
 data such as log files. It can be connected to OpenRiak's HTTP statistics
-[`/stats`](/kv/3.4.1/reference/http-api/status/) endpoint.
+[`/stats`]({{< baseurl >}}kv/3.4.1/reference/http-api/status/) endpoint.
 
 Splunk can be used to aggregate all OpenRiak cluster node operational log
 files, including operating system and Riak-specific logs and Riak
@@ -508,9 +508,9 @@ Docs](https://github.com/basho/basho_docs).
 
 #### References
 
-* [Inspecting a Node](/kv/3.4.1/how-to/operate/inspect-node-and-cluster/)
+* [Inspecting a Node]({{< baseurl >}}kv/3.4.1/how-to/operate/inspect-node-and-cluster/)
 * [Riaknostic](http://riaknostic.basho.com)
-* [Riak Control](/kv/3.4.1/reference/commands/riak-control/)
+* [Riak Control]({{< baseurl >}}kv/3.4.1/reference/commands/riak-control/)
 * [collectd](http://collectd.org)
 * [Ganglia](http://ganglia.info)
 * [Nagios](http://www.nagios.org)
@@ -525,9 +525,9 @@ Docs](https://github.com/basho/basho_docs).
 * [Riak Docs on Github](https://github.com/basho/basho_docs)
 
 [sysctl_vm_txt]: https://www.kernel.org/doc/Documentation/sysctl/vm.txt
-[data_types_counters]: /riak/kv/latest/developing/data-types/counters/
-[data_types_sets]: /riak/kv/latest/developing/data-types/sets/
-[data_types_maps]: /riak/kv/latest/developing/data-types/maps/
+[data_types_counters]: {{< baseurl >}}riak/kv/latest/developing/data-types/counters/
+[data_types_sets]: {{< baseurl >}}riak/kv/latest/developing/data-types/sets/
+[data_types_maps]: {{< baseurl >}}riak/kv/latest/developing/data-types/maps/
 [riak_nagios]: https://github.com/basho/riak_nagios
 [tcollector]: https://github.com/stumbleupon/tcollector
 [tcollector_riak_plugin]: https://github.com/stumbleupon/tcollector/blob/master/collectors/0/riak.py
@@ -551,17 +551,17 @@ When Tictac AAE is enabled, each vnode has a queue of exchanges related to that 
 
 The result of each individual exchange is not logged by `riak_kv `unless it shows a discrepancy, although the details of each exchange can be found in the AAE logs with the tag `log_ref=ex*`.  A summary log is produced every loop from the `riak_kv_vnode` ("Tictac AAE loop completed"), giving the statistics for that loop.
 
-Statistics on Tictac AAE exchanges are also available via [riak stats](/kv/3.4.1/reference/operations/statistics-and-monitoring/):
+Statistics on Tictac AAE exchanges are also available via [riak stats]({{< baseurl >}}kv/3.4.1/reference/operations/statistics-and-monitoring/):
 
 - `tictacaae_queue_microsec__max`, `tictacaae_queue_microsec_mean`.
   - The time spent by the vnode waiting for the controller to respond to an update (prompted by a PUT on the vnode).
   - May give an indication that the vnode is being delayed due to the overhead of maintaining a parallel-mode AAE store.
 - `tictacaae_root_compare`, `tictacaae_branch_compare`, `tictacaae_clock_compare`, `tictacaae_error`, `tictacaae_timeout`, `tictacaae_notsupported`.
   - Counts of the exchanges by the closing status of the exchange.
-    - Intra-cluster exchanges follow [the same process as inter-cluster reconciliation exchanges](/kv/3.4.1/how-to/configure/replication/configure-fullsync/).
+    - Intra-cluster exchanges follow [the same process as inter-cluster reconciliation exchanges]({{< baseurl >}}kv/3.4.1/how-to/configure/replication/configure-fullsync/).
     - `root_compare` or `branch_compare` indicate no deltas were discovered.
   - Because of the infrequency of exchanges, tracking the `*_total` statistics is normally required to gain understanding of trends in AAE activity.
 
 > Additional logging will be generated if significant deltas are discovered, and the AAE process enters into a repair loop: a process through which repairs are accelerated by using information about the deltas being discovered (i.e. any pattern of buckets and modified date ranges discovered in deltas).
 
-AAE will prompt the repair of delta using read repairs, so the [monitoring of read repairs](/kv/3.4.1/how-to/operate/monitor-read-repairs/) provides further information.
+AAE will prompt the repair of delta using read repairs, so the [monitoring of read repairs]({{< baseurl >}}kv/3.4.1/how-to/operate/monitor-read-repairs/) provides further information.

@@ -51,4 +51,4 @@ Link to the relevant how-to guides for real tasks, explanation pages for the und
 
 ## In this section
 
-- [Secure a first client connection](/kv/3.4.0/tutorials/security/secure-client-connection/) — Guide a newcomer through enabling security and making one authenticated TLS client request.
+- [Secure a first client connection]({{< baseurl >}}kv/3.4.0/tutorials/security/secure-client-connection/) — Guide a newcomer through enabling security and making one authenticated TLS client request.

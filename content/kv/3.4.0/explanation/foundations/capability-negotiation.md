@@ -29,9 +29,9 @@ Explain capability negotiation and why it matters when designing or operating Op
 
 ### Capability Negotiation
 
-[glossary vnode]: /kv/3.4.0/explanation/foundations/glossary/#vnode
-[upgrade cluster]: /kv/3.4.0/how-to/operate/upgrade-cluster/
-[usage mapreduce]: /kv/3.4.0/how-to/develop/run-mapreduce/
+[glossary vnode]: {{< baseurl >}}kv/3.4.0/explanation/foundations/glossary/#vnode
+[upgrade cluster]: {{< baseurl >}}kv/3.4.0/how-to/operate/upgrade-cluster/
+[usage mapreduce]: {{< baseurl >}}kv/3.4.0/how-to/develop/run-mapreduce/
 
 In early versions of OpenRiak KV, [rolling upgrades][upgrade cluster] from an older version to a newer involved (a) disabling all new features associated with the newer version, and then (b) re-enabling those features once all nodes in the cluster were upgraded.
 

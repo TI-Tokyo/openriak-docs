@@ -26,7 +26,7 @@ Describe the backend callback interface and supported behavior.
 
 ### Backend API
 
-[plan backend]: /kv/3.4.1/explanation/storage/choosing-backend/
+[plan backend]: {{< baseurl >}}kv/3.4.1/explanation/storage/choosing-backend/
 
 OpenRiak's storage API uniformly applies to all of the
 [supported backends][plan backend]. This page presents the details of

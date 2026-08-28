@@ -35,11 +35,11 @@ Administrative access to the nodes you will change; a copy of the current config
 
 ### Backend Configuration
 
-[plan backend leveldb]: /kv/3.4.1/explanation/storage/leveldb/
-[plan backend leveled]: /kv/3.4.1/explanation/storage/leveled/
-[plan backend bitcask]: /kv/3.4.1/explanation/storage/bitcask/
-[plan backend memory]: /kv/3.4.1/explanation/storage/memory/
-[plan backend multi]: /kv/3.4.1/explanation/storage/multi-backend/
+[plan backend leveldb]: {{< baseurl >}}kv/3.4.1/explanation/storage/leveldb/
+[plan backend leveled]: {{< baseurl >}}kv/3.4.1/explanation/storage/leveled/
+[plan backend bitcask]: {{< baseurl >}}kv/3.4.1/explanation/storage/bitcask/
+[plan backend memory]: {{< baseurl >}}kv/3.4.1/explanation/storage/memory/
+[plan backend multi]: {{< baseurl >}}kv/3.4.1/explanation/storage/multi-backend/
 
 #### LevelDB
 
@@ -967,12 +967,12 @@ Confirm that the intended setting is active on every affected node, then check c
 
 ## In this section
 
-- [Configure the Bitcask merge window](/kv/3.4.1/how-to/configure/backends/bitcask-merge-window/) — Show operators how to schedule Bitcask merges and verify that obsolete data is reclaimed.
-- [Configure the Bitcask backend](/kv/3.4.1/how-to/configure/backends/bitcask/) — Show operators how to configure the bitcask backend without losing access to required data.
-- [Change the backend of an existing node](/kv/3.4.1/how-to/configure/backends/change-backend/) — Show operators how to change the backend of an existing node without losing access to required data.
-- [Configure the LevelDB backend](/kv/3.4.1/how-to/configure/backends/leveldb/) — Show operators how to configure the leveldb backend without losing access to required data.
-- [Configure the Leveled compaction window](/kv/3.4.1/how-to/configure/backends/leveled-compaction-window/) — Show operators how to schedule Leveled compaction within an appropriate maintenance window.
-- [Configure the Leveled backend](/kv/3.4.1/how-to/configure/backends/leveled/) — Show operators how to configure the leveled backend without losing access to required data.
-- [Configure the Memory backend](/kv/3.4.1/how-to/configure/backends/memory/) — Show operators how to configure the memory backend without losing access to required data.
-- [Configure multiple backends](/kv/3.4.1/how-to/configure/backends/multi/) — Show operators how to configure multiple backends without losing access to required data.
-- [Configure the Prefix Multi backend](/kv/3.4.1/how-to/configure/backends/prefix-multi/) — Show operators how to configure the prefix multi backend without losing access to required data.
+- [Configure the Bitcask merge window]({{< baseurl >}}kv/3.4.1/how-to/configure/backends/bitcask-merge-window/) — Show operators how to schedule Bitcask merges and verify that obsolete data is reclaimed.
+- [Configure the Bitcask backend]({{< baseurl >}}kv/3.4.1/how-to/configure/backends/bitcask/) — Show operators how to configure the bitcask backend without losing access to required data.
+- [Change the backend of an existing node]({{< baseurl >}}kv/3.4.1/how-to/configure/backends/change-backend/) — Show operators how to change the backend of an existing node without losing access to required data.
+- [Configure the LevelDB backend]({{< baseurl >}}kv/3.4.1/how-to/configure/backends/leveldb/) — Show operators how to configure the leveldb backend without losing access to required data.
+- [Configure the Leveled compaction window]({{< baseurl >}}kv/3.4.1/how-to/configure/backends/leveled-compaction-window/) — Show operators how to schedule Leveled compaction within an appropriate maintenance window.
+- [Configure the Leveled backend]({{< baseurl >}}kv/3.4.1/how-to/configure/backends/leveled/) — Show operators how to configure the leveled backend without losing access to required data.
+- [Configure the Memory backend]({{< baseurl >}}kv/3.4.1/how-to/configure/backends/memory/) — Show operators how to configure the memory backend without losing access to required data.
+- [Configure multiple backends]({{< baseurl >}}kv/3.4.1/how-to/configure/backends/multi/) — Show operators how to configure multiple backends without losing access to required data.
+- [Configure the Prefix Multi backend]({{< baseurl >}}kv/3.4.1/how-to/configure/backends/prefix-multi/) — Show operators how to configure the prefix multi backend without losing access to required data.

@@ -36,7 +36,7 @@ Administrative access to the nodes you will change; a copy of the current config
 
 ### Load Balancing and Proxy Configuration
 
-[perf open files]: /kv/3.4.1/how-to/tune/set-open-files-limit/
+[perf open files]: {{< baseurl >}}kv/3.4.1/how-to/tune/set-open-files-limit/
 
 The recommended best practice for operating Riak in production is to
 place Riak behind a load-balancing or proxy solution, either hardware-

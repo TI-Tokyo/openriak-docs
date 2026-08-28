@@ -37,13 +37,13 @@ Define the names, fields, states, limits, and version applicability for log file
 
 ### Logging Reference
 
-[cluster ops log]: /kv/3.4.0/how-to/operate/change-log-level/
+[cluster ops log]: {{< baseurl >}}kv/3.4.0/how-to/operate/change-log-level/
 
 Logging in OpenRiak KV is handled by a Basho-produced logging framework for
 [Erlang](http://www.erlang.org) called
 [lager](https://github.com/basho/lager).
 
-lager provides a number of configuration options that you can use to fine-tune your OpenRiak cluster's logging output. A compact listing of parameters can be found in our [configuration files](/kv/3.4.0/reference/configuration/#logging) documentation. A more thorough explanation of these options can be found in this document.
+lager provides a number of configuration options that you can use to fine-tune your OpenRiak cluster's logging output. A compact listing of parameters can be found in our [configuration files]({{< baseurl >}}kv/3.4.0/reference/configuration/#logging) documentation. A more thorough explanation of these options can be found in this document.
 
 #### Log Directory
 
@@ -294,11 +294,11 @@ or to neither. This is determined by the value that you give to the
 * `file` - Console logs will be emitted to a file. This is OpenRiak's
     default behavior. The location of that file is determined by the
     `log.console.file` parameter. The default location is
-    `./log/console.log` on an installation from [source](/kv/3.4.0/how-to/install/source/), but will differ on platform-specific installation,
+    `./log/console.log` on an installation from [source]({{< baseurl >}}kv/3.4.0/how-to/install/source/), but will differ on platform-specific installation,
     e.g.  `/var/log/riak` on Ubuntu, Debian, CentOS, and RHEL or
     `/opt/riak/log` on Solaris-based platforms.
 * `console` - Console logs will be emitted to standard output, which
-    can be viewed by running the [`riak attach-direct`](/kv/3.4.0/reference/commands/riak/#attach-direct) command
+    can be viewed by running the [`riak attach-direct`]({{< baseurl >}}kv/3.4.0/reference/commands/riak/#attach-direct) command
 * `both` - Console logs will be emitted both to a file and to standard
     output
 * `off` - Console log messages will be disabled
@@ -339,7 +339,7 @@ logger.default_filters = crash, error, progress, report, sasl, background, backe
 logger.additional_handlers = crash, error, background, backend
 ```
 
-It is possible to change logging at run time via [`remote_console`](/kv/3.4.0/how-to/operate/use-remote-console/) by following the [standard Erlang logger guide](https://www.erlang.org/doc/apps/kernel/logger_chapter#example-add-a-handler-to-log-info-events-to-file).
+It is possible to change logging at run time via [`remote_console`]({{< baseurl >}}kv/3.4.0/how-to/operate/use-remote-console/) by following the [standard Erlang logger guide](https://www.erlang.org/doc/apps/kernel/logger_chapter#example-add-a-handler-to-log-info-events-to-file).
 
 The `background` filter and handler is targeted at `tictacaae` logs, and recurring metric logs which are triggered by frequent ticks.  The `backend` filter and handler will presently only handle leveled logs.  The leveled log level can be set independently to the general log level in `riak.conf` using `leveled.log_level`: though it will not be possible to alter this log level at run-time as with the general log (e.g. the module log level cannot be reduced to a lower log level than the `leveled.log_loglevel` for leveled logs, the leveled filter is applied before the kernel logger filter).
 

@@ -68,20 +68,20 @@ Provides definitions for, insight into, and high level information about the var
 
 ### Concepts
 
-[concept aae]: /kv/3.4.1/explanation/replication/active-anti-entropy/
-[concept buckets]: /kv/3.4.1/explanation/data-model/keys-objects-and-buckets/
-[concept cap neg]: /kv/3.4.1/explanation/foundations/capability-negotiation/
-[concept causal context]: /kv/3.4.1/explanation/data-model/causal-context/
-[concept clusters]: /kv/3.4.1/explanation/foundations/clusters-rings-and-partitions/
-[concept crdts]: /kv/3.4.1/explanation/data-model/distributed-data-types/
-[concept eventual consistency]: /kv/3.4.1/explanation/consistency/eventual-consistency/
-[concept keys objects]: /kv/3.4.1/explanation/data-model/keys-objects-and-buckets/
-[concept replication]: /kv/3.4.1/explanation/replication/
-[concept strong consistency]: /kv/3.4.1/reference/specialized-apis/strong-consistency-api/
-[concept vnodes]: /kv/3.4.1/explanation/foundations/virtual-nodes/
-[config index]: /kv/3.4.1/how-to/configure/
-[plan index]: /kv/3.4.1/how-to/plan/
-[use index]: /kv/3.4.1/how-to/operate/
+[concept aae]: {{< baseurl >}}kv/3.4.1/explanation/replication/active-anti-entropy/
+[concept buckets]: {{< baseurl >}}kv/3.4.1/explanation/data-model/keys-objects-and-buckets/
+[concept cap neg]: {{< baseurl >}}kv/3.4.1/explanation/foundations/capability-negotiation/
+[concept causal context]: {{< baseurl >}}kv/3.4.1/explanation/data-model/causal-context/
+[concept clusters]: {{< baseurl >}}kv/3.4.1/explanation/foundations/clusters-rings-and-partitions/
+[concept crdts]: {{< baseurl >}}kv/3.4.1/explanation/data-model/distributed-data-types/
+[concept eventual consistency]: {{< baseurl >}}kv/3.4.1/explanation/consistency/eventual-consistency/
+[concept keys objects]: {{< baseurl >}}kv/3.4.1/explanation/data-model/keys-objects-and-buckets/
+[concept replication]: {{< baseurl >}}kv/3.4.1/explanation/replication/
+[concept strong consistency]: {{< baseurl >}}kv/3.4.1/reference/specialized-apis/strong-consistency-api/
+[concept vnodes]: {{< baseurl >}}kv/3.4.1/explanation/foundations/virtual-nodes/
+[config index]: {{< baseurl >}}kv/3.4.1/how-to/configure/
+[plan index]: {{< baseurl >}}kv/3.4.1/how-to/plan/
+[use index]: {{< baseurl >}}kv/3.4.1/how-to/operate/
 
 OpenRiak KV has many great features, functions, and guiding principles that inform how the product works. This section provides definitions for, insight into, and high level information about the various parts of OpenRiak KV you will encounter as you [plan][plan index], [configure][config index], and [use][use index] Riak.
 
@@ -108,7 +108,7 @@ This site provides overview documentation for the OpenRiak community release of 
 
 This guide provides insight into the underlying theories and processes which underpin the function of an OpenRiak cluster.  Understanding this theory will be helpful to understand the design, setup and operation of an OpenRiak cluster.
 
-- [The ring and how data is distributed in Riak](/kv/3.4.1/explanation/foundations/clusters-rings-and-partitions/)
-- [Eventual consistency](/kv/3.4.1/explanation/consistency/eventual-consistency/)
-- [Background processes](/kv/3.4.1/explanation/operations/)
-- [Backend design](/kv/3.4.1/explanation/storage/)
+- [The ring and how data is distributed in Riak]({{< baseurl >}}kv/3.4.1/explanation/foundations/clusters-rings-and-partitions/)
+- [Eventual consistency]({{< baseurl >}}kv/3.4.1/explanation/consistency/eventual-consistency/)
+- [Background processes]({{< baseurl >}}kv/3.4.1/explanation/operations/)
+- [Backend design]({{< baseurl >}}kv/3.4.1/explanation/storage/)

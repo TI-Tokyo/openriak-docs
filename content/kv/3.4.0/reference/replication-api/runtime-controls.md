@@ -43,7 +43,7 @@ List supported source, sink, queue, reconciliation, range, and resynchronization
 ### Replication Operations
 
 **Deprecation Warning**
-v2 Multi-Datacenter Replication is deprecated and will be removed in a future version. Please use [v3](/kv/3.4.0/reference/replication-api/runtime-controls/) instead.
+v2 Multi-Datacenter Replication is deprecated and will be removed in a future version. Please use [v3]({{< baseurl >}}kv/3.4.0/reference/replication-api/runtime-controls/) instead.
 
 OpenRiak's Multi-Datacenter Replication system is largely
 controlled by the `riak repl` command. The sections below detail the
@@ -179,7 +179,7 @@ restarting Riak.
 
 Field | Description
 :-----|:-----------
-`client_stats` | See <a href="/kv/3.4.0/reference/operations/replication-statistics/#client-statistics">Client Statistics</a>
+`client_stats` | See <a href="{{< baseurl >}}kv/3.4.0/reference/operations/replication-statistics/#client-statistics">Client Statistics</a>
 `client_bytes_recv` | The total number of bytes the client has received since the server has been started
 `client_bytes_sent` | The total number of bytes sent to all connected sites
 `client_connect_errors` | The number of TCP/IP connection errors
@@ -199,7 +199,7 @@ Field | Description
 `server_fullsyncs` | The number of fullsync operations that have occurred since the server was started
 `server_rx_kbps` | A snapshot of the server (listener) received kilobits/second taken once a minute. The past 8 snapshots are stored in this list. Newest snapshots appear on the left side of the list.
 `server_tx_kbps` | A snapshot of the server (listener) sent kilobits/second taken once a minute. The past 8 snapshots are stored in this list. Newest snapshots appear on the left side of the list.
-`server_stats` | See <a href="/kv/3.4.0/reference/operations/replication-statistics/#server-statistics">Server Statistics</a>
+`server_stats` | See <a href="{{< baseurl >}}kv/3.4.0/reference/operations/replication-statistics/#server-statistics">Server Statistics</a>
 
 ##### Elections and Objects
 
@@ -237,7 +237,7 @@ Field | Description
 #### Bounded Queue
 
 The bounded queue is responsible for holding objects that are waiting to
-participate in realtime replication. Please see the [Riak MDC Replication Configuration](/kv/3.4.0/how-to/configure/replication/configure-v2-multi-datacenter/) guide for more information.
+participate in realtime replication. Please see the [Riak MDC Replication Configuration]({{< baseurl >}}kv/3.4.0/how-to/configure/replication/configure-v2-multi-datacenter/) guide for more information.
 
 Field | Description
 ------|------------
@@ -258,7 +258,7 @@ Field | Description
 `site` | The connected site name configured with `riak repl add-site`
 `strategy` | A replication strategy defines an implementation of the Riak Replication protocol. Valid values: `keylist` or `syncv1`.
 `fullsync_worker` | The Erlang process ID of the fullsync worker
-`bounded_queue` | See the <a href="/kv/3.4.0/reference/replication-api/runtime-controls/#bounded-queue">Bounded Queue</a> section above
+`bounded_queue` | See the <a href="{{< baseurl >}}kv/3.4.0/reference/replication-api/runtime-controls/#bounded-queue">Bounded Queue</a> section above
 `state` | State shows what the current replication strategy is processing. The following definitions appear in the status output if the keylist strategy is being used. They can be used by Basho support to identify replication issues.<ul><li>`wait_for_partition`</li><li>`build_keylist`</li><li>`wait_keylist`</li><li>`diff_bloom`</li><li>`diff_keylist`</li></ul>s
 `message_queue_len` | The number of Erlang messages that are waiting to be processed by the server
 
@@ -274,11 +274,11 @@ Field | Description
 `stage_start` | The number of elapsed seconds since replication has started on a given stage
 `get_pool_size` | The number of Riak get finite state workers available to process requests
 
-[config v3 mdc]: /kv/3.4.0/how-to/configure/replication/configure-v3-multi-datacenter/
-[config v3 nat]: /kv/3.4.0/how-to/configure/replication/configure-replication-through-nat/
-[config v3 quickstart]: /kv/3.4.0/tutorials/replication/two-cluster-replication/
-[config v3 ssl]: /kv/3.4.0/how-to/configure/replication/secure-replication/
-[ref v3 stats]: /kv/3.4.0/reference/operations/replication-statistics/
+[config v3 mdc]: {{< baseurl >}}kv/3.4.0/how-to/configure/replication/configure-v3-multi-datacenter/
+[config v3 nat]: {{< baseurl >}}kv/3.4.0/how-to/configure/replication/configure-replication-through-nat/
+[config v3 quickstart]: {{< baseurl >}}kv/3.4.0/tutorials/replication/two-cluster-replication/
+[config v3 ssl]: {{< baseurl >}}kv/3.4.0/how-to/configure/replication/secure-replication/
+[ref v3 stats]: {{< baseurl >}}kv/3.4.0/reference/operations/replication-statistics/
 
 This document explains how to manage replication with the `riak repl`
 command. Some of these commands can be set or behavior altered by
@@ -670,11 +670,11 @@ With o(10bn) keys in a cluster, there are 10K keys and clocks to be compared for
 
 It is important that when a delta is being resolved, the comparison queries can complete in the time slot for the check.  If they do not complete, checks will begin to overlap and queue, and this will lead to checks being dropped and also the waste of compute resources; a timed out exchange will not be able to prompt repairs even though the fold operations may have continued through to completion.
 
-The speed of checks are recorded in logs, and can be tested manually with different numbers of segment IDs using the [AAE fold `fetch_clocks_nval`](/kv/3.4.0/reference/aae-fold-api/).  The speed of folds using segment IDs are improved if the segment IDs are in a smaller range (i.e. are numerically close together), and the AAE exchange will attempt to exploit this efficiency when selecting a subset of segment IDs.
+The speed of checks are recorded in logs, and can be tested manually with different numbers of segment IDs using the [AAE fold `fetch_clocks_nval`]({{< baseurl >}}kv/3.4.0/reference/aae-fold-api/).  The speed of folds using segment IDs are improved if the segment IDs are in a smaller range (i.e. are numerically close together), and the AAE exchange will attempt to exploit this efficiency when selecting a subset of segment IDs.
 
 #### Making runtime changes to the Source
 
-There are four functions on the source that may be [called from the `remote_console`](/kv/3.4.0/how-to/operate/use-remote-console/).  To suspend and resume a queue:
+There are four functions on the source that may be [called from the `remote_console`]({{< baseurl >}}kv/3.4.0/how-to/operate/use-remote-console/).  To suspend and resume a queue:
 
 ```erlang
 riak_kv_replrtq_src:suspend_rtq(QueueName).
@@ -698,7 +698,7 @@ riak_kv_replrtq_src:clear_rtq(QueueName).
 
 #### Making runtime changes to the Sink
 
-More workers and sink peers can be added at [runtime via the `remote_console`](/kv/3.4.0/how-to/operate/use-remote-console/), by resetting the worker counts.  This reset is a cluster-wide change, not just a change on the local node:
+More workers and sink peers can be added at [runtime via the `remote_console`]({{< baseurl >}}kv/3.4.0/how-to/operate/use-remote-console/), by resetting the worker counts.  This reset is a cluster-wide change, not just a change on the local node:
 
 ```erlang
 riak_client:replrtq_reset_all_workercounts(WorkerCount, PerPeerLimit)
@@ -734,7 +734,7 @@ The `all_check` can be replaced with `hour_check`, `day_check` or `range_check` 
 
 #### Configure and monitor work queues
 
-The node worker pool configuration is [detailed further in the AAE fold API documentation](/kv/3.4.0/how-to/operate/monitor-worker-pools/).
+The node worker pool configuration is [detailed further in the AAE fold API documentation]({{< baseurl >}}kv/3.4.0/how-to/operate/monitor-worker-pools/).
 
 There are two per-node worker pool sizes which have particular relevance to full-sync: `af1_worker_pool_size = <size>`; `af3_worker_pool_size = <size>`.
 
@@ -742,7 +742,7 @@ The AF1 pool is used for rebuilds of the AAE tree cache, and the AF3 pool is use
 
 If the full-sync processes are taking too long (perhaps as max_results or range_boost are set too aggressively) then the worker pools may backup.  At some stage there may develop a situation where all full-sync queries will time out as the queries will take too long to reach the front of the queue, and hence all the effort associated with the queries will be wasted.
 
-By default there is a log prompted for every aae_fold on completion (all full-sync activity depends on aae_folds prompted on both the source and sink).  For more information on monitoring node worker pools [refer to the Operations guide](/kv/3.4.0/how-to/operate/monitor-worker-pools/).
+By default there is a log prompted for every aae_fold on completion (all full-sync activity depends on aae_folds prompted on both the source and sink).  For more information on monitoring node worker pools [refer to the Operations guide]({{< baseurl >}}kv/3.4.0/how-to/operate/monitor-worker-pools/).
 
 #### Update the request limits
 
@@ -779,7 +779,7 @@ Remember the `range_check` queries will only run if either: the last check on th
 
 #### Re-Sync a Bucket
 
-Full-sync reconciliation is designed to be fast and efficient for confirming that clusters are in sync, but is relatively slow to resolve deltas between clusters.  The common case, when the delta is associated with a recent window of last-modified-dates (e.g. due to a recent temporary failure of replication or nodes) is optimised through the `auto_check` process; and also [re-replication](/kv/3.4.0/how-to/operate/rereplicate-time-window/) may be used to accelerate this.  However, if the delta is not restricted to a given time range of modified dates, and the delta is large, there is a need for alternative intervention to close the delta in a timely manner.
+Full-sync reconciliation is designed to be fast and efficient for confirming that clusters are in sync, but is relatively slow to resolve deltas between clusters.  The common case, when the delta is associated with a recent window of last-modified-dates (e.g. due to a recent temporary failure of replication or nodes) is optimised through the `auto_check` process; and also [re-replication]({{< baseurl >}}kv/3.4.0/how-to/operate/rereplicate-time-window/) may be used to accelerate this.  However, if the delta is not restricted to a given time range of modified dates, and the delta is large, there is a need for alternative intervention to close the delta in a timely manner.
 
 For small buckets (in terms of object count), simply re-replicating the bucket could be the easiest solution, especially where it is clear the replication failure is uni-directional.  For larger buckets, and for handling bi-directional deltas, then it is possible to manually intervene to re-sync a bucket.
 
@@ -787,7 +787,7 @@ The re-sync can be triggered from any node, from either cluster - assuming that 
 
 A bucket re-sync will suspend the local full-sync process on the node from which it is triggered, and roll through segment slices of the bucket performing bucket-specific `range_check` operations.  As each loop covers only a single slice of the segment space, this is much quicker to repair than the standard full-sync per-bucket check, which needs to read the whole bucket space to build AAE trees for comparison.
 
-The re-sync bucket can be called via [remote_console](/kv/3.4.0/how-to/operate/use-remote-console/):
+The re-sync bucket can be called via [remote_console]({{< baseurl >}}kv/3.4.0/how-to/operate/use-remote-console/):
 
 ```console
 riak_client:resync_bucket({<<"BucketType">>, <<"BucketName">>}).
@@ -803,7 +803,7 @@ riak_client:resync_bucket(<<"BucketName">>).
 
 As well as the helper function in `riak_client`, there is a configurable `riak_kv_ttaaefs_manager:resync_bucket/6` function exported.  For much larger buckets, this configurable version can be used to optimise the process e.g. use a smaller width (the size of the slice of the segment space), fix a specific key range or within a modified date range.
 
-> It is possible to have multiple nodes running resync_bucket concurrently - to sync different buckets, or different key ranges within a bucket.  The limiting factor to horizontal scaling of resync_bucket is usually the size of [AF3 worker pool](/kv/3.4.0/how-to/operate/monitor-worker-pools/).  Once all workers in the pool are continuously busy, no further scaling can be achieved, without running larger pools (on all clusters).
+> It is possible to have multiple nodes running resync_bucket concurrently - to sync different buckets, or different key ranges within a bucket.  The limiting factor to horizontal scaling of resync_bucket is usually the size of [AF3 worker pool]({{< baseurl >}}kv/3.4.0/how-to/operate/monitor-worker-pools/).  Once all workers in the pool are continuously busy, no further scaling can be achieved, without running larger pools (on all clusters).
 
 #### Participate in Coverage
 

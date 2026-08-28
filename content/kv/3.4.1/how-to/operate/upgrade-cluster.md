@@ -68,23 +68,23 @@ A tutorial on updating to OpenRiak KV 3.2.5
 
 ### Production Checklist
 
-[perf open files]: /kv/3.4.1/how-to/tune/set-open-files-limit/
-[perf index]: /kv/3.4.1/how-to/tune/
+[perf open files]: {{< baseurl >}}kv/3.4.1/how-to/tune/set-open-files-limit/
+[perf index]: {{< baseurl >}}kv/3.4.1/how-to/tune/
 [ntp]: http://www.ntp.org/
-[security basics]: /kv/3.4.1/how-to/secure/enable-security/
-[cluster ops load balance]: /kv/3.4.1/how-to/configure/load-balancing-proxy/
-[config reference]: /kv/3.4.1/reference/configuration/
-[config backend]: /kv/3.4.1/how-to/configure/backends/
-[usage conflict resolution]: /kv/3.4.1/how-to/develop/resolve-conflicts/
-[concept eventual consistency]: /kv/3.4.1/explanation/consistency/eventual-consistency/
-[apps replication properties]: /kv/3.4.1/explanation/replication/references-and-triggers/
-[concept strong consistency]: /kv/3.4.1/reference/specialized-apis/strong-consistency-api/
-[cluster ops bucket types]: /kv/3.4.1/how-to/operate/manage-bucket-types/
-[use admin commands]: /kv/3.4.1/reference/commands/
-[use admin riak control]: /kv/3.4.1/reference/commands/riak-control/
-[cluster ops inspect node]: /kv/3.4.1/how-to/operate/inspect-node-and-cluster/
-[troubleshoot http]: /kv/3.4.1/how-to/troubleshoot/http-204/
-[use admin riak admin]: /kv/3.4.1/reference/commands/riak/ admin
+[security basics]: {{< baseurl >}}kv/3.4.1/how-to/secure/enable-security/
+[cluster ops load balance]: {{< baseurl >}}kv/3.4.1/how-to/configure/load-balancing-proxy/
+[config reference]: {{< baseurl >}}kv/3.4.1/reference/configuration/
+[config backend]: {{< baseurl >}}kv/3.4.1/how-to/configure/backends/
+[usage conflict resolution]: {{< baseurl >}}kv/3.4.1/how-to/develop/resolve-conflicts/
+[concept eventual consistency]: {{< baseurl >}}kv/3.4.1/explanation/consistency/eventual-consistency/
+[apps replication properties]: {{< baseurl >}}kv/3.4.1/explanation/replication/references-and-triggers/
+[concept strong consistency]: {{< baseurl >}}kv/3.4.1/reference/specialized-apis/strong-consistency-api/
+[cluster ops bucket types]: {{< baseurl >}}kv/3.4.1/how-to/operate/manage-bucket-types/
+[use admin commands]: {{< baseurl >}}kv/3.4.1/reference/commands/
+[use admin riak control]: {{< baseurl >}}kv/3.4.1/reference/commands/riak-control/
+[cluster ops inspect node]: {{< baseurl >}}kv/3.4.1/how-to/operate/inspect-node-and-cluster/
+[troubleshoot http]: {{< baseurl >}}kv/3.4.1/how-to/troubleshoot/http-204/
+[use admin riak admin]: {{< baseurl >}}kv/3.4.1/reference/commands/riak/ admin
 [SANs]: http://en.wikipedia.org/wiki/Storage_area_network
 
 Deploying OpenRiak KV to a realtime production environment from a development or testing environment can be a complex process. While the specifics of that process will always depend on your environment and practices, there are some basics for you to consider and a few questions that you will want to ask while making this transition.
@@ -268,17 +268,17 @@ as well as metrics for understanding what to upgrade and when.
 
 ### Upgrading a Cluster
 
-[production checklist]: /kv/3.4.1/how-to/operate/upgrade-cluster/
-[use admin riak control]: /kv/3.4.1/reference/commands/riak-control/
-[use admin commands]: /kv/3.4.1/reference/commands/
-[use admin riak admin]: /kv/3.4.1/reference/commands/riak/ admin
-[usage secondary-indexes]: /kv/3.4.1/how-to/develop/query-secondary-indexes/
+[production checklist]: {{< baseurl >}}kv/3.4.1/how-to/operate/upgrade-cluster/
+[use admin riak control]: {{< baseurl >}}kv/3.4.1/reference/commands/riak-control/
+[use admin commands]: {{< baseurl >}}kv/3.4.1/reference/commands/
+[use admin riak admin]: {{< baseurl >}}kv/3.4.1/reference/commands/riak/ admin
+[usage secondary-indexes]: {{< baseurl >}}kv/3.4.1/how-to/develop/query-secondary-indexes/
 [release notes]: https://github.com/basho/riak/blob/master/RELEASE-NOTES.md
 [riak enterprise]: http://basho.com/products/riak-kv/
-[cluster ops mdc]: /kv/3.4.1/reference/replication-api/runtime-controls/
-[config v3 mdc]: /kv/3.4.1/how-to/configure/replication/configure-v3-multi-datacenter/
-[jmx monitor]: /kv/3.4.1/reference/operations/jmx/
-[snmp]: /kv/3.4.1/reference/operations/snmp/
+[cluster ops mdc]: {{< baseurl >}}kv/3.4.1/reference/replication-api/runtime-controls/
+[config v3 mdc]: {{< baseurl >}}kv/3.4.1/how-to/configure/replication/configure-v3-multi-datacenter/
+[jmx monitor]: {{< baseurl >}}kv/3.4.1/reference/operations/jmx/
+[snmp]: {{< baseurl >}}kv/3.4.1/reference/operations/snmp/
 
 **Note on upgrading OpenRiak KV from older versions**
 OpenRiak KV upgrades are tested and supported for two feature release versions.
@@ -289,7 +289,7 @@ recommend first upgrading to an intermediate version. For example, in an
 upgrade from 1.1.x to 1.4.x, we recommend upgrading from 1.1.x to 1.3.x
 before upgrading to 1.4.x.
 
-If you run [Riak Control](/kv/3.4.1/reference/commands/riak-control/), you should disable it during the rolling upgrade process.
+If you run [Riak Control]({{< baseurl >}}kv/3.4.1/reference/commands/riak-control/), you should disable it during the rolling upgrade process.
 
 OpenRiak KV nodes negotiate with each other to determine supported
 operating modes. This allows clusters containing mixed-versions of OpenRiak KV
@@ -475,7 +475,7 @@ How to update to a new version with multi-datacenter.
 
 #### Upgrading a node
 
-Riak upgrades are all designed to support in-place rolling upgrades across the cluster - a [rolling restart](/kv/3.4.1/how-to/operate/rolling-restart/) with a package deployment between the stop and start.
+Riak upgrades are all designed to support in-place rolling upgrades across the cluster - a [rolling restart]({{< baseurl >}}kv/3.4.1/how-to/operate/rolling-restart/) with a package deployment between the stop and start.
 
 The following upgrade path has been specifically tested:
 
@@ -487,7 +487,7 @@ More direct upgrade paths skipping steps may be possible.  New features are adde
 
 It is not possible via rolling restart to upgrade from an OTP version 22 or prior, to an upgrade with an OTP version of 25 or higher.  For example, direct upgrades from `3.0.n` to `3.4.n` are not supported unless `3.0.n` is built with OTP 22, and `3.4.n` is built with OTP 24.
 
-It is recommended to test all upgrades in pre-production environments.  If no pre-production environment is available, then a pilot node should be upgraded first in the cluster for an agreed time period (e.g. 24 hours).  If there are issues with the upgrade, then the pilot node can be stopped, cleared and [repaired](/kv/3.4.1/how-to/operate/replace-node/).  Most large-scale production users of Riak rely on pre-production testing or pilot nodes to assure changes, and do not depend on a [backup/restore safety net](/kv/3.4.1/explanation/operations/backups-and-restores/) during a rolling upgrade.
+It is recommended to test all upgrades in pre-production environments.  If no pre-production environment is available, then a pilot node should be upgraded first in the cluster for an agreed time period (e.g. 24 hours).  If there are issues with the upgrade, then the pilot node can be stopped, cleared and [repaired]({{< baseurl >}}kv/3.4.1/how-to/operate/replace-node/).  Most large-scale production users of Riak rely on pre-production testing or pilot nodes to assure changes, and do not depend on a [backup/restore safety net]({{< baseurl >}}kv/3.4.1/explanation/operations/backups-and-restores/) during a rolling upgrade.
 
 If local changes have been made to `riak.conf`, the package manager should leave the `riak.conf` file unchanged during an upgrade.  A release change may alter a default value in configuration, and if that default value was originally added to the `riak.conf` uncommented - the new default will not take effect following the upgrade, as the `riak.conf` is not altered.
 

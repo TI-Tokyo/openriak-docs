@@ -37,26 +37,26 @@ Administrative access to the nodes you will change; a copy of the current config
 
 ### Basic OpenRiak KV Configuration
 
-[config reference]: /kv/3.4.0/reference/configuration/
-[use running cluster]: /kv/3.4.0/how-to/operate/
-[use admin riak admin#member-status]: /kv/3.4.0/reference/commands/riak-admin/#member-status
-[perf erlang]: /kv/3.4.0/how-to/tune/tune-erlang-vm/
-[plan start]: /kv/3.4.0/how-to/plan/
-[plan best practices]: /kv/3.4.0/how-to/plan/production-readiness-checklist/
-[cluster ops backup]: /kv/3.4.0/how-to/operate/back-up-node/
-[cluster ops add remove node]: /kv/3.4.0/tutorials/operations/change-cluster-membership/
-[plan backend]: /kv/3.4.0/explanation/storage/choosing-backend/
-[plan backend multi]: /kv/3.4.0/explanation/storage/multi-backend/
-[plan backend bitcask]: /kv/3.4.0/explanation/storage/bitcask/
-[usage bucket types]: /kv/3.4.0/how-to/develop/use-bucket-types/
-[apps replication properties]: /kv/3.4.0/explanation/replication/references-and-triggers/
-[concept buckets]: /kv/3.4.0/explanation/data-model/keys-objects-and-buckets/
-[concept eventual consistency]: /kv/3.4.0/explanation/consistency/eventual-consistency/
-[perf benchmark]: /kv/3.4.0/how-to/tune/benchmark-cluster/
-[perf open files]: /kv/3.4.0/how-to/tune/set-open-files-limit/
-[perf index]: /kv/3.4.0/how-to/tune/
-[perf aws]: /kv/3.4.0/how-to/tune/tune-aws-deployment/
-[Cluster Capacity Planning]: /kv/3.4.0/explanation/storage/capacity-planning/
+[config reference]: {{< baseurl >}}kv/3.4.0/reference/configuration/
+[use running cluster]: {{< baseurl >}}kv/3.4.0/how-to/operate/
+[use admin riak admin#member-status]: {{< baseurl >}}kv/3.4.0/reference/commands/riak-admin/#member-status
+[perf erlang]: {{< baseurl >}}kv/3.4.0/how-to/tune/tune-erlang-vm/
+[plan start]: {{< baseurl >}}kv/3.4.0/how-to/plan/
+[plan best practices]: {{< baseurl >}}kv/3.4.0/how-to/plan/production-readiness-checklist/
+[cluster ops backup]: {{< baseurl >}}kv/3.4.0/how-to/operate/back-up-node/
+[cluster ops add remove node]: {{< baseurl >}}kv/3.4.0/tutorials/operations/change-cluster-membership/
+[plan backend]: {{< baseurl >}}kv/3.4.0/explanation/storage/choosing-backend/
+[plan backend multi]: {{< baseurl >}}kv/3.4.0/explanation/storage/multi-backend/
+[plan backend bitcask]: {{< baseurl >}}kv/3.4.0/explanation/storage/bitcask/
+[usage bucket types]: {{< baseurl >}}kv/3.4.0/how-to/develop/use-bucket-types/
+[apps replication properties]: {{< baseurl >}}kv/3.4.0/explanation/replication/references-and-triggers/
+[concept buckets]: {{< baseurl >}}kv/3.4.0/explanation/data-model/keys-objects-and-buckets/
+[concept eventual consistency]: {{< baseurl >}}kv/3.4.0/explanation/consistency/eventual-consistency/
+[perf benchmark]: {{< baseurl >}}kv/3.4.0/how-to/tune/benchmark-cluster/
+[perf open files]: {{< baseurl >}}kv/3.4.0/how-to/tune/set-open-files-limit/
+[perf index]: {{< baseurl >}}kv/3.4.0/how-to/tune/
+[perf aws]: {{< baseurl >}}kv/3.4.0/how-to/tune/tune-aws-deployment/
+[Cluster Capacity Planning]: {{< baseurl >}}kv/3.4.0/explanation/storage/capacity-planning/
 
 This document covers the parameters that are commonly adjusted when
 setting up a new cluster. We recommend that you also review the detailed
@@ -226,7 +226,7 @@ For more on bucket properties, we recommend reviewing our docs on
 
 If the default bucket properties are modified in your configuration
 files and the node is restarted, any existing buckets will **not** be
-directly impacted, although the mechanism described in [HTTP Reset Bucket Properties](/kv/3.4.0/reference/http-api/reset-bucket-properties/) can be used to force them to pick up the new
+directly impacted, although the mechanism described in [HTTP Reset Bucket Properties]({{< baseurl >}}kv/3.4.0/reference/http-api/reset-bucket-properties/) can be used to force them to pick up the new
 defaults.
 
 #### System tuning
@@ -252,16 +252,16 @@ Each individual schema component can be found in the `priv` folder for that repo
 
 When starting a first cluster to experiment, the following configuration items are of particular importance:
 
-- `ring_size`; refer to the [ring size selection in the design decisions document](/kv/3.4.0/how-to/plan/choose-ring-size/), should be set smaller than the default for test/dev environments and larger than the default for production systems.
-- `tictacaae_active`; refer to the [intra-cluster resilience in the design decisions document](/kv/3.4.0/how-to/plan/choose-intra-cluster-resilience/).  Should be set to active if the active repair of deltas between vnodes is required, otherwise repair will be reactive (i.e. only once a delta has been detected on read).
+- `ring_size`; refer to the [ring size selection in the design decisions document]({{< baseurl >}}kv/3.4.0/how-to/plan/choose-ring-size/), should be set smaller than the default for test/dev environments and larger than the default for production systems.
+- `tictacaae_active`; refer to the [intra-cluster resilience in the design decisions document]({{< baseurl >}}kv/3.4.0/how-to/plan/choose-intra-cluster-resilience/).  Should be set to active if the active repair of deltas between vnodes is required, otherwise repair will be reactive (i.e. only once a delta has been detected on read).
 - `tictacaae_storeheads`; should be enabled when using `tictacaae_active` on a leveled backend if the full scope of AAE Folds are to be used.
 - `anti_entropy`; this is a deprecated anti-entropy system, and should be set to `passive` if using `tictacaae_active`.  It may be set to `active` in parallel to `tictacaae_active` to transition between the services.  The legacy anti-entropy system is quicker and more aggressive at repairing deltas, but offers less functionality and runs at a higher cost when in sync.
-- `storage_backend`; refer to the [backend selection in the design decisions document](/kv/3.4.0/how-to/plan/choose-storage-backend/), but for full Riak functionality must be set to leveled.
+- `storage_backend`; refer to the [backend selection in the design decisions document]({{< baseurl >}}kv/3.4.0/how-to/plan/choose-storage-backend/), but for full Riak functionality must be set to leveled.
 - `read_repair_primaryonly`; will impact the behaviour in failure, by default when a standby vnode replaces a failed vnode, read repair will be triggered on every GET to populate the standby with old writes, but this will have a negative impact performance during both failure and recovery.
 - `buckets.default.merge_strategy`; should always be set to `2`, and `2` will be the only supported option from Riak 4.0.
 - `nodename`; a unique name for the node within the cluster.
 - `platform_data_dir`; where the actual data will be stored, must be a space with sufficient capacity and throughput.
-- `listener.http.internal` or `listener.pb.internal`; the IP address and port for accessing the API. It is recommended to bind this IP address to a specific interface address.  [The Query API](/kv/3.4.0/tutorials/query-api/) requires use of the `http` listener, and performance will differ between the `pb` and `http` transports when using [the Object API](/kv/3.4.0/reference/http-api/).
+- `listener.http.internal` or `listener.pb.internal`; the IP address and port for accessing the API. It is recommended to bind this IP address to a specific interface address.  [The Query API]({{< baseurl >}}kv/3.4.0/tutorials/query-api/) requires use of the `http` listener, and performance will differ between the `pb` and `http` transports when using [the Object API]({{< baseurl >}}kv/3.4.0/reference/http-api/).
 
 In a `riak.conf` file, the last setting of any configuration item is the actual value used in the configuration.  Edits to the riak.conf file don't have to change the configuration in place, defaults may be overwritten by concatenating changes to the end of the file.
 

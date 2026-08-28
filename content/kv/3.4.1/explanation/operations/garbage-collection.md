@@ -52,11 +52,11 @@ State what this explanation does not cover, call out 3.4.0 versus 3.4.1 differen
 
 ## In this section
 
-- [Backups and restores](/kv/3.4.1/explanation/operations/backups-and-restores/) — Explain backups and restores, including relevant state transitions, risks, and recovery assumptions.
-- [Operational concepts](/kv/3.4.1/explanation/operations/) — Introduce the system behaviors operators need to understand before changing or recovering a cluster.
-- [Node failure and recovery](/kv/3.4.1/explanation/operations/node-failure-and-recovery/) — Explain node failure and recovery, including relevant state transitions, risks, and recovery assumptions.
-- [Object deletion and tombstones](/kv/3.4.1/explanation/operations/object-deletion-and-tombstones/) — Explain object deletion and tombstones, including relevant state transitions, risks, and recovery assumptions.
-- [Store, vnode, range, and object repair](/kv/3.4.1/explanation/operations/repair-granularity/) — Explain the available repair scopes and how to choose the least disruptive effective option.
-- [Ring changes and handoffs](/kv/3.4.1/explanation/operations/ring-changes-and-handoffs/) — Explain ring changes and handoffs, including relevant state transitions, risks, and recovery assumptions.
-- [Rolling maintenance](/kv/3.4.1/explanation/operations/rolling-maintenance/) — Explain rolling maintenance, including relevant state transitions, risks, and recovery assumptions.
-- [Upgrade and downgrade behavior](/kv/3.4.1/explanation/operations/upgrade-and-downgrade/) — Explain upgrade and downgrade behavior, including relevant state transitions, risks, and recovery assumptions.
+- [Backups and restores]({{< baseurl >}}kv/3.4.1/explanation/operations/backups-and-restores/) — Explain backups and restores, including relevant state transitions, risks, and recovery assumptions.
+- [Operational concepts]({{< baseurl >}}kv/3.4.1/explanation/operations/) — Introduce the system behaviors operators need to understand before changing or recovering a cluster.
+- [Node failure and recovery]({{< baseurl >}}kv/3.4.1/explanation/operations/node-failure-and-recovery/) — Explain node failure and recovery, including relevant state transitions, risks, and recovery assumptions.
+- [Object deletion and tombstones]({{< baseurl >}}kv/3.4.1/explanation/operations/object-deletion-and-tombstones/) — Explain object deletion and tombstones, including relevant state transitions, risks, and recovery assumptions.
+- [Store, vnode, range, and object repair]({{< baseurl >}}kv/3.4.1/explanation/operations/repair-granularity/) — Explain the available repair scopes and how to choose the least disruptive effective option.
+- [Ring changes and handoffs]({{< baseurl >}}kv/3.4.1/explanation/operations/ring-changes-and-handoffs/) — Explain ring changes and handoffs, including relevant state transitions, risks, and recovery assumptions.
+- [Rolling maintenance]({{< baseurl >}}kv/3.4.1/explanation/operations/rolling-maintenance/) — Explain rolling maintenance, including relevant state transitions, risks, and recovery assumptions.
+- [Upgrade and downgrade behavior]({{< baseurl >}}kv/3.4.1/explanation/operations/upgrade-and-downgrade/) — Explain upgrade and downgrade behavior, including relevant state transitions, risks, and recovery assumptions.

@@ -30,7 +30,7 @@ Explain replication queues, its data flow, failure behavior, and operational tra
 
 ### Concepts - Queues and Workers
 
-Replication queues use the [disk-backed queue framework](/kv/3.4.0/explanation/replication/queues/) common across multiple Riak services.
+Replication queues use the [disk-backed queue framework]({{< baseurl >}}kv/3.4.0/explanation/replication/queues/) common across multiple Riak services.
 
 Replication references, which are primarily newly coordinated PUTs, are sent to the replication source queue process.  The real-time replication source then assesses which replication queues require that reference:
 
@@ -54,7 +54,7 @@ The number of sink workers can be configured on the node:
   - The number of workers will constrain the pace at which events can be pulled from a source cluster, and also the PUSH workload that a sink cluster can generate for itself.
 - There is an overhead of a sink making requests on the source, so each sink worker will backoff if a request results in no replication events being discovered.
 - The sink worker pool does not auto-expand.
-  - Sufficient sink workers need to be configured to keep-up with real-time replication, though [this number can be adjusted at runtime](/kv/3.4.0/reference/replication-api/runtime-controls/).
+  - Sufficient sink workers need to be configured to keep-up with real-time replication, though [this number can be adjusted at runtime]({{< baseurl >}}kv/3.4.0/reference/replication-api/runtime-controls/).
   - There is some protection from over-provisioning but not from under-provisioning.
 
 In handling replication events, sink workers must apply the replicated change into the local cluster, and this uses a specific `PUSH` command.  The sink workers are constrained in that:

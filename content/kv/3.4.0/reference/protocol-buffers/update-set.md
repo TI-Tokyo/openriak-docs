@@ -29,7 +29,7 @@ Document the Protocol Buffers contract for this operation, including messages, f
 ### PBC Data Type Set Store
 
 An operation to update a set, either on its own (at the bucket/key
-level) or [inside of a map](/kv/3.4.0/reference/protocol-buffers/update-map/).
+level) or [inside of a map]({{< baseurl >}}kv/3.4.0/reference/protocol-buffers/update-map/).
 
 #### Request
 

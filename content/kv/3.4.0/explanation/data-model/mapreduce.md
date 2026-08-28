@@ -33,4 +33,4 @@ The use of Map/Reduce API is deprecated in Riak 3.4, and the API will be retired
 
 For using Map/Reduce with Erlang functions, the API is unchanged since Riak 2.2.3, so refer to the [legacy documentation](https://docs.riak.com/riak/kv/2.2.3/developing/app-guide/advanced-mapreduce/index.html) for further information.  The Map/Reduce API no longer supports JavaScript functions.
 
-> For querying data the [Query API](/kv/3.4.0/tutorials/query-api/) should be used in preference to the Map/Reduce API.  The Query API is under active development to expand the number of Map/Reduce use cases it covers, in particular the ability to prompt the fetching of multiple objects.
+> For querying data the [Query API]({{< baseurl >}}kv/3.4.0/tutorials/query-api/) should be used in preference to the Map/Reduce API.  The Query API is under active development to expand the number of Map/Reduce use cases it covers, in particular the ability to prompt the fetching of multiple objects.

@@ -77,16 +77,16 @@ Setting | Options | Default | Description
 
 #### Proactive reconciliation
 
-Riak has support for proactive reconciliation within a cluster; known as [active anti-entropy (AAE)](/kv/3.4.1/explanation/replication/active-anti-entropy/).  Configuring AAE will trigger a background process that will continually verify that the most recent version of each object is correctly stored in all required locations, and prompt repairs should the verification process highlight discrepancies.  This is in addition to reactive management which is always enabled within Riak: as part of every GET request a read repair process may be triggered if all vnodes are not up-to-date; as part of failure management a handoff process will merge data captured on temporary fallback vnodes back into primary vnodes.
+Riak has support for proactive reconciliation within a cluster; known as [active anti-entropy (AAE)]({{< baseurl >}}kv/3.4.1/explanation/replication/active-anti-entropy/).  Configuring AAE will trigger a background process that will continually verify that the most recent version of each object is correctly stored in all required locations, and prompt repairs should the verification process highlight discrepancies.  This is in addition to reactive management which is always enabled within Riak: as part of every GET request a read repair process may be triggered if all vnodes are not up-to-date; as part of failure management a handoff process will merge data captured on temporary fallback vnodes back into primary vnodes.
 
 Proactive reconciliation provides continuous assurance that data is correctly secured across multiple devices within a cluster: it is verification as well as correction.  It is of particular use where data may be stored for long periods without being read, nullifying the trigger for reactive management via read repair.
 
 There are two forms of proactive intra-cluster reconciliation in Riak:
 
 - Tictac AAE (recommended).
-  - Uses the [configuration option `tictacaae_active`](/kv/3.4.1/how-to/configure/basic-node-settings/).
+  - Uses the [configuration option `tictacaae_active`]({{< baseurl >}}kv/3.4.1/how-to/configure/basic-node-settings/).
   - A prerequisite for efficient inter-cluster reconciliation.
-  - A prerequisite for the use of the [AAE Fold API](/kv/3.4.1/reference/aae-fold-api/).
+  - A prerequisite for the use of the [AAE Fold API]({{< baseurl >}}kv/3.4.1/reference/aae-fold-api/).
   - Requires a secondary keystore if not using the leveled backend.
   - Limits the pace of repair activity when discrepancies are discovered.
 - Legacy hashtree AAE (default).
@@ -97,7 +97,7 @@ There are two forms of proactive intra-cluster reconciliation in Riak:
 
 > If Tictac AAE is not enabled, there is an increased risk of data loss when Riak is used to store _cold_ data that is very rarely read.
 
-Enabling Tictac AAE also adds to the cluster support for the operator-functionality associated with [AAE Folds](/kv/3.4.1/reference/aae-fold-api/).
+Enabling Tictac AAE also adds to the cluster support for the operator-functionality associated with [AAE Folds]({{< baseurl >}}kv/3.4.1/reference/aae-fold-api/).
 
 #### Intra-cluster data resilience - changing the choice
 
@@ -109,7 +109,7 @@ Both anti-entropy mechanisms can be deployed in parallel to help with transition
 
 #### Configuration of All-Cluster Reconciliation
 
-It is commonly most efficient to reconcile all data, rather than partial data.  If all data is not required, then [per-bucket reconciliation](/kv/3.4.1/how-to/configure/replication/per-bucket-reconciliation/) can be enabled.  All-cluster reconciliation is much more common than per-bucket reconciliation in production systems, as it commonly has lower overheads.
+It is commonly most efficient to reconcile all data, rather than partial data.  If all data is not required, then [per-bucket reconciliation]({{< baseurl >}}kv/3.4.1/how-to/configure/replication/per-bucket-reconciliation/) can be enabled.  All-cluster reconciliation is much more common than per-bucket reconciliation in production systems, as it commonly has lower overheads.
 
 #### Enable Tictac AAE
 
@@ -119,10 +119,10 @@ To use the inter-cluster reconciliation then Tictac AAE must be enabled in `riak
 
 When enabling Tictac AAE for the first time, it will not be usable by reconciliation until all trees have been built.  Trees will periodically rebuild, and full-sync reconciliation checks should continue to operate as expected during rebuilds.
 
-[assumptions]: /kv/3.4.1/how-to/configure/replication/enable-tictac-aae/
-[architecture]: /kv/3.4.1/how-to/configure/replication/enable-tictac-aae/
-[check]: /kv/3.4.1/how-to/configure/replication/enable-tictac-aae/
-[applychanges]: /kv/3.4.1/how-to/configure/replication/enable-tictac-aae/
+[assumptions]: {{< baseurl >}}kv/3.4.1/how-to/configure/replication/enable-tictac-aae/
+[architecture]: {{< baseurl >}}kv/3.4.1/how-to/configure/replication/enable-tictac-aae/
+[check]: {{< baseurl >}}kv/3.4.1/how-to/configure/replication/enable-tictac-aae/
+[applychanges]: {{< baseurl >}}kv/3.4.1/how-to/configure/replication/enable-tictac-aae/
 
 ## Verify the result
 

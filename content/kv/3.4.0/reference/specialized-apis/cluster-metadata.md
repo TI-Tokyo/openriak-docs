@@ -36,7 +36,7 @@ to work with information that is stored cluster wide and can be read
 without blocking on communication over the network.
 
 One notable example of a subsystem of Riak relying on cluster metadata
-is OpenRiak's [bucket types](/kv/3.4.0/reference/data/buckets-and-bucket-types/) feature. This feature
+is OpenRiak's [bucket types]({{< baseurl >}}kv/3.4.0/reference/data/buckets-and-bucket-types/) feature. This feature
 requires that a particular form of key/value pairs, namely bucket type
 names (the key) and their associated bucket properties (the value), be
 asynchronously broadcast to all nodes in an OpenRiak cluster.
@@ -71,7 +71,7 @@ already reached all nodes in the previous set of members.
 
 All cluster metadata is eventually stored both in memory and on disk,
 but it should be noted that reads are only from memory, while writes are
-made both to memory and to disk. Logical clocks, namely [dotted version vectors](/kv/3.4.0/explanation/data-model/causal-context/#dotted-version-vectors), are used in place of [vector clocks](/kv/3.4.0/explanation/data-model/causal-context/#vector-clocks) or timestamps to resolve value conflicts. Values stored as cluster metadata are opaque Erlang
+made both to memory and to disk. Logical clocks, namely [dotted version vectors]({{< baseurl >}}kv/3.4.0/explanation/data-model/causal-context/#dotted-version-vectors), are used in place of [vector clocks]({{< baseurl >}}kv/3.4.0/explanation/data-model/causal-context/#vector-clocks) or timestamps to resolve value conflicts. Values stored as cluster metadata are opaque Erlang
 terms addressed by both prefix and a key.
 
 #### Erlang Code Interface

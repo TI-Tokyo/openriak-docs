@@ -31,7 +31,7 @@ A healthy cluster, current backups, and access to cluster status and logs. Recor
 
 ### Remote Console
 
-Advanced information and debugging tools are available from the command line via `riak remote_console`.  This will attach a remote shell to the running node.  With this shell Erlang functions can be called as if on the local node, and this can be used for: [accessing objects](/kv/3.4.1/how-to/operate/inspect-data/), [running AAE folds](/kv/3.4.1/how-to/operate/aae-fold/run-from-command-line/), [access to specific administration commands](/kv/3.4.1/reference/operations/remote-console/) as well as [advanced debugging and troubleshooting](/kv/3.4.1/how-to/troubleshoot/erlang-vm/).
+Advanced information and debugging tools are available from the command line via `riak remote_console`.  This will attach a remote shell to the running node.  With this shell Erlang functions can be called as if on the local node, and this can be used for: [accessing objects]({{< baseurl >}}kv/3.4.1/how-to/operate/inspect-data/), [running AAE folds]({{< baseurl >}}kv/3.4.1/how-to/operate/aae-fold/run-from-command-line/), [access to specific administration commands]({{< baseurl >}}kv/3.4.1/reference/operations/remote-console/) as well as [advanced debugging and troubleshooting]({{< baseurl >}}kv/3.4.1/how-to/troubleshoot/erlang-vm/).
 
 If an active remote_console session is detached in an unexpected way e.g. due to the network timeout of a SSH session over which the remote_console was run; "hanging" console process may be left running.  After a long period, a passive hanging console process may enter a loop and consume an entire CPU core.
 

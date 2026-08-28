@@ -491,17 +491,17 @@ you, but here's how to set them:
 * [Riaknostic](http://riaknostic.basho.com/)
 * [HTTP API Status](../../../developing/api/http/status/)
 
-[start]: /kv/3.4.0/how-to/operate/inspect-node-and-cluster/
-[stop]: /kv/3.4.0/how-to/operate/inspect-node-and-cluster/
-[restart]: /kv/3.4.0/how-to/operate/inspect-node-and-cluster/
-[inspect]: /kv/3.4.0/how-to/operate/inspect-node-and-cluster/
-[test]: /kv/3.4.0/how-to/operate/inspect-node-and-cluster/
-[nodestatus]: /kv/3.4.0/how-to/operate/inspect-node-and-cluster/
-[clusterstatus]: /kv/3.4.0/how-to/operate/inspect-node-and-cluster/
-[member]: /kv/3.4.0/how-to/operate/inspect-node-and-cluster/
-[clusterstatus]: /kv/3.4.0/how-to/operate/inspect-node-and-cluster/
-[ringstatus]: /kv/3.4.0/how-to/operate/inspect-node-and-cluster/
-[debug]: /kv/3.4.0/how-to/operate/inspect-node-and-cluster/
+[start]: {{< baseurl >}}kv/3.4.0/how-to/operate/inspect-node-and-cluster/
+[stop]: {{< baseurl >}}kv/3.4.0/how-to/operate/inspect-node-and-cluster/
+[restart]: {{< baseurl >}}kv/3.4.0/how-to/operate/inspect-node-and-cluster/
+[inspect]: {{< baseurl >}}kv/3.4.0/how-to/operate/inspect-node-and-cluster/
+[test]: {{< baseurl >}}kv/3.4.0/how-to/operate/inspect-node-and-cluster/
+[nodestatus]: {{< baseurl >}}kv/3.4.0/how-to/operate/inspect-node-and-cluster/
+[clusterstatus]: {{< baseurl >}}kv/3.4.0/how-to/operate/inspect-node-and-cluster/
+[member]: {{< baseurl >}}kv/3.4.0/how-to/operate/inspect-node-and-cluster/
+[clusterstatus]: {{< baseurl >}}kv/3.4.0/how-to/operate/inspect-node-and-cluster/
+[ringstatus]: {{< baseurl >}}kv/3.4.0/how-to/operate/inspect-node-and-cluster/
+[debug]: {{< baseurl >}}kv/3.4.0/how-to/operate/inspect-node-and-cluster/
 
 ## Verify the result
 

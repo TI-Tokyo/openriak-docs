@@ -57,14 +57,14 @@ response. See also RFC 2616 - [304 Not Modified](http://www.w3.org/Protocols/rfc
 Optional query parameters:
 
 * `r` - (read quorum) how many replicas need to agree when retrieving the
-object ([default is defined by the bucket](/kv/3.4.0/reference/http-api/set-bucket-properties/))
+object ([default is defined by the bucket]({{< baseurl >}}kv/3.4.0/reference/http-api/set-bucket-properties/))
 * `pr` - how many primary replicas need to be online when doing the read
-([default is defined by the bucket](/kv/3.4.0/reference/http-api/set-bucket-properties/))
+([default is defined by the bucket]({{< baseurl >}}kv/3.4.0/reference/http-api/set-bucket-properties/))
 * `basic_quorum` - whether to return early in some failure cases (eg. when r=1
 and you get 2 errors and a success `basic_quorum=true` would return an error)
-([default is defined by the bucket](/kv/3.4.0/reference/http-api/set-bucket-properties/))
+([default is defined by the bucket]({{< baseurl >}}kv/3.4.0/reference/http-api/set-bucket-properties/))
 * `notfound_ok` - whether to treat notfounds as successful reads for the
-purposes of R ([default is defined by the bucket](/kv/3.4.0/reference/http-api/set-bucket-properties/))
+purposes of R ([default is defined by the bucket]({{< baseurl >}}kv/3.4.0/reference/http-api/set-bucket-properties/))
 * `vtag` - when accessing an object with siblings, which sibling to retrieve.
 Scroll down to the [Manually requesting siblings](#manually-requesting-siblings) example for more information.
 
@@ -91,7 +91,7 @@ Important headers:
 and validation-based caching
 * `Last-Modified` - a timestamp for when the object was last written, in HTTP
 datetime format
-* `Link` - user- and system-defined links to other resources. [Read more about Links.](/kv/3.4.0/explanation/foundations/glossary/)
+* `Link` - user- and system-defined links to other resources. [Read more about Links.]({{< baseurl >}}kv/3.4.0/explanation/foundations/glossary/)
 
 The body of the response will be the contents of the object except when siblings
 are present.
@@ -264,7 +264,7 @@ When using the HEAD method the request will still result in the object value bei
 
 Supported HTTP request headers for GET:
 
-- `authorization`; optional, for tls-protected requests only when [Riak security is enabled](/kv/3.4.0/how-to/secure/).
+- `authorization`; optional, for tls-protected requests only when [Riak security is enabled]({{< baseurl >}}kv/3.4.0/how-to/secure/).
 - `accept: multipart/mixed`; optional, will cause results in a conflicted state to return all siblings as one multipart-mime object body.  Without this option a list of sibling vtags will be returned, and each `vtag` may be fetched using the `vtag=<vtag>` query parameter in the URL.
 
 Expected HTTP response headers for GET:

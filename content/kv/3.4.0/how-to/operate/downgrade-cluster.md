@@ -38,10 +38,10 @@ A healthy cluster, current backups, and access to cluster status and logs. Recor
 
 ### Downgrading
 
-[rolling upgrade]: /kv/3.4.0/how-to/operate/upgrade-cluster/
-[config ref]: /kv/3.4.0/reference/configuration/
-[concept aae]: /kv/3.4.0/explanation/replication/active-anti-entropy/
-[aae status]: /kv/3.4.0/reference/commands/riak-admin/#aae-status
+[rolling upgrade]: {{< baseurl >}}kv/3.4.0/how-to/operate/upgrade-cluster/
+[config ref]: {{< baseurl >}}kv/3.4.0/reference/configuration/
+[concept aae]: {{< baseurl >}}kv/3.4.0/explanation/replication/active-anti-entropy/
+[aae status]: {{< baseurl >}}kv/3.4.0/reference/commands/riak-admin/#aae-status
 
 Downgrades of OpenRiak KV are tested and supported for two feature release versions, with the general procedure being similar to that of a [rolling upgrade][rolling upgrade].
 
@@ -67,7 +67,7 @@ For every node in the cluster:
 
 | Feature | automatic | required | Notes |
 |:---|:---:|:---:|:---|
-| Active Anti-Entropy file format changes | ✔ |  | Can be opted out using a [capability](/kv/3.4.0/how-to/operate/downgrade-cluster/)
+| Active Anti-Entropy file format changes | ✔ |  | Can be opted out using a [capability]({{< baseurl >}}kv/3.4.0/how-to/operate/downgrade-cluster/)
 
 ##### When Downgrading is No Longer an Option
 

@@ -36,9 +36,9 @@ A healthy cluster, current backups, and access to cluster status and logs. Recor
 
 ### Rolling Replaces
 
-[upgrade]: /kv/3.4.1/how-to/operate/upgrade-cluster/
-[rolling restarts]: /kv/3.4.1/how-to/operate/rolling-restart/
-[add node]: /kv/3.4.1/tutorials/operations/change-cluster-membership/
+[upgrade]: {{< baseurl >}}kv/3.4.1/how-to/operate/upgrade-cluster/
+[rolling restarts]: {{< baseurl >}}kv/3.4.1/how-to/operate/rolling-restart/
+[add node]: {{< baseurl >}}kv/3.4.1/tutorials/operations/change-cluster-membership/
 
 OpenRiak KV functions as a multi-node system, so cluster-level [version upgrades][upgrade] and [restarts][rolling restarts] can be performed on a node-by-node or *rolling* basis.
 
@@ -99,7 +99,7 @@ It is possible to proactively replace a node in an OpenRiak cluster, for example
 - to change the storage_backend of a cluster node-by-node;
 - or to fully vacuum a node's storage backends of garbage.
 
-A proactive replace is a cluster administration change, and [follows the standard five stage process described in the general guidance on amending the cluster make-up](/kv/3.4.1/how-to/operate/add-node/).  In the case of a proactive replace, the first stage, staging, requires the staging of two changes:
+A proactive replace is a cluster administration change, and [follows the standard five stage process described in the general guidance on amending the cluster make-up]({{< baseurl >}}kv/3.4.1/how-to/operate/add-node/).  In the case of a proactive replace, the first stage, staging, requires the staging of two changes:
 
 - the `join` of a new node, and
 - a `replace` to indicate the old node which should be replaced.
@@ -110,13 +110,13 @@ The node cannot have its `location` set prior a `replace`, as the location must 
 
 See `riak admin cluster --help` for further details on the required inputs to cluster change commands.
 
-During the replace operation the replacement node should have [`participate_in_coverage` disabled](/kv/3.4.1/reference/operations/remote-console/), and have coverage support enabled only once all transfers have completed and (if configured) tictac anti-entropy has confirmed that all vnodes are in sync.
+During the replace operation the replacement node should have [`participate_in_coverage` disabled]({{< baseurl >}}kv/3.4.1/reference/operations/remote-console/), and have coverage support enabled only once all transfers have completed and (if configured) tictac anti-entropy has confirmed that all vnodes are in sync.
 
 After completing a proactive replace operation, it may be necessary to realign node naming with design documents or monitoring systems; to rename a replacement node with the name of the node it replaced.  Once the replace operation is complete, it is possible to rename a node while it is down using `reip_manual` - see `riak admin reip_manual --help`.  The ring_directory is normally named `ring` in the platform data directory.  It will contain files such as `riak_core_ring.default.20221122164111`, where the middle term between the periods (in this case `default`) represents the required cluster name.
 
 #### Rolling Replacement
 
-A rolling replacement is an extension of the [proactive replacement](/kv/3.4.1/how-to/operate/rolling-replacement/) process.  In a rolling replacement, a group of new nodes are installed.  There is then a rolling process where some nodes are proactively replaced by the new nodes; and once those replaced nodes are free - they are use to proactively replace other nodes in the cluster.
+A rolling replacement is an extension of the [proactive replacement]({{< baseurl >}}kv/3.4.1/how-to/operate/rolling-replacement/) process.  In a rolling replacement, a group of new nodes are installed.  There is then a rolling process where some nodes are proactively replaced by the new nodes; and once those replaced nodes are free - they are use to proactively replace other nodes in the cluster.
 
 A proactive replacement should normally be done with a single node (i.e. a group of one), if location awareness is not configured.  If locations are enabled, then multiple nodes within each location can be safely subject to proactive replacement in the same cluster plan.  With location awareness the group of nodes used can be up to the minimum number of nodes within a location.
 

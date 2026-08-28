@@ -34,25 +34,25 @@ Explain keys, objects, and buckets, its trade-offs, and its effect on applicatio
 
 ### Buckets
 
-[apps cluster metadata]: /kv/3.4.0/reference/specialized-apis/cluster-metadata/
-[cluster ops bucket types]: /kv/3.4.0/how-to/operate/manage-bucket-types/
-[cluster ops strong consistency]: /kv/3.4.0/explanation/consistency/strong-consistency/
-[concept causal context]: /kv/3.4.0/explanation/data-model/causal-context/
-[concept causal context sib]: /kv/3.4.0/explanation/data-model/causal-context/#siblings
-[concept replication]: /kv/3.4.0/explanation/replication/
-[concept strong consistency]: /kv/3.4.0/reference/specialized-apis/strong-consistency-api/
-[config basic]: /kv/3.4.0/how-to/configure/basic-node-settings/
-[dev api http]: /kv/3.4.0/reference/http-api/
-[dev data types]: /kv/3.4.0/reference/data/distributed-data-types/
-[glossary ring]: /kv/3.4.0/explanation/foundations/glossary/#ring
-[plan backend leveldb]: /kv/3.4.0/explanation/storage/leveldb/
-[plan backend bitcask]: /kv/3.4.0/explanation/storage/bitcask/
-[plan backend memory]: /kv/3.4.0/explanation/storage/memory/
-[plan backend multi]: /kv/3.4.0/explanation/storage/multi-backend/
-[usage bucket types]: /kv/3.4.0/how-to/develop/use-bucket-types/
-[usage commit hooks]: /kv/3.4.0/how-to/develop/write-commit-hook/
-[usage conflict resolution]: /kv/3.4.0/how-to/develop/resolve-conflicts/
-[usage replication]: /kv/3.4.0/explanation/replication/
+[apps cluster metadata]: {{< baseurl >}}kv/3.4.0/reference/specialized-apis/cluster-metadata/
+[cluster ops bucket types]: {{< baseurl >}}kv/3.4.0/how-to/operate/manage-bucket-types/
+[cluster ops strong consistency]: {{< baseurl >}}kv/3.4.0/explanation/consistency/strong-consistency/
+[concept causal context]: {{< baseurl >}}kv/3.4.0/explanation/data-model/causal-context/
+[concept causal context sib]: {{< baseurl >}}kv/3.4.0/explanation/data-model/causal-context/#siblings
+[concept replication]: {{< baseurl >}}kv/3.4.0/explanation/replication/
+[concept strong consistency]: {{< baseurl >}}kv/3.4.0/reference/specialized-apis/strong-consistency-api/
+[config basic]: {{< baseurl >}}kv/3.4.0/how-to/configure/basic-node-settings/
+[dev api http]: {{< baseurl >}}kv/3.4.0/reference/http-api/
+[dev data types]: {{< baseurl >}}kv/3.4.0/reference/data/distributed-data-types/
+[glossary ring]: {{< baseurl >}}kv/3.4.0/explanation/foundations/glossary/#ring
+[plan backend leveldb]: {{< baseurl >}}kv/3.4.0/explanation/storage/leveldb/
+[plan backend bitcask]: {{< baseurl >}}kv/3.4.0/explanation/storage/bitcask/
+[plan backend memory]: {{< baseurl >}}kv/3.4.0/explanation/storage/memory/
+[plan backend multi]: {{< baseurl >}}kv/3.4.0/explanation/storage/multi-backend/
+[usage bucket types]: {{< baseurl >}}kv/3.4.0/how-to/develop/use-bucket-types/
+[usage commit hooks]: {{< baseurl >}}kv/3.4.0/how-to/develop/write-commit-hook/
+[usage conflict resolution]: {{< baseurl >}}kv/3.4.0/how-to/develop/resolve-conflicts/
+[usage replication]: {{< baseurl >}}kv/3.4.0/explanation/replication/
 
 Buckets are used to define a virtual keyspace for storing Riak objects.
 They enable you to define non-default configurations over that keyspace
@@ -230,8 +230,8 @@ curl http://localhost:8087/types/my_custom_type/buckets/animals/props
 
 ### Keys and Objects
 
-[concept buckets]: /kv/3.4.0/explanation/data-model/keys-objects-and-buckets/
-[concept causal context vc]: /kv/3.4.0/explanation/data-model/causal-context/#vector-clocks
+[concept buckets]: {{< baseurl >}}kv/3.4.0/explanation/data-model/keys-objects-and-buckets/
+[concept causal context vc]: {{< baseurl >}}kv/3.4.0/explanation/data-model/causal-context/#vector-clocks
 
 In an RDBMS, data is organized by tables that are individually
 identifiable entities. Within those tables exist rows of a data

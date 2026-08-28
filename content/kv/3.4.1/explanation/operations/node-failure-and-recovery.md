@@ -137,13 +137,13 @@ Brief guide on performing node-by-node restarts.
 
 There are seven potential repair and recovery processes for handling different scenarios:
 
-- [Proactive replacement](/kv/3.4.1/how-to/operate/rolling-replacement/)
-- [Reactive replacement](/kv/3.4.1/how-to/operate/replace-node/)
-- [Rolling replacement](/kv/3.4.1/how-to/operate/rolling-replacement/)
-- [Rolling restart](/kv/3.4.1/how-to/operate/rolling-restart/)
-- [Leveled backend repair](/kv/3.4.1/how-to/operate/repair-leveled-store/)
-- [Repairing a single vnode](/kv/3.4.1/how-to/operate/repair-vnode/)
-- [Repairing a key range](/kv/3.4.1/how-to/operate/aae-fold/repair-key-range/)
+- [Proactive replacement]({{< baseurl >}}kv/3.4.1/how-to/operate/rolling-replacement/)
+- [Reactive replacement]({{< baseurl >}}kv/3.4.1/how-to/operate/replace-node/)
+- [Rolling replacement]({{< baseurl >}}kv/3.4.1/how-to/operate/rolling-replacement/)
+- [Rolling restart]({{< baseurl >}}kv/3.4.1/how-to/operate/rolling-restart/)
+- [Leveled backend repair]({{< baseurl >}}kv/3.4.1/how-to/operate/repair-leveled-store/)
+- [Repairing a single vnode]({{< baseurl >}}kv/3.4.1/how-to/operate/repair-vnode/)
+- [Repairing a key range]({{< baseurl >}}kv/3.4.1/how-to/operate/aae-fold/repair-key-range/)
 
 The most common repair requirements are for proactive replace, and reactive replace: testing these processes under load prior to production deployment of Riak is recommended.
 

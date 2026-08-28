@@ -68,7 +68,7 @@ You can download the pre-built packages below, or build it from source.
 
 ###### Prerequisites
 
-* Erlang must be installed. See [Installing Erlang](/kv/3.4.0/how-to/install/source/) for instructions
+* Erlang must be installed. See [Installing Erlang]({{< baseurl >}}kv/3.4.0/how-to/install/source/) for instructions
     and versioning requirements. Note: Unless you're an experienced
     Erlang developer, we recommend that you use Ubuntu 14.04 LTS (and
     not CentOS), when building ```basho_bench``` from source.  Later

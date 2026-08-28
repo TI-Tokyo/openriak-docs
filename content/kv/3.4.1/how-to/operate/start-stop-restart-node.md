@@ -35,7 +35,7 @@ A healthy cluster, current backups, and access to cluster status and logs. Recor
 
 ### Starting Riak by Make Method
 
-Starting Riak changes depending on how Riak was made - a [local release](/kv/3.4.1/how-to/install/source/) or [local development cluster](/kv/3.4.1/tutorials/first-cluster/), or through [package deployment](/kv/3.4.1/how-to/operate/start-stop-restart-node/).  In all cases Riak is released using [the relx release generator](https://rebar3.org/docs/deployment/releases/), and inherits the control commands from the `relx` extended start script; but the location and method for accessing that script will vary.
+Starting Riak changes depending on how Riak was made - a [local release]({{< baseurl >}}kv/3.4.1/how-to/install/source/) or [local development cluster]({{< baseurl >}}kv/3.4.1/tutorials/first-cluster/), or through [package deployment]({{< baseurl >}}kv/3.4.1/how-to/operate/start-stop-restart-node/).  In all cases Riak is released using [the relx release generator](https://rebar3.org/docs/deployment/releases/), and inherits the control commands from the `relx` extended start script; but the location and method for accessing that script will vary.
 
 #### Local Release or Cluster
 
@@ -47,7 +47,7 @@ bin/riak ping
 bin/riak stop
 ```
 
-The location of the `bin` directory will depend on whether `make rel` or `make devrel` has been used to create the Riak release.  By default `make rel` will copy the release into the `rel/riak` folder in the base folder to which Riak was cloned - so the control script can be found at `rel/riak/bin/riak`.  For clusters generated with `make devrel`, the make process will create `n` multiple nodes under `dev/dev{n}/riak` in the base folder.  Those nodes are independent until [they are joined into a cluster](/kv/3.4.1/how-to/operate/add-node/).
+The location of the `bin` directory will depend on whether `make rel` or `make devrel` has been used to create the Riak release.  By default `make rel` will copy the release into the `rel/riak` folder in the base folder to which Riak was cloned - so the control script can be found at `rel/riak/bin/riak`.  For clusters generated with `make devrel`, the make process will create `n` multiple nodes under `dev/dev{n}/riak` in the base folder.  Those nodes are independent until [they are joined into a cluster]({{< baseurl >}}kv/3.4.1/how-to/operate/add-node/).
 
 > Under `riak`, there should be `bin`, `data`, `log` and `etc` folders.  The location of the `data` and `log` folders can be changed using the `platform.data_dir` and `platform.log_dir` in `etc/riak.conf`.
 

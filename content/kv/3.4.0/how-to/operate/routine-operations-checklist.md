@@ -30,7 +30,7 @@ A healthy cluster, current backups, and access to cluster status and logs. Recor
 
 ### Operation Checklist
 
-In the guide to building and scaling a cluster, the section on [choosing infrastructure](/kv/3.4.0/how-to/plan/size-cluster/) provides a checklist of things to consider at the design stage, and it is worth considering the issues highlighted in that guide when troubleshooting operational issues:
+In the guide to building and scaling a cluster, the section on [choosing infrastructure]({{< baseurl >}}kv/3.4.0/how-to/plan/size-cluster/) provides a checklist of things to consider at the design stage, and it is worth considering the issues highlighted in that guide when troubleshooting operational issues:
 
 - The need to avoid the accidental concurrent scheduling of expensive operational processes;
   - Disk trim jobs,

@@ -50,9 +50,9 @@ Link to the relevant how-to guides for real tasks, explanation pages for the und
 
 ## In this section
 
-- [Build a first OpenRiak application](/kv/3.4.0/tutorials/first-application/) — Introduce language-specific learning paths for storing, reading, updating, querying, and deleting data.
-- [Learn OpenRiak with a first cluster](/kv/3.4.0/tutorials/first-cluster/) — Introduce supported learning environments for creating a disposable first cluster.
-- [Learn cluster operations](/kv/3.4.0/tutorials/operations/) — Introduce safe practice scenarios for common OpenRiak cluster operations.
-- [Learn the Query API](/kv/3.4.0/tutorials/query-api/) — Introduce a guided learning path for indexing, querying, and interpreting a small search dataset.
-- [Learn multi-cluster replication](/kv/3.4.0/tutorials/replication/) — Introduce a guided two-cluster environment for learning TicTac AAE and next-generation replication.
-- [Learn OpenRiak security](/kv/3.4.0/tutorials/security/) — Introduce a guided environment for learning OpenRiak authentication, TLS, and authorization.
+- [Build a first OpenRiak application]({{< baseurl >}}kv/3.4.0/tutorials/first-application/) — Introduce language-specific learning paths for storing, reading, updating, querying, and deleting data.
+- [Learn OpenRiak with a first cluster]({{< baseurl >}}kv/3.4.0/tutorials/first-cluster/) — Introduce supported learning environments for creating a disposable first cluster.
+- [Learn cluster operations]({{< baseurl >}}kv/3.4.0/tutorials/operations/) — Introduce safe practice scenarios for common OpenRiak cluster operations.
+- [Learn the Query API]({{< baseurl >}}kv/3.4.0/tutorials/query-api/) — Introduce a guided learning path for indexing, querying, and interpreting a small search dataset.
+- [Learn multi-cluster replication]({{< baseurl >}}kv/3.4.0/tutorials/replication/) — Introduce a guided two-cluster environment for learning TicTac AAE and next-generation replication.
+- [Learn OpenRiak security]({{< baseurl >}}kv/3.4.0/tutorials/security/) — Introduce a guided environment for learning OpenRiak authentication, TLS, and authorization.

@@ -271,15 +271,15 @@ When using any other backend or multi-backend this will require an additional pa
 
 The AAE Fold API:
 
-- Supports [more than ten different fold types](/kv/3.4.1/reference/aae-fold-api/);
-- [Are throttled to minimise the impact on other cluster operations, and have query options that may improve efficiency](/kv/3.4.1/reference/aae-fold-api/).
+- Supports [more than ten different fold types]({{< baseurl >}}kv/3.4.1/reference/aae-fold-api/);
+- [Are throttled to minimise the impact on other cluster operations, and have query options that may improve efficiency]({{< baseurl >}}kv/3.4.1/reference/aae-fold-api/).
 
 The AAE Fold API has four potential interfaces:
 
-- [AAE Folds via the Command Line](/kv/3.4.1/how-to/operate/aae-fold/run-from-command-line/);
-- [AAE Folds via remote_console](/kv/3.4.1/how-to/operate/use-remote-console/);
-- [AAE Folds via HTTP](/kv/3.4.1/reference/aae-fold-api/);
-- [AAE Folds via protocol buffers](/kv/3.4.1/reference/aae-fold-api/).
+- [AAE Folds via the Command Line]({{< baseurl >}}kv/3.4.1/how-to/operate/aae-fold/run-from-command-line/);
+- [AAE Folds via remote_console]({{< baseurl >}}kv/3.4.1/how-to/operate/use-remote-console/);
+- [AAE Folds via HTTP]({{< baseurl >}}kv/3.4.1/reference/aae-fold-api/);
+- [AAE Folds via protocol buffers]({{< baseurl >}}kv/3.4.1/reference/aae-fold-api/).
 
 ## Verify the result
 
@@ -287,13 +287,13 @@ Compare cluster health and workload behaviour with the recorded starting state, 
 
 ## In this section
 
-- [Count keys with AAE fold](/kv/3.4.1/how-to/operate/aae-fold/count-keys/) — Show operators how to count keys with aae fold and interpret the outcome.
-- [Count tombstones with AAE fold](/kv/3.4.1/how-to/operate/aae-fold/count-tombstones/) — Show operators how to count tombstones with aae fold and interpret the outcome.
-- [Erase keys with AAE fold](/kv/3.4.1/how-to/operate/aae-fold/erase-keys/) — Show operators how to erase keys with aae fold and interpret the outcome.
-- [Find keys with AAE fold](/kv/3.4.1/how-to/operate/aae-fold/find-keys/) — Show operators how to find keys with aae fold and interpret the outcome.
-- [Find tombstones with AAE fold](/kv/3.4.1/how-to/operate/aae-fold/find-tombstones/) — Show operators how to find tombstones with aae fold and interpret the outcome.
-- [List buckets with AAE fold](/kv/3.4.1/how-to/operate/aae-fold/list-buckets/) — Show operators how to list buckets with aae fold and interpret the outcome.
-- [Collect object statistics with AAE fold](/kv/3.4.1/how-to/operate/aae-fold/object-statistics/) — Show operators how to collect object statistics with aae fold and interpret the outcome.
-- [Reap tombstones with AAE fold](/kv/3.4.1/how-to/operate/aae-fold/reap-tombstones/) — Show operators how to reap tombstones with aae fold and interpret the outcome.
-- [Repair a key range with AAE fold](/kv/3.4.1/how-to/operate/aae-fold/repair-key-range/) — Show operators how to repair a key range with aae fold and interpret the outcome.
-- [Run an AAE fold from the command line](/kv/3.4.1/how-to/operate/aae-fold/run-from-command-line/) — Show operators how to start a long-running AAE fold and write its completed results to disk.
+- [Count keys with AAE fold]({{< baseurl >}}kv/3.4.1/how-to/operate/aae-fold/count-keys/) — Show operators how to count keys with aae fold and interpret the outcome.
+- [Count tombstones with AAE fold]({{< baseurl >}}kv/3.4.1/how-to/operate/aae-fold/count-tombstones/) — Show operators how to count tombstones with aae fold and interpret the outcome.
+- [Erase keys with AAE fold]({{< baseurl >}}kv/3.4.1/how-to/operate/aae-fold/erase-keys/) — Show operators how to erase keys with aae fold and interpret the outcome.
+- [Find keys with AAE fold]({{< baseurl >}}kv/3.4.1/how-to/operate/aae-fold/find-keys/) — Show operators how to find keys with aae fold and interpret the outcome.
+- [Find tombstones with AAE fold]({{< baseurl >}}kv/3.4.1/how-to/operate/aae-fold/find-tombstones/) — Show operators how to find tombstones with aae fold and interpret the outcome.
+- [List buckets with AAE fold]({{< baseurl >}}kv/3.4.1/how-to/operate/aae-fold/list-buckets/) — Show operators how to list buckets with aae fold and interpret the outcome.
+- [Collect object statistics with AAE fold]({{< baseurl >}}kv/3.4.1/how-to/operate/aae-fold/object-statistics/) — Show operators how to collect object statistics with aae fold and interpret the outcome.
+- [Reap tombstones with AAE fold]({{< baseurl >}}kv/3.4.1/how-to/operate/aae-fold/reap-tombstones/) — Show operators how to reap tombstones with aae fold and interpret the outcome.
+- [Repair a key range with AAE fold]({{< baseurl >}}kv/3.4.1/how-to/operate/aae-fold/repair-key-range/) — Show operators how to repair a key range with aae fold and interpret the outcome.
+- [Run an AAE fold from the command line]({{< baseurl >}}kv/3.4.1/how-to/operate/aae-fold/run-from-command-line/) — Show operators how to start a long-running AAE fold and write its completed results to disk.

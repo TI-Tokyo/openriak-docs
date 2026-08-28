@@ -34,12 +34,12 @@ Introduce repair, convergence, and multi-cluster data movement in OpenRiak.
 
 ### Replication
 
-[usage bucket types]: /kv/3.4.1/how-to/develop/use-bucket-types/
-[concept eventual consistency]: /kv/3.4.1/explanation/consistency/eventual-consistency/
-[plan backend leveldb]: /kv/3.4.1/explanation/storage/leveldb/
-[plan backend bitcask]: /kv/3.4.1/explanation/storage/bitcask/
-[use ref strong consistency]: /kv/3.4.1/reference/specialized-apis/strong-consistency-api/
-[concept clusters]: /kv/3.4.1/explanation/foundations/clusters-rings-and-partitions/
+[usage bucket types]: {{< baseurl >}}kv/3.4.1/how-to/develop/use-bucket-types/
+[concept eventual consistency]: {{< baseurl >}}kv/3.4.1/explanation/consistency/eventual-consistency/
+[plan backend leveldb]: {{< baseurl >}}kv/3.4.1/explanation/storage/leveldb/
+[plan backend bitcask]: {{< baseurl >}}kv/3.4.1/explanation/storage/bitcask/
+[use ref strong consistency]: {{< baseurl >}}kv/3.4.1/reference/specialized-apis/strong-consistency-api/
+[concept clusters]: {{< baseurl >}}kv/3.4.1/explanation/foundations/clusters-rings-and-partitions/
 
 Riak was built to act as a multi-node [cluster][concept clusters].  It
 distributes data across multiple physical servers, which enables it to
@@ -61,17 +61,17 @@ manner, you can fine-tune that trade-off. The ability to make these
 kinds of fundamental choices has immense value for your applications and
 is one of the features that differentiates Riak from other databases.
 
-At the bottom of the page, you'll find a [screencast](/kv/3.4.1/explanation/replication/references-and-triggers/#screencast) that briefly explains how to adjust your
+At the bottom of the page, you'll find a [screencast]({{< baseurl >}}kv/3.4.1/explanation/replication/references-and-triggers/#screencast) that briefly explains how to adjust your
 replication levels to match your application and business needs.
 
 **Note on strong consistency**
 An option introduced in Riak version 2.0 is to use Riak as a
-<a href="/kv/3.4.1/reference/specialized-apis/strong-consistency-api/">strongly
+<a href="{{< baseurl >}}kv/3.4.1/reference/specialized-apis/strong-consistency-api/">strongly
 consistent</a> system for data in specified buckets. Using Riak in this way is
 fundamentally different from adjusting replication properties and fine-tuning
 the availability/consistency trade-off, as it sacrifices _all_ availability
 guarantees when necessary. Therefore, you should consult the
-<a href="/kv/3.4.1/reference/specialized-apis/strong-consistency-api/">Using
+<a href="{{< baseurl >}}kv/3.4.1/reference/specialized-apis/strong-consistency-api/">Using
 Strong Consistency</a> documentation, as this option will not be covered in
 this tutorial.
 
@@ -90,7 +90,7 @@ Riak is to specify those properties
 ##### Replication Properties Through Bucket Types
 
 Let's say, for example, that you want to apply an `n_val` of 5, an `r`
-of 3, and a `w` of 3 to all of the data in some of the [buckets](/kv/3.4.1/explanation/data-model/keys-objects-and-buckets/) that
+of 3, and a `w` of 3 to all of the data in some of the [buckets]({{< baseurl >}}kv/3.4.1/explanation/data-model/keys-objects-and-buckets/) that
 you're using. In order to set those replication properties, you should
 create a bucket type that sets those properties. Below is an example:
 
@@ -114,8 +114,8 @@ Parameter | Common name | Default value | Description
 `n_val` | N | `3` | Replication factor, i.e. the number of nodes in the cluster on which an object is to be stored
 `r` | R | `quorum` | The number of servers that must respond to a read request
 `w` | W | `quorum` | Number of servers that must respond to a write request
-`pr` | PR | `0` | The number of primary <a href="/kv/3.4.1/explanation/foundations/virtual-nodes/">vnodes</a> that must respond to a read request
-`pw` | PW | `0` | The number of primary <a href="/kv/3.4.1/explanation/foundations/virtual-nodes/">vnodes</a> that must respond to a write request
+`pr` | PR | `0` | The number of primary <a href="{{< baseurl >}}kv/3.4.1/explanation/foundations/virtual-nodes/">vnodes</a> that must respond to a read request
+`pw` | PW | `0` | The number of primary <a href="{{< baseurl >}}kv/3.4.1/explanation/foundations/virtual-nodes/">vnodes</a> that must respond to a write request
 `dw` | DW | `quorum` | The number of servers that must report that a write has been successfully written to disk
 `rw` | RW | `quorum` | If R and W are undefined, this parameter will substitute for both R and W during object deletes. It is extremely unlikely that you will need to adjust this parameter.
 `notfound_ok` | | `true` | This parameter determines how Riak responds if a read fails on a node. Setting to `true` (the default) is the equivalent to setting R to 1: if the first node to respond doesn't have a copy of the object, Riak will immediately return a `not found` error. If set to `false`, Riak will continue to look for the object on the number of nodes specified by N (aka `n_val`).
@@ -124,7 +124,7 @@ Parameter | Common name | Default value | Description
 #### A Primer on N, R, and W
 
 The most important thing to note about OpenRiak's replication controls is
-that they can be at the bucket level. You can use [bucket types](/kv/3.4.1/how-to/develop/use-bucket-types/)
+that they can be at the bucket level. You can use [bucket types]({{< baseurl >}}kv/3.4.1/how-to/develop/use-bucket-types/)
 to set up bucket `A` to use a particular set of replication properties
 and bucket `B` to use entirely different properties.
 
@@ -335,7 +335,7 @@ seeks to write the object to is unavailable.
 
 #### Primary Reads and Writes with PR and PW
 
-In OpenRiak's replication model, there are N [vnodes](/kv/3.4.1/explanation/foundations/glossary/#vnode),
+In OpenRiak's replication model, there are N [vnodes]({{< baseurl >}}kv/3.4.1/explanation/foundations/glossary/#vnode),
 called _primary vnodes_, that hold primary responsibility for any given
 key. Riak will attempt reads and writes to primary vnodes first, but in
 case of failure, those operations will go to failover nodes in order to
@@ -372,7 +372,7 @@ successful. The default value is `quorum` (more on symbolic names below).
 
 How quickly and robustly data is written to disk depends on the
 configuration of your backend or backends. For more details, see the
-documentation on [Bitcask][plan backend bitcask], [LevelDB][plan backend leveldb], and [multiple backends](/kv/3.4.1/explanation/storage/multi-backend/).
+documentation on [Bitcask][plan backend bitcask], [LevelDB][plan backend leveldb], and [multiple backends]({{< baseurl >}}kv/3.4.1/explanation/storage/multi-backend/).
 
 #### Delete Quorum with RW
 
@@ -546,9 +546,9 @@ curl -XPUT \
   http://localhost:8098/buckets/nba_stats/keys/michael_jordan?w=3&dw=2
 ```
 
-All of Basho's [official Riak clients](/kv/3.4.1/reference/client-libraries/) enable you to
+All of Basho's [official Riak clients]({{< baseurl >}}kv/3.4.1/reference/client-libraries/) enable you to
 set replication properties this way. For more detailed information,
-refer to the tutorial on [basic key/value operations in OpenRiak KV](/kv/3.4.1/tutorials/first-application/)
+refer to the tutorial on [basic key/value operations in OpenRiak KV]({{< baseurl >}}kv/3.4.1/tutorials/first-application/)
 or to client-specific documentation:
 
 * [Ruby](https://github.com/basho/riak-ruby-client/blob/master/README.md)
@@ -562,7 +562,7 @@ In case the above explanations were a bit too abstract for your tastes,
 the following table lays out a number of possible scenarios for reads
 and writes in Riak and how Riak is likely to respond. Some of these
 scenarios involve issues surrounding conflict resolution, vector clocks,
-and siblings, so we recommend reading the [Vector Clocks](/kv/3.4.1/explanation/data-model/causal-context/#vector-clocks) documentation for more information.
+and siblings, so we recommend reading the [Vector Clocks]({{< baseurl >}}kv/3.4.1/explanation/data-model/causal-context/#vector-clocks) documentation for more information.
 
 ##### Read Scenarios
 
@@ -572,8 +572,8 @@ vnodes responsible for an object.
 Scenario | What happens in Riak
 :--------|:--------------------
 All 3 vnodes agree on the value | Once the first 2 vnodes return the value, that value is returned to the client
-2 of 3 vnodes agree on the value, and those 2 are the first to reach the coordinating node | The value is returned to the client. Read repair will deal with the conflict per the later scenarios, which means that a future read may return a different value or <a href="/kv/3.4.1/explanation/data-model/causal-context/#siblings">siblings</a>
-2 conflicting values reach the coordinating node and <a href="/kv/3.4.1/explanation/data-model/causal-context/#vector-clocks">vector clocks</a> allow for resolution | The vector clocks are used to resolve the conflict and return a single value, which is propagated via read repair to the relevant vnodes
+2 of 3 vnodes agree on the value, and those 2 are the first to reach the coordinating node | The value is returned to the client. Read repair will deal with the conflict per the later scenarios, which means that a future read may return a different value or <a href="{{< baseurl >}}kv/3.4.1/explanation/data-model/causal-context/#siblings">siblings</a>
+2 conflicting values reach the coordinating node and <a href="{{< baseurl >}}kv/3.4.1/explanation/data-model/causal-context/#vector-clocks">vector clocks</a> allow for resolution | The vector clocks are used to resolve the conflict and return a single value, which is propagated via read repair to the relevant vnodes
 2 conflicting values reach the coordinating node, vector clocks indicate a fork in the object history, and `allow_mult` is set to `false` | The object with the most recent timestamp is returned and propagated via read repair to the relevant vnodes
 2 siblings or conflicting values reach the coordinating node, vector clocks indicate a fork in the object history, and `allow_mult` is set to `true` | All keys are returned as siblings, optionally with associated values (depending on how the request is made)
 
@@ -604,14 +604,14 @@ href="http://vimeo.com">Vimeo</a>.
 
 ### Replication
 
-[cluster ops v3 mdc]: /kv/3.4.1/reference/replication-api/runtime-controls/
-[concept aae]: /kv/3.4.1/explanation/replication/active-anti-entropy/
-[concept causal context vc]: /kv/3.4.1/explanation/data-model/causal-context/#vector-clocks
-[concept clusters]: /kv/3.4.1/explanation/foundations/clusters-rings-and-partitions/
-[concept vnodes]: /kv/3.4.1/explanation/foundations/virtual-nodes/
-[glossary node]: /kv/3.4.1/explanation/foundations/glossary/#node
-[glossary ring]: /kv/3.4.1/explanation/foundations/glossary/#ring
-[usage replication]: /kv/3.4.1/explanation/replication/
+[cluster ops v3 mdc]: {{< baseurl >}}kv/3.4.1/reference/replication-api/runtime-controls/
+[concept aae]: {{< baseurl >}}kv/3.4.1/explanation/replication/active-anti-entropy/
+[concept causal context vc]: {{< baseurl >}}kv/3.4.1/explanation/data-model/causal-context/#vector-clocks
+[concept clusters]: {{< baseurl >}}kv/3.4.1/explanation/foundations/clusters-rings-and-partitions/
+[concept vnodes]: {{< baseurl >}}kv/3.4.1/explanation/foundations/virtual-nodes/
+[glossary node]: {{< baseurl >}}kv/3.4.1/explanation/foundations/glossary/#node
+[glossary ring]: {{< baseurl >}}kv/3.4.1/explanation/foundations/glossary/#ring
+[usage replication]: {{< baseurl >}}kv/3.4.1/explanation/replication/
 
 Data replication is a core feature of OpenRiak's basic architecture. Riak
 was designed to operate as a [clustered][concept clusters] system containing
@@ -622,13 +622,13 @@ Replication is fundamental and automatic in Riak, providing security
 that your data will still be there if a node in your OpenRiak cluster goes
 down. All data stored in Riak will be replicated to a number of nodes in
 the cluster according to the N value (`n_val`) property set in a
-bucket's [bucket type](/kv/3.4.1/how-to/develop/use-bucket-types/).
+bucket's [bucket type]({{< baseurl >}}kv/3.4.1/how-to/develop/use-bucket-types/).
 
 >**Note: Replication across clusters**
 >
 >If you're interested in replication not just within a cluster but across
 multiple clusters, we recommend checking out our documentation on OpenRiak's
-[Multi-Datacenter Replications](/kv/3.4.1/how-to/configure/replication/configure-v3-multi-datacenter/) capabilities.
+[Multi-Datacenter Replications]({{< baseurl >}}kv/3.4.1/how-to/configure/replication/configure-v3-multi-datacenter/) capabilities.
 
 #### Selecting an N value (`n_val`)
 
@@ -655,7 +655,7 @@ nodes with the data will cause the read to fail.
 #### Setting the N value (`n_val`)
 
 To change the N value for a bucket, you need to create a [bucket
-type](/kv/3.4.1/how-to/develop/use-bucket-types/) with `n_val` set to your desired value and
+type]({{< baseurl >}}kv/3.4.1/how-to/develop/use-bucket-types/) with `n_val` set to your desired value and
 then make sure that the bucket bears that type.
 
 In this example, we'll set N to 2. First, we'll create the bucket type
@@ -686,8 +686,8 @@ objects' preflists, i.e. lists of [vnodes][concept vnodes] responsible for the o
 can end up
 
 Unreachable data is a problem because it can negatively impact coverage
-queries, e.g. [secondary index](/kv/3.4.1/how-to/develop/query-secondary-indexes/) and
-[MapReduce](/kv/3.4.1/how-to/develop/run-mapreduce/) queries. Lowering an object or bucket's
+queries, e.g. [secondary index]({{< baseurl >}}kv/3.4.1/how-to/develop/query-secondary-indexes/) and
+[MapReduce]({{< baseurl >}}kv/3.4.1/how-to/develop/run-mapreduce/) queries. Lowering an object or bucket's
 `n_val` will likely mean that objects that you would expect to
 be returned from those queries will no longer be returned.
 
@@ -905,20 +905,20 @@ addition or removal of nodes to the cluster.
 
 In the evolution of Riak, there have been two generations of solutions developed to support replication and reconciliation between clusters:
 
-- The now legacy, [`riak_repl` replication](/kv/3.4.1/explanation/replication/v2-and-v3-replication/) which was the recommended replication approach prior to Riak 3.0.10.
+- The now legacy, [`riak_repl` replication]({{< baseurl >}}kv/3.4.1/explanation/replication/v2-and-v3-replication/) which was the recommended replication approach prior to Riak 3.0.10.
   - The `riak_repl` application has evolved through multiple versions of a real-time replication, that supported a push-based model to reliably deliver changes from a source cluster to a sink cluster;
   - The replication approach is backed-up by a reconciliation approach focused on time-consuming key-by-key comparisons, running in the background between clusters on a vnode-by-vnode basis.
 - The NextGen replication solution which is the recommended approach in Riak 3.4.
   - The real-time replication approach is by comparison a pull-based model, to allow a sink cluster to fetch results from the source;
   - The replication approach is backed-up with reconciliation through rapid low-cost comparisons between the state of clusters using anti-entropy information, where the comparisons run reliably between clusters with different configurations (e.g. ring-size, node count or n_val).
 
-This guide covers the NextGen replication solution, and further information on alternatives are linked from the [legacy replication section](/kv/3.4.1/explanation/replication/v2-and-v3-replication/).
+This guide covers the NextGen replication solution, and further information on alternatives are linked from the [legacy replication section]({{< baseurl >}}kv/3.4.1/explanation/replication/v2-and-v3-replication/).
 
 Replication is considered to have three stages:
 
 - Seeding; populating data in one cluster from another cluster.
   - Not covered in this guide.
-  - The recommended approach to seeding using `repl_keys_range` is explained as part of [the AAE Fold API guide](/kv/3.4.1/reference/aae-fold-api/).
+  - The recommended approach to seeding using `repl_keys_range` is explained as part of [the AAE Fold API guide]({{< baseurl >}}kv/3.4.1/reference/aae-fold-api/).
 - **Real-time replication**; the forwarding of changes between connected clusters as they occur.
 - **Reconciliation**; determining if two clusters have the same data at the same version, and automatically resolving any deltas that exist.
 
@@ -928,15 +928,15 @@ Real-time replication is asynchronous in Riak, the availability and performance 
 
 The guide is split into the following sections:
 
-- [An overview of the concepts](/kv/3.4.1/explanation/replication/).
-- [Configuration of real-time replication](/kv/3.4.1/how-to/configure/replication/configure-real-time-replication/).
-- [Configuration of all-cluster reconciliation](/kv/3.4.1/how-to/configure/replication/configure-fullsync/).
-- [Configuration of per-bucket reconciliation](/kv/3.4.1/how-to/configure/replication/per-bucket-reconciliation/).
-- [Managing a cluster migration](/kv/3.4.1/how-to/configure/replication/migrate-cluster/).
-- [The external Replication API](/kv/3.4.1/reference/replication-api/).
-- [Operations and the troubleshooting of replication](/kv/3.4.1/how-to/operate/monitor-reconciliation/).
-- [Configuring `riak_repl`](/kv/3.4.1/explanation/replication/v2-and-v3-replication/).
-- [Replication scope](/kv/3.4.1/explanation/replication/reconciliation-scope/).
+- [An overview of the concepts]({{< baseurl >}}kv/3.4.1/explanation/replication/).
+- [Configuration of real-time replication]({{< baseurl >}}kv/3.4.1/how-to/configure/replication/configure-real-time-replication/).
+- [Configuration of all-cluster reconciliation]({{< baseurl >}}kv/3.4.1/how-to/configure/replication/configure-fullsync/).
+- [Configuration of per-bucket reconciliation]({{< baseurl >}}kv/3.4.1/how-to/configure/replication/per-bucket-reconciliation/).
+- [Managing a cluster migration]({{< baseurl >}}kv/3.4.1/how-to/configure/replication/migrate-cluster/).
+- [The external Replication API]({{< baseurl >}}kv/3.4.1/reference/replication-api/).
+- [Operations and the troubleshooting of replication]({{< baseurl >}}kv/3.4.1/how-to/operate/monitor-reconciliation/).
+- [Configuring `riak_repl`]({{< baseurl >}}kv/3.4.1/explanation/replication/v2-and-v3-replication/).
+- [Replication scope]({{< baseurl >}}kv/3.4.1/explanation/replication/reconciliation-scope/).
 
 #### Overview
 
@@ -966,22 +966,22 @@ Within the replication system, for any replication event, there is a **source** 
 
 Replication and reconciliation is built on the following support infrastructure:
 
-- [Queues and workers](/kv/3.4.1/explanation/replication/queues/);
-- [Replication references](/kv/3.4.1/explanation/replication/references-and-triggers/);
-- [Replication triggers](/kv/3.4.1/explanation/replication/references-and-triggers/).
+- [Queues and workers]({{< baseurl >}}kv/3.4.1/explanation/replication/queues/);
+- [Replication references]({{< baseurl >}}kv/3.4.1/explanation/replication/references-and-triggers/);
+- [Replication triggers]({{< baseurl >}}kv/3.4.1/explanation/replication/references-and-triggers/).
 
 ## In this section
 
-- [Accelerated large-delta reconciliation](/kv/3.4.1/explanation/replication/accelerated-reconciliation/) — Explain how 3.4.1 accelerates large replication-delta repair without resending an entire bucket.
-- [Active anti-entropy](/kv/3.4.1/explanation/replication/active-anti-entropy/) — Explain active anti-entropy, its data flow, failure behavior, and operational trade-offs.
-- [Cascading replication writes](/kv/3.4.1/explanation/replication/cascading-writes/) — Explain cascading replication writes, its data flow, failure behavior, and operational trade-offs.
-- [Legacy active anti-entropy](/kv/3.4.1/explanation/replication/legacy-aae/) — Explain legacy active anti-entropy, its data flow, failure behavior, and operational trade-offs.
-- [Multi-datacenter replication architecture](/kv/3.4.1/explanation/replication/multi-datacenter-architecture/) — Explain multi-datacenter replication architecture, its data flow, failure behavior, and operational trade-offs.
-- [Next-generation replication](/kv/3.4.1/explanation/replication/next-generation-replication/) — Explain next-generation replication, its data flow, failure behavior, and operational trade-offs.
-- [Replication queues](/kv/3.4.1/explanation/replication/queues/) — Explain replication queues, its data flow, failure behavior, and operational trade-offs.
-- [Real-time and Fullsync replication](/kv/3.4.1/explanation/replication/real-time-and-fullsync/) — Explain real-time and fullsync replication, its data flow, failure behavior, and operational trade-offs.
-- [Reconciliation scope](/kv/3.4.1/explanation/replication/reconciliation-scope/) — Explain all-cluster, per-bucket, time-window, and key-range reconciliation trade-offs.
-- [Replication references and triggers](/kv/3.4.1/explanation/replication/references-and-triggers/) — Explain how replication references and triggers select, queue, and transmit changes.
-- [Replication sink nodes](/kv/3.4.1/explanation/replication/sink-nodes/) — Explain replication sink nodes, its data flow, failure behavior, and operational trade-offs.
-- [TicTac active anti-entropy](/kv/3.4.1/explanation/replication/tictac-aae/) — Explain tictac active anti-entropy, its data flow, failure behavior, and operational trade-offs.
-- [Legacy and current replication generations](/kv/3.4.1/explanation/replication/v2-and-v3-replication/) — Explain legacy and current replication generations, its data flow, failure behavior, and operational trade-offs.
+- [Accelerated large-delta reconciliation]({{< baseurl >}}kv/3.4.1/explanation/replication/accelerated-reconciliation/) — Explain how 3.4.1 accelerates large replication-delta repair without resending an entire bucket.
+- [Active anti-entropy]({{< baseurl >}}kv/3.4.1/explanation/replication/active-anti-entropy/) — Explain active anti-entropy, its data flow, failure behavior, and operational trade-offs.
+- [Cascading replication writes]({{< baseurl >}}kv/3.4.1/explanation/replication/cascading-writes/) — Explain cascading replication writes, its data flow, failure behavior, and operational trade-offs.
+- [Legacy active anti-entropy]({{< baseurl >}}kv/3.4.1/explanation/replication/legacy-aae/) — Explain legacy active anti-entropy, its data flow, failure behavior, and operational trade-offs.
+- [Multi-datacenter replication architecture]({{< baseurl >}}kv/3.4.1/explanation/replication/multi-datacenter-architecture/) — Explain multi-datacenter replication architecture, its data flow, failure behavior, and operational trade-offs.
+- [Next-generation replication]({{< baseurl >}}kv/3.4.1/explanation/replication/next-generation-replication/) — Explain next-generation replication, its data flow, failure behavior, and operational trade-offs.
+- [Replication queues]({{< baseurl >}}kv/3.4.1/explanation/replication/queues/) — Explain replication queues, its data flow, failure behavior, and operational trade-offs.
+- [Real-time and Fullsync replication]({{< baseurl >}}kv/3.4.1/explanation/replication/real-time-and-fullsync/) — Explain real-time and fullsync replication, its data flow, failure behavior, and operational trade-offs.
+- [Reconciliation scope]({{< baseurl >}}kv/3.4.1/explanation/replication/reconciliation-scope/) — Explain all-cluster, per-bucket, time-window, and key-range reconciliation trade-offs.
+- [Replication references and triggers]({{< baseurl >}}kv/3.4.1/explanation/replication/references-and-triggers/) — Explain how replication references and triggers select, queue, and transmit changes.
+- [Replication sink nodes]({{< baseurl >}}kv/3.4.1/explanation/replication/sink-nodes/) — Explain replication sink nodes, its data flow, failure behavior, and operational trade-offs.
+- [TicTac active anti-entropy]({{< baseurl >}}kv/3.4.1/explanation/replication/tictac-aae/) — Explain tictac active anti-entropy, its data flow, failure behavior, and operational trade-offs.
+- [Legacy and current replication generations]({{< baseurl >}}kv/3.4.1/explanation/replication/v2-and-v3-replication/) — Explain legacy and current replication generations, its data flow, failure behavior, and operational trade-offs.

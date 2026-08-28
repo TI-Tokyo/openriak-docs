@@ -40,10 +40,10 @@ Access to the affected OpenRiak KV environment, the exact product version, a rec
 
 ### Scaling and Operating Riak Best Practices
 
-[use ref handoff]: /kv/3.4.1/reference/operations/handoff/
-[config mapreduce]: /kv/3.4.1/how-to/configure/mapreduce/
-[glossary aae]: /kv/3.4.1/explanation/foundations/glossary/#active-anti-entropy-aae
-[cluster ops add remove node]: /kv/3.4.1/tutorials/operations/change-cluster-membership/
+[use ref handoff]: {{< baseurl >}}kv/3.4.1/reference/operations/handoff/
+[config mapreduce]: {{< baseurl >}}kv/3.4.1/how-to/configure/mapreduce/
+[glossary aae]: {{< baseurl >}}kv/3.4.1/explanation/foundations/glossary/#active-anti-entropy-aae
+[cluster ops add remove node]: {{< baseurl >}}kv/3.4.1/tutorials/operations/change-cluster-membership/
 
 OpenRiak KV is a database designed for easy operation and scaling. Below are some best practices that will enable you to improve performance and reliability at all stages in the life of your OpenRiak cluster.
 
@@ -177,9 +177,9 @@ Choosing the infrastructure for a distributed database requires a different appr
 
 The infrastructure selection decision is split into three parts:
 
-- [Node selection, including storage](/kv/3.4.1/how-to/plan/size-cluster/);
-- [Network requirements](/kv/3.4.1/reference/configuration/networking/);
-- [The use of a proxy, WAF or load-balancing gateway](/kv/3.4.1/how-to/configure/load-balancing-proxy/).
+- [Node selection, including storage]({{< baseurl >}}kv/3.4.1/how-to/plan/size-cluster/);
+- [Network requirements]({{< baseurl >}}kv/3.4.1/reference/configuration/networking/);
+- [The use of a proxy, WAF or load-balancing gateway]({{< baseurl >}}kv/3.4.1/how-to/configure/load-balancing-proxy/).
 
 OpenRiak KV is designed for easy operation and scaling. The following document comtains some best practices that will help you to improve the performance, reliability and life-span of your OpenRiak Cluster.
 

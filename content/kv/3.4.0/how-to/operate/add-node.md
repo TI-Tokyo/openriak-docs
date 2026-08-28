@@ -55,11 +55,11 @@ riak admin cluster --help
 
 The process of joining, is a five stage process:
 
-- [staging changes](/kv/3.4.0/how-to/operate/add-node/);
-- [plan the change](/kv/3.4.0/how-to/operate/plan-and-commit-cluster-change/);
-- [verify the plan](/kv/3.4.0/how-to/operate/plan-and-commit-cluster-change/);
-- [commit the change](/kv/3.4.0/how-to/operate/plan-and-commit-cluster-change/);
-- [await handoffs](/kv/3.4.0/how-to/operate/manage-handoffs/).
+- [staging changes]({{< baseurl >}}kv/3.4.0/how-to/operate/add-node/);
+- [plan the change]({{< baseurl >}}kv/3.4.0/how-to/operate/plan-and-commit-cluster-change/);
+- [verify the plan]({{< baseurl >}}kv/3.4.0/how-to/operate/plan-and-commit-cluster-change/);
+- [commit the change]({{< baseurl >}}kv/3.4.0/how-to/operate/plan-and-commit-cluster-change/);
+- [await handoffs]({{< baseurl >}}kv/3.4.0/how-to/operate/manage-handoffs/).
 
 #### Join process - staging a change
 
@@ -67,7 +67,7 @@ There must first be the staging of a `join`, an act that simply informs the clus
 
 Only nodes configured with the same `ring_size` as the cluster, can be joined into the cluster.
 
-If [locations are to be used](/kv/3.4.0/reference/operations/cluster-claim-algorithms/) within the cluster, then location changes must also be staged:
+If [locations are to be used]({{< baseurl >}}kv/3.4.0/reference/operations/cluster-claim-algorithms/) within the cluster, then location changes must also be staged:
 
 ```console
 riak admin cluster location --help

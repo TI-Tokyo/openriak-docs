@@ -47,6 +47,6 @@ Repeat the completed workflow, inspect the stored or operational result, and con
 
 ## Next steps
 
-- [Build a first OpenRiak cluster in the cloud](/kv/3.4.1/tutorials/first-cluster/cloud/)
-- [Build a first OpenRiak cluster on Ubuntu](/kv/3.4.1/tutorials/first-cluster/ubuntu/)
-- [Build a first OpenRiak cluster with Vagrant](/kv/3.4.1/tutorials/first-cluster/vagrant/)
+- [Build a first OpenRiak cluster in the cloud]({{< baseurl >}}kv/3.4.1/tutorials/first-cluster/cloud/)
+- [Build a first OpenRiak cluster on Ubuntu]({{< baseurl >}}kv/3.4.1/tutorials/first-cluster/ubuntu/)
+- [Build a first OpenRiak cluster with Vagrant]({{< baseurl >}}kv/3.4.1/tutorials/first-cluster/vagrant/)

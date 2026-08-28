@@ -33,12 +33,12 @@ A non-production OpenRiak KV cluster, client credentials, and disposable test da
 
 ### Advanced MapReduce
 
-[usage 2i]: /kv/3.4.1/how-to/develop/query-secondary-indexes/
-[apps replication properties]: /kv/3.4.1/explanation/replication/references-and-triggers/
-[use ref custom code]: /kv/3.4.1/reference/operations/custom-code/
-[usage bucket types]: /kv/3.4.1/how-to/develop/use-bucket-types/
-[glossary vnode]: /kv/3.4.1/explanation/foundations/glossary/#vnode
-[config reference]: /kv/3.4.1/reference/configuration/
+[usage 2i]: {{< baseurl >}}kv/3.4.1/how-to/develop/query-secondary-indexes/
+[apps replication properties]: {{< baseurl >}}kv/3.4.1/explanation/replication/references-and-triggers/
+[use ref custom code]: {{< baseurl >}}kv/3.4.1/reference/operations/custom-code/
+[usage bucket types]: {{< baseurl >}}kv/3.4.1/how-to/develop/use-bucket-types/
+[glossary vnode]: {{< baseurl >}}kv/3.4.1/explanation/foundations/glossary/#vnode
+[config reference]: {{< baseurl >}}kv/3.4.1/reference/configuration/
 [google mr]: http://research.google.com/archive/mapreduce.html
 [mapping list]: http://hackage.haskell.org/package/base-4.7.0.0/docs/Prelude.html#v:map
 [function contrib]: https://github.com/basho/riak_function_contrib
@@ -391,7 +391,7 @@ Erlang client.
 **Distributing Erlang MapReduce Code**
 Any modules and functions you use in your Erlang MapReduce calls must be
 available on all nodes in the cluster. Please read about
-[installing custom code](/kv/3.4.1/reference/operations/custom-code/).
+[installing custom code]({{< baseurl >}}kv/3.4.1/reference/operations/custom-code/).
 
 ##### Erlang Example
 
@@ -730,7 +730,7 @@ You can use streaming with Erlang via the OpenRiak KV local client or the
 Erlang Protocol Buffers API.  In either case, you will provide the call
 to `mapred_stream` with a `Pid` that will receive the streaming results.
 
-For examples, see [MapReduce pbstream.erl](/data/MapReduceExamples/pbstream.erl)
+For examples, see [MapReduce pbstream.erl]({{< baseurl >}}data/MapReduceExamples/pbstream.erl)
 
 #### Troubleshooting MapReduce, illustrated
 
@@ -800,13 +800,13 @@ false
 
 ### Using MapReduce
 
-[usage 2i]: /kv/3.4.1/how-to/develop/query-secondary-indexes/
-[usage search]: /kv/3.4.1/reference/specialized-apis/legacy-query-api/
-[usage types]: /kv/3.4.1/how-to/develop/use-bucket-types/
-[api http]: /kv/3.4.1/reference/http-api/
-[api pb]: /kv/3.4.1/reference/protocol-buffers/
-[glossary vnode]: /kv/3.4.1/explanation/foundations/glossary/#vnode
-[guide mapreduce]: /kv/3.4.1/how-to/develop/run-mapreduce/
+[usage 2i]: {{< baseurl >}}kv/3.4.1/how-to/develop/query-secondary-indexes/
+[usage search]: {{< baseurl >}}kv/3.4.1/reference/specialized-apis/legacy-query-api/
+[usage types]: {{< baseurl >}}kv/3.4.1/how-to/develop/use-bucket-types/
+[api http]: {{< baseurl >}}kv/3.4.1/reference/http-api/
+[api pb]: {{< baseurl >}}kv/3.4.1/reference/protocol-buffers/
+[glossary vnode]: {{< baseurl >}}kv/3.4.1/explanation/foundations/glossary/#vnode
+[guide mapreduce]: {{< baseurl >}}kv/3.4.1/how-to/develop/run-mapreduce/
 
 **Use MapReduce sparingly**
 In OpenRiak KV, MapReduce is the primary method for non-primary-key-based
@@ -900,7 +900,7 @@ assuming that the next phase in the list is a reduce phase.
 The diagram below provides an illustration of how a coordinating vnode
 orchestrates a MapReduce job.
 
-![MapReduce Diagram](/images/MapReduce-diagram.png)
+![MapReduce Diagram]({{< baseurl >}}images/MapReduce-diagram.png)
 
 #### Example
 

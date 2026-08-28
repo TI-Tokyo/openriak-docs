@@ -52,7 +52,7 @@ State what this explanation does not cover, call out 3.4.0 versus 3.4.1 differen
 
 ## In this section
 
-- [Security concepts](/kv/3.4.0/explanation/security/) — Introduce the OpenRiak security model, trust boundaries, identities, and authorization decisions.
-- [The OpenRiak security model](/kv/3.4.0/explanation/security/security-model/) — Explain the openriak security model and the security decisions administrators must make.
-- [TLS identities and certificate trust](/kv/3.4.0/explanation/security/tls-model/) — Explain tls identities and certificate trust and the security decisions administrators must make.
-- [Users, groups, and permissions](/kv/3.4.0/explanation/security/users-groups-and-permissions/) — Explain users, groups, and permissions and the security decisions administrators must make.
+- [Security concepts]({{< baseurl >}}kv/3.4.0/explanation/security/) — Introduce the OpenRiak security model, trust boundaries, identities, and authorization decisions.
+- [The OpenRiak security model]({{< baseurl >}}kv/3.4.0/explanation/security/security-model/) — Explain the openriak security model and the security decisions administrators must make.
+- [TLS identities and certificate trust]({{< baseurl >}}kv/3.4.0/explanation/security/tls-model/) — Explain tls identities and certificate trust and the security decisions administrators must make.
+- [Users, groups, and permissions]({{< baseurl >}}kv/3.4.0/explanation/security/users-groups-and-permissions/) — Explain users, groups, and permissions and the security decisions administrators must make.

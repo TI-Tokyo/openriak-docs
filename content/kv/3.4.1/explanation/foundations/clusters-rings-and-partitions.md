@@ -34,15 +34,15 @@ Explain clusters, rings, and partitions and why it matters when designing or ope
 
 ### Clusters
 
-[concept buckets]: /kv/3.4.1/explanation/data-model/keys-objects-and-buckets/
-[concept keys objects]: /kv/3.4.1/explanation/data-model/keys-objects-and-buckets/
-[concept replication]: /kv/3.4.1/explanation/replication/
-[glossary node]: /kv/3.4.1/explanation/foundations/glossary/#node
-[glossary vnode]: /kv/3.4.1/explanation/foundations/glossary/#vnode
-[learn dynamo]: /kv/3.4.1/explanation/foundations/dynamo-model/
-[usage bucket types]: /kv/3.4.1/how-to/develop/use-bucket-types/
-[usage conflict resolution]: /kv/3.4.1/how-to/develop/resolve-conflicts/
-[usage replication]: /kv/3.4.1/explanation/replication/
+[concept buckets]: {{< baseurl >}}kv/3.4.1/explanation/data-model/keys-objects-and-buckets/
+[concept keys objects]: {{< baseurl >}}kv/3.4.1/explanation/data-model/keys-objects-and-buckets/
+[concept replication]: {{< baseurl >}}kv/3.4.1/explanation/replication/
+[glossary node]: {{< baseurl >}}kv/3.4.1/explanation/foundations/glossary/#node
+[glossary vnode]: {{< baseurl >}}kv/3.4.1/explanation/foundations/glossary/#vnode
+[learn dynamo]: {{< baseurl >}}kv/3.4.1/explanation/foundations/dynamo-model/
+[usage bucket types]: {{< baseurl >}}kv/3.4.1/how-to/develop/use-bucket-types/
+[usage conflict resolution]: {{< baseurl >}}kv/3.4.1/how-to/develop/resolve-conflicts/
+[usage replication]: {{< baseurl >}}kv/3.4.1/explanation/replication/
 
 OpenRiak's default mode of operation is to work as a cluster consisting of
 multiple [nodes][glossary node], i.e. multiple well-connected data
@@ -78,7 +78,7 @@ _claims_ that partition).
 
 Below is a visual representation of a Riak ring:
 
-![A Riak Ring](/images/riak-ring.png)
+![A Riak Ring]({{< baseurl >}}images/riak-ring.png)
 
 The nodes of an OpenRiak cluster each attempt to run a roughly equal number
 of vnodes at any given time. In the general case, this means that each
@@ -110,7 +110,7 @@ number of vnodes that must reply before a response is returned.
 
 Here is an illustration of this process:
 
-![A Riak Ring](/images/riak-data-distribution.png)
+![A Riak Ring]({{< baseurl >}}images/riak-data-distribution.png)
 
 When N is set to 3, the value `REM` is stored in the key `artist`. That
 key is assigned to 3 partitions out of 32 available partitions. When a

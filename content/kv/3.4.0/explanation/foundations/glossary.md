@@ -29,38 +29,38 @@ Explain openriak terminology and why it matters when designing or operating Open
 
 ### OpenRiak KV Glossary
 
-[apps replication properties]: /kv/3.4.0/explanation/replication/references-and-triggers/
+[apps replication properties]: {{< baseurl >}}kv/3.4.0/explanation/replication/references-and-triggers/
 [basho bench GH]: http://github.com/basho/basho_bench/
-[cluster ops add remove node]: /kv/3.4.0/tutorials/operations/change-cluster-membership/
-[cluster ops strong consistency]: /kv/3.4.0/explanation/consistency/strong-consistency/
-[concept buckets]: /kv/3.4.0/explanation/data-model/keys-objects-and-buckets/
-[concept causal context vc]: /kv/3.4.0/explanation/data-model/causal-context/#vector-clocks
-[concept clusters]: /kv/3.4.0/explanation/foundations/clusters-rings-and-partitions/
-[concept crdts]: /kv/3.4.0/explanation/data-model/distributed-data-types/
-[concept eventual consistency]: /kv/3.4.0/explanation/consistency/eventual-consistency/
-[concept keys objects]: /kv/3.4.0/explanation/data-model/keys-objects-and-buckets/
-[concept replication]: /kv/3.4.0/explanation/replication/
-[concept strong consistency]: /kv/3.4.0/explanation/consistency/strong-consistency/
-[dev kv model]: /kv/3.4.0/how-to/plan/map-data-to-objects/
-[concept replication aae]: /kv/3.4.0/explanation/replication/#active-anti-entropy
-[dev api http]: /kv/3.4.0/reference/http-api/
-[dev data model]: /kv/3.4.0/how-to/plan/map-data-to-objects/
-[dev data types]: /kv/3.4.0/reference/data/distributed-data-types/
-[glossary read rep]: /kv/3.4.0/explanation/foundations/glossary/#read-repair
-[glossary vnode]: /kv/3.4.0/explanation/foundations/glossary/#vnode
+[cluster ops add remove node]: {{< baseurl >}}kv/3.4.0/tutorials/operations/change-cluster-membership/
+[cluster ops strong consistency]: {{< baseurl >}}kv/3.4.0/explanation/consistency/strong-consistency/
+[concept buckets]: {{< baseurl >}}kv/3.4.0/explanation/data-model/keys-objects-and-buckets/
+[concept causal context vc]: {{< baseurl >}}kv/3.4.0/explanation/data-model/causal-context/#vector-clocks
+[concept clusters]: {{< baseurl >}}kv/3.4.0/explanation/foundations/clusters-rings-and-partitions/
+[concept crdts]: {{< baseurl >}}kv/3.4.0/explanation/data-model/distributed-data-types/
+[concept eventual consistency]: {{< baseurl >}}kv/3.4.0/explanation/consistency/eventual-consistency/
+[concept keys objects]: {{< baseurl >}}kv/3.4.0/explanation/data-model/keys-objects-and-buckets/
+[concept replication]: {{< baseurl >}}kv/3.4.0/explanation/replication/
+[concept strong consistency]: {{< baseurl >}}kv/3.4.0/explanation/consistency/strong-consistency/
+[dev kv model]: {{< baseurl >}}kv/3.4.0/how-to/plan/map-data-to-objects/
+[concept replication aae]: {{< baseurl >}}kv/3.4.0/explanation/replication/#active-anti-entropy
+[dev api http]: {{< baseurl >}}kv/3.4.0/reference/http-api/
+[dev data model]: {{< baseurl >}}kv/3.4.0/how-to/plan/map-data-to-objects/
+[dev data types]: {{< baseurl >}}kv/3.4.0/reference/data/distributed-data-types/
+[glossary read rep]: {{< baseurl >}}kv/3.4.0/explanation/foundations/glossary/#read-repair
+[glossary vnode]: {{< baseurl >}}kv/3.4.0/explanation/foundations/glossary/#vnode
 [Lager]: https://github.com/basho/lager
-[learn dynamo]: /kv/3.4.0/explanation/foundations/dynamo-model/
-[plan cluster capacity]: /kv/3.4.0/explanation/storage/capacity-planning/
-[repair recover failure recovery]: /kv/3.4.0/how-to/troubleshoot/recover-cluster-failure/
-[repair recover repairs]: /kv/3.4.0/explanation/operations/repair-granularity/
+[learn dynamo]: {{< baseurl >}}kv/3.4.0/explanation/foundations/dynamo-model/
+[plan cluster capacity]: {{< baseurl >}}kv/3.4.0/explanation/storage/capacity-planning/
+[repair recover failure recovery]: {{< baseurl >}}kv/3.4.0/how-to/troubleshoot/recover-cluster-failure/
+[repair recover repairs]: {{< baseurl >}}kv/3.4.0/explanation/operations/repair-granularity/
 [Riak Core]: https://github.com/basho/riak_core
 [OpenRiak KV]: https://github.com/basho/riak_kv
 [Riak Pipe]: https://github.com/basho/riak_pipe
 [Riak Pipe - the New MapReduce Power]: http://basho.com/riak-pipe-the-new-mapreduce-power/
 [Riak Pipe - OpenRiak's Distributed Processing Framework]: http://vimeo.com/53910999
 [Understanding OpenRiak's Configurable Behaviors]: http://basho.com/riaks-config-behaviors-part-2/
-[usage mapreduce]: /kv/3.4.0/how-to/develop/run-mapreduce/
-[usage secondary-indexes]: /kv/3.4.0/how-to/develop/query-secondary-indexes/
+[usage mapreduce]: {{< baseurl >}}kv/3.4.0/how-to/develop/run-mapreduce/
+[usage secondary-indexes]: {{< baseurl >}}kv/3.4.0/how-to/develop/query-secondary-indexes/
 [Where To Start With Riak Core]: http://basho.com/where-to-start-with-riak-core/
 [Wikipedia:Consistent Hashing]: http://en.wikipedia.org/wiki/Consistent_hashing
 
@@ -87,7 +87,7 @@ Basho Bench is a benchmarking tool created to conduct accurate and
 repeatable performance tests and stress tests and to produce performance
 graphs.
 
-* [Basho Bench](/kv/3.4.0/how-to/tune/benchmark-cluster/)
+* [Basho Bench]({{< baseurl >}}kv/3.4.0/how-to/tune/benchmark-cluster/)
 * [GitHub repository][basho bench GH]
 
 #### Bucket
@@ -106,7 +106,7 @@ Bucket types enable you to create and manage sets of bucket properties
 that, when applied to buckets, dictate those buckets' behavior. They
 also act as a third namespace in Riak in addition to buckets and keys.
 
-* [Bucket Types](/kv/3.4.0/how-to/develop/use-bucket-types/)
+* [Bucket Types]({{< baseurl >}}kv/3.4.0/how-to/develop/use-bucket-types/)
 
 #### Cluster
 

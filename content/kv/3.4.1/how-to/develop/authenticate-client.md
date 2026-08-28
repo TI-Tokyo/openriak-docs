@@ -37,49 +37,49 @@ A non-production OpenRiak KV cluster, client credentials, and disposable test da
 
 ### Client Security
 
-Versions of Riak 2.0 and later come equipped with a [security subsystem](/kv/3.4.1/how-to/secure/enable-security/) that enables you to choose
+Versions of Riak 2.0 and later come equipped with a [security subsystem]({{< baseurl >}}kv/3.4.1/how-to/secure/enable-security/) that enables you to choose
 
 * which Riak users/clients are authorized to perform a wide variety of
   Riak operations, and
 * how those users/clients are required to authenticate themselves.
 
-The following four authentication mechanisms, aka [security sources](/kv/3.4.1/how-to/secure/manage-sources/) are available:
+The following four authentication mechanisms, aka [security sources]({{< baseurl >}}kv/3.4.1/how-to/secure/manage-sources/) are available:
 
-* [Trust](/kv/3.4.1/how-to/secure/manage-sources/#trust-based-authentication)-based
+* [Trust]({{< baseurl >}}kv/3.4.1/how-to/secure/manage-sources/#trust-based-authentication)-based
   authentication enables you to specify trusted
   [CIDR](http://en.wikipedia.org/wiki/Classless_Inter-Domain_Routing)s
   from which all clients will be authenticated by default
-* [Password](/kv/3.4.1/how-to/secure/manage-sources/#password-based-authentication)-based authentication requires
+* [Password]({{< baseurl >}}kv/3.4.1/how-to/secure/manage-sources/#password-based-authentication)-based authentication requires
   that clients provide a username and password
-* [Certificate](/kv/3.4.1/how-to/secure/manage-sources/#certificate-based-authentication)-based authentication
+* [Certificate]({{< baseurl >}}kv/3.4.1/how-to/secure/manage-sources/#certificate-based-authentication)-based authentication
   requires that clients
-* [Pluggable authentication module (PAM)](/kv/3.4.1/how-to/secure/manage-sources/#pam-based-authentication)-based authentication requires
+* [Pluggable authentication module (PAM)]({{< baseurl >}}kv/3.4.1/how-to/secure/manage-sources/#pam-based-authentication)-based authentication requires
   clients to authenticate using the PAM service specified using the
-  [`riak admin security`](/kv/3.4.1/how-to/secure/manage-sources/)
+  [`riak admin security`]({{< baseurl >}}kv/3.4.1/how-to/secure/manage-sources/)
   command line interface
 
 OpenRiak's approach to security is highly flexible. If you choose to use
 OpenRiak's security feature, you do not need to require that all clients
 authenticate via the same means. Instead, you can specify authentication
 sources on a client-by-client, i.e. user-by-user, basis. This means that
-you can require clients performing, say, [MapReduce](/kv/3.4.1/how-to/develop/run-mapreduce/)
-operations to use certificate auth, while clients performing [K/V Operations](/kv/3.4.1/how-to/develop/) have to use username and password. The approach
+you can require clients performing, say, [MapReduce]({{< baseurl >}}kv/3.4.1/how-to/develop/run-mapreduce/)
+operations to use certificate auth, while clients performing [K/V Operations]({{< baseurl >}}kv/3.4.1/how-to/develop/) have to use username and password. The approach
 that you adopt will depend on your security needs.
 
 This document provides a general overview of how that works. For
 managing security in Riak itself, see the following documents:
 
-* [Authentication and Authorization](/kv/3.4.1/how-to/secure/enable-security/)
-* [Managing Security Sources](/kv/3.4.1/how-to/secure/manage-sources/)
+* [Authentication and Authorization]({{< baseurl >}}kv/3.4.1/how-to/secure/enable-security/)
+* [Managing Security Sources]({{< baseurl >}}kv/3.4.1/how-to/secure/manage-sources/)
 
 We also provide client-library-specific guides for the following
 officially supported clients:
 
-* [Java](/kv/3.4.1/how-to/develop/authenticate-client/)
-* [Ruby](/kv/3.4.1/how-to/develop/authenticate-client/)
-* [PHP](/kv/3.4.1/how-to/develop/authenticate-client/)
-* [Python](/kv/3.4.1/how-to/develop/authenticate-client/)
-* [Erlang](/kv/3.4.1/how-to/develop/authenticate-client/)
+* [Java]({{< baseurl >}}kv/3.4.1/how-to/develop/authenticate-client/)
+* [Ruby]({{< baseurl >}}kv/3.4.1/how-to/develop/authenticate-client/)
+* [PHP]({{< baseurl >}}kv/3.4.1/how-to/develop/authenticate-client/)
+* [Python]({{< baseurl >}}kv/3.4.1/how-to/develop/authenticate-client/)
+* [Erlang]({{< baseurl >}}kv/3.4.1/how-to/develop/authenticate-client/)
 
 #### Certificates, Keys, and Authorities
 
@@ -104,12 +104,12 @@ keys should never be shared beyond Riak and connecting clients.
 > **HTTP not supported**
 >
 > Certificate-based authentication is available only through OpenRiak's
-[Protocol Buffers](/kv/3.4.1/reference/protocol-buffers/) interface. It is not available through the
-[HTTP API](/kv/3.4.1/reference/http-api/).
+[Protocol Buffers]({{< baseurl >}}kv/3.4.1/reference/protocol-buffers/) interface. It is not available through the
+[HTTP API]({{< baseurl >}}kv/3.4.1/reference/http-api/).
 
 ##### Default Names
 
-In OpenRiak's [configuration files](/kv/3.4.1/reference/configuration/#security), the
+In OpenRiak's [configuration files]({{< baseurl >}}kv/3.4.1/reference/configuration/#security), the
 default certificate file names are as follows:
 
 Cert | Filename
@@ -125,9 +125,9 @@ These filenames will be used in the client-library-specific tutorials.
 This tutorial shows you how to set up a Riak Erlang client to
 authenticate itself when connecting to Riak.
 
-If you are using [trust](/kv/3.4.1/how-to/secure/manage-sources/), [PAM-](/kv/3.4.1/how-to/secure/manage-sources/#pam-based-authentication), you can use the security setup described [below](#erlang-client-basics). [Password](/kv/3.4.1/how-to/secure/manage-sources/#password-based-authentication)-based authentication is covered
+If you are using [trust]({{< baseurl >}}kv/3.4.1/how-to/secure/manage-sources/), [PAM-]({{< baseurl >}}kv/3.4.1/how-to/secure/manage-sources/#pam-based-authentication), you can use the security setup described [below](#erlang-client-basics). [Password]({{< baseurl >}}kv/3.4.1/how-to/secure/manage-sources/#password-based-authentication)-based authentication is covered
 in a [later section](#password-based-authentication). If you are using
-[certificate](/kv/3.4.1/how-to/secure/manage-sources/#certificate-based-authentication)-based authentication, follow
+[certificate]({{< baseurl >}}kv/3.4.1/how-to/secure/manage-sources/#certificate-based-authentication)-based authentication, follow
 the instructions in the [section below](#certificate-based-authentication).
 
 **Note on certificate generation**
@@ -148,7 +148,7 @@ connection to `localhost` on port 8087:
 
 If you are using Riak security, _all_ connecting clients should have
 access to the same Certificate Authority (CA) used on the server side,
-regardless of which [security source](/kv/3.4.1/how-to/secure/manage-sources/) you
+regardless of which [security source]({{< baseurl >}}kv/3.4.1/how-to/secure/manage-sources/) you
 choose. In addition, all clients should provide a username. The example
 above created a connection to Riak without specifying a username or CA.
 That information is specified as a list of options passed to the
@@ -173,7 +173,7 @@ This client is not currently set up to use any of the available security
 sources, with the exception of trust-based authentication, provided that
 the [CIDR](http://en.wikipedia.org/wiki/Classless_Inter-Domain_Routing)
 from which the client is connecting has been specified as trusted. More
-on specifying trusted CIDRs can be found in [Trust-based Authentication](/kv/3.4.1/how-to/secure/manage-sources/#trust-based-authentication).
+on specifying trusted CIDRs can be found in [Trust-based Authentication]({{< baseurl >}}kv/3.4.1/how-to/secure/manage-sources/#trust-based-authentication).
 
 #### Password-based Authentication
 
@@ -195,10 +195,10 @@ SecurityOptions = [
 #### PAM-based Authentication
 
 If you have specified that a specific client be authenticated using
-[PAM](/kv/3.4.1/how-to/secure/manage-sources/#pam-based-authentication), you will
+[PAM]({{< baseurl >}}kv/3.4.1/how-to/secure/manage-sources/#pam-based-authentication), you will
 need to provide a CA as well as the username and password that you
 specified when creating the user in Riak. For more, see our
-documentation on [User Management](/kv/3.4.1/how-to/secure/enable-security/#user-management).
+documentation on [User Management]({{< baseurl >}}kv/3.4.1/how-to/secure/enable-security/#user-management).
 
 #### Certificate-based Authentication
 
@@ -223,8 +223,8 @@ SecurityOptions = [
 This tutorial shows you how to set up a Riak Java client to authenticate
 itself when connecting to Riak.
 
-If you are using [trust-](/kv/3.4.1/how-to/secure/manage-sources/#trust-based-authentication) or [PAM](/kv/3.4.1/how-to/secure/manage-sources/#pam-based-authentication)-based authentication, you can use the
-security setup described [below](#java-client-basics). [Certificate](/kv/3.4.1/how-to/secure/manage-sources/#certificate-based-authentication)-based authentication is not
+If you are using [trust-]({{< baseurl >}}kv/3.4.1/how-to/secure/manage-sources/#trust-based-authentication) or [PAM]({{< baseurl >}}kv/3.4.1/how-to/secure/manage-sources/#pam-based-authentication)-based authentication, you can use the
+security setup described [below](#java-client-basics). [Certificate]({{< baseurl >}}kv/3.4.1/how-to/secure/manage-sources/#certificate-based-authentication)-based authentication is not
 yet supported in the Java client.
 
 #### Java Client Basics
@@ -237,7 +237,7 @@ configuration. In this document, we will be working with only one node.
 
 If you are using Riak security, _all_ connecting clients should have
 access to the same Certificate Authority (CA) used on the server side,
-regardless of which [security source](/kv/3.4.1/how-to/secure/manage-sources/) you
+regardless of which [security source]({{< baseurl >}}kv/3.4.1/how-to/secure/manage-sources/) you
 choose. All clients should also provide a username, regardless of
 security source. The example below sets up a single node object (we'll
 simply call it `node`) that connects to Riak on `localhost` and on port
@@ -315,8 +315,8 @@ official Riak Java client.
 This tutorial shows you how to set up a Riak PHP client to authenticate
 itself when connecting to Riak.
 
-If you are using [trust-](/kv/3.4.1/how-to/secure/manage-sources/#trust-based-authentication) or [PAM](/kv/3.4.1/how-to/secure/manage-sources/#pam-based-authentication)-based authentication, you can use the
-security setup described [below](#php-client-basics). [Certificate](/kv/3.4.1/how-to/secure/manage-sources/#certificate-based-authentication)-based authentication is not
+If you are using [trust-]({{< baseurl >}}kv/3.4.1/how-to/secure/manage-sources/#trust-based-authentication) or [PAM]({{< baseurl >}}kv/3.4.1/how-to/secure/manage-sources/#pam-based-authentication)-based authentication, you can use the
+security setup described [below](#php-client-basics). [Certificate]({{< baseurl >}}kv/3.4.1/how-to/secure/manage-sources/#certificate-based-authentication)-based authentication is not
 yet supported in the PHP client due to limitations of the HTTP interface of Riak.
 
 #### PHP Client Basics
@@ -329,7 +329,7 @@ only one node.
 
 If you are using Riak security, _all_ connecting clients should have
 access to the same Certificate Authority (CA) used on the server side,
-regardless of which [security source](/kv/3.4.1/how-to/secure/manage-sources/) you choose. All clients should also provide a username, regardless of
+regardless of which [security source]({{< baseurl >}}kv/3.4.1/how-to/secure/manage-sources/) you choose. All clients should also provide a username, regardless of
 security source. The example below sets up a single node object (we'll
 simply call it `node`) that connects to Riak on `localhost` and on port
 8087 and specifies `riakuser` as a username. That object will be used to
@@ -393,10 +393,10 @@ official Riak PHP client due to limitations in the HTTP interface.
 This tutorial shows you how to set up a Riak Python client to
 authenticate itself when connecting to Riak.
 
-If you are using [trust-](/kv/3.4.1/how-to/secure/manage-sources/) or [PAM-](/kv/3.4.1/how-to/secure/manage-sources/#pam-based-authentication), you can use the security
-setup described [below](#python-client-basics). [Password](/kv/3.4.1/how-to/secure/manage-sources/#password-based-authentication)-based authentication is covered
+If you are using [trust-]({{< baseurl >}}kv/3.4.1/how-to/secure/manage-sources/) or [PAM-]({{< baseurl >}}kv/3.4.1/how-to/secure/manage-sources/#pam-based-authentication), you can use the security
+setup described [below](#python-client-basics). [Password]({{< baseurl >}}kv/3.4.1/how-to/secure/manage-sources/#password-based-authentication)-based authentication is covered
 in a [later section](#password-based-authentication). If you are using
-[certificate](/kv/3.4.1/how-to/secure/manage-sources/#certificate-based-authentication)-based authentication, follow
+[certificate]({{< baseurl >}}kv/3.4.1/how-to/secure/manage-sources/#certificate-based-authentication)-based authentication, follow
 the instructions in the [section below](#certificate-based-authentication).
 
 #### OpenSSL Versions
@@ -419,7 +419,7 @@ instantiation by creating a `SecurityCreds` object.
 
 If you are using Riak Security, _all_ connecting clients should have
 access to the same Certificate Authority (CA) used on the server side,
-regardless of which [security source](/kv/3.4.1/how-to/secure/manage-sources/) you
+regardless of which [security source]({{< baseurl >}}kv/3.4.1/how-to/secure/manage-sources/) you
 choose. All clients should also provide a username. The example below
 sets up a client object (we'll simply call it `client`) that connects to
 Riak on `localhost` and on port 8087 without any security credentials:
@@ -451,7 +451,7 @@ provided that the
 [CIDR](http://en.wikipedia.org/wiki/Classless_Inter-Domain_Routing) from
 which the client is connecting has been specified as trusted. More on
 specifying trusted CIDRs can be found in [Trust-based
-Authentication](/kv/3.4.1/how-to/secure/manage-sources/).
+Authentication]({{< baseurl >}}kv/3.4.1/how-to/secure/manage-sources/).
 
 **Note**: The examples in the following sections specify certs on the
 basis of their filepaths, e.g. `/ssl_dir/cacertfile.pem`. In addition to
@@ -494,7 +494,7 @@ creds = SecurityCreds(username='riakuser',
 
 #### Specifying Ciphers
 
-To specify a list of preferred [security ciphers](/kv/3.4.1/how-to/secure/enable-security/#security-ciphers), you can pass in a colon-delimited
+To specify a list of preferred [security ciphers]({{< baseurl >}}kv/3.4.1/how-to/secure/enable-security/#security-ciphers), you can pass in a colon-delimited
 string to the `ciphers` parameter:
 
 ```python
@@ -532,10 +532,10 @@ this are `OpenSSL.crypto.load_privatekey()` for the private key and
 This tutorial shows you how to set up a Riak Ruby client to authenticate
 itself when connecting to Riak.
 
-If you are using [trust-](/kv/3.4.1/how-to/secure/manage-sources/) or [PAM](/kv/3.4.1/how-to/secure/manage-sources/#pam-based-authentication)-based authentication, you
+If you are using [trust-]({{< baseurl >}}kv/3.4.1/how-to/secure/manage-sources/) or [PAM]({{< baseurl >}}kv/3.4.1/how-to/secure/manage-sources/#pam-based-authentication)-based authentication, you
 can use the security setup described in the [Ruby Client Basics](#ruby-client-basics) section.
-[Password](/kv/3.4.1/how-to/secure/manage-sources/#password-based-authentication)-based authentication is covered
-in a [later section](#password-based-authentication), while [certificate](/kv/3.4.1/how-to/secure/manage-sources/#certificate-based-authentication)-based authentication
+[Password]({{< baseurl >}}kv/3.4.1/how-to/secure/manage-sources/#password-based-authentication)-based authentication is covered
+in a [later section](#password-based-authentication), while [certificate]({{< baseurl >}}kv/3.4.1/how-to/secure/manage-sources/#certificate-based-authentication)-based authentication
 is covered [further down](#certificate-based-authentication).
 
 #### Ruby Client Basics
@@ -549,7 +549,7 @@ needs to be used can be passed to the object upon instantiation in an
 
 If you are using Riak Security, _all_ connecting clients should have
 access to the same Certificate Authority (CA) used on the server side,
-regardless of which [security source](/kv/3.4.1/how-to/secure/manage-sources/) you choose. All clients should also provide a username. The example below sets up a client object (we'll simply call it `client`) that connects
+regardless of which [security source]({{< baseurl >}}kv/3.4.1/how-to/secure/manage-sources/) you choose. All clients should also provide a username. The example below sets up a client object (we'll simply call it `client`) that connects
 to Riak on `localhost` and on port 8087, specifies `riakuser` as a
 username, and points the client to a CA located at
 `/ssl_dir/cacertfile.pem`.
@@ -570,7 +570,7 @@ client = Riak::Client.new(
 This client object is currently not set up to use any of the available
 security sources, except trust-based auth, provided that the CIDR from
 which the client is connecting has been specified as trusted. More on
-this in [Trust-based Authentication](/kv/3.4.1/how-to/secure/manage-sources/#trust-based-authentication).
+this in [Trust-based Authentication]({{< baseurl >}}kv/3.4.1/how-to/secure/manage-sources/#trust-based-authentication).
 
 To enable our client to use password-based auth, we can use most of the
 information from the example above, with the exception that we will
