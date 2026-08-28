@@ -1,0 +1,418 @@
+---
+title: 'Set up the Redis add-on'
+description: 'Show operators how to deploy the Redis add-on in a supported topology and verify connectivity.'
+weight: 3
+diataxis: 'how-to'
+product: 'OpenRiak KV'
+product_version: '3.4.0'
+status: 'editorially-rewritten'
+draft: true
+audience:
+  - 'operators'
+source_material:
+  - 'legacy-3.2.5'
+  - 'live-3.2.5'
+legacy_3_2_5_sources:
+  - 'C:\Users\pjacl\Downloads\riak-docs-fork\kv\3.2.5\add-ons\redis\set-up-rra.md'
+  - 'C:\Users\pjacl\Downloads\riak-docs-fork\kv\3.2.5\add-ons\redis\set-up-rra\deployment-models.md'
+tags: ['diataxis', 'kv', 'how-to']
+editorial_review: 'complete'
+technical_review: 'required'
+last_reviewed: '2026-08-28'
+review_scope: 'editorial-and-site-integration'
+---
+
+Show operators how to deploy the Redis add-on in a supported topology and verify connectivity.
+
+## Overview
+
+### Setting Up OpenRiak Redis Add-on
+
+[addon redis develop]: ../developing-rra/
+[addon redis use]: ../using-rra
+[ee]: https://www.tiot.jp/en/about-us/contact-us/
+[install index]: /kv/3.4.0/how-to/install/
+[perf open files]: /kv/3.4.0/how-to/tune/set-open-files-limit/
+[lab ansible]: https://github.com/paegun/ansible-cache-proxy
+
+This page will walk you through the process of installing Riak Redis Add-on (RRA) and configuring it to run in your environment. Check the [prerequisites](#prerequisites) before you get started to make sure you have everything you need in order to successfully install and use RRA.
+
+#### Prerequisites
+
+Before you begin installing Riak Redis Add-on (RRA), you will need to ensure that you have root or sudo access on the nodes where you plan to install RRA. You will also need to have OpenRiak KV already [installed][install index].
+
+While this page assumes that Redis is not already installed, existing installations of Redis are supported. If you have an existing Redis installation, look for the *skip ahead* instructions as you go.
+
+This page assumes that Redis is (or will be) installed on separate hosts from OpenRiak KV. You will need the list of OpenRiak KV and Redis host:port combinations. RRA communicates with OpenRiak KV via the protobuf port, and the host:port values are used
+to configure the cache proxy.
+
+##### In the Lab
+
+An ansible setup for the Riak Redis Add-on (RRA) was developed to provide a
+runnable example of an installation, see [ansible cache proxy][lab ansible].
+The remainder of this setup guide lists the commands required to install and
+configure RRA manually.
+
+##### Installing
+
+1. On all Redis and Riak Redis Add-on hosts, change the [open-files limit][perf open files].
+2. On all Redis hosts, install Redis. **Skip ahead* if you already have Redis installed.
+3. Install Riak Redis Add-on.
+
+###### Change the open-files limit
+
+As with OpenRiak KV, both the total open-files limit and the per-user open-files limit
+must be high enough to allow Redis and Riak Redis Add-on (RRA) to function.
+
+For a complete guide on changing limit in OpenRiak KV, see
+[Changing the limit][perf open files].
+
+###### Linux
+
+On most Linux distributions, the total limit for open files is controlled by `sysctl`.
+
+```bash
+sudo sysctl fs.file-max fs.file-max=65536
+sudo sysctl -p
+```
+
+To change the per-user file limit, you need to edit `/etc/security/limits.conf`.
+
+###### CentOS
+
+On CentOS systems, set a proper limit for the user you're usually logging in with
+to do any kind of work on the machine, including managing OpenRiak KV, Redis, or RRA services. On CentOS, `sudo` properly inherits the values from the
+executing user.
+
+###### Ubuntu
+
+On Ubuntu systems, the following settings are recommended:
+
+```config
+»USERNAME« hard nofile 65536
+»USERNAME« soft nofile 65536
+root hard nofile 65536
+root soft nofile 65536
+```
+
+>**Note:** You may need to log out of your shell and then log back in for these changes to take effect.
+
+###### Install Redis
+
+>**Note:** If you already have Redis installed, *skip ahead* to "Install Riak Redis Add-on".
+
+###### Install on Ubuntu
+
+If you are on Ubuntu, run the following to install Redis:
+
+```bash
+#### add the dotdeb repositories to your APT sources.
+sudo bash -c "cat >> /etc/apt/sources.list.d/dotdeb.org.list" <<EOF
+deb http://packages.dotdeb.org squeeze all
+deb-src http://packages.dotdeb.org squeeze all
+EOF
+
+#### authenticate the dotdeb repositories using their public key.
+wget -q -O - http://www.dotdeb.org/dotdeb.gpg | sudo apt-key add -
+
+#### update APT cache
+sudo apt-get update
+
+#### install Redis
+sudo apt-get install redis-server
+```
+
+Then, you'll need to configure Redis, which is shown below.
+
+###### Install on CentOS
+
+If you are on CentOS, run the following to install Redis:
+
+```bash
+#### install the EPEL repository
+VERSION_ID=$(case $(cat /etc/centos-release) in *6*) echo "6";; *7*) echo "7";; esac)
+wget -r --no-parent -A 'epel-release-*.rpm' http://dl.fedoraproject.org/pub/epel/$VERSION_ID/x86_64/e/
+rpm -Uvh dl.fedoraproject.org/pub/epel/$VERSION_ID/x86_64/e/epel-release-*.rpm
+
+#### install Redis
+yum install redis
+```
+
+###### Configure Redis
+
+To configure Redis, edit the configuration file `/etc/redis.conf` .
+
+Since Redis is being used as a cache where every key will have an expiry set,
+the following configuration values should be set (assuming a max memory limit of
+2 megabytes as an example):
+
+```config
+maxmemory 2mb
+maxmemory-policy allkeys-lru
+```
+
+To set the Redis listen port, the following configuration values should be
+set (assuming the default Redis port 6379 as an example):
+
+```config
+port 6379
+```
+
+If you are on Ubuntu, run the following to restart Redis:
+
+```bash
+sudo service redis-server stop
+sudo service redis-server start
+```
+
+If you are on CentOS, run the following to restart Redis and ensure redis-server
+is enabled to start on boot:
+
+```bash
+systemctl stop redis.service
+systemctl start redis.service
+systemctl enable redis.service
+```
+
+To verify Redis is running and listening on the expected port, run the following
+(using the loopback interface and the default Redis port 6379 as an example):
+
+```bash
+redis-cli -h 127.0.0.1 -p 6379 ping
+```
+
+Redis should respond with `PONG`.
+
+If Redis did not respond with the expected output, run the following to verify
+that Redis is running on the expected port:
+
+```bash
+ss -nlp |grep [r]edis
+```
+
+>**Notes:** ss is used here to support a minimal installed system, but netstat may be used as well.
+
+###### Install Riak Redis Add-on (RRA)
+
+>**Note:**
+>Riak Redis Add-on (RRA) is available to Enterprise customers for download in the usual Zendesk forums.
+
+If you are on CentOS, run the following to install RRA:
+
+```bash
+sudo yum -y localinstall cache_proxy_ee_1.1.0_x86_64.rpm
+```
+
+If you are on Ubuntu, run the following to install RRA:
+
+```bash
+sudo dpkg -i cache_proxy_ee_1.1.0_amd64.deb
+```
+
+##### Configuring Riak Redis Add-on
+
+To configure Riak Redis Add-on (RRA), edit the configuration file: /etc/cache_proxy/cache_proxy_22122.yml.
+
+The RRA configuration file is in YAML format. An example configuration
+file is provided in the install, and it contains all relevant configuration elements:
+
+```config
+» XML node name« :
+  listen: 0.0.0.0:22122
+  hash: fnv1a_64
+  distribution: ketama
+  auto_eject_hosts: true
+  redis: true
+  server_retry_timeout: 2000
+  server_failure_limit: 1
+  server_ttl: 1h
+  servers:
+    - 127.0.0.1:6379:1
+  backend_type: riak
+  backend_max_resend: 2
+  backends:
+    - 127.0.0.1:8087
+```
+
+Set the `listen` configuration value to set the RRA listen port.
+
+To set the time-to-live (TTL) for values stored in cache, set the `server_ttl`
+configuration value. Human-readable time values can be specified,
+with the most likely units being `s` for seconds or `ms` for milliseconds.
+
+Set the list of Redis servers by listing the servers, separated by `-`, under the `servers` configuration value in the format `»host«:»port«:»weight«` (weight is optional).
+
+Set the list of OpenRiak KV servers by listing the servers, separated by `-`, under the `backends` configuration value in the format `»host«:»port«:»weight«`
+(weight is optional). You will want to make sure to list the OpenRiak KV protobuf (pb) port here.
+
+###### Verify your configuration
+
+If you are on Ubuntu, run the following to start RRA:
+
+```bash
+sudo service cache_proxy start
+```
+
+```bash
+systemctl start cache_proxy
+```
+
+To verify RRA is running and listening on the expected port, run the
+following (using the loopback interface and the default RRA port 22122
+as an example):
+
+```bash
+redis-cli -h 127.0.0.1 -p 22122 set test:redis-add-on SUCCESS
+redis-cli -h 127.0.0.1 -p 22122 get test:redis-add-on SUCCESS
+```
+
+Redis should respond with `SUCCESS`.
+
+If RRA is responding with the expected output, run the following to
+clean up and remove the test value:
+
+```bash
+redis-cli -h 127.0.0.1 -p 22122 del test:redis-add-on
+```
+
+If you did not get the expected output, run the following
+to verify that RRA is running on the expected port:
+
+```bash
+ss -nlp |grep [n]utcracker
+```
+
+>**Note:** ss is used here to support a minimal installed system, but netstat may be used as well.
+
+##### Next Steps
+
+Get started with some [basic usage][addon redis use] or checkout out more info on [setting up for development (with examples)][addon redis develop].
+
+### OpenRiak Redis Add-on Deployment Models
+
+[Local-deployment]: /images/redis/rra_deployment_local.png
+[Colocated-deployment]: /images/redis/rra_deployment_colocated.png
+[Distributed-deployment]: /images/redis/rra_deployment_distributed.png
+
+#### Deployment Models
+
+##### Local Cache Deployment
+
+In a local cache deployment, the RRA and Redis are deployed to the application
+server.
+
+![Local-deployment](/images/redis/rra_deployment_local.png)
+
+Connections:
+
+* RRA: The connections between Application Service instances to RRA Service
+  instance are local.
+* Redis: The connection between the RRA Service instance and Redis Service
+  instance is local.
+* Riak: The connections between Application Servers to Riak Nodes is distributed
+  and bounded to equal the number of Riak nodes _multiplied_ by the number of
+  Application Servers since they are aggregated at the RRA Service instance.
+
+Advantages:
+
+* Cache hits are extremely fast
+
+Disadvantages:
+
+* Cache writes on one application server are *not* observed on other application
+  servers, so cache hit rates are likely lower unless some form of consistent
+  routing to the application server exists within the solution.
+* Redis competing for RAM with the application service may be problematic
+
+##### Colocated Cache Deployment
+
+In a colocated cache deployment, the RRA may be deployed either to the
+application server (suggested) or to the Riak servers and Redis is deployed to
+the Riak servers.
+
+In the case of deploying the RRA to the application servers, the RRA features
+of reducing connections from the relatively high number of application service
+instances to the fewer Redis (cache) and Riak (persistent) data service
+instances allows for the greatest scale at the expense of the deployment cost
+of pushing a service and its configuration.
+
+In the case of deploying the RRA to the colocated Redis and Riak data servers,
+the maximum scale for the solution is contrained by the number of network
+connections from the application services while deployment costs remain a matter
+of pushing a service and its configuration. In either case, deployment should
+be automated, so are not multiplied by the number of servers.
+
+![Colocated-deployment](/images/redis/rra_deployment_colocated.png)
+
+Connections:
+
+* RRA: The connections between Application Service instances to RRA Service
+  instance are distributed and bounded to equal the number of Riak nodes
+  _multiplied_ by the number of Application Service instances.
+* Redis: The connection between the RRA Service instance and Redis Service
+  instance is local.
+* Riak: The connections between RRA to Riak Nodes is distributed and bounded to
+  equal the number of Riak nodes _squared_.
+
+Advantages:
+
+* Increases the cache hit rate as a cache write from one application server
+  will lead to a cache hit by all other application servers.
+
+Disadvantages:
+
+* Typically increased distance between the application service and Redis and
+  Riak services, so slightly increased latency compared to local.
+* Redis competing for RAM with Riak will likely be problematic. Redis should
+  be configured to ensure `maxmemory` and `maxmemory-policy` constrain Redis
+  to ensure Riak is allotted sufficient RAM to serve the more important
+  persistent data storage and retrieval services. See http://redis.io/topics/config
+* This model may seem to provide data locality, but in the case of faults in
+  either Redis or Riak services, the fault tolerance mechanisms of RRA and
+  Riak will not match exactly as communicating the necessary information to
+  support such a lock-step fault tolerance would lead to greater mean latencies
+  and Riak provides superior 99th percentile latency performance in the face
+  of faults.
+
+##### Distributed Cache Deployment
+
+In a distributed cache deployment, the RRA is deployed to the application server
+and Redis is deployed to standalone servers, separate from OpenRiak cluster nodes.
+
+![Distributed-deployment](/images/redis/rra_deployment_distributed.png)
+
+Connections:
+
+* RRA: The connections between Application Service instances to RRA Service
+  instance are local.
+* Redis: The connection between the RRA Service instance and Redis Service
+  instance are distributed and bounded to equal the number of Application
+  Servers _multipled_ by the number of Redis Servers.
+* Riak: The connections between RRA to Riak Nodes is distributed and bounded to
+  equal the number of Riak nodes _multiplied_ by the number of Application
+  Servers since they are aggregated at the RRA Service instance.
+
+Advantages:
+
+* Increases the cache hit rate as a cache write from one application server
+  will lead to a cache hit by all other application servers.
+* Keeps RRA near the application, reducing network connections.
+* Moves Redis to distinct servers, allowing the cache more RAM and not
+  constraining the RAM of either application or persistent data services.
+
+Disadvantages:
+
+* Typically increased distance between the application service and Redis and
+  Riak services, so increased latency compared to local.
+
+##### Recommendation
+
+The relative advantages and disadvantages of the Distributed Cache Deployment,
+most notably the increased cache hit rate and reduced connection overhead,
+should make it the standout choice for applications requiring the scale and
+operational simplicity of Riak. For this reason, we recommend the Distributed
+Cache Deployment.
+
+## Verify the result
+
+Confirm the requested outcome, inspect cluster health and logs, and test the relevant client or operational path.
