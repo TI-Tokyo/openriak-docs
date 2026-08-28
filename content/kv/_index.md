@@ -7,6 +7,7 @@ page_kind: 'version-selector'
 versions:
   - '3.4.1'
   - '3.4.0'
+  - '3.2.5'
 diataxis: 'reference'
 product: 'OpenRiak KV'
 product_version: 'all'
@@ -37,6 +38,7 @@ Use the documentation version that exactly matches the OpenRiak KV release deplo
 
 - [OpenRiak KV 3.4.0]({{< baseurl >}}kv/3.4.0/) — Orient readers to OpenRiak KV and route them to learning, task, lookup, or conceptual documentation.
 - [OpenRiak KV 3.4.1]({{< baseurl >}}kv/3.4.1/) — Orient readers to OpenRiak KV and route them to learning, task, lookup, or conceptual documentation.
+- [Riak KV 3.2.5]({{< baseurl >}}kv/3.2.5/) — Read the preserved documentation for the historical Riak KV 3.2.5 release.
 
 ## What this page still needs
 

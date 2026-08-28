@@ -19,7 +19,6 @@ migration_sources:
 migration_review:
   - 'Internal links still refer to the earlier documentation hierarchy and must be retargeted to the Diátaxis paths.'
   - 'Release-specific installation, upgrade, downgrade, or quick-start instructions require verification against OpenRiak KV 3.4.1 packages.'
-  - 'No matching OpenRiak KV 3.4.1 package was found in the official 3.4 package index for this platform.'
 legacy_3_2_5_sources:
   - 'C:\Users\pjacl\Downloads\riak-docs-fork\kv\3.2.5\setup\installing\alpine-linux.md'
   - 'Package, platform, installation, upgrade, or downgrade details require release-specific verification for OpenRiak KV 3.4.1.'
@@ -52,22 +51,46 @@ The following steps have been tested to work with OpenRiak KV on:
 * Alpine Linux 3.21 using x86_64
 * Alpine Linux 3.21 using aarch64
 
-#### Riak 64-bit Installation
+#### Install the Alpine package
 
-To install Riak on Alpine Linux:
+The Alpine 3.21 repository publishes OpenRiak KV 3.4.1 with OTP 24 and OTP 26
+for both `x86_64` and `aarch64`.
 
-1. Add the Riak repository:
+1. Add the TI Tokyo Alpine repository:
 
-* Run `echo https://files.tiot.jp/alpine/v3.21/main >> /etc/apk/repositories`
+```sh
+echo 'https://files-source.tiot.jp/alpine/v3.21/main' >> /etc/apk/repositories
+```
 
-2. Download and install the Riak repository public key:
-   * Run `wget http://files.tiot.jp/alpine/alpine@tiot.jp.rsa.pub -O /etc/apk/keys/alpine@tiot.jp.rsa.pub`
-3. Update your list of packages:
-   * Run `apk update`
-4. Install Riak:
-   * For the latest version, run `apk add riak`
-   * For version 3.2.5 using OTP 24, run `apk add riak=3.2.5.24-r1`
-   * For version 3.2.5 using OTP 25, run `apk add riak=3.2.5.25-r1`
+2. Install the repository signing key:
+
+```sh
+wget https://files-source.tiot.jp/alpine/alpine@tiot.jp.rsa.pub \
+  -O /etc/apk/keys/alpine@tiot.jp.rsa.pub
+```
+
+3. Refresh the package index:
+
+```sh
+apk update
+```
+
+4. Install the package for the required OTP version.
+
+For OTP 26:
+
+```sh
+apk add 'riak=3.4.1.26-r1'
+```
+
+For OTP 24:
+
+```sh
+apk add 'riak=3.4.1.24-r1'
+```
+
+Do not use the unversioned `apk add riak` command on a versioned
+documentation path, because it may install a later OpenRiak release.
 
 #### Next Steps
 
