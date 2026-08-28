@@ -139,3 +139,9 @@ The amount of time to wait for the query to complete, before returning a timeout
 8. `query_list` (Required)
 
 A list of one or more queries. This should be a list of just one query unless an `aggregation_expression` has been included in the main query block.
+
+## Expressions
+
+An OpenRiak query employs expressions in two phases. An evaluation expression is applied to each input term to convert it into a set of projected attributes. Then, a filter expression is executed over those projected attributes, to filter results in or out of the dataset.
+
+### 
