@@ -1,0 +1,376 @@
+{
+  "mappings": {
+    "multi_backend.$name.bitcask.data_root": {
+      "properties": {
+        "hidden": true,
+        "datatype": {
+          "type": "atom",
+          "value": "directory"
+        }
+      },
+      "docSees": [
+        "bitcask.data_root"
+      ],
+      "docOther": [
+        "-*- erlang -*-",
+        "%% bitcask multi"
+      ],
+      "configName": "multi_backend.$name.bitcask.data_root",
+      "settingName": "riak_kv.multi_backend"
+    },
+    "multi_backend.$name.bitcask.open_timeout": {
+      "properties": {
+        "default": "4s",
+        "datatype": {
+          "type": "duration",
+          "unit": "s"
+        },
+        "hidden": true
+      },
+      "docSees": [
+        "bitcask.open_timeout"
+      ],
+      "configName": "multi_backend.$name.bitcask.open_timeout",
+      "settingName": "riak_kv.multi_backend"
+    },
+    "multi_backend.$name.bitcask.sync.strategy": {
+      "properties": {
+        "default": "none",
+        "datatype": {
+          "type": "enum",
+          "possibleValues": [
+            {
+              "type": "atom",
+              "value": "none"
+            },
+            {
+              "type": "atom",
+              "value": "o_sync"
+            },
+            {
+              "type": "atom",
+              "value": "interval"
+            }
+          ]
+        },
+        "hidden": true
+      },
+      "docSees": [
+        "bitcask.sync.strategy"
+      ],
+      "configName": "multi_backend.$name.bitcask.sync.strategy",
+      "settingName": "riak_kv.multi_backend"
+    },
+    "multi_backend.$name.bitcask.sync.interval": {
+      "properties": {
+        "datatype": {
+          "type": "duration",
+          "unit": "s"
+        },
+        "hidden": true
+      },
+      "docSees": [
+        "bitcask.sync.strategy"
+      ],
+      "configName": "multi_backend.$name.bitcask.sync.interval",
+      "settingName": "riak_kv.multi_backend"
+    },
+    "multi_backend.$name.bitcask.max_file_size": {
+      "properties": {
+        "default": "2GB",
+        "datatype": {
+          "type": "atom",
+          "value": "bytesize"
+        },
+        "hidden": true
+      },
+      "docSees": [
+        "bitcask.max_file_size"
+      ],
+      "configName": "multi_backend.$name.bitcask.max_file_size",
+      "settingName": "riak_kv.multi_backend"
+    },
+    "multi_backend.$name.bitcask.merge.policy": {
+      "properties": {
+        "default": "always",
+        "datatype": {
+          "type": "enum",
+          "possibleValues": [
+            {
+              "type": "atom",
+              "value": "always"
+            },
+            {
+              "type": "atom",
+              "value": "never"
+            },
+            {
+              "type": "atom",
+              "value": "window"
+            }
+          ]
+        },
+        "hidden": true
+      },
+      "docSees": [
+        "bitcask.merge.policy"
+      ],
+      "configName": "multi_backend.$name.bitcask.merge.policy",
+      "settingName": "riak_kv.multi_backend"
+    },
+    "multi_backend.$name.bitcask.merge.window.start": {
+      "properties": {
+        "default": "0",
+        "datatype": {
+          "type": "atom",
+          "value": "integer"
+        },
+        "hidden": true
+      },
+      "docSees": [
+        "bitcask.merge.policy"
+      ],
+      "configName": "multi_backend.$name.bitcask.merge.window.start",
+      "settingName": "riak_kv.multi_backend"
+    },
+    "multi_backend.$name.bitcask.merge.window.end": {
+      "properties": {
+        "default": "23",
+        "datatype": {
+          "type": "atom",
+          "value": "integer"
+        },
+        "hidden": true
+      },
+      "docSees": [
+        "bitcask.merge.policy"
+      ],
+      "configName": "multi_backend.$name.bitcask.merge.window.end",
+      "settingName": "riak_kv.multi_backend"
+    },
+    "multi_backend.$name.bitcask.merge.triggers.fragmentation": {
+      "properties": {
+        "datatype": {
+          "type": "atom",
+          "value": "integer"
+        },
+        "hidden": true,
+        "default": "60",
+        "validators": [
+          {
+            "type": "text",
+            "value": "is_percentage"
+          }
+        ]
+      },
+      "docSees": [
+        "bitcask.merge.triggers.fragmentation"
+      ],
+      "configName": "multi_backend.$name.bitcask.merge.triggers.fragmentation",
+      "settingName": "riak_kv.multi_backend"
+    },
+    "multi_backend.$name.bitcask.merge.triggers.dead_bytes": {
+      "properties": {
+        "datatype": {
+          "type": "atom",
+          "value": "bytesize"
+        },
+        "hidden": true,
+        "default": "512MB"
+      },
+      "docSees": [
+        "bitcask.merge.triggers.dead_bytes"
+      ],
+      "configName": "multi_backend.$name.bitcask.merge.triggers.dead_bytes",
+      "settingName": "riak_kv.multi_backend"
+    },
+    "multi_backend.$name.bitcask.merge.thresholds.fragmentation": {
+      "properties": {
+        "datatype": {
+          "type": "atom",
+          "value": "integer"
+        },
+        "hidden": true,
+        "default": "40",
+        "validators": [
+          {
+            "type": "text",
+            "value": "is_percentage"
+          }
+        ]
+      },
+      "docSees": [
+        "bitcask.merge.thresholds.fragmentation"
+      ],
+      "configName": "multi_backend.$name.bitcask.merge.thresholds.fragmentation",
+      "settingName": "riak_kv.multi_backend"
+    },
+    "multi_backend.$name.bitcask.merge.thresholds.dead_bytes": {
+      "properties": {
+        "datatype": {
+          "type": "atom",
+          "value": "bytesize"
+        },
+        "hidden": true,
+        "default": "128MB"
+      },
+      "docSees": [
+        "bitcask.merge.thresholds.dead_bytes"
+      ],
+      "configName": "multi_backend.$name.bitcask.merge.thresholds.dead_bytes",
+      "settingName": "riak_kv.multi_backend"
+    },
+    "multi_backend.$name.bitcask.merge.thresholds.small_file": {
+      "properties": {
+        "datatype": {
+          "type": "atom",
+          "value": "bytesize"
+        },
+        "hidden": true,
+        "default": "10MB"
+      },
+      "docSees": [
+        "bitcask.merge.thresholds.small_file"
+      ],
+      "configName": "multi_backend.$name.bitcask.merge.thresholds.small_file",
+      "settingName": "riak_kv.multi_backend"
+    },
+    "multi_backend.$name.bitcask.fold.max_age": {
+      "properties": {
+        "datatype": [
+          {
+            "type": "atom",
+            "value": {
+              "type": "atom",
+              "value": "unlimited"
+            }
+          },
+          {
+            "type": "duration",
+            "unit": "ms"
+          }
+        ],
+        "hidden": true,
+        "default": "unlimited"
+      },
+      "docSees": [
+        "bitcask.fold.max_age"
+      ],
+      "configName": "multi_backend.$name.bitcask.fold.max_age",
+      "settingName": "riak_kv.multi_backend"
+    },
+    "multi_backend.$name.bitcask.fold.max_puts": {
+      "properties": {
+        "datatype": [
+          {
+            "type": "atom",
+            "value": "integer"
+          },
+          {
+            "type": "atom",
+            "value": {
+              "type": "atom",
+              "value": "unlimited"
+            }
+          }
+        ],
+        "hidden": true,
+        "default": "0"
+      },
+      "docSees": [
+        "bitcask.fold.max_age"
+      ],
+      "configName": "multi_backend.$name.bitcask.fold.max_puts",
+      "settingName": "riak_kv.multi_backend"
+    },
+    "multi_backend.$name.bitcask.expiry": {
+      "properties": {
+        "datatype": [
+          {
+            "type": "atom",
+            "value": {
+              "type": "atom",
+              "value": "off"
+            }
+          },
+          {
+            "type": "duration",
+            "unit": "s"
+          }
+        ],
+        "hidden": true,
+        "default": "off"
+      },
+      "docSees": [
+        "bitcask.expiry"
+      ],
+      "configName": "multi_backend.$name.bitcask.expiry",
+      "settingName": "riak_kv.multi_backend"
+    },
+    "multi_backend.$name.bitcask.hintfile_checksums": {
+      "properties": {
+        "default": "strict",
+        "datatype": {
+          "type": "enum",
+          "possibleValues": [
+            {
+              "type": "atom",
+              "value": "strict"
+            },
+            {
+              "type": "atom",
+              "value": "allow_missing"
+            }
+          ]
+        },
+        "hidden": true
+      },
+      "docSees": [
+        "bitcask.hintfile_checksums"
+      ],
+      "configName": "multi_backend.$name.bitcask.hintfile_checksums",
+      "settingName": "riak_kv.multi_backend"
+    },
+    "multi_backend.$name.bitcask.expiry.grace_time": {
+      "properties": {
+        "datatype": {
+          "type": "duration",
+          "unit": "s"
+        },
+        "hidden": true,
+        "default": "0"
+      },
+      "docSees": [
+        "bitcask.expiry.grace_time"
+      ],
+      "configName": "multi_backend.$name.bitcask.expiry.grace_time",
+      "settingName": "riak_kv.multi_backend"
+    },
+    "multi_backend.$name.bitcask.io_mode": {
+      "properties": {
+        "default": "erlang",
+        "datatype": {
+          "type": "enum",
+          "possibleValues": [
+            {
+              "type": "atom",
+              "value": "erlang"
+            },
+            {
+              "type": "atom",
+              "value": "nif"
+            }
+          ]
+        },
+        "hidden": true
+      },
+      "docSees": [
+        "bitcask.io_mode"
+      ],
+      "configName": "multi_backend.$name.bitcask.io_mode",
+      "settingName": "riak_kv.multi_backend"
+    }
+  },
+  "translations": {},
+  "validators": {}
+}

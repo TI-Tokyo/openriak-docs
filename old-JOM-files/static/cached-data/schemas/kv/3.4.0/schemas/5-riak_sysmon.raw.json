@@ -1,0 +1,482 @@
+[
+  {
+    "rawSchema": "{mapping, \"runtime_health.thresholds.busy_processes\", \"riak_sysmon.process_limit\", [ {default, 30}, {datatype, integer}, hidden ]}.",
+    "comment": [
+      "@doc The threshold at which to warn about the number of processes",
+      "that are overly busy. Processes with large heaps or that take a",
+      "long time to garbage collect will count toward this threshold."
+    ],
+    "docText": [
+      "The threshold at which to warn about the number of processes",
+      "that are overly busy. Processes with large heaps or that take a",
+      "long time to garbage collect will count toward this threshold."
+    ],
+    "docSections": [],
+    "docRelateds": [],
+    "docSees": [],
+    "docOther": [],
+    "type": "mapping",
+    "configName": "runtime_health.thresholds.busy_processes",
+    "settingName": "riak_sysmon.process_limit",
+    "properties": [
+      {
+        "type": "tuple",
+        "value": [
+          {
+            "type": "atom",
+            "value": "default"
+          },
+          {
+            "type": "atom",
+            "value": "30"
+          }
+        ]
+      },
+      {
+        "type": "tuple",
+        "value": [
+          {
+            "type": "atom",
+            "value": "datatype"
+          },
+          {
+            "type": "atom",
+            "value": "integer"
+          }
+        ]
+      },
+      {
+        "type": "atom",
+        "value": "hidden"
+      }
+    ]
+  },
+  {
+    "rawSchema": "{mapping, \"runtime_health.thresholds.busy_ports\", \"riak_sysmon.port_limit\", [ {default, 2}, {datatype, integer}, hidden ]}.",
+    "comment": [
+      "@doc The threshold at which to warn about the number of ports that",
+      "are overly busy. Ports with full input buffers count toward this",
+      "threshold."
+    ],
+    "docText": [
+      "The threshold at which to warn about the number of ports that",
+      "are overly busy. Ports with full input buffers count toward this",
+      "threshold."
+    ],
+    "docSections": [],
+    "docRelateds": [],
+    "docSees": [],
+    "docOther": [],
+    "type": "mapping",
+    "configName": "runtime_health.thresholds.busy_ports",
+    "settingName": "riak_sysmon.port_limit",
+    "properties": [
+      {
+        "type": "tuple",
+        "value": [
+          {
+            "type": "atom",
+            "value": "default"
+          },
+          {
+            "type": "atom",
+            "value": "2"
+          }
+        ]
+      },
+      {
+        "type": "tuple",
+        "value": [
+          {
+            "type": "atom",
+            "value": "datatype"
+          },
+          {
+            "type": "atom",
+            "value": "integer"
+          }
+        ]
+      },
+      {
+        "type": "atom",
+        "value": "hidden"
+      }
+    ]
+  },
+  {
+    "rawSchema": "{mapping, \"runtime_health.triggers.process.garbage_collection\", \"riak_sysmon.gc_ms_limit\", [ {default, off}, {datatype, [{atom, off}, {duration, ms}]}, hidden ]}.",
+    "comment": [
+      "@doc A process will become busy when it exceeds this amount of time",
+      "doing garbage collection.",
+      "",
+      "NOTE: Enabling this setting can cause performance problems on",
+      "multi-core systems.",
+      "@see runtime_health.thresholds.busy_processes"
+    ],
+    "docText": [
+      "A process will become busy when it exceeds this amount of time",
+      "doing garbage collection.",
+      "",
+      "NOTE: Enabling this setting can cause performance problems on",
+      "multi-core systems."
+    ],
+    "docSections": [],
+    "docRelateds": [],
+    "docSees": [
+      "runtime_health.thresholds.busy_processes"
+    ],
+    "docOther": [],
+    "type": "mapping",
+    "configName": "runtime_health.triggers.process.garbage_collection",
+    "settingName": "riak_sysmon.gc_ms_limit",
+    "properties": [
+      {
+        "type": "tuple",
+        "value": [
+          {
+            "type": "atom",
+            "value": "default"
+          },
+          {
+            "type": "atom",
+            "value": "off"
+          }
+        ]
+      },
+      {
+        "type": "tuple",
+        "value": [
+          {
+            "type": "atom",
+            "value": "datatype"
+          },
+          {
+            "type": "array",
+            "value": [
+              {
+                "type": "tuple",
+                "value": [
+                  {
+                    "type": "atom",
+                    "value": "atom"
+                  },
+                  {
+                    "type": "atom",
+                    "value": "off"
+                  }
+                ]
+              },
+              {
+                "type": "tuple",
+                "value": [
+                  {
+                    "type": "atom",
+                    "value": "duration"
+                  },
+                  {
+                    "type": "atom",
+                    "value": "ms"
+                  }
+                ]
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "type": "atom",
+        "value": "hidden"
+      }
+    ]
+  },
+  {
+    "rawSchema": "{translation, \"riak_sysmon.gc_ms_limit\", fun(Conf) -> case cuttlefish:conf_get(\"runtime_health.triggers.process.garbage_collection\", Conf) of off -> 0; Int -> Int end end}.",
+    "comment": [],
+    "docText": [],
+    "docSections": [],
+    "docRelateds": [],
+    "docSees": [],
+    "docOther": [],
+    "type": "translation",
+    "configName": "riak_sysmon.gc_ms_limit",
+    "func": "fun(Conf) -> case cuttlefish:conf_get(\"runtime_health.triggers.process.garbage_collection\", Conf) of off -> 0; Int -> Int end end"
+  },
+  {
+    "rawSchema": "{mapping, \"runtime_health.triggers.process.long_schedule\", \"riak_sysmon.schedule_ms_limit\", [ {default, off}, {datatype, [{atom, off}, {duration, ms}]}, hidden ]}.",
+    "comment": [
+      "@doc A process will become busy when it exceeds this amount of time",
+      "during a single process scheduling & execution cycle."
+    ],
+    "docText": [
+      "A process will become busy when it exceeds this amount of time",
+      "during a single process scheduling & execution cycle."
+    ],
+    "docSections": [],
+    "docRelateds": [],
+    "docSees": [],
+    "docOther": [],
+    "type": "mapping",
+    "configName": "runtime_health.triggers.process.long_schedule",
+    "settingName": "riak_sysmon.schedule_ms_limit",
+    "properties": [
+      {
+        "type": "tuple",
+        "value": [
+          {
+            "type": "atom",
+            "value": "default"
+          },
+          {
+            "type": "atom",
+            "value": "off"
+          }
+        ]
+      },
+      {
+        "type": "tuple",
+        "value": [
+          {
+            "type": "atom",
+            "value": "datatype"
+          },
+          {
+            "type": "array",
+            "value": [
+              {
+                "type": "tuple",
+                "value": [
+                  {
+                    "type": "atom",
+                    "value": "atom"
+                  },
+                  {
+                    "type": "atom",
+                    "value": "off"
+                  }
+                ]
+              },
+              {
+                "type": "tuple",
+                "value": [
+                  {
+                    "type": "atom",
+                    "value": "duration"
+                  },
+                  {
+                    "type": "atom",
+                    "value": "ms"
+                  }
+                ]
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "type": "atom",
+        "value": "hidden"
+      }
+    ]
+  },
+  {
+    "rawSchema": "{translation, \"riak_sysmon.schedule_ms_limit\", fun(Conf) -> case cuttlefish:conf_get(\"runtime_health.triggers.process.long_schedule\", Conf) of off -> 0; Int -> Int end end}.",
+    "comment": [],
+    "docText": [],
+    "docSections": [],
+    "docRelateds": [],
+    "docSees": [],
+    "docOther": [],
+    "type": "translation",
+    "configName": "riak_sysmon.schedule_ms_limit",
+    "func": "fun(Conf) -> case cuttlefish:conf_get(\"runtime_health.triggers.process.long_schedule\", Conf) of off -> 0; Int -> Int end end"
+  },
+  {
+    "rawSchema": "{mapping, \"runtime_health.triggers.process.heap_size\", \"riak_sysmon.heap_word_limit\", [ {default, \"160444000\"}, {datatype, [bytesize, {atom, off}]}, hidden ]}.",
+    "comment": [
+      "@doc A process will become busy when its heap exceeds this size.",
+      "@see runtime_health.thresholds.busy_processes"
+    ],
+    "docText": [
+      "A process will become busy when its heap exceeds this size."
+    ],
+    "docSections": [],
+    "docRelateds": [],
+    "docSees": [
+      "runtime_health.thresholds.busy_processes"
+    ],
+    "docOther": [],
+    "type": "mapping",
+    "configName": "runtime_health.triggers.process.heap_size",
+    "settingName": "riak_sysmon.heap_word_limit",
+    "properties": [
+      {
+        "type": "tuple",
+        "value": [
+          {
+            "type": "atom",
+            "value": "default"
+          },
+          {
+            "type": "text",
+            "value": "160444000"
+          }
+        ]
+      },
+      {
+        "type": "tuple",
+        "value": [
+          {
+            "type": "atom",
+            "value": "datatype"
+          },
+          {
+            "type": "array",
+            "value": [
+              {
+                "type": "atom",
+                "value": "bytesize"
+              },
+              {
+                "type": "tuple",
+                "value": [
+                  {
+                    "type": "atom",
+                    "value": "atom"
+                  },
+                  {
+                    "type": "atom",
+                    "value": "off"
+                  }
+                ]
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "type": "atom",
+        "value": "hidden"
+      }
+    ]
+  },
+  {
+    "rawSchema": "{translation, \"riak_sysmon.heap_word_limit\", fun(Conf) -> case cuttlefish:conf_get(\"runtime_health.triggers.process.heap_size\", Conf) of off -> 0; Bytes -> WordSize = erlang:system_info(wordsize), Bytes div WordSize end end}.",
+    "comment": [],
+    "docText": [],
+    "docSections": [],
+    "docRelateds": [],
+    "docSees": [],
+    "docOther": [],
+    "type": "translation",
+    "configName": "riak_sysmon.heap_word_limit",
+    "func": "fun(Conf) -> case cuttlefish:conf_get(\"runtime_health.triggers.process.heap_size\", Conf) of off -> 0; Bytes -> WordSize = erlang:system_info(wordsize), Bytes div WordSize end end"
+  },
+  {
+    "rawSchema": "{mapping, \"runtime_health.triggers.port\", \"riak_sysmon.busy_port\", [ {default, on}, {datatype, flag}, hidden ]}.",
+    "comment": [
+      "@doc Whether ports with full input buffers will be counted as",
+      "busy. Ports can represent open files or network sockets.",
+      "@see runtime_health.thresholds.busy_ports"
+    ],
+    "docText": [
+      "Whether ports with full input buffers will be counted as",
+      "busy. Ports can represent open files or network sockets."
+    ],
+    "docSections": [],
+    "docRelateds": [],
+    "docSees": [
+      "runtime_health.thresholds.busy_ports"
+    ],
+    "docOther": [],
+    "type": "mapping",
+    "configName": "runtime_health.triggers.port",
+    "settingName": "riak_sysmon.busy_port",
+    "properties": [
+      {
+        "type": "tuple",
+        "value": [
+          {
+            "type": "atom",
+            "value": "default"
+          },
+          {
+            "type": "atom",
+            "value": "on"
+          }
+        ]
+      },
+      {
+        "type": "tuple",
+        "value": [
+          {
+            "type": "atom",
+            "value": "datatype"
+          },
+          {
+            "type": "atom",
+            "value": "flag"
+          }
+        ]
+      },
+      {
+        "type": "atom",
+        "value": "hidden"
+      }
+    ]
+  },
+  {
+    "rawSchema": "{mapping, \"runtime_health.triggers.distribution_port\", \"riak_sysmon.busy_dist_port\", [ {default, on}, {datatype, flag}, hidden ]}.",
+    "comment": [
+      "@doc Whether distribution ports with full input buffers will be",
+      "counted as busy. Distribution ports connect Riak nodes within a",
+      "single cluster.",
+      "@see runtime_health.thresholds.busy_ports"
+    ],
+    "docText": [
+      "Whether distribution ports with full input buffers will be",
+      "counted as busy. Distribution ports connect Riak nodes within a",
+      "single cluster."
+    ],
+    "docSections": [],
+    "docRelateds": [],
+    "docSees": [
+      "runtime_health.thresholds.busy_ports"
+    ],
+    "docOther": [],
+    "type": "mapping",
+    "configName": "runtime_health.triggers.distribution_port",
+    "settingName": "riak_sysmon.busy_dist_port",
+    "properties": [
+      {
+        "type": "tuple",
+        "value": [
+          {
+            "type": "atom",
+            "value": "default"
+          },
+          {
+            "type": "atom",
+            "value": "on"
+          }
+        ]
+      },
+      {
+        "type": "tuple",
+        "value": [
+          {
+            "type": "atom",
+            "value": "datatype"
+          },
+          {
+            "type": "atom",
+            "value": "flag"
+          }
+        ]
+      },
+      {
+        "type": "atom",
+        "value": "hidden"
+      }
+    ]
+  }
+]

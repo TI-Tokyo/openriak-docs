@@ -1,0 +1,367 @@
+/**
+ * Any CSS included here will be global. The classic template
+ * bundles Infima by default. Infima is a CSS framework designed to
+ * work well for content-centric websites.
+ */
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* You can override the default Infima variables here. */
+:root {
+  --ifm-color-primary: #e78505;
+  --ifm-color-primary-dark: #d07805;
+  --ifm-color-primary-darker: #c47104;
+  --ifm-color-primary-darkest: #b96a04;
+  --ifm-color-primary-light: #fbaf4b;
+  --ifm-color-primary-lighter: #fcbb66;
+  --ifm-color-primary-lightest: #ffd195;
+  --ifm-code-font-size: 95%;
+  --docusaurus-highlighted-code-line-bg: rgba(0, 0, 0, 0.1);
+  --openriak-popupbackdrop: #f7f7f7;
+/*
+  --ifm-color-primary: #2e8555;
+  --ifm-color-primary-dark: #29784c;
+  --ifm-color-primary-darker: #277148;
+  --ifm-color-primary-darkest: #205d3b;
+  --ifm-color-primary-light: #33925d;
+  --ifm-color-primary-lighter: #359962;
+  --ifm-color-primary-lightest: #3cad6e;
+  --ifm-code-font-size: 95%;
+  --docusaurus-highlighted-code-line-bg: rgba(0, 0, 0, 0.1);
+*/
+}
+
+/* For readability concerns, you should choose a lighter palette in dark mode. */
+[data-theme='dark'] {
+  --ifm-color-primary: #56969f;
+  --ifm-color-primary-dark: #4f8b93;
+  --ifm-color-primary-darker: #44787e;
+  --ifm-color-primary-darkest: #3e6c73;
+  --ifm-color-primary-light: #5c9ea7;
+  --ifm-color-primary-lighter: #85b6bd;
+  --ifm-color-primary-lightest: #8fc6cb;
+  --docusaurus-highlighted-code-line-bg: rgba(0, 0, 0, 0.3);
+  --openriak-popupbackdrop: #3e6c73;
+/*
+  --ifm-color-primary: #25c2a0;
+  --ifm-color-primary-dark: #21af90;
+  --ifm-color-primary-darker: #1fa588;
+  --ifm-color-primary-darkest: #1a8870;
+  --ifm-color-primary-light: #29d5b0;
+  --ifm-color-primary-lighter: #32d8b4;
+  --ifm-color-primary-lightest: #4fddbf;
+  --docusaurus-highlighted-code-line-bg: rgba(0, 0, 0, 0.3);
+*/
+}
+
+@layer docusaurus.theme-classic {
+  [class*="docs-doc-id-configure/reference"] .main-wrapper .container,
+  [class*="docs-doc-id-configure/reference"] .main-wrapper .container>.row>div {
+    max-width: 100% !important;
+  }
+
+  aside.theme-doc-sidebar-container>div>div {
+    padding-top: 1em;
+  }
+  
+  aside.theme-doc-sidebar-container>div>div:first-child {
+    padding-top: var(--ifm-navbar-height) !important;
+  }
+}
+
+.comments-value p:last-child {
+    margin-bottom: 0;
+}
+
+a.relatedPage {
+  display: block;
+}
+
+article>div a:not(.hash-link):not(.recentFilterLink):not(.clearRecentFilter)::after {
+  content: " ➔";
+}
+
+article>div a.clearRecentFilter {
+  font-size: 0.7em;
+  padding-right: 0.5em;
+}
+
+article>div a.recentFilterLink:first-of-type {
+  padding-left: 0.5em;
+}
+
+div.configListings div.config-name>span>code {
+  font-size: 1.25em;
+}
+
+div.configListings span.config-datatypes-value ul {
+  list-style: none; 
+  padding: 0;
+  margin: 0; 
+  display: inline;
+}
+
+div.configListings span.config-datatypes-value li {
+  display: inline;
+}
+
+div.configListings span.config-datatypes-value i {
+  padding-right: 0.5em;
+}
+
+div.configListings span.config-datatypes-value li::after {
+  padding-left: 0.5em;
+  padding-right: 0.5em;
+  content: '/';
+}
+
+div.configListings span.config-datatypes-value li:last-child::after {
+  content: '';
+}
+
+
+div.menu__list-item-collapsible--active,
+a.menu__link--active {
+  background-color: var(--ifm-color-primary-lightest);
+  color: #454d54;
+  font-weight: var(--ifm-font-weight-semibold);
+}
+
+a:hover,
+div.menu__list-item-collapsible:hover {
+  color: var(--ifm-color-primary);
+}
+
+.osPicker-trigger,
+.versionPicker-trigger {
+  display: flex;
+  margin: 1rem;
+  font-size: 1.2rem;
+  width: calc(100% - 2rem);
+  background-color: var(--ifm-color-primary-lightest);
+  border-color: var(--ifm-color-primary-darkest); 
+  border-width: 0;
+  border-radius: 0.125rem;
+  padding: 0.5rem;
+  cursor: pointer;
+}
+
+[data-theme='dark'] {
+  .osPicker-trigger,
+  .versionPicker-trigger {
+    background-color: var(--ifm-color-primary-darkest);
+  }
+}
+
+.osPicker-trigger {
+  margin-bottom: 0.5rem;
+}
+
+.versionPicker-trigger {
+  margin-top: 0;
+  margin-bottom: 0.5rem;
+}
+
+.osPicker-triggerContent,
+.versionPicker-triggerContent {
+  display: flex;
+  align-items: center;
+}
+
+.push-right {
+  margin-left: auto;
+}
+
+.versionPicker-optionsPortal {
+  
+}
+
+.osPicker-content,
+.versionPicker-optionsContent {
+  background: var(--openriak-popupbackdrop);
+  border: 2px solid var(--ifm-color-primary-darker);
+  border-radius: 0 0 10px 10px;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+  top: 1rem;
+}
+
+.versionPicker-optionsContent {
+    width: calc(var(--radix-popover-trigger-width)*1);
+}
+
+.osPicker-portal,
+.versionPicker-portal {
+}
+
+.osPicker-viewport {
+}
+
+.osPicker-item {
+  display: grid;
+  row-gap: 0.5rem;
+  padding: 0 0.5em;
+}
+
+.osPicker-item:hover {
+  background: var(--ifm-color-primary-light);
+}
+
+.osPicker-arrow,
+.versionPicker-arrow {
+  fill: var(--ifm-color-primary-darker);
+}
+
+.theme-doc-sidebar-container>div>div:has(nav) {
+  padding-top: 0;
+}
+
+.theme-doc-sidebar-container>div>div>nav {
+  padding-top: 0;
+}
+
+.versionPicker-brand {
+/*
+  display: grid;
+  row-gap: 0.5rem;
+*/
+  padding: 0 0.5em 0.5em 0.5em;
+  display: grid;
+  grid-template-columns: auto 1fr;
+  row-gap: 0.5rem; /* spacing between rows */
+  column-gap: 0.125rem;
+}
+
+.versionPicker-label {
+  //gap: 0.125rem;
+  //align-items: flex-start;
+}
+
+.versionPicker-brandGroup {
+/*
+  display: flex;
+  gap: 0.125rem;
+  align-items: flex-start;
+*/
+/*
+  display: grid;
+  grid-template-columns: auto 1fr;
+  align-items: start;
+  column-gap: 0.125rem;
+  row-gap: 0.125rem;
+*/
+  display: contents;
+}
+
+.versionPicker-brand-Title {
+  grid-column: 1 / -1;
+  padding-top: 0.5rem;
+  display: flex;
+  align-items: center;
+}
+
+.versionPicker-versions-nolabel {
+  grid-column: 1 / -1;
+}
+
+.toggleButtonForHiddenItems,
+.versionPicker-version {
+  background: var(--ifm-color-primary-lighter);
+  padding: 0.125rem 0.5rem;
+  border: 0;
+  font-size: 1.1em;
+}
+
+.versionPicker-label {
+  flex: 0 0 auto;
+  background: var(--ifm-color-primary-light);
+  font-weight: bold;
+  padding: 0.125rem 0.5rem;
+  border: 0;
+  border-radius: 0.75rem 0 0 0;
+  white-space: nowrap;
+}
+
+.versionPicker-versions-nolabel .versionPicker-version:first-of-type {
+  border-radius: 0.75rem 0 0 0;
+}
+
+.versionPicker-versions {
+  flex: 1 1 0;
+  min-width: 0;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.125rem;
+}
+
+.versionPicker-version a {
+  color: black;
+}
+
+[data-theme='dark'] {
+  .versionPicker-version a {
+    color: white;
+  }
+}
+
+.toggleButtonForHiddenItems:hover,
+.versionPicker-version:hover {
+  background: var(--ifm-color-primary-dark);
+}
+
+.versionPicker-version:hover a {
+  text-decoration: none;
+}
+
+.versionPicker-version:first-child {
+  //border-radius: 0.75rem 0 0 0.75rem;
+}
+
+// if no lts then curve
+.versionPicker-brandGroup > .versionPicker-version:first-of-type {
+  border-radius: 0.75rem 0 0 0.75rem;
+}
+
+.toggleButtonForHiddenItems,
+.versionPicker-version:last-child {
+  border-radius: 0 0 0.75rem 0;
+  margin-right: 0;
+}
+
+.versionPicker-activeVersion {
+  background: var(--ifm-color-primary-dark);
+}
+
+.menu {
+  max-height: calc(100vh - 210px - 60px);
+  overflow-y: auto;
+  position: sticky;
+  top: 0;
+}
+
+.versionPicker-brand .versionPicker-brand-Logo {
+  height: 1.6rem;
+}
+
+.versionPicker-brand:first-child .versionPicker-brand-Logo {
+  height: 2.5rem;
+}
+
+.versionPicker-version-hidden {
+  display: none;
+}
+
+.versionPicker-brandGroup-displayName {
+  margin-right: 0.25em;
+}
+
+.toggleButtonForHiddenItems {
+  color: black;
+  display: flex;
+  align-items: center;
+}
+
+.toggleButtonForHiddenItems svg {
+  height: 1.5em;
+  width: 1.5em;
+}
