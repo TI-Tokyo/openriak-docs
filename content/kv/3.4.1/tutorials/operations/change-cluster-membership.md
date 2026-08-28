@@ -38,19 +38,13 @@ an OpenRiak KV cluster. For information on creating a cluster check out [Running
 
 Just like the initial configuration steps, this step has to be repeated
 for every node in your cluster. Before a node can join an existing
-cluster it needs to be started. Depending on your mode of installation,
-use either the init scripts installed by the Riak binary packages or
-simply the script [`riak`]({{< baseurl >}}kv/3.4.1/reference/commands/riak/):
+cluster it needs to be started. This tutorial assumes a packaged installation where `riak` is available on `PATH` and `systemd` manages the node. Start the node with:
 
 ```bash
-/etc/init.d/riak start
+sudo systemctl start riak
 ```
 
-or
-
-```bash
-bin/riak start
-```
+For a source-built release, run `./rel/riak/bin/riak daemon` instead; for a development node, use the matching `./dev/dev{n}/riak/bin/riak daemon` script.
 
 When the node starts, it will look for a cluster description, known as
 the **ring file**, in its data directory. If a ring file does not exist,
@@ -69,7 +63,7 @@ for nodes that you want to add later.
 To join the node to an existing cluster, use the `cluster join` command:
 
 ```bash
-bin/riak admin cluster join <node_in_cluster>
+riak admin cluster join <node_in_cluster>
 ```
 
 The `<node_in_cluster>` in the example above can be _any_ node in the
@@ -78,9 +72,9 @@ nodes `A`, `B`, and `C`, any of the following commands would join the
 new node:
 
 ```bash
-bin/riak admin cluster join A
-bin/riak admin cluster join B
-bin/riak admin cluster join C
+riak admin cluster join A
+riak admin cluster join B
+riak admin cluster join C
 ```
 
 To give a more realistic example, let's say that you have an isolated
@@ -89,7 +83,7 @@ cluster that contains a node named `riak@192.168.2.2`. This command
 would stage a join to that cluster:
 
 ```bash
-bin/riak admin cluster join riak@192.168.2.2
+riak admin cluster join riak@192.168.2.2
 ```
 
 If the join request is successful, you should see the following:

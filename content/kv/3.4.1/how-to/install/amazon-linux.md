@@ -127,20 +127,35 @@ You now have an OpenRiak cluster running on AWS.
 
 #### Installing From Package
 
-##### AWS (2023)
+##### Amazon Linux 2023 (x86_64)
 
-You can install on AWS 2023 using yum, which we recommend:
+All published OpenRiak KV 3.4.1 Amazon Linux packages use OTP 26. Install the
+x86_64 package using `yum`:
 
 ```bash
-wget https://files.tiot.jp/riak/kv/3.2/3.2.5/amazon/2023/riak-3.2.5.OTP25-1.amzn2023.x86_64.rpm
-sudo yum localinstall -y riak-3.2.5.OTP25-1.amzn2023.x86_64.rpm
+wget https://files.tiot.jp/riak/kv/3.4/3.4.1/amazon/2023%20%28x86_64%29/riak-3.4.1.OTP26-1.amzn2023.x86_64.rpm
+sudo yum localinstall -y riak-3.4.1.OTP26-1.amzn2023.x86_64.rpm
 ```
 
 Or you can install the `.rpm` package manually:
 
 ```bash
-wget https://files.tiot.jp/riak/kv/3.2/3.2.5/amazon/2023/riak-3.2.5.OTP25-1.amzn2023.x86_64.rpm
-sudo rpm -i riak-3.2.5.OTP25-1.amzn2023.x86_64.rpm
+wget https://files.tiot.jp/riak/kv/3.4/3.4.1/amazon/2023%20%28x86_64%29/riak-3.4.1.OTP26-1.amzn2023.x86_64.rpm
+sudo rpm -i riak-3.4.1.OTP26-1.amzn2023.x86_64.rpm
+```
+
+##### Amazon Linux 2023 (ARM64)
+
+Use the package matching the Graviton generation of the EC2 instance:
+
+```bash
+# Graviton2
+wget https://files.tiot.jp/riak/kv/3.4/3.4.1/amazon/2023%20%28graviton2%29/riak-3.4.1.OTP26-1.amzn2023.aarch64.rpm
+
+# Graviton3
+wget https://files.tiot.jp/riak/kv/3.4/3.4.1/amazon/2023%20%28graviton3%29/riak-3.4.1.OTP26-1.amzn2023.aarch64.rpm
+
+sudo yum localinstall -y riak-3.4.1.OTP26-1.amzn2023.aarch64.rpm
 ```
 
 #### Next Steps

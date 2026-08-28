@@ -51,9 +51,9 @@ A supported operating system and package source, verified backups, release notes
 If you wish to install the Oracle Linux package by hand, follow these
 instructions.
 
-##### For Oracle Linux 8
+##### Oracle Linux 9 (x86_64)
 
-**Note** There are various Riak packages available for different OTP versions, please ensure that you are using the correct package for your OTP version.
+The published OpenRiak KV 3.4.1 package uses OTP 26.
 
 Before installing Riak on Oracle Linux 9, we need to satisfy some Erlang dependencies
 from EPEL first by installing the EPEL repository:
@@ -62,11 +62,11 @@ from EPEL first by installing the EPEL repository:
 sudo yum install -y epel-release
 ```
 
-Once the EPEL has been installed, you can install Riak on Oracle Linux 8 using yum, which we recommend::
+Once EPEL has been installed, install OpenRiak KV using `yum`:
 
 ```bash
-wget https://files.tiot.jp/riak/kv/3.2/3.2.5/oracle/9/riak-3.2.5.OTP25-1.el9.x86_64.rpm
-sudo yum install -y riak-3.2.5.OTP25-1.el9.x86_64.rpm
+wget https://files.tiot.jp/riak/kv/3.4/3.4.1/oracle/9/riak-3.4.1.OTP26-1.el9.x86_64.rpm
+sudo yum install -y riak-3.4.1.OTP26-1.el9.x86_64.rpm
 ```
 
 #### Next Steps
@@ -75,49 +75,52 @@ Now that Riak is installed, check out [Verifying a Riak Installation][install ve
 
 ### RHEL and CentOS
 
-OpenRiak KV can be installed on CentOS- or Red-Hat-based systems using a binary
-package or by [compiling Riak from source code][install source index]. The following steps have been tested to work with Riak on
-CentOS/RHEL 8.1.1911 .
+OpenRiak KV can be installed on RHEL-based systems using a binary package or by
+[compiling OpenRiak KV from source code][install source index]. Packages are
+published for RHEL 8 and RHEL 9; Rocky Linux users should use the package for
+the corresponding RHEL major version.
 
 > **Note on SELinux**
 >
-> CentOS enables SELinux by default, so you may need to disable SELinux if
-you encounter errors.
+> RHEL-compatible systems enable SELinux by default. Keep SELinux enabled unless
+> your security policy and troubleshooting results require a different setting.
 
-If you wish to install the RHEL/CentOS packages by hand, follow these
+If you wish to install the RHEL or Rocky Linux packages by hand, follow these
 instructions.
 
-#### For Centos 8 / RHEL 8
+#### RHEL 8 or Rocky Linux 8 (x86_64)
 
 Before installing Riak on CentOS 8/RHEL 8, we need to satisfy some Erlang dependencies
 from EPEL first by installing the EPEL repository:
 
-Once the EPEL has been installed, you can install CentOS 8/RHEL 8 using yum, which we recommend:
+Once EPEL has been installed, install the package using `yum`:
 
 ```bash
-wget https://files.tiot.jp/riak/kv/3.2/3.2.5/rhel/8/riak-3.2.5.OTP25-1.el8.x86_64.rpm
-sudo yum localinstall -y riak-3.2.5.1.gd26294d.OTP25-1.el8.x86_64.rpm
+wget https://files.tiot.jp/riak/kv/3.4/3.4.1/rhel/8/riak-3.4.1.OTP26-1.el8.x86_64.rpm
+sudo yum localinstall -y riak-3.4.1.OTP26-1.el8.x86_64.rpm
 ```
 
 Or you can install the `.rpm` package manually:
 
 ```bash
-wget https://files.tiot.jp/riak/kv/3.2/3.2.5/rhel/8/riak-3.2.5.OTP25-1.el8.x86_64.rpm
-sudo rpm -Uvh riak-3.2.5-1.el8.x86_64.rpm
+wget https://files.tiot.jp/riak/kv/3.4/3.4.1/rhel/8/riak-3.4.1.OTP26-1.el8.x86_64.rpm
+sudo rpm -Uvh riak-3.4.1.OTP26-1.el8.x86_64.rpm
 ```
 
-##### For Centos 9 / RHEL 9
+##### RHEL 9 or Rocky Linux 9 (x86_64)
 
-You can install CentOS 9/RHEL 9 using yum, which we recommend:
+Install the package using `yum`:
 
 ```bash
-wget https://files.tiot.jp/riak/kv/3.2/3.2.5/rhel/9/riak-3.2.5.OTP25-1.el9.x86_64.rpm
-sudo yum localinstall -y riak-3.2.5.OTP25-1.el9.x86_64.rpm
+wget https://files.tiot.jp/riak/kv/3.4/3.4.1/rhel/9/riak-3.4.1.OTP26-1.el9.x86_64.rpm
+sudo yum localinstall -y riak-3.4.1.OTP26-1.el9.x86_64.rpm
 ```
 
+Or install the `.rpm` package manually:
+
 ```bash
-wget https://files.tiot.jp/riak/kv/3.2/3.2.5/rhel/9/riak-3.2.5.OTP25-1.el9.x86_64.rpm
-sudo rpm -Uvh riak-3.2.5.OTP25-1.el9.x86_64.rpm
+wget https://files.tiot.jp/riak/kv/3.4/3.4.1/rhel/9/riak-3.4.1.OTP26-1.el9.x86_64.rpm
+sudo rpm -Uvh riak-3.4.1.OTP26-1.el9.x86_64.rpm
 ```
 
 #### Installing From Source
@@ -139,16 +142,9 @@ You can install these with yum:
 sudo yum install gcc gcc-c++ glibc-devel make git pam-devel
 ```
 
-Now we can download and install Riak:
-
-```bash
-wget https://files.tiot.jp/riak/kv/3.2/3.2.5/riak-3.2.5.tar.gz
-tar zxvf riak-3.2.5.tar.gz
-cd riak-3.2.5
-make rel
-```
-
-You will now have a fresh build of Riak in the `rel/riak` directory.
+Follow [the source installation guide][install source index] to obtain and build
+the OpenRiak KV 3.4.1 source tree. A successful build creates the release in
+the `rel/riak` directory.
 
 #### Next Steps
 

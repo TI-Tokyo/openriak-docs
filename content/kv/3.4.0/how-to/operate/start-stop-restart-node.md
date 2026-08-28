@@ -39,38 +39,38 @@ Starting Riak changes depending on how Riak was made - a [local release]({{< bas
 
 #### Local Release or Cluster
 
-For locally deployed instances (i.e. via `make rel` for a single node or `make devrel` for a development cluster), nodes can be controlled using the `bin/riak` script:
+For locally deployed instances (i.e. via `make rel` for a single node or `make devrel` for a development cluster), use the release control script. The examples below show the default single-node `make rel` path:
 
 ```console
-bin/riak daemon
-bin/riak ping
-bin/riak stop
+./rel/riak/bin/riak daemon
+./rel/riak/bin/riak ping
+./rel/riak/bin/riak stop
 ```
 
-The location of the `bin` directory will depend on whether `make rel` or `make devrel` has been used to create the Riak release.  By default `make rel` will copy the release into the `rel/riak` folder in the base folder to which Riak was cloned - so the control script can be found at `rel/riak/bin/riak`.  For clusters generated with `make devrel`, the make process will create `n` multiple nodes under `dev/dev{n}/riak` in the base folder.  Those nodes are independent until [they are joined into a cluster]({{< baseurl >}}kv/3.4.0/how-to/operate/add-node/).
+The location of the `bin` directory will depend on whether `make rel` or `make devrel` has been used to create the Riak release.  By default `make rel` will copy the release into the `rel/riak` folder in the base folder to which Riak was cloned - so the control script can be found at `./rel/riak/bin/riak`. For clusters generated with `make devrel`, use the matching node script at `./dev/dev{n}/riak/bin/riak`.  Those nodes are independent until [they are joined into a cluster]({{< baseurl >}}kv/3.4.0/how-to/operate/add-node/).
 
 > Under `riak`, there should be `bin`, `data`, `log` and `etc` folders.  The location of the `data` and `log` folders can be changed using the `platform.data_dir` and `platform.log_dir` in `etc/riak.conf`.
 
-> The `bin/riak start` command which was used in Riak 3.0 and earlier releases is now deprecated.
+> The `start` action on the release control script, used in Riak 3.0 and earlier releases, is deprecated.
 >
 > From Riak 3.2.0 use `daemon` to start Riak, or `foreground` to start with output redirected to `stdout`.
 
 Help for further console activities can be found via:
 
 ```console
-bin/riak --help
-bin/riak admin --help
-bin/riak admin cluster --help
+./rel/riak/bin/riak --help
+./rel/riak/bin/riak admin --help
+./rel/riak/bin/riak admin cluster --help
 ```
 
 #### Package Deployment
 
-For instances deployed through packages, startup and shutdown should be controlled using `systemd` e.g.:
+For instances deployed through packages, control the service with `systemd`:
 
 ```console
-service riak start
-service riak ping
-service riak stop
+sudo systemctl start riak
+sudo systemctl status riak
+sudo systemctl stop riak
 ```
 
 Help for further console activities can be found by using the standard `riak` script e.g. `sudo riak admin --help`.

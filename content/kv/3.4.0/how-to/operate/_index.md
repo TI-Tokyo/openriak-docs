@@ -189,11 +189,7 @@ Most configuration changes will be applied to the [configuration file]({{< baseu
 you compiled from source) or `/etc` (if you used a binary install of
 Riak).
 
-The commands below presume that you are running from a source install,
-but if you have installed Riak with a binary install, you can substitute
-the usage of `bin/riak` with `sudo /usr/sbin/riak` and `bin/riak admin`
-with `sudo /usr/sbin/riak admin`. The `riak` and `riak admin` scripts
-are located in the `/bin` directory of your installation.
+The commands below use `riak` because packaged installations place the control script on `PATH`. For a source-built release, replace `riak` with the explicit release path, normally `./rel/riak/bin/riak`; for a development node, use `./dev/dev{n}/riak/bin/riak`.
 
 > **Note on changing the `name` value**
 >
@@ -353,8 +349,7 @@ Repeat the above steps for a second host on the same network, providing
 the second node with a host/port and node name. Once the second node has
 started, use `riak admin cluster join` to join the second node to the
 first node, thereby creating an initial OpenRiak cluster. Let's say that
-we've named our second node `riak@192.168.1.11`. From the new node's
-`/bin` directory:
+we've named our second node `riak@192.168.1.11`. On the new node:
 
 ```bash
 riak admin cluster join riak@192.168.1.10
@@ -387,7 +382,7 @@ examine your OpenRiak cluster's ring:
 1. Using the `riak admin` command:
 
 ```bash
-    bin/riak admin status | grep ring_members
+    riak admin status | grep ring_members
     ```
 
 With output resembling the following:
@@ -518,9 +513,9 @@ Continue for all nodes on the host.
 4. Now, start the nodes, changing path names and nodes as appropriate:
 
 ```bash
-    ./rel/riak1/bin/riak start
-    ./rel/riak2/bin/riak start
-    ./rel/riak3/bin/riak start
+    ./rel/riak1/bin/riak daemon
+    ./rel/riak2/bin/riak daemon
+    ./rel/riak3/bin/riak daemon
 
 ## etc
     ```

@@ -49,15 +49,11 @@ A supported operating system and package source, verified backups, release notes
 OpenRiak KV can be installed on Debian or Ubuntu-based systems using a binary
 package or by compiling from source code.
 
-The following steps have been tested to work with OpenRiak KV on:
+Binary packages for OpenRiak KV 3.4.1 are published for:
 
-- Ubuntu 20.04
-- Ubuntu 22.04
-- Ubuntu 24.04
-- Debian 9.0
-- Debian 10.0
-- Debian 11.0
-- Raspbian Buster
+- Ubuntu 22.04 on AMD64
+- Ubuntu 24.04 on AMD64 and ARM64
+- Debian 11 and Debian 12 on AMD64
 
 #### Installing From Package
 
@@ -75,56 +71,41 @@ To install:
 ```bash
 sudo apt-get install libpam0g-dev
 ```
-***Note on OTP version***
-Packages for different OTP versions are available at https://files.tiot.jp
+All published OpenRiak KV 3.4.1 packages use OTP 26.
 
-###### Ubuntu Focal Fossa (OTP 25) (20.04.6)
+###### Ubuntu 22.04 Jammy (AMD64)
 
 ```bash
-wget https://files.tiot.jp/riak/kv/3.2/3.2.5/ubuntu/focal64/riak_3.2.5-OTP25_amd64.deb
-sudo dpkg -i riak_3.2.5-OTP25_amd64.deb
+wget https://files.tiot.jp/riak/kv/3.4/3.4.1/ubuntu/jammy64/riak_3.4.1-OTP26_amd64.deb
+sudo dpkg -i riak_3.4.1-OTP26_amd64.deb
 ```
 
-###### Ubuntu Jammy Jellyfix (OtP 24) (22.04.5)
+###### Ubuntu 24.04 Noble (AMD64)
 
 ```bash
-wget https://files.tiot.jp/riak/kv/3.2/3.2.5/ubuntu/jammy64/riak_3.2.5-OTP25_amd64.deb
-sudo dpkg -i riak_3.2.5-OTP25_amd64.deb
+wget https://files.tiot.jp/riak/kv/3.4/3.4.1/ubuntu/noble64/riak_3.4.1-OTP26_amd64.deb
+sudo dpkg -i riak_3.4.1-OTP26_amd64.deb
 ```
 
-###### Ubuntu Noble Numbat (24.04.01)
+###### Ubuntu 24.04 Noble (ARM64, Graviton3)
 
 ```bash
-wget https://files.tiot.jp/riak/kv/3.2/3.2.5/ubuntu/noble64/riak_3.2.5-OTP25_amd64.deb
-sudo dpkg -i riak_3.2.5-OTP25_amd64.deb
+wget https://files.tiot.jp/riak/kv/3.4/3.4.1/ubuntu/noble%20%28graviton3%29/riak_3.4.1-OTP26_arm64.deb
+sudo dpkg -i riak_3.4.1-OTP26_arm64.deb
 ```
 
-###### Debian Buster (10.0)
+###### Debian 11 Bullseye (AMD64)
 
 ```bash
-wget https://files.tiot.jp/riak/kv/3.2/3.2.5/debian/10/riak_3.2.5-OTP25_amd64.deb
-sudo dpkg -i riak_3.2.5-OTP25_amd64.deb
+wget https://files.tiot.jp/riak/kv/3.4/3.4.1/debian/11/riak_3.4.1-OTP26_amd64.deb
+sudo dpkg -i riak_3.4.1-OTP26_amd64.deb
 ```
 
-###### Debian bullseye (11.0)
+###### Debian 12 Bookworm (AMD64)
 
 ```bash
-wget https://files.tiot.jp/riak/kv/3.2/3.2.5/debian/11/riak_3.2.5-OTP25_amd64.deb
-sudo dpkg -i riak_3.2.5-OTP25_amd64.deb
-```
-
-###### Debian Bookworm (12.0)
-
-```bash
-wget https://files.tiot.jp/riak/kv/3.2/3.2.5/debian/12/riak_3.2.5-OTP25_amd64.deb
-sudo dpkg -i riak_3.2.5-OTP25_amd64.deb
-```
-
-###### Raspbian Bullseye
-
-```bash
-wget https://files.tiot.jp/riak/kv/3.2/3.2.5/raspbian/bullseye/riak_3.2.5-OTP22_arm64.deb
-sudo dpkg -i riak_3.2.5-OTP22_arm64.deb
+wget https://files.tiot.jp/riak/kv/3.4/3.4.1/debian/12/riak_3.4.1-OTP26_amd64.deb
+sudo dpkg -i riak_3.4.1-OTP26_amd64.deb
 ```
 
 #### Next Steps

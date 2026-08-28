@@ -63,7 +63,7 @@ Riak objects are placed into buckets.  The configuration of the handling of buck
 For help in enabling properties on typed buckets see:
 
 ```console
-rel/riak/bin/riak admin bucket-type --help
+riak admin bucket-type --help
 ```
 
 The majority of defaults for bucket properties are configurable via `riak.conf`, for example:
