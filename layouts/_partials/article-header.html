@@ -1,0 +1,16 @@
+<header class="article-header">
+  <div class="badges">
+    {{ with .Params.diataxis }}<span class="badge badge--{{ . | urlize }}">{{ . }}</span>{{ end }}
+    {{ with .Params.product_version }}<span class="badge">{{ $.Params.product | default site.Params.productName }} {{ . }}</span>{{ end }}
+  </div>
+  <h1>{{ .Title }}</h1>
+  {{ with .Description }}<p class="lede">{{ . }}</p>{{ end }}
+  {{ if or .Draft (eq .Params.technical_review "required") }}
+    <div class="review-notice" role="note">
+      <strong>Review status:</strong>
+      {{ if .Draft }}This migrated page is still marked as a draft.{{ end }}
+      {{ if eq .Params.technical_review "required" }} Technical review is required before publication.{{ end }}
+    </div>
+  {{ end }}
+</header>
+

@@ -1,0 +1,215 @@
+<!doctype html><html lang=en class=no-js><head><script src="/docs/livereload.js?mindelay=10&amp;v=2&amp;port=1320&amp;path=docs/livereload" data-no-instant defer></script><meta charset=utf-8><meta name=viewport content="width=device-width,initial-scale=1"><meta name=color-scheme content="light dark"><script>(()=>{const t="openriak-docs-theme";let e="system";try{const n=localStorage.getItem(t);(n==="light"||n==="dark"||n==="system")&&(e=n)}catch{}const n=window.matchMedia?.("(prefers-color-scheme: dark)").matches??!1;document.documentElement.dataset.themePreference=e,document.documentElement.dataset.theme=e==="system"?n?"dark":"light":e})()</script><meta name=description content="Define command syntax, options, output fields, exit behavior, and required privileges."><title>Command reference | OpenRiak Documentation</title><link rel=canonical href=http://127.0.0.1:1320/docs/kv/3.4.0/reference/commands/><link rel=icon href=/docs/images/branding/favicon.ico sizes=any><link rel=stylesheet href=/docs/css/site.css><link rel=stylesheet href=/docs/css/theme.css><script src=/docs/js/theme.js defer></script><meta property="og:type" content="website"><meta property="og:title" content="Command reference"><meta property="og:description" content="Define command syntax, options, output fields, exit behavior, and required privileges."><meta property="og:url" content="http://127.0.0.1:1320/docs/kv/3.4.0/reference/commands/"></head><body data-kind=section data-section=kv><script>document.documentElement.classList.remove("no-js")</script><a class=skip-link href=#main-content>Skip to content</a><header class=site-header><div class=site-header__inner><button class=nav-toggle type=button aria-controls=docs-sidebar aria-expanded=false>
+<span aria-hidden=true>☰</span><span class=sr-only>Toggle documentation navigation</span>
+</button>
+<a class=brand href=/docs/ aria-label="OpenRiak documentation home"><img src=/docs/images/branding/riak-logo-inverted.png alt width=34 height=34>
+<span>OpenRiak <strong>Docs</strong></span></a><nav class=primary-nav aria-label="Documentation types"><a href=/docs/kv/3.4.1/tutorials/>Tutorials</a>
+<a href=/docs/kv/3.4.1/how-to/>How-to</a>
+<a href=/docs/kv/3.4.1/reference/>Reference</a>
+<a href=/docs/kv/3.4.1/explanation/>Explanation</a></nav><a class=community-link href=https://github.com/orgs/OpenRiak/discussions>Community</a>
+<label class=theme-control><span class=theme-control__icon aria-hidden=true>◐</span>
+<span class=sr-only>Color theme</span>
+<select data-theme-select aria-label="Color theme"><option value=system>System</option><option value=light>Light</option><option value=dark>Dark</option></select></label></div></header><div class=site-shell><aside id=docs-sidebar class=sidebar aria-label="Documentation navigation"><div class=sidebar__tools><label for=version-select>Version</label>
+<select id=version-select data-version-select><option value=/docs/kv/3.4.1/>3.4.1 (latest)</option><option value=/docs/kv/3.4.0/ selected>3.4.0</option></select><form class=docs-search role=search data-search data-index-url=/docs/search-index.json data-version=3.4.0><label class=sr-only for=docs-search-input>Search this version</label>
+<input id=docs-search-input type=search placeholder="Search this version" autocomplete=off data-search-input><div class=search-results data-search-results hidden></div></form></div><nav class=sidebar__nav aria-label="Pages in this version"><a class=sidebar__root href=/docs/kv/3.4.0/>OpenRiak KV 3.4.0</a><ul class=nav-tree><li><details><summary><a href=/docs/kv/3.4.0/explanation/>Explanation</a></summary></details></li><li><details><summary><a href=/docs/kv/3.4.0/how-to/>How-to guides</a></summary></details></li><li><details open><summary><a href=/docs/kv/3.4.0/reference/>Reference</a></summary><ul class=nav-tree><li><details><summary><a href=/docs/kv/3.4.0/reference/aae-fold-api/>AAE fold API reference</a></summary></details></li><li><details><summary><a href=/docs/kv/3.4.0/reference/client-libraries/>Client library reference</a></summary></details></li><li><details open><summary><a class=is-current href=/docs/kv/3.4.0/reference/commands/ aria-current=page>Command reference</a></summary><ul class=nav-tree><li><a href=/docs/kv/3.4.0/reference/commands/riak-admin-command-reference/>riak admin command reference</a></li><li><a href=/docs/kv/3.4.0/reference/commands/riak-control-reference/>Riak Control reference</a></li><li><a href=/docs/kv/3.4.0/reference/commands/riak-command-reference/>riak command reference</a></li><li><a href=/docs/kv/3.4.0/reference/commands/aae-command-reference/>AAE command reference</a></li><li><a href=/docs/kv/3.4.0/reference/commands/vnode-status-command/>vnode-status command</a></li></ul></details></li><li><details><summary><a href=/docs/kv/3.4.0/reference/configuration/>Configuration reference</a></summary></details></li><li><details><summary><a href=/docs/kv/3.4.0/reference/data/>Data reference</a></summary></details></li><li><details><summary><a href=/docs/kv/3.4.0/reference/http-api/>HTTP API reference</a></summary></details></li><li><details><summary><a href=/docs/kv/3.4.0/reference/operations/>Operations reference</a></summary></details></li><li><details><summary><a href=/docs/kv/3.4.0/reference/protocol-buffers/>Protocol Buffers API reference</a></summary></details></li><li><details><summary><a href=/docs/kv/3.4.0/reference/query-api/>Query API reference</a></summary></details></li><li><details><summary><a href=/docs/kv/3.4.0/reference/releases/>Release and compatibility reference</a></summary></details></li><li><details><summary><a href=/docs/kv/3.4.0/reference/replication-api/>Replication API reference</a></summary></details></li><li><details><summary><a href=/docs/kv/3.4.0/reference/specialized-apis/>Specialized API reference</a></summary></details></li><li><a href=/docs/kv/3.4.0/reference/frequently-asked-questions/>Frequently asked questions</a></li></ul></details></li><li><details><summary><a href=/docs/kv/3.4.0/tutorials/>Tutorials</a></summary></details></li></ul></nav><div class=sidebar__help><a href=https://github.com/orgs/OpenRiak/discussions>Ask the OpenRiak community</a>
+<a href=https://github.com/OpenRiak/riak>OpenRiak source code</a></div></aside><button class=sidebar-scrim type=button data-sidebar-close aria-label="Close navigation"></button><main id=main-content class=content tabindex=-1><article class="doc doc--section"><nav class=breadcrumbs aria-label=Breadcrumb><ol><li><a href=/docs/kv/>OpenRiak KV documentation</a></li><li><a href=/docs/kv/3.4.0/>OpenRiak KV 3.4.0</a></li><li><a href=/docs/kv/3.4.0/reference/>Reference</a></li><li aria-current=page>Command reference</li></ol></nav><header class=article-header><div class=badges><span class="badge badge--reference">reference</span>
+<span class=badge>KV 3.4.0</span></div><h1>Command reference</h1><p class=lede>Define command syntax, options, output fields, exit behavior, and required privileges.</p><div class=review-notice role=note><strong>Review status:</strong>
+This migrated page is still marked as a draft.
+Technical review is required before publication.</div></header><div class=doc-body><p>Define command syntax, options, output fields, exit behavior, and required privileges.</p><h2 id=details>Details</h2><h3 id=cluster-administration>Cluster Administration</h3><h4 id=in-this-section>In This Section</h4><h5 id=cluster-admin-commands><a href=./commands/>Cluster Admin Commands</a></h5><p>Explains usage of the <code>riak admin cluster</code> interface, which enables you to perform a wide variety of cluster-level actions.</p><p><a href=./commands/>Learn More &#187;</a></p><h6 id=riak-admin-command-line-interface><a href=./riak-cli/>riak admin Command Line Interface</a></h6><p>Details the <code>riak admin</code> interface.</p><p><a href=./riak-admin/>Learn More &#187;</a></p><h6 id=riak-command-line-interface><a href=./riak-admin/>riak Command Line Interface</a></h6><p>Covers the <code>riak</code> interface, which enables control of the processes associated with an OpenRiak node.</p><p><a href=./riak-cli/>Learn More &#187;</a></p><h6 id=riak-control><a href=./riak-control/>Riak Control</a></h6><p>Overview of Riak Control, a web-based administrative console for Riak clusters.</p><p><a href=./riak-control/>Learn More &#187;</a></p><h3 id=cluster-administration-commands>Cluster Administration Commands</h3><p>This document explains usage of the <a href=/docs/kv/3.4.0/reference/commands/riak-admin/#cluster><code>riak admin cluster</code></a>
+interface, which enables you to perform a wide
+variety of cluster-level actions.</p><h4 id=how-cluster-administration-works>How Cluster Administration Works</h4><p>Riak provides a multi-phased approach to cluster administration that
+enables you to stage and review cluster-level changes prior to
+committing them. This allows you to group multiple changes together,
+such as adding multiple nodes at once, adding some nodes and removing
+others, etc.</p><p>Enacting cluster-level changes typically follows this set of steps:</p><ol><li>Choose an action or set of actions, such as adding a node, removing
+multiple nodes, etc. These actions will be <strong>staged</strong> rather than
+executed immediately.</li><li><strong>Plan</strong> the changes using the <a href=#plan><code>cluster plan</code></a>
+command. This will return a list of staged
+commands that you can review.</li><li><strong>Commit</strong> the changes using the <a href=#commit><code>cluster commit</code></a>
+command. This will execute the changes that
+have been staged and reviewed.</li></ol><blockquote><p><strong>Note on command names</strong></p><p>Many of the commands available through the <code>riak admin cluster</code>
+interface are also available as self-standing commands. The <code>riak admin
+member-status</code> command is now the <code>riak admin cluster status</code> command,
+<code>riak admin join</code> is now <code>riak admin cluster join</code>, etc.</p><p>We recommend using the <code>riak admin cluster</code> interface over the older,
+deprecated commands. You will receive a deprecation warning if you use
+the older commands.</p></blockquote><h4 id=status>status</h4><p>Displays a variety of information about the cluster.</p><div class=highlight><pre tabindex=0 class=chroma><code class=language-bash data-lang=bash><span class=line><span class=cl>riak admin cluster status
+</span></span></code></pre></div><p>This will return output like the following in a 3-node cluster:</p><pre tabindex=0><code>---- Cluster Status ----
+Ring ready: true
+
++--------------------+------+-------+-----+-------+
+|        node        |status| avail |ring |pending|
++--------------------+------+-------+-----+-------+
+| (C) dev1@127.0.0.1 |valid |  up   | 34.4|  --   |
+|     dev2@127.0.0.1 |valid |  up   | 32.8|  --   |
+|     dev3@127.0.0.1 |valid |  up   | 32.8|  --   |
++--------------------+------+-------+-----+-------+
+</code></pre><p>In the above output, <code>Ring ready</code> denotes whether or not the cluster
+agrees on <a href=/docs/kv/3.4.0/explanation/foundations/clusters-rings-and-partitions/>the ring</a>
+, i.e. whether the cluster is
+ready to begin taking requests.</p><p>The following information is then displayed for each node, by nodename
+(in this case <code>dev1@127.0.0.1</code>, etc.):</p><ul><li><code>status</code> - There are five possible values for status:<ul><li><code>valid</code> - The node has begun participating in cluster operations</li><li><code>leaving</code> - The node is is currently unloading ownership of its
+<a href=/docs/kv/3.4.0/explanation/foundations/clusters-rings-and-partitions/>data partitions</a>
+to other nodes</li><li><code>exiting</code> - The node&rsquo;s ownership transfers are complete and it is
+currently shutting down</li><li><code>joining</code> - The node is in the process of joining the cluster but
+but has not yet completed the join process</li><li><code>down</code> - The node is not currently responding</li></ul></li><li><code>avail</code> - There are two possible values: <code>up</code> if the node is
+available and taking requests and <code>down!</code> if the node is unavailable</li><li><code>ring</code> - What percentage of the Riak <a href=/docs/kv/3.4.0/explanation/foundations/clusters-rings-and-partitions/>ring</a>
+the
+node is responsible for</li><li><code>pending</code> - The number of pending transfers to or from the node</li></ul><p>In addition, the cluster&rsquo;s <a href=/docs/kv/3.4.0/tutorials/operations/change-cluster-membership/>claimant node</a>
+node will have a <code>(C)</code> next
+to it.</p><h4 id=join>join</h4><p>Joins the current node to another node in the cluster.</p><div class=highlight><pre tabindex=0 class=chroma><code class=language-bash data-lang=bash><span class=line><span class=cl>riak admin cluster join &lt;node&gt;
+</span></span></code></pre></div><p>You <em>must</em> specify a node to join to by nodename. You can join to any
+node in the cluster. The following would join the current node to
+<code>dev1@127.0.0.1</code>:</p><div class=highlight><pre tabindex=0 class=chroma><code class=language-bash data-lang=bash><span class=line><span class=cl>riak admin cluster join dev1@127.0.0.1
+</span></span></code></pre></div><p>The above command should produce an output similar to below:</p><pre tabindex=0><code>Success: staged join request for &#39;dev2@127.0.0.1&#39; to &#39;dev1@127.0.0.1&#39;
+ok
+</code></pre><p>Once a node joins, all of the operations necessary to establish
+communication with all other nodes proceeds automatically.</p><blockquote><p><strong>Note</strong>: As with all cluster-level actions, the changes made when you
+run the <code>cluster join</code> command will take effect only after you have both
+planned the changes by running <a href=/docs/kv/3.4.0/reference/commands/riak-admin/><code>riak admin cluster plan</code></a>
+and committed the changes by running
+<a href=/docs/kv/3.4.0/reference/commands/riak-admin/><code>riak admin cluster commit</code></a>
+.
+You can stage multiple joins before planning/committing.</p></blockquote><h4 id=leave>leave</h4><p>Instructs the current node to hand off its
+<a href=/docs/kv/3.4.0/explanation/foundations/clusters-rings-and-partitions/>data partitions</a>
+, leave the cluster, and shut down.</p><div class=highlight><pre tabindex=0 class=chroma><code class=language-bash data-lang=bash><span class=line><span class=cl>riak admin cluster leave
+</span></span></code></pre></div><p>Produces:</p><pre tabindex=0><code>Success: staged leave request for &#39;dev1@127.0.0.1&#39;
+</code></pre><p>You can also instruct another node (by nodename) to leave the cluster:</p><div class=highlight><pre tabindex=0 class=chroma><code class=language-bash data-lang=bash><span class=line><span class=cl>riak admin cluster leave &lt;node&gt;
+</span></span></code></pre></div><blockquote><p><strong>Note</strong>: As with all cluster-level actions, the changes made when you
+run the <code>cluster leave</code> command will take effect only after you have
+both planned the changes by running <a href=/docs/kv/3.4.0/reference/commands/riak-admin/><code>riak admin cluster plan</code></a>
+and committed the changes
+by running <a href=/docs/kv/3.4.0/reference/commands/riak-admin/><code>riak admin cluster commit</code></a>
+.
+You can stage multiple leave command before planning/committing.</p></blockquote><h4 id=force-remove>force-remove</h4><p>Removes another node from the cluster (by nodename) <em>without</em> first
+handing off its <a href=/docs/kv/3.4.0/explanation/foundations/clusters-rings-and-partitions/>data partitions</a>
+. This command is
+designed for crashed, unrecoverable nodes and should be used with
+caution.</p><div class=highlight><pre tabindex=0 class=chroma><code class=language-bash data-lang=bash><span class=line><span class=cl>riak admin cluster force-remove &lt;node&gt;
+</span></span></code></pre></div><blockquote><p><strong>Note</strong>: As with all cluster-level actions, the changes made when you
+run the <code>cluster force-remove</code> command will take effect only after you have
+both planned the changes by running <a href=/docs/kv/3.4.0/reference/commands/riak-admin/><code>riak admin cluster plan</code></a>
+and committed the changes
+by running <a href=/docs/kv/3.4.0/reference/commands/riak-admin/><code>riak admin cluster commit</code></a>
+. You can stage multiple force-remove actions
+before planning/committing.</p></blockquote><h4 id=replace>replace</h4><p>Instructs a node to transfer all of its <a href=/docs/kv/3.4.0/explanation/foundations/clusters-rings-and-partitions/>data partitions</a>
+to another node and then to leave the
+cluster and shut down.</p><div class=highlight><pre tabindex=0 class=chroma><code class=language-bash data-lang=bash><span class=line><span class=cl>riak admin cluster replace &lt;node1&gt; &lt;node2&gt;
+</span></span></code></pre></div><blockquote><p><strong>Note</strong>: As with all cluster-level actions, the changes made when you
+run the <code>cluster replace</code> command will take effect only after you have
+both planned the changes by running <a href=/docs/kv/3.4.0/reference/commands/riak-admin/><code>riak admin cluster plan</code></a>
+and committed the changes
+by running <a href=/docs/kv/3.4.0/reference/commands/riak-admin/><code>riak admin cluster commit</code></a>
+. You can stage multiple replace actions before
+planning/committing.</p></blockquote><h4 id=force-replace>force-replace</h4><p>Reassigns all <a href=/docs/kv/3.4.0/explanation/foundations/clusters-rings-and-partitions/>data partitions</a>
+owned by one node to
+another node <em>without</em> first handing off data.</p><div class=highlight><pre tabindex=0 class=chroma><code class=language-bash data-lang=bash><span class=line><span class=cl>riak admin force-replace &lt;node_being_replaced&gt; &lt;replacement_node&gt;
+</span></span></code></pre></div><p>Once the data partitions have been reassigned, the node that is being
+replaced will be removed from the cluster.</p><blockquote><p><strong>Note</strong>: As with all cluster-level actions, the changes made when you
+run the <code>cluster force-replace</code> command will take effect only after you have
+both planned the changes by running <a href=/docs/kv/3.4.0/reference/commands/riak-admin/><code>riak admin cluster plan</code></a>
+and committed the changes
+by running <a href=/docs/kv/3.4.0/reference/commands/riak-admin/><code>riak admin cluster commit</code></a>
+. You can stage multiple force-replace actions
+before planning/committing.</p></blockquote><h4 id=plan>plan</h4><p>Displays the currently staged cluster changes.</p><div class=highlight><pre tabindex=0 class=chroma><code class=language-bash data-lang=bash><span class=line><span class=cl>riak admin cluster plan
+</span></span></code></pre></div><p>If there are no staged changes, the response will be:</p><pre tabindex=0><code>There are no staged changes
+</code></pre><p><code>riak admin cluster plan</code> is complex, depending on the staged changes.</p><ul><li>If a <code>leave</code> operation has been staged, <code>riak admin cluster plan</code> will undo the staged change and no node will be stopped.</li><li>If a <code>join</code> operation has been staged, the joining node will be shut down after its ring has been cleared. When this node restarts, it will behave like a fresh unjoined node and can be joined again.</li><li>If a <code>cluster clear</code> operation is staged on a node that remains in the cluster, running <code>riak admin cluster plan</code> will leave the node unaffected.</li></ul><p>If there is no current cluster plan, the output will be <code>There are no
+staged changes</code>.</p><p>If there is a staged change (or changes), however, you
+will see a detailed listing of what will take place upon commit, what
+the cluster will look like afterward, etc.</p><p>For example, if a <code>cluster leave</code> operation is staged in a 3-node cluster the output will look something like this:</p><pre tabindex=0><code>=============================== Staged Changes ================================
+Action         Details(s)
+-------------------------------------------------------------------------------
+leave          &#39;dev2@127.0.0.1&#39;
+-------------------------------------------------------------------------------
+
+NOTE: Applying these changes will result in 2 cluster transitions
+
+###############################################################################
+                         After cluster transition 1/2
+###############################################################################
+
+================================= Membership ==================================
+Status     Ring    Pending    Node
+-------------------------------------------------------------------------------
+leaving    32.8%      0.0%    &#39;dev2@127.0.0.1&#39;
+valid      34.4%     50.0%    &#39;dev1@127.0.0.1&#39;
+valid      32.8%     50.0%    &#39;dev3@127.0.0.1&#39;
+-------------------------------------------------------------------------------
+Valid:2 / Leaving:1 / Exiting:0 / Joining:0 / Down:0
+
+WARNING: Not all replicas will be on distinct nodes
+
+Transfers resulting from cluster changes: 38
+  6 transfers from &#39;dev1@127.0.0.1&#39; to &#39;dev3@127.0.0.1&#39;
+  11 transfers from &#39;dev3@127.0.0.1&#39; to &#39;dev1@127.0.0.1&#39;
+  5 transfers from &#39;dev2@127.0.0.1&#39; to &#39;dev1@127.0.0.1&#39;
+  16 transfers from &#39;dev2@127.0.0.1&#39; to &#39;dev3@127.0.0.1&#39;
+
+###############################################################################
+                        After cluster transition 2/2
+###############################################################################
+
+================================= Membership ==================================
+Status     Ring    Pending    Node
+-------------------------------------------------------------------------------
+valid      50.0%      --      &#39;dev1@127.0.0.1&#39;
+valid      50.0%      --      &#39;dev3@127.0.0.1&#39;
+-------------------------------------------------------------------------------
+Valid:2 / Leaving:0 / Exiting:0 / Joining:0 / Down:0
+
+WARNING: Not all replicas will be on distinct nodes
+</code></pre><p>Notice that there are distinct sections of the output for each of the
+transitions that the cluster will undergo, including warnings, planned
+data transfers, etc.</p><h4 id=commit>commit</h4><p>Commits the currently staged cluster changes. Staged cluster changes
+must be reviewed using <a href=/docs/kv/3.4.0/reference/commands/riak-admin/><code>riak admin cluster plan</code></a>
+prior to being committed.</p><div class=highlight><pre tabindex=0 class=chroma><code class=language-bash data-lang=bash><span class=line><span class=cl>riak admin cluster commit
+</span></span></code></pre></div><p>Produces:</p><pre tabindex=0><code>Cluster changes committed
+</code></pre><h4 id=clear>clear</h4><p>Clears the currently staged cluster changes.</p><div class=highlight><pre tabindex=0 class=chroma><code class=language-bash data-lang=bash><span class=line><span class=cl>riak admin cluster clear
+</span></span></code></pre></div><p>The output from this command should appear as follows:</p><pre tabindex=0><code>Cleared staged cluster changes
+ok
+</code></pre><h4 id=partitions>partitions</h4><p>Prints primary, secondary, and stopped partition indices and IDs either
+for the current node or for another, specified node. The following
+prints that information for the current node:</p><div class=highlight><pre tabindex=0 class=chroma><code class=language-bash data-lang=bash><span class=line><span class=cl>riak admin cluster partitions
+</span></span></code></pre></div><p>This would print the partition information for a different node in the
+cluster:</p><div class=highlight><pre tabindex=0 class=chroma><code class=language-bash data-lang=bash><span class=line><span class=cl>riak admin cluster partitions --node<span class=o>=</span>&lt;node&gt;
+</span></span></code></pre></div><p>Partition information is contained in a table like this:</p><pre tabindex=0><code>Partitions owned by &#39;dev1@127.0.0.1&#39;:
++---------+-------------------------------------------------+--+
+|  type   |                      index                      |id|
++---------+-------------------------------------------------+--+
+| primary |                        0                        |0 |
+| primary | 91343852333181432387730302044767688728495783936 |4 |
+| primary |182687704666362864775460604089535377456991567872 |8 |
+|   ...   |                      ....                       |..|
+| primary |1438665674247607560106752257205091097473808596992|63|
+|secondary|                       --                        |--|
+| stopped |                       --                        |--|
++---------+-------------------------------------------------+--+
+</code></pre><h4 id=partition-count>partition-count</h4><p>Displays the current partition count either for the whole cluster or for
+a particular node. This would display the partition count for the
+cluster:</p><div class=highlight><pre tabindex=0 class=chroma><code class=language-bash data-lang=bash><span class=line><span class=cl>riak admin cluster partition-count
+</span></span></code></pre></div><p>Produces:</p><pre tabindex=0><code>Cluster-wide partition-count: 64
+</code></pre><p>This would display the count for a node:</p><div class=highlight><pre tabindex=0 class=chroma><code class=language-bash data-lang=bash><span class=line><span class=cl>riak admin cluster partition-count --node<span class=o>=</span>&lt;node&gt;
+</span></span></code></pre></div><p>When retrieving the partition count for a node, you&rsquo;ll see a table like
+this:</p><pre tabindex=0><code>+--------------+----------+-----+
+|     node     |partitions| pct |
++--------------+----------+-----+
+|dev1@127.0.0.1|    22    | 34.4|
++--------------+----------+-----+
+</code></pre><p>The <code>partitions</code> column displays the number of partitions claimed by the
+node, while the <code>pct</code> column displays the percentage of the ring claimed.</p><h4 id=partition>partition</h4><p>The <code>cluster partition</code> command enables you to convert partition IDs to
+indexes and vice versa using the <code>partition id</code> and <code>partition index</code>
+commands, respectively. Let&rsquo;s say that you run the <code>riak admin cluster
+partitions</code> command and see that you have a variety of partitions, one
+of which has an index of
+<code>1004782375664995756265033323.0.1144576013453623296</code>. You can convert
+that index to an ID like this:</p><div class=highlight><pre tabindex=0 class=chroma><code class=language-bash data-lang=bash><span class=line><span class=cl>riak admin cluster partition <span class=nv>index</span><span class=o>=</span>1004782375664995756265033323.0.1144576013453623296
+</span></span></code></pre></div><p>Conversely, if you have a partition with an ID of 20, you can retrieve
+the corresponding index:</p><div class=highlight><pre tabindex=0 class=chroma><code class=language-bash data-lang=bash><span class=line><span class=cl>riak admin cluster partition <span class=nv>id</span><span class=o>=</span><span class=m>20</span>
+</span></span></code></pre></div></div><section class=child-pages aria-labelledby=browse-section><h2 id=browse-section>Browse this section</h2><div class=cards><a class=card href=/docs/kv/3.4.0/reference/commands/riak-admin-command-reference/><strong>riak admin command reference</strong>
+<span>List every supported riak admin command with syntax, options, output, and safety notes.</span>
+</a><a class=card href=/docs/kv/3.4.0/reference/commands/riak-control-reference/><strong>Riak Control reference</strong>
+<span>List Riak Control capabilities, configuration, access requirements, and operational constraints.</span>
+</a><a class=card href=/docs/kv/3.4.0/reference/commands/riak-command-reference/><strong>riak command reference</strong>
+<span>List every supported riak command with syntax, options, output, and exit behavior.</span>
+</a><a class=card href=/docs/kv/3.4.0/reference/commands/aae-command-reference/><strong>AAE command reference</strong>
+<span>List 3.4.0 command-line operations for AAE status, tree rebuilding, fold execution, and result retrieval.</span>
+</a><a class=card href=/docs/kv/3.4.0/reference/commands/vnode-status-command/><strong>vnode-status command</strong>
+<span>Define the syntax, output fields, scope, and operational cautions for riak admin vnode-status.</span></a></div></section></article></main></div><footer class=site-footer><div><p>OpenRiak documentation is licensed under <a href=https://creativecommons.org/licenses/by/4.0/>Creative Commons Attribution 4.0</a>.</p><p>Historical material © Basho Technologies, Inc.; community revisions © OpenRiak contributors.</p></div><a href=#main-content>Back to top</a></footer><script src=/docs/js/site.js defer></script></body></html>

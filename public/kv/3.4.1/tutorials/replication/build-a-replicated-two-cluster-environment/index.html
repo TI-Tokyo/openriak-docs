@@ -1,0 +1,233 @@
+<!doctype html><html lang=en class=no-js><head><script src="/docs/livereload.js?mindelay=10&amp;v=2&amp;port=1320&amp;path=docs/livereload" data-no-instant defer></script><meta charset=utf-8><meta name=viewport content="width=device-width,initial-scale=1"><meta name=color-scheme content="light dark"><script>(()=>{const t="openriak-docs-theme";let e="system";try{const n=localStorage.getItem(t);(n==="light"||n==="dark"||n==="system")&&(e=n)}catch{}const n=window.matchMedia?.("(prefers-color-scheme: dark)").matches??!1;document.documentElement.dataset.themePreference=e,document.documentElement.dataset.theme=e==="system"?n?"dark":"light":e})()</script><meta name=description content="Guide an operator through enabling TicTac AAE and replicating test data between two disposable clusters."><title>Build a replicated two-cluster environment | OpenRiak Documentation</title><link rel=canonical href=http://127.0.0.1:1320/docs/kv/3.4.1/tutorials/replication/build-a-replicated-two-cluster-environment/><link rel=icon href=/docs/images/branding/favicon.ico sizes=any><link rel=stylesheet href=/docs/css/site.css><link rel=stylesheet href=/docs/css/theme.css><script src=/docs/js/theme.js defer></script><meta property="og:type" content="website"><meta property="og:title" content="Build a replicated two-cluster environment"><meta property="og:description" content="Guide an operator through enabling TicTac AAE and replicating test data between two disposable clusters."><meta property="og:url" content="http://127.0.0.1:1320/docs/kv/3.4.1/tutorials/replication/build-a-replicated-two-cluster-environment/"></head><body data-kind=page data-section=kv><script>document.documentElement.classList.remove("no-js")</script><a class=skip-link href=#main-content>Skip to content</a><header class=site-header><div class=site-header__inner><button class=nav-toggle type=button aria-controls=docs-sidebar aria-expanded=false>
+<span aria-hidden=true>☰</span><span class=sr-only>Toggle documentation navigation</span>
+</button>
+<a class=brand href=/docs/ aria-label="OpenRiak documentation home"><img src=/docs/images/branding/riak-logo-inverted.png alt width=34 height=34>
+<span>OpenRiak <strong>Docs</strong></span></a><nav class=primary-nav aria-label="Documentation types"><a href=/docs/kv/3.4.1/tutorials/>Tutorials</a>
+<a href=/docs/kv/3.4.1/how-to/>How-to</a>
+<a href=/docs/kv/3.4.1/reference/>Reference</a>
+<a href=/docs/kv/3.4.1/explanation/>Explanation</a></nav><a class=community-link href=https://github.com/orgs/OpenRiak/discussions>Community</a>
+<label class=theme-control><span class=theme-control__icon aria-hidden=true>◐</span>
+<span class=sr-only>Color theme</span>
+<select data-theme-select aria-label="Color theme"><option value=system>System</option><option value=light>Light</option><option value=dark>Dark</option></select></label></div></header><div class=site-shell><aside id=docs-sidebar class=sidebar aria-label="Documentation navigation"><div class=sidebar__tools><label for=version-select>Version</label>
+<select id=version-select data-version-select><option value=/docs/kv/3.4.1/ selected>3.4.1 (latest)</option><option value=/docs/kv/3.4.0/>3.4.0</option></select><form class=docs-search role=search data-search data-index-url=/docs/search-index.json data-version=3.4.1><label class=sr-only for=docs-search-input>Search this version</label>
+<input id=docs-search-input type=search placeholder="Search this version" autocomplete=off data-search-input><div class=search-results data-search-results hidden></div></form></div><nav class=sidebar__nav aria-label="Pages in this version"><a class=sidebar__root href=/docs/kv/3.4.1/>OpenRiak KV 3.4.1</a><ul class=nav-tree><li><details><summary><a href=/docs/kv/3.4.1/explanation/>Explanation</a></summary></details></li><li><details><summary><a href=/docs/kv/3.4.1/how-to/>How-to guides</a></summary></details></li><li><details><summary><a href=/docs/kv/3.4.1/reference/>Reference</a></summary></details></li><li><details open><summary><a href=/docs/kv/3.4.1/tutorials/>Tutorials</a></summary><ul class=nav-tree><li><details><summary><a href=/docs/kv/3.4.1/tutorials/first-application/>Build a first OpenRiak application</a></summary></details></li><li><details><summary><a href=/docs/kv/3.4.1/tutorials/operations/>Learn cluster operations</a></summary></details></li><li><details open><summary><a href=/docs/kv/3.4.1/tutorials/replication/>Learn multi-cluster replication</a></summary><ul class=nav-tree><li><a class=is-current href=/docs/kv/3.4.1/tutorials/replication/build-a-replicated-two-cluster-environment/ aria-current=page>Build a replicated two-cluster environment</a></li></ul></details></li><li><details><summary><a href=/docs/kv/3.4.1/tutorials/security/>Learn OpenRiak security</a></summary></details></li><li><details><summary><a href=/docs/kv/3.4.1/tutorials/first-cluster/>Learn OpenRiak with a first cluster</a></summary></details></li><li><details><summary><a href=/docs/kv/3.4.1/tutorials/query-api/>Learn the Query API</a></summary></details></li></ul></details></li></ul></nav><div class=sidebar__help><a href=https://github.com/orgs/OpenRiak/discussions>Ask the OpenRiak community</a>
+<a href=https://github.com/OpenRiak/riak>OpenRiak source code</a></div></aside><button class=sidebar-scrim type=button data-sidebar-close aria-label="Close navigation"></button><main id=main-content class=content tabindex=-1><article class=doc><nav class=breadcrumbs aria-label=Breadcrumb><ol><li><a href=/docs/kv/>OpenRiak KV documentation</a></li><li><a href=/docs/kv/3.4.1/>OpenRiak KV 3.4.1</a></li><li><a href=/docs/kv/3.4.1/tutorials/>Tutorials</a></li><li><a href=/docs/kv/3.4.1/tutorials/replication/>Learn multi-cluster replication</a></li><li aria-current=page>Build a replicated two-cluster environment</li></ol></nav><header class=article-header><div class=badges><span class="badge badge--tutorial">tutorial</span>
+<span class=badge>KV 3.4.1</span></div><h1>Build a replicated two-cluster environment</h1><p class=lede>Guide an operator through enabling TicTac AAE and replicating test data between two disposable clusters.</p><div class=review-notice role=note><strong>Review status:</strong>
+This migrated page is still marked as a draft.
+Technical review is required before publication.</div></header><details class=on-this-page><summary>On this page</summary><nav id=TableOfContents><ul><li><a href=#overview>Overview</a><ul><li><a href=#quickstart>Quickstart</a></li><li><a href=#quickstart-1>Quickstart</a></li></ul></li><li><a href=#what-you-will-learn>What you will learn</a></li><li><a href=#verify-the-result>Verify the result</a></li><li><a href=#next-steps>Next steps</a></li></ul></nav></details><div class=doc-body><p>Guide an operator through enabling TicTac AAE and replicating test data between two disposable clusters.</p><h2 id=overview>Overview</h2><h3 id=quickstart>Quickstart</h3><p><strong>Deprecation Warning</strong>
+v2 Multi-Datacenter Replication is deprecated and will be removed in a future version. Please use <a href=/docs/kv/3.4.1/tutorials/replication/two-cluster-replication/>v3</a>
+instead.</p><p>The Riak Multi-Datacenter Replication Quick Start will walk you through
+the process of configuring OpenRiak&rsquo;s version 2 Replication to perform
+replication between two sample Riak clusters in separate networks. This
+guide will also cover bidirectional replication, which is accomplished
+by setting up unidirectional replication in both directions between the
+clusters.</p><h4 id=prerequisites>Prerequisites</h4><p>This Guide assumes that you have completed the following steps:</p><ul><li>[Installing Riak][install index]</li><li><a href=/docs/kv/3.4.1/how-to/tune/>Performing system tuning|System Performance Tuning</a></li><li>[Reviewing configuration][config v2 mdc]</li></ul><h4 id=scenario>Scenario</h4><p>Configure Riak MDC to perform replication, given the following
+3-node Riak clusters:</p><h5 id=cluster-1>Cluster 1</h5><table><thead><tr><th style=text-align:left>Name</th><th style=text-align:left>IP</th><th style=text-align:left>Node name</th></tr></thead><tbody><tr><td style=text-align:left><code>node1</code></td><td style=text-align:left><code>172.16.1.11</code></td><td style=text-align:left><code>riak@172.16.1.11</code></td></tr><tr><td style=text-align:left><code>node2</code></td><td style=text-align:left><code>172.16.1.12</code></td><td style=text-align:left><code>riak@172.16.1.12</code></td></tr><tr><td style=text-align:left><code>node3</code></td><td style=text-align:left><code>172.16.1.13</code></td><td style=text-align:left><code>riak@172.16.1.13</code></td></tr></tbody></table><h6 id=cluster-2>Cluster 2</h6><table><thead><tr><th style=text-align:left>Name</th><th>IP</th><th>Node name</th></tr></thead><tbody><tr><td style=text-align:left><code>node4</code></td><td><code>192.168.1.21</code></td><td><code>riak@192.168.1.21</code></td></tr><tr><td style=text-align:left><code>node5</code></td><td><code>192.168.1.22</code></td><td><code>riak@192.168.1.22</code></td></tr><tr><td style=text-align:left><code>node6</code></td><td><code>192.168.1.23</code></td><td><code>riak@192.168.1.23</code></td></tr></tbody></table><p><strong>Note</strong>: The addresses used in these example clusters are contrived,
+non-routable addresses. In real-world applications, however, these
+addresses would need to be routable over the public Internet.</p><h4 id=set-up-cluster1--cluster2-replication>Set Up Cluster1 → Cluster2 Replication</h4><h5 id=set-up-the-listeners-on-cluster1-source-cluster>Set Up the Listeners on Cluster1 (Source cluster)</h5><p>On a node in Cluster1, <code>node1</code> for example, identify the nodes that will
+be listening to connections from replication clients with <code>riak repl
+add-listener &lt;nodename> &lt;listen_ip> &lt;port></code> for each node that will be
+listening for replication clients.</p><div class=highlight><pre tabindex=0 class=chroma><code class=language-bash data-lang=bash><span class=line><span class=cl>riak repl add-listener riak@172.16.1.11 172.16.1.11 <span class=m>9010</span>
+</span></span><span class=line><span class=cl>riak repl add-listener riak@172.16.1.12 172.16.1.12 <span class=m>9010</span>
+</span></span><span class=line><span class=cl>riak repl add-listener riak@172.16.1.13 172.16.1.13 <span class=m>9010</span>
+</span></span></code></pre></div><h5 id=set-up-the-site-on-cluster2-site-cluster>Set Up the Site on Cluster2 (Site cluster)</h5><p>On a node in Cluster2, <code>node4</code> for example, inform the replication
+clients where the Source Listeners are located with <code>riak repl add-site
+&lt;ipaddr> &lt;port> &lt;sitename></code>. Use the IP address(es) and port(s) you
+configured in the earlier step. For <code>sitename</code> enter <code>Cluster1</code>.</p><div class=highlight><pre tabindex=0 class=chroma><code class=language-bash data-lang=bash><span class=line><span class=cl>riak repl add-site 172.16.1.11 <span class=m>9010</span> Cluster1
+</span></span></code></pre></div><p><strong>Note</strong>: While a Listener needs to be added to each node, only a single
+Site needs to be added on the Site cluster. Once connected to the Source
+cluster, it will get the locations of the rest of the Listeners in the
+Source cluster.</p><h5 id=verify-the-replication-configuration>Verify the Replication Configuration</h5><p>Verify the replication configuration using <code>riak repl status</code> on both a
+Cluster1 node and a Cluster2 node. A full description of the <code>riak repl
+status</code> command&rsquo;s output can be found in the documentation for
+<code>riak repl</code>&rsquo;s [status output][cluster ops v2 mdc#status].</p><p>On the Cluster1 node, verify that there are <code>listener_&lt;nodename></code>s for
+each listening node, and that <code>leader</code> and <code>server_stats</code> are populated.
+They should look similar to the following:</p><pre tabindex=0><code>listener_riak@172.16.1.11: &#34;172.16.1.11:9010&#34;
+listener_riak@172.16.1.12: &#34;172.16.1.12:9010&#34;
+listener_riak@172.16.1.13: &#34;172.16.1.13:9010&#34;
+leader: &#39;riak@172.16.1.11&#39;
+server_stats: [{&lt;8051.3939.0&gt;,
+               {message_queue_len,0},
+               {status,[{site,&#34;Cluster2&#34;},
+                        {strategy,riak_repl_keylist_server},
+                        {fullsync_worker,&lt;8051.3940.0&gt;},
+                        {dropped_count,0},
+                        {queue_length,0},
+                        {queue_byte_size,0},
+                        {state,wait_for_partition}]}}]
+</code></pre><p>On the Cluster2 node, verify that <code>Cluster1_ips</code>, <code>leader</code>, and
+<code>client_stats</code> are populated. They should look similar to the following:</p><pre tabindex=0><code>Cluster1_ips: &#34;172.16.1.11:9010, 172.16.1.12:9010, 172.16.1.13:9010&#34;
+leader: &#39;riak@192.168.1.21&#39;
+client_stats: [{&lt;8051.3902.0&gt;,
+               {message_queue_len,0},
+               {status,[{site,&#34;Cluster1&#34;},
+                        {strategy,riak_repl_keylist_client},
+                        {fullsync_worker,&lt;8051.3909.0&gt;},
+                        {put_pool_size,5},
+                        {connected,&#34;172.16.1.11&#34;,9010},
+                        {state,wait_for_fullsync}]}}]
+</code></pre><h5 id=testing-realtime-replication>Testing Realtime Replication</h5><p>That&rsquo;s all there is to it! When <code>PUT</code> requests are coordinated by
+Cluster1, these operations will be replicated to Cluster2.</p><p>You can use the following example script to verify that <code>PUT</code> operations
+sent to Cluster1 are being replicated to Cluster2:</p><div class=highlight><pre tabindex=0 class=chroma><code class=language-bash data-lang=bash><span class=line><span class=cl><span class=cp>#!/bin/bash
+</span></span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl><span class=nv>VALUE</span><span class=o>=</span><span class=sb>`</span>date<span class=sb>`</span>
+</span></span><span class=line><span class=cl><span class=nv>CLUSTER_1_IP</span><span class=o>=</span>172.16.1.11
+</span></span><span class=line><span class=cl><span class=nv>CLUSTER_2_IP</span><span class=o>=</span>192.168.1.21
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl>curl -s -X PUT -d <span class=s2>&#34;</span><span class=si>${</span><span class=nv>VALUE</span><span class=si>}</span><span class=s2>&#34;</span> http://<span class=si>${</span><span class=nv>CLUSTER_1_IP</span><span class=si>}</span>:8098/riak/replCheck/c1
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl><span class=nv>CHECKPUT_C1</span><span class=o>=</span><span class=sb>`</span>curl -s http://<span class=si>${</span><span class=nv>CLUSTER_1_IP</span><span class=si>}</span>:8098/riak/replCheck/c1<span class=sb>`</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl><span class=k>if</span> <span class=o>[</span> <span class=s2>&#34;</span><span class=si>${</span><span class=nv>VALUE</span><span class=si>}</span><span class=s2>&#34;</span> <span class=o>=</span> <span class=s2>&#34;</span><span class=si>${</span><span class=nv>CHECKPUT_C1</span><span class=si>}</span><span class=s2>&#34;</span> <span class=o>]</span><span class=p>;</span> <span class=k>then</span>
+</span></span><span class=line><span class=cl>  <span class=nb>echo</span> <span class=s2>&#34;C1 PUT Successful&#34;</span>
+</span></span><span class=line><span class=cl><span class=k>else</span>
+</span></span><span class=line><span class=cl>  <span class=nb>echo</span> <span class=s2>&#34;C1 PUT Failed&#34;</span>
+</span></span><span class=line><span class=cl>  <span class=nb>exit</span> <span class=m>1</span>
+</span></span><span class=line><span class=cl><span class=k>fi</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl><span class=nv>CHECKREPL_C1_TO_C2</span><span class=o>=</span><span class=sb>`</span>curl -s http://<span class=si>${</span><span class=nv>CLUSTER_2_IP</span><span class=si>}</span>:8098/riak/replCheck/c1<span class=sb>`</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl><span class=k>if</span> <span class=o>[</span> <span class=s2>&#34;</span><span class=si>${</span><span class=nv>VALUE</span><span class=si>}</span><span class=s2>&#34;</span> <span class=o>=</span> <span class=s2>&#34;</span><span class=si>${</span><span class=nv>CHECKREPL_C1_TO_C2</span><span class=si>}</span><span class=s2>&#34;</span> <span class=o>]</span><span class=p>;</span> <span class=k>then</span>
+</span></span><span class=line><span class=cl>  <span class=nb>echo</span> <span class=s2>&#34;C1 to C2 consistent&#34;</span>
+</span></span><span class=line><span class=cl><span class=k>else</span>
+</span></span><span class=line><span class=cl>  <span class=nb>echo</span> <span class=s2>&#34;C1 to C2 inconsistent
+</span></span></span><span class=line><span class=cl><span class=s2>        C1:</span><span class=si>${</span><span class=nv>CHECKPUT_C1</span><span class=si>}</span><span class=s2>
+</span></span></span><span class=line><span class=cl><span class=s2>        C2:</span><span class=si>${</span><span class=nv>CHECKREPL_C1_TO_C2</span><span class=si>}</span><span class=s2>&#34;</span>
+</span></span><span class=line><span class=cl>  <span class=nb>exit</span> <span class=m>1</span>
+</span></span><span class=line><span class=cl><span class=k>fi</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl><span class=nb>exit</span> <span class=m>0</span>
+</span></span></code></pre></div><p>You will have to change some of the above variables for your own
+environment, such as IP addresses or ports.</p><p>If you run this script and things are working as expected, you will get
+the following output:</p><pre tabindex=0><code>C1 PUT Successful
+C1 to C2 consistent
+</code></pre><h4 id=set-up-cluster2--cluster1-replication>Set Up Cluster2 → Cluster1 Replication</h4><h5 id=about-bidirectional-replication>About Bidirectional Replication</h5><p>Multi-Datacenter support can also be configured to replicate in both
+directions, ensuring eventual consistency between your two datacenters.
+Setting up bidirectional replication is as simple as repeating the steps
+above in the other direction, i.e. from Cluster2 to Cluster1.</p><h5 id=set-up-the-listeners-on-cluster2-source-cluster>Set Up the Listeners on Cluster2 (Source cluster)</h5><p>On a node in Cluster2, <code>node4</code> for example, identify the nodes that will
+be listening to connections from replication clients with <code>riak repl
+add-listener &lt;nodename> &lt;listen_ip> &lt;port></code> for each node that will be
+listening for replication clients.</p><div class=highlight><pre tabindex=0 class=chroma><code class=language-bash data-lang=bash><span class=line><span class=cl>riak repl add-listener riak@192.168.1.21 192.168.1.21 <span class=m>9010</span>
+</span></span><span class=line><span class=cl>riak repl add-listener riak@192.168.1.22 192.168.1.22 <span class=m>9010</span>
+</span></span><span class=line><span class=cl>riak repl add-listener riak@192.168.1.23 192.168.1.23 <span class=m>9010</span>
+</span></span></code></pre></div><h5 id=set-up-the-site-on-cluster1-site-cluster>Set Up the Site on Cluster1 (Site cluster)</h5><p>On a node in Cluster1, <code>node1</code> for example, inform the replication
+clients where the Source Listeners are with <code>riak repl add-site &lt;ipaddr>
+&lt;port> &lt;sitename></code>. Use the IP address(es) and port(s) you configured in
+the earlier step. For <code>sitename</code> enter <strong>Cluster2</strong>.</p><div class=highlight><pre tabindex=0 class=chroma><code class=language-bash data-lang=bash><span class=line><span class=cl>riak repl add-site 192.168.1.21 <span class=m>9010</span> Cluster2
+</span></span></code></pre></div><p>Verify the replication configuration using <code>riak repl status</code> on a
+Cluster1 node and a Cluster2 node. A full description of the <code>riak repl
+status</code> command&rsquo;s output can be found in the documentation for
+<code>riak repl</code>&rsquo;s [status output][cluster ops v2 mdc#status].</p><p>On the Cluster1 node, verify that <code>Cluster2_ips</code>, <code>leader</code>, and
+<code>client_stats</code> are populated. They should look similar to the following:</p><pre tabindex=0><code>Cluster2_ips: &#34;192.168.1.21:9010, 192.168.1.22:9010, 192.168.1.23:9010&#34;
+leader: &#39;riak@172.16.1.11&#39;
+client_stats: [{&lt;8051.3902.0&gt;,
+               {message_queue_len,0},
+               {status,[{site,&#34;Cluster2&#34;},
+                        {strategy,riak_repl_keylist_client},
+                        {fullsync_worker,&lt;8051.3909.0&gt;},
+                        {put_pool_size,5},
+                        {connected,&#34;192.168.1.21&#34;,9010},
+                        {state,wait_for_fullsync}]}}]
+</code></pre><p>On the Cluster2 node, verify that there are listener entries for each
+listening node, and that <code>leader</code> and <code>server_stats</code> are populated. They
+should look similar to the following:</p><pre tabindex=0><code>listener_riak@192.168.1.21: &#34;192.168.1.21:9010&#34;
+listener_riak@192.168.1.22: &#34;192.168.1.22:9010&#34;
+listener_riak@192.168.1.23: &#34;192.168.1.23:9010&#34;
+leader: &#39;riak@192.168.1.21&#39;
+server_stats: [{&lt;8051.3939.0&gt;,
+               {message_queue_len,0},
+               {status,[{site,&#34;Cluster1&#34;},
+                        {strategy,riak_repl_keylist_server},
+                        {fullsync_worker,&lt;8051.3940.0&gt;},
+                        {dropped_count,0},
+                        {queue_length,0},
+                        {queue_byte_size,0},
+                        {state,wait_for_partition}]}}]
+</code></pre><p>You can use the following script to perform <code>PUT</code>s and <code>GET</code>s on both
+sides of the replication and verify that those changes are replicated to
+the other side.</p><div class=highlight><pre tabindex=0 class=chroma><code class=language-bash data-lang=bash><span class=line><span class=cl><span class=cp>#!/bin/bash
+</span></span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl>curl -s -X PUT -d <span class=s2>&#34;</span><span class=si>${</span><span class=nv>VALUE</span><span class=si>}</span><span class=s2>&#34;</span> http://<span class=si>${</span><span class=nv>CLUSTER_2_IP</span><span class=si>}</span>:8098/riak/replCheck/c2
+</span></span><span class=line><span class=cl><span class=nv>CHECKPUT_C2</span><span class=o>=</span><span class=sb>`</span>curl -s http://<span class=si>${</span><span class=nv>CLUSTER_2_IP</span><span class=si>}</span>:8098/riak/replCheck/c2<span class=sb>`</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl><span class=k>if</span> <span class=o>[</span> <span class=s2>&#34;</span><span class=si>${</span><span class=nv>VALUE</span><span class=si>}</span><span class=s2>&#34;</span> <span class=o>=</span> <span class=s2>&#34;</span><span class=si>${</span><span class=nv>CHECKPUT_C2</span><span class=si>}</span><span class=s2>&#34;</span> <span class=o>]</span><span class=p>;</span> <span class=k>then</span>
+</span></span><span class=line><span class=cl>  <span class=nb>echo</span> <span class=s2>&#34;C2 PUT Successful&#34;</span>
+</span></span><span class=line><span class=cl><span class=k>else</span>
+</span></span><span class=line><span class=cl>  <span class=nb>echo</span> <span class=s2>&#34;C2 PUT Failed&#34;</span>
+</span></span><span class=line><span class=cl>  <span class=nb>exit</span> <span class=m>1</span>
+</span></span><span class=line><span class=cl><span class=k>fi</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl><span class=nv>CHECKREPL_C1_TO_C2</span><span class=o>=</span><span class=sb>`</span>curl -s http://<span class=si>${</span><span class=nv>CLUSTER_2_IP</span><span class=si>}</span>:8098/riak/replCheck/c1<span class=sb>`</span>
+</span></span><span class=line><span class=cl><span class=nv>CHECKREPL_C2_TO_C1</span><span class=o>=</span><span class=sb>`</span>curl -s http://<span class=si>${</span><span class=nv>CLUSTER_1_IP</span><span class=si>}</span>:8098/riak/replCheck/c2<span class=sb>`</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl><span class=k>if</span> <span class=o>[</span> <span class=s2>&#34;</span><span class=si>${</span><span class=nv>VALUE</span><span class=si>}</span><span class=s2>&#34;</span> <span class=o>=</span> <span class=s2>&#34;</span><span class=si>${</span><span class=nv>CHECKREPL_C2_TO_C1</span><span class=si>}</span><span class=s2>&#34;</span> <span class=o>]</span><span class=p>;</span> <span class=k>then</span>
+</span></span><span class=line><span class=cl>  <span class=nb>echo</span> <span class=s2>&#34;C2 to C1 consistent&#34;</span>
+</span></span><span class=line><span class=cl><span class=k>else</span>
+</span></span><span class=line><span class=cl>  <span class=nb>echo</span> <span class=s2>&#34;C2 to C1 inconsistent
+</span></span></span><span class=line><span class=cl><span class=s2>      C2:</span><span class=si>${</span><span class=nv>CHECKPUT_C2</span><span class=si>}</span><span class=s2>
+</span></span></span><span class=line><span class=cl><span class=s2>      C1:</span><span class=si>${</span><span class=nv>CHECKREPL_C2_TO_C1</span><span class=si>}</span><span class=s2>&#34;</span>
+</span></span><span class=line><span class=cl>  <span class=nb>exit</span> <span class=m>1</span>
+</span></span><span class=line><span class=cl><span class=k>fi</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl><span class=nb>exit</span> <span class=m>0</span>
+</span></span></code></pre></div><pre tabindex=0><code>C1 PUT Successful
+C2 PUT Successful
+C1 to C2 consistent
+C2 to C1 consistent
+</code></pre><h4 id=fullsync>Fullsync</h4><p>During realtime replication, operations coordinated by the Source
+cluster will be replicated to the Site cluster. Riak Objects are placed
+in a queue on the Source cluster and streamed to the Site cluster. When
+the queue is full due to high traffic or a bulk loading operation, some
+objects will be dropped from replication. These dropped objects can be
+sent to the Site cluster by running a fullsync operation. The settings
+for the realtime replication queue and their explanations are available
+in the [configuration][config v2 mdc] documentation.</p><h5 id=initiating-a-fullsync>Initiating a fullsync</h5><p>To start a fullsync operation, issue the following command on your
+leader node:</p><div class=highlight><pre tabindex=0 class=chroma><code class=language-bash data-lang=bash><span class=line><span class=cl>riak repl start-fullsync
+</span></span></code></pre></div><p>A fullsync operation may also be cancelled. If a partition is in
+progress, synchronization will stop after that partition completes.
+During cancellation, <code>riak repl status</code> will show &lsquo;cancelled&rsquo; in the
+status.</p><div class=highlight><pre tabindex=0 class=chroma><code class=language-bash data-lang=bash><span class=line><span class=cl>riak repl cancel-fullsync
+</span></span></code></pre></div><p>Fullsync operations may also be paused, resumed, or scheduled for
+certain times using cron jobs. A complete list of fullsync commands is
+available in the [MDC Operations][cluster ops v2 mdc] documentation.</p><h3 id=quickstart-1>Quickstart</h3><p>This guide will walk you through the process of configuring OpenRiak&rsquo;s v3
+Replication to perform replication between two sample Riak clusters on
+separate networks. This guide will also cover bidirectional replication,
+which is accomplished by setting up unidirectional replication in both
+directions between the clusters. It is important to note that both
+clusters must have the same ring size, but can have a different number
+of nodes.</p><h4 id=prerequisites-1>Prerequisites</h4><ul><li>Install [Riak][install index]</li><li>Perform <a href=/docs/kv/3.4.1/how-to/tune/>System Tuning</a></li><li>Review <a href=/docs/kv/3.4.1/how-to/configure/replication/configure-v3-multi-datacenter/>Configuration</a></li></ul><h4 id=about-v3-replication-in-13-and-higher>About v3 Replication in 1.3 and higher</h4><p>In OpenRiak&rsquo;s v3 Replication from OpenRiak KV version 1.3 onwards, the nomenclature for Source and Site
+clusters has changed. To more accurately reflect the behavior of each of
+the clusters, &ldquo;listeners&rdquo; and &ldquo;sites&rdquo; are now known as &ldquo;sources&rdquo; and
+&ldquo;sinks.&rdquo; Data transfer now originates at the &ldquo;source&rdquo; and replicates to
+the &ldquo;sink;&rdquo; initiation is always from the primary (source) to the backup
+(sink) data center.</p><p>Additionally, knowledge of the state of each cluster is now managed by a
+<strong>cluster manager</strong> process, which greatly simplifies the setup and
+maintenance of Multi-Datacenter replication.</p><h4 id=scenario-1>Scenario</h4><p>Configure Riak MDC to perform replication, given the following two
+Riak Clusters, each of which consists of three nodes:</p><h5 id=cluster-1-1>Cluster 1</h5><table><thead><tr><th style=text-align:left>Name</th><th style=text-align:left>IP</th><th>Node name</th></tr></thead><tbody><tr><td style=text-align:left><code>node1</code></td><td style=text-align:left><code>10.60.67.149</code></td><td><code>riak@10.60.67.149</code></td></tr><tr><td style=text-align:left><code>node2</code></td><td style=text-align:left><code>10.60.83.39</code></td><td><code>riak@10.60.83.39</code></td></tr><tr><td style=text-align:left><code>node3</code></td><td style=text-align:left><code>10.60.90.252</code></td><td><code>riak@10.60.90.252</code></td></tr></tbody></table><h5 id=cluster-2-1>Cluster 2</h5><table><thead><tr><th style=text-align:left>Name</th><th style=text-align:left>IP</th><th style=text-align:left>Node name</th></tr></thead><tbody><tr><td style=text-align:left><code>node4</code></td><td style=text-align:left><code>10.60.77.10</code></td><td style=text-align:left><code>riak@10.60.77.10</code></td></tr><tr><td style=text-align:left><code>node5</code></td><td style=text-align:left><code>10.60.84.41</code></td><td style=text-align:left><code>riak@10.60.84.41</code></td></tr><tr><td style=text-align:left><code>node6</code></td><td style=text-align:left><code>10.60.92.44</code></td><td style=text-align:left><code>riak@10.60.92.44</code></td></tr></tbody></table><h5 id=set-up-cluster1--cluster2-connection>Set up Cluster1 → Cluster2 Connection</h5><h6 id=set-up-the-source-on-cluster1>Set up the Source on Cluster1</h6><p>On a node in Cluster1, <code>node1</code> for example, initiate and name this
+cluster with <code>riak repl clustername &lt;name></code>:</p><div class=highlight><pre tabindex=0 class=chroma><code class=language-bash data-lang=bash><span class=line><span class=cl>riak repl clustername Cluster1
+</span></span></code></pre></div><h6 id=setup-the-sink-on-cluster2>Setup the Sink on Cluster2</h6><p>On a node in Cluster2, <code>node4</code> for example, initiation and name this
+cluster with <code>riak repl clustername &lt;name></code>:</p><div class=highlight><pre tabindex=0 class=chroma><code class=language-bash data-lang=bash><span class=line><span class=cl>riak repl clustername Cluster2
+</span></span></code></pre></div><h6 id=connect-the-source-to-the-sink>Connect the Source to the Sink</h6><p>From Cluster1, connect to the IP and port of Cluster2 with <code>riak repl
+connect &lt;sink_ip>:&lt;port></code>:</p><div class=highlight><pre tabindex=0 class=chroma><code class=language-bash data-lang=bash><span class=line><span class=cl>riak repl connect 10.60.77.10:9080
+</span></span></code></pre></div><blockquote><p>The port can be found in the <code>riak_core</code> section of the <code>advanced.config</code>
+under <code>cluster_mgr</code>.</p></blockquote><h6 id=view-your-active-connections>View your active connections</h6><p>From Cluster1, view your active connections with <code>riak repl
+connections</code>:</p><pre tabindex=0><code>Sink             Cluster Name         &lt;Ctrl-Pid&gt;      [Members]
+----             ------------         ----------      ---------
+Cluster2          Cluster2            &lt;0.7985.0&gt;      [&#34;10.60.77.10:9080&#34;] (via 10.60.77.10:9080)
+</code></pre><h5 id=set-up-cluster2--cluster1-connection-if-bidirectional-replication-is-desired>Set up Cluster2 → Cluster1 Connection (if bidirectional replication is desired)</h5><p>From Cluster2, connect to the IP and port of Cluster1 with <code>riak repl
+connect &lt;sink_ip>:&lt;port></code>:</p><div class=highlight><pre tabindex=0 class=chroma><code class=language-bash data-lang=bash><span class=line><span class=cl>riak repl connect 10.60.67.149:9080
+</span></span></code></pre></div><p>From Cluster2, view your active connections with <code>riak repl
+connections</code>:</p><pre tabindex=0><code>Sink             Cluster Name         &lt;Ctrl-Pid&gt;      [Members]
+----             ------------         ----------      ---------
+Cluster1          Cluster1            &lt;0.4456.0&gt;      [&#34;10.60.67.149:9080&#34;] (via 10.60.67.149:9080)
+</code></pre><p><strong>Note on connections</strong>
+At this point, if you do not have connections, replication will not work.
+Check your IP bindings by running <code>netstat -a</code> on all nodes. You should see
+<code>*:9080 LISTENING</code>. If not, you have configuration problems.</p><h5 id=enable-realtime-replication>Enable Realtime Replication</h5><p>From Cluster1, run <code>riak repl realtime enable &lt;clustername></code> to start
+queuing updates on Cluster1 for replication:</p><div class=highlight><pre tabindex=0 class=chroma><code class=language-bash data-lang=bash><span class=line><span class=cl>riak repl realtime <span class=nb>enable</span> Cluster2
+</span></span></code></pre></div><p>Also on Cluster1, run <code>riak repl realtime start &lt;clustername></code> to
+establish connectivity from Cluster1 to Cluster2 to push queued updates:</p><div class=highlight><pre tabindex=0 class=chroma><code class=language-bash data-lang=bash><span class=line><span class=cl>riak repl realtime start Cluster2
+</span></span></code></pre></div><p>To enable bidirectional replication, do the reverse from Cluster2.
+Once this is done, bidirectional replication should be operating.</p><h4 id=more-information>More information</h4><p>For a full list of commands, you may enter <code>riak repl</code> to see full
+instructions on usage, or check the <a href=/docs/kv/3.4.1/reference/replication-api/runtime-controls/>Operations</a>
+documentation.</p><h2 id=what-you-will-learn>What you will learn</h2><p>By completing this tutorial, you will build the workflow described above and learn how to validate each stage before moving on.</p><h2 id=verify-the-result>Verify the result</h2><p>Repeat the completed workflow, inspect the stored or operational result, and confirm that the cluster remains healthy.</p><h2 id=next-steps>Next steps</h2><ul><li>Continue with the section index and choose the next task for your role.</li></ul></div></article></main></div><footer class=site-footer><div><p>OpenRiak documentation is licensed under <a href=https://creativecommons.org/licenses/by/4.0/>Creative Commons Attribution 4.0</a>.</p><p>Historical material © Basho Technologies, Inc.; community revisions © OpenRiak contributors.</p></div><a href=#main-content>Back to top</a></footer><script src=/docs/js/site.js defer></script></body></html>

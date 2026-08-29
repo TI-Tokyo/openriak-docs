@@ -1,0 +1,462 @@
+<!doctype html><html lang=en class=no-js><head><script src="/docs/livereload.js?mindelay=10&amp;v=2&amp;port=1320&amp;path=docs/livereload" data-no-instant defer></script><meta charset=utf-8><meta name=viewport content="width=device-width,initial-scale=1"><meta name=color-scheme content="light dark"><script>(()=>{const t="openriak-docs-theme";let e="system";try{const n=localStorage.getItem(t);(n==="light"||n==="dark"||n==="system")&&(e=n)}catch{}const n=window.matchMedia?.("(prefers-color-scheme: dark)").matches??!1;document.documentElement.dataset.themePreference=e,document.documentElement.dataset.theme=e==="system"?n?"dark":"light":e})()</script><meta name=description content="Guide a developer through modeling, storing, retrieving, querying, and updating a small dataset with PHP."><title>Build a first OpenRiak application with PHP | OpenRiak Documentation</title><link rel=canonical href=http://127.0.0.1:1320/docs/kv/3.4.0/tutorials/first-application/build-a-first-openriak-application-with-php/><link rel=icon href=/docs/images/branding/favicon.ico sizes=any><link rel=stylesheet href=/docs/css/site.css><link rel=stylesheet href=/docs/css/theme.css><script src=/docs/js/theme.js defer></script><meta property="og:type" content="website"><meta property="og:title" content="Build a first OpenRiak application with PHP"><meta property="og:description" content="Guide a developer through modeling, storing, retrieving, querying, and updating a small dataset with PHP."><meta property="og:url" content="http://127.0.0.1:1320/docs/kv/3.4.0/tutorials/first-application/build-a-first-openriak-application-with-php/"></head><body data-kind=page data-section=kv><script>document.documentElement.classList.remove("no-js")</script><a class=skip-link href=#main-content>Skip to content</a><header class=site-header><div class=site-header__inner><button class=nav-toggle type=button aria-controls=docs-sidebar aria-expanded=false>
+<span aria-hidden=true>☰</span><span class=sr-only>Toggle documentation navigation</span>
+</button>
+<a class=brand href=/docs/ aria-label="OpenRiak documentation home"><img src=/docs/images/branding/riak-logo-inverted.png alt width=34 height=34>
+<span>OpenRiak <strong>Docs</strong></span></a><nav class=primary-nav aria-label="Documentation types"><a href=/docs/kv/3.4.1/tutorials/>Tutorials</a>
+<a href=/docs/kv/3.4.1/how-to/>How-to</a>
+<a href=/docs/kv/3.4.1/reference/>Reference</a>
+<a href=/docs/kv/3.4.1/explanation/>Explanation</a></nav><a class=community-link href=https://github.com/orgs/OpenRiak/discussions>Community</a>
+<label class=theme-control><span class=theme-control__icon aria-hidden=true>◐</span>
+<span class=sr-only>Color theme</span>
+<select data-theme-select aria-label="Color theme"><option value=system>System</option><option value=light>Light</option><option value=dark>Dark</option></select></label></div></header><div class=site-shell><aside id=docs-sidebar class=sidebar aria-label="Documentation navigation"><div class=sidebar__tools><label for=version-select>Version</label>
+<select id=version-select data-version-select><option value=/docs/kv/3.4.1/>3.4.1 (latest)</option><option value=/docs/kv/3.4.0/ selected>3.4.0</option></select><form class=docs-search role=search data-search data-index-url=/docs/search-index.json data-version=3.4.0><label class=sr-only for=docs-search-input>Search this version</label>
+<input id=docs-search-input type=search placeholder="Search this version" autocomplete=off data-search-input><div class=search-results data-search-results hidden></div></form></div><nav class=sidebar__nav aria-label="Pages in this version"><a class=sidebar__root href=/docs/kv/3.4.0/>OpenRiak KV 3.4.0</a><ul class=nav-tree><li><details><summary><a href=/docs/kv/3.4.0/explanation/>Explanation</a></summary></details></li><li><details><summary><a href=/docs/kv/3.4.0/how-to/>How-to guides</a></summary></details></li><li><details><summary><a href=/docs/kv/3.4.0/reference/>Reference</a></summary></details></li><li><details open><summary><a href=/docs/kv/3.4.0/tutorials/>Tutorials</a></summary><ul class=nav-tree><li><details open><summary><a href=/docs/kv/3.4.0/tutorials/first-application/>Build a first OpenRiak application</a></summary><ul class=nav-tree><li><a href=/docs/kv/3.4.0/tutorials/first-application/build-a-first-openriak-application-with-c/>Build a first OpenRiak application with C#</a></li><li><a href=/docs/kv/3.4.0/tutorials/first-application/build-a-first-openriak-application-with-erlang/>Build a first OpenRiak application with Erlang</a></li><li><a href=/docs/kv/3.4.0/tutorials/first-application/build-a-first-openriak-application-with-go/>Build a first OpenRiak application with Go</a></li><li><a href=/docs/kv/3.4.0/tutorials/first-application/build-a-first-openriak-application-with-java/>Build a first OpenRiak application with Java</a></li><li><a href=/docs/kv/3.4.0/tutorials/first-application/build-a-first-openriak-application-with-node.js/>Build a first OpenRiak application with Node.js</a></li><li><a class=is-current href=/docs/kv/3.4.0/tutorials/first-application/build-a-first-openriak-application-with-php/ aria-current=page>Build a first OpenRiak application with PHP</a></li><li><a href=/docs/kv/3.4.0/tutorials/first-application/build-a-first-openriak-application-with-python/>Build a first OpenRiak application with Python</a></li><li><a href=/docs/kv/3.4.0/tutorials/first-application/build-a-first-openriak-application-with-ruby/>Build a first OpenRiak application with Ruby</a></li><li><a href=/docs/kv/3.4.0/tutorials/first-application/build-a-first-openriak-application-with-rust/>Build a first OpenRiak application with Rust</a></li></ul></details></li><li><details><summary><a href=/docs/kv/3.4.0/tutorials/operations/>Learn cluster operations</a></summary></details></li><li><details><summary><a href=/docs/kv/3.4.0/tutorials/replication/>Learn multi-cluster replication</a></summary></details></li><li><details><summary><a href=/docs/kv/3.4.0/tutorials/security/>Learn OpenRiak security</a></summary></details></li><li><details><summary><a href=/docs/kv/3.4.0/tutorials/first-cluster/>Learn OpenRiak with a first cluster</a></summary></details></li><li><details><summary><a href=/docs/kv/3.4.0/tutorials/query-api/>Learn the Query API</a></summary></details></li></ul></details></li></ul></nav><div class=sidebar__help><a href=https://github.com/orgs/OpenRiak/discussions>Ask the OpenRiak community</a>
+<a href=https://github.com/OpenRiak/riak>OpenRiak source code</a></div></aside><button class=sidebar-scrim type=button data-sidebar-close aria-label="Close navigation"></button><main id=main-content class=content tabindex=-1><article class=doc><nav class=breadcrumbs aria-label=Breadcrumb><ol><li><a href=/docs/kv/>OpenRiak KV documentation</a></li><li><a href=/docs/kv/3.4.0/>OpenRiak KV 3.4.0</a></li><li><a href=/docs/kv/3.4.0/tutorials/>Tutorials</a></li><li><a href=/docs/kv/3.4.0/tutorials/first-application/>Build a first OpenRiak application</a></li><li aria-current=page>Build a first OpenRiak application with PHP</li></ol></nav><header class=article-header><div class=badges><span class="badge badge--tutorial">tutorial</span>
+<span class=badge>KV 3.4.0</span></div><h1>Build a first OpenRiak application with PHP</h1><p class=lede>Guide a developer through modeling, storing, retrieving, querying, and updating a small dataset with PHP.</p><div class=review-notice role=note><strong>Review status:</strong>
+This migrated page is still marked as a draft.
+Technical review is required before publication.</div></header><details class=on-this-page><summary>On this page</summary><nav id=TableOfContents><ul><li><a href=#overview>Overview</a><ul><li><a href=#getting-started-with-php>Getting Started with PHP</a></li><li><a href=#crud-operations-with-php>CRUD Operations with PHP</a></li><li><a href=#querying-with-php>Querying with PHP</a></li></ul></li><li><a href=#what-you-will-learn>What you will learn</a></li><li><a href=#before-you-begin>Before you begin</a></li><li><a href=#verify-the-result>Verify the result</a></li></ul></nav></details><div class=doc-body><p>Guide a developer through modeling, storing, retrieving, querying, and updating a small dataset with PHP.</p><h2 id=overview>Overview</h2><h3 id=getting-started-with-php>Getting Started with PHP</h3><p>If you haven&rsquo;t set up an OpenRiak node and started it, please visit <a href=/docs/kv/3.4.0/how-to/operate/>Running A Cluster</a>
+first.</p><p>To try this flavor of Riak, a working installation of PHP is required, and <a href=https://getcomposer.org/ rel=noopener>Composer</a>
+is required to be installed to fetch the client library package.</p><h4 id=client-setup>Client Setup</h4><p>Download and unzip, or clone the Taste of Riak Sample Code Repository from GitHub (<a href=https://github.com/basho/taste-of-riak/archive/master.zip rel=noopener>zip</a>
+, <a href=https://github.com/basho/taste-of-riak rel=noopener>github repository</a>
+).</p><p>From the <code>taste-of-riak</code> directory, use composer to install the Riak PHP 2.0 Client`.</p><div class=highlight><pre tabindex=0 class=chroma><code class=language-bash data-lang=bash><span class=line><span class=cl>php path/to/your/composer.phar install
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl><span class=c1>#### If you did a global install of composer, run this instead:</span>
+</span></span><span class=line><span class=cl>composer install
+</span></span></code></pre></div><p>If you set up a local OpenRiak cluster using the [[five minute install]] method, change line 11 from <code>->onPort(8098)</code> to <code>->onPort(10018)</code>.</p><p>Next, run <code>php Ch01-CRUD/taste-of-riak.php</code> to run this chapter&rsquo;s example code. It should output:</p><div class=highlight><pre tabindex=0 class=chroma><code class=language-json data-lang=json><span class=line><span class=cl><span class=err>Reading</span> <span class=err>Objects</span> <span class=err>From</span> <span class=err>Riak...</span>
+</span></span><span class=line><span class=cl><span class=err>Updating</span> <span class=err>Objects</span> <span class=err>In</span> <span class=err>Riak...</span>
+</span></span><span class=line><span class=cl><span class=err>Deleting</span> <span class=err>Objects</span> <span class=err>From</span> <span class=err>Riak...</span>
+</span></span><span class=line><span class=cl><span class=err>Working</span> <span class=err>With</span> <span class=err>Complex</span> <span class=err>Objects...</span>
+</span></span><span class=line><span class=cl><span class=err>Serialized</span> <span class=err>Object:</span>
+</span></span><span class=line><span class=cl><span class=p>{</span><span class=nt>&#34;title&#34;</span><span class=p>:</span><span class=s2>&#34;Moby Dick&#34;</span><span class=p>,</span><span class=nt>&#34;author&#34;</span><span class=p>:</span><span class=s2>&#34;Herman Melville&#34;</span><span class=p>,</span><span class=nt>&#34;body&#34;</span><span class=p>:</span><span class=s2>&#34;Call me Ishmael. Some years ago...&#34;</span><span class=p>,</span><span class=nt>&#34;isbn&#34;</span><span class=p>:</span><span class=s2>&#34;1111979723&#34;</span><span class=p>,</span><span class=nt>&#34;copiesOwned&#34;</span><span class=p>:</span><span class=mi>3</span><span class=p>}</span>
+</span></span></code></pre></div><p>Yay, success!</p><p>Since we didn&rsquo;t use PHP&rsquo;s REPL environment, let&rsquo;s walk through the code
+to see what it actually did at each step.</p><h5 id=setting-up-the-php-client-and-connections>Setting up the PHP Client and connections</h5><div class=highlight><pre tabindex=0 class=chroma><code class=language-php data-lang=php><span class=line><span class=cl><span class=k>include_once</span> <span class=s1>&#39;vendor/autoload.php&#39;</span><span class=p>;</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl><span class=k>use</span> <span class=nx>Basho\Riak</span><span class=p>;</span>
+</span></span><span class=line><span class=cl><span class=k>use</span> <span class=nx>Basho\Riak\Node</span><span class=p>;</span>
+</span></span><span class=line><span class=cl><span class=k>use</span> <span class=nx>Basho\Riak\Command</span><span class=p>;</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl><span class=nv>$node</span> <span class=o>=</span> <span class=p>(</span><span class=k>new</span> <span class=nx>Node\Builder</span><span class=p>)</span>
+</span></span><span class=line><span class=cl>        <span class=o>-&gt;</span><span class=na>atHost</span><span class=p>(</span><span class=s1>&#39;127.0.0.1&#39;</span><span class=p>)</span>
+</span></span><span class=line><span class=cl>        <span class=o>-&gt;</span><span class=na>onPort</span><span class=p>(</span><span class=mi>8098</span><span class=p>)</span>
+</span></span><span class=line><span class=cl>        <span class=o>-&gt;</span><span class=na>build</span><span class=p>();</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl><span class=nv>$riak</span> <span class=o>=</span> <span class=k>new</span> <span class=nx>Riak</span><span class=p>([</span><span class=nv>$node</span><span class=p>]);</span>
+</span></span></code></pre></div><p>This code will load the library, declare the necessary <code>use</code> statements for our code, and then initialize and configure a <a href=http://basho.github.io/riak-php-client/class-Basho.Riak.Node.Builder.html rel=noopener>Node Builder</a>
+.
+Once we call <code>build()</code> on the builder, it will return to us a <a href=http://basho.github.io/riak-php-client/class-Basho.Riak.Node.html rel=noopener>Node</a>
+object, which we use when building our Riak commands.</p><p>We are now ready to start interacting with Riak.</p><h5 id=next-steps>Next Steps</h5><p><a href=/docs/kv/3.4.0/tutorials/first-application/php/>CRUD Operations</a></p><h3 id=crud-operations-with-php>CRUD Operations with PHP</h3><h4 id=creating-objects-in-riak>Creating Objects In Riak</h4><p>First, let’s create a few objects and a bucket to keep them in.</p><div class=highlight><pre tabindex=0 class=chroma><code class=language-php data-lang=php><span class=line><span class=cl><span class=nv>$bucket</span> <span class=o>=</span> <span class=k>new</span> <span class=nx>Riak\Bucket</span><span class=p>(</span><span class=s1>&#39;testBucket&#39;</span><span class=p>);</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl><span class=nv>$val1</span> <span class=o>=</span> <span class=mi>1</span><span class=p>;</span>
+</span></span><span class=line><span class=cl><span class=nv>$location1</span> <span class=o>=</span> <span class=k>new</span> <span class=nx>Riak\Location</span><span class=p>(</span><span class=s1>&#39;one&#39;</span><span class=p>,</span> <span class=nv>$bucket</span><span class=p>);</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl><span class=nv>$storeCommand1</span> <span class=o>=</span> <span class=p>(</span><span class=k>new</span> <span class=nx>Command\Builder\StoreObject</span><span class=p>(</span><span class=nv>$riak</span><span class=p>))</span>
+</span></span><span class=line><span class=cl>                    <span class=o>-&gt;</span><span class=na>buildObject</span><span class=p>(</span><span class=nv>$val1</span><span class=p>)</span>
+</span></span><span class=line><span class=cl>                    <span class=o>-&gt;</span><span class=na>atLocation</span><span class=p>(</span><span class=nv>$location1</span><span class=p>)</span>
+</span></span><span class=line><span class=cl>                    <span class=o>-&gt;</span><span class=na>build</span><span class=p>();</span>
+</span></span><span class=line><span class=cl><span class=nv>$storeCommand1</span><span class=o>-&gt;</span><span class=na>execute</span><span class=p>();</span>
+</span></span></code></pre></div><p>In this first example we have stored the integer 1 with the lookup key of ‘one’. Next let’s store a simple string value of “two” with a matching key.</p><div class=highlight><pre tabindex=0 class=chroma><code class=language-php data-lang=php><span class=line><span class=cl><span class=nv>$val2</span> <span class=o>=</span> <span class=s1>&#39;two&#39;</span><span class=p>;</span>
+</span></span><span class=line><span class=cl><span class=nv>$location2</span> <span class=o>=</span> <span class=k>new</span> <span class=nx>Riak\Location</span><span class=p>(</span><span class=s1>&#39;two&#39;</span><span class=p>,</span> <span class=nv>$bucket</span><span class=p>);</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl><span class=nv>$storeCommand2</span> <span class=o>=</span> <span class=p>(</span><span class=k>new</span> <span class=nx>Command\Builder\StoreObject</span><span class=p>(</span><span class=nv>$riak</span><span class=p>))</span>
+</span></span><span class=line><span class=cl>                    <span class=o>-&gt;</span><span class=na>buildObject</span><span class=p>(</span><span class=nv>$val2</span><span class=p>)</span>
+</span></span><span class=line><span class=cl>                    <span class=o>-&gt;</span><span class=na>atLocation</span><span class=p>(</span><span class=nv>$location2</span><span class=p>)</span>
+</span></span><span class=line><span class=cl>                    <span class=o>-&gt;</span><span class=na>build</span><span class=p>();</span>
+</span></span><span class=line><span class=cl><span class=nv>$storeCommand2</span><span class=o>-&gt;</span><span class=na>execute</span><span class=p>();</span>
+</span></span></code></pre></div><p>That was easy. Finally, let’s store an associative array. You will probably recognize the pattern by now.</p><div class=highlight><pre tabindex=0 class=chroma><code class=language-php data-lang=php><span class=line><span class=cl><span class=nv>$val3</span> <span class=o>=</span> <span class=p>[</span><span class=s1>&#39;myValue&#39;</span> <span class=o>=&gt;</span> <span class=mi>3</span><span class=p>];</span>
+</span></span><span class=line><span class=cl><span class=nv>$location3</span> <span class=o>=</span> <span class=k>new</span> <span class=nx>Riak\Location</span><span class=p>(</span><span class=s1>&#39;three&#39;</span><span class=p>,</span> <span class=nv>$bucket</span><span class=p>);</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl><span class=nv>$storeCommand3</span> <span class=o>=</span> <span class=p>(</span><span class=k>new</span> <span class=nx>Command\Builder\StoreObject</span><span class=p>(</span><span class=nv>$riak</span><span class=p>))</span>
+</span></span><span class=line><span class=cl>                    <span class=o>-&gt;</span><span class=na>buildJsonObject</span><span class=p>(</span><span class=nv>$val3</span><span class=p>)</span>
+</span></span><span class=line><span class=cl>                    <span class=o>-&gt;</span><span class=na>atLocation</span><span class=p>(</span><span class=nv>$location3</span><span class=p>)</span>
+</span></span><span class=line><span class=cl>                    <span class=o>-&gt;</span><span class=na>build</span><span class=p>();</span>
+</span></span><span class=line><span class=cl><span class=nv>$storeCommand3</span><span class=o>-&gt;</span><span class=na>execute</span><span class=p>();</span>
+</span></span></code></pre></div><h4 id=reading-objects-from-riak>Reading Objects From Riak</h4><p>Now that we have a few objects stored, let’s retrieve them and make sure they contain the values we expect.</p><div class=highlight><pre tabindex=0 class=chroma><code class=language-php data-lang=php><span class=line><span class=cl><span class=nv>$response1</span> <span class=o>=</span> <span class=p>(</span><span class=k>new</span> <span class=nx>Command\Builder\FetchObject</span><span class=p>(</span><span class=nv>$riak</span><span class=p>))</span>
+</span></span><span class=line><span class=cl>                <span class=o>-&gt;</span><span class=na>atLocation</span><span class=p>(</span><span class=nv>$location1</span><span class=p>)</span>
+</span></span><span class=line><span class=cl>                <span class=o>-&gt;</span><span class=na>build</span><span class=p>()</span>
+</span></span><span class=line><span class=cl>                <span class=o>-&gt;</span><span class=na>execute</span><span class=p>();</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl><span class=nv>$response2</span> <span class=o>=</span> <span class=p>(</span><span class=k>new</span> <span class=nx>Command\Builder\FetchObject</span><span class=p>(</span><span class=nv>$riak</span><span class=p>))</span>
+</span></span><span class=line><span class=cl>                <span class=o>-&gt;</span><span class=na>atLocation</span><span class=p>(</span><span class=nv>$location2</span><span class=p>)</span>
+</span></span><span class=line><span class=cl>                <span class=o>-&gt;</span><span class=na>build</span><span class=p>()</span>
+</span></span><span class=line><span class=cl>                <span class=o>-&gt;</span><span class=na>execute</span><span class=p>();</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl><span class=nv>$response3</span> <span class=o>=</span> <span class=p>(</span><span class=k>new</span> <span class=nx>Command\Builder\FetchObject</span><span class=p>(</span><span class=nv>$riak</span><span class=p>))</span>
+</span></span><span class=line><span class=cl>                <span class=o>-&gt;</span><span class=na>atLocation</span><span class=p>(</span><span class=nv>$location3</span><span class=p>)</span>
+</span></span><span class=line><span class=cl>                <span class=o>-&gt;</span><span class=na>withDecodeAsAssociative</span><span class=p>()</span>
+</span></span><span class=line><span class=cl>                <span class=o>-&gt;</span><span class=na>build</span><span class=p>()</span>
+</span></span><span class=line><span class=cl>                <span class=o>-&gt;</span><span class=na>execute</span><span class=p>();</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl><span class=nx>print_r</span><span class=p>(</span><span class=nv>$response1</span><span class=o>-&gt;</span><span class=na>getObject</span><span class=p>()</span><span class=o>-&gt;</span><span class=na>getData</span><span class=p>());</span>
+</span></span><span class=line><span class=cl><span class=nx>print_r</span><span class=p>(</span><span class=nv>$response2</span><span class=o>-&gt;</span><span class=na>getObject</span><span class=p>()</span><span class=o>-&gt;</span><span class=na>getData</span><span class=p>());</span>
+</span></span><span class=line><span class=cl><span class=nx>print_r</span><span class=p>(</span><span class=nv>$response3</span><span class=o>-&gt;</span><span class=na>getObject</span><span class=p>()</span><span class=o>-&gt;</span><span class=na>getData</span><span class=p>());</span>
+</span></span></code></pre></div><p>That was easy. We create a <a href=http://basho.github.io/riak-php-client/class-Basho.Riak.Command.Object.Fetch.html rel=noopener>Fetch Command</a>
+from a <a href=http://basho.github.io/riak-php-client/class-Basho.Riak.Command.Builder.FetchObject.html rel=noopener>FetchObject Builder</a>
+.
+For our object that is an associative array, we also add <a href=http://basho.github.io/riak-php-client/class-Basho.Riak.Command.Builder.FetchObject.html#_withDecodeAsAssociative rel=noopener><code>withDecodeAsAssociative()</code></a>
+to the builder so it returns the object as an associative array instead of an stdClass object.</p><p>In either case, we&rsquo;ll get a <a href=http://basho.github.io/riak-php-client/class-Basho.Riak.Command.Object.Response.html rel=noopener>Response</a>
+object back, which holds information about the operation, and the result data.</p><h4 id=updating-objects-in-riak>Updating Objects In Riak</h4><p>While some data may be static, other forms of data may need to be updated. This is also easy to accomplish. Let’s update the value of myValue in the 3rd example to 42.</p><div class=highlight><pre tabindex=0 class=chroma><code class=language-php data-lang=php><span class=line><span class=cl><span class=nv>$object3</span> <span class=o>=</span> <span class=nv>$response3</span><span class=o>-&gt;</span><span class=na>getObject</span><span class=p>();</span>
+</span></span><span class=line><span class=cl><span class=nv>$data3</span> <span class=o>=</span> <span class=nv>$object3</span><span class=o>-&gt;</span><span class=na>getData</span><span class=p>();</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl><span class=nv>$data3</span><span class=p>[</span><span class=s1>&#39;myValue&#39;</span><span class=p>]</span> <span class=o>=</span> <span class=mi>42</span><span class=p>;</span>
+</span></span><span class=line><span class=cl><span class=nv>$object3</span> <span class=o>=</span> <span class=nv>$object3</span><span class=o>-&gt;</span><span class=na>setData</span><span class=p>(</span><span class=nx>json_encode</span><span class=p>(</span><span class=nv>$data3</span><span class=p>));</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl><span class=nv>$updateCommand</span> <span class=o>=</span> <span class=p>(</span><span class=k>new</span> <span class=nx>Command\Builder\StoreObject</span><span class=p>(</span><span class=nv>$riak</span><span class=p>))</span>
+</span></span><span class=line><span class=cl>    <span class=o>-&gt;</span><span class=na>withObject</span><span class=p>(</span><span class=nv>$object3</span><span class=p>)</span>
+</span></span><span class=line><span class=cl>    <span class=o>-&gt;</span><span class=na>atLocation</span><span class=p>(</span><span class=nv>$location3</span><span class=p>)</span>
+</span></span><span class=line><span class=cl>    <span class=o>-&gt;</span><span class=na>build</span><span class=p>();</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl><span class=nv>$updateCommand</span><span class=o>-&gt;</span><span class=na>execute</span><span class=p>();</span>
+</span></span></code></pre></div><p>First we get the Riak <a href=http://basho.github.io/riak-php-client/class-Basho.Riak.Object.html rel=noopener>Object</a>
+from the <a href=http://basho.github.io/riak-php-client/class-Basho.Riak.Command.Object.Response.html rel=noopener>Response</a>
+, then we get the stored data with <a href=http://basho.github.io/riak-php-client/class-Basho.Riak.Object.html#_getData rel=noopener><code>getData()</code></a>
+. We update the data to our liking, then use <a href=http://basho.github.io/riak-php-client/class-Basho.Riak.Object.html#_setData rel=noopener><code>setData()</code></a>
+to set the new data back to the Riak Object.
+To store it we use the same pattern as before, but this time we use the <a href=http://basho.github.io/riak-php-client/class-Basho.Riak.Command.Builder.ObjectTrait.html#_withObject rel=noopener><code>withObject()</code></a>
+method to tell it to store our updated Riak Object.</p><h4 id=deleting-objects-from-riak>Deleting Objects From Riak</h4><p>As a last step, we’ll demonstrate how to delete data. We just build a <a href=http://basho.github.io/riak-php-client/class-Basho.Riak.Command.Object.Delete.html rel=noopener>Delete Command</a>
+from a <a href=http://basho.github.io/riak-php-client/class-Basho.Riak.Command.Builder.DeleteObject.html rel=noopener>DeleteObject Builder</a>
+, and execute it.</p><div class=highlight><pre tabindex=0 class=chroma><code class=language-php data-lang=php><span class=line><span class=cl><span class=p>(</span><span class=k>new</span> <span class=nx>Command\Builder\DeleteObject</span><span class=p>(</span><span class=nv>$riak</span><span class=p>))</span><span class=o>-&gt;</span><span class=na>atLocation</span><span class=p>(</span><span class=nv>$location1</span><span class=p>)</span><span class=o>-&gt;</span><span class=na>build</span><span class=p>()</span><span class=o>-&gt;</span><span class=na>execute</span><span class=p>();</span>
+</span></span><span class=line><span class=cl><span class=p>(</span><span class=k>new</span> <span class=nx>Command\Builder\DeleteObject</span><span class=p>(</span><span class=nv>$riak</span><span class=p>))</span><span class=o>-&gt;</span><span class=na>atLocation</span><span class=p>(</span><span class=nv>$location2</span><span class=p>)</span><span class=o>-&gt;</span><span class=na>build</span><span class=p>()</span><span class=o>-&gt;</span><span class=na>execute</span><span class=p>();</span>
+</span></span><span class=line><span class=cl><span class=p>(</span><span class=k>new</span> <span class=nx>Command\Builder\DeleteObject</span><span class=p>(</span><span class=nv>$riak</span><span class=p>))</span><span class=o>-&gt;</span><span class=na>atLocation</span><span class=p>(</span><span class=nv>$location3</span><span class=p>)</span><span class=o>-&gt;</span><span class=na>build</span><span class=p>()</span><span class=o>-&gt;</span><span class=na>execute</span><span class=p>();</span>
+</span></span></code></pre></div><h5 id=working-with-complex-objects>Working With Complex Objects</h5><p>Since the world is a little more complicated than simple integers and bits of strings, let’s see how we can work with more complex objects. Take for example, this plain old PHP object(POPO) that encapsulates some knowledge about a book.</p><div class=highlight><pre tabindex=0 class=chroma><code class=language-php data-lang=php><span class=line><span class=cl><span class=k>class</span> <span class=nc>Book</span>
+</span></span><span class=line><span class=cl><span class=p>{</span>
+</span></span><span class=line><span class=cl>    <span class=k>var</span> <span class=nv>$title</span><span class=p>;</span>
+</span></span><span class=line><span class=cl>    <span class=k>var</span> <span class=nv>$author</span><span class=p>;</span>
+</span></span><span class=line><span class=cl>    <span class=k>var</span> <span class=nv>$body</span><span class=p>;</span>
+</span></span><span class=line><span class=cl>    <span class=k>var</span> <span class=nv>$isbn</span><span class=p>;</span>
+</span></span><span class=line><span class=cl>    <span class=k>var</span> <span class=nv>$copiesOwned</span><span class=p>;</span>
+</span></span><span class=line><span class=cl><span class=p>}</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl><span class=nv>$book</span> <span class=o>=</span> <span class=k>new</span> <span class=nx>Book</span><span class=p>();</span>
+</span></span><span class=line><span class=cl><span class=nv>$book</span><span class=o>-&gt;</span><span class=na>isbn</span> <span class=o>=</span> <span class=s1>&#39;1111979723&#39;</span><span class=p>;</span>
+</span></span><span class=line><span class=cl><span class=nv>$book</span><span class=o>-&gt;</span><span class=na>title</span> <span class=o>=</span> <span class=s1>&#39;Moby Dick&#39;</span><span class=p>;</span>
+</span></span><span class=line><span class=cl><span class=nv>$book</span><span class=o>-&gt;</span><span class=na>author</span> <span class=o>=</span> <span class=s1>&#39;Herman Melville&#39;</span><span class=p>;</span>
+</span></span><span class=line><span class=cl><span class=nv>$book</span><span class=o>-&gt;</span><span class=na>body</span> <span class=o>=</span> <span class=s1>&#39;Call me Ishmael. Some years ago...&#39;</span><span class=p>;</span>
+</span></span><span class=line><span class=cl><span class=nv>$book</span><span class=o>-&gt;</span><span class=na>copiesOwned</span> <span class=o>=</span> <span class=mi>3</span><span class=p>;</span>
+</span></span></code></pre></div><p>Ok, so we have some information about our Moby Dick collection that we want to save. Storing this to Riak should look familiar by now:</p><div class=highlight><pre tabindex=0 class=chroma><code class=language-php data-lang=php><span class=line><span class=cl><span class=nv>$bookLocation</span> <span class=o>=</span> <span class=k>new</span> <span class=nx>Riak\Location</span><span class=p>(</span><span class=nv>$book</span><span class=o>-&gt;</span><span class=na>isbn</span><span class=p>,</span> <span class=k>new</span> <span class=nx>Riak\Bucket</span><span class=p>(</span><span class=s1>&#39;books&#39;</span><span class=p>));</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl><span class=nv>$storeCommand1</span> <span class=o>=</span> <span class=p>(</span><span class=k>new</span> <span class=nx>Command\Builder\StoreObject</span><span class=p>(</span><span class=nv>$riak</span><span class=p>))</span>
+</span></span><span class=line><span class=cl>    <span class=o>-&gt;</span><span class=na>buildJsonObject</span><span class=p>(</span><span class=nv>$book</span><span class=p>)</span>
+</span></span><span class=line><span class=cl>    <span class=o>-&gt;</span><span class=na>atLocation</span><span class=p>(</span><span class=nv>$bookLocation</span><span class=p>)</span>
+</span></span><span class=line><span class=cl>    <span class=o>-&gt;</span><span class=na>build</span><span class=p>();</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl><span class=nv>$storeCommand1</span><span class=o>-&gt;</span><span class=na>execute</span><span class=p>();</span>
+</span></span></code></pre></div><p>Some of you may be thinking “But how does the Riak client encode/decode my object”? If we fetch the binary version of our book back and print it as a string, we shall know:</p><div class=highlight><pre tabindex=0 class=chroma><code class=language-php data-lang=php><span class=line><span class=cl><span class=nv>$fetchBookResponse</span> <span class=o>=</span> <span class=p>(</span><span class=k>new</span> <span class=nx>Command\Builder\FetchObject</span><span class=p>(</span><span class=nv>$riak</span><span class=p>))</span>
+</span></span><span class=line><span class=cl>                        <span class=o>-&gt;</span><span class=na>atLocation</span><span class=p>(</span><span class=nv>$bookLocation</span><span class=p>)</span>
+</span></span><span class=line><span class=cl>                        <span class=o>-&gt;</span><span class=na>build</span><span class=p>()</span>
+</span></span><span class=line><span class=cl>                        <span class=o>-&gt;</span><span class=na>execute</span><span class=p>();</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl><span class=k>print</span><span class=p>(</span><span class=s1>&#39;Serialized Object:&#39;</span> <span class=o>.</span> <span class=nx>PHP_EOL</span><span class=p>);</span>
+</span></span><span class=line><span class=cl><span class=k>print</span><span class=p>(</span><span class=nv>$fetchBookResponse</span><span class=o>-&gt;</span><span class=na>getBody</span><span class=p>()</span> <span class=o>.</span> <span class=nx>PHP_EOL</span><span class=p>);</span>
+</span></span></code></pre></div><div class=highlight><pre tabindex=0 class=chroma><code class=language-json data-lang=json><span class=line><span class=cl><span class=err>Serialized</span> <span class=err>Object:</span>
+</span></span><span class=line><span class=cl><span class=p>{</span><span class=nt>&#34;title&#34;</span><span class=p>:</span><span class=s2>&#34;Moby Dick&#34;</span><span class=p>,</span><span class=nt>&#34;author&#34;</span><span class=p>:</span><span class=s2>&#34;Herman Melville&#34;</span><span class=p>,</span><span class=nt>&#34;body&#34;</span><span class=p>:</span><span class=s2>&#34;Call me Ishmael. Some years ago...&#34;</span><span class=p>,</span><span class=nt>&#34;isbn&#34;</span><span class=p>:</span><span class=s2>&#34;1111979723&#34;</span><span class=p>,</span><span class=nt>&#34;copiesOwned&#34;</span><span class=p>:</span><span class=mi>3</span><span class=p>}</span>
+</span></span></code></pre></div><p>JSON! The library encodes PHP objects as JSON strings when you use the <a href=http://basho.github.io/riak-php-client/class-Basho.Riak.Command.Builder.ObjectTrait.html#_buildJsonObject rel=noopener><code>buildJsonObject()</code></a>
+method on the StoreObject builder.</p><p>Now that we’ve ruined the magic of object encoding, let’s clean up our mess:</p><div class=highlight><pre tabindex=0 class=chroma><code class=language-php data-lang=php><span class=line><span class=cl><span class=p>(</span><span class=k>new</span> <span class=nx>Command\Builder\DeleteObject</span><span class=p>(</span><span class=nv>$riak</span><span class=p>))</span>
+</span></span><span class=line><span class=cl>    <span class=o>-&gt;</span><span class=na>atLocation</span><span class=p>(</span><span class=nv>$bookLocation</span><span class=p>)</span>
+</span></span><span class=line><span class=cl>    <span class=o>-&gt;</span><span class=na>build</span><span class=p>()</span>
+</span></span><span class=line><span class=cl>    <span class=o>-&gt;</span><span class=na>execute</span><span class=p>();</span>
+</span></span></code></pre></div><h4 id=next-steps-1>Next Steps</h4><p>More complex use cases can be composed from these initial create, read, update, and delete (CRUD) operations. <a href=/docs/kv/3.4.0/tutorials/first-application/php/>In the next chapter</a>
+we will look at how to store and query more complicated and interconnected data, such as documents.</p><h3 id=querying-with-php>Querying with PHP</h3><h4 id=a-quick-note-on-querying-and-schemas>A Quick Note on Querying and Schemas</h4><p><em>Schemas</em>? Yes we said that correctly, S-C-H-E-M-A-S. It&rsquo;s not a dirty word.
+Even with a Key/Value store, you will still have a logical database schema of how all the data relates to one another. This can be as simple as using the same key across multiple buckets for different types of data, to having fields in your data that are related by name. These querying methods will introduce you to some ways of laying out your data in Riak, along with how to query it back.</p><h4 id=denormalization>Denormalization</h4><p>If you&rsquo;re coming from a relational database, the easiest way to get your application&rsquo;s feet wet with NoSQL is to denormalize your data into related chunks. For example with a customer database, you might have separate tables for Customers, Addresses, Preferences, etc. In Riak, you can denormalize all that associated data into a single object and store it into a <code>Customer</code> bucket. You can keep pulling in associated data until you hit one of the big denormalization walls:</p><ul><li>Size Limits (objects greater than 1MB)</li><li>Shared/Referential Data (data that the object doesn&rsquo;t &ldquo;own&rdquo;)</li><li>Differences in Access Patterns (objects that get read/written once vs. often)</li></ul><p>At one of these points we will have to split the model.</p><h4 id=same-keys---different-buckets>Same Keys - Different Buckets</h4><p>The simplest way to split up data would be to use the same identity key across different buckets. A good example of this would be a <code>Customer</code> object, an <code>Order</code> object, and an <code>OrderSummaries</code> object that keeps rolled up info about orders such as Total, etc. Let&rsquo;s put some data into Riak so we can play with it.</p><div class=highlight><pre tabindex=0 class=chroma><code class=language-php data-lang=php><span class=line><span class=cl><span class=o>&lt;?</span><span class=nx>php</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl><span class=k>include_once</span> <span class=s1>&#39;vendor/autoload.php&#39;</span><span class=p>;</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl><span class=k>use</span> <span class=nx>Basho\Riak</span><span class=p>;</span>
+</span></span><span class=line><span class=cl><span class=k>use</span> <span class=nx>Basho\Riak\Location</span><span class=p>;</span>
+</span></span><span class=line><span class=cl><span class=k>use</span> <span class=nx>Basho\Riak\Node</span><span class=p>;</span>
+</span></span><span class=line><span class=cl><span class=k>use</span> <span class=nx>Basho\Riak\Command</span><span class=p>;</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl><span class=nv>$riak</span> <span class=o>=</span> <span class=k>new</span> <span class=nx>Riak</span><span class=p>([</span><span class=nv>$node</span><span class=p>]);</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl><span class=c1>// Class definitions for our models
+</span></span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl><span class=k>class</span> <span class=nc>Customer</span>
+</span></span><span class=line><span class=cl><span class=p>{</span>
+</span></span><span class=line><span class=cl>    <span class=k>var</span> <span class=nv>$customerId</span><span class=p>;</span>
+</span></span><span class=line><span class=cl>    <span class=k>var</span> <span class=nv>$name</span><span class=p>;</span>
+</span></span><span class=line><span class=cl>    <span class=k>var</span> <span class=nv>$address</span><span class=p>;</span>
+</span></span><span class=line><span class=cl>    <span class=k>var</span> <span class=nv>$city</span><span class=p>;</span>
+</span></span><span class=line><span class=cl>    <span class=k>var</span> <span class=nv>$state</span><span class=p>;</span>
+</span></span><span class=line><span class=cl>    <span class=k>var</span> <span class=nv>$zip</span><span class=p>;</span>
+</span></span><span class=line><span class=cl>    <span class=k>var</span> <span class=nv>$phone</span><span class=p>;</span>
+</span></span><span class=line><span class=cl>    <span class=k>var</span> <span class=nv>$createdDate</span><span class=p>;</span>
+</span></span><span class=line><span class=cl><span class=p>}</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl><span class=k>class</span> <span class=nc>Order</span>
+</span></span><span class=line><span class=cl><span class=p>{</span>
+</span></span><span class=line><span class=cl>    <span class=k>public</span> <span class=k>function</span> <span class=fm>__construct</span><span class=p>()</span>
+</span></span><span class=line><span class=cl>    <span class=p>{</span>
+</span></span><span class=line><span class=cl>        <span class=nv>$this</span><span class=o>-&gt;</span><span class=na>items</span> <span class=o>=</span> <span class=k>array</span><span class=p>();</span>
+</span></span><span class=line><span class=cl>    <span class=p>}</span>
+</span></span><span class=line><span class=cl>    <span class=k>var</span> <span class=nv>$orderId</span><span class=p>;</span>
+</span></span><span class=line><span class=cl>    <span class=k>var</span> <span class=nv>$customerId</span><span class=p>;</span>
+</span></span><span class=line><span class=cl>    <span class=k>var</span> <span class=nv>$salespersonId</span><span class=p>;</span>
+</span></span><span class=line><span class=cl>    <span class=k>var</span> <span class=nv>$items</span><span class=p>;</span>
+</span></span><span class=line><span class=cl>    <span class=k>var</span> <span class=nv>$total</span><span class=p>;</span>
+</span></span><span class=line><span class=cl>    <span class=k>var</span> <span class=nv>$orderDate</span><span class=p>;</span>
+</span></span><span class=line><span class=cl><span class=p>}</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl><span class=k>class</span> <span class=nc>Item</span>
+</span></span><span class=line><span class=cl><span class=p>{</span>
+</span></span><span class=line><span class=cl>    <span class=k>public</span> <span class=k>function</span> <span class=fm>__construct</span><span class=p>(</span><span class=nv>$itemId</span><span class=p>,</span> <span class=nv>$title</span><span class=p>,</span> <span class=nv>$price</span><span class=p>)</span>
+</span></span><span class=line><span class=cl>    <span class=p>{</span>
+</span></span><span class=line><span class=cl>        <span class=nv>$this</span><span class=o>-&gt;</span><span class=na>itemId</span> <span class=o>=</span> <span class=nv>$itemId</span><span class=p>;</span>
+</span></span><span class=line><span class=cl>        <span class=nv>$this</span><span class=o>-&gt;</span><span class=na>title</span> <span class=o>=</span> <span class=nv>$title</span><span class=p>;</span>
+</span></span><span class=line><span class=cl>        <span class=nv>$this</span><span class=o>-&gt;</span><span class=na>price</span> <span class=o>=</span> <span class=nv>$price</span><span class=p>;</span>
+</span></span><span class=line><span class=cl>    <span class=p>}</span>
+</span></span><span class=line><span class=cl>    <span class=k>var</span> <span class=nv>$itemId</span><span class=p>;</span>
+</span></span><span class=line><span class=cl>    <span class=k>var</span> <span class=nv>$title</span><span class=p>;</span>
+</span></span><span class=line><span class=cl>    <span class=k>var</span> <span class=nv>$price</span><span class=p>;</span>
+</span></span><span class=line><span class=cl><span class=p>}</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl><span class=k>class</span> <span class=nc>OrderSummary</span>
+</span></span><span class=line><span class=cl><span class=p>{</span>
+</span></span><span class=line><span class=cl>    <span class=k>public</span> <span class=k>function</span> <span class=fm>__construct</span><span class=p>()</span>
+</span></span><span class=line><span class=cl>    <span class=p>{</span>
+</span></span><span class=line><span class=cl>        <span class=nv>$this</span><span class=o>-&gt;</span><span class=na>summaries</span> <span class=o>=</span> <span class=k>array</span><span class=p>();</span>
+</span></span><span class=line><span class=cl>    <span class=p>}</span>
+</span></span><span class=line><span class=cl>    <span class=k>var</span> <span class=nv>$customerId</span><span class=p>;</span>
+</span></span><span class=line><span class=cl>    <span class=k>var</span> <span class=nv>$summaries</span><span class=p>;</span>
+</span></span><span class=line><span class=cl><span class=p>}</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl><span class=k>class</span> <span class=nc>OrderSummaryItem</span>
+</span></span><span class=line><span class=cl><span class=p>{</span>
+</span></span><span class=line><span class=cl>    <span class=k>public</span> <span class=k>function</span> <span class=fm>__construct</span><span class=p>(</span><span class=nx>Order</span> <span class=nv>$order</span><span class=p>)</span>
+</span></span><span class=line><span class=cl>    <span class=p>{</span>
+</span></span><span class=line><span class=cl>        <span class=nv>$this</span><span class=o>-&gt;</span><span class=na>orderId</span> <span class=o>=</span> <span class=nv>$order</span><span class=o>-&gt;</span><span class=na>orderId</span><span class=p>;</span>
+</span></span><span class=line><span class=cl>        <span class=nv>$this</span><span class=o>-&gt;</span><span class=na>total</span> <span class=o>=</span> <span class=nv>$order</span><span class=o>-&gt;</span><span class=na>total</span><span class=p>;</span>
+</span></span><span class=line><span class=cl>        <span class=nv>$this</span><span class=o>-&gt;</span><span class=na>orderDate</span> <span class=o>=</span> <span class=nv>$order</span><span class=o>-&gt;</span><span class=na>orderDate</span><span class=p>;</span>
+</span></span><span class=line><span class=cl>    <span class=p>}</span>
+</span></span><span class=line><span class=cl>    <span class=k>var</span> <span class=nv>$orderId</span><span class=p>;</span>
+</span></span><span class=line><span class=cl>    <span class=k>var</span> <span class=nv>$total</span><span class=p>;</span>
+</span></span><span class=line><span class=cl>    <span class=k>var</span> <span class=nv>$orderDate</span><span class=p>;</span>
+</span></span><span class=line><span class=cl><span class=p>}</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl><span class=c1>// Creating Data
+</span></span></span><span class=line><span class=cl><span class=nv>$customer</span> <span class=o>=</span> <span class=k>new</span> <span class=nx>Customer</span><span class=p>();</span>
+</span></span><span class=line><span class=cl><span class=nv>$customer</span><span class=o>-&gt;</span><span class=na>customerId</span> <span class=o>=</span> <span class=mi>1</span><span class=p>;</span>
+</span></span><span class=line><span class=cl><span class=nv>$customer</span><span class=o>-&gt;</span><span class=na>name</span> <span class=o>=</span> <span class=s1>&#39;John Smith&#39;</span><span class=p>;</span>
+</span></span><span class=line><span class=cl><span class=nv>$customer</span><span class=o>-&gt;</span><span class=na>address</span> <span class=o>=</span> <span class=s1>&#39;123 Main Street&#39;</span><span class=p>;</span>
+</span></span><span class=line><span class=cl><span class=nv>$customer</span><span class=o>-&gt;</span><span class=na>city</span> <span class=o>=</span> <span class=s1>&#39;Columbus&#39;</span><span class=p>;</span>
+</span></span><span class=line><span class=cl><span class=nv>$customer</span><span class=o>-&gt;</span><span class=na>state</span> <span class=o>=</span> <span class=s1>&#39;Ohio&#39;</span><span class=p>;</span>
+</span></span><span class=line><span class=cl><span class=nv>$customer</span><span class=o>-&gt;</span><span class=na>zip</span> <span class=o>=</span> <span class=s1>&#39;43210&#39;</span><span class=p>;</span>
+</span></span><span class=line><span class=cl><span class=nv>$customer</span><span class=o>-&gt;</span><span class=na>phone</span> <span class=o>=</span> <span class=s1>&#39;+1-614-555-5555&#39;</span><span class=p>;</span>
+</span></span><span class=line><span class=cl><span class=nv>$customer</span><span class=o>-&gt;</span><span class=na>createdDate</span> <span class=o>=</span> <span class=s1>&#39;2013-10-01 14:30:26&#39;</span><span class=p>;</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl><span class=nv>$orders</span> <span class=o>=</span> <span class=p>[];</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl><span class=nv>$order1</span> <span class=o>=</span> <span class=k>new</span> <span class=nx>Order</span><span class=p>();</span>
+</span></span><span class=line><span class=cl><span class=nv>$order1</span><span class=o>-&gt;</span><span class=na>orderId</span> <span class=o>=</span> <span class=mi>1</span><span class=p>;</span>
+</span></span><span class=line><span class=cl><span class=nv>$order1</span><span class=o>-&gt;</span><span class=na>customerId</span> <span class=o>=</span> <span class=mi>1</span><span class=p>;</span>
+</span></span><span class=line><span class=cl><span class=nv>$order1</span><span class=o>-&gt;</span><span class=na>salespersonId</span> <span class=o>=</span> <span class=mi>9000</span><span class=p>;</span>
+</span></span><span class=line><span class=cl><span class=nv>$order1</span><span class=o>-&gt;</span><span class=na>items</span> <span class=o>=</span> <span class=p>[</span>
+</span></span><span class=line><span class=cl>    <span class=k>new</span> <span class=nx>Item</span><span class=p>(</span>
+</span></span><span class=line><span class=cl>        <span class=s1>&#39;TCV37GIT4NJ&#39;</span><span class=p>,</span>
+</span></span><span class=line><span class=cl>        <span class=s1>&#39;USB 3.0 Coffee Warmer&#39;</span><span class=p>,</span>
+</span></span><span class=line><span class=cl>        <span class=mf>15.99</span>
+</span></span><span class=line><span class=cl>    <span class=p>),</span>
+</span></span><span class=line><span class=cl>    <span class=k>new</span> <span class=nx>Item</span><span class=p>(</span>
+</span></span><span class=line><span class=cl>        <span class=s1>&#39;PEG10BBF2PP&#39;</span><span class=p>,</span>
+</span></span><span class=line><span class=cl>        <span class=s1>&#39;eTablet Pro; 24GB; Grey&#39;</span><span class=p>,</span>
+</span></span><span class=line><span class=cl>        <span class=mf>399.99</span>
+</span></span><span class=line><span class=cl>    <span class=p>)</span>
+</span></span><span class=line><span class=cl><span class=p>];</span>
+</span></span><span class=line><span class=cl><span class=nv>$order1</span><span class=o>-&gt;</span><span class=na>total</span> <span class=o>=</span> <span class=mf>415.98</span><span class=p>;</span>
+</span></span><span class=line><span class=cl><span class=nv>$order1</span><span class=o>-&gt;</span><span class=na>orderDate</span> <span class=o>=</span> <span class=s1>&#39;2013-10-01 14:42:26&#39;</span><span class=p>;</span>
+</span></span><span class=line><span class=cl><span class=nv>$orders</span><span class=p>[]</span> <span class=o>=</span> <span class=nv>$order1</span><span class=p>;</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl><span class=nv>$order2</span> <span class=o>=</span> <span class=k>new</span> <span class=nx>Order</span><span class=p>();</span>
+</span></span><span class=line><span class=cl><span class=nv>$order2</span><span class=o>-&gt;</span><span class=na>orderId</span> <span class=o>=</span> <span class=mi>2</span><span class=p>;</span>
+</span></span><span class=line><span class=cl><span class=nv>$order2</span><span class=o>-&gt;</span><span class=na>customerId</span> <span class=o>=</span> <span class=mi>1</span><span class=p>;</span>
+</span></span><span class=line><span class=cl><span class=nv>$order2</span><span class=o>-&gt;</span><span class=na>salespersonId</span> <span class=o>=</span> <span class=mi>9001</span><span class=p>;</span>
+</span></span><span class=line><span class=cl><span class=nv>$order2</span><span class=o>-&gt;</span><span class=na>items</span> <span class=o>=</span> <span class=p>[</span>
+</span></span><span class=line><span class=cl>    <span class=k>new</span> <span class=nx>Item</span><span class=p>(</span>
+</span></span><span class=line><span class=cl>        <span class=s1>&#39;OAX19XWN0QP&#39;</span><span class=p>,</span>
+</span></span><span class=line><span class=cl>        <span class=s1>&#39;GoSlo Digital Camera&#39;</span><span class=p>,</span>
+</span></span><span class=line><span class=cl>        <span class=mf>359.99</span>
+</span></span><span class=line><span class=cl>    <span class=p>)</span>
+</span></span><span class=line><span class=cl><span class=p>];</span>
+</span></span><span class=line><span class=cl><span class=nv>$order2</span><span class=o>-&gt;</span><span class=na>total</span> <span class=o>=</span> <span class=mf>359.99</span><span class=p>;</span>
+</span></span><span class=line><span class=cl><span class=nv>$order2</span><span class=o>-&gt;</span><span class=na>orderDate</span> <span class=o>=</span> <span class=s1>&#39;2013-10-15 16:43:16&#39;</span><span class=p>;</span>
+</span></span><span class=line><span class=cl><span class=nv>$orders</span><span class=p>[]</span> <span class=o>=</span> <span class=nv>$order2</span><span class=p>;</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl><span class=nv>$order3</span> <span class=o>=</span> <span class=k>new</span> <span class=nx>Order</span><span class=p>();</span>
+</span></span><span class=line><span class=cl><span class=nv>$order3</span><span class=o>-&gt;</span><span class=na>orderId</span> <span class=o>=</span> <span class=mi>3</span><span class=p>;</span>
+</span></span><span class=line><span class=cl><span class=nv>$order3</span><span class=o>-&gt;</span><span class=na>customerId</span> <span class=o>=</span> <span class=mi>1</span><span class=p>;</span>
+</span></span><span class=line><span class=cl><span class=nv>$order3</span><span class=o>-&gt;</span><span class=na>salespersonId</span> <span class=o>=</span> <span class=mi>9000</span><span class=p>;</span>
+</span></span><span class=line><span class=cl><span class=nv>$order3</span><span class=o>-&gt;</span><span class=na>items</span> <span class=o>=</span> <span class=p>[</span>
+</span></span><span class=line><span class=cl>    <span class=k>new</span> <span class=nx>Item</span><span class=p>(</span>
+</span></span><span class=line><span class=cl>        <span class=s1>&#39;WYK12EPU5EZ&#39;</span><span class=p>,</span>
+</span></span><span class=line><span class=cl>        <span class=s1>&#39;Call of Battle = Goats - Gamesphere 4&#39;</span><span class=p>,</span>
+</span></span><span class=line><span class=cl>        <span class=mf>69.99</span>
+</span></span><span class=line><span class=cl>    <span class=p>),</span>
+</span></span><span class=line><span class=cl>    <span class=k>new</span> <span class=nx>Item</span><span class=p>(</span>
+</span></span><span class=line><span class=cl>        <span class=s1>&#39;TJB84HAA8OA&#39;</span><span class=p>,</span>
+</span></span><span class=line><span class=cl>        <span class=s1>&#39;Bricko Building Blocks&#39;</span><span class=p>,</span>
+</span></span><span class=line><span class=cl>        <span class=mf>4.99</span>
+</span></span><span class=line><span class=cl>    <span class=p>)</span>
+</span></span><span class=line><span class=cl><span class=p>];</span>
+</span></span><span class=line><span class=cl><span class=nv>$order3</span><span class=o>-&gt;</span><span class=na>total</span> <span class=o>=</span> <span class=mf>74.98</span><span class=p>;</span>
+</span></span><span class=line><span class=cl><span class=nv>$order3</span><span class=o>-&gt;</span><span class=na>orderDate</span> <span class=o>=</span> <span class=s1>&#39;2013-11-03 17:45:28&#39;</span><span class=p>;</span>
+</span></span><span class=line><span class=cl><span class=nv>$orders</span><span class=p>[]</span> <span class=o>=</span> <span class=nv>$order3</span><span class=p>;</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl><span class=nv>$orderSummary</span> <span class=o>=</span> <span class=k>new</span> <span class=nx>OrderSummary</span><span class=p>();</span>
+</span></span><span class=line><span class=cl><span class=nv>$orderSummary</span><span class=o>-&gt;</span><span class=na>customerId</span> <span class=o>=</span> <span class=mi>1</span><span class=p>;</span>
+</span></span><span class=line><span class=cl><span class=k>foreach</span> <span class=p>(</span><span class=nv>$orders</span> <span class=k>as</span> <span class=nv>$order</span><span class=p>)</span> <span class=p>{</span>
+</span></span><span class=line><span class=cl>    <span class=nv>$orderSummary</span><span class=o>-&gt;</span><span class=na>summaries</span><span class=p>[]</span> <span class=o>=</span> <span class=k>new</span> <span class=nx>OrderSummaryItem</span><span class=p>(</span><span class=nv>$order</span><span class=p>);</span>
+</span></span><span class=line><span class=cl><span class=p>}</span>
+</span></span><span class=line><span class=cl><span class=nx>unset</span><span class=p>(</span><span class=nv>$order</span><span class=p>);</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl><span class=c1>// Starting Client
+</span></span></span><span class=line><span class=cl><span class=nv>$node</span> <span class=o>=</span> <span class=p>(</span><span class=k>new</span> <span class=nx>Node\Builder</span><span class=p>)</span>
+</span></span><span class=line><span class=cl>    <span class=o>-&gt;</span><span class=na>atHost</span><span class=p>(</span><span class=s1>&#39;127.0.0.1&#39;</span><span class=p>)</span>
+</span></span><span class=line><span class=cl>    <span class=o>-&gt;</span><span class=na>onPort</span><span class=p>(</span><span class=mi>8098</span><span class=p>)</span>
+</span></span><span class=line><span class=cl>    <span class=o>-&gt;</span><span class=na>build</span><span class=p>();</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl><span class=c1>// Creating Buckets
+</span></span></span><span class=line><span class=cl><span class=nv>$customersBucket</span> <span class=o>=</span> <span class=k>new</span> <span class=nx>Riak\Bucket</span><span class=p>(</span><span class=s1>&#39;Customers&#39;</span><span class=p>);</span>
+</span></span><span class=line><span class=cl><span class=nv>$ordersBucket</span> <span class=o>=</span> <span class=k>new</span> <span class=nx>Riak\Bucket</span><span class=p>(</span><span class=s1>&#39;Orders&#39;</span><span class=p>);</span>
+</span></span><span class=line><span class=cl><span class=nv>$orderSummariesBucket</span> <span class=o>=</span> <span class=k>new</span> <span class=nx>Riak\Bucket</span><span class=p>(</span><span class=s1>&#39;OrderSummaries&#39;</span><span class=p>);</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl><span class=c1>// Storing Data
+</span></span></span><span class=line><span class=cl><span class=nv>$storeCustomer</span> <span class=o>=</span> <span class=p>(</span><span class=k>new</span> <span class=nx>Command\Builder\StoreObject</span><span class=p>(</span><span class=nv>$riak</span><span class=p>))</span>
+</span></span><span class=line><span class=cl>    <span class=o>-&gt;</span><span class=na>buildJsonObject</span><span class=p>(</span><span class=nv>$customer</span><span class=p>)</span>
+</span></span><span class=line><span class=cl>    <span class=o>-&gt;</span><span class=na>atLocation</span><span class=p>(</span><span class=k>new</span> <span class=nx>Location</span><span class=p>(</span><span class=nv>$customer</span><span class=o>-&gt;</span><span class=na>customerId</span><span class=p>,</span> <span class=nv>$customersBucket</span><span class=p>))</span>
+</span></span><span class=line><span class=cl>    <span class=o>-&gt;</span><span class=na>build</span><span class=p>();</span>
+</span></span><span class=line><span class=cl><span class=nv>$storeCustomer</span><span class=o>-&gt;</span><span class=na>execute</span><span class=p>();</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl><span class=k>foreach</span> <span class=p>(</span><span class=nv>$orders</span> <span class=k>as</span> <span class=nv>$order</span><span class=p>)</span> <span class=p>{</span>
+</span></span><span class=line><span class=cl>    <span class=nv>$storeOrder</span> <span class=o>=</span> <span class=p>(</span><span class=k>new</span> <span class=nx>Command\Builder\StoreObject</span><span class=p>(</span><span class=nv>$riak</span><span class=p>))</span>
+</span></span><span class=line><span class=cl>        <span class=o>-&gt;</span><span class=na>buildJsonObject</span><span class=p>(</span><span class=nv>$order</span><span class=p>)</span>
+</span></span><span class=line><span class=cl>        <span class=o>-&gt;</span><span class=na>atLocation</span><span class=p>(</span><span class=k>new</span> <span class=nx>Location</span><span class=p>(</span><span class=nv>$order</span><span class=o>-&gt;</span><span class=na>orderId</span><span class=p>,</span> <span class=nv>$ordersBucket</span><span class=p>))</span>
+</span></span><span class=line><span class=cl>        <span class=o>-&gt;</span><span class=na>build</span><span class=p>();</span>
+</span></span><span class=line><span class=cl>    <span class=nv>$storeOrder</span><span class=o>-&gt;</span><span class=na>execute</span><span class=p>();</span>
+</span></span><span class=line><span class=cl><span class=p>}</span>
+</span></span><span class=line><span class=cl><span class=nx>unset</span><span class=p>(</span><span class=nv>$order</span><span class=p>);</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl><span class=nv>$storeSummary</span> <span class=o>=</span> <span class=p>(</span><span class=k>new</span> <span class=nx>Command\Builder\StoreObject</span><span class=p>(</span><span class=nv>$riak</span><span class=p>))</span>
+</span></span><span class=line><span class=cl>    <span class=o>-&gt;</span><span class=na>buildJsonObject</span><span class=p>(</span><span class=nv>$orderSummary</span><span class=p>)</span>
+</span></span><span class=line><span class=cl>    <span class=o>-&gt;</span><span class=na>atLocation</span><span class=p>(</span><span class=k>new</span> <span class=nx>Location</span><span class=p>(</span><span class=nv>$orderSummary</span><span class=o>-&gt;</span><span class=na>customerId</span><span class=p>,</span> <span class=nv>$orderSummariesBucket</span><span class=p>))</span>
+</span></span><span class=line><span class=cl>    <span class=o>-&gt;</span><span class=na>build</span><span class=p>();</span>
+</span></span><span class=line><span class=cl><span class=nv>$storeSummary</span><span class=o>-&gt;</span><span class=na>execute</span><span class=p>();</span>
+</span></span></code></pre></div><p>While individual <code>Customer</code> and <code>Order</code> objects don&rsquo;t change much (or shouldn&rsquo;t change), the <code>Order Summaries</code> object will likely change often. It will do double duty by acting as an index for all a customer&rsquo;s orders, and also holding some relevant data such as the order total, etc. If we showed this information in our application often, it&rsquo;s only one extra request to get all the info.</p><div class=highlight><pre tabindex=0 class=chroma><code class=language-php data-lang=php><span class=line><span class=cl><span class=c1>// Fetching related data by shared key
+</span></span></span><span class=line><span class=cl><span class=nv>$fetched_customer</span> <span class=o>=</span> <span class=p>(</span><span class=k>new</span> <span class=nx>Command\Builder\FetchObject</span><span class=p>(</span><span class=nv>$riak</span><span class=p>))</span>
+</span></span><span class=line><span class=cl>                    <span class=o>-&gt;</span><span class=na>atLocation</span><span class=p>(</span><span class=k>new</span> <span class=nx>Location</span><span class=p>(</span><span class=s1>&#39;1&#39;</span><span class=p>,</span> <span class=nv>$customersBucket</span><span class=p>))</span>
+</span></span><span class=line><span class=cl>                    <span class=o>-&gt;</span><span class=na>build</span><span class=p>()</span><span class=o>-&gt;</span><span class=na>execute</span><span class=p>()</span><span class=o>-&gt;</span><span class=na>getObject</span><span class=p>()</span><span class=o>-&gt;</span><span class=na>getData</span><span class=p>();</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl><span class=nv>$fetched_customer</span><span class=o>-&gt;</span><span class=na>orderSummary</span> <span class=o>=</span>
+</span></span><span class=line><span class=cl>    <span class=p>(</span><span class=k>new</span> <span class=nx>Command\Builder\FetchObject</span><span class=p>(</span><span class=nv>$riak</span><span class=p>))</span>
+</span></span><span class=line><span class=cl>    <span class=o>-&gt;</span><span class=na>atLocation</span><span class=p>(</span><span class=k>new</span> <span class=nx>Location</span><span class=p>(</span><span class=s1>&#39;1&#39;</span><span class=p>,</span> <span class=nv>$orderSummariesBucket</span><span class=p>))</span>
+</span></span><span class=line><span class=cl>    <span class=o>-&gt;</span><span class=na>build</span><span class=p>()</span><span class=o>-&gt;</span><span class=na>execute</span><span class=p>()</span><span class=o>-&gt;</span><span class=na>getObject</span><span class=p>()</span><span class=o>-&gt;</span><span class=na>getData</span><span class=p>();</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl><span class=k>print</span><span class=p>(</span><span class=s2>&#34;Customer with OrderSummary data: </span><span class=se>\n</span><span class=s2>&#34;</span><span class=p>);</span>
+</span></span><span class=line><span class=cl><span class=nx>print_r</span><span class=p>(</span><span class=nv>$fetched_customer</span><span class=p>);</span>
+</span></span></code></pre></div><p>Which returns our amalgamated objects:</p><div class=highlight><pre tabindex=0 class=chroma><code class=language-text data-lang=text><span class=line><span class=cl>Customer with OrderSummary data:
+</span></span><span class=line><span class=cl>stdClass Object
+</span></span><span class=line><span class=cl>(
+</span></span><span class=line><span class=cl>    [customerId] =&gt; 1
+</span></span><span class=line><span class=cl>    [name] =&gt; John Smith
+</span></span><span class=line><span class=cl>    [address] =&gt; 123 Main Street
+</span></span><span class=line><span class=cl>    [city] =&gt; Columbus
+</span></span><span class=line><span class=cl>    [state] =&gt; Ohio
+</span></span><span class=line><span class=cl>    [zip] =&gt; 43210
+</span></span><span class=line><span class=cl>    [phone] =&gt; +1-614-555-5555
+</span></span><span class=line><span class=cl>    [createdDate] =&gt; 2013-10-01 14:30:26
+</span></span><span class=line><span class=cl>    [orderSummary] =&gt; stdClass Object
+</span></span><span class=line><span class=cl>        (
+</span></span><span class=line><span class=cl>            [customerId] =&gt; 1
+</span></span><span class=line><span class=cl>            [summaries] =&gt; Array
+</span></span><span class=line><span class=cl>                (
+</span></span><span class=line><span class=cl>                    [0] =&gt; stdClass Object
+</span></span><span class=line><span class=cl>                        (
+</span></span><span class=line><span class=cl>                            [orderId] =&gt; 1
+</span></span><span class=line><span class=cl>                            [total] =&gt; 415.98
+</span></span><span class=line><span class=cl>                            [orderDate] =&gt; 2013-10-01 14:42:26
+</span></span><span class=line><span class=cl>                        )
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl>[1] =&gt; stdClass Object
+</span></span><span class=line><span class=cl>                        (
+</span></span><span class=line><span class=cl>                            [orderId] =&gt; 2
+</span></span><span class=line><span class=cl>                            [total] =&gt; 359.99
+</span></span><span class=line><span class=cl>                            [orderDate] =&gt; 2013-10-15 16:43:16
+</span></span><span class=line><span class=cl>                        )
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl>[2] =&gt; stdClass Object
+</span></span><span class=line><span class=cl>                        (
+</span></span><span class=line><span class=cl>                            [orderId] =&gt; 3
+</span></span><span class=line><span class=cl>                            [total] =&gt; 74.98
+</span></span><span class=line><span class=cl>                            [orderDate] =&gt; 2013-11-03 17:45:28
+</span></span><span class=line><span class=cl>                        )
+</span></span><span class=line><span class=cl>                )
+</span></span><span class=line><span class=cl>        )
+</span></span><span class=line><span class=cl>)
+</span></span></code></pre></div><p>While this pattern is very easy and extremely fast with respect to queries and complexity, it&rsquo;s up to the application to know about these intrinsic relationships.</p><h4 id=secondary-indexes>Secondary Indexes</h4><p><strong>Note:</strong>
+Secondary indexes in OpenRiak KV require a sorted backend: <a href=/docs/kv/3.4.0/explanation/storage/memory/>Memory</a>
+or <a href=/docs/kv/3.4.0/explanation/storage/leveldb/>LevelDB</a>
+. <a href=/docs/kv/3.4.0/explanation/storage/bitcask/>Bitcask</a>
+does not support secondary indexes.</p><p>See <a href=/docs/kv/3.4.0/how-to/develop/query-secondary-indexes/>Using Secondary Indexes (2i)</a>
+for more information on developing with secondary indexes.</p><p>If you&rsquo;re coming from a SQL world, Secondary Indexes (2i) are a lot like SQL indexes. They are a way to quickly lookup objects based on a secondary key, without scanning through the whole dataset. This makes it very easy to find groups of related data by values, or even ranges of values. To properly show this off, we will now add some more data to our application, and add some secondary index entries at the same time.</p><div class=highlight><pre tabindex=0 class=chroma><code class=language-php data-lang=php><span class=line><span class=cl><span class=c1>// Adding Index Data
+</span></span></span><span class=line><span class=cl><span class=nv>$keys</span> <span class=o>=</span> <span class=k>array</span><span class=p>(</span><span class=mi>1</span><span class=p>,</span><span class=mi>2</span><span class=p>,</span><span class=mi>3</span><span class=p>);</span>
+</span></span><span class=line><span class=cl><span class=k>foreach</span> <span class=p>(</span><span class=nv>$keys</span> <span class=k>as</span> <span class=nv>$key</span><span class=p>)</span> <span class=p>{</span>
+</span></span><span class=line><span class=cl>    <span class=nv>$orderLocation</span> <span class=o>=</span> <span class=k>new</span> <span class=nx>Location</span><span class=p>(</span><span class=nv>$key</span><span class=p>,</span> <span class=nv>$ordersBucket</span><span class=p>);</span>
+</span></span><span class=line><span class=cl>    <span class=nv>$orderObject</span> <span class=o>=</span> <span class=p>(</span><span class=k>new</span> <span class=nx>Command\Builder\FetchObject</span><span class=p>(</span><span class=nv>$riak</span><span class=p>))</span>
+</span></span><span class=line><span class=cl>                    <span class=o>-&gt;</span><span class=na>atLocation</span><span class=p>(</span><span class=nv>$orderLocation</span><span class=p>)</span>
+</span></span><span class=line><span class=cl>                    <span class=o>-&gt;</span><span class=na>build</span><span class=p>()</span><span class=o>-&gt;</span><span class=na>execute</span><span class=p>()</span><span class=o>-&gt;</span><span class=na>getObject</span><span class=p>();</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl><span class=nv>$order</span> <span class=o>=</span> <span class=nv>$orderObject</span><span class=o>-&gt;</span><span class=na>getData</span><span class=p>();</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl><span class=nv>$orderObject</span><span class=o>-&gt;</span><span class=na>addValueToIndex</span><span class=p>(</span><span class=s1>&#39;SalespersonId_int&#39;</span><span class=p>,</span> <span class=nv>$order</span><span class=o>-&gt;</span><span class=na>salespersonId</span><span class=p>);</span>
+</span></span><span class=line><span class=cl>    <span class=nv>$orderObject</span><span class=o>-&gt;</span><span class=na>addValueToIndex</span><span class=p>(</span><span class=s1>&#39;OrderDate_bin&#39;</span><span class=p>,</span> <span class=nv>$order</span><span class=o>-&gt;</span><span class=na>orderDate</span><span class=p>);</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl><span class=nv>$storeOrder</span> <span class=o>=</span> <span class=p>(</span><span class=k>new</span> <span class=nx>Command\Builder\StoreObject</span><span class=p>(</span><span class=nv>$riak</span><span class=p>))</span>
+</span></span><span class=line><span class=cl>                    <span class=o>-&gt;</span><span class=na>withObject</span><span class=p>(</span><span class=nv>$orderObject</span><span class=p>)</span>
+</span></span><span class=line><span class=cl>                    <span class=o>-&gt;</span><span class=na>atLocation</span><span class=p>(</span><span class=nv>$orderLocation</span><span class=p>)</span>
+</span></span><span class=line><span class=cl>                    <span class=o>-&gt;</span><span class=na>build</span><span class=p>();</span>
+</span></span><span class=line><span class=cl>    <span class=nv>$storeOrder</span><span class=o>-&gt;</span><span class=na>execute</span><span class=p>();</span>
+</span></span><span class=line><span class=cl><span class=p>}</span>
+</span></span><span class=line><span class=cl><span class=nx>unset</span><span class=p>(</span><span class=nv>$key</span><span class=p>);</span>
+</span></span></code></pre></div><p>As you may have noticed, ordinary Key/Value data is opaque to 2i, so we have to add entries to the indexes at the application level.
+Now let&rsquo;s find all of Jane Appleseed&rsquo;s processed orders, we&rsquo;ll lookup the orders by searching the <code>saleperson_id_int</code> index for Jane&rsquo;s id of <code>9000</code>.</p><div class=highlight><pre tabindex=0 class=chroma><code class=language-php data-lang=php><span class=line><span class=cl><span class=c1>// Query for orders where the SalespersonId int index is set to 9000
+</span></span></span><span class=line><span class=cl><span class=nv>$fetchIndex</span> <span class=o>=</span> <span class=p>(</span><span class=k>new</span> <span class=nx>Command\Builder\QueryIndex</span><span class=p>(</span><span class=nv>$riak</span><span class=p>))</span>
+</span></span><span class=line><span class=cl>                <span class=o>-&gt;</span><span class=na>inBucket</span><span class=p>(</span><span class=nv>$ordersBucket</span><span class=p>)</span>
+</span></span><span class=line><span class=cl>                <span class=o>-&gt;</span><span class=na>withIndexName</span><span class=p>(</span><span class=s1>&#39;SalespersonId_int&#39;</span><span class=p>)</span>
+</span></span><span class=line><span class=cl>                <span class=o>-&gt;</span><span class=na>withScalarValue</span><span class=p>(</span><span class=mi>9000</span><span class=p>)</span><span class=o>-&gt;</span><span class=na>build</span><span class=p>();</span>
+</span></span><span class=line><span class=cl><span class=nv>$janes_orders</span> <span class=o>=</span> <span class=nv>$fetchIndex</span><span class=o>-&gt;</span><span class=na>execute</span><span class=p>()</span><span class=o>-&gt;</span><span class=na>getResults</span><span class=p>();</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl><span class=k>print</span><span class=p>(</span><span class=s2>&#34;</span><span class=se>\n\n</span><span class=s2>Jane&#39;s Orders: </span><span class=se>\n</span><span class=s2>&#34;</span><span class=p>);</span>
+</span></span><span class=line><span class=cl><span class=nx>print_r</span><span class=p>(</span><span class=nv>$janes_orders</span><span class=p>);</span>
+</span></span></code></pre></div><p>Which returns:</p><div class=highlight><pre tabindex=0 class=chroma><code class=language-text data-lang=text><span class=line><span class=cl>Jane&#39;s Orders:
+</span></span><span class=line><span class=cl>Array
+</span></span><span class=line><span class=cl>(
+</span></span><span class=line><span class=cl>    [0] =&gt; 3
+</span></span><span class=line><span class=cl>    [1] =&gt; 1
+</span></span><span class=line><span class=cl>)
+</span></span></code></pre></div><p>Jane processed orders 1 and 3. We used an &ldquo;integer&rdquo; index to reference Jane&rsquo;s id, next let&rsquo;s use a &ldquo;binary&rdquo; index.
+Now, let&rsquo;s say that the VP of Sales wants to know how many orders came in during October 2013. In this case, we can exploit 2i&rsquo;s range queries. Let&rsquo;s search the <code>order_date_bin</code> index for entries between <code>20131001</code> and <code>20131031</code>.</p><div class=highlight><pre tabindex=0 class=chroma><code class=language-php data-lang=php><span class=line><span class=cl><span class=c1>// Query for orders where the OrderDate bin index is
+</span></span></span><span class=line><span class=cl><span class=c1>// between 2013-10-01 and 2013-10-31
+</span></span></span><span class=line><span class=cl><span class=nv>$fetchOctoberOrders</span> <span class=o>=</span> <span class=p>(</span><span class=k>new</span> <span class=nx>Command\Builder\QueryIndex</span><span class=p>(</span><span class=nv>$riak</span><span class=p>))</span>
+</span></span><span class=line><span class=cl>                        <span class=o>-&gt;</span><span class=na>inBucket</span><span class=p>(</span><span class=nv>$ordersBucket</span><span class=p>)</span>
+</span></span><span class=line><span class=cl>                        <span class=o>-&gt;</span><span class=na>withIndexName</span><span class=p>(</span><span class=s1>&#39;OrderDate_bin&#39;</span><span class=p>)</span>
+</span></span><span class=line><span class=cl>                        <span class=o>-&gt;</span><span class=na>withRangeValue</span><span class=p>(</span><span class=s1>&#39;2013-10-01&#39;</span><span class=p>,</span><span class=s1>&#39;2013-10-31&#39;</span><span class=p>)</span>
+</span></span><span class=line><span class=cl>                        <span class=o>-&gt;</span><span class=na>withReturnTerms</span><span class=p>(</span><span class=k>true</span><span class=p>)</span>
+</span></span><span class=line><span class=cl>                        <span class=o>-&gt;</span><span class=na>build</span><span class=p>();</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl><span class=nv>$octobers_orders</span> <span class=o>=</span> <span class=nv>$fetchOctoberOrders</span><span class=o>-&gt;</span><span class=na>execute</span><span class=p>()</span><span class=o>-&gt;</span><span class=na>getResults</span><span class=p>();</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl><span class=k>print</span><span class=p>(</span><span class=s2>&#34;</span><span class=se>\n\n</span><span class=s2>October&#39;s Orders: </span><span class=se>\n</span><span class=s2>&#34;</span><span class=p>);</span>
+</span></span><span class=line><span class=cl><span class=nx>print_r</span><span class=p>(</span><span class=nv>$octobers_orders</span><span class=p>);</span>
+</span></span><span class=line><span class=cl><span class=cp>?&gt;</span><span class=err>
+</span></span></span></code></pre></div><p>Which returns:</p><div class=highlight><pre tabindex=0 class=chroma><code class=language-text data-lang=text><span class=line><span class=cl>October&#39;s Orders:
+</span></span><span class=line><span class=cl>Array
+</span></span><span class=line><span class=cl>(
+</span></span><span class=line><span class=cl>    [0] =&gt; Array
+</span></span><span class=line><span class=cl>        (
+</span></span><span class=line><span class=cl>            [2013-10-01 14:42:26] =&gt; 1
+</span></span><span class=line><span class=cl>        )
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl>[1] =&gt; Array
+</span></span><span class=line><span class=cl>        (
+</span></span><span class=line><span class=cl>            [2013-10-15 16:43:16] =&gt; 2
+</span></span><span class=line><span class=cl>        )
+</span></span><span class=line><span class=cl>)
+</span></span></code></pre></div><p>Boom, easy-peasy. We used 2i&rsquo;s range feature to search for a range of values, and demonstrated binary indexes. With the October&rsquo;s Orders query we also used the <code>->withReturnTerms(true)</code> option, which as you can see will return the values of the matching 2i terms.</p><p>So to recap:</p><ul><li>You can use Secondary Indexes to quickly lookup an object based on a secondary id other than the object&rsquo;s key.</li><li>Indexes can have either Integer or Binary(String) keys</li><li>You can search for specific values, or a range of values</li><li>Riak will return a list of keys (and terms if needed) that match the index query</li></ul><h2 id=what-you-will-learn>What you will learn</h2><p>By completing this tutorial, you will build the workflow described above and learn how to validate each stage before moving on.</p><h2 id=before-you-begin>Before you begin</h2><p>Use a disposable OpenRiak KV environment that matches this documentation version, and keep cluster status and logs available while you work.</p><h2 id=verify-the-result>Verify the result</h2><p>Repeat the completed workflow, inspect the stored or operational result, and confirm that the cluster remains healthy.</p></div><nav class=page-navigation aria-label="Adjacent pages"><a class=page-navigation__previous href=/docs/kv/3.4.0/tutorials/first-application/build-a-first-openriak-application-with-python/><span>Previous</span><strong>Build a first OpenRiak application with Python</strong></a>
+<a class=page-navigation__next href=/docs/kv/3.4.0/tutorials/first-application/build-a-first-openriak-application-with-node.js/><span>Next</span><strong>Build a first OpenRiak application with Node.js</strong></a></nav></article></main></div><footer class=site-footer><div><p>OpenRiak documentation is licensed under <a href=https://creativecommons.org/licenses/by/4.0/>Creative Commons Attribution 4.0</a>.</p><p>Historical material © Basho Technologies, Inc.; community revisions © OpenRiak contributors.</p></div><a href=#main-content>Back to top</a></footer><script src=/docs/js/site.js defer></script></body></html>

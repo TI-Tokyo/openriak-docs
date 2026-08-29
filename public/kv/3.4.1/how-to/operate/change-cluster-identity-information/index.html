@@ -1,0 +1,312 @@
+<!doctype html><html lang=en class=no-js><head><script src="/docs/livereload.js?mindelay=10&amp;v=2&amp;port=1320&amp;path=docs/livereload" data-no-instant defer></script><meta charset=utf-8><meta name=viewport content="width=device-width,initial-scale=1"><meta name=color-scheme content="light dark"><script>(()=>{const t="openriak-docs-theme";let e="system";try{const n=localStorage.getItem(t);(n==="light"||n==="dark"||n==="system")&&(e=n)}catch{}const n=window.matchMedia?.("(prefers-color-scheme: dark)").matches??!1;document.documentElement.dataset.themePreference=e,document.documentElement.dataset.theme=e==="system"?n?"dark":"light":e})()</script><meta name=description content="Show operators how to change cluster identity information with prechecks, verification, and recovery guidance."><title>Change cluster identity information | OpenRiak Documentation</title><link rel=canonical href=http://127.0.0.1:1320/docs/kv/3.4.1/how-to/operate/change-cluster-identity-information/><link rel=icon href=/docs/images/branding/favicon.ico sizes=any><link rel=stylesheet href=/docs/css/site.css><link rel=stylesheet href=/docs/css/theme.css><script src=/docs/js/theme.js defer></script><meta property="og:type" content="website"><meta property="og:title" content="Change cluster identity information"><meta property="og:description" content="Show operators how to change cluster identity information with prechecks, verification, and recovery guidance."><meta property="og:url" content="http://127.0.0.1:1320/docs/kv/3.4.1/how-to/operate/change-cluster-identity-information/"></head><body data-kind=page data-section=kv><script>document.documentElement.classList.remove("no-js")</script><a class=skip-link href=#main-content>Skip to content</a><header class=site-header><div class=site-header__inner><button class=nav-toggle type=button aria-controls=docs-sidebar aria-expanded=false>
+<span aria-hidden=true>☰</span><span class=sr-only>Toggle documentation navigation</span>
+</button>
+<a class=brand href=/docs/ aria-label="OpenRiak documentation home"><img src=/docs/images/branding/riak-logo-inverted.png alt width=34 height=34>
+<span>OpenRiak <strong>Docs</strong></span></a><nav class=primary-nav aria-label="Documentation types"><a href=/docs/kv/3.4.1/tutorials/>Tutorials</a>
+<a href=/docs/kv/3.4.1/how-to/>How-to</a>
+<a href=/docs/kv/3.4.1/reference/>Reference</a>
+<a href=/docs/kv/3.4.1/explanation/>Explanation</a></nav><a class=community-link href=https://github.com/orgs/OpenRiak/discussions>Community</a>
+<label class=theme-control><span class=theme-control__icon aria-hidden=true>◐</span>
+<span class=sr-only>Color theme</span>
+<select data-theme-select aria-label="Color theme"><option value=system>System</option><option value=light>Light</option><option value=dark>Dark</option></select></label></div></header><div class=site-shell><aside id=docs-sidebar class=sidebar aria-label="Documentation navigation"><div class=sidebar__tools><label for=version-select>Version</label>
+<select id=version-select data-version-select><option value=/docs/kv/3.4.1/ selected>3.4.1 (latest)</option><option value=/docs/kv/3.4.0/>3.4.0</option></select><form class=docs-search role=search data-search data-index-url=/docs/search-index.json data-version=3.4.1><label class=sr-only for=docs-search-input>Search this version</label>
+<input id=docs-search-input type=search placeholder="Search this version" autocomplete=off data-search-input><div class=search-results data-search-results hidden></div></form></div><nav class=sidebar__nav aria-label="Pages in this version"><a class=sidebar__root href=/docs/kv/3.4.1/>OpenRiak KV 3.4.1</a><ul class=nav-tree><li><details><summary><a href=/docs/kv/3.4.1/explanation/>Explanation</a></summary></details></li><li><details open><summary><a href=/docs/kv/3.4.1/how-to/>How-to guides</a></summary><ul class=nav-tree><li><details><summary><a href=/docs/kv/3.4.1/how-to/configure/>Configure OpenRiak</a></summary></details></li><li><details><summary><a href=/docs/kv/3.4.1/how-to/develop/>Develop with OpenRiak</a></summary></details></li><li><details><summary><a href=/docs/kv/3.4.1/how-to/install/>Install and verify OpenRiak</a></summary></details></li><li><details open><summary><a href=/docs/kv/3.4.1/how-to/operate/>Operate a cluster</a></summary><ul class=nav-tree><li><details><summary><a href=/docs/kv/3.4.1/how-to/operate/aae-fold/>Run TicTac AAE fold operations</a></summary></details></li><li><a href=/docs/kv/3.4.1/how-to/operate/add-a-node-to-a-cluster/>Add a node to a cluster</a></li><li><a href=/docs/kv/3.4.1/how-to/operate/back-up-an-openriak-node/>Back up an OpenRiak node</a></li><li><a class=is-current href=/docs/kv/3.4.1/how-to/operate/change-cluster-identity-information/ aria-current=page>Change cluster identity information</a></li><li><a href=/docs/kv/3.4.1/how-to/operate/change-runtime-log-levels/>Change runtime log levels</a></li><li><a href=/docs/kv/3.4.1/how-to/operate/collect-diagnostic-information/>Collect diagnostic information</a></li><li><a href=/docs/kv/3.4.1/how-to/operate/downgrade-an-openriak-cluster/>Downgrade an OpenRiak cluster</a></li><li><a href=/docs/kv/3.4.1/how-to/operate/inspect-node-and-cluster-health/>Inspect node and cluster health</a></li><li><a href=/docs/kv/3.4.1/how-to/operate/create-and-activate-bucket-types/>Create and activate bucket types</a></li><li><a href=/docs/kv/3.4.1/how-to/operate/monitor-and-manage-handoffs/>Monitor and manage handoffs</a></li><li><a href=/docs/kv/3.4.1/how-to/operate/remove-a-node-from-a-cluster/>Remove a node from a cluster</a></li><li><a href=/docs/kv/3.4.1/how-to/operate/replace-a-failed-node/>Replace a failed node</a></li><li><a href=/docs/kv/3.4.1/how-to/operate/restore-an-openriak-node/>Restore an OpenRiak node</a></li><li><a href=/docs/kv/3.4.1/how-to/operate/perform-a-rolling-node-replacement/>Perform a rolling node replacement</a></li><li><a href=/docs/kv/3.4.1/how-to/operate/perform-a-rolling-restart/>Perform a rolling restart</a></li><li><a href=/docs/kv/3.4.1/how-to/operate/start-stop-or-restart-a-node/>Start, stop, or restart a node</a></li><li><a href=/docs/kv/3.4.1/how-to/operate/upgrade-an-openriak-cluster/>Upgrade an OpenRiak cluster</a></li><li><a href=/docs/kv/3.4.1/how-to/operate/plan-and-commit-a-cluster-change/>Plan and commit a cluster change</a></li><li><a href=/docs/kv/3.4.1/how-to/operate/repair-a-leveled-store/>Repair a Leveled store</a></li><li><a href=/docs/kv/3.4.1/how-to/operate/repair-an-individual-vnode/>Repair an individual vnode</a></li><li><a href=/docs/kv/3.4.1/how-to/operate/use-the-remote-console/>Use the remote console</a></li><li><a href=/docs/kv/3.4.1/how-to/operate/monitor-active-anti-entropy/>Monitor active anti-entropy</a></li><li><a href=/docs/kv/3.4.1/how-to/operate/monitor-read-repairs/>Monitor read repairs</a></li><li><a href=/docs/kv/3.4.1/how-to/operate/monitor-inter-cluster-reconciliation/>Monitor inter-cluster reconciliation</a></li><li><a href=/docs/kv/3.4.1/how-to/operate/monitor-node-worker-pools/>Monitor node worker pools</a></li><li><a href=/docs/kv/3.4.1/how-to/operate/schedule-object-reaping-and-erasure/>Schedule object reaping and erasure</a></li><li><a href=/docs/kv/3.4.1/how-to/operate/remove-obsolete-leveled-backup-files/>Remove obsolete Leveled backup files</a></li><li><a href=/docs/kv/3.4.1/how-to/operate/inspect-stored-data/>Inspect stored data</a></li><li><a href=/docs/kv/3.4.1/how-to/operate/resynchronize-a-bucket/>Resynchronize a bucket</a></li><li><a href=/docs/kv/3.4.1/how-to/operate/re-replicate-keys-from-a-time-window/>Re-replicate keys from a time window</a></li><li><a href=/docs/kv/3.4.1/how-to/operate/rebuild-aae-trees-from-the-command-line/>Rebuild AAE trees from the command line</a></li><li><a href=/docs/kv/3.4.1/how-to/operate/tune-node-repair-under-application-load/>Tune node repair under application load</a></li><li><a href=/docs/kv/3.4.1/how-to/operate/check-vnode-and-backend-status/>Check vnode and backend status</a></li><li><a href=/docs/kv/3.4.1/how-to/operate/monitor-virtual-machine-limits/>Monitor virtual machine limits</a></li><li><a href=/docs/kv/3.4.1/how-to/operate/run-a-routine-operations-checklist/>Run a routine operations checklist</a></li></ul></details></li><li><details><summary><a href=/docs/kv/3.4.1/how-to/plan/>Plan a production cluster</a></summary></details></li><li><details><summary><a href=/docs/kv/3.4.1/how-to/secure/>Secure OpenRiak</a></summary></details></li><li><details><summary><a href=/docs/kv/3.4.1/how-to/troubleshoot/>Troubleshoot OpenRiak</a></summary></details></li><li><details><summary><a href=/docs/kv/3.4.1/how-to/tune/>Tune performance</a></summary></details></li><li><details><summary><a href=/docs/kv/3.4.1/how-to/redis-add-on/>Use the Redis add-on</a></summary></details></li></ul></details></li><li><details><summary><a href=/docs/kv/3.4.1/reference/>Reference</a></summary></details></li><li><details><summary><a href=/docs/kv/3.4.1/tutorials/>Tutorials</a></summary></details></li></ul></nav><div class=sidebar__help><a href=https://github.com/orgs/OpenRiak/discussions>Ask the OpenRiak community</a>
+<a href=https://github.com/OpenRiak/riak>OpenRiak source code</a></div></aside><button class=sidebar-scrim type=button data-sidebar-close aria-label="Close navigation"></button><main id=main-content class=content tabindex=-1><article class=doc><nav class=breadcrumbs aria-label=Breadcrumb><ol><li><a href=/docs/kv/>OpenRiak KV documentation</a></li><li><a href=/docs/kv/3.4.1/>OpenRiak KV 3.4.1</a></li><li><a href=/docs/kv/3.4.1/how-to/>How-to guides</a></li><li><a href=/docs/kv/3.4.1/how-to/operate/>Operate a cluster</a></li><li aria-current=page>Change cluster identity information</li></ol></nav><header class=article-header><div class=badges><span class="badge badge--how-to">how-to</span>
+<span class=badge>KV 3.4.1</span></div><h1>Change cluster identity information</h1><p class=lede>Show operators how to change cluster identity information with prechecks, verification, and recovery guidance.</p><div class=review-notice role=note><strong>Review status:</strong>
+This migrated page is still marked as a draft.
+Technical review is required before publication.</div></header><details class=on-this-page><summary>On this page</summary><nav id=TableOfContents><ul><li><a href=#before-you-begin>Before you begin</a></li><li><a href=#overview>Overview</a><ul><li><a href=#changing-cluster-information>Changing Cluster Information</a></li></ul></li><li><a href=#verify-the-result>Verify the result</a></li></ul></nav></details><div class=doc-body><p>Show operators how to change cluster identity information with prechecks, verification, and recovery guidance.</p><h2 id=before-you-begin>Before you begin</h2><p>A healthy cluster, current backups, and access to cluster status and logs. Record the starting state before making an operational change.</p><h2 id=overview>Overview</h2><h3 id=changing-cluster-information>Changing Cluster Information</h3><h4 id=change-the-node-name>Change the Node Name</h4><p>The node name is an important setting for the Erlang VM, especially when
+you want to build a cluster of nodes, as the node name identifies both
+the Erlang application and the host name on the network. All nodes in
+the OpenRiak cluster need these node names to communicate and coordinate
+with each other.</p><p>In your configuration files, the node name defaults to <code>riak@127.0.0.1</code>.
+To change the node name, change the following line:</p><pre tabindex=0><code class=language-riakconf data-lang=riakconf>nodename = riak@127.0.0.1
+</code></pre><pre tabindex=0><code class=language-vmargs data-lang=vmargs>-name riak@127.0.0.1
+</code></pre><p>Change it to something that corresponds to either the IP address or a
+resolvable host name for this particular node, like so:</p><pre tabindex=0><code class=language-riakconf data-lang=riakconf>nodename = riak@192.168.1.10
+</code></pre><pre tabindex=0><code class=language-vmargs data-lang=vmargs>-name riak@192.168.1.10
+</code></pre><h5 id=change-the-http-and-protocol-buffers-binding-address>Change the HTTP and Protocol Buffers binding address</h5><p>By default, OpenRiak&rsquo;s HTTP and Protocol Buffers services are bound to the
+local interface, i.e. 127.0.0.1, and are therefore unable to serve
+requests from the outside network. The relevant setting is in your
+<a href=/docs/kv/3.4.1/reference/configuration/>configuration files</a>
+:</p><pre tabindex=0><code class=language-riakconf data-lang=riakconf>#### For HTTP
+listener.http.internal = 127.0.0.1:8098
+
+#### For Protocol Buffers
+listener.protobuf.internal = 127.0.0.1:8087
+</code></pre><pre tabindex=0><code class=language-appconfig data-lang=appconfig>% In the riak_api section
+
+% For HTTP
+{http, [ {&#34;127.0.0.1&#34;, 8098 } ]},
+
+% For Protocol Buffers
+{pb, [ {&#34;127.0.0.1&#34;, 8087} ] },
+</code></pre><p>Either change it to use an IP address that corresponds to one of the
+server&rsquo;s network interfaces, or 0.0.0.0 to allow access from all
+interfaces and networks, e.g.:</p><pre tabindex=0><code class=language-riakconf data-lang=riakconf>listener.http.internal = 0.0.0.0:8098
+</code></pre><pre tabindex=0><code class=language-appconfig data-lang=appconfig>% In the riak_core section
+{http, [ {&#34;0.0.0.0&#34;, 8098 } ]},
+</code></pre><p>The same configuration should be changed for the Protocol Buffers
+interface if you intend on using it (which we recommend). Change the
+following line:</p><pre tabindex=0><code class=language-riakconf data-lang=riakconf>listener.protobuf.internal = 0.0.0.0:8087
+</code></pre><pre tabindex=0><code class=language-appconfig data-lang=appconfig>% In the riak_core section
+{pb, [ {&#34;0.0.0.0&#34;, 8087} ] },
+</code></pre><h5 id=rename-single-node-clusters>Rename Single Node Clusters</h5><p>To rename a single-node development cluster:</p><ol><li><p>Stop the node with <code>riak stop</code>.</p></li><li><p>Change the node&rsquo;s <code>nodename</code> parameter in <code>riak.conf</code>, or <code>-name</code> parameter in <code>vm.args</code> to the new name.</p></li><li><p>Change any IP addresses in <code>riak.conf</code> or <code>app.config</code> if necessary. Specifically: <code>listener.protobuf.$name</code>, <code>listener.http.$name</code>, and <code>listener.https.$name</code> in <code>riak.conf</code>, and <code>pb_ip</code>, <code>http</code>, <code>https</code>, and <code>cluster_mgr</code> in <code>app.config</code>.</p></li><li><p>Delete the contents of the node&rsquo;s <code>ring</code> directory. The location of the ring directory is the value for the <code>ring.state_dir</code> in <code>riak.conf</code>, or <code>ring_state_dir</code> in <code>app.config</code>.</p></li><li><p>Start Riak on the node with <code>riak start</code>.</p></li></ol><h5 id=rename-multi-node-clusters>Rename Multi-Node Clusters</h5><p>For multi-node clusters, a rename is a slightly more complex procedure; however, it is very similar to the process for renaming a single node.</p><p>Previous to Riak version 1.2, a cluster node&rsquo;s name could only be changed with the <a href=/docs/kv/3.4.1/reference/commands/riak-admin/#reip><code>riak admin reip</code></a>
+command, which involves downtime for the entire cluster. As of Riak version 1.2, that method has been superseded by <a href=/docs/kv/3.4.1/reference/commands/riak-admin/><code>riak admin cluster force-replace</code></a>
+, which is safer and does not require cluster wide downtime.</p><p>There still exist scenarios that require nodes to be renamed while stopped, such as seeding a cluster with backups from another cluster that does not share the same node names. Please see the <a href=#clusters-from-backups>Clusters from Backups</a>
+section for more details on renaming in this scenario.</p><p>The following example describes reconfiguring node names with the new <code>riak admin cluster force-replace</code> method.</p><h6 id=example-scenario>Example Scenario</h6><p>For this example scenario, Riak is operating in a cluster of 5 nodes with the following network configuration:</p><ul><li><code>riak@10.1.42.11</code> on <code>node1.localdomain</code> → IP address changing to 192.168.17.11</li><li><code>riak@10.1.42.12</code> on <code>node2.localdomain</code> → IP address changing to 192.168.17.12</li><li><code>riak@10.1.42.13</code> on <code>node3.localdomain</code> → IP address changing to 192.168.17.13</li><li><code>riak@10.1.42.14</code> on <code>node4.localdomain</code> → IP address changing to 192.168.17.14</li><li><code>riak@10.1.42.15</code> on <code>node5.localdomain</code> → IP address changing to 192.168.17.15</li></ul><p>The above list shows the network configuration details for our 5 nodes, including the Erlang node name value, the node&rsquo;s fully qualified domain name, and the new IP address each node will be configured to use.</p><p>The nodes in our example cluster are currently configured to use the <em>10.1.42.</em> private subnetwork range. Our goal for this example will be to configure the nodes to instead use the <em>192.168.17.</em> private subnetwork range and do so in a rolling fashion without interrupting cluster operation.</p><h6 id=process>Process</h6><p>This process can be accomplished in three phases. The details and steps required of each phase are presented in the following section.</p><ol><li><a href=#down>Down the node to be reconfigured</a></li><li><a href=#reconfigure>Reconfigure node to use new address</a></li><li><a href=#repeat>Repeat previous steps on each node</a></li></ol><p><a id=down></a></p><h6 id=down-the-node>Down the Node</h6><ol><li>Stop Riak on <code>node1.localdomain</code>:</li></ol><div class=highlight><pre tabindex=0 class=chroma><code class=language-bash data-lang=bash><span class=line><span class=cl>    riak stop
+</span></span><span class=line><span class=cl>    <span class=sb>```</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl>The output should look like this:
+</span></span></code></pre></div><pre><code>Attempting to restart script through sudo -H -u riak
+ok
+```
+</code></pre><ol start=2><li>From the <code>node2.localdomain</code> node, mark <code>riak@10.1.42.11</code> down:</li></ol><div class=highlight><pre tabindex=0 class=chroma><code class=language-bash data-lang=bash><span class=line><span class=cl>    riak admin down riak@10.1.42.11
+</span></span><span class=line><span class=cl>    <span class=sb>```</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl>Successfully marking the node down should produce output like this:
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl><span class=sb>```</span>bash
+</span></span><span class=line><span class=cl>    Attempting to restart script through sudo -H -u riak
+</span></span><span class=line><span class=cl>    Success: <span class=s2>&#34;riak@10.1.42.11&#34;</span> marked as down
+</span></span><span class=line><span class=cl>    <span class=sb>```</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl>This step informs the cluster that <span class=sb>`</span>riak@10.1.42.11<span class=sb>`</span> is offline and ring-state transitions should be allowed. While we<span class=s1>&#39;re executing the `riak admin down` command from `node2.localdomain` in this example, the command can be executed from any currently running node.
+</span></span></span><span class=line><span class=cl><span class=s1>
+</span></span></span><span class=line><span class=cl><span class=s1>&lt;a id=&#34;reconfigure&#34;&gt;&lt;/a&gt;
+</span></span></span><span class=line><span class=cl><span class=s1>###### Reconfigure Node to Use New Address
+</span></span></span><span class=line><span class=cl><span class=s1>
+</span></span></span><span class=line><span class=cl><span class=s1>Reconfigure `node1.localdomain` to listen on the new private IP address *192.168.17.11* by following these steps:
+</span></span></span><span class=line><span class=cl><span class=s1>
+</span></span></span><span class=line><span class=cl><span class=s1>1. Change the node&#39;</span>s <span class=sb>`</span>nodename<span class=sb>`</span> parameter in <span class=sb>`</span>riak.conf<span class=sb>`</span>, or <span class=sb>`</span>-name<span class=sb>`</span> parameter in <span class=sb>`</span>vm.args<span class=sb>`</span>, to reflect the new node name. For example:
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl><span class=sb>`</span>riak.conf<span class=sb>`</span>: <span class=sb>`</span><span class=nv>nodename</span> <span class=o>=</span> riak@192.168.17.11<span class=sb>`</span>
+</span></span><span class=line><span class=cl>    <span class=sb>`</span>vm.args<span class=sb>`</span> : <span class=sb>`</span>-name riak@192.168.17.11<span class=sb>`</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl>2. Change any IP addresses to *192.168.17.11* in <span class=sb>`</span>riak.conf<span class=sb>`</span> or <span class=sb>`</span>app.config<span class=sb>`</span> as previously described in step <span class=m>3</span> of <span class=o>[</span>Single Node Clusters<span class=o>](</span>/docs/kv/3.4.1/how-to/operate/change-cluster-information/<span class=o>)</span>.
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl>3. Rename the node<span class=s1>&#39;s `ring` directory, the location of which is described in step 4 of [Single Node Clusters](/docs/kv/3.4.1/how-to/operate/change-cluster-information/).  You may rename it to whatever you like, as it will only be used as a backup during the node renaming process.
+</span></span></span><span class=line><span class=cl><span class=s1>
+</span></span></span><span class=line><span class=cl><span class=s1>4. Start Riak on `node1.localdomain`.
+</span></span></span><span class=line><span class=cl><span class=s1>
+</span></span></span><span class=line><span class=cl><span class=s1>```bash
+</span></span></span><span class=line><span class=cl><span class=s1>    riak start
+</span></span></span><span class=line><span class=cl><span class=s1>    ```
+</span></span></span><span class=line><span class=cl><span class=s1>
+</span></span></span><span class=line><span class=cl><span class=s1>5. Join the node back into the cluster.
+</span></span></span><span class=line><span class=cl><span class=s1>
+</span></span></span><span class=line><span class=cl><span class=s1>```bash
+</span></span></span><span class=line><span class=cl><span class=s1>    riak admin cluster join riak@10.1.42.12
+</span></span></span><span class=line><span class=cl><span class=s1>    ```
+</span></span></span><span class=line><span class=cl><span class=s1>
+</span></span></span><span class=line><span class=cl><span class=s1>Successful staging of the join request should have output like this:
+</span></span></span><span class=line><span class=cl><span class=s1>
+</span></span></span><span class=line><span class=cl><span class=s1>```bash
+</span></span></span><span class=line><span class=cl><span class=s1>    Attempting to restart script through sudo -H -u riak
+</span></span></span><span class=line><span class=cl><span class=s1>    Success: staged join request for &#39;</span>riak@192.168.17.11<span class=s1>&#39; to &#39;</span>riak@10.1.42.12<span class=s1>&#39;
+</span></span></span><span class=line><span class=cl><span class=s1>    ```
+</span></span></span><span class=line><span class=cl><span class=s1>
+</span></span></span><span class=line><span class=cl><span class=s1>6. Use `riak admin cluster force-replace` to change all ownership references from `riak@10.1.42.11` to `riak@192.168.17.11`:
+</span></span></span><span class=line><span class=cl><span class=s1>
+</span></span></span><span class=line><span class=cl><span class=s1>```bash
+</span></span></span><span class=line><span class=cl><span class=s1>    riak admin cluster force-replace riak@10.1.42.11 riak@192.168.17.11
+</span></span></span><span class=line><span class=cl><span class=s1>    ```
+</span></span></span><span class=line><span class=cl><span class=s1>
+</span></span></span><span class=line><span class=cl><span class=s1>Successful force replacement staging output looks like this:
+</span></span></span><span class=line><span class=cl><span class=s1>
+</span></span></span><span class=line><span class=cl><span class=s1>```bash
+</span></span></span><span class=line><span class=cl><span class=s1>    Attempting to restart script through sudo -H -u riak
+</span></span></span><span class=line><span class=cl><span class=s1>    Success: staged forced replacement of &#39;</span>riak@10.1.42.11<span class=s1>&#39; with &#39;</span>riak@192.168.17.11<span class=s1>&#39;
+</span></span></span><span class=line><span class=cl><span class=s1>    ```
+</span></span></span><span class=line><span class=cl><span class=s1>
+</span></span></span><span class=line><span class=cl><span class=s1>7. Review the new changes with `riak admin cluster plan:`
+</span></span></span><span class=line><span class=cl><span class=s1>
+</span></span></span><span class=line><span class=cl><span class=s1>```bash
+</span></span></span><span class=line><span class=cl><span class=s1>    riak admin cluster plan
+</span></span></span><span class=line><span class=cl><span class=s1>    ```
+</span></span></span><span class=line><span class=cl><span class=s1>
+</span></span></span><span class=line><span class=cl><span class=s1>Example output:
+</span></span></span><span class=line><span class=cl><span class=s1>
+</span></span></span><span class=line><span class=cl><span class=s1>```bash
+</span></span></span><span class=line><span class=cl><span class=s1>    Attempting to restart script through sudo -H -u riak
+</span></span></span><span class=line><span class=cl><span class=s1>    =========================== Staged Changes ============================
+</span></span></span><span class=line><span class=cl><span class=s1>    Action         Nodes(s)
+</span></span></span><span class=line><span class=cl><span class=s1>    -----------------------------------------------------------------------
+</span></span></span><span class=line><span class=cl><span class=s1>    join           &#39;</span>riak@192.168.17.11<span class=s1>&#39;
+</span></span></span><span class=line><span class=cl><span class=s1>    force-replace  &#39;</span>riak@10.1.42.11<span class=s1>&#39; with &#39;</span>riak@192.168.17.11<span class=s1>&#39;
+</span></span></span><span class=line><span class=cl><span class=s1>    -----------------------------------------------------------------------
+</span></span></span><span class=line><span class=cl><span class=s1>
+</span></span></span><span class=line><span class=cl><span class=s1>WARNING: All of &#39;</span>riak@10.1.42.11<span class=s1>&#39; replicas will be lost
+</span></span></span><span class=line><span class=cl><span class=s1>
+</span></span></span><span class=line><span class=cl><span class=s1>NOTE: Applying these changes will result in 1 cluster transition
+</span></span></span><span class=line><span class=cl><span class=s1>
+</span></span></span><span class=line><span class=cl><span class=s1>#######################################################################
+</span></span></span><span class=line><span class=cl><span class=s1>                         After cluster transition 1/1
+</span></span></span><span class=line><span class=cl><span class=s1>    #######################################################################
+</span></span></span><span class=line><span class=cl><span class=s1>
+</span></span></span><span class=line><span class=cl><span class=s1>============================= Membership ==============================
+</span></span></span><span class=line><span class=cl><span class=s1>    Status     Ring    Pending    Node
+</span></span></span><span class=line><span class=cl><span class=s1>    -----------------------------------------------------------------------
+</span></span></span><span class=line><span class=cl><span class=s1>    valid      20.3%      --      &#39;</span>riak@192.168.17.11<span class=s1>&#39;
+</span></span></span><span class=line><span class=cl><span class=s1>    valid      20.3%      --      &#39;</span>riak@10.1.42.12<span class=s1>&#39;
+</span></span></span><span class=line><span class=cl><span class=s1>    valid      20.3%      --      &#39;</span>riak@10.1.42.13<span class=s1>&#39;
+</span></span></span><span class=line><span class=cl><span class=s1>    valid      20.3%      --      &#39;</span>riak@10.1.42.14<span class=s1>&#39;
+</span></span></span><span class=line><span class=cl><span class=s1>    valid      18.8%      --      &#39;</span>riak@10.1.42.15<span class=s1>&#39;
+</span></span></span><span class=line><span class=cl><span class=s1>    -----------------------------------------------------------------------
+</span></span></span><span class=line><span class=cl><span class=s1>    Valid:5 / Leaving:0 / Exiting:0 / Joining:0 / Down:0
+</span></span></span><span class=line><span class=cl><span class=s1>
+</span></span></span><span class=line><span class=cl><span class=s1>Partitions reassigned from cluster changes: 13
+</span></span></span><span class=line><span class=cl><span class=s1>    13 reassigned from &#39;</span>riak@10.1.42.11<span class=s1>&#39; to &#39;</span>riak@192.168.17.11<span class=s1>&#39;
+</span></span></span><span class=line><span class=cl><span class=s1>    ```
+</span></span></span><span class=line><span class=cl><span class=s1>
+</span></span></span><span class=line><span class=cl><span class=s1>8. Commit the new changes to the cluster with `riak admin cluster commit`:
+</span></span></span><span class=line><span class=cl><span class=s1>
+</span></span></span><span class=line><span class=cl><span class=s1>```bash
+</span></span></span><span class=line><span class=cl><span class=s1>    riak admin cluster commit
+</span></span></span><span class=line><span class=cl><span class=s1>    ```
+</span></span></span><span class=line><span class=cl><span class=s1>
+</span></span></span><span class=line><span class=cl><span class=s1>Output from the command should resemble this example:
+</span></span></span><span class=line><span class=cl><span class=s1>
+</span></span></span><span class=line><span class=cl><span class=s1>```bash
+</span></span></span><span class=line><span class=cl><span class=s1>    Attempting to restart script through sudo -H -u riak
+</span></span></span><span class=line><span class=cl><span class=s1>    Cluster changes committed
+</span></span></span><span class=line><span class=cl><span class=s1>    ```
+</span></span></span><span class=line><span class=cl><span class=s1>
+</span></span></span><span class=line><span class=cl><span class=s1>9. Check that the node is participating in the cluster and functioning as expected:
+</span></span></span><span class=line><span class=cl><span class=s1>
+</span></span></span><span class=line><span class=cl><span class=s1>```bash
+</span></span></span><span class=line><span class=cl><span class=s1>    riak admin member-status
+</span></span></span><span class=line><span class=cl><span class=s1>    ```
+</span></span></span><span class=line><span class=cl><span class=s1>
+</span></span></span><span class=line><span class=cl><span class=s1>Output should resemble this example:
+</span></span></span><span class=line><span class=cl><span class=s1>
+</span></span></span><span class=line><span class=cl><span class=s1>```bash
+</span></span></span><span class=line><span class=cl><span class=s1>    Attempting to restart script through sudo -H -u riak
+</span></span></span><span class=line><span class=cl><span class=s1>    ============================= Membership ==============================
+</span></span></span><span class=line><span class=cl><span class=s1>    Status     Ring    Pending    Node
+</span></span></span><span class=line><span class=cl><span class=s1>    -----------------------------------------------------------------------
+</span></span></span><span class=line><span class=cl><span class=s1>    valid      20.3%      --      &#39;</span>riak@192.168.17.11<span class=s1>&#39;
+</span></span></span><span class=line><span class=cl><span class=s1>    valid      20.3%      --      &#39;</span>riak@10.1.42.12<span class=s1>&#39;
+</span></span></span><span class=line><span class=cl><span class=s1>    valid      20.3%      --      &#39;</span>riak@10.1.42.13<span class=s1>&#39;
+</span></span></span><span class=line><span class=cl><span class=s1>    valid      20.3%      --      &#39;</span>riak@10.1.42.14<span class=s1>&#39;
+</span></span></span><span class=line><span class=cl><span class=s1>    valid      18.8%      --      &#39;</span>riak@10.1.42.15<span class=s1>&#39;
+</span></span></span><span class=line><span class=cl><span class=s1>    -----------------------------------------------------------------------
+</span></span></span><span class=line><span class=cl><span class=s1>    Valid:5 / Leaving:0 / Exiting:0 / Joining:0 / Down:0
+</span></span></span><span class=line><span class=cl><span class=s1>    ```
+</span></span></span><span class=line><span class=cl><span class=s1>
+</span></span></span><span class=line><span class=cl><span class=s1>10. Monitor hinted handoff transfers to ensure they have finished with the `riak admin transfers` command.
+</span></span></span><span class=line><span class=cl><span class=s1>
+</span></span></span><span class=line><span class=cl><span class=s1>11. Clean up by deleting the renamed `ring` directory once all previous steps have been successfully completed.
+</span></span></span><span class=line><span class=cl><span class=s1>
+</span></span></span><span class=line><span class=cl><span class=s1>**Note**
+</span></span></span><span class=line><span class=cl><span class=s1>When using the `riak admin force-replace` command, you will always get a
+</span></span></span><span class=line><span class=cl><span class=s1>warning message like: `WARNING: All of &#39;</span>riak@10.1.42.11<span class=s1>&#39; replicas will be
+</span></span></span><span class=line><span class=cl><span class=s1>lost`. Since we didn&#39;</span>t delete any data files and we are replacing the node
+</span></span><span class=line><span class=cl>with itself under a new name, we will not lose any replicas.
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl>&lt;a <span class=nv>id</span><span class=o>=</span><span class=s2>&#34;repeat&#34;</span>&gt;&lt;/a&gt;
+</span></span><span class=line><span class=cl><span class=c1>###### Repeat previous steps on each node</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl>Repeat the steps above <span class=k>for</span> each of the remaining nodes in the cluster.
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl>Use *riak@192.168.17.11* as the target node <span class=k>for</span> further <span class=sb>`</span>riak admin cluster join<span class=sb>`</span> commands issued from subsequently reconfigured nodes to join those nodes to the cluster.
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl><span class=sb>```</span>bash
+</span></span><span class=line><span class=cl>riak admin cluster join riak@192.168.17.11
+</span></span></code></pre></div><p>A successful join request staging produces output similar to this example:</p><div class=highlight><pre tabindex=0 class=chroma><code class=language-bash data-lang=bash><span class=line><span class=cl>Attempting to restart script through sudo -H -u riak
+</span></span><span class=line><span class=cl>Success: staged join request <span class=k>for</span> <span class=s1>&#39;riak@192.168.17.12&#39;</span> to <span class=s1>&#39;riak@192.168.17.11&#39;</span>
+</span></span></code></pre></div><h5 id=clusters-from-backups>Clusters from Backups</h5><p>The above steps describe a process for renaming nodes in a running cluster. When seeding a new cluster with backups where the nodes must have new names, typically done as a secondary cluster or in a disaster recovery scenario, a slightly different process must be used. This is because the node names must resolve to the new hosts in order for the nodes to start and communicate with each other.</p><p>Expanding on the Example Scenario above, the below steps can be used to rename nodes in a cluster that is being restored from backups. The below steps assume every node is offline, and they will indicate when to bring each node online.</p><h6 id=bringing-up-the-first-node>Bringing Up the First Node</h6><p>In order to bring our first node online, we&rsquo;ll first need to use the <code>riak admin reip</code> command on a single node. In this example, we&rsquo;ll use <code>riak@10.1.42.11</code> as our first node.</p><ol><li><p>In <code>riak.conf</code> change <code>nodename</code>, <code>-name</code> in <code>vm.args</code>, from <code>riak@10.1.42.11</code> to your new nodename, <code>riak@192.168.17.11</code>.</p></li><li><p>On <code>node1.localdomain</code> run <code>riak admin reip riak@10.1.42.11 riak@192.168.17.11</code>. This will change the name of <code>riak@10.1.42.11</code> to <code>riak@192.168.17.11</code> in the Riak ring.</p></li><li><p>Start Riak on <code>node1.localdomain</code>.</p></li><li><p>Once Riak is started on <code>node1.localdomain</code>, mark the rest of the nodes in the cluster down, using <code>riak admin down</code>. For example, we would down <code>riak@10.1.42.12</code> with <code>riak admin down riak@10.1.42.12</code>.</p></li><li><p>Confirm every other node in the cluster is marked down by running <code>riak admin member-status</code> on <code>node1.localdomain</code>:</p></li></ol><div class=highlight><pre tabindex=0 class=chroma><code class=language-bash data-lang=bash><span class=line><span class=cl>    <span class=o>=================================</span> <span class=nv>Membership</span> <span class=o>==================================</span>
+</span></span><span class=line><span class=cl>    Status     Ring        Pending    Node
+</span></span><span class=line><span class=cl>    -------------------------------------------------------------------------------
+</span></span><span class=line><span class=cl>    valid       20.3%      --      <span class=s1>&#39;riak@192.168.17.11&#39;</span>
+</span></span><span class=line><span class=cl>    down        20.3%      --      <span class=s1>&#39;riak@10.1.42.12&#39;</span>
+</span></span><span class=line><span class=cl>    down        20.3%      --      <span class=s1>&#39;riak@10.1.42.13&#39;</span>
+</span></span><span class=line><span class=cl>    down        20.3%      --      <span class=s1>&#39;riak@10.1.42.14&#39;</span>
+</span></span><span class=line><span class=cl>    down        18.8%      --      <span class=s1>&#39;riak@10.1.42.15&#39;</span>
+</span></span><span class=line><span class=cl>    -------------------------------------------------------------------------------
+</span></span><span class=line><span class=cl>    Valid:1 / Leaving:0 / Exiting:0 / Joining:0 / Down:4
+</span></span></code></pre></div><ol start=6><li>Ensure <code>riak@192.168.17.11</code> is listed as the claimant by running <code>riak admin ring-status</code> on <code>node1.localdomain</code>:</li></ol><div class=highlight><pre tabindex=0 class=chroma><code class=language-bash data-lang=bash><span class=line><span class=cl>    <span class=o>==================================</span> <span class=nv>Claimant</span> <span class=o>===================================</span>
+</span></span><span class=line><span class=cl>    Claimant:  <span class=s1>&#39;riak@192.168.17.11&#39;</span>
+</span></span><span class=line><span class=cl>    Status:     up
+</span></span><span class=line><span class=cl>    Ring Ready: <span class=nb>true</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl><span class=o>==============================</span> Ownership <span class=nv>Handoff</span> <span class=o>==============================</span>
+</span></span><span class=line><span class=cl>    No pending changes.
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl><span class=o>==============================</span> Unreachable <span class=nv>Nodes</span> <span class=o>==============================</span>
+</span></span><span class=line><span class=cl>    All nodes are up and reachable
+</span></span><span class=line><span class=cl>    <span class=sb>```</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl>Once all nodes are marked as down and our first node is listed as the claimant, we can proceed with the rest of the nodes.
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl><span class=c1>###### Bringing Up the Remaining Nodes</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl>1. On each of the remaining nodes, change <span class=sb>`</span>nodename<span class=sb>`</span> in <span class=sb>`</span>riak.conf<span class=sb>`</span>, or <span class=sb>`</span>-name<span class=sb>`</span> in <span class=sb>`</span>vm.args<span class=sb>`</span> as described above.
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl>2. Move aside the ring directory. As in <span class=o>[</span>Multi-Node Clusters<span class=o>](</span>/docs/kv/3.4.1/how-to/operate/change-cluster-information/<span class=o>)</span>, we will save this ring directory as a backup <span class=k>until</span> were finished.
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl>3. Start each node. They will start as <span class=k>if</span> they are each a member of their own cluster, but will retain their restored data.
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl>4. Join each node to our first node using <span class=sb>`</span>riak admin cluster join riak@192.168.17.11<span class=sb>`</span>.
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl>5. Force replace each node with its old node name. For example, <span class=sb>`</span>riak admin cluster force-replace riak@10.1.42.12 riak@192.168.17.12<span class=sb>`</span>.
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl>6. Once the above is <span class=nb>complete</span> <span class=k>for</span> each node, run <span class=sb>`</span>riak admin cluster plan<span class=sb>`</span> on any node. The output should look similar to below:
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl><span class=sb>```</span><span class=nv>bash</span>
+</span></span><span class=line><span class=cl>    <span class=o>===============================</span> Staged <span class=nv>Changes</span> <span class=o>================================</span>
+</span></span><span class=line><span class=cl>    Action         Details<span class=o>(</span>s<span class=o>)</span>
+</span></span><span class=line><span class=cl>    -------------------------------------------------------------------------------
+</span></span><span class=line><span class=cl>    force-replace  <span class=s1>&#39;riak@10.1.42.12&#39;</span> with <span class=s1>&#39;riak@192.168.17.12&#39;</span>
+</span></span><span class=line><span class=cl>    force-replace  <span class=s1>&#39;riak@10.1.42.13&#39;</span> with <span class=s1>&#39;riak@192.168.17.13&#39;</span>
+</span></span><span class=line><span class=cl>    force-replace  <span class=s1>&#39;riak@10.1.42.14&#39;</span> with <span class=s1>&#39;riak@192.168.17.14&#39;</span>
+</span></span><span class=line><span class=cl>    force-replace  <span class=s1>&#39;riak@10.1.42.15&#39;</span> with <span class=s1>&#39;riak@192.168.17.15&#39;</span>
+</span></span><span class=line><span class=cl>    join           <span class=s1>&#39;riak@192.168.17.12&#39;</span>
+</span></span><span class=line><span class=cl>    join           <span class=s1>&#39;riak@192.168.17.13&#39;</span>
+</span></span><span class=line><span class=cl>    join           <span class=s1>&#39;riak@192.168.17.14&#39;</span>
+</span></span><span class=line><span class=cl>    join           <span class=s1>&#39;riak@192.168.17.15&#39;</span>
+</span></span><span class=line><span class=cl>    -------------------------------------------------------------------------------
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl>WARNING: All of <span class=s1>&#39;riak@10.1.42.12&#39;</span> replicas will be lost
+</span></span><span class=line><span class=cl>    WARNING: All of <span class=s1>&#39;riak@10.1.42.13&#39;</span> replicas will be lost
+</span></span><span class=line><span class=cl>    WARNING: All of <span class=s1>&#39;riak@10.1.42.14&#39;</span> replicas will be lost
+</span></span><span class=line><span class=cl>    WARNING: All of <span class=s1>&#39;riak@10.1.42.15&#39;</span> replicas will be lost
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl><span class=c1>###############################################################################</span>
+</span></span><span class=line><span class=cl>                             After cluster transition 1/1
+</span></span><span class=line><span class=cl>    <span class=c1>###############################################################################</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl><span class=o>=================================</span> <span class=nv>Membership</span> <span class=o>==================================</span>
+</span></span><span class=line><span class=cl>    Status     Ring    Pending    Node
+</span></span><span class=line><span class=cl>    -------------------------------------------------------------------------------
+</span></span><span class=line><span class=cl>    valid       20.3%      --      <span class=s1>&#39;riak@192.168.17.11&#39;</span>
+</span></span><span class=line><span class=cl>    valid       20.3%      --      <span class=s1>&#39;riak@192.168.17.12&#39;</span>
+</span></span><span class=line><span class=cl>    valid       20.3%      --      <span class=s1>&#39;riak@192.168.17.13&#39;</span>
+</span></span><span class=line><span class=cl>    valid       20.3%      --      <span class=s1>&#39;riak@192.168.17.14&#39;</span>
+</span></span><span class=line><span class=cl>    valid       18.8%      --      <span class=s1>&#39;riak@192.168.17.15&#39;</span>
+</span></span><span class=line><span class=cl>    -------------------------------------------------------------------------------
+</span></span><span class=line><span class=cl>    Valid:5 / Leaving:0 / Exiting:0 / Joining:0 / Down:0
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl>Partitions reassigned from cluster changes: <span class=m>51</span>
+</span></span><span class=line><span class=cl>      <span class=m>13</span> reassigned from <span class=s1>&#39;riak@10.1.42.12&#39;</span> to <span class=s1>&#39;riak@192.168.17.12&#39;</span>
+</span></span><span class=line><span class=cl>      <span class=m>13</span> reassigned from <span class=s1>&#39;riak@10.1.42.13&#39;</span> to <span class=s1>&#39;riak@192.168.17.13&#39;</span>
+</span></span><span class=line><span class=cl>      <span class=m>13</span> reassigned from <span class=s1>&#39;riak@10.1.42.14&#39;</span> to <span class=s1>&#39;riak@192.168.17.14&#39;</span>
+</span></span><span class=line><span class=cl>      <span class=m>12</span> reassigned from <span class=s1>&#39;riak@10.1.42.15&#39;</span> to <span class=s1>&#39;riak@192.168.17.15&#39;</span>
+</span></span><span class=line><span class=cl>    <span class=sb>```</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl>7. If the above plan looks correct, commit the cluster changes with <span class=sb>`</span>riak admin cluster commit<span class=sb>`</span>.
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl>8. Once the cluster transition has completed, all node names should be changed and be marked as valid in <span class=sb>`</span>riak admin member-status<span class=sb>`</span> like below:
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl><span class=sb>```</span><span class=nv>bash</span>
+</span></span><span class=line><span class=cl>    <span class=o>=================================</span> <span class=nv>Membership</span> <span class=o>==================================</span>
+</span></span><span class=line><span class=cl>    Status       Ring       Pending    Node
+</span></span><span class=line><span class=cl>    -------------------------------------------------------------------------------
+</span></span><span class=line><span class=cl>    valid        20.3%      --        <span class=s1>&#39;riak@192.168.17.11&#39;</span>
+</span></span><span class=line><span class=cl>    valid        20.3%      --        <span class=s1>&#39;riak@192.168.17.12&#39;</span>
+</span></span><span class=line><span class=cl>    valid        20.3%      --        <span class=s1>&#39;riak@192.168.17.13&#39;</span>
+</span></span><span class=line><span class=cl>    valid        20.3%      --        <span class=s1>&#39;riak@192.168.17.14&#39;</span>
+</span></span><span class=line><span class=cl>    valid        18.8%      --        <span class=s1>&#39;riak@192.168.17.15&#39;</span>
+</span></span><span class=line><span class=cl>    -------------------------------------------------------------------------------
+</span></span><span class=line><span class=cl>    Valid:5 / Leaving:0 / Exiting:0 / Joining:0 / Down:0
+</span></span></code></pre></div><h2 id=verify-the-result>Verify the result</h2><p>Compare cluster health and workload behaviour with the recorded starting state, and confirm that all affected nodes have converged.</p></div><nav class=page-navigation aria-label="Adjacent pages"><a class=page-navigation__previous href=/docs/kv/3.4.1/how-to/operate/change-runtime-log-levels/><span>Previous</span><strong>Change runtime log levels</strong></a>
+<a class=page-navigation__next href=/docs/kv/3.4.1/how-to/operate/back-up-an-openriak-node/><span>Next</span><strong>Back up an OpenRiak node</strong></a></nav></article></main></div><footer class=site-footer><div><p>OpenRiak documentation is licensed under <a href=https://creativecommons.org/licenses/by/4.0/>Creative Commons Attribution 4.0</a>.</p><p>Historical material © Basho Technologies, Inc.; community revisions © OpenRiak contributors.</p></div><a href=#main-content>Back to top</a></footer><script src=/docs/js/site.js defer></script></body></html>

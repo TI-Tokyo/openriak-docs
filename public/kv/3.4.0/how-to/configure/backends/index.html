@@ -1,0 +1,201 @@
+<!doctype html><html lang=en class=no-js><head><script src="/docs/livereload.js?mindelay=10&amp;v=2&amp;port=1320&amp;path=docs/livereload" data-no-instant defer></script><meta charset=utf-8><meta name=viewport content="width=device-width,initial-scale=1"><meta name=color-scheme content="light dark"><script>(()=>{const t="openriak-docs-theme";let e="system";try{const n=localStorage.getItem(t);(n==="light"||n==="dark"||n==="system")&&(e=n)}catch{}const n=window.matchMedia?.("(prefers-color-scheme: dark)").matches??!1;document.documentElement.dataset.themePreference=e,document.documentElement.dataset.theme=e==="system"?n?"dark":"light":e})()</script><meta name=description content="Introduce backend configuration procedures after the reader has selected a suitable storage engine."><title>Configure storage backends | OpenRiak Documentation</title><link rel=canonical href=http://127.0.0.1:1320/docs/kv/3.4.0/how-to/configure/backends/><link rel=icon href=/docs/images/branding/favicon.ico sizes=any><link rel=stylesheet href=/docs/css/site.css><link rel=stylesheet href=/docs/css/theme.css><script src=/docs/js/theme.js defer></script><meta property="og:type" content="website"><meta property="og:title" content="Configure storage backends"><meta property="og:description" content="Introduce backend configuration procedures after the reader has selected a suitable storage engine."><meta property="og:url" content="http://127.0.0.1:1320/docs/kv/3.4.0/how-to/configure/backends/"></head><body data-kind=section data-section=kv><script>document.documentElement.classList.remove("no-js")</script><a class=skip-link href=#main-content>Skip to content</a><header class=site-header><div class=site-header__inner><button class=nav-toggle type=button aria-controls=docs-sidebar aria-expanded=false>
+<span aria-hidden=true>☰</span><span class=sr-only>Toggle documentation navigation</span>
+</button>
+<a class=brand href=/docs/ aria-label="OpenRiak documentation home"><img src=/docs/images/branding/riak-logo-inverted.png alt width=34 height=34>
+<span>OpenRiak <strong>Docs</strong></span></a><nav class=primary-nav aria-label="Documentation types"><a href=/docs/kv/3.4.1/tutorials/>Tutorials</a>
+<a href=/docs/kv/3.4.1/how-to/>How-to</a>
+<a href=/docs/kv/3.4.1/reference/>Reference</a>
+<a href=/docs/kv/3.4.1/explanation/>Explanation</a></nav><a class=community-link href=https://github.com/orgs/OpenRiak/discussions>Community</a>
+<label class=theme-control><span class=theme-control__icon aria-hidden=true>◐</span>
+<span class=sr-only>Color theme</span>
+<select data-theme-select aria-label="Color theme"><option value=system>System</option><option value=light>Light</option><option value=dark>Dark</option></select></label></div></header><div class=site-shell><aside id=docs-sidebar class=sidebar aria-label="Documentation navigation"><div class=sidebar__tools><label for=version-select>Version</label>
+<select id=version-select data-version-select><option value=/docs/kv/3.4.1/>3.4.1 (latest)</option><option value=/docs/kv/3.4.0/ selected>3.4.0</option></select><form class=docs-search role=search data-search data-index-url=/docs/search-index.json data-version=3.4.0><label class=sr-only for=docs-search-input>Search this version</label>
+<input id=docs-search-input type=search placeholder="Search this version" autocomplete=off data-search-input><div class=search-results data-search-results hidden></div></form></div><nav class=sidebar__nav aria-label="Pages in this version"><a class=sidebar__root href=/docs/kv/3.4.0/>OpenRiak KV 3.4.0</a><ul class=nav-tree><li><details><summary><a href=/docs/kv/3.4.0/explanation/>Explanation</a></summary></details></li><li><details open><summary><a href=/docs/kv/3.4.0/how-to/>How-to guides</a></summary><ul class=nav-tree><li><details open><summary><a href=/docs/kv/3.4.0/how-to/configure/>Configure OpenRiak</a></summary><ul class=nav-tree><li><details><summary><a href=/docs/kv/3.4.0/how-to/configure/replication/>Configure replication</a></summary></details></li><li><details open><summary><a class=is-current href=/docs/kv/3.4.0/how-to/configure/backends/ aria-current=page>Configure storage backends</a></summary><ul class=nav-tree><li><a href=/docs/kv/3.4.0/how-to/configure/backends/configure-the-bitcask-backend/>Configure the Bitcask backend</a></li><li><a href=/docs/kv/3.4.0/how-to/configure/backends/change-the-backend-of-an-existing-node/>Change the backend of an existing node</a></li><li><a href=/docs/kv/3.4.0/how-to/configure/backends/configure-the-leveldb-backend/>Configure the LevelDB backend</a></li><li><a href=/docs/kv/3.4.0/how-to/configure/backends/configure-the-leveled-backend/>Configure the Leveled backend</a></li><li><a href=/docs/kv/3.4.0/how-to/configure/backends/configure-the-memory-backend/>Configure the Memory backend</a></li><li><a href=/docs/kv/3.4.0/how-to/configure/backends/configure-multiple-backends/>Configure multiple backends</a></li><li><a href=/docs/kv/3.4.0/how-to/configure/backends/configure-the-prefix-multi-backend/>Configure the Prefix Multi backend</a></li><li><a href=/docs/kv/3.4.0/how-to/configure/backends/configure-the-bitcask-merge-window/>Configure the Bitcask merge window</a></li><li><a href=/docs/kv/3.4.0/how-to/configure/backends/configure-the-leveled-compaction-window/>Configure the Leveled compaction window</a></li></ul></details></li><li><a href=/docs/kv/3.4.0/how-to/configure/configure-api-listeners/>Configure API listeners</a></li><li><a href=/docs/kv/3.4.0/how-to/configure/configure-basic-node-settings/>Configure basic node settings</a></li><li><a href=/docs/kv/3.4.0/how-to/configure/configure-global-object-expiration/>Configure global object expiration</a></li><li><a href=/docs/kv/3.4.0/how-to/configure/configure-a-load-balancing-proxy/>Configure a load-balancing proxy</a></li><li><a href=/docs/kv/3.4.0/how-to/configure/configure-logging/>Configure logging</a></li><li><a href=/docs/kv/3.4.0/how-to/configure/inspect-and-manage-configuration/>Inspect and manage configuration</a></li><li><a href=/docs/kv/3.4.0/how-to/configure/configure-mapreduce/>Configure MapReduce</a></li><li><a href=/docs/kv/3.4.0/how-to/configure/enable-strong-consistency/>Enable strong consistency</a></li><li><a href=/docs/kv/3.4.0/how-to/configure/verify-configuration-before-startup/>Verify configuration before startup</a></li><li><a href=/docs/kv/3.4.0/how-to/configure/extend-configuration-with-advanced.config/>Extend configuration with advanced.config</a></li><li><a href=/docs/kv/3.4.0/how-to/configure/set-runtime-environment-variables/>Set runtime environment variables</a></li><li><a href=/docs/kv/3.4.0/how-to/configure/configure-split-and-json-logging/>Configure split and JSON logging</a></li></ul></details></li><li><details><summary><a href=/docs/kv/3.4.0/how-to/develop/>Develop with OpenRiak</a></summary></details></li><li><details><summary><a href=/docs/kv/3.4.0/how-to/install/>Install and verify OpenRiak</a></summary></details></li><li><details><summary><a href=/docs/kv/3.4.0/how-to/operate/>Operate a cluster</a></summary></details></li><li><details><summary><a href=/docs/kv/3.4.0/how-to/plan/>Plan a production cluster</a></summary></details></li><li><details><summary><a href=/docs/kv/3.4.0/how-to/secure/>Secure OpenRiak</a></summary></details></li><li><details><summary><a href=/docs/kv/3.4.0/how-to/troubleshoot/>Troubleshoot OpenRiak</a></summary></details></li><li><details><summary><a href=/docs/kv/3.4.0/how-to/tune/>Tune performance</a></summary></details></li><li><details><summary><a href=/docs/kv/3.4.0/how-to/redis-add-on/>Use the Redis add-on</a></summary></details></li></ul></details></li><li><details><summary><a href=/docs/kv/3.4.0/reference/>Reference</a></summary></details></li><li><details><summary><a href=/docs/kv/3.4.0/tutorials/>Tutorials</a></summary></details></li></ul></nav><div class=sidebar__help><a href=https://github.com/orgs/OpenRiak/discussions>Ask the OpenRiak community</a>
+<a href=https://github.com/OpenRiak/riak>OpenRiak source code</a></div></aside><button class=sidebar-scrim type=button data-sidebar-close aria-label="Close navigation"></button><main id=main-content class=content tabindex=-1><article class="doc doc--section"><nav class=breadcrumbs aria-label=Breadcrumb><ol><li><a href=/docs/kv/>OpenRiak KV documentation</a></li><li><a href=/docs/kv/3.4.0/>OpenRiak KV 3.4.0</a></li><li><a href=/docs/kv/3.4.0/how-to/>How-to guides</a></li><li><a href=/docs/kv/3.4.0/how-to/configure/>Configure OpenRiak</a></li><li aria-current=page>Configure storage backends</li></ol></nav><header class=article-header><div class=badges><span class="badge badge--how-to">how-to</span>
+<span class=badge>KV 3.4.0</span></div><h1>Configure storage backends</h1><p class=lede>Introduce backend configuration procedures after the reader has selected a suitable storage engine.</p><div class=review-notice role=note><strong>Review status:</strong>
+This migrated page is still marked as a draft.
+Technical review is required before publication.</div></header><div class=doc-body><p>Introduce backend configuration procedures after the reader has selected a suitable storage engine.</p><h2 id=before-you-begin>Before you begin</h2><p>Administrative access to the nodes you will change; a copy of the current configuration; and a maintenance window if the setting requires a restart.</p><h2 id=overview>Overview</h2><h3 id=backend-configuration>Backend Configuration</h3><h4 id=leveldb>LevelDB</h4><p>Configurable parameters for OpenRiak&rsquo;s <a href=/docs/kv/3.4.0/explanation/storage/leveldb/>LevelDB</a>
+storage backend.</p><table class=riak-conf><thead><tr><th>Config</th><th>Description</th><th>Default</th></tr></thead><tbody><tr><td><code>leveldb.block_cache_threshold</code></td><td>This setting defines the limit past which block cache memory can no
+longer be released in favor of the page cache. This setting has no
+impact in favor of file cache. The value is set on a per-vnode basis.</td><td><code>32MB</code></td></tr><tr><td><code>leveldb.compaction.trigger.tombstone_count</code></td><td>Controls when a background compaction initiates solely due to the
+number of delete tombstones within an individual <code>.sst</code> table
+file. A value of <code>off</code> disables the feature.</td><td><code>1000</code></td></tr><tr><td><code>leveldb.compression</code></td><td>Enabling this setting (<code>on</code>), which is the default,
+saves disk space. Disabling it may reduce read latency but increase
+overall disk activity. This option can be changed at any time, but it
+will not impact data on disk until the next time a file requires
+compaction.</td><td><code>on</code></td></tr><tr><td><code>leveldb.compression.algorithm</code></td><td>This setting is used to select which compression algorithm
+is selected when <code>leveldb.compression</code> is on.
+In new riak.conf files, this is explicitly set to
+<code>lz4</code>; however when this setting is not provided,
+<code>snappy</code> will be used for backward-compatibility.<br><br>When you determine that you will no longer need backward-compatibility,
+setting this to <code>lz4</code> will cause future compactions
+to use the LZ4 algorithm for compression.</td><td><code>lz4</code> in new riak.conf files<br><br><code>snappy</code> when not provided</td></tr><tr><td><code>leveldb.data_root</code></td><td>The directory in which LevelDB will store its data.</td><td><code>./data/leveldb</code></td></tr><tr><td><code>leveldb.fadvise_willneed</code></td><td>Option to override LevelDB's use of <code>fadvise(DONTNEED)</code>
+with <code>fadvise(WILLNEED)</code> instead. <code>WILLNEED</code> can
+reduce disk activity on systems where physical memory exceeds the
+database size.</td><td><code>false</code></td></tr><tr><td><code>leveldb.maximum_memory</code></td><td>This parameter defines the server memory (in bytes) to assign to
+LevelDB. Also see <code>leveldb.maximum_memory.percent</code> to set
+LevelDB memory as a percentage of system total.</td><td><code>80</code></td></tr><tr><td><code>leveldb.maximum_memory.percent</code></td><td>This parameter defines the percentage of total server memory to
+assign to LevelDB. LevelDB will dynamically adjust its internal cache
+sizes to stay within this size. The memory size can alternately be
+assigned as a byte count via <code>leveldb.maximum_memory</code>
+instead.</td><td><code>70</code></td></tr><tr><td><code>leveldb.threads</code></td><td>The number of worker threads performing LevelDB operations.</td><td><code>71</code></td></tr><tr><td><code>leveldb.verify_checksums</code></td><td>Enables or disables the verification of the data fetched from
+LevelDB against internal checksums</td><td><code>on</code></td></tr><tr><td><code>leveldb.verify_compaction</code></td><td>Enables or disables the verification of LevelDB data during
+compaction</td><td><code>on</code></td></tr><tr><td><code>leveldb.block.size_steps</code></td><td>Defines the number of incremental adjustments to attempt between the
+<code>block.size</code> value and the maximum <code>block.size</code>
+for an <code>.sst</code> table file. A value of zero disables the
+underlying dynamic <code>block_size</code> feature.</td><td><code>16</code></td></tr><tr><td><code>leveldb.block.restart_interval</code></td><td>Defines the key count threshold for a new key entry in the key
+index for a block. Most deployments should leave this parameter alone.</td><td><code>16</code></td></tr><tr><td><code>leveldb.block.size</code></td><td>Defines the size threshold for a block/chunk of data within one
+<code>.sst</code> table file. Each new block gets an index entry in the
+<code>.sst</code> table file's master index.</td><td><code>4KB</code></td></tr><tr><td><code>leveldb.bloomfilter</code></td><td>Each database <code>.sst</code> table file can include an optional
+"bloom filter" that is highly effective in shortcutting data queries
+that are destined to not find the requested key. The Bloom filter
+typically increases the size of an <code>.sst</code> table file by about
+2%.</td><td><code>on</code></td></tr><tr><td><code>leveldb.write_buffer_size_min</code></td><td>Each vnode first stores new key/value data in a memory-based write
+buffer. This write buffer is in parallel to the recovery log mentioned
+in the <code>sync</code> parameter. Riak creates each vnode with a
+randomly sized write buffer for performance reasons. The random size is
+somewhere between <code>write_buffer_size_min</code> and
+<code>write_buffer_size_max</code>.</td><td><code>30MB</code></td></tr><tr><td><code>leveldb.write_buffer_size_max</code></td><td>See <code>leveldb.write_buffer_size_min</code> directly above.</td><td><code>60MB</code></td></tr><tr><td><code>leveldb.limited_developer_mem</code></td><td>This is a Riak-specific option that is used when a developer is
+testing a high number of vnodes and/or several VMs on a machine with
+limited physical memory. Do <em>not</em> use this option if making
+performance measurements. This option overwrites values given to
+<code>write_buffer_size_min</code> and
+<code>write_buffer_size_max</code>.</td><td><code>off</code></td></tr><tr><td><code>leveldb.sync_on_write</code></td><td>Whether LevelDB will flush after every write.<br><br><strong>Note</strong>: If you are familiar with fsync, this is analogous
+to calling fsync after every write.</td><td><code>off</code></td></tr><tr><td><code>leveldb.tiered</code></td><td>The level number at which LevelDB data switches from the faster to
+the slower array. The default of <code>off</code> disables the
+feature.</td><td><code>off</code></td></tr><tr><td><code>leveldb.tiered.path.fast</code></td><td>The path prefix for <code>.sst</code> files below the level set by
+<code>leveldb.tiered</code></td><td></td></tr><tr><td><code>leveldb.tiered.path.slow</code></td><td>The path prefix for <code>.sst</code> files below the level set by
+<code>leveldb.tiered</code></td><td></td></tr></tbody></table><h5 id=leveled>Leveled</h5><p>Configurable Parameters for OpenRiak&rsquo;s <a href=/docs/kv/3.4.0/explanation/storage/leveled/>leveled</a>
+storage backend</p><tr><td><code>leveled.data_root</code></td><td>A path under which leveled data files will be stored.</td><td><code>$(platform_data_dir)/leveled</code></td></tr><tr><td><code>leveled.sync_strategy</code></td><td>Strategy for flushing data to disk - Can be set to <code>riak_sync</code>, <code>sync</code> (if OTP > 16) or <code>none</code>. Use <code>none</code>, and the OS will flush when most efficient. Use <code>riak_sync</code> or <code>sync</code> to flush after every PUT (not recommended without some hardware support e.g. flash drives and/or
+Flash-backed Write Caches</td><td><code>none</code></td></tr><tr><td><code>leveled.compression_method</code></td><td>Can be lz4 or native (which will use the Erlang native zlib compression) within term_to_binary</td><td><code>native</code></td></tr><tr><td><code>leveled.compression_point</code></td><td>The point at which compression is applied to the Journal (the Ledger is always compressed). Use on_receipt or on_compact. on_compact is suitable
+when values are unlikely to yield much benefit from compression(compression is only attempted when compacting</td><td><code>on_receipt</code></td></tr><tr><td><code>leveled.log_level</code></td><td>Can be debug, info, warn, error or critical. Set the minimum log level to be used within leveled. Leveled will log many lines to allow for stats to be etracted by those using log indexers such as Splunk</td><td><code>info</code></td></tr><tr><td><code>leveled.journal_size</code></td><td>The approximate size (in bytes) when a Journal file should be rolled. Normally keep this as around the size of o(100K) objects.</td><td><code>1000000000</code></td></tr><tr><td><code>leveled.compaction_runs_perday</code></td><td>The number of journal compactions per vnode per day, The higher the value, the more compaction runs, and the sooner space is recovered. But each run has a cost.</td><td><code>24</code></td></tr><tr><td><code>leveled.compaction_low_hour</code></td><td>The hour of the day in which journal compaction can start. Use Low hour of 0 and High hour of 23 to have no compaction window (i.e. always compactregardless of time of day)</td><td><code>0</code></td></tr><tr><td><code>leveled.compaction_top_hour</code></td><td>The hour of the day, after which journal compaction should stop. If low hour > top hour then, compaction will work overnight between low hour and top hour (inclusive). Timings rely on server's view of local time</td><td><code>23</code></td></tr><tr><td><code>leveled.max_run_length</code></td><td>In a single compaction run, what is the maximum number of consecutive files which may be compacted.</td><td><code>4</code></td></tr><tr><td><code>leveled_reload_recalc</code></td><td>Enable the `recalc` compaction strategy within the leveled backend in riak.</td><td><code>disabled</code></td></tr></table><h5 id=bitcask>Bitcask</h5><p>Configurable parameters for OpenRiak&rsquo;s <a href=/docs/kv/3.4.0/explanation/storage/bitcask/>Bitcask</a>
+storage backend.</p><tr><td><code>bitcask.data_root</code></td><td>The directory under which Bitcask will store its data.</td><td><code>./data/bitcask</code></td></tr><tr><td><code>bitcask.io_mode</code></td><td>Configure how Bitcask writes data to disk. If set to
+<code>erlang</code>, writes are made via Erlang's built-in file API; if
+set to <code>nif</code>, writes are made via direct calls to the POSIX C
+API. The <code>nif</code> mode provides higher throughput for certain
+workloads, but has the potential to negatively impact the Erlang VM,
+leading to higher worst-case latencies and possible throughput collapse</td><td><code>erlang</code></td></tr><tr><td><code>bitcask.expiry</code></td><td>By default, Bitcask keeps all of your data around. If your data has
+limited time value, or if you need to purge data for space reasons, you
+can set the <code>expiry</code> option. For example, if you need to
+purge data automatically after 1 day, set the value to <code>1d</code>.
+<code>off</code> disables automatic expiration</td><td><code>off</code></td></tr><tr><td><code>bitcask.expiry.grace_time</code></td><td>By default, Bitcask will trigger a merge whenever a data file
+contains an expired key. This may result in excessive merging under some
+usage patterns. To prevent this you can set the
+<code>bitcask.expiry.grace_time</code> option. Bitcask will defer
+triggering a merge solely for key expiry by the configured number of
+seconds. Setting this to <code>1h</code> effectively limits each cask to
+merging for expiry once per hour.</td><td><code>0</code></td></tr><tr><td><code>bitcask.hintfile_checksums</code></td><td>Whether to allow the CRC to be present at the end of hintfiles.
+Setting this to <code>allow_missing</code> runs Bitcask in a
+backwards-compatible mode in which old hint files will still be accepted
+without CRC signatures.</td><td><code>strict</code></td></tr><tr><td><code>bitcask.fold.max_puts</code></td><td>See the description for the <code>bitcask.fold.max_age</code>
+config directly below</td><td><code>0</code></td></tr><tr><td><code>bitcask.fold.max_age</code></td><td>Fold keys thresholds will reuse the keydir if another fold was
+started less than <code>fold.max_age</code> ago and there were fewer
+than <code>fold.max_puts</code> updates. Otherwise, it will wait until
+all current fold keys complete and then start. Set either option to
+<code>unlimited</code> to disable.</td><td><code>unlimited</code></td></tr><tr><td><code>bitcask.merge.thresholds.fragmentation</code></td><td>Describes which ratio of dead keys to total keys in a file will
+cause it to be included in the merge. The value of this setting is a
+percentage from 0 to 100. For example, if a data file contains 4 dead
+keys and 6 live keys, it will be included in the merge at the default
+ratio (which is 40). Increasing the value will cause fewer files to be
+merged, decreasing the value will cause more files to be merged.</td><td><code>40</code></td></tr><tr><td><code>bitcask.merge.thresholds.dead_bytes</code></td><td>Describes the minimum amount of data occupied by dead keys in a file
+to cause it to be included in the merge. Increasing the value will cause
+fewer files to be merged, whereas decreasing the value will cause more
+files to be merged.</td><td><code>128MB</code></td></tr><tr><td><code>bitcask.merge.thresholds.small_file</code></td><td>Describes the minimum size a file must have to be excluded from the
+merge. Files smaller than the threshold will be included. Increasing
+the value will cause more files to be merged, whereas decreasing the
+value will cause fewer files to be merged.</td><td><code>10MB</code></td></tr><tr><td><code>bitcask.merge.triggers.dead_bytes</code></td><td>Describes how much data stored for dead keys in a single file will
+trigger merging. If a file meets or exceeds the trigger value for dead
+bytes, merge will be triggered. Increasing the value will cause merging
+to occur less often, whereas decreasing the value will cause merging to
+happen more often. When either of these constraints are met by any file
+in the directory, Bitcask will attempt to merge files.</td><td><code>512MB</code></td></tr><tr><td><code>bitcask.merge.triggers.fragmentation</code></td><td>Describes which ratio of dead keys to total keys in a file will
+trigger merging. The value of this setting is a percentage from 0 to
+100. For example, if a data file contains 6 dead keys and 4 live keys,
+then merge will be triggered at the default setting. Increasing this
+value will cause merging to occur less often, whereas decreasing the
+value will cause merging to happen more often.</td><td><code>60</code></td></tr><tr><td><code>bitcask.merge.window.end</code></td><td>See the description of the <code>bitcask.merge.policy</code> config
+below</td><td><code>23</code></td></tr><tr><td><code>bitcask.merge.window.start</code></td><td>See the description of the <code>bitcask.merge.policy</code> config
+below</td><td><code>0</code></td></tr><tr><td><code>bitcask.merge.policy</code></td><td>Lets you specify when during the day merge operations are allowed to
+be triggered. Valid options are: <code>always</code>, meaning no
+restrictions; <code>never</code>, meaning that merging will never be
+attempted; and <code>window</code>, specifying the hours during which
+merging is permitted, where <code>bitcask.merge.window.start</code> and
+<code>bitcask.merge.window.end</code> are integers between 0 and 23. If
+merging has a significant impact on performance of your cluster, or your
+cluster has quiet periods in which little storage activity occurs, you
+may want to change this setting from the default.</td><td><code>always</code></td></tr><tr><td><code>bitcask.merge_check_interval</code></td><td>Bitcask periodically runs checks to determine whether merges are
+necessary. This parameter determines how often those checks take place.
+Expressed as a time unit, e.g. `10s` for 10 seconds, `5m` for 5 minutes,
+etc.</td><td><code>3m</code></td></tr><tr><td><code>bitcask.merge_check_jitter</code></td><td>In order to prevent merge operations from taking place on different
+nodes at the same time, Riak can apply random variance to merge times,
+expressed as a percentage of <code>bitcask.merge_check_interval</code>.</td><td><code>30%</code></td></tr><tr><td><code>bitcask.max_merge_size</code></td><td>$1</td><td><code>100GB</code></td></tr><tr><td><code>bitcask.max_file_size</code></td><td>Describes the maximum permitted size for any single data file in the
+Bitcask directory. If a write causes the current file to exceed this
+size threshold then that file is closed, and a new file is opened for
+writes.</td><td><code>2GB</code></td></tr><tr><td><code>bitcask.sync.interval</code></td><td>See the description of the <code>bitcask.sync.strategy</code>
+directly below</td><td></td></tr><tr><td><code>bitcask.sync.strategy</code></td><td>Changes the durability of writes by specifying when to synchronize
+data to disk. The default setting protects against data loss in the
+event of application failure (process death) but leaves open a small
+window in which data could be lost in the event of complete system
+failure (e.g. hardware, OS, or power). The default mode,
+<code>none</code>, writes data into operating system buffers which will
+be written to the disks when those buffers are flushed by the operating
+system. If the system fails, e.g. due power loss or crash, that data is
+lost before those buffers are flushed to stable storage. This is
+prevented by the setting <code>o_sync</code>, which forces the operating
+system to flush to stable storage at every write. The effect of flushing
+each write is better durability, however write throughput will suffer as
+each write will have to wait for the write to complete. Available sync
+strategies: <code>none</code>, which will let the operating system
+manage syncing writes; <code>o_sync</code>, which will uses the
+<code>O_SYNC</code> flag to force syncs on every write; and
+<code>interval</code>, by which will force Bitcask to sync every
+<code>bitcask.sync.interval</code> seconds.</td><td><code>none</code></td></tr><tr><td><code>bitcask.open_timeout</code></td><td>Specifies the maximum time Bitcask will block on startup while
+attempting to create or open the data directory. You generally need not
+change this value. If for some reason the timeout is exceeded on open
+you'll see a log message of the form <code>Failed to start bitcask
+backend: .... </code>. Only then should you consider a longer timeout.</td><td><code>4s</code></td></tr></tbody></table><h5 id=memory-backend>Memory Backend</h5><p>Configurable parameters for OpenRiak&rsquo;s <a href=/docs/kv/3.4.0/explanation/storage/memory/>Memory</a>
+backend.</p><tr><td><code>memory_backend.ttl</code></td><td>Each value written will be written with this "time to live." Once
+that object's time is up, it will be deleted on the next read of its
+key. Minimum: <code>1s</code>.</td><td></td></tr><tr><td><code>memory_backend.max_memory_per_vnode</code></td><td>The maximum amount of memory consumed per vnode by the memory
+storage backend. Minimum: <code>1MB</code></td><td></td></tr></tbody></table><h5 id=multi-backend>Multi Backend</h5><p>Configurable parameters for OpenRiak&rsquo;s <a href=/docs/kv/3.4.0/explanation/storage/multi-backend/>Multi</a>
+backend, which enables you to utilize multiple data backends in a single OpenRiak cluster.</p><p>If you are using multiple backends, you can configure the backends
+individually by prepending the setting with <code>multi_backend.$name</code>, where
+<code>$name</code> is the name of the backend. <code>$name</code> can be any valid
+configuration word, like <code>customer_data</code>, <code>my_data</code>, <code>foo_bar_backend</code>,
+etc.</p><p>Below is the general form for setting multi-backend parameters:</p><pre tabindex=0><code class=language-riakconf data-lang=riakconf>multi_backend.$name.(existing_setting) = &lt;setting&gt;
+#### or
+multi_backend.$name.$backend_type.(backend_specific_setting) = &lt;setting&gt;
+</code></pre><p>Below is a listing of the available parameters:</p><tr><td><code>multi_backend.$name.storage_backend</code></td><td>This parameter specifies the Erlang module defining the storage
+mechanism that will be used on this node</td><td><code>bitcask</code></td></tr><tr><td><code>multi_backend.default</code></td><td>The default name of a backend when one is not specified.</td><td></td></tr></tbody></table><p>To give an example, if you have a LevelDB backend named
+<code>customer_backend</code> and wish to set the <code>data_root</code> parameter to
+<code>$(platform_data_dir)/leveldb_backends/customer_backend/</code>, you would
+do so as follows:</p><pre tabindex=0><code class=language-riakconf data-lang=riakconf>multi_backend.customer_backend.storage_backend = leveldb
+multi_backend.customer_backend.leveldb.data_root = $(platform_data_dir)/leveldb_backends/customer_backend
+multi_backend.customer_backend.leveldb.maximum_memory.percent = 50
+</code></pre><h4 id=property---backend>Property - backend</h4><p>If using the multi-backend, the bucket property <code>backend</code> can be used to map bucket types to different backends.</p><h2 id=verify-the-result>Verify the result</h2><p>Confirm that the intended setting is active on every affected node, then check cluster health and the relevant logs for warnings.</p><h2 id=in-this-section>In this section</h2><ul><li><a href=/docs/kv/3.4.0/how-to/configure/backends/bitcask-merge-window/>Configure the Bitcask merge window</a>
+— Show operators how to schedule Bitcask merges and verify that obsolete data is reclaimed.</li><li><a href=/docs/kv/3.4.0/how-to/configure/backends/bitcask/>Configure the Bitcask backend</a>
+— Show operators how to configure the bitcask backend without losing access to required data.</li><li><a href=/docs/kv/3.4.0/how-to/configure/backends/change-backend/>Change the backend of an existing node</a>
+— Show operators how to change the backend of an existing node without losing access to required data.</li><li><a href=/docs/kv/3.4.0/how-to/configure/backends/leveldb/>Configure the LevelDB backend</a>
+— Show operators how to configure the leveldb backend without losing access to required data.</li><li><a href=/docs/kv/3.4.0/how-to/configure/backends/leveled-compaction-window/>Configure the Leveled compaction window</a>
+— Show operators how to schedule Leveled compaction within an appropriate maintenance window.</li><li><a href=/docs/kv/3.4.0/how-to/configure/backends/leveled/>Configure the Leveled backend</a>
+— Show operators how to configure the leveled backend without losing access to required data.</li><li><a href=/docs/kv/3.4.0/how-to/configure/backends/memory/>Configure the Memory backend</a>
+— Show operators how to configure the memory backend without losing access to required data.</li><li><a href=/docs/kv/3.4.0/how-to/configure/backends/multi/>Configure multiple backends</a>
+— Show operators how to configure multiple backends without losing access to required data.</li><li><a href=/docs/kv/3.4.0/how-to/configure/backends/prefix-multi/>Configure the Prefix Multi backend</a>
+— Show operators how to configure the prefix multi backend without losing access to required data.</li></ul></div><section class=child-pages aria-labelledby=browse-section><h2 id=browse-section>Browse this section</h2><div class=cards><a class=card href=/docs/kv/3.4.0/how-to/configure/backends/configure-the-bitcask-backend/><strong>Configure the Bitcask backend</strong>
+<span>Show operators how to configure the bitcask backend without losing access to required data.</span>
+</a><a class=card href=/docs/kv/3.4.0/how-to/configure/backends/change-the-backend-of-an-existing-node/><strong>Change the backend of an existing node</strong>
+<span>Show operators how to change the backend of an existing node without losing access to required data.</span>
+</a><a class=card href=/docs/kv/3.4.0/how-to/configure/backends/configure-the-leveldb-backend/><strong>Configure the LevelDB backend</strong>
+<span>Show operators how to configure the leveldb backend without losing access to required data.</span>
+</a><a class=card href=/docs/kv/3.4.0/how-to/configure/backends/configure-the-leveled-backend/><strong>Configure the Leveled backend</strong>
+<span>Show operators how to configure the leveled backend without losing access to required data.</span>
+</a><a class=card href=/docs/kv/3.4.0/how-to/configure/backends/configure-the-memory-backend/><strong>Configure the Memory backend</strong>
+<span>Show operators how to configure the memory backend without losing access to required data.</span>
+</a><a class=card href=/docs/kv/3.4.0/how-to/configure/backends/configure-multiple-backends/><strong>Configure multiple backends</strong>
+<span>Show operators how to configure multiple backends without losing access to required data.</span>
+</a><a class=card href=/docs/kv/3.4.0/how-to/configure/backends/configure-the-prefix-multi-backend/><strong>Configure the Prefix Multi backend</strong>
+<span>Show operators how to configure the prefix multi backend without losing access to required data.</span>
+</a><a class=card href=/docs/kv/3.4.0/how-to/configure/backends/configure-the-bitcask-merge-window/><strong>Configure the Bitcask merge window</strong>
+<span>Show operators how to schedule Bitcask merges and verify that obsolete data is reclaimed.</span>
+</a><a class=card href=/docs/kv/3.4.0/how-to/configure/backends/configure-the-leveled-compaction-window/><strong>Configure the Leveled compaction window</strong>
+<span>Show operators how to schedule Leveled compaction within an appropriate maintenance window.</span></a></div></section></article></main></div><footer class=site-footer><div><p>OpenRiak documentation is licensed under <a href=https://creativecommons.org/licenses/by/4.0/>Creative Commons Attribution 4.0</a>.</p><p>Historical material © Basho Technologies, Inc.; community revisions © OpenRiak contributors.</p></div><a href=#main-content>Back to top</a></footer><script src=/docs/js/site.js defer></script></body></html>

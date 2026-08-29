@@ -1,0 +1,123 @@
+<!doctype html><html lang=en class=no-js><head><script src="/docs/livereload.js?mindelay=10&amp;v=2&amp;port=1320&amp;path=docs/livereload" data-no-instant defer></script><meta charset=utf-8><meta name=viewport content="width=device-width,initial-scale=1"><meta name=color-scheme content="light dark"><script>(()=>{const t="openriak-docs-theme";let e="system";try{const n=localStorage.getItem(t);(n==="light"||n==="dark"||n==="system")&&(e=n)}catch{}const n=window.matchMedia?.("(prefers-color-scheme: dark)").matches??!1;document.documentElement.dataset.themePreference=e,document.documentElement.dataset.theme=e==="system"?n?"dark":"light":e})()</script><meta name=description content="Explain eventual consistency, convergence, quorums, and the application behaviors they produce."><title>Eventual consistency | OpenRiak Documentation</title><link rel=canonical href=http://127.0.0.1:1320/docs/kv/3.4.0/explanation/consistency/eventual-consistency/><link rel=icon href=/docs/images/branding/favicon.ico sizes=any><link rel=stylesheet href=/docs/css/site.css><link rel=stylesheet href=/docs/css/theme.css><script src=/docs/js/theme.js defer></script><meta property="og:type" content="website"><meta property="og:title" content="Eventual consistency"><meta property="og:description" content="Explain eventual consistency, convergence, quorums, and the application behaviors they produce."><meta property="og:url" content="http://127.0.0.1:1320/docs/kv/3.4.0/explanation/consistency/eventual-consistency/"></head><body data-kind=page data-section=kv><script>document.documentElement.classList.remove("no-js")</script><a class=skip-link href=#main-content>Skip to content</a><header class=site-header><div class=site-header__inner><button class=nav-toggle type=button aria-controls=docs-sidebar aria-expanded=false>
+<span aria-hidden=true>☰</span><span class=sr-only>Toggle documentation navigation</span>
+</button>
+<a class=brand href=/docs/ aria-label="OpenRiak documentation home"><img src=/docs/images/branding/riak-logo-inverted.png alt width=34 height=34>
+<span>OpenRiak <strong>Docs</strong></span></a><nav class=primary-nav aria-label="Documentation types"><a href=/docs/kv/3.4.1/tutorials/>Tutorials</a>
+<a href=/docs/kv/3.4.1/how-to/>How-to</a>
+<a href=/docs/kv/3.4.1/reference/>Reference</a>
+<a href=/docs/kv/3.4.1/explanation/>Explanation</a></nav><a class=community-link href=https://github.com/orgs/OpenRiak/discussions>Community</a>
+<label class=theme-control><span class=theme-control__icon aria-hidden=true>◐</span>
+<span class=sr-only>Color theme</span>
+<select data-theme-select aria-label="Color theme"><option value=system>System</option><option value=light>Light</option><option value=dark>Dark</option></select></label></div></header><div class=site-shell><aside id=docs-sidebar class=sidebar aria-label="Documentation navigation"><div class=sidebar__tools><label for=version-select>Version</label>
+<select id=version-select data-version-select><option value=/docs/kv/3.4.1/>3.4.1 (latest)</option><option value=/docs/kv/3.4.0/ selected>3.4.0</option></select><form class=docs-search role=search data-search data-index-url=/docs/search-index.json data-version=3.4.0><label class=sr-only for=docs-search-input>Search this version</label>
+<input id=docs-search-input type=search placeholder="Search this version" autocomplete=off data-search-input><div class=search-results data-search-results hidden></div></form></div><nav class=sidebar__nav aria-label="Pages in this version"><a class=sidebar__root href=/docs/kv/3.4.0/>OpenRiak KV 3.4.0</a><ul class=nav-tree><li><details open><summary><a href=/docs/kv/3.4.0/explanation/>Explanation</a></summary><ul class=nav-tree><li><details open><summary><a href=/docs/kv/3.4.0/explanation/consistency/>Consistency concepts</a></summary><ul class=nav-tree><li><a class=is-current href=/docs/kv/3.4.0/explanation/consistency/eventual-consistency/ aria-current=page>Eventual consistency</a></li><li><a href=/docs/kv/3.4.0/explanation/consistency/read-and-write-quorums/>Read and write quorums</a></li><li><a href=/docs/kv/3.4.0/explanation/consistency/strong-consistency/>Strong consistency</a></li><li><a href=/docs/kv/3.4.0/explanation/consistency/conditional-requests/>Conditional requests</a></li></ul></details></li><li><details><summary><a href=/docs/kv/3.4.0/explanation/data-model/>Data model concepts</a></summary></details></li><li><details><summary><a href=/docs/kv/3.4.0/explanation/foundations/>OpenRiak foundations</a></summary></details></li><li><details><summary><a href=/docs/kv/3.4.0/explanation/operations/>Operational concepts</a></summary></details></li><li><details><summary><a href=/docs/kv/3.4.0/explanation/performance/>Performance concepts</a></summary></details></li><li><details><summary><a href=/docs/kv/3.4.0/explanation/replication/>Replication concepts</a></summary></details></li><li><details><summary><a href=/docs/kv/3.4.0/explanation/security/>Security concepts</a></summary></details></li><li><details><summary><a href=/docs/kv/3.4.0/explanation/storage/>Storage architecture</a></summary></details></li></ul></details></li><li><details><summary><a href=/docs/kv/3.4.0/how-to/>How-to guides</a></summary></details></li><li><details><summary><a href=/docs/kv/3.4.0/reference/>Reference</a></summary></details></li><li><details><summary><a href=/docs/kv/3.4.0/tutorials/>Tutorials</a></summary></details></li></ul></nav><div class=sidebar__help><a href=https://github.com/orgs/OpenRiak/discussions>Ask the OpenRiak community</a>
+<a href=https://github.com/OpenRiak/riak>OpenRiak source code</a></div></aside><button class=sidebar-scrim type=button data-sidebar-close aria-label="Close navigation"></button><main id=main-content class=content tabindex=-1><article class=doc><nav class=breadcrumbs aria-label=Breadcrumb><ol><li><a href=/docs/kv/>OpenRiak KV documentation</a></li><li><a href=/docs/kv/3.4.0/>OpenRiak KV 3.4.0</a></li><li><a href=/docs/kv/3.4.0/explanation/>Explanation</a></li><li><a href=/docs/kv/3.4.0/explanation/consistency/>Consistency concepts</a></li><li aria-current=page>Eventual consistency</li></ol></nav><header class=article-header><div class=badges><span class="badge badge--explanation">explanation</span>
+<span class=badge>KV 3.4.0</span></div><h1>Eventual consistency</h1><p class=lede>Explain eventual consistency, convergence, quorums, and the application behaviors they produce.</p><div class=review-notice role=note><strong>Review status:</strong>
+This migrated page is still marked as a draft.
+Technical review is required before publication.</div></header><details class=on-this-page><summary>On this page</summary><nav id=TableOfContents><ul><li><a href=#overview>Overview</a><ul><li><a href=#eventual-consistency>Eventual Consistency</a></li></ul></li></ul></nav></details><div class=doc-body><p>Explain eventual consistency, convergence, quorums, and the application behaviors they produce.</p><h2 id=overview>Overview</h2><h3 id=eventual-consistency>Eventual Consistency</h3><p>In a distributed and fault-tolerant system like Riak, server and network
+failures are expected. Riak is designed to respond to requests even when
+<a href=/docs/kv/3.4.0/explanation/foundations/glossary/#node>nodes</a>
+are offline or the cluster is experiencing
+a network partition.</p><p>Riak handles this problem by enabling conflicting copies of data stored
+in the same location, as specified by <a href=/docs/kv/3.4.0/explanation/data-model/keys-objects-and-buckets/>bucket type</a>
+, bucket, and key, to exist at the same time in the cluster. This
+gives rise to the problem of <strong>data inconsistency</strong>.</p><h4 id=data-inconsistency>Data Inconsistency</h4><p>Conflicts between replicas of an object are inevitable in
+highly-available, <a href=/docs/kv/3.4.0/explanation/foundations/clusters-rings-and-partitions/>clustered</a>
+systems like Riak because there
+is nothing in those systems to guarantee so-called <a href=http://en.wikipedia.org/wiki/ACID rel=noopener>ACID
+transactions</a>
+. Because of this, these
+systems need to rely on some form of conflict-resolution mechanism.</p><p>One of the things that makes OpenRiak&rsquo;s eventual consistency model powerful
+is that Riak does not dictate how data resolution takes place. While
+Riak does ship with a set of defaults regarding how data is
+<a href=#replication-properties-and-request-tuning>replicated</a>
+and how
+<a href=/docs/kv/3.4.0/how-to/develop/resolve-conflicts/>conflicts are resolved</a>
+, you can override these
+defaults if you want to employ a different strategy.</p><p>Among those strategies, you can enable Riak to resolve object conflicts
+automatically, whether via internal <a href=/docs/kv/3.4.0/explanation/data-model/causal-context/#vector-clocks>vector clocks</a>
+, timestamps, or
+special eventually consistent <a href=/docs/kv/3.4.0/reference/data/distributed-data-types/>Data Types</a>
+, or you can resolve those
+conflicts on the application side by employing a use case-specific logic
+of your choosing. More information on this can be found in our guide to
+<a href=/docs/kv/3.4.0/how-to/develop/resolve-conflicts/>conflict resolution</a>
+.</p><p>This variety of options enables you to manage OpenRiak&rsquo;s eventually
+consistent behavior in accordance with your application&rsquo;s <a href=/docs/kv/3.4.0/how-to/plan/map-data-to-objects/>data model
+or models</a>
+.</p><h4 id=replication-properties-and-request-tuning>Replication Properties and Request Tuning</h4><p>In addition to providing you different means of resolving conflicts,
+Riak also enables you to fine-tune <strong>replication properties</strong>, which
+determine things like the number of nodes on which data should be stored
+and the number of nodes that are required to respond to read, write, and
+other requests.</p><p>An in-depth discussion of these behaviors and how they can be
+implemented on the application side can be found in our guides to
+<a href=/docs/kv/3.4.0/explanation/replication/>replication properties</a>
+and <a href=/docs/kv/3.4.0/how-to/develop/resolve-conflicts/>conflict resolution</a>
+.</p><p>In addition to our official documentation, we also recommend checking
+out the <a href=http://basho.com/understanding-riaks-configurable-behaviors-part-1/ rel=noopener>Understanding OpenRiak&rsquo;s Configurable
+Behaviors</a>
+series from <a href=https://riak.com/blog/ rel=noopener>the Basho blog</a>
+.</p><h4 id=a-simple-example-of-eventual-consistency>A Simple Example of Eventual Consistency</h4><p>Let&rsquo;s assume for the moment that a sports news application is storing
+all of its data in Riak. One thing that the application always needs to
+be able to report to users is the identity of the current manager of
+Manchester United, which is stored in the key <code>manchester-manager</code> in
+the bucket <code>premier-league-managers</code>. This bucket has <code>allow_mult</code> set
+to <code>false</code>, which means that Riak will resolve all conflicts by itself.</p><p>Now let&rsquo;s say that a node in this cluster has recently recovered from
+failure and has an old copy of the key <code>manchester-manager</code> stored in
+it, with the value <code>Alex Ferguson</code>. The problem is that Sir Ferguson
+stepped down in 2013 and is no longer the manager. Fortunately, the
+other nodes in the cluster hold the value <code>David Moyes</code>, which is
+correct.</p><p>Shortly after the recovered node comes back online, other cluster
+members recognize that it is available. Then, a read request for
+<code>manchester-manager</code> arrives from the application. Regardless of which
+order the responses arrive to the node that is coordinating this
+request, <code>David Moyes</code> will be returned as the value to the client,
+because <code>Alex Ferguson</code> is recognized as an older value.</p><p>Why is this? How does Riak make this decision? Behind the scenes, after
+<code>David Moyes</code> is sent to the client, a <a href=/docs/kv/3.4.0/explanation/foundations/glossary/#read-repair>read repair</a>
+mechanism will occur on the cluster to fix the
+older value on the node that just came back online. Because Riak tags
+all objects with versioning information, it can make these kinds of
+decisions on its own, if you wish.</p><h5 id=r1>R=1</h5><p>Let&rsquo;s say that you keep the above scenario the same, except you tweak
+the request and set R to 1, perhaps because you want faster responses to
+the client. In this case, it <em>is</em> possible that the client will receive
+the outdated value <code>Alex Ferguson</code> because it is only waiting for a
+response from one node.</p><p>However, the read repair mechanism will kick in and fix the value, so
+the next time someone asks for the value of <code>manchester-manager</code>, <code>David
+Moyes</code> will indeed be the answer.</p><h5 id=r1-sloppy-quorum>R=1, sloppy quorum</h5><p>Let&rsquo;s take the scenario back in time to the point at which our unlucky
+node originally failed. At that point, all 3 nodes had <code>Alex Ferguson</code>
+as the value for <code>manchester-manager</code>.</p><p>When a node fails, OpenRiak&rsquo;s <em>sloppy quorum</em> feature kicks in and another
+node takes responsibility for serving its requests.</p><p>The first time we issue a read request after the failure, if <code>R</code> is set
+to 1, we run a significant risk of receiving a <code>not found</code> response from
+Riak. The node that has assumed responsibility for that data won&rsquo;t have
+a copy of <code>manchester-manager</code> yet, and it&rsquo;s much faster to verify a
+missing key than to pull a copy of the value from disk, so that node
+will likely respond fastest.</p><p>If <code>R</code> is left to its default value of 2, there wouldn&rsquo;t be a problem
+because 1 of the nodes that still had a copy of <code>Alex Ferguson</code> would
+also respond before the client got its result. In either case, read
+repair will step in after the request has been completed and make
+certain that the value is propagated to all the nodes that need it.</p><h5 id=pr-pw-sloppy-quorum>PR, PW, sloppy quorum</h5><p>Thus far, we&rsquo;ve discussed settings that permit sloppy quorums in the
+interest of allowing Riak to maintain as high a level of availability as
+possible in the presence of node or network failure.</p><p>It is possible to configure requests to ignore sloppy quorums in order
+to limit the possibility of older data being returned to a client. The
+tradeoff, of course, is that there is an increased risk of request
+failures if failover nodes are not permitted to serve requests.</p><p>In the scenario we&rsquo;ve been discussing, for example, the possibility of a
+node for the <code>manchester-manager</code> key having failed, but to be more
+precise, we&rsquo;ve been talking about a <em>primary</em> node, one that when the
+cluster is perfectly healthy would bear responsibility for that key.</p><p>When that node failed, using <code>R=2</code> as we&rsquo;ve discussed or even <code>R=3</code> for
+a read request would still work properly: a failover node (sloppy quorum
+again) would be tasked to take responsibility for that key, and when it
+receives a request for it, it would reply that it doesn&rsquo;t have any such
+key, but the two surviving primary nodes still know who the
+<code>manchester-manager</code> is.</p><p>However, if the PR (primary read) value is specified, only the two
+surviving primary nodes are considered valid sources for that data.</p><p>So, setting PR to 2 works fine, because there are still 2 such nodes,
+but a read request with PR=3 would fail because the 3rd primary node is
+offline, and no failover node can take its place <em>as a primary</em>.</p><p>The same is true of writes: W=2 or W=3 will work fine with the primary
+node offline, as will PW=2 (primary write), but PW=3 will result in an
+error.</p><blockquote><p><strong>Note: Errors and Failures</strong></p><p>It is important to understand the difference between an error and a
+failure.</p><p>The <code>PW=3</code> request in this scenario will result in an error,
+but the value will still be written to the two surviving primary
+nodes.</p><p>By specifying <code>PW=3</code> the client indicated that 3 primary
+nodes must respond for the operation to be considered successful, which
+it wasn&rsquo;t, but there&rsquo;s no way to tell without performing another read
+whether the operation truly failed.</p></blockquote><h4 id=further-reading>Further Reading</h4><ul><li><a href=http://basho.com/understanding-riaks-configurable-behaviors-part-1/ rel=noopener>Understanding OpenRiak&rsquo;s Configurable Behaviors blog series</a></li><li>Werner Vogels, et. al.: <a href=http://www.allthingsdistributed.com/2008/12/eventually_consistent.html rel=noopener>Eventually Consistent - Revisited</a></li></ul><h4 id=eventual-consistency-1>Eventual Consistency</h4><p>Riak is designed to be eventually consistent, in that it is:</p><ul><li>Permissive about accepting updates, ensuring data is stored securely on behalf of the application, even when the current state of the data relative to the update cannot be guaranteed;<ul><li>either because some state may be in geographically diverse location, and waiting for verification of the present state would cause an unacceptable increase in response time,</li><li>or because failure of individual components has limited the visibility of the current state.</li></ul></li><li>Definitive that all changes will eventually be visible;<ul><li>not just because data is replicated between nodes and between clusters,</li><li>but also because it is continuously reconciled, with background process that efficiently analyse the overall system for discrepancies and proactively heal those deltas without operator intervention,</li><li>where that continuous reconciliation occurs both within and between clusters.</li></ul></li></ul><p>It should be noted that Riak offers the same guarantees of zero-intervention eventual-consistency for both multi-cluster environments as well as single cluster environments. However, within a cluster it is possible to enforce conditions on writes to make Riak less permissive, but less likely to result in conflict e.g. through the use of <a href=/docs/kv/3.4.0/reference/http-api/conditional-requests/>conditional PUTs with token-based consensus</a>
+.</p><p>Care may be taken by the Riak user to avoid conflict; but inevitably there will be some object values that eventually end-up in conflict. When in a conflicted state, an object may have two values where the database cannot determine which is the most current, often as updates were made concurrently by two different application instances.</p><p>Not being eventually consistent in a database, is likely to increase the operational processes required during failure scenarios: e.g. static fail-overs between primary and standby clusters, intervention to recover from replication failures between regions. With eventual consistency: the gain in operational simplicity and reduced operational intervention, is a trade-off against the developer overhead of considering conflict.</p><blockquote><p>Handling an object where the value is in doubt, adds cognitive load to the application developer - it is the key trade-off between the operator and the developer to accept when adopting Riak. At small-scale, and when downtime is acceptable; it is almost always preferable to favour the application developer in the trade-off. Riak is an answer to exceptional use cases with demanding non-functional requirements, not a general purpose data-storage solution.</p></blockquote><p>It is possible to craft objects whereby the situation can always be resolved, known as conflict-free replicated data-types. However, designing a system based only on those data types is another type of cognitive load for the application developer.</p><p>In general, most applications that depend on Riak evolve strategies to restrict and manage conflict scenarios:</p><ul><li>Separating immutable and mutable data into different objects.</li><li>Using application conditions to direct updates to clusters to avoid conflicting cross-cluster updates on the same object.</li><li>Use sharding within the application or Riak&rsquo;s conditional PUT controls to avoid intra-cluster conflicts.<ul><li>Potentially adopt an event sourcing CQRS-type pattern, to first secure capture of the data and then retry updates to queryable stores, so that refusing a write downstream will not lead to a risk of data-loss.</li></ul></li><li>Adding metadata to objects to allow deterministic resolution in either all cases, or just common cases.</li></ul></div><nav class=page-navigation aria-label="Adjacent pages"><a class=page-navigation__previous href=/docs/kv/3.4.0/explanation/consistency/read-and-write-quorums/><span>Previous</span><strong>Read and write quorums</strong></a></nav></article></main></div><footer class=site-footer><div><p>OpenRiak documentation is licensed under <a href=https://creativecommons.org/licenses/by/4.0/>Creative Commons Attribution 4.0</a>.</p><p>Historical material © Basho Technologies, Inc.; community revisions © OpenRiak contributors.</p></div><a href=#main-content>Back to top</a></footer><script src=/docs/js/site.js defer></script></body></html>

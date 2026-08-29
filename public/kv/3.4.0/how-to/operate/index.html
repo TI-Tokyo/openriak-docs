@@ -1,0 +1,350 @@
+<!doctype html><html lang=en class=no-js><head><script src="/docs/livereload.js?mindelay=10&amp;v=2&amp;port=1320&amp;path=docs/livereload" data-no-instant defer></script><meta charset=utf-8><meta name=viewport content="width=device-width,initial-scale=1"><meta name=color-scheme content="light dark"><script>(()=>{const t="openriak-docs-theme";let e="system";try{const n=localStorage.getItem(t);(n==="light"||n==="dark"||n==="system")&&(e=n)}catch{}const n=window.matchMedia?.("(prefers-color-scheme: dark)").matches??!1;document.documentElement.dataset.themePreference=e,document.documentElement.dataset.theme=e==="system"?n?"dark":"light":e})()</script><meta name=description content="Introduce routine cluster administration and lifecycle procedures."><title>Operate a cluster | OpenRiak Documentation</title><link rel=canonical href=http://127.0.0.1:1320/docs/kv/3.4.0/how-to/operate/><link rel=icon href=/docs/images/branding/favicon.ico sizes=any><link rel=stylesheet href=/docs/css/site.css><link rel=stylesheet href=/docs/css/theme.css><script src=/docs/js/theme.js defer></script><meta property="og:type" content="website"><meta property="og:title" content="Operate a cluster"><meta property="og:description" content="Introduce routine cluster administration and lifecycle procedures."><meta property="og:url" content="http://127.0.0.1:1320/docs/kv/3.4.0/how-to/operate/"></head><body data-kind=section data-section=kv><script>document.documentElement.classList.remove("no-js")</script><a class=skip-link href=#main-content>Skip to content</a><header class=site-header><div class=site-header__inner><button class=nav-toggle type=button aria-controls=docs-sidebar aria-expanded=false>
+<span aria-hidden=true>☰</span><span class=sr-only>Toggle documentation navigation</span>
+</button>
+<a class=brand href=/docs/ aria-label="OpenRiak documentation home"><img src=/docs/images/branding/riak-logo-inverted.png alt width=34 height=34>
+<span>OpenRiak <strong>Docs</strong></span></a><nav class=primary-nav aria-label="Documentation types"><a href=/docs/kv/3.4.1/tutorials/>Tutorials</a>
+<a href=/docs/kv/3.4.1/how-to/>How-to</a>
+<a href=/docs/kv/3.4.1/reference/>Reference</a>
+<a href=/docs/kv/3.4.1/explanation/>Explanation</a></nav><a class=community-link href=https://github.com/orgs/OpenRiak/discussions>Community</a>
+<label class=theme-control><span class=theme-control__icon aria-hidden=true>◐</span>
+<span class=sr-only>Color theme</span>
+<select data-theme-select aria-label="Color theme"><option value=system>System</option><option value=light>Light</option><option value=dark>Dark</option></select></label></div></header><div class=site-shell><aside id=docs-sidebar class=sidebar aria-label="Documentation navigation"><div class=sidebar__tools><label for=version-select>Version</label>
+<select id=version-select data-version-select><option value=/docs/kv/3.4.1/>3.4.1 (latest)</option><option value=/docs/kv/3.4.0/ selected>3.4.0</option></select><form class=docs-search role=search data-search data-index-url=/docs/search-index.json data-version=3.4.0><label class=sr-only for=docs-search-input>Search this version</label>
+<input id=docs-search-input type=search placeholder="Search this version" autocomplete=off data-search-input><div class=search-results data-search-results hidden></div></form></div><nav class=sidebar__nav aria-label="Pages in this version"><a class=sidebar__root href=/docs/kv/3.4.0/>OpenRiak KV 3.4.0</a><ul class=nav-tree><li><details><summary><a href=/docs/kv/3.4.0/explanation/>Explanation</a></summary></details></li><li><details open><summary><a href=/docs/kv/3.4.0/how-to/>How-to guides</a></summary><ul class=nav-tree><li><details><summary><a href=/docs/kv/3.4.0/how-to/configure/>Configure OpenRiak</a></summary></details></li><li><details><summary><a href=/docs/kv/3.4.0/how-to/develop/>Develop with OpenRiak</a></summary></details></li><li><details><summary><a href=/docs/kv/3.4.0/how-to/install/>Install and verify OpenRiak</a></summary></details></li><li><details open><summary><a class=is-current href=/docs/kv/3.4.0/how-to/operate/ aria-current=page>Operate a cluster</a></summary><ul class=nav-tree><li><details><summary><a href=/docs/kv/3.4.0/how-to/operate/aae-fold/>Run TicTac AAE fold operations</a></summary></details></li><li><a href=/docs/kv/3.4.0/how-to/operate/add-a-node-to-a-cluster/>Add a node to a cluster</a></li><li><a href=/docs/kv/3.4.0/how-to/operate/back-up-an-openriak-node/>Back up an OpenRiak node</a></li><li><a href=/docs/kv/3.4.0/how-to/operate/change-cluster-identity-information/>Change cluster identity information</a></li><li><a href=/docs/kv/3.4.0/how-to/operate/change-runtime-log-levels/>Change runtime log levels</a></li><li><a href=/docs/kv/3.4.0/how-to/operate/collect-diagnostic-information/>Collect diagnostic information</a></li><li><a href=/docs/kv/3.4.0/how-to/operate/downgrade-an-openriak-cluster/>Downgrade an OpenRiak cluster</a></li><li><a href=/docs/kv/3.4.0/how-to/operate/inspect-node-and-cluster-health/>Inspect node and cluster health</a></li><li><a href=/docs/kv/3.4.0/how-to/operate/create-and-activate-bucket-types/>Create and activate bucket types</a></li><li><a href=/docs/kv/3.4.0/how-to/operate/monitor-and-manage-handoffs/>Monitor and manage handoffs</a></li><li><a href=/docs/kv/3.4.0/how-to/operate/remove-a-node-from-a-cluster/>Remove a node from a cluster</a></li><li><a href=/docs/kv/3.4.0/how-to/operate/replace-a-failed-node/>Replace a failed node</a></li><li><a href=/docs/kv/3.4.0/how-to/operate/restore-an-openriak-node/>Restore an OpenRiak node</a></li><li><a href=/docs/kv/3.4.0/how-to/operate/perform-a-rolling-node-replacement/>Perform a rolling node replacement</a></li><li><a href=/docs/kv/3.4.0/how-to/operate/perform-a-rolling-restart/>Perform a rolling restart</a></li><li><a href=/docs/kv/3.4.0/how-to/operate/start-stop-or-restart-a-node/>Start, stop, or restart a node</a></li><li><a href=/docs/kv/3.4.0/how-to/operate/upgrade-an-openriak-cluster/>Upgrade an OpenRiak cluster</a></li><li><a href=/docs/kv/3.4.0/how-to/operate/plan-and-commit-a-cluster-change/>Plan and commit a cluster change</a></li><li><a href=/docs/kv/3.4.0/how-to/operate/repair-a-leveled-store/>Repair a Leveled store</a></li><li><a href=/docs/kv/3.4.0/how-to/operate/repair-an-individual-vnode/>Repair an individual vnode</a></li><li><a href=/docs/kv/3.4.0/how-to/operate/use-the-remote-console/>Use the remote console</a></li><li><a href=/docs/kv/3.4.0/how-to/operate/monitor-active-anti-entropy/>Monitor active anti-entropy</a></li><li><a href=/docs/kv/3.4.0/how-to/operate/monitor-read-repairs/>Monitor read repairs</a></li><li><a href=/docs/kv/3.4.0/how-to/operate/monitor-inter-cluster-reconciliation/>Monitor inter-cluster reconciliation</a></li><li><a href=/docs/kv/3.4.0/how-to/operate/monitor-node-worker-pools/>Monitor node worker pools</a></li><li><a href=/docs/kv/3.4.0/how-to/operate/schedule-object-reaping-and-erasure/>Schedule object reaping and erasure</a></li><li><a href=/docs/kv/3.4.0/how-to/operate/remove-obsolete-leveled-backup-files/>Remove obsolete Leveled backup files</a></li><li><a href=/docs/kv/3.4.0/how-to/operate/inspect-stored-data/>Inspect stored data</a></li><li><a href=/docs/kv/3.4.0/how-to/operate/re-replicate-keys-from-a-time-window/>Re-replicate keys from a time window</a></li><li><a href=/docs/kv/3.4.0/how-to/operate/rebuild-aae-trees-from-the-command-line/>Rebuild AAE trees from the command line</a></li><li><a href=/docs/kv/3.4.0/how-to/operate/tune-node-repair-under-application-load/>Tune node repair under application load</a></li><li><a href=/docs/kv/3.4.0/how-to/operate/check-vnode-and-backend-status/>Check vnode and backend status</a></li><li><a href=/docs/kv/3.4.0/how-to/operate/run-a-routine-operations-checklist/>Run a routine operations checklist</a></li></ul></details></li><li><details><summary><a href=/docs/kv/3.4.0/how-to/plan/>Plan a production cluster</a></summary></details></li><li><details><summary><a href=/docs/kv/3.4.0/how-to/secure/>Secure OpenRiak</a></summary></details></li><li><details><summary><a href=/docs/kv/3.4.0/how-to/troubleshoot/>Troubleshoot OpenRiak</a></summary></details></li><li><details><summary><a href=/docs/kv/3.4.0/how-to/tune/>Tune performance</a></summary></details></li><li><details><summary><a href=/docs/kv/3.4.0/how-to/redis-add-on/>Use the Redis add-on</a></summary></details></li></ul></details></li><li><details><summary><a href=/docs/kv/3.4.0/reference/>Reference</a></summary></details></li><li><details><summary><a href=/docs/kv/3.4.0/tutorials/>Tutorials</a></summary></details></li></ul></nav><div class=sidebar__help><a href=https://github.com/orgs/OpenRiak/discussions>Ask the OpenRiak community</a>
+<a href=https://github.com/OpenRiak/riak>OpenRiak source code</a></div></aside><button class=sidebar-scrim type=button data-sidebar-close aria-label="Close navigation"></button><main id=main-content class=content tabindex=-1><article class="doc doc--section"><nav class=breadcrumbs aria-label=Breadcrumb><ol><li><a href=/docs/kv/>OpenRiak KV documentation</a></li><li><a href=/docs/kv/3.4.0/>OpenRiak KV 3.4.0</a></li><li><a href=/docs/kv/3.4.0/how-to/>How-to guides</a></li><li aria-current=page>Operate a cluster</li></ol></nav><header class=article-header><div class=badges><span class="badge badge--how-to">how-to</span>
+<span class=badge>KV 3.4.0</span></div><h1>Operate a cluster</h1><p class=lede>Introduce routine cluster administration and lifecycle procedures.</p><div class=review-notice role=note><strong>Review status:</strong>
+This migrated page is still marked as a draft.
+Technical review is required before publication.</div></header><div class=doc-body><p>Introduce routine cluster administration and lifecycle procedures.</p><h2 id=before-you-begin>Before you begin</h2><p>A healthy cluster, current backups, and access to cluster status and logs. Record the starting state before making an operational change.</p><h2 id=overview>Overview</h2><h3 id=using-openriak-kv>Using OpenRiak KV</h3><h4 id=in-this-section>In This Section</h4><h5 id=running-a-cluster><a href=../using/running-a-cluster>Running a Cluster</a></h5><p>A guide on basic cluster setup.</p><p><a href=../using/running-a-cluster>Learn More &#187;</a></p><h6 id=cluster-administration><a href=../using/admin/>Cluster Administration</a></h6><p>Tutorials and reference documentation on cluster administration commands as well as command-line tools.</p><p><a href=../using/admin/>Learn More &#187;</a></p><h6 id=cluster-operations><a href=../using/cluster-operations>Cluster Operations</a></h6><p>Step-by-step tutorials on a range of cluster operations, such as adding & removing nodes, renaming nodes, and back-ups.</p><p><a href=../using/cluster-operations>Learn More &#187;</a></p><h6 id=repair--recovery><a href=../using/repair-recovery>Repair & Recovery</a></h6><p>Contains documentation on repairing a cluster, recovering from failure, and common errors.</p><p><a href=../using/repair-recovery>Learn More &#187;</a></p><h6 id=security><a href=../using/security>Security</a></h6><p>Information on securing your OpenRiak KV cluster.</p><p><a href=../using/security>Learn More &#187;</a></p><h6 id=performance><a href=../using/performance>Performance</a></h6><p>Articles on benchmarking your OpenRiak KV cluster and improving performance.</p><p><a href=../using/performance>Learn More &#187;</a></p><h6 id=troubleshooting><a href=../using/troubleshooting>Troubleshooting</a></h6><p>Guides on troubleshooting issues and current product advisories.</p><p><a href=../using/troubleshooting>Learn More &#187;</a></p><h6 id=reference><a href=../using/reference>Reference</a></h6><p>Articles providing background information and implementation details on topics such as logging, bucket types.</p><p><a href=../using/reference>Learn More &#187;</a></p><h3 id=cluster-operations-1>Cluster Operations</h3><h4 id=in-this-section-1>In This Section</h4><h5 id=adding--removing-nodes><a href=./adding-removing-nodes>Adding / Removing Nodes</a></h5><p>Describes the process of adding and removing nodes to and from an OpenRiak KV cluster.</p><p><a href=./adding-removing-nodes>Learn More &#187;</a></p><h6 id=changing-cluster-information><a href=./changing-cluster-info>Changing Cluster Information</a></h6><p>Details how to rename nodes and change the HTTP & Protocol Buffers binding address.</p><p><a href=./changing-cluster-info>Learn More &#187;</a></p><h6 id=replacing-a-node><a href=./replacing-node>Replacing a Node</a></h6><p>Tutorial on replacing a node in an OpenRiak KV cluster.</p><p><a href=./replacing-node>Learn More &#187;</a></p><h6 id=inspecting-a-node><a href=./inspecting-node>Inspecting a Node</a></h6><p>Guide on some of the available tools for inspecting an OpenRiak KV node.</p><p><a href=./inspecting-node>Learn More &#187;</a></p><h6 id=bucket-types><a href=./bucket-types>Bucket Types</a></h6><p>Brief tutorial on creating bucket types.</p><p><a href=./bucket-types>Learn More &#187;</a></p><h6 id=enabling-and-disabling-debug-logging><a href=./logging>Enabling and Disabling Debug Logging</a></h6><p>Details toggling debug logging on a single node or all nodes in a cluster.</p><p><a href=./logging>Learn More &#187;</a></p><h6 id=backing-up><a href=./backing-up>Backing Up</a></h6><p>Covers backing up OpenRiak KV data.</p><p><a href=./backing-up>Learn More &#187;</a></p><h6 id=enabling-and-disabling-handoff><a href=./handoff>Enabling and Disabling Handoff</a></h6><p>Information on using the <code>riak admin handoff</code> interface to enable and disable handoff.</p><p><a href=./handoff>Learn More &#187;</a></p><h6 id=monitoring-strong-consistency><a href=./strong-consistency>Monitoring Strong Consistency</a></h6><p>Overview of the various statistics used in monitoring strong consistency.</p><p><a href=./strong-consistency>Learn More &#187;</a></p><h6 id=v3-multi-datacenter><a href=./v3-multi-datacenter>V3 Multi-Datacenter</a></h6><p>Explains how to manage V3 replication with the <code>riak repl</code> command.</p><p><a href=./v3-multi-datacenter>Learn More &#187;</a></p><h6 id=v2-multi-datacenter><a href=./v2-multi-datacenter>V2 Multi-Datacenter</a></h6><p>Explains how to manage V2 replication with the <code>riak repl</code> command.</p><p><a href=./v2-multi-datacenter>Learn More &#187;</a></p><h3 id=running-a-cluster-1>Running a Cluster</h3><p>Configuring an OpenRiak cluster involves instructing each node to listen on a
+non-local interface, i.e. not <code>127.0.0.1</code>, and then joining all of the
+nodes together to participate in the cluster.</p><p>Most configuration changes will be applied to the <a href=/docs/kv/3.4.0/reference/configuration/>configuration file</a>
+located in your <code>rel/riak/etc</code> directory (if
+you compiled from source) or <code>/etc</code> (if you used a binary install of
+Riak).</p><p>The commands below use <code>riak</code> because packaged installations place the control script on <code>PATH</code>. For a source-built release, replace <code>riak</code> with the explicit release path, normally <code>./rel/riak/bin/riak</code>; for a development node, use <code>./dev/dev{n}/riak/bin/riak</code>.</p><blockquote><p><strong>Note on changing the <code>name</code> value</strong></p><p>If possible, you should avoid starting Riak prior to editing the name of
+a node. This setting corresponds to the <code>nodename</code> parameter in the
+<code>riak.conf</code> file if you are using the newer configuration system, and to
+the <code>-name</code> parameter in <code>vm.args</code> (as described below) if you are using
+the older configuration system. If you have already started Riak with
+the default settings, you cannot change the <code>-name</code> setting and then
+successfully restart the node.</p><p>If you cannot restart after changing the <code>-name</code> value you have two
+options:</p><ul><li>Discard the existing ring metadata by removing the contents of the
+<code>ring</code> directory. This will require rejoining all nodes into a
+cluster again.</li></ul><p>*Rename the node using the <a href=/docs/kv/3.4.0/reference/commands/riak-admin/><code>riak admin cluster replace</code></a>
+command. This will not work if you have previously only started Riak with a single node.</p></blockquote><h4 id=configure-the-first-node>Configure the First Node</h4><p>First, stop your OpenRiak node if it is currently running:</p><div class=highlight><pre tabindex=0 class=chroma><code class=language-bash data-lang=bash><span class=line><span class=cl>riak stop
+</span></span></code></pre></div><h5 id=select-an-ip-address-and-port>Select an IP address and port</h5><p>Let&rsquo;s say that the IP address for your cluster is 192.168.1.10 and that
+you&rsquo;ll be using the default port (8087). If you&rsquo;re using the <a href=/docs/kv/3.4.0/reference/protocol-buffers/>Protocol Buffers interface</a>
+to Riak (which we recommend over the HTTP
+interface due to performance gains), you should change your
+configuration file:</p><pre tabindex=0><code class=language-riakconf data-lang=riakconf>listener.protobuf.internal = 127.0.0.1:8087
+</code></pre><pre tabindex=0><code class=language-appconfig data-lang=appconfig>%% In the pb section of riak_core:
+
+{&#34;127.0.0.1&#34;, 8087 },
+</code></pre><p>becomes</p><pre tabindex=0><code class=language-riakconf data-lang=riakconf>listener.protobuf.internal = 192.168.1.10:8087
+</code></pre><p>{&ldquo;192.168.1.10&rdquo;, 8087 },</p><pre tabindex=0><code>
+**Note on upgrading to 2.0**
+If you are upgrading to Riak version 2.0 or later from an pre-2.0
+release, you can use either your old `app.config`/ `vm.args`
+configuration files or the newer `riak.conf` if you wish. If you have
+installed Riak 2.0 directly, you should use only `riak.conf`.
+
+Below, examples will be provided for both the old and new configuration
+systems. Bear in mind that you need to use either the older or the newer
+but never both simultaneously.
+
+More on configuring Riak can be found in the [Configuration documentation](../../configuring/reference).
+
+If you&#39;re using the HTTP interface, you will need to alter your
+configuration in an analogous way:
+
+```riakconf
+listener.http.internal = 127.0.0.1:8098
+</code></pre><pre tabindex=0><code class=language-appconfig data-lang=appconfig>%% In the riak_core section:
+
+{http, [ {&#34;127.0.0.1&#34;, 8098 } ]},
+</code></pre><p>becomes</p><pre tabindex=0><code class=language-riakconf data-lang=riakconf>listener.http.internal = 192.168.1.10:8098
+</code></pre><pre tabindex=0><code class=language-appconfig data-lang=appconfig>{http, [ {&#34;192.168.1.10&#34;, 8098 } ]},
+</code></pre><h6 id=name-your-node>Name your node</h6><p>Every node in Riak has a name associated with it. The default name is
+<code>riak@127.0.0.1</code>. Let&rsquo;s say that you want to change the name to
+<code>riak@192.168.1.10</code>:</p><pre tabindex=0><code class=language-riakconf data-lang=riakconf>nodename = riak@127.0.0.1
+</code></pre><pre tabindex=0><code class=language-vmargs data-lang=vmargs>-name riak@127.0.0.1
+</code></pre><p>becomes</p><pre tabindex=0><code class=language-riakconf data-lang=riakconf>nodename = riak@192.168.1.10
+</code></pre><pre tabindex=0><code class=language-vmargs data-lang=vmargs>-name riak@192.168.1.10
+</code></pre><blockquote><p><strong>Node Names</strong></p><p>Use fully qualified domain names (<a href=http://en.wikipedia.org/wiki/Fully_qualified_domain_name rel=noopener>FQDNs</a>
+) rather than IP addresses for the cluster member node names. For example, <code>riak@cluster.example.com</code> and <code>riak@192.168.1.10</code>
+are both acceptable node naming schemes, but using the FQDN style is
+preferred.</p><p>Once a node has been started, in order to change the name you must
+either remove ring files from the <code>/data/ring</code> directory or
+<a href=/docs/kv/3.4.0/reference/commands/riak-admin/><code>riak admin cluster force-replace</code></a>
+the node.</p></blockquote><h6 id=start-the-node>Start the node</h6><p>Now that your node is properly configured, you can start it:</p><div class=highlight><pre tabindex=0 class=chroma><code class=language-bash data-lang=bash><span class=line><span class=cl>riak start
+</span></span></code></pre></div><p>If the OpenRiak node has been previously started, you must use the
+<code>riak admin cluster replace</code> command to change the node name and update
+the node&rsquo;s ring file.</p><div class=highlight><pre tabindex=0 class=chroma><code class=language-bash data-lang=bash><span class=line><span class=cl>riak admin cluster replace riak@127.0.0.1 riak@192.168.1.10
+</span></span></code></pre></div><p><strong>Note on single nodes</strong>
+If a node is started singly using default settings, as you might do when you
+are building your first test environment, you will need to remove the ring
+files from the data directory after you edit your configuration files.
+<code>riak admin cluster replace</code> will not work since the node has not been joined
+to a cluster.</p><p>As with all cluster changes, you need to view the planned changes by
+running <code>riak admin cluster plan</code> and then running <code>riak admin cluster
+commit</code> to finalize those changes.</p><p>The node is now properly set up to join other nodes for cluster
+participation. You can proceed to adding a second node to the cluster.</p><h4 id=add-a-second-node-to-your-cluster>Add a Second Node to Your Cluster</h4><p>Repeat the above steps for a second host on the same network, providing
+the second node with a host/port and node name. Once the second node has
+started, use <code>riak admin cluster join</code> to join the second node to the
+first node, thereby creating an initial OpenRiak cluster. Let&rsquo;s say that
+we&rsquo;ve named our second node <code>riak@192.168.1.11</code>. On the new node:</p><div class=highlight><pre tabindex=0 class=chroma><code class=language-bash data-lang=bash><span class=line><span class=cl>riak admin cluster join riak@192.168.1.10
+</span></span></code></pre></div><p>Output from the above should resemble:</p><pre tabindex=0><code>Success: staged join request for `riak@192.168.1.11` to `riak@192.168.1.10`
+</code></pre><p>Next, plan and commit the changes:</p><div class=highlight><pre tabindex=0 class=chroma><code class=language-bash data-lang=bash><span class=line><span class=cl>riak admin cluster plan
+</span></span><span class=line><span class=cl>riak admin cluster commit
+</span></span></code></pre></div><p>After the last command, you should see:</p><pre tabindex=0><code>Cluster changes committed
+</code></pre><p>If your output was similar, then the second OpenRiak node is now part of the
+cluster and has begun syncing with the first node. Riak provides several
+ways to determine the cluster&rsquo;s ring status. Here are two ways to
+examine your OpenRiak cluster&rsquo;s ring:</p><ol><li>Using the <code>riak admin</code> command:</li></ol><div class=highlight><pre tabindex=0 class=chroma><code class=language-bash data-lang=bash><span class=line><span class=cl>    riak admin status <span class=p>|</span> grep ring_members
+</span></span><span class=line><span class=cl>    <span class=sb>```</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl>With output resembling the following:
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl><span class=sb>```</span>bash
+</span></span><span class=line><span class=cl>    ring_members : <span class=o>[</span><span class=s1>&#39;riak@192.168.1.10&#39;</span>,<span class=s1>&#39;riak@192.168.1.11&#39;</span><span class=o>]</span>
+</span></span><span class=line><span class=cl>    <span class=sb>```</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl>2. Running the <span class=sb>`</span>riak attach<span class=sb>`</span> command. This will open up an Erlang shell,
+</span></span><span class=line><span class=cl>into which you can <span class=nb>type</span> the following command:
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl><span class=sb>```</span>erlang
+</span></span><span class=line><span class=cl>    1&gt; <span class=o>{</span>ok, R<span class=o>}</span> <span class=o>=</span> riak_core_ring_manager:get_my_ring<span class=o>()</span>.
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl>%% Response:
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl><span class=o>{</span>ok,<span class=o>{</span>chstate,<span class=s1>&#39;riak@192.168.1.10&#39;</span>,.........
+</span></span><span class=line><span class=cl>    <span class=o>(</span>riak@192.168.52.129<span class=o>)</span>2&gt; riak_core_ring:all_members<span class=o>(</span>R<span class=o>)</span>.
+</span></span><span class=line><span class=cl>    <span class=o>[</span><span class=s1>&#39;riak@192.168.1.10&#39;</span>,<span class=s1>&#39;riak@192.168.1.11&#39;</span><span class=o>]</span>
+</span></span><span class=line><span class=cl>    <span class=sb>```</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl>To join additional nodes to your cluster, repeat the above steps.  You
+</span></span><span class=line><span class=cl>can also find more detailed instructions about <span class=o>[</span>adding and removing nodes<span class=o>](</span>/docs/kv/3.4.0/tutorials/operations/change-cluster-membership/<span class=o>)</span> from a cluster.
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl>&gt; **Ring Creation Size**
+</span></span><span class=line><span class=cl>&gt;
+</span></span><span class=line><span class=cl>&gt; All nodes in the cluster
+</span></span><span class=line><span class=cl>must have the same initial ring size setting in order to join, and
+</span></span><span class=line><span class=cl>participate in cluster activity. This setting can be adjusted in your
+</span></span><span class=line><span class=cl>configuration file using the <span class=sb>`</span>ring_creation_size<span class=sb>`</span> parameter <span class=k>if</span> you<span class=err>&#39;</span>re
+</span></span><span class=line><span class=cl>using the older configuration system or <span class=sb>`</span>ring_size<span class=sb>`</span> in the new system.
+</span></span><span class=line><span class=cl>&gt;
+</span></span><span class=line><span class=cl>&gt; Check the value of all nodes <span class=k>if</span> you receive a message like this:
+</span></span><span class=line><span class=cl>&gt; <span class=sb>`</span>Failed: riak@10.0.1.156 has a different ring_creation_size<span class=sb>`</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl><span class=c1>#### Running Multiple Nodes on One Host</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl>If you built Riak from <span class=nb>source</span> code, or <span class=k>if</span> you are using the Mac OS X
+</span></span><span class=line><span class=cl>pre-built package, <span class=k>then</span> you can easily run multiple Riak nodes on the
+</span></span><span class=line><span class=cl>same machine. The most common scenario <span class=k>for</span> doing this is to experiment
+</span></span><span class=line><span class=cl>with running an OpenRiak cluster.
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl>**Note**: If you have installed the <span class=sb>`</span>.deb<span class=sb>`</span> or <span class=sb>`</span>.rpm<span class=sb>`</span> package, <span class=k>then</span> you
+</span></span><span class=line><span class=cl>will need to download and build Riak from <span class=nb>source</span> to follow the
+</span></span><span class=line><span class=cl>directions below.
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl>To run multiple nodes, make copies of the <span class=sb>`</span>riak<span class=sb>`</span> directory.
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl>-   If you ran <span class=sb>`</span>make all rel<span class=sb>`</span>, <span class=k>then</span> this can be found in <span class=sb>`</span>./rel/riak<span class=sb>`</span>
+</span></span><span class=line><span class=cl>    under the Riak <span class=nb>source</span> root directory.
+</span></span><span class=line><span class=cl>-   If you are running Mac OS X, <span class=k>then</span> this is the directory where you
+</span></span><span class=line><span class=cl>    unzipped the <span class=sb>`</span>.tar.gz<span class=sb>`</span> file.
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl>Presuming that you copied <span class=sb>`</span>./rel/riak<span class=sb>`</span> into <span class=sb>`</span>./rel/riak1<span class=sb>`</span>, <span class=sb>`</span>./rel/riak2<span class=sb>`</span>,
+</span></span><span class=line><span class=cl><span class=sb>`</span>./rel/riak3<span class=sb>`</span>, and so on, you need to make two changes:
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl>1. Change the ports used by each OpenRiak node to be unique on your host.
+</span></span><span class=line><span class=cl>   Specifically, you need to <span class=nb>set</span> to different values on each node:
+</span></span><span class=line><span class=cl>   - the handoff port <span class=o>(</span>in either <span class=sb>`</span>riak.conf<span class=sb>`</span><span class=o>)</span>
+</span></span><span class=line><span class=cl>   - the Cluster Manager port <span class=o>(</span>in <span class=sb>`</span>advanced.conf<span class=sb>`</span><span class=o>)</span>
+</span></span><span class=line><span class=cl>   - either your Protocol Buffers listener port or your HTTP listener port or both <span class=o>(</span>depending on which interface you are using<span class=o>)</span> <span class=o>(</span>in <span class=sb>`</span>riak.conf<span class=sb>`</span><span class=o>)</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl>For example, on node <span class=m>1</span> one could use these ports:
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl><span class=sb>```</span>riakconf
+</span></span><span class=line><span class=cl>    <span class=c1># For Protocol Buffers change from:</span>
+</span></span><span class=line><span class=cl>    <span class=c1># listener.protobuf.internal = 127.0.0.1:8097</span>
+</span></span><span class=line><span class=cl>    <span class=c1># To something like this:</span>
+</span></span><span class=line><span class=cl>    listener.protobuf.internal <span class=o>=</span> 127.0.0.1:8187
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl><span class=c1>## For HTTP change from:</span>
+</span></span><span class=line><span class=cl>    <span class=c1># listener.http.internal = 127.0.0.1:8098</span>
+</span></span><span class=line><span class=cl>    <span class=c1># To something like this:</span>
+</span></span><span class=line><span class=cl>    listener.http.internal <span class=o>=</span> 127.0.0.1:8198
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl><span class=c1>## For either interface set the handoff from:</span>
+</span></span><span class=line><span class=cl>    <span class=c1># handoff.port = 8099</span>
+</span></span><span class=line><span class=cl>    <span class=c1># To something like this:</span>
+</span></span><span class=line><span class=cl>    handoff.port <span class=o>=</span> <span class=m>8199</span>
+</span></span><span class=line><span class=cl>    <span class=sb>```</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl><span class=sb>```</span>advancedconf
+</span></span><span class=line><span class=cl>    <span class=o>{</span>riak_core,
+</span></span><span class=line><span class=cl>    <span class=o>[</span>
+</span></span><span class=line><span class=cl>      <span class=o>{</span>cluster_mgr, <span class=o>{</span><span class=s2>&#34;127.0.0.1&#34;</span>, <span class=m>9180</span> <span class=o>}</span> <span class=o>}</span>,
+</span></span><span class=line><span class=cl>      %% more riak_core configs
+</span></span><span class=line><span class=cl>    <span class=o>]}</span>
+</span></span><span class=line><span class=cl>    <span class=sb>```</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl>And therefore on node 2, use slightly different ports:
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl><span class=sb>```</span>riakconf
+</span></span><span class=line><span class=cl>    <span class=c1># For Protocol Buffers change from:</span>
+</span></span><span class=line><span class=cl>    <span class=c1># listener.protobuf.internal = 127.0.0.1:8097</span>
+</span></span><span class=line><span class=cl>    <span class=c1># To something like this:</span>
+</span></span><span class=line><span class=cl>    listener.protobuf.internal <span class=o>=</span> 127.0.0.1:8287
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl><span class=c1>## For HTTP change from:</span>
+</span></span><span class=line><span class=cl>    <span class=c1># listener.http.internal = 127.0.0.1:8098</span>
+</span></span><span class=line><span class=cl>    <span class=c1># To something like this:</span>
+</span></span><span class=line><span class=cl>    listener.http.internal <span class=o>=</span> 127.0.0.1:8298
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl><span class=c1>## For either interface set the handoff from:</span>
+</span></span><span class=line><span class=cl>    <span class=c1># handoff.port = 8099</span>
+</span></span><span class=line><span class=cl>    <span class=c1># To something like this:</span>
+</span></span><span class=line><span class=cl>    handoff.port <span class=o>=</span> <span class=m>8299</span>
+</span></span><span class=line><span class=cl>    <span class=sb>```</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl><span class=sb>```</span>advancedconf
+</span></span><span class=line><span class=cl>    <span class=o>{</span>riak_core,
+</span></span><span class=line><span class=cl>    <span class=o>[</span>
+</span></span><span class=line><span class=cl>      <span class=o>{</span>cluster_mgr, <span class=o>{</span><span class=s2>&#34;127.0.0.1&#34;</span>, <span class=m>9280</span> <span class=o>}</span> <span class=o>}</span>,
+</span></span><span class=line><span class=cl>      %% more riak_core configs
+</span></span><span class=line><span class=cl>    <span class=o>]}</span>
+</span></span><span class=line><span class=cl>    <span class=sb>```</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl>Continue <span class=k>for</span> all nodes on the host.
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl>3. Change the name of each node to a unique name.
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl><span class=sb>```</span>riakconf
+</span></span><span class=line><span class=cl>    <span class=c1># Change from this:</span>
+</span></span><span class=line><span class=cl>    <span class=c1># nodename = riak@127.0.0.1</span>
+</span></span><span class=line><span class=cl>    <span class=c1># To something like this:</span>
+</span></span><span class=line><span class=cl>    <span class=nv>nodename</span> <span class=o>=</span> riak1@127.0.0.1
+</span></span><span class=line><span class=cl>    <span class=sb>```</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl>4. Now, start the nodes, changing path names and nodes as appropriate:
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl><span class=sb>```</span>bash
+</span></span><span class=line><span class=cl>    ./rel/riak1/bin/riak daemon
+</span></span><span class=line><span class=cl>    ./rel/riak2/bin/riak daemon
+</span></span><span class=line><span class=cl>    ./rel/riak3/bin/riak daemon
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl><span class=c1>## etc</span>
+</span></span><span class=line><span class=cl>    <span class=sb>```</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl>5. Next, join the nodes into a cluster:
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl><span class=sb>```</span>bash
+</span></span><span class=line><span class=cl>    ./rel/riak2/bin/riak admin cluster join riak1@127.0.0.1
+</span></span><span class=line><span class=cl>    ./rel/riak3/bin/riak admin cluster join riak1@127.0.0.1
+</span></span><span class=line><span class=cl>    ./rel/riak2/bin/riak admin cluster plan
+</span></span><span class=line><span class=cl>    ./rel/riak2/bin/riak admin cluster commit
+</span></span><span class=line><span class=cl>    <span class=sb>```</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl><span class=c1>#### Multiple Clusters on One Host</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl>Using the above technique, it is possible to run multiple clusters on
+</span></span><span class=line><span class=cl>one computer. If a node hasn’t joined an existing cluster, it will
+</span></span><span class=line><span class=cl>behave just as a cluster would. Running multiple clusters on one
+</span></span><span class=line><span class=cl>computer is simply a matter of having two or more distinct nodes or
+</span></span><span class=line><span class=cl>groups of clustered nodes. Please note that each cluster should have a
+</span></span><span class=line><span class=cl>different value <span class=k>for</span> <span class=sb>`</span>distributed_cookie<span class=sb>`</span>.
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl><span class=c1>#### OpenRiak KV - Building and Scaling a Cluster</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl>This guide is split into two parts:
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl>- <span class=o>[</span>The considerations to make when choosing infrastructure <span class=k>for</span> Riak<span class=o>](</span>/docs/kv/3.4.0/how-to/plan/size-cluster/<span class=o>)</span>
+</span></span><span class=line><span class=cl>- <span class=o>[</span>The practical steps to actually make and expand a cluster<span class=o>](</span>/docs/kv/3.4.0/how-to/operate/add-node/<span class=o>)</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl><span class=c1>#### OpenRiak KV - Operations and Troubleshooting</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl>The following sections provide guidance when operating or troubleshooting an OpenRiak cluster:
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl>- <span class=o>[</span>Handling failure - replace, repair and recover<span class=o>](</span>/docs/kv/3.4.0/explanation/operations/node-failure-and-recovery/<span class=o>)</span>
+</span></span><span class=line><span class=cl>- <span class=o>[</span>Upgrading Riak on a node<span class=o>](</span>/docs/kv/3.4.0/how-to/operate/upgrade-cluster/<span class=o>)</span>
+</span></span><span class=line><span class=cl>- <span class=o>[</span>Using the remote console<span class=o>](</span>/docs/kv/3.4.0/how-to/operate/use-remote-console/<span class=o>)</span>
+</span></span><span class=line><span class=cl>- <span class=o>[</span>Accessing extended configuration options<span class=o>](</span>/docs/kv/3.4.0/how-to/configure/advanced-configuration/<span class=o>)</span>
+</span></span><span class=line><span class=cl>- <span class=o>[</span>Making use of logging and statistics<span class=o>](</span>/docs/kv/3.4.0/reference/operations/statistics-and-monitoring/<span class=o>)</span>
+</span></span><span class=line><span class=cl>- <span class=o>[</span>Monitoring background operational services<span class=o>](</span>/docs/kv/3.4.0/reference/operations/statistics-and-monitoring/<span class=o>)</span>
+</span></span><span class=line><span class=cl>- <span class=o>[</span>Enabling Riak security controls<span class=o>](</span>/docs/kv/3.4.0/how-to/secure/<span class=o>)</span>
+</span></span><span class=line><span class=cl>- <span class=o>[</span>Garbage collection - monitoring and tuning<span class=o>](</span>/docs/kv/3.4.0/explanation/operations/garbage-collection/<span class=o>)</span>
+</span></span><span class=line><span class=cl>- <span class=o>[</span>Understanding the contents of an OpenRiak cluster<span class=o>](</span>/docs/kv/3.4.0/how-to/operate/inspect-data/<span class=o>)</span>
+</span></span><span class=line><span class=cl>- <span class=o>[</span>Volume and performance testing<span class=o>](</span>/docs/kv/3.4.0/how-to/tune/benchmark-cluster/<span class=o>)</span>
+</span></span><span class=line><span class=cl>- <span class=o>[</span>Backing up a cluster<span class=o>](</span>/docs/kv/3.4.0/explanation/operations/backups-and-restores/<span class=o>)</span>
+</span></span><span class=line><span class=cl>- <span class=o>[</span>Operation checklist<span class=o>](</span>/docs/kv/3.4.0/how-to/operate/routine-operations-checklist/<span class=o>)</span>
+</span></span><span class=line><span class=cl>- <span class=o>[</span>Advanced troubleshooting of Riak internals<span class=o>](</span>/docs/kv/3.4.0/how-to/troubleshoot/erlang-vm/<span class=o>)</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl><span class=c1>## Verify the result</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl>Compare cluster health and workload behaviour with the recorded starting state, and confirm that all affected nodes have converged.
+</span></span></code></pre></div></div><section class=child-pages aria-labelledby=browse-section><h2 id=browse-section>Browse this section</h2><div class=cards><a class=card href=/docs/kv/3.4.0/how-to/operate/aae-fold/><strong>Run TicTac AAE fold operations</strong>
+<span>Introduce operational recipes for inspecting and repairing data with TicTac AAE fold functions.</span>
+</a><a class=card href=/docs/kv/3.4.0/how-to/operate/add-a-node-to-a-cluster/><strong>Add a node to a cluster</strong>
+<span>Show operators how to add a node to a cluster with prechecks, verification, and recovery guidance.</span>
+</a><a class=card href=/docs/kv/3.4.0/how-to/operate/back-up-an-openriak-node/><strong>Back up an OpenRiak node</strong>
+<span>Show operators how to back up an openriak node with prechecks, verification, and recovery guidance.</span>
+</a><a class=card href=/docs/kv/3.4.0/how-to/operate/change-cluster-identity-information/><strong>Change cluster identity information</strong>
+<span>Show operators how to change cluster identity information with prechecks, verification, and recovery guidance.</span>
+</a><a class=card href=/docs/kv/3.4.0/how-to/operate/change-runtime-log-levels/><strong>Change runtime log levels</strong>
+<span>Show operators how to change runtime log levels with prechecks, verification, and recovery guidance.</span>
+</a><a class=card href=/docs/kv/3.4.0/how-to/operate/collect-diagnostic-information/><strong>Collect diagnostic information</strong>
+<span>Show operators how to collect diagnostic information with prechecks, verification, and recovery guidance.</span>
+</a><a class=card href=/docs/kv/3.4.0/how-to/operate/downgrade-an-openriak-cluster/><strong>Downgrade an OpenRiak cluster</strong>
+<span>Show operators how to downgrade an openriak cluster with prechecks, verification, and recovery guidance.</span>
+</a><a class=card href=/docs/kv/3.4.0/how-to/operate/inspect-node-and-cluster-health/><strong>Inspect node and cluster health</strong>
+<span>Show operators how to inspect node and cluster health with prechecks, verification, and recovery guidance.</span>
+</a><a class=card href=/docs/kv/3.4.0/how-to/operate/create-and-activate-bucket-types/><strong>Create and activate bucket types</strong>
+<span>Show operators how to create and activate bucket types with prechecks, verification, and recovery guidance.</span>
+</a><a class=card href=/docs/kv/3.4.0/how-to/operate/monitor-and-manage-handoffs/><strong>Monitor and manage handoffs</strong>
+<span>Show operators how to monitor and manage handoffs with prechecks, verification, and recovery guidance.</span>
+</a><a class=card href=/docs/kv/3.4.0/how-to/operate/remove-a-node-from-a-cluster/><strong>Remove a node from a cluster</strong>
+<span>Show operators how to remove a node from a cluster with prechecks, verification, and recovery guidance.</span>
+</a><a class=card href=/docs/kv/3.4.0/how-to/operate/replace-a-failed-node/><strong>Replace a failed node</strong>
+<span>Show operators how to replace a failed node with prechecks, verification, and recovery guidance.</span>
+</a><a class=card href=/docs/kv/3.4.0/how-to/operate/restore-an-openriak-node/><strong>Restore an OpenRiak node</strong>
+<span>Show operators how to restore an openriak node with prechecks, verification, and recovery guidance.</span>
+</a><a class=card href=/docs/kv/3.4.0/how-to/operate/perform-a-rolling-node-replacement/><strong>Perform a rolling node replacement</strong>
+<span>Show operators how to perform a rolling node replacement with prechecks, verification, and recovery guidance.</span>
+</a><a class=card href=/docs/kv/3.4.0/how-to/operate/perform-a-rolling-restart/><strong>Perform a rolling restart</strong>
+<span>Show operators how to perform a rolling restart with prechecks, verification, and recovery guidance.</span>
+</a><a class=card href=/docs/kv/3.4.0/how-to/operate/start-stop-or-restart-a-node/><strong>Start, stop, or restart a node</strong>
+<span>Show operators how to start, stop, or restart a node with prechecks, verification, and recovery guidance.</span>
+</a><a class=card href=/docs/kv/3.4.0/how-to/operate/upgrade-an-openriak-cluster/><strong>Upgrade an OpenRiak cluster</strong>
+<span>Show operators how to upgrade an openriak cluster with prechecks, verification, and recovery guidance.</span>
+</a><a class=card href=/docs/kv/3.4.0/how-to/operate/plan-and-commit-a-cluster-change/><strong>Plan and commit a cluster change</strong>
+<span>Show operators how to stage, plan, verify, commit, and monitor a cluster membership change.</span>
+</a><a class=card href=/docs/kv/3.4.0/how-to/operate/repair-a-leveled-store/><strong>Repair a Leveled store</strong>
+<span>Show operators how to diagnose and repair an individual Leveled store with appropriate safeguards.</span>
+</a><a class=card href=/docs/kv/3.4.0/how-to/operate/repair-an-individual-vnode/><strong>Repair an individual vnode</strong>
+<span>Show operators how to identify, repair, and verify an unhealthy vnode.</span>
+</a><a class=card href=/docs/kv/3.4.0/how-to/operate/use-the-remote-console/><strong>Use the remote console</strong>
+<span>Show operators how to enter the remote console and perform supported diagnostic operations safely.</span>
+</a><a class=card href=/docs/kv/3.4.0/how-to/operate/monitor-active-anti-entropy/><strong>Monitor active anti-entropy</strong>
+<span>Show operators how to inspect active anti-entropy progress, health, and failure signals.</span>
+</a><a class=card href=/docs/kv/3.4.0/how-to/operate/monitor-read-repairs/><strong>Monitor read repairs</strong>
+<span>Show operators how to observe read-repair activity and identify abnormal repair rates.</span>
+</a><a class=card href=/docs/kv/3.4.0/how-to/operate/monitor-inter-cluster-reconciliation/><strong>Monitor inter-cluster reconciliation</strong>
+<span>Show operators how to observe reconciliation exchanges and diagnose incomplete convergence.</span>
+</a><a class=card href=/docs/kv/3.4.0/how-to/operate/monitor-node-worker-pools/><strong>Monitor node worker pools</strong>
+<span>Show operators how to inspect worker-pool utilization, backlogs, and saturation symptoms.</span>
+</a><a class=card href=/docs/kv/3.4.0/how-to/operate/schedule-object-reaping-and-erasure/><strong>Schedule object reaping and erasure</strong>
+<span>Show operators how to schedule reaping and erasure while controlling load and retention risk.</span>
+</a><a class=card href=/docs/kv/3.4.0/how-to/operate/remove-obsolete-leveled-backup-files/><strong>Remove obsolete Leveled backup files</strong>
+<span>Show operators how to identify and safely remove obsolete Leveled backup files.</span>
+</a><a class=card href=/docs/kv/3.4.0/how-to/operate/inspect-stored-data/><strong>Inspect stored data</strong>
+<span>Show operators how to inspect stored objects and backend state without changing data.</span>
+</a><a class=card href=/docs/kv/3.4.0/how-to/operate/re-replicate-keys-from-a-time-window/><strong>Re-replicate keys from a time window</strong>
+<span>Show operators how to re-replicate keys modified during a selected time window.</span>
+</a><a class=card href=/docs/kv/3.4.0/how-to/operate/rebuild-aae-trees-from-the-command-line/><strong>Rebuild AAE trees from the command line</strong>
+<span>Show operators how to request an AAE tree rebuild and monitor its status from the command line.</span>
+</a><a class=card href=/docs/kv/3.4.0/how-to/operate/tune-node-repair-under-application-load/><strong>Tune node repair under application load</strong>
+<span>Show operators how to use double-pair and deferred repair settings to limit repair impact.</span>
+</a><a class=card href=/docs/kv/3.4.0/how-to/operate/check-vnode-and-backend-status/><strong>Check vnode and backend status</strong>
+<span>Show operators how to use riak admin vnode-status to inspect vnodes and their storage backends.</span>
+</a><a class=card href=/docs/kv/3.4.0/how-to/operate/run-a-routine-operations-checklist/><strong>Run a routine operations checklist</strong>
+<span>Show operators how to perform a repeatable health and maintenance review of an OpenRiak cluster.</span></a></div></section></article></main></div><footer class=site-footer><div><p>OpenRiak documentation is licensed under <a href=https://creativecommons.org/licenses/by/4.0/>Creative Commons Attribution 4.0</a>.</p><p>Historical material © Basho Technologies, Inc.; community revisions © OpenRiak contributors.</p></div><a href=#main-content>Back to top</a></footer><script src=/docs/js/site.js defer></script></body></html>

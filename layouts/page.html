@@ -1,0 +1,17 @@
+{{ define "main" }}
+  <article class="doc">
+    {{ partial "breadcrumbs.html" . }}
+    {{ partial "article-header.html" . }}
+    {{ with .TableOfContents }}
+      {{ if ne . `<nav id="TableOfContents"></nav>` }}
+        <details class="on-this-page">
+          <summary>On this page</summary>
+          {{ . }}
+        </details>
+      {{ end }}
+    {{ end }}
+    <div class="doc-body">{{ .Content }}</div>
+    {{ partial "page-navigation.html" . }}
+  </article>
+{{ end }}
+

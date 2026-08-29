@@ -1,0 +1,232 @@
+<!doctype html><html lang=en class=no-js><head><script src="/docs/livereload.js?mindelay=10&amp;v=2&amp;port=1320&amp;path=docs/livereload" data-no-instant defer></script><meta charset=utf-8><meta name=viewport content="width=device-width,initial-scale=1"><meta name=color-scheme content="light dark"><script>(()=>{const t="openriak-docs-theme";let e="system";try{const n=localStorage.getItem(t);(n==="light"||n==="dark"||n==="system")&&(e=n)}catch{}const n=window.matchMedia?.("(prefers-color-scheme: dark)").matches??!1;document.documentElement.dataset.themePreference=e,document.documentElement.dataset.theme=e==="system"?n?"dark":"light":e})()</script><meta name=description content="Show performance engineers how to tune the erlang virtual machine using measurable before-and-after checks."><title>Tune the Erlang virtual machine | OpenRiak Documentation</title><link rel=canonical href=http://127.0.0.1:1320/docs/kv/3.4.1/how-to/tune/tune-the-erlang-virtual-machine/><link rel=icon href=/docs/images/branding/favicon.ico sizes=any><link rel=stylesheet href=/docs/css/site.css><link rel=stylesheet href=/docs/css/theme.css><script src=/docs/js/theme.js defer></script><meta property="og:type" content="website"><meta property="og:title" content="Tune the Erlang virtual machine"><meta property="og:description" content="Show performance engineers how to tune the erlang virtual machine using measurable before-and-after checks."><meta property="og:url" content="http://127.0.0.1:1320/docs/kv/3.4.1/how-to/tune/tune-the-erlang-virtual-machine/"></head><body data-kind=page data-section=kv><script>document.documentElement.classList.remove("no-js")</script><a class=skip-link href=#main-content>Skip to content</a><header class=site-header><div class=site-header__inner><button class=nav-toggle type=button aria-controls=docs-sidebar aria-expanded=false>
+<span aria-hidden=true>☰</span><span class=sr-only>Toggle documentation navigation</span>
+</button>
+<a class=brand href=/docs/ aria-label="OpenRiak documentation home"><img src=/docs/images/branding/riak-logo-inverted.png alt width=34 height=34>
+<span>OpenRiak <strong>Docs</strong></span></a><nav class=primary-nav aria-label="Documentation types"><a href=/docs/kv/3.4.1/tutorials/>Tutorials</a>
+<a href=/docs/kv/3.4.1/how-to/>How-to</a>
+<a href=/docs/kv/3.4.1/reference/>Reference</a>
+<a href=/docs/kv/3.4.1/explanation/>Explanation</a></nav><a class=community-link href=https://github.com/orgs/OpenRiak/discussions>Community</a>
+<label class=theme-control><span class=theme-control__icon aria-hidden=true>◐</span>
+<span class=sr-only>Color theme</span>
+<select data-theme-select aria-label="Color theme"><option value=system>System</option><option value=light>Light</option><option value=dark>Dark</option></select></label></div></header><div class=site-shell><aside id=docs-sidebar class=sidebar aria-label="Documentation navigation"><div class=sidebar__tools><label for=version-select>Version</label>
+<select id=version-select data-version-select><option value=/docs/kv/3.4.1/ selected>3.4.1 (latest)</option><option value=/docs/kv/3.4.0/>3.4.0</option></select><form class=docs-search role=search data-search data-index-url=/docs/search-index.json data-version=3.4.1><label class=sr-only for=docs-search-input>Search this version</label>
+<input id=docs-search-input type=search placeholder="Search this version" autocomplete=off data-search-input><div class=search-results data-search-results hidden></div></form></div><nav class=sidebar__nav aria-label="Pages in this version"><a class=sidebar__root href=/docs/kv/3.4.1/>OpenRiak KV 3.4.1</a><ul class=nav-tree><li><details><summary><a href=/docs/kv/3.4.1/explanation/>Explanation</a></summary></details></li><li><details open><summary><a href=/docs/kv/3.4.1/how-to/>How-to guides</a></summary><ul class=nav-tree><li><details><summary><a href=/docs/kv/3.4.1/how-to/configure/>Configure OpenRiak</a></summary></details></li><li><details><summary><a href=/docs/kv/3.4.1/how-to/develop/>Develop with OpenRiak</a></summary></details></li><li><details><summary><a href=/docs/kv/3.4.1/how-to/install/>Install and verify OpenRiak</a></summary></details></li><li><details><summary><a href=/docs/kv/3.4.1/how-to/operate/>Operate a cluster</a></summary></details></li><li><details><summary><a href=/docs/kv/3.4.1/how-to/plan/>Plan a production cluster</a></summary></details></li><li><details><summary><a href=/docs/kv/3.4.1/how-to/secure/>Secure OpenRiak</a></summary></details></li><li><details><summary><a href=/docs/kv/3.4.1/how-to/troubleshoot/>Troubleshoot OpenRiak</a></summary></details></li><li><details open><summary><a href=/docs/kv/3.4.1/how-to/tune/>Tune performance</a></summary><ul class=nav-tree><li><a href=/docs/kv/3.4.1/how-to/tune/benchmark-a-cluster/>Benchmark a cluster</a></li><li><a href=/docs/kv/3.4.1/how-to/tune/reduce-request-latency/>Reduce request latency</a></li><li><a href=/docs/kv/3.4.1/how-to/tune/set-the-open-files-limit/>Set the open-files limit</a></li><li><a href=/docs/kv/3.4.1/how-to/tune/tune-an-aws-deployment/>Tune an AWS deployment</a></li><li><a class=is-current href=/docs/kv/3.4.1/how-to/tune/tune-the-erlang-virtual-machine/ aria-current=page>Tune the Erlang virtual machine</a></li><li><a href=/docs/kv/3.4.1/how-to/tune/tune-multi-datacenter-replication/>Tune multi-datacenter replication</a></li></ul></details></li><li><details><summary><a href=/docs/kv/3.4.1/how-to/redis-add-on/>Use the Redis add-on</a></summary></details></li></ul></details></li><li><details><summary><a href=/docs/kv/3.4.1/reference/>Reference</a></summary></details></li><li><details><summary><a href=/docs/kv/3.4.1/tutorials/>Tutorials</a></summary></details></li></ul></nav><div class=sidebar__help><a href=https://github.com/orgs/OpenRiak/discussions>Ask the OpenRiak community</a>
+<a href=https://github.com/OpenRiak/riak>OpenRiak source code</a></div></aside><button class=sidebar-scrim type=button data-sidebar-close aria-label="Close navigation"></button><main id=main-content class=content tabindex=-1><article class=doc><nav class=breadcrumbs aria-label=Breadcrumb><ol><li><a href=/docs/kv/>OpenRiak KV documentation</a></li><li><a href=/docs/kv/3.4.1/>OpenRiak KV 3.4.1</a></li><li><a href=/docs/kv/3.4.1/how-to/>How-to guides</a></li><li><a href=/docs/kv/3.4.1/how-to/tune/>Tune performance</a></li><li aria-current=page>Tune the Erlang virtual machine</li></ol></nav><header class=article-header><div class=badges><span class="badge badge--how-to">how-to</span>
+<span class=badge>KV 3.4.1</span></div><h1>Tune the Erlang virtual machine</h1><p class=lede>Show performance engineers how to tune the erlang virtual machine using measurable before-and-after checks.</p><div class=review-notice role=note><strong>Review status:</strong>
+This migrated page is still marked as a draft.
+Technical review is required before publication.</div></header><details class=on-this-page><summary>On this page</summary><nav id=TableOfContents><ul><li><a href=#before-you-begin>Before you begin</a></li><li><a href=#overview>Overview</a><ul><li><a href=#erlang-vm-tuning>Erlang VM Tuning</a></li></ul></li><li><a href=#verify-the-result>Verify the result</a></li></ul></nav></details><div class=doc-body><p>Show performance engineers how to tune the erlang virtual machine using measurable before-and-after checks.</p><h2 id=before-you-begin>Before you begin</h2><p>A representative workload, a recorded performance baseline, current capacity measurements, and a safe environment in which to test one change at a time.</p><h2 id=overview>Overview</h2><h3 id=erlang-vm-tuning>Erlang VM Tuning</h3><p>Riak was written almost exclusively in <a href=http://www.erlang.org rel=noopener>Erlang</a>
+and runs on an Erlang virtual machine (VM), which makes proper Erlang VM
+tuning an important part of optimizing Riak performance. The Erlang VM
+itself provides a wide variety of <a href=http://erlang.org/doc/man/erl.html rel=noopener>configurable parameters</a>
+that you can use to tune its performance; Riak enables you to tune a subset of those parameters in each node&rsquo;s <a href=../../../configuring/reference/#erlang-vm>configuration files</a>
+.</p><p>The table below lists some of the parameters that are available, showing
+both their names as used in Erlang and their names as Riak parameters.</p><table><thead><tr><th style=text-align:left>Erlang parameter</th><th style=text-align:left>Riak parameter</th></tr></thead><tbody><tr><td style=text-align:left><a href=http://erlang.org/doc/man/erl.html#async_thread_pool_size rel=noopener><code>+A</code></a></td><td style=text-align:left><code>erlang.async_threads</code></td></tr><tr><td style=text-align:left><a href=http://erlang.org/doc/man/erl.html#emu_flags rel=noopener><code>+K</code></a></td><td style=text-align:left><code>erlang.K</code></td></tr><tr><td style=text-align:left><a href=http://erlang.org/doc/man/erl.html#+P rel=noopener><code>+P</code></a></td><td style=text-align:left><code>erlang.process_limit</code></td></tr><tr><td style=text-align:left><a href=http://erlang.org/doc/man/erl.html#+Q rel=noopener><code>+Q</code></a></td><td style=text-align:left><code>erlang.max_ports</code></td></tr><tr><td style=text-align:left><a href=http://erlang.org/doc/man/erl.html#+S rel=noopener><code>+S</code></a></td><td style=text-align:left><code>erlang.schedulers.total</code>, <code>erlang.schedulers.online</code></td></tr><tr><td style=text-align:left><a href=http://erlang.org/doc/man/erl.html#emu_flags rel=noopener><code>+W</code></a></td><td style=text-align:left><code>erlang.W</code></td></tr><tr><td style=text-align:left><a href=http://erlang.org/doc/man/erl.html#async_thread_stack_size rel=noopener><code>+a</code></a></td><td style=text-align:left><code>erlang.async_threads.stack_size</code></td></tr><tr><td style=text-align:left><a href=http://www.erlang.org/doc/man/ets.html#+e rel=noopener><code>+e</code></a></td><td style=text-align:left><code>erlang.max_ets_tables</code></td></tr><tr><td style=text-align:left><a href=http://www.erlang.org/doc/main/erl.html#+scl rel=noopener><code>+scl</code></a></td><td style=text-align:left><code>erlang.schedulers.compaction_of_load</code></td></tr><tr><td style=text-align:left><a href=http://www.erlang.org/doc/man/erl.html#+sfwi rel=noopener><code>+sfwi</code></a></td><td style=text-align:left><code>erlang.schedulers.force_wakeup_interval</code></td></tr><tr><td style=text-align:left><a href=http://erlang.org/doc/man/erl.html#smp rel=noopener><code>-smp</code></a></td><td style=text-align:left><code>erlang.smp</code></td></tr><tr><td style=text-align:left><a href=http://www.erlang.org/doc/man/erl.html#+sub rel=noopener><code>+sub</code></a></td><td style=text-align:left><code>erlang.schedulers.utilization_balancing</code></td></tr><tr><td style=text-align:left><a href=http://erlang.org/doc/man/erl.html#+zdbbl rel=noopener><code>+zdbbl</code></a></td><td style=text-align:left><code>erlang.distribution_buffer_size</code></td></tr><tr><td style=text-align:left><a href=http://www.erlang.org/doc/man/kernel_app.html#net_ticktime rel=noopener><code>-kernel net_ticktime</code></a></td><td style=text-align:left><code>erlang.distribution.net_ticktime</code></td></tr><tr><td style=text-align:left><a href=http://www.erlang.org/doc/man/erlang.html#system_flag-2 rel=noopener><code>-env FULLSWEEP_AFTER</code></a></td><td style=text-align:left><code>erlang.fullsweep_after</code></td></tr><tr><td style=text-align:left><a href=http://www.erlang.org/doc/apps/erts/crash_dump.html rel=noopener><code>-env ERL_CRASH_DUMP</code></a></td><td style=text-align:left><code>erlang.crash_dump</code></td></tr><tr><td style=text-align:left><a href=http://learnyousomeerlang.com/ets rel=noopener><code>-env ERL_MAX_ETS_TABLES</code></a></td><td style=text-align:left><code>erlang.max_ets_tables</code></td></tr><tr><td style=text-align:left><code>-name</code></td><td style=text-align:left><code>nodename</code></td></tr></tbody></table><p><strong>Note on upgrading to 2.0</strong>
+In versions of Riak prior to 2.0, Erlang VM-related parameters were specified
+in a <code>vm.args</code> configuration file; in versions 2.0 and later, all
+Erlang-VM-specific parameters are set in the <code>riak.conf</code> file. If you&rsquo;re
+upgrading to 2.0 from an earlier version, you can still use your old <code>vm.args</code>
+if you wish. Please note, however, that if you set one or more parameters in
+both <code>vm.args</code> and in <code>riak.conf</code>, the settings in <code>vm.args</code> will override
+those in <code>riak.conf</code>.</p><h4 id=smp>SMP</h4><p>Some operating systems provide Erlang VMs with Symmetric Multiprocessing
+capabilities
+(<a href=http://en.wikipedia.org/wiki/Symmetric_multiprocessing rel=noopener>SMP</a>
+) for
+taking advantage of multi-processor hardware architectures. SMP support
+can be turned on or off by setting the <code>erlang.smp</code> parameter to
+<code>enable</code> or <code>disable</code>. It is enabled by default. The following would
+disable SMP support:</p><pre tabindex=0><code class=language-riakconf data-lang=riakconf>erlang.smp = disable
+</code></pre><p>Because Riak is supported on some operating systems that do not provide
+SMP support. Make sure that your OS supports SMP before enabling it for
+use by OpenRiak&rsquo;s Erlang VM. If it does not, you should set <code>erlang.smp</code> to
+<code>disable</code> prior to starting up your cluster.</p><p>Another safe option is to set <code>erlang.smp</code> to <code>auto</code>. This will instruct
+the Erlang VM to start up with SMP support enabled if (a) SMP support is
+available on the current OS and (b) more than one logical processor is
+detected. If neither of these conditions is met, the Erlang VM will
+start up with SMP disabled.</p><h4 id=schedulers>Schedulers</h4><blockquote><p><strong>Note on missing scheduler flags</strong></p><p>We recommend that <em>all</em> users set the <code>+sfwi</code> to <code>500</code> (milliseconds)
+and the <code>+scl</code> flag to <code>false</code> if using the older, <code>vm.args</code>-based
+configuration system. If you are using the new, <code>riak.conf</code>-based
+configuration system, the corresponding parameters are
+<code>erlang.schedulers.force_wakeup_interval</code> and
+<code>erlang.schedulers.compaction_of_load</code>.</p><p>Please note that you will need to uncomment the appropriate lines in
+your <code>riak.conf</code> for this configuration to take effect.</p></blockquote><p>If <a href=#smp>SMP support</a>
+has been enabled on your Erlang
+VM, i.e. if <code>erlang.smp</code> is set to <code>enable</code> or <code>auto</code> on a machine
+providing SMP support <em>and</em> more than one logical processor, you can
+configure the number of logical processors, or <a href=http://www.erlang.org/doc/man/erl.html#+S rel=noopener>scheduler
+threads</a>
+, that are created
+when starting Riak, as well as the number of threads that are set
+online.</p><p>The total number of threads can be set using the
+<code>erlang.schedulers.total</code> parameter, whereas the number of threads set
+online can be set using <code>erlang.schedulers.online</code>. These parameters map
+directly onto <code>Schedulers</code> and <code>SchedulersOnline</code>, both of which are
+used by <a href=http://www.erlang.org/doc/man/erl.html#+S rel=noopener><code>erl</code></a>
+.</p><p>While the maximum for both parameters is 1024, there is no universal
+default for either. Instead, the Erlang VM will attempt to determine the
+number of configured processors, as well as the number of available
+processors, on its own. If the Erlang VM <em>can</em> make that determination,
+<code>schedulers.total</code> will default to the total number of configured
+processors while <code>schedulers.online</code> will default to the number of
+processors available; if the Erlang VM can&rsquo;t make that determination,
+both values will default to 1.</p><p>If either parameter is set to a negative integer, that value will be
+subtracted from the default number of processors that are configured or
+available, depending on the parameter. For example, if there are 100
+configured processors and <code>schedulers.total</code> is set to <code>-50</code>, then the
+calculated value for <code>schedulers.total</code> will be 50. Setting either
+parameter to 0, on the other hand, will reset both values to their
+defaults.</p><p>If SMP support is not enabled, i.e. if <code>erlang.smp</code> is set to <code>disable</code>
+(or set to <code>auto</code> on a machine without SMP support or with only one
+logical processor), then the values of <code>schedulers.total</code> and
+<code>schedulers.online</code> will be ignored.</p><h5 id=scheduler-wakeup-interval>Scheduler Wakeup Interval</h5><p>Scheduler wakeup is an optional process whereby Erlang VM schedulers are
+periodically scanned to determine whether they have &ldquo;fallen asleep,&rdquo;
+i.e. whether they have an empty <a href=http://en.wikipedia.org/wiki/Run_queue rel=noopener>run
+queue</a>
+. The interval at which
+this process occurs can be set, in milliseconds, using the
+<code>erlang.schedulers.force_wakeup_interval</code> parameter, which corresponds
+to the Erlang VM&rsquo;s <code>+sfwi</code> flag. This parameter is set to <code>0</code> by
+default, which disables scheduler wakeup.</p><p>Erlang distributions like R15Bx have a tendency to put schedulers to
+sleep too often. If you are using a more recent distribution, i.e. a if
+you are running Riak 2.0 or later, you most likely won&rsquo;t need to enable
+scheduler wakeup.</p><h5 id=scheduler-compaction-and-balancing>Scheduler Compaction and Balancing</h5><p>The Erlang scheduler offers two methods of distributing load across
+schedulers: <strong>compaction of load</strong> and <strong>utilization balancing</strong> of
+load.</p><p>Compaction of load is used by default. When enabled, the Erlang VM will
+attempt to fully load as many scheduler threads as possible, i.e. it
+will attempt to ensure that scheduler threads do not run out of work. To
+that end, the VM will take into account the frequency with which
+schedulers run out of work when making decisions about which schedulers
+should be assigned work. You can disable compaction of load by setting
+the <code>erlang.schedulers.compaction_of_load</code> setting to <code>false</code> (in the
+older configuration system, set <code>+scl</code> to <code>true</code>).</p><p>The other option, utilization balancing, is disabled by default in favor
+of load balancing. When utilization balancing is enabled instead, the
+Erlang VM will strive to balance scheduler utilization as equally as
+possible between schedulers, without taking into account the frequency
+at which schedulers run out of work. You can enable utilization
+balancing by setting the <code>erlang.schedulers.utilization_balancing</code>
+setting to <code>true</code> (or the <code>+scl</code> parameter to <code>false</code> in the older
+configuration system).</p><p>At any given time, only compaction of load <em>or</em> utilization balancing
+can be used. If you set both parameters to <code>false</code>, Riak will default to
+using compaction of load; if both are set to <code>true</code>, Riak will enable
+whichever setting is listed first in <code>riak.conf</code> (or <code>vm.args</code> if you&rsquo;re
+using the older configuration system).</p><h4 id=port-settings>Port Settings</h4><p>Riak uses <a href=http://www.erlang.org/doc/man/epmd.html rel=noopener>epmd</a>
+, the Erlang
+Port Mapper Daemon, for most inter-node communication. In this system,
+other nodes in the <a href=../../../learn/concepts/clusters>cluster</a>
+use the Erlang identifiers specified by the <code>nodename</code> parameter (or <code>-name</code> in <code>vm.args</code>), for example <code>riak@10.9.8.7</code>. On each node, the daemon resolves these node
+identifiers to a TCP port. You can specify a port or range of ports for
+Riak nodes to listen on as well as the maximum number of concurrent
+ports/sockets.</p><h5 id=port-range>Port Range</h5><p>By default, epmd binds to TCP port 4369 and listens on the wildcard
+interface. epmd uses an unpredictable port for inter-node communication
+by default, binding to port 0, which means that it uses the first
+available port. This can make it difficult to configure <a href=../../security>firewalls</a>
+.</p><p>To make configuring firewalls easier, you can instruct the Erlang VM to
+use either a limited range of TCP ports or a single TCP port. The
+minimum and maximum can be set using the
+<code>erlang.distribution.port_range.minimum</code> and
+<code>erlang.distribution.port.maximum</code> parameters, respectively. The
+following would set the range to ports between 3000 and 5000:</p><pre tabindex=0><code class=language-riakconf data-lang=riakconf>erlang.distribution.port_range.minimum = 3000
+erlang.distribution.port_range.maximum = 5000
+</code></pre><pre tabindex=0><code class=language-appconfig data-lang=appconfig>%% The older, app.config-based system uses different parameter names
+%% for specifying the minimum and maximum port
+
+{kernel, [
+          % ...
+          {inet_dist_listen_min, 3000},
+          {inet_dist_listen_max, 5000}
+          % ...
+         ]}
+</code></pre><p>You can set the Erlang VM to use a single port by setting the minimum to
+the desired port while setting no maximum. The following would set the
+port to 5000:</p><pre tabindex=0><code class=language-riakconf data-lang=riakconf>erlang.distribution.port_range.minimum = 5000
+</code></pre><pre tabindex=0><code class=language-appconfig data-lang=appconfig>{kernel, [
+          % ...
+          {inet_dist_listen_min, 5000},
+          % ...
+         ]}
+</code></pre><p>If the minimum port is unset, the Erlang VM will listen on a random
+high-numbered port.</p><h5 id=maximum-ports>Maximum Ports</h5><p>You can set the maximum number of concurrent ports/sockets used by the
+Erlang VM using the <code>erlang.max_ports</code> setting. Possible values range
+from 1024 to 134217727. The default is 65536. In <code>vm.args</code> you can use
+either <code>+Q</code> or <code>-env ERL_MAX_PORTS</code>.</p><h4 id=asynchronous-thread-pool>Asynchronous Thread Pool</h4><p>If thread support is available in your Erlang VM, you can set the number
+of asynchronous threads in the Erlang VM&rsquo;s asynchronous thread pool
+using <code>erlang.async_threads</code> (<code>+A</code> in <code>vm.args</code>). The valid range is 0
+to 1024. If thread support is available on your OS, the default is 64.
+Below is an example setting the number of async threads to 600:</p><pre tabindex=0><code class=language-riakconf data-lang=riakconf>erlang.async_threads = 600
+</code></pre><pre tabindex=0><code class=language-vmargs data-lang=vmargs>+A 600
+</code></pre><h5 id=stack-size>Stack Size</h5><p>In addition to the number of asynchronous threads, you can determine the
+memory allocated to each thread using the
+<code>erlang.async_threads.stack_size</code> parameter, which corresponds to the
+<code>+a</code> Erlang flag. You can determine that size in Riak using KB, MB, GB,
+etc. The valid range is 16-8192 kilowords, which translates to 64-32768
+KB on 32-bit architectures. While there is no default, we suggest a
+stack size of 16 kilowords, which translates to 64 KB. We suggest such a
+small size because the number of asynchronous threads, as determined by
+<code>erlang.async_threads</code> might be quite large in your Erlang VM. The 64 KB
+default is enough for drivers delivered with Erlang/OTP but might not be
+large enough to accommodate drivers that use the <code>driver_async()</code>
+functionality, documented
+<a href=http://www.erlang.org/doc/man/erl_driver.html rel=noopener>here</a>
+. We recommend
+setting higher values with caution, always keeping the number of
+available threads in mind.</p><h4 id=kernel-polling>Kernel Polling</h4><p>You can utilize kernel polling in your Erlang distribution if your OS
+supports it. Kernel polling can improve performance if many file
+descriptors are in use; the more file descriptors, the larger an effect
+kernel polling may have on performance. Kernel polling is enabled by
+default on OpenRiak&rsquo;s Erlang VM, i.e. the default for <code>erlang.K</code> is <code>on</code>.
+This corresponds to the
+<a href=http://erlang.org/doc/man/erl.html#emu_flags rel=noopener><code>+K</code></a>
+setting on the
+Erlang VM. You can disable it by setting <code>erlang.K</code> to <code>off</code>.</p><h4 id=warning-messages>Warning Messages</h4><p>Erlang&rsquo;s
+<a href=http://www.erlang.org/doc/man/error_logger.html rel=noopener><code>error_logger</code></a>
+is an
+event manager that registers error, warning, and info events from the
+Erlang runtime. By default, events from the <code>error_logger</code> are mapped as
+warnings, but you can also set messages to be mapped as errors or info
+reports using the <code>erlang.W</code> parameter (or <code>+W</code> in <code>vm.args</code>). The
+possible values are <code>w</code> (warnings), <code>errors</code>, or <code>i</code> (info reports).</p><h4 id=process-limit>Process Limit</h4><p>The <code>erlang.process_limit</code> parameter can be used to set the maximum
+number of simultaneously existing system processes (corresponding to
+Erlang&rsquo;s <code>+P</code> parameter). The valid range is 1024 to 134217727. The
+default is 256000.</p><h4 id=distribution-buffer>Distribution Buffer</h4><p>You can set the size of the Erlang VM&rsquo;s distribution buffer busy limit
+(denoted by <code>+zdbbl</code> on the VM and in <code>vm.args</code>) by adding
+<code>erlang.distribution_buffer_size</code> to <code>riak.conf</code>. Modifying this setting can be useful
+on nodes with many <code>busy_dist_port</code> events, i.e. instances when the
+Erlang distribution is overloaded. The default is 32 MB (i.e. <code>32MB</code>),
+but this may be insufficient for some workloads. The maximum value is
+2097151 KB.</p><p>A larger buffer limit will allow processes to buffer more outgoing
+messages. When the limit is reached, sending processes will be suspended
+until the the buffer size has shrunk below the limit specified by
+<code>erlang.distribution_buffer_size</code>. Higher values will tend to produce
+lower latency and higher throughput but at the expense of higher RAM
+usage. You should evaluate your RAM resources prior to increasing this
+setting.</p><h4 id=erlang-built-in-storage>Erlang Built-in Storage</h4><p>Erlang uses a built-in database called
+<a href=http://www.erlang.org/doc/man/ets.html rel=noopener>ets</a>
+(Erlang Term Storage)
+for some processes that require fast access from memory in constant
+access time (rather than logarithmic access time). The maximum number
+of tables can be set using the <code>erlang.max_ets_tables</code> setting. The
+default is 256000, which is higher than the default limit of 1400 on the
+Erlang VM. The corresponding setting in <code>vm.args</code> is <code>+e</code>.</p><p>Higher values for <code>erlang.max_ets_tables</code> will tend to provide more
+quick-access data storage but at the cost of higher RAM usage. Please
+note that the default values for <code>erlang.max_ets_tables</code> and
+<code>erlang.distribution_size</code> (explained in the section <a href=#distribution-buffer>above</a>
+) are the same.</p><h4 id=crash-dumps>Crash Dumps</h4><p>By default, crash dumps from OpenRiak&rsquo;s Erlang distribution are deposited in
+<code>./log/erl_crash.dump</code>. You can change this location using
+<code>erlang.crash_dump</code>. This is the equivalent of setting the
+<a href=http://www.erlang.org/doc/man/erl.html#environment_variables rel=noopener><code>ERL_CRASH_DUMP</code></a>
+environment variable for the Erlang VM.</p><h4 id=net-kernel-tick-time>Net Kernel Tick Time</h4><p>The <a href=http://erlang.org/doc/man/net_kernel.html rel=noopener>net kernel</a>
+is an Erlang
+system process that provides various forms of network monitoring. In a
+OpenRiak cluster, one of the functions of the net kernel is to periodically
+check node liveness. <strong>Tick time</strong> is the frequency with which those
+checks happen. You can determine that frequency using the
+<code>erlang.distribution.net_ticktime</code>. The tick will occur every N seconds,
+where N is the value set. Thus, setting
+<code>erlang.distribution.net_ticktime</code> to <code>60</code> will make the tick occur once
+every minute. The corresponding flag in <code>vm.args</code> is <code>-kernel
+net_ticktime</code>.</p><h4 id=shutdown-time>Shutdown Time</h4><p>You can determine how long the Erlang VM spends shutting down using the
+<code>erlang.shutdown_time</code> parameter. The default is <code>10s</code> (10 seconds).
+Once this duration elapses, all existing processes are killed.
+Decreasing shutdown time can be useful in situations in which you are
+frequently starting and stopping a cluster, e.g. in test clusters. In
+<code>vm.args</code> you can set the <code>-shutdown_time</code> flag in milliseconds.</p><h2 id=verify-the-result>Verify the result</h2><p>Repeat the baseline workload and compare latency, throughput, resource use, and error rates before deciding whether to retain the change.</p></div><nav class=page-navigation aria-label="Adjacent pages"><a class=page-navigation__previous href=/docs/kv/3.4.1/how-to/tune/tune-multi-datacenter-replication/><span>Previous</span><strong>Tune multi-datacenter replication</strong></a>
+<a class=page-navigation__next href=/docs/kv/3.4.1/how-to/tune/tune-an-aws-deployment/><span>Next</span><strong>Tune an AWS deployment</strong></a></nav></article></main></div><footer class=site-footer><div><p>OpenRiak documentation is licensed under <a href=https://creativecommons.org/licenses/by/4.0/>Creative Commons Attribution 4.0</a>.</p><p>Historical material © Basho Technologies, Inc.; community revisions © OpenRiak contributors.</p></div><a href=#main-content>Back to top</a></footer><script src=/docs/js/site.js defer></script></body></html>

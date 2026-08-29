@@ -1,0 +1,109 @@
+<!doctype html><html lang=en class=no-js><head><script src="/docs/livereload.js?mindelay=10&amp;v=2&amp;port=1320&amp;path=docs/livereload" data-no-instant defer></script><meta charset=utf-8><meta name=viewport content="width=device-width,initial-scale=1"><meta name=color-scheme content="light dark"><script>(()=>{const t="openriak-docs-theme";let e="system";try{const n=localStorage.getItem(t);(n==="light"||n==="dark"||n==="system")&&(e=n)}catch{}const n=window.matchMedia?.("(prefers-color-scheme: dark)").matches??!1;document.documentElement.dataset.themePreference=e,document.documentElement.dataset.theme=e==="system"?n?"dark":"light":e})()</script><meta name=description content="Define the names, fields, states, limits, and version applicability for handoff behavior and state."><title>Handoff behavior and state | OpenRiak Documentation</title><link rel=canonical href=http://127.0.0.1:1320/docs/kv/3.4.0/reference/operations/handoff-behavior-and-state/><link rel=icon href=/docs/images/branding/favicon.ico sizes=any><link rel=stylesheet href=/docs/css/site.css><link rel=stylesheet href=/docs/css/theme.css><script src=/docs/js/theme.js defer></script><meta property="og:type" content="website"><meta property="og:title" content="Handoff behavior and state"><meta property="og:description" content="Define the names, fields, states, limits, and version applicability for handoff behavior and state."><meta property="og:url" content="http://127.0.0.1:1320/docs/kv/3.4.0/reference/operations/handoff-behavior-and-state/"></head><body data-kind=page data-section=kv><script>document.documentElement.classList.remove("no-js")</script><a class=skip-link href=#main-content>Skip to content</a><header class=site-header><div class=site-header__inner><button class=nav-toggle type=button aria-controls=docs-sidebar aria-expanded=false>
+<span aria-hidden=true>☰</span><span class=sr-only>Toggle documentation navigation</span>
+</button>
+<a class=brand href=/docs/ aria-label="OpenRiak documentation home"><img src=/docs/images/branding/riak-logo-inverted.png alt width=34 height=34>
+<span>OpenRiak <strong>Docs</strong></span></a><nav class=primary-nav aria-label="Documentation types"><a href=/docs/kv/3.4.1/tutorials/>Tutorials</a>
+<a href=/docs/kv/3.4.1/how-to/>How-to</a>
+<a href=/docs/kv/3.4.1/reference/>Reference</a>
+<a href=/docs/kv/3.4.1/explanation/>Explanation</a></nav><a class=community-link href=https://github.com/orgs/OpenRiak/discussions>Community</a>
+<label class=theme-control><span class=theme-control__icon aria-hidden=true>◐</span>
+<span class=sr-only>Color theme</span>
+<select data-theme-select aria-label="Color theme"><option value=system>System</option><option value=light>Light</option><option value=dark>Dark</option></select></label></div></header><div class=site-shell><aside id=docs-sidebar class=sidebar aria-label="Documentation navigation"><div class=sidebar__tools><label for=version-select>Version</label>
+<select id=version-select data-version-select><option value=/docs/kv/3.4.1/>3.4.1 (latest)</option><option value=/docs/kv/3.4.0/ selected>3.4.0</option></select><form class=docs-search role=search data-search data-index-url=/docs/search-index.json data-version=3.4.0><label class=sr-only for=docs-search-input>Search this version</label>
+<input id=docs-search-input type=search placeholder="Search this version" autocomplete=off data-search-input><div class=search-results data-search-results hidden></div></form></div><nav class=sidebar__nav aria-label="Pages in this version"><a class=sidebar__root href=/docs/kv/3.4.0/>OpenRiak KV 3.4.0</a><ul class=nav-tree><li><details><summary><a href=/docs/kv/3.4.0/explanation/>Explanation</a></summary></details></li><li><details><summary><a href=/docs/kv/3.4.0/how-to/>How-to guides</a></summary></details></li><li><details open><summary><a href=/docs/kv/3.4.0/reference/>Reference</a></summary><ul class=nav-tree><li><details><summary><a href=/docs/kv/3.4.0/reference/aae-fold-api/>AAE fold API reference</a></summary></details></li><li><details><summary><a href=/docs/kv/3.4.0/reference/client-libraries/>Client library reference</a></summary></details></li><li><details><summary><a href=/docs/kv/3.4.0/reference/commands/>Command reference</a></summary></details></li><li><details><summary><a href=/docs/kv/3.4.0/reference/configuration/>Configuration reference</a></summary></details></li><li><details><summary><a href=/docs/kv/3.4.0/reference/data/>Data reference</a></summary></details></li><li><details><summary><a href=/docs/kv/3.4.0/reference/http-api/>HTTP API reference</a></summary></details></li><li><details open><summary><a href=/docs/kv/3.4.0/reference/operations/>Operations reference</a></summary><ul class=nav-tree><li><a href=/docs/kv/3.4.0/reference/operations/custom-code-constraints/>Custom code constraints</a></li><li><a class=is-current href=/docs/kv/3.4.0/reference/operations/handoff-behavior-and-state/ aria-current=page>Handoff behavior and state</a></li><li><a href=/docs/kv/3.4.0/reference/operations/jmx-integration/>JMX integration</a></li><li><a href=/docs/kv/3.4.0/reference/operations/log-files-and-message-formats/>Log files and message formats</a></li><li><a href=/docs/kv/3.4.0/reference/operations/multi-datacenter-feature-comparison/>Multi-datacenter feature comparison</a></li><li><a href=/docs/kv/3.4.0/reference/operations/object-deletion-and-tombstones/>Object deletion and tombstones</a></li><li><a href=/docs/kv/3.4.0/reference/operations/replication-statistics/>Replication statistics</a></li><li><a href=/docs/kv/3.4.0/reference/operations/snmp-integration/>SNMP integration</a></li><li><a href=/docs/kv/3.4.0/reference/operations/statistics-and-monitoring-metrics/>Statistics and monitoring metrics</a></li><li><a href=/docs/kv/3.4.0/reference/operations/remote-console-reference/>Remote console reference</a></li><li><a href=/docs/kv/3.4.0/reference/operations/errors-and-messages/>Errors and messages</a></li><li><a href=/docs/kv/3.4.0/reference/operations/cluster-claim-algorithms/>Cluster claim algorithms</a></li></ul></details></li><li><details><summary><a href=/docs/kv/3.4.0/reference/protocol-buffers/>Protocol Buffers API reference</a></summary></details></li><li><details><summary><a href=/docs/kv/3.4.0/reference/query-api/>Query API reference</a></summary></details></li><li><details><summary><a href=/docs/kv/3.4.0/reference/releases/>Release and compatibility reference</a></summary></details></li><li><details><summary><a href=/docs/kv/3.4.0/reference/replication-api/>Replication API reference</a></summary></details></li><li><details><summary><a href=/docs/kv/3.4.0/reference/specialized-apis/>Specialized API reference</a></summary></details></li><li><a href=/docs/kv/3.4.0/reference/frequently-asked-questions/>Frequently asked questions</a></li></ul></details></li><li><details><summary><a href=/docs/kv/3.4.0/tutorials/>Tutorials</a></summary></details></li></ul></nav><div class=sidebar__help><a href=https://github.com/orgs/OpenRiak/discussions>Ask the OpenRiak community</a>
+<a href=https://github.com/OpenRiak/riak>OpenRiak source code</a></div></aside><button class=sidebar-scrim type=button data-sidebar-close aria-label="Close navigation"></button><main id=main-content class=content tabindex=-1><article class=doc><nav class=breadcrumbs aria-label=Breadcrumb><ol><li><a href=/docs/kv/>OpenRiak KV documentation</a></li><li><a href=/docs/kv/3.4.0/>OpenRiak KV 3.4.0</a></li><li><a href=/docs/kv/3.4.0/reference/>Reference</a></li><li><a href=/docs/kv/3.4.0/reference/operations/>Operations reference</a></li><li aria-current=page>Handoff behavior and state</li></ol></nav><header class=article-header><div class=badges><span class="badge badge--reference">reference</span>
+<span class=badge>KV 3.4.0</span></div><h1>Handoff behavior and state</h1><p class=lede>Define the names, fields, states, limits, and version applicability for handoff behavior and state.</p><div class=review-notice role=note><strong>Review status:</strong>
+This migrated page is still marked as a draft.
+Technical review is required before publication.</div></header><details class=on-this-page><summary>On this page</summary><nav id=TableOfContents><ul><li><a href=#details>Details</a><ul><li><a href=#handoff-reference>Handoff Reference</a></li></ul></li></ul></nav></details><div class=doc-body><p>Define the names, fields, states, limits, and version applicability for handoff behavior and state.</p><h2 id=details>Details</h2><h3 id=handoff-reference>Handoff Reference</h3><p>Riak is a distributed system built with two essential goals in mind:</p><ul><li><strong>fault tolerance</strong>, whereby an OpenRiak cluster can withstand node
+failure, network partitions, and other events in a way that does not
+disrupt normal functioning, and</li><li><strong>scalability</strong>, whereby operators can gracefully add and remove nodes
+to/from an OpenRiak cluster</li></ul><p>Both of these goals demand that Riak is able to either temporarily or
+permanently re-assign responsibility for portions of the keyspace. That
+re-assigning is referred to as <strong>intra-cluster handoff</strong> (or simply
+<strong>handoff</strong> in our documentation).</p><h4 id=types-of-handoff>Types of Handoff</h4><p>Intra-cluster handoff typically takes one of two forms: <strong>hinted
+handoff</strong> and <strong>ownership transfer</strong>.</p><p>Hinted handoff occurs when a <a href=/docs/kv/3.4.0/explanation/foundations/glossary/#vnode>vnode</a>
+temporarily takes over responsibility for some data and then returns that data to its original &ldquo;owner.&rdquo; Imagine a 3-node cluster with nodes A, B, and C. If node C goes offline, e.g. during a network partition, nodes A and B will pick
+up the slack, so to speak, assuming responsibility for node C&rsquo;s
+operations. When node C comes back online, responsibility will be handed
+back to the original vnodes.</p><p>Ownership transfer is different because it is meant to be permanent.
+It occurs when a <a href=/docs/kv/3.4.0/explanation/foundations/glossary/#vnode>vnode</a>
+no longer belongs to the node on which it&rsquo;s running. This typically happens when the very
+makeup of a cluster changes, e.g. when nodes are added or removed from
+the cluster. In this case, responsibility for portions of the keyspace
+needs to be fundamentally re-assigned.</p><p>Both types of handoff are handled automatically by Riak. Operators do
+have the option, however, of enabling and disabling handoff on
+particular nodes or all nodes and of configuring key aspects of OpenRiak&rsquo;s
+handoff behavior. More information can be found below.</p><h4 id=configuring-handoff>Configuring Handoff</h4><p>A full listing of configurable parameters can be found in our
+<a href=/docs/kv/3.4.0/reference/configuration/#intra-cluster-handoff>configuration files</a>
+document. The sections below provide a more narrative description of
+handoff configuration.</p><h5 id=ssl>SSL</h5><p>If you want to encrypt handoff behavior within an OpenRiak cluster, you need
+to provide each node with appropriate paths for an SSL certfile (and
+potentially a keyfile). The configuration below would designate a
+certfile at <code>/ssl_dir/cert.pem</code> and a keyfile at <code>/ssl_dir/key.pem</code>:</p><pre tabindex=0><code class=language-riakconf data-lang=riakconf>handoff.ssl.certfile = /ssl_dir/cert.pem
+handoff.ssl.keyfile = /ssl_dir/key.pem
+</code></pre><pre tabindex=0><code class=language-appconfig data-lang=appconfig>{riak_core, [
+    %% Other configs
+    {handoff_ssl_options, [
+        {certfile, &#34;/ssl_dir/cert.pem&#34;},
+        {keyfile, &#34;/ssl_dir/key.pem&#34;}
+    ]},
+    %% Other configs
+]}
+</code></pre><h5 id=port>Port</h5><p>You can set the port used by Riak for handoff-related interactions using
+the <code>handoff.port</code> parameter. The default is 8099. This would change the
+port to 9000:</p><pre tabindex=0><code class=language-riakconf data-lang=riakconf>handoff.port = 9000
+</code></pre><pre tabindex=0><code class=language-appconfig data-lang=appconfig>{riak_core, [
+    %% Other configs
+    {handoff_port, 9000},
+    %% Other configs
+]}
+</code></pre><h5 id=background-manager>Background Manager</h5><p>Riak has an optional background manager that limits handoff activity in
+the name of saving resources. The manager can help prevent system
+response degradation during times of heavy load, when multiple
+background tasks may contend for the same system resources. The
+background manager is disabled by default. The following will enable it:</p><pre tabindex=0><code class=language-riakconf data-lang=riakconf>handoff.use_background_manager = on
+</code></pre><pre tabindex=0><code class=language-appconfig data-lang=appconfig>{riak_kv, [
+    %% Other configs
+    {handoff_use_background_manager, on},
+    %% Other configs
+]}
+</code></pre><h5 id=maximum-rejects>Maximum Rejects</h5><p>The <code>handoff.max_rejects</code> setting enables you to set the maximum
+duration that a <a href=/docs/kv/3.4.0/explanation/foundations/glossary/#vnode>vnode</a>
+can be blocked by multiplying the
+<code>handoff.max_rejects</code> setting by the value of
+<a href=/docs/kv/3.4.0/reference/configuration/#vnode_management_timer><code>vnode_management_timer</code></a>
+.
+Thus, if you set <code>handoff.max_rejects</code> to 10 and
+<code>vnode_management_timer</code> to 5 seconds (i.e. <code>5s</code>), non-K/V subsystems
+can block K/V handoff for a maximum of 50 seconds. The default for
+<code>handoff.max_rejects</code> is 6, while the default for
+<code>vnode_management_timer</code> is <code>10s</code>. This would set <code>max_rejects</code> to 10:</p><pre tabindex=0><code class=language-riakconf data-lang=riakconf>handoff.max_rejects = 10
+</code></pre><pre tabindex=0><code class=language-appconfig data-lang=appconfig>{riak_kv, [
+    %% Other configs
+    {handoff_rejected_max, 10},
+    %% Other configs
+]}
+</code></pre><h5 id=transfer-limit>Transfer Limit</h5><p>You can adjust the number of node-to-node transfers (which includes
+handoff) using the <code>transfer_limit</code> parameter. The default is 2. Setting
+this higher will increase node-to-node communication but at the expense
+of higher resource intensity. This would set <code>transfer_limit</code> to 5:</p><pre tabindex=0><code class=language-riakconf data-lang=riakconf>transfer_limit = 5
+</code></pre><pre tabindex=0><code class=language-appconfig data-lang=appconfig>{riak_core, [
+    %% Other configs
+    {handoff_concurrency, 5},
+    %% Other configs
+]}
+</code></pre><h4 id=enabling-and-disabling-handoff>Enabling and Disabling Handoff</h4><p>Handoff can be enabled and disabled in two ways: via configuration or
+on the command line.</p><h5 id=enabling-and-disabling-via-configuration>Enabling and Disabling via Configuration</h5><p>You can enable and disable both outbound and inbound handoff on a node
+using the <code>handoff.outbound</code> and <code>handoff.inbound</code> settings,
+respectively. Both are enabled by default. The following would disable
+both:</p><pre tabindex=0><code class=language-riakconf data-lang=riakconf>handoff.outbound = off
+handoff.inbound = off
+</code></pre><pre tabindex=0><code class=language-appconfig data-lang=appconfig>{riak_core, [
+    %% Other configs
+    {disable_outbound_handoff, true},
+    {disable_inbound_handoff, true},
+    %% Other configs
+]}
+</code></pre><h5 id=enabling-and-disabling-through-the-command-line>Enabling and Disabling Through the Command Line</h5><p>Check out the <a href=/docs/kv/3.4.0/how-to/operate/manage-handoffs/>Cluster Operations: Handoff</a>
+for steps on enabling and disabling handoff via the command line.</p></div><nav class=page-navigation aria-label="Adjacent pages"><a class=page-navigation__previous href=/docs/kv/3.4.0/reference/operations/jmx-integration/><span>Previous</span><strong>JMX integration</strong></a>
+<a class=page-navigation__next href=/docs/kv/3.4.0/reference/operations/custom-code-constraints/><span>Next</span><strong>Custom code constraints</strong></a></nav></article></main></div><footer class=site-footer><div><p>OpenRiak documentation is licensed under <a href=https://creativecommons.org/licenses/by/4.0/>Creative Commons Attribution 4.0</a>.</p><p>Historical material © Basho Technologies, Inc.; community revisions © OpenRiak contributors.</p></div><a href=#main-content>Back to top</a></footer><script src=/docs/js/site.js defer></script></body></html>

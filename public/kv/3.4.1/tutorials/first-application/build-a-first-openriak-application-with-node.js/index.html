@@ -1,0 +1,234 @@
+<!doctype html><html lang=en class=no-js><head><script src="/docs/livereload.js?mindelay=10&amp;v=2&amp;port=1320&amp;path=docs/livereload" data-no-instant defer></script><meta charset=utf-8><meta name=viewport content="width=device-width,initial-scale=1"><meta name=color-scheme content="light dark"><script>(()=>{const t="openriak-docs-theme";let e="system";try{const n=localStorage.getItem(t);(n==="light"||n==="dark"||n==="system")&&(e=n)}catch{}const n=window.matchMedia?.("(prefers-color-scheme: dark)").matches??!1;document.documentElement.dataset.themePreference=e,document.documentElement.dataset.theme=e==="system"?n?"dark":"light":e})()</script><meta name=description content="Guide a developer through modeling, storing, retrieving, querying, and updating a small dataset with Node.js."><title>Build a first OpenRiak application with Node.js | OpenRiak Documentation</title><link rel=canonical href=http://127.0.0.1:1320/docs/kv/3.4.1/tutorials/first-application/build-a-first-openriak-application-with-node.js/><link rel=icon href=/docs/images/branding/favicon.ico sizes=any><link rel=stylesheet href=/docs/css/site.css><link rel=stylesheet href=/docs/css/theme.css><script src=/docs/js/theme.js defer></script><meta property="og:type" content="website"><meta property="og:title" content="Build a first OpenRiak application with Node.js"><meta property="og:description" content="Guide a developer through modeling, storing, retrieving, querying, and updating a small dataset with Node.js."><meta property="og:url" content="http://127.0.0.1:1320/docs/kv/3.4.1/tutorials/first-application/build-a-first-openriak-application-with-node.js/"></head><body data-kind=page data-section=kv><script>document.documentElement.classList.remove("no-js")</script><a class=skip-link href=#main-content>Skip to content</a><header class=site-header><div class=site-header__inner><button class=nav-toggle type=button aria-controls=docs-sidebar aria-expanded=false>
+<span aria-hidden=true>☰</span><span class=sr-only>Toggle documentation navigation</span>
+</button>
+<a class=brand href=/docs/ aria-label="OpenRiak documentation home"><img src=/docs/images/branding/riak-logo-inverted.png alt width=34 height=34>
+<span>OpenRiak <strong>Docs</strong></span></a><nav class=primary-nav aria-label="Documentation types"><a href=/docs/kv/3.4.1/tutorials/>Tutorials</a>
+<a href=/docs/kv/3.4.1/how-to/>How-to</a>
+<a href=/docs/kv/3.4.1/reference/>Reference</a>
+<a href=/docs/kv/3.4.1/explanation/>Explanation</a></nav><a class=community-link href=https://github.com/orgs/OpenRiak/discussions>Community</a>
+<label class=theme-control><span class=theme-control__icon aria-hidden=true>◐</span>
+<span class=sr-only>Color theme</span>
+<select data-theme-select aria-label="Color theme"><option value=system>System</option><option value=light>Light</option><option value=dark>Dark</option></select></label></div></header><div class=site-shell><aside id=docs-sidebar class=sidebar aria-label="Documentation navigation"><div class=sidebar__tools><label for=version-select>Version</label>
+<select id=version-select data-version-select><option value=/docs/kv/3.4.1/ selected>3.4.1 (latest)</option><option value=/docs/kv/3.4.0/>3.4.0</option></select><form class=docs-search role=search data-search data-index-url=/docs/search-index.json data-version=3.4.1><label class=sr-only for=docs-search-input>Search this version</label>
+<input id=docs-search-input type=search placeholder="Search this version" autocomplete=off data-search-input><div class=search-results data-search-results hidden></div></form></div><nav class=sidebar__nav aria-label="Pages in this version"><a class=sidebar__root href=/docs/kv/3.4.1/>OpenRiak KV 3.4.1</a><ul class=nav-tree><li><details><summary><a href=/docs/kv/3.4.1/explanation/>Explanation</a></summary></details></li><li><details><summary><a href=/docs/kv/3.4.1/how-to/>How-to guides</a></summary></details></li><li><details><summary><a href=/docs/kv/3.4.1/reference/>Reference</a></summary></details></li><li><details open><summary><a href=/docs/kv/3.4.1/tutorials/>Tutorials</a></summary><ul class=nav-tree><li><details open><summary><a href=/docs/kv/3.4.1/tutorials/first-application/>Build a first OpenRiak application</a></summary><ul class=nav-tree><li><a href=/docs/kv/3.4.1/tutorials/first-application/build-a-first-openriak-application-with-c/>Build a first OpenRiak application with C#</a></li><li><a href=/docs/kv/3.4.1/tutorials/first-application/build-a-first-openriak-application-with-erlang/>Build a first OpenRiak application with Erlang</a></li><li><a href=/docs/kv/3.4.1/tutorials/first-application/build-a-first-openriak-application-with-go/>Build a first OpenRiak application with Go</a></li><li><a href=/docs/kv/3.4.1/tutorials/first-application/build-a-first-openriak-application-with-java/>Build a first OpenRiak application with Java</a></li><li><a class=is-current href=/docs/kv/3.4.1/tutorials/first-application/build-a-first-openriak-application-with-node.js/ aria-current=page>Build a first OpenRiak application with Node.js</a></li><li><a href=/docs/kv/3.4.1/tutorials/first-application/build-a-first-openriak-application-with-php/>Build a first OpenRiak application with PHP</a></li><li><a href=/docs/kv/3.4.1/tutorials/first-application/build-a-first-openriak-application-with-python/>Build a first OpenRiak application with Python</a></li><li><a href=/docs/kv/3.4.1/tutorials/first-application/build-a-first-openriak-application-with-ruby/>Build a first OpenRiak application with Ruby</a></li><li><a href=/docs/kv/3.4.1/tutorials/first-application/build-a-first-openriak-application-with-rust/>Build a first OpenRiak application with Rust</a></li></ul></details></li><li><details><summary><a href=/docs/kv/3.4.1/tutorials/operations/>Learn cluster operations</a></summary></details></li><li><details><summary><a href=/docs/kv/3.4.1/tutorials/replication/>Learn multi-cluster replication</a></summary></details></li><li><details><summary><a href=/docs/kv/3.4.1/tutorials/security/>Learn OpenRiak security</a></summary></details></li><li><details><summary><a href=/docs/kv/3.4.1/tutorials/first-cluster/>Learn OpenRiak with a first cluster</a></summary></details></li><li><details><summary><a href=/docs/kv/3.4.1/tutorials/query-api/>Learn the Query API</a></summary></details></li></ul></details></li></ul></nav><div class=sidebar__help><a href=https://github.com/orgs/OpenRiak/discussions>Ask the OpenRiak community</a>
+<a href=https://github.com/OpenRiak/riak>OpenRiak source code</a></div></aside><button class=sidebar-scrim type=button data-sidebar-close aria-label="Close navigation"></button><main id=main-content class=content tabindex=-1><article class=doc><nav class=breadcrumbs aria-label=Breadcrumb><ol><li><a href=/docs/kv/>OpenRiak KV documentation</a></li><li><a href=/docs/kv/3.4.1/>OpenRiak KV 3.4.1</a></li><li><a href=/docs/kv/3.4.1/tutorials/>Tutorials</a></li><li><a href=/docs/kv/3.4.1/tutorials/first-application/>Build a first OpenRiak application</a></li><li aria-current=page>Build a first OpenRiak application with Node.js</li></ol></nav><header class=article-header><div class=badges><span class="badge badge--tutorial">tutorial</span>
+<span class=badge>KV 3.4.1</span></div><h1>Build a first OpenRiak application with Node.js</h1><p class=lede>Guide a developer through modeling, storing, retrieving, querying, and updating a small dataset with Node.js.</p><div class=review-notice role=note><strong>Review status:</strong>
+This migrated page is still marked as a draft.
+Technical review is required before publication.</div></header><details class=on-this-page><summary>On this page</summary><nav id=TableOfContents><ul><li><a href=#overview>Overview</a><ul><li><a href=#getting-started-with-nodejs>Getting Started with NodeJS</a></li><li><a href=#crud-operations-with-nodejs>CRUD Operations with NodeJS</a></li><li><a href=#object-modeling-with-nodejs>Object Modeling with NodeJS</a></li><li><a href=#querying-with-nodejs>Querying with NodeJS</a></li></ul></li><li><a href=#what-you-will-learn>What you will learn</a></li><li><a href=#before-you-begin>Before you begin</a></li><li><a href=#verify-the-result>Verify the result</a></li></ul></nav></details><div class=doc-body><p>Guide a developer through modeling, storing, retrieving, querying, and updating a small dataset with Node.js.</p><h2 id=overview>Overview</h2><h3 id=getting-started-with-nodejs>Getting Started with NodeJS</h3><p>If you haven&rsquo;t set up an OpenRiak node and started it, please visit <a href=/docs/kv/3.4.1/how-to/operate/>Running A Cluster</a>
+first.</p><p>To try this flavor of Riak, a working installation of Node.js 0.12 or later is
+required.</p><p>Code for these examples is available <a href=https://github.com/basho/riak-nodejs-client-examples/blob/master/dev/taste-of-riak/introduction.js rel=noopener>here</a>
+. To run, follow
+these directions:</p><div class=highlight><pre tabindex=0 class=chroma><code class=language-bash data-lang=bash><span class=line><span class=cl>git clone git://github.com/basho/riak-nodejs-client-examples
+</span></span><span class=line><span class=cl><span class=nb>cd</span> riak-nodejs-client-examples
+</span></span><span class=line><span class=cl>npm install
+</span></span><span class=line><span class=cl>node ./app.js
+</span></span></code></pre></div><h4 id=client-setup>Client Setup</h4><p>Install <a href=https://github.com/basho/riak-nodejs-client/wiki/Installation rel=noopener>the OpenRiak node.js Client</a>
+through <a href=https://www.npmjs.com/package/basho-riak-client rel=noopener>NPM</a>
+.</p><h5 id=connecting-to-riak>Connecting to Riak</h5><p>Connecting to Riak with the OpenRiak node.js Client requires creating a new client
+object and using the callback argument to know when the client is fully
+initialized:</p><div class=highlight><pre tabindex=0 class=chroma><code class=language-javascript data-lang=javascript><span class=line><span class=cl><span class=kd>var</span> <span class=nx>Riak</span> <span class=o>=</span> <span class=nx>require</span><span class=p>(</span><span class=s1>&#39;basho-riak-client&#39;</span><span class=p>);</span>
+</span></span><span class=line><span class=cl><span class=kd>var</span> <span class=nx>nodes</span> <span class=o>=</span> <span class=p>[</span>
+</span></span><span class=line><span class=cl>    <span class=s1>&#39;riak-test:10017&#39;</span><span class=p>,</span>
+</span></span><span class=line><span class=cl>    <span class=s1>&#39;riak-test:10027&#39;</span><span class=p>,</span>
+</span></span><span class=line><span class=cl>    <span class=s1>&#39;riak-test:10037&#39;</span><span class=p>,</span>
+</span></span><span class=line><span class=cl>    <span class=s1>&#39;riak-test:10047&#39;</span>
+</span></span><span class=line><span class=cl><span class=p>];</span>
+</span></span><span class=line><span class=cl><span class=kd>var</span> <span class=nx>client</span> <span class=o>=</span> <span class=k>new</span> <span class=nx>Riak</span><span class=p>.</span><span class=nx>Client</span><span class=p>(</span><span class=nx>nodes</span><span class=p>,</span> <span class=kd>function</span> <span class=p>(</span><span class=nx>err</span><span class=p>,</span> <span class=nx>c</span><span class=p>)</span> <span class=p>{</span>
+</span></span><span class=line><span class=cl>    <span class=c1>// NB: at this point the client is fully initialized, and
+</span></span></span><span class=line><span class=cl>    <span class=c1>// &#39;client&#39; and &#39;c&#39; are the same object
+</span></span></span><span class=line><span class=cl><span class=p>});</span>
+</span></span></code></pre></div><p>This creates a new <code>Riak.Client</code> object which handles all the details of
+tracking active nodes and also provides load balancing. The <code>Riak.Client</code> object
+is used to send commands to Riak. When your application is completely done with
+Riak communications, the following method can be used to gracefully shut the
+client down and exit Node.js:</p><div class=highlight><pre tabindex=0 class=chroma><code class=language-javascript data-lang=javascript><span class=line><span class=cl><span class=nx>client</span><span class=p>.</span><span class=nx>stop</span><span class=p>(</span><span class=kd>function</span> <span class=p>(</span><span class=nx>err</span><span class=p>,</span> <span class=nx>rslt</span><span class=p>)</span> <span class=p>{</span>
+</span></span><span class=line><span class=cl>    <span class=c1>// NB: you may wish to check err
+</span></span></span><span class=line><span class=cl>    <span class=nx>process</span><span class=p>.</span><span class=nx>exit</span><span class=p>();</span>
+</span></span><span class=line><span class=cl><span class=p>});</span>
+</span></span></code></pre></div><p>Let&rsquo;s make sure the cluster is online with a <code>Ping</code> request:</p><div class=highlight><pre tabindex=0 class=chroma><code class=language-javascript data-lang=javascript><span class=line><span class=cl><span class=kd>var</span> <span class=nx>assert</span> <span class=o>=</span> <span class=nx>require</span><span class=p>(</span><span class=s1>&#39;assert&#39;</span><span class=p>);</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl><span class=nx>client</span><span class=p>.</span><span class=nx>ping</span><span class=p>(</span><span class=kd>function</span> <span class=p>(</span><span class=nx>err</span><span class=p>,</span> <span class=nx>rslt</span><span class=p>)</span> <span class=p>{</span>
+</span></span><span class=line><span class=cl>    <span class=k>if</span> <span class=p>(</span><span class=nx>err</span><span class=p>)</span> <span class=p>{</span>
+</span></span><span class=line><span class=cl>        <span class=k>throw</span> <span class=k>new</span> <span class=nb>Error</span><span class=p>(</span><span class=nx>err</span><span class=p>);</span>
+</span></span><span class=line><span class=cl>    <span class=p>}</span> <span class=k>else</span> <span class=p>{</span>
+</span></span><span class=line><span class=cl>        <span class=c1>// On success, ping returns true
+</span></span></span><span class=line><span class=cl>        <span class=nx>assert</span><span class=p>(</span><span class=nx>rslt</span> <span class=o>===</span> <span class=kc>true</span><span class=p>);</span>
+</span></span><span class=line><span class=cl>    <span class=p>}</span>
+</span></span><span class=line><span class=cl><span class=p>});</span>
+</span></span></code></pre></div><p>This is some simple code to test that a node in an OpenRiak cluster is online - we
+send a simple ping message. Even if the cluster isn&rsquo;t present, the OpenRiak node.js
+Client will return a response message. In the callback it is important to check
+that your activity was successful by checking the <code>err</code> variable.</p><p>We are now ready to start interacting with Riak.</p><h4 id=next-steps>Next Steps</h4><p><a href=/docs/kv/3.4.1/tutorials/first-application/nodejs/>CRUD Operations</a></p><h3 id=crud-operations-with-nodejs>CRUD Operations with NodeJS</h3><h4 id=creating-objects-in-openriak-kv>Creating Objects In OpenRiak KV</h4><p>Pinging an OpenRiak cluster sounds like a lot of fun, but eventually someone is going
+to want us to do productive work. Let&rsquo;s create some data to save in Riak.</p><p>The OpenRiak node.js Client makes use of a <code>RiakObject</code> class to encapsulate Riak
+key/value objects. At the most basic, a <code>RiakObject</code> is responsible for
+identifying your object and for translating it into a format that can be easily
+saved to Riak.</p><div class=highlight><pre tabindex=0 class=chroma><code class=language-javascript data-lang=javascript><span class=line><span class=cl><span class=kd>var</span> <span class=kr>async</span> <span class=o>=</span> <span class=nx>require</span><span class=p>(</span><span class=s1>&#39;async&#39;</span><span class=p>);</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl><span class=kd>var</span> <span class=nx>people</span> <span class=o>=</span> <span class=p>[</span>
+</span></span><span class=line><span class=cl>    <span class=p>{</span>
+</span></span><span class=line><span class=cl>        <span class=nx>emailAddress</span><span class=o>:</span> <span class=s2>&#34;bashoman@basho.com&#34;</span><span class=p>,</span>
+</span></span><span class=line><span class=cl>        <span class=nx>firstName</span><span class=o>:</span> <span class=s2>&#34;Basho&#34;</span><span class=p>,</span>
+</span></span><span class=line><span class=cl>        <span class=nx>lastName</span><span class=o>:</span> <span class=s2>&#34;Man&#34;</span>
+</span></span><span class=line><span class=cl>    <span class=p>},</span>
+</span></span><span class=line><span class=cl>    <span class=p>{</span>
+</span></span><span class=line><span class=cl>        <span class=nx>emailAddress</span><span class=o>:</span> <span class=s2>&#34;johndoe@gmail.com&#34;</span><span class=p>,</span>
+</span></span><span class=line><span class=cl>        <span class=nx>firstName</span><span class=o>:</span> <span class=s2>&#34;John&#34;</span><span class=p>,</span>
+</span></span><span class=line><span class=cl>        <span class=nx>lastName</span><span class=o>:</span> <span class=s2>&#34;Doe&#34;</span>
+</span></span><span class=line><span class=cl>    <span class=p>}</span>
+</span></span><span class=line><span class=cl><span class=p>];</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl><span class=kd>var</span> <span class=nx>storeFuncs</span> <span class=o>=</span> <span class=p>[];</span>
+</span></span><span class=line><span class=cl><span class=nx>people</span><span class=p>.</span><span class=nx>forEach</span><span class=p>(</span><span class=kd>function</span> <span class=p>(</span><span class=nx>person</span><span class=p>)</span> <span class=p>{</span>
+</span></span><span class=line><span class=cl>    <span class=c1>// Create functions to execute in parallel to store people
+</span></span></span><span class=line><span class=cl>    <span class=nx>storeFuncs</span><span class=p>.</span><span class=nx>push</span><span class=p>(</span><span class=kd>function</span> <span class=p>(</span><span class=nx>async_cb</span><span class=p>)</span> <span class=p>{</span>
+</span></span><span class=line><span class=cl>        <span class=nx>client</span><span class=p>.</span><span class=nx>storeValue</span><span class=p>({</span>
+</span></span><span class=line><span class=cl>                <span class=nx>bucket</span><span class=o>:</span> <span class=s1>&#39;contributors&#39;</span><span class=p>,</span>
+</span></span><span class=line><span class=cl>                <span class=nx>key</span><span class=o>:</span> <span class=nx>person</span><span class=p>.</span><span class=nx>emailAddress</span><span class=p>,</span>
+</span></span><span class=line><span class=cl>                <span class=nx>value</span><span class=o>:</span> <span class=nx>person</span>
+</span></span><span class=line><span class=cl>            <span class=p>},</span>
+</span></span><span class=line><span class=cl>            <span class=kd>function</span><span class=p>(</span><span class=nx>err</span><span class=p>,</span> <span class=nx>rslt</span><span class=p>)</span> <span class=p>{</span>
+</span></span><span class=line><span class=cl>                <span class=nx>async_cb</span><span class=p>(</span><span class=nx>err</span><span class=p>,</span> <span class=nx>rslt</span><span class=p>);</span>
+</span></span><span class=line><span class=cl>            <span class=p>}</span>
+</span></span><span class=line><span class=cl>        <span class=p>);</span>
+</span></span><span class=line><span class=cl>    <span class=p>});</span>
+</span></span><span class=line><span class=cl><span class=p>});</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl><span class=kr>async</span><span class=p>.</span><span class=nx>parallel</span><span class=p>(</span><span class=nx>storeFuncs</span><span class=p>,</span> <span class=kd>function</span> <span class=p>(</span><span class=nx>err</span><span class=p>,</span> <span class=nx>rslts</span><span class=p>)</span> <span class=p>{</span>
+</span></span><span class=line><span class=cl>    <span class=k>if</span> <span class=p>(</span><span class=nx>err</span><span class=p>)</span> <span class=p>{</span>
+</span></span><span class=line><span class=cl>        <span class=k>throw</span> <span class=k>new</span> <span class=nb>Error</span><span class=p>(</span><span class=nx>err</span><span class=p>);</span>
+</span></span><span class=line><span class=cl>    <span class=p>}</span>
+</span></span><span class=line><span class=cl><span class=p>});</span>
+</span></span></code></pre></div><p>In this sample, we create a collection of <code>Person</code> objects and then save each
+<code>Person</code> to Riak. Once again, we check the response from Riak.</p><h4 id=reading-from-riak>Reading from Riak</h4><p>Let&rsquo;s find a person!</p><div class=highlight><pre tabindex=0 class=chroma><code class=language-javascript data-lang=javascript><span class=line><span class=cl><span class=kd>var</span> <span class=nx>logger</span> <span class=o>=</span> <span class=nx>require</span><span class=p>(</span><span class=s1>&#39;winston&#39;</span><span class=p>);</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl><span class=nx>client</span><span class=p>.</span><span class=nx>fetchValue</span><span class=p>({</span> <span class=nx>bucket</span><span class=o>:</span> <span class=s1>&#39;contributors&#39;</span><span class=p>,</span> <span class=nx>key</span><span class=o>:</span> <span class=s1>&#39;bashoman@basho.com&#39;</span><span class=p>,</span> <span class=nx>convertToJs</span><span class=o>:</span> <span class=kc>true</span> <span class=p>},</span>
+</span></span><span class=line><span class=cl>    <span class=kd>function</span> <span class=p>(</span><span class=nx>err</span><span class=p>,</span> <span class=nx>rslt</span><span class=p>)</span> <span class=p>{</span>
+</span></span><span class=line><span class=cl>        <span class=k>if</span> <span class=p>(</span><span class=nx>err</span><span class=p>)</span> <span class=p>{</span>
+</span></span><span class=line><span class=cl>            <span class=k>throw</span> <span class=k>new</span> <span class=nb>Error</span><span class=p>(</span><span class=nx>err</span><span class=p>);</span>
+</span></span><span class=line><span class=cl>        <span class=p>}</span> <span class=k>else</span> <span class=p>{</span>
+</span></span><span class=line><span class=cl>            <span class=kd>var</span> <span class=nx>riakObj</span> <span class=o>=</span> <span class=nx>rslt</span><span class=p>.</span><span class=nx>values</span><span class=p>.</span><span class=nx>shift</span><span class=p>();</span>
+</span></span><span class=line><span class=cl>            <span class=kd>var</span> <span class=nx>bashoman</span> <span class=o>=</span> <span class=nx>riakObj</span><span class=p>.</span><span class=nx>value</span><span class=p>;</span>
+</span></span><span class=line><span class=cl>            <span class=nx>logger</span><span class=p>.</span><span class=nx>info</span><span class=p>(</span><span class=s2>&#34;I found %s in &#39;contributors&#39;&#34;</span><span class=p>,</span> <span class=nx>bashoman</span><span class=p>.</span><span class=nx>emailAddress</span><span class=p>);</span>
+</span></span><span class=line><span class=cl>        <span class=p>}</span>
+</span></span><span class=line><span class=cl>    <span class=p>}</span>
+</span></span><span class=line><span class=cl><span class=p>);</span>
+</span></span></code></pre></div><p>We use <code>client.fetchValue</code> to retrieve an object from Riak. This returns an
+array of <code>RiakObject</code> objects which helpfully encapsulates the communication
+with Riak.</p><p>After verifying that we&rsquo;ve been able to communicate with Riak <em>and</em> that we have
+a successful result, we use the <code>value</code> property to get the object, which has
+already been converted to a javascript object due to the use of <code>convertToJs:
+true</code> in the options.</p><h4 id=modifying-existing-data>Modifying Existing Data</h4><p>Let&rsquo;s say that Basho Man has decided to be known as Riak Man:</p><div class=highlight><pre tabindex=0 class=chroma><code class=language-javascript data-lang=javascript><span class=line><span class=cl><span class=nx>bashoman</span><span class=p>.</span><span class=nx>FirstName</span> <span class=o>=</span> <span class=s2>&#34;Riak&#34;</span><span class=p>;</span>
+</span></span><span class=line><span class=cl><span class=nx>riakObj</span><span class=p>.</span><span class=nx>setValue</span><span class=p>(</span><span class=nx>bashoman</span><span class=p>);</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl><span class=nx>client</span><span class=p>.</span><span class=nx>storeValue</span><span class=p>({</span> <span class=nx>value</span><span class=o>:</span> <span class=nx>riakObj</span> <span class=p>},</span> <span class=kd>function</span> <span class=p>(</span><span class=nx>err</span><span class=p>,</span> <span class=nx>rslt</span><span class=p>)</span> <span class=p>{</span>
+</span></span><span class=line><span class=cl>    <span class=k>if</span> <span class=p>(</span><span class=nx>err</span><span class=p>)</span> <span class=p>{</span>
+</span></span><span class=line><span class=cl>        <span class=k>throw</span> <span class=k>new</span> <span class=nb>Error</span><span class=p>(</span><span class=nx>err</span><span class=p>);</span>
+</span></span><span class=line><span class=cl>    <span class=p>}</span>
+</span></span><span class=line><span class=cl><span class=p>});</span>
+</span></span></code></pre></div><p>Updating an object involves modifying a <code>RiakObject</code> then using
+<code>client.storeValue</code> to save the existing object.</p><h4 id=deleting-data>Deleting Data</h4><div class=highlight><pre tabindex=0 class=chroma><code class=language-javascript data-lang=javascript><span class=line><span class=cl><span class=nx>client</span><span class=p>.</span><span class=nx>deleteValue</span><span class=p>({</span> <span class=nx>bucket</span><span class=o>:</span> <span class=s1>&#39;contributors&#39;</span><span class=p>,</span> <span class=nx>key</span><span class=o>:</span> <span class=s1>&#39;johndoe@gmail.com&#39;</span> <span class=p>},</span> <span class=kd>function</span> <span class=p>(</span><span class=nx>err</span><span class=p>,</span> <span class=nx>rslt</span><span class=p>)</span> <span class=p>{</span>
+</span></span><span class=line><span class=cl>    <span class=k>if</span> <span class=p>(</span><span class=nx>err</span><span class=p>)</span> <span class=p>{</span>
+</span></span><span class=line><span class=cl>        <span class=k>throw</span> <span class=k>new</span> <span class=nb>Error</span><span class=p>(</span><span class=nx>err</span><span class=p>);</span>
+</span></span><span class=line><span class=cl>    <span class=p>}</span>
+</span></span><span class=line><span class=cl><span class=p>});</span>
+</span></span></code></pre></div><p>Just like other operations, we check the results that have come back from Riak
+to make sure the object was successfully deleted.</p><p>The OpenRiak node.js Client has a lot of additional functionality that makes it easy
+to build rich, complex applications with Riak. Check out the
+<a href=https://github.com/basho/riak-nodejs-client/wiki rel=noopener>documentation</a>
+to learn more about working with the OpenRiak node.js
+Client and Riak.</p><h3 id=object-modeling-with-nodejs>Object Modeling with NodeJS</h3><p>To get started, let&rsquo;s create the models that we&rsquo;ll be using.</p><ul><li><a href=https://github.com/basho/taste-of-riak/blob/master/nodejs/Ch03-Msgy-Schema/models/msg.js rel=noopener><code>Msg</code></a></li><li><a href=https://github.com/basho/taste-of-riak/blob/master/nodejs/Ch03-Msgy-Schema/models/timeline.js rel=noopener><code>Timeline</code></a></li><li><a href=https://github.com/basho/taste-of-riak/blob/master/nodejs/Ch03-Msgy-Schema/models/user.js rel=noopener><code>User</code></a></li></ul><p>To use these classes to store data, we will first have to create a user.
+Then, when a user creates a message, we will append that message to one
+or more timelines. If it&rsquo;s a private message, we&rsquo;ll append it to the
+Recipient&rsquo;s <code>Inbox</code> timeline and the User&rsquo;s own <code>Sent</code> timeline. If it&rsquo;s
+a group message, we&rsquo;ll append it to the Group&rsquo;s timeline, as well as to
+the User&rsquo;s <code>Sent</code> timeline.</p><h4 id=buckets-and-keys-revisited>Buckets and Keys Revisited</h4><p>Now that we&rsquo;ve worked out how we will differentiate data in the system,
+let&rsquo;s figure out our bucket and key names.</p><p>The bucket names are straightforward. We can use <code>Users</code>, <code>Msgs</code>, and
+<code>Timelines</code>. The key names, however, are a little more tricky. In past
+examples we&rsquo;ve used sequential integers, but this presents a problem: we
+would need a secondary service to hand out these IDs. This service could
+easily be a future bottleneck in the system, so let&rsquo;s use a natural key.
+Natural keys are a great fit for key/value systems because both humans
+and computers can easily construct them when needed, and most of the
+time they can be made unique enough for a KV store.</p><table><thead><tr><th style=text-align:left>Bucket</th><th style=text-align:left>Key Pattern</th><th style=text-align:left>Example Key</th></tr></thead><tbody><tr><td style=text-align:left><code>Users</code></td><td style=text-align:left><code>&lt;user_name></code></td><td style=text-align:left><code>joeuser</code></td></tr><tr><td style=text-align:left><code>Msgs</code></td><td style=text-align:left><code>&lt;username>_&lt;datetime></code></td><td style=text-align:left><code>joeuser_2014-03-06T02:05:13.556Z</code></td></tr><tr><td style=text-align:left><code>Timelines</code></td><td style=text-align:left><code>&lt;username>_&lt;type>_&lt;date></code></td><td style=text-align:left><code>joeuser_SENT_2014-03-06</code><br><code>marketing_group_INBOX_2014-03-06</code></td></tr></tbody></table><p>For the <code>Users</code> bucket, we can be certain that we will want each
+username to be unique, so let&rsquo;s use the <code>userName</code> as the key.</p><p><a href=https://github.com/basho/taste-of-riak/blob/master/nodejs/Ch03-Msgy-Schema/models/user.js#L19-L20 rel=noopener><em>Example:</em> <code>userName</code> as key</a></p><p>For the <code>Msgs</code> bucket, let&rsquo;s use a combination of the username and the
+posting datetime in an <a href=http://en.wikipedia.org/wiki/ISO_8601 rel=noopener>ISO 8601
+Long</a>
+format. This combination
+gives us the pattern <code>&lt;username>_&lt;datetime></code>, which produces keys like
+<code>joeuser_2014-03-05T23:20:28Z</code>.</p><p><a href=https://github.com/basho/taste-of-riak/blob/master/nodejs/Ch03-Msgy-Schema/models/msg.js#L25-L27 rel=noopener><em>Example:</em> <code>Msg</code> key</a></p><p>Now for <code>Timelines</code>, we need to differentiate between <code>Inbox</code> and <code>Sent</code>
+timelines, so we can simply add that type into the key name. We will
+also want to partition each collection object into some time period,
+that way the object doesn&rsquo;t grow too large (see note below).</p><p>For <code>Timelines</code>, let&rsquo;s use the pattern <code>&lt;username>_&lt;type>_&lt;date></code> for
+users, and <code>&lt;groupname>_Inbox_&lt;date></code> for groups, which will look like
+<code>joeuser_SENT_2014-03-06</code> or <code>marketing_group_INBOX_2014-03-05</code>,
+respectively.</p><p><strong>Note</strong>
+Riak performs best with objects under 1-2MB. Objects larger than that can hurt
+performance, especially many siblings are being created. We will cover
+siblings, sibling resolution, and sibling explosions in the next chapter.</p><h4 id=keeping-our-story-straight-with-repositories>Keeping our story straight with repositories</h4><p>Now that we&rsquo;ve figured out our object model, let&rsquo;s write some
+repositories to help create and work with these objects in Riak:</p><ul><li><a href=https://github.com/basho/taste-of-riak/blob/master/nodejs/Ch03-Msgy-Schema/repositories/repository.js rel=noopener>Base <code>Repository</code> class</a></li><li><a href=https://github.com/basho/taste-of-riak/blob/master/nodejs/Ch03-Msgy-Schema/repositories/user-repository.js rel=noopener><code>UserRepository</code> class</a></li><li><a href=https://github.com/basho/taste-of-riak/blob/master/nodejs/Ch03-Msgy-Schema/repositories/msg-repository.js rel=noopener><code>MsgRepository</code> class</a></li><li><a href=https://github.com/basho/taste-of-riak/blob/master/nodejs/Ch03-Msgy-Schema/repositories/timeline-repository.js rel=noopener><code>TimelineRepository</code> class</a></li><li><a href=https://github.com/basho/taste-of-riak/blob/master/nodejs/Ch03-Msgy-Schema/timeline-manager.js rel=noopener><code>TimelineManager</code> class that manages <code>Msg</code> and <code>Timeline</code> objects</a></li></ul><p>Finally, let&rsquo;s test them:</p><p><a href=https://github.com/basho/taste-of-riak/blob/master/nodejs/Ch03-Msgy-Schema/app.js rel=noopener><em>Example:</em> Putting it all together</a></p><p>As you can see, the repository pattern helps us with a few things:</p><ul><li>It helps us to see if an object exists before creating a new one</li><li>It keeps our buckets and key names consistent</li><li>It provides us with a consistent interface to work with.</li></ul><p>While this set of repositories solves many of our problems, it is very
+minimal and doesn&rsquo;t cover all the edge cases. For instance, what happens
+if two different people try to create a user with the same username?</p><p>We can also easily &ldquo;compute&rdquo; key names now, but how do we quickly look
+up the last 10 messages a user sent? Many of these answers will be
+application dependent. If your application shows the last 10 messages in
+reverse order, for example, you may want to store that set of data in
+another collection object to make lookup faster. There are drawbacks to
+every solution, but we recommend seeking out the key/value-based
+solution first, as it will likely be the quickest.</p><p>So to recap, in this chapter we learned:</p><ul><li>How to choose bucket names</li><li>How to choose natural keys based on how we want to partition our data</li></ul><h3 id=querying-with-nodejs>Querying with NodeJS</h3><h4 id=nodejs-version-setup>Node.js Version Setup</h4><p>For the Node.js version, please download the source from GitHub by either
+<a href=https://github.com/basho/taste-of-riak rel=noopener>cloning</a>
+the source code
+repository or downloading the <a href=https://github.com/basho/taste-of-riak/archive/master.zip rel=noopener>current zip of the master
+branch</a>
+.
+The code for this chapter is in <code>nodejs/Ch02-Schemas-and-Indexes</code>. Be
+sure to run <code>npm install</code> in this directory prior to running <code>node
+./app.js</code> to run the code.</p><h4 id=a-quick-note-on-querying-and-schemas>A Quick Note on Querying and Schemas</h4><p><em>Schemas</em>? Yes, we said that correctly: S-C-H-E-M-A-S. It&rsquo;s not a dirty
+word. Even in a key/value store, you will still have a logical database
+schema of how all the data relates to other data. This can be as simple
+as using the same key across multiple buckets for different types of
+data to having fields in your data that are related by name. These
+querying methods will introduce you to some ways of laying out your data
+in Riak, along with how to query it back.</p><h4 id=denormalization>Denormalization</h4><p>If you&rsquo;re coming from a relational database, the easiest way to get your
+application&rsquo;s feet wet with NoSQL is to denormalize your data into
+related chunks. For example, with a customer database, you might have
+separate tables for customers, addresses, preferences, etc. In Riak,
+you can denormalize all that associated data into a single object and
+store it into a <code>Customer</code> bucket. You can keep pulling in associated
+data until you hit one of the big denormalization walls:</p><ul><li>Size Limits (objects greater than 1MB)</li><li>Shared/Referential Data (data that the object doesn&rsquo;t &ldquo;own&rdquo;)</li><li>Differences in Access Patterns (objects that get read/written once vs.
+often)</li></ul><p>At one of these points we will have to split the model.</p><h4 id=same-keys-different-buckets>Same Keys, Different Buckets</h4><p>The simplest way to split up data would be to use the same identity key
+across different buckets. A good example of this would be a <code>Customer</code>
+object, an <code>Order</code> object, and an <code>OrderSummaries</code> object that keeps
+rolled up info about orders such as total, etc. Let&rsquo;s put some data into
+Riak so we can play with it.</p><ul><li><a href=https://github.com/basho/taste-of-riak/blob/master/nodejs/Ch02-Schemas-and-Indexes/app.js#L24-L33 rel=noopener><em>Example:</em> Creating a customer</a></li><li><a href=https://github.com/basho/taste-of-riak/blob/master/nodejs/Ch02-Schemas-and-Indexes/app.js#L193-L262 rel=noopener><em>Example:</em> Creating orders and order summaries</a></li></ul><p>While individual Customer and Order objects don&rsquo;t change much (or
+shouldn&rsquo;t change), the &ldquo;Order Summary&rdquo; object will likely change often.
+It will do double duty by acting as an index for all a customer&rsquo;s
+orders, and also holding some relevant data such as the order total,
+etc. If we showed this information in our application often, it&rsquo;s only
+one extra request to get all the info.</p><p><a href=https://github.com/basho/taste-of-riak/blob/master/nodejs/Ch02-Schemas-and-Indexes/app.js#L78-L96 rel=noopener><em>Example:</em> Fetching by shared key</a></p><p>Which returns our amalgamated objects:</p><div class=highlight><pre tabindex=0 class=chroma><code class=language-bash data-lang=bash><span class=line><span class=cl>info: Customer     1: <span class=o>{</span><span class=s2>&#34;id&#34;</span>:<span class=s2>&#34;1&#34;</span>,<span class=s2>&#34;name&#34;</span>:<span class=s2>&#34;John Smith&#34;</span>,<span class=s2>&#34;address&#34;</span>:<span class=s2>&#34;123 Main Street&#34;</span>,<span class=s2>&#34;city&#34;</span>:<span class=s2>&#34;Columbus&#34;</span>,<span class=s2>&#34;state&#34;</span>:<span class=s2>&#34;Ohio&#34;</span>,<span class=s2>&#34;zip&#34;</span>:<span class=s2>&#34;43210&#34;</span>,<span class=s2>&#34;phone&#34;</span>:<span class=s2>&#34;+1-614-555-5555&#34;</span>,<span class=s2>&#34;createdDate&#34;</span>:<span class=s2>&#34;2013-10-01 14:30:26&#34;</span><span class=o>}</span>
+</span></span><span class=line><span class=cl>info: OrderSummary 1: <span class=o>{</span><span class=s2>&#34;customerId&#34;</span>:<span class=s2>&#34;1&#34;</span>,<span class=s2>&#34;summaries&#34;</span>:<span class=o>[{</span><span class=s2>&#34;orderId&#34;</span>:<span class=s2>&#34;1&#34;</span>,<span class=s2>&#34;total&#34;</span>:415.98,<span class=s2>&#34;orderDate&#34;</span>:<span class=s2>&#34;2013-10-01 14:42:26&#34;</span><span class=o>}</span>,<span class=o>{</span><span class=s2>&#34;orderId&#34;</span>:<span class=s2>&#34;2&#34;</span>,<span class=s2>&#34;total&#34;</span>:359.99,<span class=s2>&#34;orderDate&#34;</span>:<span class=s2>&#34;2013-10-15 16:43:16&#34;</span><span class=o>}</span>,<span class=o>{</span><span class=s2>&#34;orderId&#34;</span>:<span class=s2>&#34;3&#34;</span>,<span class=s2>&#34;total&#34;</span>:74.98,<span class=s2>&#34;orderDate&#34;</span>:<span class=s2>&#34;2013-11-03 17:45:28&#34;</span><span class=o>}]}</span>
+</span></span></code></pre></div><p>While this pattern is very easy and extremely fast with respect to
+queries and complexity, it&rsquo;s up to the application to know about these
+intrinsic relationships.</p><h4 id=secondary-indexes>Secondary Indexes</h4><p><strong>Note:</strong>
+Secondary indexes in OpenRiak KV require a sorted backend: <a href=/docs/kv/3.4.1/explanation/storage/memory/>Memory</a>
+or <a href=/docs/kv/3.4.1/explanation/storage/leveldb/>LevelDB</a>
+. <a href=/docs/kv/3.4.1/explanation/storage/bitcask/>Bitcask</a>
+does not support secondary indexes.</p><p>See <a href=/docs/kv/3.4.1/how-to/develop/query-secondary-indexes/>Using Secondary Indexes (2i)</a>
+for more information on developing with secondary indexes.</p><p>If you&rsquo;re coming from an SQL world, Secondary Indexes (2i) are a lot
+like SQL indexes. They are a way to quickly look up objects based on a
+secondary key, without scanning through the whole dataset. This makes it
+very easy to find groups of related data by values, or even ranges of
+values. To properly show this off, we will now add some more data to our
+application, and add some secondary index entries at the same time.</p><p><a href=https://github.com/basho/taste-of-riak/blob/master/nodejs/Ch02-Schemas-and-Indexes/app.js#L98-L141 rel=noopener><em>Example:</em> Adding index data</a></p><p>As you may have noticed, ordinary key/value data is opaque to 2i, so we
+have to add entries to the indexes at the application level. Now let&rsquo;s
+find all of Jane Appleseed&rsquo;s processed orders, we&rsquo;ll look up the orders
+by searching the <code>SalespersonId</code> integer index for Jane&rsquo;s id of <code>9000</code>.</p><p><a href=https://github.com/basho/taste-of-riak/blob/master/nodejs/Ch02-Schemas-and-Indexes/app.js#L143-L159 rel=noopener><em>Example:</em> Query for orders where the SalespersonId index is set to 9000</a></p><p>Which returns:</p><div class=highlight><pre tabindex=0 class=chroma><code class=language-text data-lang=text><span class=line><span class=cl>Jane&#39;s Orders: 1, 3
+</span></span></code></pre></div><p>Jane processed orders 1 and 3. We used an &ldquo;integer&rdquo; index to reference
+Jane&rsquo;s ID, next let&rsquo;s use a &ldquo;binary&rdquo; index. Now, let&rsquo;s say that the VP
+of Sales wants to know how many orders came in during October 2013. In
+this case, we can exploit 2i&rsquo;s range queries. Let&rsquo;s search the
+<code>OrderDate</code> binary index for entries between <code>2013-10-01</code> and
+<code>2013-10-31</code>.</p><p><a href=https://github.com/basho/taste-of-riak/blob/master/nodejs/Ch02-Schemas-and-Indexes/app.js#L161-175 rel=noopener><em>Example:</em> Query for orders where the OrderDate index is between 2013-10-01 and
+2013-10-31</a></p><p>Which returns:</p><div class=highlight><pre tabindex=0 class=chroma><code class=language-text data-lang=text><span class=line><span class=cl>October&#39;s Orders: 1, 2
+</span></span></code></pre></div><p>Boom! Easy-peasy. We used 2i&rsquo;s range feature to search for a range of
+values, and demonstrated binary indexes.</p><p>So to recap:</p><ul><li>You can use Secondary Indexes to quickly look up an object based on a
+secondary id other than the object&rsquo;s key.</li><li>Indexes can have either Integer or Binary(String) keys</li><li>You can search for specific values, or a range of values</li><li>Riak will return a list of keys that match the index query</li></ul><h2 id=what-you-will-learn>What you will learn</h2><p>By completing this tutorial, you will build the workflow described above and learn how to validate each stage before moving on.</p><h2 id=before-you-begin>Before you begin</h2><p>Use a disposable OpenRiak KV environment that matches this documentation version, and keep cluster status and logs available while you work.</p><h2 id=verify-the-result>Verify the result</h2><p>Repeat the completed workflow, inspect the stored or operational result, and confirm that the cluster remains healthy.</p></div><nav class=page-navigation aria-label="Adjacent pages"><a class=page-navigation__previous href=/docs/kv/3.4.1/tutorials/first-application/build-a-first-openriak-application-with-php/><span>Previous</span><strong>Build a first OpenRiak application with PHP</strong></a>
+<a class=page-navigation__next href=/docs/kv/3.4.1/tutorials/first-application/build-a-first-openriak-application-with-java/><span>Next</span><strong>Build a first OpenRiak application with Java</strong></a></nav></article></main></div><footer class=site-footer><div><p>OpenRiak documentation is licensed under <a href=https://creativecommons.org/licenses/by/4.0/>Creative Commons Attribution 4.0</a>.</p><p>Historical material © Basho Technologies, Inc.; community revisions © OpenRiak contributors.</p></div><a href=#main-content>Back to top</a></footer><script src=/docs/js/site.js defer></script></body></html>

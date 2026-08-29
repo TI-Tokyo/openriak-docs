@@ -1,0 +1,1003 @@
+<!doctype html><html lang=en class=no-js><head><script src="/docs/livereload.js?mindelay=10&amp;v=2&amp;port=1320&amp;path=docs/livereload" data-no-instant defer></script><meta charset=utf-8><meta name=viewport content="width=device-width,initial-scale=1"><meta name=color-scheme content="light dark"><script>(()=>{const t="openriak-docs-theme";let e="system";try{const n=localStorage.getItem(t);(n==="light"||n==="dark"||n==="system")&&(e=n)}catch{}const n=window.matchMedia?.("(prefers-color-scheme: dark)").matches??!1;document.documentElement.dataset.themePreference=e,document.documentElement.dataset.theme=e==="system"?n?"dark":"light":e})()</script><meta name=description content="Show developers how to use distributed maps with a minimal verified example."><title>Use distributed maps | OpenRiak Documentation</title><link rel=canonical href=http://127.0.0.1:1320/docs/kv/3.4.0/how-to/develop/use-distributed-maps/><link rel=icon href=/docs/images/branding/favicon.ico sizes=any><link rel=stylesheet href=/docs/css/site.css><link rel=stylesheet href=/docs/css/theme.css><script src=/docs/js/theme.js defer></script><meta property="og:type" content="website"><meta property="og:title" content="Use distributed maps"><meta property="og:description" content="Show developers how to use distributed maps with a minimal verified example."><meta property="og:url" content="http://127.0.0.1:1320/docs/kv/3.4.0/how-to/develop/use-distributed-maps/"></head><body data-kind=page data-section=kv><script>document.documentElement.classList.remove("no-js")</script><a class=skip-link href=#main-content>Skip to content</a><header class=site-header><div class=site-header__inner><button class=nav-toggle type=button aria-controls=docs-sidebar aria-expanded=false>
+<span aria-hidden=true>☰</span><span class=sr-only>Toggle documentation navigation</span>
+</button>
+<a class=brand href=/docs/ aria-label="OpenRiak documentation home"><img src=/docs/images/branding/riak-logo-inverted.png alt width=34 height=34>
+<span>OpenRiak <strong>Docs</strong></span></a><nav class=primary-nav aria-label="Documentation types"><a href=/docs/kv/3.4.1/tutorials/>Tutorials</a>
+<a href=/docs/kv/3.4.1/how-to/>How-to</a>
+<a href=/docs/kv/3.4.1/reference/>Reference</a>
+<a href=/docs/kv/3.4.1/explanation/>Explanation</a></nav><a class=community-link href=https://github.com/orgs/OpenRiak/discussions>Community</a>
+<label class=theme-control><span class=theme-control__icon aria-hidden=true>◐</span>
+<span class=sr-only>Color theme</span>
+<select data-theme-select aria-label="Color theme"><option value=system>System</option><option value=light>Light</option><option value=dark>Dark</option></select></label></div></header><div class=site-shell><aside id=docs-sidebar class=sidebar aria-label="Documentation navigation"><div class=sidebar__tools><label for=version-select>Version</label>
+<select id=version-select data-version-select><option value=/docs/kv/3.4.1/>3.4.1 (latest)</option><option value=/docs/kv/3.4.0/ selected>3.4.0</option></select><form class=docs-search role=search data-search data-index-url=/docs/search-index.json data-version=3.4.0><label class=sr-only for=docs-search-input>Search this version</label>
+<input id=docs-search-input type=search placeholder="Search this version" autocomplete=off data-search-input><div class=search-results data-search-results hidden></div></form></div><nav class=sidebar__nav aria-label="Pages in this version"><a class=sidebar__root href=/docs/kv/3.4.0/>OpenRiak KV 3.4.0</a><ul class=nav-tree><li><details><summary><a href=/docs/kv/3.4.0/explanation/>Explanation</a></summary></details></li><li><details open><summary><a href=/docs/kv/3.4.0/how-to/>How-to guides</a></summary><ul class=nav-tree><li><details><summary><a href=/docs/kv/3.4.0/how-to/configure/>Configure OpenRiak</a></summary></details></li><li><details open><summary><a href=/docs/kv/3.4.0/how-to/develop/>Develop with OpenRiak</a></summary><ul class=nav-tree><li><a href=/docs/kv/3.4.0/how-to/develop/authenticate-an-application-client/>Authenticate an application client</a></li><li><a href=/docs/kv/3.4.0/how-to/develop/create-and-store-an-object/>Create and store an object</a></li><li><a href=/docs/kv/3.4.0/how-to/develop/delete-an-object/>Delete an object</a></li><li><a href=/docs/kv/3.4.0/how-to/develop/query-secondary-indexes/>Query secondary indexes</a></li><li><a href=/docs/kv/3.4.0/how-to/develop/read-an-object/>Read an object</a></li><li><a href=/docs/kv/3.4.0/how-to/develop/resolve-object-conflicts/>Resolve object conflicts</a></li><li><a href=/docs/kv/3.4.0/how-to/develop/run-a-mapreduce-query/>Run a MapReduce query</a></li><li><a href=/docs/kv/3.4.0/how-to/develop/update-an-object/>Update an object</a></li><li><a href=/docs/kv/3.4.0/how-to/develop/use-bucket-types-in-an-application/>Use bucket types in an application</a></li><li><a href=/docs/kv/3.4.0/how-to/develop/store-content-with-media-types/>Store content with media types</a></li><li><a href=/docs/kv/3.4.0/how-to/develop/use-distributed-counters/>Use distributed counters</a></li><li><a href=/docs/kv/3.4.0/how-to/develop/use-grow-only-sets/>Use grow-only sets</a></li><li><a href=/docs/kv/3.4.0/how-to/develop/use-hyperloglogs/>Use HyperLogLogs</a></li><li><a class=is-current href=/docs/kv/3.4.0/how-to/develop/use-distributed-maps/ aria-current=page>Use distributed maps</a></li><li><a href=/docs/kv/3.4.0/how-to/develop/use-distributed-sets/>Use distributed sets</a></li><li><a href=/docs/kv/3.4.0/how-to/develop/write-a-commit-hook/>Write a commit hook</a></li><li><a href=/docs/kv/3.4.0/how-to/develop/write-a-replication-hook/>Write a replication hook</a></li><li><a href=/docs/kv/3.4.0/how-to/develop/query-data-with-the-query-api/>Query data with the Query API</a></li><li><a href=/docs/kv/3.4.0/how-to/develop/send-a-conditional-object-request/>Send a conditional object request</a></li><li><a href=/docs/kv/3.4.0/how-to/develop/store-immutable-data-with-the-write-once-path/>Store immutable data with the write-once path</a></li></ul></details></li><li><details><summary><a href=/docs/kv/3.4.0/how-to/install/>Install and verify OpenRiak</a></summary></details></li><li><details><summary><a href=/docs/kv/3.4.0/how-to/operate/>Operate a cluster</a></summary></details></li><li><details><summary><a href=/docs/kv/3.4.0/how-to/plan/>Plan a production cluster</a></summary></details></li><li><details><summary><a href=/docs/kv/3.4.0/how-to/secure/>Secure OpenRiak</a></summary></details></li><li><details><summary><a href=/docs/kv/3.4.0/how-to/troubleshoot/>Troubleshoot OpenRiak</a></summary></details></li><li><details><summary><a href=/docs/kv/3.4.0/how-to/tune/>Tune performance</a></summary></details></li><li><details><summary><a href=/docs/kv/3.4.0/how-to/redis-add-on/>Use the Redis add-on</a></summary></details></li></ul></details></li><li><details><summary><a href=/docs/kv/3.4.0/reference/>Reference</a></summary></details></li><li><details><summary><a href=/docs/kv/3.4.0/tutorials/>Tutorials</a></summary></details></li></ul></nav><div class=sidebar__help><a href=https://github.com/orgs/OpenRiak/discussions>Ask the OpenRiak community</a>
+<a href=https://github.com/OpenRiak/riak>OpenRiak source code</a></div></aside><button class=sidebar-scrim type=button data-sidebar-close aria-label="Close navigation"></button><main id=main-content class=content tabindex=-1><article class=doc><nav class=breadcrumbs aria-label=Breadcrumb><ol><li><a href=/docs/kv/>OpenRiak KV documentation</a></li><li><a href=/docs/kv/3.4.0/>OpenRiak KV 3.4.0</a></li><li><a href=/docs/kv/3.4.0/how-to/>How-to guides</a></li><li><a href=/docs/kv/3.4.0/how-to/develop/>Develop with OpenRiak</a></li><li aria-current=page>Use distributed maps</li></ol></nav><header class=article-header><div class=badges><span class="badge badge--how-to">how-to</span>
+<span class=badge>KV 3.4.0</span></div><h1>Use distributed maps</h1><p class=lede>Show developers how to use distributed maps with a minimal verified example.</p><div class=review-notice role=note><strong>Review status:</strong>
+This migrated page is still marked as a draft.
+Technical review is required before publication.</div></header><details class=on-this-page><summary>On this page</summary><nav id=TableOfContents><ul><li><a href=#before-you-begin>Before you begin</a></li><li><a href=#overview>Overview</a><ul><li><a href=#data-types-maps>Data Types: Maps</a></li></ul></li><li><a href=#verify-the-result>Verify the result</a></li></ul></nav></details><div class=doc-body><p>Show developers how to use distributed maps with a minimal verified example.</p><h2 id=before-you-begin>Before you begin</h2><p>A non-production OpenRiak KV cluster, client credentials, and disposable test data that represents the operation you need to implement.</p><h2 id=overview>Overview</h2><h3 id=data-types-maps>Data Types: Maps</h3><p>Maps are the most versatile of the Riak data types because all other data types can be embedded within them, <em>including maps themselves</em>. This enables the creation of complex, custom data types from a few basic building blocks.</p><p>Using counters, sets, and maps within maps are similar to working with those types at the bucket level.</p><h4 id=set-up-a-bucket-type>Set Up a Bucket Type</h4><blockquote><p>If you&rsquo;ve already created and activated a bucket type with the <code>datatype</code> parameter set to <code>map</code>, skip to the <a href=#client-setup>next section</a>
+.</p></blockquote><p>Start by creating a bucket type with the <code>datatype</code> parameter set to <code>map</code>:</p><div class=highlight><pre tabindex=0 class=chroma><code class=language-bash data-lang=bash><span class=line><span class=cl>riak admin bucket-type create maps <span class=s1>&#39;{&#34;props&#34;:{&#34;datatype&#34;:&#34;map&#34;}}&#39;</span>
+</span></span></code></pre></div><blockquote><p><strong>Note</strong></p><p>The <code>maps</code> bucket type name provided above is an example and is not required to be <code>maps</code>. You are free to name bucket types whatever you like, with the exception of <code>default</code>.</p></blockquote><p>After creating a bucket with a Riak data type, confirm the bucket property configuration associated with that type is correct:</p><div class=highlight><pre tabindex=0 class=chroma><code class=language-bash data-lang=bash><span class=line><span class=cl>riak admin bucket-type status maps
+</span></span></code></pre></div><p>This returns a list of bucket properties and their values
+in the form of <code>property: value</code>.</p><p>If our <code>map</code> bucket type has been set properly we should see the following pair in our console output:</p><div class=highlight><pre tabindex=0 class=chroma><code class=language-bash data-lang=bash><span class=line><span class=cl>datatype: map
+</span></span></code></pre></div><p>Once we have confirmed the bucket type is properly configured, we can activate the bucket type to be used in OpenRiak KV:</p><div class=highlight><pre tabindex=0 class=chroma><code class=language-bash data-lang=bash><span class=line><span class=cl>riak admin bucket-type activate maps
+</span></span></code></pre></div><p>We can check if activation has been successful by using the same <code>bucket-type status</code> command shown above:</p><p>After creating and activating our new <code>maps</code> bucket type, we can setup our client to start using the bucket type as detailed in the next section.</p><h5 id=client-setup>Client Setup</h5><p>First, we need to direct our client to the bucket type/bucket/key location that contains our map.</p><p>The syntax for creating a map is analogous to the
+syntax for creating other data types:</p><div class=highlight><pre tabindex=0 class=chroma><code class=language-java data-lang=java><span class=line><span class=cl><span class=c1>// In the Java client, a bucket/bucket type combination is specified</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=c1>// using a Namespace object. To specify bucket, bucket type, and key,</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=c1>// use a Location object that incorporates the Namespace object, as is</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=c1>// done below.</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>
+</span></span></span><span class=line><span class=cl><span class=n>Location</span><span class=w> </span><span class=n>map</span><span class=w> </span><span class=o>=</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>  </span><span class=k>new</span><span class=w> </span><span class=n>Location</span><span class=p>(</span><span class=k>new</span><span class=w> </span><span class=n>Namespace</span><span class=p>(</span><span class=s>&#34;&lt;bucket_type&gt;&#34;</span><span class=p>,</span><span class=w> </span><span class=s>&#34;&lt;bucket&gt;&#34;</span><span class=p>),</span><span class=w> </span><span class=s>&#34;&lt;key&gt;&#34;</span><span class=p>);</span><span class=w>
+</span></span></span></code></pre></div><div class=highlight><pre tabindex=0 class=chroma><code class=language-ruby data-lang=ruby><span class=line><span class=cl><span class=n>bucket</span> <span class=o>=</span> <span class=n>client</span><span class=o>.</span><span class=n>bucket_type</span><span class=p>(</span><span class=s1>&#39;bucket_type_name&#39;</span><span class=p>)</span><span class=o>.</span><span class=n>bucket</span><span class=p>(</span><span class=s1>&#39;bucket_name&#39;</span><span class=p>)</span>
+</span></span><span class=line><span class=cl><span class=n>map</span> <span class=o>=</span> <span class=no>Riak</span><span class=o>::</span><span class=no>Crdt</span><span class=o>::</span><span class=no>Map</span><span class=o>.</span><span class=n>new</span><span class=p>(</span><span class=n>bucket</span><span class=p>,</span> <span class=n>key</span><span class=p>)</span>
+</span></span></code></pre></div><div class=highlight><pre tabindex=0 class=chroma><code class=language-php data-lang=php><span class=line><span class=cl><span class=nv>$location</span> <span class=o>=</span> <span class=k>new</span> <span class=nx>\Basho\Riak\Location</span><span class=p>(</span><span class=s1>&#39;key&#39;</span><span class=p>,</span> <span class=s1>&#39;bucket&#39;</span><span class=p>,</span> <span class=s1>&#39;bucket_type&#39;</span><span class=p>);</span>
+</span></span></code></pre></div><div class=highlight><pre tabindex=0 class=chroma><code class=language-python data-lang=python><span class=line><span class=cl><span class=c1>#### The client detects the bucket type&#39;s datatype and automatically</span>
+</span></span><span class=line><span class=cl><span class=c1>#### returns the right datatype for you, in this case a Map.</span>
+</span></span><span class=line><span class=cl><span class=nb>map</span> <span class=o>=</span> <span class=n>bucket</span><span class=o>.</span><span class=n>new</span><span class=p>(</span><span class=n>key</span><span class=p>)</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl><span class=c1>#### This way is also acceptable:</span>
+</span></span><span class=line><span class=cl><span class=kn>from</span> <span class=nn>riak.datatypes</span> <span class=kn>import</span> <span class=n>Map</span>
+</span></span><span class=line><span class=cl><span class=nb>map</span> <span class=o>=</span> <span class=n>Map</span><span class=p>(</span><span class=n>bucket</span><span class=p>,</span> <span class=n>key</span><span class=p>)</span>
+</span></span></code></pre></div><div class=highlight><pre tabindex=0 class=chroma><code class=language-csharp data-lang=csharp><span class=line><span class=cl><span class=c1>// https://github.com/basho/riak-dotnet-client/blob/develop/src/RiakClientExamples/Dev/Using/DataTypes.cs</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl><span class=kt>var</span> <span class=n>builder</span> <span class=p>=</span> <span class=k>new</span> <span class=n>UpdateMap</span><span class=p>.</span><span class=n>Builder</span><span class=p>()</span>
+</span></span><span class=line><span class=cl>    <span class=p>.</span><span class=n>WithBucketType</span><span class=p>(</span><span class=s>&#34;&lt;bucket_type&gt;&#34;</span><span class=p>)</span>
+</span></span><span class=line><span class=cl>    <span class=p>.</span><span class=n>WithBucket</span><span class=p>(</span><span class=s>&#34;&lt;bucket&gt;&#34;</span><span class=p>)</span>
+</span></span><span class=line><span class=cl>    <span class=p>.</span><span class=n>WithKey</span><span class=p>(</span><span class=s>&#34;&lt;key&gt;&#34;</span><span class=p>);</span>
+</span></span></code></pre></div><div class=highlight><pre tabindex=0 class=chroma><code class=language-javascript data-lang=javascript><span class=line><span class=cl><span class=c1>// Options to pass to the various map methods
+</span></span></span><span class=line><span class=cl><span class=kd>var</span> <span class=nx>options</span> <span class=o>=</span> <span class=p>{</span>
+</span></span><span class=line><span class=cl>    <span class=nx>bucketType</span><span class=o>:</span> <span class=s1>&#39;&lt;bucket_type&gt;&#39;</span><span class=p>,</span>
+</span></span><span class=line><span class=cl>    <span class=nx>bucket</span><span class=o>:</span> <span class=s1>&#39;&lt;bucket&gt;&#39;</span><span class=p>,</span>
+</span></span><span class=line><span class=cl>    <span class=nx>key</span><span class=o>:</span> <span class=s1>&#39;&lt;key&gt;&#39;</span>
+</span></span><span class=line><span class=cl><span class=p>};</span>
+</span></span></code></pre></div><div class=highlight><pre tabindex=0 class=chroma><code class=language-erlang data-lang=erlang><span class=line><span class=cl><span class=c>%% Maps in the Erlang client are opaque data structures that
+</span></span></span><span class=line><span class=cl><span class=c>%% collect operations as you mutate them. We will associate the data
+</span></span></span><span class=line><span class=cl><span class=c>%% structure with a bucket type, bucket, and key later on.
+</span></span></span></code></pre></div><pre tabindex=0><code class=language-curl data-lang=curl>curl http://localhost:8098/types/&lt;bucket_type&gt;/buckets/&lt;bucket&gt;/datatypes/&lt;key&gt;
+
+#### Note that this differs from the URL structure for non-data type requests,
+#### which end in /keys/&lt;key&gt;
+</code></pre><h5 id=create-a-map>Create a Map</h5><p>For this example, say we want to use OpenRiak KV to store information about our company&rsquo;s customers. We&rsquo;ll use the <code>maps</code> bucket type created and activated previously and a bucket called <code>customers</code>. Each customer&rsquo;s data will be contained in its own key in the <code>customers</code> bucket.</p><p>We can create a map for the user Ahmed (<code>ahmed_info</code>) using the <code>maps</code> bucket type:</p><div class=highlight><pre tabindex=0 class=chroma><code class=language-java data-lang=java><span class=line><span class=cl><span class=c1>// In the Java client, you specify the location of data types</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=c1>// before you perform operations on them:</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>
+</span></span></span><span class=line><span class=cl><span class=n>Location</span><span class=w> </span><span class=n>ahmedMap</span><span class=w> </span><span class=o>=</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>  </span><span class=k>new</span><span class=w> </span><span class=n>Location</span><span class=p>(</span><span class=k>new</span><span class=w> </span><span class=n>Namespace</span><span class=p>(</span><span class=s>&#34;maps&#34;</span><span class=p>,</span><span class=w> </span><span class=s>&#34;customers&#34;</span><span class=p>),</span><span class=w> </span><span class=s>&#34;ahmed_info&#34;</span><span class=p>);</span><span class=w>
+</span></span></span></code></pre></div><div class=highlight><pre tabindex=0 class=chroma><code class=language-ruby data-lang=ruby><span class=line><span class=cl><span class=n>customers</span> <span class=o>=</span> <span class=n>client</span><span class=o>.</span><span class=n>bucket_type</span><span class=p>(</span><span class=s1>&#39;maps&#39;</span><span class=p>)</span><span class=o>.</span><span class=n>bucket</span><span class=p>(</span><span class=s1>&#39;customers&#39;</span><span class=p>)</span>
+</span></span><span class=line><span class=cl><span class=n>map</span> <span class=o>=</span> <span class=no>Riak</span><span class=o>::</span><span class=no>Crdt</span><span class=o>::</span><span class=no>Map</span><span class=o>.</span><span class=n>new</span><span class=p>(</span><span class=n>customers</span><span class=p>,</span> <span class=s1>&#39;ahmed_info&#39;</span><span class=p>)</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl><span class=c1>#### Alternatively, the Ruby client enables you to set a bucket type as being</span>
+</span></span><span class=line><span class=cl><span class=c1>#### globally associated with a Riak data type. The following would set all</span>
+</span></span><span class=line><span class=cl><span class=c1>#### map buckets to use the maps bucket type:</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl><span class=no>Riak</span><span class=o>::</span><span class=no>Crdt</span><span class=o>::</span><span class=no>DEFAULT_BUCKET_TYPES</span><span class=o>[</span><span class=ss>:map</span><span class=o>]</span> <span class=o>=</span> <span class=s1>&#39;maps&#39;</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl><span class=c1>#### This would enable us to create our map without specifying a bucket type:</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl><span class=n>customers</span> <span class=o>=</span> <span class=n>client</span><span class=o>.</span><span class=n>bucket</span><span class=p>(</span><span class=s1>&#39;customers&#39;</span><span class=p>)</span>
+</span></span><span class=line><span class=cl><span class=n>map</span> <span class=o>=</span> <span class=no>Riak</span><span class=o>::</span><span class=no>Crdt</span><span class=o>::</span><span class=no>Map</span><span class=o>.</span><span class=n>new</span><span class=p>(</span><span class=n>customers</span><span class=p>,</span> <span class=s1>&#39;ahmed_info&#39;</span><span class=p>)</span>
+</span></span></code></pre></div><div class=highlight><pre tabindex=0 class=chroma><code class=language-php data-lang=php><span class=line><span class=cl><span class=nv>$location</span> <span class=o>=</span> <span class=k>new</span> <span class=nx>\Basho\Riak\Location</span><span class=p>(</span><span class=s1>&#39;ahmed_info&#39;</span><span class=p>,</span> <span class=s1>&#39;customers&#39;</span><span class=p>,</span> <span class=s1>&#39;maps&#39;</span><span class=p>);</span>
+</span></span></code></pre></div><div class=highlight><pre tabindex=0 class=chroma><code class=language-python data-lang=python><span class=line><span class=cl><span class=n>customers</span> <span class=o>=</span> <span class=n>client</span><span class=o>.</span><span class=n>bucket_type</span><span class=p>(</span><span class=s1>&#39;map_bucket&#39;</span><span class=p>)</span><span class=o>.</span><span class=n>bucket</span><span class=p>(</span><span class=s1>&#39;customers&#39;</span><span class=p>)</span>
+</span></span><span class=line><span class=cl><span class=nb>map</span> <span class=o>=</span> <span class=n>customers</span><span class=o>.</span><span class=n>net</span><span class=p>(</span><span class=s1>&#39;ahmed_info&#39;</span><span class=p>)</span>
+</span></span></code></pre></div><p>var builder = new UpdateMap.Builder()
+.WithBucketType(&ldquo;maps&rdquo;)
+.WithBucket(&ldquo;customers&rdquo;)
+.WithKey(&ldquo;ahmed_info&rdquo;);</p><pre tabindex=0><code>
+```javascript
+var options = {
+    bucketType: &#39;maps&#39;,
+    bucket: &#39;customers&#39;,
+    key: &#39;ahmed_info&#39;
+};
+</code></pre><div class=highlight><pre tabindex=0 class=chroma><code class=language-erlang data-lang=erlang><span class=line><span class=cl><span class=nv>Map</span> <span class=o>=</span> <span class=nn>riakc_map</span><span class=p>:</span><span class=nf>new</span><span class=p>().</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl><span class=c>%% Maps in the Erlang client are opaque data structures that
+</span></span></span><span class=line><span class=cl><span class=c>%% collect operations as you mutate them. We will associate the data
+</span></span></span><span class=line><span class=cl><span class=c>%% structure with a bucket type, bucket, and key later on.
+</span></span></span></code></pre></div><pre tabindex=0><code class=language-curl data-lang=curl>#### You cannot create an empty map through the HTTP interface. Maps can only
+#### be created when a field is added to them, as in the examples below.
+</code></pre><h5 id=registers>Registers</h5><p>Registers are essentially named binaries (like strings). Any binary
+value can act as the value of a register. Like flags, registers cannot
+be used on their own and must be embedded in Riak maps.</p><h6 id=registers-within-maps>Registers Within Maps</h6><p>Continuing with our previous <code>customers</code> example, let&rsquo;s store some information in our map.</p><p>The first piece of information we want to store in our map is Ahmed&rsquo;s name and
+phone number, both of which are best stored as registers:</p><div class=highlight><pre tabindex=0 class=chroma><code class=language-java data-lang=java><span class=line><span class=cl><span class=c1>// Using our &#34;ahmedMap&#34; location from above:</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>
+</span></span></span><span class=line><span class=cl><span class=n>RegisterUpdate</span><span class=w> </span><span class=n>ru1</span><span class=w> </span><span class=o>=</span><span class=w> </span><span class=k>new</span><span class=w> </span><span class=n>RegisterUpdate</span><span class=p>(</span><span class=s>&#34;Ahmed&#34;</span><span class=p>);</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=n>RegisterUpdate</span><span class=w> </span><span class=n>ru2</span><span class=w> </span><span class=o>=</span><span class=w> </span><span class=k>new</span><span class=w> </span><span class=n>RegisterUpdate</span><span class=p>(</span><span class=s>&#34;5551234567&#34;</span><span class=p>);</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=n>MapUpdate</span><span class=w> </span><span class=n>mu</span><span class=w> </span><span class=o>=</span><span class=w> </span><span class=k>new</span><span class=w> </span><span class=n>MapUpdate</span><span class=p>()</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>        </span><span class=p>.</span><span class=na>update</span><span class=p>(</span><span class=s>&#34;first_name&#34;</span><span class=p>,</span><span class=w> </span><span class=n>ru1</span><span class=p>)</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>        </span><span class=p>.</span><span class=na>update</span><span class=p>(</span><span class=s>&#34;phone_number&#34;</span><span class=p>,</span><span class=w> </span><span class=n>ru2</span><span class=p>);</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=n>UpdateMap</span><span class=w> </span><span class=n>update</span><span class=w> </span><span class=o>=</span><span class=w> </span><span class=k>new</span><span class=w> </span><span class=n>UpdateMap</span><span class=p>.</span><span class=na>Builder</span><span class=p>(</span><span class=n>ahmedMap</span><span class=p>,</span><span class=w> </span><span class=n>mu</span><span class=p>)</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>          </span><span class=p>.</span><span class=na>build</span><span class=p>();</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=n>client</span><span class=p>.</span><span class=na>execute</span><span class=p>(</span><span class=n>update</span><span class=p>);</span><span class=w>
+</span></span></span></code></pre></div><div class=highlight><pre tabindex=0 class=chroma><code class=language-ruby data-lang=ruby><span class=line><span class=cl><span class=c1>#### The Ruby client enables you to batch operations together if you&#39;re</span>
+</span></span><span class=line><span class=cl><span class=c1>#### performing them on one data type.</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl><span class=n>map</span><span class=o>.</span><span class=n>batch</span> <span class=k>do</span> <span class=o>|</span><span class=n>m</span><span class=o>|</span>
+</span></span><span class=line><span class=cl>  <span class=n>m</span><span class=o>.</span><span class=n>registers</span><span class=o>[</span><span class=s1>&#39;first_name&#39;</span><span class=o>]</span> <span class=o>=</span> <span class=s1>&#39;Ahmed&#39;</span>
+</span></span><span class=line><span class=cl>  <span class=n>m</span><span class=o>.</span><span class=n>registers</span><span class=o>[</span><span class=s1>&#39;phone_number&#39;</span><span class=o>]</span> <span class=o>=</span> <span class=s1>&#39;5551234567&#39;</span>
+</span></span><span class=line><span class=cl><span class=k>end</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl><span class=c1>#### Integers need to be stored as strings and then converted back when</span>
+</span></span><span class=line><span class=cl><span class=c1>#### the data is retrieved. The following would work as well:</span>
+</span></span><span class=line><span class=cl><span class=n>map</span><span class=o>.</span><span class=n>registers</span><span class=o>[</span><span class=s1>&#39;phone_number&#39;</span><span class=o>]</span> <span class=o>=</span> <span class=mi>5551234567</span><span class=o>.</span><span class=n>to_s</span>
+</span></span></code></pre></div><div class=highlight><pre tabindex=0 class=chroma><code class=language-php data-lang=php><span class=line><span class=cl><span class=p>(</span><span class=k>new</span> <span class=nx>\Basho\Riak\Command\Builder\UpdateMap</span><span class=p>(</span><span class=nv>$riak</span><span class=p>))</span>
+</span></span><span class=line><span class=cl>    <span class=o>-&gt;</span><span class=na>updateRegister</span><span class=p>(</span><span class=s1>&#39;first_name&#39;</span><span class=p>,</span> <span class=s1>&#39;Ahmed&#39;</span><span class=p>)</span>
+</span></span><span class=line><span class=cl>    <span class=o>-&gt;</span><span class=na>updateRegister</span><span class=p>(</span><span class=s1>&#39;phone_number&#39;</span><span class=p>,</span> <span class=s1>&#39;5551234567&#39;</span><span class=p>)</span>
+</span></span><span class=line><span class=cl>    <span class=o>-&gt;</span><span class=na>atLocation</span><span class=p>(</span><span class=nv>$location</span><span class=p>)</span>
+</span></span><span class=line><span class=cl>    <span class=o>-&gt;</span><span class=na>build</span><span class=p>()</span>
+</span></span><span class=line><span class=cl>    <span class=o>-&gt;</span><span class=na>execute</span><span class=p>();</span>
+</span></span></code></pre></div><div class=highlight><pre tabindex=0 class=chroma><code class=language-python data-lang=python><span class=line><span class=cl><span class=nb>map</span><span class=o>.</span><span class=n>registers</span><span class=p>[</span><span class=s1>&#39;first_name&#39;</span><span class=p>]</span><span class=o>.</span><span class=n>assign</span><span class=p>(</span><span class=s1>&#39;Ahmed&#39;</span><span class=p>)</span>
+</span></span><span class=line><span class=cl><span class=nb>map</span><span class=o>.</span><span class=n>registers</span><span class=p>[</span><span class=s1>&#39;phone_number&#39;</span><span class=p>]</span><span class=o>.</span><span class=n>assign</span><span class=p>(</span><span class=s1>&#39;5551234567&#39;</span><span class=p>)</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl><span class=c1>#### Integers need to be stored as strings and then converted back when the</span>
+</span></span><span class=line><span class=cl><span class=c1>#### data is retrieved. The following would work as well:</span>
+</span></span><span class=line><span class=cl><span class=nb>map</span><span class=o>.</span><span class=n>registers</span><span class=p>[</span><span class=s1>&#39;phone_number&#39;</span><span class=p>]</span><span class=o>.</span><span class=n>assign</span><span class=p>(</span><span class=nb>str</span><span class=p>(</span><span class=mi>5551234567</span><span class=p>))</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl><span class=nb>map</span><span class=o>.</span><span class=n>store</span><span class=p>()</span>
+</span></span></code></pre></div><p>var builder = new UpdateMap.Builder()
+.WithBucketType(&ldquo;maps&rdquo;)
+.WithBucket(&ldquo;customers&rdquo;)
+.WithKey(&ldquo;ahmed_info&rdquo;);</p><p>var mapOperation = new UpdateMap.MapOperation();</p><p>// Ahmed&rsquo;s first name
+mapOperation.SetRegister(&ldquo;first_name&rdquo;, &ldquo;Ahmed&rdquo;);</p><p>// Ahmed&rsquo;s phone number
+mapOperation.SetRegister(&ldquo;phone_number&rdquo;, &ldquo;5551234567&rdquo;);</p><p>builder.WithMapOperation(mapOperation);</p><p>UpdateMap cmd = builder.Build();
+RiakResult rslt = client.Execute(cmd);
+MapResponse response = cmd.Response;
+PrintMap(response.Value);
+// Output as JSON:
+// Map: {&ldquo;Counters&rdquo;:{},&ldquo;Sets&rdquo;:{},&ldquo;Registers&rdquo;:{&ldquo;first_name&rdquo;:&ldquo;Ahmed&rdquo;,&ldquo;phone_number&rdquo;:&ldquo;5551234567&rdquo;},&ldquo;Flags&rdquo;:{},&ldquo;Maps&rdquo;:{}}</p><pre tabindex=0><code>
+```javascript
+var mapOp = new Riak.Commands.CRDT.UpdateMap.MapOperation();
+mapOp.setRegister(&#39;first_name&#39;, new Buffer(&#39;Ahmed&#39;));
+mapOp.setRegister(&#39;phone_number&#39;, new Buffer(&#39;5551234567&#39;));
+
+var options = {
+    bucketType: &#39;maps&#39;,
+    bucket: &#39;customers&#39;,
+    key: &#39;ahmed_info&#39;,
+    op: mapOp
+};
+
+client.updateMap(options, function (err, rslt) {
+    if (err) {
+        throw new Error(err);
+    }
+});
+</code></pre><div class=highlight><pre tabindex=0 class=chroma><code class=language-erlang data-lang=erlang><span class=line><span class=cl><span class=nv>Map1</span> <span class=o>=</span> <span class=nn>riakc_map</span><span class=p>:</span><span class=nf>update</span><span class=p>({</span><span class=o>&lt;&lt;</span><span class=s>&#34;first_name&#34;</span><span class=o>&gt;&gt;</span><span class=p>,</span> <span class=nb>register</span><span class=p>},</span>
+</span></span><span class=line><span class=cl>                        <span class=k>fun</span><span class=p>(</span><span class=nv>R</span><span class=p>)</span> <span class=o>-&gt;</span> <span class=nn>riakc_register</span><span class=p>:</span><span class=nf>set</span><span class=p>(</span><span class=o>&lt;&lt;</span><span class=s>&#34;Ahmed&#34;</span><span class=o>&gt;&gt;</span><span class=p>,</span> <span class=nv>R</span><span class=p>)</span> <span class=k>end</span><span class=p>,</span>
+</span></span><span class=line><span class=cl>                        <span class=nv>Map</span><span class=p>),</span>
+</span></span><span class=line><span class=cl><span class=nv>Map2</span> <span class=o>=</span> <span class=nn>riakc_map</span><span class=p>:</span><span class=nf>update</span><span class=p>({</span><span class=o>&lt;&lt;</span><span class=s>&#34;phone_number&#34;</span><span class=o>&gt;&gt;</span><span class=p>,</span> <span class=nb>register</span><span class=p>},</span>
+</span></span><span class=line><span class=cl>                        <span class=k>fun</span><span class=p>(</span><span class=nv>R</span><span class=p>)</span> <span class=o>-&gt;</span> <span class=nn>riakc_register</span><span class=p>:</span><span class=nf>set</span><span class=p>(</span><span class=o>&lt;&lt;</span><span class=s>&#34;5551234567&#34;</span><span class=o>&gt;&gt;</span><span class=p>,</span> <span class=nv>R</span><span class=p>)</span> <span class=k>end</span><span class=p>,</span>
+</span></span><span class=line><span class=cl>                        <span class=nv>Map1</span><span class=p>).</span>
+</span></span></code></pre></div><pre tabindex=0><code class=language-curl data-lang=curl>#### Updates can be performed all at once. The following will create two new
+#### registers in the map and also set the value of those registers to the
+#### desired values
+
+curl -XPOST http://localhost:8098/types/maps/buckets/customers/datatypes/ahmed_info \
+  -H &#34;Content-Type: application/json&#34; \
+  -d &#39;
+  {
+    &#34;update&#34;: {
+      &#34;first_name_register&#34;: &#34;Ahmed&#34;,
+      &#34;phone_number_register&#34;: &#34;5551234567&#34;
+    }
+  }&#39;
+</code></pre><p>If a register did not previously exist, OpenRiak KV will create that register for you.</p><h5 id=flags>Flags</h5><p>Flags behave much like Boolean values, except that instead of <code>true</code> or
+<code>false</code> flags have the values <code>enable</code> or <code>disable</code>.</p><p>Flags cannot be used on their own, i.e. a flag cannot be stored in a bucket/key by itself. Instead, flags can only be stored within maps.</p><p>To disable an existing flag, you have to read it or provide <a href=../#data-types-and-context>a context</a>
+.</p><h6 id=flags-within-maps>Flags Within Maps</h6><p>Now let&rsquo;s say that we add an Enterprise plan to our pricing model. We&rsquo;ll
+create an <code>enterprise_customer</code> flag to track whether Ahmed has signed
+up for the new plan. He hasn&rsquo;t yet, so we&rsquo;ll set it to <code>false</code>:</p><p>MapUpdate mu = new MapUpdate()
+.update(&ldquo;enterprise_customer&rdquo;, new FlagUpdate(false));
+UpdateMap update = new UpdateMap.Builder(ahmedMap, mu)
+.build();
+client.execute(update);</p><pre tabindex=0><code>
+```ruby
+map.flags[&#39;enterprise_customer&#39;] = false
+</code></pre><div class=highlight><pre tabindex=0 class=chroma><code class=language-php data-lang=php><span class=line><span class=cl><span class=p>(</span><span class=k>new</span> <span class=nx>\Basho\Riak\Command\Builder\UpdateMap</span><span class=p>(</span><span class=nv>$riak</span><span class=p>))</span>
+</span></span><span class=line><span class=cl>    <span class=o>-&gt;</span><span class=na>updateFlag</span><span class=p>(</span><span class=s1>&#39;enterprise_customer&#39;</span><span class=p>,</span> <span class=k>false</span><span class=p>)</span>
+</span></span><span class=line><span class=cl>    <span class=o>-&gt;</span><span class=na>atLocation</span><span class=p>(</span><span class=nv>$location</span><span class=p>)</span>
+</span></span><span class=line><span class=cl>    <span class=o>-&gt;</span><span class=na>build</span><span class=p>()</span>
+</span></span><span class=line><span class=cl>    <span class=o>-&gt;</span><span class=na>execute</span><span class=p>();</span>
+</span></span></code></pre></div><div class=highlight><pre tabindex=0 class=chroma><code class=language-python data-lang=python><span class=line><span class=cl><span class=nb>map</span><span class=o>.</span><span class=n>flags</span><span class=p>[</span><span class=s1>&#39;enterprise_customer&#39;</span><span class=p>]</span><span class=o>.</span><span class=n>disable</span><span class=p>()</span>
+</span></span><span class=line><span class=cl><span class=nb>map</span><span class=o>.</span><span class=n>store</span><span class=p>()</span>
+</span></span></code></pre></div><p>// Using our builder from above:</p><p>mapOperation = new UpdateMap.MapOperation();
+mapOperation.SetFlag(&ldquo;enterprise_customer&rdquo;, false);</p><p>builder.WithMapOperation(mapOperation);
+cmd = builder.Build();
+rslt = client.Execute(cmd);</p><p>response = cmd.Response;</p><p>// response.Value as JSON:
+// Map: {&ldquo;Counters&rdquo;:{},&ldquo;Sets&rdquo;:{},
+&ldquo;Registers&rdquo;:{&ldquo;first_name&rdquo;:&ldquo;Ahmed&rdquo;,&ldquo;phone_number&rdquo;:&ldquo;5551234567&rdquo;},
+&ldquo;Flags&rdquo;:{&ldquo;enterprise_customer&rdquo;:false},&ldquo;Maps&rdquo;:{}}</p><pre tabindex=0><code>
+```javascript
+var mapOp = new Riak.Commands.CRDT.UpdateMap.MapOperation();
+mapOp.setFlag(&#39;enterprise_customer&#39;, false);
+
+```erlang
+Map4 = riakc_map:update({&lt;&lt;&#34;enterprise_customer&#34;&gt;&gt;, flag},
+                        fun(F) -&gt; riakc_flag:disable(F) end,
+                        Map3).
+</code></pre><pre tabindex=0><code class=language-curl data-lang=curl>curl http://localhost:8098/types/maps/buckets/customers/datatypes/ahmed_info
+
+#### Response
+{&#34;type&#34;:&#34;map&#34;,&#34;value&#34;:{&#34;first_name_register&#34;:&#34;Ahmed&#34;,&#34;phone_number_register&#34;:&#34;5551234567&#34;},&#34;context&#34;:&#34;g2wAAAABaAJtAAAADCMJ/vn2jOEXAAAAAWEBag==&#34;}
+
+curl -XPOST http://localhost:8098/types/maps/buckets/customers/datatypes/ahmed_info \
+  -H &#34;Content-Type: application/json&#34; \
+  -d &#39;
+  {
+    &#34;update&#34;: {
+      &#34;enterprise_customer_flag&#34;: &#34;disable&#34;
+    },
+    &#34;context&#34; : &#34;g2wAAAABaAJtAAAADCMJ/vn2jOEXAAAAAWEBag==&#34;
+  }&#39;
+</code></pre><p>We can retrieve the value of that flag at any time:</p><p>FetchMap fetch = new FetchMap.Builder(ahmedMap).build();
+FetchMap.Response response = client.execute(fetch);
+RiakMap map = response.getDatatype();
+System.out.println(map.getFlag(&ldquo;enterprise_customer&rdquo;).view());</p><pre tabindex=0><code>
+```ruby
+map.flags[&#39;enterprise_customer&#39;]
+
+#### false
+</code></pre><div class=highlight><pre tabindex=0 class=chroma><code class=language-php data-lang=php><span class=line><span class=cl><span class=nv>$map</span> <span class=o>=</span> <span class=p>(</span><span class=k>new</span> <span class=nx>\Basho\Riak\Command\Builder\FetchMap</span><span class=p>(</span><span class=nv>$riak</span><span class=p>))</span>
+</span></span><span class=line><span class=cl>    <span class=o>-&gt;</span><span class=na>atLocation</span><span class=p>(</span><span class=nv>$location</span><span class=p>)</span>
+</span></span><span class=line><span class=cl>    <span class=o>-&gt;</span><span class=na>build</span><span class=p>()</span>
+</span></span><span class=line><span class=cl>    <span class=o>-&gt;</span><span class=na>execute</span><span class=p>()</span>
+</span></span><span class=line><span class=cl>    <span class=o>-&gt;</span><span class=na>getMap</span><span class=p>();</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl><span class=k>echo</span> <span class=nv>$map</span><span class=o>-&gt;</span><span class=na>getFlag</span><span class=p>(</span><span class=s1>&#39;enterprise_customer&#39;</span><span class=p>);</span> <span class=c1>// false
+</span></span></span></code></pre></div><div class=highlight><pre tabindex=0 class=chroma><code class=language-python data-lang=python><span class=line><span class=cl><span class=nb>map</span><span class=o>.</span><span class=n>reload</span><span class=p>()</span><span class=o>.</span><span class=n>flags</span><span class=p>[</span><span class=s1>&#39;enterprise_customer&#39;</span><span class=p>]</span><span class=o>.</span><span class=n>value</span>
+</span></span></code></pre></div><p>Map ahmedMap = response.Value;
+ahmedMap.Flags[&ldquo;enterprise_customer&rdquo;]</p><pre tabindex=0><code>
+```javascript
+var options = {
+    bucketType: &#39;maps&#39;,
+    bucket: &#39;customers&#39;,
+    key: &#39;ahmed_info&#39;
+};
+
+client.fetchMap(options, function (err, rslt) {
+    if (err) {
+        throw new Error(err);
+    }
+
+console.log(&#34;fetched map: %s&#34;, JSON.stringify(rslt));
+});
+</code></pre><div class=highlight><pre tabindex=0 class=chroma><code class=language-erlang data-lang=erlang><span class=line><span class=cl><span class=c>%% The value fetched from Riak is always immutable, whereas the &#34;dirty
+</span></span></span><span class=line><span class=cl><span class=c>%% value&#34; takes into account local modifications that have not been
+</span></span></span><span class=line><span class=cl><span class=c>%% sent to the server.
+</span></span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl><span class=nn>riakc_map</span><span class=p>:</span><span class=nf>dirty_value</span><span class=p>(</span><span class=nv>Map4</span><span class=p>).</span>
+</span></span></code></pre></div><pre tabindex=0><code class=language-curl data-lang=curl>curl http://localhost:8098/types/maps/buckets/customers/datatypes/ahmed_info
+</code></pre><h5 id=counters-within-maps>Counters Within Maps</h5><p>We also want to know how many times Ahmed has visited our website. We&rsquo;ll
+use a <code>page_visits</code> counter for that and run the following operation
+when Ahmed visits our page for the first time:</p><p>MapUpdate mu = new MapUpdate()
+.update(&ldquo;page_visits&rdquo;, cu);
+UpdateMap update = new UpdateMap.Builder(ahmedMap, new CounterUpdate(1))
+.build();
+client.execute(update);</p><pre tabindex=0><code>
+```ruby
+map.counters[&#39;page_visits&#39;].increment
+
+#### This operation may return false even if successful
+</code></pre><div class=highlight><pre tabindex=0 class=chroma><code class=language-php data-lang=php><span class=line><span class=cl><span class=nv>$updateCounter</span> <span class=o>=</span> <span class=p>(</span><span class=k>new</span> <span class=nx>\Basho\Riak\Command\Builder\IncrementCounter</span><span class=p>(</span><span class=nv>$riak</span><span class=p>))</span>
+</span></span><span class=line><span class=cl>    <span class=o>-&gt;</span><span class=na>withIncrement</span><span class=p>(</span><span class=mi>1</span><span class=p>);</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl><span class=p>(</span><span class=k>new</span> <span class=nx>\Basho\Riak\Command\Builder\UpdateMap</span><span class=p>(</span><span class=nv>$riak</span><span class=p>))</span>
+</span></span><span class=line><span class=cl>    <span class=o>-&gt;</span><span class=na>updateCounter</span><span class=p>(</span><span class=s1>&#39;page_visits&#39;</span><span class=p>,</span> <span class=nv>$updateCounter</span><span class=p>)</span>
+</span></span><span class=line><span class=cl>    <span class=o>-&gt;</span><span class=na>atLocation</span><span class=p>(</span><span class=nv>$location</span><span class=p>)</span>
+</span></span><span class=line><span class=cl>    <span class=o>-&gt;</span><span class=na>build</span><span class=p>()</span>
+</span></span><span class=line><span class=cl>    <span class=o>-&gt;</span><span class=na>execute</span><span class=p>();</span>
+</span></span></code></pre></div><div class=highlight><pre tabindex=0 class=chroma><code class=language-python data-lang=python><span class=line><span class=cl><span class=nb>map</span><span class=o>.</span><span class=n>counters</span><span class=p>[</span><span class=s1>&#39;page_visits&#39;</span><span class=p>]</span><span class=o>.</span><span class=n>increment</span><span class=p>()</span>
+</span></span><span class=line><span class=cl><span class=nb>map</span><span class=o>.</span><span class=n>store</span><span class=p>()</span>
+</span></span></code></pre></div><p>var mapOperation = new UpdateMap.MapOperation();
+mapOperation.IncrementCounter(&ldquo;page_visits&rdquo;, 1);</p><p>builder.WithMapOperation(mapOperation);
+UpdateMap cmd = builder.Build();
+RiakResult rslt = client.Execute(cmd);</p><p>MapResponse response = cmd.Response;
+// Map: {&ldquo;Counters&rdquo;:{&ldquo;page_visits&rdquo;:3},
+&ldquo;Sets&rdquo;:{},
+&ldquo;Registers&rdquo;:{&ldquo;first_name&rdquo;:&ldquo;Ahmed&rdquo;,&ldquo;phone_number&rdquo;:&ldquo;5551234567&rdquo;},
+&ldquo;Flags&rdquo;:{&ldquo;enterprise_customer&rdquo;:false},
+&ldquo;Maps&rdquo;:{}}</p><pre tabindex=0><code>
+```javascript
+var mapOp = new Riak.Commands.CRDT.UpdateMap.MapOperation();
+mapOp.incrementCounter(&#39;page_visits&#39;, 1);
+
+```erlang
+Map3 = riakc_map:update({&lt;&lt;&#34;page_visits&#34;&gt;&gt;, counter},
+                        fun(C) -&gt; riakc_counter:increment(1, C) end,
+                        Map2).
+</code></pre><pre tabindex=0><code class=language-curl data-lang=curl>#### The following will create a new counter and increment it by 1
+
+curl -XPOST http://localhost:8098/types/maps/buckets/customers/datatypes/ahmed_info \
+  -H &#34;Content-Type: application/json&#34; \
+  -d &#39;
+  {
+    &#34;update&#34;: {
+      &#34;page_visits_counter&#34;: 1
+    }
+  }&#39;
+</code></pre><p>Even though the <code>page_visits</code> counter did not exist previously, the
+above operation will create it (with a default starting point of 0) and
+the increment operation will bump the counter up to 1.</p><h5 id=sets-within-maps>Sets Within Maps</h5><p>We&rsquo;d also like to know what Ahmed&rsquo;s interests are so that we can better
+design a user experience for him. Through his purchasing decisions, we
+find out that Ahmed likes robots, opera, and motorcycles. We&rsquo;ll store
+that information in a set inside of our map:</p><p>SetUpdate su = new SetUpdate()
+.add(&ldquo;robots&rdquo;)
+.add(&ldquo;opera&rdquo;)
+.add(&ldquo;motorcycles&rdquo;);
+MapUpdate mu = new MapUpdate()
+.update(&ldquo;interests&rdquo;, su);
+UpdateMap update = new UpdateMap.Builder(ahmedMap, mu)
+.build();
+client.execute(update);</p><pre tabindex=0><code>
+```ruby
+map.batch do |m|
+  %{ robots opera motorcycles }.each do |interest|
+    m.sets[&#39;interests&#39;].add(interest)
+  end
+end
+</code></pre><div class=highlight><pre tabindex=0 class=chroma><code class=language-php data-lang=php><span class=line><span class=cl><span class=nv>$updateSet</span> <span class=o>=</span> <span class=p>(</span><span class=k>new</span> <span class=nx>\Basho\Riak\Command\Builder\UpdateSet</span><span class=p>(</span><span class=nv>$riak</span><span class=p>))</span>
+</span></span><span class=line><span class=cl>    <span class=o>-&gt;</span><span class=na>add</span><span class=p>(</span><span class=s1>&#39;robots&#39;</span><span class=p>)</span>
+</span></span><span class=line><span class=cl>    <span class=o>-&gt;</span><span class=na>add</span><span class=p>(</span><span class=s1>&#39;opera&#39;</span><span class=p>)</span>
+</span></span><span class=line><span class=cl>    <span class=o>-&gt;</span><span class=na>add</span><span class=p>(</span><span class=s1>&#39;motorcycles&#39;</span><span class=p>);</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl><span class=p>(</span><span class=k>new</span> <span class=nx>\Basho\Riak\Command\Builder\UpdateMap</span><span class=p>(</span><span class=nv>$riak</span><span class=p>))</span>
+</span></span><span class=line><span class=cl>    <span class=o>-&gt;</span><span class=na>updateSet</span><span class=p>(</span><span class=s1>&#39;interests&#39;</span><span class=p>,</span> <span class=nv>$updateSet</span><span class=p>)</span>
+</span></span><span class=line><span class=cl>    <span class=o>-&gt;</span><span class=na>atLocation</span><span class=p>(</span><span class=nv>$location</span><span class=p>)</span>
+</span></span><span class=line><span class=cl>    <span class=o>-&gt;</span><span class=na>build</span><span class=p>()</span>
+</span></span><span class=line><span class=cl>    <span class=o>-&gt;</span><span class=na>execute</span><span class=p>();</span>
+</span></span></code></pre></div><div class=highlight><pre tabindex=0 class=chroma><code class=language-python data-lang=python><span class=line><span class=cl><span class=k>for</span> <span class=n>interest</span> <span class=ow>in</span> <span class=p>[</span><span class=s1>&#39;robots&#39;</span><span class=p>,</span> <span class=s1>&#39;opera&#39;</span><span class=p>,</span> <span class=s1>&#39;motorcycles&#39;</span><span class=p>]:</span>
+</span></span><span class=line><span class=cl>    <span class=nb>map</span><span class=o>.</span><span class=n>sets</span><span class=p>[</span><span class=s1>&#39;interests&#39;</span><span class=p>]</span><span class=o>.</span><span class=n>add</span><span class=p>(</span><span class=n>interest</span><span class=p>)</span>
+</span></span><span class=line><span class=cl><span class=nb>map</span><span class=o>.</span><span class=n>store</span><span class=p>()</span>
+</span></span></code></pre></div><p>var interestsAdds = new[] { &ldquo;robots&rdquo;, &ldquo;opera&rdquo;, &ldquo;motorcycles&rdquo; };</p><p>var mapOperation = new UpdateMap.MapOperation();
+mapOperation.AddToSet(&ldquo;interests&rdquo;, interestsAdds);</p><p>builder.WithMapOperation(mapOperation);
+UpdateMap cmd = builder.Build();
+RiakResult rslt = client.Execute(cmd);
+MapResponse response = cmd.Response;</p><p>// Map: {&ldquo;Counters&rdquo;:{&ldquo;page_visits&rdquo;:3},
+&ldquo;Sets&rdquo;:{&ldquo;interests&rdquo;:[&ldquo;motorcycles&rdquo;,&ldquo;opera&rdquo;,&ldquo;robots&rdquo;]},
+&ldquo;Registers&rdquo;:{&ldquo;first_name&rdquo;:&ldquo;Ahmed&rdquo;,&ldquo;phone_number&rdquo;:&ldquo;5551234567&rdquo;},
+&ldquo;Flags&rdquo;:{&ldquo;enterprise_customer&rdquo;:false},
+&ldquo;Maps&rdquo;:{}}</p><pre tabindex=0><code>
+```javascript
+var mapOp = new Riak.Commands.CRDT.UpdateMap.MapOperation();
+mapOp.addToSet(&#39;interests&#39;, &#39;robots&#39;);
+mapOp.addToSet(&#39;interests&#39;, &#39;opera&#39;);
+mapOp.addToSet(&#39;interests&#39;, &#39;motorcycles&#39;);
+
+```erlang
+Map4 = riakc_map:update({&lt;&lt;&#34;interests&#34;&gt;&gt;, set},
+                        fun(S) -&gt; riakc_set:add_element(&lt;&lt;&#34;robots&#34;&gt;&gt;, S) end, Map3),
+Map5 = riakc_map:update({&lt;&lt;&#34;interests&#34;&gt;&gt;, set},
+                        fun(S) -&gt; riakc_set:add_element(&lt;&lt;&#34;opera&#34;&gt;&gt;, S) end,
+                        Map4),
+Map6 = riakc_map:update({&lt;&lt;&#34;interests&#34;&gt;&gt;, set},
+                        fun(S) -&gt; riakc_set:add_element(&lt;&lt;&#34;motorcycles&#34;&gt;&gt;, S) end,
+                        Map4).
+</code></pre><pre tabindex=0><code class=language-curl data-lang=curl>curl -XPOST http://localhost:8098/types/maps/buckets/customers/datatypes/ahmed_info \
+  -H &#34;Content-Type: application/json&#34; \
+  -d &#39;
+  {
+    &#34;update&#34;: {
+      &#34;interests_set&#34;: {
+        &#34;add_all&#34;: [
+          &#34;robots&#34;,
+          &#34;opera&#34;,
+          &#34;motorcycles&#34;
+        ]
+      }
+    }
+  }&#39;
+</code></pre><p>We can then verify that the <code>interests</code> set includes these three
+interests:</p><p>FetchMap fetch = new FetchMap.Builder(ahmedMap)
+.build();
+FetchMap.Response response = client.execute(fetch);
+RiakMap map = response.getDatatype();
+RiakSet interestSet = map.getSet(&ldquo;interests&rdquo;);
+Set<binaryvalue> interests = interestSet.view();
+System.out.println(interests.contains(BinaryValue.create(&ldquo;robots&rdquo;)));</p><p>// Checking for &ldquo;opera&rdquo; and &ldquo;motorcycles&rdquo; works the same way</p><pre tabindex=0><code>
+```ruby
+map.batch do |m|
+  %w{ robots opera motorcycles }.each do |interest|
+    m.sets[&#39;interests&#39;].include? interest
+  end
+end
+
+#### This will return three Boolean values
+</code></pre><p>$sets = $map->getSet(&lsquo;interests&rsquo;);
+var_dump($sets->getData());</p><pre tabindex=0><code>
+```python
+reloaded_map = map.reload()
+for interest in [&#39;robots&#39;, &#39;opera&#39;, &#39;motorcycles&#39;]:
+    interest in reloaded_map.sets[&#39;interests&#39;].value
+</code></pre><p>Map ahmedMap = response.Value;</p><p>// All of the following return true:
+ahmedMap.Sets.GetValue(&ldquo;interests&rdquo;).Contains(&ldquo;robots&rdquo;);
+ahmedMap.Sets.GetValue(&ldquo;interests&rdquo;).Contains(&ldquo;opera&rdquo;);
+ahmedMap.Sets.GetValue(&ldquo;interests&rdquo;).Contains(&ldquo;motorcycles&rdquo;);</p><pre tabindex=0><code>
+assert(rslt.map.sets[&#39;interests&#39;].indexOf(&#39;robots&#39;) !== -1);
+});
+</code></pre><div class=highlight><pre tabindex=0 class=chroma><code class=language-erlang data-lang=erlang><span class=line><span class=cl><span class=nn>riakc_map</span><span class=p>:</span><span class=nf>dirty_value</span><span class=p>(</span><span class=nv>Map6</span><span class=p>).</span>
+</span></span></code></pre></div><pre tabindex=0><code class=language-curl data-lang=curl>curl http://localhost:8098/types/maps/buckets/customers/datatypes/ahmed_info?include_context=false
+</code></pre><p>We learn from a recent purchasing decision that Ahmed actually doesn&rsquo;t
+seem to like opera. He&rsquo;s much more keen on indie pop. Let&rsquo;s change the
+<code>interests</code> set to reflect that:</p><p>SetUpdate su = new SetUpdate()
+.remove(&ldquo;opera&rdquo;)
+.add(&ldquo;indie pop&rdquo;);
+MapUpdate mu = new MapUpdate()
+.update(&ldquo;interests&rdquo;, su);
+UpdateMap update = new UpdateMap.Builder(ahmedMap, mu)
+.build();
+client.execute(update);</p><pre tabindex=0><code>
+```ruby
+map.batch do |m|
+  m.sets[&#39;interests&#39;].remove(&#39;opera&#39;)
+  m.sets[&#39;interests&#39;].add(&#39;indie pop&#39;)
+end
+</code></pre><div class=highlight><pre tabindex=0 class=chroma><code class=language-php data-lang=php><span class=line><span class=cl><span class=nv>$updateSet</span> <span class=o>=</span> <span class=p>(</span><span class=k>new</span> <span class=nx>\Basho\Riak\Command\Builder\UpdateSet</span><span class=p>(</span><span class=nv>$riak</span><span class=p>))</span>
+</span></span><span class=line><span class=cl>    <span class=o>-&gt;</span><span class=na>add</span><span class=p>(</span><span class=s1>&#39;indie pop&#39;</span><span class=p>)</span>
+</span></span><span class=line><span class=cl>    <span class=o>-&gt;</span><span class=na>remove</span><span class=p>(</span><span class=s1>&#39;opera&#39;</span><span class=p>);</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl><span class=p>(</span><span class=k>new</span> <span class=nx>\Basho\Riak\Command\Builder\UpdateMap</span><span class=p>(</span><span class=nv>$riak</span><span class=p>))</span>
+</span></span><span class=line><span class=cl>    <span class=o>-&gt;</span><span class=na>updateSet</span><span class=p>(</span><span class=s1>&#39;interests&#39;</span><span class=p>,</span> <span class=nv>$updateSet</span><span class=p>)</span>
+</span></span><span class=line><span class=cl>    <span class=o>-&gt;</span><span class=na>atLocation</span><span class=p>(</span><span class=nv>$location</span><span class=p>)</span>
+</span></span><span class=line><span class=cl>    <span class=o>-&gt;</span><span class=na>withContext</span><span class=p>(</span><span class=nv>$map</span><span class=o>-&gt;</span><span class=na>getContext</span><span class=p>())</span>
+</span></span><span class=line><span class=cl>    <span class=o>-&gt;</span><span class=na>build</span><span class=p>()</span>
+</span></span><span class=line><span class=cl>    <span class=o>-&gt;</span><span class=na>execute</span><span class=p>();</span>
+</span></span></code></pre></div><div class=highlight><pre tabindex=0 class=chroma><code class=language-python data-lang=python><span class=line><span class=cl><span class=nb>map</span><span class=o>.</span><span class=n>sets</span><span class=p>[</span><span class=s1>&#39;interests&#39;</span><span class=p>]</span><span class=o>.</span><span class=n>discard</span><span class=p>(</span><span class=s1>&#39;opera&#39;</span><span class=p>)</span>
+</span></span><span class=line><span class=cl><span class=nb>map</span><span class=o>.</span><span class=n>sets</span><span class=p>[</span><span class=s1>&#39;interests&#39;</span><span class=p>]</span><span class=o>.</span><span class=n>add</span><span class=p>(</span><span class=s1>&#39;indie pop&#39;</span><span class=p>)</span>
+</span></span><span class=line><span class=cl><span class=nb>map</span><span class=o>.</span><span class=n>store</span><span class=p>()</span>
+</span></span></code></pre></div><p>var mapOperation = new UpdateMap.MapOperation();
+mapOperation.AddToSet(&ldquo;interests&rdquo;, &ldquo;indie pop&rdquo;);
+mapOperation.RemoveFromSet(&ldquo;interests&rdquo;, &ldquo;opera&rdquo;);</p><p>builder
+.WithMapOperation(mapOperation)
+.WithContext(response.Context);</p><p>UpdateMap cmd = builder.Build();
+RiakResult rslt = client.Execute(cmd);</p><p>MapResponse response = cmd.Response;
+Map ahmedMap = response.Value;</p><p>// This is false
+ahmedMap.Sets.GetValue(&ldquo;interests&rdquo;).Contains(&ldquo;opera&rdquo;);</p><p>// These are true
+ahmedMap.Sets.GetValue(&ldquo;interests&rdquo;).Contains(&ldquo;indie pop&rdquo;);
+ahmedMap.Sets.GetValue(&ldquo;interests&rdquo;).Contains(&ldquo;robots&rdquo;);
+ahmedMap.Sets.GetValue(&ldquo;interests&rdquo;).Contains(&ldquo;motorcycles&rdquo;);</p><pre tabindex=0><code>
+var mapOp = new Riak.Commands.CRDT.UpdateMap.MapOperation();
+    mapOp.removeFromSet(&#39;interests&#39;, &#39;opera&#39;);
+    mapOp.addToSet(&#39;interests&#39;, &#39;indie pop&#39;);
+
+options.context = rslt.context;
+    options.op = mapOp;
+
+client.updateMap(options, function (err, rslt) {
+        if (err) {
+            throw new Error(err);
+        }
+    });
+});
+</code></pre><div class=highlight><pre tabindex=0 class=chroma><code class=language-erlang data-lang=erlang><span class=line><span class=cl><span class=nv>Map7</span> <span class=o>=</span> <span class=nn>riakc_map</span><span class=p>:</span><span class=nf>update</span><span class=p>({</span><span class=o>&lt;&lt;</span><span class=s>&#34;interests&#34;</span><span class=o>&gt;&gt;</span><span class=p>,</span> <span class=n>set</span><span class=p>},</span>
+</span></span><span class=line><span class=cl>                        <span class=k>fun</span><span class=p>(</span><span class=nv>S</span><span class=p>)</span> <span class=o>-&gt;</span> <span class=nn>riakc_set</span><span class=p>:</span><span class=nf>del_element</span><span class=p>(</span><span class=o>&lt;&lt;</span><span class=s>&#34;opera&#34;</span><span class=o>&gt;&gt;</span><span class=p>,</span> <span class=nv>S</span><span class=p>)</span> <span class=k>end</span><span class=p>,</span> <span class=nv>Map6</span><span class=p>),</span>
+</span></span><span class=line><span class=cl><span class=nv>Map8</span> <span class=o>=</span> <span class=nn>riakc_map</span><span class=p>:</span><span class=nf>update</span><span class=p>({</span><span class=o>&lt;&lt;</span><span class=s>&#34;interests&#34;</span><span class=o>&gt;&gt;</span><span class=p>,</span> <span class=n>set</span><span class=p>},</span>
+</span></span><span class=line><span class=cl>                        <span class=k>fun</span><span class=p>(</span><span class=nv>S</span><span class=p>)</span> <span class=o>-&gt;</span> <span class=nn>riakc_set</span><span class=p>:</span><span class=nf>add_element</span><span class=p>(</span><span class=o>&lt;&lt;</span><span class=s>&#34;indie pop&#34;</span><span class=o>&gt;&gt;</span><span class=p>,</span> <span class=nv>S</span><span class=p>)</span> <span class=k>end</span><span class=p>,</span>
+</span></span><span class=line><span class=cl>                        <span class=nv>Map7</span><span class=p>).</span>
+</span></span></code></pre></div><h4 id=response>Response</h4><p>{&ldquo;type&rdquo;:&ldquo;map&rdquo;,&ldquo;value&rdquo;:{&ldquo;enterprise_customer_flag&rdquo;:false,&ldquo;first_name_register&rdquo;:&ldquo;Ahmed&rdquo;,&ldquo;interests_set&rdquo;:[&ldquo;motorcycles&rdquo;,&ldquo;opera&rdquo;,&ldquo;robots&rdquo;],&ldquo;page_visits_counter&rdquo;:1,&ldquo;phone_number_register&rdquo;:&ldquo;5551234567&rdquo;},&ldquo;context&rdquo;:&ldquo;g2wAAAABaAJtAAAADCMJ/vn2jOEXAAAAAWEEag==&rdquo;}</p><p>curl -XPOST http://localhost:8098/types/maps/buckets/customers/datatypes/ahmed_info<br>-H &ldquo;Content-Type: application/json&rdquo;<br>-d &rsquo;
+{
+&ldquo;update&rdquo;: {
+&ldquo;interests_set&rdquo;: {
+&ldquo;remove&rdquo;: &ldquo;opera&rdquo;,
+&ldquo;add&rdquo;: &ldquo;indie pop&rdquo;
+}
+},
+&ldquo;context&rdquo; : &ldquo;g2wAAAABaAJtAAAADCMJ/vn2jOEXAAAAAWEEag==&rdquo;
+}
+'</p><pre tabindex=0><code>
+##### Maps Within Maps
+
+We&#39;ve stored a wide of variety of information---of a wide variety of
+types---within the `ahmed_info` map thus far, but we have yet to explore
+recursively storing maps within maps (which can be nested as deeply as
+you wish).
+
+Our company is doing well and we have lots of useful information about
+Ahmed, but now we want to store information about Ahmed&#39;s contacts as
+well. We&#39;ll start with storing some information about Ahmed&#39;s colleague
+Annika inside of a map called `annika_info`.
+
+First, we&#39;ll store Annika&#39;s first name, last name, and phone number in
+registers:
+
+RegisterUpdate ru1 = new RegisterUpdate(&#34;Annika&#34;);
+RegisterUpdate ru2 = new RegisterUpdate(&#34;Weiss&#34;);
+RegisterUpdate ru3 = new RegisterUpdate(&#34;5559876543&#34;);
+
+MapUpdate annikaUpdate = new MapUpdate()
+        .update(&#34;first_name&#34;, ru1)
+        .update(&#34;last_name&#34;, ru2)
+        .update(&#34;phone_number&#34;, ru3);
+MapUpdate ahmedUpdate = new MapUpdate()
+        .update(&#34;annika_info&#34;, annikaUpdate);
+UpdateMap update = new UpdateMap.Builder(ahmedMap, ahmedUpdate)
+        .build();
+client.execute(update);
+</code></pre><div class=highlight><pre tabindex=0 class=chroma><code class=language-ruby data-lang=ruby><span class=line><span class=cl><span class=n>map</span><span class=o>.</span><span class=n>maps</span><span class=o>[</span><span class=s1>&#39;annika_info&#39;</span><span class=o>].</span><span class=n>batch</span> <span class=k>do</span> <span class=o>|</span><span class=n>m</span><span class=o>|</span>
+</span></span><span class=line><span class=cl>  <span class=n>m</span><span class=o>.</span><span class=n>registers</span><span class=o>[</span><span class=s1>&#39;first_name&#39;</span><span class=o>]</span> <span class=o>=</span> <span class=s1>&#39;Annika&#39;</span>
+</span></span><span class=line><span class=cl>  <span class=n>m</span><span class=o>.</span><span class=n>registers</span><span class=o>[</span><span class=s1>&#39;last_name&#39;</span><span class=o>]</span> <span class=o>=</span> <span class=s1>&#39;Weiss&#39;</span>
+</span></span><span class=line><span class=cl>  <span class=n>m</span><span class=o>.</span><span class=n>registers</span><span class=o>[</span><span class=s1>&#39;phone_number&#39;</span><span class=o>]</span> <span class=o>=</span> <span class=mi>5559876543</span><span class=o>.</span><span class=n>to_s</span>
+</span></span><span class=line><span class=cl><span class=k>end</span>
+</span></span></code></pre></div><div class=highlight><pre tabindex=0 class=chroma><code class=language-php data-lang=php><span class=line><span class=cl><span class=nv>$annikaMap</span> <span class=o>=</span> <span class=p>(</span><span class=k>new</span> <span class=nx>\Basho\Riak\Command\Builder\UpdateMap</span><span class=p>(</span><span class=nv>$riak</span><span class=p>))</span>
+</span></span><span class=line><span class=cl>    <span class=o>-&gt;</span><span class=na>updateRegister</span><span class=p>(</span><span class=s1>&#39;first_name&#39;</span><span class=p>,</span> <span class=s1>&#39;Annika&#39;</span><span class=p>)</span>
+</span></span><span class=line><span class=cl>    <span class=o>-&gt;</span><span class=na>updateRegister</span><span class=p>(</span><span class=s1>&#39;last_name&#39;</span><span class=p>,</span> <span class=s1>&#39;Weiss&#39;</span><span class=p>)</span>
+</span></span><span class=line><span class=cl>    <span class=o>-&gt;</span><span class=na>updateRegister</span><span class=p>(</span><span class=s1>&#39;phone_number&#39;</span><span class=p>,</span> <span class=s1>&#39;5559876543&#39;</span><span class=p>);</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl><span class=nv>$response</span> <span class=o>=</span> <span class=p>(</span><span class=k>new</span> <span class=nx>\Basho\Riak\Command\Builder\UpdateMap</span><span class=p>(</span><span class=nv>$riak</span><span class=p>))</span>
+</span></span><span class=line><span class=cl>    <span class=o>-&gt;</span><span class=na>updateMap</span><span class=p>(</span><span class=s1>&#39;annika_info&#39;</span><span class=p>,</span> <span class=nv>$annikaMap</span><span class=p>)</span>
+</span></span><span class=line><span class=cl>    <span class=o>-&gt;</span><span class=na>atLocation</span><span class=p>(</span><span class=nv>$location</span><span class=p>)</span>
+</span></span><span class=line><span class=cl>    <span class=o>-&gt;</span><span class=na>withParameter</span><span class=p>(</span><span class=s1>&#39;returnbody&#39;</span><span class=p>,</span> <span class=s1>&#39;true&#39;</span><span class=p>)</span>
+</span></span><span class=line><span class=cl>    <span class=o>-&gt;</span><span class=na>build</span><span class=p>()</span>
+</span></span><span class=line><span class=cl>    <span class=o>-&gt;</span><span class=na>execute</span><span class=p>();</span>
+</span></span></code></pre></div><div class=highlight><pre tabindex=0 class=chroma><code class=language-python data-lang=python><span class=line><span class=cl><span class=nb>map</span><span class=o>.</span><span class=n>maps</span><span class=p>[</span><span class=s1>&#39;annika_info&#39;</span><span class=p>]</span><span class=o>.</span><span class=n>registers</span><span class=p>[</span><span class=s1>&#39;first_name&#39;</span><span class=p>]</span><span class=o>.</span><span class=n>assign</span><span class=p>(</span><span class=s1>&#39;Annika&#39;</span><span class=p>)</span>
+</span></span><span class=line><span class=cl><span class=nb>map</span><span class=o>.</span><span class=n>maps</span><span class=p>[</span><span class=s1>&#39;annika_info&#39;</span><span class=p>]</span><span class=o>.</span><span class=n>registers</span><span class=p>[</span><span class=s1>&#39;last_name&#39;</span><span class=p>]</span><span class=o>.</span><span class=n>assign</span><span class=p>(</span><span class=s1>&#39;Weiss&#39;</span><span class=p>)</span>
+</span></span><span class=line><span class=cl><span class=nb>map</span><span class=o>.</span><span class=n>maps</span><span class=p>[</span><span class=s1>&#39;annika_info&#39;</span><span class=p>]</span><span class=o>.</span><span class=n>registers</span><span class=p>[</span><span class=s1>&#39;phone_number&#39;</span><span class=p>]</span><span class=o>.</span><span class=n>assign</span><span class=p>(</span><span class=nb>str</span><span class=p>(</span><span class=mi>5559876543</span><span class=p>))</span>
+</span></span><span class=line><span class=cl><span class=nb>map</span><span class=o>.</span><span class=n>store</span><span class=p>()</span>
+</span></span></code></pre></div><p>var annikaInfoOperation = mapOperation.Map(&ldquo;annika_info&rdquo;);
+annikaInfoOperation.SetRegister(&ldquo;first_name&rdquo;, &ldquo;Annika&rdquo;);
+annikaInfoOperation.SetRegister(&ldquo;last_name&rdquo;, &ldquo;Weiss&rdquo;);
+annikaInfoOperation.SetRegister(&ldquo;phone_number&rdquo;, &ldquo;5559876543&rdquo;);</p><p>builder.WithMapOperation(mapOperation);
+UpdateMap cmd = builder.Build();
+client.Execute(cmd);</p><pre tabindex=0><code>
+var mapOp = new Riak.Commands.CRDT.UpdateMap.MapOperation();
+mapOp.map(&#39;annika_info&#39;)
+    .setRegister(&#39;first_name&#39;, &#39;Annika&#39;)
+    .setRegister(&#39;last_name&#39;, &#39;Weiss&#39;)
+    .setRegister(&#39;phone_number&#39;, &#39;5559876543&#39;);
+
+options.op = mapOp;
+
+```erlang
+Map12 = riakc_map:update(
+    {&lt;&lt;&#34;annika_info&#34;&gt;&gt;, map},
+    fun(M) -&gt; riakc_map:update(
+        {&lt;&lt;&#34;first_name&#34;&gt;&gt;, register},
+        fun(R) -&gt; riakc_register:set(&lt;&lt;&#34;Annika&#34;&gt;&gt;, R) end, M) end,
+    Map11),
+Map13 = riakc_map:update(
+    {&lt;&lt;&#34;annika_info&#34;&gt;&gt;, map},
+    fun(M) -&gt; riakc_map:update(
+        {&lt;&lt;&#34;last_name&#34;&gt;&gt;, register},
+        fun(R) -&gt; riakc_register:set(&lt;&lt;&#34;Weiss&#34;&gt;&gt;, R) end, M) end,
+    Map12),
+Map14 = riakc_map:update(
+    {&lt;&lt;&#34;annika_info&#34;&gt;&gt;, map},
+    fun(M) -&gt; riakc_map:update(
+        {&lt;&lt;&#34;phone_number&#34;&gt;&gt;, register},
+        fun(R) -&gt; riakc_register:set(&lt;&lt;&#34;5559876543&#34;&gt;&gt;, R) end, M) end,
+    Map13).
+</code></pre><pre tabindex=0><code class=language-curl data-lang=curl>curl -XPOST http://localhost:8098/types/maps/buckets/customers/datatypes/ahmed_info \
+  -H &#34;Content-Type: application/json&#34; \
+  -d &#39;
+  {
+    &#34;update&#34;: {
+      &#34;annika_info_map&#34;: {
+        &#34;update&#34;: {
+          &#34;first_name_register&#34;: &#34;Annika&#34;,
+          &#34;last_name_register&#34;: &#34;Weiss&#34;,
+          &#34;phone_number_register&#34;: &#34;5559876543&#34;
+        }
+      }
+    }
+  }
+  &#39;
+</code></pre><p>The value of a register in a map can be obtained without a special
+method:</p><p>FetchMap fetch = new FetchMap.Builder(ahmedMap).build();
+FetchMap.Response response = client.execute(fetch);
+String annikaFirstName = response.getDatatype()
+.getMap(&ldquo;annika_info&rdquo;)
+.getRegister(&ldquo;first_name&rdquo;)
+.view()
+.toString();</p><pre tabindex=0><code>
+```ruby
+map.maps[&#39;annika_info&#39;].registers[&#39;first_name&#39;]
+
+#### &#34;Annika&#34;
+</code></pre><div class=highlight><pre tabindex=0 class=chroma><code class=language-php data-lang=php><span class=line><span class=cl><span class=c1>#### with param &#39;returnbody&#39; = &#39;true&#39;, we can fetch the map from our last response
+</span></span></span><span class=line><span class=cl><span class=nv>$map</span><span class=o>-&gt;</span><span class=na>getMap</span><span class=p>();</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl><span class=k>echo</span> <span class=nv>$map</span><span class=o>-&gt;</span><span class=na>getMap</span><span class=p>(</span><span class=s1>&#39;annika_info&#39;</span><span class=p>)</span><span class=o>-&gt;</span><span class=na>getRegister</span><span class=p>(</span><span class=s1>&#39;first_name&#39;</span><span class=p>);</span> <span class=c1>// Annika
+</span></span></span></code></pre></div><div class=highlight><pre tabindex=0 class=chroma><code class=language-python data-lang=python><span class=line><span class=cl><span class=nb>map</span><span class=o>.</span><span class=n>reload</span><span class=p>()</span><span class=o>.</span><span class=n>maps</span><span class=p>[</span><span class=s1>&#39;annika_info&#39;</span><span class=p>]</span><span class=o>.</span><span class=n>registers</span><span class=p>[</span><span class=s1>&#39;first_name&#39;</span><span class=p>]</span><span class=o>.</span><span class=n>value</span>
+</span></span></code></pre></div><p>ahmedMap = response.Value;
+ahmedMap.Maps[&ldquo;annika_info&rdquo;].Registers.GetValue(&ldquo;first_name&rdquo;);</p><pre tabindex=0><code>
+var annikaFirstName =
+        rslt.map.maps[&#39;annika_info&#39;].registers[&#39;first_name&#39;].toString(&#39;utf8&#39;);
+});
+</code></pre><div class=highlight><pre tabindex=0 class=chroma><code class=language-erlang data-lang=erlang><span class=line><span class=cl><span class=nn>riakc_map</span><span class=p>:</span><span class=nf>dirty_value</span><span class=p>(</span><span class=nv>Map14</span><span class=p>).</span>
+</span></span></code></pre></div><pre tabindex=0><code class=language-curl data-lang=curl>#### Specific values for fields inside of maps (or maps within maps, for that
+#### matter), cannot be obtained directly through the HTTP interface.
+</code></pre><p>Registers can also be removed:</p><div class=highlight><pre tabindex=0 class=chroma><code class=language-java data-lang=java><span class=line><span class=cl><span class=c1>// This example uses our &#34;ahmedMap&#34; location from above. Operations that</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=c1>// remove fields from maps require that you first fetch the opaque context</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=c1>// attached to the map and then include the context in the update operation:</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>
+</span></span></span><span class=line><span class=cl><span class=n>FetchMap</span><span class=w> </span><span class=n>fetch</span><span class=w> </span><span class=o>=</span><span class=w> </span><span class=k>new</span><span class=w> </span><span class=n>FetchMap</span><span class=p>.</span><span class=na>Builder</span><span class=p>(</span><span class=n>ahmedMap</span><span class=p>)</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>    </span><span class=p>.</span><span class=na>build</span><span class=p>();</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=n>FetchMap</span><span class=p>.</span><span class=na>Response</span><span class=w> </span><span class=n>response</span><span class=w> </span><span class=o>=</span><span class=w> </span><span class=n>client</span><span class=p>.</span><span class=na>execute</span><span class=p>(</span><span class=n>fetch</span><span class=p>);</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=n>Context</span><span class=w> </span><span class=n>ctx</span><span class=w> </span><span class=o>=</span><span class=w> </span><span class=n>response</span><span class=p>.</span><span class=na>getContext</span><span class=p>();</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=n>MapUpdate</span><span class=w> </span><span class=n>annikaUpdate</span><span class=w> </span><span class=o>=</span><span class=w> </span><span class=k>new</span><span class=w> </span><span class=n>MapUpdate</span><span class=p>()</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>        </span><span class=p>.</span><span class=na>removeRegister</span><span class=p>(</span><span class=s>&#34;first_name&#34;</span><span class=p>);</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=n>MapUpdate</span><span class=w> </span><span class=n>ahmedUpdate</span><span class=w> </span><span class=o>=</span><span class=w> </span><span class=k>new</span><span class=w> </span><span class=n>MapUpdate</span><span class=p>()</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>        </span><span class=p>.</span><span class=na>update</span><span class=p>(</span><span class=s>&#34;annika_info&#34;</span><span class=p>,</span><span class=w> </span><span class=n>annikaUpdate</span><span class=p>);</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=n>UpdateMap</span><span class=w> </span><span class=n>update</span><span class=w> </span><span class=o>=</span><span class=w> </span><span class=k>new</span><span class=w> </span><span class=n>UpdateMap</span><span class=p>.</span><span class=na>Builder</span><span class=p>(</span><span class=n>ahmedMap</span><span class=p>,</span><span class=w> </span><span class=n>ahmedUpdate</span><span class=p>)</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>        </span><span class=p>.</span><span class=na>withContext</span><span class=p>(</span><span class=n>ctx</span><span class=p>)</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>        </span><span class=p>.</span><span class=na>build</span><span class=p>();</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=n>client</span><span class=p>.</span><span class=na>execute</span><span class=p>(</span><span class=n>update</span><span class=p>);</span><span class=w>
+</span></span></span></code></pre></div><div class=highlight><pre tabindex=0 class=chroma><code class=language-ruby data-lang=ruby><span class=line><span class=cl><span class=n>map</span><span class=o>.</span><span class=n>maps</span><span class=o>[</span><span class=s1>&#39;annika_info&#39;</span><span class=o>].</span><span class=n>registers</span><span class=o>.</span><span class=n>remove</span><span class=p>(</span><span class=s1>&#39;first_name&#39;</span><span class=p>)</span>
+</span></span></code></pre></div><div class=highlight><pre tabindex=0 class=chroma><code class=language-php data-lang=php><span class=line><span class=cl><span class=nv>$annikaMap</span> <span class=o>=</span> <span class=p>(</span><span class=k>new</span> <span class=nx>\Basho\Riak\Command\Builder\UpdateMap</span><span class=p>(</span><span class=nv>$riak</span><span class=p>))</span>
+</span></span><span class=line><span class=cl>    <span class=o>-&gt;</span><span class=na>removeRegister</span><span class=p>(</span><span class=s1>&#39;first_name&#39;</span><span class=p>);</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl><span class=p>(</span><span class=k>new</span> <span class=nx>\Basho\Riak\Command\Builder\UpdateMap</span><span class=p>(</span><span class=nv>$riak</span><span class=p>))</span>
+</span></span><span class=line><span class=cl>    <span class=o>-&gt;</span><span class=na>updateMap</span><span class=p>(</span><span class=s1>&#39;annika_info&#39;</span><span class=p>,</span> <span class=nv>$annikaMap</span><span class=p>)</span>
+</span></span><span class=line><span class=cl>    <span class=o>-&gt;</span><span class=na>atLocation</span><span class=p>(</span><span class=nv>$location</span><span class=p>)</span>
+</span></span><span class=line><span class=cl>    <span class=o>-&gt;</span><span class=na>withContext</span><span class=p>(</span><span class=nv>$map</span><span class=o>-&gt;</span><span class=na>getContext</span><span class=p>())</span>
+</span></span><span class=line><span class=cl>    <span class=o>-&gt;</span><span class=na>build</span><span class=p>()</span>
+</span></span><span class=line><span class=cl>    <span class=o>-&gt;</span><span class=na>execute</span><span class=p>();</span>
+</span></span></code></pre></div><div class=highlight><pre tabindex=0 class=chroma><code class=language-python data-lang=python><span class=line><span class=cl><span class=k>del</span> <span class=nb>map</span><span class=o>.</span><span class=n>maps</span><span class=p>[</span><span class=s1>&#39;annika_info&#39;</span><span class=p>]</span><span class=o>.</span><span class=n>registers</span><span class=p>[</span><span class=s1>&#39;first_name&#39;</span><span class=p>]</span>
+</span></span><span class=line><span class=cl><span class=nb>map</span><span class=o>.</span><span class=n>store</span><span class=p>()</span>
+</span></span></code></pre></div><p>var mapOperation = new UpdateMap.MapOperation();
+mapOperation.Map(&ldquo;annika_info&rdquo;).RemoveRegister(&ldquo;first_name&rdquo;);</p><p>// Note: using Context from last response
+builder
+.WithMapOperation(mapOperation)
+.WithContext(response.Context);</p><p>UpdateMap cmd = builder.Build();
+client.Execute(cmd);</p><pre tabindex=0><code>
+var mapOp = new Riak.Commands.CRDT.UpdateMap.MapOperation();
+    mapOp.map(&#39;annika_info&#39;).removeRegister(&#39;first_name&#39;);
+
+var options = {
+        bucketType: &#39;maps&#39;,
+        bucket: &#39;customers&#39;,
+        key: &#39;ahmed_info&#39;,
+        op: mapOp,
+        context: rslt.context,
+    };
+
+```erlang
+Map15 = riakc_map:update({&lt;&lt;&#34;annika_info&#34;&gt;&gt;, map},
+                         fun(M) -&gt; riakc_map:erase({&lt;&lt;&#34;phone_number&#34;&gt;&gt;, register}, M) end,
+                         Map14).
+</code></pre><h4 id=response-1>Response</h4><p>{&ldquo;type&rdquo;:&ldquo;map&rdquo;,&ldquo;value&rdquo;:{&ldquo;annika_info_map&rdquo;:{&ldquo;first_name_register&rdquo;:&ldquo;Annika&rdquo;,&ldquo;last_name_register&rdquo;:&ldquo;Weiss&rdquo;,&ldquo;phone_number_register&rdquo;:&ldquo;5559876543&rdquo;},&ldquo;enterprise_customer_flag&rdquo;:false,&ldquo;first_name_register&rdquo;:&ldquo;Ahmed&rdquo;,&ldquo;interests_set&rdquo;:[&ldquo;indie pop&rdquo;,&ldquo;motorcycles&rdquo;,&ldquo;robots&rdquo;],&ldquo;page_visits_counter&rdquo;:1,&ldquo;phone_number_register&rdquo;:&ldquo;5551234567&rdquo;},&ldquo;context&rdquo;:&ldquo;g2wAAAABaAJtAAAADCMJ/vn2jOEXAAAAAWEGag==&rdquo;}</p><p>curl -XPOST http://localhost:8098/types/maps/buckets/customers/datatypes/ahmed_info<br>-H &ldquo;Content-Type: application/json&rdquo;<br>-d &rsquo;
+{
+&ldquo;update&rdquo;: {
+&ldquo;annika_info_map&rdquo;: {
+&ldquo;remove&rdquo;: [&ldquo;phone_number_register&rdquo;]
+}
+},
+&ldquo;context&rdquo; : &ldquo;g2wAAAABaAJtAAAADCMJ/vn2jOEXAAAAAWEGag==&rdquo;
+}
+'</p><pre tabindex=0><code>
+Now, we&#39;ll store whether Annika is subscribed to a variety of plans
+within the company as well:
+
+FetchMap fetch = new FetchMap.Builder(ahmedMap).build();
+FetchMap.Response response = client.execute(fetch);
+Context ctx = response.getContext();
+MapUpdate annikaUpdate = new MapUpdate()
+        .update(&#34;enterprise_plan&#34;, new FlagUpdate((false))
+        .update(&#34;family_plan&#34;, new FlagUpdate(false))
+        .update(&#34;free_plan&#34;, new FlagUpdate(true));
+MapUpdate ahmedUpdate = new MapUpdate()
+        .update(&#34;annika_info&#34;, annikaUpdate);
+UpdateMap update = new UpdateMap.Builder(ahmedMap, ahmedUpdate)
+        .withContext(ctx)
+        .build();
+client.execute(update);
+</code></pre><div class=highlight><pre tabindex=0 class=chroma><code class=language-ruby data-lang=ruby><span class=line><span class=cl><span class=n>map</span><span class=o>.</span><span class=n>maps</span><span class=o>[</span><span class=s1>&#39;annika_info&#39;</span><span class=o>].</span><span class=n>batch</span> <span class=k>do</span> <span class=o>|</span><span class=n>m</span><span class=o>|</span>
+</span></span><span class=line><span class=cl>  <span class=n>m</span><span class=o>.</span><span class=n>flags</span><span class=o>[</span><span class=s1>&#39;enterprise_plan&#39;</span><span class=o>]</span> <span class=o>=</span> <span class=kp>false</span>
+</span></span><span class=line><span class=cl>  <span class=n>m</span><span class=o>.</span><span class=n>flags</span><span class=o>[</span><span class=s1>&#39;family_plan&#39;</span><span class=o>]</span> <span class=o>=</span> <span class=kp>false</span>
+</span></span><span class=line><span class=cl>  <span class=n>m</span><span class=o>.</span><span class=n>flags</span><span class=o>[</span><span class=s1>&#39;free_plan&#39;</span><span class=o>]</span> <span class=o>=</span> <span class=kp>true</span>
+</span></span><span class=line><span class=cl><span class=k>end</span>
+</span></span></code></pre></div><div class=highlight><pre tabindex=0 class=chroma><code class=language-php data-lang=php><span class=line><span class=cl><span class=nv>$annikaMap</span> <span class=o>=</span> <span class=p>(</span><span class=k>new</span> <span class=nx>\Basho\Riak\Command\Builder\UpdateMap</span><span class=p>(</span><span class=nv>$riak</span><span class=p>))</span>
+</span></span><span class=line><span class=cl>    <span class=o>-&gt;</span><span class=na>updateFlag</span><span class=p>(</span><span class=s1>&#39;enterprise_plan&#39;</span><span class=p>,</span> <span class=k>false</span><span class=p>)</span>
+</span></span><span class=line><span class=cl>    <span class=o>-&gt;</span><span class=na>updateFlag</span><span class=p>(</span><span class=s1>&#39;family_plan&#39;</span><span class=p>,</span> <span class=k>false</span><span class=p>)</span>
+</span></span><span class=line><span class=cl>    <span class=o>-&gt;</span><span class=na>updateFlag</span><span class=p>(</span><span class=s1>&#39;free_plan&#39;</span><span class=p>,</span> <span class=k>true</span><span class=p>);</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl><span class=sb>``</span><span class=err>`</span><span class=nx>python</span>
+</span></span><span class=line><span class=cl><span class=nx>map</span><span class=o>.</span><span class=nx>maps</span><span class=p>[</span><span class=s1>&#39;annika_info&#39;</span><span class=p>]</span><span class=o>.</span><span class=nx>flags</span><span class=p>[</span><span class=s1>&#39;enterprise_plan&#39;</span><span class=p>]</span><span class=o>.</span><span class=nx>disable</span><span class=p>()</span>
+</span></span><span class=line><span class=cl><span class=nx>map</span><span class=o>.</span><span class=nx>maps</span><span class=p>[</span><span class=s1>&#39;annika_info&#39;</span><span class=p>]</span><span class=o>.</span><span class=nx>flags</span><span class=p>[</span><span class=s1>&#39;family_plan&#39;</span><span class=p>]</span><span class=o>.</span><span class=nx>disable</span><span class=p>()</span>
+</span></span><span class=line><span class=cl><span class=nx>map</span><span class=o>.</span><span class=nx>maps</span><span class=p>[</span><span class=s1>&#39;annika_info&#39;</span><span class=p>]</span><span class=o>.</span><span class=nx>flags</span><span class=p>[</span><span class=s1>&#39;free_plan&#39;</span><span class=p>]</span><span class=o>.</span><span class=nx>enable</span><span class=p>()</span>
+</span></span><span class=line><span class=cl><span class=nx>map</span><span class=o>.</span><span class=nx>store</span><span class=p>()</span>
+</span></span></code></pre></div><p>var mapOperation = new UpdateMap.MapOperation();
+mapOperation.Map(&ldquo;annika_info&rdquo;)
+.SetFlag(&ldquo;enterprise_plan&rdquo;, false)
+.SetFlag(&ldquo;family_plan&rdquo;, false)
+.SetFlag(&ldquo;free_plan&rdquo;, true);</p><p>MapUpdate cmd = builder.Build();
+client.Execute(cmd);</p><pre tabindex=0><code>
+var mapOp = new Riak.Commands.CRDT.UpdateMap.MapOperation();
+    var annika_map = mapOp.map(&#39;annika_info&#39;);
+    annika_map.setFlag(&#39;enterprise_plan&#39;, false);
+    annika_map.setFlag(&#39;family_plan&#39;, false);
+    annika_map.setFlag(&#39;free_plan&#39;, true);
+
+```erlang
+Map16 = riakc_map:update(
+    {&lt;&lt;&#34;annika_info&#34;&gt;&gt;, map},
+    fun(M) -&gt; riakc_map:update(
+        {&lt;&lt;&#34;enterprise_plan&#34;&gt;&gt;, flag},
+        fun(F) -&gt; riakc_flag:disable(F) end,
+        M) end,
+    Map15),
+Map17 = riakc_map:update(
+    {&lt;&lt;&#34;annika_info&#34;&gt;&gt;, map},
+    fun(M) -&gt; riakc_map:update(
+        {&lt;&lt;&#34;family_plan&#34;&gt;&gt;, flag},
+        fun(F) -&gt; riakc_flag:disable(F) end,
+        M) end,
+    Map16),
+Map18 = riakc_map:update(
+    {&lt;&lt;&#34;annika_info&#34;&gt;&gt;, map},
+    fun(M) -&gt; riakc_map:update(
+        {&lt;&lt;&#34;free_plan&#34;&gt;&gt;, flag},
+        fun(F) -&gt; riakc_flag:enable(F) end,
+        M) end,
+    Map17).
+</code></pre><h4 id=response-2>Response</h4><p>{&ldquo;type&rdquo;:&ldquo;map&rdquo;,&ldquo;value&rdquo;:{&ldquo;annika_info_map&rdquo;:{&ldquo;first_name_register&rdquo;:&ldquo;Annika&rdquo;,&ldquo;last_name_register&rdquo;:&ldquo;Weiss&rdquo;},&ldquo;enterprise_customer_flag&rdquo;:false,&ldquo;first_name_register&rdquo;:&ldquo;Ahmed&rdquo;,&ldquo;interests_set&rdquo;:[&ldquo;indie pop&rdquo;,&ldquo;motorcycles&rdquo;,&ldquo;robots&rdquo;],&ldquo;page_visits_counter&rdquo;:1,&ldquo;phone_number_register&rdquo;:&ldquo;5551234567&rdquo;},&ldquo;context&rdquo;:&ldquo;g2wAAAABaAJtAAAADCMJ/vn2jOEXAAAAAWEHag==&rdquo;}</p><p>curl -XPOST http://localhost:8098/types/maps/buckets/customers/datatypes/ahmed_info<br>-H &ldquo;Content-Type: application/json&rdquo;<br>-d &rsquo;
+{
+&ldquo;update&rdquo;: {
+&ldquo;annika_info_map&rdquo;: {
+&ldquo;update&rdquo;: {
+&ldquo;enterprise_plan_flag&rdquo;: &ldquo;disable&rdquo;,
+&ldquo;family_plan_flag&rdquo;: &ldquo;disable&rdquo;,
+&ldquo;free_plan_flag&rdquo;: &ldquo;enable&rdquo;
+}
+}
+},
+&ldquo;context&rdquo; : &ldquo;g2wAAAABaAJtAAAADCMJ/vn2jOEXAAAAAWEHag==&rdquo;
+}
+'</p><pre tabindex=0><code>
+The value of a flag can be retrieved at any time:
+
+FetchMap fetch = new FetchMap.Builder(ahmedMap).build();
+FetchMap.Response response = client.execute(fetch);
+boolean enterprisePlan = response.getDatatype()
+        .getMap(&#34;annika_info&#34;)
+        .getFlag(&#34;enterprise_plan&#34;)
+        .view();
+</code></pre><div class=highlight><pre tabindex=0 class=chroma><code class=language-ruby data-lang=ruby><span class=line><span class=cl><span class=n>map</span><span class=o>.</span><span class=n>maps</span><span class=o>[</span><span class=s1>&#39;annika_info&#39;</span><span class=o>].</span><span class=n>flags</span><span class=o>[</span><span class=s1>&#39;enterprise_plan&#39;</span><span class=o>]</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl><span class=c1>#### false</span>
+</span></span></code></pre></div><p>echo $map->getMap(&lsquo;annika_info&rsquo;)->getFlag(&rsquo;enterprise_plan&rsquo;); // false</p><pre tabindex=0><code>
+```python
+map.reload().maps[&#39;annika_info&#39;].flags[&#39;enterprise_plan&#39;].value
+</code></pre><p>ahmedMap = response.Value;
+ahmedMap.Maps[&ldquo;annika_info&rdquo;].Flags[&ldquo;enterprise_plan&rdquo;];</p><pre tabindex=0><code>
+var enterprisePlan =
+        rslt.map.maps.annika_info.flags.enterprise_plan;
+});
+</code></pre><div class=highlight><pre tabindex=0 class=chroma><code class=language-erlang data-lang=erlang><span class=line><span class=cl><span class=nn>riakc_map</span><span class=p>:</span><span class=nf>dirty_value</span><span class=p>(</span><span class=nv>Map18</span><span class=p>).</span>
+</span></span></code></pre></div><p>It&rsquo;s also important to track the number of purchases that Annika has
+made with our company. Annika just made her first widget purchase:</p><p>MapUpdate annikaUpdate = new MapUpdate()
+.update(&ldquo;widget_purchases&rdquo;, new CounterUpdate(1));
+MapUpdate ahmedUpdate = new MapUpdate()
+.update(&ldquo;annika_info&rdquo;, annikaUpdate);
+UpdateMap update = new UpdateMap.Builder(ahmedMap, ahmedUpdate)
+.build();
+client.execute(update);</p><pre tabindex=0><code>
+```ruby
+map.maps[&#39;annika_info&#39;].counters[&#39;widget_purchases&#39;].increment
+</code></pre><p>$annikaMap = (new \Basho\Riak\Command\Builder\UpdateMap($riak))
+->updateCounter(&lsquo;widget_purchases&rsquo;, $updateCounter);</p><p>(new \Basho\Riak\Command\Builder\UpdateMap($riak))
+->updateMap(&lsquo;annika_info&rsquo;, $annikaMap)
+->atLocation($location)
+->build()
+->execute();</p><pre tabindex=0><code>
+```python
+map.maps[&#39;annika_info&#39;].counters[&#39;widget_purchases&#39;].increment()
+map.store()
+</code></pre><p>var mapOperation = new UpdateMap.MapOperation();
+mapOperation.Map(&ldquo;annika_info&rdquo;).IncrementCounter(&ldquo;widget_purchases&rdquo;, 1);</p><div class=highlight><pre tabindex=0 class=chroma><code class=language-javascript data-lang=javascript><span class=line><span class=cl><span class=kd>var</span> <span class=nx>mapOp</span> <span class=o>=</span> <span class=k>new</span> <span class=nx>Riak</span><span class=p>.</span><span class=nx>Commands</span><span class=p>.</span><span class=nx>CRDT</span><span class=p>.</span><span class=nx>UpdateMap</span><span class=p>.</span><span class=nx>MapOperation</span><span class=p>();</span>
+</span></span><span class=line><span class=cl><span class=nx>mapOp</span><span class=p>.</span><span class=nx>map</span><span class=p>(</span><span class=s1>&#39;annika_info&#39;</span><span class=p>).</span><span class=nx>incrementCounter</span><span class=p>(</span><span class=s1>&#39;widget_purchases&#39;</span><span class=p>,</span> <span class=mi>1</span><span class=p>);</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl><span class=sb>```erlang
+</span></span></span><span class=line><span class=cl><span class=sb>Map19 = riakc_map:update(
+</span></span></span><span class=line><span class=cl><span class=sb>    {&lt;&lt;&#34;annika_info&#34;&gt;&gt;, map},
+</span></span></span><span class=line><span class=cl><span class=sb>    fun(M) -&gt; riakc_map:update(
+</span></span></span><span class=line><span class=cl><span class=sb>        {&lt;&lt;&#34;widget_purchases&#34;&gt;&gt;, counter},
+</span></span></span><span class=line><span class=cl><span class=sb>        fun(C) -&gt; riakc_counter:increment(1, C) end,
+</span></span></span><span class=line><span class=cl><span class=sb>        M) end,
+</span></span></span><span class=line><span class=cl><span class=sb>    Map18).
+</span></span></span></code></pre></div><pre tabindex=0><code class=language-curl data-lang=curl>curl -XPOST http://localhost:8098/types/maps/buckets/customers/datatypes/ahmed_info \
+  -H &#34;Content-Type: application/json&#34; \
+  -d &#39;
+  {
+    &#34;update&#34;: {
+      &#34;annika_info_map&#34;: {
+        &#34;update&#34;: {
+          &#34;widget_purchases_counter&#34;: 1
+        }
+      }
+    }
+  }
+  &#39;
+</code></pre><p>Now let&rsquo;s store Annika&rsquo;s interests in a set:</p><p>SetUpdate su = new SetUpdate().add(&ldquo;tango dancing&rdquo;);
+MapUpdate annikaUpdate = new MapUpdate()
+.update(&ldquo;interests&rdquo;, su);
+MapUpdate ahmedUpdate = new MapUpdate()
+.update(&ldquo;annika_info&rdquo;, annikaUpdate);
+UpdateMap update = new UpdateMap.Builder(ahmedMap, ahmedUpdate)
+.build();
+client.execute(update);</p><pre tabindex=0><code>
+```ruby
+map.maps[&#39;annika_info&#39;].sets[&#39;interests&#39;].add(&#39;tango dancing&#39;)
+</code></pre><div class=highlight><pre tabindex=0 class=chroma><code class=language-php data-lang=php><span class=line><span class=cl><span class=nv>$updateSet</span> <span class=o>=</span> <span class=p>(</span><span class=k>new</span> <span class=nx>\Basho\Riak\Command\Builder\UpdateSet</span><span class=p>(</span><span class=nv>$riak</span><span class=p>))</span>
+</span></span><span class=line><span class=cl>    <span class=o>-&gt;</span><span class=na>add</span><span class=p>(</span><span class=s1>&#39;tango dancing&#39;</span><span class=p>);</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl><span class=nv>$annikaMap</span> <span class=o>=</span> <span class=p>(</span><span class=k>new</span> <span class=nx>\Basho\Riak\Command\Builder\UpdateMap</span><span class=p>(</span><span class=nv>$riak</span><span class=p>))</span>
+</span></span><span class=line><span class=cl>    <span class=o>-&gt;</span><span class=na>updateSet</span><span class=p>(</span><span class=s1>&#39;interests&#39;</span><span class=p>,</span> <span class=nv>$updateSet</span><span class=p>);</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl><span class=sb>``</span><span class=err>`</span><span class=nx>python</span>
+</span></span><span class=line><span class=cl><span class=nx>map</span><span class=o>.</span><span class=nx>maps</span><span class=p>[</span><span class=s1>&#39;annika_info&#39;</span><span class=p>]</span><span class=o>.</span><span class=nx>sets</span><span class=p>[</span><span class=s1>&#39;interests&#39;</span><span class=p>]</span><span class=o>.</span><span class=nx>add</span><span class=p>(</span><span class=s1>&#39;tango dancing&#39;</span><span class=p>)</span>
+</span></span><span class=line><span class=cl><span class=nx>map</span><span class=o>.</span><span class=nx>store</span><span class=p>()</span>
+</span></span></code></pre></div><p>var mapOperation = new UpdateMap.MapOperation();
+mapOperation.Map(&ldquo;annika_info&rdquo;).AddToSet(&ldquo;interests&rdquo;, &ldquo;tango dancing&rdquo;);</p><p>builder.WithMapOperation(mapOperation);
+client.Execute(builder.Build());</p><pre tabindex=0><code>
+```javascript
+var mapOp = new Riak.Commands.CRDT.UpdateMap.MapOperation();
+var annika_map = mapOp.map(&#39;annika_info&#39;);
+annika_map.addToSet(&#39;interests&#39;, &#39;tango dancing&#39;);
+
+```erlang
+Map20 = riakc_map:update(
+    {&lt;&lt;&#34;annika_info&#34;&gt;&gt;, map},
+    fun(M) -&gt; riakc_map:update(
+        {&lt;&lt;&#34;interests&#34;&gt;&gt;, set},
+        fun(S) -&gt; riakc_set:add_element(&lt;&lt;&#34;tango dancing&#34;&gt;&gt;, S) end,
+        M) end,
+    Map19).
+</code></pre><pre tabindex=0><code class=language-curl data-lang=curl>curl -XPOST http://localhost:8098/types/maps/buckets/customers/datatypes/ahmed_info \
+  -H &#34;Content-Type: application/json&#34; \
+  -d &#39;
+  {
+    &#34;update&#34;: {
+      &#34;annika_info_map&#34;: {
+        &#34;update&#34;: {
+          &#34;interests_set&#34;: {
+            &#34;add&#34;: &#34;tango dancing&#34;
+          }
+        }
+      }
+    }
+  }
+  &#39;
+</code></pre><p>We can remove that interest in just the way that we would expect:</p><p>SetUpdate su = new SetUpdate().remove(&ldquo;tango dancing&rdquo;);
+MapUpdate annikaUpdate = new MapUpdate()
+.update(&ldquo;interests&rdquo;, su);
+MapUpdate ahmedUpdate = new MapUpdate()
+.update(&ldquo;annika_info&rdquo;, annikaUpdate);
+UpdateMap update = new UpdateMap.Builder(ahmedMap, ahmedUpdate)
+.withUpdate(ahmedUpdate)
+.build();
+client.execute(update);</p><pre tabindex=0><code>
+```ruby
+map.maps[&#39;annika_info&#39;].sets[&#39;interests&#39;].remove(&#39;tango dancing&#39;)
+</code></pre><div class=highlight><pre tabindex=0 class=chroma><code class=language-php data-lang=php><span class=line><span class=cl><span class=nv>$updateSet</span> <span class=o>=</span> <span class=p>(</span><span class=k>new</span> <span class=nx>\Basho\Riak\Command\Builder\UpdateSet</span><span class=p>(</span><span class=nv>$riak</span><span class=p>))</span>
+</span></span><span class=line><span class=cl>    <span class=o>-&gt;</span><span class=na>remove</span><span class=p>(</span><span class=s1>&#39;tango dancing&#39;</span><span class=p>);</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl><span class=p>(</span><span class=k>new</span> <span class=nx>\Basho\Riak\Command\Builder\UpdateMap</span><span class=p>(</span><span class=nv>$riak</span><span class=p>))</span>
+</span></span><span class=line><span class=cl>    <span class=o>-&gt;</span><span class=na>updateMap</span><span class=p>(</span><span class=s1>&#39;annika_info&#39;</span><span class=p>,</span> <span class=nv>$annikaMap</span><span class=p>)</span>
+</span></span><span class=line><span class=cl>    <span class=o>-&gt;</span><span class=na>atLocation</span><span class=p>(</span><span class=nv>$location</span><span class=p>)</span>
+</span></span><span class=line><span class=cl>    <span class=o>-&gt;</span><span class=na>withContext</span><span class=p>(</span><span class=nv>$response</span><span class=o>-&gt;</span><span class=na>getMap</span><span class=p>()</span><span class=o>-&gt;</span><span class=na>getContext</span><span class=p>())</span>
+</span></span><span class=line><span class=cl>    <span class=o>-&gt;</span><span class=na>build</span><span class=p>()</span>
+</span></span><span class=line><span class=cl>    <span class=o>-&gt;</span><span class=na>execute</span><span class=p>();</span>
+</span></span></code></pre></div><div class=highlight><pre tabindex=0 class=chroma><code class=language-python data-lang=python><span class=line><span class=cl><span class=nb>map</span><span class=o>.</span><span class=n>maps</span><span class=p>[</span><span class=s1>&#39;annika_info&#39;</span><span class=p>]</span><span class=o>.</span><span class=n>sets</span><span class=p>[</span><span class=s1>&#39;interests&#39;</span><span class=p>]</span><span class=o>.</span><span class=n>discard</span><span class=p>(</span><span class=s1>&#39;tango dancing&#39;</span><span class=p>)</span>
+</span></span><span class=line><span class=cl><span class=nb>map</span><span class=o>.</span><span class=n>store</span><span class=p>()</span>
+</span></span></code></pre></div><p>var mapOperation = new UpdateMap.MapOperation();
+mapOperation.Map(&ldquo;annika_info&rdquo;).RemoveFromSet(&ldquo;interests&rdquo;, &ldquo;tango dancing&rdquo;);</p><p>// Note: using Context from previous response
+builder
+.WithMapOperation(mapOperation)
+.WithContext(response.Context);
+client.Execute(builder.Build());</p><pre tabindex=0><code>
+client.fetchMap(options, function (err, rslt) {
+    var mapOp = new Riak.Commands.CRDT.UpdateMap.MapOperation();
+    var annika_map = mapOp.map(&#39;annika_info&#39;);
+    annika_map.removeFromSet(&#39;interests&#39;, &#39;tango dancing&#39;);
+
+options = {
+        bucketType: &#39;maps&#39;,
+        bucket: &#39;customers&#39;,
+        key: &#39;ahmed_info&#39;,
+        op: mapOp,
+        context: rslt.context
+    };
+
+```erlang
+Map21 = riakc_map:update(
+    {&lt;&lt;&#34;annika_info&#34;&gt;&gt;, map},
+    fun(M) -&gt; riakc_map:update(
+        {&lt;&lt;&#34;interests&#34;&gt;&gt;, set},
+        fun(S) -&gt; riakc_set:del_element(&lt;&lt;&#34;tango dancing&#34;&gt;&gt;, S) end,
+        M) end,
+    Map20).
+</code></pre><h4 id=response-3>Response</h4><p>{&ldquo;type&rdquo;:&ldquo;map&rdquo;,&ldquo;value&rdquo;:{&ldquo;annika_info_map&rdquo;:{&ldquo;enterprise_plan_flag&rdquo;:false,&ldquo;family_plan_flag&rdquo;:false,&ldquo;first_name_register&rdquo;:&ldquo;Annika&rdquo;,&ldquo;free_plan_flag&rdquo;:true,&ldquo;interests_set&rdquo;:[&ldquo;tango dancing&rdquo;],&ldquo;last_name_register&rdquo;:&ldquo;Weiss&rdquo;,&ldquo;widget_purchases_counter&rdquo;:1},&ldquo;enterprise_customer_flag&rdquo;:false,&ldquo;first_name_register&rdquo;:&ldquo;Ahmed&rdquo;,&ldquo;interests_set&rdquo;:[&ldquo;indie pop&rdquo;,&ldquo;motorcycles&rdquo;,&ldquo;robots&rdquo;],&ldquo;page_visits_counter&rdquo;:1,&ldquo;phone_number_register&rdquo;:&ldquo;5551234567&rdquo;},&ldquo;context&rdquo;:&ldquo;g2wAAAABaAJtAAAADCMJ/vn2jOEXAAAAAWEKag==&rdquo;}</p><p>curl -XPOST http://localhost:8098/types/maps/buckets/customers/datatypes/ahmed_info<br>-H &ldquo;Content-Type: application/json&rdquo;<br>-d &rsquo;
+{
+&ldquo;update&rdquo;: {
+&ldquo;annika_info_map&rdquo;: {
+&ldquo;update&rdquo;: {
+&ldquo;interests_set&rdquo;: {
+&ldquo;remove&rdquo;: &ldquo;tango dancing&rdquo;
+}
+}
+}
+},
+&ldquo;context&rdquo; : &ldquo;g2wAAAABaAJtAAAADCMJ/vn2jOEXAAAAAWEKag==&rdquo;
+}
+'</p><pre tabindex=0><code>
+If we wanted to add store information about one of Annika&#39;s specific
+purchases, we could do so within a map:
+
+MapUpdate purchaseUpdate = new MapUpdate()
+        .update(&#34;first_purchase&#34;, new FlagUpdate(true)
+        .update(&#34;amount&#34;, new RegisterUpdate(&#34;1271&#34;))
+        .update(&#34;items&#34;, new SetUpdate().add(&#34;large widget&#34;));
+MapUpdate annikaUpdate = new MapUpdate()
+        .update(&#34;purchase&#34;, purchaseUpdate);
+MapUpdate ahmedUpdate = new MapUpdate()
+        .update(&#34;annika_info&#34;, annikaUpdate);
+UpdateMap update = new UpdateMap.Builder(ahmedMap, ahmedUpdate)
+        .withUpdate(ahmedUpdate)
+        .build();
+client.execute(update);
+</code></pre><div class=highlight><pre tabindex=0 class=chroma><code class=language-ruby data-lang=ruby><span class=line><span class=cl><span class=n>map</span><span class=o>.</span><span class=n>maps</span><span class=o>[</span><span class=s1>&#39;annika_info&#39;</span><span class=o>].</span><span class=n>maps</span><span class=o>[</span><span class=s1>&#39;purchase&#39;</span><span class=o>].</span><span class=n>batch</span> <span class=k>do</span> <span class=o>|</span><span class=n>m</span><span class=o>|</span>
+</span></span><span class=line><span class=cl>  <span class=n>m</span><span class=o>.</span><span class=n>flags</span><span class=o>[</span><span class=s1>&#39;first_purchase&#39;</span><span class=o>]</span> <span class=o>=</span> <span class=kp>true</span>
+</span></span><span class=line><span class=cl>  <span class=n>m</span><span class=o>.</span><span class=n>register</span><span class=o>[</span><span class=s1>&#39;amount&#39;</span><span class=o>]</span> <span class=o>=</span> <span class=mi>1271</span><span class=o>.</span><span class=n>to_s</span>
+</span></span><span class=line><span class=cl>  <span class=n>m</span><span class=o>.</span><span class=n>sets</span><span class=o>[</span><span class=s1>&#39;items&#39;</span><span class=o>].</span><span class=n>add</span><span class=p>(</span><span class=s1>&#39;large widget&#39;</span><span class=p>)</span>
+</span></span><span class=line><span class=cl><span class=k>end</span>
+</span></span></code></pre></div><div class=highlight><pre tabindex=0 class=chroma><code class=language-php data-lang=php><span class=line><span class=cl><span class=nv>$updateSet</span> <span class=o>=</span> <span class=p>(</span><span class=k>new</span> <span class=nx>\Basho\Riak\Command\Builder\UpdateSet</span><span class=p>(</span><span class=nv>$riak</span><span class=p>))</span>
+</span></span><span class=line><span class=cl>    <span class=o>-&gt;</span><span class=na>add</span><span class=p>(</span><span class=s1>&#39;large widget&#39;</span><span class=p>);</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl><span class=nv>$purchaseMap</span> <span class=o>=</span> <span class=p>(</span><span class=k>new</span> <span class=nx>\Basho\Riak\Command\Builder\UpdateMap</span><span class=p>(</span><span class=nv>$riak</span><span class=p>))</span>
+</span></span><span class=line><span class=cl>    <span class=o>-&gt;</span><span class=na>updateFlag</span><span class=p>(</span><span class=s1>&#39;first_purchase&#39;</span><span class=p>,</span> <span class=k>true</span><span class=p>)</span>
+</span></span><span class=line><span class=cl>    <span class=o>-&gt;</span><span class=na>updateRegister</span><span class=p>(</span><span class=s1>&#39;amount&#39;</span><span class=p>,</span> <span class=s1>&#39;1271&#39;</span><span class=p>)</span>
+</span></span><span class=line><span class=cl>    <span class=o>-&gt;</span><span class=na>updateSet</span><span class=p>(</span><span class=s1>&#39;items&#39;</span><span class=p>,</span> <span class=nv>$updateSet</span><span class=p>);</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl><span class=nv>$annikaMap</span> <span class=o>=</span> <span class=p>(</span><span class=k>new</span> <span class=nx>\Basho\Riak\Command\Builder\UpdateMap</span><span class=p>(</span><span class=nv>$riak</span><span class=p>))</span>
+</span></span><span class=line><span class=cl>    <span class=o>-&gt;</span><span class=na>updateMap</span><span class=p>(</span><span class=s1>&#39;purchase&#39;</span><span class=p>,</span> <span class=nv>$purchaseMap</span><span class=p>);</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl><span class=sb>``</span><span class=err>`</span><span class=nx>python</span>
+</span></span><span class=line><span class=cl><span class=nx>map</span><span class=o>.</span><span class=nx>maps</span><span class=p>[</span><span class=s1>&#39;annika_info&#39;</span><span class=p>]</span><span class=o>.</span><span class=nx>maps</span><span class=p>[</span><span class=s1>&#39;purchase&#39;</span><span class=p>]</span><span class=o>.</span><span class=nx>flags</span><span class=p>[</span><span class=s1>&#39;first_purchase&#39;</span><span class=p>]</span><span class=o>.</span><span class=nx>enable</span><span class=p>()</span>
+</span></span><span class=line><span class=cl><span class=nx>map</span><span class=o>.</span><span class=nx>maps</span><span class=p>[</span><span class=s1>&#39;annika_info&#39;</span><span class=p>]</span><span class=o>.</span><span class=nx>maps</span><span class=p>[</span><span class=s1>&#39;purchase&#39;</span><span class=p>]</span><span class=o>.</span><span class=nx>register</span><span class=p>[</span><span class=s1>&#39;amount&#39;</span><span class=p>]</span><span class=o>.</span><span class=nx>assign</span><span class=p>(</span><span class=nx>str</span><span class=p>(</span><span class=mi>1271</span><span class=p>))</span>
+</span></span><span class=line><span class=cl><span class=nx>map</span><span class=o>.</span><span class=nx>maps</span><span class=p>[</span><span class=s1>&#39;annika_info&#39;</span><span class=p>]</span><span class=o>.</span><span class=nx>maps</span><span class=p>[</span><span class=s1>&#39;purchase&#39;</span><span class=p>]</span><span class=o>.</span><span class=nx>sets</span><span class=p>[</span><span class=s1>&#39;items&#39;</span><span class=p>]</span><span class=o>.</span><span class=nx>add</span><span class=p>(</span><span class=s1>&#39;large widget&#39;</span><span class=p>)</span>
+</span></span><span class=line><span class=cl><span class=c1>#### and so on
+</span></span></span><span class=line><span class=cl><span class=nx>map</span><span class=o>.</span><span class=nx>store</span><span class=p>()</span>
+</span></span></code></pre></div><p>var mapOperation = new UpdateMap.MapOperation();
+mapOperation.Map(&ldquo;annika_info&rdquo;).Map(&ldquo;purchase&rdquo;)
+.SetFlag(&ldquo;first_purchase&rdquo;, true)
+.SetRegister(&ldquo;amount&rdquo;, &ldquo;1271&rdquo;)
+.AddToSet(&ldquo;items&rdquo;, &ldquo;large widget&rdquo;);</p><div class=highlight><pre tabindex=0 class=chroma><code class=language-javascript data-lang=javascript><span class=line><span class=cl><span class=kd>var</span> <span class=nx>mapOp</span> <span class=o>=</span> <span class=k>new</span> <span class=nx>Riak</span><span class=p>.</span><span class=nx>Commands</span><span class=p>.</span><span class=nx>CRDT</span><span class=p>.</span><span class=nx>UpdateMap</span><span class=p>.</span><span class=nx>MapOperation</span><span class=p>();</span>
+</span></span><span class=line><span class=cl><span class=kd>var</span> <span class=nx>annika_map</span> <span class=o>=</span> <span class=nx>mapOp</span><span class=p>.</span><span class=nx>map</span><span class=p>(</span><span class=s1>&#39;annika_info&#39;</span><span class=p>);</span>
+</span></span><span class=line><span class=cl><span class=kd>var</span> <span class=nx>annika_purchase_map</span> <span class=o>=</span> <span class=nx>annika_map</span><span class=p>.</span><span class=nx>map</span><span class=p>(</span><span class=s1>&#39;purchase&#39;</span><span class=p>);</span>
+</span></span><span class=line><span class=cl><span class=nx>annika_purchase_map</span><span class=p>.</span><span class=nx>setFlag</span><span class=p>(</span><span class=s1>&#39;first_purchase&#39;</span><span class=p>,</span> <span class=kc>true</span><span class=p>);</span>
+</span></span><span class=line><span class=cl><span class=nx>annika_purchase_map</span><span class=p>.</span><span class=nx>setRegister</span><span class=p>(</span><span class=s1>&#39;amount&#39;</span><span class=p>,</span> <span class=s1>&#39;1271&#39;</span><span class=p>);</span>
+</span></span><span class=line><span class=cl><span class=nx>annika_purchase_map</span><span class=p>.</span><span class=nx>addToSet</span><span class=p>(</span><span class=s1>&#39;items&#39;</span><span class=p>,</span> <span class=s1>&#39;large widget&#39;</span><span class=p>);</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl><span class=sb>```erlang
+</span></span></span><span class=line><span class=cl><span class=sb>Map22 = riakc_map:update(
+</span></span></span><span class=line><span class=cl><span class=sb>    {&lt;&lt;&#34;annika_info&#34;&gt;&gt;, map},
+</span></span></span><span class=line><span class=cl><span class=sb>    fun(M) -&gt; riakc_map:update(
+</span></span></span><span class=line><span class=cl><span class=sb>        {&lt;&lt;&#34;purchase&#34;&gt;&gt;, map},
+</span></span></span><span class=line><span class=cl><span class=sb>        fun(M) -&gt; riakc_map:update(
+</span></span></span><span class=line><span class=cl><span class=sb>            {&lt;&lt;&#34;first_purchase&#34;&gt;&gt;, flag},
+</span></span></span><span class=line><span class=cl><span class=sb>            fun(R) -&gt; riakc_flag:enable(R) end,
+</span></span></span><span class=line><span class=cl><span class=sb>        M) end,
+</span></span></span><span class=line><span class=cl><span class=sb>    M) end,
+</span></span></span><span class=line><span class=cl><span class=sb>    Map21
+</span></span></span><span class=line><span class=cl><span class=sb>).
+</span></span></span></code></pre></div><pre tabindex=0><code class=language-curl data-lang=curl>curl -XPOST http://localhost:8098/types/maps/buckets/customers/datatypes/ahmed_info \
+  -H &#34;Content-Type: application/json&#34; \
+  -d &#39;
+  {
+    &#34;update&#34;: {
+      &#34;annika_info_map&#34;: {
+        &#34;update&#34;: {
+          &#34;purchase_map&#34;: {
+            &#34;update&#34;: {
+              &#34;first_purchase_flag&#34;: &#34;enable&#34;,
+              &#34;amount_register&#34;: &#34;1271&#34;,
+              &#34;items_set&#34;: {
+                &#34;add&#34;: &#34;large widget&#34;
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+  &#39;
+</code></pre><h2 id=verify-the-result>Verify the result</h2><p>Run the operation against test data, inspect the stored result and response metadata, and exercise the expected failure path.</p></div><nav class=page-navigation aria-label="Adjacent pages"><a class=page-navigation__previous href=/docs/kv/3.4.0/how-to/develop/use-distributed-sets/><span>Previous</span><strong>Use distributed sets</strong></a>
+<a class=page-navigation__next href=/docs/kv/3.4.0/how-to/develop/use-hyperloglogs/><span>Next</span><strong>Use HyperLogLogs</strong></a></nav></article></main></div><footer class=site-footer><div><p>OpenRiak documentation is licensed under <a href=https://creativecommons.org/licenses/by/4.0/>Creative Commons Attribution 4.0</a>.</p><p>Historical material © Basho Technologies, Inc.; community revisions © OpenRiak contributors.</p></div><a href=#main-content>Back to top</a></footer><script src=/docs/js/site.js defer></script></body></html>

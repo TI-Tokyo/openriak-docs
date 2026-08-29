@@ -1,0 +1,132 @@
+<!doctype html><html lang=en class=no-js><head><script src="/docs/livereload.js?mindelay=10&amp;v=2&amp;port=1320&amp;path=docs/livereload" data-no-instant defer></script><meta charset=utf-8><meta name=viewport content="width=device-width,initial-scale=1"><meta name=color-scheme content="light dark"><script>(()=>{const t="openriak-docs-theme";let e="system";try{const n=localStorage.getItem(t);(n==="light"||n==="dark"||n==="system")&&(e=n)}catch{}const n=window.matchMedia?.("(prefers-color-scheme: dark)").matches??!1;document.documentElement.dataset.themePreference=e,document.documentElement.dataset.theme=e==="system"?n?"dark":"light":e})()</script><meta name=description content="Show performance engineers how to tune an aws deployment using measurable before-and-after checks."><title>Tune an AWS deployment | OpenRiak Documentation</title><link rel=canonical href=http://127.0.0.1:1320/docs/kv/3.4.1/how-to/tune/tune-an-aws-deployment/><link rel=icon href=/docs/images/branding/favicon.ico sizes=any><link rel=stylesheet href=/docs/css/site.css><link rel=stylesheet href=/docs/css/theme.css><script src=/docs/js/theme.js defer></script><meta property="og:type" content="website"><meta property="og:title" content="Tune an AWS deployment"><meta property="og:description" content="Show performance engineers how to tune an aws deployment using measurable before-and-after checks."><meta property="og:url" content="http://127.0.0.1:1320/docs/kv/3.4.1/how-to/tune/tune-an-aws-deployment/"></head><body data-kind=page data-section=kv><script>document.documentElement.classList.remove("no-js")</script><a class=skip-link href=#main-content>Skip to content</a><header class=site-header><div class=site-header__inner><button class=nav-toggle type=button aria-controls=docs-sidebar aria-expanded=false>
+<span aria-hidden=true>☰</span><span class=sr-only>Toggle documentation navigation</span>
+</button>
+<a class=brand href=/docs/ aria-label="OpenRiak documentation home"><img src=/docs/images/branding/riak-logo-inverted.png alt width=34 height=34>
+<span>OpenRiak <strong>Docs</strong></span></a><nav class=primary-nav aria-label="Documentation types"><a href=/docs/kv/3.4.1/tutorials/>Tutorials</a>
+<a href=/docs/kv/3.4.1/how-to/>How-to</a>
+<a href=/docs/kv/3.4.1/reference/>Reference</a>
+<a href=/docs/kv/3.4.1/explanation/>Explanation</a></nav><a class=community-link href=https://github.com/orgs/OpenRiak/discussions>Community</a>
+<label class=theme-control><span class=theme-control__icon aria-hidden=true>◐</span>
+<span class=sr-only>Color theme</span>
+<select data-theme-select aria-label="Color theme"><option value=system>System</option><option value=light>Light</option><option value=dark>Dark</option></select></label></div></header><div class=site-shell><aside id=docs-sidebar class=sidebar aria-label="Documentation navigation"><div class=sidebar__tools><label for=version-select>Version</label>
+<select id=version-select data-version-select><option value=/docs/kv/3.4.1/ selected>3.4.1 (latest)</option><option value=/docs/kv/3.4.0/>3.4.0</option></select><form class=docs-search role=search data-search data-index-url=/docs/search-index.json data-version=3.4.1><label class=sr-only for=docs-search-input>Search this version</label>
+<input id=docs-search-input type=search placeholder="Search this version" autocomplete=off data-search-input><div class=search-results data-search-results hidden></div></form></div><nav class=sidebar__nav aria-label="Pages in this version"><a class=sidebar__root href=/docs/kv/3.4.1/>OpenRiak KV 3.4.1</a><ul class=nav-tree><li><details><summary><a href=/docs/kv/3.4.1/explanation/>Explanation</a></summary></details></li><li><details open><summary><a href=/docs/kv/3.4.1/how-to/>How-to guides</a></summary><ul class=nav-tree><li><details><summary><a href=/docs/kv/3.4.1/how-to/configure/>Configure OpenRiak</a></summary></details></li><li><details><summary><a href=/docs/kv/3.4.1/how-to/develop/>Develop with OpenRiak</a></summary></details></li><li><details><summary><a href=/docs/kv/3.4.1/how-to/install/>Install and verify OpenRiak</a></summary></details></li><li><details><summary><a href=/docs/kv/3.4.1/how-to/operate/>Operate a cluster</a></summary></details></li><li><details><summary><a href=/docs/kv/3.4.1/how-to/plan/>Plan a production cluster</a></summary></details></li><li><details><summary><a href=/docs/kv/3.4.1/how-to/secure/>Secure OpenRiak</a></summary></details></li><li><details><summary><a href=/docs/kv/3.4.1/how-to/troubleshoot/>Troubleshoot OpenRiak</a></summary></details></li><li><details open><summary><a href=/docs/kv/3.4.1/how-to/tune/>Tune performance</a></summary><ul class=nav-tree><li><a href=/docs/kv/3.4.1/how-to/tune/benchmark-a-cluster/>Benchmark a cluster</a></li><li><a href=/docs/kv/3.4.1/how-to/tune/reduce-request-latency/>Reduce request latency</a></li><li><a href=/docs/kv/3.4.1/how-to/tune/set-the-open-files-limit/>Set the open-files limit</a></li><li><a class=is-current href=/docs/kv/3.4.1/how-to/tune/tune-an-aws-deployment/ aria-current=page>Tune an AWS deployment</a></li><li><a href=/docs/kv/3.4.1/how-to/tune/tune-the-erlang-virtual-machine/>Tune the Erlang virtual machine</a></li><li><a href=/docs/kv/3.4.1/how-to/tune/tune-multi-datacenter-replication/>Tune multi-datacenter replication</a></li></ul></details></li><li><details><summary><a href=/docs/kv/3.4.1/how-to/redis-add-on/>Use the Redis add-on</a></summary></details></li></ul></details></li><li><details><summary><a href=/docs/kv/3.4.1/reference/>Reference</a></summary></details></li><li><details><summary><a href=/docs/kv/3.4.1/tutorials/>Tutorials</a></summary></details></li></ul></nav><div class=sidebar__help><a href=https://github.com/orgs/OpenRiak/discussions>Ask the OpenRiak community</a>
+<a href=https://github.com/OpenRiak/riak>OpenRiak source code</a></div></aside><button class=sidebar-scrim type=button data-sidebar-close aria-label="Close navigation"></button><main id=main-content class=content tabindex=-1><article class=doc><nav class=breadcrumbs aria-label=Breadcrumb><ol><li><a href=/docs/kv/>OpenRiak KV documentation</a></li><li><a href=/docs/kv/3.4.1/>OpenRiak KV 3.4.1</a></li><li><a href=/docs/kv/3.4.1/how-to/>How-to guides</a></li><li><a href=/docs/kv/3.4.1/how-to/tune/>Tune performance</a></li><li aria-current=page>Tune an AWS deployment</li></ol></nav><header class=article-header><div class=badges><span class="badge badge--how-to">how-to</span>
+<span class=badge>KV 3.4.1</span></div><h1>Tune an AWS deployment</h1><p class=lede>Show performance engineers how to tune an aws deployment using measurable before-and-after checks.</p><div class=review-notice role=note><strong>Review status:</strong>
+This migrated page is still marked as a draft.
+Technical review is required before publication.</div></header><details class=on-this-page><summary>On this page</summary><nav id=TableOfContents><ul><li><a href=#before-you-begin>Before you begin</a></li><li><a href=#overview>Overview</a><ul><li><a href=#amazon-web-services-performance-tuning>Amazon Web Services Performance Tuning</a></li></ul></li><li><a href=#verify-the-result>Verify the result</a></li></ul></nav></details><div class=doc-body><p>Show performance engineers how to tune an aws deployment using measurable before-and-after checks.</p><h2 id=before-you-begin>Before you begin</h2><p>A representative workload, a recorded performance baseline, current capacity measurements, and a safe environment in which to test one change at a time.</p><h2 id=overview>Overview</h2><h3 id=amazon-web-services-performance-tuning>Amazon Web Services Performance Tuning</h3><p>This guide introduces best practices for tuning OpenRiak cluster performance
+in the Amazon Web Services (AWS) Elastic Compute Cloud (EC2) environment.</p><blockquote><p><strong>Note:</strong></p><p>The following guide is supplementary. Be sure to check out <a href=../>Improving Performance</a>
+for general performance and tuning recommendations before continuing with this guide.</p></blockquote><h4 id=ec2-instances>EC2 Instances</h4><p>EC2 instances are available as predefined types which encapsulate a
+fixed amount of computing resources. For Riak, the most important of
+these resources are Disk I/O, RAM, and Network I/O, followed by CPU
+cores. With this in mind, Riak users have reported success with large,
+extra large, and cluster compute instance types for use as cluster nodes
+in the AWS EC2 environment.</p><p>The most commonly used <a href=http://aws.amazon.com/ec2/instance-types/ rel=noopener>instance types</a>
+for OpenRiak cluster nodes are <code>large</code> and <code>xlarge</code> <code>m</code> class (General Purpose), such as <code>m4.xlarge</code>. In cases where 10-gigabit Ethernet networking is desired, the Cluster Compute class of EC2 instances, such as <code>cc2.8xlarge</code> can be used.</p><p>Amazon also offers a High I/O Quadruple Extra Large instance
+(<code>hi1.4xlarge</code>) that is backed by solid state drives (SSD) and features
+very high I/O performance.</p><p>EBS-Optimized EC2 instances, which provide between 500 Megabits per
+second and 1,000 Megabits per second of throughput with <a href=http://aws.amazon.com/about-aws/whats-new/2012/07/31/announcing-provisioned-iops-for-amazon-ebs/ rel=noopener>Provisioned
+IOPS</a>
+EBS volumes are also available, and recommended for use with Provisioned
+IOPS EBS volumes.</p><p>OpenRiak&rsquo;s primary bottleneck will be disk and network I/O, meaning that in
+most cases, standard EBS will incur too much latency and iowait. OpenRiak&rsquo;s
+I/O pattern tends to operate on small blobs from many places on the
+disk, whereas EBS is best at bulk reads and writes. The negative effects
+of this pattern can be mitigated by adding RAID over multiple volumes,
+using Provisioned IOPS, and/or choosing the Bitcask backend if secondary
+indexes are not needed for the application.</p><p>In any case, proper benchmarking and tuning are needed to achieve the
+desired performance.</p><p><strong>Tip</strong>
+Most successful AWS cluster deployments use more EC2 instances than they would
+the same number of physical nodes to compensate for the performance
+variability caused by shared, virtualized resources. Plan to have more EC2
+instance based nodes than physical server nodes when estimating cluster size
+with respect to node count.</p><h4 id=operating-system>Operating System</h4><h5 id=clocks>Clocks</h5><p>NTP is configured by default on Amazon EC2 Linux instances. Please
+refer to the <a href=http://docs.aws.amazon.com/AWSEC2/latest/UserGuide/set-time.html rel=noopener>Set the Time for an
+Instance</a>
+section of the EC2 documentation for steps on verifying if NTP is
+working properly. If NTP is not working properly, significant clock
+drift can occur.</p><h5 id=mounts-and-scheduler>Mounts and Scheduler</h5><p>On EBS volumes, the <strong>deadline</strong> scheduler should be used. To check the
+scheduler in use for block device xvdf, for example, use the following
+command:</p><div class=highlight><pre tabindex=0 class=chroma><code class=language-bash data-lang=bash><span class=line><span class=cl>cat /sys/block/xvdf/queue/scheduler
+</span></span></code></pre></div><p>To set the scheduler to deadline, use the following command:</p><div class=highlight><pre tabindex=0 class=chroma><code class=language-bash data-lang=bash><span class=line><span class=cl><span class=nb>echo</span> deadline &gt; /sys/block/xvdf/queue/scheduler
+</span></span></code></pre></div><p>More information on the disk scheduler is available in <a href=../>Improving Performance</a>
+.</p><h5 id=virtual-memory-subsystem>Virtual Memory Subsystem</h5><p>EBS volumes have considerably less bandwidth than hardware disks. To
+avoid saturating EBS bandwidth and inducing IO latency spikes, it is
+recommended to tune the Linux virtual memory subsystem to flush smaller
+amounts of data more often. To do so, please see <a href=../#optional-i-o-settings>Linux system performance tuning</a>
+.</p><h5 id=forensics>Forensics</h5><p>When a failure occurs, collect as much information as possible. Check
+monitoring systems, back up log and configuration files if they are
+available, including system logs like <code>dmesg</code> and <code>syslog</code>. Make sure
+that the other nodes in the OpenRiak cluster are still operating normally
+and are not affected by a wider problem like an AWS service outage. Try
+to determine the cause of the problem from the data you have collected.
+If you are paying for <a href=https://www.tiot.jp/en/solutions/riak/ rel=noopener>TI Tokyo support services</a>
+, either directly or re-sold under Erlang Solutions, and the failure comes from Riak or is not immediately obvious, you may open a ticket on the TI Tokyo Client Services help desk.</p><p>Have your collected data ready when contacting TI Tokyo Client Services. A
+Client Services Engineer (CSE) might request log files, configuration
+files, or other information.</p><h4 id=data-loss>Data Loss</h4><p>Many failures either do not entail data loss or have minimal loss that
+can be repaired automatically, without intervention. Outage of a single
+node does not necessarily cause data loss, as other replicas of every
+key are available elsewhere in the cluster. Once the node is detected as
+down, other nodes in the cluster will take over its responsibilities
+temporarily and transmit the updated data to it when it eventually
+returns to service (also called hinted handoff).</p><p>The more severe data loss scenarios usually relate to hardware failure
+(in the case of AWS, service failure or instance termination). In the
+cases where data is lost, several options are available for restoring
+the data:</p><ol><li>Restore from backup. A daily backup of Riak nodes can be helpful.
+The data in this backup may be stale depending on the time at which
+the node failed, but can be used to partially restore data from
+lost EBS volumes. If running in a RAID configuration, rebuilding the
+array may also be possible.</li><li>Restore from Multi-Datacenter Replication. If replication is enabled
+between two or more clusters, the missing data will gradually be
+restored via realtime replication and fullsync replication. A
+fullsync operation can also be triggered manually via the
+<code>riak repl</code> command.</li><li>Restore using intra-cluster repair. Riak versions 1.2 and greater
+include a &ldquo;repair&rdquo; feature which will restore lost partitions with
+data from other replicas. This currently has to be invoked manually
+using the Riak console and should be performed with guidance from a
+Basho CSE.</li></ol><p>Once data has been restored, normal operations should continue. If
+multiple nodes completely lose their data, consultation and assistance
+from Basho is strongly recommended.</p><h4 id=benchmarking>Benchmarking</h4><p>Using a tool such as <a href=https://github.com/basho/basho_bench rel=noopener>Basho Bench</a>
+, you can generate load that
+simulates application operations by constructing and communicating
+approximately-compatible data payloads with the OpenRiak cluster directly.</p><p>Benchmarking is critical to determining the appropriate EC2 instance
+types, and strongly recommended. More information is available on
+benchmarking Riak clusters with <a href=../benchmarking>Basho Bench</a>
+.</p><p>Besides running Basho Bench, we also advise that you load test Riak with
+your own tests to ensure that load imparted by MapReduce queries,
+full-text queries, and index queries are within the expected range.</p><h4 id=simulating-upgrades-scaling-and-failure-states>Simulating Upgrades, Scaling, and Failure states</h4><p>In addition to simply measuring performance, it is also important to
+measure how performance degrades when the cluster is not in
+steady-state. While under a simulation of live load, the following
+states might be simulated:</p><ol><li>Stop one or more nodes normally and restart them after a few moments
+(simulates <a href=../../../setup/upgrading/cluster>rolling upgrade</a>
+).</li><li>Join two or more nodes to the cluster.</li><li>Leave nodes from the cluster (after step #2).</li><li>Hard-kill the Riak <code>beam.smp</code> process (i.e., <code>kill -9</code>) and then
+restart it.</li><li>Hard-reboot a node&rsquo;s instance using the AWS console and then
+restart it.</li><li>Hard-stop and destroy a node&rsquo;s instance and build a new one from
+backup.</li><li>Via networking, e.g. firewall, partition one or more nodes from
+the rest of the cluster and then restore the original
+configuration.</li></ol><h4 id=out-of-memory>Out-of-Memory</h4><p>Sometimes, Riak will exit when it runs out of available RAM. While this
+does not necessarily cause data loss, it may indicate that the cluster
+needs to be scaled out. While the OpenRiak node is out, other nodes may also
+be at risk if free capacity is low on the rest of the cluster, so
+monitor carefully.</p><p>Replacing the EC2 instance type with one that has greater RAM capacity
+may temporarily alleviate the problem, but out of memory (OOM) tends to
+be an indication that the cluster is underprovisioned.</p><p>Software bugs (memory leaks) could also be a cause of OOM, so we
+recommend paid support Riak users to contact TI Tokyo Client Services
+if this problem occurs.</p><h4 id=dealing-with-ip-addresses>Dealing with IP addresses</h4><p>EC2 instances that are not provisioned inside a VPC can change the
+following attributes after a restart:</p><ul><li>Private IP address</li><li>Public IP address</li><li>Private DNS</li><li>Public DNS</li></ul><p>Because these parameters play a role in a Riak instance&rsquo;s node name,
+ensure that you follow the steps outlined in the <a href=../../repair-recovery/failed-node/#node-name-changed>Node Name Changed</a>
+section to replace
+it.</p><p>To avoid this inconvenience, you can deploy Riak inside a
+<a href=http://aws.amazon.com/vpc/ rel=noopener>VPC</a>
+. Instances inside the VPC do not
+change their private IP address on restart. In addition you get the
+following benefits:</p><ul><li>Access control lists can be defined at multiple levels</li><li>The instance is not automatically open to the internet</li><li>Amazon VPC is <a href=http://aws.amazon.com/vpc/pricing/ rel=noopener>free</a></li></ul><h4 id=choice-of-storage>Choice of Storage</h4><p>EC2 instances support ephemeral and EBS storage. Ephemeral is local to
+the instance, generally performs better, but disappears when instances
+go down.</p><p>On the other hand, EBS is effectively network attached storage that
+persists after instances go down. Along with EBS you can optionally
+enable <a href=http://docs.aws.amazon.com/AmazonRDS/latest/UserGuide/USER_PIOPS.html rel=noopener>Provisioned
+IOPS</a>
+(PIOPS) provide more stable performance.</p><p>For more information on EC2 storage options, please see their
+<a href=http://docs.aws.amazon.com/AWSEC2/latest/UserGuide/Storage.html rel=noopener>documentation</a>
+.</p><h4 id=references>References</h4><ul><li><a href=../>Improving Performance</a></li><li><a href=../../repair-recovery>Failure and Recovery</a></li><li><a href=https://help.basho.com rel=noopener>Basho Client Services Help Desk</a></li></ul><h2 id=verify-the-result>Verify the result</h2><p>Repeat the baseline workload and compare latency, throughput, resource use, and error rates before deciding whether to retain the change.</p></div><nav class=page-navigation aria-label="Adjacent pages"><a class=page-navigation__previous href=/docs/kv/3.4.1/how-to/tune/tune-the-erlang-virtual-machine/><span>Previous</span><strong>Tune the Erlang virtual machine</strong></a>
+<a class=page-navigation__next href=/docs/kv/3.4.1/how-to/tune/set-the-open-files-limit/><span>Next</span><strong>Set the open-files limit</strong></a></nav></article></main></div><footer class=site-footer><div><p>OpenRiak documentation is licensed under <a href=https://creativecommons.org/licenses/by/4.0/>Creative Commons Attribution 4.0</a>.</p><p>Historical material © Basho Technologies, Inc.; community revisions © OpenRiak contributors.</p></div><a href=#main-content>Back to top</a></footer><script src=/docs/js/site.js defer></script></body></html>

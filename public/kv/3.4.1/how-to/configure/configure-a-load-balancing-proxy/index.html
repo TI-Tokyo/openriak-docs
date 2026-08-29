@@ -1,0 +1,195 @@
+<!doctype html><html lang=en class=no-js><head><script src="/docs/livereload.js?mindelay=10&amp;v=2&amp;port=1320&amp;path=docs/livereload" data-no-instant defer></script><meta charset=utf-8><meta name=viewport content="width=device-width,initial-scale=1"><meta name=color-scheme content="light dark"><script>(()=>{const t="openriak-docs-theme";let e="system";try{const n=localStorage.getItem(t);(n==="light"||n==="dark"||n==="system")&&(e=n)}catch{}const n=window.matchMedia?.("(prefers-color-scheme: dark)").matches??!1;document.documentElement.dataset.themePreference=e,document.documentElement.dataset.theme=e==="system"?n?"dark":"light":e})()</script><meta name=description content="Show operators how to configure a load-balancing proxy and verify the result."><title>Configure a load-balancing proxy | OpenRiak Documentation</title><link rel=canonical href=http://127.0.0.1:1320/docs/kv/3.4.1/how-to/configure/configure-a-load-balancing-proxy/><link rel=icon href=/docs/images/branding/favicon.ico sizes=any><link rel=stylesheet href=/docs/css/site.css><link rel=stylesheet href=/docs/css/theme.css><script src=/docs/js/theme.js defer></script><meta property="og:type" content="website"><meta property="og:title" content="Configure a load-balancing proxy"><meta property="og:description" content="Show operators how to configure a load-balancing proxy and verify the result."><meta property="og:url" content="http://127.0.0.1:1320/docs/kv/3.4.1/how-to/configure/configure-a-load-balancing-proxy/"></head><body data-kind=page data-section=kv><script>document.documentElement.classList.remove("no-js")</script><a class=skip-link href=#main-content>Skip to content</a><header class=site-header><div class=site-header__inner><button class=nav-toggle type=button aria-controls=docs-sidebar aria-expanded=false>
+<span aria-hidden=true>☰</span><span class=sr-only>Toggle documentation navigation</span>
+</button>
+<a class=brand href=/docs/ aria-label="OpenRiak documentation home"><img src=/docs/images/branding/riak-logo-inverted.png alt width=34 height=34>
+<span>OpenRiak <strong>Docs</strong></span></a><nav class=primary-nav aria-label="Documentation types"><a href=/docs/kv/3.4.1/tutorials/>Tutorials</a>
+<a href=/docs/kv/3.4.1/how-to/>How-to</a>
+<a href=/docs/kv/3.4.1/reference/>Reference</a>
+<a href=/docs/kv/3.4.1/explanation/>Explanation</a></nav><a class=community-link href=https://github.com/orgs/OpenRiak/discussions>Community</a>
+<label class=theme-control><span class=theme-control__icon aria-hidden=true>◐</span>
+<span class=sr-only>Color theme</span>
+<select data-theme-select aria-label="Color theme"><option value=system>System</option><option value=light>Light</option><option value=dark>Dark</option></select></label></div></header><div class=site-shell><aside id=docs-sidebar class=sidebar aria-label="Documentation navigation"><div class=sidebar__tools><label for=version-select>Version</label>
+<select id=version-select data-version-select><option value=/docs/kv/3.4.1/ selected>3.4.1 (latest)</option><option value=/docs/kv/3.4.0/>3.4.0</option></select><form class=docs-search role=search data-search data-index-url=/docs/search-index.json data-version=3.4.1><label class=sr-only for=docs-search-input>Search this version</label>
+<input id=docs-search-input type=search placeholder="Search this version" autocomplete=off data-search-input><div class=search-results data-search-results hidden></div></form></div><nav class=sidebar__nav aria-label="Pages in this version"><a class=sidebar__root href=/docs/kv/3.4.1/>OpenRiak KV 3.4.1</a><ul class=nav-tree><li><details><summary><a href=/docs/kv/3.4.1/explanation/>Explanation</a></summary></details></li><li><details open><summary><a href=/docs/kv/3.4.1/how-to/>How-to guides</a></summary><ul class=nav-tree><li><details open><summary><a href=/docs/kv/3.4.1/how-to/configure/>Configure OpenRiak</a></summary><ul class=nav-tree><li><details><summary><a href=/docs/kv/3.4.1/how-to/configure/replication/>Configure replication</a></summary></details></li><li><details><summary><a href=/docs/kv/3.4.1/how-to/configure/backends/>Configure storage backends</a></summary></details></li><li><a href=/docs/kv/3.4.1/how-to/configure/configure-api-listeners/>Configure API listeners</a></li><li><a href=/docs/kv/3.4.1/how-to/configure/configure-basic-node-settings/>Configure basic node settings</a></li><li><a href=/docs/kv/3.4.1/how-to/configure/configure-global-object-expiration/>Configure global object expiration</a></li><li><a class=is-current href=/docs/kv/3.4.1/how-to/configure/configure-a-load-balancing-proxy/ aria-current=page>Configure a load-balancing proxy</a></li><li><a href=/docs/kv/3.4.1/how-to/configure/configure-logging/>Configure logging</a></li><li><a href=/docs/kv/3.4.1/how-to/configure/inspect-and-manage-configuration/>Inspect and manage configuration</a></li><li><a href=/docs/kv/3.4.1/how-to/configure/configure-mapreduce/>Configure MapReduce</a></li><li><a href=/docs/kv/3.4.1/how-to/configure/enable-strong-consistency/>Enable strong consistency</a></li><li><a href=/docs/kv/3.4.1/how-to/configure/verify-configuration-before-startup/>Verify configuration before startup</a></li><li><a href=/docs/kv/3.4.1/how-to/configure/extend-configuration-with-advanced.config/>Extend configuration with advanced.config</a></li><li><a href=/docs/kv/3.4.1/how-to/configure/set-runtime-environment-variables/>Set runtime environment variables</a></li><li><a href=/docs/kv/3.4.1/how-to/configure/configure-split-and-json-logging/>Configure split and JSON logging</a></li></ul></details></li><li><details><summary><a href=/docs/kv/3.4.1/how-to/develop/>Develop with OpenRiak</a></summary></details></li><li><details><summary><a href=/docs/kv/3.4.1/how-to/install/>Install and verify OpenRiak</a></summary></details></li><li><details><summary><a href=/docs/kv/3.4.1/how-to/operate/>Operate a cluster</a></summary></details></li><li><details><summary><a href=/docs/kv/3.4.1/how-to/plan/>Plan a production cluster</a></summary></details></li><li><details><summary><a href=/docs/kv/3.4.1/how-to/secure/>Secure OpenRiak</a></summary></details></li><li><details><summary><a href=/docs/kv/3.4.1/how-to/troubleshoot/>Troubleshoot OpenRiak</a></summary></details></li><li><details><summary><a href=/docs/kv/3.4.1/how-to/tune/>Tune performance</a></summary></details></li><li><details><summary><a href=/docs/kv/3.4.1/how-to/redis-add-on/>Use the Redis add-on</a></summary></details></li></ul></details></li><li><details><summary><a href=/docs/kv/3.4.1/reference/>Reference</a></summary></details></li><li><details><summary><a href=/docs/kv/3.4.1/tutorials/>Tutorials</a></summary></details></li></ul></nav><div class=sidebar__help><a href=https://github.com/orgs/OpenRiak/discussions>Ask the OpenRiak community</a>
+<a href=https://github.com/OpenRiak/riak>OpenRiak source code</a></div></aside><button class=sidebar-scrim type=button data-sidebar-close aria-label="Close navigation"></button><main id=main-content class=content tabindex=-1><article class=doc><nav class=breadcrumbs aria-label=Breadcrumb><ol><li><a href=/docs/kv/>OpenRiak KV documentation</a></li><li><a href=/docs/kv/3.4.1/>OpenRiak KV 3.4.1</a></li><li><a href=/docs/kv/3.4.1/how-to/>How-to guides</a></li><li><a href=/docs/kv/3.4.1/how-to/configure/>Configure OpenRiak</a></li><li aria-current=page>Configure a load-balancing proxy</li></ol></nav><header class=article-header><div class=badges><span class="badge badge--how-to">how-to</span>
+<span class=badge>KV 3.4.1</span></div><h1>Configure a load-balancing proxy</h1><p class=lede>Show operators how to configure a load-balancing proxy and verify the result.</p><div class=review-notice role=note><strong>Review status:</strong>
+This migrated page is still marked as a draft.
+Technical review is required before publication.</div></header><details class=on-this-page><summary>On this page</summary><nav id=TableOfContents><ul><li><a href=#before-you-begin>Before you begin</a></li><li><a href=#overview>Overview</a><ul><li><a href=#load-balancing-and-proxy-configuration>Load Balancing and Proxy Configuration</a></li><li><a href=#load-balancing>Load Balancing</a></li></ul></li><li><a href=#verify-the-result>Verify the result</a></li></ul></nav></details><div class=doc-body><p>Show operators how to configure a load-balancing proxy and verify the result.</p><h2 id=before-you-begin>Before you begin</h2><p>Administrative access to the nodes you will change; a copy of the current configuration; and a maintenance window if the setting requires a restart.</p><h2 id=overview>Overview</h2><h3 id=load-balancing-and-proxy-configuration>Load Balancing and Proxy Configuration</h3><p>The recommended best practice for operating Riak in production is to
+place Riak behind a load-balancing or proxy solution, either hardware-
+or software- based, while never directly exposing Riak to public network
+interfaces.</p><p>Riak users have reported success in using Riak with a variety of load-
+balancing and proxy solutions. Common solutions include proprietary
+hardware-based load balancers, cloud-based load balancing options, such
+as Amazon&rsquo;s Elastic Load Balancer, and open-source software based
+projects like HAProxy and Nginx.</p><p>This guide briefly explores the commonly used open-source software-based
+solutions HAProxy and Nginx, and provides some configuration and
+operational tips gathered from community users and operations oriented
+engineers at Basho.</p><p>While it is by no means an exhaustive overview of the topic, this guide
+should provide a starting point for choosing and implementing your own
+solution.</p><h4 id=haproxy>HAProxy</h4><p><a href=http://haproxy.1wt.eu/ rel=noopener>HAProxy</a>
+is a fast and reliable open-source
+solution for load balancing and proxying of HTTP- and TCP-based
+application traffic.</p><p>Users have reported success in using HAProxy in combination with Riak in
+a number of configurations and scenarios. Much of the information and
+example configuration for this section is drawn from experiences of
+users in the Riak community in addition to suggestions from Basho
+engineering.</p><h5 id=example-configuration>Example Configuration</h5><p>The following is an example starting-point configuration for HAProxy to
+act as a load balancer. The example cluster has 4 nodes and will be
+accessed by Riak clients using both the Protocol Buffers and HTTP
+interfaces.</p><blockquote><p><strong>Note on open files limits</strong></p><p>The operating system&rsquo;s open files limits need to be greater than 256000
+for the example configuration that follows. Consult the <a href=/docs/kv/3.4.1/how-to/tune/set-open-files-limit/>Open Files Limit</a>
+documentation for details on configuring the value for different operating systems.</p></blockquote><pre tabindex=0><code class=language-config data-lang=config>global
+        log 127.0.0.1     local0
+        log 127.0.0.1     local1 notice
+        maxconn           256000
+        chroot            /var/lib/haproxy
+        user              haproxy
+        group             haproxy
+        spread-checks     5
+        daemon
+        quiet
+
+defaults
+        log               global
+        option            dontlognull
+        option            redispatch
+        option            allbackups
+        maxconn           256000
+        timeout connect   5000
+
+backend riak_rest_backend
+       mode               http
+       balance            roundrobin
+       option             httpchk GET /ping
+       option             httplog
+       server riak1 riak1.&lt;FQDN&gt;:8098 weight 1 maxconn 1024  check
+       server riak2 riak2.&lt;FQDN&gt;:8098 weight 1 maxconn 1024  check
+       server riak3 riak3.&lt;FQDN&gt;:8098 weight 1 maxconn 1024  check
+       server riak4 riak4.&lt;FQDN&gt;:8098 weight 1 maxconn 1024  check
+
+frontend riak_rest
+       bind               127.0.0.1:8098
+       # Example bind for SSL termination
+       # bind             127.0.0.1:8443 ssl crt /opt/local/haproxy/etc/data.pem
+       mode               http
+       option             contstats
+       default_backend    riak_rest_backend
+
+backend riak_protocol_buffer_backend
+       balance            leastconn
+       mode               tcp
+       option             tcpka
+       option             srvtcpka
+       server riak1 riak1.&lt;FQDN&gt;:8087 weight 1 maxconn 1024  check
+       server riak2 riak2.&lt;FQDN&gt;:8087 weight 1 maxconn 1024  check
+       server riak3 riak3.&lt;FQDN&gt;:8087 weight 1 maxconn 1024  check
+       server riak4 riak4.&lt;FQDN&gt;:8087 weight 1 maxconn 1024  check
+
+frontend riak_protocol_buffer
+       bind               127.0.0.1:8087
+       mode               tcp
+       option             tcplog
+       option             contstats
+       mode               tcp
+       option             tcpka
+       option             srvtcpka
+       default_backend    riak_protocol_buffer_backend
+</code></pre><p>A specific configuration detail worth noting from the example is the
+commented option for SSL termination. HAProxy supports SSL directly as
+of version 1.5. Provided that your HAProxy instance was built with
+OpenSSL support, you can enable it by uncommenting the example line and
+modifying it to suit your environment. More information is available in
+the <a href=http://cbonte.github.io/haproxy-dconv/configuration-1.5.html#5-ssl rel=noopener>HAProxy
+documentation</a>
+.</p><p>Also note that the above example is considered a starting point and is a
+work in progress based upon <a href=https://gist.github.com/1507077 rel=noopener>this
+example</a>
+. You should carefully examine
+the configuration and change it according to your specific environment.</p><h5 id=maintaining-nodes-behind-haproxy>Maintaining Nodes Behind HAProxy</h5><p>When using HAProxy with Riak, you can instruct HAProxy to ping each node
+in the cluster and automatically remove nodes that do not respond.</p><p>You can also specify a round-robin configuration in HAProxy and have
+your application handle connection failures by retrying after a timeout,
+thereby reaching a functioning node upon retrying the connection
+attempt.</p><p>HAPproxy also has a standby system you can use to remove a node from
+rotation while allowing existing requests to finish. You can remove
+nodes from HAProxy directly from the command line by interacting with
+the HAProxy stats socket with a utility such as
+<a href=http://www.dest-unreach.org/socat/ rel=noopener>socat</a>
+:</p><div class=highlight><pre tabindex=0 class=chroma><code class=language-bash data-lang=bash><span class=line><span class=cl><span class=nb>echo</span> <span class=s2>&#34;disable server &lt;backend&gt;/&lt;riak_node&gt;&#34;</span> <span class=p>|</span> socat stdio /etc/haproxy/haproxysock
+</span></span></code></pre></div><p>At this point, you can perform maintenance on the node, down the node,
+and so on. When you&rsquo;ve finished working with the node and it is again
+available for requests, you can re-enable it:</p><div class=highlight><pre tabindex=0 class=chroma><code class=language-bash data-lang=bash><span class=line><span class=cl><span class=nb>echo</span> <span class=s2>&#34;enable server &lt;backend&gt;/&lt;riak_node&gt;&#34;</span> <span class=p>|</span> socat stdio /etc/haproxy/haproxysock
+</span></span></code></pre></div><p>Consult the following HAProxy documentation resources for more
+information on configuring HAProxy in your environment:</p><ul><li><a href="http://developers.google.com/s/results/?q=haproxy" rel=noopener>HAProxy Documentation</a></li><li><a href=http://haproxy.1wt.eu/download/1.2/doc/architecture.txt rel=noopener>HAProxy Architecture</a></li></ul><h4 id=nginx>Nginx</h4><p>Some users have reported success in using the <a href=http://nginx.org/ rel=noopener>Nginx</a>
+HTTP server to proxy requests for Riak clusters. An example that
+provides access to an OpenRiak cluster <em>through GET requests only</em> is
+provided here for reference.</p><p>The following is an example starting point configuration for Nginx to
+act as a front-end proxy to a 5-node OpenRiak cluster.</p><p>This example forwards all GET requests to Riak nodes while rejecting all
+other HTTP operations.</p><p><strong>Nginx version notes</strong>
+This example configuration was verified on <strong>Nginx version 1.2.3</strong>. Please be
+aware that earlier versions of Nginx did not support any HTTP 1.1 semantics
+for upstream communication to backends. You should carefully examine this
+configuration and make changes appropriate to your specific environment before
+attempting to use it</p><p>Here is an example <code>nginx.conf</code> file:</p><pre tabindex=0><code class=language-config data-lang=config>upstream riak_hosts {
+  # server  10.0.1.10:8098;
+  # server  10.0.1.11:8098;
+  # server  10.0.1.12:8098;
+  # server  10.0.1.13:8098;
+  # server  10.0.1.14:8098;
+}
+
+server {
+  listen   80;
+  server_name  _;
+  access_log  /var/log/nginx/riak.access.log;
+
+# your standard Nginx config for your site here...
+  location / {
+    root /var/www/nginx-default;
+  }
+
+# Expose the /riak endpoint and allow queries for keys only
+  location /riak/ {
+      proxy_set_header Host $host;
+      proxy_redirect off;
+
+client_max_body_size       10m;
+      client_body_buffer_size    128k;
+
+proxy_connect_timeout      90;
+      proxy_send_timeout         90;
+      proxy_read_timeout         90;
+
+proxy_buffer_size          64k;  # If set to a smaller value,
+                                       # nginx can complain with an
+                                       # &#34;too large headers&#34; error
+      proxy_buffers              4 64k;
+      proxy_busy_buffers_size    64k;
+      proxy_temp_file_write_size 64k;
+
+if ($request_method != GET) {
+      return 405;
+    }
+
+# Disallow any link with the MapReduce query format &#34;bucket,tag,_&#34;
+    if ($uri ~ &#34;/riak/[^/]*/[^/]*/[^,]+,[^,]+,&#34; ) {
+      return 405;
+    }
+
+if ($request_method = GET) {
+      proxy_pass http://riak_hosts;
+    }
+  }
+}
+</code></pre><p><strong>Note on access controls</strong>
+Even when filtering and limiting requests to GETs only as done in the example,
+you should strongly consider additional access controls beyond what Nginx can
+provide directly, such as specific firewall rules to limit inbound connections
+to trusted sources.</p><h5 id=querying-secondary-indexes-over-http>Querying Secondary Indexes Over HTTP</h5><p>When accessing Riak over HTTP and issuing Secondary Index queries, you
+can encounter an issue due to the default Nginx handling of HTTP header
+names containing underscore (<code>_</code>) characters.</p><p>By default, Nginx will issue errors for such queries, but you can
+instruct Nginx to handle such header names when doing Secondary Index
+queries over HTTP by adding the following directive to the appropriate
+<code>server</code> section of <code>nginx.conf</code>:</p><pre tabindex=0><code>underscores_in_headers on;
+</code></pre><h3 id=load-balancing>Load Balancing</h3><p><strong>TODO: Add content (not sure where this exists in docs)</strong></p><h4 id=load-balancing-1>Load-balancing</h4><p>Non-functional tests of Riak are performed with requests distributed across the OpenRiak cluster using the NGINX proxy. Other proxy servers with equivalent functionality should also work.</p><blockquote><p>For full use of proxy functionality, use of the HTTP API is preferred.</p></blockquote><p>Some load-balancers will support load-balancing of general TCP connections, which can in-turn allow for load-balancing of PB connections, such solutions will likely constrain proxy functionality:</p><ul><li>The proxy may not be able to log the details of individual requests or provide WAF-like features (no access bucket/query to information in URL or request methods);</li><li>The proxy many not be able to use proactive health-checks (e.g. in scripting non-HTTP server validation checks);</li><li>The proxy may not be able to use reactive health-checks (as errors cannot be detected via HTTP response codes).</li></ul><p>When making extensive use of secondary indexes on objects, those indexes are stored as HTTP request/response headers. Some load-balancing proxies (and HTTP client software) may apply limits to the size of both individual HTTP headers and the overall size of all HTTP headers:</p><ul><li>Without reconfiguration header limits could be breached with either large or numerous secondary index entries.</li><li>A proxy may also restrict the use of underscores, so it may be necessary to specifically enable <code>underscores_in_headers</code> to prevent requests including 2i headers with underscores from being blocked.</li></ul><p>It is necessary for a load-balancing gateway to make a continuous determination of the the health of individual nodes, and react accordingly should a node become unavailable:</p><ul><li>Some legacy Riak clients will attempt to implement health-checking and load-balancing across configured destinations. This should be disabled when using a proxy, as it may lead to unexpected failure propagation e.g. a client determining a proxy has failed because it load-balanced a request to a node that has failed.</li><li>If enabling proactive health-checking of nodes, sending a <code>ping</code> request represents a weak check of availability, and a <code>status</code> request may have excessive costs. It is better to use checks for the availability of sentinel objects instead (store specific objects in the cluster for the purpose of health-checks).<ul><li>There is no mechanism for making objects permanent and immutable, so care must be taken to ensure sentinel objects are not accidentally deleted.</li></ul></li><li>The <code>503</code> service unavailable message is used by Riak when sending a timeout. However, such timeouts may occur because of poorly formed requests (such as overly complex queries). It is therefore generally recommended that <code>503</code> errors should not be considered as server failures within the proxy configuration, so that nodes that coordinate complex queries are not marked as down.</li><li>If a node is marked as <code>down</code> by a proxy, either through failure detection or operator intervention, it should be noted that the node will still play an active role in the cluster unless it has been stopped. Marking a node as <code>down</code> in the proxy is not sufficient to remove a node from service.</li><li>When deploying a new node, note that it may be considered as active by a load-balancer when the node is started, and before the join has been initiated - and in this state the node would not have access to the data in the cluster. Careful orchestration of change between the load-balancer configuration and cluster change actions is required.</li></ul><p>When sending requests via a proxy, it is recommended to avoid connection pooling (e.g. use a <code>connection_close</code> or equivalent directive). Pooling and reusing long-lived connections will reduce response times by a small margin; however there will be failure conditions that may take a long time to be detected, especially without frequent proactive health-checks.</p><ul><li>Without connection pools it is necessary to ensure there is sufficient connection capacity to handle the required database load, and this will require the reuse of connections in a <code>TIME_WAIT</code> state.</li><li>Reuse of connections in a <code>TIME_WAIT</code> state will require the PAWS protection described in <a href=https://www.rfc-editor.org/rfc/rfc7323 rel=noopener>RFC 7323</a>
+. The TCP timestamps necessary for PAWS, may sometimes be disabled for security reasons, as some vulnerability scanning tools are not aware of the relevance of RFC 7323 to high performance environments.</li><li>A common signal of connection pool exhaustion is response times of close to 1s, 3s or 5s; the delays normally associated with a TCP retry.</li></ul><p>Additional factors that should be considered when implementing a load balancer include:</p><ul><li>Load-balancing proxies are the recommended approach for logging of individual requests, should tracking per request be required.<ul><li>The response time metrics provided by Riak commence at the start of the internal process, and do not include the time to deserialise the request and serialise the response. Logging metrics from a proxy is a better way of assessing actual response times than relying on the Riak metrics.</li></ul></li><li>It is generally easier to automate the management of security controls by manipulating the configuration of a load-balancing proxy, than it is through manipulation of the Riak security CLI controls. Many environments therefore delegate access controls that restrict users and networks to specific Riak functions to the load-balancing proxy.</li></ul><h2 id=verify-the-result>Verify the result</h2><p>Confirm that the intended setting is active on every affected node, then check cluster health and the relevant logs for warnings.</p></div><nav class=page-navigation aria-label="Adjacent pages"><a class=page-navigation__previous href=/docs/kv/3.4.1/how-to/configure/configure-logging/><span>Previous</span><strong>Configure logging</strong></a>
+<a class=page-navigation__next href=/docs/kv/3.4.1/how-to/configure/configure-global-object-expiration/><span>Next</span><strong>Configure global object expiration</strong></a></nav></article></main></div><footer class=site-footer><div><p>OpenRiak documentation is licensed under <a href=https://creativecommons.org/licenses/by/4.0/>Creative Commons Attribution 4.0</a>.</p><p>Historical material © Basho Technologies, Inc.; community revisions © OpenRiak contributors.</p></div><a href=#main-content>Back to top</a></footer><script src=/docs/js/site.js defer></script></body></html>

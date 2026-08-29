@@ -1,0 +1,117 @@
+<!doctype html><html lang=en class=no-js><head><script src="/docs/livereload.js?mindelay=10&amp;v=2&amp;port=1320&amp;path=docs/livereload" data-no-instant defer></script><meta charset=utf-8><meta name=viewport content="width=device-width,initial-scale=1"><meta name=color-scheme content="light dark"><script>(()=>{const t="openriak-docs-theme";let e="system";try{const n=localStorage.getItem(t);(n==="light"||n==="dark"||n==="system")&&(e=n)}catch{}const n=window.matchMedia?.("(prefers-color-scheme: dark)").matches??!1;document.documentElement.dataset.themePreference=e,document.documentElement.dataset.theme=e==="system"?n?"dark":"light":e})()</script><meta name=description content="Explain multi-datacenter replication architecture, its data flow, failure behavior, and operational trade-offs."><title>Multi-datacenter replication architecture | OpenRiak Documentation</title><link rel=canonical href=http://127.0.0.1:1320/docs/kv/3.4.1/explanation/replication/multi-datacenter-replication-architecture/><link rel=icon href=/docs/images/branding/favicon.ico sizes=any><link rel=stylesheet href=/docs/css/site.css><link rel=stylesheet href=/docs/css/theme.css><script src=/docs/js/theme.js defer></script><meta property="og:type" content="website"><meta property="og:title" content="Multi-datacenter replication architecture"><meta property="og:description" content="Explain multi-datacenter replication architecture, its data flow, failure behavior, and operational trade-offs."><meta property="og:url" content="http://127.0.0.1:1320/docs/kv/3.4.1/explanation/replication/multi-datacenter-replication-architecture/"></head><body data-kind=page data-section=kv><script>document.documentElement.classList.remove("no-js")</script><a class=skip-link href=#main-content>Skip to content</a><header class=site-header><div class=site-header__inner><button class=nav-toggle type=button aria-controls=docs-sidebar aria-expanded=false>
+<span aria-hidden=true>☰</span><span class=sr-only>Toggle documentation navigation</span>
+</button>
+<a class=brand href=/docs/ aria-label="OpenRiak documentation home"><img src=/docs/images/branding/riak-logo-inverted.png alt width=34 height=34>
+<span>OpenRiak <strong>Docs</strong></span></a><nav class=primary-nav aria-label="Documentation types"><a href=/docs/kv/3.4.1/tutorials/>Tutorials</a>
+<a href=/docs/kv/3.4.1/how-to/>How-to</a>
+<a href=/docs/kv/3.4.1/reference/>Reference</a>
+<a href=/docs/kv/3.4.1/explanation/>Explanation</a></nav><a class=community-link href=https://github.com/orgs/OpenRiak/discussions>Community</a>
+<label class=theme-control><span class=theme-control__icon aria-hidden=true>◐</span>
+<span class=sr-only>Color theme</span>
+<select data-theme-select aria-label="Color theme"><option value=system>System</option><option value=light>Light</option><option value=dark>Dark</option></select></label></div></header><div class=site-shell><aside id=docs-sidebar class=sidebar aria-label="Documentation navigation"><div class=sidebar__tools><label for=version-select>Version</label>
+<select id=version-select data-version-select><option value=/docs/kv/3.4.1/ selected>3.4.1 (latest)</option><option value=/docs/kv/3.4.0/>3.4.0</option></select><form class=docs-search role=search data-search data-index-url=/docs/search-index.json data-version=3.4.1><label class=sr-only for=docs-search-input>Search this version</label>
+<input id=docs-search-input type=search placeholder="Search this version" autocomplete=off data-search-input><div class=search-results data-search-results hidden></div></form></div><nav class=sidebar__nav aria-label="Pages in this version"><a class=sidebar__root href=/docs/kv/3.4.1/>OpenRiak KV 3.4.1</a><ul class=nav-tree><li><details open><summary><a href=/docs/kv/3.4.1/explanation/>Explanation</a></summary><ul class=nav-tree><li><details><summary><a href=/docs/kv/3.4.1/explanation/consistency/>Consistency concepts</a></summary></details></li><li><details><summary><a href=/docs/kv/3.4.1/explanation/data-model/>Data model concepts</a></summary></details></li><li><details><summary><a href=/docs/kv/3.4.1/explanation/foundations/>OpenRiak foundations</a></summary></details></li><li><details><summary><a href=/docs/kv/3.4.1/explanation/operations/>Operational concepts</a></summary></details></li><li><details><summary><a href=/docs/kv/3.4.1/explanation/performance/>Performance concepts</a></summary></details></li><li><details open><summary><a href=/docs/kv/3.4.1/explanation/replication/>Replication concepts</a></summary><ul class=nav-tree><li><a href=/docs/kv/3.4.1/explanation/replication/active-anti-entropy/>Active anti-entropy</a></li><li><a href=/docs/kv/3.4.1/explanation/replication/cascading-replication-writes/>Cascading replication writes</a></li><li><a href=/docs/kv/3.4.1/explanation/replication/legacy-active-anti-entropy/>Legacy active anti-entropy</a></li><li><a class=is-current href=/docs/kv/3.4.1/explanation/replication/multi-datacenter-replication-architecture/ aria-current=page>Multi-datacenter replication architecture</a></li><li><a href=/docs/kv/3.4.1/explanation/replication/next-generation-replication/>Next-generation replication</a></li><li><a href=/docs/kv/3.4.1/explanation/replication/replication-queues/>Replication queues</a></li><li><a href=/docs/kv/3.4.1/explanation/replication/real-time-and-fullsync-replication/>Real-time and Fullsync replication</a></li><li><a href=/docs/kv/3.4.1/explanation/replication/replication-sink-nodes/>Replication sink nodes</a></li><li><a href=/docs/kv/3.4.1/explanation/replication/tictac-active-anti-entropy/>TicTac active anti-entropy</a></li><li><a href=/docs/kv/3.4.1/explanation/replication/legacy-and-current-replication-generations/>Legacy and current replication generations</a></li><li><a href=/docs/kv/3.4.1/explanation/replication/replication-references-and-triggers/>Replication references and triggers</a></li><li><a href=/docs/kv/3.4.1/explanation/replication/reconciliation-scope/>Reconciliation scope</a></li><li><a href=/docs/kv/3.4.1/explanation/replication/accelerated-large-delta-reconciliation/>Accelerated large-delta reconciliation</a></li></ul></details></li><li><details><summary><a href=/docs/kv/3.4.1/explanation/security/>Security concepts</a></summary></details></li><li><details><summary><a href=/docs/kv/3.4.1/explanation/storage/>Storage architecture</a></summary></details></li></ul></details></li><li><details><summary><a href=/docs/kv/3.4.1/how-to/>How-to guides</a></summary></details></li><li><details><summary><a href=/docs/kv/3.4.1/reference/>Reference</a></summary></details></li><li><details><summary><a href=/docs/kv/3.4.1/tutorials/>Tutorials</a></summary></details></li></ul></nav><div class=sidebar__help><a href=https://github.com/orgs/OpenRiak/discussions>Ask the OpenRiak community</a>
+<a href=https://github.com/OpenRiak/riak>OpenRiak source code</a></div></aside><button class=sidebar-scrim type=button data-sidebar-close aria-label="Close navigation"></button><main id=main-content class=content tabindex=-1><article class=doc><nav class=breadcrumbs aria-label=Breadcrumb><ol><li><a href=/docs/kv/>OpenRiak KV documentation</a></li><li><a href=/docs/kv/3.4.1/>OpenRiak KV 3.4.1</a></li><li><a href=/docs/kv/3.4.1/explanation/>Explanation</a></li><li><a href=/docs/kv/3.4.1/explanation/replication/>Replication concepts</a></li><li aria-current=page>Multi-datacenter replication architecture</li></ol></nav><header class=article-header><div class=badges><span class="badge badge--explanation">explanation</span>
+<span class=badge>KV 3.4.1</span></div><h1>Multi-datacenter replication architecture</h1><p class=lede>Explain multi-datacenter replication architecture, its data flow, failure behavior, and operational trade-offs.</p><div class=review-notice role=note><strong>Review status:</strong>
+This migrated page is still marked as a draft.
+Technical review is required before publication.</div></header><details class=on-this-page><summary>On this page</summary><nav id=TableOfContents><ul><li><a href=#overview>Overview</a><ul><li><a href=#multi-datacenter-reference>Multi-Datacenter Reference</a></li><li><a href=#v2-multi-datacenter-replication-reference-architecture>V2 Multi-Datacenter Replication Reference: Architecture</a></li><li><a href=#architecture>Architecture</a></li></ul></li></ul></nav></details><div class=doc-body><p>Explain multi-datacenter replication architecture, its data flow, failure behavior, and operational trade-offs.</p><h2 id=overview>Overview</h2><h3 id=multi-datacenter-reference>Multi-Datacenter Reference</h3><h4 id=in-this-section>In This Section</h4><h5 id=multi-datacenter-replication-reference-statistics><a href=./statistics>Multi-Datacenter Replication Reference: Statistics</a></h5><p>Describes the output of <code>riak repl status</code> interface.</p><p><a href=./statistics>Learn More &#187;</a></p><h6 id=multi-datacenter-replication-reference-per-bucket><a href=./per-bucket-replication>Multi-Datacenter Replication Reference: Per Bucket</a></h6><p>Details enabling & disabling of per bucket replication.</p><p><a href=./per-bucket-replication>Learn More &#187;</a></p><h6 id=multi-datacenter-replication-reference-monitoring><a href=./monitoring>Multi-Datacenter Replication Reference: Monitoring</a></h6><p>Overview of monitoring in a Multi-Datacenter environment.</p><p><a href=./monitoring>Learn More &#187;</a></p><h6 id=multi-datacenter-replication-reference-comparison><a href=./comparison>Multi-Datacenter Replication Reference: Comparison</a></h6><p>Compares Version 2 and Version 3 of OpenRiak&rsquo;s Multi-Datacenter Replication capabilities.</p><p><a href=./comparison>Learn More &#187;</a></p><h3 id=v2-multi-datacenter-replication-reference-architecture>V2 Multi-Datacenter Replication Reference: Architecture</h3><p><strong>Deprecation Warning</strong>
+v2 Multi-Datacenter Replication is deprecated and will be removed in a future version. Please use <a href=/docs/kv/3.4.1/explanation/replication/multi-datacenter-architecture/>v3</a>
+instead.</p><p>This document provides a basic overview of the architecture undergirding
+OpenRiak&rsquo;s Multi-Datacenter Replication capabilities.</p><h4 id=how-replication-works>How Replication Works</h4><p>When Multi-Datacenter Replication is implemented, one OpenRiak cluster acts
+as a <strong>primary cluster</strong>. The primary cluster handles replication
+requests from one or more <strong>secondary clusters</strong> (generally located in
+datacenters in other regions or countries). If the datacenter with the
+primary cluster goes down, a secondary cluster can take over as the
+primary cluster. In this sense, OpenRiak&rsquo;s multi-datacenter capabilities are
+masterless.</p><p>Multi-Datacenter Replication has two primary modes of operation:
+<strong>fullsync</strong> and <strong>realtime</strong>. In fullsync mode, a complete
+synchronization occurs between primary and secondary cluster(s); in
+realtime mode, continual, incremental synchronization occurs, i.e.
+replication is triggered by new updates.</p><p>Fullsync is performed upon initial connection of a secondary cluster,
+and then periodically thereafter (every 360 minutes is the default, but
+this can be modified). Fullsync is also triggered if the TCP connection
+between primary and secondary cluster is severed and then recovered.</p><p>Both fullsync and realtime mode are described in detail below.
+But first, a few key concepts.</p><h4 id=concepts>Concepts</h4><h5 id=listener-nodes>Listener Nodes</h5><p>Listeners, also called <strong>servers</strong>, are Riak nodes in the primary
+cluster that listen on an external IP address for replication requests.
+Any node in an OpenRiak cluster can participate as a listener. Adding more
+nodes will increase the fault tolerance of the replication process in
+the event of individual node failures. If a listener node goes down,
+another node can take its place.</p><h5 id=site-nodes>Site Nodes</h5><p>Site nodes, also called <strong>clients</strong>, are Riak nodes on a secondary
+cluster that connect to listener nodes and send replication initiation
+requests. Site nodes are paired with a listener node when started.</p><h5 id=leadership>Leadership</h5><p>Only one node in each cluster will serve as the lead site (client) or
+listener (server) node. Riak replication uses a leadership-election
+protocol to determine which node in the cluster will participate in
+replication. If a site connects to a node in the primary cluster that is
+not the leader, it will be redirected to the listener node that is
+currently the leader.</p><h4 id=fullsync-replication>Fullsync Replication</h4><p>Riak performs the following steps during fullsync
+replication, as illustrated in the Figure below.</p><ol><li>A TCP connection is established between the primary and secondary
+clusters</li><li>The site node in the secondary cluster initiates fullsync replication
+with the primary node by sending a message to the listener node in
+the primary cluster</li><li>The site and listener nodes iterate through each <a href=/docs/kv/3.4.1/explanation/foundations/glossary/#vnode>vnode</a>
+in their respective clusters and compute a hash for
+each key&rsquo;s object value. The site node on the secondary cluster sends
+its complete list of key/hash pairs to the listener node in the
+primary cluster. The listener node then sequentially compares its
+key/hash pairs with the primary cluster&rsquo;s pairs, identifying any
+missing objects or updates needed in the secondary cluster.</li><li>The listener node streams the missing objects/updates to the
+secondary cluster.</li><li>The secondary cluster replicates the updates within the cluster to
+achieve the new object values, completing the fullsync cycle</li></ol><br>![MDC Fullsync](/docs/images/MDC_Full-sync-small.png)<br><h4 id=realtime-replication>Realtime Replication</h4><p>Riak performs the following steps during realtime
+replication, as illustrated in the Figure below.</p><ol><li>The secondary cluster establishes a TCP connection to the primary</li><li>Realtime replication of a key/object is initiated when an update is
+sent from a client to the primary cluster</li><li>The primary cluster replicates the object locally</li><li>The listener node on the primary cluster streams an update to the
+secondary cluster</li><li>The site node within the secondary cluster receives and replicates
+the update</li></ol><br>![MDC Realtime](/docs/images/MDC-real-time-sync-small.png)<br><h4 id=restrictions>Restrictions</h4><p>It is important to note that both clusters must have certain attributes
+in common for Multi-Datacenter Replication to work. If you are using
+either fullsync or realtime replication, both clusters must have the
+same <a href=/docs/kv/3.4.1/explanation/foundations/clusters-rings-and-partitions/#the-ring>ring size</a>
+; if you are using fullsync
+replication, every bucket&rsquo;s <a href=/docs/kv/3.4.1/explanation/replication/references-and-triggers/#n-value-and-replication><code>n_val</code></a>
+must be the same in both the
+source and sink cluster.</p><h3 id=architecture>Architecture</h3><h4 id=how-version-3-replication-works>How Version 3 Replication Works</h4><p>In Multi-Datacenter (MDC) Replication, a cluster can act as either the</p><ul><li><strong>source cluster</strong>, which sends replication data to one or</li><li><strong>sink clusters</strong>, which are generally located in datacenters in other
+regions or countries.</li></ul><p>Bidirectional replication can easily be established by making a cluster
+both a source and sink to other clusters. Riak
+Multi-Datacenter Replication is considered &ldquo;masterless&rdquo; in that all
+clusters participating will resolve replicated writes via the normal
+resolution methods available in Riak.</p><p>In Multi-Datacenter Replication, there are two primary modes of
+operation:</p><ul><li><strong>Fullsync</strong> replication is a complete synchronization that occurs
+between source and sink cluster(s), which can be performed upon
+initial connection of a sink cluster if you wish</li><li><strong>Realtime</strong> replication is a continual, incremental synchronization
+triggered by successful writing of new updates on the source cluster</li></ul><p>Fullsync and realtime replication modes are described in detail below.</p><h4 id=concepts-1>Concepts</h4><h5 id=sources>Sources</h5><p>A source refers to a cluster that is the primary producer of replication
+data. A source can also refer to any node that is part of the source
+cluster. Source clusters push data to sink clusters.</p><h5 id=sinks>Sinks</h5><p>A sink refers to a cluster that is the primary consumer of replication
+data. A sink can also refer to any node that is part of the sink
+cluster. Sink clusters receive data from source clusters.</p><h5 id=cluster-manager>Cluster Manager</h5><p>The cluster manager is a Riak service that provides
+information regarding nodes and protocols supported by the sink and
+source clusters. This information is primarily consumed by the
+<code>riak repl connect</code> command.</p><h5 id=fullsync-coordinator>Fullsync Coordinator</h5><p>In fullsync replication, a node on the source cluster is elected to be
+the <em>fullsync coordinator</em>. This node is responsible for starting and
+stopping replication to the sink cluster. It also communicates with the
+sink cluster to exchange key lists and ultimately transfer data across a
+TCP connection. If a fullsync coordinator is terminated as the result of
+an error, it will automatically restart on the current node. If the node
+becomes unresponsive, a leader election will take place within 5 seconds
+to select a new node from the cluster to become the coordinator. In the
+event of a coordinator restart, a fullsync will have to restart.</p><p>Fullsync replication scans through the list of partitions in a Riak
+cluster and determines which objects in the sink cluster need to be
+updated. A source partition is synchronized to a node on the sink
+cluster containing the current partition.</p><p>In realtime replication, a node in the source cluster will forward data
+to the sink cluster. A node in the source cluster does not necessarily
+connect to a node containing the same <a href=/docs/kv/3.4.1/explanation/foundations/glossary/#vnode>vnode</a>
+on
+the sink cluster. This allows Riak to spread out realtime replication
+across the entire cluster, thus improving throughput and making
+replication more fault tolerant.</p><h5 id=initialization>Initialization</h5><p>Before a source cluster can begin pushing realtime updates to a sink,
+the following commands must be issued:</p><ol><li><code>riak repl realtime enable &lt;sink_cluster></code></li></ol><p>After this command, the realtime queues (one for each OpenRiak node) are
+populated with updates to the source cluster, ready to be pushed to
+the sink.</p><ol start=2><li><code>riak repl realtime start &lt;sink_cluster></code></li></ol><p>This instructs the Riak connection manager to contact the sink
+cluster.</p><br>![MDC fullsync](/docs/images/MDC-v3-realtime1.png)<br><p>At this point realtime replication commences.</p><ol start=3><li>Nodes with queued updates establish connections to the sink cluster
+and replication begins.</li></ol><br>![MDC fullsync](/docs/images/MDC-v3-realtime2.png)<br><h5 id=realtime-queueing-and-synchronization>Realtime queueing and synchronization</h5><p>Once initialized, realtime replication continues to use the queues to
+store data updates for synchronization.</p><ol start=4><li>The client sends an object to store on the source cluster.</li><li>Riak writes N replicas on the source cluster.</li></ol><br>![MDC fullsync](/docs/images/MDC-v3-realtime3.png)<br><ol start=6><li>The new object is stored in the realtime queue.</li><li>The object is copied to the sink cluster.</li></ol><br>![MDC fullsync](/docs/images/MDC-v3-realtime4.png)<br><ol start=8><li>The destination node on the sink cluster writes the object to N
+nodes.</li></ol><br>![MDC fullsync](/docs/images/MDC-v3-realtime5.png)<br><ol start=9><li>The successful write of the object to the sink cluster is
+acknowledged and the object removed from the realtime queue.</li></ol><br>![MDC fullsync](/docs/images/MDC-v3-realtime6.png)<br><h4 id=restrictions-1>Restrictions</h4><p>It is important to note that both clusters must have certain attributes
+in common for Multi-Datacenter Replication to work. If you are using
+either fullsync or realtime replication, both clusters must have the
+same <a href=/docs/kv/3.4.1/explanation/foundations/clusters-rings-and-partitions/>ring size</a>
+; if you are using fullsync
+replication, every bucket&rsquo;s <code>n_val</code> must be the same in both the
+source and sink cluster.</p></div><nav class=page-navigation aria-label="Adjacent pages"><a class=page-navigation__previous href=/docs/kv/3.4.1/explanation/replication/next-generation-replication/><span>Previous</span><strong>Next-generation replication</strong></a>
+<a class=page-navigation__next href=/docs/kv/3.4.1/explanation/replication/legacy-active-anti-entropy/><span>Next</span><strong>Legacy active anti-entropy</strong></a></nav></article></main></div><footer class=site-footer><div><p>OpenRiak documentation is licensed under <a href=https://creativecommons.org/licenses/by/4.0/>Creative Commons Attribution 4.0</a>.</p><p>Historical material © Basho Technologies, Inc.; community revisions © OpenRiak contributors.</p></div><a href=#main-content>Back to top</a></footer><script src=/docs/js/site.js defer></script></body></html>

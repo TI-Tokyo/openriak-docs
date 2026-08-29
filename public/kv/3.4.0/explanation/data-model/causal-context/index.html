@@ -1,0 +1,166 @@
+<!doctype html><html lang=en class=no-js><head><script src="/docs/livereload.js?mindelay=10&amp;v=2&amp;port=1320&amp;path=docs/livereload" data-no-instant defer></script><meta charset=utf-8><meta name=viewport content="width=device-width,initial-scale=1"><meta name=color-scheme content="light dark"><script>(()=>{const t="openriak-docs-theme";let e="system";try{const n=localStorage.getItem(t);(n==="light"||n==="dark"||n==="system")&&(e=n)}catch{}const n=window.matchMedia?.("(prefers-color-scheme: dark)").matches??!1;document.documentElement.dataset.themePreference=e,document.documentElement.dataset.theme=e==="system"?n?"dark":"light":e})()</script><meta name=description content="Explain causal context, its trade-offs, and its effect on application design."><title>Causal context | OpenRiak Documentation</title><link rel=canonical href=http://127.0.0.1:1320/docs/kv/3.4.0/explanation/data-model/causal-context/><link rel=icon href=/docs/images/branding/favicon.ico sizes=any><link rel=stylesheet href=/docs/css/site.css><link rel=stylesheet href=/docs/css/theme.css><script src=/docs/js/theme.js defer></script><meta property="og:type" content="website"><meta property="og:title" content="Causal context"><meta property="og:description" content="Explain causal context, its trade-offs, and its effect on application design."><meta property="og:url" content="http://127.0.0.1:1320/docs/kv/3.4.0/explanation/data-model/causal-context/"></head><body data-kind=page data-section=kv><script>document.documentElement.classList.remove("no-js")</script><a class=skip-link href=#main-content>Skip to content</a><header class=site-header><div class=site-header__inner><button class=nav-toggle type=button aria-controls=docs-sidebar aria-expanded=false>
+<span aria-hidden=true>☰</span><span class=sr-only>Toggle documentation navigation</span>
+</button>
+<a class=brand href=/docs/ aria-label="OpenRiak documentation home"><img src=/docs/images/branding/riak-logo-inverted.png alt width=34 height=34>
+<span>OpenRiak <strong>Docs</strong></span></a><nav class=primary-nav aria-label="Documentation types"><a href=/docs/kv/3.4.1/tutorials/>Tutorials</a>
+<a href=/docs/kv/3.4.1/how-to/>How-to</a>
+<a href=/docs/kv/3.4.1/reference/>Reference</a>
+<a href=/docs/kv/3.4.1/explanation/>Explanation</a></nav><a class=community-link href=https://github.com/orgs/OpenRiak/discussions>Community</a>
+<label class=theme-control><span class=theme-control__icon aria-hidden=true>◐</span>
+<span class=sr-only>Color theme</span>
+<select data-theme-select aria-label="Color theme"><option value=system>System</option><option value=light>Light</option><option value=dark>Dark</option></select></label></div></header><div class=site-shell><aside id=docs-sidebar class=sidebar aria-label="Documentation navigation"><div class=sidebar__tools><label for=version-select>Version</label>
+<select id=version-select data-version-select><option value=/docs/kv/3.4.1/>3.4.1 (latest)</option><option value=/docs/kv/3.4.0/ selected>3.4.0</option></select><form class=docs-search role=search data-search data-index-url=/docs/search-index.json data-version=3.4.0><label class=sr-only for=docs-search-input>Search this version</label>
+<input id=docs-search-input type=search placeholder="Search this version" autocomplete=off data-search-input><div class=search-results data-search-results hidden></div></form></div><nav class=sidebar__nav aria-label="Pages in this version"><a class=sidebar__root href=/docs/kv/3.4.0/>OpenRiak KV 3.4.0</a><ul class=nav-tree><li><details open><summary><a href=/docs/kv/3.4.0/explanation/>Explanation</a></summary><ul class=nav-tree><li><details><summary><a href=/docs/kv/3.4.0/explanation/consistency/>Consistency concepts</a></summary></details></li><li><details open><summary><a href=/docs/kv/3.4.0/explanation/data-model/>Data model concepts</a></summary><ul class=nav-tree><li><a href=/docs/kv/3.4.0/explanation/data-model/bucket-types-as-namespaces-and-policy/>Bucket types as namespaces and policy</a></li><li><a class=is-current href=/docs/kv/3.4.0/explanation/data-model/causal-context/ aria-current=page>Causal context</a></li><li><a href=/docs/kv/3.4.0/explanation/data-model/conflict-resolution-strategies/>Conflict resolution strategies</a></li><li><a href=/docs/kv/3.4.0/explanation/data-model/conflict-free-replicated-data-types/>Conflict-free replicated data types</a></li><li><a href=/docs/kv/3.4.0/explanation/data-model/keys-objects-and-buckets/>Keys, objects, and buckets</a></li><li><a href=/docs/kv/3.4.0/explanation/data-model/mapreduce-in-openriak/>MapReduce in OpenRiak</a></li><li><a href=/docs/kv/3.4.0/explanation/data-model/secondary-index-design/>Secondary index design</a></li><li><a href=/docs/kv/3.4.0/explanation/data-model/version-vectors-and-siblings/>Version vectors and siblings</a></li><li><a href=/docs/kv/3.4.0/explanation/data-model/latch-objects/>Latch objects</a></li><li><a href=/docs/kv/3.4.0/explanation/data-model/query-api-design/>Query API design</a></li><li><a href=/docs/kv/3.4.0/explanation/data-model/deletion-policies-and-tombstone-retention/>Deletion policies and tombstone retention</a></li><li><a href=/docs/kv/3.4.0/explanation/data-model/object-merge-strategies/>Object merge strategies</a></li></ul></details></li><li><details><summary><a href=/docs/kv/3.4.0/explanation/foundations/>OpenRiak foundations</a></summary></details></li><li><details><summary><a href=/docs/kv/3.4.0/explanation/operations/>Operational concepts</a></summary></details></li><li><details><summary><a href=/docs/kv/3.4.0/explanation/performance/>Performance concepts</a></summary></details></li><li><details><summary><a href=/docs/kv/3.4.0/explanation/replication/>Replication concepts</a></summary></details></li><li><details><summary><a href=/docs/kv/3.4.0/explanation/security/>Security concepts</a></summary></details></li><li><details><summary><a href=/docs/kv/3.4.0/explanation/storage/>Storage architecture</a></summary></details></li></ul></details></li><li><details><summary><a href=/docs/kv/3.4.0/how-to/>How-to guides</a></summary></details></li><li><details><summary><a href=/docs/kv/3.4.0/reference/>Reference</a></summary></details></li><li><details><summary><a href=/docs/kv/3.4.0/tutorials/>Tutorials</a></summary></details></li></ul></nav><div class=sidebar__help><a href=https://github.com/orgs/OpenRiak/discussions>Ask the OpenRiak community</a>
+<a href=https://github.com/OpenRiak/riak>OpenRiak source code</a></div></aside><button class=sidebar-scrim type=button data-sidebar-close aria-label="Close navigation"></button><main id=main-content class=content tabindex=-1><article class=doc><nav class=breadcrumbs aria-label=Breadcrumb><ol><li><a href=/docs/kv/>OpenRiak KV documentation</a></li><li><a href=/docs/kv/3.4.0/>OpenRiak KV 3.4.0</a></li><li><a href=/docs/kv/3.4.0/explanation/>Explanation</a></li><li><a href=/docs/kv/3.4.0/explanation/data-model/>Data model concepts</a></li><li aria-current=page>Causal context</li></ol></nav><header class=article-header><div class=badges><span class="badge badge--explanation">explanation</span>
+<span class=badge>KV 3.4.0</span></div><h1>Causal context</h1><p class=lede>Explain causal context, its trade-offs, and its effect on application design.</p><div class=review-notice role=note><strong>Review status:</strong>
+This migrated page is still marked as a draft.
+Technical review is required before publication.</div></header><details class=on-this-page><summary>On this page</summary><nav id=TableOfContents><ul><li><a href=#overview>Overview</a><ul><li><a href=#causal-context>Causal Context</a></li></ul></li></ul></nav></details><div class=doc-body><p>Explain causal context, its trade-offs, and its effect on application design.</p><h2 id=overview>Overview</h2><h3 id=causal-context>Causal Context</h3><p>Because Riak is an <a href=/docs/kv/3.4.0/explanation/consistency/eventual-consistency/>eventually consistent</a>
+,
+<a href=/docs/kv/3.4.0/explanation/foundations/clusters-rings-and-partitions/>clustered</a>
+database, <a href=/docs/kv/3.4.0/how-to/develop/resolve-conflicts/>conflicts</a>
+between
+object replicas stored on different nodes are inevitable, particularly
+when multiple clients update an object simultaneously.</p><h4 id=the-problem-of-conflicting-values>The Problem of Conflicting Values</h4><p>To illustrate this problem, imagine that you&rsquo;re building a
+<a href=http://en.wikipedia.org/wiki/Customer_relationship_management rel=noopener>CRM</a>
+application and storing customer information in Riak. Now imagine that
+information about a particular user is being stored in the <a href=/docs/kv/3.4.0/how-to/plan/map-data-to-objects/>key</a>
+<code>mariejohnston</code> in the <a href=/docs/kv/3.4.0/how-to/develop/use-bucket-types/>bucket</a>
+<code>customers</code>.
+What happens if Marie has two browser windows open and changes her phone
+number to 555-1337 in one window and saves it, and then also changes it
+to 555-1212 in another window and saves it?</p><p>This means that two different values are sent into Riak. So what
+happens at that point? There are several possible outcomes:</p><ol><li>Riak is able to discern that one object is more causally recent than the other (in this case 555-1212) and chooses to store that value as the &ldquo;correct&rdquo; value.</li><li>The two operations hit the database at roughly the same time, i.e. two <strong>concurrent
+updates</strong> have been completed, and Riak is unable to determine which
+value &ldquo;wins.&rdquo; In this scenario, one of three things can happen:</li></ol><p>a. The object is a CRDT, so Riak is able to resolve conflicting values by type-specific rules</p><p>b. Riak creates sibling values, aka <strong>siblings</strong>, for the object</p><p>c. Riak resolves the values on the basis of timestamps</p><p>In the case of outcome 1 above, Riak uses <strong>causal context</strong> metadata to
+make that decision. This metadata is attached to every object in Riak.
+Causal context comes in two forms in Riak: <strong>vector clocks</strong> and
+<strong>dotted version vectors</strong>. More information in both can be found in the
+sections below.</p><p>In the case of outcome 2, the choice between <strong>a</strong>, <strong>b</strong> and <strong>c</strong> is determined by settings. If you set the <code>allow_mult</code> parameter to <code>true</code> for a <a href=/docs/kv/3.4.0/how-to/develop/use-bucket-types/>bucket type</a>
+, all non-CRDT writes to that bucket type will create siblings in the case of concurrent writes (and occasionally under other
+scenarios, e.g. healed network partitions).</p><p>If, however, <code>allow_mult</code> is set to <code>false</code>, then Riak will not generate
+siblings, instead relying on simple timestamp resolution to decide which value
+&ldquo;wins.&rdquo; In general, we recommend <em>always</em> setting <code>allow_mult</code> to
+<code>true</code>. A more complete discussion can be found in our documentation on
+<a href=/docs/kv/3.4.0/how-to/develop/resolve-conflicts/>conflict resolution</a>
+.</p><h4 id=vector-clocks>Vector Clocks</h4><p>In versions of Riak prior to 1.4, Riak used vector clocks as the sole
+means of tracking the history of object updates. In Riak versions 2.0
+and later, we recommend using <a href=#dotted-version-vectors>dotted version vectors</a>
+instead, for reasons that are explained
+in that section.</p><p>Like dotted version vectors, vector clocks are a means of tracking
+events in distributed systems. Unlike normal clocks, vector clocks have
+no sense of chronological time, i.e. they don&rsquo;t care if something
+happened at 6 pm today or back in 1972. They care only about sequences
+of events. More specifically, they keep track of who&mdash;i.e. which actor
+in the system&mdash;has modified an object and how many times they&rsquo;ve done
+so.</p><p>In a distributed system like Riak, multiple replicas of each object are
+active in the cluster all the time. Because it&rsquo;s inevitable that objects
+will have conflicting values due to events like concurrent updates and
+healed network partitions, Riak needs a mechanism to keep track of which
+replica of an object is more current than another. In versions of Riak
+prior to 2.0, vector clocks were the means employed by Riak to do
+precisely that.</p><p>A number of important aspects of the relationship between object
+replicas can be determined using vector clocks:</p><ul><li>Whether one object is a direct descendant of the other</li><li>Whether the objects are direct descendants of a common parent</li><li>Whether the objects are unrelated in recent heritage</li></ul><p>Behind the scenes, Riak uses vector clocks as an essential element of
+its <a href=/docs/kv/3.4.0/explanation/replication/active-anti-entropy/>active anti-entropy</a>
+subsystem and of its automatic read
+repair capabilities.</p><p>Vector clocks are non-human-readable metadata attached to all Riak
+objects. They look something like this:</p><pre tabindex=0><code>a85hYGBgzGDKBVIcR4M2cgczH7HPYEpkzGNlsP/VfYYvCwA=
+</code></pre><p>While vector clocks quite often resolve object conflicts without
+trouble, there are times when they can&rsquo;t, i.e. when it&rsquo;s unclear which
+value of an object is most current. When that happens, Riak, if
+configured to do so, will create <strong>siblings</strong>.</p><h4 id=more-information-on-vector-clocks>More Information on Vector Clocks</h4><p>Additional information on vector clocks:</p><ul><li><a href=/docs/kv/3.4.0/how-to/develop/resolve-conflicts/>Conflict Resolution</a>
+in OpenRiak KV</li><li><a href=http://en.wikipedia.org/wiki/Vector_clock rel=noopener>Vector Clocks on Wikipedia</a></li><li><a href=http://basho.com/posts/technical/why-vector-clocks-are-easy/ rel=noopener>Why Vector Clocks are Easy</a></li><li><a href=http://basho.com/posts/technical/why-vector-clocks-are-hard/ rel=noopener>Why Vector Clocks are Hard</a></li><li>The vector clocks used in Riak are based on the <a href="http://portal.acm.org/citation.cfm?id=359563" rel=noopener>work of Leslie Lamport</a>
+.</li></ul><h4 id=siblings>Siblings</h4><p>It is possible, though not recommendable, to <a href=/docs/kv/3.4.0/how-to/develop/resolve-conflicts/>configure Riak</a>
+to ensure that only one copy of an object ever exists in a
+specific location. This will ensure that <em>at most</em> one value is returned
+when a read is performed on a bucket type/bucket/key location (and no
+value if Riak returns <code>not found</code>).</p><p>It&rsquo;s also possible, however, to configure Riak to store multiple objects
+in a single key if necessary, i.e. for an object to have different
+values on different nodes. Objects stored this way have what are called
+sibling values. You can instruct Riak to allow for sibling creation by
+setting the the <code>allow_mult</code> bucket property to <code>true</code> for a specific
+bucket, preferably <a href=/docs/kv/3.4.0/how-to/develop/use-bucket-types/>using bucket types</a>
+.</p><p>From the standpoint of application development, the difficulty with
+siblings is that they <em>by definition</em> conflict with one another. When an
+application attempts to read an object that has siblings, multiple
+replicas will be stored in the location where the application is
+looking. This means that the application will need to develop a
+strategy for <a href=/docs/kv/3.4.0/how-to/develop/resolve-conflicts/>conflict resolution</a>
+, i.e. the application will need to
+decide which value is more correct depending on the use case.</p><h4 id=dotted-version-vectors>Dotted Version Vectors</h4><p>In versions of Riak prior to 2.0, all causality-based conflict
+resolution, whether on the client side or in Riak, was achieved using
+[vector clocks][concept causal context]. In version 2.0,
+Riak added the option of using <strong>dotted version vectors</strong> (DVVs)
+instead.</p><p>Like vector clocks, dotted version vectors are a mechanism for tracking
+object update causality in terms of <strong>logical time</strong> rather than
+chronological time (as with timestamps), enabling Riak to make decisions
+about which objects are more current than others in cases of conflict.</p><blockquote><p><strong>Note: DVVs Recommended Over Vector Clocks</strong></p><p>If you are using Riak version 2.0 or later, we strongly recommend using
+dotted version vectors instead of vector clocks, as DVVs are far better
+at limiting the number of siblings produced in a cluster, which can
+prevent a wide variety of potential issues.</p></blockquote><h4 id=dvvs-versus-vector-clocks>DVVs Versus Vector Clocks</h4><p>The role that DVVs play in Riak is directly analogous to that of
+vector clocks, as both are used
+to resolve object conflicts, whether during background operations like
+<a href=/docs/kv/3.4.0/explanation/replication/active-anti-entropy/>active anti-entropy</a>
+or <a href=/docs/kv/3.4.0/explanation/foundations/glossary/#read-repair>read repair</a>
+, or
+when applications engage in client-side <a href=/docs/kv/3.4.0/how-to/develop/resolve-conflicts/>conflict resolution</a>
+. The
+crucial difference between them, however, lies in the way that they
+handle concurrent updates.</p><p>Vector clocks can detect concurrent updates to the same object but they
+can&rsquo;t identify which value was associated with each update. If an object
+stored in the bucket <code>frequent_updates</code> with the key <code>update_me</code> is
+updated by five different clients concurrently and tagged with the same
+vector clock, then five values should be created as siblings. However,
+depending on the order of delivery of those updates to the different
+replicas, sibling values may be duplicated, which can in turn lead to
+<a href=#siblings>sibling explosion</a>
+and thus undue
+<a href=/docs/kv/3.4.0/how-to/tune/reduce-latency/>latency</a>
+.</p><p>DVVs, on the other hand, identify each value with the update that
+created it. If five clients concurrently update the object above (in the
+bucket <code>frequent_updates</code>, with the key <code>update_me</code>), each of these
+updates will be marked with a <em>dot</em> (a minimal vector clock) that indicates the specific event that introduced it. This
+means that duplicate values can always be identified and removed,
+reducing the likelihood of sibling explosion. Rather than being potentially unbounded, the
+number of sibling values will be proportional to the number of
+concurrent updates.</p><p>In terms of performance, the difference between vector clocks and DVVs
+should be minimal in most cases. Because DVVs de-duplicate updates, they
+should generally be smaller than objects that use vector clocks.</p><h4 id=usage>Usage</h4><p>From an application&rsquo;s perspective, vector clocks and DVVs function in
+exactly the same fashion. Object updates using DVVs involve the same
+sequence in interacting with Riak:</p><ul><li>fetch an object from Riak,</li><li>fetch the object&rsquo;s metadata, which will contain an opaque context
+object (e.g. <code>a85hYGBgzGDKBVIcWu/1S4Pjin9lMCWy5bEycN1/cYYvCwA=</code>) for
+the vector clock or DVV attached to that version of the object, and
+finally</li><li>pass that opaque context object back to Riak when you update the
+object.</li></ul><p>You will not need to modify your application code when switching from
+vector clocks to DVVs, even if you choose to switch all Riak objects in
+your cluster to DVVs. You should make sure, however, that the right
+bucket types and buckets are being targeted by your application after
+the <code>dvv_enabled</code> parameter has been changed.</p><p>For compatibility&rsquo;s sake, DVVs contained in Riak objects&rsquo; metadata are
+still labeled <code>X-Riak-Vclock</code> if you&rsquo;re using the <a href=/docs/kv/3.4.0/reference/http-api/>HTTP API</a>
+and
+<code>vclock</code> if using the <a href=/docs/kv/3.4.0/reference/protocol-buffers/>Protocol Buffers interface</a>
+.</p><p>More on using vector clocks and DVVs on the application side can be
+found in our documentation on <a href=/docs/kv/3.4.0/how-to/develop/resolve-conflicts/>conflict resolution</a>
+.</p><blockquote><p><strong>Note on DVVs and bucket types</strong></p><p>The choice between vector clocks and DVVs can be made at the bucket
+level, <a href=/docs/kv/3.4.0/how-to/develop/use-bucket-types/>using bucket types</a>
+. This enables you to employ a mixed
+conflict resolution strategy in your OpenRiak cluster, using DVVs in some
+buckets and vector clocks in others if you wish. DVVs can be enabled by
+setting the <code>dvv_enabled</code> bucket property to
+<code>true</code> for one or more bucket types.</p><p>Vector clocks remain the default if you are not using bucket types.
+However, any bucket type that you create and activate will have
+<code>dvv_enabled</code> set to <code>true</code>. And so if you wish to
+create a bucket type that uses traditional vector clocks, you will need
+to explicitly set <code>dvv_enabled</code> to <code>false</code> for
+that bucket type.</p></blockquote><h4 id=sibling-explosion>Sibling Explosion</h4><p>Sibling explosion occurs when an object rapidly collects siblings that
+are not reconciled. This can lead to a variety of problems, including
+degraded performance, especially if many objects in a cluster suffer
+from siblings explosion. At the extreme, having an enormous object in a
+node can cause reads of that object to crash the entire node. Other
+issues include <a href=/docs/kv/3.4.0/how-to/tune/reduce-latency/>undue latency</a>
+and
+out-of-memory errors.</p><p>To prevent sibling explosion, we recommend the following:</p><ol><li>Use <a href=#dotted-version-vectors>dotted version vectors</a>
+instead of vector clocks for causal
+context.</li><li>Always update mutable objects within a read/modify/write cycle. More
+information can be found in the <a href=/docs/kv/3.4.0/how-to/develop/update-object/>Object Updates</a>
+doc.</li></ol><h4 id=resources>Resources</h4><ul><li><a href=http://asc.di.fct.unl.pt/~nmp/pubs/inforum-2011-2.pdf rel=noopener>Evaluating Dotted Version Vectors in Riak</a></li><li><a href=http://paginas.fe.up.pt/~prodei/dsie12/papers/paper_19.pdf rel=noopener>Improving Logical Clocks in Riak with Dotted Version Vectors: A Case Study</a></li><li><a href=https://github.com/ricardobcl/Dotted-Version-Vectors rel=noopener>Dotted Version Vector Sets</a></li><li><a href="https://www.youtube.com/watch?v=3SWSw3mKApM" rel=noopener>A History of Time in Riak</a></li></ul></div><nav class=page-navigation aria-label="Adjacent pages"><a class=page-navigation__previous href=/docs/kv/3.4.0/explanation/data-model/conflict-resolution-strategies/><span>Previous</span><strong>Conflict resolution strategies</strong></a>
+<a class=page-navigation__next href=/docs/kv/3.4.0/explanation/data-model/bucket-types-as-namespaces-and-policy/><span>Next</span><strong>Bucket types as namespaces and policy</strong></a></nav></article></main></div><footer class=site-footer><div><p>OpenRiak documentation is licensed under <a href=https://creativecommons.org/licenses/by/4.0/>Creative Commons Attribution 4.0</a>.</p><p>Historical material © Basho Technologies, Inc.; community revisions © OpenRiak contributors.</p></div><a href=#main-content>Back to top</a></footer><script src=/docs/js/site.js defer></script></body></html>

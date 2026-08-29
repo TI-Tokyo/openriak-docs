@@ -1,0 +1,223 @@
+<!doctype html><html lang=en class=no-js><head><script src="/docs/livereload.js?mindelay=10&amp;v=2&amp;port=1320&amp;path=docs/livereload" data-no-instant defer></script><meta charset=utf-8><meta name=viewport content="width=device-width,initial-scale=1"><meta name=color-scheme content="light dark"><script>(()=>{const t="openriak-docs-theme";let e="system";try{const n=localStorage.getItem(t);(n==="light"||n==="dark"||n==="system")&&(e=n)}catch{}const n=window.matchMedia?.("(prefers-color-scheme: dark)").matches??!1;document.documentElement.dataset.themePreference=e,document.documentElement.dataset.theme=e==="system"?n?"dark":"light":e})()</script><meta name=description content="List supported clients, compatibility, installation packages, API documentation, and maintenance status."><title>Client library reference | OpenRiak Documentation</title><link rel=canonical href=http://127.0.0.1:1320/docs/kv/3.4.0/reference/client-libraries/><link rel=icon href=/docs/images/branding/favicon.ico sizes=any><link rel=stylesheet href=/docs/css/site.css><link rel=stylesheet href=/docs/css/theme.css><script src=/docs/js/theme.js defer></script><meta property="og:type" content="website"><meta property="og:title" content="Client library reference"><meta property="og:description" content="List supported clients, compatibility, installation packages, API documentation, and maintenance status."><meta property="og:url" content="http://127.0.0.1:1320/docs/kv/3.4.0/reference/client-libraries/"></head><body data-kind=section data-section=kv><script>document.documentElement.classList.remove("no-js")</script><a class=skip-link href=#main-content>Skip to content</a><header class=site-header><div class=site-header__inner><button class=nav-toggle type=button aria-controls=docs-sidebar aria-expanded=false>
+<span aria-hidden=true>☰</span><span class=sr-only>Toggle documentation navigation</span>
+</button>
+<a class=brand href=/docs/ aria-label="OpenRiak documentation home"><img src=/docs/images/branding/riak-logo-inverted.png alt width=34 height=34>
+<span>OpenRiak <strong>Docs</strong></span></a><nav class=primary-nav aria-label="Documentation types"><a href=/docs/kv/3.4.1/tutorials/>Tutorials</a>
+<a href=/docs/kv/3.4.1/how-to/>How-to</a>
+<a href=/docs/kv/3.4.1/reference/>Reference</a>
+<a href=/docs/kv/3.4.1/explanation/>Explanation</a></nav><a class=community-link href=https://github.com/orgs/OpenRiak/discussions>Community</a>
+<label class=theme-control><span class=theme-control__icon aria-hidden=true>◐</span>
+<span class=sr-only>Color theme</span>
+<select data-theme-select aria-label="Color theme"><option value=system>System</option><option value=light>Light</option><option value=dark>Dark</option></select></label></div></header><div class=site-shell><aside id=docs-sidebar class=sidebar aria-label="Documentation navigation"><div class=sidebar__tools><label for=version-select>Version</label>
+<select id=version-select data-version-select><option value=/docs/kv/3.4.1/>3.4.1 (latest)</option><option value=/docs/kv/3.4.0/ selected>3.4.0</option></select><form class=docs-search role=search data-search data-index-url=/docs/search-index.json data-version=3.4.0><label class=sr-only for=docs-search-input>Search this version</label>
+<input id=docs-search-input type=search placeholder="Search this version" autocomplete=off data-search-input><div class=search-results data-search-results hidden></div></form></div><nav class=sidebar__nav aria-label="Pages in this version"><a class=sidebar__root href=/docs/kv/3.4.0/>OpenRiak KV 3.4.0</a><ul class=nav-tree><li><details><summary><a href=/docs/kv/3.4.0/explanation/>Explanation</a></summary></details></li><li><details><summary><a href=/docs/kv/3.4.0/how-to/>How-to guides</a></summary></details></li><li><details open><summary><a href=/docs/kv/3.4.0/reference/>Reference</a></summary><ul class=nav-tree><li><details><summary><a href=/docs/kv/3.4.0/reference/aae-fold-api/>AAE fold API reference</a></summary></details></li><li><details open><summary><a class=is-current href=/docs/kv/3.4.0/reference/client-libraries/ aria-current=page>Client library reference</a></summary><ul class=nav-tree><li><a href=/docs/kv/3.4.0/reference/client-libraries/c%23-client/>C# client</a></li><li><a href=/docs/kv/3.4.0/reference/client-libraries/erlang-client/>Erlang client</a></li><li><a href=/docs/kv/3.4.0/reference/client-libraries/go-client/>Go client</a></li><li><a href=/docs/kv/3.4.0/reference/client-libraries/java-client/>Java client</a></li><li><a href=/docs/kv/3.4.0/reference/client-libraries/node.js-client/>Node.js client</a></li><li><a href=/docs/kv/3.4.0/reference/client-libraries/php-client/>PHP client</a></li><li><a href=/docs/kv/3.4.0/reference/client-libraries/python-client/>Python client</a></li><li><a href=/docs/kv/3.4.0/reference/client-libraries/ruby-client/>Ruby client</a></li><li><a href=/docs/kv/3.4.0/reference/client-libraries/rust-client/>Rust client</a></li></ul></details></li><li><details><summary><a href=/docs/kv/3.4.0/reference/commands/>Command reference</a></summary></details></li><li><details><summary><a href=/docs/kv/3.4.0/reference/configuration/>Configuration reference</a></summary></details></li><li><details><summary><a href=/docs/kv/3.4.0/reference/data/>Data reference</a></summary></details></li><li><details><summary><a href=/docs/kv/3.4.0/reference/http-api/>HTTP API reference</a></summary></details></li><li><details><summary><a href=/docs/kv/3.4.0/reference/operations/>Operations reference</a></summary></details></li><li><details><summary><a href=/docs/kv/3.4.0/reference/protocol-buffers/>Protocol Buffers API reference</a></summary></details></li><li><details><summary><a href=/docs/kv/3.4.0/reference/query-api/>Query API reference</a></summary></details></li><li><details><summary><a href=/docs/kv/3.4.0/reference/releases/>Release and compatibility reference</a></summary></details></li><li><details><summary><a href=/docs/kv/3.4.0/reference/replication-api/>Replication API reference</a></summary></details></li><li><details><summary><a href=/docs/kv/3.4.0/reference/specialized-apis/>Specialized API reference</a></summary></details></li><li><a href=/docs/kv/3.4.0/reference/frequently-asked-questions/>Frequently asked questions</a></li></ul></details></li><li><details><summary><a href=/docs/kv/3.4.0/tutorials/>Tutorials</a></summary></details></li></ul></nav><div class=sidebar__help><a href=https://github.com/orgs/OpenRiak/discussions>Ask the OpenRiak community</a>
+<a href=https://github.com/OpenRiak/riak>OpenRiak source code</a></div></aside><button class=sidebar-scrim type=button data-sidebar-close aria-label="Close navigation"></button><main id=main-content class=content tabindex=-1><article class="doc doc--section"><nav class=breadcrumbs aria-label=Breadcrumb><ol><li><a href=/docs/kv/>OpenRiak KV documentation</a></li><li><a href=/docs/kv/3.4.0/>OpenRiak KV 3.4.0</a></li><li><a href=/docs/kv/3.4.0/reference/>Reference</a></li><li aria-current=page>Client library reference</li></ol></nav><header class=article-header><div class=badges><span class="badge badge--reference">reference</span>
+<span class=badge>KV 3.4.0</span></div><h1>Client library reference</h1><p class=lede>List supported clients, compatibility, installation packages, API documentation, and maintenance status.</p><div class=review-notice role=note><strong>Review status:</strong>
+This migrated page is still marked as a draft.
+Technical review is required before publication.</div></header><div class=doc-body><p>List supported clients, compatibility, installation packages, API documentation, and maintenance status.</p><h2 id=details>Details</h2><h3 id=client-libraries>Client Libraries</h3><h4 id=basho-supported-libraries>Basho-Supported Libraries</h4><p>Basho officially supports a number of open-source client libraries for a
+variety of programming languages and environments.</p><table><thead><tr><th style=text-align:left>Language</th><th style=text-align:left>Source</th><th style=text-align:left>Documentation</th><th style=text-align:left>Download</th></tr></thead><tbody><tr><td style=text-align:left>Java</td><td style=text-align:left><a href=https://github.com/basho/riak-java-client rel=noopener>riak-java-client</a></td><td style=text-align:left><a href=http://basho.github.com/riak-java-client rel=noopener>javadoc</a>
+, <a href=https://github.com/basho/riak-java-client/wiki rel=noopener>wiki</a></td><td style=text-align:left><a href=http://search.maven.org/?#search%7Cgav%7C1%7Cg%3A%22com.basho.riak%22%20AND%20a%3A%22riak-client%22 rel=noopener>Maven Central</a></td></tr><tr><td style=text-align:left>Ruby</td><td style=text-align:left><a href=https://github.com/basho/riak-ruby-client rel=noopener>riak-ruby-client</a></td><td style=text-align:left><a href=http://basho.github.io/riak-ruby-client/ rel=noopener>GitHub Pages</a></td><td style=text-align:left><a href=https://rubygems.org/gems/riak-client rel=noopener>RubyGems</a></td></tr><tr><td style=text-align:left>Python</td><td style=text-align:left><a href=https://github.com/basho/riak-python-client rel=noopener>riak-python-client</a></td><td style=text-align:left><a href=http://basho.github.com/riak-python-client rel=noopener>sphinx</a></td><td style=text-align:left><a href="http://pypi.python.org/pypi?:action=display&amp;name=riak#downloads" rel=noopener>PyPI</a></td></tr><tr><td style=text-align:left>C#</td><td style=text-align:left><a href=https://github.com/basho/riak-dotnet-client rel=noopener>riak-dotnet-client</a></td><td style=text-align:left><a href=http://basho.github.io/riak-dotnet-client-api/ rel=noopener>api docs</a>
+, <a href=https://github.com/basho/riak-dotnet-client/wiki rel=noopener>wiki</a></td><td style=text-align:left><a href=http://www.nuget.org/List/Packages/RiakClient rel=noopener>NuGet package</a>
+, <a href=https://github.com/basho/riak-dotnet-client/releases rel=noopener>GitHub Releases</a></td></tr><tr><td style=text-align:left>Node.js</td><td style=text-align:left><a href=https://github.com/basho/riak-nodejs-client rel=noopener>riak-nodejs-client</a></td><td style=text-align:left><a href=http://basho.github.com/riak-nodejs-client/ rel=noopener>api docs</a>
+, <a href=https://github.com/basho/riak-nodejs-client/wiki rel=noopener>wiki</a></td><td style=text-align:left><a href=https://www.npmjs.com/package/basho-riak-client rel=noopener>NPM</a>
+, <a href=https://github.com/basho/riak-nodejs-client/releases rel=noopener>GitHub Releases</a></td></tr><tr><td style=text-align:left>PHP</td><td style=text-align:left><a href=https://github.com/basho/riak-php-client rel=noopener>riak-php-client</a></td><td style=text-align:left><a href=http://basho.github.io/riak-php-client rel=noopener>apigen</a></td><td></td></tr><tr><td style=text-align:left>Erlang</td><td style=text-align:left><a href=https://github.com/basho/riak-erlang-client rel=noopener>riak-erlang-client (riakc)</a></td><td style=text-align:left><a href=http://basho.github.com/riak-erlang-client/ rel=noopener>edoc</a></td><td style=text-align:left><a href=https://github.com/basho/riak-erlang-client rel=noopener>GitHub</a></td></tr><tr><td style=text-align:left>Go</td><td style=text-align:left><a href=https://github.com/basho/riak-go-client rel=noopener>riak-go-client</a></td><td style=text-align:left><a href=https://godoc.org/github.com/basho/riak-go-client rel=noopener>GoDoc</a></td><td style=text-align:left><a href=https://github.com/basho/riak-go-client rel=noopener>GitHub</a></td></tr></tbody></table><p><strong>Note</strong>: All official clients use the integrated issue tracker on
+GitHub for bug reporting.</p><p>In addition to the official clients, Basho provides some unofficial
+client libraries, listed below. There are also many client libraries and
+related <a href=/docs/community/projects/>community projects</a>
+.</p><h4 id=community-libraries>Community Libraries</h4><p>The Riak Community is developing at a break-neck pace, and the number of
+community-contributed libraries and drivers is growing right along side
+it. Here is a list of projects that may suit your programming needs or
+curiosities. If you know of something that needs to be added or are
+developing something that you wish to see added to this list, please
+fork the <a href=https://github.com/basho/basho_docs rel=noopener>Riak Docs repo on GitHub</a>
+and send us a pull request.</p><p><strong>Note on community-produced libraries</strong>
+All of these projects and libraries are at various stages of completeness and
+may not suit your application&rsquo;s needs based on their level of maturity and
+activity.</p><h5 id=client-libraries-and-frameworks>Client Libraries and Frameworks</h5><h6 id=cc>C/C++</h6><ul><li><a href=https://github.com/ajtack/riak-cpp rel=noopener>riak-cpp</a>
+- A C++ Riak client
+library for use with C++11 compilers</li><li><a href=https://github.com/fenek/riak-c-driver rel=noopener>Riak C Driver</a>
+- A library
+to communicate with Riak using cURL and Protocol Buffers</li><li><a href=https://github.com/trifork/riack rel=noopener>Riack</a>
+- A simple C client
+library</li><li><a href=https://github.com/TriKaspar/riack_cpp rel=noopener>Riack++</a>
+- A C++ wrapper
+around riack</li></ul><h6 id=clojure>Clojure</h6><ul><li><a href=https://github.com/reiddraper/knockbox rel=noopener>knockbox</a>
+- An eventual
+consistency toolbox for Clojure</li><li><a href=http://clojureriak.info rel=noopener>Welle</a>
+- An expressive Clojure client with
+batteries included</li><li><a href=http://github.com/mmcgrana/clj-riak rel=noopener>clj-riak</a>
+- Clojure bindings
+to the Riak Protocol Buffers API</li><li><a href=https://github.com/reiddraper/sumo rel=noopener>sumo</a>
+- A Protocol
+Buffer-specific client for Riak with KV, 2i, and MapReduce support</li><li><a href=https://github.com/bluemont/kria rel=noopener>kria</a>
+- Riak 2.0 Asynchronous
+(NIO.2) Clojure client. Callback driven, low level, Protocol Buffer
+API, Java 7.</li></ul><h6 id=coldfusion>ColdFusion</h6><ul><li><a href=https://github.com/getrailo/Riak-Cache-Extension rel=noopener>Riak-Cache-Extension</a>
+- A Riak-backed cache extension for Railo/ColdFusion</li></ul><h6 id=common-lisp>Common Lisp</h6><ul><li><a href=https://github.com/whee/cl-riak rel=noopener>cl-riak (1)</a></li><li><a href=https://github.com/eriknomitch/cl-riak rel=noopener>cl-riak (2)</a></li></ul><h6 id=dart>Dart</h6><ul><li><a href=https://github.com/agilord/riak_dart_client rel=noopener>riak-dart</a>
+- HTTP
+client for Riak written in Dart</li></ul><h6 id=django-python>Django (Python)</h6><ul><li><a href=https://github.com/flashingpumpkin/django-riak-sessions rel=noopener>django-riak-sessions</a>
+- Riak-based Session Backend for Django</li><li><a href=https://github.com/oubiwann/django-riak-engine rel=noopener>Django Riak Engine</a>
+- A Riak backend for Django</li></ul><h6 id=erlang>Erlang</h6><ul><li><a href=https://github.com/unisontech/uriak_pool rel=noopener>Uriak Pool</a>
+- Erlang
+connection pool library from the team at
+<a href=http://www.unison.com rel=noopener>Unison</a></li><li><a href=https://github.com/snoopaloop/Riak-PBC-Pool rel=noopener>Riak PBC Pool</a>
+- Riak
+Protocol Buffer Client pool application</li><li><a href=https://github.com/aberman/pooly rel=noopener>Pooly</a>
+- Riak Process Pool</li><li><a href=https://github.com/dweldon/riakpool rel=noopener>riakpool</a>
+- Application for
+maintaining a dynamic pool of Protocol Buffer client connections to a
+Riak database</li><li><a href=https://github.com/seth/pooler rel=noopener>pooler</a>
+- An OTP Process Pool
+Application</li><li><a href=https://github.com/klarna/krc rel=noopener>krc</a>
+- A simple wrapper around the
+official Riak client for Erlang</li><li><a href=https://github.com/brb/riakc_pool rel=noopener>riakc_pool</a>
+- A really simple
+Riak client process pool based on poolboy</li></ul><h6 id=go>Go</h6><ul><li><a href=https://github.com/riaken rel=noopener>riaken</a>
+- A fast and extendable Riak
+Protocol Buffer Client</li><li><a href=https://github.com/tpjg/goriakpbc rel=noopener>goriakpbc</a>
+- A Golang Riak
+client inspired by the Ruby riak-client from Basho and riakpbc from mrb</li><li><a href=https://github.com/mrb/riakpbc rel=noopener>riakpbc</a>
+- A Riak Protocol Buffer
+client in Go</li><li><a href=https://github.com/zegl/goriak rel=noopener>goriak</a>
+- Go language driver for OpenRiak KV</li></ul><h6 id=grails>Grails</h6><ul><li><a href=http://www.grails.org/plugin/riak rel=noopener>Grails ORM for Riak</a></li></ul><h6 id=griffon>Griffon</h6><ul><li><a href=http://docs.codehaus.org/display/GRIFFON/Riak+Plugin rel=noopener>Riak Plugin for
+Griffon</a></li></ul><h6 id=groovy>Groovy</h6><ul><li><a href=https://github.com/jbrisbin/spring-riak rel=noopener>spring-riak</a>
+- Riak
+support from Groovy and/or Java</li></ul><h6 id=haskell>Haskell</h6><ul><li><a href=https://github.com/markhibberd/riak-haskell-client rel=noopener>Riak Haskell Client</a>
+- A fast Haskell client library from the team at MailRank.</li></ul><h6 id=java>Java</h6><ul><li><a href=http://github.com/krestenkrab/riak-java-pb-client rel=noopener>Riak-Java-PB-Client</a>
+- Java Client Library for Riak based on the Protocol Buffers API</li><li><a href=https://github.com/jbrisbin/riak-async-java-client rel=noopener>Asynchronous Riak Java Client</a>
+- Asynchronous, NIO-based Protocol Buffers client for Riak</li><li><a href=http://www.playframework.org/modules/riak-head/home rel=noopener>Riak Module for the Play
+Framework</a></li></ul><h6 id=lisp-flavored-erlang>Lisp-flavored Erlang</h6><ul><li><a href=https://github.com/dysinger/gutenberg/ rel=noopener>Gutenberg</a>
+- Riak MapReduce
+examples written in LFE</li></ul><h6 id=nodejs>Node.js</h6><ul><li><a href=https://github.com/natural/zukai rel=noopener>zukai</a>
+- Riak ODM for Node.js
+from Troy Melhase</li><li><a href=https://github.com/CrowdProcess/riak-pb rel=noopener>riak-pb</a>
+- Riak Protocol
+Buffers client for Node.js from the team at
+<a href=http://crowdprocess.com rel=noopener>CrowdProcess</a></li><li><a href=https://github.com/mranney/node_riak rel=noopener>node_riak</a>
+- Voxer&rsquo;s
+production Node.js client for Riak.</li><li><a href=https://github.com/nlf/riakpbc rel=noopener>riakpbc</a>
+- A simple Riak Protocol
+Buffer client library for Node.js</li><li><a href=https://npmjs.org/package/nodiak rel=noopener>nodiak</a>
+- Supports bulk
+get/save/delete, sibling auto-resolution, MapReduce chaining, Search,
+and 2i&rsquo;s</li><li><a href=https://github.com/admazely/resourceful-riak rel=noopener>resourceful-riak</a>
+- A
+Riak engine to the
+<a href=https://github.com/flatiron/resourceful/ rel=noopener>resourceful</a>
+model
+framework from <a href=https://github.com/flatiron/ rel=noopener>flatiron</a></li><li><a href=https://github.com/frank06/connect-riak rel=noopener>Connect-Riak</a>
+- Riak
+session store for Connect backed by <a href=http://riakjs.org/ rel=noopener>Riak-js</a></li><li><a href=http://riakjs.com rel=noopener>Riak-js</a>
+- Node.js client for Riak with support
+for HTTP and Protocol Buffers</li><li><a href=https://github.com/dandean/riakjs-model rel=noopener>Riakjs-model</a>
+- a model
+abstraction around riak-js</li><li><a href=http://github.com/orlandov/node-riak rel=noopener>Node-Riak</a>
+- A wrapper around
+Node&rsquo;s HTTP facilities for communicating with Riak</li><li><a href=https://github.com/janearc/riak-dc rel=noopener>riak-dc</a>
+- A very thin, very small
+http-based interface to Riak using promises intended to be used for small
+tools like command-line applications; aims to have the &ldquo;most-synchronous-
+like&rdquo; interface.</li><li><a href=https://github.com/sgonyea/nori rel=noopener>Nori</a>
+- Experimental Riak HTTP
+library for Node.js modeled after Ripple</li><li><a href=http://github.com/mauritslamers/OrionNodeRiak rel=noopener>OrionNodeRiak</a>
+- Node-based server and database-frontend for Sproutcore</li><li><a href=https://npmjs.org/package/chinood rel=noopener>Chinood</a>
+- Object data mapper
+for Riak built on Nodiak</li><li><a href=https://npmjs.org/package/simpleriak rel=noopener>SimpleRiak</a>
+- A very simple
+Riak HTTP client</li></ul><h6 id=ocaml>OCaml</h6><ul><li><a href=http://metadave.github.com/riak-ocaml-client/ rel=noopener>Riak OCaml Client</a>
+- Riak OCaml client</li><li><a href=https://github.com/orbitz/ocaml-riakc rel=noopener>OCaml Riakc</a>
+- A Protocol
+Buffers client for Riak</li></ul><h6 id=perl>Perl</h6><ul><li><a href=http://search.cpan.org/~franckc/Net-Riak/ rel=noopener>Net::Riak</a>
+- A Perl
+interface to Riak</li><li><a href=http://github.com/franckcuny/anyevent-riak rel=noopener>AnyEvent-Riak adapter</a>
+- Non-blocking Riak adapter using anyevent</li><li><a href=https://github.com/tempire/riak-tiny rel=noopener>riak-tiny</a>
+- Perl interface
+to Riak without Moose</li><li><a href=https://metacpan.org/module/Riak::Light rel=noopener>Riak::Light</a>
+- Fast and
+lightweight Perl client for Riak (PBC only)</li></ul><h6 id=php>PHP</h6><ul><li><a href=https://github.com/php-riak/riak-client rel=noopener>riak-client</a>
+- A Riak
+2.0-compliant PHP client with support for Protocol Buffers by <a href=https://github.com/FabioBatSilva rel=noopener>Fabio
+Silva</a></li><li><a href=https://github.com/KevBurnsJr/ripple-php rel=noopener>Ripple-PHP</a>
+- A port of
+Ripple to PHP</li><li><a href=https://bitbucket.org/intel352/riiak rel=noopener>riiak</a>
+- A Riak PHP client
+library for the <a href=http://www.yiiframework.com/ rel=noopener>Yii Framework</a></li><li><a href=https://github.com/marksteele/riak-php rel=noopener>riak-php</a>
+- A Riak PHP
+client with support for Protocol Buffers</li><li><a href=https://github.com/remialvado/RiakBundle rel=noopener>RiakBundle</a>
+- <a href=http://symfony.com rel=noopener>Symfony</a>
+Bundle designed to ease interaction
+with Riak</li><li><a href=https://github.com/TriKaspar/php_riak rel=noopener>php_riak</a>
+- A PHP extension
+written in C, Both Riak client and PHP session module</li></ul><h6 id=python>Python</h6><ul><li><a href=https://github.com/rambler-digital-solutions/aioriak rel=noopener>Aioriak</a>
+- Asyncio PBC Riak 2.0+ client library. (Based on official Basho
+python client)</li><li><a href=https://github.com/calston/riakasaurus rel=noopener>Riakasaurus</a>
+- A Riak
+client library for Twisted (based on txriak)</li><li><a href=http://shuhaowu.com/riakkit rel=noopener>RiakKit</a>
+- A small Python ORM that
+sits on top of riak-python-client, similar to mongokit and couchdbkit</li><li><a href=https://github.com/Linux2Go/riakalchemy rel=noopener>riakalchemy</a>
+- Object
+mapper for Riak written in Python</li><li><a href=https://github.com/ericmoritz/riak_crdt rel=noopener>riak_crdt</a>
+- A CRDT
+(Conflict-Free Replicated Data Type) loader for Riak using the <a href=https://github.com/ericmoritz/crdt rel=noopener>CRDT
+API</a></li><li><a href=https://launchpad.net/txriak rel=noopener>txriak</a>
+- A Twisted module for
+communicating with Riak via the HTTP interface</li><li><a href=https://github.com/williamsjj/txriakidx rel=noopener>txriakidx</a>
+- Riak client
+for Twisted Python that implements transparent indexes</li></ul><h6 id=racket>Racket</h6><ul><li><a href=https://github.com/shofetim/riak.rkt rel=noopener>riak.rkt</a>
+- Racket API to
+Riak</li><li><a href=https://github.com/dkvasnicka/racket-riak rel=noopener>Racket Riak</a>
+- Racket
+1.3.x API to Riak</li></ul><h6 id=ruby>Ruby</h6><ul><li><a href=https://github.com/aphyr/risky rel=noopener>Risky</a>
+- A lightweight Ruby ORM for
+Riak</li><li><a href=http://github.com/igorgue/riak_sessions rel=noopener>riak_sessions</a>
+- Riak-backed session storage for Rack</li><li><a href=http://github.com/benmyles/riaktor rel=noopener>Riaktor</a>
+- Ruby client and
+object mapper for Riak</li><li><a href=http://github.com/mikeric/dm-riak-adapter rel=noopener>dm-riak-adapter</a>
+- DataMapper adapter for Riak</li><li><a href=https://github.com/sgonyea/riak-pbclient rel=noopener>Riak PB Client</a>
+- Riak
+Protocol Buffer Client in Ruby</li><li><a href=http://github.com/frank06/devise-ripple rel=noopener>Devise-Ripple</a>
+- An ORM
+strategy to use Devise with Riak</li><li><a href=http://github.com/bkaney/ripple-anaf rel=noopener>ripple-anaf</a>
+- Accepts nested
+attributes support for Ripple</li><li><a href=https://github.com/sgonyea/pabst rel=noopener>Pabst</a>
+- Cross-platform Ruby
+extension for Protocol Buffers written in both Objective-C and
+Objective-C++</li></ul><h6 id=scala>Scala</h6><ul><li><a href=http://github.com/timperrett/riakka rel=noopener>Riakka</a>
+- Scala library for
+talking to Riak</li><li><a href=http://github.com/softprops/ryu rel=noopener>Ryu</a>
+- A Tornado Whirlwind Kick
+Scala client for the Riak raw HTTP interface</li><li><a href=https://github.com/gideondk/Raiku rel=noopener>Raiku</a>
+- An Akka IO- and
+Sentinel-driven Riak Scala client</li></ul><h6 id=smalltalk>Smalltalk</h6><ul><li><a href=http://www.squeaksource.com/Phriak/ rel=noopener>Phriak</a>
+- A Riak client for
+Pharo Smalltalk based on Runar Jordahl&rsquo;s EpigentRiakInterface</li><li><a href=http://www.squeaksource.com/EpigentRiakInterface/ rel=noopener>EpigentRiakInterface</a>
+- A Pharo Smalltalk interface to Riak. There is also a blog post
+with some additional info about the client
+<a href=http://blog.epigent.com/2011/03/riak-interface-for-pharo-smalltalk.html rel=noopener>here</a>
+.</li></ul><h2 id=in-this-section>In this section</h2><ul><li><a href=/docs/kv/3.4.0/reference/client-libraries/csharp/>C# client</a>
+— Record installation, supported versions, connection options, feature coverage, and upstream API links for the C# client.</li><li><a href=/docs/kv/3.4.0/reference/client-libraries/erlang/>Erlang client</a>
+— Record installation, supported versions, connection options, feature coverage, and upstream API links for the Erlang client.</li><li><a href=/docs/kv/3.4.0/reference/client-libraries/golang/>Go client</a>
+— Record installation, supported versions, connection options, feature coverage, and upstream API links for the Go client.</li><li><a href=/docs/kv/3.4.0/reference/client-libraries/java/>Java client</a>
+— Record installation, supported versions, connection options, feature coverage, and upstream API links for the Java client.</li><li><a href=/docs/kv/3.4.0/reference/client-libraries/nodejs/>Node.js client</a>
+— Record installation, supported versions, connection options, feature coverage, and upstream API links for the Node.js client.</li><li><a href=/docs/kv/3.4.0/reference/client-libraries/php/>PHP client</a>
+— Record installation, supported versions, connection options, feature coverage, and upstream API links for the PHP client.</li><li><a href=/docs/kv/3.4.0/reference/client-libraries/python/>Python client</a>
+— Record installation, supported versions, connection options, feature coverage, and upstream API links for the Python client.</li><li><a href=/docs/kv/3.4.0/reference/client-libraries/ruby/>Ruby client</a>
+— Record installation, supported versions, connection options, feature coverage, and upstream API links for the Ruby client.</li><li><a href=/docs/kv/3.4.0/reference/client-libraries/rust/>Rust client</a>
+— Record installation, supported versions, connection options, feature coverage, and upstream API links for the Rust client.</li></ul></div><section class=child-pages aria-labelledby=browse-section><h2 id=browse-section>Browse this section</h2><div class=cards><a class=card href=/docs/kv/3.4.0/reference/client-libraries/c%23-client/><strong>C# client</strong>
+<span>Record installation, supported versions, connection options, feature coverage, and upstream API links for the C# client.</span>
+</a><a class=card href=/docs/kv/3.4.0/reference/client-libraries/erlang-client/><strong>Erlang client</strong>
+<span>Record installation, supported versions, connection options, feature coverage, and upstream API links for the Erlang client.</span>
+</a><a class=card href=/docs/kv/3.4.0/reference/client-libraries/go-client/><strong>Go client</strong>
+<span>Record installation, supported versions, connection options, feature coverage, and upstream API links for the Go client.</span>
+</a><a class=card href=/docs/kv/3.4.0/reference/client-libraries/java-client/><strong>Java client</strong>
+<span>Record installation, supported versions, connection options, feature coverage, and upstream API links for the Java client.</span>
+</a><a class=card href=/docs/kv/3.4.0/reference/client-libraries/node.js-client/><strong>Node.js client</strong>
+<span>Record installation, supported versions, connection options, feature coverage, and upstream API links for the Node.js client.</span>
+</a><a class=card href=/docs/kv/3.4.0/reference/client-libraries/php-client/><strong>PHP client</strong>
+<span>Record installation, supported versions, connection options, feature coverage, and upstream API links for the PHP client.</span>
+</a><a class=card href=/docs/kv/3.4.0/reference/client-libraries/python-client/><strong>Python client</strong>
+<span>Record installation, supported versions, connection options, feature coverage, and upstream API links for the Python client.</span>
+</a><a class=card href=/docs/kv/3.4.0/reference/client-libraries/ruby-client/><strong>Ruby client</strong>
+<span>Record installation, supported versions, connection options, feature coverage, and upstream API links for the Ruby client.</span>
+</a><a class=card href=/docs/kv/3.4.0/reference/client-libraries/rust-client/><strong>Rust client</strong>
+<span>Record installation, supported versions, connection options, feature coverage, and upstream API links for the Rust client.</span></a></div></section></article></main></div><footer class=site-footer><div><p>OpenRiak documentation is licensed under <a href=https://creativecommons.org/licenses/by/4.0/>Creative Commons Attribution 4.0</a>.</p><p>Historical material © Basho Technologies, Inc.; community revisions © OpenRiak contributors.</p></div><a href=#main-content>Back to top</a></footer><script src=/docs/js/site.js defer></script></body></html>

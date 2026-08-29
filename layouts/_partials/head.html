@@ -1,0 +1,29 @@
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="color-scheme" content="light dark">
+<script>
+  (() => {
+    const storageKey = 'openriak-docs-theme';
+    let preference = 'system';
+    try {
+      const stored = localStorage.getItem(storageKey);
+      if (stored === 'light' || stored === 'dark' || stored === 'system') preference = stored;
+    } catch {}
+    const systemDark = window.matchMedia?.('(prefers-color-scheme: dark)').matches ?? false;
+    document.documentElement.dataset.themePreference = preference;
+    document.documentElement.dataset.theme = preference === 'system' ? (systemDark ? 'dark' : 'light') : preference;
+  })();
+</script>
+{{ $description := .Description | default site.Params.description }}
+<meta name="description" content="{{ $description }}">
+<title>{{ if .IsHome }}{{ site.Title }}{{ else }}{{ .Title }} | {{ site.Title }}{{ end }}</title>
+<link rel="canonical" href="{{ .Permalink }}">
+<link rel="icon" href="{{ "images/branding/favicon.ico" | relURL }}" sizes="any">
+<link rel="stylesheet" href="{{ "css/site.css" | relURL }}">
+<link rel="stylesheet" href="{{ "css/version-picker.css" | relURL }}">
+<link rel="stylesheet" href="{{ "css/theme.css" | relURL }}">
+<script src="{{ "js/theme.js" | relURL }}" defer></script>
+<meta property="og:type" content="website">
+<meta property="og:title" content="{{ .Title | default site.Title }}">
+<meta property="og:description" content="{{ $description }}">
+<meta property="og:url" content="{{ .Permalink }}">

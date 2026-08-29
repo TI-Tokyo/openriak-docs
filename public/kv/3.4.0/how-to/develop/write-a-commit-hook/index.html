@@ -1,0 +1,149 @@
+<!doctype html><html lang=en class=no-js><head><script src="/docs/livereload.js?mindelay=10&amp;v=2&amp;port=1320&amp;path=docs/livereload" data-no-instant defer></script><meta charset=utf-8><meta name=viewport content="width=device-width,initial-scale=1"><meta name=color-scheme content="light dark"><script>(()=>{const t="openriak-docs-theme";let e="system";try{const n=localStorage.getItem(t);(n==="light"||n==="dark"||n==="system")&&(e=n)}catch{}const n=window.matchMedia?.("(prefers-color-scheme: dark)").matches??!1;document.documentElement.dataset.themePreference=e,document.documentElement.dataset.theme=e==="system"?n?"dark":"light":e})()</script><meta name=description content="Show developers how to write a commit hook with a minimal verified example."><title>Write a commit hook | OpenRiak Documentation</title><link rel=canonical href=http://127.0.0.1:1320/docs/kv/3.4.0/how-to/develop/write-a-commit-hook/><link rel=icon href=/docs/images/branding/favicon.ico sizes=any><link rel=stylesheet href=/docs/css/site.css><link rel=stylesheet href=/docs/css/theme.css><script src=/docs/js/theme.js defer></script><meta property="og:type" content="website"><meta property="og:title" content="Write a commit hook"><meta property="og:description" content="Show developers how to write a commit hook with a minimal verified example."><meta property="og:url" content="http://127.0.0.1:1320/docs/kv/3.4.0/how-to/develop/write-a-commit-hook/"></head><body data-kind=page data-section=kv><script>document.documentElement.classList.remove("no-js")</script><a class=skip-link href=#main-content>Skip to content</a><header class=site-header><div class=site-header__inner><button class=nav-toggle type=button aria-controls=docs-sidebar aria-expanded=false>
+<span aria-hidden=true>☰</span><span class=sr-only>Toggle documentation navigation</span>
+</button>
+<a class=brand href=/docs/ aria-label="OpenRiak documentation home"><img src=/docs/images/branding/riak-logo-inverted.png alt width=34 height=34>
+<span>OpenRiak <strong>Docs</strong></span></a><nav class=primary-nav aria-label="Documentation types"><a href=/docs/kv/3.4.1/tutorials/>Tutorials</a>
+<a href=/docs/kv/3.4.1/how-to/>How-to</a>
+<a href=/docs/kv/3.4.1/reference/>Reference</a>
+<a href=/docs/kv/3.4.1/explanation/>Explanation</a></nav><a class=community-link href=https://github.com/orgs/OpenRiak/discussions>Community</a>
+<label class=theme-control><span class=theme-control__icon aria-hidden=true>◐</span>
+<span class=sr-only>Color theme</span>
+<select data-theme-select aria-label="Color theme"><option value=system>System</option><option value=light>Light</option><option value=dark>Dark</option></select></label></div></header><div class=site-shell><aside id=docs-sidebar class=sidebar aria-label="Documentation navigation"><div class=sidebar__tools><label for=version-select>Version</label>
+<select id=version-select data-version-select><option value=/docs/kv/3.4.1/>3.4.1 (latest)</option><option value=/docs/kv/3.4.0/ selected>3.4.0</option></select><form class=docs-search role=search data-search data-index-url=/docs/search-index.json data-version=3.4.0><label class=sr-only for=docs-search-input>Search this version</label>
+<input id=docs-search-input type=search placeholder="Search this version" autocomplete=off data-search-input><div class=search-results data-search-results hidden></div></form></div><nav class=sidebar__nav aria-label="Pages in this version"><a class=sidebar__root href=/docs/kv/3.4.0/>OpenRiak KV 3.4.0</a><ul class=nav-tree><li><details><summary><a href=/docs/kv/3.4.0/explanation/>Explanation</a></summary></details></li><li><details open><summary><a href=/docs/kv/3.4.0/how-to/>How-to guides</a></summary><ul class=nav-tree><li><details><summary><a href=/docs/kv/3.4.0/how-to/configure/>Configure OpenRiak</a></summary></details></li><li><details open><summary><a href=/docs/kv/3.4.0/how-to/develop/>Develop with OpenRiak</a></summary><ul class=nav-tree><li><a href=/docs/kv/3.4.0/how-to/develop/authenticate-an-application-client/>Authenticate an application client</a></li><li><a href=/docs/kv/3.4.0/how-to/develop/create-and-store-an-object/>Create and store an object</a></li><li><a href=/docs/kv/3.4.0/how-to/develop/delete-an-object/>Delete an object</a></li><li><a href=/docs/kv/3.4.0/how-to/develop/query-secondary-indexes/>Query secondary indexes</a></li><li><a href=/docs/kv/3.4.0/how-to/develop/read-an-object/>Read an object</a></li><li><a href=/docs/kv/3.4.0/how-to/develop/resolve-object-conflicts/>Resolve object conflicts</a></li><li><a href=/docs/kv/3.4.0/how-to/develop/run-a-mapreduce-query/>Run a MapReduce query</a></li><li><a href=/docs/kv/3.4.0/how-to/develop/update-an-object/>Update an object</a></li><li><a href=/docs/kv/3.4.0/how-to/develop/use-bucket-types-in-an-application/>Use bucket types in an application</a></li><li><a href=/docs/kv/3.4.0/how-to/develop/store-content-with-media-types/>Store content with media types</a></li><li><a href=/docs/kv/3.4.0/how-to/develop/use-distributed-counters/>Use distributed counters</a></li><li><a href=/docs/kv/3.4.0/how-to/develop/use-grow-only-sets/>Use grow-only sets</a></li><li><a href=/docs/kv/3.4.0/how-to/develop/use-hyperloglogs/>Use HyperLogLogs</a></li><li><a href=/docs/kv/3.4.0/how-to/develop/use-distributed-maps/>Use distributed maps</a></li><li><a href=/docs/kv/3.4.0/how-to/develop/use-distributed-sets/>Use distributed sets</a></li><li><a class=is-current href=/docs/kv/3.4.0/how-to/develop/write-a-commit-hook/ aria-current=page>Write a commit hook</a></li><li><a href=/docs/kv/3.4.0/how-to/develop/write-a-replication-hook/>Write a replication hook</a></li><li><a href=/docs/kv/3.4.0/how-to/develop/query-data-with-the-query-api/>Query data with the Query API</a></li><li><a href=/docs/kv/3.4.0/how-to/develop/send-a-conditional-object-request/>Send a conditional object request</a></li><li><a href=/docs/kv/3.4.0/how-to/develop/store-immutable-data-with-the-write-once-path/>Store immutable data with the write-once path</a></li></ul></details></li><li><details><summary><a href=/docs/kv/3.4.0/how-to/install/>Install and verify OpenRiak</a></summary></details></li><li><details><summary><a href=/docs/kv/3.4.0/how-to/operate/>Operate a cluster</a></summary></details></li><li><details><summary><a href=/docs/kv/3.4.0/how-to/plan/>Plan a production cluster</a></summary></details></li><li><details><summary><a href=/docs/kv/3.4.0/how-to/secure/>Secure OpenRiak</a></summary></details></li><li><details><summary><a href=/docs/kv/3.4.0/how-to/troubleshoot/>Troubleshoot OpenRiak</a></summary></details></li><li><details><summary><a href=/docs/kv/3.4.0/how-to/tune/>Tune performance</a></summary></details></li><li><details><summary><a href=/docs/kv/3.4.0/how-to/redis-add-on/>Use the Redis add-on</a></summary></details></li></ul></details></li><li><details><summary><a href=/docs/kv/3.4.0/reference/>Reference</a></summary></details></li><li><details><summary><a href=/docs/kv/3.4.0/tutorials/>Tutorials</a></summary></details></li></ul></nav><div class=sidebar__help><a href=https://github.com/orgs/OpenRiak/discussions>Ask the OpenRiak community</a>
+<a href=https://github.com/OpenRiak/riak>OpenRiak source code</a></div></aside><button class=sidebar-scrim type=button data-sidebar-close aria-label="Close navigation"></button><main id=main-content class=content tabindex=-1><article class=doc><nav class=breadcrumbs aria-label=Breadcrumb><ol><li><a href=/docs/kv/>OpenRiak KV documentation</a></li><li><a href=/docs/kv/3.4.0/>OpenRiak KV 3.4.0</a></li><li><a href=/docs/kv/3.4.0/how-to/>How-to guides</a></li><li><a href=/docs/kv/3.4.0/how-to/develop/>Develop with OpenRiak</a></li><li aria-current=page>Write a commit hook</li></ol></nav><header class=article-header><div class=badges><span class="badge badge--how-to">how-to</span>
+<span class=badge>KV 3.4.0</span></div><h1>Write a commit hook</h1><p class=lede>Show developers how to write a commit hook with a minimal verified example.</p><div class=review-notice role=note><strong>Review status:</strong>
+This migrated page is still marked as a draft.
+Technical review is required before publication.</div></header><details class=on-this-page><summary>On this page</summary><nav id=TableOfContents><ul><li><a href=#before-you-begin>Before you begin</a></li><li><a href=#overview>Overview</a><ul><li><a href=#using-commit-hooks>Using Commit Hooks</a></li></ul></li><li><a href=#verify-the-result>Verify the result</a></li></ul></nav></details><div class=doc-body><p>Show developers how to write a commit hook with a minimal verified example.</p><h2 id=before-you-begin>Before you begin</h2><p>A non-production OpenRiak KV cluster, client credentials, and disposable test data that represents the operation you need to implement.</p><h2 id=overview>Overview</h2><h3 id=using-commit-hooks>Using Commit Hooks</h3><p>Pre- and post-commit hooks are functions that are invoked before or
+after an object has been written to Riak. To provide a few examples,
+commit hooks can:</p><ul><li>allow a write to occur with an unmodified object</li><li>modify an object</li><li>fail an update and prevent any modifications to the object</li></ul><p>Post-commit hooks are notified <em>after the fact</em> and should not modify
+the object directly. Updating Riak objects while post-commit hooks are
+invoked can cause nasty feedback loops which will wedge the hook into an
+infinite cycle unless the hook functions are carefully written to detect
+and short-circuit such cycles.</p><p>Pre- and post-commit hooks are applied at the <a href=/docs/kv/3.4.0/explanation/data-model/keys-objects-and-buckets/>bucket</a>
+level,
+<a href=/docs/kv/3.4.0/how-to/develop/use-bucket-types/>using bucket types</a>
+. They are run once per successful response to the
+client.</p><p>Both pre- and post-commit hooks are named <a href=http://learnyousomeerlang.com/ rel=noopener>Erlang</a>
+functions.</p><h4 id=setting-commit-hooks-using-bucket-types>Setting Commit Hooks Using Bucket Types</h4><p>Because hooks are defined at the bucket level, you can create <a href=/docs/kv/3.4.0/how-to/develop/use-bucket-types/>bucket types</a>
+that associate one or more hooks with any bucket that bears that type.
+Let&rsquo;s create a bucket type called <code>with_post_commit</code> that adds a
+post-commit hook to operations on any bucket that bears the
+<code>with_post_commit</code> type.</p><p>The format for specifying commit hooks is to identify the module (<code>mod</code>)
+and then the name of the function (<code>fun</code>) as a JavaScript object. The
+following specifies a commit hook called <code>my_custom_hook</code> in the module
+<code>commit_hooks_module</code>:</p><div class=highlight><pre tabindex=0 class=chroma><code class=language-json data-lang=json><span class=line><span class=cl><span class=p>{</span>
+</span></span><span class=line><span class=cl>  <span class=nt>&#34;mod&#34;</span><span class=p>:</span> <span class=s2>&#34;commit_hooks_module&#34;</span><span class=p>,</span>
+</span></span><span class=line><span class=cl>  <span class=nt>&#34;fun&#34;</span><span class=p>:</span> <span class=s2>&#34;my_custom_hook&#34;</span>
+</span></span><span class=line><span class=cl><span class=p>}</span>
+</span></span></code></pre></div><p>When we create our <code>with_post_commit</code> bucket type, we add that object
+to either the <code>precommit</code> or <code>postcommit</code> list in the bucket type&rsquo;s
+properties. Pre- and post-commit hooks are stored in lists named
+<code>precommit</code> and <code>postcommit</code>, respectively. Let&rsquo;s add the hook we
+specified above to the <code>postcommit</code> property when we create our bucket
+type:</p><div class=highlight><pre tabindex=0 class=chroma><code class=language-bash data-lang=bash><span class=line><span class=cl>riak admin bucket-type create with_post_commit <span class=se>\
+</span></span></span><span class=line><span class=cl>  <span class=s1>&#39;{&#34;props&#34;:{&#34;postcommit&#34;:[&#34;my_post_commit_hook&#34;]}&#39;</span>
+</span></span></code></pre></div><p>Once our bucket type has been created, we must activate it so that it
+will be usable through our OpenRiak cluster:</p><div class=highlight><pre tabindex=0 class=chroma><code class=language-bash data-lang=bash><span class=line><span class=cl>riak admin bucket-type activate with_post_commit
+</span></span></code></pre></div><p>If the response is <code>with_post_commit has been activated</code>, then the
+bucket type is ready for use.</p><h4 id=pre-commit-hooks>Pre-Commit Hooks</h4><p>Pre-commit hook Erlang functions should take a single argument, the
+Riak object being modified. Remember that deletes are also considered
+&ldquo;writes,&rdquo; and so pre-commit hooks will be fired when a delete occurs in
+the bucket as well. This means that hook functions will need to inspect
+the object for the <code>X-Riak-Deleted</code> metadata entry (more on this in our
+documentation on <a href=/docs/kv/3.4.0/reference/operations/object-deletion/>object deletion</a>
+) to determine whether a delete is
+occurring.</p><p>Erlang pre-commit functions are allowed three possible return values:</p><ul><li>A Riak object - This can either be the same object passed to the function or an updated version of the object. This allows hooks to modify the object before they are written.</li><li><code>fail</code> - The atom <code>fail</code> will cause Riak to fail the write and send a 403 Forbidden error response (in the <a href=/docs/kv/3.4.0/reference/http-api/>HTTP API</a>
+) along with a generic error message about why the write was blocked.</li><li><code>{fail, Reason}</code> - The tuple <code>{fail, Reason}</code> will cause the same behavior as in the case above, but with the addition of <code>Reason</code> used as the error text.</li></ul><p>Errors that occur when processing Erlang pre-commit hooks will be
+reported in the <code>sasl-error.log</code> file with lines that start with
+<code>problem invoking hook</code>.</p><h5 id=object-size-example>Object Size Example</h5><p>This Erlang pre-commit hook will limit object values to 5 MB or smaller:</p><div class=highlight><pre tabindex=0 class=chroma><code class=language-erlang data-lang=erlang><span class=line><span class=cl><span class=nf>precommit_limit_size</span><span class=p>(</span><span class=nv>Object</span><span class=p>)</span> <span class=o>-&gt;</span>
+</span></span><span class=line><span class=cl>  <span class=k>case</span> <span class=nn>erlang</span><span class=p>:</span><span class=nb>byte_size</span><span class=p>(</span><span class=nn>riak_object</span><span class=p>:</span><span class=nf>get_value</span><span class=p>(</span><span class=nv>Object</span><span class=p>))</span> <span class=k>of</span>
+</span></span><span class=line><span class=cl>    <span class=nv>Size</span> <span class=k>when</span> <span class=nv>Size</span> <span class=o>&gt;</span> <span class=mi>5242880</span> <span class=o>-&gt;</span> <span class=p>{</span><span class=n>fail</span><span class=p>,</span> <span class=s>&#34;Object is larger than 5MB.&#34;</span><span class=p>};</span>
+</span></span><span class=line><span class=cl>    <span class=p>_</span> <span class=o>-&gt;</span> <span class=nv>Object</span>
+</span></span><span class=line><span class=cl>  <span class=k>end</span><span class=p>.</span>
+</span></span></code></pre></div><p>The Erlang function <code>precommit_limit_size</code> takes the Riak object
+(<code>Object</code>) as its input and runs a pattern-matching operation on the
+object. If the <a href=http://www.erlang.org/doc/man/erlang.html#byte_size-1 rel=noopener><code>erlang:byte_size</code></a>
+function determines that the object&rsquo;s size (determined by the <code>riak_object:get_value</code>
+function) is greater than 5,242,880 (5 MB in bytes), then the commit
+will return failure and the message <code>Object size is larger than 5 MB</code>.
+This will stop the write. If the object is not larger than 5 MB, Riak
+will return the object and allow the write to proceed.</p><h5 id=chaining>Chaining</h5><p>The default value of the bucket type&rsquo;s <code>precommit</code> property is an empty
+list, meaning that no pre-commit hooks are specified by default. Adding
+one or more pre-commit hook functions to this list, as documented above,
+will cause Riak to start evaluating those hook functions when bucket
+entries are created, updated, or deleted. Riak stops evaluating
+pre-commit hooks when a hook function fails the commit.</p><h6 id=json-validation-example>JSON Validation Example</h6><p>Pre-commit hooks can be used in many ways in Riak. One such way to use
+pre-commmit hooks is to validate data before it is written to Riak.
+Below is an example that uses Javascript to validate a JSON object
+before it is written to Riak.</p><p>Below is a sample JSON object that will be evaluated by the hook:</p><div class=highlight><pre tabindex=0 class=chroma><code class=language-json data-lang=json><span class=line><span class=cl><span class=p>{</span>
+</span></span><span class=line><span class=cl>  <span class=nt>&#34;user_info&#34;</span><span class=p>:</span> <span class=p>{</span>
+</span></span><span class=line><span class=cl>    <span class=nt>&#34;name&#34;</span><span class=p>:</span> <span class=s2>&#34;Mark Phillips&#34;</span><span class=p>,</span>
+</span></span><span class=line><span class=cl>    <span class=nt>&#34;age&#34;</span><span class=p>:</span> <span class=s2>&#34;25&#34;</span>
+</span></span><span class=line><span class=cl>  <span class=p>},</span>
+</span></span><span class=line><span class=cl>  <span class=nt>&#34;session_info&#34;</span><span class=p>:</span> <span class=p>{</span>
+</span></span><span class=line><span class=cl>    <span class=nt>&#34;id&#34;</span><span class=p>:</span> <span class=mi>3254425</span><span class=p>,</span>
+</span></span><span class=line><span class=cl>    <span class=nt>&#34;items&#34;</span><span class=p>:</span> <span class=p>[</span><span class=mi>29</span><span class=p>,</span> <span class=mi>37</span><span class=p>,</span> <span class=mi>34</span><span class=p>]</span>
+</span></span><span class=line><span class=cl>  <span class=p>}</span>
+</span></span><span class=line><span class=cl><span class=p>}</span>
+</span></span></code></pre></div><p>The following hook will validate the JSON object:</p><div class=highlight><pre tabindex=0 class=chroma><code class=language-erlang data-lang=erlang><span class=line><span class=cl><span class=nf>validate</span><span class=p>(</span><span class=nv>Object</span><span class=p>)</span> <span class=o>-&gt;</span>
+</span></span><span class=line><span class=cl>  <span class=k>try</span>
+</span></span><span class=line><span class=cl>    <span class=nn>mochijson2</span><span class=p>:</span><span class=nf>decode</span><span class=p>(</span><span class=nn>riak_object</span><span class=p>:</span><span class=nf>get_value</span><span class=p>(</span><span class=nv>Object</span><span class=p>)),</span>
+</span></span><span class=line><span class=cl>    <span class=nv>Object</span>
+</span></span><span class=line><span class=cl>  <span class=k>catch</span>
+</span></span><span class=line><span class=cl>    <span class=nn>throw</span><span class=p>:</span><span class=n>invalid_utf8</span> <span class=o>-&gt;</span>
+</span></span><span class=line><span class=cl>      <span class=p>{</span><span class=n>fail</span><span class=p>,</span> <span class=s>&#34;Invalid JSON: Illegal UTF-8 character&#34;</span><span class=p>};</span>
+</span></span><span class=line><span class=cl>    <span class=nn>error</span><span class=p>:</span><span class=nv>Error</span> <span class=o>-&gt;</span>
+</span></span><span class=line><span class=cl>      <span class=p>{</span><span class=n>fail</span><span class=p>,</span> <span class=nn>lists</span><span class=p>:</span><span class=nf>flatten</span><span class=p>(</span><span class=nn>io_lib</span><span class=p>:</span><span class=nf>format</span><span class=p>(</span><span class=s>&#34;Invalid JSON: </span><span class=si>~p</span><span class=s>&#34;</span><span class=p>,[</span><span class=nv>Error</span><span class=p>]))}</span>
+</span></span><span class=line><span class=cl>  <span class=k>end</span><span class=p>.</span>
+</span></span></code></pre></div><p><strong>Note</strong>: All pre-commit hook functions are executed for each create and update operation.</p><h4 id=post-commit-hooks>Post-Commit Hooks</h4><p>Post-commit hooks are run after a write has completed successfully. More
+specifically, the hook function is called immediately before the calling
+process is notified of the successful write.</p><p>Hook functions must accept a single argument: the object instance just
+written. The return value of the function is ignored. As with pre-commit
+hooks, deletes are considered writes, so post-commit hook functions will
+need to inspect the object&rsquo;s metadata for the presence of <code>X-Riak-Deleted</code>
+to determine whether a delete has occurred. As with pre-commit hooks,
+errors that occur when processing post-commit hooks will be reported in
+the <code>sasl-error.log</code> file with lines that start with <code>problem invoking hook</code>.</p><h5 id=example>Example</h5><p>The following post-commit hook creates a secondary index on the <code>email</code>
+field of a JSON object:</p><div class=highlight><pre tabindex=0 class=chroma><code class=language-erlang data-lang=erlang><span class=line><span class=cl><span class=nf>postcommit_index_on_email</span><span class=p>(</span><span class=nv>Object</span><span class=p>)</span> <span class=o>-&gt;</span>
+</span></span><span class=line><span class=cl>    <span class=c>%% Determine the target bucket name
+</span></span></span><span class=line><span class=cl>    <span class=nv>Bucket</span> <span class=o>=</span> <span class=nn>erlang</span><span class=p>:</span><span class=nb>iolist_to_binary</span><span class=p>([</span><span class=nn>riak_object</span><span class=p>:</span><span class=nf>bucket</span><span class=p>(</span><span class=nv>Object</span><span class=p>),</span><span class=s>&#34;_by_email&#34;</span><span class=p>]),</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl><span class=c>%% Decode the JSON body of the object
+</span></span></span><span class=line><span class=cl>    <span class=p>{</span><span class=n>struct</span><span class=p>,</span> <span class=nv>Properties</span><span class=p>}</span> <span class=o>=</span> <span class=nn>mochijson2</span><span class=p>:</span><span class=nf>decode</span><span class=p>(</span><span class=nn>riak_object</span><span class=p>:</span><span class=nf>get_value</span><span class=p>(</span><span class=nv>Object</span><span class=p>)),</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl><span class=c>%% Extract the email field
+</span></span></span><span class=line><span class=cl>    <span class=p>{</span><span class=o>&lt;&lt;</span><span class=s>&#34;email&#34;</span><span class=o>&gt;&gt;</span><span class=p>,</span><span class=nv>Key</span><span class=p>}</span> <span class=o>=</span> <span class=nn>lists</span><span class=p>:</span><span class=nf>keyfind</span><span class=p>(</span><span class=o>&lt;&lt;</span><span class=s>&#34;email&#34;</span><span class=o>&gt;&gt;</span><span class=p>,</span><span class=mi>1</span><span class=p>,</span><span class=nv>Properties</span><span class=p>),</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl><span class=c>%% Create a new object for the target bucket
+</span></span></span><span class=line><span class=cl>    <span class=c>%% NOTE: This doesn&#39;t handle the case where the
+</span></span></span><span class=line><span class=cl>    <span class=c>%%       index object already exists!
+</span></span></span><span class=line><span class=cl>    <span class=nv>IndexObj</span> <span class=o>=</span> <span class=nn>riak_object</span><span class=p>:</span><span class=nf>new</span><span class=p>(</span>
+</span></span><span class=line><span class=cl>        <span class=nv>Bucket</span><span class=p>,</span> <span class=nv>Key</span><span class=p>,</span> <span class=o>&lt;&lt;&gt;&gt;</span><span class=p>,</span> <span class=c>%% no object contents
+</span></span></span><span class=line><span class=cl>            <span class=nn>dict</span><span class=p>:</span><span class=nf>from_list</span><span class=p>(</span>
+</span></span><span class=line><span class=cl>                <span class=p>[</span>
+</span></span><span class=line><span class=cl>                    <span class=p>{</span><span class=o>&lt;&lt;</span><span class=s>&#34;content-type&#34;</span><span class=o>&gt;&gt;</span><span class=p>,</span> <span class=s>&#34;text/plain&#34;</span><span class=p>},</span>
+</span></span><span class=line><span class=cl>                    <span class=p>{</span><span class=o>&lt;&lt;</span><span class=s>&#34;Links&#34;</span><span class=o>&gt;&gt;</span><span class=p>,</span>
+</span></span><span class=line><span class=cl>                        <span class=p>[</span>
+</span></span><span class=line><span class=cl>                            <span class=p>{</span>
+</span></span><span class=line><span class=cl>                                <span class=p>{</span><span class=nn>riak_object</span><span class=p>:</span><span class=nf>bucket</span><span class=p>(</span><span class=nv>Object</span><span class=p>),</span> <span class=nn>riak_object</span><span class=p>:</span><span class=nf>key</span><span class=p>(</span><span class=nv>Object</span><span class=p>)},</span>
+</span></span><span class=line><span class=cl>                                <span class=o>&lt;&lt;</span><span class=s>&#34;indexed&#34;</span><span class=o>&gt;&gt;</span>
+</span></span><span class=line><span class=cl>                            <span class=p>}]}</span>
+</span></span><span class=line><span class=cl>                        <span class=p>]</span>
+</span></span><span class=line><span class=cl>            <span class=p>)</span>
+</span></span><span class=line><span class=cl>    <span class=p>),</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl><span class=c>%% Get a riak client
+</span></span></span><span class=line><span class=cl>    <span class=p>{</span><span class=n>ok</span><span class=p>,</span> <span class=nv>C</span><span class=p>}</span> <span class=o>=</span> <span class=nn>riak</span><span class=p>:</span><span class=nf>local_client</span><span class=p>(),</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl><span class=c>%% Store the object
+</span></span></span><span class=line><span class=cl>    <span class=nv>C</span><span class=p>:</span><span class=nb>put</span><span class=p>(</span><span class=nv>IndexObj</span><span class=p>).</span>
+</span></span></code></pre></div><h5 id=chaining-1>Chaining</h5><p>The default value of the bucket <code>postcommit</code> property is an empty list,
+meaning that no post-commit hooks are specified by default. Adding one
+or more post-commit hook functions to the list, as documented above,
+will cause Riak to start evaluating those hook functions immediately
+after data has been created, updated, or deleted. Each post-commit hook
+function runs in a separate process so it&rsquo;s possible for several hook
+functions, triggered by the same update, to execute in parallel.</p><p><strong>Note</strong>: All post-commit hook functions are executed for each create,
+update, or delete.</p><h4 id=commit-hooks>Commit Hooks</h4><p>For store requests it is possible, via bucket properties, to configure &ldquo;commit hooks&rdquo; - functions that will be applied either pre-commit (before the PUT has coordinated), or post-commit (after coordination and before response to the client). This may have uses such as: value validation; updating inverted index objects; triggering actions in external systems.</p><p>Commit hooks are an expert feature, and should not be added without an understanding of the Riak codebase.</p><h2 id=verify-the-result>Verify the result</h2><p>Run the operation against test data, inspect the stored result and response metadata, and exercise the expected failure path.</p></div><nav class=page-navigation aria-label="Adjacent pages"><a class=page-navigation__previous href=/docs/kv/3.4.0/how-to/develop/write-a-replication-hook/><span>Previous</span><strong>Write a replication hook</strong></a>
+<a class=page-navigation__next href=/docs/kv/3.4.0/how-to/develop/use-distributed-sets/><span>Next</span><strong>Use distributed sets</strong></a></nav></article></main></div><footer class=site-footer><div><p>OpenRiak documentation is licensed under <a href=https://creativecommons.org/licenses/by/4.0/>Creative Commons Attribution 4.0</a>.</p><p>Historical material © Basho Technologies, Inc.; community revisions © OpenRiak contributors.</p></div><a href=#main-content>Back to top</a></footer><script src=/docs/js/site.js defer></script></body></html>

@@ -1,0 +1,21 @@
+{{ define "main" }}
+  <article class="doc doc--section">
+    {{ partial "breadcrumbs.html" . }}
+    {{ partial "article-header.html" . }}
+    <div class="doc-body">{{ .Content }}</div>
+    {{ if .Pages }}
+      <section class="child-pages" aria-labelledby="browse-section">
+        <h2 id="browse-section">Browse this section</h2>
+        <div class="cards">
+          {{ range .Pages.ByWeight }}
+            <a class="card" href="{{ .RelPermalink }}">
+              <strong>{{ .LinkTitle }}</strong>
+              {{ with .Description }}<span>{{ . }}</span>{{ end }}
+            </a>
+          {{ end }}
+        </div>
+      </section>
+    {{ end }}
+  </article>
+{{ end }}
+

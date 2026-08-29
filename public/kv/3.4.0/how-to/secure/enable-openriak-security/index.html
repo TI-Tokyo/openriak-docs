@@ -1,0 +1,358 @@
+<!doctype html><html lang=en class=no-js><head><script src="/docs/livereload.js?mindelay=10&amp;v=2&amp;port=1320&amp;path=docs/livereload" data-no-instant defer></script><meta charset=utf-8><meta name=viewport content="width=device-width,initial-scale=1"><meta name=color-scheme content="light dark"><script>(()=>{const t="openriak-docs-theme";let e="system";try{const n=localStorage.getItem(t);(n==="light"||n==="dark"||n==="system")&&(e=n)}catch{}const n=window.matchMedia?.("(prefers-color-scheme: dark)").matches??!1;document.documentElement.dataset.themePreference=e,document.documentElement.dataset.theme=e==="system"?n?"dark":"light":e})()</script><meta name=description content="Show security engineers how to enable openriak security and test the resulting controls."><title>Enable OpenRiak security | OpenRiak Documentation</title><link rel=canonical href=http://127.0.0.1:1320/docs/kv/3.4.0/how-to/secure/enable-openriak-security/><link rel=icon href=/docs/images/branding/favicon.ico sizes=any><link rel=stylesheet href=/docs/css/site.css><link rel=stylesheet href=/docs/css/theme.css><script src=/docs/js/theme.js defer></script><meta property="og:type" content="website"><meta property="og:title" content="Enable OpenRiak security"><meta property="og:description" content="Show security engineers how to enable openriak security and test the resulting controls."><meta property="og:url" content="http://127.0.0.1:1320/docs/kv/3.4.0/how-to/secure/enable-openriak-security/"></head><body data-kind=page data-section=kv><script>document.documentElement.classList.remove("no-js")</script><a class=skip-link href=#main-content>Skip to content</a><header class=site-header><div class=site-header__inner><button class=nav-toggle type=button aria-controls=docs-sidebar aria-expanded=false>
+<span aria-hidden=true>☰</span><span class=sr-only>Toggle documentation navigation</span>
+</button>
+<a class=brand href=/docs/ aria-label="OpenRiak documentation home"><img src=/docs/images/branding/riak-logo-inverted.png alt width=34 height=34>
+<span>OpenRiak <strong>Docs</strong></span></a><nav class=primary-nav aria-label="Documentation types"><a href=/docs/kv/3.4.1/tutorials/>Tutorials</a>
+<a href=/docs/kv/3.4.1/how-to/>How-to</a>
+<a href=/docs/kv/3.4.1/reference/>Reference</a>
+<a href=/docs/kv/3.4.1/explanation/>Explanation</a></nav><a class=community-link href=https://github.com/orgs/OpenRiak/discussions>Community</a>
+<label class=theme-control><span class=theme-control__icon aria-hidden=true>◐</span>
+<span class=sr-only>Color theme</span>
+<select data-theme-select aria-label="Color theme"><option value=system>System</option><option value=light>Light</option><option value=dark>Dark</option></select></label></div></header><div class=site-shell><aside id=docs-sidebar class=sidebar aria-label="Documentation navigation"><div class=sidebar__tools><label for=version-select>Version</label>
+<select id=version-select data-version-select><option value=/docs/kv/3.4.1/>3.4.1 (latest)</option><option value=/docs/kv/3.4.0/ selected>3.4.0</option></select><form class=docs-search role=search data-search data-index-url=/docs/search-index.json data-version=3.4.0><label class=sr-only for=docs-search-input>Search this version</label>
+<input id=docs-search-input type=search placeholder="Search this version" autocomplete=off data-search-input><div class=search-results data-search-results hidden></div></form></div><nav class=sidebar__nav aria-label="Pages in this version"><a class=sidebar__root href=/docs/kv/3.4.0/>OpenRiak KV 3.4.0</a><ul class=nav-tree><li><details><summary><a href=/docs/kv/3.4.0/explanation/>Explanation</a></summary></details></li><li><details open><summary><a href=/docs/kv/3.4.0/how-to/>How-to guides</a></summary><ul class=nav-tree><li><details><summary><a href=/docs/kv/3.4.0/how-to/configure/>Configure OpenRiak</a></summary></details></li><li><details><summary><a href=/docs/kv/3.4.0/how-to/develop/>Develop with OpenRiak</a></summary></details></li><li><details><summary><a href=/docs/kv/3.4.0/how-to/install/>Install and verify OpenRiak</a></summary></details></li><li><details><summary><a href=/docs/kv/3.4.0/how-to/operate/>Operate a cluster</a></summary></details></li><li><details><summary><a href=/docs/kv/3.4.0/how-to/plan/>Plan a production cluster</a></summary></details></li><li><details open><summary><a href=/docs/kv/3.4.0/how-to/secure/>Secure OpenRiak</a></summary><ul class=nav-tree><li><a href=/docs/kv/3.4.0/how-to/secure/configure-tls-certificates-and-ciphers/>Configure TLS certificates and ciphers</a></li><li><a class=is-current href=/docs/kv/3.4.0/how-to/secure/enable-openriak-security/ aria-current=page>Enable OpenRiak security</a></li><li><a href=/docs/kv/3.4.0/how-to/secure/manage-groups/>Manage groups</a></li><li><a href=/docs/kv/3.4.0/how-to/secure/grant-and-revoke-permissions/>Grant and revoke permissions</a></li><li><a href=/docs/kv/3.4.0/how-to/secure/manage-authentication-sources/>Manage authentication sources</a></li><li><a href=/docs/kv/3.4.0/how-to/secure/manage-users/>Manage users</a></li><li><a href=/docs/kv/3.4.0/how-to/secure/harden-openriak-network-access/>Harden OpenRiak network access</a></li><li><a href=/docs/kv/3.4.0/how-to/secure/apply-security-best-practices/>Apply security best practices</a></li></ul></details></li><li><details><summary><a href=/docs/kv/3.4.0/how-to/troubleshoot/>Troubleshoot OpenRiak</a></summary></details></li><li><details><summary><a href=/docs/kv/3.4.0/how-to/tune/>Tune performance</a></summary></details></li><li><details><summary><a href=/docs/kv/3.4.0/how-to/redis-add-on/>Use the Redis add-on</a></summary></details></li></ul></details></li><li><details><summary><a href=/docs/kv/3.4.0/reference/>Reference</a></summary></details></li><li><details><summary><a href=/docs/kv/3.4.0/tutorials/>Tutorials</a></summary></details></li></ul></nav><div class=sidebar__help><a href=https://github.com/orgs/OpenRiak/discussions>Ask the OpenRiak community</a>
+<a href=https://github.com/OpenRiak/riak>OpenRiak source code</a></div></aside><button class=sidebar-scrim type=button data-sidebar-close aria-label="Close navigation"></button><main id=main-content class=content tabindex=-1><article class=doc><nav class=breadcrumbs aria-label=Breadcrumb><ol><li><a href=/docs/kv/>OpenRiak KV documentation</a></li><li><a href=/docs/kv/3.4.0/>OpenRiak KV 3.4.0</a></li><li><a href=/docs/kv/3.4.0/how-to/>How-to guides</a></li><li><a href=/docs/kv/3.4.0/how-to/secure/>Secure OpenRiak</a></li><li aria-current=page>Enable OpenRiak security</li></ol></nav><header class=article-header><div class=badges><span class="badge badge--how-to">how-to</span>
+<span class=badge>KV 3.4.0</span></div><h1>Enable OpenRiak security</h1><p class=lede>Show security engineers how to enable openriak security and test the resulting controls.</p><div class=review-notice role=note><strong>Review status:</strong>
+This migrated page is still marked as a draft.
+Technical review is required before publication.</div></header><details class=on-this-page><summary>On this page</summary><nav id=TableOfContents><ul><li><a href=#before-you-begin>Before you begin</a></li><li><a href=#overview>Overview</a><ul><li><a href=#security-basics>Security Basics</a></li></ul></li><li><a href=#verify-the-result>Verify the result</a></li></ul></nav></details><div class=doc-body><p>Show security engineers how to enable openriak security and test the resulting controls.</p><h2 id=before-you-begin>Before you begin</h2><p>Secure administrative access, an inventory of identities and certificates involved, and a tested rollback path that will not lock operators out.</p><h2 id=overview>Overview</h2><h3 id=security-basics>Security Basics</h3><blockquote><p><strong>Note on Network security</strong></p><p>This document covers only the 2.0 authentication and authorization
+features. For a look at network security in Riak, see <a href=/docs/kv/3.4.0/how-to/secure/manage-sources/>Security and Firewalls</a>
+.</p></blockquote><p>As of version 2.0, Riak administrators can selectively apportion
+access to a wide variety of OpenRiak&rsquo;s functionality, including accessing,
+modifying, and deleting objects, changing bucket properties, and
+running MapReduce jobs.</p><h4 id=terminology>Terminology</h4><ul><li><strong>Authentication</strong> is the process of identifying a user.</li><li><strong>Authorization</strong> is verifying whether a user has access to perform
+the requested operation.</li><li><strong>Groups</strong> can have permissions assigned to them, but cannot be
+authenticated.</li><li><strong>Users</strong> can be authenticated and authorized; permissions
+(authorization) may be granted directly or via group membership.</li><li><strong>Sources</strong> are used to define authentication mechanisms. A user
+cannot be authenticated to Riak until a source is defined.</li></ul><h5 id=security-checklist>Security Checklist</h5><p>There are a few key steps that all applications will need to undertake
+when turning on Riak security. Missing one of these steps will almost
+certainly break your application, so make sure that you have done each
+of the following <strong>before</strong> enabling security:</p><ol><li>Because Riak security requires a secure SSL connection, you will need
+to generate appropriate SSL certs, <a href=#enabling-ssl>enable SSL</a>
+and establish a <a href=#certificate-configuration>certificate configuration</a>
+on each node. <strong>If you
+enable security without having established a functioning SSL
+connection, all requests to Riak will fail</strong>.</li><li>Define <a href=#user-management>users</a>
+and, optionally, <a href=#add-group>groups</a></li><li>Define an <a href=#managing-sources>authentication source</a>
+for each user</li><li>Grant the necessary <a href=#managing-permissions>permissions</a>
+to each user (and/or group)</li><li>Check any Erlang MapReduce code for invocations of Riak modules other
+than <code>riak_kv_mapreduce</code>. Enabling security will prevent those from
+succeeding unless those modules are available via the <code>add_path</code>
+mechanism documented in <a href=/docs/kv/3.4.0/reference/operations/custom-code/>Installing Custom Code</a>
+.</li><li>Make sure that your client software will work properly:<ul><li>It must pass authentication information with each request</li><li>It must support HTTPS or encrypted <a href=/docs/kv/3.4.0/reference/protocol-buffers/>Protocol Buffers</a>
+traffic</li><li>If using HTTPS, the proper port (presumably 443) is open from
+client to server</li><li>Code that uses OpenRiak&rsquo;s deprecated link walking feature <strong>will
+not work</strong> with security enabled</li></ul></li><li>If you have applications that rely on an already existing Riak
+cluster, make sure that those applications are prepared to gracefully
+transition into using Riak security once security is enabled.</li></ol><p>Security should be enabled only after all of the above steps have been
+performed and your security setup has been properly vetted.</p><p>Clients that use <a href=/docs/kv/3.4.0/reference/protocol-buffers/>Protocol Buffers</a>
+will typically have to be
+reconfigured/restarted with the proper credentials once security is
+enabled.</p><h5 id=security-basics-1>Security Basics</h5><p>Riak security may be checked, enabled, or disabled by an administrator
+through the command line. This allows an administrator to change
+security settings for the whole cluster quickly without needing to
+change settings on a node-by-node basis.</p><p><strong>Note</strong>: Currently, Riak security commands can be run only through
+the command line, using the <code>riak admin security</code> command. In future
+versions of Riak, administrators may have the option of issuing
+those commands through the Protocol Buffers and HTTP interfaces.</p><h6 id=enabling-security>Enabling Security</h6><blockquote><p><strong>Warning: Enable security with caution</strong></p><p>Enabling security will change the way your client libraries and
+your applications interact with Riak.</p><p>Once security is enabled, all client connections must be encrypted and all permissions will be denied by default. Do not enable this in production until you have worked through the <a href=#security-checklist>security checklist</a>
+above and tested everything in a non-production environment.</p></blockquote><p>Riak security is disabled by default. To enable it:</p><div class=highlight><pre tabindex=0 class=chroma><code class=language-bash data-lang=bash><span class=line><span class=cl>riak admin security <span class=nb>enable</span>
+</span></span></code></pre></div><p><strong>As per the warning above, do not enable security in production without
+taking the appropriate precautions.</strong></p><p>All users, groups, authentication sources, and permissions can be
+configured while security is disabled, allowing you to create a
+security configuration of any level of complexity without prematurely
+impacting the service. This should be borne in mind when you are
+<a href=#user-management>managing users</a>
+and <a href=#managing-sources>managing sources</a>
+.</p><h6 id=disabling-security>Disabling Security</h6><p>If you disable security, this means that you have disabled all of the
+various permissions checks that take place when executing operations
+against Riak. Users, groups, and other security attributes remain
+available for configuration while security is disabled, and will be
+applied if and when security is re-enabled.</p><div class=highlight><pre tabindex=0 class=chroma><code class=language-bash data-lang=bash><span class=line><span class=cl>riak admin security disable
+</span></span></code></pre></div><p>While security is disabled, clients will need to be reconfigured to no
+longer require TLS and send credentials.</p><h6 id=checking-security-status>Checking Security Status</h6><p>To check whether security is currently enabled for the cluster, use the
+<code>status</code> command:</p><div class=highlight><pre tabindex=0 class=chroma><code class=language-bash data-lang=bash><span class=line><span class=cl>riak admin security status
+</span></span></code></pre></div><p>This command will usually return <code>Enabled</code> or <code>Disabled</code>, but if
+security is enabled on a mixed-mode cluster (running a combination of
+Riak 2.0 and older versions) it will indicate that security is enabled
+but not yet available.</p><h5 id=user-management>User Management</h5><p>Riak security enables you to control <em>authorization</em> by creating,
+modifying, and deleting user characteristics and granting users
+selective access to Riak functionality (and also to revoke access).
+Users can be assigned one or more of the following characteristics:</p><ul><li><code>username</code></li><li><code>groups</code></li><li><code>password</code></li></ul><p>You may also assign users characteristics beyond those listed
+above&mdash;e.g., listing email addresses or other information&mdash;but those
+values will carry no special significance for Riak.</p><p><strong>Note</strong>: The <code>username</code> is the one user characteristic that cannot be
+changed once a user has been created.</p><h6 id=retrieve-a-current-user-or-group-list>Retrieve a Current User or Group List</h6><p>A list of currently existing users can be accessed at any time:</p><div class=highlight><pre tabindex=0 class=chroma><code class=language-bash data-lang=bash><span class=line><span class=cl>riak admin security print-users
+</span></span></code></pre></div><p>The same goes for groups:</p><div class=highlight><pre tabindex=0 class=chroma><code class=language-bash data-lang=bash><span class=line><span class=cl>riak admin security print-groups
+</span></span></code></pre></div><p>Example output, assuming user named <code>riakuser</code> with an assigned
+password:</p><pre tabindex=0><code>+----------+--------+----------------------+------------------------------+
+| username | groups |       password       |           options            |
++----------+--------+----------------------+------------------------------+
+| riakuser |        |983e8ae1421574b8733824|              []              |
++----------+--------+----------------------+------------------------------+
+</code></pre><p><strong>Note</strong>: All passwords are displayed in encrypted form in console
+output.</p><p>If the user <code>riakuser</code> were assigned to the group <code>dev</code> and a <code>name</code> of
+<code>lucius</code>, the output would look like this:</p><div class=highlight><pre tabindex=0 class=chroma><code class=language-bash data-lang=bash><span class=line><span class=cl>+----------+----------------+----------------------+---------------------+
+</span></span><span class=line><span class=cl><span class=p>|</span> username <span class=p>|</span>     groups     <span class=p>|</span>       password       <span class=p>|</span>       options       <span class=p>|</span>
+</span></span><span class=line><span class=cl>+----------+----------------+----------------------+---------------------+
+</span></span><span class=line><span class=cl><span class=p>|</span> riakuser <span class=p>|</span>      dev       <span class=p>|</span>983e8ae1421574b8733824<span class=p>|</span> <span class=o>[{</span><span class=s2>&#34;name&#34;</span>,<span class=s2>&#34;lucius&#34;</span><span class=o>}]</span> <span class=p>|</span>
+</span></span><span class=line><span class=cl>+----------+----------------+----------------------+---------------------+
+</span></span></code></pre></div><p>If you&rsquo;d like to see which permissions have been assigned to
+<code>riakuser</code>, you would need to use the <code>print-grants</code> command, detailed
+below.</p><p>The <code>security print-user</code> or <code>security-print-group</code> (singular) commands
+can be used with a name as argument to see the same information as
+above, except for only that user or group.</p><h6 id=permissions-grants-for-a-single-user-or-group>Permissions Grants For a Single User or Group</h6><p>You can retrieve authorization information about a specific user or
+group using the <code>print-grants</code> command, which takes the form of
+<code>riak admin security print-grants &lt;username></code>.</p><p>The output will look like this if the user <code>riakuser</code> has been
+explicitly granted a <code>riak_kv.get</code> permission on the bucket
+<code>shopping_list</code> and inherits a set of permissions from the <code>admin</code>
+group:</p><div class=highlight><pre tabindex=0 class=chroma><code class=language-bash data-lang=bash><span class=line><span class=cl>Inherited permissions <span class=o>(</span>user/riakuser<span class=o>)</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl>+--------+----------+----------+----------------------------------------+
+</span></span><span class=line><span class=cl><span class=p>|</span> group  <span class=p>|</span>   <span class=nb>type</span>   <span class=p>|</span>  bucket  <span class=p>|</span>                 grants                 <span class=p>|</span>
+</span></span><span class=line><span class=cl>+--------+----------+----------+----------------------------------------+
+</span></span><span class=line><span class=cl><span class=p>|</span> admin  <span class=p>|</span>    *     <span class=p>|</span>    *     <span class=p>|</span>      riak_kv.get, riak_kv.delete,      <span class=p>|</span>
+</span></span><span class=line><span class=cl><span class=p>|</span>        <span class=p>|</span>          <span class=p>|</span>          <span class=p>|</span>              riak_kv.put               <span class=p>|</span>
+</span></span><span class=line><span class=cl>+--------+----------+----------+----------------------------------------+
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl>Dedicated permissions <span class=o>(</span>user/riakuser<span class=o>)</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl>+----------+-------------+----------------------------------------+
+</span></span><span class=line><span class=cl><span class=p>|</span>   <span class=nb>type</span>   <span class=p>|</span>   bucket    <span class=p>|</span>                 grants                 <span class=p>|</span>
+</span></span><span class=line><span class=cl>+----------+-------------+----------------------------------------+
+</span></span><span class=line><span class=cl><span class=p>|</span>   ANY    <span class=p>|</span>shopping_list<span class=p>|</span>               riak_kv.get              <span class=p>|</span>
+</span></span><span class=line><span class=cl>+----------+-------------+----------------------------------------+
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl>Cumulative permissions <span class=o>(</span>user/riakuser<span class=o>)</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl>+----------+-------------+----------------------------------------+
+</span></span><span class=line><span class=cl><span class=p>|</span>   <span class=nb>type</span>   <span class=p>|</span>   bucket    <span class=p>|</span>                 grants                 <span class=p>|</span>
+</span></span><span class=line><span class=cl>+----------+-------------+----------------------------------------+
+</span></span><span class=line><span class=cl><span class=p>|</span>    *     <span class=p>|</span>      *      <span class=p>|</span>      riak_kv.get, riak_kv.delete,      <span class=p>|</span>
+</span></span><span class=line><span class=cl><span class=p>|</span>          <span class=p>|</span>             <span class=p>|</span>               riak_kv.put              <span class=p>|</span>
+</span></span><span class=line><span class=cl><span class=p>|</span>   ANY    <span class=p>|</span>shopping_list<span class=p>|</span>               riak_kv.get              <span class=p>|</span>
+</span></span><span class=line><span class=cl>+----------+-------------+----------------------------------------+
+</span></span></code></pre></div><p><strong>Note</strong>: The term <code>admin</code> is not a reserved term in Riak security. It
+is used here only for illustrative purposes.</p><p>Because the same name can represent both a user and a group, a prefix
+(<code>user/</code> or <code>group/</code>) can be used before the name (e.g., <code>print-grants
+user/admin</code>). If a name collides and no prefix is supplied, grants for
+both will be listed separately.</p><h6 id=add-group>Add Group</h6><p>For easier management of permissions across several users, it is
+possible to create groups to be assigned to those users.</p><div class=highlight><pre tabindex=0 class=chroma><code class=language-bash data-lang=bash><span class=line><span class=cl>riak admin security add-group admin
+</span></span></code></pre></div><h6 id=add-user>Add User</h6><p>To create a user with the username <code>riakuser</code>, we use the <code>add-user</code>
+command:</p><div class=highlight><pre tabindex=0 class=chroma><code class=language-bash data-lang=bash><span class=line><span class=cl>riak admin security add-user riakuser
+</span></span></code></pre></div><p>Using the command this way will create the user <code>riakuser</code> without <em>any</em>
+characteristics beyond a username, which is the only attribute that you
+must assign upon user creation.</p><p>Alternatively, a password&mdash;or other attributes&mdash;can be assigned to the
+user upon creation. Here, we&rsquo;ll assign a password:</p><div class=highlight><pre tabindex=0 class=chroma><code class=language-bash data-lang=bash><span class=line><span class=cl>riak admin security add-user riakuser <span class=nv>password</span><span class=o>=</span>Test1234
+</span></span></code></pre></div><h6 id=assigning-a-password-and-altering-existing-user-characteristics>Assigning a Password and Altering Existing User Characteristics</h6><p>While passwords and other characteristics can be set upon user creation,
+it often makes sense to change user characteristics after the user has
+already been created. Let&rsquo;s say that the user <code>riakuser</code> was created
+without a password (or created <em>with</em> a password that we&rsquo;d like to
+change). The <code>alter-user</code> command can be used to modify our <code>riakuser</code>
+user:</p><div class=highlight><pre tabindex=0 class=chroma><code class=language-bash data-lang=bash><span class=line><span class=cl>riak admin security alter-user riakuser <span class=nv>password</span><span class=o>=</span>opensesame
+</span></span></code></pre></div><p>When creating or altering a user, any number of <code>&lt;option>=&lt;value></code>
+pairs can be appended to the end of the command. Any non-standard
+options will be stored and displayed via the <code>riak admin security
+print-users</code> command.</p><div class=highlight><pre tabindex=0 class=chroma><code class=language-bash data-lang=bash><span class=line><span class=cl>riak admin security alter-user riakuser <span class=nv>name</span><span class=o>=</span>bill <span class=nv>age</span><span class=o>=</span><span class=m>47</span> <span class=nv>fav_color</span><span class=o>=</span>red
+</span></span></code></pre></div><p>Now, the <code>print-users</code> command should return this:</p><pre tabindex=0><code>+----------+--------+----------+--------------------------------------------------+
+| username | groups | password |                     options                      |
++----------+--------+----------+--------------------------------------------------+
+| riakuser |        |          |[{&#34;fav_color&#34;,&#34;red&#34;},{&#34;age&#34;,&#34;47&#34;},{&#34;name&#34;,&#34;bill&#34;}]|
++----------+--------+----------+--------------------------------------------------+
+</code></pre><p><strong>Note</strong>: Usernames <em>cannot</em> be changed using the <code>alter-user</code> command.
+For example, running <code>riak admin security alter-user riakuser
+username=other-name</code>, will instead add the
+<code>{"username","other-name"}</code> tuple to <code>riakuser</code>&rsquo;s options.</p><h6 id=managing-groups-for-a-user>Managing Groups for a User</h6><p>If we have a user <code>riakuser</code> and we&rsquo;d like to assign her to the
+<code>admin</code> group, we assign the value <code>admin</code> to the option <code>groups</code>:</p><div class=highlight><pre tabindex=0 class=chroma><code class=language-bash data-lang=bash><span class=line><span class=cl>riak admin security alter-user riakuser <span class=nv>groups</span><span class=o>=</span>admin
+</span></span></code></pre></div><p>If we&rsquo;d like to make the user <code>riakuser</code> both an <code>admin</code> and an
+<code>archoverlord</code>:</p><div class=highlight><pre tabindex=0 class=chroma><code class=language-bash data-lang=bash><span class=line><span class=cl>riak admin security alter-user riakuser <span class=nv>groups</span><span class=o>=</span>admin,archoverlord
+</span></span></code></pre></div><p>There is no way to incrementally add groups; even if <code>riakuser</code> was
+already an <code>admin</code>, it is necessary to list it again when adding the
+<code>archoverlord</code> group. Thus, to remove a group from a user, use
+<code>alter-user</code> and list all <em>other</em> groups.</p><p>If the user should be removed from all groups, use <code>groups=</code> with no
+list:</p><div class=highlight><pre tabindex=0 class=chroma><code class=language-bash data-lang=bash><span class=line><span class=cl>riak admin security alter-user riakuser <span class=nv>groups</span><span class=o>=</span>
+</span></span></code></pre></div><h6 id=managing-groups-for-groups>Managing Groups for Groups</h6><p>Groups can be added to other groups for cascading permissions.</p><div class=highlight><pre tabindex=0 class=chroma><code class=language-bash data-lang=bash><span class=line><span class=cl>riak admin security alter-group admin <span class=nv>groups</span><span class=o>=</span>dev
+</span></span></code></pre></div><h6 id=deleting-a-user-or-group>Deleting a User or Group</h6><p>If you&rsquo;d like to remove a user, use the <code>del-user</code> command:</p><pre tabindex=0><code>riak admin security del-user riakuser
+</code></pre><p>For groups, use the <code>del-group</code> command:</p><pre tabindex=0><code>riak admin security del-group admin
+</code></pre><h6 id=adding-or-deleting-multiple-users>Adding or Deleting Multiple Users</h6><p>The <code>riak admin security</code> command does not currently allow you to
+add or delete multiple users using a single command. Instead, they must
+be added or deleted one by one.</p><h5 id=managing-permissions>Managing Permissions</h5><p>Permission to perform a wide variety of operations against Riak can be
+granted to&mdash;or revoked from&mdash;users via the <code>grant</code> and <code>revoke</code>
+commands.</p><h6 id=basic-form>Basic Form</h6><p>The <code>grant</code> command takes one of the following forms:</p><div class=highlight><pre tabindex=0 class=chroma><code class=language-bash data-lang=bash><span class=line><span class=cl>riak admin security grant &lt;permissions&gt; on any to all<span class=p>|</span><span class=o>{</span>&lt;user&gt;<span class=p>|</span>&lt;group&gt;<span class=o>[</span>,...<span class=o>]}</span>
+</span></span><span class=line><span class=cl>riak admin security grant &lt;permissions&gt; on &lt;bucket-type&gt; to all<span class=p>|</span><span class=o>{</span>&lt;user&gt;<span class=p>|</span>&lt;group&gt;<span class=o>[</span>,...<span class=o>]}</span>
+</span></span><span class=line><span class=cl>riak admin security grant &lt;permissions&gt; on &lt;bucket-type&gt; &lt;bucket&gt; to all<span class=p>|</span><span class=o>{</span>&lt;user&gt;<span class=p>|</span>&lt;group&gt;<span class=o>[</span>,...<span class=o>]}</span>
+</span></span></code></pre></div><p>The <code>revoke</code> command is essentially the same, except that <code>to</code> is
+replaced with <code>from</code> of <code>to</code>:</p><div class=highlight><pre tabindex=0 class=chroma><code class=language-bash data-lang=bash><span class=line><span class=cl>riak admin security revoke &lt;permissions&gt; on any from all<span class=p>|</span><span class=o>{</span>&lt;user&gt;<span class=p>|</span>&lt;group&gt;<span class=o>[</span>,...<span class=o>]}</span>
+</span></span><span class=line><span class=cl>riak admin security revoke &lt;permissions&gt; on &lt;bucket-type&gt; from all<span class=p>|</span><span class=o>{</span>&lt;user&gt;<span class=p>|</span>&lt;group&gt;<span class=o>[</span>,...<span class=o>]}</span>
+</span></span><span class=line><span class=cl>riak admin security revoke &lt;permissions&gt; on &lt;bucket-type&gt; &lt;bucket&gt; from all<span class=p>|</span><span class=o>{</span>&lt;user&gt;<span class=p>|</span>&lt;group&gt;<span class=o>[</span>,...<span class=o>]}</span>
+</span></span></code></pre></div><p>If you select <code>any</code>, this means that the permission (or set of
+permissions) is granted/revoked for all buckets and <a href=/docs/kv/3.4.0/how-to/develop/use-bucket-types/>bucket types</a>
+. If you specify a bucket type only, then the permission
+is granted/revoked for all buckets of that type. If you specify a bucket
+type <em>and</em> a bucket, the permission is granted/revoked only for that
+bucket type/bucket combination.</p><p><strong>Note</strong>: You cannot grant/revoke permissions with respect to a bucket
+alone. You must specify either a bucket type by itself or a bucket type
+and bucket. This limitation reflects the naming structure underlying
+buckets and bucket types.</p><p>Selecting <code>all</code> grants or revokes a permission (or set of permissions)
+for all users in all groups. When specifying the user(s)/group(s) to
+which you want to apply a permission (or set of permissions), you may
+list any number of users or groups comma-separated with no whitespace.</p><p>If the same name is used for both a user and a group, the <code>grant</code>
+command will ask for the name to be prefixed with <code>user/</code> or <code>group/</code>
+to disambiguate.</p><h6 id=keyvalue-permissions>Key/Value Permissions</h6><p>Permissions that can be granted for basic key/value access
+functionality:</p><table><thead><tr><th style=text-align:left>Permission</th><th style=text-align:left>Operation</th></tr></thead><tbody><tr><td style=text-align:left><code>riak_kv.get</code></td><td style=text-align:left>Retrieve objects</td></tr><tr><td style=text-align:left><code>riak_kv.put</code></td><td style=text-align:left>Create or update objects</td></tr><tr><td style=text-align:left><code>riak_kv.delete</code></td><td style=text-align:left>Delete objects</td></tr><tr><td style=text-align:left><code>riak_kv.index</code></td><td style=text-align:left>Index objects using secondary indexes (2i)</td></tr><tr><td style=text-align:left><code>riak_kv.list_keys</code></td><td style=text-align:left>List all of the keys in a bucket</td></tr><tr><td style=text-align:left><code>riak_kv.list_buckets</code></td><td style=text-align:left>List all buckets</td></tr></tbody></table><p><strong>Note on Listing Keys and Buckets</strong>
+<code>riak_kv.list_keys</code> and <code>riak_kv.list_buckets</code> are both very expensive
+operations that should be performed very rarely and never in production.
+Access to this functionality should be granted very carefully.</p><p>If you&rsquo;d like to create, for example, a <code>client</code> account that is
+allowed only to run <code>GET</code> and <code>PUT</code> requests on all buckets:</p><div class=highlight><pre tabindex=0 class=chroma><code class=language-bash data-lang=bash><span class=line><span class=cl>riak admin security add-user client
+</span></span><span class=line><span class=cl>riak admin security grant riak_kv.get,riak_kv.put on any to client
+</span></span></code></pre></div><h6 id=mapreduce-permissions>MapReduce Permissions</h6><p>Permission to perform <a href=/docs/kv/3.4.0/how-to/develop/run-mapreduce/>MapReduce</a>
+jobs can be assigned
+using <code>riak_kv.mapreduce</code>. The following example grants MapReduce
+permissions to the user <code>mapreduce-power-user</code> for all buckets and
+bucket types:</p><div class=highlight><pre tabindex=0 class=chroma><code class=language-bash data-lang=bash><span class=line><span class=cl>riak admin security grant riak_kv.mapreduce on any to mapreduce-power-user
+</span></span></code></pre></div><h6 id=bucket-type-permissions>Bucket Type Permissions</h6><p>In versions 2.0 and later, Riak users can manage <a href=/docs/kv/3.4.0/how-to/develop/use-bucket-types/>bucket types</a>
+in addition to setting bucket properties. <code>riak admin
+security</code> allows you to manage the following bucket type-related
+permissions:</p><table><thead><tr><th style=text-align:left>Permission</th><th style=text-align:left>Operation</th></tr></thead><tbody><tr><td style=text-align:left><code>riak_core.get_bucket</code></td><td style=text-align:left>Retrieve the <code>props</code> associated with a bucket</td></tr><tr><td style=text-align:left><code>riak_core.set_bucket</code></td><td style=text-align:left>Modify the <code>props</code> associated with a bucket</td></tr><tr><td style=text-align:left><code>riak_core.get_bucket_type</code></td><td style=text-align:left>Retrieve the set of <code>props</code> associated with a bucket type</td></tr><tr><td style=text-align:left><code>riak_core.set_bucket_type</code></td><td style=text-align:left>Modify the set of <code>props</code> associated with a bucket type</td></tr></tbody></table><h5 id=managing-sources>Managing Sources</h5><p>While user management enables you to control <em>authorization</em> with regard
+to users, security <strong>sources</strong> provide you with an interface for
+managing means of <em>authentication</em>. If you create users and grant them
+access to some or all of OpenRiak&rsquo;s functionality as described in the <a href=#user-management>User Management</a>
+section,
+you will then need to define security sources required for
+authentication.</p><p>An more in-depth tutorial can be found in <a href=/docs/kv/3.4.0/how-to/secure/manage-sources/>Managing Security Sources</a>
+.</p><h6 id=add-source>Add Source</h6><p>Riak security sources may be applied to a specific user, multiple users,
+or all users (<code>all</code>).</p><h6 id=available-sources>Available Sources</h6><table><thead><tr><th style=text-align:left>Source</th><th style=text-align:left>Description</th></tr></thead><tbody><tr><td style=text-align:left><code>trust</code></td><td style=text-align:left>Always authenticates successfully if access has been granted to a user or all users on the specified CIDR range</td></tr><tr><td style=text-align:left><code>password</code></td><td style=text-align:left>Check the user&rsquo;s password against the <a href=http://en.wikipedia.org/wiki/PBKDF2 rel=noopener>PBKFD2</a>
+-hashed password stored in Riak</td></tr><tr><td style=text-align:left><code>pam</code></td><td style=text-align:left>Authenticate against the given pluggable authentication module (PAM) service</td></tr><tr><td style=text-align:left><code>certificate</code></td><td style=text-align:left>Authenticate using a client certificate</td></tr></tbody></table><h6 id=example-adding-a-trusted-source>Example: Adding a Trusted Source</h6><p>Security sources can be added either to a specific user, multiple users,
+or all users (<code>all</code>).</p><p>In general, the <code>add-source</code> command takes the following form:</p><div class=highlight><pre tabindex=0 class=chroma><code class=language-bash data-lang=bash><span class=line><span class=cl>riak admin security add-source all<span class=p>|</span>&lt;users&gt; &lt;CIDR&gt; &lt;source&gt; <span class=o>[</span>&lt;option&gt;<span class=o>=</span>&lt;value&gt;<span class=o>[</span>...<span class=o>]]</span>
+</span></span></code></pre></div><p>Using <code>all</code> indicates that the authentication source can be added to
+all users. A source can be added to a specific user, e.g. <code>add-source
+superuser</code>, or to a list of users separated by commas, e.g. <code>add-source
+jane,bill,admin</code>.</p><p>Let&rsquo;s say that we want to give all users trusted access to securables
+(without a password) when requests come from <code>localhost</code>:</p><div class=highlight><pre tabindex=0 class=chroma><code class=language-bash data-lang=bash><span class=line><span class=cl>riak admin security add-source all 127.0.0.1/32 trust
+</span></span></code></pre></div><p>At that point, the <code>riak admin security print-sources</code> command would
+print the following:</p><pre tabindex=0><code>+--------------------+------------+----------+----------+
+|       users        |    cidr    |  source  | options  |
++--------------------+------------+----------+----------+
+|        all         |127.0.0.1/32|  trust   |    []    |
++--------------------+------------+----------+----------+
+</code></pre><h6 id=deleting-sources>Deleting Sources</h6><p>If we wish to remove the <code>trust</code> source that we granted to <code>all</code> in the
+example above, we can simply use the <code>del-source</code> command and specify
+the CIDR.</p><div class=highlight><pre tabindex=0 class=chroma><code class=language-bash data-lang=bash><span class=line><span class=cl>riak admin security del-source all 127.0.0.1/32
+</span></span></code></pre></div><p>Note that this does not require that you specify which type of source is
+being deleted. You only need to specify the user(s) or <code>all</code>, because
+only one source can be applied to a user or <code>all</code> at any given time.</p><p>The following command would remove the source for <code>riakuser</code> on
+<code>localhost</code>, regardless of which source is being used:</p><div class=highlight><pre tabindex=0 class=chroma><code class=language-bash data-lang=bash><span class=line><span class=cl>riak admin security del-source riakuser 127.0.0.1/32
+</span></span></code></pre></div><p><strong>Note on Removing Sources</strong>
+If you apply a security source both to <code>all</code> and to specific users and then
+wish to remove that source, you will need to do so in separate steps. The
+<code>riak admin security del-source all ...</code> command by itself is not sufficient.</p><p>For example, if you have assigned the source <code>password</code> to both <code>all</code> and to
+the user <code>riakuser</code> on the network <code>127.0.0.1/32</code>, the following two-step
+process would be required to fully remove the source:</p><div class=highlight><pre tabindex=0 class=chroma><code class=language-bash data-lang=bash><span class=line><span class=cl>riak admin security del-source all 127.0.0.1/32 password
+</span></span><span class=line><span class=cl>riak admin security del-source riakuser 127.0.0.1/32 password
+</span></span></code></pre></div><h6 id=more-usage-examples>More Usage Examples</h6><p>This section provides only a very brief overview of the syntax for
+working with sources. For more information on using the <code>trust</code>,
+<code>password</code>, <code>pam</code>, and <code>certificate</code> sources, please see our <a href=/docs/kv/3.4.0/how-to/secure/manage-sources/>Managing Security Sources</a>
+document.</p><h5 id=security-ciphers>Security Ciphers</h5><p>To view a list of currently available security ciphers or change OpenRiak&rsquo;s
+preferences, use the <code>ciphers</code> command:</p><div class=highlight><pre tabindex=0 class=chroma><code class=language-bash data-lang=bash><span class=line><span class=cl>riak admin security ciphers
+</span></span></code></pre></div><p>That command by itself will return a large list of available ciphers:</p><pre tabindex=0><code>Configured ciphers
+
+ECDHE-RSA-AES128-GCM-SHA256:ECDHE-ECDSA-AES128-GCM-SHA256: ...
+
+Valid ciphers(35)
+
+ECDHE-RSA-AES128-SHA256:ECDHE-ECDSA-AES128-SHA256: ...
+
+Unknown/Unsupported ciphers(32)
+
+ECDHE-RSA-AES128-GCM-SHA256:ECDHE-ECDSA-AES128-GCM-SHA256: ...
+</code></pre><p>To alter the list, i.e. to constrain it and/or to set preferred ciphers
+higher in the list:</p><div class=highlight><pre tabindex=0 class=chroma><code class=language-bash data-lang=bash><span class=line><span class=cl>riak admin security ciphers DHE-RSA-AES256-SHA:AES128-GCM-SHA256
+</span></span></code></pre></div><p>The list of configured ciphers should now look like this:</p><p>DHE-RSA-AES256-SHA:AES128-GCM-SHA256</p><p>Valid ciphers(1)</p><p>DHE-RSA-AES256-SHA</p><p>Unknown/Unsupported ciphers(1)</p><p>AES128-GCM-SHA256</p><pre tabindex=0><code>
+A list of available ciphers on a server can be obtained using the
+`openssl` command:
+
+```bash
+openssl ciphers
+</code></pre><p>That should return a list structured like this:</p><pre tabindex=0><code>DHE-RSA-AES256-SHA:DHE-DSS-AES256-SHA:AES256-SHA:EDH-RSA-DES-CBC3-SHA: # and so on
+</code></pre><p>OpenRiak&rsquo;s cipher preferences were taken from <a href=https://wiki.mozilla.org/Security/Server_Side_TLS rel=noopener>Mozilla&rsquo;s Server-Side TLS
+documentation</a>
+.</p><h6 id=client-vs-server-cipher-order>Client vs. Server Cipher Order</h6><p>By default, Riak prefers the cipher order that you set on the server,
+i.e. the <a href=/docs/kv/3.4.0/reference/configuration/#security><code>honor_cipher_order</code></a>
+setting is set to <code>on</code>. If you prefer, however, that clients&rsquo; preferred cipher
+order dictate which cipher is chosen, set <code>honor_cipher_order</code> to <code>off</code>.</p><blockquote><p><strong>Note on Erlang versions</strong></p><p>OpenRiak&rsquo;s default cipher order behavior has the potential to crash Erlang
+VMs that do not support it. Erlang VMs that are known to support it
+include Basho&rsquo;s patched version of Erlang R16. Instructions on
+installing it can be found in <a href=/docs/kv/3.4.0/how-to/install/source/>Installing Erlang</a>
+. This issue should
+not affect Erlang 17.0 and later.</p></blockquote><h5 id=enabling-ssl>Enabling SSL</h5><p>In order to use any authentication or authorization features, you must
+enable SSL for Riak. <strong>SSL is disabled by default</strong>, but you will need
+to enable it prior to enabling security. If you are using <a href=/docs/kv/3.4.0/reference/protocol-buffers/>Protocol Buffers</a>
+as a transport protocol for Riak (which we strongly recommend), enabling SSL on a given node requires only that you specify a <a href=/docs/kv/3.4.0/reference/configuration/#client-interfaces>host and port</a>
+for the node
+as well as a <a href=#certificate-configuration>certification configuration</a>
+.</p><p>If, however, you are using the <a href=/docs/kv/3.4.0/reference/http-api/>HTTP API</a>
+for Riak and would like to
+configure HTTPS, you will need to not only establish a <a href=#certificate-configuration>certificate configuration</a>
+but also specify an HTTPS host
+and port. The following configuration would establish port 8088 on
+<code>localhost</code> as the HTTPS port:</p><pre tabindex=0><code class=language-riakconf data-lang=riakconf>listener.https.$name = 127.0.0.1:8088
+
+#### By default, &#34;internal&#34; is used as the &#34;name&#34; setting
+</code></pre><pre tabindex=0><code class=language-appconfig data-lang=appconfig>{riak_core, [
+             %% Other configs
+             {https, [{&#34;127.0.0.1&#34;, 8088}]},
+             %% Other configs
+            ]}
+</code></pre><h5 id=tls-settings>TLS Settings</h5><p>When using Riak security, you can choose which versions of SSL/TLS are
+allowed. By default, only TLS 1.2 is allowed, but this version can be
+disabled and others enabled by setting the following <a href=/docs/kv/3.4.0/reference/configuration/#security>configurable parameters</a>
+to <code>on</code> or <code>off</code>:</p><ul><li><code>tls_protocols.tlsv1</code></li><li><code>tls_protocols.tlsv1.1</code></li><li><code>tls_protocols.tlsv1.2</code></li><li><code>tls_protocols.sslv3</code></li></ul><p>Three things to note:</p><ul><li>Among the four available options, only TLS version 1.2 is enabled by
+default</li><li>You can enable more than one protocol at a time</li><li>We strongly recommend that you do <em>not</em> use SSL version 3 unless
+absolutely necessary</li></ul><h5 id=certificate-configuration>Certificate Configuration</h5><p>If you are using any of the available <a href=/docs/kv/3.4.0/how-to/secure/manage-sources/>security sources</a>
+, including <a href=/docs/kv/3.4.0/how-to/secure/manage-sources/#trust-based-authentication>trust-based authentication</a>
+, you will need to do so
+over a secure SSL connection. In order to establish a secure connection,
+you will need to ensure that each OpenRiak node&rsquo;s <a href=/docs/kv/3.4.0/reference/configuration/#security>configuration files</a>
+point to the proper paths for your
+generated certs. By default, Riak assumes that all certs are stored in
+each node&rsquo;s <code>/etc</code> directory.</p><p>If you are using the newer, <code>riak.conf</code>-based configuration system, you
+can change the location of the <code>/etc</code> directory by modifying the
+<code>platform_etc_dir</code>. More information can be found in our documentation
+on <a href=/docs/kv/3.4.0/reference/configuration/#directories>configuring directories</a>
+.</p><table class=riak-conf><thead><tr><th>Type</th><th>Parameter</th><th>Default</th></tr></thead><tbody><tr><td><strong>Signing authority</strong></td><td><code>ssl.cacertfile</code></td><td><code>#(platform_etc_dir)/cacertfile.pem</code></td></tr><tr><td><strong>Cert</strong></td><td><code>ssl.certfile</code></td><td><code>#(platform_etc_dir)/cert.pem</code></td></tr><tr><td><strong>Key file</strong></td><td><code>ssl.keyfile</code></td><td><code>#(platform_etc_dir)/key.pem</code></td></tr></tbody></table><p>If you are using the older, <code>app.config</code>-based configuration system,
+these paths can be set in the <code>ssl</code> subsection of the <code>riak_core</code>
+section. The corresponding parameters are shown in the example below:</p><pre tabindex=0><code class=language-appconfig data-lang=appconfig>{riak_core, [
+    %% Other configs
+
+{ssl, [
+           {certfile, &#34;./etc/cert.pem&#34;},
+           {keyfile, &#34;./etc/key.pem&#34;},
+           {cacertfile, &#34;./etc/cacertfile.pem&#34;}
+          ]},
+
+%% Other configs
+]}
+</code></pre><h5 id=referer-checks-and-certificate-revocation-lists>Referer Checks and Certificate Revocation Lists</h5><p>In order to provide safeguards against
+<a href=http://en.wikipedia.org/wiki/Cross-site_scripting rel=noopener>cross-site-scripting</a>
+(XSS) and
+<a href=http://en.wikipedia.org/wiki/Cross-site_request_forgery rel=noopener>request-forgery</a>
+attacks, Riak performs <a href=http://en.wikipedia.org/wiki/HTTP_referer rel=noopener>secure referer
+checks</a>
+by default. Those
+checks make it impossible to serve data directly from Riak. To disable
+those checks, set the <code>secure_referer_check</code> parameter to <code>off</code>.</p><p>If you are using <a href=/docs/kv/3.4.0/how-to/secure/manage-sources/#certificate-based-authentication>certificate-based authentication</a>
+, Riak will check the certificate revocation list (CRL) of connecting clients&rsquo; certificate by
+default. To disable this behavior, set the <code>check_crl</code> parameter to
+<code>off</code>.</p><h4 id=enabling-riak-security>Enabling Riak Security</h4><blockquote><p>Riak is expected to be deployed into secure environments, it is not a database designed for direct exposure on public networks.</p></blockquote><p>Riak does have the optional capability to enable additional security controls, which are disabled by default. However:</p><ul><li>It is commonly easier to provide stronger security controls than the Riak security measures, by using standard DevOps security tools to protect Riak;<ul><li>Particularly when using the HTTP API, e.g. through the use of Web Application Firewalls or other HTTP proxying and filtering capability.</li></ul></li><li>The Riak security controls are designed to protect Riak from remote connections;<ul><li>The controls can be applied to local connections, but enabling Riak security is insufficient to protect Riak from localhost attacks.</li></ul></li></ul><p>There are three parts to Riak&rsquo;s security mechanism:</p><ul><li><a href=/docs/kv/3.4.0/how-to/secure/configure-tls/>TLS enablement</a>
+;</li><li><a href=/docs/kv/3.4.0/how-to/secure/enable-security/>Enabling Security and restricting the Source of requests</a>
+;</li><li><a href=/docs/kv/3.4.0/how-to/secure/manage-permissions/>Granting permissions for specific actions</a>
+.</li></ul><h4 id=enabling-security-and-restricting-source>Enabling Security and Restricting Source</h4><p>To provide further security, the Riak security mechanism should be enabled. This is not possible through configuration; it must be enabled via the command line:</p><div class=highlight><pre tabindex=0 class=chroma><code class=language-console data-lang=console><span class=line><span class=cl><span class=go>riak admin security enable
+</span></span></span></code></pre></div><p>This is a cluster-wide setting, and will change the behaviour across the cluster with almost immediate effect. Once security is enabled, any request to Riak sent without TLS enablement and a valid username will be blocked.</p><blockquote><p>Security enablement is not per API, both the HTTP and PB transports are impacted by enabling security, cluster-wide.</p></blockquote><p>If enablement causes unexpected problems, it may be disabled again:</p><div class=highlight><pre tabindex=0 class=chroma><code class=language-console data-lang=console><span class=line><span class=cl><span class=go>riak admin security disable
+</span></span></span></code></pre></div><p>Prior to Riak 3.4, some HTTP API requests could still be sent to the plain text listener after the enablement of security, and also sent without passing a valid username to the HTTPS listener. The rest endpoints that remained insecure were: stats, AAE folds and the queue API. This allowed operational queries to continue unimpaired by the enablement of security.</p><p>To preserve the old behaviour, and allow insecure use via HTTP of operational calls when security is enabled, the configuration option in <code>riak.conf</code> of <code>permit_insecure_http_ops = enabled</code> can be used.</p><blockquote><p>Although the CLI uses the terms <code>user</code> and <code>password</code>; these would normally translate to an <code>application_instance</code> and <code>shared_secret</code> in an actual implementation. There is no expectation that Riak security should manage the real-world usernames and passwords of operators, developers or application end-users.</p></blockquote><p>Once security is enabled, all requests will need to have a valid <code>user</code> and a valid <code>source</code>. There are three types of <code>source</code>:</p><ul><li><code>trust</code>;<ul><li>Applies no conditions beyond a source IP address filter;</li></ul></li><li><code>password</code>;<ul><li>Requires the user provide a valid password, as well as matching on a source IP address filter,</li><li>Passwords should be assigned via the <code>riak admin security</code> CLI, as use of PAM-based authentication is deprecated.</li></ul></li><li><code>certificate</code>;<ul><li>Supported for <strong>the PB API only</strong>,</li><li>Requires that the username match the certificate name,</li><li>By inference requires the session to have included a valid client certificate in the TLS negotiation,</li><li>The client certificate must be signed by the same CA as the server certificate, the <code>ssl.cacertfile</code>.</li></ul></li></ul><p>A very basic setup would be:</p><div class=highlight><pre tabindex=0 class=chroma><code class=language-console data-lang=console><span class=line><span class=cl><span class=go>riak admin security enable
+</span></span></span><span class=line><span class=cl><span class=go>riak admin security add-user proxy_waf
+</span></span></span><span class=line><span class=cl><span class=go>riak-admin security add-source all 192.168.6.7/32 trust
+</span></span></span></code></pre></div><p>This would permit access to the APIs only from the IP address <code>192.168.6.7</code> (this may be the address of a web application firewall, for example), and trust all access from that source as long as the username of <code>proxy_waf</code> is provided within the Authorization header.</p><blockquote><p>In this simple case, this is functionally equivalent to applying an IP filter on the node through a standard filter utility, but it is not the security equal of that measure. An IP filter would prevent connections being made from an unauthorised host, whereas the Riak security control allows connections and requests to be sent, but blocks requests during the processing of those requests; which presents a broader attack surface.</p></blockquote><p>On the PB API, a stronger level of security could be applied with:</p><div class=highlight><pre tabindex=0 class=chroma><code class=language-console data-lang=console><span class=line><span class=cl><span class=go>riak admin security enable
+</span></span></span><span class=line><span class=cl><span class=go>riak admin security add-user app.acme.org
+</span></span></span><span class=line><span class=cl><span class=go>riak-admin security add-source all 192.168.8.0/24 certificate
+</span></span></span></code></pre></div><p>This would permit access from the whole of the network <code>192.168.8.0/24</code> (this may be a network hosting application instances allowed to send Riak requests) for any application instance with a valid certificate as long as the certificate name matches <code>app.acme.org</code>.</p><blockquote><p>In this case, this is functionally equivalent to requiring TLS mutual authentication on the PB API, but it is not the security equal of that measure. A connection would still be accepted from any IP address, and an unauthenticated TLS negotiation allowed; at this stage the PB API will only accept an authentication request, and this will now only work if the IP address is valid and the certificate matches.</p></blockquote><p>Further information on the configuration of security sources can be found in the <a href=https://docs.riak.com/riak/kv/latest/using/security/managing-sources/index.html rel=noopener>legacy documentation</a>
+.</p><blockquote><p>The use of PAM-based authentication is deprecated and may be removed in a future release.</p></blockquote><p>When enabling the use of certificates, the CRL within the configured CA certificate will be checked for every connection attempt. If there are issues with either the performance of the CRL check, or the reachability of the CRL endpoint; the crl check can be disabled via a hidden <code>riak.conf</code> setting - <code>check_crl = disabled</code>.</p><link rel=stylesheet href=/docs/css/vendors/admonitions.css><div class="admonition warning"><div class=admonition-header><svg viewBox="0 0 512 512"><path d="M256 32c14.2.0 27.3 7.5 34.5 19.8l216 368c7.3 12.4 7.3 27.7.2 40.1S486.3 480 472 480H40c-14.3.0-27.6-7.7-34.7-20.1s-7-27.8.2-40.1l216-368C228.7 39.5 241.8 32 256 32zm0 128c-13.3.0-24 10.7-24 24v112c0 13.3 10.7 24 24 24s24-10.7 24-24V184c0-13.3-10.7-24-24-24zm32 224a32 32 0 10-64 0 32 32 0 1064 0z"/></svg>
+<span>Warning</span></div><div class=admonition-content><p>Migration review required: Internal links still refer to the earlier documentation hierarchy and must be retargeted to the Diátaxis paths.</p></div></div><h2 id=verify-the-result>Verify the result</h2><p>Test permitted and denied access separately, validate certificate and identity details, and review security-related logs.</p></div><nav class=page-navigation aria-label="Adjacent pages"><a class=page-navigation__previous href=/docs/kv/3.4.0/how-to/secure/manage-groups/><span>Previous</span><strong>Manage groups</strong></a>
+<a class=page-navigation__next href=/docs/kv/3.4.0/how-to/secure/configure-tls-certificates-and-ciphers/><span>Next</span><strong>Configure TLS certificates and ciphers</strong></a></nav></article></main></div><footer class=site-footer><div><p>OpenRiak documentation is licensed under <a href=https://creativecommons.org/licenses/by/4.0/>Creative Commons Attribution 4.0</a>.</p><p>Historical material © Basho Technologies, Inc.; community revisions © OpenRiak contributors.</p></div><a href=#main-content>Back to top</a></footer><script src=/docs/js/site.js defer></script></body></html>

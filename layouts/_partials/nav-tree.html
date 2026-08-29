@@ -1,0 +1,21 @@
+{{ $parent := .parent }}
+{{ $current := .current }}
+{{ if $parent.Pages }}
+<ul class="nav-tree">
+  {{ range $parent.Pages.ByWeight }}
+    {{ $isCurrent := eq .RelPermalink $current.RelPermalink }}
+    {{ $isOpen := or $isCurrent (.IsAncestor $current) }}
+    <li>
+      {{ if .IsSection }}
+        <details {{ if $isOpen }}open{{ end }}>
+          <summary><a class="{{ if $isCurrent }}is-current{{ end }}" href="{{ .RelPermalink }}" {{ if $isCurrent }}aria-current="page"{{ end }}>{{ .LinkTitle }}</a></summary>
+          {{ if $isOpen }}{{ partial "nav-tree.html" (dict "parent" . "current" $current) }}{{ end }}
+        </details>
+      {{ else }}
+        <a class="{{ if $isCurrent }}is-current{{ end }}" href="{{ .RelPermalink }}" {{ if $isCurrent }}aria-current="page"{{ end }}>{{ .LinkTitle }}</a>
+      {{ end }}
+    </li>
+  {{ end }}
+</ul>
+{{ end }}
+

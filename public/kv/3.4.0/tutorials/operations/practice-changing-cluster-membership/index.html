@@ -1,0 +1,106 @@
+<!doctype html><html lang=en class=no-js><head><script src="/docs/livereload.js?mindelay=10&amp;v=2&amp;port=1320&amp;path=docs/livereload" data-no-instant defer></script><meta charset=utf-8><meta name=viewport content="width=device-width,initial-scale=1"><meta name=color-scheme content="light dark"><script>(()=>{const t="openriak-docs-theme";let e="system";try{const n=localStorage.getItem(t);(n==="light"||n==="dark"||n==="system")&&(e=n)}catch{}const n=window.matchMedia?.("(prefers-color-scheme: dark)").matches??!1;document.documentElement.dataset.themePreference=e,document.documentElement.dataset.theme=e==="system"?n?"dark":"light":e})()</script><meta name=description content="Guide an operator through adding and removing disposable nodes while observing ring and handoff behavior."><title>Practice changing cluster membership | OpenRiak Documentation</title><link rel=canonical href=http://127.0.0.1:1320/docs/kv/3.4.0/tutorials/operations/practice-changing-cluster-membership/><link rel=icon href=/docs/images/branding/favicon.ico sizes=any><link rel=stylesheet href=/docs/css/site.css><link rel=stylesheet href=/docs/css/theme.css><script src=/docs/js/theme.js defer></script><meta property="og:type" content="website"><meta property="og:title" content="Practice changing cluster membership"><meta property="og:description" content="Guide an operator through adding and removing disposable nodes while observing ring and handoff behavior."><meta property="og:url" content="http://127.0.0.1:1320/docs/kv/3.4.0/tutorials/operations/practice-changing-cluster-membership/"></head><body data-kind=page data-section=kv><script>document.documentElement.classList.remove("no-js")</script><a class=skip-link href=#main-content>Skip to content</a><header class=site-header><div class=site-header__inner><button class=nav-toggle type=button aria-controls=docs-sidebar aria-expanded=false>
+<span aria-hidden=true>☰</span><span class=sr-only>Toggle documentation navigation</span>
+</button>
+<a class=brand href=/docs/ aria-label="OpenRiak documentation home"><img src=/docs/images/branding/riak-logo-inverted.png alt width=34 height=34>
+<span>OpenRiak <strong>Docs</strong></span></a><nav class=primary-nav aria-label="Documentation types"><a href=/docs/kv/3.4.1/tutorials/>Tutorials</a>
+<a href=/docs/kv/3.4.1/how-to/>How-to</a>
+<a href=/docs/kv/3.4.1/reference/>Reference</a>
+<a href=/docs/kv/3.4.1/explanation/>Explanation</a></nav><a class=community-link href=https://github.com/orgs/OpenRiak/discussions>Community</a>
+<label class=theme-control><span class=theme-control__icon aria-hidden=true>◐</span>
+<span class=sr-only>Color theme</span>
+<select data-theme-select aria-label="Color theme"><option value=system>System</option><option value=light>Light</option><option value=dark>Dark</option></select></label></div></header><div class=site-shell><aside id=docs-sidebar class=sidebar aria-label="Documentation navigation"><div class=sidebar__tools><label for=version-select>Version</label>
+<select id=version-select data-version-select><option value=/docs/kv/3.4.1/>3.4.1 (latest)</option><option value=/docs/kv/3.4.0/ selected>3.4.0</option></select><form class=docs-search role=search data-search data-index-url=/docs/search-index.json data-version=3.4.0><label class=sr-only for=docs-search-input>Search this version</label>
+<input id=docs-search-input type=search placeholder="Search this version" autocomplete=off data-search-input><div class=search-results data-search-results hidden></div></form></div><nav class=sidebar__nav aria-label="Pages in this version"><a class=sidebar__root href=/docs/kv/3.4.0/>OpenRiak KV 3.4.0</a><ul class=nav-tree><li><details><summary><a href=/docs/kv/3.4.0/explanation/>Explanation</a></summary></details></li><li><details><summary><a href=/docs/kv/3.4.0/how-to/>How-to guides</a></summary></details></li><li><details><summary><a href=/docs/kv/3.4.0/reference/>Reference</a></summary></details></li><li><details open><summary><a href=/docs/kv/3.4.0/tutorials/>Tutorials</a></summary><ul class=nav-tree><li><details><summary><a href=/docs/kv/3.4.0/tutorials/first-application/>Build a first OpenRiak application</a></summary></details></li><li><details open><summary><a href=/docs/kv/3.4.0/tutorials/operations/>Learn cluster operations</a></summary><ul class=nav-tree><li><a class=is-current href=/docs/kv/3.4.0/tutorials/operations/practice-changing-cluster-membership/ aria-current=page>Practice changing cluster membership</a></li><li><a href=/docs/kv/3.4.0/tutorials/operations/practice-changing-a-storage-backend/>Practice changing a storage backend</a></li></ul></details></li><li><details><summary><a href=/docs/kv/3.4.0/tutorials/replication/>Learn multi-cluster replication</a></summary></details></li><li><details><summary><a href=/docs/kv/3.4.0/tutorials/security/>Learn OpenRiak security</a></summary></details></li><li><details><summary><a href=/docs/kv/3.4.0/tutorials/first-cluster/>Learn OpenRiak with a first cluster</a></summary></details></li><li><details><summary><a href=/docs/kv/3.4.0/tutorials/query-api/>Learn the Query API</a></summary></details></li></ul></details></li></ul></nav><div class=sidebar__help><a href=https://github.com/orgs/OpenRiak/discussions>Ask the OpenRiak community</a>
+<a href=https://github.com/OpenRiak/riak>OpenRiak source code</a></div></aside><button class=sidebar-scrim type=button data-sidebar-close aria-label="Close navigation"></button><main id=main-content class=content tabindex=-1><article class=doc><nav class=breadcrumbs aria-label=Breadcrumb><ol><li><a href=/docs/kv/>OpenRiak KV documentation</a></li><li><a href=/docs/kv/3.4.0/>OpenRiak KV 3.4.0</a></li><li><a href=/docs/kv/3.4.0/tutorials/>Tutorials</a></li><li><a href=/docs/kv/3.4.0/tutorials/operations/>Learn cluster operations</a></li><li aria-current=page>Practice changing cluster membership</li></ol></nav><header class=article-header><div class=badges><span class="badge badge--tutorial">tutorial</span>
+<span class=badge>KV 3.4.0</span></div><h1>Practice changing cluster membership</h1><p class=lede>Guide an operator through adding and removing disposable nodes while observing ring and handoff behavior.</p><div class=review-notice role=note><strong>Review status:</strong>
+This migrated page is still marked as a draft.
+Technical review is required before publication.</div></header><details class=on-this-page><summary>On this page</summary><nav id=TableOfContents><ul><li><a href=#adding--removing-nodes>Adding / Removing Nodes</a><ul><li><a href=#start-the-node>Start the Node</a></li></ul></li><li><a href=#ring-changes>Ring Changes</a></li><li><a href=#what-you-will-learn>What you will learn</a></li><li><a href=#before-you-begin>Before you begin</a></li><li><a href=#verify-the-result>Verify the result</a></li><li><a href=#next-steps>Next steps</a></li></ul></nav></details><div class=doc-body><p>Guide an operator through adding and removing disposable nodes while observing ring and handoff behavior.</p><h2 id=adding--removing-nodes>Adding / Removing Nodes</h2><p>This page describes the process of adding and removing nodes to and from
+an OpenRiak KV cluster. For information on creating a cluster check out <a href=/docs/kv/3.4.0/how-to/operate/>Running a Cluster</a>
+.</p><h3 id=start-the-node>Start the Node</h3><p>Just like the initial configuration steps, this step has to be repeated
+for every node in your cluster. Before a node can join an existing
+cluster it needs to be started. This tutorial assumes a packaged installation where <code>riak</code> is available on <code>PATH</code> and <code>systemd</code> manages the node. Start the node with:</p><div class=highlight><pre tabindex=0 class=chroma><code class=language-bash data-lang=bash><span class=line><span class=cl>sudo systemctl start riak
+</span></span></code></pre></div><p>For a source-built release, run <code>./rel/riak/bin/riak daemon</code> instead; for a development node, use the matching <code>./dev/dev{n}/riak/bin/riak daemon</code> script.</p><p>When the node starts, it will look for a cluster description, known as
+the <strong>ring file</strong>, in its data directory. If a ring file does not exist,
+it will create a new ring file based on the initially configured
+<code>ring_size</code> (or <code>ring_creation_size</code> if you&rsquo;re using the older,
+<code>app.config</code>-based configuration system), claiming all partitions for
+itself. Once this process completes, the node will be ready to serve
+requests.</p><h4 id=add-a-node-to-an-existing-cluster>Add a Node to an Existing Cluster</h4><p>Once the node is running, it can be added to an existing cluster. Note
+that this step isn&rsquo;t necessary for the first node; it&rsquo;s necessary only
+for nodes that you want to add later.</p><p>To join the node to an existing cluster, use the <code>cluster join</code> command:</p><div class=highlight><pre tabindex=0 class=chroma><code class=language-bash data-lang=bash><span class=line><span class=cl>riak admin cluster join &lt;node_in_cluster&gt;
+</span></span></code></pre></div><p>The <code>&lt;node_in_cluster></code> in the example above can be <em>any</em> node in the
+cluster you want to join to. So if the existing cluster consists of
+nodes <code>A</code>, <code>B</code>, and <code>C</code>, any of the following commands would join the
+new node:</p><div class=highlight><pre tabindex=0 class=chroma><code class=language-bash data-lang=bash><span class=line><span class=cl>riak admin cluster join A
+</span></span><span class=line><span class=cl>riak admin cluster join B
+</span></span><span class=line><span class=cl>riak admin cluster join C
+</span></span></code></pre></div><p>To give a more realistic example, let&rsquo;s say that you have an isolated
+node named <code>riak@192.168.2.5</code> and you want to join it to an existing
+cluster that contains a node named <code>riak@192.168.2.2</code>. This command
+would stage a join to that cluster:</p><div class=highlight><pre tabindex=0 class=chroma><code class=language-bash data-lang=bash><span class=line><span class=cl>riak admin cluster join riak@192.168.2.2
+</span></span></code></pre></div><p>If the join request is successful, you should see the following:</p><pre tabindex=0><code>Success: staged join request for &#39;riak@192.168.2.5&#39; to &#39;riak@192.168.2.2&#39;
+</code></pre><p>If you have multiple nodes that you would like to join to an existing
+cluster, repeat this process for each of them.</p><h4 id=joining-nodes-to-form-a-cluster>Joining Nodes to Form a Cluster</h4><p>The process of joining a cluster involves several steps, including
+staging the proposed cluster nodes, reviewing the cluster plan, and
+committing the changes.</p><p>After staging each of the cluster nodes with <code>riak admin cluster join</code>
+commands, as in the section above, the next step in forming a cluster is
+to review the proposed plan of changes. This can be done with the
+<code>riak admin cluster plan</code> command, which is shown in the example below.</p><pre tabindex=0><code>=============================== Staged Changes ================================
+Action         Nodes(s)
+-------------------------------------------------------------------------------
+join           &#39;riak@192.168.2.2&#39;
+join           &#39;riak@192.168.2.2&#39;
+join           &#39;riak@192.168.2.2&#39;
+join           &#39;riak@192.168.2.2&#39;
+-------------------------------------------------------------------------------
+
+NOTE: Applying these changes will result in 1 cluster transition
+
+###############################################################################
+                         After cluster transition 1/1
+###############################################################################
+
+================================= Membership ==================================
+Status     Ring    Pending    Node
+-------------------------------------------------------------------------------
+valid     100.0%     20.3%    &#39;riak@192.168.2.2&#39;
+valid       0.0%     20.3%    &#39;riak@192.168.2.3&#39;
+valid       0.0%     20.3%    &#39;riak@192.168.2.4&#39;
+valid       0.0%     20.3%    &#39;riak@192.168.2.5&#39;
+valid       0.0%     18.8%    &#39;riak@192.168.2.6&#39;
+-------------------------------------------------------------------------------
+Valid:5 / Leaving:0 / Exiting:0 / Joining:0 / Down:0
+
+Transfers resulting from cluster changes: 51
+  12 transfers from &#39;riak@192.168.2.2&#39; to &#39;riak@192.168.2.3&#39;
+  13 transfers from &#39;riak@192.168.2.2&#39; to &#39;riak@192.168.2.4&#39;
+  13 transfers from &#39;riak@192.168.2.2&#39; to &#39;riak@192.168.2.5&#39;
+  13 transfers from &#39;riak@192.168.2.2&#39; to &#39;riak@192.168.2.6&#39;
+</code></pre><p>If the plan is to your liking, submit the changes by running <code>riak admin
+cluster commit</code>.</p><p><strong>Note on ring changes</strong>
+The algorithm that distributes partitions across the cluster during membership
+changes is non-deterministic. As a result, there is no optimal ring. In the
+event that a plan results in a slightly uneven distribution of partitions, the
+plan can be cleared. Clearing a cluster plan with <code>riak admin cluster clear</code>
+and running <code>riak admin cluster plan</code> again will produce a slightly different
+ring.</p><h4 id=removing-a-node-from-a-cluster>Removing a Node From a Cluster</h4><p>A node can be removed from the cluster in two ways. One assumes that a
+node is decommissioned, for example, because its added capacity is not
+needed anymore or because it&rsquo;s explicitly replaced with a new one. The
+second is relevant for failure scenarios in which a node has crashed and
+is irrecoverable and thus must be removed from the cluster from another
+node.</p><p>The command to remove a running node is <code>riak admin cluster leave</code>. This
+command must be executed on the node that you intend to removed from the
+cluster.</p><p>Similarly to joining a node, after executing <code>riak admin cluster leave</code>
+the cluster plan must be reviewed with <code>riak admin cluster plan</code> and
+the changes committed with <code>riak admin cluster commit</code>.</p><p>The other command is <code>riak admin cluster leave &lt;node></code>, where <code>&lt;node></code>
+is the node name as specified in the node&rsquo;s configuration files:</p><div class=highlight><pre tabindex=0 class=chroma><code class=language-bash data-lang=bash><span class=line><span class=cl>riak admin cluster leave riak@192.168.2.1
+</span></span></code></pre></div><p>This command can be run from any other node in the cluster.</p><p>Under the hood, both commands do basically the same thing. Running
+<code>riak admin cluster leave &lt;node></code> selects the current node for you
+automatically.</p><p>As with <code>riak admin cluster leave</code>, the plan to have a node leave the
+cluster must be first reviewed with <code>riak admin cluster plan</code> and
+committed with <code>riak admin cluster commit</code> before any changes will
+actually take place.</p><h4 id=pausing-a-join-or-leave>Pausing a <code>join</code> or <code>leave</code></h4><p><strong>Warning</strong>
+Pausing may impact cluster health and is not recommended for more than a short period of time.</p><p>To pause during <code>riak admin cluster join</code> or <code>riak admin cluster leave</code>, set the node&rsquo;s transfer-limit to 0:</p><div class=highlight><pre tabindex=0 class=chroma><code class=language-bash data-lang=bash><span class=line><span class=cl>riak admin transfer-limit &lt;node&gt; <span class=m>0</span>
+</span></span></code></pre></div><p>The above should produce the following output:</p><pre tabindex=0><code>Set transfer limit for &#39;node&#39; to 0
+ok
+</code></pre><h2 id=ring-changes>Ring Changes</h2><h2 id=what-you-will-learn>What you will learn</h2><p>By completing this tutorial, you will build the workflow described above and learn how to validate each stage before moving on.</p><h2 id=before-you-begin>Before you begin</h2><p>Use a disposable OpenRiak KV environment that matches this documentation version, and keep cluster status and logs available while you work.</p><h2 id=verify-the-result>Verify the result</h2><p>Repeat the completed workflow, inspect the stored or operational result, and confirm that the cluster remains healthy.</p><h2 id=next-steps>Next steps</h2><ul><li><a href=/docs/kv/3.4.0/tutorials/operations/change-storage-backend/>Practice changing a storage backend</a></li></ul></div><nav class=page-navigation aria-label="Adjacent pages"><a class=page-navigation__previous href=/docs/kv/3.4.0/tutorials/operations/practice-changing-a-storage-backend/><span>Previous</span><strong>Practice changing a storage backend</strong></a></nav></article></main></div><footer class=site-footer><div><p>OpenRiak documentation is licensed under <a href=https://creativecommons.org/licenses/by/4.0/>Creative Commons Attribution 4.0</a>.</p><p>Historical material © Basho Technologies, Inc.; community revisions © OpenRiak contributors.</p></div><a href=#main-content>Back to top</a></footer><script src=/docs/js/site.js defer></script></body></html>
