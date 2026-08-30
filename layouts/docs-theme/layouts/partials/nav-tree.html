@@ -1,0 +1,25 @@
+{{- $current := .current -}}
+<ul class="nav-tree">
+  {{- range .pages.ByWeight -}}
+    {{- $children := .Pages.ByWeight -}}
+    {{- $hasChildren := gt (len $children) 0 -}}
+    {{- $isCurrent := eq $current.RelPermalink .RelPermalink -}}
+    {{- $expanded := and $hasChildren (or $isCurrent (strings.HasPrefix $current.RelPermalink .RelPermalink)) -}}
+    {{- $childrenID := printf "nav-children-%s" (md5 .RelPermalink) -}}
+    <li class="nav-tree-node">
+      <div class="nav-tree-row">
+        {{- if $hasChildren -}}
+          <button class="nav-tree-toggle" type="button" data-nav-tree-toggle aria-expanded="{{ $expanded }}" aria-controls="{{ $childrenID }}" aria-label="{{ if $expanded }}Collapse{{ else }}Expand{{ end }} {{ .LinkTitle }}"></button>
+        {{- else -}}
+          <span class="nav-tree-spacer" aria-hidden="true"></span>
+        {{- end -}}
+        <a href="{{ .RelPermalink }}"{{ if $isCurrent }} aria-current="page"{{ end }}>{{ .LinkTitle }}</a>
+      </div>
+      {{- if $hasChildren -}}
+        <div id="{{ $childrenID }}" data-nav-tree-children{{ if not $expanded }} hidden{{ end }}>
+          {{ partial "nav-tree.html" (dict "pages" $children "current" $current) }}
+        </div>
+      {{- end -}}
+    </li>
+  {{- end -}}
+</ul>

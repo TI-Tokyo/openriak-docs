@@ -1,0 +1,7 @@
+{{ define "main" }}
+  {{ $threads := where site.RegularPages "Section" "archived-mailing-list" }}{{ $years := $threads.GroupByDate "2006" "desc" }}{{ $dateHome := .RelPermalink }}
+  <section class="category-hero"><div class="eyebrow">Browse the archive</div><h1>{{ .Title }}</h1><p>{{ .Description }}</p></section>
+  <section class="archive-shell category-shell"><div class="results-line"><h2>All years</h2><span>{{ len $years }} years · {{ len $threads }} conversations</span></div><div class="category-grid">
+    {{ range $years }}<a class="category-card" href="{{ printf `%s%s/` $dateHome .Key }}"><div><h2>{{ .Key }}</h2><p>Mailing-list conversations started in {{ .Key }}.</p></div><span>{{ len .Pages }} conversations <b aria-hidden="true">→</b></span></a>{{ end }}
+  </div></section>
+{{ end }}

@@ -1,0 +1,22 @@
+{{ define "main" }}
+  {{ $archiveHome := .FirstSection }}
+  {{ $allPosts := where site.RegularPages "Section" "archived-technical-blog" }}
+  <section class="category-hero">
+    <div class="eyebrow">Browse the archive</div>
+    <h1>{{ .Title }}</h1>
+    <p>{{ .Description }}</p>
+  </section>
+  <section class="archive-shell category-shell">
+    <div class="results-line"><h2>All categories</h2><span>{{ len .Pages }} categories · {{ len $allPosts }} articles</span></div>
+    <div class="category-grid">
+      {{ range .Pages.ByTitle }}
+        {{ $category := .Params.category }}
+        {{ $posts := where $allPosts "Params.categories" "intersect" (slice $category) }}
+        <a class="category-card" href="{{ .RelPermalink }}">
+          <div><h2>{{ .Title }}</h2><p>{{ .Description }}</p></div>
+          <span>{{ len $posts }} {{ if eq (len $posts) 1 }}article{{ else }}articles{{ end }} <b aria-hidden="true">→</b></span>
+        </a>
+      {{ end }}
+    </div>
+  </section>
+{{ end }}

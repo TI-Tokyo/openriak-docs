@@ -1,0 +1,28 @@
+{{ define "main" }}
+  {{ $posts := where site.RegularPages "Section" "archived-technical-blog" }}
+  {{ $years := $posts.GroupByDate "2006" "desc" }}
+  <section class="hero">
+    <div class="eyebrow">Basho engineering archive</div>
+    <h1>Browse the Technical Blog.</h1>
+    <p>Explore {{ len $posts }} recovered articles by subject or publication year.</p>
+  </section>
+  <section class="archive-shell category-shell">
+    <div class="results-line"><h2>Browse the archive</h2><span>{{ len $posts }} articles</span></div>
+    <div class="category-grid">
+      <a class="category-card" href="{{ printf `%scategories/` .RelPermalink }}">
+        <div>
+          <h2>By Category</h2>
+          <p>Find articles by subjects such as architecture, data modeling, releases, replication, and security.</p>
+        </div>
+        <span>15 categories <b aria-hidden="true">→</b></span>
+      </a>
+      <a class="category-card" href="{{ printf `%sby-year/` .RelPermalink }}">
+        <div>
+          <h2>By Year</h2>
+          <p>Browse the archive chronologically, from the earliest recovered posts to the final Basho publications.</p>
+        </div>
+        <span>{{ len $years }} years <b aria-hidden="true">→</b></span>
+      </a>
+    </div>
+  </section>
+{{ end }}

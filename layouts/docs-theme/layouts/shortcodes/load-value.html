@@ -1,0 +1,12 @@
+{{- $key := .Get "key" -}}
+{{- if not $key }}{{ errorf "load-value requires key on %s" .Page.File.Path }}{{ end -}}
+{{- $args := dict "page" .Page "key" $key "product" (.Get "product") "version" (.Get "version") "os" (.Get "os") -}}
+{{- $value := partial "resolve-value.html" $args -}}
+{{- $render := .Get "render" | default "text" -}}
+{{- if eq $render "link" -}}
+  <a href="{{ $value | safeURL }}" data-doc-value="{{ $key }}" data-doc-bind="href">{{ .Get "text" | default $value }}</a>
+{{- else if eq $render "text" -}}
+  <span data-doc-value="{{ $key }}" data-doc-bind="text">{{ $value }}</span>
+{{- else -}}
+  {{- errorf "load-value render must be text or link, got %q on %s" $render .Page.File.Path -}}
+{{- end -}}

@@ -1,0 +1,12 @@
+{{- $left := split .left "." -}}
+{{- $right := split .right "." -}}
+{{- $result := 0 -}}
+{{- range seq 0 2 -}}
+  {{- if eq $result 0 -}}
+    {{- $a := int (index $left .) -}}
+    {{- $b := int (index $right .) -}}
+    {{- if gt $a $b }}{{ $result = 1 }}{{ else if lt $a $b }}{{ $result = -1 }}{{ end -}}
+  {{- end -}}
+{{- end -}}
+{{- return $result -}}
+

@@ -1,0 +1,32 @@
+<!doctype html>
+{{- $archiveHome := .FirstSection -}}
+{{- $siteSection := index (where hugo.Data.site_sections "id" "archived-mailing-list") 0 -}}
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="An archive of historical Riak mailing-list conversations.">
+  <title>{{ if eq .RelPermalink $archiveHome.RelPermalink }}Archived Mailing List{{ else }}{{ .Title }} · Archived Mailing List{{ end }}</title>
+  <script>document.documentElement.classList.remove('no-js');try{var t=localStorage.getItem('openriak-docs-theme')||'system';document.documentElement.dataset.theme=t==='dark'||(t==='system'&&matchMedia('(prefers-color-scheme: dark)').matches)?'dark':'light'}catch(e){}</script>
+  <link rel="icon" href="{{ `images/ui/favicon.ico` | relURL }}?v=openriak" type="image/x-icon">
+  <link rel="stylesheet" href="{{ `assets/styles.css` | relURL }}?v=20260830-mailing-list">
+  <link rel="stylesheet" href="{{ `css/site-header.css` | relURL }}?v=20260830-section-groups">
+  <link rel="stylesheet" href="{{ `css/mailing-list.css` | relURL }}?v=20260830-threaded">
+</head>
+<body>
+  <a class="skip-link" href="#main">Skip to content</a>
+  {{ partial "site-header.html" (dict "page" . "section" $siteSection "showNavToggle" false) }}
+  <main id="main" class="blog-layout">
+    {{ partial "mailing-list-menu.html" . }}
+    <div class="blog-main">{{ block "main" . }}{{ end }}</div>
+  </main>
+  <footer class="site-footer" id="about">
+    <div class="footer-brand">Archived Mailing List</div>
+    <p>Preserving historical questions, answers, and discussions from the Riak community.</p>
+    <p class="footer-note">Riak community mailing-list archive</p>
+  </footer>
+  <script src="{{ `js/theme.js` | relURL }}?v=20260829-shared-header" defer></script>
+  <script src="{{ `js/docs-shell.js` | relURL }}?v=20260829-shared-header" defer></script>
+  <script src="{{ `js/mailing-list-search.js` | relURL }}?v=20260830-full-text" defer></script>
+</body>
+</html>

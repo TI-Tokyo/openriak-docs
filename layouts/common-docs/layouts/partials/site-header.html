@@ -1,0 +1,52 @@
+{{- $page := .page -}}
+{{- $section := .section -}}
+<header class="global-header">
+  {{ if .showNavToggle }}
+    <button class="nav-toggle" type="button" data-nav-toggle aria-controls="docs-sidebar" aria-expanded="false">
+      <span class="sr-only">Open navigation</span><span aria-hidden="true">☰</span>
+    </button>
+  {{ end }}
+  <div class="brand">
+    <a class="brand-home" href="{{ $page.Site.Home.RelPermalink }}" aria-label="OpenRiak homepage">
+      <img src="{{ `images/branding/openriak-project.png` | relURL }}?v=official" alt="OpenRiak">
+    </a>
+    <a class="brand-section" href="{{ $section.url }}" aria-label="{{ $section.name }} landing page">{{ $section.name }}</a>
+  </div>
+  <nav class="header-controls" aria-label="Site preferences">
+    <div class="site-section-control" data-site-section-picker>
+      <button class="site-section-trigger" type="button" aria-expanded="false" aria-controls="site-section-panel" aria-label="Site sections, current section: {{ $section.name }}">
+        <img src="{{ $section.logo | relURL }}" alt="">
+        <span>{{ $section.name }}</span>
+        <span class="picker-chevron" aria-hidden="true"></span>
+      </button>
+      <div id="site-section-panel" class="site-section-panel" data-site-section-panel role="navigation" aria-label="Site sections" hidden>
+        <h2>Site sections</h2>
+        {{ range hugo.Data.site_sections }}
+          {{ if or (eq .id "openriak-kv") (eq .id "community") }}<div class="site-section-separator" role="separator"></div>{{ end }}
+          <a href="{{ .url }}" data-site-section-id="{{ .id }}" class="site-section-option{{ if eq .id $section.id }} is-active{{ end }}"{{ if eq .id $section.id }} aria-current="page"{{ end }}>
+            <img src="{{ .logo | relURL }}" alt="">
+            <span>{{ .name }}</span>
+          </a>
+        {{ end }}
+      </div>
+    </div>
+    <div class="theme-control" data-theme-picker>
+      <button class="theme-trigger" type="button" aria-expanded="false" aria-controls="theme-panel">
+        <img data-theme-trigger-icon src="{{ `images/ui/theme-system.svg` | relURL }}" alt="">
+        <span data-theme-trigger-label>Default</span>
+        <span class="picker-chevron" aria-hidden="true"></span>
+      </button>
+      <div id="theme-panel" class="theme-panel" data-theme-panel role="listbox" aria-label="Colour theme" hidden>
+        <button class="theme-option" type="button" role="option" data-theme-value="system" data-theme-icon="{{ `images/ui/theme-system.svg` | relURL }}">
+          <img src="{{ `images/ui/theme-system.svg` | relURL }}" alt=""><span><strong>Default</strong><small>Use device setting</small></span>
+        </button>
+        <button class="theme-option" type="button" role="option" data-theme-value="dark" data-theme-icon="{{ `images/ui/theme-dark.svg` | relURL }}">
+          <img src="{{ `images/ui/theme-dark.svg` | relURL }}" alt=""><span><strong>Dark</strong><small>Dark colour theme</small></span>
+        </button>
+        <button class="theme-option" type="button" role="option" data-theme-value="light" data-theme-icon="{{ `images/ui/theme-light.svg` | relURL }}">
+          <img src="{{ `images/ui/theme-light.svg` | relURL }}" alt=""><span><strong>Light</strong><small>Light colour theme</small></span>
+        </button>
+      </div>
+    </div>
+  </nav>
+</header>

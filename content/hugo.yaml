@@ -1,0 +1,108 @@
+baseURL: 'https://www.openriak.org/docs/'
+title: 'OpenRiak Documentation'
+defaultContentLanguage: 'en'
+disableKinds: ['RSS', 'taxonomy', 'term']
+resourceDir: '../tools/generated/hugo-resources'
+
+pagination:
+  pagerSize: 12
+
+markup:
+  goldmark:
+    renderer:
+      unsafe: true
+
+mediaTypes:
+  application/json:
+    suffixes: ['json']
+
+outputFormats:
+  Search:
+    mediaType: 'application/json'
+    baseName: 'index'
+    isPlainText: true
+    notAlternative: true
+
+outputs:
+  home: ['HTML']
+  section: ['HTML', 'Search']
+
+params:
+  description: 'Documentation and technical archives for the OpenRiak product family.'
+  securityContactEmail: 'security@riak.info'
+
+module:
+  mounts:
+    # Authored pages: one Hugo project, three page families.
+    - {source: 'portal/pages', target: 'content'}
+    - {source: 'community/pages', target: 'content/community'}
+    - {source: 'openriak-kv/pages', target: 'content/openriak-kv'}
+    - {source: 'openriak-cs/pages', target: 'content/openriak-cs'}
+    - {source: 'openriak-ts/pages', target: 'content/openriak-ts'}
+    - {source: 'archive-technical-blog/pages', target: 'content/archived-technical-blog'}
+    - {source: 'archive-technical-blog/posts', target: 'content/archived-technical-blog/posts'}
+    - {source: 'archive-mailing-list/pages', target: 'content/archived-mailing-list'}
+    - {source: 'archive-mailing-list/generated', target: 'content/archived-mailing-list'}
+
+    # Product releases. Later mounts layer changes over their baseline.
+    - {source: 'openriak-kv/releases/3.4.0', target: 'content/openriak-kv/3.4.0'}
+    - {source: 'openriak-kv/releases/3.4.0', target: 'content/openriak-kv/3.4.1'}
+    - {source: 'openriak-kv/layers/3.4.1', target: 'content/openriak-kv/3.4.1'}
+    - {source: 'openriak-kv/releases/3.2.5', target: 'content/openriak-kv/3.2.5'}
+    - {source: 'openriak-kv/releases/3.2.4', target: 'content/openriak-kv/3.2.4'}
+    - {source: 'openriak-kv/releases/3.2.3', target: 'content/openriak-kv/3.2.3'}
+    - {source: 'openriak-kv/releases/3.2.1', target: 'content/openriak-kv/3.2.1'}
+    - {source: 'openriak-kv/releases/3.2.0', target: 'content/openriak-kv/3.2.0'}
+    - {source: 'openriak-kv/layers/3.2.0', target: 'content/openriak-kv/3.2.4'}
+    - {source: 'openriak-kv/layers/3.2.0', target: 'content/openriak-kv/3.2.3'}
+    - {source: 'openriak-kv/layers/3.2.0', target: 'content/openriak-kv/3.2.1'}
+    - {source: 'openriak-kv/layers/3.2.0', target: 'content/openriak-kv/3.2.0'}
+    - {source: 'openriak-cs/releases/2.1.3', target: 'content/openriak-cs/2.1.3'}
+    - {source: 'openriak-ts/releases/1.5.2', target: 'content/openriak-ts/1.5.2'}
+
+    # Project data is keyed by product ID.
+    - {source: 'openriak-kv/data/product.json', target: 'data/product/openriak-kv.json'}
+    - {source: 'openriak-cs/data/product.json', target: 'data/product/openriak-cs.json'}
+    - {source: 'openriak-ts/data/product.json', target: 'data/product/openriak-ts.json'}
+    - {source: '../tools/generated/openriak-kv/data/versions', target: 'data/versions/openriak-kv'}
+    - {source: '../tools/generated/openriak-cs/data/versions', target: 'data/versions/openriak-cs'}
+    - {source: '../tools/generated/openriak-ts/data/versions', target: 'data/versions/openriak-ts'}
+    - {source: '../layouts/common-docs/data', target: 'data'}
+
+    # Homepage, product, and blog template families.
+    - {source: '../layouts/portal/index.html', target: 'layouts/home.html'}
+    - {source: '../layouts/docs-theme/layouts/baseof.html', target: 'layouts/product/baseof.html'}
+    - {source: '../layouts/docs-theme/layouts/_default/list.html', target: 'layouts/product/list.html'}
+    - {source: '../layouts/docs-theme/layouts/_default/single.html', target: 'layouts/product/single.html'}
+    - {source: '../layouts/docs-theme/layouts/_default/section.search.json.json', target: 'layouts/_default/section.search.json.json'}
+    - {source: '../layouts/docs-theme/layouts/partials', target: 'layouts/_partials'}
+    - {source: '../layouts/common-docs/layouts/partials', target: 'layouts/_partials'}
+    - {source: '../layouts/common-docs/layouts/site-section', target: 'layouts/site-section'}
+    - {source: '../layouts/docs-theme/layouts/shortcodes', target: 'layouts/_shortcodes'}
+    - {source: '../layouts/archive-technical-blog/_default/baseof.html', target: 'layouts/blog/baseof.html'}
+    - {source: '../layouts/archive-technical-blog/_default/single.html', target: 'layouts/blog/single.html'}
+    - {source: '../layouts/archive-technical-blog/index.html', target: 'layouts/blog/list.html'}
+    - {source: '../layouts/archive-technical-blog/by-year.html', target: 'layouts/blog/by-year.html'}
+    - {source: '../layouts/archive-technical-blog/categories.html', target: 'layouts/blog/categories.html'}
+    - {source: '../layouts/archive-technical-blog/category.html', target: 'layouts/blog/category.html'}
+    - {source: '../layouts/archive-technical-blog/date.html', target: 'layouts/blog/date.html'}
+    - {source: '../layouts/archive-technical-blog/author.html', target: 'layouts/blog/author.html'}
+    - {source: '../layouts/archive-technical-blog/partials', target: 'layouts/_partials'}
+    - {source: '../layouts/archive-technical-blog/_markup', target: 'layouts/_markup'}
+    - {source: '../layouts/archive-mailing-list/_default/baseof.html', target: 'layouts/mailing-list/baseof.html'}
+    - {source: '../layouts/archive-mailing-list/_default/single.html', target: 'layouts/mailing-list/single.html'}
+    - {source: '../layouts/archive-mailing-list/index.html', target: 'layouts/mailing-list/list.html'}
+    - {source: '../layouts/archive-mailing-list/by-date.html', target: 'layouts/mailing-list/by-date.html'}
+    - {source: '../layouts/archive-mailing-list/categories.html', target: 'layouts/mailing-list/categories.html'}
+    - {source: '../layouts/archive-mailing-list/category.html', target: 'layouts/mailing-list/category.html'}
+    - {source: '../layouts/archive-mailing-list/date.html', target: 'layouts/mailing-list/date.html'}
+    - {source: '../layouts/archive-mailing-list/section.search.json.json', target: 'layouts/mailing-list/section.search.json.json'}
+    - {source: '../layouts/archive-mailing-list/partials', target: 'layouts/_partials'}
+
+    # Shared and page-family assets.
+    - {source: 'static/common', target: 'static'}
+    - {source: 'static/openriak-kv', target: 'static'}
+    - {source: 'static/archive-technical-blog', target: 'static'}
+    - {source: 'static/archive-mailing-list', target: 'static'}
+    - {source: '../layouts/docs-theme/static', target: 'static'}
+    - {source: '../layouts/common-docs/static', target: 'static'}

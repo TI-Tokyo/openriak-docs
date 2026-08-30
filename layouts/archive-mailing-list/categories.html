@@ -1,0 +1,7 @@
+{{ define "main" }}
+  {{ $threads := where site.RegularPages "Section" "archived-mailing-list" }}
+  <section class="category-hero"><div class="eyebrow">Browse the archive</div><h1>{{ .Title }}</h1><p>{{ .Description }}</p></section>
+  <section class="archive-shell category-shell"><div class="results-line"><h2>All categories</h2><span>{{ len .Pages }} categories · {{ len $threads }} conversations</span></div><div class="category-grid">
+    {{ range .Pages.ByTitle }}{{ $categoryThreads := where $threads "Params.categories" "intersect" (slice .Params.category) }}<a class="category-card" href="{{ .RelPermalink }}"><div><h2>{{ .Title }}</h2><p>{{ .Description }}</p></div><span>{{ len $categoryThreads }} conversations <b aria-hidden="true">→</b></span></a>{{ end }}
+  </div></section>
+{{ end }}

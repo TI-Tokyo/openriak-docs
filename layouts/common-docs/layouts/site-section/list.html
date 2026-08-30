@@ -1,0 +1,12 @@
+{{ define "main" }}
+  <article class="site-section-landing">
+    <p class="eyebrow">OpenRiak</p>
+    <h1>{{ .Title }}</h1>
+    <div class="site-section-intro">{{ .Content }}</div>
+    {{ with .RegularPages }}
+      <nav class="site-section-pages" aria-label="Pages in {{ $.Title }}">
+        {{ range . }}<a href="{{ .RelPermalink }}"><strong>{{ .Title }}</strong>{{ with .Description }}<span>{{ . }}</span>{{ end }}</a>{{ end }}
+      </nav>
+    {{ end }}
+  </article>
+{{ end }}

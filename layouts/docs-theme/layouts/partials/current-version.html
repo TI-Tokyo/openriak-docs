@@ -1,0 +1,7 @@
+{{- with .Params.current_version -}}
+  {{- . -}}
+{{- else -}}
+  {{- $segments := strings.Split (strings.TrimPrefix "/" .Path) "/" -}}
+  {{- if lt (len $segments) 2 }}{{ errorf "cannot resolve product version from %s" .Path }}{{ end -}}
+  {{- index $segments 1 -}}
+{{- end -}}

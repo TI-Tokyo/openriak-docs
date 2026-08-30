@@ -1,0 +1,15 @@
+{{- $productContext := partial "product-context.html" . -}}
+{{- $version := $productContext.version -}}
+{{- $versions := slice -}}
+{{- range $key, $value := $productContext.versions -}}
+  {{- $versions = $versions | append $value -}}
+{{- end -}}
+{{- $context := dict
+  "product" $productContext.product
+  "siteSections" hugo.Data.site_sections
+  "versions" $versions
+  "currentVersion" $version
+  "productBase" $productContext.productBase
+  "assetBase" site.Home.RelPermalink
+-}}
+<script id="docs-context" type="application/json">{{ $context | jsonify | safeJS }}</script>

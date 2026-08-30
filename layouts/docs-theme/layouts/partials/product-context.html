@@ -1,0 +1,17 @@
+{{- $page := . -}}
+{{- $productID := $page.Params.product_id | default $page.Section -}}
+{{- $product := index hugo.Data.product $productID -}}
+{{- if not $product }}{{ errorf "no product data for %q on %s" $productID $page.Path }}{{ end -}}
+{{- $version := (partial "current-version.html" $page | strings.TrimSpace) -}}
+{{- $versions := index hugo.Data.versions $productID -}}
+{{- if not $versions }}{{ errorf "no version data for %q on %s" $productID $page.Path }}{{ end -}}
+{{- $versionHome := site.GetPage (printf "/%s/%s" $productID $version) -}}
+{{- if not $versionHome }}{{ errorf "no version home for product=%s version=%s on %s" $productID $version $page.Path }}{{ end -}}
+{{- return dict
+  "id" $productID
+  "product" $product
+  "versions" $versions
+  "version" $version
+  "productBase" ((printf "%s/" $productID) | relURL)
+  "versionHome" $versionHome
+-}}

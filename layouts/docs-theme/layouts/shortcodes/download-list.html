@@ -1,0 +1,11 @@
+{{- $context := partial "product-context.html" .Page -}}
+{{- $version := $context.version -}}
+{{- $config := index $context.versions $version -}}
+{{- if not $config }}{{ errorf "download-list has no version data for %s on %s" $version .Page.File.Path }}{{ end -}}
+{{- $os := $config.defaultOs -}}
+{{- $downloads := index $config.downloads $os | default slice -}}
+<ul class="download-list" data-doc-downloads>
+  {{- range $downloads }}
+    <li><a href="{{ .url | safeURL }}">OTP {{ .otp }} · {{ .architecture }}{{ with .variant }} · {{ . }}{{ end }} · {{ .filename }}</a></li>
+  {{- end }}
+</ul>

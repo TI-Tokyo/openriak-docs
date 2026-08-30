@@ -1,0 +1,14 @@
+{{ define "main" }}
+  {{ $archiveHome := .FirstSection }}
+  {{ $dateURL := printf `%sby-date/%s/%s/` $archiveHome.RelPermalink (.Date.Format "2006") ((.Date.Format "January") | urlize) }}
+  <article class="article-wrap mailing-list-article">
+    <a class="back-link" href="{{ $archiveHome.RelPermalink }}">← Back to all conversations</a>
+    <header class="article-header">
+      <div class="eyebrow">Mailing-list thread</div>
+      <h1>{{ .Title }}</h1>
+      <div class="article-byline"><strong>{{ .Params.author }}</strong><i></i><a class="byline-link" href="{{ $dateURL }}"><time datetime="{{ .Date.Format `2006-01-02` }}">{{ .Date.Format "January 2, 2006" }}</time></a><i></i><span>{{ .Params.reply_count }} {{ if eq .Params.reply_count 1 }}reply{{ else }}replies{{ end }}</span></div>
+      {{ with .Params.categories }}<nav class="category-chips article-categories" aria-label="Thread categories">{{ range . }}<a class="category-chip" href="{{ printf `%scategories/%s/` $archiveHome.RelPermalink (. | urlize) }}">{{ . }}</a>{{ end }}</nav>{{ end }}
+    </header>
+    <div class="article-layout"><div class="article-body">{{ .Content }}</div><aside class="article-aside"><h2>About this archive</h2><p>This page combines one complete mailing-list thread. Select a reply header to expand or collapse that branch of the conversation.</p><p>Quoted email text is visually indented from the original message.</p></aside></div>
+  </article>
+{{ end }}

@@ -1,0 +1,45 @@
+{{- $page := . -}}
+{{- $archiveHome := .FirstSection -}}
+{{- $posts := where site.RegularPages "Section" "archived-technical-blog" -}}
+{{- $years := $posts.GroupByDate "2006" "desc" -}}
+{{- $newestYear := (index $years 0).Key -}}
+{{- $pageYear := printf "%v" (.Params.archive_year | default "") -}}
+{{- $categoryHome := site.GetPage "/archived-technical-blog/categories" -}}
+{{- $yearHomeURL := printf "%sby-year/" $archiveHome.RelPermalink -}}
+{{- $categoryHomeURL := printf "%scategories/" $archiveHome.RelPermalink -}}
+<aside class="blog-menu" aria-label="Archive menu">
+  <details class="blog-menu-disclosure" open>
+    <summary>Browse archive</summary>
+    <nav class="blog-menu-tree" aria-label="Browse archived articles">
+      <details class="blog-menu-group" open>
+        <summary><a class="blog-menu-index-link{{ if hasPrefix $page.RelPermalink $yearHomeURL }} active{{ end }}" href="{{ $yearHomeURL }}">By Year</a></summary>
+        <div class="blog-menu-branch">
+          {{ range $years }}
+            {{ $year := .Key }}
+            {{ $yearURL := printf "%sby-year/%s/" $archiveHome.RelPermalink $year }}
+            <details class="blog-year"{{ if or (eq $pageYear $year) (and (not $pageYear) (eq $year $newestYear)) }} open{{ end }}>
+              <summary><a class="blog-menu-link{{ if hasPrefix $page.RelPermalink $yearURL }} active{{ end }}" href="{{ $yearURL }}">{{ $year }}</a><span>{{ len .Pages }}</span></summary>
+              <ul>
+                {{ range .Pages.GroupByDate "January" "desc" }}
+                  {{ $monthURL := printf "%sby-year/%s/%s/" $archiveHome.RelPermalink $year (.Key | urlize) }}
+                  <li><a class="blog-menu-link{{ if hasPrefix $page.RelPermalink $monthURL }} active{{ end }}" href="{{ $monthURL }}">{{ .Key }}</a><span>{{ len .Pages }}</span></li>
+                {{ end }}
+              </ul>
+            </details>
+          {{ end }}
+        </div>
+      </details>
+      <details class="blog-menu-group" open>
+        <summary><a class="blog-menu-index-link{{ if hasPrefix $page.RelPermalink $categoryHomeURL }} active{{ end }}" href="{{ $categoryHomeURL }}">By Category</a></summary>
+        <ul class="blog-category-list">
+          {{ with $categoryHome }}
+            {{ range .Pages.ByTitle }}
+              {{ $categoryPosts := where $posts "Params.categories" "intersect" (slice .Params.category) }}
+              <li><a class="blog-menu-link{{ if hasPrefix $page.RelPermalink .RelPermalink }} active{{ end }}" href="{{ .RelPermalink }}">{{ .Title }}</a><span>{{ len $categoryPosts }}</span></li>
+            {{ end }}
+          {{ end }}
+        </ul>
+      </details>
+    </nav>
+  </details>
+</aside>

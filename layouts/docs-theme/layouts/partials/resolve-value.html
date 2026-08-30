@@ -1,0 +1,30 @@
+{{- $page := .page -}}
+{{- $key := .key -}}
+{{- $context := partial "product-context.html" $page -}}
+{{- $version := .version | default $context.version -}}
+{{- $product := .product | default $context.id -}}
+{{- if ne $product $context.id -}}
+  {{- errorf "load-value cannot read product %q from product section %q on %s" $product $context.id $page.File.Path -}}
+{{- end -}}
+{{- $config := index $context.versions $version -}}
+{{- if not $config -}}
+  {{- errorf "load-value has no version data: product=%s version=%s page=%s" $product $version $page.File.Path -}}
+{{- end -}}
+{{- $os := .os | default $config.defaultOs -}}
+{{- $validOs := false -}}
+{{- range $config.operatingSystems }}{{ if eq .id $os }}{{ $validOs = true }}{{ end }}{{ end -}}
+{{- if not $validOs -}}
+  {{- errorf "load-value has invalid OS: product=%s version=%s os=%s page=%s" $product $version $os $page.File.Path -}}
+{{- end -}}
+{{- $value := "" -}}
+{{- $found := false -}}
+{{- with index $config.values $os -}}
+  {{- if isset . $key }}{{ $value = index . $key }}{{ $found = true }}{{ end -}}
+{{- end -}}
+{{- if and (not $found) $config.values.common -}}
+  {{- if isset $config.values.common $key }}{{ $value = index $config.values.common $key }}{{ $found = true }}{{ end -}}
+{{- end -}}
+{{- if not $found -}}
+  {{- errorf "missing value: product=%s version=%s os=%s key=%s page=%s" $product $version $os $key $page.File.Path -}}
+{{- end -}}
+{{- return $value -}}

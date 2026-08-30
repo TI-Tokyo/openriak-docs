@@ -1,0 +1,12 @@
+{{- $context := partial "product-context.html" .page -}}
+{{- $version := .version | default $context.version -}}
+{{- $match := false -}}
+{{- range $context.product.brands -}}
+  {{- $minResult := 0 -}}
+  {{- $maxResult := -1 -}}
+  {{- with .minVersion }}{{ $minResult = partial "compare-semver.html" (dict "left" $version "right" .) }}{{ end -}}
+  {{- with .maxVersionExclusive }}{{ $maxResult = partial "compare-semver.html" (dict "left" $version "right" .) }}{{ end -}}
+  {{- if and (ge $minResult 0) (lt $maxResult 0) }}{{ $match = . }}{{ end -}}
+{{- end -}}
+{{- if not $match }}{{ errorf "version %s does not resolve to exactly one brand for %s" $version $context.id }}{{ end -}}
+{{- return $match -}}

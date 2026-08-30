@@ -1,0 +1,10 @@
+{{- $context := partial "product-context.html" . -}}
+{{- if ne .RelPermalink $context.versionHome.RelPermalink -}}
+<nav class="breadcrumbs" aria-label="Breadcrumb">
+  <a href="{{ $context.versionHome.RelPermalink }}">{{ $context.product.name }}</a>
+  {{- range .Ancestors.Reverse }}
+    {{- if and (strings.HasPrefix .RelPermalink $context.versionHome.RelPermalink) (ne .RelPermalink $context.versionHome.RelPermalink) }}<span aria-hidden="true">/</span><a href="{{ .RelPermalink }}">{{ .LinkTitle }}</a>{{ end -}}
+  {{- end }}
+  <span aria-hidden="true">/</span><span aria-current="page">{{ .LinkTitle }}</span>
+</nav>
+{{- end -}}

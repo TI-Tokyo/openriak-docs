@@ -1,0 +1,44 @@
+{{ define "main" }}
+  {{ $archiveHome := .FirstSection }}
+  {{ $year := int .Params.archive_year }}
+  {{ $month := int (.Params.archive_month | default 0) }}
+  {{ $sort := .Params.sort | default "date" }}
+  {{ $allPosts := where site.RegularPages "Section" "archived-technical-blog" }}
+  {{ $posts := where $allPosts "Date.Year" $year }}
+  {{ if gt $month 0 }}{{ $posts = where $posts "Date.Month" $month }}{{ end }}
+  {{ $sortedPosts := $posts.ByDate.Reverse }}
+  {{ if eq $sort "name" }}{{ $sortedPosts = $posts.ByTitle }}{{ end }}
+  {{ $paginator := .Paginate $sortedPosts 12 }}
+  <section class="category-hero">
+    <a class="back-link category-back" href="{{ $archiveHome.RelPermalink }}">← All articles</a>
+    <div class="eyebrow">Articles by date</div>
+    <h1>{{ .Title }}</h1>
+    <p>{{ .Description }}</p>
+  </section>
+  <section class="archive-shell category-shell">
+    <div class="results-line"><h2>Articles</h2><div class="results-actions"><span>Page {{ $paginator.PageNumber }} of {{ $paginator.TotalPages }} · {{ len $posts }} articles</span>{{ partial "blog-sort.html" (dict "page" . "sort" $sort) }}</div></div>
+    <div class="posts-grid">
+      {{ range $paginator.Pages }}
+        <a class="post-card" href="{{ .RelPermalink }}">
+          <div class="card-meta">
+            <span class="card-categories">{{ delimit .Params.categories " · " }}</span>
+            <time datetime="{{ .Date.Format `2006-01-02` }}">{{ .Date.Format "Jan 2, 2006" }}</time>
+          </div>
+          <h3>{{ .Title }}</h3><p>{{ .Plain | htmlUnescape | truncate 165 }}</p>
+          <div class="card-foot"><span>{{ .Params.author | default "Basho" }}</span><b aria-hidden="true">→</b></div>
+        </a>
+      {{ end }}
+    </div>
+    {{ if gt $paginator.TotalPages 1 }}
+      <nav class="pagination" aria-label="Pagination">
+        {{ with $paginator.Prev }}<a class="page-btn" href="{{ .URL }}" aria-label="Previous page">←</a>{{ else }}<span class="page-btn disabled" aria-hidden="true">←</span>{{ end }}
+        {{ range $paginator.Pagers }}
+          {{ if or (eq .PageNumber 1) (eq .PageNumber $paginator.TotalPages) (and (ge .PageNumber (sub $paginator.PageNumber 1)) (le .PageNumber (add $paginator.PageNumber 1))) }}
+            <a class="page-btn{{ if eq .PageNumber $paginator.PageNumber }} current{{ end }}" href="{{ .URL }}"{{ if eq .PageNumber $paginator.PageNumber }} aria-current="page"{{ end }}>{{ .PageNumber }}</a>
+          {{ else if or (eq .PageNumber 2) (eq .PageNumber (sub $paginator.TotalPages 1)) }}<span class="page-gap" aria-hidden="true">…</span>{{ end }}
+        {{ end }}
+        {{ with $paginator.Next }}<a class="page-btn" href="{{ .URL }}" aria-label="Next page">→</a>{{ else }}<span class="page-btn disabled" aria-hidden="true">→</span>{{ end }}
+      </nav>
+    {{ end }}
+  </section>
+{{ end }}

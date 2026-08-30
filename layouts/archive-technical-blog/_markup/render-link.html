@@ -1,0 +1,8 @@
+{{- $destination := .Destination -}}
+{{- $external := or (strings.HasPrefix $destination "http://") (strings.HasPrefix $destination "https://") -}}
+{{- if strings.HasPrefix $destination "../images/" -}}
+  {{- $destination = strings.TrimPrefix "../" $destination | relURL -}}
+{{- else if strings.HasSuffix $destination ".md" -}}
+  {{- with .Page.GetPage $destination -}}{{- $destination = .RelPermalink -}}{{- end -}}
+{{- end -}}
+<a href="{{ $destination | safeURL }}"{{ with .Title }} title="{{ . }}"{{ end }}{{ if $external }} target="_blank" rel="noreferrer"{{ end }}>{{ .Text | safeHTML }}</a>

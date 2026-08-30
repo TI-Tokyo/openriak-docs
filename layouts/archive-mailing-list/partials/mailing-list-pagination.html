@@ -1,0 +1,8 @@
+{{ $paginator := . }}
+{{ if gt $paginator.TotalPages 1 }}
+  <nav class="pagination" aria-label="Pagination">
+    {{ with $paginator.Prev }}<a class="page-btn" href="{{ .URL }}" aria-label="Previous page">←</a>{{ else }}<span class="page-btn disabled" aria-hidden="true">←</span>{{ end }}
+    {{ range $paginator.Pagers }}{{ if or (eq .PageNumber 1) (eq .PageNumber $paginator.TotalPages) (and (ge .PageNumber (sub $paginator.PageNumber 1)) (le .PageNumber (add $paginator.PageNumber 1))) }}<a class="page-btn{{ if eq .PageNumber $paginator.PageNumber }} current{{ end }}" href="{{ .URL }}"{{ if eq .PageNumber $paginator.PageNumber }} aria-current="page"{{ end }}>{{ .PageNumber }}</a>{{ else if or (eq .PageNumber 2) (eq .PageNumber (sub $paginator.TotalPages 1)) }}<span class="page-gap" aria-hidden="true">…</span>{{ end }}{{ end }}
+    {{ with $paginator.Next }}<a class="page-btn" href="{{ .URL }}" aria-label="Next page">→</a>{{ else }}<span class="page-btn disabled" aria-hidden="true">→</span>{{ end }}
+  </nav>
+{{ end }}

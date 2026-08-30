@@ -1,0 +1,24 @@
+{{ define "main" }}
+  {{ $posts := where site.RegularPages "Section" "archived-technical-blog" }}
+  {{ $years := $posts.GroupByDate "2006" "desc" }}
+  {{ $yearHome := .RelPermalink }}
+  <section class="category-hero">
+    <div class="eyebrow">Browse the archive</div>
+    <h1>{{ .Title }}</h1>
+    <p>{{ .Description }}</p>
+  </section>
+  <section class="archive-shell category-shell">
+    <div class="results-line"><h2>All years</h2><span>{{ len $years }} years · {{ len $posts }} articles</span></div>
+    <div class="category-grid">
+      {{ range $years }}
+        <a class="category-card" href="{{ printf `%s%s/` $yearHome .Key }}">
+          <div>
+            <h2>{{ .Key }}</h2>
+            <p>Archived Basho Technical Blog articles published in {{ .Key }}.</p>
+          </div>
+          <span>{{ len .Pages }} {{ if eq (len .Pages) 1 }}article{{ else }}articles{{ end }} <b aria-hidden="true">→</b></span>
+        </a>
+      {{ end }}
+    </div>
+  </section>
+{{ end }}

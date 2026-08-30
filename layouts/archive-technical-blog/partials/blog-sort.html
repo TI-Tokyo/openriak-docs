@@ -1,0 +1,9 @@
+{{- $page := .page -}}
+{{- $sort := .sort -}}
+{{- $root := $page.RelPermalink -}}
+{{- if eq $sort "name" -}}{{- $root = $page.Parent.RelPermalink -}}{{- end -}}
+<nav class="sort-options" aria-label="Sort articles">
+  <span>Sort by</span>
+  <a href="{{ $root }}" class="sort-option{{ if eq $sort `date` }} active{{ end }}"{{ if eq $sort `date` }} aria-current="page"{{ end }}>Date</a>
+  <a href="{{ printf `%sname/` $root }}" class="sort-option{{ if eq $sort `name` }} active{{ end }}"{{ if eq $sort `name` }} aria-current="page"{{ end }}>Title</a>
+</nav>

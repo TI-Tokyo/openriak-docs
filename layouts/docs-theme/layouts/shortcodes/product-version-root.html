@@ -1,0 +1,3 @@
+{{- $version := .Get "version" | default (partial "current-version.html" .Page) -}}
+{{- $context := partial "product-context.html" .Page -}}
+{{- printf "%s%s/" $context.productBase $version -}}

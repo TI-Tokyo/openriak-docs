@@ -1,0 +1,15 @@
+{{ define "main" }}
+  {{ partial "breadcrumbs.html" . }}
+  <article class="doc-article">
+    <h1>{{ .Title }}</h1>
+    {{ .Content }}
+    {{ with .Pages }}
+      <nav class="page-list" aria-label="Pages in {{ $.Title }}">
+        {{ range .ByWeight }}
+          <a href="{{ .RelPermalink }}"><strong>{{ .LinkTitle }}</strong>{{ with .Description }}<span>{{ . }}</span>{{ end }}</a>
+        {{ end }}
+      </nav>
+    {{ end }}
+  </article>
+{{ end }}
+

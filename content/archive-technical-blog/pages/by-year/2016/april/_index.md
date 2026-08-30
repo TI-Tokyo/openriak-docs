@@ -1,0 +1,8 @@
+---
+title: "April 2016"
+description: Archived Basho Technical Blog articles published in April 2016.
+archive_year: 2016
+archive_month: 4
+type: blog
+layout: date
+---

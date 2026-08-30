@@ -1,0 +1,11 @@
+{{- $context := partial "product-context.html" . -}}
+{{- $version := $context.version -}}
+{{- if ne $version $context.product.currentVersion -}}
+  {{- $brand := partial "brand-for-version.html" (dict "page" . "version" $version) -}}
+  <aside class="version-warning" role="status">
+    You are viewing <strong>{{ $brand.name }} {{ $version }}</strong> documentation.
+    The current {{ $context.product.name }} release is {{ $context.product.currentVersion }}.
+    <a href="{{ printf "%s%s/" $context.productBase $context.product.currentVersion }}" data-version-warning-target="{{ $context.product.currentVersion }}">View current documentation</a>
+  </aside>
+{{- end -}}
+

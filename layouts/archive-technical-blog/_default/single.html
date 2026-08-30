@@ -1,0 +1,25 @@
+{{ define "main" }}
+  {{ $archiveHome := .FirstSection }}
+  {{ $author := .Params.author | default "Basho" }}
+  {{ $authorSlug := replaceRE `[^a-z0-9]+` `-` ($author | lower) }}
+  {{ $authorURL := printf `%sauthors/%s/` $archiveHome.RelPermalink $authorSlug }}
+  {{ $dateURL := printf `%sby-year/%s/%s/` $archiveHome.RelPermalink (.Date.Format "2006") ((.Date.Format "January") | urlize) }}
+  <article class="article-wrap">
+    <a class="back-link" href="{{ $archiveHome.RelPermalink }}">← Back to all articles</a>
+    <header class="article-header">
+      <div class="eyebrow">Technical archive</div>
+      <h1>{{ .Title }}</h1>
+      <div class="article-byline"><a class="byline-link" href="{{ $authorURL }}"><strong>{{ $author }}</strong></a><i></i><a class="byline-link" href="{{ $dateURL }}"><time datetime="{{ .Date.Format `2006-01-02` }}">{{ .Date.Format "January 2, 2006" }}</time></a><i></i><span>Originally published on Basho.com</span></div>
+      {{ with .Params.categories }}
+        <nav class="category-chips article-categories" aria-label="Article categories">
+          {{ range . }}<a class="category-chip" href="{{ printf `%scategories/%s/` $archiveHome.RelPermalink (. | urlize) }}">{{ . }}</a>{{ end }}
+        </nav>
+      {{ end }}
+    </header>
+    <div class="article-layout"><div>
+      {{ $imageBase := `images/` | relURL }}
+      <div class="article-body">{{ .Content | replaceRE `\.\./images/` $imageBase | safeHTML }}</div>
+      <nav class="post-nav" aria-label="Adjacent posts">{{ with .PrevInSection }}<a href="{{ .RelPermalink }}"><small>Newer article</small>{{ .Title }}</a>{{ else }}<span></span>{{ end }}{{ with .NextInSection }}<a href="{{ .RelPermalink }}"><small>Older article</small>{{ .Title }}</a>{{ end }}</nav>
+    </div><aside class="article-aside"><h2>From the archive</h2><p>This article was recovered from a historical snapshot of the Basho Technical Blog. Links may point to services that have since changed or disappeared.</p>{{ with .Params.archive_url }}<a class="source-link" href="{{ . }}" target="_blank" rel="noreferrer">View Wayback snapshot ↗</a>{{ end }}</aside></div>
+  </article>
+{{ end }}

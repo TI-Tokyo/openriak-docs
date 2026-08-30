@@ -1,0 +1,22 @@
+<!doctype html>
+{{- $sectionID := .Params.site_section | default .Section -}}
+{{- $siteSection := index (where hugo.Data.site_sections "id" $sectionID) 0 -}}
+<html class="no-js" lang="{{ site.Language.Locale | default `en` }}">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="{{ .Description | default site.Params.description }}">
+  <title>{{ .Title }} · {{ site.Title }}</title>
+  <script>document.documentElement.classList.remove('no-js');try{var t=localStorage.getItem('openriak-docs-theme')||'system';document.documentElement.dataset.theme=t==='dark'||(t==='system'&&matchMedia('(prefers-color-scheme: dark)').matches)?'dark':'light'}catch(e){}</script>
+  <link rel="icon" href="{{ `images/ui/favicon.ico` | relURL }}?v=openriak" type="image/x-icon">
+  <link rel="stylesheet" href="{{ `css/site-section.css` | relURL }}?v=20260829-community">
+  <link rel="stylesheet" href="{{ `css/site-header.css` | relURL }}?v=20260830-section-groups">
+</head>
+<body>
+  <a class="skip-link" href="#main-content">Skip to content</a>
+  {{ partial "site-header.html" (dict "page" . "section" $siteSection "showNavToggle" false) }}
+  <main id="main-content" class="site-section-main">{{ block "main" . }}{{ end }}</main>
+  <script src="{{ `js/theme.js` | relURL }}?v=20260829-shared-header" defer></script>
+  <script src="{{ `js/docs-shell.js` | relURL }}?v=20260829-shared-header" defer></script>
+</body>
+</html>

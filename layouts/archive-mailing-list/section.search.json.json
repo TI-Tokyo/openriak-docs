@@ -1,0 +1,7 @@
+{{- $pages := where .RegularPagesRecursive "Type" "mailing-list" -}}
+[
+{{- range $index, $page := $pages -}}
+  {{- if $index }},{{ end }}
+  {{- dict "title" $page.Title "author" ($page.Params.author | default "") "content" ($page.Plain | htmlUnescape) "date" ($page.Date.Format "2006-01-02") "url" $page.RelPermalink | jsonify -}}
+{{- end }}
+]
