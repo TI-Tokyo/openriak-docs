@@ -3,11 +3,14 @@ $repositoryRoot = Split-Path -Parent (Split-Path -Parent $PSScriptRoot)
 $image = 'ghcr.io/gohugoio/hugo:v0.165.0'
 $validationRoot = Join-Path $repositoryRoot 'public/.architecture-validation'
 
+node (Join-Path $PSScriptRoot 'generate-version-mounts.js')
+if ($LASTEXITCODE -ne 0) { throw 'Version mount generation failed' }
 node (Join-Path $PSScriptRoot 'sync-product-metadata.js')
 if ($LASTEXITCODE -ne 0) { throw 'Metadata synchronization failed' }
 
 Write-Host 'Building unified site...'
 docker run --rm --volume "${repositoryRoot}:/workspace" --workdir /workspace/content $image `
+    --config /workspace/tools/generated/hugo.yaml `
     --destination /workspace/public/.architecture-validation `
     --baseURL http://localhost:1410/docs/ `
     --cacheDir /tmp/hugo-cache `
@@ -23,8 +26,9 @@ function Assert-MissingValueBuildFails {
     $fixtureContent = "---`ntitle: Missing value validation`n---`n`n$Shortcode`n"
     [IO.File]::WriteAllText($fixturePath, $fixtureContent, [Text.UTF8Encoding]::new($false))
     $output = docker run --rm --volume "${repositoryRoot}:/workspace" `
-        --volume "${fixtureDirectory}:/workspace/content/openriak-kv/layers/3.4.1:ro" `
+        --volume "${fixtureDirectory}:/workspace/content/openriak-kv/3.4.1:ro" `
         --workdir /workspace/content $image `
+        --config /workspace/tools/generated/hugo.yaml `
         --destination "/workspace/public/.architecture-validation/missing-value-output-$Name" `
         --baseURL http://localhost:1410/docs/ `
         --cacheDir /tmp/hugo-cache --cleanDestinationDir --gc --minify --panicOnWarning 2>&1

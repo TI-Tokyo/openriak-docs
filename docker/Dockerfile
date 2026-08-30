@@ -3,7 +3,7 @@ ARG HUGO_VERSION=0.165.0
 FROM node:${NODE_VERSION}-alpine AS metadata
 WORKDIR /project
 COPY . .
-RUN node tools/scripts/sync-product-metadata.js
+RUN node tools/scripts/generate-version-mounts.js && node tools/scripts/sync-product-metadata.js
 
 FROM ghcr.io/gohugoio/hugo:v${HUGO_VERSION} AS build
 ARG INCLUDE_DRAFTS=true

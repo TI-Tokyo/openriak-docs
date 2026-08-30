@@ -16,10 +16,15 @@ destination=${HUGO_DESTINATION:-$site_root/public}
 # wrapper inputs, then unset them so each project's explicit flags take effect.
 unset HUGO_BASEURL HUGO_DESTINATION
 
+generated_config=${HUGO_GENERATED_CONFIG:-$site_root/tools/generated/hugo.yaml}
 if command -v node >/dev/null 2>&1; then
+  node "$site_root/tools/scripts/generate-version-mounts.js" --output "$generated_config"
   node "$site_root/tools/scripts/sync-product-metadata.js"
+else
+  echo "Node.js is required to generate version mounts." >&2
+  exit 1
 fi
 
-set -- --source "$site_root/content" --destination "$destination" --baseURL "$base_url" --gc --minify --panicOnWarning --noBuildLock --cleanDestinationDir
+set -- --source "$site_root/content" --config "$generated_config" --destination "$destination" --baseURL "$base_url" --gc --minify --panicOnWarning --noBuildLock --cleanDestinationDir
 if [ "${INCLUDE_DRAFTS:-true}" = "true" ]; then set -- "$@" --buildDrafts; fi
 hugo "$@"

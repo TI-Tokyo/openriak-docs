@@ -6,6 +6,7 @@ services:
     working_dir: /project
     volumes:
       - '..:/project:ro'
+      - '../tools/generated:/project/tools/generated'
       - 'hugo-cache:/cache'
     read_only: true
     tmpfs:
@@ -14,7 +15,15 @@ services:
       HUGO_RESOURCEDIR: /cache/resources
     init: true
     restart: unless-stopped
-    command: ['server', '--source=/project/content', '--bind=0.0.0.0', '--port=1410', '--baseURL=http://localhost:1410/docs/', '--appendPort=false', '--buildDrafts', '--renderToMemory', '--noBuildLock', '--cacheDir=/cache/hugo', '--poll=700ms']
+    entrypoint: ['/bin/sh', '-lc']
+    command:
+      - >-
+        node /project/tools/scripts/generate-version-mounts.js --output /tmp/openriak-hugo.yaml &&
+        node /project/tools/scripts/sync-product-metadata.js &&
+        hugo server --source=/project/content --config=/tmp/openriak-hugo.yaml
+        --bind=0.0.0.0 --port=1410 --baseURL=http://localhost:1410/docs/
+        --appendPort=false --buildDrafts --renderToMemory --noBuildLock
+        --cacheDir=/cache/hugo --poll=700ms
     ports: ['127.0.0.1:1410:1410']
 
 volumes:

@@ -165,13 +165,20 @@ assert.deepEqual(
   ]
 );
 
-const hugoConfig = fs.readFileSync(path.join(repositoryRoot, 'content', 'hugo.yaml'), 'utf8');
+const generatedHugoConfigPath = path.join(repositoryRoot, 'tools', 'generated', 'hugo.yaml');
+assert.ok(fs.existsSync(generatedHugoConfigPath), 'version mounts must be generated before architecture validation');
+const hugoConfig = fs.readFileSync(generatedHugoConfigPath, 'utf8');
 const kv34Mounts = hugoConfig.split(/\r?\n/).filter((line) => line.includes("target: 'content/openriak-kv/3.4."));
-assert.ok(kv34Mounts.some((line) => line.includes("source: 'openriak-kv/releases/3.4.0'") && line.includes("target: 'content/openriak-kv/3.4.0'")), '3.4.0 must mount its own self-contained baseline');
-assert.ok(kv34Mounts.some((line) => line.includes("source: 'openriak-kv/releases/3.4.0'") && line.includes("target: 'content/openriak-kv/3.4.1'")), '3.4.1 must inherit the 3.4.0 baseline');
-assert.ok(kv34Mounts.every((line) => !/source: 'openriak-kv\/(?:releases|layers)\/3\.2/.test(line)), '3.4.x must never inherit a 3.2.x release or layer');
-assert.ok(kv34Mounts.findIndex((line) => line.includes("source: 'openriak-kv/layers/3.4.1'")) < kv34Mounts.findIndex((line) => line.includes("source: 'openriak-kv/releases/3.4.0'") && line.includes("target: 'content/openriak-kv/3.4.1'")), '3.4.1 changes must precede the 3.4.0 fallback mount');
-assert.match(fs.readFileSync(path.join(repositoryRoot, 'content', 'openriak-kv', 'releases', '3.4.0', '_index.md'), 'utf8'), /^release_baseline: true$/m, '3.4.0 must be explicitly marked as a release baseline');
+assert.deepEqual(
+  kv34Mounts.filter((line) => line.includes("target: 'content/openriak-kv/3.4.1'")).map((line) => line.match(/source: '([^']+)'/)[1]),
+  ['openriak-kv/3.4.1', 'openriak-kv/3.4.0'],
+  '3.4.1 must layer over the self-contained 3.4.0 baseline'
+);
+assert.ok(kv34Mounts.every((line) => /source: 'openriak-kv\//.test(line)), 'OpenRiak KV 3.4.x must never inherit Riak KV sources');
+const kv32Mounts = hugoConfig.split(/\r?\n/).filter((line) => line.includes("target: 'content/openriak-kv/3.2."));
+assert.ok(kv32Mounts.length > 0 && kv32Mounts.every((line) => /source: 'riak-kv\//.test(line)), 'Riak KV versions must inherit only Riak KV sources while retaining OpenRiak KV URLs');
+assert.match(fs.readFileSync(path.join(repositoryRoot, 'content', 'openriak-kv', '3.4.0', '_index.md'), 'utf8'), /^release_baseline: true$/m, '3.4.0 must remain explicitly marked as a release baseline');
+assert.doesNotMatch(hugoConfig, /\/(?:releases|layers)\//, 'generated version mounts must use flat product/version sources');
 assert.match(hugoConfig, /source: 'homepage\/pages'/, 'the homepage must be mounted into the unified project');
 assert.match(hugoConfig, /source: 'community\/pages', target: 'content\/community'/, 'Community must be mounted as a normal Pages collection');
 assert.match(hugoConfig, /target: 'content\/archived-technical-blog'/, 'the blog must be mounted into the unified project');
@@ -257,7 +264,7 @@ for (const author of expectedAuthors) {
 
 for (const productId of productIds) {
   const productRoot = path.join(repositoryRoot, 'content', productId);
-  assert.match(hugoConfig, new RegExp(`source: '${productId}/releases/`), `${productId} releases must be mounted into the unified project`);
+  assert.match(hugoConfig, new RegExp(`source: '${productId}/\\d+\\.\\d+\\.\\d+`), `${productId} versions must be mounted into the unified project`);
   assert.match(hugoConfig, new RegExp(`target: 'content/${productId}/`), `${productId} must publish below its product path`);
   const product = JSON.parse(fs.readFileSync(path.join(productRoot, 'data', 'product.json')));
   const versionDir = path.join(generatedProductsRoot, productId, 'data', 'versions');

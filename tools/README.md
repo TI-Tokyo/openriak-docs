@@ -7,3 +7,7 @@
 
 The main build entry points are `tools/scripts/build.sh` and
 `tools/scripts/build.ps1`.
+
+`tools/scripts/generate-version-mounts.js` scans the flat product/version
+directories and expands their cumulative inheritance chains into
+`tools/generated/hugo.yaml` before Hugo starts.

@@ -8,7 +8,11 @@ const productRoot = path.join(repositoryRoot, 'content', 'openriak-kv');
 const generatedDataRoot = path.join(repositoryRoot, 'tools', 'generated', 'openriak-kv', 'data');
 const metadataProduct = 'kv';
 const productId = 'openriak-kv';
-const versions = ['3.4.0', '3.4.1'];
+const { compareSemver } = require('./generate-version-mounts.js');
+const versions = fs.readdirSync(productRoot, { withFileTypes: true })
+  .filter((entry) => entry.isDirectory() && /^\d+\.\d+\.\d+(?:-[0-9A-Za-z.-]+)?$/.test(entry.name))
+  .map((entry) => entry.name)
+  .sort(compareSemver);
 
 const familyNames = {
   alpine: 'Alpine Linux',

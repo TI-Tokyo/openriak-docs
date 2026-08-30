@@ -12,11 +12,20 @@ The homepage, product documentation, and Archived Technical Blog are rendered by
 
 ## Product content layering
 
-Hugo mounts product releases directly below their product/version URL. The OpenRiak KV 3.4.1 tree layers its changed pages over the 3.4.0 baseline; unchanged pages are inherited without source duplication. Historical releases use the same product templates and product-keyed data model.
+Versioned sources are flat directories such as `content/openriak-kv/3.4.1/`.
+There are no special `releases/` or `layers/` directories. Every version is
+a sparse layer over the earlier versions in the same source product.
+
+`tools/scripts/generate-version-mounts.js` scans `riak-kv`, `openriak-kv`,
+`openriak-cs`, and `openriak-ts` before each build. For each target version
+it mounts matching source versions newest first, because Hugo resolves the
+first matching file. Riak KV sources publish below `content/openriak-kv/` to
+preserve existing URLs, but they never inherit from or into OpenRiak KV:
+`riak-kv` stops below 3.4.0 and `openriak-kv` starts at 3.4.0.
 
 ## Data ownership
 
-Authoritative metadata lives under `content/openriak-kv/metadata/{version}/`. `tools/scripts/sync-product-metadata.js` validates it and writes Hugo adapters under `tools/generated/`. Build tools never write under `content/`.
+Authoritative metadata lives under `content/openriak-kv/metadata/{version}/`. `tools/scripts/sync-product-metadata.js` discovers the flat OpenRiak KV version directories, validates their metadata, and writes Hugo adapters under `tools/generated/`. Build tools never write under `content/`.
 
 Product descriptors remain with authored product content. The unified Hugo configuration mounts them into a project-wide data map keyed by product ID, avoiding product-specific template copies.
 

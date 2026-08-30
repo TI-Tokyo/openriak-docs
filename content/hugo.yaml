@@ -45,25 +45,9 @@ module:
     - {source: 'archive-mailing-list/generated', target: 'content/archived-mailing-list', disableWatch: true}
     - {source: 'archive-mailing-list/generated-static', target: 'static/archived-mailing-list'}
 
-    # Product releases. OpenRiak KV 3.4.0 is a self-contained baseline: never
-    # mount a 3.2.x release or layer into 3.4.x. Hugo resolves overlapping
-    # mounts in declaration order, so 3.4.1-specific content comes first and
-    # the 3.4.0 baseline is mounted last as its fallback.
-    - {source: 'openriak-kv/releases/3.4.0', target: 'content/openriak-kv/3.4.0'}
-    - {source: 'openriak-kv/releases/3.4.1', target: 'content/openriak-kv/3.4.1'}
-    - {source: 'openriak-kv/layers/3.4.1', target: 'content/openriak-kv/3.4.1'}
-    - {source: 'openriak-kv/releases/3.4.0', target: 'content/openriak-kv/3.4.1'}
-    - {source: 'openriak-kv/releases/3.2.5', target: 'content/openriak-kv/3.2.5'}
-    - {source: 'openriak-kv/releases/3.2.4', target: 'content/openriak-kv/3.2.4'}
-    - {source: 'openriak-kv/releases/3.2.3', target: 'content/openriak-kv/3.2.3'}
-    - {source: 'openriak-kv/releases/3.2.1', target: 'content/openriak-kv/3.2.1'}
-    - {source: 'openriak-kv/releases/3.2.0', target: 'content/openriak-kv/3.2.0'}
-    - {source: 'openriak-kv/layers/3.2.0', target: 'content/openriak-kv/3.2.4'}
-    - {source: 'openriak-kv/layers/3.2.0', target: 'content/openriak-kv/3.2.3'}
-    - {source: 'openriak-kv/layers/3.2.0', target: 'content/openriak-kv/3.2.1'}
-    - {source: 'openriak-kv/layers/3.2.0', target: 'content/openriak-kv/3.2.0'}
-    - {source: 'openriak-cs/releases/2.1.3', target: 'content/openriak-cs/2.1.3'}
-    - {source: 'openriak-ts/releases/1.5.2', target: 'content/openriak-ts/1.5.2'}
+    # Product version mounts are generated before every build. The source
+    # directories remain hand-authored; only the expanded Hugo config is generated.
+    # GENERATED_VERSION_MOUNTS
 
     # Project data is keyed by product ID.
     - {source: 'openriak-kv/data/product.json', target: 'data/product/openriak-kv.json'}
