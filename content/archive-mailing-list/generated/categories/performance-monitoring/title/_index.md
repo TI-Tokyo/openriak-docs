@@ -5,4 +5,5 @@ category: "Performance & Monitoring"
 type: "mailing-list"
 layout: "category"
 sort: "title"
+outputs: ["HTML"]
 ---

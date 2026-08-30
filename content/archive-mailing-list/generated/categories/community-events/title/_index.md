@@ -5,4 +5,5 @@ category: "Community & Events"
 type: "mailing-list"
 layout: "category"
 sort: "title"
+outputs: ["HTML"]
 ---

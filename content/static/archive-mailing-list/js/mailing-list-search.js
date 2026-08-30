@@ -19,7 +19,7 @@
           .then((items) => items.map((item) => ({
             ...item,
             titleText: normalize(item.title),
-            authorText: normalize(item.author),
+            authorText: normalize(item.authors || item.author),
             contentText: normalize(item.content),
           })))
           .catch((error) => {
@@ -41,7 +41,7 @@
       const fragment = document.createDocumentFragment();
       matches.slice(0, 30).forEach(({ item }) => {
         const link = document.createElement('a');
-        link.href = item.url;
+        link.href = new URL(item.url, new URL(root.dataset.indexUrl, window.location.href));
         const title = document.createElement('strong');
         title.textContent = item.title;
         const meta = document.createElement('span');

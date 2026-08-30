@@ -7,16 +7,21 @@
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta name="description" content="{{ .Description | default site.Params.description }}">
   <title>{{ .Title }} · {{ site.Title }}</title>
-  <script>document.documentElement.classList.remove('no-js');try{var t=localStorage.getItem('openriak-docs-theme')||'system';document.documentElement.dataset.theme=t==='dark'||(t==='system'&&matchMedia('(prefers-color-scheme: dark)').matches)?'dark':'light'}catch(e){}</script>
+  <script>document.documentElement.classList.remove('no-js');try{var t=localStorage.getItem('openriak-docs-theme')||'system';document.documentElement.dataset.theme=t==='dark'||(t==='system'&&matchMedia('(prefers-color-scheme: dark)').matches)?'dark':'light';if(matchMedia('(min-width:761px)').matches&&localStorage.getItem('openriak-docs-sidebar-collapsed')==='true')document.documentElement.classList.add('sidebar-collapsed')}catch(e){}</script>
   <link rel="icon" href="{{ `images/ui/favicon.ico` | relURL }}?v=openriak" type="image/x-icon">
   <link rel="stylesheet" href="{{ `css/site-section.css` | relURL }}?v=20260829-community">
   <link rel="stylesheet" href="{{ `css/site-header.css` | relURL }}?v=20260830-section-groups">
+  <link rel="stylesheet" href="{{ `css/sidebar-shell.css` | relURL }}?v=20260830-shared-shell">
 </head>
 <body>
   <a class="skip-link" href="#main-content">Skip to content</a>
-  {{ partial "site-header.html" (dict "page" . "section" $siteSection "showNavToggle" false) }}
-  <main id="main-content" class="site-section-main">{{ block "main" . }}{{ end }}</main>
+  {{ partial "site-header.html" (dict "page" . "section" $siteSection "showNavToggle" true) }}
+  <div class="site-section-shell">
+    {{ partial "site-section-sidebar.html" . }}
+    <main id="main-content" class="site-section-main">{{ block "main" . }}{{ end }}</main>
+  </div>
   <script src="{{ `js/theme.js` | relURL }}?v=20260829-shared-header" defer></script>
+  <script src="{{ `js/sidebar-search.js` | relURL }}?v=20260830-shared-search" defer></script>
   <script src="{{ `js/docs-shell.js` | relURL }}?v=20260829-shared-header" defer></script>
 </body>
 </html>

@@ -1,0 +1,12 @@
+{{- $section := .FirstSection -}}
+{{- $context := dict "page" . "section" $section -}}
+{{ partial "sidebar-shell.html" (dict
+  "class" "site-section-sidebar"
+  "label" (printf "%s navigation" $section.Title)
+  "context" $context
+  "toolsPartial" "site-section-sidebar-tools.html"
+  "treePartial" "site-section-sidebar-tree.html"
+  "showSearch" true
+  "showTree" true
+  "showScrim" true
+) }}

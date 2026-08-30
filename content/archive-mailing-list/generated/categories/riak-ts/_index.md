@@ -5,4 +5,5 @@ category: "Riak TS"
 type: "mailing-list"
 layout: "category"
 sort: "date"
+outputs: ["HTML"]
 ---

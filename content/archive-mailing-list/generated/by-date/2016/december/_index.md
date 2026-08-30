@@ -5,4 +5,6 @@ archive_year: 2016
 archive_month: 12
 type: "mailing-list"
 layout: "date"
+sort: "date"
+outputs: ["HTML"]
 ---

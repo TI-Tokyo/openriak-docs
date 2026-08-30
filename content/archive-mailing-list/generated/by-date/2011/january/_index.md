@@ -5,4 +5,6 @@ archive_year: 2011
 archive_month: 1
 type: "mailing-list"
 layout: "date"
+sort: "date"
+outputs: ["HTML"]
 ---

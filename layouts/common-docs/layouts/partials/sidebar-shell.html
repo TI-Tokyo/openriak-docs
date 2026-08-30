@@ -1,0 +1,19 @@
+{{- $shell := . -}}
+{{- $class := printf "site-sidebar %s" (.class | default "") -}}
+<aside id="docs-sidebar" class="{{ $class }}" aria-label="{{ .label | default `Site navigation` }}">
+  <button class="sidebar-collapse" type="button" data-sidebar-collapse aria-controls="docs-sidebar" aria-expanded="true" title="Collapse navigation" aria-label="Collapse navigation">
+    <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M14.5 5 8 12l6.5 7M20 4v16"/></svg>
+  </button>
+  <nav class="sidebar-rail" data-sidebar-rail aria-label="Collapsed navigation">
+    <button type="button" data-sidebar-expand title="Expand navigation" aria-label="Expand navigation"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="m9.5 5 6.5 7-6.5 7M4 4v16"/></svg></button>
+    {{ if .showVersion }}<button type="button" data-sidebar-version title="Version" aria-label="Open version picker"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 7h11M4 12h8M4 17h11M18 5v14M15.5 7.5 18 5l2.5 2.5M15.5 16.5 18 19l2.5-2.5"/></svg></button>{{ end }}
+    {{ if .showOS }}<button type="button" data-sidebar-os title="Operating system" aria-label="Open operating system picker"><svg viewBox="0 0 24 24" aria-hidden="true"><rect x="3" y="4" width="18" height="13" rx="1.5"/><path d="M8 21h8M12 17v4"/></svg></button>{{ end }}
+    {{ if .showSearch }}<button type="button" data-sidebar-search-button title="Search" aria-label="Search"><svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="10.5" cy="10.5" r="6.5"/><path d="m15.5 15.5 5 5"/></svg></button>{{ end }}
+    {{ if .showTree }}<button type="button" data-sidebar-tree title="Page tree" aria-label="Open page tree"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 4v16M5 7h5M5 12h5M5 17h5"/><rect x="10" y="5" width="9" height="4" rx="1"/><rect x="10" y="10" width="9" height="4" rx="1"/><rect x="10" y="15" width="9" height="4" rx="1"/></svg></button>{{ end }}
+  </nav>
+  <div class="sidebar-expanded" data-sidebar-expanded>
+    {{ with .toolsPartial }}{{ partial . $shell.context }}{{ end }}
+    {{ with .treePartial }}{{ partial . $shell.context }}{{ end }}
+  </div>
+</aside>
+{{ if .showScrim }}<button class="sidebar-scrim" type="button" data-nav-scrim aria-label="Close navigation" hidden></button>{{ end }}

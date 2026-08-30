@@ -5,4 +5,5 @@ category: "Querying, Search & MapReduce"
 type: "mailing-list"
 layout: "category"
 sort: "title"
+outputs: ["HTML"]
 ---

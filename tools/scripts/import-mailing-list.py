@@ -396,6 +396,7 @@ def front_matter(values):
 
 
 def write_index(path, **values):
+    values.setdefault("outputs", ["HTML"])
     path.parent.mkdir(parents=True, exist_ok=True)
     path.write_text(front_matter(values), encoding="utf-8")
 
@@ -468,14 +469,18 @@ def build(source, destination):
             earlier.append(message)
 
     generated = destination / "generated"
+    generated_static = destination / "generated-static"
     if generated.exists():
         shutil.rmtree(generated)
+    if generated_static.exists():
+        shutil.rmtree(generated_static)
     threads_dir, categories_dir, dates_dir = generated / "threads", generated / "categories", generated / "by-date"
     threads_dir.mkdir(parents=True)
     write_index(threads_dir / "_index.md", title="Archived Mailing List", type="mailing-list")
 
     category_counts = defaultdict(lambda: [0, 0])
     date_counts = defaultdict(lambda: defaultdict(lambda: [0, 0]))
+    search_entries = []
     for root_id, thread in by_root.items():
         root = messages[root_id]
         reply_count = len(thread) - 1
@@ -484,8 +489,9 @@ def build(source, destination):
         category_counts[category][1] += reply_count
         date_counts[root["date"].year][root["date"].month][0] += 1
         date_counts[root["date"].year][root["date"].month][1] += reply_count
+        thread_title = display_title(root["title"], reply_count)
         values = {
-            "title": display_title(root["title"], reply_count),
+            "title": thread_title,
             "date": root["sent_date"],
             "author": root["author"],
             "categories": [category],
@@ -494,6 +500,20 @@ def build(source, destination):
             "type": "mailing-list",
         }
         (threads_dir / f"{root_id}.md").write_text(front_matter(values) + "\n" + render_thread(root, children) + "\n", encoding="utf-8")
+        authors = list(dict.fromkeys(message["author"] for message in thread))
+        content = "\n".join(text for message in thread for _, text in message["lines"] if text)
+        search_entries.append({
+            "title": thread_title,
+            "author": root["author"],
+            "authors": authors,
+            "content": content,
+            "date": root["date"].strftime("%Y-%m-%d"),
+            "url": f"threads/{root_id}/",
+        })
+
+    generated_static.mkdir(parents=True)
+    search_path = generated_static / "index.json"
+    search_path.write_text(json.dumps(search_entries, ensure_ascii=False, separators=(",", ":")), encoding="utf-8")
 
     write_index(categories_dir / "_index.md", title="By Category", description="Browse archived mailing-list conversations by subject.", type="mailing-list", layout="categories")
     for category in sorted(category_counts):
@@ -504,13 +524,21 @@ def build(source, destination):
 
     write_index(dates_dir / "_index.md", title="By Date", description="Browse archived mailing-list conversations by year and month.", type="mailing-list", layout="by-date")
     for year in sorted(date_counts, reverse=True):
-        write_index(dates_dir / str(year) / "_index.md", title=str(year), description=f"Mailing-list conversations started in {year}.", archive_year=year, type="mailing-list", layout="date")
+        year_dir = dates_dir / str(year)
+        year_description = f"Mailing-list conversations started in {year}."
+        write_index(year_dir / "_index.md", title=str(year), description=year_description, archive_year=year, type="mailing-list", layout="date", sort="date")
+        write_index(year_dir / "title" / "_index.md", title=str(year), description=year_description, archive_year=year, type="mailing-list", layout="date", sort="title")
         for month in sorted(date_counts[year], reverse=True):
             name = dt.date(2000, month, 1).strftime("%B")
-            write_index(dates_dir / str(year) / name.lower() / "_index.md", title=f"{name} {year}", description=f"Mailing-list conversations started in {name} {year}.", archive_year=year, archive_month=month, type="mailing-list", layout="date")
+            month_dir = year_dir / name.lower()
+            month_title = f"{name} {year}"
+            month_description = f"Mailing-list conversations started in {name} {year}."
+            write_index(month_dir / "_index.md", title=month_title, description=month_description, archive_year=year, archive_month=month, type="mailing-list", layout="date", sort="date")
+            write_index(month_dir / "title" / "_index.md", title=month_title, description=month_description, archive_year=year, archive_month=month, type="mailing-list", layout="date", sort="title")
 
     print(f"imported {len(messages)} HTML messages as {len(by_root)} threads in {len(category_counts)} categories")
     print(f"removed {deduplicated} exact repeated-message quotations")
+    print(f"wrote {search_path.stat().st_size} bytes of static search data")
     if missing_parents:
         print(f"treated {len(missing_parents)} messages with empty source thread slices as standalone threads")
 

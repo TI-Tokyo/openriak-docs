@@ -1,7 +1,7 @@
-{{- $pages := .RegularPagesRecursive -}}
 [
-{{- range $index, $page := $pages -}}
-  {{- if $index }},{{ end }}
+  {{ dict "title" .Title "description" (.Description | default .Summary | plainify) "url" .RelPermalink "logicalPath" .File.Path | jsonify }}
+{{- range $page := .RegularPagesRecursive -}}
+  ,
   {{ dict "title" $page.Title "description" ($page.Description | default $page.Summary | plainify) "url" $page.RelPermalink "logicalPath" $page.File.Path | jsonify }}
 {{- end }}
 ]

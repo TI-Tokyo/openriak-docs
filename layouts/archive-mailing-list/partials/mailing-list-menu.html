@@ -2,52 +2,23 @@
 {{- $archiveHome := .FirstSection -}}
 {{- $threads := where site.RegularPages "Section" "archived-mailing-list" -}}
 {{- $years := $threads.GroupByDate "2006" "desc" -}}
-{{- $newestYear := (index $years 0).Key -}}
-{{- $pageYear := printf "%v" (.Params.archive_year | default "") -}}
-{{- $categoryHome := site.GetPage "/archived-mailing-list/categories" -}}
-{{- $dateHomeURL := printf "%sby-date/" $archiveHome.RelPermalink -}}
-{{- $categoryHomeURL := printf "%scategories/" $archiveHome.RelPermalink -}}
-<aside id="docs-sidebar" class="blog-menu mailing-list-menu" aria-label="Mailing-list archive menu">
-  <button class="sidebar-collapse" type="button" data-sidebar-collapse aria-controls="docs-sidebar" aria-expanded="true" title="Collapse navigation">
-    <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M14.5 5 8 12l6.5 7M20 4v16"/></svg><span>Collapse</span>
-  </button>
-  <nav class="sidebar-rail" data-sidebar-rail aria-label="Collapsed mailing-list navigation">
-    <button type="button" data-sidebar-expand title="Expand navigation" aria-label="Expand navigation"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="m9.5 5 6.5 7-6.5 7M4 4v16"/></svg></button>
-    <button type="button" data-sidebar-search-button title="Search" aria-label="Search conversations"><svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="10.5" cy="10.5" r="6.5"/><path d="m15.5 15.5 5 5"/></svg></button>
-    <button type="button" data-sidebar-tree title="Archive tree" aria-label="Open archive tree"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 4v16M5 7h5M5 12h5M5 17h5"/><rect x="10" y="5" width="9" height="4" rx="1"/><rect x="10" y="10" width="9" height="4" rx="1"/><rect x="10" y="15" width="9" height="4" rx="1"/></svg></button>
-  </nav>
-  <div class="sidebar-expanded" data-sidebar-expanded>
-  <div class="sidebar-tools">
-  <div class="mailing-list-search sidebar-control search-control" data-mailing-list-search data-index-url="{{ printf `%sindex.json` $archiveHome.RelPermalink }}">
-    <label for="mailing-list-search">Search conversations</label>
-    <input id="mailing-list-search" type="search" placeholder="Title, author, or message text" autocomplete="off" data-search-input data-mailing-list-search-input>
-    <p class="mailing-list-search__status" data-mailing-list-search-status aria-live="polite"></p>
-    <div class="mailing-list-search__results search-results" data-mailing-list-search-results hidden></div>
-  </div>
-  </div>
-  <details class="blog-menu-disclosure" open><summary>Browse archive</summary>
-    <nav class="blog-menu-tree sidebar-page-tree" tabindex="-1" aria-label="Browse archived mailing-list conversations">
-      <details class="blog-menu-group" open><summary><a class="blog-menu-index-link{{ if hasPrefix $page.RelPermalink $dateHomeURL }} active{{ end }}" href="{{ $dateHomeURL }}">By Date</a></summary><div class="blog-menu-branch">
-        {{ range $years }}
-          {{- $year := .Key -}}{{- $yearURL := printf "%sby-date/%s/" $archiveHome.RelPermalink $year -}}{{- $yearReplies := 0 -}}
-          {{- range .Pages }}{{ $yearReplies = add $yearReplies (int (.Params.reply_count | default 0)) }}{{ end -}}
-          <details class="blog-year"{{ if or (eq $pageYear $year) (and (not $pageYear) (eq $year $newestYear)) }} open{{ end }}><summary><a class="blog-menu-link{{ if hasPrefix $page.RelPermalink $yearURL }} active{{ end }}" href="{{ $yearURL }}">{{ $year }}</a><span>{{ len .Pages }} (+{{ $yearReplies }})</span></summary><ul>
-            {{ range .Pages.GroupByDate "January" "desc" }}
-              {{- $monthURL := printf "%sby-date/%s/%s/" $archiveHome.RelPermalink $year (.Key | urlize) -}}{{- $monthReplies := 0 -}}
-              {{- range .Pages }}{{ $monthReplies = add $monthReplies (int (.Params.reply_count | default 0)) }}{{ end -}}
-              <li><a class="blog-menu-link{{ if hasPrefix $page.RelPermalink $monthURL }} active{{ end }}" href="{{ $monthURL }}">{{ .Key }}</a><span>{{ len .Pages }} (+{{ $monthReplies }})</span></li>
-            {{ end }}
-          </ul></details>
-        {{ end }}
-      </div></details>
-      <details class="blog-menu-group" open><summary><a class="blog-menu-index-link{{ if hasPrefix $page.RelPermalink $categoryHomeURL }} active{{ end }}" href="{{ $categoryHomeURL }}">By Category</a></summary><ul class="blog-category-list">
-        {{ with $categoryHome }}{{ range .Pages.ByTitle }}
-          {{- $categoryThreads := where $threads "Params.categories" "intersect" (slice .Params.category) -}}{{- $categoryReplies := 0 -}}
-          {{- range $categoryThreads }}{{ $categoryReplies = add $categoryReplies (int (.Params.reply_count | default 0)) }}{{ end -}}
-          <li><a class="blog-menu-link{{ if hasPrefix $page.RelPermalink .RelPermalink }} active{{ end }}" href="{{ .RelPermalink }}">{{ .Title }}</a><span>{{ len $categoryThreads }} (+{{ $categoryReplies }})</span></li>
-        {{ end }}{{ end }}
-      </ul></details>
-    </nav>
-  </details>
-  </div>
-</aside>
+{{- $context := dict
+  "page" $page
+  "archiveHome" $archiveHome
+  "threads" $threads
+  "years" $years
+  "newestYear" ((index $years 0).Key)
+  "pageYear" (printf "%v" (.Params.archive_year | default ""))
+  "categoryHome" (site.GetPage "/archived-mailing-list/categories")
+  "dateHomeURL" (printf "%sby-date/" $archiveHome.RelPermalink)
+  "categoryHomeURL" (printf "%scategories/" $archiveHome.RelPermalink)
+-}}
+{{ partial "sidebar-shell.html" (dict
+  "class" "blog-menu mailing-list-menu"
+  "label" "Mailing-list archive menu"
+  "context" $context
+  "toolsPartial" "mailing-list-sidebar-tools.html"
+  "treePartial" "mailing-list-sidebar-tree.html"
+  "showSearch" true
+  "showTree" true
+) }}

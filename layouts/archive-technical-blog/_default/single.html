@@ -16,10 +16,11 @@
         </nav>
       {{ end }}
     </header>
-    <div class="article-layout"><div>
+    <div class="article-layout">
       {{ $imageBase := `images/` | relURL }}
       <div class="article-body">{{ .Content | replaceRE `\.\./images/` $imageBase | safeHTML }}</div>
+      <footer class="article-archive-footer"><h2>From the archive</h2><p>This article was recovered from a historical snapshot of the Basho Technical Blog. Links may point to services that have since changed or disappeared.</p>{{ with .Params.archive_url }}<a class="source-link" href="{{ . }}" target="_blank" rel="noreferrer">View Wayback snapshot ↗</a>{{ end }}</footer>
       <nav class="post-nav" aria-label="Adjacent posts">{{ with .PrevInSection }}<a href="{{ .RelPermalink }}"><small>Newer article</small>{{ .Title }}</a>{{ else }}<span></span>{{ end }}{{ with .NextInSection }}<a href="{{ .RelPermalink }}"><small>Older article</small>{{ .Title }}</a>{{ end }}</nav>
-    </div><aside class="article-aside"><h2>From the archive</h2><p>This article was recovered from a historical snapshot of the Basho Technical Blog. Links may point to services that have since changed or disappeared.</p>{{ with .Params.archive_url }}<a class="source-link" href="{{ . }}" target="_blank" rel="noreferrer">View Wayback snapshot ↗</a>{{ end }}</aside></div>
+    </div>
   </article>
 {{ end }}

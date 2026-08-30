@@ -42,7 +42,8 @@ module:
     - {source: 'archive-technical-blog/pages', target: 'content/archived-technical-blog'}
     - {source: 'archive-technical-blog/posts', target: 'content/archived-technical-blog/posts'}
     - {source: 'archive-mailing-list/pages', target: 'content/archived-mailing-list'}
-    - {source: 'archive-mailing-list/generated', target: 'content/archived-mailing-list'}
+    - {source: 'archive-mailing-list/generated', target: 'content/archived-mailing-list', disableWatch: true}
+    - {source: 'archive-mailing-list/generated-static', target: 'static/archived-mailing-list'}
 
     # Product releases. Later mounts layer changes over their baseline.
     - {source: 'openriak-kv/releases/3.4.0', target: 'content/openriak-kv/3.4.0'}
@@ -96,7 +97,6 @@ module:
     - {source: '../layouts/archive-mailing-list/categories.html', target: 'layouts/mailing-list/categories.html'}
     - {source: '../layouts/archive-mailing-list/category.html', target: 'layouts/mailing-list/category.html'}
     - {source: '../layouts/archive-mailing-list/date.html', target: 'layouts/mailing-list/date.html'}
-    - {source: '../layouts/archive-mailing-list/section.search.json.json', target: 'layouts/mailing-list/section.search.json.json'}
     - {source: '../layouts/archive-mailing-list/partials', target: 'layouts/_partials'}
 
     # Shared and page-family assets.

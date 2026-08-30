@@ -1,0 +1,6 @@
+<a class="sidebar-title{{ if eq .page.RelPermalink .section.RelPermalink }} active{{ end }}" href="{{ .section.RelPermalink }}">{{ .section.Title }}</a>
+{{ with .section.RegularPages }}
+  <nav class="sidebar-page-tree" tabindex="-1" aria-label="Pages in {{ $.section.Title }}">
+    <ul class="site-section-tree">{{ range .ByTitle }}<li><a{{ if eq $.page.RelPermalink .RelPermalink }} class="active" aria-current="page"{{ end }} href="{{ .RelPermalink }}">{{ .Title }}</a></li>{{ end }}</ul>
+  </nav>
+{{ end }}

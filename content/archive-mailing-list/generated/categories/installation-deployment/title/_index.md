@@ -5,4 +5,5 @@ category: "Installation & Deployment"
 type: "mailing-list"
 layout: "category"
 sort: "title"
+outputs: ["HTML"]
 ---

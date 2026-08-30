@@ -1,0 +1,6 @@
+{{- $id := .id | default "sidebar-search" -}}
+<div class="sidebar-control search-control" data-search data-sidebar-search data-index-url="{{ .indexURL }}" data-empty-message="{{ .emptyMessage | default `No results.` }}">
+  <label class="control-label" for="{{ $id }}">{{ .label | default "Search" }}</label>
+  <input id="{{ $id }}" type="search" placeholder="{{ .placeholder | default `Search this section` }}" autocomplete="off" data-search-input>
+  <div class="search-results" data-search-results hidden></div>
+</div>

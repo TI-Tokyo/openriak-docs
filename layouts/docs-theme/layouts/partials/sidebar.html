@@ -1,59 +1,21 @@
-{{- $context := partial "product-context.html" . -}}
-{{- $version := $context.version -}}
-{{- $versionData := index $context.versions $version -}}
-{{- $brand := partial "brand-for-version.html" (dict "page" . "version" $version) -}}
-<aside id="docs-sidebar" class="docs-sidebar" aria-label="Documentation navigation">
-  <button class="sidebar-collapse" type="button" data-sidebar-collapse aria-controls="docs-sidebar" aria-expanded="true" title="Collapse navigation">
-    <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M14.5 5 8 12l6.5 7M20 4v16"/></svg>
-    <span>Collapse</span>
-  </button>
-  <nav class="sidebar-rail" data-sidebar-rail aria-label="Collapsed documentation navigation">
-    <button type="button" data-sidebar-expand title="Expand navigation" aria-label="Expand navigation">
-      <svg viewBox="0 0 24 24" aria-hidden="true"><path d="m9.5 5 6.5 7-6.5 7M4 4v16"/></svg>
-    </button>
-    <button type="button" data-sidebar-version title="Version" aria-label="Open version picker">
-      <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 7h11M4 12h8M4 17h11M18 5v14M15.5 7.5 18 5l2.5 2.5M15.5 16.5 18 19l2.5-2.5"/></svg>
-    </button>
-    <button type="button" data-sidebar-os title="Operating system" aria-label="Open operating system picker">
-      <svg viewBox="0 0 24 24" aria-hidden="true"><rect x="3" y="4" width="18" height="13" rx="1.5"/><path d="M8 21h8M12 17v4"/></svg>
-    </button>
-    <button type="button" data-sidebar-search-button title="Search" aria-label="Search documentation">
-      <svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="10.5" cy="10.5" r="6.5"/><path d="m15.5 15.5 5 5"/></svg>
-    </button>
-    <button type="button" data-sidebar-tree title="Page tree" aria-label="Open page tree">
-      <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 4v16M5 7h5M5 12h5M5 17h5"/><rect x="10" y="5" width="9" height="4" rx="1"/><rect x="10" y="10" width="9" height="4" rx="1"/><rect x="10" y="15" width="9" height="4" rx="1"/></svg>
-    </button>
-  </nav>
-  <div class="sidebar-expanded" data-sidebar-expanded>
-    <div class="sidebar-tools">
-      <div class="sidebar-control version-control" data-version-picker>
-        <span class="control-label">Version</span>
-        <button class="picker-trigger" type="button" aria-expanded="false" aria-controls="version-panel">
-          <img src="{{ $brand.logo | relURL }}" alt="">
-          <span class="picker-label"><span data-current-brand>{{ $brand.name }}</span> <strong>{{ $version }}</strong></span>
-          <span class="picker-chevron" aria-hidden="true"></span>
-        </button>
-        <div id="version-panel" class="picker-panel version-panel" data-version-panel hidden></div>
-      </div>
-      <div class="sidebar-control os-control" data-os-control>
-        <span class="control-label">Operating system</span>
-        <button class="picker-trigger os-picker-trigger" type="button" aria-expanded="false" aria-controls="os-panel" data-os-trigger>
-          {{ with index $versionData.operatingSystems 0 }}<img data-os-logo src="{{ .logo | relURL }}" alt="">{{ end }}
-          <span class="picker-label" data-os-label>Choose an operating system</span>
-          <span class="picker-chevron" aria-hidden="true"></span>
-        </button>
-        <div id="os-panel" class="picker-panel os-panel" data-os-picker role="listbox" aria-label="Operating system" hidden></div>
-      </div>
-      <div class="sidebar-control search-control" data-search>
-        <label class="control-label" for="docs-search">Search</label>
-        <input id="docs-search" type="search" placeholder="Search this version" autocomplete="off" data-search-input>
-        <div class="search-results" data-search-results hidden></div>
-      </div>
-    </div>
-    <a class="sidebar-title" href="{{ $context.versionHome.RelPermalink }}">{{ $context.versionHome.Title }}</a>
-    <nav class="sidebar-page-tree" tabindex="-1" aria-label="Page tree">
-      {{ partial "nav-tree.html" (dict "pages" $context.versionHome.Pages "current" .) }}
-    </nav>
-  </div>
-</aside>
-<button class="sidebar-scrim" type="button" data-nav-scrim aria-label="Close navigation" hidden></button>
+{{- $product := partial "product-context.html" . -}}
+{{- $version := $product.version -}}
+{{- $context := dict
+  "page" .
+  "product" $product
+  "version" $version
+  "versionData" (index $product.versions $version)
+  "brand" (partial "brand-for-version.html" (dict "page" . "version" $version))
+-}}
+{{ partial "sidebar-shell.html" (dict
+  "class" "docs-sidebar"
+  "label" "Documentation navigation"
+  "context" $context
+  "toolsPartial" "docs-sidebar-tools.html"
+  "treePartial" "docs-sidebar-tree.html"
+  "showVersion" true
+  "showOS" true
+  "showSearch" true
+  "showTree" true
+  "showScrim" true
+) }}

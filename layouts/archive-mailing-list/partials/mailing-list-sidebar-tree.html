@@ -1,0 +1,24 @@
+<details class="blog-menu-disclosure" open><summary>Browse archive</summary>
+  <nav class="blog-menu-tree sidebar-page-tree" tabindex="-1" aria-label="Browse archived mailing-list conversations">
+    <details class="blog-menu-group" open><summary><a class="blog-menu-index-link{{ if hasPrefix .page.RelPermalink .dateHomeURL }} active{{ end }}" href="{{ .dateHomeURL }}">By Date</a></summary><div class="blog-menu-branch">
+      {{ range .years }}
+        {{- $year := .Key -}}{{- $yearURL := printf "%sby-date/%s/" $.archiveHome.RelPermalink $year -}}{{- $yearReplies := 0 -}}
+        {{- range .Pages }}{{ $yearReplies = add $yearReplies (int (.Params.reply_count | default 0)) }}{{ end -}}
+        <details class="blog-year"{{ if or (eq $.pageYear $year) (and (not $.pageYear) (eq $year $.newestYear)) }} open{{ end }}><summary><a class="blog-menu-link{{ if hasPrefix $.page.RelPermalink $yearURL }} active{{ end }}" href="{{ $yearURL }}">{{ $year }}</a><span>{{ len .Pages }} (+{{ $yearReplies }})</span></summary><ul>
+          {{ range .Pages.GroupByDate "January" "desc" }}
+            {{- $monthURL := printf "%sby-date/%s/%s/" $.archiveHome.RelPermalink $year (.Key | urlize) -}}{{- $monthReplies := 0 -}}
+            {{- range .Pages }}{{ $monthReplies = add $monthReplies (int (.Params.reply_count | default 0)) }}{{ end -}}
+            <li><a class="blog-menu-link{{ if hasPrefix $.page.RelPermalink $monthURL }} active{{ end }}" href="{{ $monthURL }}">{{ .Key }}</a><span>{{ len .Pages }} (+{{ $monthReplies }})</span></li>
+          {{ end }}
+        </ul></details>
+      {{ end }}
+    </div></details>
+    <details class="blog-menu-group" open><summary><a class="blog-menu-index-link{{ if hasPrefix .page.RelPermalink .categoryHomeURL }} active{{ end }}" href="{{ .categoryHomeURL }}">By Category</a></summary><ul class="blog-category-list">
+      {{ with .categoryHome }}{{ range .Pages.ByTitle }}
+        {{- $categoryThreads := where $.threads "Params.categories" "intersect" (slice .Params.category) -}}{{- $categoryReplies := 0 -}}
+        {{- range $categoryThreads }}{{ $categoryReplies = add $categoryReplies (int (.Params.reply_count | default 0)) }}{{ end -}}
+        <li><a class="blog-menu-link{{ if hasPrefix $.page.RelPermalink .RelPermalink }} active{{ end }}" href="{{ .RelPermalink }}">{{ .Title }}</a><span>{{ len $categoryThreads }} (+{{ $categoryReplies }})</span></li>
+      {{ end }}{{ end }}
+    </ul></details>
+  </nav>
+</details>

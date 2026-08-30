@@ -1,0 +1,10 @@
+---
+title: "December 2010"
+description: "Mailing-list conversations started in December 2010."
+archive_year: 2010
+archive_month: 12
+type: "mailing-list"
+layout: "date"
+sort: "title"
+outputs: ["HTML"]
+---

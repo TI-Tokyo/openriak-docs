@@ -5,4 +5,5 @@ category: "Clients & APIs"
 type: "mailing-list"
 layout: "category"
 sort: "date"
+outputs: ["HTML"]
 ---

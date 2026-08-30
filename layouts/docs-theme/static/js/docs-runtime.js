@@ -398,6 +398,7 @@
 
   const setupSearch = () => {
     const root = document.querySelector('[data-search]');
+    if (root?.dataset.sharedSearchReady === 'true') return;
     const input = document.querySelector('[data-search-input]');
     const results = document.querySelector('[data-search-results]');
     if (!root || !input || !results) return;
