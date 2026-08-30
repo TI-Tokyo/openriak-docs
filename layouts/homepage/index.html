@@ -6,7 +6,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>{{ .Title }}</title>
   <script>document.documentElement.classList.remove('no-js');try{var t=localStorage.getItem('openriak-docs-theme')||'system';document.documentElement.dataset.theme=t==='dark'||(t==='system'&&matchMedia('(prefers-color-scheme: dark)').matches)?'dark':'light'}catch(e){}</script>
-  <link rel="icon" href="{{ `images/ui/favicon.ico` | relURL }}?v=openriak" type="image/x-icon">
+  <link rel="icon" href="{{ `images/ui/favicon.png` | relURL }}?v=openriak-mark" type="image/png">
   <style>
     :root { color-scheme: light; --home-ink: #17222b; --home-muted: #56656f; --home-canvas: #f3f6f8; --home-surface: #fff; --home-line: #d8e0e5; --home-accent: #85181b; --home-hover: #b52226; --home-shadow: rgba(23,34,43,.06); font-family: Inter, ui-sans-serif, system-ui, sans-serif; color: var(--home-ink); background: var(--home-canvas); }
     :root[data-theme="dark"] { color-scheme: dark; --home-ink: #e4e8eb; --home-muted: #acb5bc; --home-canvas: #111a22; --home-surface: #18222b; --home-line: #4c5964; --home-accent: #f28b61; --home-hover: #f06b70; --home-shadow: rgba(0,0,0,.25); }
@@ -21,11 +21,15 @@
     .site-sections { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 1rem; }
     .site-section { display: grid; gap: 1.2rem; min-height: 15rem; padding: 1.4rem; border: 1px solid var(--home-line); border-radius: .8rem; background: var(--home-surface); color: inherit; text-decoration: none; box-shadow: 0 8px 25px var(--home-shadow); }
     .site-section:hover { border-color: var(--home-hover); transform: translateY(-2px); }
-    .site-section img { width: 100%; height: 50px; object-fit: contain; object-position: left center; }
+    .site-section-heading { display: flex; align-items: center; gap: .85rem; min-height: 50px; font-size: 1.2rem; font-weight: 700; }
+    .site-section-heading .site-section-icon { display: inline-flex; flex: 0 0 50px; align-items: center; justify-content: center; width: 50px; height: 50px; color: var(--home-ink); }
+    .site-section-heading .site-section-icon svg { width: 34px; height: 34px; fill: none; stroke: currentColor; stroke-width: 1.8; stroke-linecap: round; stroke-linejoin: round; }
+    .site-section-heading .site-section-icon--openriak img { width: 50px; height: 50px; object-fit: contain; }
+    .site-section-heading .site-section-at { font-size: 2rem; font-weight: 800; line-height: 1; }
     .site-section strong { align-self: end; color: var(--home-accent); }
     @media (max-width: 720px) { .site-sections { grid-template-columns: 1fr; } }
   </style>
-  <link rel="stylesheet" href="{{ `css/site-header.css` | relURL }}?v=20260830-section-groups">
+  <link rel="stylesheet" href="{{ `css/site-header.css` | relURL }}?v=20260830-compact-picker">
 </head>
 <body>
   <a class="skip-link" href="#main-content">Skip to content</a>
@@ -37,7 +41,11 @@
     <h2 class="site-sections-title">Site sections</h2>
     <nav class="site-sections" aria-label="Site sections">
       {{ range where hugo.Data.site_sections "showOnHomepage" "ne" false }}
-        <a class="site-section" href="{{ .url }}"><img src="{{ .logo | relURL }}" alt="{{ .name }}"><span>{{ .description }}</span><strong>{{ .action }}</strong></a>
+        <a class="site-section" href="{{ .url }}">
+          <span class="site-section-heading">{{ partial "site-picker-icon.html" . }}<span>{{ .name }}</span></span>
+          <span>{{ .description }}</span>
+          <strong>{{ .action }}</strong>
+        </a>
       {{ end }}
     </nav>
   </main>

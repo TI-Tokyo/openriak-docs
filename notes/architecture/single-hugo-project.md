@@ -4,11 +4,11 @@ The homepage, product documentation, and Archived Technical Blog are rendered by
 
 ## Page families
 
-- The homepage uses the portal home template.
+- The homepage uses the homepage template.
 - OpenRiak KV, CS, and TS are data-driven instances of the shared product templates. Product ID and version come from their mounted content paths and product data.
 - The archive is a blog section with its own list, single-page, and base templates.
 
-`layouts/docs-theme/` owns shared product navigation, product and version pickers, operating-system selection, search, breadcrumbs, version warnings, and metadata-aware shortcodes. `layouts/archive-technical-blog/` owns blog presentation. `layouts/portal/` owns the homepage.
+`layouts/docs-theme/` owns shared product navigation, product and version pickers, operating-system selection, search, breadcrumbs, version warnings, and metadata-aware shortcodes. `layouts/archive-technical-blog/` owns blog presentation. `layouts/homepage/` owns the homepage.
 
 ## Product content layering
 

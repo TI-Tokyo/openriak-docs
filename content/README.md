@@ -2,7 +2,7 @@
 
 `hugo.yaml` defines one Hugo project containing four page families:
 
-- `portal/` — the homepage.
+- `homepage/` — the homepage.
 - `community/` — standard authored pages, beginning with the Community landing page.
 - `openriak-kv/`, `openriak-cs/`, and `openriak-ts/` — instances of the shared product page family.
 - `archive-technical-blog/` — the paginated blog page family.

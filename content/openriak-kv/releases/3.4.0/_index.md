@@ -5,6 +5,7 @@ weight: 1
 diataxis: 'explanation'
 product: 'OpenRiak KV'
 product_version: '3.4.0'
+release_baseline: true
 status: 'editorially-rewritten'
 draft: true
 audience:

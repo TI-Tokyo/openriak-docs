@@ -34,7 +34,7 @@ params:
 module:
   mounts:
     # Authored pages: one Hugo project, three page families.
-    - {source: 'portal/pages', target: 'content'}
+    - {source: 'homepage/pages', target: 'content'}
     - {source: 'community/pages', target: 'content/community'}
     - {source: 'openriak-kv/pages', target: 'content/openriak-kv'}
     - {source: 'openriak-cs/pages', target: 'content/openriak-cs'}
@@ -45,10 +45,14 @@ module:
     - {source: 'archive-mailing-list/generated', target: 'content/archived-mailing-list', disableWatch: true}
     - {source: 'archive-mailing-list/generated-static', target: 'static/archived-mailing-list'}
 
-    # Product releases. Later mounts layer changes over their baseline.
+    # Product releases. OpenRiak KV 3.4.0 is a self-contained baseline: never
+    # mount a 3.2.x release or layer into 3.4.x. Hugo resolves overlapping
+    # mounts in declaration order, so 3.4.1-specific content comes first and
+    # the 3.4.0 baseline is mounted last as its fallback.
     - {source: 'openriak-kv/releases/3.4.0', target: 'content/openriak-kv/3.4.0'}
-    - {source: 'openriak-kv/releases/3.4.0', target: 'content/openriak-kv/3.4.1'}
+    - {source: 'openriak-kv/releases/3.4.1', target: 'content/openriak-kv/3.4.1'}
     - {source: 'openriak-kv/layers/3.4.1', target: 'content/openriak-kv/3.4.1'}
+    - {source: 'openriak-kv/releases/3.4.0', target: 'content/openriak-kv/3.4.1'}
     - {source: 'openriak-kv/releases/3.2.5', target: 'content/openriak-kv/3.2.5'}
     - {source: 'openriak-kv/releases/3.2.4', target: 'content/openriak-kv/3.2.4'}
     - {source: 'openriak-kv/releases/3.2.3', target: 'content/openriak-kv/3.2.3'}
@@ -71,7 +75,7 @@ module:
     - {source: '../layouts/common-docs/data', target: 'data'}
 
     # Homepage, product, and blog template families.
-    - {source: '../layouts/portal/index.html', target: 'layouts/home.html'}
+    - {source: '../layouts/homepage/index.html', target: 'layouts/home.html'}
     - {source: '../layouts/docs-theme/layouts/baseof.html', target: 'layouts/product/baseof.html'}
     - {source: '../layouts/docs-theme/layouts/_default/list.html', target: 'layouts/product/list.html'}
     - {source: '../layouts/docs-theme/layouts/_default/single.html', target: 'layouts/product/single.html'}
