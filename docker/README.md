@@ -1,27 +1,24 @@
-# HTTP-only Docker preview
+# Docker
 
-This wrapper restores the old local Docker workflow using Hugo 0.165.0 without the former Ruby, Rake, Sass, or CoffeeScript toolchain.
+Container build and local single-process Hugo preview configuration.
 
-From the repository root, run one of:
-
-```sh
-sh ./docker/run.local.sh
-```
-
-```powershell
-.\docker\run.local.ps1
-```
-
-The default preview URL is <http://localhost:1314/docs/>. The container binds only to `127.0.0.1`, serves plain HTTP, includes draft content, watches for source changes by polling, renders to memory, and mounts the project read-only.
-
-Set `HUGO_BASEURL` before launching to use a different path, for example:
+From the repository root, start the complete site with one Hugo server:
 
 ```sh
-HUGO_BASEURL=http://localhost:1314/openriak-docs/ sh ./docker/run.local.sh
+./docker/run.local.sh
 ```
 
-Pass Compose `up` options through the wrapper, for example `sh ./docker/run.local.sh --detach`. Stop a detached preview with:
+Arguments are forwarded to `docker compose up`; for example,
+`./docker/run.local.sh -d` starts the services in the background.
+
+The wrapper supports native Docker, the legacy `docker-compose` command, and
+Docker Desktop from WSL. If Docker cannot be reached, it prints platform-aware
+recovery suggestions, including when retrying with `sudo` may be appropriate.
+
+Build the production Nginx image with:
 
 ```sh
-docker compose -f ./docker/docker-compose.localhost-preview.yaml down
+docker build -f docker/Dockerfile --build-arg HUGO_BASEURL=https://www.openriak.org/docs/ -t openriak-docs .
 ```
+
+The Compose service binds only to `127.0.0.1` on port 1410.

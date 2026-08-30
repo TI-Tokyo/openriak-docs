@@ -1,6 +1,0 @@
-{{- $items := slice -}}
-{{- range where site.RegularPages "Section" "kv" -}}
-  {{- $items = $items | append (dict "title" .Title "description" (.Description | default .Summary) "url" .RelPermalink "version" (.Params.product_version | default "") "diataxis" (.Params.diataxis | default "") "content" .Plain) -}}
-{{- end -}}
-{{- $items | jsonify -}}
-

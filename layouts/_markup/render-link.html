@@ -1,8 +1,0 @@
-{{- $destination := .Destination -}}
-{{- $basePath := (urls.Parse site.BaseURL).Path -}}
-{{- $alreadyBased := and (ne $basePath "/") (hasPrefix $destination $basePath) -}}
-{{- if and (hasPrefix $destination "/") (not (hasPrefix $destination "//")) (not $alreadyBased) -}}
-  {{- $destination = relURL (strings.TrimPrefix "/" $destination) -}}
-{{- end -}}
-{{- $external := or (hasPrefix $destination "http://") (hasPrefix $destination "https://") -}}
-<a href="{{ $destination | safeURL }}"{{ with .Title }} title="{{ . }}"{{ end }}{{ if $external }} rel="noopener"{{ end }}>{{ .Text | safeHTML }}</a>

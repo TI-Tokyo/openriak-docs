@@ -1,95 +1,66 @@
 # OpenRiak documentation site
 
-This repository builds the versioned OpenRiak KV documentation with Hugo 0.165.0 and plain Markdown content.
+This repository builds the OpenRiak homepage, versioned product documentation, and Archived Technical Blog as one Hugo 0.165.0 project.
 
-## Preview locally
+## Repository layout
 
-Install the extended Hugo release named in `.hugo-version`, then run:
+- `content/` — the unified Hugo project, authored content, and static site assets.
+- `docker/` — container build, runtime, and local-preview configuration.
+- `layouts/` — shared themes, templates, Hugo modules, and vendored modules.
+- `notes/` — architecture notes and retained migration or validation reports.
+- `public/` — generated merged production output.
+- `tools/` — build, validation, and release-metadata tooling.
 
-```powershell
-hugo server --buildDrafts --baseURL http://localhost:1313/docs/ --appendPort=false
-```
+## Content and metadata
 
-Open `http://localhost:1313/docs/`. The migrated pages are intentionally marked as drafts until their technical reviews are complete, so `--buildDrafts` is required for the working preview.
+Production KV Markdown is layered beneath `content/openriak-kv/`:
 
-The URL prefix is not fixed. For example, use `--baseURL http://localhost:1313/openriak-docs/` to preview the same site under `/openriak-docs/`, or `--baseURL http://localhost:1313/` to preview it at the domain root.
+- `releases/3.2.5/` is the historical Riak KV baseline.
+- `releases/3.4.0/` is the OpenRiak KV 3.4 baseline.
+- `layers/3.4.1/` contains only pages added or changed in 3.4.1; unchanged pages are inherited from 3.4.0.
 
-## Base-path-safe links
+Release metadata under `content/openriak-kv/metadata/{version}/` is authoritative for supported operating systems, package downloads, and replaceable configuration values. `tools/scripts/sync-product-metadata.js` validates and generates the compact browser/Hugo adapters in `tools/generated/openriak-kv/data/versions/`. Build tools do not write under `content/`.
 
-The default production URL is `https://www.openriak.org/docs/`, but the same source can be built for another domain and path. Ordinary Markdown site links are written with the `baseurl` shortcode:
+## Build
 
-```markdown
-[Install OpenRiak]({{< baseurl >}}kv/3.4.1/how-to/install/)
-```
+Install the extended Hugo release in `.hugo-version`, plus Node.js when metadata adapters need regeneration.
 
-Use the same prefix in raw HTML attributes, such as `href="{{< baseurl >}}kv/3.4.1/"` or `src="{{< baseurl >}}images/example.png"`. The shortcode emits only the path component of the configured `baseURL`: `/docs/`, `/openriak-docs/`, or `/`. Markdown render hooks also make any remaining root-relative links and images base-path safe.
-
-## Admonitions
-
-The site uses [hugo-admonitions](https://github.com/KKKZOZ/hugo-admonitions), pinned to v0.12.4 in `go.mod`. Its files are committed under `_vendor`, so preview and publication builds do not require Go, GitHub access, Sass, or Node.
-
-Write callouts using portable blockquote syntax:
-
-```markdown
-> [!NOTE]
-> This information helps readers complete the task safely.
-
-> [!WARNING] Before changing the ring
-> Verify that every node reports the expected cluster state.
-```
-
-The module supports additional types including `TIP`, `IMPORTANT`, `CAUTION`, `DANGER`, `INFO`, and `SUCCESS`, plus custom titles, nesting, and foldable callouts.
-
-## HTTP-only Docker preview
-
-The restored Docker wrapper runs the site without installing Hugo, Ruby, or Node locally. From the repository root, run either:
+PowerShell:
 
 ```powershell
-.\docker\run.local.ps1
+.\tools\scripts\build.ps1 -BaseURL 'https://www.openriak.org/docs/'
 ```
+
+Linux or WSL:
 
 ```sh
-sh ./docker/run.local.sh
+HUGO_BASEURL=https://www.openriak.org/docs/ INCLUDE_DRAFTS=true ./tools/scripts/build.sh
 ```
 
-Then open `http://localhost:1314/docs/`. The service binds only to `127.0.0.1`, uses plain HTTP, includes drafts, watches for changes, renders in memory, and mounts the project read-only. Running `docker compose up` from the repository root starts the same preview configuration.
+The merged site is written to `public/`, with each product under its product-first URL directory.
 
-Set `HUGO_BASEURL` to preview another prefix:
+Run the strict architecture, metadata, SemVer, fallback, missing-value, search, and layered-output checks with:
 
 ```powershell
-$env:HUGO_BASEURL = 'http://localhost:1314/openriak-docs/'
-.\docker\run.local.ps1
+.\tools\scripts\build-architecture.ps1
 ```
+
+## Local preview
+
+Start the complete site with one Hugo server:
 
 ```sh
-HUGO_BASEURL=http://localhost:1314/openriak-docs/ sh ./docker/run.local.sh
+./docker/run.local.sh
 ```
 
-## Build and validate
+The complete site is available below `http://localhost:1410/docs/`.
 
-On Windows:
+## Container image
 
-```powershell
-.\scripts\build.ps1 -BaseURL 'https://www.tiot.jp/openriak-docs/'
-.\scripts\validate-links.ps1
-```
-
-On Linux or WSL:
+The production image regenerates metadata, builds the merged site, and serves it with Nginx:
 
 ```sh
-HUGO_BASEURL=https://www.tiot.jp/openriak-docs/ INCLUDE_DRAFTS=true ./scripts/build.sh
+docker build -f docker/Dockerfile --build-arg HUGO_BASEURL=https://www.openriak.org/docs/ -t openriak-docs .
 ```
 
-Set `IncludeDrafts` or `INCLUDE_DRAFTS` to false for a publication build after reviewed pages have `draft: false` in their front matter.
-
-For the production image, pass the target URL as a build argument. The generated files are placed under the matching URL path inside Nginx:
-
-```sh
-docker build --build-arg HUGO_BASEURL=https://docs.openriak.org/ -t openriak-docs .
-```
-
-## Content organization
-
-Content lives under `content/kv/<version>/`. Current OpenRiak versions use the four Diátaxis sections: `tutorials`, `how-to`, `reference`, and `explanation`. The historical Riak KV 3.2.5 tree preserves its original task-oriented hierarchy so existing page relationships remain intact. Keep version-specific facts within the matching version tree; do not share a page across versions unless its output is demonstrably identical.
-
-The site uses Hugo's current template layout (`layouts/baseof.html`, `home.html`, `page.html`, `section.html`, `_partials`, and `_markup`) with no Docusaurus, Node, Ruby, or Sass build dependency.
+Migrated pages remain drafts until their technical reviews are complete. Set `INCLUDE_DRAFTS=false` for publication once the relevant front matter has been approved.

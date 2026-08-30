@@ -16,10 +16,6 @@
     if (event.key === 'Escape') setNavigation(false);
   });
 
-  document.querySelector('[data-version-select]')?.addEventListener('change', (event) => {
-    window.location.assign(event.target.value);
-  });
-
   document.querySelectorAll('.doc-body pre').forEach((pre) => {
     const button = document.createElement('button');
     button.className = 'copy-code';
