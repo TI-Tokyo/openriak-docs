@@ -66,6 +66,13 @@ module:
     - {source: '../layouts/common-docs/layouts/site-section', target: 'layouts/site-section'}
     - {source: '../layouts/docs-theme/layouts/shortcodes', target: 'layouts/_shortcodes'}
 
+    # Vendored GitHub-style admonitions. Explicit mounts are required because
+    # this project assembles its component roots rather than loading a theme.
+    - {source: '../layouts/_vendor/github.com/KKKZOZ/hugo-admonitions/layouts/_default/_markup/render-blockquote-alert.html', target: 'layouts/_markup/render-blockquote-alert.html'}
+    - {source: '../layouts/_vendor/github.com/KKKZOZ/hugo-admonitions/layouts/partials/admonitions', target: 'layouts/partials/admonitions'}
+    - {source: '../layouts/_vendor/github.com/KKKZOZ/hugo-admonitions/assets/css/vendors', target: 'assets/css/vendors'}
+    - {source: '../layouts/_vendor/github.com/KKKZOZ/hugo-admonitions/i18n', target: 'i18n'}
+
     # The core build owns every shared and section-specific static asset. The
     # archive build emits only its section trees, so assembly has one asset owner.
     - {source: 'static/common', target: 'static'}

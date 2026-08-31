@@ -26,6 +26,7 @@ const highlightSource = fs.readFileSync(path.join(repositoryRoot, 'layouts', 'co
 const docsCssSource = fs.readFileSync(path.join(themeRoot, 'static', 'css', 'docs.css'), 'utf8');
 const downloadsTemplateSource = fs.readFileSync(path.join(themeRoot, 'layouts', '_default', 'downloads.html'), 'utf8');
 const contactEmailShortcodeSource = fs.readFileSync(path.join(themeRoot, 'layouts', 'shortcodes', 'contactusemail.html'), 'utf8');
+const currentVersionShortcodeSource = fs.readFileSync(path.join(themeRoot, 'layouts', 'shortcodes', 'current-version.html'), 'utf8');
 const headerSource = fs.readFileSync(path.join(themeRoot, 'layouts', 'partials', 'header.html'), 'utf8');
 const sharedHeaderSource = fs.readFileSync(path.join(repositoryRoot, 'layouts', 'common-docs', 'layouts', 'partials', 'site-header.html'), 'utf8');
 const sharedSidebarSource = fs.readFileSync(path.join(repositoryRoot, 'layouts', 'common-docs', 'layouts', 'partials', 'sidebar-shell.html'), 'utf8');
@@ -62,6 +63,9 @@ assert.match(staticBuilderSource, /development\|beta-test\)[\s\S]*core-static[\s
 assert.match(shellBuilderSource, /development\|beta-test\|release[\s\S]*if \[ "\$build_profile" = release \]/, 'local Hugo builds must assemble archives only for release');
 assert.match(headSource, /docs\.css[^"\n]+\?v=/, 'shared stylesheet must be cache-busted');
 assert.match(contactEmailShortcodeSource, /contactUsEmail[\s\S]*info@riak\.info/, 'legacy contact-email links must have a supported default');
+assert.match(currentVersionShortcodeSource, /partial "current-version\.html" \.Page \| strings\.TrimSpace/, 'the current-version shortcode must use the canonical rendered-page version');
+assert.match(currentVersionShortcodeSource, /\.Get "format" \| default "full"[\s\S]*eq \$format "major-minor"[\s\S]*printf "%s\.%s"/, 'the current-version shortcode must support full and major-minor plain-text formats');
+assert.match(currentVersionShortcodeSource, /format must be full or major-minor/, 'the current-version shortcode must reject unknown formats');
 assert.match(baseSource, /js\/theme\.js[^"\n]+\?v=/, 'theme picker script must be cache-busted');
 assert.match(headSource, /images\/ui\/favicon\.png[^"\n]+\?v=/, 'documentation pages must use the shared OpenRiak favicon');
 assert.match(homepageSource, /images\/ui\/favicon\.png[^"\n]+\?v=/, 'the homepage must use the shared OpenRiak favicon');
@@ -120,6 +124,13 @@ assert.ok(docsCssSource.includes('.picker-panel {') && docsCssSource.includes('w
 assert.match(docsCssSource, /\.version-panel \{[^}]*width: max-content[^}]*max-width: calc\(100vw - 2rem\)/, 'desktop version picker must size to its content before reaching the viewport limit');
 assert.match(docsCssSource, /\.version-row \{[^}]*grid-template-columns: 3\.2rem minmax\(0,1fr\)[^}]*width: 100%/, 'version rows must fit the picker width');
 assert.match(docsCssSource, /\.version-releases \{[^}]*flex-wrap: wrap/, 'version releases must wrap at every viewport width');
+assert.match(runtimeSource, /section\.dataset\.brand = brand\.name/, 'version brands must expose a stable styling hook');
+assert.match(docsCssSource, /\.version-brand\[data-brand="Riak KV"\] \{ --version-brand-logo-height: 24\.7px; \}/, 'the Riak KV picker logo must be 65 percent of the OpenRiak logo height');
+assert.match(docsCssSource, /\.version-option:first-child \{ border-top-left-radius: \.875rem; \}/, 'the first release in each version family must curve at the top left');
+assert.match(docsCssSource, /\.version-option:not\(\[hidden\]\):not\(:has\(~ \.version-option:not\(\[hidden\]\)\)\) \{ border-bottom-right-radius: \.875rem; \}/, 'the last visible release in each version family must curve at the bottom right');
+assert.match(docsCssSource, /\.download-os-index button \{[^}]*border-radius: 0/, 'download operating-system buttons must use square intermediate corners');
+assert.match(docsCssSource, /\.download-os-index li:first-child button \{ border-top-left-radius: \.875rem; \}/, 'the first download operating system must curve at the top left');
+assert.match(docsCssSource, /\.download-os-index li:last-child button \{ border-bottom-right-radius: \.875rem; \}/, 'the last download operating system must curve at the bottom right');
 assert.match(docsCssSource, /@media \(max-width: 760px\)[\s\S]*\.picker-panel \{[^}]*top: calc\(64px \+ 1rem\)[^}]*bottom: 1rem[^}]*overflow-y: auto/, 'mobile picker panels must remain below the header and scroll within the viewport');
 assert.match(docsCssSource, /@media \(max-width: 760px\)[\s\S]*\.docs-sidebar \{[^}]*align-self: stretch[^}]*height: auto/, 'mobile sidebar must stretch between its fixed insets so overflowing navigation can scroll');
 assert.match(runtimeSource, /className = 'os-option-logo'/, 'OS picker options must render their logos');
@@ -244,9 +255,11 @@ assert.deepEqual(
 );
 
 const generatedHugoConfigPath = path.join(repositoryRoot, 'tools', 'generated', 'hugo.yaml');
+const coreHugoConfigPath = path.join(repositoryRoot, 'content', 'hugo.yaml');
 const archiveHugoConfigPath = path.join(repositoryRoot, 'content', 'hugo-archives.yaml');
 assert.ok(fs.existsSync(generatedHugoConfigPath), 'version mounts must be generated before architecture validation');
 const hugoConfig = fs.readFileSync(generatedHugoConfigPath, 'utf8');
+const coreHugoConfig = fs.readFileSync(coreHugoConfigPath, 'utf8');
 const kv34Mounts = hugoConfig.split(/\r?\n/).filter((line) => line.includes("target: 'content/openriak-kv/3.4."));
 assert.deepEqual(
   kv34Mounts.filter((line) => line.includes("target: 'content/openriak-kv/3.4.1'")).map((line) => line.match(/source: '([^']+)'/)[1]),
@@ -266,6 +279,13 @@ assert.match(archiveHugoConfig, /target: 'content\/archived-technical-blog'/, 't
 assert.match(archiveHugoConfig, /target: 'content\/archived-mailing-list'/, 'the mailing list must be mounted into the archive project');
 assert.match(archiveHugoConfig, /archive-technical-blog\/by-year\.html', target: 'layouts\/blog\/by-year\.html'/, 'the blog year index template must be mounted into the archive project');
 assert.doesNotMatch(archiveHugoConfig, /source: '(homepage|community|openriak-kv|riak-kv)\//, 'active content must not be mounted into the archive project');
+for (const [name, config] of [['core', coreHugoConfig], ['archive', archiveHugoConfig]]) {
+  assert.match(config, /hugo-admonitions\/layouts\/_default\/_markup\/render-blockquote-alert\.html', target: 'layouts\/_markup\/render-blockquote-alert\.html'/, `${name} Hugo project must mount the admonition render hook`);
+  assert.match(config, /hugo-admonitions\/layouts\/partials\/admonitions', target: 'layouts\/partials\/admonitions'/, `${name} Hugo project must mount the admonition icons where the module's templates.Exists check can find them`);
+  assert.match(config, /hugo-admonitions\/assets\/css\/vendors', target: 'assets\/css\/vendors'/, `${name} Hugo project must mount the admonition styles`);
+  assert.match(config, /hugo-admonitions\/i18n', target: 'i18n'/, `${name} Hugo project must mount the admonition translations`);
+}
+assert.equal((dockerfileSource.match(/COPY layouts\/_vendor\/github\.com\/KKKZOZ\/hugo-admonitions \.\/layouts\/_vendor\/github\.com\/KKKZOZ\/hugo-admonitions/g) || []).length, 2, 'both Docker Hugo stages must include the vendored admonition module');
 assert.ok(fs.existsSync(path.join(repositoryRoot, 'content', 'community', 'pages', '_index.md')), 'Community must have an authored landing page');
 assert.ok(fs.existsSync(path.join(commonAssets, 'images', 'sites', 'community.svg')), 'Community must have a shared Site section logo');
 assert.ok(fs.existsSync(path.join(commonAssets, 'images', 'sites', 'homepage.svg')), 'Homepage must have a shared Site section logo');

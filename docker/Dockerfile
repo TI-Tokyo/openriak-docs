@@ -19,6 +19,7 @@ COPY content/static ./content/static
 COPY layouts/homepage ./layouts/homepage
 COPY layouts/docs-theme ./layouts/docs-theme
 COPY layouts/common-docs ./layouts/common-docs
+COPY layouts/_vendor/github.com/KKKZOZ/hugo-admonitions ./layouts/_vendor/github.com/KKKZOZ/hugo-admonitions
 RUN case "$CORE_BUILD_PROFILE" in \
       development) \
         node tools/scripts/generate-version-mounts.js \
@@ -64,6 +65,7 @@ COPY layouts/archive-mailing-list ./layouts/archive-mailing-list
 COPY layouts/common-docs/data ./layouts/common-docs/data
 COPY layouts/common-docs/layouts ./layouts/common-docs/layouts
 COPY layouts/docs-theme/layouts/_default/section.search.json.json ./layouts/docs-theme/layouts/_default/section.search.json.json
+COPY layouts/_vendor/github.com/KKKZOZ/hugo-admonitions ./layouts/_vendor/github.com/KKKZOZ/hugo-admonitions
 RUN drafts=''; if [ "$INCLUDE_DRAFTS" = true ]; then drafts=--buildDrafts; fi; \
     hugo --source=/project/content --config=/project/content/hugo-archives.yaml \
       --destination=/project/public --baseURL="$HUGO_BASEURL" --gc --minify \

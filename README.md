@@ -11,6 +11,32 @@ Shared layouts, navigation data, and assets remain under `layouts/` and
 `content/static/`. The core build is the only owner of shared static output;
 the archive build may emit files only below its two archive URL directories.
 
+GitHub-style Markdown alerts are supported by the vendored admonition module in
+both Hugo projects and in every build profile:
+
+```markdown
+> [!NOTE]
+> Tagged releases contain a `rebar.lock` file.
+```
+
+Product documentation can insert the version being browsed with the text-only
+`{{</* current-version */>}}` shortcode. It can be used as ordinary text, inside
+inline code, or inside a fenced code block. Use
+`{{</* current-version format="major-minor" */>}}` when only the major and minor
+components are needed. For example:
+
+````markdown
+Version {{</* current-version */>}}
+
+Release line {{</* current-version format="major-minor" */>}}
+
+`riak-{{</* current-version */>}}`
+
+```text
+riak-{{</* current-version */>}}
+```
+````
+
 ## Repository layout
 
 - `content/` — authored content, the core `hugo.yaml`, and `hugo-archives.yaml`.

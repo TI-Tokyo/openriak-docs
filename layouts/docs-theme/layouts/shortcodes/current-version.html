@@ -1,0 +1,13 @@
+{{- $version := partial "current-version.html" .Page | strings.TrimSpace -}}
+{{- $format := .Get "format" | default "full" -}}
+{{- if eq $format "major-minor" -}}
+  {{- $parts := strings.Split $version "." -}}
+  {{- if lt (len $parts) 2 -}}
+    {{- errorf "current-version cannot derive major-minor from %q on %s" $version .Page.Path -}}
+  {{- end -}}
+  {{- printf "%s.%s" (index $parts 0) (index $parts 1) -}}
+{{- else if eq $format "full" -}}
+  {{- $version -}}
+{{- else -}}
+  {{- errorf "current-version format must be full or major-minor, got %q on %s" $format .Page.Path -}}
+{{- end -}}
