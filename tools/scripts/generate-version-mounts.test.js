@@ -8,6 +8,7 @@ const {
   compareSemver,
   createVersionMounts,
   generateConfig,
+  parseArguments,
   productSources
 } = require('./generate-version-mounts.js');
 
@@ -87,10 +88,32 @@ try {
     'openriak-cs/2.1.3-new-release'
   ]);
 
+  const developmentMounts = createVersionMounts(fixture, productSources, { 'riak-kv': ['2.1.1'] });
+  const developmentSourcesFor = (target) => developmentMounts
+    .filter((mount) => mount.target === target)
+    .map((mount) => mount.source);
+  assert.deepEqual(developmentSourcesFor('content/openriak-kv/2.1.1'), [
+    'riak-kv/2.1.1',
+    'riak-kv/2.1.0-new-release'
+  ]);
+  assert.deepEqual(developmentSourcesFor('content/openriak-kv/2.0.3'), []);
+  assert.deepEqual(developmentSourcesFor('content/openriak-kv/3.4.2'), [
+    'openriak-kv/3.4.2',
+    'openriak-kv/3.4.1',
+    'openriak-kv/3.4.0-new-release'
+  ]);
+  assert.throws(
+    () => createVersionMounts(fixture, productSources, { 'riak-kv': ['9.9.9'] }),
+    /Requested version 9\.9\.9 does not exist/
+  );
+  assert.deepEqual(parseArguments(['--include-version', 'riak-kv=2.1.1']).includeVersions, {
+    'riak-kv': ['2.1.1']
+  });
+
   const baseConfig = path.join(fixture, 'hugo.yaml');
   const output = path.join(fixture, 'generated.yaml');
   const latestRedirectRoot = path.join(fixture, 'latest-redirects');
-  fs.writeFileSync(baseConfig, `module:\n  mounts:\n    # GENERATED_VERSION_MOUNTS\n`, 'utf8');
+  fs.writeFileSync(baseConfig, `module:\n  mounts:\n    - {source: '../tools/generated/openriak-kv/data/versions', target: 'data/versions/openriak-kv'}\n    # GENERATED_VERSION_MOUNTS\n`, 'utf8');
   generateConfig({ contentRoot: fixture, baseConfig, output, latestRedirectRoot, products: productSources });
   const generated = fs.readFileSync(output, 'utf8');
   assert.match(generated, /source: 'openriak-kv\/3\.4\.0-new-release', target: 'content\/openriak-kv\/3\.4\.2'/);
@@ -102,6 +125,19 @@ try {
   const legacySectionRoot = fs.readFileSync(path.join(latestRedirectRoot, 'riak-kv-section', '_index.md'), 'utf8');
   assert.match(legacySectionRoot, /outputs: \[\]/);
   assert.match(legacySectionRoot, /render: never/);
+
+  const filteredOutput = path.join(fixture, 'development.yaml');
+  const filteredDataRoot = path.join(fixture, 'development-data', 'versions');
+  generateConfig({
+    contentRoot: fixture,
+    baseConfig,
+    output: filteredOutput,
+    latestRedirectRoot,
+    products: productSources,
+    includeVersions: { 'riak-kv': ['2.1.1'] },
+    versionDataRoot: filteredDataRoot
+  });
+  assert.match(fs.readFileSync(filteredOutput, 'utf8'), new RegExp(`source: '${filteredDataRoot.replace(/\\/g, '/')}'`));
 
   makeVersions('duplicate-product', ['1.0.0', '1.0.0-new-release']);
   assert.throws(

@@ -3,6 +3,8 @@ ARG HUGO_VERSION=0.165.0
 
 # Product changes invalidate this stage, but do not invalidate archive-build.
 FROM node:${NODE_VERSION}-alpine AS core-metadata
+ARG CORE_BUILD_PROFILE=release
+ARG RIAK_KV_VERSION=3.2.5
 WORKDIR /project
 COPY .hugo-version ./
 COPY tools ./tools
@@ -17,10 +19,21 @@ COPY content/static ./content/static
 COPY layouts/homepage ./layouts/homepage
 COPY layouts/docs-theme ./layouts/docs-theme
 COPY layouts/common-docs ./layouts/common-docs
-RUN node tools/scripts/generate-version-mounts.js \
-      --base-config /project/content/hugo.yaml \
-      --output /project/tools/generated/hugo.yaml && \
-    node tools/scripts/sync-product-metadata.js
+RUN case "$CORE_BUILD_PROFILE" in \
+      development) \
+        node tools/scripts/generate-version-mounts.js \
+          --base-config /project/content/hugo.yaml \
+          --output /project/tools/generated/hugo.yaml \
+          --include-version "riak-kv=$RIAK_KV_VERSION" && \
+        node tools/scripts/sync-product-metadata.js \
+          --include-version "riak-kv=$RIAK_KV_VERSION" ;; \
+      beta-test|release) \
+        node tools/scripts/generate-version-mounts.js \
+          --base-config /project/content/hugo.yaml \
+          --output /project/tools/generated/hugo.yaml && \
+        node tools/scripts/sync-product-metadata.js ;; \
+      *) echo "Unknown core build profile: $CORE_BUILD_PROFILE" >&2; exit 2 ;; \
+    esac
 
 FROM ghcr.io/gohugoio/hugo:v${HUGO_VERSION} AS core-build
 ARG INCLUDE_DRAFTS=true
@@ -31,6 +44,10 @@ RUN drafts=''; if [ "$INCLUDE_DRAFTS" = true ]; then drafts=--buildDrafts; fi; \
     hugo --source=/project/content --config=/project/tools/generated/hugo.yaml \
       --destination=/project/public --baseURL="$HUGO_BASEURL" --gc --minify \
       --panicOnWarning --noBuildLock --cleanDestinationDir $drafts
+
+# Development and beta-test artifacts contain the core project only.
+FROM scratch AS core-static
+COPY --from=core-build /project/public/ /
 
 # This stage only depends on archive content and the templates shared with it.
 # Product documentation changes therefore reuse its cached result.

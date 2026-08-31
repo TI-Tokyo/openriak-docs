@@ -6,6 +6,18 @@ compose_file="$docker_directory/compose.yaml"
 native_docker_found=false
 mkdir -p "$docker_directory/../build/archives"
 
+build_profile=development
+case "${1:-}" in
+  development|beta-test|release) build_profile=$1; shift ;;
+esac
+export OPENRIAK_DOCS_BUILD_PROFILE=$build_profile
+
+if [ "$build_profile" = release ]; then
+  compose_profile=release
+else
+  compose_profile=
+fi
+
 find_zoneinfo_directory() {
   timezone=$1
   for candidate in \
@@ -65,10 +77,18 @@ if command -v docker >/dev/null 2>&1; then
   native_docker_found=true
   if docker info >/dev/null 2>&1; then
     if docker compose version >/dev/null 2>&1; then
+      if [ -n "$compose_profile" ]; then
+        exec docker compose --file "$compose_file" --profile "$compose_profile" up "$@"
+      fi
+      docker compose --file "$compose_file" --profile release stop archives >/dev/null 2>&1 || true
       exec docker compose --file "$compose_file" up "$@"
     fi
 
     if command -v docker-compose >/dev/null 2>&1; then
+      if [ -n "$compose_profile" ]; then
+        exec docker-compose --file "$compose_file" --profile "$compose_profile" up "$@"
+      fi
+      docker-compose --file "$compose_file" --profile release stop archives >/dev/null 2>&1 || true
       exec docker-compose --file "$compose_file" up "$@"
     fi
 
@@ -82,6 +102,10 @@ if command -v docker.exe >/dev/null 2>&1 && command -v wslpath >/dev/null 2>&1; 
   if docker.exe info >/dev/null 2>&1 && docker.exe compose version >/dev/null 2>&1; then
     export OPENRIAK_DOCS_ZONEINFO_DIR=$(wslpath -w "$zoneinfo_directory")
     export WSLENV="${WSLENV:+$WSLENV:}OPENRIAK_DOCS_TZ:OPENRIAK_DOCS_ZONEINFO_DIR"
+    if [ -n "$compose_profile" ]; then
+      exec docker.exe compose --file "$(wslpath -w "$compose_file")" --profile "$compose_profile" up "$@"
+    fi
+    docker.exe compose --file "$(wslpath -w "$compose_file")" --profile release stop archives >/dev/null 2>&1 || true
     exec docker.exe compose --file "$(wslpath -w "$compose_file")" up "$@"
   fi
 fi

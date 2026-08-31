@@ -5,16 +5,20 @@
 - `generated/` — generated Hugo data adapters; safe for build tools to rewrite.
 
 The main build entry points are `tools/scripts/build.sh` and
-`tools/scripts/build.ps1`. They build the core and archive Hugo projects into
-separate temporary directories, then `assemble-site.sh` validates ownership and
-combines them into one `public/` directory.
+`tools/scripts/build.ps1`. Both accept `development`, `beta-test`, or `release`.
+Development builds core with one selected historical Riak KV version, beta-test
+builds the complete core project, and release additionally builds the archives
+before `assemble-site.sh` validates ownership and combines them into `public/`.
 
 `tools/scripts/generate-version-mounts.js` scans the flat product/version
 directories and expands their cumulative inheritance chains into
 `tools/generated/hugo.yaml` before the core project starts. It also mounts the
 newest release under each product's `latest` route and generates redirect-only
 section roots in `tools/generated/latest-redirects/`. The legacy `riak-kv/latest`
-route targets the newest `openriak-kv` release.
+route targets the newest `openriak-kv` release. `--include-version
+SOURCE=VERSION` limits generated targets for one source family while preserving
+the selected release's required inheritance layers; the development profile uses
+this to select one `riak-kv` release.
 
 ## Importing Hugo 0.18 content
 

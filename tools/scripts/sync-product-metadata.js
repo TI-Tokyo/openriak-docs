@@ -6,11 +6,30 @@ const path = require('node:path');
 const repositoryRoot = path.resolve(__dirname, '..', '..');
 const contentRoot = path.join(repositoryRoot, 'content');
 const productRoot = path.join(repositoryRoot, 'content', 'openriak-kv');
-const generatedDataRoot = path.join(repositoryRoot, 'tools', 'generated', 'openriak-kv', 'data');
 const metadataProduct = 'kv';
 const productId = 'openriak-kv';
 const { compareSemver, discoverVersions, productSources } = require('./generate-version-mounts.js');
-const versionEntries = productSources
+const parseOptions = (argumentsList) => {
+  const options = { includeVersions: {} };
+  for (let index = 0; index < argumentsList.length; index += 1) {
+    if (argumentsList[index] === '--output-root') {
+      options.outputRoot = path.resolve(argumentsList[++index] || '');
+      continue;
+    }
+    if (argumentsList[index] !== '--include-version') throw new Error(`Unknown argument: ${argumentsList[index]}`);
+    const value = argumentsList[++index] || '';
+    const separator = value.indexOf('=');
+    if (separator < 1 || separator === value.length - 1) throw new Error('--include-version expects SOURCE=VERSION');
+    const source = value.slice(0, separator);
+    const version = value.slice(separator + 1);
+    (options.includeVersions[source] ||= new Set()).add(version);
+  }
+  return options;
+};
+const options = parseOptions(process.argv.slice(2));
+const includedVersions = options.includeVersions;
+const generatedDataRoot = options.outputRoot || path.join(repositoryRoot, 'tools', 'generated', 'openriak-kv', 'data');
+const allVersionEntries = productSources
   .filter((product) => product.target === productId)
   .flatMap((product) => discoverVersions(contentRoot, product).map((version) => ({
     version: version.raw,
@@ -18,6 +37,15 @@ const versionEntries = productSources
     source: product.source
   })))
   .sort((left, right) => compareSemver(left.version, right.version));
+for (const [source, selected] of Object.entries(includedVersions)) {
+  const discovered = new Set(allVersionEntries.filter((entry) => entry.source === source).map((entry) => entry.version));
+  for (const version of selected) {
+    if (!discovered.has(version)) throw new Error(`Requested version ${version} does not exist in content/${source}`);
+  }
+}
+const versionEntries = allVersionEntries.filter(({ source, version }) => (
+  !includedVersions[source] || includedVersions[source].has(version)
+));
 
 const familyNames = {
   alpine: 'Alpine Linux',

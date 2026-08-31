@@ -132,16 +132,33 @@ const discoverLatestRedirects = (contentRoot, products = productSources) => {
     })));
 };
 
-const createVersionMounts = (contentRoot = defaultContentRoot, products = productSources) => {
+const selectedVersionsFor = (includeVersions, source) => {
+  const selected = includeVersions instanceof Map
+    ? includeVersions.get(source)
+    : includeVersions?.[source];
+  return selected ? new Set(selected) : null;
+};
+
+const createVersionMounts = (contentRoot = defaultContentRoot, products = productSources, includeVersions = {}) => {
   const mounts = [];
   const targets = new Set();
 
   for (const product of products) {
     const versions = discoverVersions(contentRoot, product);
+    const selectedVersions = selectedVersionsFor(includeVersions, product.source);
+    if (selectedVersions) {
+      const discovered = new Set(versions.map((version) => version.raw));
+      for (const selected of selectedVersions) {
+        if (!discovered.has(selected)) {
+          throw new Error(`Requested version ${selected} does not exist in content/${product.source}`);
+        }
+      }
+    }
     let baselineIndex = 0;
     for (let targetIndex = 0; targetIndex < versions.length; targetIndex += 1) {
       if (versions[targetIndex].newRelease) baselineIndex = targetIndex;
       const targetVersion = versions[targetIndex].raw;
+      if (selectedVersions && !selectedVersions.has(targetVersion)) continue;
       const targetKey = `${product.target}/${targetVersion}`;
       if (targets.has(targetKey)) throw new Error(`Duplicate generated target: content/${targetKey}`);
       targets.add(targetKey);
@@ -257,29 +274,49 @@ const generateConfig = ({
   baseConfig = defaultBaseConfig,
   output = defaultOutput,
   latestRedirectRoot = defaultLatestRedirectRoot,
-  products = productSources
+  products = productSources,
+  includeVersions = {},
+  versionDataRoot
 } = {}) => {
   const source = fs.readFileSync(baseConfig, 'utf8');
   const markerCount = source.split(mountMarker).length - 1;
   if (markerCount !== 1) throw new Error(`Expected exactly one ${mountMarker.trim()} marker in ${baseConfig}`);
 
-  const mounts = createVersionMounts(contentRoot, products);
+  const mounts = createVersionMounts(contentRoot, products, includeVersions);
   const latestRedirects = discoverLatestRedirects(contentRoot, products);
   writeLatestRedirectRoots(latestRedirects, latestRedirectRoot);
-  const generated = source.replace(mountMarker, renderMounts(mounts));
+  let generated = source.replace(mountMarker, renderMounts(mounts));
+  if (versionDataRoot) {
+    const canonicalMount = "    - {source: '../tools/generated/openriak-kv/data/versions', target: 'data/versions/openriak-kv'}";
+    if (!generated.includes(canonicalMount)) throw new Error('Unable to locate the OpenRiak KV version-data mount');
+    const normalizedRoot = versionDataRoot.split(path.sep).join('/');
+    generated = generated.replace(canonicalMount, `    - {source: '${normalizedRoot}', target: 'data/versions/openriak-kv'}`);
+  }
   fs.mkdirSync(path.dirname(output), { recursive: true });
   fs.writeFileSync(output, generated, 'utf8');
   return { latestRedirects, mounts, output };
 };
 
 const parseArguments = (argumentsList) => {
-  const options = {};
+  const options = { includeVersions: {} };
   for (let index = 0; index < argumentsList.length; index += 1) {
     const argument = argumentsList[index];
     if (argument === '--output') options.output = path.resolve(argumentsList[++index]);
     else if (argument === '--base-config') options.baseConfig = path.resolve(argumentsList[++index]);
     else if (argument === '--content-root') options.contentRoot = path.resolve(argumentsList[++index]);
     else if (argument === '--latest-redirect-root') options.latestRedirectRoot = path.resolve(argumentsList[++index]);
+    else if (argument === '--version-data-root') options.versionDataRoot = path.resolve(argumentsList[++index]);
+    else if (argument === '--include-version') {
+      const value = argumentsList[++index] || '';
+      const separator = value.indexOf('=');
+      if (separator < 1 || separator === value.length - 1) {
+        throw new Error('--include-version expects SOURCE=VERSION');
+      }
+      const source = value.slice(0, separator);
+      const version = value.slice(separator + 1);
+      parseSemver(version);
+      (options.includeVersions[source] ||= []).push(version);
+    }
     else throw new Error(`Unknown argument: ${argument}`);
   }
   return options;
@@ -302,6 +339,7 @@ module.exports = {
   discoverVersions,
   generateConfig,
   parseSemver,
+  parseArguments,
   parseVersionDirectory,
   productSources,
   renderMounts,

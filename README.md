@@ -33,12 +33,31 @@ for supported operating systems, package downloads, and replaceable configuratio
 values. Build tools generate browser/Hugo adapters under `tools/generated/` and
 never write under `content/`.
 
-## Build
+## Build profiles
+
+The same source tree supports three explicit profiles:
+
+- `development` builds only core and mounts one historical Riak KV release. It defaults to `3.2.5`; set `OPENRIAK_DOCS_RIAK_KV_VERSION` to work on another imported release.
+- `beta-test` builds only core, with every Riak KV and OpenRiak product release mounted.
+- `release` builds all core releases and both archive projects, then assembles one deployment tree.
+
+Docker static builds are selected by the first argument:
+
+```sh
+./docker/build.static.sh development
+./docker/build.static.sh beta-test
+./docker/build.static.sh release
+```
+
+All three write their selected artifact to `public/`. The release artifact is the
+only one intended for rsync deployment.
+
+## Release build
 
 The Docker build caches the immutable archives independently from active content:
 
 ```sh
-./docker/build.static.sh
+./docker/build.static.sh release
 ```
 
 This writes the complete assembled site to `public/`. Product-only changes reuse
@@ -48,7 +67,7 @@ invalidates the archive layer.
 With local Hugo 0.165.0 and Node.js installed, the equivalent uncached build is:
 
 ```sh
-HUGO_BASEURL=https://www.openriak.org/docs/ INCLUDE_DRAFTS=true ./tools/scripts/build.sh
+HUGO_BASEURL=https://www.openriak.org/docs/ INCLUDE_DRAFTS=true ./tools/scripts/build.sh release
 ```
 
 PowerShell users can run `tools/scripts/build.ps1`. Both entrypoints build the two
@@ -57,14 +76,14 @@ projects and assemble the same `public/` layout.
 ## Local preview
 
 ```sh
-./docker/run.local.sh
+./docker/run.local.sh development
 ```
 
-The gateway exposes the complete site at `http://localhost:1410/docs/`. Core and
-archive Hugo servers rebuild independently behind it. Archive live reload is
-disabled because the archive corpus is immutable; refresh after rebuilding it.
-The archive output persists under `build/archives/`, so the archive service can
-be stopped after a successful render and the gateway will continue serving it.
+Use `./docker/run.local.sh beta-test` to preview all core releases, or
+`./docker/run.local.sh release` to run core and archives together. The gateway
+always listens at `http://localhost:1410/docs/`. In development and beta-test,
+archive URLs use the last successful cached archive output when one exists; no
+archive Hugo process is started.
 
 ## Runtime container
 

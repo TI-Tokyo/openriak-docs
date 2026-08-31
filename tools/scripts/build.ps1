@@ -1,7 +1,10 @@
 param(
+    [ValidateSet('development', 'beta-test', 'release')]
+    [string] $Profile = 'release',
     [bool] $IncludeDrafts = $true,
     [string] $Destination = 'public',
-    [string] $BaseURL = 'https://www.openriak.org/docs/'
+    [string] $BaseURL = 'https://www.openriak.org/docs/',
+    [string] $RiakKVVersion = '3.2.5'
 )
 
 $ErrorActionPreference = 'Stop'
@@ -15,13 +18,26 @@ if (-not (Get-Command node -ErrorAction SilentlyContinue)) { throw 'Node.js is r
 if (-not $BaseURL.EndsWith('/')) { $BaseURL += '/' }
 
 $destinationRoot = if ([IO.Path]::IsPathRooted($Destination)) { $Destination } else { Join-Path $siteRoot $Destination }
-$coreDestination = Join-Path $siteRoot 'build/core'
+$coreDestination = Join-Path $siteRoot "build/core-$Profile"
 $archiveDestination = Join-Path $siteRoot 'build/archives'
-$generatedConfig = Join-Path $siteRoot 'tools/generated/hugo.yaml'
+$generatedConfig = if ($Profile -eq 'development') {
+    Join-Path $siteRoot 'build/generated-development/hugo.yaml'
+} else {
+    Join-Path $siteRoot 'tools/generated/hugo.yaml'
+}
+$developmentDataRoot = Join-Path $siteRoot 'build/generated-development/openriak-kv/data'
 
-& node (Join-Path $PSScriptRoot 'generate-version-mounts.js') --base-config (Join-Path $siteRoot 'content/hugo.yaml') --output $generatedConfig
+$mountArguments = @('--base-config', (Join-Path $siteRoot 'content/hugo.yaml'), '--output', $generatedConfig)
+if ($Profile -eq 'development') {
+    $mountArguments += @('--version-data-root', (Join-Path $developmentDataRoot 'versions'), '--include-version', "riak-kv=$RiakKVVersion")
+}
+& node (Join-Path $PSScriptRoot 'generate-version-mounts.js') @mountArguments
 if ($LASTEXITCODE -ne 0) { throw 'Version mount generation failed' }
-& node (Join-Path $PSScriptRoot 'sync-product-metadata.js')
+$metadataArguments = @()
+if ($Profile -eq 'development') {
+    $metadataArguments += @('--output-root', $developmentDataRoot, '--include-version', "riak-kv=$RiakKVVersion")
+}
+& node (Join-Path $PSScriptRoot 'sync-product-metadata.js') @metadataArguments
 if ($LASTEXITCODE -ne 0) { throw 'Metadata synchronization failed' }
 
 function Invoke-HugoBuild([string] $Config, [string] $Output) {
@@ -32,21 +48,25 @@ function Invoke-HugoBuild([string] $Config, [string] $Output) {
 }
 
 Invoke-HugoBuild $generatedConfig $coreDestination
-Invoke-HugoBuild (Join-Path $siteRoot 'content/hugo-archives.yaml') $archiveDestination
+if ($Profile -eq 'release') {
+    Invoke-HugoBuild (Join-Path $siteRoot 'content/hugo-archives.yaml') $archiveDestination
 
-$archiveFiles = @(Get-ChildItem -LiteralPath $archiveDestination -Recurse -File)
-foreach ($file in $archiveFiles) {
-    $relative = [IO.Path]::GetRelativePath($archiveDestination, $file.FullName)
-    if ($relative -notmatch '^(archived-technical-blog|archived-mailing-list)[\\/]') {
-        throw "Archive build produced an unexpected path: $relative"
-    }
-    if (Test-Path -LiteralPath (Join-Path $coreDestination $relative)) {
-        throw "Core and archive builds both own: $relative"
+    $archiveFiles = @(Get-ChildItem -LiteralPath $archiveDestination -Recurse -File)
+    foreach ($file in $archiveFiles) {
+        $relative = [IO.Path]::GetRelativePath($archiveDestination, $file.FullName)
+        if ($relative -notmatch '^(archived-technical-blog|archived-mailing-list)[\\/]') {
+            throw "Archive build produced an unexpected path: $relative"
+        }
+        if (Test-Path -LiteralPath (Join-Path $coreDestination $relative)) {
+            throw "Core and archive builds both own: $relative"
+        }
     }
 }
 
 if (Test-Path -LiteralPath $destinationRoot) { Remove-Item -LiteralPath $destinationRoot -Recurse -Force }
 New-Item -ItemType Directory -Force -Path $destinationRoot | Out-Null
 Copy-Item -Path (Join-Path $coreDestination '*') -Destination $destinationRoot -Recurse -Force
-Copy-Item -Path (Join-Path $archiveDestination '*') -Destination $destinationRoot -Recurse -Force
-Write-Host "Assembled the complete static site in $destinationRoot"
+if ($Profile -eq 'release') {
+    Copy-Item -Path (Join-Path $archiveDestination '*') -Destination $destinationRoot -Recurse -Force
+}
+Write-Host "Built the $Profile static site in $destinationRoot"
