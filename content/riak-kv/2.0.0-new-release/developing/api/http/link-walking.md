@@ -15,7 +15,7 @@ menu:
 toc: true
 aliases:
   - /riak/2.0.0/dev/references/http/link-walking
-  - /docs/openriak-kv/2.0.0/dev/references/http/link-walking
+  - /openriak-kv/2.0.0/dev/references/http/link-walking
 linkTitle: "Link Walking"
 weight: 118
 ---

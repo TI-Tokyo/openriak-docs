@@ -15,13 +15,13 @@ menu:
 toc: true
 aliases:
   - /riak/2.0.0/ops/running/recovery/repairing-indexes
-  - /docs/openriak-kv/2.0.0/ops/running/recovery/repairing-indexes
+  - /openriak-kv/2.0.0/ops/running/recovery/repairing-indexes
   - /riak/2.0.0/ops/running/recovery/failed-node
-  - /docs/openriak-kv/2.0.0/ops/running/recovery/failed-node
+  - /openriak-kv/2.0.0/ops/running/recovery/failed-node
   - /riak/2.0.0/ops/running/recovery/repairing-leveldb
-  - /docs/openriak-kv/2.0.0/ops/running/recovery/repairing-leveldb
+  - /openriak-kv/2.0.0/ops/running/recovery/repairing-leveldb
   - /riak/2.0.0/ops/running/recovery/repairing-partitions
-  - /docs/openriak-kv/2.0.0/ops/running/recovery/repairing-partitions
+  - /openriak-kv/2.0.0/ops/running/recovery/repairing-partitions
 linkTitle: "Repairs"
 weight: 102
 ---

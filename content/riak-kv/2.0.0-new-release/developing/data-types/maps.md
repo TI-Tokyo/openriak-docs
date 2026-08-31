@@ -16,9 +16,9 @@ menu:
 toc: true
 aliases:
   - /riak/2.0.0/dev/using/data-types/maps
-  - /docs/openriak-kv/2.0.0/dev/using/data-types/maps
+  - /openriak-kv/2.0.0/dev/using/data-types/maps
   - /riak/2.0.0/dev/data-modeling/data-types/maps
-  - /docs/openriak-kv/2.0.0/dev/data-modeling/data-types/maps
+  - /openriak-kv/2.0.0/dev/data-modeling/data-types/maps
 linkTitle: "Maps"
 weight: 103
 ---

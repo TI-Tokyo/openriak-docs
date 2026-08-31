@@ -16,7 +16,7 @@ menu:
 toc: true
 aliases:
   - /riak/2.0.0/dev/using/conflict-resolution/php
-  - /docs/openriak-kv/2.0.0/dev/using/conflict-resolution/php
+  - /openriak-kv/2.0.0/dev/using/conflict-resolution/php
 linkTitle: "PHP"
 weight: 105
 ---

@@ -15,7 +15,7 @@ menu:
 toc: true
 aliases:
   - /riak/2.0.0/ops/running/security-sources
-  - /docs/openriak-kv/2.0.0/ops/running/security-sources
+  - /openriak-kv/2.0.0/ops/running/security-sources
 linkTitle: "Managing Security Sources"
 weight: 101
 ---

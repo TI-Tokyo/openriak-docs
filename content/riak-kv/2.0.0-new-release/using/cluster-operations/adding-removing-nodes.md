@@ -15,7 +15,7 @@ menu:
 toc: true
 aliases:
   - /riak/2.0.0/ops/running/nodes/adding-removing
-  - /docs/openriak-kv/2.0.0/ops/running/nodes/adding-removing
+  - /openriak-kv/2.0.0/ops/running/nodes/adding-removing
 linkTitle: "Adding/Removing Nodes"
 weight: 100
 ---

@@ -17,7 +17,7 @@ toc: true
 commercial_offering: true
 aliases:
   - /riak/2.0.0/ops/mdc/v2/quick-start
-  - /docs/openriak-kv/2.0.0/ops/mdc/v2/quick-start
+  - /openriak-kv/2.0.0/ops/mdc/v2/quick-start
 linkTitle: "Quickstart"
 weight: 100
 ---

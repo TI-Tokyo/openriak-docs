@@ -15,7 +15,7 @@ menu:
 toc: true
 aliases:
   - /riak/2.0.0/dev/references/protocol-buffers/dt-set-store
-  - /docs/openriak-kv/2.0.0/dev/references/protocol-buffers/dt-set-store
+  - /openriak-kv/2.0.0/dev/references/protocol-buffers/dt-set-store
 linkTitle: "Data Type Set Store"
 weight: 118
 ---

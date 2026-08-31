@@ -16,9 +16,9 @@ menu:
 toc: true
 aliases:
   - /riak/2.0.0/dev/using/data-types/counters
-  - /docs/openriak-kv/2.0.0/dev/using/data-types/counters
+  - /openriak-kv/2.0.0/dev/using/data-types/counters
   - /riak/2.0.0/dev/data-modeling/data-types/counters
-  - /docs/openriak-kv/2.0.0/dev/data-modeling/data-types/counters
+  - /openriak-kv/2.0.0/dev/data-modeling/data-types/counters
 linkTitle: "Counters"
 weight: 100
 ---

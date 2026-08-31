@@ -15,7 +15,7 @@ menu:
 toc: true
 aliases:
   - /riak/2.0.0/ops/mdc/v2/scheduling-fullsync
-  - /docs/openriak-kv/2.0.0/ops/mdc/v2/scheduling-fullsync
+  - /openriak-kv/2.0.0/ops/mdc/v2/scheduling-fullsync
 linkTitle: "Scheduling Fullsync"
 weight: 101
 ---

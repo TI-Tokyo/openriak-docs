@@ -16,9 +16,9 @@ menu:
 toc: false
 aliases:
   - /riak/2.0.0/ops/building/installing/Installing-on-SUSE
-  - /docs/openriak-kv/2.0.0/ops/building/installing/Installing-on-SUSE
+  - /openriak-kv/2.0.0/ops/building/installing/Installing-on-SUSE
   - /riak/2.0.0/installing/suse/
-  - /docs/openriak-kv/2.0.0/installing/suse/
+  - /openriak-kv/2.0.0/installing/suse/
 linkTitle: "SUSE"
 weight: 307
 ---

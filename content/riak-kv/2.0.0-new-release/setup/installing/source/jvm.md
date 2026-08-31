@@ -17,11 +17,11 @@ version_history:
   in: "2.0.0-2.9999.9999"
 aliases:
   - /riak/2.0.0/ops/building/installing/jvm
-  - /docs/openriak-kv/2.0.0/ops/building/installing/jvm
+  - /openriak-kv/2.0.0/ops/building/installing/jvm
   - /riak/2.0.0/ops/building/installing/Installing-the-JVM
-  - /docs/openriak-kv/2.0.0/ops/building/installing/Installing-the-JVM
+  - /openriak-kv/2.0.0/ops/building/installing/Installing-the-JVM
   - /riak/2.0.0/installing/source/jvm/
-  - /docs/openriak-kv/2.0.0/installing/source/jvm/
+  - /openriak-kv/2.0.0/installing/source/jvm/
 linkTitle: "Installing the JVM"
 weight: 302
 ---

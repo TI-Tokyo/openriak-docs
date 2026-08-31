@@ -16,9 +16,9 @@ menu:
 toc: true
 aliases:
   - /riak/2.0.0/ops/building/Installing-Riak-from-Source
-  - /docs/openriak-kv/2.0.0/ops/building/Installing-Riak-from-Source
+  - /openriak-kv/2.0.0/ops/building/Installing-Riak-from-Source
   - /riak/2.0.0/installing/source/
-  - /docs/openriak-kv/2.0.0/installing/source/
+  - /openriak-kv/2.0.0/installing/source/
 linkTitle: "Installing From Source"
 weight: 310
 ---

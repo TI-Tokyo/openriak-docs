@@ -15,7 +15,7 @@ menu:
 toc: true
 aliases:
   - /riak/2.0.0/dev/references/protocol-buffers/set-bucket-props
-  - /docs/openriak-kv/2.0.0/dev/references/protocol-buffers/set-bucket-props
+  - /openriak-kv/2.0.0/dev/references/protocol-buffers/set-bucket-props
 linkTitle: "Set Bucket Properties"
 weight: 103
 ---

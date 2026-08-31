@@ -15,7 +15,7 @@ menu:
 toc: true
 aliases:
   - /riak/2.0.0/dev/references/protocol-buffers/mapreduce
-  - /docs/openriak-kv/2.0.0/dev/references/protocol-buffers/mapreduce
+  - /openriak-kv/2.0.0/dev/references/protocol-buffers/mapreduce
 linkTitle: "MapReduce"
 weight: 107
 ---

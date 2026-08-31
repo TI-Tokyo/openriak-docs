@@ -15,7 +15,7 @@ menu:
 toc: true
 aliases:
   - /riak/2.0.0/ops/running/nodes/renaming
-  - /docs/openriak-kv/2.0.0/ops/running/nodes/renaming
+  - /openriak-kv/2.0.0/ops/running/nodes/renaming
 linkTitle: "Changing Cluster Info"
 weight: 101
 ---

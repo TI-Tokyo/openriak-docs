@@ -14,7 +14,7 @@ menu:
     parent: "managing"
 toc: true
 aliases:
-  - /docs/openriak-kv/2.0.0/ops/tuning/linux/
+  - /openriak-kv/2.0.0/ops/tuning/linux/
   - /riak/2.0.0/ops/tuning/linux/
 linkTitle: "Performance"
 weight: 206

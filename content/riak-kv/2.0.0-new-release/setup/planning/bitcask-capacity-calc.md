@@ -15,7 +15,7 @@ menu:
 toc: true
 aliases:
   - /riak/2.0.0/ops/building/planning/bitcask
-  - /docs/openriak-kv/2.0.0/ops/building/planning/bitcask
+  - /openriak-kv/2.0.0/ops/building/planning/bitcask
 linkTitle: "Bitcask Capacity Calculator"
 weight: 104
 ---

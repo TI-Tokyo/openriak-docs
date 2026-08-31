@@ -16,7 +16,7 @@ menu:
 toc: true
 aliases:
   - /riak/2.0.0/dev/taste-of-riak/object-modeling-nodejs
-  - /docs/openriak-kv/2.0.0/dev/taste-of-riak/object-modeling-nodejs
+  - /openriak-kv/2.0.0/dev/taste-of-riak/object-modeling-nodejs
 linkTitle: "Object Modeling"
 weight: 102
 ---

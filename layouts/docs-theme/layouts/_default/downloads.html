@@ -1,0 +1,114 @@
+{{ define "main" }}
+  {{ partial "breadcrumbs.html" . }}
+  {{- $context := partial "product-context.html" . -}}
+  {{- $versionData := index $context.versions $context.version -}}
+  {{- $isModern := gt (len $versionData.operatingSystems) 0 -}}
+  {{- $downloadOperatingSystems := $versionData.downloadOperatingSystems | default $versionData.operatingSystems -}}
+  {{- $installPages := dict
+    "amazon-linux" "setup/installing/amazon-web-services"
+    "debian" "setup/installing/debian-ubuntu"
+    "oracle-linux" "setup/installing/oracle-linux"
+    "rhel" "setup/installing/rhel-centos"
+    "sles" "setup/installing/suse"
+    "ubuntu" "setup/installing/debian-ubuntu"
+  -}}
+  {{- $familyOrder := slice "alpine" "amazon-linux" "debian" "fedora" "oracle-linux" "raspbian" "rhel" "sles" "ubuntu" -}}
+  <article class="doc-article"{{ if $isModern }} data-modern-downloads{{ else }} data-legacy-downloads{{ end }}>
+    <h1>{{ .Title }}</h1>
+    {{- if $isModern }}
+      <nav class="download-os-index" aria-label="Download operating systems">
+        <h2>Operating systems</h2>
+        <ul>
+          {{- range $os := $versionData.operatingSystems }}
+            <li><button type="button" data-download-os-select="{{ $os.id }}" aria-pressed="{{ eq $os.id $versionData.defaultOs }}">{{ $os.displayName }} — {{ $os.architecture }}</button></li>
+          {{- end }}
+        </ul>
+      </nav>
+      {{- $defaultOperatingSystems := where $versionData.operatingSystems "id" $versionData.defaultOs -}}
+      {{- $selectedOperatingSystem := index $defaultOperatingSystems 0 -}}
+      {{- $selectedDownloads := index $versionData.downloads $selectedOperatingSystem.id | default slice -}}
+      <section class="modern-downloads-selected" data-selected-downloads>
+        <h2>Downloads for</h2>
+        <h3 class="modern-downloads-selected-os"><img src="{{ $selectedOperatingSystem.logo | relURL }}" alt="" data-selected-download-logo><span data-selected-download-os>{{ $selectedOperatingSystem.displayName }} — {{ $selectedOperatingSystem.architecture }}</span></h3>
+        <ul class="download-list" data-doc-downloads>
+          {{- range $selectedDownloads }}
+            <li><a href="{{ .url | safeURL }}">OTP {{ .otp }} · {{ .architecture }}{{ with .variant }} · {{ . }}{{ end }} · {{ .filename }}</a>{{ with .checksumUrl }}<a class="download-checksum" href="{{ . | safeURL }}">checksum</a>{{ end }}</li>
+          {{- end }}
+        </ul>
+        <p class="modern-downloads-all-link"><a href="#all-downloads" data-all-downloads-link>All downloads</a></p>
+      </section>
+
+      <details class="modern-downloads-disclosure" data-downloads-source>
+        <summary>Source Code</summary>
+        <div class="modern-downloads-disclosure-content">{{ .Content }}</div>
+      </details>
+
+      <details class="modern-downloads-disclosure modern-all-downloads" id="all-downloads" data-all-downloads>
+        <summary>All downloads</summary>
+        <div class="modern-downloads-disclosure-content modern-downloads-grid">
+          {{- range $os := $versionData.operatingSystems -}}
+            {{- $downloads := index $versionData.downloads $os.id | default slice -}}
+            <section class="modern-download-card" id="downloads-{{ $os.id }}" data-download-os="{{ $os.id }}">
+              <h3><img src="{{ $os.logo | relURL }}" alt="">{{ $os.displayName }} — {{ $os.architecture }}</h3>
+              <ul class="download-list">
+                {{- range $downloads }}
+                  <li><a href="{{ .url | safeURL }}">OTP {{ .otp }} · {{ .filename }}</a>{{ with .checksumUrl }}<a class="download-checksum" href="{{ . | safeURL }}">checksum</a>{{ end }}</li>
+                {{- end }}
+              </ul>
+            </section>
+          {{- end }}
+        </div>
+      </details>
+    {{- else -}}
+      {{ .Content }}
+      <h2>Riak KV {{ $context.version }}</h2>
+      <p>You should be able to find your operating system in the choices below.</p>
+      <p>All files (except Alpine Linux) are available on <a href="https://files.tiot.jp/riak/kv/">the file store</a>.</p>
+
+      {{- range $family := $familyOrder -}}
+        {{- $familyOperatingSystems := where $downloadOperatingSystems "family" $family -}}
+        {{- with $familyOperatingSystems -}}
+          {{- $first := index . 0 -}}
+          <section class="legacy-downloads-family" id="{{ $family }}">
+            <h2><img src="{{ $first.logo | relURL }}" alt="">Riak KV for {{ $first.name }}</h2>
+            {{- if eq $family "alpine" -}}
+              {{- $alpinePage := site.GetPage (printf "/%s/%s/setup/installing/alpine-linux" $context.id $context.version) -}}
+              <h3>Alpine Linux 64-bit</h3>
+              <p class="legacy-downloads-install">Installing Riak KV on Alpine Linux uses the
+                {{- if $alpinePage }} <a href="{{ $alpinePage.RelPermalink }}">Alpine Linux Riak Repository for x86_64 and aarch64 architectures</a>{{ else }} Alpine Linux Riak Repository for x86_64 and aarch64 architectures{{ end }}.
+              </p>
+            {{- else -}}
+              {{- $seenDisplayNames := newScratch -}}
+              {{- range $os := $familyOperatingSystems -}}
+                {{- if not ($seenDisplayNames.Get $os.displayName) -}}
+                  {{- $seenDisplayNames.Set $os.displayName true -}}
+                  {{- $matchingOperatingSystems := where $familyOperatingSystems "displayName" $os.displayName -}}
+                  <h3>{{ $os.displayName }}</h3>
+                  <table class="legacy-downloads-table">
+                    <thead><tr><th>OTP</th><th>Architecture</th><th>Package</th><th>Checksum</th></tr></thead>
+                    <tbody>
+                      {{- range $matchingOs := $matchingOperatingSystems -}}
+                        {{- range (index $versionData.downloads $matchingOs.id | default slice) -}}
+                          <tr>
+                            <td>{{ with .otp }}OTP {{ . }}{{ end }}</td>
+                            <td>{{ .architecture }}</td>
+                            <td><a href="{{ .url | safeURL }}">{{ .filename }}</a></td>
+                            <td>{{ with .checksumUrl }}<a href="{{ . | safeURL }}">hash</a>{{ end }}</td>
+                          </tr>
+                        {{- end -}}
+                      {{- end -}}
+                    </tbody>
+                  </table>
+                {{- end -}}
+              {{- end -}}
+              {{- with index $installPages $family -}}
+                {{- $installPage := site.GetPage (printf "/%s/%s/%s" $context.id $context.version .) -}}
+                {{- with $installPage }}<p class="legacy-downloads-install">Here are further instructions for <a href="{{ .RelPermalink }}">installing Riak KV on this system</a>.</p>{{ end -}}
+              {{- end -}}
+            {{- end -}}
+          </section>
+        {{- end -}}
+      {{- end -}}
+    {{- end -}}
+  </article>
+{{ end }}

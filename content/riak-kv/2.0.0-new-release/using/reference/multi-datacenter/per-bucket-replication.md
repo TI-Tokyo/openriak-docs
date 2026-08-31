@@ -15,7 +15,7 @@ menu:
 toc: true
 aliases:
   - /riak/2.0.0/ops/mdc/per-bucket
-  - /docs/openriak-kv/2.0.0/ops/mdc/per-bucket
+  - /openriak-kv/2.0.0/ops/mdc/per-bucket
 linkTitle: "Per Bucket"
 weight: 101
 ---

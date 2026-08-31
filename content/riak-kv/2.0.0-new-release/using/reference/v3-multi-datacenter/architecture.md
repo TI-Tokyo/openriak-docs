@@ -17,7 +17,7 @@ toc: true
 commercial_offering: true
 aliases:
   - /riak/2.0.0/ops/mdc/v3/architecture
-  - /docs/openriak-kv/2.0.0/ops/mdc/v3/architecture
+  - /openriak-kv/2.0.0/ops/mdc/v3/architecture
 linkTitle: "Architecture"
 weight: 100
 ---

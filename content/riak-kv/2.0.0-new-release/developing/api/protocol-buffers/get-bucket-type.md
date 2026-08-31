@@ -15,7 +15,7 @@ menu:
 toc: true
 aliases:
   - /riak/2.0.0/dev/references/protocol-buffers/get-bucket-type
-  - /docs/openriak-kv/2.0.0/dev/references/protocol-buffers/get-bucket-type
+  - /openriak-kv/2.0.0/dev/references/protocol-buffers/get-bucket-type
 linkTitle: "Get Bucket Type"
 weight: 112
 ---

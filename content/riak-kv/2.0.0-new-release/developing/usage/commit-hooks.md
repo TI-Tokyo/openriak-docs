@@ -15,7 +15,7 @@ menu:
 toc: true
 aliases:
   - /riak/2.0.0/dev/using/commit-hooks
-  - /docs/openriak-kv/2.0.0/dev/using/commit-hooks
+  - /openriak-kv/2.0.0/dev/using/commit-hooks
 linkTitle: "Using Commit Hooks"
 weight: 109
 ---

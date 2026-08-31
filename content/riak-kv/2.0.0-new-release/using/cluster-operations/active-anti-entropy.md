@@ -14,7 +14,7 @@ menu:
     parent: "managing_cluster_operations"
 toc: true
 aliases:
-  - /docs/openriak-kv/2.0.0/ops/advanced/aae/
+  - /openriak-kv/2.0.0/ops/advanced/aae/
   - /riak/2.0.0/ops/advanced/aae/
 linkTitle: "Managing Active Anti-Entropy"
 weight: 111

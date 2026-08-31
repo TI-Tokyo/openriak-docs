@@ -16,7 +16,7 @@ menu:
 toc: true
 aliases:
   - /riak/2.0.0/dev/taste-of-riak/object-modeling-golang
-  - /docs/openriak-kv/2.0.0/dev/taste-of-riak/object-modeling-golang
+  - /openriak-kv/2.0.0/dev/taste-of-riak/object-modeling-golang
 linkTitle: "Object Modeling"
 weight: 102
 ---

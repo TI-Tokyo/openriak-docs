@@ -15,7 +15,7 @@ menu:
 toc: true
 aliases:
   - /riak/2.0.0/dev/references/http/list-buckets
-  - /docs/openriak-kv/2.0.0/dev/references/http/list-buckets
+  - /openriak-kv/2.0.0/dev/references/http/list-buckets
 linkTitle: "List Buckets"
 weight: 103
 ---

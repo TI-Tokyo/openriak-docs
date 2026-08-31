@@ -16,7 +16,7 @@ toc: true
 commercial_offering: true
 aliases:
   - /riak/2.0.0/ops/running/monitoring/jmx
-  - /docs/openriak-kv/2.0.0/ops/running/monitoring/jmx
+  - /openriak-kv/2.0.0/ops/running/monitoring/jmx
 linkTitle: "JMX Monitoring"
 weight: 108
 ---

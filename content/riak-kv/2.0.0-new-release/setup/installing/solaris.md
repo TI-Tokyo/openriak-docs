@@ -16,9 +16,9 @@ menu:
 toc: true
 aliases:
   - /riak/2.0.0/ops/building/installing/Installing-on-Solaris
-  - /docs/openriak-kv/2.0.0/ops/building/installing/Installing-on-Solaris
+  - /openriak-kv/2.0.0/ops/building/installing/Installing-on-Solaris
   - /riak/2.0.0/installing/solaris/
-  - /docs/openriak-kv/2.0.0/installing/solaris/
+  - /openriak-kv/2.0.0/installing/solaris/
 linkTitle: "Solaris"
 weight: 306
 ---

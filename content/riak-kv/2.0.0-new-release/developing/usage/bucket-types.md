@@ -15,7 +15,7 @@ menu:
 toc: true
 aliases:
   - /riak/2.0.0/dev/advanced/bucket-types
-  - /docs/openriak-kv/2.0.0/dev/advanced/bucket-types
+  - /openriak-kv/2.0.0/dev/advanced/bucket-types
 linkTitle: "Bucket Types"
 weight: 108
 ---

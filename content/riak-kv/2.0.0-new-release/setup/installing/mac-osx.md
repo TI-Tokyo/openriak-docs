@@ -16,9 +16,9 @@ menu:
 toc: true
 aliases:
   - /riak/2.0.0/ops/building/installing/Installing-on-Mac-OS-X
-  - /docs/openriak-kv/2.0.0/ops/building/installing/Installing-on-Mac-OS-X
+  - /openriak-kv/2.0.0/ops/building/installing/Installing-on-Mac-OS-X
   - /riak/2.0.0/installing/mac-osx/
-  - /docs/openriak-kv/2.0.0/installing/mac-osx/
+  - /openriak-kv/2.0.0/installing/mac-osx/
 linkTitle: "Mac OS X"
 weight: 303
 ---

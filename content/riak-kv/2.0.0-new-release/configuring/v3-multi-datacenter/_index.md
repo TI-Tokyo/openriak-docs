@@ -17,7 +17,7 @@ toc: true
 commercial_offering: true
 aliases:
   - /riak/2.0.0/ops/mdc/v3/configuration
-  - /docs/openriak-kv/2.0.0/ops/mdc/v3/configuration
+  - /openriak-kv/2.0.0/ops/mdc/v3/configuration
 linkTitle: "V3 Multi-Datacenter"
 weight: 109
 ---

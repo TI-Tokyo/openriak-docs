@@ -16,9 +16,9 @@ menu:
 toc: true
 aliases:
   - /riak/2.0.0/ops/building/installing
-  - /docs/openriak-kv/2.0.0/ops/building/installing
+  - /openriak-kv/2.0.0/ops/building/installing
   - /riak/2.0.0/installing/
-  - /docs/openriak-kv/2.0.0/installing/
+  - /openriak-kv/2.0.0/installing/
 linkTitle: "Installing"
 weight: 101
 ---

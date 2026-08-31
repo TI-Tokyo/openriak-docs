@@ -27,9 +27,19 @@ PRODUCTS = {
     },
 }
 
-UBUNTU = {"jammy": "22.04", "noble": "24.04", "focal": "20.04", "bionic": "18.04"}
+UBUNTU = {
+    "lucid": "10.04",
+    "precise": "12.04",
+    "trusty": "14.04",
+    "xenial": "16.04",
+    "artful": "17.10",
+    "bionic": "18.04",
+    "focal": "20.04",
+    "jammy": "22.04",
+    "noble": "24.04",
+}
+DEBIAN = {"stretch": "9", "buster": "10", "bullseye": "11", "bookworm": "12"}
 ARCHES = {
     "amd64": "amd64", "x86_64": "x86_64", "arm64": "arm64",
     "aarch64": "aarch64", "i386": "i386", "armhf": "armhf",
 }
-

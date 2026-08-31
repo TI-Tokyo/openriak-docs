@@ -15,7 +15,7 @@ menu:
 toc: true
 aliases:
   - /riak/2.0.0/ops/building/basic-cluster-setup
-  - /docs/openriak-kv/2.0.0/ops/building/basic-cluster-setup
+  - /openriak-kv/2.0.0/ops/building/basic-cluster-setup
 linkTitle: "Running a Cluster"
 weight: 200
 ---

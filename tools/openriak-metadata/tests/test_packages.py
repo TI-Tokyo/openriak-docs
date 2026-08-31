@@ -32,6 +32,15 @@ class PackageParsingTests(unittest.TestCase):
                          "riak-openrc-3.4.1.26-r1.apk", "riak-debug-3.4.1.26-r1.apk"):
             self.assertIsNone(self.parse(filename))
 
+    def test_historical_ubuntu_codenames_have_release_versions(self):
+        for codename, release in (("trusty64", "14.04"), ("artful64", "17.10")):
+            with self.subTest(codename=codename):
+                package = self.parse(
+                    "riak_3.4.1-OTP26_amd64.deb",
+                    parts=["riak", "kv", "3.4", "3.4.1", "ubuntu", codename],
+                )
+                self.assertEqual(package.target["release_version"], release)
+
     def test_exact_product_and_version(self):
         self.assertIsNone(self.parse("riak-cs_3.4.1-OTP26_amd64.deb"))
         self.assertIsNone(self.parse("riak-ts_3.4.1-OTP26_amd64.deb"))

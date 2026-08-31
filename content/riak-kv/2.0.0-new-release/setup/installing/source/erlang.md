@@ -15,9 +15,9 @@ menu:
 toc: true
 aliases:
   - /riak/2.0.0/ops/building/installing/erlang
-  - /docs/openriak-kv/2.0.0/ops/building/installing/erlang
+  - /openriak-kv/2.0.0/ops/building/installing/erlang
   - /riak/2.0.0/installing/source/erlang/
-  - /docs/openriak-kv/2.0.0/installing/source/erlang/
+  - /openriak-kv/2.0.0/installing/source/erlang/
 linkTitle: "Installing Erlang"
 weight: 301
 ---

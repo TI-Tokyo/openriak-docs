@@ -15,7 +15,7 @@ menu:
 toc: true
 aliases:
   - /riak/2.0.0/dev/references/protocol-buffers/dt-counter-store
-  - /docs/openriak-kv/2.0.0/dev/references/protocol-buffers/dt-counter-store
+  - /openriak-kv/2.0.0/dev/references/protocol-buffers/dt-counter-store
 linkTitle: "Data Type Counter Store"
 weight: 117
 ---

@@ -15,9 +15,9 @@ menu:
 toc: true
 aliases:
   - /riak/2.0.0/theory/concepts/Eventual-Consistency
-  - /docs/openriak-kv/2.0.0/theory/concepts/Eventual-Consistency
+  - /openriak-kv/2.0.0/theory/concepts/Eventual-Consistency
   - /riak/2.0.0/theory/concepts/eventual-consistency
-  - /docs/openriak-kv/2.0.0/theory/concepts/eventual-consistency
+  - /openriak-kv/2.0.0/theory/concepts/eventual-consistency
 linkTitle: "Eventual Consistency"
 weight: 105
 ---

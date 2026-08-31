@@ -8,10 +8,11 @@
   let indexPromise;
   let cachedQuery = '';
   const hide = () => { results.hidden = true; };
-  const resultUrl = (value) => {
+  const resultUrl = (value, query) => {
     const url = new URL(value, window.location.href);
     const os = new URL(window.location.href).searchParams.get('os');
     if (os && url.origin === window.location.origin) url.searchParams.set('os', os);
+    url.searchParams.set('highlight', query);
     return url.href;
   };
   const loadIndex = () => {
@@ -29,13 +30,13 @@
       + (description.includes(query) ? 100 : 0)
       + (content.includes(query) ? Math.min(content.split(query).length - 1, 50) : 0);
   };
-  const render = (pages) => {
+  const render = (pages, query) => {
     results.replaceChildren();
     pages.forEach((page) => {
       const link = document.createElement('a');
       const title = document.createElement('strong');
       const description = document.createElement('span');
-      link.href = resultUrl(page.url);
+      link.href = resultUrl(page.url, query);
       title.textContent = page.title;
       description.textContent = page.description || '';
       link.append(title, description);
@@ -70,7 +71,7 @@
         .filter((match) => match.score > 0)
         .sort((left, right) => right.score - left.score)
         .slice(0, 8)
-        .map((match) => match.page));
+        .map((match) => match.page), query);
       cachedQuery = query;
     } catch (error) {
       if (input.value.trim().toLowerCase() !== query) return;

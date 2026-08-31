@@ -56,6 +56,47 @@ class ImportHugo018Tests(unittest.TestCase):
             self.assertIn('linkTitle: "The guide"', guide)
             self.assertIn("weight: 20", guide)
 
+    def test_duplicate_top_level_front_matter_keeps_final_value(self):
+        with tempfile.TemporaryDirectory() as temporary:
+            source = self.make_source(Path(temporary))
+            topic = source / "guide" / "topic.md"
+            text = topic.read_text(encoding="utf-8")
+            topic.write_text(
+                text.replace(
+                    "---\n\nBody.",
+                    'version_history:\n  in: "old"\nversion_history:\n  in: "new"\n---\n\nBody.',
+                ),
+                encoding="utf-8",
+            )
+            import_tree(source, source)
+            converted = (source / "guide" / "topic.md").read_text(encoding="utf-8")
+            self.assertEqual(converted.count("version_history:"), 1)
+            self.assertNotIn('in: "old"', converted)
+            self.assertIn('in: "new"', converted)
+
+    def test_appended_duplicate_document_is_discarded(self):
+        with tempfile.TemporaryDirectory() as temporary:
+            source = self.make_source(Path(temporary))
+            topic = source / "guide" / "topic.md"
+            original = topic.read_text(encoding="utf-8")
+            duplicate = original.replace("\n\nBody.\n", "\n\nOlder duplicate body.\n")
+            topic.write_text(original + duplicate, encoding="utf-8")
+            import_tree(source, source)
+            converted = (source / "guide" / "topic.md").read_text(encoding="utf-8")
+            self.assertEqual(converted.count('title: "Topic"'), 1)
+            self.assertIn("Body.", converted)
+            self.assertNotIn("Older duplicate body.", converted)
+
+    def test_leading_blank_line_before_front_matter_is_removed(self):
+        with tempfile.TemporaryDirectory() as temporary:
+            source = self.make_source(Path(temporary))
+            topic = source / "guide" / "topic.md"
+            topic.write_text("\n" + topic.read_text(encoding="utf-8"), encoding="utf-8")
+            import_tree(source, source)
+            converted = (source / "guide" / "topic.md").read_text(encoding="utf-8")
+            self.assertTrue(converted.startswith("---\n"))
+            self.assertIn('linkTitle: "First topic"', converted)
+
     def test_in_place_import_is_idempotent(self):
         with tempfile.TemporaryDirectory() as temporary:
             source = self.make_source(Path(temporary))

@@ -15,7 +15,7 @@ menu:
 toc: true
 aliases:
   - /riak/2.0.0/dev/references/protocol-buffers/list-keys
-  - /docs/openriak-kv/2.0.0/dev/references/protocol-buffers/list-keys
+  - /openriak-kv/2.0.0/dev/references/protocol-buffers/list-keys
 linkTitle: "List Keys"
 weight: 101
 ---

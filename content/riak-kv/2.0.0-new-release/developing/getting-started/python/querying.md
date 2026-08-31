@@ -16,7 +16,7 @@ menu:
 toc: true
 aliases:
   - /riak/2.0.0/dev/taste-of-riak/querying-python
-  - /docs/openriak-kv/2.0.0/dev/taste-of-riak/querying-python
+  - /openriak-kv/2.0.0/dev/taste-of-riak/querying-python
 linkTitle: "Querying"
 weight: 101
 ---

@@ -17,7 +17,7 @@ version_history:
   in: "2.0.0-2.9999.9999"
 aliases:
   - /riak/2.0.0/dev/references/protocol-buffers/yz-schema-get
-  - /docs/openriak-kv/2.0.0/dev/references/protocol-buffers/yz-schema-get
+  - /openriak-kv/2.0.0/dev/references/protocol-buffers/yz-schema-get
 linkTitle: "Yokozuna Schema Get"
 weight: 123
 ---

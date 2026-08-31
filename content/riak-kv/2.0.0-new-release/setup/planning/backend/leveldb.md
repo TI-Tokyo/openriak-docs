@@ -15,7 +15,7 @@ menu:
 toc: true
 aliases:
   - /riak/2.0.0/ops/advanced/backends/leveldb/
-  - /docs/openriak-kv/2.0.0/ops/advanced/backends/leveldb/
+  - /openriak-kv/2.0.0/ops/advanced/backends/leveldb/
 linkTitle: "LevelDB"
 weight: 101
 ---

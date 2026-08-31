@@ -15,7 +15,7 @@ menu:
 toc: true
 aliases:
   - /riak/2.0.0/dev/taste-of-riak/golang
-  - /docs/openriak-kv/2.0.0/dev/taste-of-riak/golang
+  - /openriak-kv/2.0.0/dev/taste-of-riak/golang
 linkTitle: "Go"
 weight: 107
 ---

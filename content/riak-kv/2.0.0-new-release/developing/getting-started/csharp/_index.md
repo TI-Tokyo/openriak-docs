@@ -15,7 +15,7 @@ menu:
 toc: true
 aliases:
   - /riak/2.0.0/dev/taste-of-riak/csharp
-  - /docs/openriak-kv/2.0.0/dev/taste-of-riak/csharp
+  - /openriak-kv/2.0.0/dev/taste-of-riak/csharp
 linkTitle: "C Sharp"
 weight: 103
 ---

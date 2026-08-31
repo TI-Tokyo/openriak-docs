@@ -15,7 +15,7 @@ menu:
 toc: true
 aliases:
   - /riak/2.0.0/dev/references/protocol-buffers/dt-union
-  - /docs/openriak-kv/2.0.0/dev/references/protocol-buffers/dt-union
+  - /openriak-kv/2.0.0/dev/references/protocol-buffers/dt-union
 linkTitle: "Data Type Union"
 weight: 115
 ---

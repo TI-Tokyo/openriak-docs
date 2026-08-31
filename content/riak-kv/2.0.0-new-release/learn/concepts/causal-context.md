@@ -15,9 +15,9 @@ menu:
 toc: true
 aliases:
   - /riak/2.0.0/theory/concepts/Vector-Clocks/
-  - /docs/openriak-kv/2.0.0/theory/concepts/Vector-Clocks/
+  - /openriak-kv/2.0.0/theory/concepts/Vector-Clocks/
   - /riak/2.0.0/theory/concepts/context
-  - /docs/openriak-kv/2.0.0/theory/concepts/context
+  - /openriak-kv/2.0.0/theory/concepts/context
 linkTitle: "Causal Context"
 weight: 103
 ---

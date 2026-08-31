@@ -15,7 +15,7 @@ menu:
 toc: true
 aliases:
   - /riak/2.0.0/dev/references/protocol-buffers
-  - /docs/openriak-kv/2.0.0/dev/references/protocol-buffers
+  - /openriak-kv/2.0.0/dev/references/protocol-buffers
 linkTitle: "Protocol Buffers API"
 weight: 103
 ---

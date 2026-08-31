@@ -15,7 +15,7 @@ menu:
 toc: true
 aliases:
   - /riak/2.0.0/dev/references/protocol-buffers/ping
-  - /docs/openriak-kv/2.0.0/dev/references/protocol-buffers/ping
+  - /openriak-kv/2.0.0/dev/references/protocol-buffers/ping
 linkTitle: "Ping"
 weight: 110
 ---

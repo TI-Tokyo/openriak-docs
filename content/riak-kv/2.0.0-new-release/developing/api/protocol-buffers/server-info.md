@@ -15,7 +15,7 @@ menu:
 toc: true
 aliases:
   - /riak/2.0.0/dev/references/protocol-buffers/server-info
-  - /docs/openriak-kv/2.0.0/dev/references/protocol-buffers/server-info
+  - /openriak-kv/2.0.0/dev/references/protocol-buffers/server-info
 linkTitle: "Server Info"
 weight: 111
 ---

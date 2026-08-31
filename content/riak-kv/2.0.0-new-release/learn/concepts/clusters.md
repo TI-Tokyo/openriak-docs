@@ -15,9 +15,9 @@ menu:
 toc: true
 aliases:
   - /riak/2.0.0/theory/concepts/Clusters
-  - /docs/openriak-kv/2.0.0/theory/concepts/Clusters
+  - /openriak-kv/2.0.0/theory/concepts/Clusters
   - /riak/2.0.0/theory/concepts/clusters
-  - /docs/openriak-kv/2.0.0/theory/concepts/clusters
+  - /openriak-kv/2.0.0/theory/concepts/clusters
 linkTitle: "Clusters"
 weight: 103
 ---

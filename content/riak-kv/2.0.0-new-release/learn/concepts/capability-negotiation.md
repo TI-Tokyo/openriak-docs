@@ -15,7 +15,7 @@ menu:
 toc: true
 aliases:
   - /riak/2.0.0/theory/concepts/capability-negotiation
-  - /docs/openriak-kv/2.0.0/theory/concepts/capability-negotiation
+  - /openriak-kv/2.0.0/theory/concepts/capability-negotiation
 linkTitle: "Capability Negotiation"
 weight: 102
 ---

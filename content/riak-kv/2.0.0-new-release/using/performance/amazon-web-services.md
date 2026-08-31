@@ -15,7 +15,7 @@ menu:
 toc: true
 aliases:
   - /riak/2.0.0/ops/tuning/aws
-  - /docs/openriak-kv/2.0.0/ops/tuning/aws
+  - /openriak-kv/2.0.0/ops/tuning/aws
 linkTitle: "Amazon Web Services"
 weight: 106
 ---

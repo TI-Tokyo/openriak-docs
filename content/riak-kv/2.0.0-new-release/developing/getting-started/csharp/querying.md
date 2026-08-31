@@ -16,7 +16,7 @@ menu:
 toc: true
 aliases:
   - /riak/2.0.0/dev/taste-of-riak/querying-csharp
-  - /docs/openriak-kv/2.0.0/dev/taste-of-riak/querying-csharp
+  - /openriak-kv/2.0.0/dev/taste-of-riak/querying-csharp
 linkTitle: "Querying"
 weight: 101
 ---

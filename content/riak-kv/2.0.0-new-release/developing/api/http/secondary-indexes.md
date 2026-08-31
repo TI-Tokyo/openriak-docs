@@ -15,7 +15,7 @@ menu:
 toc: true
 aliases:
   - /riak/2.0.0/dev/references/http/secondary-indexes
-  - /docs/openriak-kv/2.0.0/dev/references/http/secondary-indexes
+  - /openriak-kv/2.0.0/dev/references/http/secondary-indexes
 linkTitle: "Secondary Indexes"
 weight: 109
 ---

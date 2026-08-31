@@ -15,7 +15,7 @@ menu:
 toc: true
 aliases:
   - /riak/2.0.0/ops/building/planning/system-planning
-  - /docs/openriak-kv/2.0.0/ops/building/planning/system-planning
+  - /openriak-kv/2.0.0/ops/building/planning/system-planning
 linkTitle: "Start Planning"
 weight: 100
 ---

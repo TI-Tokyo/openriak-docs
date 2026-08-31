@@ -15,7 +15,7 @@ menu:
 toc: true
 aliases:
   - /riak/2.0.0/dev/using/libraries
-  - /docs/openriak-kv/2.0.0/dev/using/libraries
+  - /openriak-kv/2.0.0/dev/using/libraries
 linkTitle: "Client Libraries"
 weight: 106
 ---

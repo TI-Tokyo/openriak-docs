@@ -41,7 +41,9 @@
       const fragment = document.createDocumentFragment();
       matches.slice(0, 30).forEach(({ item }) => {
         const link = document.createElement('a');
-        link.href = new URL(item.url, new URL(root.dataset.indexUrl, window.location.href));
+        const url = new URL(item.url, new URL(root.dataset.indexUrl, window.location.href));
+        query.trim().split(/\s+/).filter(Boolean).slice(0, 8).forEach((term) => url.searchParams.append('highlight', term));
+        link.href = url;
         const title = document.createElement('strong');
         title.textContent = item.title;
         const meta = document.createElement('span');

@@ -35,7 +35,7 @@ List supported operating systems, architectures, runtimes, and lifecycle dates f
 
 ### Operating System Support
 
-[downloads]: {{< product-version-root >}}reference/releases/downloads/
+[downloads]: {{< product-version-root >}}downloads/
 
 We recommend deploying OpenRiak KV on a mainstream Unix-like operating system.
 Mainstream distributions have larger support communities, making

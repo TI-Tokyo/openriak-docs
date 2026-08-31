@@ -16,7 +16,7 @@ menu:
 toc: true
 aliases:
   - /riak/2.0.0/dev/advanced/client-security/php
-  - /docs/openriak-kv/2.0.0/dev/advanced/client-security/php
+  - /openriak-kv/2.0.0/dev/advanced/client-security/php
 linkTitle: "PHP"
 weight: 104
 ---

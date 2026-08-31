@@ -16,9 +16,9 @@ menu:
 toc: true
 aliases:
   - /riak/2.0.0/ops/building/installing/Installing-on-Windows-Azure
-  - /docs/openriak-kv/2.0.0/ops/building/installing/Installing-on-Windows-Azure
+  - /openriak-kv/2.0.0/ops/building/installing/Installing-on-Windows-Azure
   - /riak/2.0.0/installing/windows-azure/
-  - /docs/openriak-kv/2.0.0/installing/windows-azure/
+  - /openriak-kv/2.0.0/installing/windows-azure/
 linkTitle: "Windows Azure"
 weight: 308
 ---

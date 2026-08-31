@@ -15,7 +15,7 @@ menu:
 toc: true
 aliases:
   - /riak/2.0.0/ops/running/recovery/rolling-restart
-  - /docs/openriak-kv/2.0.0/ops/running/recovery/rolling-restart
+  - /openriak-kv/2.0.0/ops/running/recovery/rolling-restart
 linkTitle: "Rolling Restarts"
 weight: 103
 ---

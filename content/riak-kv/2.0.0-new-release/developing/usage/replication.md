@@ -15,7 +15,7 @@ menu:
 toc: true
 aliases:
   - /riak/2.0.0/dev/advanced/replication-properties
-  - /docs/openriak-kv/2.0.0/dev/advanced/replication-properties
+  - /openriak-kv/2.0.0/dev/advanced/replication-properties
 linkTitle: "Replication"
 weight: 115
 ---

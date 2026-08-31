@@ -15,7 +15,7 @@ menu:
 toc: true
 aliases:
   - /riak/2.0.0/ops/mdc/statistics
-  - /docs/openriak-kv/2.0.0/ops/mdc/statistics
+  - /openriak-kv/2.0.0/ops/mdc/statistics
 linkTitle: "Statistics"
 weight: 100
 ---

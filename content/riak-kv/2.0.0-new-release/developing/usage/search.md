@@ -17,7 +17,7 @@ version_history:
   in: "2.0.0-2.9999.9999"
 aliases:
   - /riak/2.0.0/dev/using/search
-  - /docs/openriak-kv/2.0.0/dev/using/search
+  - /openriak-kv/2.0.0/dev/using/search
 linkTitle: "Searching"
 weight: 105
 ---

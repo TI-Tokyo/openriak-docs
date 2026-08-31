@@ -15,7 +15,7 @@ menu:
 toc: true
 aliases:
   - /riak/2.0.0/dev/advanced/strong-consistency
-  - /docs/openriak-kv/2.0.0/dev/advanced/strong-consistency
+  - /openriak-kv/2.0.0/dev/advanced/strong-consistency
 linkTitle: "Strong Consistency"
 weight: 101
 ---

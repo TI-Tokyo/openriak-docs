@@ -15,7 +15,7 @@ menu:
 toc: true
 aliases:
   - /riak/2.0.0/ops/advanced/security
-  - /docs/openriak-kv/2.0.0/ops/advanced/security
+  - /openriak-kv/2.0.0/ops/advanced/security
 linkTitle: "Security"
 weight: 205
 ---

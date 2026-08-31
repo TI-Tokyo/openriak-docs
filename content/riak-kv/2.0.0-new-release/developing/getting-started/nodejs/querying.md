@@ -16,7 +16,7 @@ menu:
 toc: true
 aliases:
   - /riak/2.0.0/dev/taste-of-riak/querying-nodejs
-  - /docs/openriak-kv/2.0.0/dev/taste-of-riak/querying-nodejs
+  - /openriak-kv/2.0.0/dev/taste-of-riak/querying-nodejs
 linkTitle: "Querying"
 weight: 101
 ---

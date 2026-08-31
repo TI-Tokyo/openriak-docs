@@ -15,7 +15,7 @@ menu:
 toc: false
 aliases:
   - /riak/2.0.0/theory/dynamo
-  - /docs/openriak-kv/2.0.0/theory/dynamo
+  - /openriak-kv/2.0.0/theory/dynamo
 linkTitle: "Dynamo"
 weight: 110
 ---

@@ -15,7 +15,7 @@ menu:
 toc: true
 aliases:
   - /riak/2.0.0/dev/references/http/list-resources
-  - /docs/openriak-kv/2.0.0/dev/references/http/list-resources
+  - /openriak-kv/2.0.0/dev/references/http/list-resources
 linkTitle: "List Resources"
 weight: 112
 ---

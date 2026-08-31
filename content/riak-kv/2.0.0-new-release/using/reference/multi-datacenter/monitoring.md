@@ -15,7 +15,7 @@ menu:
 toc: true
 aliases:
   - /riak/2.0.0/ops/mdc/monitoring
-  - /docs/openriak-kv/2.0.0/ops/mdc/monitoring
+  - /openriak-kv/2.0.0/ops/mdc/monitoring
 linkTitle: "Monitoring"
 weight: 102
 ---

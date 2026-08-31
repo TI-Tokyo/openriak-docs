@@ -15,7 +15,7 @@ menu:
 toc: true
 aliases:
   - /riak/2.0.0/ops/running/backups
-  - /docs/openriak-kv/2.0.0/ops/running/backups
+  - /openriak-kv/2.0.0/ops/running/backups
 linkTitle: "Backing Up"
 weight: 106
 ---

@@ -15,7 +15,7 @@ menu:
 toc: true
 aliases:
   - /riak/2.0.0/ops/advanced/configs/search/
-  - /docs/openriak-kv/2.0.0/ops/advanced/configs/search/
+  - /openriak-kv/2.0.0/ops/advanced/configs/search/
 linkTitle: "Search Settings"
 weight: 108
 ---

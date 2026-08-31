@@ -15,7 +15,7 @@ menu:
 toc: true
 aliases:
   - /riak/2.0.0/dev/references/protocol-buffers/secondary-indexes
-  - /docs/openriak-kv/2.0.0/dev/references/protocol-buffers/secondary-indexes
+  - /openriak-kv/2.0.0/dev/references/protocol-buffers/secondary-indexes
 linkTitle: "Secondary Indexes"
 weight: 108
 ---

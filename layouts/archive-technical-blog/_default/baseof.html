@@ -18,10 +18,11 @@
   {{ partial "site-header.html" (dict "page" . "section" $siteSection "showNavToggle" false) }}
   <main id="main" class="blog-layout">
     {{ partial "blog-menu.html" . }}
-    <div class="blog-main">{{ block "main" . }}{{ end }}</div>
+    <div class="blog-main" data-search-highlight-root>{{ block "main" . }}{{ end }}</div>
   </main>
   <script src="{{ `js/theme.js` | relURL }}?v=20260829-shared-header" defer></script>
   <script src="{{ `js/sidebar-search.js` | relURL }}?v=20260831-full-text-search" defer></script>
+  <script src="{{ `js/search-highlight.js` | relURL }}?v=20260831-search-highlight" defer></script>
   <script src="{{ `js/docs-shell.js` | relURL }}?v=20260829-shared-header" defer></script>
 </body>
 </html>

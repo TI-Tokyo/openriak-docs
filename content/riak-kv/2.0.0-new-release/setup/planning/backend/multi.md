@@ -15,7 +15,7 @@ menu:
 toc: true
 aliases:
   - /riak/2.0.0/ops/advanced/backends/multi/
-  - /docs/openriak-kv/2.0.0/ops/advanced/backends/multi/
+  - /openriak-kv/2.0.0/ops/advanced/backends/multi/
 linkTitle: "Multi-backend"
 weight: 103
 ---

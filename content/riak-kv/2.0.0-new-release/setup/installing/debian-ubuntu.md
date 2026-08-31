@@ -16,9 +16,9 @@ menu:
 toc: true
 aliases:
   - /riak/2.0.0/ops/building/installing/Installing-on-Debian-and-Ubuntu
-  - /docs/openriak-kv/2.0.0/ops/building/installing/Installing-on-Debian-and-Ubuntu
+  - /openriak-kv/2.0.0/ops/building/installing/Installing-on-Debian-and-Ubuntu
   - /riak/2.0.0/installing/debian-ubuntu/
-  - /docs/openriak-kv/2.0.0/installing/debian-ubuntu/
+  - /openriak-kv/2.0.0/installing/debian-ubuntu/
 linkTitle: "Debian & Ubuntu"
 weight: 302
 ---

@@ -15,7 +15,7 @@ menu:
 toc: true
 aliases:
   - /riak/2.0.0/ops/building/configuration/
-  - /docs/openriak-kv/2.0.0/ops/building/configuration/
+  - /openriak-kv/2.0.0/ops/building/configuration/
 linkTitle: "Basic Configuration"
 weight: 100
 ---

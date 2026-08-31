@@ -17,7 +17,7 @@ version_history:
   in: "2.0.0-2.9999.9999"
 aliases:
   - /riak/2.0.0/dev/references/http/store-search-schema
-  - /docs/openriak-kv/2.0.0/dev/references/http/store-search-schema
+  - /openriak-kv/2.0.0/dev/references/http/store-search-schema
 linkTitle: "Store Search Schema"
 weight: 117
 ---

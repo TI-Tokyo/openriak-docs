@@ -15,7 +15,7 @@ menu:
 toc: true
 aliases:
   - /riak/2.0.0/ops/running/recovery/repairing-indexes
-  - /docs/openriak-kv/2.0.0/ops/running/recovery/repairing-indexes
+  - /openriak-kv/2.0.0/ops/running/recovery/repairing-indexes
 linkTitle: "Repair Secondary Indexes"
 weight: 105
 ---

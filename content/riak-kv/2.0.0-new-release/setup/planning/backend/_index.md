@@ -15,7 +15,7 @@ menu:
 toc: true
 aliases:
   - /riak/2.0.0/ops/building/planning/backends/
-  - /docs/openriak-kv/2.0.0/ops/building/planning/backends/
+  - /openriak-kv/2.0.0/ops/building/planning/backends/
 linkTitle: "Choosing a Backend"
 weight: 102
 ---

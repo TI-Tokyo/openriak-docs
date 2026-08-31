@@ -15,7 +15,7 @@ menu:
 toc: true
 aliases:
   - /riak/2.0.0/ops/advanced/deletion
-  - /docs/openriak-kv/2.0.0/ops/advanced/deletion
+  - /openriak-kv/2.0.0/ops/advanced/deletion
 linkTitle: "Object Deletion"
 weight: 103
 ---

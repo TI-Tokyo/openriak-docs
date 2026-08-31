@@ -15,7 +15,7 @@ menu:
 toc: true
 aliases:
   - /riak/2.0.0/ops/running/logging
-  - /docs/openriak-kv/2.0.0/ops/running/logging
+  - /openriak-kv/2.0.0/ops/running/logging
 linkTitle: "Logging"
 weight: 100
 ---

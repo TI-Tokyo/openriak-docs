@@ -21,7 +21,7 @@ listed_projects:
       install_instructions_set: "setup/installing"
 aliases:
   - /riak/2.0.0/downloads
-  - /docs/openriak-kv/2.0.0/downloads
+  - /openriak-kv/2.0.0/downloads
 linkTitle: "Download Riak KV"
 weight: 101
 ---

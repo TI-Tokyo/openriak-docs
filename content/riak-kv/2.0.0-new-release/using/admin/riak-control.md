@@ -15,7 +15,7 @@ menu:
 toc: true
 aliases:
   - /riak/2.0.0/ops/advanced/riak-control
-  - /docs/openriak-kv/2.0.0/ops/advanced/riak-control
+  - /openriak-kv/2.0.0/ops/advanced/riak-control
 linkTitle: "Riak Control"
 weight: 103
 ---

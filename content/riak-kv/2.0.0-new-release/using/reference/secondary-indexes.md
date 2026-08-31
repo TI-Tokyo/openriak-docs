@@ -15,7 +15,7 @@ menu:
 toc: true
 aliases:
   - /riak/2.0.0/dev/advanced/2i
-  - /docs/openriak-kv/2.0.0/dev/advanced/2i
+  - /openriak-kv/2.0.0/dev/advanced/2i
 linkTitle: "Secondary Indexes"
 weight: 110
 ---

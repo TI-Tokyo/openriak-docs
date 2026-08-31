@@ -39,7 +39,7 @@ Show operators how to build and install openriak from source and confirm that th
 ### OpenRiak KV From Source
 
 [install source erlang]: {{< product-version-root >}}how-to/install/source/
-[downloads]: {{< product-version-root >}}reference/releases/downloads/
+[downloads]: {{< product-version-root >}}downloads/
 [install debian & ubuntu#source]: {{< product-version-root >}}how-to/install/debian-ubuntu/
 [install freebsd#source]: {{< product-version-root >}}reference/releases/supported-platforms/
 [install mac osx#source]: {{< product-version-root >}}reference/releases/supported-platforms/

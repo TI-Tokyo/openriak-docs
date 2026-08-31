@@ -15,7 +15,7 @@ menu:
 toc: true
 aliases:
   - /riak/2.0.0/dev/data-modeling/
-  - /docs/openriak-kv/2.0.0/dev/data-modeling/
+  - /openriak-kv/2.0.0/dev/data-modeling/
 linkTitle: "Use Cases"
 weight: 101
 ---

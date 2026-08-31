@@ -15,7 +15,7 @@ menu:
 toc: true
 aliases:
   - /riak/2.0.0/ops/upgrading/rolling-downgrades/
-  - /docs/openriak-kv/2.0.0/ops/upgrading/rolling-downgrades/
+  - /openriak-kv/2.0.0/ops/upgrading/rolling-downgrades/
 linkTitle: "Downgrading"
 weight: 103
 ---

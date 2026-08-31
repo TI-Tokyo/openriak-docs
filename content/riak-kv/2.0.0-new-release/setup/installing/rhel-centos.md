@@ -16,9 +16,9 @@ menu:
 toc: true
 aliases:
   - /riak/2.0.0/ops/building/installing/Installing-on-RHEL-and-CentOS
-  - /docs/openriak-kv/2.0.0/ops/building/installing/Installing-on-RHEL-and-CentOS
+  - /openriak-kv/2.0.0/ops/building/installing/Installing-on-RHEL-and-CentOS
   - /riak/2.0.0/installing/rhel-centos/
-  - /docs/openriak-kv/2.0.0/installing/rhel-centos/
+  - /openriak-kv/2.0.0/installing/rhel-centos/
 linkTitle: "RHEL & CentOS"
 weight: 304
 ---

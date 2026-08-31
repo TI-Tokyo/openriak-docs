@@ -15,7 +15,7 @@ menu:
 toc: true
 aliases:
   - /riak/2.0.0/dev/using/mapreduce
-  - /docs/openriak-kv/2.0.0/dev/using/mapreduce
+  - /openriak-kv/2.0.0/dev/using/mapreduce
 linkTitle: "Using MapReduce"
 weight: 106
 ---

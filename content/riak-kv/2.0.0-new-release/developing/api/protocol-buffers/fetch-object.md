@@ -15,7 +15,7 @@ menu:
 toc: true
 aliases:
   - /riak/2.0.0/dev/references/protocol-buffers/fetch-object
-  - /docs/openriak-kv/2.0.0/dev/references/protocol-buffers/fetch-object
+  - /openriak-kv/2.0.0/dev/references/protocol-buffers/fetch-object
 linkTitle: "Fetch Object"
 weight: 105
 ---

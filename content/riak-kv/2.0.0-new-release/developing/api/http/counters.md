@@ -15,7 +15,7 @@ menu:
 toc: true
 aliases:
   - /riak/2.0.0/dev/references/http/counters
-  - /docs/openriak-kv/2.0.0/dev/references/http/counters
+  - /openriak-kv/2.0.0/dev/references/http/counters
 linkTitle: "Counters"
 weight: 118
 ---

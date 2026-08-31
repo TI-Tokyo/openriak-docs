@@ -17,7 +17,7 @@ toc: true
 commercial_offering: true
 aliases:
   - /riak/2.0.0/ops/mdc/v3/ssl
-  - /docs/openriak-kv/2.0.0/ops/mdc/v3/ssl
+  - /openriak-kv/2.0.0/ops/mdc/v3/ssl
 linkTitle: "SSL"
 weight: 103
 ---

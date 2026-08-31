@@ -25,7 +25,11 @@ the root `_index.md`, discards the obsolete root `_index.md` search page when
 both old index files are present, and promotes legacy menu labels and weights
 to `linkTitle` and `weight` front matter. Underscore-prefixed Markdown fragments
 remain in the content tree but are excluded from rendering and navigation.
-Other files are copied unchanged.
+Duplicate top-level YAML keys, which Hugo 0.18 accepted, are reduced to their
+final value so modern Hugo can parse the page. If an export accidentally
+appended a second complete copy of a page with the same title, that duplicate
+document is discarded. Leading blank lines before YAML front matter are also
+removed so modern Hugo recognizes the metadata. Other files are copied unchanged.
 
 Import into a new release directory:
 

@@ -15,9 +15,9 @@ menu:
 toc: true
 aliases:
   - /riak/2.0.0/theory/concepts/Replication
-  - /docs/openriak-kv/2.0.0/theory/concepts/Replication
+  - /openriak-kv/2.0.0/theory/concepts/Replication
   - /riak/2.0.0/theory/concepts/replication
-  - /docs/openriak-kv/2.0.0/theory/concepts/replication
+  - /openriak-kv/2.0.0/theory/concepts/replication
 linkTitle: "Replication"
 weight: 108
 ---

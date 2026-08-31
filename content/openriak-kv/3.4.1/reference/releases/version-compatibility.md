@@ -54,7 +54,7 @@ Link to adjacent commands, configuration keys, APIs, data types, and the how-to 
 ## In this section
 
 - [Deprecated features in OpenRiak KV 3.4.1]({{< product-version-root >}}reference/releases/deprecations/) — List deprecated features carried into 3.4.1, preferred alternatives, compatibility implications, and possible future removal.
-- [Downloads]({{< product-version-root >}}reference/releases/downloads/) — List supported OpenRiak packages, checksums, repositories, and source archives by platform and version.
+- [Downloads]({{< product-version-root >}}downloads/) — List supported OpenRiak packages, checksums, repositories, and source archives by platform and version.
 - [Release and compatibility reference]({{< product-version-root >}}reference/releases/) — Provide factual version, platform, package, compatibility, and change information.
-- [OpenRiak KV 3.4.1 release notes]({{< product-version-root >}}reference/releases/release-notes/) — Summarize the externally visible changes and fixes in OpenRiak KV 3.4.1 relative to 3.4.0.
+- [OpenRiak KV 3.4.1 release notes]({{< product-version-root >}}release-notes/) — Summarize the externally visible changes and fixes in OpenRiak KV 3.4.1 relative to 3.4.0.
 - [Supported platforms]({{< product-version-root >}}reference/releases/supported-platforms/) — List supported operating systems, architectures, runtimes, and lifecycle dates for this release.

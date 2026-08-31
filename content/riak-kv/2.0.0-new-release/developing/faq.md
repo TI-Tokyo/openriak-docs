@@ -16,7 +16,7 @@ menu:
 toc: true
 aliases:
   - /riak/2.0.0/community/faqs/developing
-  - /docs/openriak-kv/2.0.0/community/faqs/developing
+  - /openriak-kv/2.0.0/community/faqs/developing
 linkTitle: "Developing FAQ"
 weight: 108
 ---

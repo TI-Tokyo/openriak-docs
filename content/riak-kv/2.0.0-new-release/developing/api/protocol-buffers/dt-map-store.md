@@ -15,7 +15,7 @@ menu:
 toc: true
 aliases:
   - /riak/2.0.0/dev/references/protocol-buffers/dt-map-store
-  - /docs/openriak-kv/2.0.0/dev/references/protocol-buffers/dt-map-store
+  - /openriak-kv/2.0.0/dev/references/protocol-buffers/dt-map-store
 linkTitle: "Data Type Map Store"
 weight: 119
 ---

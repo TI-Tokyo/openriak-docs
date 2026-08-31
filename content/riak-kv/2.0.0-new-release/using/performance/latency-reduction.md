@@ -15,7 +15,7 @@ menu:
 toc: true
 aliases:
   - /riak/2.0.0/ops/tuning/latency-reduction
-  - /docs/openriak-kv/2.0.0/ops/tuning/latency-reduction
+  - /openriak-kv/2.0.0/ops/tuning/latency-reduction
 linkTitle: "Latency Reduction"
 weight: 104
 ---

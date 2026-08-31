@@ -15,7 +15,7 @@ menu:
 toc: true
 aliases:
   - /riak/2.0.0/ops/mdc/v2/architecture
-  - /docs/openriak-kv/2.0.0/ops/mdc/v2/architecture
+  - /openriak-kv/2.0.0/ops/mdc/v2/architecture
 linkTitle: "Architecture"
 weight: 100
 ---

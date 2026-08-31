@@ -15,7 +15,7 @@ menu:
 toc: true
 aliases:
   - /riak/2.0.0/ops/advanced/configs/configuration-files/
-  - /docs/openriak-kv/2.0.0/ops/advanced/configs/configuration-files/
+  - /openriak-kv/2.0.0/ops/advanced/configs/configuration-files/
 linkTitle: "Configuration Reference"
 weight: 104
 ---

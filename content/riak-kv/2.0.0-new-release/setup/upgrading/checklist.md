@@ -16,7 +16,7 @@ menu:
 toc: true
 aliases:
   - /riak/2.0.0/ops/upgrading/production-checklist/
-  - /docs/openriak-kv/2.0.0/ops/upgrading/production-checklist/
+  - /openriak-kv/2.0.0/ops/upgrading/production-checklist/
 linkTitle: "Production Checklist"
 weight: 100
 ---

@@ -15,7 +15,7 @@ menu:
 toc: true
 aliases:
   - /riak/2.0.0/ops/running/recovery/failure-recovery
-  - /docs/openriak-kv/2.0.0/ops/running/recovery/failure-recovery
+  - /openriak-kv/2.0.0/ops/running/recovery/failure-recovery
 linkTitle: "Failure & Recovery"
 weight: 100
 ---

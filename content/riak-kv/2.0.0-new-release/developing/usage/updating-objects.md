@@ -15,7 +15,7 @@ menu:
 toc: true
 aliases:
   - /riak/2.0.0/dev/using/updates
-  - /docs/openriak-kv/2.0.0/dev/using/updates
+  - /openriak-kv/2.0.0/dev/using/updates
 linkTitle: "Updating Objects"
 weight: 102
 ---

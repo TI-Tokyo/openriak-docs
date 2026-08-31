@@ -1,19 +1,41 @@
-<!doctype html>
-{{- $context := partial "product-context.html" . -}}
-<html class="no-js" lang="{{ site.Language.Locale | default `en` }}">
-  <head>{{ partial "head.html" . }}</head>
-  <body data-product="{{ $context.id }}" data-version="{{ $context.version }}">
-    <a class="skip-link" href="#main-content">Skip to content</a>
-    {{ partial "header.html" . }}
-    {{ partial "version-warning.html" . }}
-    <div class="docs-shell">
-      {{ partial "sidebar.html" . }}
-      <main id="main-content" class="docs-main" tabindex="-1">{{ block "main" . }}{{ end }}</main>
-    </div>
-    {{ partial "context-data.html" . }}
-    <script src="{{ `js/theme.js` | relURL }}?v=20260829-theme-picker" defer></script>
-    <script src="{{ `js/sidebar-search.js` | relURL }}?v=20260831-full-text-search" defer></script>
-    <script src="{{ `js/docs-runtime.js` | relURL }}?v=20260829-site-sections" defer></script>
-    <script src="{{ `js/docs-shell.js` | relURL }}?v=20260830-sidebar-rail" defer></script>
-  </body>
-</html>
+{{- if .Params.latest_redirect_route -}}
+  {{- $sourceRoot := printf "%s/latest/" .Params.latest_redirect_route | relURL -}}
+  {{- $targetRoot := printf "%s/%s/" .Params.latest_redirect_product .Params.latest_redirect_version | relURL -}}
+  {{- $suffix := strings.TrimPrefix $sourceRoot .RelPermalink -}}
+  {{- $target := printf "%s%s" $targetRoot $suffix -}}
+  <!doctype html>
+  <html lang="{{ site.Language.Locale | default `en` }}">
+    <head>
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width, initial-scale=1">
+      <title>Redirecting to {{ .Params.latest_redirect_product }} {{ .Params.latest_redirect_version }}</title>
+      <link rel="canonical" href="{{ $target | absURL }}">
+      <meta http-equiv="refresh" content="0; url={{ $target }}">
+      <script>location.replace({{ $target | jsonify | safeJS }} + location.search + location.hash);</script>
+    </head>
+    <body>
+      <p>This documentation has moved to <a href="{{ $target }}">{{ .Params.latest_redirect_product }} {{ .Params.latest_redirect_version }}</a>.</p>
+    </body>
+  </html>
+{{- else -}}
+  <!doctype html>
+  {{- $context := partial "product-context.html" . -}}
+  <html class="no-js" lang="{{ site.Language.Locale | default `en` }}">
+    <head>{{ partial "head.html" . }}</head>
+    <body data-product="{{ $context.id }}" data-version="{{ $context.version }}">
+      <a class="skip-link" href="#main-content">Skip to content</a>
+      {{ partial "header.html" . }}
+      {{ partial "version-warning.html" . }}
+      <div class="docs-shell">
+        {{ partial "sidebar.html" . }}
+        <main id="main-content" class="docs-main" tabindex="-1" data-search-highlight-root>{{ block "main" . }}{{ end }}</main>
+      </div>
+      {{ partial "context-data.html" . }}
+      <script src="{{ `js/theme.js` | relURL }}?v=20260829-theme-picker" defer></script>
+      <script src="{{ `js/sidebar-search.js` | relURL }}?v=20260831-full-text-search" defer></script>
+      <script src="{{ `js/search-highlight.js` | relURL }}?v=20260831-search-highlight" defer></script>
+      <script src="{{ `js/docs-runtime.js` | relURL }}?v=20260829-site-sections" defer></script>
+      <script src="{{ `js/docs-shell.js` | relURL }}?v=20260830-sidebar-rail" defer></script>
+    </body>
+  </html>
+{{- end -}}

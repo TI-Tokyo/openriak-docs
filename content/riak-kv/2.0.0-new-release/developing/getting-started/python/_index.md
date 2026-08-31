@@ -15,7 +15,7 @@ menu:
 toc: true
 aliases:
   - /riak/2.0.0/dev/taste-of-riak/python
-  - /docs/openriak-kv/2.0.0/dev/taste-of-riak/python
+  - /openriak-kv/2.0.0/dev/taste-of-riak/python
 linkTitle: "Python"
 weight: 102
 ---

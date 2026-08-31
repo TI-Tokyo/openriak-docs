@@ -6,7 +6,7 @@ from dataclasses import dataclass
 from html.parser import HTMLParser
 from urllib.parse import quote, unquote, urljoin, urlparse
 
-from .registry import ARCHES, UBUNTU
+from .registry import ARCHES, DEBIAN, UBUNTU
 
 
 class _Links(HTMLParser):
@@ -104,9 +104,23 @@ def normalize_target(parts: list[str], fmt: str, arch: str, rpm_target: str | No
         if codename or any("ubuntu" in p for p in lowered):
             family, release = "ubuntu", codename
             display = f"Ubuntu {UBUNTU.get(codename, codename or '')}".rstrip()
-        elif any("debian" in p for p in lowered):
+        elif any("raspbian" in p for p in lowered):
+            family = "raspbian"
+            codename = next((code for code in DEBIAN if code in lowered), None)
+            release = DEBIAN.get(codename or "") or _numeric_release(lowered)
+            display = f"Raspbian {release}" if release else "Raspbian"
+        elif any("debian" in p for p in lowered) or any(code in lowered for code in DEBIAN):
             family, release = "debian", _numeric_release(lowered)
+            if not release:
+                codename = next((code for code in DEBIAN if code in lowered), None)
+                release = DEBIAN.get(codename or "")
             display = f"Debian {release}" if release else "Debian"
+        elif any("fedora" in p for p in lowered):
+            family, release = "fedora", _numeric_release(lowered)
+            display = f"Fedora {release}" if release else "Fedora"
+        elif any(p in ("sles", "suse") or p.startswith("sles") for p in lowered):
+            family, release = "sles", _numeric_release(lowered)
+            display = f"SUSE Linux Enterprise Server {release}" if release else "SUSE Linux Enterprise Server"
         else:
             family, release, display = "unknown", None, source_label
     rid = release or source_label or "unknown"

@@ -16,9 +16,9 @@ menu:
 toc: true
 aliases:
   - /riak/2.0.0/ops/building/installing/Installing-on-FreeBSD
-  - /docs/openriak-kv/2.0.0/ops/building/installing/Installing-on-FreeBSD
+  - /openriak-kv/2.0.0/ops/building/installing/Installing-on-FreeBSD
   - /riak/2.0.0/installing/freebsd/
-  - /docs/openriak-kv/2.0.0/installing/freebsd/
+  - /openriak-kv/2.0.0/installing/freebsd/
 linkTitle: "FreeBSD"
 weight: 303
 ---

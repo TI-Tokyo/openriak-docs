@@ -15,7 +15,7 @@ menu:
 toc: true
 aliases:
   - /riak/2.0.0/dev/references/http/get-bucket-props
-  - /docs/openriak-kv/2.0.0/dev/references/http/get-bucket-props
+  - /openriak-kv/2.0.0/dev/references/http/get-bucket-props
 linkTitle: "Get Bucket Properties"
 weight: 100
 ---

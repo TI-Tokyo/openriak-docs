@@ -15,7 +15,7 @@ menu:
 toc: true
 aliases:
   - /riak/2.0.0/ops/advanced/runtime
-  - /docs/openriak-kv/2.0.0/ops/advanced/runtime
+  - /openriak-kv/2.0.0/ops/advanced/runtime
 linkTitle: "Runtime Interaction"
 weight: 104
 ---

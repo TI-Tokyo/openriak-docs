@@ -15,7 +15,7 @@ menu:
 toc: true
 aliases:
   - /riak/2.0.0/dev/advanced/mapreduce/
-  - /docs/openriak-kv/2.0.0/dev/advanced/mapreduce/
+  - /openriak-kv/2.0.0/dev/advanced/mapreduce/
 linkTitle: "Advanced MapReduce"
 weight: 103
 ---

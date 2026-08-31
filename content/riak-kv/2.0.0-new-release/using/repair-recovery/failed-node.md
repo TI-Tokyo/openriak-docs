@@ -15,7 +15,7 @@ menu:
 toc: true
 aliases:
   - /riak/2.0.0/ops/running/recovery/failed-node
-  - /docs/openriak-kv/2.0.0/ops/running/recovery/failed-node
+  - /openriak-kv/2.0.0/ops/running/recovery/failed-node
 linkTitle: "Recover a Failed Node"
 weight: 104
 ---

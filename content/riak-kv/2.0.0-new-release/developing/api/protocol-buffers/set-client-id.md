@@ -15,7 +15,7 @@ menu:
 toc: true
 aliases:
   - /riak/2.0.0/dev/references/protocol-buffers/set-client-id
-  - /docs/openriak-kv/2.0.0/dev/references/protocol-buffers/set-client-id
+  - /openriak-kv/2.0.0/dev/references/protocol-buffers/set-client-id
 linkTitle: "Set Client ID"
 weight: 126
 ---

@@ -16,7 +16,7 @@ menu:
 toc: true
 aliases:
   - /riak/2.0.0/dev/advanced/client-security/java
-  - /docs/openriak-kv/2.0.0/dev/advanced/client-security/java
+  - /openriak-kv/2.0.0/dev/advanced/client-security/java
 linkTitle: "Java"
 weight: 100
 ---

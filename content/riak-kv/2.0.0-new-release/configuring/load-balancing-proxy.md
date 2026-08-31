@@ -15,7 +15,7 @@ menu:
 toc: true
 aliases:
   - /riak/2.0.0/ops/advanced/configs/load-balanacing-proxy/
-  - /docs/openriak-kv/2.0.0/ops/advanced/configs/load-balanacing-proxy/
+  - /openriak-kv/2.0.0/ops/advanced/configs/load-balanacing-proxy/
 linkTitle: "Load Balancing & Proxy"
 weight: 106
 ---

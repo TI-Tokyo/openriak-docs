@@ -17,7 +17,7 @@ toc: true
 commercial_offering: true
 aliases:
   - /riak/2.0.0/ops/mdc/v3/nat
-  - /docs/openriak-kv/2.0.0/ops/mdc/v3/nat
+  - /openriak-kv/2.0.0/ops/mdc/v3/nat
 linkTitle: "With NAT"
 weight: 101
 ---

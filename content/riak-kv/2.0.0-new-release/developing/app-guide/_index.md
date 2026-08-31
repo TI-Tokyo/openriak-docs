@@ -15,7 +15,7 @@ menu:
 toc: true
 aliases:
   - /riak/2.0.0/dev/using/application-guide/
-  - /docs/openriak-kv/2.0.0/dev/using/application-guide/
+  - /openriak-kv/2.0.0/dev/using/application-guide/
 linkTitle: "Application Guide"
 weight: 105
 ---

@@ -15,7 +15,7 @@ menu:
 toc: true
 aliases:
   - /riak/2.0.0/ops/advanced/backends/bitcask/
-  - /docs/openriak-kv/2.0.0/ops/advanced/backends/bitcask/
+  - /openriak-kv/2.0.0/ops/advanced/backends/bitcask/
 linkTitle: "Bitcask"
 weight: 100
 ---

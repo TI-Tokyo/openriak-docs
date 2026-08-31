@@ -17,7 +17,7 @@ version_history:
   in: "2.0.0-2.99.999"
 aliases:
   - /riak/2.0.0/ops/upgrading/rolling-upgrades/
-  - /docs/openriak-kv/2.0.0/ops/upgrading/rolling-upgrades/
+  - /openriak-kv/2.0.0/ops/upgrading/rolling-upgrades/
 linkTitle: "Upgrading a Cluster"
 weight: 102
 ---

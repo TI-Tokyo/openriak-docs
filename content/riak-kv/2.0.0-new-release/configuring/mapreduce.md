@@ -15,7 +15,7 @@ menu:
 toc: true
 aliases:
   - /riak/2.0.0/ops/advanced/configs/mapreduce/
-  - /docs/openriak-kv/2.0.0/ops/advanced/configs/mapreduce/
+  - /openriak-kv/2.0.0/ops/advanced/configs/mapreduce/
 linkTitle: "MapReduce Settings"
 weight: 107
 ---

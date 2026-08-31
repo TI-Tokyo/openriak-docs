@@ -16,9 +16,9 @@ menu:
 toc: true
 aliases:
   - /riak/2.0.0/ops/building/installing/Installing-on-AWS-Marketplace
-  - /docs/openriak-kv/2.0.0/ops/building/installing/Installing-on-AWS-Marketplace
+  - /openriak-kv/2.0.0/ops/building/installing/Installing-on-AWS-Marketplace
   - /riak/2.0.0/installing/amazon-web-services/
-  - /docs/openriak-kv/2.0.0/installing/amazon-web-services/
+  - /openriak-kv/2.0.0/installing/amazon-web-services/
 linkTitle: "Amazon Web Services"
 weight: 301
 ---

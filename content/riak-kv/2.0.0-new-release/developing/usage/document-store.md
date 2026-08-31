@@ -17,7 +17,7 @@ version_history:
   in: "2.0.0-2.9999.9999"
 aliases:
   - /riak/2.0.0/dev/search/document-store
-  - /docs/openriak-kv/2.0.0/dev/search/document-store
+  - /openriak-kv/2.0.0/dev/search/document-store
 linkTitle: "Implementing a Document Store"
 weight: 112
 ---

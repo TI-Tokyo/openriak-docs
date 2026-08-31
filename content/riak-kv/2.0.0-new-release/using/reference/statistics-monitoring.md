@@ -15,7 +15,7 @@ menu:
 toc: true
 aliases:
   - /riak/2.0.0/ops/running/stats-and-monitoring
-  - /docs/openriak-kv/2.0.0/ops/running/stats-and-monitoring
+  - /openriak-kv/2.0.0/ops/running/stats-and-monitoring
 linkTitle: "Monitoring"
 weight: 106
 ---

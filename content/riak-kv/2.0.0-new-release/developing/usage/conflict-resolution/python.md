@@ -16,7 +16,7 @@ menu:
 toc: true
 aliases:
   - /riak/2.0.0/dev/using/conflict-resolution/python
-  - /docs/openriak-kv/2.0.0/dev/using/conflict-resolution/python
+  - /openriak-kv/2.0.0/dev/using/conflict-resolution/python
 linkTitle: "Python"
 weight: 102
 ---

@@ -135,6 +135,17 @@
   };
 
   const renderDownloads = () => {
+    document.querySelectorAll('[data-download-os-select]').forEach((button) => {
+      const isSelected = button.dataset.downloadOsSelect === selectedOs.id;
+      button.setAttribute('aria-pressed', String(isSelected));
+      button.classList.toggle('is-active', isSelected);
+    });
+    document.querySelectorAll('[data-selected-download-os]').forEach((label) => {
+      label.textContent = osLabel(selectedOs);
+    });
+    document.querySelectorAll('[data-selected-download-logo]').forEach((logo) => {
+      logo.src = osAssetUrl(selectedOs.logo);
+    });
     document.querySelectorAll('[data-doc-downloads]').forEach((list) => {
       const downloads = currentVersion.downloads?.[selectedOs.id] || [];
       list.replaceChildren();
@@ -157,6 +168,20 @@
         list.append(item);
       });
     });
+  };
+
+  const setupDownloadControls = () => {
+    document.querySelectorAll('[data-download-os-select]').forEach((button) => {
+      button.addEventListener('click', () => {
+        const os = osById(currentVersion, button.dataset.downloadOsSelect);
+        if (os) setOs(os);
+      });
+    });
+    const allDownloads = document.querySelector('[data-all-downloads]');
+    document.querySelectorAll('[data-all-downloads-link]').forEach((link) => {
+      link.addEventListener('click', () => { if (allDownloads) allDownloads.open = true; });
+    });
+    if (window.location.hash === '#all-downloads' && allDownloads) allDownloads.open = true;
   };
 
   const preserveOsOnInternalLinks = () => {
@@ -407,6 +432,11 @@
     let indexPromise;
     let cachedQuery = '';
     const hideResults = () => { results.hidden = true; };
+    const highlightedUrl = (value, query) => {
+      const url = new URL(withOs(value), window.location.href);
+      url.searchParams.set('highlight', query);
+      return url.href;
+    };
     const score = (page, query) => {
       const title = (page.title || '').toLowerCase();
       const description = (page.description || '').toLowerCase();
@@ -457,7 +487,7 @@
         results.replaceChildren();
         matches.forEach((page) => {
           const link = document.createElement('a');
-          link.href = withOs(page.url);
+          link.href = highlightedUrl(page.url, query);
           link.innerHTML = `<strong>${page.title}</strong><span>${page.description || ''}</span>`;
           results.append(link);
         });
@@ -479,6 +509,7 @@
   renderVersionPicker();
   setupVersionWarning();
   if (selectedOs) setOs(selectedOs);
+  setupDownloadControls();
   setupSearch();
 })();
 

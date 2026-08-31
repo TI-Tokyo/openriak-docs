@@ -15,7 +15,7 @@ menu:
 toc: true
 commercial_offering: true
 aliases:
-  - /docs/openriak-kv/2.0.0/add-ons/redis/get-started-with-rra
+  - /openriak-kv/2.0.0/add-ons/redis/get-started-with-rra
 linkTitle: "Using Redis Addon"
 weight: 302
 ---

@@ -35,7 +35,7 @@ Orient readers to OpenRiak KV and route them to learning, task, lookup, or conce
 
 [aboutenterprise]: https://www.tiot.jp/en/about-us/contact-us/
 [config index]: {{< product-version-root >}}how-to/configure/
-[downloads]: {{< product-version-root >}}reference/releases/downloads/
+[downloads]: {{< product-version-root >}}downloads/
 [install index]: {{< product-version-root >}}how-to/install/
 [plan index]: {{< product-version-root >}}how-to/plan/
 [perf open files]: {{< product-version-root >}}how-to/tune/set-open-files-limit/

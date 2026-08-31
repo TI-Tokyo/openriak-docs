@@ -24,17 +24,23 @@ assert.deepEqual(generatedVersions, [...legacyVersions, ...openRiakVersions].map
 
 for (const { raw: version, sourceDirectory } of legacyVersions) {
   const adapter = JSON.parse(fs.readFileSync(path.join(versionsRoot, `${version}.json`), 'utf8'));
-  assert.equal(adapter.generatedFrom, `content/riak-kv/${sourceDirectory}`);
-  assert.equal(adapter.metadataStatus.supportedOs, 'unavailable');
+  assert.equal(adapter.generatedFrom, `content/openriak-kv/metadata/${version}`);
+  assert.equal(adapter.metadataStatus.supportedOs, 'complete');
+  assert.equal(adapter.metadataStatus.downloads, 'complete');
+  assert.equal(adapter.metadataStatus.defaults, 'not_generated');
   assert.deepEqual(adapter.operatingSystems, []);
-  assert.deepEqual(adapter.downloads, {});
-  assert.equal(resolveOs('ubuntu-noble-amd64', { family: 'ubuntu' }, adapter), null);
+  assert.equal(adapter.defaultOs, null);
+  assert.ok(adapter.downloadOperatingSystems.length > 0);
+  assert.ok(Object.values(adapter.downloads).flat().length > 0);
+  assert.deepEqual(adapter.values, {});
+  assert.equal(resolveOs('ubuntu-noble-amd64', null, adapter), null);
 }
 
 for (const { raw: version } of openRiakVersions) {
   const adapter = JSON.parse(fs.readFileSync(path.join(versionsRoot, `${version}.json`), 'utf8'));
   assert.equal(adapter.generatedFrom, `content/openriak-kv/metadata/${version}`);
   assert.ok(adapter.operatingSystems.length > 0);
+  assert.deepEqual(adapter.downloadOperatingSystems, adapter.operatingSystems);
 }
 
 console.log('Product metadata synchronization tests passed.');

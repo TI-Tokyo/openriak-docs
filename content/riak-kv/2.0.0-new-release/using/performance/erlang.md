@@ -15,7 +15,7 @@ menu:
 toc: true
 aliases:
   - /riak/2.0.0/ops/tuning/erlang
-  - /docs/openriak-kv/2.0.0/ops/tuning/erlang
+  - /openriak-kv/2.0.0/ops/tuning/erlang
 linkTitle: "Erlang VM"
 weight: 105
 ---

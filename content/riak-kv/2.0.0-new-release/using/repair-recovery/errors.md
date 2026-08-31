@@ -15,7 +15,7 @@ menu:
 toc: true
 aliases:
   - /riak/2.0.0/ops/running/recovery/errors
-  - /docs/openriak-kv/2.0.0/ops/running/recovery/errors
+  - /openriak-kv/2.0.0/ops/running/recovery/errors
 linkTitle: "Errors"
 weight: 101
 ---

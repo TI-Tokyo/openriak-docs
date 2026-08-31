@@ -16,9 +16,9 @@ menu:
 toc: true
 aliases:
   - /riak/2.0.0/dev/using/data-types/sets
-  - /docs/openriak-kv/2.0.0/dev/using/data-types/sets
+  - /openriak-kv/2.0.0/dev/using/data-types/sets
   - /riak/2.0.0/dev/data-modeling/data-types/sets
-  - /docs/openriak-kv/2.0.0/dev/data-modeling/data-types/sets
+  - /openriak-kv/2.0.0/dev/data-modeling/data-types/sets
 linkTitle: "Sets"
 weight: 104
 ---

@@ -17,7 +17,7 @@ toc: true
 commercial_offering: true
 aliases:
   - /riak/2.0.0/ops/mdc/v3/scheduling-fullsync
-  - /docs/openriak-kv/2.0.0/ops/mdc/v3/scheduling-fullsync
+  - /openriak-kv/2.0.0/ops/mdc/v3/scheduling-fullsync
 linkTitle: "Scheduling Fullsync"
 weight: 103
 ---

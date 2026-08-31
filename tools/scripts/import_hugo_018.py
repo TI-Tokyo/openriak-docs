@@ -39,6 +39,7 @@ class Conversion:
 
 
 FIELD_RE = re.compile(r"^(?P<indent>\s*)(?P<key>[A-Za-z0-9_.-]+):\s*(?P<value>.*?)\s*$")
+DOCUMENT_START_RE = re.compile(r"(?m)^---\r?\ntitle:\s*(?P<title>.*?)\s*$")
 
 
 def _unquote(value: str) -> str:
@@ -101,21 +102,72 @@ def legacy_menu(front: list[str], path: Path) -> MenuEntry | None:
     return MenuEntry(values.get("name"), values.get("identifier"), values.get("parent"), parsed_weight)
 
 
+def deduplicate_top_level_fields(front: list[str]) -> list[str]:
+    """Preserve the final value when legacy YAML repeats a top-level key.
+
+    Hugo 0.18's YAML parser accepted duplicate mapping keys and effectively
+    kept the final value. Modern Hugo rejects the page, so reproduce the old
+    behavior explicitly before writing the imported front matter.
+    """
+    fields = [
+        (index, match.group("key"))
+        for index, line in enumerate(front)
+        if (match := FIELD_RE.match(line)) and not match.group("indent")
+    ]
+    seen: set[str] = set()
+    discard: set[int] = set()
+    for field_index in range(len(fields) - 1, -1, -1):
+        start, key = fields[field_index]
+        end = fields[field_index + 1][0] if field_index + 1 < len(fields) else len(front)
+        if key in seen:
+            discard.update(range(start, end))
+        else:
+            seen.add(key)
+    return [line for index, line in enumerate(front) if index not in discard]
+
+
+def discard_appended_duplicate_document(text: str, path: Path) -> str:
+    """Discard an accidentally concatenated second copy of the same page.
+
+    Some Hugo 0.18 exports contain a complete second document after the first
+    document's body. A repeated YAML delimiter followed immediately by the
+    same title is sufficiently specific to distinguish this corruption from
+    ordinary Markdown horizontal rules and fenced examples.
+    """
+    starts = list(DOCUMENT_START_RE.finditer(text))
+    if len(starts) <= 1:
+        return text
+    original_title = _unquote(starts[0].group("title"))
+    for duplicate in starts[1:]:
+        duplicate_title = _unquote(duplicate.group("title"))
+        if duplicate_title != original_title:
+            raise ImportError018(
+                f"{path}: appended document has a different title: {duplicate_title!r}"
+            )
+        newline = "\r\n" if "\r\n" in text else "\n"
+        return text[: duplicate.start()].rstrip() + newline
+    return text
+
+
 def modernize_front_matter(text: str, path: Path) -> tuple[str, MenuEntry | None]:
+    text = text.lstrip("\ufeff")
+    text = re.sub(r"\A(?:[ \t]*\r?\n)+(?=---(?:\r?\n))", "", text)
     fragment = path.name.startswith("_") and path.name != "_index.md"
-    if not text.lstrip("\ufeff").startswith("---") and fragment:
+    if not text.startswith("---") and fragment:
         return (
             "---\n"
             "build:\n"
             "  list: never\n"
             "  render: never\n"
             "---\n\n"
-            + text.lstrip("\ufeff"),
+            + text,
             None,
         )
-    if not text.lstrip("\ufeff").startswith("---"):
+    if not text.startswith("---"):
         return text, None
+    text = discard_appended_duplicate_document(text, path)
     front, body, newline = split_front_matter(text, path)
+    front = deduplicate_top_level_fields(front)
     menu = legacy_menu(front, path)
     top_level = {
         match.group("key")

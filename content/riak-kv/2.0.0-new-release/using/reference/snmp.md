@@ -16,7 +16,7 @@ toc: true
 commercial_offering: true
 aliases:
   - /riak/2.0.0/ops/running/monitoring/snmp
-  - /docs/openriak-kv/2.0.0/ops/running/monitoring/snmp
+  - /openriak-kv/2.0.0/ops/running/monitoring/snmp
 linkTitle: "SNMP"
 weight: 107
 ---

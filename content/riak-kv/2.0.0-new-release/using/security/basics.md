@@ -15,7 +15,7 @@ menu:
 toc: true
 aliases:
   - /riak/2.0.0/ops/running/authz
-  - /docs/openriak-kv/2.0.0/ops/running/authz
+  - /openriak-kv/2.0.0/ops/running/authz
 linkTitle: "Security Basics"
 weight: 100
 ---

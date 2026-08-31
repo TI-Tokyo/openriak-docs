@@ -15,9 +15,9 @@ menu:
 toc: true
 aliases:
   - /riak/2.0.0/ops/installing/Post-Installation
-  - /docs/openriak-kv/2.0.0/ops/installing/Post-Installation
+  - /openriak-kv/2.0.0/ops/installing/Post-Installation
   - /riak/2.0.0/installing/verify-install/
-  - /docs/openriak-kv/2.0.0/installing/verify-install/
+  - /openriak-kv/2.0.0/installing/verify-install/
 linkTitle: "Verifying an Installation"
 weight: 311
 ---

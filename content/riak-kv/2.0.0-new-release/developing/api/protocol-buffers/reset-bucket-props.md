@@ -15,7 +15,7 @@ menu:
 toc: true
 aliases:
   - /riak/2.0.0/dev/references/protocol-buffers/reset-bucket-props
-  - /docs/openriak-kv/2.0.0/dev/references/protocol-buffers/reset-bucket-props
+  - /openriak-kv/2.0.0/dev/references/protocol-buffers/reset-bucket-props
 linkTitle: "Reset Bucket Properties"
 weight: 104
 ---

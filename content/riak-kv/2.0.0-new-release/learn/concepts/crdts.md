@@ -15,7 +15,7 @@ menu:
 toc: true
 aliases:
   - /riak/2.0.0/theory/concepts/crdts
-  - /docs/openriak-kv/2.0.0/theory/concepts/crdts
+  - /openriak-kv/2.0.0/theory/concepts/crdts
 linkTitle: "Data Types"
 weight: 104
 ---

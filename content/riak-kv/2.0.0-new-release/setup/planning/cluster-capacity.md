@@ -15,7 +15,7 @@ menu:
 toc: true
 aliases:
   - /riak/2.0.0/ops/building/planning/cluster
-  - /docs/openriak-kv/2.0.0/ops/building/planning/cluster
+  - /openriak-kv/2.0.0/ops/building/planning/cluster
 linkTitle: "Cluster Capacity"
 weight: 103
 ---

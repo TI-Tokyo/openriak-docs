@@ -15,7 +15,7 @@ menu:
 toc: true
 aliases:
   - /riak/2.0.0/dev/using/2i
-  - /docs/openriak-kv/2.0.0/dev/using/2i
+  - /openriak-kv/2.0.0/dev/using/2i
 linkTitle: "Using Secondary Indexes"
 weight: 107
 ---

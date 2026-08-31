@@ -16,7 +16,7 @@ toc: true
 version_history:
   in: "2.0.0-2.1.999"
 aliases:
-  - /docs/openriak-kv/2.0.0/intro-v20
+  - /openriak-kv/2.0.0/intro-v20
   - /riak/2.0.0/intro-v20
 linkTitle: "Intro to Riak KV 2.0"
 weight: 100

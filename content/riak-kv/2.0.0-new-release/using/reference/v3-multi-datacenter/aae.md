@@ -17,7 +17,7 @@ toc: true
 commercial_offering: true
 aliases:
   - /riak/2.0.0/ops/mdc/v3/aae
-  - /docs/openriak-kv/2.0.0/ops/mdc/v3/aae
+  - /openriak-kv/2.0.0/ops/mdc/v3/aae
 linkTitle: "Active Anti-Entropy"
 weight: 101
 ---

@@ -15,7 +15,7 @@ menu:
 toc: true
 aliases:
   - /riak/2.0.0/ops/running/cluster-admin
-  - /docs/openriak-kv/2.0.0/ops/running/cluster-admin
+  - /openriak-kv/2.0.0/ops/running/cluster-admin
 linkTitle: "Cluster Administration"
 weight: 202
 ---

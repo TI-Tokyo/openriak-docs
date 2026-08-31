@@ -15,7 +15,7 @@ menu:
 toc: true
 aliases:
   - /riak/2.0.0/theory/concepts/aae
-  - /docs/openriak-kv/2.0.0/theory/concepts/aae
+  - /openriak-kv/2.0.0/theory/concepts/aae
 linkTitle: "Active Anti-Entropy"
 weight: 100
 ---

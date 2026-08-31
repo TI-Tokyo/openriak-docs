@@ -16,7 +16,7 @@ menu:
 toc: true
 aliases:
   - /riak/2.0.0/dev/taste-of-riak/querying-ruby
-  - /docs/openriak-kv/2.0.0/dev/taste-of-riak/querying-ruby
+  - /openriak-kv/2.0.0/dev/taste-of-riak/querying-ruby
 linkTitle: "Querying"
 weight: 101
 ---

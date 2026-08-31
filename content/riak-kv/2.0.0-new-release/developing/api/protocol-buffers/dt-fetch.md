@@ -15,7 +15,7 @@ menu:
 toc: true
 aliases:
   - /riak/2.0.0/dev/references/protocol-buffers/dt-fetch
-  - /docs/openriak-kv/2.0.0/dev/references/protocol-buffers/dt-fetch
+  - /openriak-kv/2.0.0/dev/references/protocol-buffers/dt-fetch
 linkTitle: "Data Type Fetch"
 weight: 114
 ---

@@ -15,7 +15,7 @@ menu:
 toc: true
 aliases:
   - /riak/2.0.0/dev/taste-of-riak/php
-  - /docs/openriak-kv/2.0.0/dev/taste-of-riak/php
+  - /openriak-kv/2.0.0/dev/taste-of-riak/php
 linkTitle: "PHP"
 weight: 107
 ---

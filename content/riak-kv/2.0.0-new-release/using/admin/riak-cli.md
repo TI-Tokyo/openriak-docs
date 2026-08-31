@@ -15,7 +15,7 @@ menu:
 toc: true
 aliases:
   - /riak/2.0.0/ops/running/tools/riak
-  - /docs/openriak-kv/2.0.0/ops/running/tools/riak
+  - /openriak-kv/2.0.0/ops/running/tools/riak
 linkTitle: "riak CLI"
 weight: 102
 ---

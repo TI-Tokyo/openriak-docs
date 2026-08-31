@@ -15,7 +15,7 @@ menu:
 toc: true
 aliases:
   - /riak/2.0.0/ops/mdc/comparison
-  - /docs/openriak-kv/2.0.0/ops/mdc/comparison
+  - /openriak-kv/2.0.0/ops/mdc/comparison
 linkTitle: "Comparison"
 weight: 103
 ---

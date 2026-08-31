@@ -15,7 +15,7 @@ menu:
 toc: true
 aliases:
   - /riak/2.0.0/dev/references/backend-api
-  - /docs/openriak-kv/2.0.0/dev/references/backend-api
+  - /openriak-kv/2.0.0/dev/references/backend-api
 linkTitle: "Backend API"
 weight: 101
 ---

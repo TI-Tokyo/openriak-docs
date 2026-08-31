@@ -1,0 +1,158 @@
+---
+title_supertext: "Installing on"
+title: "Debian and Ubuntu"
+description: ""
+project: "riak_kv"
+project_version: "3.0.11"
+lastmod: 2022-10-12T00:00:00-00:00
+sitemap:
+  priority: 0.2
+menu:
+  riak_kv-3.0.11:
+    name: "Debian & Ubuntu"
+    identifier: "installing_debian_ubuntu"
+    weight: 303
+    parent: "installing"
+toc: true
+aliases:
+  - /riak/3.0.11/ops/building/installing/Installing-on-Debian-and-Ubuntu
+  - /openriak-kv/3.0.11/ops/building/installing/Installing-on-Debian-and-Ubuntu
+  - /riak/3.0.11/installing/debian-ubuntu/
+  - /openriak-kv/3.0.11/installing/debian-ubuntu/
+linkTitle: "Debian & Ubuntu"
+weight: 303
+---
+
+[install source index]: {{<baseurl>}}openriak-kv/3.0.11/setup/installing/source/
+[security index]: {{<baseurl>}}openriak-kv/3.0.11/using/security/
+[install source erlang]: {{<baseurl>}}openriak-kv/3.0.11/setup/installing/source/erlang
+[install verify]: {{<baseurl>}}openriak-kv/3.0.11/setup/installing/verify
+
+Riak KV can be installed on Debian or Ubuntu-based systems using a binary
+package or by compiling from source code.
+
+The following steps have been tested to work with Riak KV on:
+
+- Ubuntu 16.04
+- Ubuntu 18.04
+- Ubuntu 20.04
+- Ubuntu 22.04
+- Debian 9.0
+- Debian 10.0
+- Debian 11.0
+- Raspbian Buster
+
+## Installing From Package
+
+If you wish to install the deb packages by hand, follow these
+instructions.
+
+### Installing on Non-LTS Ubuntu Releases
+
+Typically we only package Riak for LTS releases to keep our build and
+testing matrix focused.  In some cases, such as the historic Ubuntu 11.04 (Natty),
+there are changes that affect how Riak is packaged, so we will release a
+separate package for that non-LTS release. In most other cases, however,
+if you are running a non-LTS release (such as 12.10) it is safe to
+follow the below instructions for the LTS release prior to your release.
+In the case of later subversions such as Ubuntu 12.10, follow the installation instructions for
+Ubuntu 12.04.
+
+### PAM Library Requirement for Ubuntu
+
+One dependency that may be missing on your machine is the `libpam0g-dev`
+package used for Pluggable Authentication Module (PAM) authentication,
+associated with [Riak security][security index].
+
+To install:
+
+```bash
+sudo apt-get install libpam0g-dev
+```
+
+### Riak 64-bit Installation
+
+***Note on OTP version***
+Packages for different OTP versions are available at https://iles.tiot.jp
+
+#### Ubuntu Xenial Xerus (16.04)
+
+```bash
+wget https://files.tiot.jp/riak/kv/3.0/3.0.11/ubuntu/xenial64/riak_3.0.11-OTP22.3_amd64.deb
+sudo dpkg -i riak_3.0.11-OTP22.3_amd64.deb
+```
+
+#### Ubuntu Bionic Beaver (18.04)
+
+```bash
+wget https://files.tiot.jp/riak/kv/3.0/3.0.11/ubuntu/bionic64/riak_3.0.11-OTP22.3_amd64.deb
+sudo dpkg -i riak_3.0.11-1_amd64.deb
+```
+
+#### Ubuntu Focal Fossa (20.04)
+
+```bash
+wget https://files.tiot.jp/riak/kv/3.0/3.0.11/ubuntu/focal64/riak_3.0.11-OTP22.3_amd64.deb
+sudo dpkg -i riak_3.0.11-OTP22.3_amd64.deb
+```
+
+#### Ubuntu Jammy Jellyfish (22.04)
+
+```bash
+wget https://files.tiot.jp/riak/kv/3.0/3.0.11/ubuntu/trusty64/riak_3.0.11-1_amd64.deb
+sudo dpkg -i riak_3.0.11-1_amd64.deb
+```
+
+#### Debian Stretch (9.0)
+
+```bash
+wget https://files.tiot.jp/riak/kv/3.0/3.0.11/debian/9/riak_3.0.11-OTP22.3_amd64.deb
+sudo dpkg -i riak_3.0.11-OTP22.3_amd64.deb
+```
+
+#### Debian Buster (10.0)
+
+```bash
+wget https://files.tiot.jp/riak/kv/3.0/3.0.11/debian/10/riak_3.0.11-OTP22.3_amd64.deb
+sudo dpkg -i riak_3.0.11-OTP22.3_amd64.deb
+```
+
+#### Debian Bookworm (11.0)
+
+```bash
+wget https://files.tiot.jp/riak/kv/3.0/3.0.11/debian/11/riak_3.0.11-OTP22.3_amd64.deb
+sudo dpkg -i riak_3.0.11-OTP22.3_amd64.deb
+```
+
+#### Raspbian Buster
+
+```bash
+wget https://files.tiot.jp/riak/kv/3.0/3.0.11/raspbian/buster/riak_3.0.11-1_armhf.deb
+sudo dpkg -i riak_3.0.11-1_amd64.deb
+```
+
+## Installing From Source
+
+First, install Riak dependencies using apt:
+
+```bash
+sudo apt-get install build-essential libc6-dev-i386 git
+```
+
+Riak requires an [Erlang](http://www.erlang.org/) installation.
+Instructions can be found in [Installing Erlang][install source erlang].
+
+```bash
+wget https://files.tiot.jp/riak/kv/3.0/3.0.11/riak-3.0.11.tar.gz
+tar zxvf riak-3.0.11.tar.gz
+cd riak-3.0.11
+make rel
+```
+
+If the build was successful, a fresh build of Riak will exist in the
+`rel/riak` directory.
+
+## Next Steps
+
+Now that Riak is installed, check out [Verifying a Riak Installation][install verify].
+

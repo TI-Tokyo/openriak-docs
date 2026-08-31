@@ -11,6 +11,11 @@ _original_parse_package = _implementation.parse_package
 _NAMES = {"kv": "riak", "cs": "riak-cs", "ts": "riak-ts"}
 _LEGACY_DEB = re.compile(r"^(?P<name>riak(?:-cs|-ts)?)_(?P<version>\d+\.\d+\.\d+)(?:-[^_]*)?_(?P<arch>[A-Za-z0-9_]+)\.deb$")
 _LEGACY_RPM = re.compile(r"^(?P<name>riak(?:-cs|-ts)?)-(?P<version>\d+\.\d+\.\d+)-(?P<rev>[^.]+)\.(?P<target>[^.]+)\.(?P<arch>[^.]+)\.rpm$")
+_JOINED_OTP_RPM = re.compile(
+    r"^(?P<name>riak(?:-cs|-ts)?)-(?P<version>\d+\.\d+\.\d+)-OTP"
+    r"(?P<otp>\d+)(?:\.\d+)*-(?P<rev>[^.]+)\."
+    r"(?P<target>amzn\d+|el\d+)(?P<arch>x86_64|aarch64)\.rpm$"
+)
 
 
 def parse_package(filename: str, product: str, version: str, url: str, path_parts: list[str]):
@@ -22,6 +27,14 @@ def parse_package(filename: str, product: str, version: str, url: str, path_part
         return None
     if any(marker in lower for marker in ("-openrc-", "-debug-", "-dev-", "-dialyzer-", "-reltool-")):
         return None
+    joined = _JOINED_OTP_RPM.match(filename)
+    if joined and joined.group("name") == _NAMES[product] and joined.group("version") == version:
+        data = joined.groupdict()
+        target = normalize_target(path_parts, "rpm", data["arch"], data["target"])
+        if not target:
+            return None
+        return Package(product, version, int(data["otp"]), data["arch"], "rpm", data["rev"],
+                       filename, url, None, target)
     match = _LEGACY_DEB.match(filename) or _LEGACY_RPM.match(filename)
     if not match or match.group("name") != _NAMES[product] or match.group("version") != version:
         return None

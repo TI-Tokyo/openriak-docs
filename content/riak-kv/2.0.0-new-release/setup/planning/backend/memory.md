@@ -15,7 +15,7 @@ menu:
 toc: true
 aliases:
   - /riak/2.0.0/ops/advanced/backends/memory/
-  - /docs/openriak-kv/2.0.0/ops/advanced/backends/memory/
+  - /openriak-kv/2.0.0/ops/advanced/backends/memory/
 linkTitle: "Memory"
 weight: 102
 ---

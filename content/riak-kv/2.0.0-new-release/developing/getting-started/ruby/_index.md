@@ -15,7 +15,7 @@ menu:
 toc: true
 aliases:
   - /riak/2.0.0/dev/taste-of-riak/ruby
-  - /docs/openriak-kv/2.0.0/dev/taste-of-riak/ruby
+  - /openriak-kv/2.0.0/dev/taste-of-riak/ruby
 linkTitle: "Ruby"
 weight: 101
 ---

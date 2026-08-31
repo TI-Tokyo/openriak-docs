@@ -16,9 +16,9 @@ menu:
 toc: true
 aliases:
   - /riak/2.0.0/dev/using/data-types
-  - /docs/openriak-kv/2.0.0/dev/using/data-types
+  - /openriak-kv/2.0.0/dev/using/data-types
   - /riak/2.0.0/dev/data-modeling/data-types
-  - /docs/openriak-kv/2.0.0/dev/data-modeling/data-types
+  - /openriak-kv/2.0.0/dev/data-modeling/data-types
 linkTitle: "Data Types"
 weight: 102
 ---

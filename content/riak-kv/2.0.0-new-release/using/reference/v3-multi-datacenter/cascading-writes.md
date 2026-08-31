@@ -17,7 +17,7 @@ toc: true
 commercial_offering: true
 aliases:
   - /riak/2.0.0/ops/mdc/v3/cascading-writes
-  - /docs/openriak-kv/2.0.0/ops/mdc/v3/cascading-writes
+  - /openriak-kv/2.0.0/ops/mdc/v3/cascading-writes
 linkTitle: "Cascading Writes"
 weight: 102
 ---

@@ -15,7 +15,7 @@ menu:
 toc: true
 aliases:
   - /riak/2.0.0/dev/using/conflict-resolution
-  - /docs/openriak-kv/2.0.0/dev/using/conflict-resolution
+  - /openriak-kv/2.0.0/dev/using/conflict-resolution
 linkTitle: "Conflict Resolution"
 weight: 116
 ---

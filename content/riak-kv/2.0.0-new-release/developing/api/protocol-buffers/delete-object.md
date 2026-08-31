@@ -15,7 +15,7 @@ menu:
 toc: true
 aliases:
   - /riak/2.0.0/dev/references/protocol-buffers/delete-object
-  - /docs/openriak-kv/2.0.0/dev/references/protocol-buffers/delete-object
+  - /openriak-kv/2.0.0/dev/references/protocol-buffers/delete-object
 linkTitle: "Delete Object"
 weight: 107
 ---

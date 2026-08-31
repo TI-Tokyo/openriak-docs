@@ -1,0 +1,35 @@
+---
+title: "PBC Auth Request"
+description: ""
+project: "riak_kv"
+project_version: "2.9.2"
+lastmod: 2020-04-08T00:00:00-00:00
+sitemap:
+  priority: 0.2
+menu:
+  riak_kv-2.9.2:
+    name: "Auth Request"
+    identifier: "pbc_auth_request"
+    weight: 125
+    parent: "apis_pbc"
+toc: true
+aliases:
+  - /riak/2.9.2/dev/references/protocol-buffers/auth-req
+  - /openriak-kv/2.9.2/dev/references/protocol-buffers/auth-req
+linkTitle: "Auth Request"
+weight: 125
+---
+
+Sends a username (`user`) and password (`password`) to Riak as part of
+an authentication request. Both values are sent as binaries.
+
+## Request
+
+```protobuf
+message RpbAuthReq {
+    required bytes user = 1;
+    required bytes password = 2;
+}
+```
+
+For more on authentication, see our documentation on [Authentication and Authorization]({{<baseurl>}}openriak-kv/2.9.2/using/security/basics).

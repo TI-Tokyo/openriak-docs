@@ -16,7 +16,7 @@ menu:
 toc: true
 aliases:
   - /riak/2.0.0/dev/taste-of-riak/querying-golang
-  - /docs/openriak-kv/2.0.0/dev/taste-of-riak/querying-golang
+  - /openriak-kv/2.0.0/dev/taste-of-riak/querying-golang
 linkTitle: "Querying"
 weight: 101
 ---

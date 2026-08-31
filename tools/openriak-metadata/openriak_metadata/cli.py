@@ -29,6 +29,12 @@ def build_parser() -> argparse.ArgumentParser:
         command.add_argument("--strict", action="store_true")
         command.add_argument("--keep-workdir", action="store_true")
         command.add_argument("--log-level", choices=("debug", "info", "warning", "error"), default="info")
+        if name == "generate":
+            command.add_argument(
+                "--skip-defaults",
+                action="store_true",
+                help="write supported OS and download metadata without generating defaults.json",
+            )
     return result
 
 
@@ -63,7 +69,7 @@ def main(argv: list[str] | None = None) -> int:
         write_json(destination / "supported-os.json", supported)
         write_json(destination / "downloads.json", download_document)
     statuses.append(package_status)
-    if args.command in ("generate", "defaults"):
+    if args.command in ("generate", "defaults") and not getattr(args, "skip_defaults", False):
         defaults_document = generate_defaults(args, product, targets)
         write_json(destination / "defaults.json", defaults_document)
         statuses.append(defaults_document["status"])

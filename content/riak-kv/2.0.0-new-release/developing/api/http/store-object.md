@@ -15,7 +15,7 @@ menu:
 toc: true
 aliases:
   - /riak/2.0.0/dev/references/http/store-object
-  - /docs/openriak-kv/2.0.0/dev/references/http/store-object
+  - /openriak-kv/2.0.0/dev/references/http/store-object
 linkTitle: "Store Object"
 weight: 106
 ---

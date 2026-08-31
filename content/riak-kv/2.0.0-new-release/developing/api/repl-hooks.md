@@ -17,7 +17,7 @@ toc: true
 commercial_offering: true
 aliases:
   - /riak/2.0.0/ops/mdc/v2/hooks
-  - /docs/openriak-kv/2.0.0/ops/mdc/v2/hooks
+  - /openriak-kv/2.0.0/ops/mdc/v2/hooks
 linkTitle: "V2 Multi-Datacenter REPL Hooks API"
 weight: 100
 ---

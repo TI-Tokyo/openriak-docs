@@ -15,7 +15,7 @@ menu:
 toc: true
 aliases:
   - /riak/2.0.0/ops/building/planning/best-practices
-  - /docs/openriak-kv/2.0.0/ops/building/planning/best-practices
+  - /openriak-kv/2.0.0/ops/building/planning/best-practices
 linkTitle: "Best Practices"
 weight: 105
 ---

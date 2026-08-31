@@ -15,7 +15,7 @@ menu:
 toc: true
 aliases:
   - /riak/2.0.0/dev/taste-of-riak/erlang
-  - /docs/openriak-kv/2.0.0/dev/taste-of-riak/erlang
+  - /openriak-kv/2.0.0/dev/taste-of-riak/erlang
 linkTitle: "Erlang"
 weight: 105
 ---

@@ -15,7 +15,7 @@ menu:
 toc: true
 aliases:
   - /riak/2.0.0/theory/concepts/keys-and-values
-  - /docs/openriak-kv/2.0.0/theory/concepts/keys-and-values
+  - /openriak-kv/2.0.0/theory/concepts/keys-and-values
 linkTitle: "Keys and Objects"
 weight: 106
 ---

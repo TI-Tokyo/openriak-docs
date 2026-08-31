@@ -15,7 +15,7 @@ menu:
 toc: true
 aliases:
   - /riak/2.0.0/ops/advanced/install-custom-code/
-  - /docs/openriak-kv/2.0.0/ops/advanced/install-custom-code/
+  - /openriak-kv/2.0.0/ops/advanced/install-custom-code/
 linkTitle: "Installing Custom Code"
 weight: 111
 ---

@@ -15,7 +15,7 @@ menu:
 toc: true
 aliases:
   - /riak/2.0.0/ops/running/nodes/inspecting
-  - /docs/openriak-kv/2.0.0/ops/running/nodes/inspecting
+  - /openriak-kv/2.0.0/ops/running/nodes/inspecting
 linkTitle: "Inspecting a Node"
 weight: 103
 ---

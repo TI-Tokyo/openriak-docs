@@ -15,7 +15,7 @@ menu:
 toc: true
 aliases:
   - /riak/2.0.0/ops/tuning/open-files-limit/
-  - /docs/openriak-kv/2.0.0/ops/tuning/open-files-limit/
+  - /openriak-kv/2.0.0/ops/tuning/open-files-limit/
 linkTitle: "Open Files Limit"
 weight: 101
 ---

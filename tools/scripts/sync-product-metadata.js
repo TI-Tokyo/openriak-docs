@@ -15,8 +15,7 @@ const versionEntries = productSources
   .flatMap((product) => discoverVersions(contentRoot, product).map((version) => ({
     version: version.raw,
     sourceDirectory: version.sourceDirectory,
-    source: product.source,
-    hasMetadata: product.source === productId
+    source: product.source
   })))
   .sort((left, right) => compareSemver(left.version, right.version));
 
@@ -24,17 +23,23 @@ const familyNames = {
   alpine: 'Alpine Linux',
   'amazon-linux': 'Amazon Linux',
   debian: 'Debian',
+  fedora: 'Fedora',
   'oracle-linux': 'Oracle Linux',
+  raspbian: 'Raspbian',
   rhel: 'Red Hat Enterprise Linux',
+  sles: 'SUSE Linux Enterprise Server',
   ubuntu: 'Ubuntu'
 };
 
 const familyLogos = {
-  alpine: 'images/os/linux.svg',
-  'amazon-linux': 'images/os/linux.svg',
+  alpine: 'images/os/alpine.png',
+  'amazon-linux': 'images/os/amazon.png',
   debian: 'images/os/debian.svg',
-  'oracle-linux': 'images/os/linux.svg',
+  fedora: 'images/os/fedora.png',
+  'oracle-linux': 'images/os/oracle.png',
+  raspbian: 'images/os/raspbian.png',
   rhel: 'images/os/red-hat.svg',
+  sles: 'images/os/suse.png',
   ubuntu: 'images/os/ubuntu.svg'
 };
 
@@ -77,8 +82,20 @@ const downloadVariant = (url) => {
   return match ? match[1].replace(/graviton\s*/i, 'Graviton ') : '';
 };
 
-for (const { version, sourceDirectory, source, hasMetadata } of versionEntries) {
-  if (!hasMetadata) {
+const requestedKeys = referencedValueKeys();
+const requiredValueKeys = ['ring_size', 'nodename'];
+
+for (const { version, sourceDirectory, source } of versionEntries) {
+  const exposesOperatingSystemPicker = source === productId;
+  const metadataRoot = path.join(productRoot, 'metadata', version);
+  const files = {
+    supported: path.join(metadataRoot, 'supported-os.json'),
+    downloads: path.join(metadataRoot, 'downloads.json'),
+    defaults: path.join(metadataRoot, 'defaults.json')
+  };
+  const hasSupported = fs.existsSync(files.supported);
+  const hasDownloads = fs.existsSync(files.downloads);
+  if (!hasSupported && !hasDownloads) {
     writeVersionData(version, {
       product: productId,
       version,
@@ -97,28 +114,21 @@ for (const { version, sourceDirectory, source, hasMetadata } of versionEntries) 
     console.log(`Synced ${productId} ${version}: legacy content without structured OS metadata.`);
     continue;
   }
-
-  const metadataRoot = path.join(productRoot, 'metadata', version);
-  const files = {
-    supported: path.join(metadataRoot, 'supported-os.json'),
-    downloads: path.join(metadataRoot, 'downloads.json'),
-    defaults: path.join(metadataRoot, 'defaults.json')
-  };
-  for (const file of Object.values(files)) {
-    if (!fs.existsSync(file)) throw new Error(`Incomplete metadata for ${metadataProduct}/${version}: missing ${path.basename(file)}`);
+  if (!hasSupported || !hasDownloads) {
+    const missing = hasSupported ? files.downloads : files.supported;
+    throw new Error(`Incomplete metadata for ${metadataProduct}/${version}: missing ${path.basename(missing)}`);
   }
 
   const supported = readJson(files.supported);
   const downloads = readJson(files.downloads);
-  const defaults = readJson(files.defaults);
-  for (const [name, document] of Object.entries({ supported, downloads, defaults })) {
+  const defaults = fs.existsSync(files.defaults) ? readJson(files.defaults) : null;
+  const documents = { supported, downloads, ...(defaults ? { defaults } : {}) };
+  for (const [name, document] of Object.entries(documents)) {
     const acceptedStatuses = name === 'defaults' ? ['complete', 'partial'] : ['complete'];
     if (!acceptedStatuses.includes(document.status)) throw new Error(`Incomplete ${name} metadata for ${metadataProduct}/${version}: ${document.status}`);
     if (document.product !== metadataProduct || document.version !== version) throw new Error(`Mismatched ${name} metadata for ${metadataProduct}/${version}`);
   }
 
-  const requestedKeys = referencedValueKeys();
-  const requiredValueKeys = ['ring_size', 'nodename'];
   const operatingSystems = supported.operating_systems.map((os) => ({
     id: os.id,
     family: os.family,
@@ -131,22 +141,28 @@ for (const { version, sourceDirectory, source, hasMetadata } of versionEntries) 
     logo: familyLogos[os.family] || 'images/os/linux.svg',
     defaultForFamily: preferredFamilyDefaults[os.family] === os.id
   }));
-
-  const values = {};
-  for (const os of operatingSystems) {
-    const effective = defaults.effective_defaults[os.id] || {};
-    values[os.id] = {};
-    for (const key of requestedKeys) {
-      const setting = effective[key];
-      if (!setting || !setting.has_default) continue;
-      const value = setting.resolved_value ?? setting.value;
-      if (value !== null && value !== undefined) values[os.id][key] = value;
-    }
+  for (const family of new Set(operatingSystems.map((os) => os.family))) {
+    const members = operatingSystems.filter((os) => os.family === family);
+    if (!members.some((os) => os.defaultForFamily)) members.at(-1).defaultForFamily = true;
   }
 
-  for (const os of operatingSystems) {
-    for (const key of requiredValueKeys) {
-      if (!(key in values[os.id])) throw new Error(`Missing required default ${key} for ${metadataProduct}/${version}/${os.id}`);
+  const values = {};
+  if (defaults) {
+    for (const os of operatingSystems) {
+      const effective = defaults.effective_defaults[os.id] || {};
+      values[os.id] = {};
+      for (const key of requestedKeys) {
+        const setting = effective[key];
+        if (!setting || !setting.has_default) continue;
+        const value = setting.resolved_value ?? setting.value;
+        if (value !== null && value !== undefined) values[os.id][key] = value;
+      }
+    }
+
+    for (const os of operatingSystems) {
+      for (const key of requiredValueKeys) {
+        if (!(key in values[os.id])) throw new Error(`Missing required default ${key} for ${metadataProduct}/${version}/${os.id}`);
+      }
     }
   }
 
@@ -175,17 +191,25 @@ for (const { version, sourceDirectory, source, hasMetadata } of versionEntries) 
     metadataStatus: {
       supportedOs: supported.status,
       downloads: downloads.status,
-      defaults: defaults.status
+      defaults: defaults?.status || 'not_generated'
     },
-    metadataWarnings: defaults.warnings || [],
-    defaultOs: operatingSystems.some((os) => os.id === 'ubuntu-noble-amd64') ? 'ubuntu-noble-amd64' : operatingSystems[0]?.id,
-    operatingSystems,
+    metadataWarnings: [...new Set([
+      ...(supported.warnings || []),
+      ...(downloads.warnings || []),
+      ...(defaults?.warnings || [])
+    ])],
+    defaultOs: exposesOperatingSystemPicker
+      ? (operatingSystems.some((os) => os.id === 'ubuntu-noble-amd64') ? 'ubuntu-noble-amd64' : operatingSystems[0]?.id)
+      : null,
+    operatingSystems: exposesOperatingSystemPicker ? operatingSystems : [],
+    downloadOperatingSystems: operatingSystems,
     downloads: normalizedDownloads,
     values
   };
 
   writeVersionData(version, output);
-  console.log(`Synced ${productId} ${version}: ${operatingSystems.length} OS targets, ${Object.values(normalizedDownloads).flat().length} downloads, ${requestedKeys.size} referenced value keys.`);
+  const valueKeyCount = defaults ? requestedKeys.size : 0;
+  console.log(`Synced ${productId} ${version}: ${operatingSystems.length} OS targets, ${Object.values(normalizedDownloads).flat().length} downloads, ${valueKeyCount} referenced value keys.`);
 }
 
 const expectedVersionFiles = new Set(versionEntries.map(({ version }) => `${version}.json`));

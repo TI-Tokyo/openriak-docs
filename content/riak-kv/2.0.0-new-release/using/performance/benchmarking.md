@@ -15,7 +15,7 @@ menu:
 toc: true
 aliases:
   - /riak/2.0.0/ops/building/benchmarking
-  - /docs/openriak-kv/2.0.0/ops/building/benchmarking
+  - /openriak-kv/2.0.0/ops/building/benchmarking
 linkTitle: "Benchmarking"
 weight: 100
 ---

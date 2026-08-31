@@ -16,7 +16,7 @@ menu:
 toc: true
 aliases:
   - /riak/2.0.0/dev/taste-of-riak/querying-java
-  - /docs/openriak-kv/2.0.0/dev/taste-of-riak/querying-java
+  - /openriak-kv/2.0.0/dev/taste-of-riak/querying-java
 linkTitle: "Querying"
 weight: 101
 ---

@@ -17,7 +17,7 @@ version_history:
   in: "2.0.0-2.9999.9999"
 aliases:
   - /riak/2.0.0/dev/references/http/fetch-search-schema
-  - /docs/openriak-kv/2.0.0/dev/references/http/fetch-search-schema
+  - /openriak-kv/2.0.0/dev/references/http/fetch-search-schema
 linkTitle: "Fetch Search Schema"
 weight: 116
 ---

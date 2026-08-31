@@ -16,7 +16,7 @@ menu:
 toc: true
 aliases:
   - /riak/2.0.0/dev/taste-of-riak/object-modeling-python
-  - /docs/openriak-kv/2.0.0/dev/taste-of-riak/object-modeling-python
+  - /openriak-kv/2.0.0/dev/taste-of-riak/object-modeling-python
 linkTitle: "Object Modeling"
 weight: 102
 ---

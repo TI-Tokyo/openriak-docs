@@ -15,7 +15,7 @@ menu:
 toc: true
 aliases:
   - /riak/2.0.0/ops/running/handoff
-  - /docs/openriak-kv/2.0.0/ops/running/handoff
+  - /openriak-kv/2.0.0/ops/running/handoff
 linkTitle: "Handoff"
 weight: 107
 ---

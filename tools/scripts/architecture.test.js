@@ -22,11 +22,16 @@ const shellSource = fs.readFileSync(path.join(themeRoot, 'static', 'js', 'docs-s
 const hugo018ImporterSource = fs.readFileSync(path.join(repositoryRoot, 'tools', 'scripts', 'import_hugo_018.py'), 'utf8');
 const searchIndexSource = fs.readFileSync(path.join(themeRoot, 'layouts', '_default', 'section.search.json.json'), 'utf8');
 const sharedSearchSource = fs.readFileSync(path.join(repositoryRoot, 'layouts', 'common-docs', 'static', 'js', 'sidebar-search.js'), 'utf8');
+const highlightSource = fs.readFileSync(path.join(repositoryRoot, 'layouts', 'common-docs', 'static', 'js', 'search-highlight.js'), 'utf8');
 const docsCssSource = fs.readFileSync(path.join(themeRoot, 'static', 'css', 'docs.css'), 'utf8');
+const downloadsTemplateSource = fs.readFileSync(path.join(themeRoot, 'layouts', '_default', 'downloads.html'), 'utf8');
+const contactEmailShortcodeSource = fs.readFileSync(path.join(themeRoot, 'layouts', 'shortcodes', 'contactusemail.html'), 'utf8');
 const headerSource = fs.readFileSync(path.join(themeRoot, 'layouts', 'partials', 'header.html'), 'utf8');
 const sharedHeaderSource = fs.readFileSync(path.join(repositoryRoot, 'layouts', 'common-docs', 'layouts', 'partials', 'site-header.html'), 'utf8');
 const sharedSidebarSource = fs.readFileSync(path.join(repositoryRoot, 'layouts', 'common-docs', 'layouts', 'partials', 'sidebar-shell.html'), 'utf8');
 const blogBaseSource = fs.readFileSync(path.join(repositoryRoot, 'layouts', 'archive-technical-blog', '_default', 'baseof.html'), 'utf8');
+const mailingListBaseSource = fs.readFileSync(path.join(repositoryRoot, 'layouts', 'archive-mailing-list', '_default', 'baseof.html'), 'utf8');
+const mailingListSearchSource = fs.readFileSync(path.join(repositoryRoot, 'content', 'static', 'archive-mailing-list', 'js', 'mailing-list-search.js'), 'utf8');
 const blogIndexSource = fs.readFileSync(path.join(repositoryRoot, 'layouts', 'archive-technical-blog', 'index.html'), 'utf8');
 const blogByYearSource = fs.readFileSync(path.join(repositoryRoot, 'layouts', 'archive-technical-blog', 'by-year.html'), 'utf8');
 const blogSingleSource = fs.readFileSync(path.join(repositoryRoot, 'layouts', 'archive-technical-blog', '_default', 'single.html'), 'utf8');
@@ -45,6 +50,7 @@ const faviconPath = path.join(commonAssets, 'images', 'ui', 'favicon.png');
 const projectLogoPath = path.join(commonAssets, 'images', 'branding', 'openriak-mark.png');
 const siteSections = JSON.parse(fs.readFileSync(path.join(repositoryRoot, 'layouts', 'common-docs', 'data', 'site_sections.json'), 'utf8'));
 assert.match(headSource, /docs\.css[^"\n]+\?v=/, 'shared stylesheet must be cache-busted');
+assert.match(contactEmailShortcodeSource, /contactUsEmail[\s\S]*info@riak\.info/, 'legacy contact-email links must have a supported default');
 assert.match(baseSource, /js\/theme\.js[^"\n]+\?v=/, 'theme picker script must be cache-busted');
 assert.match(headSource, /images\/ui\/favicon\.png[^"\n]+\?v=/, 'documentation pages must use the shared OpenRiak favicon');
 assert.match(homepageSource, /images\/ui\/favicon\.png[^"\n]+\?v=/, 'the homepage must use the shared OpenRiak favicon');
@@ -90,6 +96,9 @@ assert.ok(siteSections.some((section) => section.id === 'community' && section.u
 assert.deepEqual(siteSections.map((section) => section.id), ['homepage', 'openriak-kv', 'openriak-cs', 'openriak-ts', 'community', 'archived-technical-blog', 'archived-mailing-list'], 'Site sections must be ordered Homepage, products, Community, then archives');
 assert.ok(siteSections.every((section) => section.name && section.logo && section.description && section.action && section.url), 'every Site section must provide complete shared navigation data');
 assert.ok(docsCssSource.includes(':root[data-theme="dark"] .version-warning { border-bottom-color: #6f5d28; background: #322d1b; color: #d8c88a; }'), 'dark theme must use a subdued old-version warning');
+assert.match(docsCssSource, /\.doc-article pre \{[^}]*border: 1px solid var\(--line\)[^}]*background: var\(--panel-cool\)[^}]*color: var\(--ink\)/, 'light theme code blocks must use the light panel palette');
+assert.match(docsCssSource, /\.doc-article pre code \{[^}]*padding: 0[^}]*background: transparent[^}]*color: inherit/, 'code inside preformatted blocks must not retain inline-code styling');
+assert.match(docsCssSource, /:root\[data-theme="dark"\] \.doc-article pre \{[^}]*background: #202a33[^}]*color: #f6f8fa/, 'dark theme code blocks must retain their high-contrast dark palette');
 assert.ok(!sharedHeaderSource.includes('⌄') && !sidebarSource.includes('⌄'), 'pickers must not use the old down marker');
 assert.match(sharedHeaderSource, /data-theme-picker[\s\S]*class="theme-trigger"[\s\S]*class="picker-chevron"/, 'Theme must use the shared custom picker and chevron');
 assert.ok(!sharedHeaderSource.includes('data-theme-select') && !sharedHeaderSource.includes('<select'), 'Theme picker must not use a native select');
@@ -100,6 +109,11 @@ assert.ok(docsCssSource.includes('.picker-panel {') && docsCssSource.includes('w
 assert.ok(docsCssSource.includes('.version-panel .version-releases { flex-wrap: wrap;'), 'mobile version releases must expand downward');
 assert.match(runtimeSource, /className = 'os-option-logo'/, 'OS picker options must render their logos');
 assert.match(runtimeSource, /option\.append\(optionLogo, copy\)/, 'OS picker options must include their logos');
+assert.match(runtimeSource, /data-download-os-select[\s\S]*setOs\(os\)/, 'the operating-system list must update the selected download state');
+assert.match(runtimeSource, /data-all-downloads-link[\s\S]*allDownloads\.open = true/, 'the selected download box must expand All downloads before following its anchor');
+assert.match(runtimeSource, /data-selected-download-os[\s\S]*data-selected-download-logo[\s\S]*data-doc-downloads/, 'changing OS must update the selected download subtitle, logo, and package list');
+assert.match(downloadsTemplateSource, /data-download-os-select[\s\S]*<h2>Downloads for<\/h2>[\s\S]*modern-downloads-selected-os[\s\S]*data-all-downloads-link[\s\S]*<summary>Source Code<\/summary>[\s\S]*<summary>All downloads<\/summary>/, 'OpenRiak downloads must use an OS selector, title/subtitle selected box, collapsed disclosures, and an All downloads expansion link');
+assert.match(downloadsTemplateSource, /data-legacy-downloads[\s\S]*Alpine Linux Riak Repository/, 'Riak KV downloads must retain the legacy grouped layout and Alpine repository link');
 assert.match(runtimeSource, /event\.key === 'Escape' && !panel\.hidden/, 'closed version picker must not claim focus on Escape');
 assert.match(runtimeSource, /event\.stopPropagation\(\);[\s\S]*input\.value = '';[\s\S]*cachedQuery = '';[\s\S]*hideResults\(\);/, 'Escape in Search must clear and close results');
 assert.match(runtimeSource, /query === cachedQuery[\s\S]*input\.addEventListener\('click', showCachedResults\);/, 'clicking an unchanged Search must reopen cached results');
@@ -109,6 +123,14 @@ assert.match(sharedSearchSource, /page\.title[\s\S]*page\.description[\s\S]*page
 assert.match(runtimeSource, /page\.title[\s\S]*page\.description[\s\S]*page\.content/, 'the documentation fallback search must match titles, descriptions, and full page text');
 assert.match(sharedSearchSource, /title\.includes\(query\) \? 1000[\s\S]*description\.includes\(query\) \? 100[\s\S]*content\.split\(query\)/, 'full-text search must rank title, description, and repeated content matches');
 assert.match(runtimeSource, /title\.includes\(query\) \? 1000[\s\S]*description\.includes\(query\) \? 100[\s\S]*content\.split\(query\)/, 'the fallback search must use the same relevance ranking');
+assert.match(sharedSearchSource, /searchParams\.set\('highlight', query\)/, 'shared search results must carry their query to the destination page');
+assert.match(mailingListSearchSource, /searchParams\.append\('highlight', term\)/, 'mailing-list results must carry every search term to the destination thread');
+assert.match(highlightSource, /data-search-highlight-root[\s\S]*createTreeWalker[\s\S]*mark\.search-highlight[\s\S]*scrollIntoView/, 'destination pages must highlight content matches and jump to the first one');
+assert.match(highlightSource, /details:not\(\[open\]\)[\s\S]*disclosure\.open = true/, 'highlighting must reveal matches inside collapsed mailing-list replies');
+assert.match(highlightSource, /search-highlight-clear[\s\S]*searchParams\.delete\('highlight'\)/, 'highlighting must provide a clear control that cleans the URL');
+assert.match(baseSource, /data-search-highlight-root[\s\S]*search-highlight\.js/, 'product pages must load highlighting for their content root');
+assert.match(blogBaseSource, /data-search-highlight-root[\s\S]*search-highlight\.js/, 'technical-blog pages must load highlighting for their content root');
+assert.match(mailingListBaseSource, /data-search-highlight-root[\s\S]*search-highlight\.js/, 'mailing-list pages must load highlighting for their content root');
 assert.match(shellSource, /data-nav-tree-toggle/, 'hierarchical navigation toggles must be initialized');
 assert.match(shellSource, /children\.hidden = !expanded/, 'tree toggles must directly control their child node regardless of the current page');
 assert.match(sharedSidebarSource, /data-sidebar-collapse[\s\S]*data-sidebar-expand[\s\S]*data-sidebar-version[\s\S]*data-sidebar-os[\s\S]*data-sidebar-search-button[\s\S]*data-sidebar-tree/, 'the shared sidebar shell must provide collapse, expand, version, OS, search, and page-tree controls');
@@ -132,6 +154,32 @@ assert.equal(resolveBrand('2.0.0', kvProduct.brands).name, 'Riak KV');
 const v341 = JSON.parse(fs.readFileSync(path.join(generatedProductsRoot, 'openriak-kv', 'data', 'versions', '3.4.1.json')));
 const v340 = JSON.parse(fs.readFileSync(path.join(generatedProductsRoot, 'openriak-kv', 'data', 'versions', '3.4.0.json')));
 const v200 = JSON.parse(fs.readFileSync(path.join(generatedProductsRoot, 'openriak-kv', 'data', 'versions', '2.0.0.json')));
+const importedKvVersions = [
+  '2.0.0', '2.0.1', '2.0.2', '2.0.4', '2.0.5', '2.0.6', '2.0.7', '2.0.8', '2.0.9',
+  '2.1.1', '2.1.3', '2.1.4', '2.2.0', '2.2.1', '2.2.2', '2.2.3', '2.2.6',
+  '2.9.0', '2.9.1', '2.9.2', '2.9.4', '2.9.7', '2.9.8', '2.9.9', '2.9.10',
+  '3.0.1', '3.0.2', '3.0.3', '3.0.4', '3.0.6', '3.0.7', '3.0.8', '3.0.9',
+  '3.0.10', '3.0.11', '3.0.12', '3.0.13', '3.0.14', '3.0.15', '3.0.16',
+  '3.2.0', '3.2.3', '3.2.4', '3.2.5'
+];
+for (const version of importedKvVersions) {
+  const sourceDirectory = path.join(repositoryRoot, 'content', 'riak-kv', `${version}-new-release`);
+  const adapterPath = path.join(generatedProductsRoot, 'openriak-kv', 'data', 'versions', `${version}.json`);
+  assert.ok(fs.existsSync(sourceDirectory), `missing imported Riak KV ${version} baseline`);
+  assert.ok(fs.existsSync(adapterPath), `missing generated Riak KV ${version} metadata`);
+  const metadataRoot = path.join(repositoryRoot, 'content', 'openriak-kv', 'metadata', version);
+  assert.ok(fs.existsSync(path.join(metadataRoot, 'supported-os.json')), `missing ${version} supported OS metadata`);
+  assert.ok(fs.existsSync(path.join(metadataRoot, 'downloads.json')), `missing ${version} download metadata`);
+  assert.ok(!fs.existsSync(path.join(metadataRoot, 'defaults.json')), `${version} must not generate unused defaults metadata`);
+  const adapter = JSON.parse(fs.readFileSync(adapterPath));
+  assert.equal(adapter.generatedFrom, `content/openriak-kv/metadata/${version}`);
+  assert.equal(adapter.metadataStatus.defaults, 'not_generated');
+  assert.deepEqual(adapter.operatingSystems, [], `${version} must not expose the OpenRiak OS picker`);
+  assert.equal(adapter.defaultOs, null);
+  assert.ok(adapter.downloadOperatingSystems.length > 0, `${version} downloads page must retain OS metadata`);
+  assert.ok(Object.values(adapter.downloads).flat().length > 0, `${version} downloads page must retain package metadata`);
+}
+assert.ok(!fs.existsSync(path.join(repositoryRoot, 'content', 'riak-kv', '2.9.0p5-new-release')), '2.9.0p5 must publish as 2.9.0');
 const ubuntu2404 = v341.operatingSystems.find((os) => os.id === 'ubuntu-noble-amd64');
 const ubuntuArm64 = v341.operatingSystems.find((os) => os.id === 'ubuntu-noble-arm64');
 assert.equal(v341.generatedFrom, 'content/openriak-kv/metadata/3.4.1');
@@ -140,9 +188,11 @@ assert.equal(v340.metadataStatus.defaults, 'partial');
 assert.equal(v340.metadataWarnings.length, 2);
 assert.equal(resolveOs('ubuntu-noble-amd64', ubuntu2404, v341).id, 'ubuntu-noble-amd64', 'exact OS and architecture are retained');
 assert.equal(resolveOs('ubuntu-noble-arm64', ubuntuArm64, v340).id, 'ubuntu-noble-arm64', 'exact metadata OS and architecture are retained across versions');
-assert.equal(resolveOs('ubuntu-noble-amd64', ubuntu2404, v200), null, 'legacy versions without structured OS metadata do not invent a default');
-assert.equal(v200.generatedFrom, 'content/riak-kv/2.0.0-new-release');
+assert.equal(resolveOs('ubuntu-noble-amd64', ubuntu2404, v200), null, 'legacy Riak KV versions must not expose the OS picker');
+assert.equal(v200.generatedFrom, 'content/openriak-kv/metadata/2.0.0');
 assert.deepEqual(v200.operatingSystems, []);
+assert.ok(v200.downloadOperatingSystems.length > 0);
+assert.deepEqual(v200.values, {});
 assert.equal(resolveValue(v341, 'ubuntu-noble-amd64', 'ring_size'), 64);
 assert.equal(resolveValue(v341, 'ubuntu-noble-amd64', 'nodename'), 'riak@127.0.0.1');
 assert.equal(resolveValue(v340, 'ubuntu-noble-amd64', 'ring_size'), 64);
@@ -303,7 +353,7 @@ for (const productId of productIds) {
       assert.ok(os.id && os.family && os.name && os.version && os.codename && os.logo);
       assert.ok(!ids.has(os.id), `duplicate OS ${os.id} in ${product.id} ${version.version}`);
       ids.add(os.id);
-      assert.equal(path.extname(os.logo), '.svg');
+      assert.ok(['.svg', '.png'].includes(path.extname(os.logo)), `unsupported OS logo format ${os.logo}`);
       assert.ok(fs.existsSync(path.join(commonAssets, os.logo)), `missing ${os.logo}`);
     }
     if (version.operatingSystems.length === 0) {
@@ -338,7 +388,17 @@ if (fs.existsSync(buildRoot)) {
   assert.ok(!exists('3.4.0/reference/query-api/queued-results/index.html'), '3.4.1 additions must not leak backwards');
   assert.ok(exists('3.2.5/setup/installing/debian-ubuntu/index.html'), 'the full historical 3.2.5 corpus must be published');
 
-  const html = fs.readFileSync(path.join(buildRoot, '3.4.1', 'reference', 'releases', 'downloads', 'index.html'), 'utf8');
+  const legacyDownloadsHtml = fs.readFileSync(path.join(buildRoot, '3.2.5', 'downloads', 'index.html'), 'utf8');
+  assert.doesNotMatch(legacyDownloadsHtml, /data-os-trigger/, 'legacy Riak KV must not render the OS picker');
+  assert.match(legacyDownloadsHtml, /data-legacy-downloads/, 'legacy Riak KV must render its structured downloads page');
+  assert.match(legacyDownloadsHtml, /Alpine Linux Riak Repository for x86_64 and aarch64 architectures/, 'legacy Alpine downloads must link to repository installation instructions');
+  assert.match(legacyDownloadsHtml, /files\.tiot\.jp\/riak\/kv\/3\.2\/3\.2\.5/, 'legacy package links must come from generated download metadata');
+
+  assert.ok(exists('3.4.0/downloads/index.html'), '3.4.0 Downloads must be top-level');
+  assert.ok(exists('3.4.0/release-notes/index.html'), '3.4.0 Release Notes must be top-level');
+  assert.ok(exists('3.4.1/downloads/index.html'), '3.4.1 Downloads must be top-level');
+  assert.ok(exists('3.4.1/release-notes/index.html'), '3.4.1 Release Notes must be top-level');
+  const html = fs.readFileSync(path.join(buildRoot, '3.4.1', 'downloads', 'index.html'), 'utf8');
   const contextMatch = html.match(/<script id=docs-context type=application\/json>([\s\S]*?)<\/script>/);
   assert.ok(contextMatch, 'runtime context must be embedded');
   const context = JSON.parse(contextMatch[1]);
@@ -350,7 +410,15 @@ if (fs.existsSync(buildRoot)) {
   assert.match(html, /data-nav-tree-toggle/, 'hierarchical navigation toggles must be rendered');
   assert.match(html, /data-nav-tree-children hidden/, 'non-current sections must remain rendered and collapsible');
   assert.match(html, /class=breadcrumbs[^>]*><a href=\/docs\/openriak-kv\/3\.4\.1\/>OpenRiak KV<\/a>/, 'breadcrumb root must target the active version landing page');
-  assert.match(html, /data-doc-downloads/, 'the production downloads page must bind release metadata');
+  assert.match(html, /data-modern-downloads/, 'the production downloads page must use the OpenRiak layout');
+  const releaseNotesMenuIndex = html.indexOf('>Release Notes</a>');
+  const downloadsMenuIndex = html.indexOf('>Downloads</a>');
+  const explanationMenuIndex = html.indexOf('>Explanation</a>');
+  assert.ok(releaseNotesMenuIndex >= 0 && releaseNotesMenuIndex < downloadsMenuIndex && downloadsMenuIndex < explanationMenuIndex, 'Release Notes and Downloads must be the first two labelled top-level menu items');
+  assert.match(html, /aria-label="Download operating systems"[\s\S]*data-download-os-select=ubuntu-noble-amd64/, 'the modern downloads page must render every OS as an in-page selector');
+  assert.match(html, /data-selected-downloads[\s\S]*<summary>Source Code<\/summary>[\s\S]*<summary>All downloads<\/summary>/, 'the selected OS downloads must render before the collapsed Source Code and All downloads disclosures');
+  assert.doesNotMatch(html, /<details[^>]+(?:data-downloads-source|data-all-downloads)[^>]+open/, 'Source Code and All downloads must be collapsed by default');
+  assert.match(html, />All downloads<[\s\S]*data-download-os=alpine-3\.21-x86_64/, 'All downloads must include the initially selected OS');
   assert.match(html, /files\.tiot\.jp\/riak\/kv\/3\.4\/3\.4\.1/);
 
   const inheritedHtml = fs.readFileSync(path.join(buildRoot, '3.4.1', 'reference', 'faq', 'index.html'), 'utf8');

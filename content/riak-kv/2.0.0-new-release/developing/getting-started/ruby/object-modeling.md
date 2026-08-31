@@ -16,7 +16,7 @@ menu:
 toc: true
 aliases:
   - /riak/2.0.0/dev/taste-of-riak/object-modeling-ruby
-  - /docs/openriak-kv/2.0.0/dev/taste-of-riak/object-modeling-ruby
+  - /openriak-kv/2.0.0/dev/taste-of-riak/object-modeling-ruby
 linkTitle: "Object Modeling"
 weight: 102
 ---

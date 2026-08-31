@@ -16,7 +16,7 @@ menu:
 toc: true
 aliases:
   - /riak/2.0.0/dev/advanced/client-security/ruby
-  - /docs/openriak-kv/2.0.0/dev/advanced/client-security/ruby
+  - /openriak-kv/2.0.0/dev/advanced/client-security/ruby
 linkTitle: "Ruby"
 weight: 101
 ---

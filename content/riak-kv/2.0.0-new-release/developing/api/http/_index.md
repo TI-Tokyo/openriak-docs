@@ -15,7 +15,7 @@ menu:
 toc: true
 aliases:
   - /riak/2.0.0/dev/references/http
-  - /docs/openriak-kv/2.0.0/dev/references/http
+  - /openriak-kv/2.0.0/dev/references/http
 linkTitle: "HTTP API"
 weight: 102
 ---

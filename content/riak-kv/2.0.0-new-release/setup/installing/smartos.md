@@ -16,9 +16,9 @@ menu:
 toc: true
 aliases:
   - /riak/2.0.0/ops/building/installing/Installing-on-SmartOS
-  - /docs/openriak-kv/2.0.0/ops/building/installing/Installing-on-SmartOS
+  - /openriak-kv/2.0.0/ops/building/installing/Installing-on-SmartOS
   - /riak/2.0.0/installing/smartos/
-  - /docs/openriak-kv/2.0.0/installing/smartos/
+  - /openriak-kv/2.0.0/installing/smartos/
 linkTitle: "SmartOS"
 weight: 305
 ---

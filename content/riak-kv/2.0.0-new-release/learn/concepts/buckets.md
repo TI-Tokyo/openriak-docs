@@ -15,9 +15,9 @@ menu:
 toc: true
 aliases:
   - /riak/2.0.0/theory/concepts/Buckets
-  - /docs/openriak-kv/2.0.0/theory/concepts/Buckets
+  - /openriak-kv/2.0.0/theory/concepts/Buckets
   - /riak/2.0.0/theory/concepts/buckets
-  - /docs/openriak-kv/2.0.0/theory/concepts/buckets
+  - /openriak-kv/2.0.0/theory/concepts/buckets
 linkTitle: "Buckets"
 weight: 101
 ---
