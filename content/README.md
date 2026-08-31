@@ -1,17 +1,21 @@
 # Content
 
-`hugo.yaml` defines one Hugo project containing four page families:
+The repository has two Hugo projects that are assembled into one static site:
 
-- `homepage/` — the homepage.
-- `community/` — standard authored pages, beginning with the Community landing page.
-- `riak-kv/{version}/` — Riak KV sources from 2.0.0 up to, but not including, 3.4.0. They publish at the existing `openriak-kv/{version}` URLs.
-- `openriak-kv/{version}/` — OpenRiak KV sources beginning at 3.4.0.
-- `openriak-cs/{version}/` and `openriak-ts/{version}/` — versioned instances of the shared product page family.
-- `archive-technical-blog/` — the paginated blog page family.
+- `hugo.yaml` mounts the homepage, Community, and versioned OpenRiak/Riak product content.
+- `hugo-archives.yaml` mounts the Archived Technical Blog and Archived Mailing List.
 
-Shared and site-specific web assets live under `static/`.
+Product version mounts are expanded into the generated core configuration before
+each core build. Archive content is deliberately absent from that configuration,
+so active documentation changes do not make Hugo process 18,642 mailing-list
+messages.
 
-Each direct semantic-version directory is a cumulative content layer over
-earlier versions in that same source product. Everything under `content/` is
+The core project owns all shared and page-family web assets under `static/`.
+The archive project owns only its generated content and mailing-list search index.
+Both projects mount common templates and site-section data directly from
+`layouts/common-docs/`; common code is not duplicated.
+
+Each direct semantic-version product directory is a cumulative content layer over
+earlier versions in that source product. Everything under `content/` is
 user-maintained source. Build tools must not create or modify files here;
 generated Hugo inputs belong under `tools/generated/`.

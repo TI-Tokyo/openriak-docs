@@ -7,6 +7,8 @@
   "versionData" (index $product.versions $version)
   "brand" (partial "brand-for-version.html" (dict "page" . "version" $version))
 -}}
+{{- $showOS := false -}}
+{{- with $context.versionData.operatingSystems }}{{ $showOS = true }}{{ end -}}
 {{ partial "sidebar-shell.html" (dict
   "class" "docs-sidebar"
   "label" "Documentation navigation"
@@ -14,7 +16,7 @@
   "toolsPartial" "docs-sidebar-tools.html"
   "treePartial" "docs-sidebar-tree.html"
   "showVersion" true
-  "showOS" true
+  "showOS" $showOS
   "showSearch" true
   "showTree" true
   "showScrim" true

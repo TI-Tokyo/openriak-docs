@@ -1,7 +1,7 @@
 [
-  {{ dict "title" .Title "description" (.Description | default .Summary | plainify) "url" .RelPermalink "logicalPath" .File.Path | jsonify }}
+  {{ dict "title" .Title "description" (.Description | default .Summary | plainify) "content" (.Content | plainify) "url" .RelPermalink "logicalPath" .File.Path | jsonify }}
 {{- range $page := .RegularPagesRecursive -}}
   ,
-  {{ dict "title" $page.Title "description" ($page.Description | default $page.Summary | plainify) "url" $page.RelPermalink "logicalPath" $page.File.Path | jsonify }}
+  {{ dict "title" $page.Title "description" ($page.Description | default $page.Summary | plainify) "content" ($page.Content | plainify) "url" $page.RelPermalink "logicalPath" $page.File.Path | jsonify }}
 {{- end }}
 ]

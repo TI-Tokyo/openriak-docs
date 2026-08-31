@@ -1,0 +1,18 @@
+{{- $sourceRoot := printf "%s/latest/" .Params.latest_redirect_route | relURL -}}
+{{- $targetRoot := printf "%s/%s/" .Params.latest_redirect_product .Params.latest_redirect_version | relURL -}}
+{{- $suffix := strings.TrimPrefix $sourceRoot .RelPermalink -}}
+{{- $target := printf "%s%s" $targetRoot $suffix -}}
+<!doctype html>
+<html lang="{{ site.Language.Locale | default `en` }}">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Redirecting to {{ .Params.latest_redirect_product }} {{ .Params.latest_redirect_version }}</title>
+  <link rel="canonical" href="{{ $target | absURL }}">
+  <meta http-equiv="refresh" content="0; url={{ $target }}">
+  <script>location.replace({{ $target | jsonify | safeJS }} + location.search + location.hash);</script>
+</head>
+<body>
+  <p>This documentation has moved to <a href="{{ $target }}">{{ .Params.latest_redirect_product }} {{ .Params.latest_redirect_version }}</a>.</p>
+</body>
+</html>

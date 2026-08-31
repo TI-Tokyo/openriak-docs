@@ -4,15 +4,21 @@ const fs = require('node:fs');
 const path = require('node:path');
 
 const repositoryRoot = path.resolve(__dirname, '..', '..');
+const contentRoot = path.join(repositoryRoot, 'content');
 const productRoot = path.join(repositoryRoot, 'content', 'openriak-kv');
 const generatedDataRoot = path.join(repositoryRoot, 'tools', 'generated', 'openriak-kv', 'data');
 const metadataProduct = 'kv';
 const productId = 'openriak-kv';
-const { compareSemver } = require('./generate-version-mounts.js');
-const versions = fs.readdirSync(productRoot, { withFileTypes: true })
-  .filter((entry) => entry.isDirectory() && /^\d+\.\d+\.\d+(?:-[0-9A-Za-z.-]+)?$/.test(entry.name))
-  .map((entry) => entry.name)
-  .sort(compareSemver);
+const { compareSemver, discoverVersions, productSources } = require('./generate-version-mounts.js');
+const versionEntries = productSources
+  .filter((product) => product.target === productId)
+  .flatMap((product) => discoverVersions(contentRoot, product).map((version) => ({
+    version: version.raw,
+    sourceDirectory: version.sourceDirectory,
+    source: product.source,
+    hasMetadata: product.source === productId
+  })))
+  .sort((left, right) => compareSemver(left.version, right.version));
 
 const familyNames = {
   alpine: 'Alpine Linux',
@@ -42,6 +48,12 @@ const preferredFamilyDefaults = {
 };
 
 const readJson = (file) => JSON.parse(fs.readFileSync(file, 'utf8'));
+const versionsRoot = path.join(generatedDataRoot, 'versions');
+const writeVersionData = (version, output) => {
+  const target = path.join(versionsRoot, `${version}.json`);
+  fs.mkdirSync(path.dirname(target), { recursive: true });
+  fs.writeFileSync(target, `${JSON.stringify(output, null, 2)}\n`, 'utf8');
+};
 
 const referencedValueKeys = () => {
   const keys = new Set();
@@ -65,7 +77,27 @@ const downloadVariant = (url) => {
   return match ? match[1].replace(/graviton\s*/i, 'Graviton ') : '';
 };
 
-for (const version of versions) {
+for (const { version, sourceDirectory, source, hasMetadata } of versionEntries) {
+  if (!hasMetadata) {
+    writeVersionData(version, {
+      product: productId,
+      version,
+      generatedFrom: `content/${source}/${sourceDirectory}`,
+      metadataStatus: {
+        supportedOs: 'unavailable',
+        downloads: 'unavailable',
+        defaults: 'unavailable'
+      },
+      metadataWarnings: ['No structured operating-system, download, or default-value metadata is available for this legacy release.'],
+      defaultOs: null,
+      operatingSystems: [],
+      downloads: {},
+      values: {}
+    });
+    console.log(`Synced ${productId} ${version}: legacy content without structured OS metadata.`);
+    continue;
+  }
+
   const metadataRoot = path.join(productRoot, 'metadata', version);
   const files = {
     supported: path.join(metadataRoot, 'supported-os.json'),
@@ -152,8 +184,14 @@ for (const version of versions) {
     values
   };
 
-  const target = path.join(generatedDataRoot, 'versions', `${version}.json`);
-  fs.mkdirSync(path.dirname(target), { recursive: true });
-  fs.writeFileSync(target, `${JSON.stringify(output, null, 2)}\n`, 'utf8');
+  writeVersionData(version, output);
   console.log(`Synced ${productId} ${version}: ${operatingSystems.length} OS targets, ${Object.values(normalizedDownloads).flat().length} downloads, ${requestedKeys.size} referenced value keys.`);
+}
+
+const expectedVersionFiles = new Set(versionEntries.map(({ version }) => `${version}.json`));
+for (const entry of fs.readdirSync(versionsRoot, { withFileTypes: true })) {
+  if (entry.isFile() && entry.name.endsWith('.json') && !expectedVersionFiles.has(entry.name)) {
+    fs.rmSync(path.join(versionsRoot, entry.name));
+    console.log(`Removed stale ${productId} version metadata: ${entry.name}`);
+  }
 }

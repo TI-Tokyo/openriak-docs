@@ -25,7 +25,7 @@ preserve existing URLs, but they never inherit from or into OpenRiak KV:
 
 ## Data ownership
 
-Authoritative metadata lives under `content/openriak-kv/metadata/{version}/`. `tools/scripts/sync-product-metadata.js` discovers the flat OpenRiak KV version directories, validates their metadata, and writes Hugo adapters under `tools/generated/`. Build tools never write under `content/`.
+Authoritative OpenRiak metadata lives under `content/openriak-kv/metadata/{version}/`. `tools/scripts/sync-product-metadata.js` discovers versions in both `content/riak-kv/` and `content/openriak-kv/`, validates complete OpenRiak metadata, and writes Hugo adapters under `tools/generated/`. Historical Riak versions without structured metadata receive version-only adapters with no invented operating-system or download claims, and their operating-system picker is omitted. Build tools never write under `content/`.
 
 Product descriptors remain with authored product content. The unified Hugo configuration mounts them into a project-wide data map keyed by product ID, avoiding product-specific template copies.
 

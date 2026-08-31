@@ -33,17 +33,12 @@ params:
 
 module:
   mounts:
-    # Authored pages: one Hugo project, three page families.
+    # Active site content. Immutable archives are built by hugo-archives.yaml.
     - {source: 'homepage/pages', target: 'content'}
     - {source: 'community/pages', target: 'content/community'}
     - {source: 'openriak-kv/pages', target: 'content/openriak-kv'}
     - {source: 'openriak-cs/pages', target: 'content/openriak-cs'}
     - {source: 'openriak-ts/pages', target: 'content/openriak-ts'}
-    - {source: 'archive-technical-blog/pages', target: 'content/archived-technical-blog'}
-    - {source: 'archive-technical-blog/posts', target: 'content/archived-technical-blog/posts'}
-    - {source: 'archive-mailing-list/pages', target: 'content/archived-mailing-list'}
-    - {source: 'archive-mailing-list/generated', target: 'content/archived-mailing-list', disableWatch: true}
-    - {source: 'archive-mailing-list/generated-static', target: 'static/archived-mailing-list'}
 
     # Product version mounts are generated before every build. The source
     # directories remain hand-authored; only the expanded Hugo config is generated.
@@ -58,36 +53,20 @@ module:
     - {source: '../tools/generated/openriak-ts/data/versions', target: 'data/versions/openriak-ts'}
     - {source: '../layouts/common-docs/data', target: 'data'}
 
-    # Homepage, product, and blog template families.
+    # Homepage, Community, and product template families.
     - {source: '../layouts/homepage/index.html', target: 'layouts/home.html'}
     - {source: '../layouts/docs-theme/layouts/baseof.html', target: 'layouts/product/baseof.html'}
     - {source: '../layouts/docs-theme/layouts/_default/list.html', target: 'layouts/product/list.html'}
     - {source: '../layouts/docs-theme/layouts/_default/single.html', target: 'layouts/product/single.html'}
+    - {source: '../layouts/common-docs/layouts/latest-redirect.html', target: 'layouts/_default/latest-redirect.html'}
     - {source: '../layouts/docs-theme/layouts/_default/section.search.json.json', target: 'layouts/_default/section.search.json.json'}
     - {source: '../layouts/docs-theme/layouts/partials', target: 'layouts/_partials'}
     - {source: '../layouts/common-docs/layouts/partials', target: 'layouts/_partials'}
     - {source: '../layouts/common-docs/layouts/site-section', target: 'layouts/site-section'}
     - {source: '../layouts/docs-theme/layouts/shortcodes', target: 'layouts/_shortcodes'}
-    - {source: '../layouts/archive-technical-blog/_default/baseof.html', target: 'layouts/blog/baseof.html'}
-    - {source: '../layouts/archive-technical-blog/_default/single.html', target: 'layouts/blog/single.html'}
-    - {source: '../layouts/archive-technical-blog/index.html', target: 'layouts/blog/list.html'}
-    - {source: '../layouts/archive-technical-blog/by-year.html', target: 'layouts/blog/by-year.html'}
-    - {source: '../layouts/archive-technical-blog/categories.html', target: 'layouts/blog/categories.html'}
-    - {source: '../layouts/archive-technical-blog/category.html', target: 'layouts/blog/category.html'}
-    - {source: '../layouts/archive-technical-blog/date.html', target: 'layouts/blog/date.html'}
-    - {source: '../layouts/archive-technical-blog/author.html', target: 'layouts/blog/author.html'}
-    - {source: '../layouts/archive-technical-blog/partials', target: 'layouts/_partials'}
-    - {source: '../layouts/archive-technical-blog/_markup', target: 'layouts/_markup'}
-    - {source: '../layouts/archive-mailing-list/_default/baseof.html', target: 'layouts/mailing-list/baseof.html'}
-    - {source: '../layouts/archive-mailing-list/_default/single.html', target: 'layouts/mailing-list/single.html'}
-    - {source: '../layouts/archive-mailing-list/index.html', target: 'layouts/mailing-list/list.html'}
-    - {source: '../layouts/archive-mailing-list/by-date.html', target: 'layouts/mailing-list/by-date.html'}
-    - {source: '../layouts/archive-mailing-list/categories.html', target: 'layouts/mailing-list/categories.html'}
-    - {source: '../layouts/archive-mailing-list/category.html', target: 'layouts/mailing-list/category.html'}
-    - {source: '../layouts/archive-mailing-list/date.html', target: 'layouts/mailing-list/date.html'}
-    - {source: '../layouts/archive-mailing-list/partials', target: 'layouts/_partials'}
 
-    # Shared and page-family assets.
+    # The core build owns every shared and section-specific static asset. The
+    # archive build emits only its section trees, so assembly has one asset owner.
     - {source: 'static/common', target: 'static'}
     - {source: 'static/openriak-kv', target: 'static'}
     - {source: 'static/archive-technical-blog', target: 'static'}

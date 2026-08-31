@@ -298,7 +298,9 @@
   };
 
   const switchVersion = async (target) => {
-    const targetOs = resolveOs(selectedOs.id, selectedOs, target);
+    const targetOs = selectedOs
+      ? resolveOs(selectedOs.id, selectedOs, target)
+      : resolveOs('', null, target);
     const candidates = buildVersionCandidates({
       currentUrl: window.location.href,
       productBase: context.productBase,
@@ -405,6 +407,14 @@
     let indexPromise;
     let cachedQuery = '';
     const hideResults = () => { results.hidden = true; };
+    const score = (page, query) => {
+      const title = (page.title || '').toLowerCase();
+      const description = (page.description || '').toLowerCase();
+      const content = (page.content || '').toLowerCase();
+      return (title.includes(query) ? 1000 : 0)
+        + (description.includes(query) ? 100 : 0)
+        + (content.includes(query) ? Math.min(content.split(query).length - 1, 50) : 0);
+    };
     const showCachedResults = () => {
       const query = input.value.trim().toLowerCase();
       if (query.length >= 2 && query === cachedQuery && results.childNodes.length) results.hidden = false;
@@ -438,7 +448,12 @@
       try {
         const pages = await loadIndex();
         if (input.value.trim().toLowerCase() !== query) return;
-        const matches = pages.filter((page) => `${page.title} ${page.description}`.toLowerCase().includes(query)).slice(0, 8);
+        const matches = pages
+          .map((page) => ({ page, score: score(page, query) }))
+          .filter((match) => match.score > 0)
+          .sort((left, right) => right.score - left.score)
+          .slice(0, 8)
+          .map((match) => match.page);
         results.replaceChildren();
         matches.forEach((page) => {
           const link = document.createElement('a');
@@ -463,7 +478,7 @@
   selectedOs = initialOs();
   renderVersionPicker();
   setupVersionWarning();
-  setOs(selectedOs);
+  if (selectedOs) setOs(selectedOs);
   setupSearch();
 })();
 

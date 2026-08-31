@@ -4,6 +4,62 @@ set -eu
 docker_directory=$(CDPATH= cd -- "$(dirname -- "$0")" && pwd)
 compose_file="$docker_directory/compose.yaml"
 native_docker_found=false
+mkdir -p "$docker_directory/../build/archives"
+
+find_zoneinfo_directory() {
+  timezone=$1
+  for candidate in \
+    "${OPENRIAK_DOCS_ZONEINFO_DIR:-}" \
+    /usr/share/zoneinfo \
+    /var/db/timezone/zoneinfo
+  do
+    if [ -n "$candidate" ] && [ -e "$candidate/$timezone" ]; then
+      printf '%s\n' "$candidate"
+      return 0
+    fi
+  done
+  return 1
+}
+
+detect_host_timezone() {
+  if [ -n "${OPENRIAK_DOCS_TZ:-}" ]; then
+    printf '%s\n' "$OPENRIAK_DOCS_TZ"
+    return 0
+  fi
+
+  if [ -r /etc/timezone ]; then
+    timezone=$(tr -d '[:space:]' < /etc/timezone)
+    if [ -n "$timezone" ]; then
+      printf '%s\n' "$timezone"
+      return 0
+    fi
+  fi
+
+  localtime_target=$(readlink /etc/localtime 2>/dev/null || true)
+  case "$localtime_target" in
+    */zoneinfo/*)
+      printf '%s\n' "${localtime_target#*/zoneinfo/}"
+      return 0
+      ;;
+  esac
+
+  if [ -n "${TZ:-}" ] && [ "${TZ#/}" = "$TZ" ] && [ "${TZ#:}" = "$TZ" ]; then
+    printf '%s\n' "$TZ"
+    return 0
+  fi
+  return 1
+}
+
+host_timezone=$(detect_host_timezone || true)
+zoneinfo_directory=$(find_zoneinfo_directory "$host_timezone" || true)
+if [ -z "$zoneinfo_directory" ] || [ -z "$host_timezone" ]; then
+  echo 'Unable to detect a usable IANA host timezone.' >&2
+  echo 'Set OPENRIAK_DOCS_TZ and OPENRIAK_DOCS_ZONEINFO_DIR, then rerun this command.' >&2
+  exit 1
+fi
+
+export OPENRIAK_DOCS_TZ="$host_timezone"
+export OPENRIAK_DOCS_ZONEINFO_DIR="$zoneinfo_directory"
 
 if command -v docker >/dev/null 2>&1; then
   native_docker_found=true
@@ -24,6 +80,8 @@ fi
 
 if command -v docker.exe >/dev/null 2>&1 && command -v wslpath >/dev/null 2>&1; then
   if docker.exe info >/dev/null 2>&1 && docker.exe compose version >/dev/null 2>&1; then
+    export OPENRIAK_DOCS_ZONEINFO_DIR=$(wslpath -w "$zoneinfo_directory")
+    export WSLENV="${WSLENV:+$WSLENV:}OPENRIAK_DOCS_TZ:OPENRIAK_DOCS_ZONEINFO_DIR"
     exec docker.exe compose --file "$(wslpath -w "$compose_file")" up "$@"
   fi
 fi

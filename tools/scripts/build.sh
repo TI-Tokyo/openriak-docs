@@ -2,29 +2,12 @@
 set -eu
 
 site_root=$(CDPATH= cd -- "$(dirname -- "$0")/../.." && pwd)
-required_version=$(tr -d '\r\n' < "$site_root/.hugo-version")
-
-case "$(hugo version)" in
-  *"hugo v${required_version}"*) ;;
-  *) echo "This site requires Hugo ${required_version}." >&2; exit 1 ;;
-esac
-
-base_url=${HUGO_BASEURL:-https://www.openriak.org/docs/}
-case "$base_url" in */) ;; *) base_url="${base_url}/" ;; esac
 destination=${HUGO_DESTINATION:-$site_root/public}
-# These names are also Hugo configuration environment variables. Capture the
-# wrapper inputs, then unset them so each project's explicit flags take effect.
-unset HUGO_BASEURL HUGO_DESTINATION
+core_destination=${HUGO_CORE_DESTINATION:-$site_root/build/core}
+archive_destination=${HUGO_ARCHIVE_DESTINATION:-$site_root/build/archives}
 
-generated_config=${HUGO_GENERATED_CONFIG:-$site_root/tools/generated/hugo.yaml}
-if command -v node >/dev/null 2>&1; then
-  node "$site_root/tools/scripts/generate-version-mounts.js" --output "$generated_config"
-  node "$site_root/tools/scripts/sync-product-metadata.js"
-else
-  echo "Node.js is required to generate version mounts." >&2
-  exit 1
-fi
+"$site_root/tools/scripts/build-project.sh" core "$core_destination"
+"$site_root/tools/scripts/build-project.sh" archives "$archive_destination"
+"$site_root/tools/scripts/assemble-site.sh" "$core_destination" "$archive_destination" "$destination"
 
-set -- --source "$site_root/content" --config "$generated_config" --destination "$destination" --baseURL "$base_url" --gc --minify --panicOnWarning --noBuildLock --cleanDestinationDir
-if [ "${INCLUDE_DRAFTS:-true}" = "true" ]; then set -- "$@" --buildDrafts; fi
-hugo "$@"
+printf 'Assembled the complete static site in %s\n' "$destination"

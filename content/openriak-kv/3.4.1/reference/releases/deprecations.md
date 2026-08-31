@@ -30,8 +30,8 @@ List deprecated features carried into 3.4.1, preferred alternatives, compatibili
 
 ### Riak Search
 
-[riak 2.9.10]: https://www.tiot.jp/riak-docs/riak/kv/2.9.10/
-[config 2.9.10-search]: https://www.tiot.jp/riak-docs/riak/kv/2.9.10/configuring/search/
+[riak 2.9.10]: {{<baseurl>}}openriak-kv/2.9.10/
+[config 2.9.10-search]: {{<baseurl>}}openriak-kv/2.9.10/configuring/search/
 
 Riak Search (aka Yokozuna) using Solr is deprecated in this version. The last version with support was OpenRiak KV 2.9.10. Check out [OpenRiak KV 2.9.10][riak 2.9.10], and it's [Riak Search config page][config 2.9.10-search].
 

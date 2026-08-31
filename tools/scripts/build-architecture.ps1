@@ -1,21 +1,34 @@
 $ErrorActionPreference = 'Stop'
 $repositoryRoot = Split-Path -Parent (Split-Path -Parent $PSScriptRoot)
 $image = 'ghcr.io/gohugoio/hugo:v0.165.0'
-$validationRoot = Join-Path $repositoryRoot 'public/.architecture-validation'
+$validationRoot = Join-Path $repositoryRoot 'build/.architecture-validation'
 
 node (Join-Path $PSScriptRoot 'generate-version-mounts.js')
 if ($LASTEXITCODE -ne 0) { throw 'Version mount generation failed' }
 node (Join-Path $PSScriptRoot 'sync-product-metadata.js')
 if ($LASTEXITCODE -ne 0) { throw 'Metadata synchronization failed' }
 
-Write-Host 'Building unified site...'
+Write-Host 'Building core site...'
 docker run --rm --volume "${repositoryRoot}:/workspace" --workdir /workspace/content $image `
     --config /workspace/tools/generated/hugo.yaml `
-    --destination /workspace/public/.architecture-validation `
+    --destination /workspace/build/.architecture-validation/core `
     --baseURL http://localhost:1410/docs/ `
     --cacheDir /tmp/hugo-cache `
     --cleanDestinationDir --gc --minify --panicOnWarning --buildDrafts
-if ($LASTEXITCODE -ne 0) { throw 'Unified Hugo build failed' }
+if ($LASTEXITCODE -ne 0) { throw 'Core Hugo build failed' }
+
+Write-Host 'Building archive site...'
+docker run --rm --volume "${repositoryRoot}:/workspace" --workdir /workspace/content $image `
+    --config /workspace/content/hugo-archives.yaml `
+    --destination /workspace/build/.architecture-validation/archives `
+    --baseURL http://localhost:1410/docs/ `
+    --cacheDir /tmp/hugo-cache `
+    --cleanDestinationDir --gc --minify --panicOnWarning --buildDrafts
+if ($LASTEXITCODE -ne 0) { throw 'Archive Hugo build failed' }
+
+docker run --rm --volume "${repositoryRoot}:/workspace" --entrypoint /bin/sh $image `
+    -c 'sh /workspace/tools/scripts/assemble-site.sh /workspace/build/.architecture-validation/core /workspace/build/.architecture-validation/archives /workspace/build/.architecture-validation/assembled'
+if ($LASTEXITCODE -ne 0) { throw 'Static-site assembly failed' }
 
 function Assert-MissingValueBuildFails {
     param([string]$Name, [string]$Shortcode, [string]$ExpectedOs)
@@ -29,7 +42,7 @@ function Assert-MissingValueBuildFails {
         --volume "${fixtureDirectory}:/workspace/content/openriak-kv/3.4.1:ro" `
         --workdir /workspace/content $image `
         --config /workspace/tools/generated/hugo.yaml `
-        --destination "/workspace/public/.architecture-validation/missing-value-output-$Name" `
+        --destination "/workspace/build/.architecture-validation/missing-value-output-$Name" `
         --baseURL http://localhost:1410/docs/ `
         --cacheDir /tmp/hugo-cache --cleanDestinationDir --gc --minify --panicOnWarning 2>&1
     $exitCode = $LASTEXITCODE
@@ -47,5 +60,5 @@ Write-Host 'Missing value generation failure tests passed.'
 node (Join-Path $PSScriptRoot 'architecture.test.js')
 if ($LASTEXITCODE -ne 0) { throw 'Architecture validation failed' }
 docker run --rm --volume "${repositoryRoot}:/workspace" --entrypoint /bin/sh $image `
-    -c 'rm -rf /workspace/public/.architecture-validation'
+    -c 'rm -rf /workspace/build/.architecture-validation'
 if ($LASTEXITCODE -ne 0) { throw 'Architecture validation cleanup failed' }

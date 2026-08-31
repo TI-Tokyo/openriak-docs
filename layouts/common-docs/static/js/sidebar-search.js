@@ -21,6 +21,14 @@
     });
     return indexPromise;
   };
+  const score = (page, query) => {
+    const title = (page.title || '').toLowerCase();
+    const description = (page.description || '').toLowerCase();
+    const content = (page.content || '').toLowerCase();
+    return (title.includes(query) ? 1000 : 0)
+      + (description.includes(query) ? 100 : 0)
+      + (content.includes(query) ? Math.min(content.split(query).length - 1, 50) : 0);
+  };
   const render = (pages) => {
     results.replaceChildren();
     pages.forEach((page) => {
@@ -57,7 +65,12 @@
     try {
       const pages = await loadIndex();
       if (input.value.trim().toLowerCase() !== query) return;
-      render(pages.filter((page) => `${page.title} ${page.description || ''}`.toLowerCase().includes(query)).slice(0, 8));
+      render(pages
+        .map((page) => ({ page, score: score(page, query) }))
+        .filter((match) => match.score > 0)
+        .sort((left, right) => right.score - left.score)
+        .slice(0, 8)
+        .map((match) => match.page));
       cachedQuery = query;
     } catch (error) {
       if (input.value.trim().toLowerCase() !== query) return;

@@ -19,9 +19,13 @@ const commonAssets = path.join(repositoryRoot, 'content', 'static', 'common');
 const themeRoot = path.join(repositoryRoot, 'layouts', 'docs-theme');
 const runtimeSource = fs.readFileSync(path.join(themeRoot, 'static', 'js', 'docs-runtime.js'), 'utf8');
 const shellSource = fs.readFileSync(path.join(themeRoot, 'static', 'js', 'docs-shell.js'), 'utf8');
+const hugo018ImporterSource = fs.readFileSync(path.join(repositoryRoot, 'tools', 'scripts', 'import_hugo_018.py'), 'utf8');
+const searchIndexSource = fs.readFileSync(path.join(themeRoot, 'layouts', '_default', 'section.search.json.json'), 'utf8');
+const sharedSearchSource = fs.readFileSync(path.join(repositoryRoot, 'layouts', 'common-docs', 'static', 'js', 'sidebar-search.js'), 'utf8');
 const docsCssSource = fs.readFileSync(path.join(themeRoot, 'static', 'css', 'docs.css'), 'utf8');
 const headerSource = fs.readFileSync(path.join(themeRoot, 'layouts', 'partials', 'header.html'), 'utf8');
 const sharedHeaderSource = fs.readFileSync(path.join(repositoryRoot, 'layouts', 'common-docs', 'layouts', 'partials', 'site-header.html'), 'utf8');
+const sharedSidebarSource = fs.readFileSync(path.join(repositoryRoot, 'layouts', 'common-docs', 'layouts', 'partials', 'sidebar-shell.html'), 'utf8');
 const blogBaseSource = fs.readFileSync(path.join(repositoryRoot, 'layouts', 'archive-technical-blog', '_default', 'baseof.html'), 'utf8');
 const blogIndexSource = fs.readFileSync(path.join(repositoryRoot, 'layouts', 'archive-technical-blog', 'index.html'), 'utf8');
 const blogByYearSource = fs.readFileSync(path.join(repositoryRoot, 'layouts', 'archive-technical-blog', 'by-year.html'), 'utf8');
@@ -29,7 +33,7 @@ const blogSingleSource = fs.readFileSync(path.join(repositoryRoot, 'layouts', 'a
 const blogCategoriesSource = fs.readFileSync(path.join(repositoryRoot, 'layouts', 'archive-technical-blog', 'categories.html'), 'utf8');
 const blogCategorySource = fs.readFileSync(path.join(repositoryRoot, 'layouts', 'archive-technical-blog', 'category.html'), 'utf8');
 const blogDateSource = fs.readFileSync(path.join(repositoryRoot, 'layouts', 'archive-technical-blog', 'date.html'), 'utf8');
-const blogMenuSource = fs.readFileSync(path.join(repositoryRoot, 'layouts', 'archive-technical-blog', 'partials', 'blog-menu.html'), 'utf8');
+const blogMenuSource = fs.readFileSync(path.join(repositoryRoot, 'layouts', 'archive-technical-blog', 'partials', 'blog-sidebar-tree.html'), 'utf8');
 const blogSortSource = fs.readFileSync(path.join(repositoryRoot, 'layouts', 'archive-technical-blog', 'partials', 'blog-sort.html'), 'utf8');
 const blogAuthorSource = fs.readFileSync(path.join(repositoryRoot, 'layouts', 'archive-technical-blog', 'author.html'), 'utf8');
 const sharedHeaderCss = fs.readFileSync(path.join(repositoryRoot, 'layouts', 'common-docs', 'static', 'css', 'site-header.css'), 'utf8');
@@ -100,12 +104,19 @@ assert.match(runtimeSource, /event\.key === 'Escape' && !panel\.hidden/, 'closed
 assert.match(runtimeSource, /event\.stopPropagation\(\);[\s\S]*input\.value = '';[\s\S]*cachedQuery = '';[\s\S]*hideResults\(\);/, 'Escape in Search must clear and close results');
 assert.match(runtimeSource, /query === cachedQuery[\s\S]*input\.addEventListener\('click', showCachedResults\);/, 'clicking an unchanged Search must reopen cached results');
 assert.match(runtimeSource, /if \(!root\.contains\(event\.target\)\) hideResults\(\);/, 'clicking outside Search must hide results without clearing the input');
+assert.match(searchIndexSource, /"content" \(\.Content \| plainify\)[\s\S]*"content" \(\$page\.Content \| plainify\)/, 'section search indexes must contain the full rendered text of the section and every page');
+assert.match(sharedSearchSource, /page\.title[\s\S]*page\.description[\s\S]*page\.content/, 'shared sidebar search must match titles, descriptions, and full page text');
+assert.match(runtimeSource, /page\.title[\s\S]*page\.description[\s\S]*page\.content/, 'the documentation fallback search must match titles, descriptions, and full page text');
+assert.match(sharedSearchSource, /title\.includes\(query\) \? 1000[\s\S]*description\.includes\(query\) \? 100[\s\S]*content\.split\(query\)/, 'full-text search must rank title, description, and repeated content matches');
+assert.match(runtimeSource, /title\.includes\(query\) \? 1000[\s\S]*description\.includes\(query\) \? 100[\s\S]*content\.split\(query\)/, 'the fallback search must use the same relevance ranking');
 assert.match(shellSource, /data-nav-tree-toggle/, 'hierarchical navigation toggles must be initialized');
 assert.match(shellSource, /children\.hidden = !expanded/, 'tree toggles must directly control their child node regardless of the current page');
-assert.match(sidebarSource, /data-sidebar-collapse[\s\S]*data-sidebar-expand[\s\S]*data-sidebar-version[\s\S]*data-sidebar-os[\s\S]*data-sidebar-search-button[\s\S]*data-sidebar-tree/, 'documentation sidebar must provide collapse, expand, version, OS, search, and page-tree controls');
+assert.match(sharedSidebarSource, /data-sidebar-collapse[\s\S]*data-sidebar-expand[\s\S]*data-sidebar-version[\s\S]*data-sidebar-os[\s\S]*data-sidebar-search-button[\s\S]*data-sidebar-tree/, 'the shared sidebar shell must provide collapse, expand, version, OS, search, and page-tree controls');
 assert.match(docsCssSource, /:root\.sidebar-collapsed \.docs-shell \{ grid-template-columns: 4\.25rem/, 'collapsed documentation sidebar must become a narrow icon rail');
 assert.match(shellSource, /openriak-docs-sidebar-collapsed[\s\S]*setSidebarCollapsed[\s\S]*expandFor/, 'documentation sidebar state must persist and rail controls must restore their full tools');
 assert.match(headSource, /openriak-docs-sidebar-collapsed/, 'persisted sidebar state must be applied before page paint');
+assert.match(hugo018ImporterSource, /sibling_directory[\s\S]*_index\.md/, 'the Hugo 0.18 importer must convert page-plus-directory sections to branch bundles');
+assert.match(hugo018ImporterSource, /linkTitle:[\s\S]*weight:/, 'the Hugo 0.18 importer must promote legacy menu presentation into page front matter');
 const productIds = ['openriak-kv', 'openriak-cs', 'openriak-ts'];
 
 assert.ok(compareSemVer('3.10.0', '3.9.9') > 0);
@@ -116,11 +127,11 @@ assert.throws(() => parseSemVer('3.4'));
 
 const kvProduct = JSON.parse(fs.readFileSync(path.join(repositoryRoot, 'content', 'openriak-kv', 'data', 'product.json')));
 assert.equal(resolveBrand('3.4.0', kvProduct.brands).name, 'OpenRiak KV');
-assert.equal(resolveBrand('3.2.5', kvProduct.brands).name, 'Riak KV');
+assert.equal(resolveBrand('2.0.0', kvProduct.brands).name, 'Riak KV');
 
 const v341 = JSON.parse(fs.readFileSync(path.join(generatedProductsRoot, 'openriak-kv', 'data', 'versions', '3.4.1.json')));
 const v340 = JSON.parse(fs.readFileSync(path.join(generatedProductsRoot, 'openriak-kv', 'data', 'versions', '3.4.0.json')));
-const v325 = JSON.parse(fs.readFileSync(path.join(generatedProductsRoot, 'openriak-kv', 'data', 'versions', '3.2.5.json')));
+const v200 = JSON.parse(fs.readFileSync(path.join(generatedProductsRoot, 'openriak-kv', 'data', 'versions', '2.0.0.json')));
 const ubuntu2404 = v341.operatingSystems.find((os) => os.id === 'ubuntu-noble-amd64');
 const ubuntuArm64 = v341.operatingSystems.find((os) => os.id === 'ubuntu-noble-arm64');
 assert.equal(v341.generatedFrom, 'content/openriak-kv/metadata/3.4.1');
@@ -129,7 +140,9 @@ assert.equal(v340.metadataStatus.defaults, 'partial');
 assert.equal(v340.metadataWarnings.length, 2);
 assert.equal(resolveOs('ubuntu-noble-amd64', ubuntu2404, v341).id, 'ubuntu-noble-amd64', 'exact OS and architecture are retained');
 assert.equal(resolveOs('ubuntu-noble-arm64', ubuntuArm64, v340).id, 'ubuntu-noble-arm64', 'exact metadata OS and architecture are retained across versions');
-assert.equal(resolveOs('ubuntu-noble-amd64', ubuntu2404, v325).id, 'rocky-9', 'product-version default is used');
+assert.equal(resolveOs('ubuntu-noble-amd64', ubuntu2404, v200), null, 'legacy versions without structured OS metadata do not invent a default');
+assert.equal(v200.generatedFrom, 'content/riak-kv/2.0.0-new-release');
+assert.deepEqual(v200.operatingSystems, []);
 assert.equal(resolveValue(v341, 'ubuntu-noble-amd64', 'ring_size'), 64);
 assert.equal(resolveValue(v341, 'ubuntu-noble-amd64', 'nodename'), 'riak@127.0.0.1');
 assert.equal(resolveValue(v340, 'ubuntu-noble-amd64', 'ring_size'), 64);
@@ -166,23 +179,28 @@ assert.deepEqual(
 );
 
 const generatedHugoConfigPath = path.join(repositoryRoot, 'tools', 'generated', 'hugo.yaml');
+const archiveHugoConfigPath = path.join(repositoryRoot, 'content', 'hugo-archives.yaml');
 assert.ok(fs.existsSync(generatedHugoConfigPath), 'version mounts must be generated before architecture validation');
 const hugoConfig = fs.readFileSync(generatedHugoConfigPath, 'utf8');
 const kv34Mounts = hugoConfig.split(/\r?\n/).filter((line) => line.includes("target: 'content/openriak-kv/3.4."));
 assert.deepEqual(
   kv34Mounts.filter((line) => line.includes("target: 'content/openriak-kv/3.4.1'")).map((line) => line.match(/source: '([^']+)'/)[1]),
-  ['openriak-kv/3.4.1', 'openriak-kv/3.4.0'],
+  ['openriak-kv/3.4.1', 'openriak-kv/3.4.0-new-release'],
   '3.4.1 must layer over the self-contained 3.4.0 baseline'
 );
 assert.ok(kv34Mounts.every((line) => /source: 'openriak-kv\//.test(line)), 'OpenRiak KV 3.4.x must never inherit Riak KV sources');
-const kv32Mounts = hugoConfig.split(/\r?\n/).filter((line) => line.includes("target: 'content/openriak-kv/3.2."));
-assert.ok(kv32Mounts.length > 0 && kv32Mounts.every((line) => /source: 'riak-kv\//.test(line)), 'Riak KV versions must inherit only Riak KV sources while retaining OpenRiak KV URLs');
-assert.match(fs.readFileSync(path.join(repositoryRoot, 'content', 'openriak-kv', '3.4.0', '_index.md'), 'utf8'), /^release_baseline: true$/m, '3.4.0 must remain explicitly marked as a release baseline');
+const legacyKvMounts = hugoConfig.split(/\r?\n/).filter((line) => /target: 'content\/openriak-kv\/2\./.test(line));
+assert.ok(legacyKvMounts.length > 0 && legacyKvMounts.every((line) => /source: 'riak-kv\//.test(line)), 'Riak KV versions must inherit only Riak KV sources while retaining OpenRiak KV URLs');
+assert.match(fs.readFileSync(path.join(repositoryRoot, 'content', 'openriak-kv', '3.4.0-new-release', '_index.md'), 'utf8'), /^release_baseline: true$/m, '3.4.0 must remain explicitly marked as a release baseline');
 assert.doesNotMatch(hugoConfig, /\/(?:releases|layers)\//, 'generated version mounts must use flat product/version sources');
-assert.match(hugoConfig, /source: 'homepage\/pages'/, 'the homepage must be mounted into the unified project');
+assert.match(hugoConfig, /source: 'homepage\/pages'/, 'the homepage must be mounted into the core project');
 assert.match(hugoConfig, /source: 'community\/pages', target: 'content\/community'/, 'Community must be mounted as a normal Pages collection');
-assert.match(hugoConfig, /target: 'content\/archived-technical-blog'/, 'the blog must be mounted into the unified project');
-assert.match(hugoConfig, /archive-technical-blog\/by-year\.html', target: 'layouts\/blog\/by-year\.html'/, 'the blog year index template must be mounted into the unified project');
+assert.doesNotMatch(hugoConfig, /target: 'content\/archived-(technical-blog|mailing-list)'/, 'archive content must not be mounted into the core project');
+const archiveHugoConfig = fs.readFileSync(archiveHugoConfigPath, 'utf8');
+assert.match(archiveHugoConfig, /target: 'content\/archived-technical-blog'/, 'the blog must be mounted into the archive project');
+assert.match(archiveHugoConfig, /target: 'content\/archived-mailing-list'/, 'the mailing list must be mounted into the archive project');
+assert.match(archiveHugoConfig, /archive-technical-blog\/by-year\.html', target: 'layouts\/blog\/by-year\.html'/, 'the blog year index template must be mounted into the archive project');
+assert.doesNotMatch(archiveHugoConfig, /source: '(homepage|community|openriak-kv|riak-kv)\//, 'active content must not be mounted into the archive project');
 assert.ok(fs.existsSync(path.join(repositoryRoot, 'content', 'community', 'pages', '_index.md')), 'Community must have an authored landing page');
 assert.ok(fs.existsSync(path.join(commonAssets, 'images', 'sites', 'community.svg')), 'Community must have a shared Site section logo');
 assert.ok(fs.existsSync(path.join(commonAssets, 'images', 'sites', 'homepage.svg')), 'Homepage must have a shared Site section logo');
@@ -288,7 +306,11 @@ for (const productId of productIds) {
       assert.equal(path.extname(os.logo), '.svg');
       assert.ok(fs.existsSync(path.join(commonAssets, os.logo)), `missing ${os.logo}`);
     }
-    assert.ok(ids.has(version.defaultOs), `invalid default OS in ${product.id} ${version.version}`);
+    if (version.operatingSystems.length === 0) {
+      assert.equal(version.defaultOs, null, `legacy metadata without operating systems must not invent a default in ${product.id} ${version.version}`);
+    } else {
+      assert.ok(ids.has(version.defaultOs), `invalid default OS in ${product.id} ${version.version}`);
+    }
     const families = new Set(version.operatingSystems.map((os) => os.family));
     for (const family of families) {
       const members = version.operatingSystems.filter((os) => os.family === family);
