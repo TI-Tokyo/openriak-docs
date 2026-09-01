@@ -23,6 +23,11 @@ openriak-metadata generate \
 The files are written beneath `out/kv/3.4.1/`. `packages` and `defaults`
 subcommands are available for development. Every subcommand accepts
 `--cache-dir`, `--refresh`, `--strict`, `--keep-workdir`, and `--log-level`.
+Package generation streams every discovered package through SHA-256 and writes
+the digest into `downloads.json`; package bodies are not retained. Four files
+are hashed concurrently by default. Use `--checksum-workers` to tune that limit.
+Digests are cached by URL beneath the metadata cache, so interrupted and repeat
+runs do not download packages again unless `--refresh` is supplied.
 
 For releases whose documentation does not consume generated configuration
 defaults, generate only supported operating systems and downloads:

@@ -17,6 +17,14 @@ class CliTests(unittest.TestCase):
             "--output", "out", "--skip-defaults",
         ])
         self.assertTrue(args.skip_defaults)
+        self.assertEqual(args.checksum_workers, 4)
+
+    def test_checksum_workers_must_be_positive(self):
+        with self.assertRaises(SystemExit):
+            main([
+                "packages", "--product", "kv", "--version", "3.4.1",
+                "--output", "out", "--checksum-workers", "0",
+            ])
 
     def test_skip_defaults_writes_only_package_metadata(self):
         with tempfile.TemporaryDirectory() as temporary, patch(

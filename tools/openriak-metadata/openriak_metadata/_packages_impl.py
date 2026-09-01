@@ -2,6 +2,7 @@ from __future__ import annotations
 
 import posixpath
 import re
+from concurrent.futures import ThreadPoolExecutor, as_completed
 from dataclasses import dataclass
 from html.parser import HTMLParser
 from urllib.parse import quote, unquote, urljoin, urlparse
@@ -141,10 +142,12 @@ def _numeric_release(parts: list[str]) -> str | None:
 
 
 class PackageCatalog:
-    def __init__(self, client, host: str = "https://files.tiot.jp") -> None:
+    def __init__(self, client, host: str = "https://files.tiot.jp", checksum_workers: int = 4) -> None:
         self.client, self.host = client, host.rstrip("/")
+        self.checksum_workers = checksum_workers
 
-    def discover(self, product: str, version: str, product_path: str) -> tuple[list[dict], dict, list[str]]:
+    def discover(self, product: str, version: str, product_path: str, *,
+                 generate_checksums: bool = True) -> tuple[list[dict], dict, list[str]]:
         major_minor = ".".join(version.split(".")[:2])
         roots = [f"{product_path.rstrip('/')}/{major_minor}/{version}/", "/alpine/"]
         packages: list[Package] = []
@@ -159,6 +162,16 @@ class PackageCatalog:
                 warnings.append(f"Could not crawl {root}: {exc}")
         unique = {p.url: p for p in packages}
         packages = sorted(unique.values(), key=lambda p: (p.target["id"], p.otp or -1, p.revision or "", p.filename))
+        checksums: dict[str, str] = {}
+        if generate_checksums:
+            with ThreadPoolExecutor(max_workers=self.checksum_workers) as executor:
+                futures = {executor.submit(self.client.sha256, package.url): package for package in packages}
+                for future in as_completed(futures):
+                    package = futures[future]
+                    try:
+                        checksums[package.url] = future.result()
+                    except Exception as exc:
+                        warnings.append(f"Could not generate SHA-256 for {package.url}: {exc}")
         targets = {p.target["id"]: p.target for p in packages}
         operating_systems = []
         for target in sorted(targets.values(), key=_target_sort_key):
@@ -179,7 +192,8 @@ class PackageCatalog:
             bucket[candidate] = {"otp": package.otp, "architecture": package.architecture,
                                      "package_revision": package.revision, "format": package.format,
                                      "filename": package.filename, "url": package.url,
-                                     "checksum_url": package.checksum_url}
+                                     "checksum": ({"algorithm": "sha256", "value": checksums[package.url]}
+                                                  if package.url in checksums else None)}
         return operating_systems, downloads, warnings
 
     def _crawl(self, root: str, alpine: bool = False):

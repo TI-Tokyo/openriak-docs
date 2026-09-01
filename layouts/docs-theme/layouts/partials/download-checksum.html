@@ -1,0 +1,13 @@
+{{- $download := . -}}
+{{- with $download.checksum -}}
+  <div class="download-actions">
+    <button class="download-checksum-toggle" type="button" data-download-checksum-toggle aria-label="Show checksum" title="Show checksum" aria-expanded="false">{{ partial "download-icon-hash.html" . }}</button>
+    <button class="download-copy download-copy-url" type="button" data-copy-value="{{ $download.url }}" data-copy-label="Copy URL" aria-label="Copy URL" title="Copy URL" aria-live="polite">{{ partial "download-icon-copy.html" . }}</button>
+    <div class="download-checksum-panel" data-download-checksum-panel hidden>
+      <p class="download-checksum-value"><strong>{{ if eq .algorithm "sha256" }}SHA-256{{ else }}{{ .algorithm | upper }}{{ end }}</strong><code>{{ .value }}</code></p>
+      <div class="download-checksum-actions">
+        <button class="download-copy" type="button" data-copy-value="{{ .value }}" data-copy-label="Copy checksum" aria-label="Copy checksum" title="Copy checksum" aria-live="polite">{{ partial "download-icon-copy.html" . }}</button>
+      </div>
+    </div>
+  </div>
+{{- end -}}

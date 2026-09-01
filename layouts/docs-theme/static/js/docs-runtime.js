@@ -88,6 +88,112 @@
 
   const resolveAssetUrl = (asset, assetBase, origin) => new URL(asset, new URL(assetBase, origin)).href;
 
+  const writeClipboard = async (value) => {
+    if (navigator.clipboard?.writeText && window.isSecureContext) {
+      await navigator.clipboard.writeText(value);
+      return;
+    }
+    const field = document.createElement('textarea');
+    field.value = value;
+    field.setAttribute('readonly', '');
+    field.style.position = 'fixed';
+    field.style.opacity = '0';
+    document.body.append(field);
+    field.select();
+    try {
+      if (!document.execCommand('copy')) throw new Error('Copy command was rejected');
+    } finally {
+      field.remove();
+    }
+  };
+
+  const copyIconMarkup = `
+    <span class="download-copy-icon" aria-hidden="true">
+      <svg class="download-copy-glyph" viewBox="0 0 24 24" focusable="false">
+        <rect x="9" y="9" width="11" height="11" rx="2"></rect>
+        <path d="M15 9V6a2 2 0 0 0-2-2H6a2 2 0 0 0-2 2v7a2 2 0 0 0 2 2h3"></path>
+      </svg>
+      <svg class="download-copy-tick" viewBox="0 0 24 24" focusable="false">
+        <path d="m6 12 4 4 8-9"></path>
+      </svg>
+    </span>`;
+  const hashIconMarkup = `
+    <svg class="download-hash-icon" viewBox="0 0 24 24" aria-hidden="true" focusable="false">
+      <path d="M10 3 8 21M16 3l-2 18M4 9h16M3 15h16"></path>
+    </svg>`;
+
+  const copyValue = async (button) => {
+    const originalLabel = button.dataset.copyLabel || button.getAttribute('aria-label') || 'Copy';
+    try {
+      await writeClipboard(button.dataset.copyValue);
+      button.classList.remove('is-copy-failed');
+      button.classList.add('is-copied');
+      button.setAttribute('aria-label', `${originalLabel} copied`);
+      button.title = `${originalLabel} copied`;
+    } catch {
+      button.classList.remove('is-copied');
+      button.classList.add('is-copy-failed');
+      button.setAttribute('aria-label', `${originalLabel} failed`);
+      button.title = `${originalLabel} failed`;
+    }
+    window.clearTimeout(Number(button.dataset.copyResetTimer || 0));
+    const timer = window.setTimeout(() => {
+      button.classList.remove('is-copied', 'is-copy-failed');
+      button.setAttribute('aria-label', originalLabel);
+      button.title = originalLabel;
+      delete button.dataset.copyResetTimer;
+    }, 1500);
+    button.dataset.copyResetTimer = String(timer);
+  };
+
+  const createCopyButton = (label, value) => {
+    const button = document.createElement('button');
+    button.className = 'download-copy';
+    button.type = 'button';
+    button.innerHTML = copyIconMarkup;
+    button.dataset.copyLabel = label;
+    button.dataset.copyValue = value;
+    button.setAttribute('aria-label', label);
+    button.title = label;
+    button.setAttribute('aria-live', 'polite');
+    return button;
+  };
+
+  const createDownloadChecksum = (download) => {
+    if (!download.checksum?.value) return null;
+    const actions = document.createElement('div');
+    actions.className = 'download-actions';
+    const toggle = document.createElement('button');
+    toggle.className = 'download-checksum-toggle';
+    toggle.type = 'button';
+    toggle.innerHTML = hashIconMarkup;
+    toggle.dataset.downloadChecksumToggle = '';
+    toggle.setAttribute('aria-label', 'Show checksum');
+    toggle.title = 'Show checksum';
+    toggle.setAttribute('aria-expanded', 'false');
+    const panel = document.createElement('div');
+    panel.className = 'download-checksum-panel';
+    panel.dataset.downloadChecksumPanel = '';
+    panel.hidden = true;
+    const checksumLine = document.createElement('p');
+    checksumLine.className = 'download-checksum-value';
+    const algorithm = document.createElement('strong');
+    algorithm.textContent = download.checksum.algorithm === 'sha256'
+      ? 'SHA-256'
+      : download.checksum.algorithm.toUpperCase();
+    const value = document.createElement('code');
+    value.textContent = download.checksum.value;
+    checksumLine.append(algorithm, value);
+    const checksumActions = document.createElement('div');
+    checksumActions.className = 'download-checksum-actions';
+    checksumActions.append(createCopyButton('Copy checksum', download.checksum.value));
+    panel.append(checksumLine, checksumActions);
+    const copyUrl = createCopyButton('Copy URL', download.url);
+    copyUrl.classList.add('download-copy-url');
+    actions.append(toggle, copyUrl, panel);
+    return actions;
+  };
+
   const api = { parseSemVer, compareSemVer, resolveBrand, resolveOs, resolveValue, buildVersionCandidates, resolveAssetUrl };
   if (typeof module !== 'undefined' && module.exports) module.exports = api;
   if (typeof window !== 'undefined') window.OpenRiakDocs = api;
@@ -147,30 +253,56 @@
       logo.src = osAssetUrl(selectedOs.logo);
     });
     document.querySelectorAll('[data-doc-downloads]').forEach((list) => {
-      const downloads = currentVersion.downloads?.[selectedOs.id] || [];
       list.replaceChildren();
-      downloads.forEach((download) => {
-        const item = document.createElement('li');
-        const link = document.createElement('a');
-        link.href = download.url;
-        const parts = [`OTP ${download.otp}`, download.architecture];
-        if (download.variant) parts.push(download.variant);
-        parts.push(download.filename);
-        link.textContent = parts.join(' · ');
-        item.append(link);
-        if (download.checksumUrl) {
-          const checksum = document.createElement('a');
-          checksum.href = download.checksumUrl;
-          checksum.className = 'download-checksum';
-          checksum.textContent = 'checksum';
-          item.append(checksum);
+      const sourceGroups = [...document.querySelectorAll('[data-all-downloads] .download-package-group')]
+        .filter((group) => group.dataset.downloadOsId === selectedOs.id);
+      if (!sourceGroups.length) return;
+      const sourceTable = sourceGroups[0].closest('table');
+      const wrap = document.createElement('div');
+      wrap.className = 'downloads-table-wrap';
+      const table = document.createElement('table');
+      table.className = 'downloads-table';
+      const heading = sourceTable?.querySelector('thead');
+      if (heading) table.append(heading.cloneNode(true));
+      sourceGroups.forEach((sourceGroup) => {
+        const group = sourceGroup.cloneNode(true);
+        group.classList.remove('is-checksum-expanded');
+        const checksumRow = group.querySelector('[data-download-checksum-row]');
+        if (checksumRow) checksumRow.hidden = true;
+        const toggle = group.querySelector('[data-download-checksum-toggle]');
+        if (toggle) {
+          toggle.setAttribute('aria-expanded', 'false');
+          toggle.setAttribute('aria-label', 'Show checksum');
+          toggle.title = 'Show checksum';
         }
-        list.append(item);
+        table.append(group);
       });
+      wrap.append(table);
+      list.append(wrap);
     });
   };
 
   const setupDownloadControls = () => {
+    document.addEventListener('click', (event) => {
+      const toggle = event.target.closest?.('[data-download-checksum-toggle]');
+      if (toggle) {
+        const packageRow = toggle.closest('.download-package-row');
+        const checksumRow = packageRow?.nextElementSibling?.matches('[data-download-checksum-row]')
+          ? packageRow.nextElementSibling
+          : null;
+        const panel = checksumRow || toggle.closest('.download-actions')?.querySelector('[data-download-checksum-panel]');
+        if (panel) {
+          panel.hidden = !panel.hidden;
+          toggle.setAttribute('aria-expanded', String(!panel.hidden));
+          toggle.setAttribute('aria-label', panel.hidden ? 'Show checksum' : 'Hide checksum');
+          toggle.title = panel.hidden ? 'Show checksum' : 'Hide checksum';
+          checksumRow?.closest('.download-package-group')?.classList.toggle('is-checksum-expanded', !panel.hidden);
+        }
+        return;
+      }
+      const button = event.target.closest?.('[data-copy-value]');
+      if (button) copyValue(button);
+    });
     document.querySelectorAll('[data-download-os-select]').forEach((button) => {
       button.addEventListener('click', () => {
         const os = osById(currentVersion, button.dataset.downloadOsSelect);

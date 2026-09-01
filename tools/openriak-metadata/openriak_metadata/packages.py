@@ -59,7 +59,7 @@ _implementation._target_sort_key = _target_sort_key
 
 
 class PackageCatalog(_PackageCatalog):
-    def discover(self, product: str, version: str, product_path: str):
-        targets, downloads, warnings = super().discover(product, version, product_path)
+    def discover(self, product: str, version: str, product_path: str, **kwargs):
+        targets, downloads, warnings = super().discover(product, version, product_path, **kwargs)
         warnings = [warning for warning in warnings if "HTTP Error 404" not in warning]
         return targets, downloads, warnings

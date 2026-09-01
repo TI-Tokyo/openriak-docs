@@ -26,6 +26,8 @@ def build_parser() -> argparse.ArgumentParser:
         command.add_argument("--output", type=Path, required=True)
         command.add_argument("--cache-dir", type=Path)
         command.add_argument("--refresh", action="store_true")
+        command.add_argument("--checksum-workers", type=int, default=4,
+                             help="number of package downloads hashed concurrently (default: 4)")
         command.add_argument("--strict", action="store_true")
         command.add_argument("--keep-workdir", action="store_true")
         command.add_argument("--log-level", choices=("debug", "info", "warning", "error"), default="info")
@@ -44,15 +46,19 @@ def main(argv: list[str] | None = None) -> int:
     logging.basicConfig(level=getattr(logging, args.log_level.upper()), format="%(levelname)s: %(message)s")
     if not VERSION.fullmatch(args.version):
         cli.error("--version must be an exact major.minor.patch version")
+    if args.checksum_workers < 1:
+        cli.error("--checksum-workers must be at least 1")
     product = PRODUCTS[args.product]
     destination = args.output / args.product / args.version
     destination.mkdir(parents=True, exist_ok=True)
     targets: list[dict] = []
     statuses: list[str] = []
     logging.info("Discovering packages for %s %s", product["display_name"], args.version)
+    generate_checksums = args.command in ("generate", "packages")
     try:
-        targets, downloads, warnings = PackageCatalog(HttpClient()).discover(
-            args.product, args.version, product["files_path"])
+        client = HttpClient(cache_dir=args.cache_dir or default_cache_dir(), refresh=args.refresh)
+        targets, downloads, warnings = PackageCatalog(client, checksum_workers=args.checksum_workers).discover(
+            args.product, args.version, product["files_path"], generate_checksums=generate_checksums)
         package_status = "partial" if warnings else ("complete" if targets else "unavailable")
         if not targets:
             warnings.append("No matching binary packages were found.")
@@ -64,7 +70,7 @@ def main(argv: list[str] | None = None) -> int:
     download_document = {"schema_version": 1, "product": args.product, "product_name": product["display_name"],
                          "version": args.version, "status": package_status, "downloads": downloads,
                          "warnings": sorted(set(warnings))}
-    _validate_packages(supported, download_document)
+    _validate_packages(supported, download_document, require_checksums=generate_checksums)
     if args.command in ("generate", "packages"):
         write_json(destination / "supported-os.json", supported)
         write_json(destination / "downloads.json", download_document)
@@ -112,7 +118,7 @@ def write_json(path: Path, value: dict) -> None:
     path.write_text(json.dumps(value, indent=2, sort_keys=True, ensure_ascii=False) + "\n", encoding="utf-8")
 
 
-def _validate_packages(supported: dict, downloads: dict) -> None:
+def _validate_packages(supported: dict, downloads: dict, *, require_checksums: bool = True) -> None:
     ids = {item["id"] for item in supported["operating_systems"]}
     if not set(downloads["downloads"]).issubset(ids):
         raise ValueError("downloads contain an unsupported OS identifier")
@@ -124,6 +130,13 @@ def _validate_packages(supported: dict, downloads: dict) -> None:
             seen.add(package["url"])
             if package["url"].rsplit("/", 1)[-1] != package["filename"]:
                 raise ValueError(f"URL filename mismatch: {package['url']}")
+            checksum = package.get("checksum")
+            if checksum is None and not require_checksums:
+                continue
+            if not isinstance(checksum, dict) or checksum.get("algorithm") != "sha256":
+                raise ValueError(f"missing SHA-256 checksum: {package['url']}")
+            if not re.fullmatch(r"[0-9a-f]{64}", checksum.get("value", "")):
+                raise ValueError(f"invalid SHA-256 checksum: {package['url']}")
 
 
 if __name__ == "__main__":

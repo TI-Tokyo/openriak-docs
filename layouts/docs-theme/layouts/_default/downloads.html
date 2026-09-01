@@ -26,15 +26,12 @@
       </nav>
       {{- $defaultOperatingSystems := where $versionData.operatingSystems "id" $versionData.defaultOs -}}
       {{- $selectedOperatingSystem := index $defaultOperatingSystems 0 -}}
-      {{- $selectedDownloads := index $versionData.downloads $selectedOperatingSystem.id | default slice -}}
       <section class="modern-downloads-selected" data-selected-downloads>
-        <h2>Downloads for</h2>
+        <h2>Download</h2>
         <h3 class="modern-downloads-selected-os"><img src="{{ $selectedOperatingSystem.logo | relURL }}" alt="" data-selected-download-logo><span data-selected-download-os>{{ $selectedOperatingSystem.displayName }} — {{ $selectedOperatingSystem.architecture }}</span></h3>
-        <ul class="download-list" data-doc-downloads>
-          {{- range $selectedDownloads }}
-            <li><a href="{{ .url | safeURL }}">OTP {{ .otp }} · {{ .architecture }}{{ with .variant }} · {{ . }}{{ end }} · {{ .filename }}</a>{{ with .checksumUrl }}<a class="download-checksum" href="{{ . | safeURL }}">checksum</a>{{ end }}</li>
-          {{- end }}
-        </ul>
+        <div data-doc-downloads>
+          {{ partial "download-table.html" (dict "versionData" $versionData "operatingSystems" $defaultOperatingSystems) }}
+        </div>
         <p class="modern-downloads-all-link"><a href="#all-downloads" data-all-downloads-link>All downloads</a></p>
       </section>
 
@@ -45,18 +42,25 @@
 
       <details class="modern-downloads-disclosure modern-all-downloads" id="all-downloads" data-all-downloads>
         <summary>All downloads</summary>
-        <div class="modern-downloads-disclosure-content modern-downloads-grid">
-          {{- range $os := $versionData.operatingSystems -}}
-            {{- $downloads := index $versionData.downloads $os.id | default slice -}}
-            <section class="modern-download-card" id="downloads-{{ $os.id }}" data-download-os="{{ $os.id }}">
-              <h3><img src="{{ $os.logo | relURL }}" alt="">{{ $os.displayName }} — {{ $os.architecture }}</h3>
-              <ul class="download-list">
-                {{- range $downloads }}
-                  <li><a href="{{ .url | safeURL }}">OTP {{ .otp }} · {{ .filename }}</a>{{ with .checksumUrl }}<a class="download-checksum" href="{{ . | safeURL }}">checksum</a>{{ end }}</li>
-                {{- end }}
-              </ul>
-            </section>
-          {{- end }}
+        <div class="modern-downloads-disclosure-content">
+          {{- range $family := $familyOrder -}}
+            {{- $familyOperatingSystems := where $downloadOperatingSystems "family" $family -}}
+            {{- with $familyOperatingSystems -}}
+              {{- $first := index . 0 -}}
+              <section class="downloads-family" id="downloads-{{ $family }}">
+                <h3 class="downloads-family-heading"><img src="{{ $first.logo | relURL }}" alt="">OpenRiak KV for {{ $first.name }}</h3>
+                {{- $seenDisplayNames := newScratch -}}
+                {{- range $os := $familyOperatingSystems -}}
+                  {{- if not ($seenDisplayNames.Get $os.displayName) -}}
+                    {{- $seenDisplayNames.Set $os.displayName true -}}
+                    {{- $matchingOperatingSystems := where $familyOperatingSystems "displayName" $os.displayName -}}
+                    <h4>{{ $os.displayName }}</h4>
+                    {{ partial "download-table.html" (dict "versionData" $versionData "operatingSystems" $matchingOperatingSystems) }}
+                  {{- end -}}
+                {{- end -}}
+              </section>
+            {{- end -}}
+          {{- end -}}
         </div>
       </details>
     {{- else -}}
@@ -69,8 +73,8 @@
         {{- $familyOperatingSystems := where $downloadOperatingSystems "family" $family -}}
         {{- with $familyOperatingSystems -}}
           {{- $first := index . 0 -}}
-          <section class="legacy-downloads-family" id="{{ $family }}">
-            <h2><img src="{{ $first.logo | relURL }}" alt="">Riak KV for {{ $first.name }}</h2>
+          <section class="downloads-family legacy-downloads-family" id="{{ $family }}">
+            <h2 class="downloads-family-heading"><img src="{{ $first.logo | relURL }}" alt="">Riak KV for {{ $first.name }}</h2>
             {{- if eq $family "alpine" -}}
               {{- $alpinePage := site.GetPage (printf "/%s/%s/setup/installing/alpine-linux" $context.id $context.version) -}}
               <h3>Alpine Linux 64-bit</h3>
@@ -84,21 +88,7 @@
                   {{- $seenDisplayNames.Set $os.displayName true -}}
                   {{- $matchingOperatingSystems := where $familyOperatingSystems "displayName" $os.displayName -}}
                   <h3>{{ $os.displayName }}</h3>
-                  <table class="legacy-downloads-table">
-                    <thead><tr><th>OTP</th><th>Architecture</th><th>Package</th><th>Checksum</th></tr></thead>
-                    <tbody>
-                      {{- range $matchingOs := $matchingOperatingSystems -}}
-                        {{- range (index $versionData.downloads $matchingOs.id | default slice) -}}
-                          <tr>
-                            <td>{{ with .otp }}OTP {{ . }}{{ end }}</td>
-                            <td>{{ .architecture }}</td>
-                            <td><a href="{{ .url | safeURL }}">{{ .filename }}</a></td>
-                            <td>{{ with .checksumUrl }}<a href="{{ . | safeURL }}">hash</a>{{ end }}</td>
-                          </tr>
-                        {{- end -}}
-                      {{- end -}}
-                    </tbody>
-                  </table>
+                  {{ partial "download-table.html" (dict "versionData" $versionData "operatingSystems" $matchingOperatingSystems) }}
                 {{- end -}}
               {{- end -}}
               {{- with index $installPages $family -}}

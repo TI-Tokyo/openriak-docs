@@ -32,6 +32,8 @@ for (const { raw: version, sourceDirectory } of legacyVersions) {
   assert.equal(adapter.defaultOs, null);
   assert.ok(adapter.downloadOperatingSystems.length > 0);
   assert.ok(Object.values(adapter.downloads).flat().length > 0);
+  assert.ok(Object.values(adapter.downloads).flat().every((download) => download.checksum?.algorithm === 'sha256'));
+  assert.ok(Object.values(adapter.downloads).flat().every((download) => /^[0-9a-f]{64}$/.test(download.checksum?.value || '')));
   assert.deepEqual(adapter.values, {});
   assert.equal(resolveOs('ubuntu-noble-amd64', null, adapter), null);
 }

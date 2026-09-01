@@ -134,15 +134,25 @@ button, select, input { border: 1px solid var(--line); border-radius: 3px; backg
 .page-list span { color: var(--muted); font-size: .9rem; }
 .eyebrow { margin-bottom: 0; color: var(--orange); font-weight: 800; letter-spacing: .08em; text-transform: uppercase; }
 .primary-action { display: inline-block; margin-top: 1rem; padding: .65rem .95rem; border-radius: 3px; background: var(--orange); color: #fff; font-weight: 800; text-decoration: none; }
-.legacy-downloads-family { margin-top: 2.4rem; }
-.legacy-downloads-family > h2 { display: flex; align-items: center; gap: .65rem; }
-.legacy-downloads-family > h2 img { width: 2rem; height: 2rem; object-fit: contain; }
-.legacy-downloads-table { width: 100%; margin: .65rem 0 1rem; border-collapse: collapse; }
-.legacy-downloads-table th, .legacy-downloads-table td { padding: .55rem .65rem; border-bottom: 1px solid var(--line); text-align: left; vertical-align: top; }
-.legacy-downloads-table th { color: var(--muted); font-size: .75rem; letter-spacing: .04em; text-transform: uppercase; }
-.legacy-downloads-table td:first-child { width: 5.5rem; }
-.legacy-downloads-table td:nth-child(2) { width: 7rem; }
-.legacy-downloads-table a { overflow-wrap: anywhere; }
+.downloads-family { margin-top: 2.4rem; }
+.modern-downloads-disclosure .downloads-family { margin-top: 1.8rem; }
+.downloads-family-heading { display: flex; align-items: center; gap: .65rem; }
+.downloads-family-heading img { width: 2rem; height: 2rem; object-fit: contain; }
+.downloads-family > h4 { margin: 1.35rem 0 .45rem; font-size: 1.05rem; }
+.downloads-table-wrap { width: 100%; margin: .65rem 0 1rem; overflow-x: auto; }
+.downloads-table { width: 100%; min-width: 42rem; border-collapse: collapse; }
+.downloads-table th, .downloads-table td { padding: .55rem .65rem; border-bottom: 1px solid var(--line); text-align: left; vertical-align: top; }
+.downloads-table th { color: var(--muted); font-size: .75rem; letter-spacing: .04em; text-transform: uppercase; }
+.downloads-table th:first-child, .downloads-table td:first-child { width: 5.5rem; }
+.downloads-table th:nth-child(2), .downloads-table td:nth-child(2) { width: 7rem; }
+.downloads-table th:last-child, .downloads-table td:last-child { width: 5.75rem; }
+.downloads-table a { overflow-wrap: anywhere; }
+.download-table-actions { text-align: right !important; }
+.download-table-action-links { display: flex; gap: .35rem; align-items: center; justify-content: flex-end; white-space: nowrap; }
+.download-checksum-row[hidden] { display: none; }
+.download-checksum-row > td { padding-top: 0; }
+.download-package-group.is-checksum-expanded .download-package-row > td { border-bottom-color: transparent; }
+.download-table-checksum-cell .download-checksum-panel { display: grid; width: 100%; margin: 0 0 .35rem; }
 .legacy-downloads-install { color: var(--muted); }
 .download-os-index { margin: 1rem 0 1.75rem; }
 .download-os-index h2 { margin: 0 0 .65rem; font-size: 1rem; }
@@ -158,18 +168,39 @@ button, select, input { border: 1px solid var(--line); border-radius: 3px; backg
 .modern-downloads-selected-os { margin-bottom: 1rem; font-size: 1.15rem; }
 .modern-downloads-selected-os img, .modern-download-card h3 img { width: 2rem; height: 2rem; object-fit: contain; }
 .modern-downloads-selected .download-list, .modern-download-card .download-list { display: grid; gap: .5rem; margin: 0; padding: 0; list-style: none; }
-.modern-downloads-selected .download-list li, .modern-download-card .download-list li { display: flex; flex-wrap: wrap; gap: .45rem .8rem; align-items: baseline; padding: .65rem .75rem; border: 1px solid var(--line); border-radius: 3px; background: var(--surface); }
+.modern-downloads-selected .download-list li, .modern-download-card .download-list li { display: grid; grid-template-columns: minmax(0, 1fr) auto auto; gap: .45rem .5rem; align-items: center; padding: .65rem .75rem; border: 1px solid var(--line); border-radius: 3px; background: var(--surface); }
 .modern-downloads-selected .download-list li > a:first-child, .modern-download-card .download-list li > a:first-child { min-width: 0; overflow-wrap: anywhere; }
 .modern-downloads-all-link { margin: 1rem 0 0; text-align: right; }
-.download-checksum { font-size: .82rem; }
+.download-actions { display: inline-flex; flex-wrap: wrap; gap: .45rem .8rem; align-items: baseline; justify-content: flex-end; min-width: 0; margin-left: auto; }
+.modern-downloads-selected .download-actions { display: contents; }
+.modern-downloads-selected .download-checksum-toggle { grid-column: 2; grid-row: 1; }
+.modern-downloads-selected .download-copy-url { grid-column: 3; grid-row: 1; }
+.modern-downloads-selected .download-checksum-panel { grid-column: 1 / -1; grid-row: 2; }
+.download-checksum-toggle { order: 1; display: inline-grid; place-items: center; width: 1.65rem; height: 1.65rem; padding: 0; border: 0; background: transparent; color: var(--link); cursor: pointer; }
+.download-copy-url { order: 2; }
+.download-checksum-panel { order: 3; display: grid; grid-template-columns: minmax(0, 1fr) auto; gap: .75rem; align-items: start; flex: 1 0 100%; min-width: 0; margin-top: .1rem; padding: .65rem .75rem; border: 1px solid var(--line); border-radius: 3px; background: var(--panel-cool); text-align: left; }
+.download-checksum-panel[hidden] { display: none; }
+.download-checksum-value { display: grid; gap: .35rem; min-width: 0; margin: 0; }
+.download-checksum-value strong { color: var(--muted); font-size: .72rem; letter-spacing: .04em; }
+.download-checksum-value code { min-width: 0; overflow-wrap: anywhere; }
+.download-checksum-actions { display: flex; align-self: end; align-items: center; justify-content: flex-end; }
+.download-copy { display: inline-grid; place-items: center; width: 1.65rem; height: 1.65rem; padding: 0; border: 0; background: transparent; color: var(--link); cursor: pointer; }
+.download-hash-icon, .download-copy-icon, .download-copy-icon svg { width: 1.05rem; height: 1.05rem; }
+.download-hash-icon, .download-copy-icon svg { fill: none; stroke: currentColor; stroke-width: 2; stroke-linecap: round; stroke-linejoin: round; }
+.download-copy-icon { position: relative; display: inline-grid; place-items: center; }
+.download-copy-icon svg { grid-area: 1 / 1; transition: opacity .16s ease, transform .16s ease; }
+.download-copy-tick { z-index: 1; color: #2f9e44; opacity: 0; transform: scale(.55); }
+.download-copy.is-copied .download-copy-glyph { opacity: .42; }
+.download-copy.is-copied .download-copy-tick { opacity: 1; transform: scale(1); }
+.download-copy.is-copy-failed { color: #c92a2a; }
+.download-copy:hover, .download-checksum-toggle:hover { color: var(--orange); }
+.download-checksum-toggle[aria-expanded="true"] { color: var(--orange); }
+.download-copy:focus-visible, .download-checksum-toggle:focus-visible { border-radius: 2px; outline: 2px solid var(--orange); outline-offset: 3px; }
 .modern-downloads-disclosure { margin: 1rem 0; border: 1px solid var(--line); border-radius: 4px; background: var(--panel); }
 .modern-downloads-disclosure > summary { padding: .85rem 1rem; color: var(--ink); font-family: var(--font-heading); font-size: 1.25rem; font-weight: 700; cursor: pointer; }
 .modern-downloads-disclosure[open] > summary { border-bottom: 1px solid var(--line); }
 .modern-downloads-disclosure-content { padding: .25rem 1rem 1rem; }
 .modern-downloads-disclosure-content > :first-child { margin-top: 1rem; }
-.modern-downloads-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(min(100%, 22rem), 1fr)); gap: 1rem; }
-.modern-download-card { min-width: 0; padding: 1rem; border: 1px solid var(--line); border-radius: 4px; background: var(--panel); }
-.modern-download-card h3 { font-size: 1.05rem; }
 
 @media (max-width: 760px) {
   .docs-shell { display: block; }

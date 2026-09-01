@@ -110,8 +110,16 @@ const downloadVariant = (url) => {
   return match ? match[1].replace(/graviton\s*/i, 'Graviton ') : '';
 };
 
+const normalizeChecksum = (checksum, version, osId, downloadId) => {
+  if (!checksum || checksum.algorithm !== 'sha256' || !/^[0-9a-f]{64}$/.test(checksum.value || '')) {
+    throw new Error(`Missing or invalid SHA-256 checksum for ${metadataProduct}/${version}/${osId}/${downloadId}`);
+  }
+  return { algorithm: 'sha256', value: checksum.value };
+};
+
 const requestedKeys = referencedValueKeys();
 const requiredValueKeys = ['ring_size', 'nodename'];
+for (const key of requiredValueKeys) requestedKeys.add(key);
 
 for (const { version, sourceDirectory, source } of versionEntries) {
   const exposesOperatingSystemPicker = source === productId;
@@ -206,7 +214,7 @@ for (const { version, sourceDirectory, source } of versionEntries) {
         packageRevision: item.package_revision,
         variant: downloadVariant(item.url),
         url: item.url,
-        checksumUrl: item.checksum_url
+        checksum: normalizeChecksum(item.checksum, version, os.id, id)
       }))
       .sort((left, right) => left.otp - right.otp || left.id.localeCompare(right.id));
   }
