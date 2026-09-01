@@ -130,7 +130,7 @@ If you found these presentations interesting, you might also enjoy these blogs:
 
 4 part series by Damien Krotkine, Ivan Paponov at booking.com
 
-[Using Riak as Events Storage – Part 1](http://blog.booking.com/using-riak-as-events-storage-part1.html)  
-[Using Riak as Events Storage – Part 2](http://blog.booking.com/using-riak-as-events-storage-part2.html)  
-[Using Riak as Events Storage – Part 3](http://blog.booking.com/using-riak-as-events-storage-part3.html)  
-[Using Riak as Events Storage – Part 4](https://blog.booking.com/using-riak-as-events-storage-part4.html)
+[Using Riak as Events Storage – Part 1](https://medium.com/booking-com-development/using-riak-as-events-storage-part-1-9b423f0ef97a)  
+[Using Riak as Events Storage – Part 2](https://medium.com/booking-com-development/using-riak-as-events-storage-part-2-b1a3db5ef139)  
+[Using Riak as Events Storage – Part 3](https://medium.com/booking-com-development/using-riak-as-events-storage-part-3-a79d629790c7)  
+[Using Riak as Events Storage – Part 4](https://medium.com/booking-com-development/using-riak-as-events-storage-part-4-43d088f80b7c)

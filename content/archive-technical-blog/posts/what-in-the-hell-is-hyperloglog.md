@@ -27,51 +27,74 @@ With the release of [Riak KV 2.2](./riak-kv-2-2-release-highlights.md), we intro
 Let’s say we have an online retail store and we want to determine distinct users who complete a purchase by State. We could create a HyperLogLog data type for each state and add the customer’s unique identifier every time an order is completed.
 
 ```
-curl -XPOST http://localhost:8098/types/hlls/buckets/orders_by_state/datatypes/south_carolina \
--H "Content-Type: application/json" \
--d '{"add_all":["001","007"]}'
+curl -XPOST http://localhost:8098/types/hlls/buckets/orders_by_state/datatypes/south_carolina \
+
+-H "Content-Type: application/json" \
+
+-d '{"add_all":["001","007"]}'
+
 ```
 
 And here is an example of fetching the cardinality of that data:
 
 ```
-curl http://localhost:8098/types/hlls/buckets/orders_by_state/datatypes/south_carolina
-
-# Response
-{"type":"hll","value":"2"}
+curl http://localhost:8098/types/hlls/buckets/orders_by_state/datatypes/south_carolina
+
+
+
+# Response
+
+{"type":"hll","value":"2"}
+
 ```
 
 Some time has passed and we have added more orders to South Carolina:
 
 ```
-curl -XPOST http://localhost:8098/types/hlls/buckets/orders_by_state/datatypes/south_carolina \
--H "Content-Type: application/json" \
--d '{"add_all":["007","032","056"]}'
-
-curl http://localhost:8098/types/hlls/buckets/orders_by_state/datatypes/south_carolina
-
-# Response
-{"type":"hll","value":"4"}
+curl -XPOST http://localhost:8098/types/hlls/buckets/orders_by_state/datatypes/south_carolina \
+
+-H "Content-Type: application/json" \
+
+-d '{"add_all":["007","032","056"]}'
+
+
+
+curl http://localhost:8098/types/hlls/buckets/orders_by_state/datatypes/south_carolina
+
+
+
+# Response
+
+{"type":"hll","value":"4"}
+
 ```
 
 More time has passed and we have added more orders:
 
 ```
-curl -XPOST http://localhost:8098/types/hlls/buckets/orders_by_state/datatypes/south_carolina \
--H "Content-Type: application/json" \
--d '{"add_all":["001","047","088"]}'
-
-curl http://localhost:8098/types/hlls/buckets/orders_by_state/datatypes/south_carolina
-
-# Response
-{"type":"hll","value":"6"}
+curl -XPOST http://localhost:8098/types/hlls/buckets/orders_by_state/datatypes/south_carolina \
+
+-H "Content-Type: application/json" \
+
+-d '{"add_all":["001","047","088"]}'
+
+
+
+curl http://localhost:8098/types/hlls/buckets/orders_by_state/datatypes/south_carolina
+
+
+
+# Response
+
+{"type":"hll","value":"6"}
+
 ```
 
 As we add more and more values to the `orders_by_state` bucket, we may start to see inaccuracies in the values returned for cardinality. This is perfectly normal as the HyperLogLog algorithm is designed to be an estimate, hence the 2% margin of error I mentioned above. This means that if your application had stored 100 unique values in the `south_carolina` key, the HyperLogLog algorithm could return values within the range of 98 to 102.
 
 Please note, these examples are using sets that are incredibly small and generally wouldn’t be well suited for the HyperLogLog data type, however, they illustrate the power of the new type and how it can be used within Riak.
 
-You can get more information about the Riak KV 2.2 release on the Basho blog at: [http://basho.com/posts/technical/riak-kv-2-2-release-highlights/](./riak-kv-2-2-release-highlights.md)
+You can get more information about the Riak KV 2.2 release on the Basho blog at: [Riak KV 2.2 Release Highlights](./riak-kv-2-2-release-highlights.md)
 
 Christopher  
 Software Engineer – Client Libraries, Basho Technologies  
