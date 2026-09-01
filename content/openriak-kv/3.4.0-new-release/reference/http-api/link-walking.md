@@ -33,7 +33,7 @@ This feature is deprecated and will be removed in a future version.
 Link walking (traversal) finds and returns objects by following links attached
 to them, starting from the object specified by the bucket and key portion.  It
 is a special case of [MapReduce]({{< product-version-root >}}how-to/develop/run-mapreduce/), and can be expressed more verbosely as such.
-[Read more about Links]({{< product-version-root >}}explanation/foundations/glossary/).
+[Read more about Links]({{< product-version-root >}}foundations/foundations/glossary/).
 
 #### Request
 

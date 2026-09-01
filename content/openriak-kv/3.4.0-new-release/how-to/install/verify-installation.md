@@ -209,7 +209,7 @@ From here you might want to check out the following resources:
 To create a local release, run `make rel`.  This will build a release of Riak in the `rel/riak` folder within the repository clone.  This can be configured, started and joined into a cluster as with any Riak node.
 
 > [!WARNING]
-> Migration review required: Release-specific installation, upgrade, downgrade, or quick-start instructions require verification against OpenRiak KV 3.4.0 packages.
+> Migration review required: Release-specific installation, upgrade, downgrade, or quick-start instructions require verification against OpenRiak KV {{< current-version >}} packages.
 
 ## Verify the result
 

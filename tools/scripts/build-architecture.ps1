@@ -57,6 +57,30 @@ Assert-MissingValueBuildFails 'default-os' '{{< load-value key="banana" >}}' 'ub
 Assert-MissingValueBuildFails 'explicit-os' '{{< load-value key="banana" os="alpine-3.21-aarch64" >}}' 'alpine-3.21-aarch64'
 Write-Host 'Missing value generation failure tests passed.'
 
+function Assert-NoPreviousVersionBuildFails {
+    $fixtureDirectory = Join-Path $validationRoot 'previous-version-fixture'
+    New-Item -ItemType Directory -Force -Path $fixtureDirectory | Out-Null
+    $fixturePath = Join-Path $fixtureDirectory 'previous-version-test.md'
+    $fixtureContent = "---`ntitle: Previous version validation`n---`n`n{{< previous-version >}}`n"
+    [IO.File]::WriteAllText($fixturePath, $fixtureContent, [Text.UTF8Encoding]::new($false))
+    $output = docker run --rm --volume "${repositoryRoot}:/workspace" `
+        --volume "${fixturePath}:/workspace/content/riak-kv/2.0.0-new-release/previous-version-test.md:ro" `
+        --workdir /workspace/content $image `
+        --config /workspace/tools/generated/hugo.yaml `
+        --destination "/workspace/build/.architecture-validation/previous-version-output" `
+        --baseURL http://localhost:1410/docs/ `
+        --cacheDir /tmp/hugo-cache --cleanDestinationDir --gc --minify --panicOnWarning 2>&1
+    $exitCode = $LASTEXITCODE
+    if ($exitCode -eq 0) { throw 'Hugo unexpectedly accepted previous-version on the first release' }
+    $expected = 'previous-version has no previous release: product=openriak-kv version=2.0.0'
+    if (($output -join "`n") -notmatch [regex]::Escape($expected)) {
+        throw "First-release previous-version fixture failed without the expected diagnostic: $($output -join ' ')"
+    }
+}
+
+Assert-NoPreviousVersionBuildFails
+Write-Host 'Previous version generation failure test passed.'
+
 node (Join-Path $PSScriptRoot 'architecture.test.js')
 if ($LASTEXITCODE -ne 0) { throw 'Architecture validation failed' }
 docker run --rm --volume "${repositoryRoot}:/workspace" --entrypoint /bin/sh $image `

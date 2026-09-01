@@ -29,7 +29,7 @@ Define Query API endpoints, request expressions, responses, limits, and consiste
 
 ### OpenRiak KV - Query API
 
-**Available from OpenRiak KV 3.4.0.**
+**Available from OpenRiak KV {{< current-version >}}.**
 
 Secondary indexes may be added to Riak objects, and Riak provides a Query API for those indexes.  The API supports range queries, to be run across the sorted terms on an index, but the terms may also contain projected attributes appended to the sort key.  The Query API can be passed evaluation and filter expressions: to first evaluate the term to extract the attributes, and then filter the terms by testing the attribute values against query conditions.
 
@@ -48,10 +48,10 @@ For further detail on the Query API:
 - [An example people search]({{< product-version-root >}}tutorials/query-api/build-search-index/)
 - [An alternative example for people search]({{< product-version-root >}}tutorials/query-api/build-search-index/)
 - [An example using the API for reporting]({{< product-version-root >}}tutorials/query-api/build-search-index/)
-- [Setting performance expectations for queries]({{< product-version-root >}}explanation/performance/query-execution/)
+- [Setting performance expectations for queries]({{< product-version-root >}}foundations/performance/query-execution/)
 - [A more formal description of the Query API]({{< product-version-root >}}reference/query-api/request/)
-- [An overview of the expected performance of queries in Riak]({{< product-version-root >}}explanation/performance/query-execution/)
-- [Some notes on the underlying implementation]({{< product-version-root >}}explanation/data-model/query-api/)
+- [An overview of the expected performance of queries in Riak]({{< product-version-root >}}foundations/performance/query-execution/)
+- [Some notes on the underlying implementation]({{< product-version-root >}}foundations/data-model/query-api/)
 
 #### Secondary Indexes - Querying Index Entries Overview
 
@@ -63,7 +63,7 @@ Riak does support via [an external replication API]({{< product-version-root >}}
 
 ## In this section
 
-- [Query API accumulation options]({{< product-version-root >}}reference/query-api/accumulation-options/) — Define the 3.4.0 Query API modes for returning keys, terms, counts, and counts by attribute.
+- [Query API accumulation options]({{< product-version-root >}}reference/query-api/accumulation-options/) — Define the {{< current-version >}} Query API modes for returning keys, terms, counts, and counts by attribute.
 - [Query API expression reference]({{< product-version-root >}}reference/query-api/expressions/) — Define supported Query API expressions, operators, composition rules, and Unicode behavior.
 - [Query API limits and performance]({{< product-version-root >}}reference/query-api/limits/) — Record Query API scanning, filtering, buffering, aggregation, collation, and transformation limits.
 - [Query API request reference]({{< product-version-root >}}reference/query-api/request/) — Define Query API request paths, JSON fields, defaults, and validation rules.

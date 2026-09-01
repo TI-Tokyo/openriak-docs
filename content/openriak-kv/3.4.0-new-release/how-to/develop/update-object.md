@@ -36,7 +36,7 @@ A non-production OpenRiak KV cluster, client credentials, and disposable test da
 
 ### Updating Objects
 
-[glossary vnode]: {{< product-version-root >}}explanation/foundations/glossary/#vnode
+[glossary vnode]: {{< product-version-root >}}foundations/foundations/glossary/#vnode
 
 #### Using Causal Context
 
@@ -44,9 +44,9 @@ If an object already exists under a certain key and you want to write a
 new object to that key, Riak needs to know what to do, especially if
 multiple writes are happening at the same time. Which of the objects
 being written should be deemed correct? These kinds of scenarios can
-arise quite frequently in distributed, [eventually consistent]({{< product-version-root >}}explanation/consistency/eventual-consistency/) systems.
+arise quite frequently in distributed, [eventually consistent]({{< product-version-root >}}foundations/consistency/eventual-consistency/) systems.
 
-Riak decides which object to choose in case of conflict using [causal context]({{< product-version-root >}}explanation/data-model/causal-context/). These objects track the causal history of objects.
+Riak decides which object to choose in case of conflict using [causal context]({{< product-version-root >}}foundations/data-model/causal-context/). These objects track the causal history of objects.
 They are attached to _all_ Riak objects as metadata, and they are not
 readable by humans. They may sound complex---and they are fairly complex
 behind the scenes---but using them in your application is very simple.
@@ -54,11 +54,11 @@ behind the scenes---but using them in your application is very simple.
 Using causal context in an update would involve the following steps;
 
 1. Fetch the object
-2. Modify the object's value (without modifying the fetched [context object]({{< product-version-root >}}explanation/data-model/causal-context/)
+2. Modify the object's value (without modifying the fetched [context object]({{< product-version-root >}}foundations/data-model/causal-context/)
 3. Write the new object to Riak
 
 Step 2 is the most important here. All of Basho's official Riak clients
-enable you to modify an object's value without modifying its [causal context]({{< product-version-root >}}explanation/data-model/causal-context/). Although a more detailed tutorial on context objects and
+enable you to modify an object's value without modifying its [causal context]({{< product-version-root >}}foundations/data-model/causal-context/). Although a more detailed tutorial on context objects and
 object updates can be found in [Conflict Resolution]({{< product-version-root >}}how-to/develop/resolve-conflicts/), we'll walk you
 through a basic example here.
 
@@ -323,7 +323,7 @@ recommend that you:
 That cycle looks something like this:
 
 1. **Read** the object from Riak. This step is important for updates
-because this enables you to fetch the object's [causal context]({{< product-version-root >}}explanation/data-model/causal-context/), which
+because this enables you to fetch the object's [causal context]({{< product-version-root >}}foundations/data-model/causal-context/), which
 is the information that Riak uses to make decisions about which object
 values are most recent (this is especially useful for objects that are
 frequently updated). This context object needs to be passed back to Riak

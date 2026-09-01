@@ -9,4 +9,4 @@ release_baseline: false
 inherits_from: 3.4.0
 ---
 
-This release inherits the self-contained OpenRiak KV 3.4.0 baseline and overlays only the changes introduced in 3.4.1.
+This release inherits the self-contained OpenRiak KV {{< previous-version >}} baseline and overlays only the changes introduced in {{< current-version >}}.

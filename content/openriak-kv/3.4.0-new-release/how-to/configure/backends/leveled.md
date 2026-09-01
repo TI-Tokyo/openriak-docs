@@ -52,7 +52,7 @@ The leveled backend has the following characteristics and features:
 - Guarding against out-of-memory errors is an operator responsibility.  The cluster should be expanded if the memory limit is close, the per-vnode memory overhead will not be proactively reduced.
   - Makes use of any spare memory of the system through proactive hints to the file-system page cache.
 
-For further details on the design and implementation of the leveled backend refer to [the Riak Theory Guide]({{< product-version-root >}}explanation/storage/leveled/).
+For further details on the design and implementation of the leveled backend refer to [the Riak Theory Guide]({{< product-version-root >}}foundations/storage/leveled/).
 
 #### Configuration of Riak - leveled backend
 

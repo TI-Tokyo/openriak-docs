@@ -35,11 +35,11 @@ Administrative access to the nodes you will change; a copy of the current config
 
 ### Backend Configuration
 
-[plan backend leveldb]: {{< product-version-root >}}explanation/storage/leveldb/
-[plan backend leveled]: {{< product-version-root >}}explanation/storage/leveled/
-[plan backend bitcask]: {{< product-version-root >}}explanation/storage/bitcask/
-[plan backend memory]: {{< product-version-root >}}explanation/storage/memory/
-[plan backend multi]: {{< product-version-root >}}explanation/storage/multi-backend/
+[plan backend leveldb]: {{< product-version-root >}}foundations/storage/leveldb/
+[plan backend leveled]: {{< product-version-root >}}foundations/storage/leveled/
+[plan backend bitcask]: {{< product-version-root >}}foundations/storage/bitcask/
+[plan backend memory]: {{< product-version-root >}}foundations/storage/memory/
+[plan backend multi]: {{< product-version-root >}}foundations/storage/multi-backend/
 
 #### LevelDB
 

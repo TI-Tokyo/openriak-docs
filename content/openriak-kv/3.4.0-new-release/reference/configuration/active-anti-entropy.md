@@ -29,11 +29,11 @@ List active anti-entropy configuration properties with defaults, accepted values
 
 ### Active Anti-Entropy
 
-[config legacy]: {{< product-version-root >}}explanation/replication/legacy-aae/
-[config tictac]: {{< product-version-root >}}explanation/replication/tictac-aae/
+[config legacy]: {{< product-version-root >}}foundations/replication/legacy-aae/
+[config tictac]: {{< product-version-root >}}foundations/replication/tictac-aae/
 [config tictac-repl]: {{< product-version-root >}}reference/configuration/
 [using aaefold]: {{< product-version-root >}}how-to/operate/aae-fold/
-[learn aae]: {{< product-version-root >}}explanation/replication/active-anti-entropy/
+[learn aae]: {{< product-version-root >}}foundations/replication/active-anti-entropy/
 
 OpenRiak's [active anti-entropy][learn aae] \(AAE) subsystem is a set of background processes that repair object inconsistencies stemming from missing or divergent object values across nodes. Riak operators can turn AAE on and off and configure and monitor its functioning.
 

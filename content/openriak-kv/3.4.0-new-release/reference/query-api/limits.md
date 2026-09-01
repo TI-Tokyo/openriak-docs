@@ -126,7 +126,7 @@ Aggregation queries, which use set expressions to combine results across multipl
 
 > As the query buffer is bypassed a cancelled query will not terminate early for combination queries.
 
-Support for `aggregation_expression`s in Riak 3.4 is a work in progress and may [be optimised in future releases]({{< product-version-root >}}explanation/data-model/query-api/).
+Support for `aggregation_expression`s in Riak 3.4 is a work in progress and may [be optimised in future releases]({{< product-version-root >}}foundations/data-model/query-api/).
 
 #### Central Collation of Query Results
 

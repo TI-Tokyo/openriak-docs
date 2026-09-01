@@ -129,35 +129,35 @@ You now have an OpenRiak cluster running on AWS.
 
 ##### Amazon Linux 2023 (x86_64)
 
-OpenRiak KV 3.4.0 packages are available with OTP 24 and OTP 26. Install the
+OpenRiak KV {{< current-version >}} packages are available with OTP 24 and OTP 26. Install the
 OTP 26 x86_64 package using `yum`:
 
 ```bash
-wget https://files.tiot.jp/riak/kv/3.4/3.4.0/amazon/2023%20%28x86_64%29/riak-3.4.0.OTP26-1.amzn2023.x86_64.rpm
-sudo yum localinstall -y riak-3.4.0.OTP26-1.amzn2023.x86_64.rpm
+wget https://files.tiot.jp/riak/kv/3.4/{{< current-version >}}/amazon/2023%20%28x86_64%29/riak-{{< current-version >}}.OTP26-1.amzn2023.x86_64.rpm
+sudo yum localinstall -y riak-{{< current-version >}}.OTP26-1.amzn2023.x86_64.rpm
 ```
 
 Or you can install the `.rpm` package manually:
 
 ```bash
-wget https://files.tiot.jp/riak/kv/3.4/3.4.0/amazon/2023%20%28x86_64%29/riak-3.4.0.OTP26-1.amzn2023.x86_64.rpm
-sudo rpm -i riak-3.4.0.OTP26-1.amzn2023.x86_64.rpm
+wget https://files.tiot.jp/riak/kv/3.4/{{< current-version >}}/amazon/2023%20%28x86_64%29/riak-{{< current-version >}}.OTP26-1.amzn2023.x86_64.rpm
+sudo rpm -i riak-{{< current-version >}}.OTP26-1.amzn2023.x86_64.rpm
 ```
 
 For OTP 24, download and install
-[`riak-3.4.0.OTP24-1.amzn2023.x86_64.rpm`](https://files.tiot.jp/riak/kv/3.4/3.4.0/amazon/2023%20%28x86_64%29/riak-3.4.0.OTP24-1.amzn2023.x86_64.rpm).
+[`riak-{{< current-version >}}.OTP24-1.amzn2023.x86_64.rpm`](https://files.tiot.jp/riak/kv/3.4/{{< current-version >}}/amazon/2023%20%28x86_64%29/riak-{{< current-version >}}.OTP24-1.amzn2023.x86_64.rpm).
 
 ##### Amazon Linux 2023 (ARM64, Graviton3)
 
 Install the OTP 26 package using `yum`:
 
 ```bash
-wget https://files.tiot.jp/riak/kv/3.4/3.4.0/amazon/2023%20%28graviton3%29/riak-3.4.0.OTP26-1.amzn2023.aarch64.rpm
-sudo yum localinstall -y riak-3.4.0.OTP26-1.amzn2023.aarch64.rpm
+wget https://files.tiot.jp/riak/kv/3.4/{{< current-version >}}/amazon/2023%20%28graviton3%29/riak-{{< current-version >}}.OTP26-1.amzn2023.aarch64.rpm
+sudo yum localinstall -y riak-{{< current-version >}}.OTP26-1.amzn2023.aarch64.rpm
 ```
 
 For OTP 24, download and install
-[`riak-3.4.0.OTP24-1.amzn2023.aarch64.rpm`](https://files.tiot.jp/riak/kv/3.4/3.4.0/amazon/2023%20%28graviton3%29/riak-3.4.0.OTP24-1.amzn2023.aarch64.rpm).
+[`riak-{{< current-version >}}.OTP24-1.amzn2023.aarch64.rpm`](https://files.tiot.jp/riak/kv/3.4/{{< current-version >}}/amazon/2023%20%28graviton3%29/riak-{{< current-version >}}.OTP24-1.amzn2023.aarch64.rpm).
 
 #### Next Steps
 

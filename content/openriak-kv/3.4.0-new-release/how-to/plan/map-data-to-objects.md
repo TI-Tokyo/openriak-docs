@@ -67,12 +67,12 @@ objects. Instead, it interacts with objects on a one-by-one basis, using
 Primary key lookups store and fetch objects in Riak on the basis of
 three basic locators:
 
-* The object's [key]({{< product-version-root >}}explanation/data-model/keys-objects-and-buckets/#keys), which can be anything you
+* The object's [key]({{< product-version-root >}}foundations/data-model/keys-objects-and-buckets/#keys), which can be anything you
   want as long as it is [Unicode compliant](http://www.unicode.org/)
-* The [bucket]({{< product-version-root >}}explanation/data-model/keys-objects-and-buckets/) which houses the object and its key (bucket
+* The [bucket]({{< product-version-root >}}foundations/data-model/keys-objects-and-buckets/) which houses the object and its key (bucket
   names are also Unicode compliant)
 * The [bucket type]({{< product-version-root >}}how-to/develop/use-bucket-types/) that determines the bucket's
-  [replication]({{< product-version-root >}}explanation/replication/references-and-triggers/) and other properties
+  [replication]({{< product-version-root >}}foundations/replication/references-and-triggers/) and other properties
 
 It may be useful to think of this system as analogous to a nested
 key/value [hash](http://en.wikipedia.org/wiki/Hash_function) as you
@@ -465,7 +465,7 @@ def get_user_by_username(username):
 ##### Bucket Types as Additional Namespaces
 
 Riak [bucket types]({{< product-version-root >}}how-to/develop/use-bucket-types/) have two essential functions:
-they enable you to manage [bucket configurations]({{< product-version-root >}}explanation/data-model/keys-objects-and-buckets/) in an
+they enable you to manage [bucket configurations]({{< product-version-root >}}foundations/data-model/keys-objects-and-buckets/) in an
 efficient and streamlined way and, more importantly for our purposes
 here, they act as a third namespace in Riak in addition to buckets and
 keys. Thus, in Riak versions 2.0 and later you have access to a third

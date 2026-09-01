@@ -50,7 +50,7 @@ The bitcask backend has the following characteristics and features:
 - No current support for optimised HEAD requests, which can have significant impact on overall efficiency within Riak.
   - Implementations of bitcask have been produced with this optimisation, and may be open-sourced in the future.
 
-For further details on the design and implementation of the bitcask backend refer to [the Riak Theory Guide]({{< product-version-root >}}explanation/storage/bitcask/).
+For further details on the design and implementation of the bitcask backend refer to [the Riak Theory Guide]({{< product-version-root >}}foundations/storage/bitcask/).
 
 #### Configuration of Riak - bitcask backend
 

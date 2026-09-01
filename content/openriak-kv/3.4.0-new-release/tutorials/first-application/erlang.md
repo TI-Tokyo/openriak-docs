@@ -742,7 +742,7 @@ intrinsic relationships.
 #### Secondary Indexes
 
 **Note:**
-Secondary indexes in OpenRiak KV require a sorted backend: [Memory]({{< product-version-root >}}explanation/storage/memory/) or [LevelDB]({{< product-version-root >}}explanation/storage/leveldb/). [Bitcask]({{< product-version-root >}}explanation/storage/bitcask/) does not support secondary indexes.
+Secondary indexes in OpenRiak KV require a sorted backend: [Memory]({{< product-version-root >}}foundations/storage/memory/) or [LevelDB]({{< product-version-root >}}foundations/storage/leveldb/). [Bitcask]({{< product-version-root >}}foundations/storage/bitcask/) does not support secondary indexes.
 
 See [Using Secondary Indexes (2i)]({{< product-version-root >}}how-to/develop/query-secondary-indexes/) for more information on developing with secondary indexes.
 

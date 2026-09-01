@@ -42,12 +42,12 @@ A non-production OpenRiak KV cluster, client credentials, and disposable test da
 [usage bucket types]: {{< product-version-root >}}how-to/develop/use-bucket-types/
 [use ref strong consistency]: {{< product-version-root >}}reference/specialized-apis/strong-consistency-api/
 
-One of OpenRiak's [central goals]({{< product-version-root >}}explanation/foundations/why-openriak/) is high availability. It was built as a [clustered]({{< product-version-root >}}explanation/foundations/clusters-rings-and-partitions/) system in which any [node]({{< product-version-root >}}explanation/foundations/glossary/#node) is capable of receiving requests without requiring that
+One of OpenRiak's [central goals]({{< product-version-root >}}foundations/foundations/why-openriak/) is high availability. It was built as a [clustered]({{< product-version-root >}}foundations/foundations/clusters-rings-and-partitions/) system in which any [node]({{< product-version-root >}}foundations/foundations/glossary/#node) is capable of receiving requests without requiring that
 every node participate in each request.
 
-If you are using Riak in an [eventually consistent]({{< product-version-root >}}explanation/consistency/eventual-consistency/) way, conflicts between object values on different nodes is
+If you are using Riak in an [eventually consistent]({{< product-version-root >}}foundations/consistency/eventual-consistency/) way, conflicts between object values on different nodes is
 unavoidable. Often, Riak can resolve these conflicts on its own
-internally if you use causal context, i.e. [vector clocks]({{< product-version-root >}}explanation/data-model/causal-context/#vector-clocks) or [dotted version vectors]({{< product-version-root >}}explanation/data-model/causal-context/#dotted-version-vectors), when updating objects. Instructions on this can be found in the section [below](#siblings).
+internally if you use causal context, i.e. [vector clocks]({{< product-version-root >}}foundations/data-model/causal-context/#vector-clocks) or [dotted version vectors]({{< product-version-root >}}foundations/data-model/causal-context/#dotted-version-vectors), when updating objects. Instructions on this can be found in the section [below](#siblings).
 
 **Important note on terminology**
 In versions of Riak prior to 2.0, vector clocks were the only causal context
@@ -95,10 +95,10 @@ strong consistency feature, please refer to the following documents:
 
 OpenRiak's eventual consistency model is powerful because Riak is
 fundamentally non-opinionated about how data resolution takes place.
-While Riak _does_ have a set of [defaults]({{< product-version-root >}}explanation/replication/references-and-triggers/#available-parameters), there are a variety of general
+While Riak _does_ have a set of [defaults]({{< product-version-root >}}foundations/replication/references-and-triggers/#available-parameters), there are a variety of general
 approaches to conflict resolution that are available. In Riak, you can
 mix and match conflict resolution strategies at the bucket level,
-[using bucket types][usage bucket types]. The most important [bucket properties]({{< product-version-root >}}explanation/data-model/keys-objects-and-buckets/)
+[using bucket types][usage bucket types]. The most important [bucket properties]({{< product-version-root >}}foundations/data-model/keys-objects-and-buckets/)
 to consider when reasoning about conflict resolution are the
 `allow_mult` and `last_write_wins` properties.
 
@@ -110,7 +110,7 @@ If the [`allow_mult`](#siblings) parameter is set to
 `false`, Riak resolves all object replica conflicts internally and does
 not return siblings to the client. How Riak resolves those conflicts
 depends on the value that you set for a different bucket property,
-[`last_write_wins`]({{< product-version-root >}}explanation/data-model/keys-objects-and-buckets/). If `last_write_wins` is set to `false`,
+[`last_write_wins`]({{< product-version-root >}}foundations/data-model/keys-objects-and-buckets/). If `last_write_wins` is set to `false`,
 Riak will resolve all conflicts on the basis of
 [timestamps](http://en.wikipedia.org/wiki/Timestamp), which are
 attached to all Riak objects as metadata.
@@ -186,7 +186,7 @@ options:
 When a value is stored in Riak, it is tagged with a piece of metadata
 called a **causal context** which establishes the object's initial
 version. Causal context comes in one of two possible forms, depending
-on what value you set for `dvv_enabled`. If set to `true`, [dotted version vectors]({{< product-version-root >}}explanation/data-model/causal-context/#dotted-version-vectors) will be used; if set to `false` (the default), [vector clocks]({{< product-version-root >}}explanation/data-model/causal-context/#vector-clocks) will be used.
+on what value you set for `dvv_enabled`. If set to `true`, [dotted version vectors]({{< product-version-root >}}foundations/data-model/causal-context/#dotted-version-vectors) will be used; if set to `false` (the default), [vector clocks]({{< product-version-root >}}foundations/data-model/causal-context/#vector-clocks) will be used.
 
 Causal context essentially enables Riak to compare the different values
 of objects stored in Riak and to determine a number of important things
@@ -230,7 +230,7 @@ clients, Riak may not be able to choose a single value to store, in
 which case the object will be given a sibling. These writes could happen
 on the same node or on different nodes.
 2. **Stale causal context** - Writes from any client using a stale
-[causal context]({{< product-version-root >}}explanation/data-model/causal-context/). This is a less likely scenario if a client updates
+[causal context]({{< product-version-root >}}foundations/data-model/causal-context/). This is a less likely scenario if a client updates
 the object by reading the object first, fetching the causal context
 currently attached to the object, and then returning that causal context
 to Riak when performing the update (fortunately, our client libraries

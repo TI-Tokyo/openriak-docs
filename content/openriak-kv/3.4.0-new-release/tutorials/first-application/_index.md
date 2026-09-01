@@ -32,7 +32,7 @@ Introduce language-specific learning paths for storing, reading, updating, query
 [usage conflict resolution]: {{< product-version-root >}}how-to/develop/resolve-conflicts/
 [dev data model#log]: {{< product-version-root >}}how-to/plan/map-data-to-objects/
 [dev data model#sensor]: {{< product-version-root >}}how-to/plan/map-data-to-objects/
-[concept eventual consistency]: {{< product-version-root >}}explanation/consistency/eventual-consistency/
+[concept eventual consistency]: {{< product-version-root >}}foundations/consistency/eventual-consistency/
 [dev data model#user]: {{< product-version-root >}}how-to/plan/map-data-to-objects/
 [dev kv model]: {{< product-version-root >}}how-to/plan/map-data-to-objects/
 [dev data types]: {{< product-version-root >}}reference/data/distributed-data-types/
@@ -44,15 +44,15 @@ Introduce language-specific learning paths for storing, reading, updating, query
 [use ref search]: {{< product-version-root >}}reference/specialized-apis/legacy-query-api/
 [usage 2i]: {{< product-version-root >}}how-to/develop/query-secondary-indexes/
 [dev client libraries]: {{< product-version-root >}}reference/client-libraries/
-[concept crdts]: {{< product-version-root >}}explanation/data-model/distributed-data-types/
+[concept crdts]: {{< product-version-root >}}foundations/data-model/distributed-data-types/
 [dev data model]: {{< product-version-root >}}how-to/plan/map-data-to-objects/
 [usage mapreduce]: {{< product-version-root >}}how-to/develop/run-mapreduce/
 [apps mapreduce]: {{< product-version-root >}}how-to/develop/run-mapreduce/
 [use ref 2i]: {{< product-version-root >}}reference/data/secondary-indexes/
-[plan backend leveldb]: {{< product-version-root >}}explanation/storage/leveldb/
-[plan backend bitcask]: {{< product-version-root >}}explanation/storage/bitcask/
-[plan backend memory]: {{< product-version-root >}}explanation/storage/memory/
-[plan backend leveled]: {{< product-version-root >}}explanation/storage/leveled/
+[plan backend leveldb]: {{< product-version-root >}}foundations/storage/leveldb/
+[plan backend bitcask]: {{< product-version-root >}}foundations/storage/bitcask/
+[plan backend memory]: {{< product-version-root >}}foundations/storage/memory/
+[plan backend leveled]: {{< product-version-root >}}foundations/storage/leveled/
 [obj model java]: {{< product-version-root >}}tutorials/first-application/java/
 [obj model ruby]: {{< product-version-root >}}tutorials/first-application/ruby/
 [obj model python]: {{< product-version-root >}}tutorials/first-application/python/
@@ -62,15 +62,15 @@ Introduce language-specific learning paths for storing, reading, updating, query
 [obj model golang]: {{< product-version-root >}}tutorials/first-application/golang/
 [concept strong consistency]: {{< product-version-root >}}reference/specialized-apis/strong-consistency-api/
 [use ref strong consistency]: {{< product-version-root >}}reference/specialized-apis/strong-consistency-api/
-[cluster ops strong consistency]: {{< product-version-root >}}explanation/consistency/strong-consistency/
+[cluster ops strong consistency]: {{< product-version-root >}}foundations/consistency/strong-consistency/
 [config strong consistency]: {{< product-version-root >}}how-to/configure/strong-consistency/
 [apps strong consistency]: {{< product-version-root >}}reference/specialized-apis/strong-consistency-api/
 [usage update objects]: {{< product-version-root >}}how-to/develop/update-object/
-[apps replication properties]: {{< product-version-root >}}explanation/replication/references-and-triggers/
+[apps replication properties]: {{< product-version-root >}}foundations/replication/references-and-triggers/
 [install index]: {{< product-version-root >}}how-to/install/
 [getting started]: {{< product-version-root >}}tutorials/first-application/
 [usage index]: {{< product-version-root >}}how-to/develop/
-[glossary]: {{< product-version-root >}}explanation/foundations/glossary/
+[glossary]: {{< product-version-root >}}foundations/foundations/glossary/
 
 So you've decided to build an application using Riak as a data store. We
 think that this is a wise choice for a broad variety of use cases. But

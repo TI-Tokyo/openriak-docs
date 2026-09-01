@@ -27,7 +27,7 @@ Define the syntax, output fields, scope, and operational cautions for riak admin
 
 ### Vnode Status
 
-**Available from OpenRiak KV 3.4.1.**
+**Available from OpenRiak KV {{< current-version >}}.**
 
 A significant proportion of the work within Riak takes places within the vnode.  To see the status of each vnode in the cluster, and see available statistics from the backend:  `riak admin vnode-status | sed -n 1p | json_pp`
 

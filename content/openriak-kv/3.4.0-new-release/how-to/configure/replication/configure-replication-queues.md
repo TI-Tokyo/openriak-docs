@@ -35,11 +35,11 @@ Administrative access to the nodes you will change; a copy of the current config
 
 ### Queuing System
 
-[configure tictacaae]: {{< product-version-root >}}explanation/replication/tictac-aae/
+[configure tictacaae]: {{< product-version-root >}}foundations/replication/tictac-aae/
 [configure nextgenrepl fullsync]: ../fullsync/
 [configure nextgenrepl realtime]: ../realtime/
-[configure nextgenrepl queuing]: {{< product-version-root >}}explanation/replication/queues/
-[configure nextgenrepl queue filters]: {{< product-version-root >}}explanation/replication/queues/#queue-filters
+[configure nextgenrepl queuing]: {{< product-version-root >}}foundations/replication/queues/
+[configure nextgenrepl queue filters]: {{< product-version-root >}}foundations/replication/queues/#queue-filters
 [configure nextgenrepl reference]: {{< product-version-root >}}reference/configuration/
 [tictacaae folds]: {{< product-version-root >}}how-to/operate/aae-fold/
 

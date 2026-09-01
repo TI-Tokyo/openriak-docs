@@ -51,7 +51,7 @@ invoked can cause nasty feedback loops which will wedge the hook into an
 infinite cycle unless the hook functions are carefully written to detect
 and short-circuit such cycles.
 
-Pre- and post-commit hooks are applied at the [bucket]({{< product-version-root >}}explanation/data-model/keys-objects-and-buckets/) level,
+Pre- and post-commit hooks are applied at the [bucket]({{< product-version-root >}}foundations/data-model/keys-objects-and-buckets/) level,
 [using bucket types][usage bucket types]. They are run once per successful response to the
 client.
 

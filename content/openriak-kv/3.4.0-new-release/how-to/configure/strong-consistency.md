@@ -37,20 +37,20 @@ Administrative access to the nodes you will change; a copy of the current config
 [cluster ops add remove node]: {{< product-version-root >}}tutorials/operations/change-cluster-membership/
 [config reference#strong-cons]: {{< product-version-root >}}reference/configuration/#strong-consistency
 [use admin riak cli]: {{< product-version-root >}}reference/commands/riak/
-[concept eventual consistency]: {{< product-version-root >}}explanation/consistency/eventual-consistency/
-[plan backend bitcask]: {{< product-version-root >}}explanation/storage/bitcask/
-[glossary vnode]: {{< product-version-root >}}explanation/foundations/glossary/#vnode
-[concept buckets]: {{< product-version-root >}}explanation/data-model/keys-objects-and-buckets/
+[concept eventual consistency]: {{< product-version-root >}}foundations/consistency/eventual-consistency/
+[plan backend bitcask]: {{< product-version-root >}}foundations/storage/bitcask/
+[glossary vnode]: {{< product-version-root >}}foundations/foundations/glossary/#vnode
+[concept buckets]: {{< product-version-root >}}foundations/data-model/keys-objects-and-buckets/
 [cluster ops bucket types]: {{< product-version-root >}}how-to/operate/manage-bucket-types/
 [use admin riak admin#ensemble]: {{< product-version-root >}}reference/commands/riak-admin/#ensemble-status
 [use admin riak admin]: {{< product-version-root >}}reference/commands/riak-admin/
 [config reference#advanced]: {{< product-version-root >}}reference/configuration/#advanced-configuration
-[plan cluster capacity]: {{< product-version-root >}}explanation/storage/capacity-planning/
-[cluster ops strong consistency]: {{< product-version-root >}}explanation/consistency/strong-consistency/
-[apps replication properties]: {{< product-version-root >}}explanation/replication/references-and-triggers/
-[concept causal context]: {{< product-version-root >}}explanation/data-model/causal-context/
+[plan cluster capacity]: {{< product-version-root >}}foundations/storage/capacity-planning/
+[cluster ops strong consistency]: {{< product-version-root >}}foundations/consistency/strong-consistency/
+[apps replication properties]: {{< product-version-root >}}foundations/replication/references-and-triggers/
+[concept causal context]: {{< product-version-root >}}foundations/data-model/causal-context/
 [dev data types]: {{< product-version-root >}}reference/data/distributed-data-types/
-[glossary aae]: {{< product-version-root >}}explanation/foundations/glossary/#active-anti-entropy-aae
+[glossary aae]: {{< product-version-root >}}foundations/foundations/glossary/#active-anti-entropy-aae
 [cluster ops 2i]: {{< product-version-root >}}reference/data/secondary-indexes/
 [usage commit hooks]: {{< product-version-root >}}how-to/develop/write-commit-hook/
 [cluster ops obj del]: {{< product-version-root >}}reference/operations/object-deletion/
@@ -350,7 +350,7 @@ Item | Meaning
 :----|:-------
 `Enabled` | Whether the consensus subsystem is enabled on the current node, i.e. whether the `strong_consistency` parameter in [`riak.conf`][config reference#strong-cons] has been set to `on`. If this reads `off` and you wish to enable strong consistency, see our documentation on <a href="{{< product-version-root >}}reference/configuration/#strong-consistency">enabling strong consistency</a>.
 `Active` | Whether the consensus subsystem is active, i.e. whether there are enough nodes in the cluster to use strong consistency, which requires at least three nodes.
-`Ring Ready` | If `true`, then all of the [vnodes][glossary vnode] in the cluster have seen the current <a href="{{< product-version-root >}}explanation/foundations/clusters-rings-and-partitions/#the-ring">ring</a>, which means that the strong consistency subsystem can be used; if `false`, then the system is not yet ready. If you have recently added or removed one or more nodes to/from the cluster, it may take some time for `Ring Ready` to change.
+`Ring Ready` | If `true`, then all of the [vnodes][glossary vnode] in the cluster have seen the current <a href="{{< product-version-root >}}foundations/foundations/clusters-rings-and-partitions/#the-ring">ring</a>, which means that the strong consistency subsystem can be used; if `false`, then the system is not yet ready. If you have recently added or removed one or more nodes to/from the cluster, it may take some time for `Ring Ready` to change.
 `Validation` | This will display `strong` if the `tree_validation` setting in [`strong consistency`]({{< product-version-root >}}reference/configuration/#strong-consistency) has been set to `on` and `weak` if set to `off`.
 `Metadata` | This depends on the value of the `synchronous_tree_updates` setting in [`strong consistency`]({{< product-version-root >}}reference/configuration/#strong-consistency), which determines whether strong consistency-related Merkle trees are updated synchronously or asynchronously. If `best-effort replication (asynchronous)`, then `synchronous_tree_updates` is set to `false`; if `guaranteed replication (synchronous)` then `synchronous_tree_updates` is set to `true`.
 `Ensembles` | This displays a list of all of the currently existing ensembles active in the cluster.<br /><ul><li><code>Ensemble</code> --- The ID of the ensemble</li><li><code>Quorum</code> --- The number of ensemble peers that are either leading or following</li><li><code>Nodes</code> --- The number of nodes currently online</li><li><code>Leader</code> --- The current leader node for the ensemble</li></ul>

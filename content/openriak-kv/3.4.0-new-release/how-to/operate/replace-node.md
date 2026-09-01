@@ -38,7 +38,7 @@ A healthy cluster, current backups, and access to cluster status and logs. Recor
 ### Replacing a Node
 
 At some point, for various reasons, you might need to replace a node in
-your OpenRiak cluster (which is different from [recovering a failed node]({{< product-version-root >}}explanation/operations/node-failure-and-recovery/)). Here is the recommended way to go
+your OpenRiak cluster (which is different from [recovering a failed node]({{< product-version-root >}}foundations/operations/node-failure-and-recovery/)). Here is the recommended way to go
 about replacing a node.
 
 1. Back up your data directory on the node in question. In this example

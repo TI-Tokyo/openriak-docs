@@ -58,7 +58,7 @@ When queueing items via a fold (e.g. `repl_keys_range`, `repair_keys_range`, `fi
 
 #### Concepts - Queues and Workers
 
-Replication queues use the [disk-backed queue framework]({{< product-version-root >}}explanation/replication/queues/) common across multiple Riak services.
+Replication queues use the [disk-backed queue framework]({{< product-version-root >}}foundations/replication/queues/) common across multiple Riak services.
 
 Replication references, which are primarily newly coordinated PUTs, are sent to the replication source queue process.  The real-time replication source then assesses which replication queues require that reference:
 

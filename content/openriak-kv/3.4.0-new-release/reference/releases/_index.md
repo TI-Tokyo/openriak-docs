@@ -36,8 +36,8 @@ Provide factual version, platform, package, compatibility, and change informatio
 
 ## In this section
 
-- [Deprecated features in OpenRiak KV 3.4.0]({{< product-version-root >}}reference/releases/deprecations/) — List deprecated 3.4.0 features, preferred alternatives, compatibility implications, and possible future removal.
+- [Deprecated features in OpenRiak KV {{< current-version >}}]({{< product-version-root >}}reference/releases/deprecations/) — List deprecated {{< current-version >}} features, preferred alternatives, compatibility implications, and possible future removal.
 - [Downloads]({{< product-version-root >}}downloads/) — List supported OpenRiak packages, checksums, repositories, and source archives by platform and version.
-- [OpenRiak KV 3.4.0 release notes]({{< product-version-root >}}release-notes/) — Summarize the features, operational improvements, supported Erlang releases, and deprecations in OpenRiak KV 3.4.0.
+- [OpenRiak KV {{< current-version >}} release notes]({{< product-version-root >}}release-notes/) — Summarize the features, operational improvements, supported Erlang releases, and deprecations in OpenRiak KV {{< current-version >}}.
 - [Supported platforms]({{< product-version-root >}}reference/releases/supported-platforms/) — List supported operating systems, architectures, runtimes, and lifecycle dates for this release.
 - [Version compatibility]({{< product-version-root >}}reference/releases/version-compatibility/) — Record cluster, client, protocol, and replication compatibility across supported OpenRiak versions.

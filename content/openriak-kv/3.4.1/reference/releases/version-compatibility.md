@@ -25,11 +25,11 @@ review_scope: 'editorial-and-site-integration'
 Record cluster, client, protocol, and replication compatibility across supported OpenRiak versions.
 
 > [!NOTE]
-> This page is a content specification. Replace the guidance below with tested OpenRiak KV 3.4.1 documentation before publishing it.
+> This page is a content specification. Replace the guidance below with tested OpenRiak KV {{< current-version >}} documentation before publishing it.
 
 ## Scope
 
-Define exactly what **Version compatibility** covers in OpenRiak KV 3.4.1 and what belongs in neighbouring reference pages. State the component, interface, file, command, or data type being documented and the supported context in which it is available.
+Define exactly what **Version compatibility** covers in OpenRiak KV {{< current-version >}} and what belongs in neighbouring reference pages. State the component, interface, file, command, or data type being documented and the supported context in which it is available.
 
 ## Definitions and syntax to add
 
@@ -41,11 +41,11 @@ Document precedence rules, interactions with other settings, consistency and fai
 
 ## Examples to verify
 
-Add minimal examples for a normal case, an important boundary case, and a representative invalid case. Record exact responses or error forms only after testing them against OpenRiak KV 3.4.1.
+Add minimal examples for a normal case, an important boundary case, and a representative invalid case. Record exact responses or error forms only after testing them against OpenRiak KV {{< current-version >}}.
 
 ## Version notes and sources
 
-Identify what changed from 3.4.0 to 3.4.1, cite the relevant release note or source definition, and distinguish inherited 3.2.5 behaviour from claims independently confirmed for this release.
+Identify what changed from {{< previous-version >}} to {{< current-version >}}, cite the relevant release note or source definition, and distinguish inherited 3.2.5 behaviour from claims independently confirmed for this release.
 
 ## Related reference
 
@@ -53,8 +53,8 @@ Link to adjacent commands, configuration keys, APIs, data types, and the how-to 
 
 ## In this section
 
-- [Deprecated features in OpenRiak KV 3.4.1]({{< product-version-root >}}reference/releases/deprecations/) — List deprecated features carried into 3.4.1, preferred alternatives, compatibility implications, and possible future removal.
+- [Deprecated features in OpenRiak KV {{< current-version >}}]({{< product-version-root >}}reference/releases/deprecations/) — List deprecated features carried into {{< current-version >}}, preferred alternatives, compatibility implications, and possible future removal.
 - [Downloads]({{< product-version-root >}}downloads/) — List supported OpenRiak packages, checksums, repositories, and source archives by platform and version.
 - [Release and compatibility reference]({{< product-version-root >}}reference/releases/) — Provide factual version, platform, package, compatibility, and change information.
-- [OpenRiak KV 3.4.1 release notes]({{< product-version-root >}}release-notes/) — Summarize the externally visible changes and fixes in OpenRiak KV 3.4.1 relative to 3.4.0.
+- [OpenRiak KV {{< current-version >}} release notes]({{< product-version-root >}}release-notes/) — Summarize the externally visible changes and fixes in OpenRiak KV {{< current-version >}} relative to {{< previous-version >}}.
 - [Supported platforms]({{< product-version-root >}}reference/releases/supported-platforms/) — List supported operating systems, architectures, runtimes, and lifecycle dates for this release.

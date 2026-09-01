@@ -49,7 +49,7 @@ A supported operating system and package source, verified backups, release notes
 OpenRiak KV can be installed on Debian or Ubuntu-based systems using a binary
 package or by compiling from source code.
 
-Binary packages for OpenRiak KV 3.4.1 are published for:
+Binary packages for OpenRiak KV {{< current-version >}} are published for:
 
 - Ubuntu 22.04 on AMD64
 - Ubuntu 24.04 on AMD64 and ARM64
@@ -71,41 +71,41 @@ To install:
 ```bash
 sudo apt-get install libpam0g-dev
 ```
-All published OpenRiak KV 3.4.1 packages use OTP 26.
+All published OpenRiak KV {{< current-version >}} packages use OTP 26.
 
 ###### Ubuntu 22.04 Jammy (AMD64)
 
 ```bash
-wget https://files.tiot.jp/riak/kv/3.4/3.4.1/ubuntu/jammy64/riak_3.4.1-OTP26_amd64.deb
-sudo dpkg -i riak_3.4.1-OTP26_amd64.deb
+wget https://files.tiot.jp/riak/kv/3.4/{{< current-version >}}/ubuntu/jammy64/riak_{{< current-version >}}-OTP26_amd64.deb
+sudo dpkg -i riak_{{< current-version >}}-OTP26_amd64.deb
 ```
 
 ###### Ubuntu 24.04 Noble (AMD64)
 
 ```bash
-wget https://files.tiot.jp/riak/kv/3.4/3.4.1/ubuntu/noble64/riak_3.4.1-OTP26_amd64.deb
-sudo dpkg -i riak_3.4.1-OTP26_amd64.deb
+wget https://files.tiot.jp/riak/kv/3.4/{{< current-version >}}/ubuntu/noble64/riak_{{< current-version >}}-OTP26_amd64.deb
+sudo dpkg -i riak_{{< current-version >}}-OTP26_amd64.deb
 ```
 
 ###### Ubuntu 24.04 Noble (ARM64, Graviton3)
 
 ```bash
-wget https://files.tiot.jp/riak/kv/3.4/3.4.1/ubuntu/noble%20%28graviton3%29/riak_3.4.1-OTP26_arm64.deb
-sudo dpkg -i riak_3.4.1-OTP26_arm64.deb
+wget https://files.tiot.jp/riak/kv/3.4/{{< current-version >}}/ubuntu/noble%20%28graviton3%29/riak_{{< current-version >}}-OTP26_arm64.deb
+sudo dpkg -i riak_{{< current-version >}}-OTP26_arm64.deb
 ```
 
 ###### Debian 11 Bullseye (AMD64)
 
 ```bash
-wget https://files.tiot.jp/riak/kv/3.4/3.4.1/debian/11/riak_3.4.1-OTP26_amd64.deb
-sudo dpkg -i riak_3.4.1-OTP26_amd64.deb
+wget https://files.tiot.jp/riak/kv/3.4/{{< current-version >}}/debian/11/riak_{{< current-version >}}-OTP26_amd64.deb
+sudo dpkg -i riak_{{< current-version >}}-OTP26_amd64.deb
 ```
 
 ###### Debian 12 Bookworm (AMD64)
 
 ```bash
-wget https://files.tiot.jp/riak/kv/3.4/3.4.1/debian/12/riak_3.4.1-OTP26_amd64.deb
-sudo dpkg -i riak_3.4.1-OTP26_amd64.deb
+wget https://files.tiot.jp/riak/kv/3.4/{{< current-version >}}/debian/12/riak_{{< current-version >}}-OTP26_amd64.deb
+sudo dpkg -i riak_{{< current-version >}}-OTP26_amd64.deb
 ```
 
 #### Next Steps

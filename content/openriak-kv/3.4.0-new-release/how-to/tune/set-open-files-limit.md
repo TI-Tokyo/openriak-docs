@@ -36,7 +36,7 @@ A representative workload, a recorded performance baseline, current capacity mea
 
 ### Open Files Limit
 
-[plan backend]: {{< product-version-root >}}explanation/storage/choosing-backend/
+[plan backend]: {{< product-version-root >}}foundations/storage/choosing-backend/
 [blog oracle]: http://blogs.oracle.com/elving/entry/too_many_open_files
 
 OpenRiak KV can accumulate a large number of open file handles during operation. The creation of numerous data files is normal, and the [backend][plan backend] performs periodic merges of data file collections to avoid accumulating file handles.

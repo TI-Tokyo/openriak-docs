@@ -33,7 +33,7 @@ A non-production OpenRiak KV cluster, client credentials, and disposable test da
 
 ### Conditional Requests
 
-**Available from OpenRiak KV 3.4.0.**
+**Available from OpenRiak KV {{< current-version >}}.**
 
 Conditional updates are very useful when looking to prevent siblings.  By default, any concurrent updates will lead to sibling generation, and handling siblings within application code may be expensive (and in some cases may require user intervention).  This can be controlled by making PUT requests conditional, with configurable degrees of strictness on how the condition will be checked to prevent concurrent changes.
 

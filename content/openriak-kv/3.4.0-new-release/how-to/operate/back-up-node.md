@@ -39,13 +39,13 @@ A healthy cluster, current backups, and access to cluster status and logs. Recor
 
 ### Backing Up
 
-[concept clusters]: {{< product-version-root >}}explanation/foundations/clusters-rings-and-partitions/
+[concept clusters]: {{< product-version-root >}}foundations/foundations/clusters-rings-and-partitions/
 [config reference]: {{< product-version-root >}}reference/configuration/
-[plan backend leveldb]: {{< product-version-root >}}explanation/storage/leveldb/
-[plan backend bitcask]: {{< product-version-root >}}explanation/storage/bitcask/
+[plan backend leveldb]: {{< product-version-root >}}foundations/storage/leveldb/
+[plan backend bitcask]: {{< product-version-root >}}foundations/storage/bitcask/
 [use ref strong consistency]: {{< product-version-root >}}reference/specialized-apis/strong-consistency-api/
-[concept aae]: {{< product-version-root >}}explanation/replication/active-anti-entropy/
-[aae read repair]: {{< product-version-root >}}explanation/replication/active-anti-entropy/#read-repair-vs-active-anti-entropy
+[concept aae]: {{< product-version-root >}}foundations/replication/active-anti-entropy/
+[aae read repair]: {{< product-version-root >}}foundations/replication/active-anti-entropy/#read-repair-vs-active-anti-entropy
 
 OpenRiak KV is a [clustered][concept clusters] system built to survive a wide range of failure scenarios, including the loss of nodes due to network or hardware failure. Although this is one of OpenRiak KV's core strengths, it cannot withstand all failure scenarios.
 
@@ -70,7 +70,7 @@ Downtime of a node can be significantly reduced by using an OS feature or filesy
 **Backups and eventual consistency**
 Due to OpenRiak KV's eventually consistent nature, backups can become slightly inconsistent from node to node.
 
-Data could exist on some nodes and not others at the exact time a backup is made. Any inconsistency will be corrected once a backup is restored, either by OpenRiak's [active anti-entropy]({{< product-version-root >}}explanation/replication/active-anti-entropy/) processes or when the object is read, via [read repair]({{< product-version-root >}}explanation/replication/active-anti-entropy/#read-repair-vs-active-anti-entropy).
+Data could exist on some nodes and not others at the exact time a backup is made. Any inconsistency will be corrected once a backup is restored, either by OpenRiak's [active anti-entropy]({{< product-version-root >}}foundations/replication/active-anti-entropy/) processes or when the object is read, via [read repair]({{< product-version-root >}}foundations/replication/active-anti-entropy/#read-repair-vs-active-anti-entropy).
 
 #### OS-Specific Directory Locations
 

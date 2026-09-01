@@ -125,7 +125,7 @@ Some changes can be applied using GET/PUT specific parameters, which will overri
 
 #### Property - dvv_enabled
 
-In Riak 2.0 the handling of siblings was improved by the enabling of dotted [version vectors]({{< product-version-root >}}explanation/data-model/version-vectors-and-siblings/).  All buckets should use `{dvv_enabled, true}`.  The introduction of DVV did not force non-typed buckets to use DVV, and by default non-typed buckets will continue to use legacy vector clocks.
+In Riak 2.0 the handling of siblings was improved by the enabling of dotted [version vectors]({{< product-version-root >}}foundations/data-model/version-vectors-and-siblings/).  All buckets should use `{dvv_enabled, true}`.  The introduction of DVV did not force non-typed buckets to use DVV, and by default non-typed buckets will continue to use legacy vector clocks.
 
 To correct this the following configuration should be added to the `riak.conf`:  `buckets.default.merge_strategy = 2`.
 

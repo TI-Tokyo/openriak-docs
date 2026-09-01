@@ -22,11 +22,11 @@ review_scope: 'editorial-and-site-integration'
 Show operators how to track virtual machine statistics from the stats endpoint against runtime limits.
 
 > [!NOTE]
-> This page is a content specification. Replace the guidance below with tested OpenRiak KV 3.4.1 documentation before publishing it.
+> This page is a content specification. Replace the guidance below with tested OpenRiak KV {{< current-version >}} documentation before publishing it.
 
 ## Goal
 
-Define the single practical outcome of **Monitor virtual machine limits**, the environments to which it applies, and the supported OpenRiak KV 3.4.1 starting state. Keep conceptual background brief and link to an explanation page instead of interrupting the procedure.
+Define the single practical outcome of **Monitor virtual machine limits**, the environments to which it applies, and the supported OpenRiak KV {{< current-version >}} starting state. Keep conceptual background brief and link to an explanation page instead of interrupting the procedure.
 
 ## Before you begin
 
@@ -34,7 +34,7 @@ List the required role and permissions, current-state checks, backups or safegua
 
 ## Procedure to write
 
-Add a tested sequence using commands and configuration values copied from OpenRiak KV 3.4.1. For every action, identify where it runs, whether it applies per node or per cluster, what output to expect, and when the operator must wait before continuing.
+Add a tested sequence using commands and configuration values copied from OpenRiak KV {{< current-version >}}. For every action, identify where it runs, whether it applies per node or per cluster, what output to expect, and when the operator must wait before continuing.
 
 ## Verify the result
 
@@ -77,7 +77,7 @@ Link to the complete configuration or API reference, the explanation of the unde
 - [Replace a failed node]({{< product-version-root >}}how-to/operate/replace-node/) — Show operators how to replace a failed node with prechecks, verification, and recovery guidance.
 - [Re-replicate keys from a time window]({{< product-version-root >}}how-to/operate/rereplicate-time-window/) — Show operators how to re-replicate keys modified during a selected time window.
 - [Restore an OpenRiak node]({{< product-version-root >}}how-to/operate/restore-node/) — Show operators how to restore an openriak node with prechecks, verification, and recovery guidance.
-- [Resynchronize a bucket]({{< product-version-root >}}how-to/operate/resync-bucket/) — Show operators how to request and monitor optimized reconciliation for one bucket in OpenRiak KV 3.4.1.
+- [Resynchronize a bucket]({{< product-version-root >}}how-to/operate/resync-bucket/) — Show operators how to request and monitor optimized reconciliation for one bucket in OpenRiak KV {{< current-version >}}.
 - [Perform a rolling node replacement]({{< product-version-root >}}how-to/operate/rolling-replacement/) — Show operators how to perform a rolling node replacement with prechecks, verification, and recovery guidance.
 - [Perform a rolling restart]({{< product-version-root >}}how-to/operate/rolling-restart/) — Show operators how to perform a rolling restart with prechecks, verification, and recovery guidance.
 - [Run a routine operations checklist]({{< product-version-root >}}how-to/operate/routine-operations-checklist/) — Show operators how to perform a repeatable health and maintenance review of an OpenRiak cluster.

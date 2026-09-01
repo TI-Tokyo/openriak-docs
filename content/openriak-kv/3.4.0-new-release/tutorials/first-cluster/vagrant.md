@@ -30,7 +30,7 @@ Guide a newcomer through creating a repeatable multi-node development cluster wi
 ## Overview
 
 > [!WARNING]
-> Migration review required: Commands or links derived from the 3.2.5 documentation were version-normalized for 3.4.0 and require technical verification; Release-specific installation, upgrade, downgrade, or quick-start instructions require verification against OpenRiak KV 3.4.0 packages; Legacy version text or MDX syntax remains and requires editorial review.
+> Migration review required: Commands or links derived from the 3.2.5 documentation were version-normalized for {{< current-version >}} and require technical verification; Release-specific installation, upgrade, downgrade, or quick-start instructions require verification against OpenRiak KV {{< current-version >}} packages; Legacy version text or MDX syntax remains and requires editorial review.
 
 ## What you will learn
 

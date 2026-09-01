@@ -23,11 +23,11 @@ review_scope: 'editorial-and-site-integration'
 Show practitioners how to troubleshoot client errors from evidence gathering through verification.
 
 > [!NOTE]
-> This page is a content specification. Replace the guidance below with tested OpenRiak KV 3.4.0 documentation before publishing it.
+> This page is a content specification. Replace the guidance below with tested OpenRiak KV {{< current-version >}} documentation before publishing it.
 
 ## Goal
 
-Define the single practical outcome of **Troubleshoot client errors**, the environments to which it applies, and the supported OpenRiak KV 3.4.0 starting state. Keep conceptual background brief and link to an explanation page instead of interrupting the procedure.
+Define the single practical outcome of **Troubleshoot client errors**, the environments to which it applies, and the supported OpenRiak KV {{< current-version >}} starting state. Keep conceptual background brief and link to an explanation page instead of interrupting the procedure.
 
 ## Before you begin
 
@@ -35,7 +35,7 @@ List the required role and permissions, current-state checks, backups or safegua
 
 ## Procedure to write
 
-Add a tested sequence using commands and configuration values copied from OpenRiak KV 3.4.0. For every action, identify where it runs, whether it applies per node or per cluster, what output to expect, and when the operator must wait before continuing.
+Add a tested sequence using commands and configuration values copied from OpenRiak KV {{< current-version >}}. For every action, identify where it runs, whether it applies per node or per cluster, what output to expect, and when the operator must wait before continuing.
 
 ## Verify the result
 

@@ -56,7 +56,7 @@ does not necessarily cause data loss, as other replicas of every key are
 available elsewhere in the cluster. Once the node is detected as down,
 other nodes in the cluster will take over its responsibilities
 temporarily and transmit the updated data to it when it eventually
-returns to service (also called [hinted handoff]({{< product-version-root >}}explanation/foundations/glossary/#hinted-handoff)).
+returns to service (also called [hinted handoff]({{< product-version-root >}}foundations/foundations/glossary/#hinted-handoff)).
 
 More severe data loss scenarios usually relate to hardware failure.
 If data is lost, several options are available for restoring it.

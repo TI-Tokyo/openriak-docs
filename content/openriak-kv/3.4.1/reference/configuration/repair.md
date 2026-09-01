@@ -19,14 +19,14 @@ last_reviewed: '2026-08-28'
 review_scope: 'editorial-and-site-integration'
 ---
 
-Define repair pairing, deferment, concurrency, and workload-control settings in OpenRiak KV 3.4.1.
+Define repair pairing, deferment, concurrency, and workload-control settings in OpenRiak KV {{< current-version >}}.
 
 > [!NOTE]
-> This page is a content specification. Replace the guidance below with tested OpenRiak KV 3.4.1 documentation before publishing it.
+> This page is a content specification. Replace the guidance below with tested OpenRiak KV {{< current-version >}} documentation before publishing it.
 
 ## Scope
 
-Define exactly what **Repair configuration properties** covers in OpenRiak KV 3.4.1 and what belongs in neighbouring reference pages. State the component, interface, file, command, or data type being documented and the supported context in which it is available.
+Define exactly what **Repair configuration properties** covers in OpenRiak KV {{< current-version >}} and what belongs in neighbouring reference pages. State the component, interface, file, command, or data type being documented and the supported context in which it is available.
 
 ## Definitions and syntax to add
 
@@ -38,11 +38,11 @@ Document precedence rules, interactions with other settings, consistency and fai
 
 ## Examples to verify
 
-Add minimal examples for a normal case, an important boundary case, and a representative invalid case. Record exact responses or error forms only after testing them against OpenRiak KV 3.4.1.
+Add minimal examples for a normal case, an important boundary case, and a representative invalid case. Record exact responses or error forms only after testing them against OpenRiak KV {{< current-version >}}.
 
 ## Version notes and sources
 
-Identify what changed from 3.4.0 to 3.4.1, cite the relevant release note or source definition, and distinguish inherited 3.2.5 behaviour from claims independently confirmed for this release.
+Identify what changed from {{< previous-version >}} to {{< current-version >}}, cite the relevant release note or source definition, and distinguish inherited 3.2.5 behaviour from claims independently confirmed for this release.
 
 ## Related reference
 

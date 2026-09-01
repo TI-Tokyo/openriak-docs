@@ -33,27 +33,27 @@ Define the scope, defaults, units, validation rules, and version applicability o
 
 ### OpenRiak KV Configuration Reference
 
-[concept clusters]: {{< product-version-root >}}explanation/foundations/clusters-rings-and-partitions/
-[plan backend bitcask]: {{< product-version-root >}}explanation/storage/bitcask/
-[config backend bitcask]: {{< product-version-root >}}explanation/storage/bitcask//#configuring-bitcask
-[plan backend leveldb]: {{< product-version-root >}}explanation/storage/leveldb/
-[config backend leveldb]: {{< product-version-root >}}explanation/storage/leveldb//#configuring-eleveldb
-[plan backend leveled]: {{< product-version-root >}}explanation/storage/leveled/
-[config backend leveled]: {{< product-version-root >}}explanation/storage/leveled//#configuring-leveled
-[plan backend memory]: {{< product-version-root >}}explanation/storage/memory/
-[config backend memory]: {{< product-version-root >}}explanation/storage/memory//#configuring-the-memory-backend
-[plan backend multi]: {{< product-version-root >}}explanation/storage/multi-backend/
-[config backend multi]: {{< product-version-root >}}explanation/storage/multi-backend//#configuring-multiple-backends-1
+[concept clusters]: {{< product-version-root >}}foundations/foundations/clusters-rings-and-partitions/
+[plan backend bitcask]: {{< product-version-root >}}foundations/storage/bitcask/
+[config backend bitcask]: {{< product-version-root >}}foundations/storage/bitcask//#configuring-bitcask
+[plan backend leveldb]: {{< product-version-root >}}foundations/storage/leveldb/
+[config backend leveldb]: {{< product-version-root >}}foundations/storage/leveldb//#configuring-eleveldb
+[plan backend leveled]: {{< product-version-root >}}foundations/storage/leveled/
+[config backend leveled]: {{< product-version-root >}}foundations/storage/leveled//#configuring-leveled
+[plan backend memory]: {{< product-version-root >}}foundations/storage/memory/
+[config backend memory]: {{< product-version-root >}}foundations/storage/memory//#configuring-the-memory-backend
+[plan backend multi]: {{< product-version-root >}}foundations/storage/multi-backend/
+[config backend multi]: {{< product-version-root >}}foundations/storage/multi-backend//#configuring-multiple-backends-1
 [use admin riak cli]: ../../using/admin/riak-cli
 [use admin riak admin]: ../../using/admin/riak-admin
 [glossary aae]: ../../learn/glossary/#active-anti-entropy-aae
 [use ref search 2i]: ../../using/reference/secondary-indexes
 [cluster ops bucket types]: {{< product-version-root >}}how-to/operate/manage-bucket-types/
 [usage conflict resolution]: {{< product-version-root >}}how-to/develop/resolve-conflicts/
-[concept causal context]: {{< product-version-root >}}explanation/data-model/causal-context/
+[concept causal context]: {{< product-version-root >}}foundations/data-model/causal-context/
 [usage mapreduce]: {{< product-version-root >}}how-to/develop/run-mapreduce/
 [security index]: {{< product-version-root >}}how-to/secure/
-[cluster ops strong consistency]: {{< product-version-root >}}explanation/consistency/strong-consistency/
+[cluster ops strong consistency]: {{< product-version-root >}}foundations/consistency/strong-consistency/
 [glossary vnode]: ../../learn/glossary/#vnode
 [cluster ops handoff]: {{< product-version-root >}}how-to/operate/manage-handoffs/
 
@@ -226,7 +226,7 @@ The directory in which the [``riak admin``][use admin riak admin],
 </td>
 <td>
 The directory in which Riak stores its storage backend data, as well
-as <a href="{{< product-version-root >}}explanation/foundations/glossary/#active-anti-entropy-aae">active anti-entropy</a> data, and cluster metadata
+as <a href="{{< product-version-root >}}foundations/foundations/glossary/#active-anti-entropy-aae">active anti-entropy</a> data, and cluster metadata
 </td>
 <td>
 <code>./data</code>
@@ -515,7 +515,7 @@ The strategy used when merging objects that potentially have
 conflicts. The default is <code>2</code> in Riak 2.0 for typed buckets
 and <code>1</code> for non-typed buckets. This setting reduces sibling
 creation through additional metadata on each sibling (also known as <a
-href="{{< product-version-root >}}explanation/data-model/causal-context/#dotted-version-vectors">Dotted
+href="{{< product-version-root >}}foundations/data-model/causal-context/#dotted-version-vectors">Dotted
 Version Vectors</a>). Setting this to <code>1</code> is the default for
 Riak 1.4 and earlier, and may duplicate siblings that originated in the
 same write.
@@ -533,7 +533,7 @@ same write.
 The number of replicas stored in **non-typed** buckets. For typed buckets, the default is 3 unless changed explicitly for that bucket type.
 <br /><br />
 <strong>Note</strong>: See
-<a href="{{< product-version-root >}}explanation/replication/references-and-triggers/">Replication Properties</a>
+<a href="{{< product-version-root >}}foundations/replication/references-and-triggers/">Replication Properties</a>
 for further discussion.
 </td>
 <td>
@@ -2037,7 +2037,7 @@ abandons the leader (in milliseconds). This must be set greater than the
 </td>
 <td>
 Determines the number of ticks the leader will wait to hear from its
-associated <a href="{{< product-version-root >}}explanation/foundations/glossary/#vnode">vnode</a> before assuming that the vnode
+associated <a href="{{< product-version-root >}}foundations/foundations/glossary/#vnode">vnode</a> before assuming that the vnode
 is unhealthy and stepping down as leader. If the vnode does not respond
 to the leader before <code>ensemble_tick</code> *
 <code>alive_tokens</code> milliseconds have elapsed, the leader will
@@ -2246,8 +2246,8 @@ package) and in R14B04 via a custom repository and branch.
 </td>
 <td>
 Sets the frequency with which <a
-href="{{< product-version-root >}}explanation/foundations/glossary/#vnode">vnodes</a> attempt to trigger <a
-href="{{< product-version-root >}}explanation/foundations/glossary/#hinted-handoff">handoff</a> between
+href="{{< product-version-root >}}foundations/foundations/glossary/#vnode">vnodes</a> attempt to trigger <a
+href="{{< product-version-root >}}foundations/foundations/glossary/#hinted-handoff">handoff</a> between
 this node and other nodes in the cluster.
 </td>
 <td>
@@ -2658,6 +2658,6 @@ Field | Default | Valid values |
 - [Networking configuration properties]({{< product-version-root >}}reference/configuration/networking/) — List networking configuration properties with defaults, accepted values, units, dependencies, and version notes.
 - [Node configuration properties]({{< product-version-root >}}reference/configuration/node/) — List node configuration properties with defaults, accepted values, units, dependencies, and version notes.
 - [Prefix Multi configuration properties]({{< product-version-root >}}reference/configuration/prefix-multi/) — List prefix multi configuration properties with defaults, accepted values, units, dependencies, and version notes.
-- [Repair configuration properties]({{< product-version-root >}}reference/configuration/repair/) — Define repair pairing, deferment, concurrency, and workload-control settings introduced or changed in 3.4.0.
+- [Repair configuration properties]({{< product-version-root >}}reference/configuration/repair/) — Define repair pairing, deferment, concurrency, and workload-control settings introduced or changed in {{< current-version >}}.
 - [Replication configuration properties]({{< product-version-root >}}reference/configuration/replication/) — List replication configuration properties with defaults, accepted values, units, dependencies, and version notes.
 - [Security configuration properties]({{< product-version-root >}}reference/configuration/security/) — List security configuration properties with defaults, accepted values, units, dependencies, and version notes.

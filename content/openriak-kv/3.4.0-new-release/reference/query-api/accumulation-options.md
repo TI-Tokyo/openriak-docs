@@ -22,7 +22,7 @@ last_reviewed: '2026-08-28'
 review_scope: 'editorial-and-site-integration'
 ---
 
-Define the 3.4.0 Query API modes for returning keys, terms, counts, and counts by attribute.
+Define the {{< current-version >}} Query API modes for returning keys, terms, counts, and counts by attribute.
 
 ## Details
 

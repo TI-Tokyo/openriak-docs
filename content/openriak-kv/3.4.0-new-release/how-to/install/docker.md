@@ -36,7 +36,7 @@ A supported operating system and package source, verified backups, release notes
 ## Overview
 
 > [!WARNING]
-> Migration review required: Commands or links derived from the 3.2.5 documentation were version-normalized for 3.4.0 and require technical verification; Release-specific installation, upgrade, downgrade, or quick-start instructions require verification against OpenRiak KV 3.4.0 packages; No matching OpenRiak KV 3.4.0 package was found in the official 3.4 package index for this platform; Legacy version text or MDX syntax remains and requires editorial review.
+> Migration review required: Commands or links derived from the 3.2.5 documentation were version-normalized for {{< current-version >}} and require technical verification; Release-specific installation, upgrade, downgrade, or quick-start instructions require verification against OpenRiak KV {{< current-version >}} packages; No matching OpenRiak KV {{< current-version >}} package was found in the official 3.4 package index for this platform; Legacy version text or MDX syntax remains and requires editorial review.
 
 ## Verify the result
 

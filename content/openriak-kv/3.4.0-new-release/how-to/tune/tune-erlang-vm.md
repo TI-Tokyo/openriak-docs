@@ -196,7 +196,7 @@ using the older configuration system).
 
 Riak uses [epmd](http://www.erlang.org/doc/man/epmd.html), the Erlang
 Port Mapper Daemon, for most inter-node communication. In this system,
-other nodes in the [cluster]({{< product-version-root >}}explanation/foundations/clusters-rings-and-partitions/) use the Erlang identifiers specified by the `nodename` parameter (or `-name` in `vm.args`), for example `riak@10.9.8.7`. On each node, the daemon resolves these node
+other nodes in the [cluster]({{< product-version-root >}}foundations/foundations/clusters-rings-and-partitions/) use the Erlang identifiers specified by the `nodename` parameter (or `-name` in `vm.args`), for example `riak@10.9.8.7`. On each node, the daemon resolves these node
 identifiers to a TCP port. You can specify a port or range of ports for
 Riak nodes to listen on as well as the maximum number of concurrent
 ports/sockets.

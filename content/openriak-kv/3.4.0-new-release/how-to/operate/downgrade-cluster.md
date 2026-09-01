@@ -40,7 +40,7 @@ A healthy cluster, current backups, and access to cluster status and logs. Recor
 
 [rolling upgrade]: {{< product-version-root >}}how-to/operate/upgrade-cluster/
 [config ref]: {{< product-version-root >}}reference/configuration/
-[concept aae]: {{< product-version-root >}}explanation/replication/active-anti-entropy/
+[concept aae]: {{< product-version-root >}}foundations/replication/active-anti-entropy/
 [aae status]: {{< product-version-root >}}reference/commands/riak-admin/#aae-status
 
 Downgrades of OpenRiak KV are tested and supported for two feature release versions, with the general procedure being similar to that of a [rolling upgrade][rolling upgrade].
@@ -130,7 +130,7 @@ riak admin transfers
 ```
 
 > [!WARNING]
-> Migration review required: Release-specific installation, upgrade, downgrade, or quick-start instructions require verification against OpenRiak KV 3.4.0 packages.
+> Migration review required: Release-specific installation, upgrade, downgrade, or quick-start instructions require verification against OpenRiak KV {{< current-version >}} packages.
 
 ## Verify the result
 

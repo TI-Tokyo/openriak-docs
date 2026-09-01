@@ -29,7 +29,7 @@ last_reviewed: '2026-08-28'
 review_scope: 'editorial-and-site-integration'
 ---
 
-Summarize the externally visible changes and fixes in OpenRiak KV 3.4.1 relative to 3.4.0.
+Summarize the externally visible changes and fixes in OpenRiak KV {{< current-version >}} relative to {{< previous-version >}}.
 
 ## Details
 

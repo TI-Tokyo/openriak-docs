@@ -30,7 +30,7 @@ last_reviewed: '2026-08-28'
 review_scope: 'editorial-and-site-integration'
 ---
 
-List OpenRiak statistics, including 3.4.1 virtual machine measurements, endpoints, units, limits, and interpretation guidance.
+List OpenRiak statistics, including {{< current-version >}} virtual machine measurements, endpoints, units, limits, and interpretation guidance.
 
 ## Details
 

@@ -42,7 +42,7 @@ This document provides implementation and other details for OpenRiak's
 #### How It Works
 
 Secondary indexes use **document-based partitioning**, a system where
-indexes reside with each document, local to the [vnode]({{< product-version-root >}}explanation/foundations/glossary/#vnode). This
+indexes reside with each document, local to the [vnode]({{< product-version-root >}}foundations/foundations/glossary/#vnode). This
 system is also a local index. Secondary indexes are a list of key/value
 pairs that are similar to HTTP headers. At write time, objects are
 tagged with index entries consisting of key/value metadata. This
@@ -70,7 +70,7 @@ that an object will be present in future index queries as soon as the
 write operation completes.
 
 Riak stores 3 replicas of all objects by default, although this can be
-changed [using bucket types][usage bucket types], which manage buckets' [replication properties]({{< product-version-root >}}explanation/replication/references-and-triggers/). The system is capable of generating a full set of results
+changed [using bucket types][usage bucket types], which manage buckets' [replication properties]({{< product-version-root >}}foundations/replication/references-and-triggers/). The system is capable of generating a full set of results
 from one third of the system’s partitions as long as it chooses the
 right set of partitions. The query is sent to each partition, the index
 data is read, and a list of keys is generated and then sent back to the
@@ -103,7 +103,7 @@ Indexes are added using [the Object API]({{< product-version-root >}}reference/d
 
 There is no direct support for schema management within Riak, as Riak is designed to act independently of the format and the content of the application-provided object body.  It is expected that for an application to make use of secondary indexes within Riak, the object-handling logic within the application will require an extension; where that extension will examine the object body, and calculate the required index entries before completing a PUT.  As the schema is managed externally to Riak, schema changes are also required to be managed within the application.  Consideration of how to make such schema changes is the responsibility of the application designer e.g. versioning, rolling updates, querying-planning during transition etc.
 
-The design of secondary indexes in Riak make them best suited to environments where the query demands are relatively predictable in advance, and also the approximate cardinality of the data elements.  The [expected performance of queries is governed by the factors highlighted in the performance section]({{< product-version-root >}}explanation/performance/query-execution/), and consideration of those factors is required when defining the indexes and planning the queries to be used.  Riak contains no query planning logic; the optimal path to resolve a query needs to be determined by the application.
+The design of secondary indexes in Riak make them best suited to environments where the query demands are relatively predictable in advance, and also the approximate cardinality of the data elements.  The [expected performance of queries is governed by the factors highlighted in the performance section]({{< product-version-root >}}foundations/performance/query-execution/), and consideration of those factors is required when defining the indexes and planning the queries to be used.  Riak contains no query planning logic; the optimal path to resolve a query needs to be determined by the application.
 
 Index entries can be made up of simple sort keys:
 

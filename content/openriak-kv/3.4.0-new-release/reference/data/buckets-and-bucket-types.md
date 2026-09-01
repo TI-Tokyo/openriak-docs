@@ -532,7 +532,7 @@ associated with the `default` bucket type:
 
 #### Bucket Types and the `allow_mult` Setting
 
-Prior to Riak 2.0, Riak created [siblings]({{< product-version-root >}}explanation/data-model/causal-context/#siblings) in the case of conflicting updates only when explicitly instructed to do so, i.e. when `allow_mult` is to `true`. The default `allow_mult` setting was `false`.
+Prior to Riak 2.0, Riak created [siblings]({{< product-version-root >}}foundations/data-model/causal-context/#siblings) in the case of conflicting updates only when explicitly instructed to do so, i.e. when `allow_mult` is to `true`. The default `allow_mult` setting was `false`.
 
 In version 2.0, this is changing in a subtle way. Now, there are two
 different default settings for `allow_mult` in play:
@@ -725,7 +725,7 @@ curl -XPUT \
 In this example, the bucket `sensitive_user_data` bears the
 configuration established by the `no_siblings` bucket type, and it bears
 that configuration _on the basis of the query's structure_. This is
-because buckets act as a [separate namespace]({{< product-version-root >}}reference/data/buckets-and-bucket-types/#buckets-as-namespaces) in Riak, in addition to [buckets]({{< product-version-root >}}explanation/data-model/keys-objects-and-buckets/) and [keys]({{< product-version-root >}}explanation/data-model/keys-objects-and-buckets/).
+because buckets act as a [separate namespace]({{< product-version-root >}}reference/data/buckets-and-bucket-types/#buckets-as-namespaces) in Riak, in addition to [buckets]({{< product-version-root >}}foundations/data-model/keys-objects-and-buckets/) and [keys]({{< product-version-root >}}foundations/data-model/keys-objects-and-buckets/).
 
 Let's say that we're using Riak to store internet memes. We've been
 using a bucket called `current_memes` using the bucket type

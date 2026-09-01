@@ -53,7 +53,7 @@ The following steps have been tested to work with OpenRiak KV on:
 
 #### Install the Alpine package
 
-The Alpine 3.21 repository publishes OpenRiak KV 3.4.1 with OTP 24 and OTP 26
+The Alpine 3.21 repository publishes OpenRiak KV {{< current-version >}} with OTP 24 and OTP 26
 for both `x86_64` and `aarch64`.
 
 1. Add the TI Tokyo Alpine repository:
@@ -80,13 +80,13 @@ apk update
 For OTP 26:
 
 ```sh
-apk add 'riak=3.4.1.26-r1'
+apk add 'riak={{< current-version >}}.26-r1'
 ```
 
 For OTP 24:
 
 ```sh
-apk add 'riak=3.4.1.24-r1'
+apk add 'riak={{< current-version >}}.24-r1'
 ```
 
 Do not use the unversioned `apk add riak` command on a versioned

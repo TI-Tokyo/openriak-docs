@@ -36,7 +36,7 @@ Refer to the [API guide for AAE Fold]({{< product-version-root >}}reference/aae-
 
 #### AAE Folds via the Command Line
 
-**Available from OpenRiak KV 3.4.0.**
+**Available from OpenRiak KV {{< current-version >}}.**
 
 AAE folds can be triggered via the command line using `riak admin tictacaae fold`:
 

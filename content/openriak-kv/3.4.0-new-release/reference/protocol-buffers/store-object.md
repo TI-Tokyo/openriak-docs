@@ -29,7 +29,7 @@ Document the Protocol Buffers contract for this operation, including messages, f
 ### PBC Store Object
 
 Stores an object under the specified location, as determined by the
-intended [key]({{< product-version-root >}}explanation/data-model/keys-objects-and-buckets/), [bucket]({{< product-version-root >}}explanation/data-model/keys-objects-and-buckets/), and [bucket type]({{< product-version-root >}}how-to/develop/use-bucket-types/). A bucket must always be specified (via
+intended [key]({{< product-version-root >}}foundations/data-model/keys-objects-and-buckets/), [bucket]({{< product-version-root >}}foundations/data-model/keys-objects-and-buckets/), and [bucket type]({{< product-version-root >}}how-to/develop/use-bucket-types/). A bucket must always be specified (via
 `bucket`), whereas key (`key`) and bucket type (`type`) are optional. If
 no key is specified, Riak will assign a random key to the object. If no
 [bucket type]({{< product-version-root >}}how-to/develop/use-bucket-types/) is assigned, Riak will assign
@@ -79,7 +79,7 @@ a special value denoting `one` (`4294967295-1`), `quorum`
 Parameter | Description
 :---------|:-----------
 `key` | The key to create/update. If not specified, Riak will generate a random key and return that key as part of the response to that request.
-`vclock` | Opaque vector clock provided by an earlier <code><a href="../{{< product-version-root >}}explanation/data-model/causal-context/">RpbGetResp</a></code> message. Omit if this is a new key or if you deliberately want to create a sibling.
+`vclock` | Opaque vector clock provided by an earlier <code><a href="../{{< product-version-root >}}foundations/data-model/causal-context/">RpbGetResp</a></code> message. Omit if this is a new key or if you deliberately want to create a sibling.
 `w` | Write quorum, i.e. how many replicas to write to before returning a successful response
 `dw` | Durable write quorum, i.e. how many replicas to commit to durable storage before returning a successful response
 `return_body` | Whether to return the contents of the now-stored object. Defaults to `false`.
@@ -105,7 +105,7 @@ message RpbPutResp {
 
 If `return_body` is set to `true` on the PUT request, the `RpbPutResp`
 will contain the current object after the PUT completes, in `contents`,
-as well as the object's [causal context]({{< product-version-root >}}explanation/data-model/causal-context/), in the `vclock`
+as well as the object's [causal context]({{< product-version-root >}}foundations/data-model/causal-context/), in the `vclock`
 field. The `key` will be sent only if the server generated a random key
 for the object.
 

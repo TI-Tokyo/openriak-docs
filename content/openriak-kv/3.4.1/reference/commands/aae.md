@@ -21,13 +21,13 @@ last_reviewed: '2026-08-28'
 review_scope: 'editorial-and-site-integration'
 ---
 
-List supported 3.4.1 command-line operations for AAE status, tree rebuilding, fold execution, and result retrieval.
+List supported {{< current-version >}} command-line operations for AAE status, tree rebuilding, fold execution, and result retrieval.
 
 ## Details
 
 ### AAE Folds via the Command Line
 
-**Available from OpenRiak KV 3.4.0.**
+**Available from OpenRiak KV {{< previous-version >}}.**
 
 AAE folds can be triggered via the command line using `riak admin tictacaae fold`:
 

@@ -45,18 +45,18 @@ Administrative access to the nodes you will change; a copy of the current config
 [plan best practices]: {{< product-version-root >}}how-to/plan/production-readiness-checklist/
 [cluster ops backup]: {{< product-version-root >}}how-to/operate/back-up-node/
 [cluster ops add remove node]: {{< product-version-root >}}tutorials/operations/change-cluster-membership/
-[plan backend]: {{< product-version-root >}}explanation/storage/choosing-backend/
-[plan backend multi]: {{< product-version-root >}}explanation/storage/multi-backend/
-[plan backend bitcask]: {{< product-version-root >}}explanation/storage/bitcask/
+[plan backend]: {{< product-version-root >}}foundations/storage/choosing-backend/
+[plan backend multi]: {{< product-version-root >}}foundations/storage/multi-backend/
+[plan backend bitcask]: {{< product-version-root >}}foundations/storage/bitcask/
 [usage bucket types]: {{< product-version-root >}}how-to/develop/use-bucket-types/
-[apps replication properties]: {{< product-version-root >}}explanation/replication/references-and-triggers/
-[concept buckets]: {{< product-version-root >}}explanation/data-model/keys-objects-and-buckets/
-[concept eventual consistency]: {{< product-version-root >}}explanation/consistency/eventual-consistency/
+[apps replication properties]: {{< product-version-root >}}foundations/replication/references-and-triggers/
+[concept buckets]: {{< product-version-root >}}foundations/data-model/keys-objects-and-buckets/
+[concept eventual consistency]: {{< product-version-root >}}foundations/consistency/eventual-consistency/
 [perf benchmark]: {{< product-version-root >}}how-to/tune/benchmark-cluster/
 [perf open files]: {{< product-version-root >}}how-to/tune/set-open-files-limit/
 [perf index]: {{< product-version-root >}}how-to/tune/
 [perf aws]: {{< product-version-root >}}how-to/tune/tune-aws-deployment/
-[Cluster Capacity Planning]: {{< product-version-root >}}explanation/storage/capacity-planning/
+[Cluster Capacity Planning]: {{< product-version-root >}}foundations/storage/capacity-planning/
 
 This document covers the parameters that are commonly adjusted when
 setting up a new cluster. We recommend that you also review the detailed

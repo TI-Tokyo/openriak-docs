@@ -40,7 +40,7 @@ The rules of the `ttaaefs_<sync_type>check` configuration are followed with per-
 
 > A scheduled run of `ttaaefs_allcheck` will occur regardless of whether the current time is within or outside of the `allcheck.window`.  The window is related only to the running of `ttaaefs_autocheck`, to prevent a `ttaaefs_autocheck` from being escalated to a `ttaaefs_allcheck` within the window.
 
-When using per-bucket full-sync, and performing a rolling upgrade to Riak 3.2.3 or 3.4.0 (from earlier releases than Riak 3.2.3), there may be errors merging trees.  To prevent these errors during the rolling upgrade, then either disable full-sync for the period of the upgrade, or use the configuration option to force the new nodes to use legacy format trees:
+When using per-bucket full-sync, and performing a rolling upgrade to Riak 3.2.3 or {{< current-version >}} (from earlier releases than Riak 3.2.3), there may be errors merging trees.  To prevent these errors during the rolling upgrade, then either disable full-sync for the period of the upgrade, or use the configuration option to force the new nodes to use legacy format trees:
 
 - `legacyformat_tictacaae_tree = enabled`
 

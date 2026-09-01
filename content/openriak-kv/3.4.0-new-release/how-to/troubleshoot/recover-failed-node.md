@@ -50,7 +50,7 @@ When a node fails and is then brought back into the cluster, make sure that it h
 During the recovery process, hinted handoff will kick in and update the data on
 the recovered node with updates accepted from other nodes in the cluster. Your
 cluster may temporarily return `not found` for objects that are currently
-being handed off (see our page on [Eventual Consistency]({{< product-version-root >}}explanation/consistency/eventual-consistency/) for more details on
+being handed off (see our page on [Eventual Consistency]({{< product-version-root >}}foundations/consistency/eventual-consistency/) for more details on
 these scenarios, in particular how the system behaves while the failed node is
 not part of the cluster).
 
@@ -163,7 +163,7 @@ Recovery of such a lost node requires a reactive replacement.  There are three s
 
 The data can then be recovered from the other nodes in the cluster issuing the `riak admin node repair start [-n NODE]` command.  This will prompt all vnodes which partially overlap the data held in the vnodes on the replacement node to race to play a role in repairing the node.  Each vnode will only repair the data which overlaps, filtering out any data that another vnode has already repaired (or is in the process of repairing).
 
-**Available from OpenRiak KV 3.4.0.**To improve the performance of repair, the `repair_span` configuration in the [riak_core schema section of riak.conf](https://github.com/OpenRiak/riak_core/blob/openriak-3.4/priv/riak_core.schema) can be changed to `double_pair`, and this has been proven to be more effective when used with the leveled backend together with the enablement of the `repair_deferred` option in the [riak_kv schema section of riak.conf](https://github.com/OpenRiak/riak_kv/blob/openriak-3.4/priv/riak_kv.schema).
+**Available from OpenRiak KV {{< current-version >}}.**To improve the performance of repair, the `repair_span` configuration in the [riak_core schema section of riak.conf](https://github.com/OpenRiak/riak_core/blob/openriak-3.4/priv/riak_core.schema) can be changed to `double_pair`, and this has been proven to be more effective when used with the leveled backend together with the enablement of the `repair_deferred` option in the [riak_kv schema section of riak.conf](https://github.com/OpenRiak/riak_kv/blob/openriak-3.4/priv/riak_kv.schema).
 
 The combination of `repair_span = double_pair, repair_deferred = enabled` is significantly more effective when repairing under load.  With these configuration options, it should be noted that repairs will happen in key order, not in reverse order of receipt (the default).  With these changes, using the leveled backend, non-functional testing demonstrates that repairs can complete efficiently even when nodes are persistently at 100% CPU utilisation due to the handling of application requests.
 

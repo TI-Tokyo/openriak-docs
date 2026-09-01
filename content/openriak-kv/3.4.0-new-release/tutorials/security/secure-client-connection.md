@@ -23,7 +23,7 @@ review_scope: 'editorial-and-site-integration'
 Guide a newcomer through enabling security and making one authenticated TLS client request.
 
 > [!NOTE]
-> This page is a content specification. Replace the guidance below with tested OpenRiak KV 3.4.0 documentation before publishing it.
+> This page is a content specification. Replace the guidance below with tested OpenRiak KV {{< current-version >}} documentation before publishing it.
 
 ## Learning outcome
 
@@ -31,7 +31,7 @@ State the concrete artefact or working OpenRiak KV behaviour that the reader wil
 
 ## Scenario and prerequisites
 
-Define a realistic, disposable scenario for **Secure a first client connection**. List the exact OpenRiak KV 3.4.0 environment, client tools, permissions, sample data, and prior knowledge required, including a safe way to reset the exercise.
+Define a realistic, disposable scenario for **Secure a first client connection**. List the exact OpenRiak KV {{< current-version >}} environment, client tools, permissions, sample data, and prior knowledge required, including a safe way to reset the exercise.
 
 ## Guided exercise to write
 

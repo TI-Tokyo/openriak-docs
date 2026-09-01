@@ -42,18 +42,18 @@ Administrative access to the nodes you will change; a copy of the current config
 
 ### RealTime
 
-[configure tictacaae]: {{< product-version-root >}}explanation/replication/tictac-aae/
+[configure tictacaae]: {{< product-version-root >}}foundations/replication/tictac-aae/
 [configure nextgenrepl fullsync]: ../fullsync/
 [configure nextgenrepl realtime]: ../realtime/
-[configure nextgenrepl queuing]: {{< product-version-root >}}explanation/replication/queues/
-[configure nextgenrepl queue filters]: {{< product-version-root >}}explanation/replication/queues/#queue-filters
+[configure nextgenrepl queuing]: {{< product-version-root >}}foundations/replication/queues/
+[configure nextgenrepl queue filters]: {{< product-version-root >}}foundations/replication/queues/#queue-filters
 
 NextGenRepl's RealTime feature provides a considerable improvement over the legacy realtime engines. It is faster, more efficient, and more reliable. NextGenRepl is the recommended replication engine to use.
 
 RealTime will ensure that the data in the sink cluster is updated as quickly as possible from the source clusters.
 
 **Note:**
-NextGenRepl relies on [TicTac AAE]({{< product-version-root >}}explanation/replication/tictac-aae/), so this must be enabled.
+NextGenRepl relies on [TicTac AAE]({{< product-version-root >}}foundations/replication/tictac-aae/), so this must be enabled.
 
 #### Overview
 

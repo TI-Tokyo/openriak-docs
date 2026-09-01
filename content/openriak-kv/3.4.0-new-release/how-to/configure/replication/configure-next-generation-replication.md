@@ -34,7 +34,7 @@ Administrative access to the nodes you will change; a copy of the current config
 
 ### Next Gen Replication
 
-[configure tictacaae]: {{< product-version-root >}}explanation/replication/tictac-aae/
+[configure tictacaae]: {{< product-version-root >}}foundations/replication/tictac-aae/
 [configure nextgenrepl fullsync]: {{< product-version-root >}}how-to/configure/replication/configure-next-generation-replication/
 [configure nextgenrepl realtime]: {{< product-version-root >}}how-to/configure/replication/configure-next-generation-replication/
 [configure nextgenrepl queuing]: {{< product-version-root >}}how-to/configure/replication/configure-next-generation-replication/
@@ -63,7 +63,7 @@ NextGenRepl comprises of four main parts.
 Best performance with lowest overheads is provided by using the ProtocolBuffer API instead of the HTTP API. Security (TLS and certificate authentication) will only work with ProtocolBuffer API.
 
 **Note:**
-NextGenRepl relies on [TicTac AAE]({{< product-version-root >}}explanation/replication/tictac-aae/), so this must be enabled.
+NextGenRepl relies on [TicTac AAE]({{< product-version-root >}}foundations/replication/tictac-aae/), so this must be enabled.
 
 #### Configuration Reference
 

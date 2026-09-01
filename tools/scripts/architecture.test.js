@@ -31,6 +31,8 @@ const downloadCopyIconSource = fs.readFileSync(path.join(themeRoot, 'layouts', '
 const downloadHashIconSource = fs.readFileSync(path.join(themeRoot, 'layouts', 'partials', 'download-icon-hash.html'), 'utf8');
 const contactEmailShortcodeSource = fs.readFileSync(path.join(themeRoot, 'layouts', 'shortcodes', 'contactusemail.html'), 'utf8');
 const currentVersionShortcodeSource = fs.readFileSync(path.join(themeRoot, 'layouts', 'shortcodes', 'current-version.html'), 'utf8');
+const previousVersionShortcodeSource = fs.readFileSync(path.join(themeRoot, 'layouts', 'shortcodes', 'previous-version.html'), 'utf8');
+const previousVersionPartialSource = fs.readFileSync(path.join(themeRoot, 'layouts', 'partials', 'previous-version.html'), 'utf8');
 const headerSource = fs.readFileSync(path.join(themeRoot, 'layouts', 'partials', 'header.html'), 'utf8');
 const sharedHeaderSource = fs.readFileSync(path.join(repositoryRoot, 'layouts', 'common-docs', 'layouts', 'partials', 'site-header.html'), 'utf8');
 const sharedSidebarSource = fs.readFileSync(path.join(repositoryRoot, 'layouts', 'common-docs', 'layouts', 'partials', 'sidebar-shell.html'), 'utf8');
@@ -70,6 +72,9 @@ assert.match(contactEmailShortcodeSource, /contactUsEmail[\s\S]*info@riak\.info/
 assert.match(currentVersionShortcodeSource, /partial "current-version\.html" \.Page \| strings\.TrimSpace/, 'the current-version shortcode must use the canonical rendered-page version');
 assert.match(currentVersionShortcodeSource, /\.Get "format" \| default "full"[\s\S]*eq \$format "major-minor"[\s\S]*printf "%s\.%s"/, 'the current-version shortcode must support full and major-minor plain-text formats');
 assert.match(currentVersionShortcodeSource, /format must be full or major-minor/, 'the current-version shortcode must reject unknown formats');
+assert.match(previousVersionShortcodeSource, /partial "previous-version\.html" \.Page \| strings\.TrimSpace/, 'the previous-version shortcode must use the canonical previous-release resolver');
+assert.match(previousVersionPartialSource, /index hugo\.Data\.versions \$productID[\s\S]*\$isEarlier[\s\S]*\$isLaterThanPrevious/, 'previous-version must select the greatest semantic version below the current release');
+assert.match(previousVersionPartialSource, /previous-version has no previous release: product=%s version=%s page=%s/, 'previous-version must stop the build when no earlier release exists');
 assert.match(baseSource, /js\/theme\.js[^"\n]+\?v=/, 'theme picker script must be cache-busted');
 assert.match(baseSource, /js\/docs-runtime\.js[^"\n]+\?v=20260901-selected-download-table/, 'the download checksum runtime must use its current cache key');
 assert.match(headSource, /css\/docs\.css[^"\n]+\?v=20260901-selected-download-table/, 'download table styling must use its current cache key');
@@ -466,8 +471,8 @@ if (fs.existsSync(buildRoot)) {
   assert.match(html, /data-modern-downloads/, 'the production downloads page must use the OpenRiak layout');
   const releaseNotesMenuIndex = html.indexOf('>Release Notes</a>');
   const downloadsMenuIndex = html.indexOf('>Downloads</a>');
-  const explanationMenuIndex = html.indexOf('>Explanation</a>');
-  assert.ok(releaseNotesMenuIndex >= 0 && releaseNotesMenuIndex < downloadsMenuIndex && downloadsMenuIndex < explanationMenuIndex, 'Release Notes and Downloads must be the first two labelled top-level menu items');
+  const foundationsMenuIndex = html.indexOf('>Foundations</a>');
+  assert.ok(releaseNotesMenuIndex >= 0 && releaseNotesMenuIndex < downloadsMenuIndex && downloadsMenuIndex < foundationsMenuIndex, 'Release Notes and Downloads must be the first two labelled top-level menu items');
   assert.match(html, /aria-label="Download operating systems"[\s\S]*data-download-os-select=ubuntu-noble-amd64/, 'the modern downloads page must render every OS as an in-page selector');
   assert.match(html, /data-selected-downloads[\s\S]*<summary>Source Code<\/summary>[\s\S]*<summary>All downloads<\/summary>/, 'the selected OS downloads must render before the collapsed Source Code and All downloads disclosures');
   assert.doesNotMatch(html, /<details[^>]+(?:data-downloads-source|data-all-downloads)[^>]+open/, 'Source Code and All downloads must be collapsed by default');

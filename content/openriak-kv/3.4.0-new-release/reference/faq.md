@@ -27,7 +27,7 @@ Answer common OpenRiak KV development and operational questions.
 ### Frequently Asked Questions
 
 [Basho Bench]: {{< product-version-root >}}how-to/tune/benchmark-cluster/
-[Bitcask]: {{< product-version-root >}}explanation/storage/bitcask/
+[Bitcask]: {{< product-version-root >}}foundations/storage/bitcask/
 [Bucket Properties]: {{< product-version-root >}}how-to/develop/
 [built-in functions list]: https://github.com/basho/riak_kv/blob/master/priv/mapred_builtins.js
 [commit hooks]: {{< product-version-root >}}how-to/develop/write-commit-hook/
@@ -35,10 +35,10 @@ Answer common OpenRiak KV development and operational questions.
 [contrib.basho.com]: https://github.com/basho/riak_function_contrib
 [Erlang Riak Client]: {{< product-version-root >}}reference/client-libraries/
 [MapReduce]: {{< product-version-root >}}how-to/develop/run-mapreduce/
-[Memory]: {{< product-version-root >}}explanation/storage/memory/
+[Memory]: {{< product-version-root >}}foundations/storage/memory/
 [Riak CS]: /docs/openriak-cs/2.1.3/
 [System Planning]: {{< product-version-root >}}how-to/plan/#network-configuration-load-balancing
-[vector clocks]: {{< product-version-root >}}explanation/data-model/causal-context/#vector-clocks
+[vector clocks]: {{< product-version-root >}}foundations/data-model/causal-context/#vector-clocks
 
 #### General
 

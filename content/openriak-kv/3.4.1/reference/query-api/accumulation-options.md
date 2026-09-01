@@ -22,7 +22,7 @@ last_reviewed: '2026-08-28'
 review_scope: 'editorial-and-site-integration'
 ---
 
-Define the 3.4.1 modes for keys, terms, counts, grouped counts, and disk-backed queued results.
+Define the {{< current-version >}} modes for keys, terms, counts, grouped counts, and disk-backed queued results.
 
 ## Details
 
@@ -31,10 +31,10 @@ Define the 3.4.1 modes for keys, terms, counts, grouped counts, and disk-backed 
 - There are multiple options for accumulating the results from a single query:
   - `keys`; return a list of keys that matched in the query, where the keys have been deduplicated and sorted.
   - `raw_keys`; return a list of keys that matched in the query, but in no specific order and where multiple matches for the same key will result in that key appearing multiple times within the results.
-  - `queue_raw_keys` **Available from OpenRiak KV 3.4.1.**; return a reference to a queue, where the results will be streamed to be consumed in batches of keys from any node by one of more external processes.  The results will be as in `raw_keys`, the only difference is the method of returning the results.
+  - `queue_raw_keys` **Available from OpenRiak KV {{< current-version >}}.**; return a reference to a queue, where the results will be streamed to be consumed in batches of keys from any node by one of more external processes.  The results will be as in `raw_keys`, the only difference is the method of returning the results.
   - `terms`; return a list of term/key pairs, ordered by term.
   - `raw_terms`; return a list of term/key pairs, unsorted.
-  - `queue_raw_keys` **Available from OpenRiak KV 3.4.1.**; return a reference to a queue, where the results will be streamed to be consumed in batches of term/key pairs from any node by one of more external processes.  The results will be as in `raw_terms`, the only difference is the method of returning the results.
+  - `queue_raw_keys` **Available from OpenRiak KV {{< current-version >}}.**; return a reference to a queue, where the results will be streamed to be consumed in batches of term/key pairs from any node by one of more external processes.  The results will be as in `raw_terms`, the only difference is the method of returning the results.
   - `count`; return a count of unique keys that matched the query.
   - `raw_count`; return a count of matches against the query (i.e. unlike `count` if an object key appears against multiple terms matched within the query, with `raw_count` that key will be counted multiple times).
   - `term_with_count`; return a count of unique key matches by term (where term is specified by the `accumulation_term`) in no specific order.

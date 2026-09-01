@@ -37,7 +37,7 @@ Access to the affected OpenRiak KV environment, the exact product version, a rec
 There are two primary aspects to data resilience within a cluster:
 
 - [Configuring data distribution guarantees]({{< product-version-root >}}how-to/plan/choose-intra-cluster-resilience/);
-- [Enabling proactive reconciliation]({{< product-version-root >}}explanation/replication/active-anti-entropy/).
+- [Enabling proactive reconciliation]({{< product-version-root >}}foundations/replication/active-anti-entropy/).
 
 Further guidance on the infrastructure requirements for a cluster, and the planning of cluster changes, can be found within the [guide to building and scaling a cluster]({{< product-version-root >}}how-to/plan/).
 

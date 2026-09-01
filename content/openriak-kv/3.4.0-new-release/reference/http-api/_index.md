@@ -73,7 +73,7 @@ Method | URL
 `POST` | `/types/<type>/buckets/<bucket>/datatypes`
 `POST` | `/types/<type>/buckets/<bucket>/datatypes/<key>`
 
-For documentation on the HTTP API for [Riak Data Types]({{< product-version-root >}}explanation/data-model/distributed-data-types/),
+For documentation on the HTTP API for [Riak Data Types]({{< product-version-root >}}foundations/data-model/distributed-data-types/),
 see the `curl` examples in [Using Data Types]({{< product-version-root >}}reference/data/distributed-data-types/#usage-examples)
 and subpages e.g. [sets]({{< product-version-root >}}how-to/develop/use-sets/).
 

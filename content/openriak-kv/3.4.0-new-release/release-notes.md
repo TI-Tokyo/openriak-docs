@@ -29,7 +29,7 @@ last_reviewed: '2026-08-28'
 review_scope: 'editorial-and-site-integration'
 ---
 
-Summarize the features, operational improvements, supported Erlang releases, and deprecations in OpenRiak KV 3.4.0.
+Summarize the features, operational improvements, supported Erlang releases, and deprecations in OpenRiak KV {{< current-version >}}.
 
 ## Details
 

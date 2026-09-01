@@ -31,22 +31,22 @@ Define the names, fields, states, limits, and version applicability for object d
 
 ### Object Deletion Reference
 
-[concept eventual consistency]: {{< product-version-root >}}explanation/consistency/eventual-consistency/
-[concept clusters]: {{< product-version-root >}}explanation/foundations/clusters-rings-and-partitions/
+[concept eventual consistency]: {{< product-version-root >}}foundations/consistency/eventual-consistency/
+[concept clusters]: {{< product-version-root >}}foundations/foundations/clusters-rings-and-partitions/
 [glossary vnode]: ../../../learn/glossary/#vnode
 [usage delete objects]: {{< product-version-root >}}how-to/develop/delete-object/
 [developing keylist]: {{< product-version-root >}}reference/http-api/list-keys/
-[developing mapreduce]: {{< product-version-root >}}explanation/data-model/mapreduce/
+[developing mapreduce]: {{< product-version-root >}}foundations/data-model/mapreduce/
 [cluster mdc]: {{< product-version-root >}}reference/
 [config advanced]: {{< product-version-root >}}reference/configuration/#advanced-configuration
-[glossary sloppy quorum]: {{< product-version-root >}}explanation/foundations/glossary/#sloppy-quorum
+[glossary sloppy quorum]: {{< product-version-root >}}foundations/foundations/glossary/#sloppy-quorum
 [bitcask merging]: {{< product-version-root >}}how-to/configure/backends/bitcask//#disk-usage-and-merging-settings
 [leveldb compaction]: {{< product-version-root >}}how-to/configure/backends/leveldb//#compaction
 
 In single-server, non-clustered data storage systems, object deletion
 is a trivial process. In an [eventually consistent][concept eventual consistency], [clustered][concept clusters] system like Riak, however,
 object deletion is far less trivial because objects live on multiple
-[nodes]({{< product-version-root >}}explanation/foundations/glossary/#nodes), which means that a deletion process must be chosen to determine when an object can be removed from the storage backend.
+[nodes]({{< product-version-root >}}foundations/foundations/glossary/#nodes), which means that a deletion process must be chosen to determine when an object can be removed from the storage backend.
 
 #### Object Deletion Example
 

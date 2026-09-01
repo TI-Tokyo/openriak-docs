@@ -32,7 +32,7 @@ List supported remote-console commands, arguments, return values, risks, and ver
 ### Runtime Interaction Reference
 
 [config reference]: {{< product-version-root >}}reference/configuration/
-[concept clusters]: {{< product-version-root >}}explanation/foundations/clusters-rings-and-partitions/
+[concept clusters]: {{< product-version-root >}}foundations/foundations/clusters-rings-and-partitions/
 
 OpenRiak's [configuration files][config reference] provide a variety of parameters that
 enable you to fine-tune how Riak interacts with two important elements

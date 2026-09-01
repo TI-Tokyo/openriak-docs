@@ -32,8 +32,8 @@ A non-production OpenRiak KV cluster, client credentials, and disposable test da
 
 ### Using Secondary Indexes (2i)
 
-[plan backend leveldb]: {{< product-version-root >}}explanation/storage/leveldb/
-[plan backend memory]: {{< product-version-root >}}explanation/storage/memory/
+[plan backend leveldb]: {{< product-version-root >}}foundations/storage/leveldb/
+[plan backend memory]: {{< product-version-root >}}foundations/storage/memory/
 [use ref strong consistency]: {{< product-version-root >}}reference/specialized-apis/strong-consistency-api/
 
 > **Note: Riak Search preferred for querying**
@@ -1128,8 +1128,8 @@ Could not parse field 'field2_int', value 'bar'.
 
 > **Note on 2i queries and the R parameter**
 >
-> For all 2i queries, the [R]({{< product-version-root >}}explanation/replication/references-and-triggers/#r-value-and-read-failure-tolerance) parameter is set to 1,
-which means that queries that are run while [handoffs]({{< product-version-root >}}explanation/foundations/glossary/#hinted-handoff) and related operations are underway may not
+> For all 2i queries, the [R]({{< product-version-root >}}foundations/replication/references-and-triggers/#r-value-and-read-failure-tolerance) parameter is set to 1,
+which means that queries that are run while [handoffs]({{< product-version-root >}}foundations/foundations/glossary/#hinted-handoff) and related operations are underway may not
 return all keys as expected.
 >
 > To avoid issues such as the above, a new option has been added to the `riak.conf` file to allow you to disable or enable node participation in 2i queries. `participate_in_coverage=disabled` will prevent the node in question from participating. Recommended usage of this feature is to prevent newly added nodes to the cluster that have yet to receive all of their data from participating in 2i queries and generating non-consistent results. Changing the `participate_in_coverage` setting requires Riak to be restarted on that node for the change to take effect. The default setting is `enabled`.

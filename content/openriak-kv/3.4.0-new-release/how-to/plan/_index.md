@@ -40,10 +40,10 @@ Access to the affected OpenRiak KV environment, the exact product version, a rec
 ### Planning Overview
 
 [plan start]: {{< product-version-root >}}how-to/plan/
-[plan backend]: {{< product-version-root >}}explanation/storage/choosing-backend/
-[plan cluster capacity]: {{< product-version-root >}}explanation/storage/capacity-planning/
-[plan bitcask capacity]: {{< product-version-root >}}explanation/storage/capacity-planning/
-[plan backend bitcask]: {{< product-version-root >}}explanation/storage/choosing-backend/#bitcask
+[plan backend]: {{< product-version-root >}}foundations/storage/choosing-backend/
+[plan cluster capacity]: {{< product-version-root >}}foundations/storage/capacity-planning/
+[plan bitcask capacity]: {{< product-version-root >}}foundations/storage/capacity-planning/
+[plan backend bitcask]: {{< product-version-root >}}foundations/storage/choosing-backend/#bitcask
 [plan best practices]: {{< product-version-root >}}how-to/plan/production-readiness-checklist/
 [plan future]: ./future
 
@@ -81,10 +81,10 @@ A set of best practices that will enable you to improve performance and reliabil
 
 ### Start Planning
 
-[plan backend]: {{< product-version-root >}}explanation/storage/choosing-backend/
-[plan cluster capacity]: {{< product-version-root >}}explanation/storage/capacity-planning/
-[plan backend bitcask]: {{< product-version-root >}}explanation/storage/bitcask/
-[plan bitcask capacity]: {{< product-version-root >}}explanation/storage/capacity-planning/
+[plan backend]: {{< product-version-root >}}foundations/storage/choosing-backend/
+[plan cluster capacity]: {{< product-version-root >}}foundations/storage/capacity-planning/
+[plan backend bitcask]: {{< product-version-root >}}foundations/storage/bitcask/
+[plan bitcask capacity]: {{< product-version-root >}}foundations/storage/capacity-planning/
 
 Here are some steps and recommendations designing and configuring your
 OpenRiak cluster.

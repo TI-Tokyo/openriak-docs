@@ -147,11 +147,11 @@ Overview and usage details of Secondary Indexes (2i).
 
 [Learn More >>]({{< product-version-root >}}how-to/develop/)
 
-###### [Bucket Types]({{< product-version-root >}}explanation/data-model/bucket-types/)
+###### [Bucket Types]({{< product-version-root >}}foundations/data-model/bucket-types/)
 
 Describes how to use bucket properties.
 
-[Learn More >>]({{< product-version-root >}}explanation/data-model/bucket-types/)
+[Learn More >>]({{< product-version-root >}}foundations/data-model/bucket-types/)
 
 ###### [Using Commit Hooks]({{< product-version-root >}}how-to/develop/)
 
@@ -195,11 +195,11 @@ Documentation on replication properties and their underlying implementation.
 
 [Learn More >>]({{< product-version-root >}}how-to/develop/)
 
-###### [Conflict Resolution]({{< product-version-root >}}explanation/data-model/conflict-resolution/)
+###### [Conflict Resolution]({{< product-version-root >}}foundations/data-model/conflict-resolution/)
 
 Guide to conflict resolution during object updates.
 
-[Learn More >>]({{< product-version-root >}}explanation/data-model/conflict-resolution/)
+[Learn More >>]({{< product-version-root >}}foundations/data-model/conflict-resolution/)
 
 #### OpenRiak KV - Object API
 

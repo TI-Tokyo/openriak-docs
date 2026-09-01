@@ -39,14 +39,14 @@ Used to replicate a range of keys to another cluster (or indeed any consumer of 
 
 In the evolution of Riak, there have been two generations of solutions developed to support replication and reconciliation between clusters:
 
-- The now legacy, [`riak_repl` replication]({{< product-version-root >}}explanation/replication/v2-and-v3-replication/) which was the recommended replication approach prior to Riak 3.0.10.
+- The now legacy, [`riak_repl` replication]({{< product-version-root >}}foundations/replication/v2-and-v3-replication/) which was the recommended replication approach prior to Riak 3.0.10.
   - The `riak_repl` application has evolved through multiple versions of a real-time replication, that supported a push-based model to reliably deliver changes from a source cluster to a sink cluster;
   - The replication approach is backed-up by a reconciliation approach focused on time-consuming key-by-key comparisons, running in the background between clusters on a vnode-by-vnode basis.
 - The NextGen replication solution which is the recommended approach in Riak 3.4.
   - The real-time replication approach is by comparison a pull-based model, to allow a sink cluster to fetch results from the source;
   - The replication approach is backed-up with reconciliation through rapid low-cost comparisons between the state of clusters using anti-entropy information, where the comparisons run reliably between clusters with different configurations (e.g. ring-size, node count or n_val).
 
-This guide covers the NextGen replication solution, and further information on alternatives are linked from the [legacy replication section]({{< product-version-root >}}explanation/replication/v2-and-v3-replication/).
+This guide covers the NextGen replication solution, and further information on alternatives are linked from the [legacy replication section]({{< product-version-root >}}foundations/replication/v2-and-v3-replication/).
 
 Replication is considered to have three stages:
 
@@ -62,15 +62,15 @@ Real-time replication is asynchronous in Riak, the availability and performance 
 
 The guide is split into the following sections:
 
-- [An overview of the concepts]({{< product-version-root >}}explanation/replication/).
+- [An overview of the concepts]({{< product-version-root >}}foundations/replication/).
 - [Configuration of real-time replication]({{< product-version-root >}}how-to/configure/replication/configure-real-time-replication/).
 - [Configuration of all-cluster reconciliation]({{< product-version-root >}}how-to/configure/replication/configure-fullsync/).
 - [Configuration of per-bucket reconciliation]({{< product-version-root >}}how-to/configure/replication/per-bucket-reconciliation/).
 - [Managing a cluster migration]({{< product-version-root >}}how-to/configure/replication/migrate-cluster/).
 - [The external Replication API]({{< product-version-root >}}reference/replication-api/).
 - [Operations and the troubleshooting of replication]({{< product-version-root >}}how-to/operate/monitor-reconciliation/).
-- [Configuring `riak_repl`]({{< product-version-root >}}explanation/replication/v2-and-v3-replication/).
-- [Replication scope]({{< product-version-root >}}explanation/replication/reconciliation-scope/).
+- [Configuring `riak_repl`]({{< product-version-root >}}foundations/replication/v2-and-v3-replication/).
+- [Replication scope]({{< product-version-root >}}foundations/replication/reconciliation-scope/).
 
 #### Replication API
 

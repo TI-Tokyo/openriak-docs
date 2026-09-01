@@ -32,7 +32,7 @@ Access to the affected OpenRiak KV environment, the exact product version, a rec
 
 ### Ring size - making a choice
 
-A OpenRiak cluster distributes data across individual databases (known as vnodes), and those databases are then distributed across the physical nodes and locations of the cluster.  The distribution of data within Riak is referred to as [the ring]({{< product-version-root >}}explanation/foundations/clusters-rings-and-partitions/). The number of vnodes in the databases is required to be a factor of 2, and bigger than the total number of nodes in the database cluster.  This number is known as the ring size.
+A OpenRiak cluster distributes data across individual databases (known as vnodes), and those databases are then distributed across the physical nodes and locations of the cluster.  The distribution of data within Riak is referred to as [the ring]({{< product-version-root >}}foundations/foundations/clusters-rings-and-partitions/). The number of vnodes in the databases is required to be a factor of 2, and bigger than the total number of nodes in the database cluster.  This number is known as the ring size.
 
 Starting with a large ring size is helpful as:
 

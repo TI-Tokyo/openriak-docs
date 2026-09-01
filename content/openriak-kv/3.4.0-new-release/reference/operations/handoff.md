@@ -48,13 +48,13 @@ re-assigning is referred to as **intra-cluster handoff** (or simply
 Intra-cluster handoff typically takes one of two forms: **hinted
 handoff** and **ownership transfer**.
 
-Hinted handoff occurs when a [vnode]({{< product-version-root >}}explanation/foundations/glossary/#vnode) temporarily takes over responsibility for some data and then returns that data to its original "owner." Imagine a 3-node cluster with nodes A, B, and C. If node C goes offline, e.g. during a network partition, nodes A and B will pick
+Hinted handoff occurs when a [vnode]({{< product-version-root >}}foundations/foundations/glossary/#vnode) temporarily takes over responsibility for some data and then returns that data to its original "owner." Imagine a 3-node cluster with nodes A, B, and C. If node C goes offline, e.g. during a network partition, nodes A and B will pick
 up the slack, so to speak, assuming responsibility for node C's
 operations. When node C comes back online, responsibility will be handed
 back to the original vnodes.
 
 Ownership transfer is different because it is meant to be permanent.
-It occurs when a [vnode]({{< product-version-root >}}explanation/foundations/glossary/#vnode) no longer belongs to the node on which it's running. This typically happens when the very
+It occurs when a [vnode]({{< product-version-root >}}foundations/foundations/glossary/#vnode) no longer belongs to the node on which it's running. This typically happens when the very
 makeup of a cluster changes, e.g. when nodes are added or removed from
 the cluster. In this case, responsibility for portions of the keyspace
 needs to be fundamentally re-assigned.
@@ -135,7 +135,7 @@ handoff.use_background_manager = on
 ##### Maximum Rejects
 
 The `handoff.max_rejects` setting enables you to set the maximum
-duration that a [vnode]({{< product-version-root >}}explanation/foundations/glossary/#vnode) can be blocked by multiplying the
+duration that a [vnode]({{< product-version-root >}}foundations/foundations/glossary/#vnode) can be blocked by multiplying the
 `handoff.max_rejects` setting by the value of
 [`vnode_management_timer`]({{< product-version-root >}}reference/configuration/#vnode_management_timer).
 Thus, if you set `handoff.max_rejects` to 10 and

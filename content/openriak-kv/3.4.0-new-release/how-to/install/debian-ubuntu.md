@@ -49,7 +49,7 @@ A supported operating system and package source, verified backups, release notes
 OpenRiak KV can be installed on Debian or Ubuntu-based systems using a binary
 package or by compiling from source code.
 
-Binary packages for OpenRiak KV 3.4.0 are published for:
+Binary packages for OpenRiak KV {{< current-version >}} are published for:
 
 - Ubuntu 22.04 on AMD64
 - Ubuntu 24.04 on AMD64 and ARM64
@@ -71,48 +71,48 @@ To install:
 ```bash
 sudo apt-get install libpam0g-dev
 ```
-OpenRiak KV 3.4.0 packages are available with OTP 24 and OTP 26. Select the
+OpenRiak KV {{< current-version >}} packages are available with OTP 24 and OTP 26. Select the
 package that matches the OTP version required by your deployment.
 
 ###### Ubuntu 22.04 Jammy (AMD64, OTP 26)
 
 ```bash
-wget https://files.tiot.jp/riak/kv/3.4/3.4.0/ubuntu/jammy64/riak_3.4.0-OTP26_amd64.deb
-sudo dpkg -i riak_3.4.0-OTP26_amd64.deb
+wget https://files.tiot.jp/riak/kv/3.4/{{< current-version >}}/ubuntu/jammy64/riak_{{< current-version >}}-OTP26_amd64.deb
+sudo dpkg -i riak_{{< current-version >}}-OTP26_amd64.deb
 ```
 
 For OTP 24, download and install
-[`riak_3.4.0-OTP24_amd64.deb`](https://files.tiot.jp/riak/kv/3.4/3.4.0/ubuntu/jammy64/riak_3.4.0-OTP24_amd64.deb).
+[`riak_{{< current-version >}}-OTP24_amd64.deb`](https://files.tiot.jp/riak/kv/3.4/{{< current-version >}}/ubuntu/jammy64/riak_{{< current-version >}}-OTP24_amd64.deb).
 
 ###### Ubuntu 24.04 Noble (AMD64, OTP 26)
 
 ```bash
-wget https://files.tiot.jp/riak/kv/3.4/3.4.0/ubuntu/noble64/riak_3.4.0-OTP26_amd64.deb
-sudo dpkg -i riak_3.4.0-OTP26_amd64.deb
+wget https://files.tiot.jp/riak/kv/3.4/{{< current-version >}}/ubuntu/noble64/riak_{{< current-version >}}-OTP26_amd64.deb
+sudo dpkg -i riak_{{< current-version >}}-OTP26_amd64.deb
 ```
 
 For OTP 24, download and install
-[`riak_3.4.0-OTP24_amd64.deb`](https://files.tiot.jp/riak/kv/3.4/3.4.0/ubuntu/noble64/riak_3.4.0-OTP24_amd64.deb).
+[`riak_{{< current-version >}}-OTP24_amd64.deb`](https://files.tiot.jp/riak/kv/3.4/{{< current-version >}}/ubuntu/noble64/riak_{{< current-version >}}-OTP24_amd64.deb).
 
 ###### Ubuntu 24.04 Noble (ARM64, OTP 26)
 
 ```bash
-wget https://files.tiot.jp/riak/kv/3.4/3.4.0/ubuntu/noble64/riak_3.4.0-OTP26_arm64.deb
-sudo dpkg -i riak_3.4.0-OTP26_arm64.deb
+wget https://files.tiot.jp/riak/kv/3.4/{{< current-version >}}/ubuntu/noble64/riak_{{< current-version >}}-OTP26_arm64.deb
+sudo dpkg -i riak_{{< current-version >}}-OTP26_arm64.deb
 ```
 
 For OTP 24, download and install
-[`riak_3.4.0-OTP24_arm64.deb`](https://files.tiot.jp/riak/kv/3.4/3.4.0/ubuntu/noble64/riak_3.4.0-OTP24_arm64.deb).
+[`riak_{{< current-version >}}-OTP24_arm64.deb`](https://files.tiot.jp/riak/kv/3.4/{{< current-version >}}/ubuntu/noble64/riak_{{< current-version >}}-OTP24_arm64.deb).
 
 ###### Debian 12 Bookworm (AMD64, OTP 26)
 
 ```bash
-wget https://files.tiot.jp/riak/kv/3.4/3.4.0/debian/12/riak_3.4.0-OTP26_amd64.deb
-sudo dpkg -i riak_3.4.0-OTP26_amd64.deb
+wget https://files.tiot.jp/riak/kv/3.4/{{< current-version >}}/debian/12/riak_{{< current-version >}}-OTP26_amd64.deb
+sudo dpkg -i riak_{{< current-version >}}-OTP26_amd64.deb
 ```
 
 For OTP 24, download and install
-[`riak_3.4.0-OTP24_amd64.deb`](https://files.tiot.jp/riak/kv/3.4/3.4.0/debian/12/riak_3.4.0-OTP24_amd64.deb).
+[`riak_{{< current-version >}}-OTP24_amd64.deb`](https://files.tiot.jp/riak/kv/3.4/{{< current-version >}}/debian/12/riak_{{< current-version >}}-OTP24_amd64.deb).
 
 #### Next Steps
 

@@ -29,7 +29,7 @@ Define immutable write requests, responses, constraints, and failure behavior.
 
 ### Write Once
 
-[glossary vnode]: {{< product-version-root >}}explanation/foundations/glossary/#vnode
+[glossary vnode]: {{< product-version-root >}}foundations/foundations/glossary/#vnode
 [bucket type]: {{< product-version-root >}}how-to/develop/use-bucket-types/
 [Riak data types]: {{< product-version-root >}}reference/data/distributed-data-types/
 [strong consistency]: {{< product-version-root >}}reference/specialized-apis/strong-consistency-api/
@@ -157,7 +157,7 @@ LevelDB. Riak will automatically fall back to synchronous writes with all other
 backends.
 
 **Note on the `multi` backend**
-The [Multi]({{< product-version-root >}}explanation/storage/multi-backend/) backend does not
+The [Multi]({{< product-version-root >}}foundations/storage/multi-backend/) backend does not
 support asynchronous writes. Therefore, if LevelDB is used with the Multi
 backend, it will be used in synchronous mode.
 

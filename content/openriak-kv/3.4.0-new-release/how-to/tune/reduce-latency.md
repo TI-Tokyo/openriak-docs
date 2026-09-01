@@ -91,7 +91,7 @@ node when configuration changes have been made.
 
 Large objects can also impact latency even if they're only present on
 some nodes. If increased latency occurs only on N nodes, where N is your
-[replication factor]({{< product-version-root >}}explanation/replication/references-and-triggers/#n-value-and-replication), also known as `n_val`, this could indicate that a single large object and its replicas are slowing down _all_ requests on those nodes.
+[replication factor]({{< product-version-root >}}foundations/replication/references-and-triggers/#n-value-and-replication), also known as `n_val`, this could indicate that a single large object and its replicas are slowing down _all_ requests on those nodes.
 
 If large objects are suspected, you should also audit the behavior of
 siblings in your cluster, as explained in the [next section](#siblings).
@@ -100,7 +100,7 @@ siblings in your cluster, as explained in the [next section](#siblings).
 
 In Riak, object conflicts are handled by keeping multiple versions of
 the object in the cluster either until a client takes action to resolve
-the conflict or until [active anti-entropy]({{< product-version-root >}}explanation/foundations/glossary/#active-anti-entropy) resolves the conflict without client intervention. While sibling production is normal, [sibling explosion]({{< product-version-root >}}explanation/data-model/causal-context/#sibling-explosion) is a problem that can come about if many siblings of an object are produced. The negative effects are the same as those associated with [large objects](#large-objects).
+the conflict or until [active anti-entropy]({{< product-version-root >}}foundations/foundations/glossary/#active-anti-entropy) resolves the conflict without client intervention. While sibling production is normal, [sibling explosion]({{< product-version-root >}}foundations/data-model/causal-context/#sibling-explosion) is a problem that can come about if many siblings of an object are produced. The negative effects are the same as those associated with [large objects](#large-objects).
 
 ##### Mitigation
 
@@ -130,8 +130,8 @@ latency issues in your cluster, you can start by checking the following:
   If you wish to set `allow_mult` to `false` on a bucket type, you will have to do so explicitly.
 * Application errors are a common source of problems with
   siblings. Updating the same key over and over without passing a
-  [causal context]({{< product-version-root >}}explanation/data-model/causal-context/) to Riak can cause sibling explosion. If this seems to be the issue, modify your application's [conflict resolution]({{< product-version-root >}}how-to/develop/resolve-conflicts/)
-  strategy. Another possibility worth exploring is using [dotted version vectors]({{< product-version-root >}}explanation/data-model/causal-context/#dotted-version-vectors) \(DVVs) in place of traditional vector clocks. DVVs can be enabled [using bucket types]({{< product-version-root >}}how-to/develop/use-bucket-types/) by setting the `dvv_enabled` parameter to `true` for buckets that seem to be experiencing sibling explosion.
+  [causal context]({{< product-version-root >}}foundations/data-model/causal-context/) to Riak can cause sibling explosion. If this seems to be the issue, modify your application's [conflict resolution]({{< product-version-root >}}how-to/develop/resolve-conflicts/)
+  strategy. Another possibility worth exploring is using [dotted version vectors]({{< product-version-root >}}foundations/data-model/causal-context/#dotted-version-vectors) \(DVVs) in place of traditional vector clocks. DVVs can be enabled [using bucket types]({{< product-version-root >}}how-to/develop/use-bucket-types/) by setting the `dvv_enabled` parameter to `true` for buckets that seem to be experiencing sibling explosion.
 
 #### Compaction and Merging
 
@@ -149,7 +149,7 @@ latency, keep an eye on on your `console.log` files (and LevelDB `LOG`
 files if you're using LevelDB). Do Bitcask merging and/or LevelDB
 compaction events overlap with increased latencies?
 
-If so, our first recommendation is to examine your [replication properties]({{< product-version-root >}}explanation/replication/references-and-triggers/) to make sure that neither R nor W are set to N, i.e. that you're not requiring that reads or writes go to all nodes in the cluster. The problem with setting `R=N` or `W=N` is that any request will only respond as quickly as the slowest node amongst the N nodes involved in the request.
+If so, our first recommendation is to examine your [replication properties]({{< product-version-root >}}foundations/replication/references-and-triggers/) to make sure that neither R nor W are set to N, i.e. that you're not requiring that reads or writes go to all nodes in the cluster. The problem with setting `R=N` or `W=N` is that any request will only respond as quickly as the slowest node amongst the N nodes involved in the request.
 
 Beyond checking for `R=N` or `W=N` for requests, the recommended
 mitigation strategy depends on the backend:
@@ -233,7 +233,7 @@ node is frequently running up against these maximums.
 
 In versions 2.0 and later, Riak enables you to configure a variety of
 settings regarding Riak objects, including allowable object sizes, how
-many [siblings]({{< product-version-root >}}explanation/data-model/causal-context/#siblings) to allow, and so on. If you suspect that undue latency in your cluster stems from object size or related factors, you may consider adjusting these settings.
+many [siblings]({{< product-version-root >}}foundations/data-model/causal-context/#siblings) to allow, and so on. If you suspect that undue latency in your cluster stems from object size or related factors, you may consider adjusting these settings.
 
 A concise listing of object-related settings can be found in the [Riak configuration]({{< product-version-root >}}reference/configuration//#object-settings) documentation. The sections below explain these settings in detail.
 
@@ -259,7 +259,7 @@ succeed but will register a warning in the logs, you can adjust the
 
 ##### Sibling Explosion Management
 
-In order to prevent or cut down on [sibling explosion]({{< product-version-root >}}explanation/data-model/causal-context/#sibling-explosion), you can either prevent Riak from storing
+In order to prevent or cut down on [sibling explosion]({{< product-version-root >}}foundations/data-model/causal-context/#sibling-explosion), you can either prevent Riak from storing
 additional siblings when a specified sibling count is reached or set a
 warning threshold past which Riak logs an error (or both). This can be
 done using the `object.siblings.maximum` and

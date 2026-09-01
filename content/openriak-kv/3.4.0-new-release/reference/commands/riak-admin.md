@@ -45,8 +45,8 @@ List every supported riak admin command with syntax, options, output, and safety
 [security managing]: {{< product-version-root >}}how-to/secure/manage-sources/
 [cluster ops bucket types]: {{< product-version-root >}}how-to/operate/manage-bucket-types/
 [cluster ops 2i]: {{< product-version-root >}}reference/data/secondary-indexes/
-[repair recover index]: {{< product-version-root >}}explanation/operations/node-failure-and-recovery/
-[cluster ops strong consistency]: {{< product-version-root >}}explanation/consistency/strong-consistency/
+[repair recover index]: {{< product-version-root >}}foundations/operations/node-failure-and-recovery/
+[cluster ops strong consistency]: {{< product-version-root >}}foundations/consistency/strong-consistency/
 [cluster ops handoff]: {{< product-version-root >}}how-to/operate/manage-handoffs/
 [use admin riak admin#stats]: {{< product-version-root >}}reference/commands/riak-admin/
 

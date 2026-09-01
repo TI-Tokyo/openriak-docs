@@ -36,7 +36,7 @@ A non-production OpenRiak KV cluster, client credentials, and disposable test da
 
 ### Reading Objects
 
-[glossary vnode]: {{< product-version-root >}}explanation/foundations/glossary/#vnode
+[glossary vnode]: {{< product-version-root >}}foundations/foundations/glossary/#vnode
 
 You can think of reads in Riak as analogous to HTTP `GET` requests. You
 specify a bucket type, bucket, and key, and Riak either returns the

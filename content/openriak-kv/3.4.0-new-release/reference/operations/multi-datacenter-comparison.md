@@ -28,7 +28,7 @@ Define the names, fields, states, limits, and version applicability for multi-da
 
 ### Multi-Datacenter Replication Reference: Comparsion
 
-This document is a systematic comparison of [Version 2]({{< product-version-root >}}explanation/replication/v2-and-v3-replication/) and [Version 3]({{< product-version-root >}}explanation/replication/v2-and-v3-replication/) of OpenRiak's Multi-Datacenter
+This document is a systematic comparison of [Version 2]({{< product-version-root >}}foundations/replication/v2-and-v3-replication/) and [Version 3]({{< product-version-root >}}foundations/replication/v2-and-v3-replication/) of OpenRiak's Multi-Datacenter
 Replication capabilities.
 
 **Important note on mixing versions**
@@ -101,7 +101,7 @@ version 3.
   of workers that will run on a source node, a sink node, and across the
   entire source cluster. This allows for limiting impact on the cluster
   and dialing in fullsync performance.
-* Version 3 is able to take advantage of [Active Anti-Entropy]({{< product-version-root >}}explanation/replication/active-anti-entropy/) \(AAE)
+* Version 3 is able to take advantage of [Active Anti-Entropy]({{< product-version-root >}}foundations/replication/active-anti-entropy/) \(AAE)
   technology, which can greatly improve fullsync performance.
 * Riak CS MDC `proxy_get` connections will be distributed across the
   source cluster (as CS blocks are requested from the sink cluster in

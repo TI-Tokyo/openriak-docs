@@ -33,7 +33,7 @@ Define the fields, limits, supported operations, representations, and compatibil
 ### Data Types
 
 [wiki crdt]: https://en.wikipedia.org/wiki/Conflict-free_replicated_data_type#Others
-[concept crdt]: {{< product-version-root >}}explanation/data-model/distributed-data-types/
+[concept crdt]: {{< product-version-root >}}foundations/data-model/distributed-data-types/
 [ops bucket type]: {{< product-version-root >}}how-to/operate/manage-bucket-types/
 
 OpenRiak KV has Riak-specific data types based on [convergent replicated data types (CRDTs)][wiki crdt]. While OpenRiak KV was built as a data-agnostic key/value store, Riak data types enable you to use OpenRiak KV as a data-aware system and perform transactions on 6 CRDT-inspired data types:
@@ -126,7 +126,7 @@ These settings are set by default and should not be changed.
 
 ##### Data Types and Context
 
-Data type context is similar to [causal context]({{< product-version-root >}}explanation/data-model/causal-context/): it tells OpenRiak KV which version of the data type a client is attempting to modify. Context is required by OpenRiak KV when making decisions about convergence.
+Data type context is similar to [causal context]({{< product-version-root >}}foundations/data-model/causal-context/): it tells OpenRiak KV which version of the data type a client is attempting to modify. Context is required by OpenRiak KV when making decisions about convergence.
 
 If no context is given when attempting a remove or remove-like operation, the operation may fail (removing a field that is not present) or succeed and remove more than intended (removing updates unseen by the client).
 

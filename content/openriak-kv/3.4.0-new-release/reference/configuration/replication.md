@@ -31,7 +31,7 @@ List replication configuration properties with defaults, accepted values, units,
 
 ### Configuration Reference
 
-[configure tictacaae]: {{< product-version-root >}}explanation/replication/tictac-aae/
+[configure tictacaae]: {{< product-version-root >}}foundations/replication/tictac-aae/
 [configure nextgenrepl fullsync]: {{< product-version-root >}}reference/configuration/
 [configure nextgenrepl realtime]: {{< product-version-root >}}reference/configuration/
 [configure nextgenrepl sink]: {{< product-version-root >}}reference/configuration/

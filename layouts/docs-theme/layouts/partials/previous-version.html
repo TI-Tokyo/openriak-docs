@@ -1,0 +1,45 @@
+{{- $page := . -}}
+{{- $productID := $page.Params.product_id | default $page.Section -}}
+{{- $versions := index hugo.Data.versions $productID -}}
+{{- if not $versions }}{{ errorf "previous-version has no version data: product=%s page=%s" $productID $page.Path }}{{ end -}}
+{{- $currentVersion := partial "current-version.html" $page | strings.TrimSpace -}}
+{{- if not (findRE `^\d+\.\d+\.\d+$` $currentVersion) -}}
+  {{- errorf "previous-version requires a semantic current version, got %q on %s" $currentVersion $page.Path -}}
+{{- end -}}
+{{- $currentParts := strings.Split $currentVersion "." -}}
+{{- $currentMajor := int (index $currentParts 0) -}}
+{{- $currentMinor := int (index $currentParts 1) -}}
+{{- $currentPatch := int (index $currentParts 2) -}}
+{{- $previousVersion := "" -}}
+{{- $previousMajor := 0 -}}
+{{- $previousMinor := 0 -}}
+{{- $previousPatch := 0 -}}
+{{- range $candidateVersion, $_ := $versions -}}
+  {{- if findRE `^\d+\.\d+\.\d+$` $candidateVersion -}}
+    {{- $candidateParts := strings.Split $candidateVersion "." -}}
+    {{- $candidateMajor := int (index $candidateParts 0) -}}
+    {{- $candidateMinor := int (index $candidateParts 1) -}}
+    {{- $candidatePatch := int (index $candidateParts 2) -}}
+    {{- $isEarlier := or
+      (lt $candidateMajor $currentMajor)
+      (and (eq $candidateMajor $currentMajor) (lt $candidateMinor $currentMinor))
+      (and (eq $candidateMajor $currentMajor) (eq $candidateMinor $currentMinor) (lt $candidatePatch $currentPatch))
+    -}}
+    {{- $isLaterThanPrevious := or
+      (eq $previousVersion "")
+      (gt $candidateMajor $previousMajor)
+      (and (eq $candidateMajor $previousMajor) (gt $candidateMinor $previousMinor))
+      (and (eq $candidateMajor $previousMajor) (eq $candidateMinor $previousMinor) (gt $candidatePatch $previousPatch))
+    -}}
+    {{- if and $isEarlier $isLaterThanPrevious -}}
+      {{- $previousVersion = $candidateVersion -}}
+      {{- $previousMajor = $candidateMajor -}}
+      {{- $previousMinor = $candidateMinor -}}
+      {{- $previousPatch = $candidatePatch -}}
+    {{- end -}}
+  {{- end -}}
+{{- end -}}
+{{- if eq $previousVersion "" -}}
+  {{- errorf "previous-version has no previous release: product=%s version=%s page=%s" $productID $currentVersion $page.Path -}}
+{{- end -}}
+{{- $previousVersion -}}

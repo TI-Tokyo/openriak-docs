@@ -59,7 +59,7 @@ The following stages are required:
 
 Once the two clusters are in an `in_sync = true` state the migration is complete, and application traffic may be switched to the new cluster, and the old cluster can be decommissioned.  It is common for production systems with o(10TB) of data to manage this process in 24 to 72 hours.
 
-> If possible, migrating a cluster should be a rehearsed process, just like any other [repair or replace operational change]({{< product-version-root >}}explanation/operations/node-failure-and-recovery/).
+> If possible, migrating a cluster should be a rehearsed process, just like any other [repair or replace operational change]({{< product-version-root >}}foundations/operations/node-failure-and-recovery/).
 
 ## Verify the result
 

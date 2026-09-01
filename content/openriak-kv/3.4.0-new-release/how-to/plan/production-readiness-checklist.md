@@ -42,7 +42,7 @@ Access to the affected OpenRiak KV environment, the exact product version, a rec
 
 [use ref handoff]: {{< product-version-root >}}reference/operations/handoff/
 [config mapreduce]: {{< product-version-root >}}how-to/configure/mapreduce/
-[glossary aae]: {{< product-version-root >}}explanation/foundations/glossary/#active-anti-entropy-aae
+[glossary aae]: {{< product-version-root >}}foundations/foundations/glossary/#active-anti-entropy-aae
 [cluster ops add remove node]: {{< product-version-root >}}tutorials/operations/change-cluster-membership/
 
 OpenRiak KV is a database designed for easy operation and scaling. Below are some best practices that will enable you to improve performance and reliability at all stages in the life of your OpenRiak cluster.

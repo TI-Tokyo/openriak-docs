@@ -22,11 +22,11 @@ review_scope: 'editorial-and-site-integration'
 Define disk-backed queue_raw_keys and queue_raw_terms results, batching behavior, retrieval, and lifecycle.
 
 > [!NOTE]
-> This page is a content specification. Replace the guidance below with tested OpenRiak KV 3.4.1 documentation before publishing it.
+> This page is a content specification. Replace the guidance below with tested OpenRiak KV {{< current-version >}} documentation before publishing it.
 
 ## Scope
 
-Define exactly what **Queued Query API results** covers in OpenRiak KV 3.4.1 and what belongs in neighbouring reference pages. State the component, interface, file, command, or data type being documented and the supported context in which it is available.
+Define exactly what **Queued Query API results** covers in OpenRiak KV {{< current-version >}} and what belongs in neighbouring reference pages. State the component, interface, file, command, or data type being documented and the supported context in which it is available.
 
 ## Definitions and syntax to add
 
@@ -38,11 +38,11 @@ Document precedence rules, interactions with other settings, consistency and fai
 
 ## Examples to verify
 
-Add minimal examples for a normal case, an important boundary case, and a representative invalid case. Record exact responses or error forms only after testing them against OpenRiak KV 3.4.1.
+Add minimal examples for a normal case, an important boundary case, and a representative invalid case. Record exact responses or error forms only after testing them against OpenRiak KV {{< current-version >}}.
 
 ## Version notes and sources
 
-Identify what changed from 3.4.0 to 3.4.1, cite the relevant release note or source definition, and distinguish inherited 3.2.5 behaviour from claims independently confirmed for this release.
+Identify what changed from {{< previous-version >}} to {{< current-version >}}, cite the relevant release note or source definition, and distinguish inherited 3.2.5 behaviour from claims independently confirmed for this release.
 
 ## Related reference
 
@@ -50,7 +50,7 @@ Link to adjacent commands, configuration keys, APIs, data types, and the how-to 
 
 ## In this section
 
-- [Query API accumulation options]({{< product-version-root >}}reference/query-api/accumulation-options/) — Define the 3.4.1 modes for keys, terms, counts, grouped counts, and disk-backed queued results.
+- [Query API accumulation options]({{< product-version-root >}}reference/query-api/accumulation-options/) — Define the {{< current-version >}} modes for keys, terms, counts, grouped counts, and disk-backed queued results.
 - [Query API expression reference]({{< product-version-root >}}reference/query-api/expressions/) — Define supported Query API expressions, operators, composition rules, and Unicode behavior.
 - [Query API reference]({{< product-version-root >}}reference/query-api/) — Define Query API endpoints, request expressions, responses, limits, and consistency behavior.
 - [Query API limits and performance]({{< product-version-root >}}reference/query-api/limits/) — Record Query API scanning, filtering, buffering, aggregation, collation, and transformation limits.

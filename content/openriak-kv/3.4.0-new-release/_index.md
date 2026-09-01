@@ -90,7 +90,7 @@ This site provides overview documentation for the OpenRiak community release of 
 
 ## In this section
 
-- [Explanation]({{< product-version-root >}}explanation/) — Route readers to concepts, architecture, rationale, trade-offs, and operational mental models.
+- [Explanation]({{< product-version-root >}}foundations/) — Route readers to concepts, architecture, rationale, trade-offs, and operational mental models.
 - [How-to guides]({{< product-version-root >}}how-to/) — Route practitioners to focused procedures for installing, configuring, operating, securing, and troubleshooting OpenRiak.
 - [Reference]({{< product-version-root >}}reference/) — Route readers to authoritative configuration, command, API, data, client, and compatibility facts.
 - [Tutorials]({{< product-version-root >}}tutorials/) — Introduce the guided learning paths and state what readers will build in each one.

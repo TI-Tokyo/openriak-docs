@@ -71,7 +71,7 @@ already reached all nodes in the previous set of members.
 
 All cluster metadata is eventually stored both in memory and on disk,
 but it should be noted that reads are only from memory, while writes are
-made both to memory and to disk. Logical clocks, namely [dotted version vectors]({{< product-version-root >}}explanation/data-model/causal-context/#dotted-version-vectors), are used in place of [vector clocks]({{< product-version-root >}}explanation/data-model/causal-context/#vector-clocks) or timestamps to resolve value conflicts. Values stored as cluster metadata are opaque Erlang
+made both to memory and to disk. Logical clocks, namely [dotted version vectors]({{< product-version-root >}}foundations/data-model/causal-context/#dotted-version-vectors), are used in place of [vector clocks]({{< product-version-root >}}foundations/data-model/causal-context/#vector-clocks) or timestamps to resolve value conflicts. Values stored as cluster metadata are opaque Erlang
 terms addressed by both prefix and a key.
 
 #### Erlang Code Interface

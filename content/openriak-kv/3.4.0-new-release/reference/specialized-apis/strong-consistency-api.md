@@ -31,18 +31,18 @@ Define strongly consistent operations, request fields, responses, constraints, a
 ### Strong Consistency
 
 [use ref strong consistency]: {{< product-version-root >}}reference/specialized-apis/strong-consistency-api/
-[concept eventual consistency]: {{< product-version-root >}}explanation/consistency/eventual-consistency/
+[concept eventual consistency]: {{< product-version-root >}}foundations/consistency/eventual-consistency/
 [use ref strong consistency#trade-offs]: {{< product-version-root >}}reference/specialized-apis/strong-consistency-api/#trade-offs
-[glossary vnode]: {{< product-version-root >}}explanation/foundations/glossary/#vnode
+[glossary vnode]: {{< product-version-root >}}foundations/foundations/glossary/#vnode
 [config strong consistency#enable]: {{< product-version-root >}}how-to/configure/strong-consistency/#enabling-strong-consistency
 [usage bucket types]: {{< product-version-root >}}how-to/develop/use-bucket-types/
 [cluster ops bucket types]: {{< product-version-root >}}how-to/operate/manage-bucket-types/
-[apps replication properties]: {{< product-version-root >}}explanation/replication/references-and-triggers/
+[apps replication properties]: {{< product-version-root >}}foundations/replication/references-and-triggers/
 [config strong consistency]: {{< product-version-root >}}how-to/configure/strong-consistency/
 [config strong consistency#fault]: {{< product-version-root >}}how-to/configure/strong-consistency/#fault-tolerance
-[concept causal context]: {{< product-version-root >}}explanation/data-model/causal-context/
-[concept causal context#vector]: {{< product-version-root >}}explanation/data-model/causal-context/#vector-clocks
-[concept version vector]: {{< product-version-root >}}explanation/data-model/causal-context/#dotted-version-vectors
+[concept causal context]: {{< product-version-root >}}foundations/data-model/causal-context/
+[concept causal context#vector]: {{< product-version-root >}}foundations/data-model/causal-context/#vector-clocks
+[concept version vector]: {{< product-version-root >}}foundations/data-model/causal-context/#dotted-version-vectors
 [usage conflict resolution]: {{< product-version-root >}}how-to/develop/resolve-conflicts/
 [usage update objects]: {{< product-version-root >}}how-to/develop/update-object/
 [use ref strong consistency#vs]: {{< product-version-root >}}reference/specialized-apis/strong-consistency-api/
@@ -274,9 +274,9 @@ consistent operations.
 ### Strong Consistency Reference
 
 [usage bucket types]: {{< product-version-root >}}how-to/develop/use-bucket-types/
-[concept eventual consistency]: {{< product-version-root >}}explanation/consistency/eventual-consistency/
+[concept eventual consistency]: {{< product-version-root >}}foundations/consistency/eventual-consistency/
 
-Riak was originally designed as an [eventually consistent]({{< product-version-root >}}explanation/consistency/eventual-consistency/) system, fundamentally geared toward providing partition
+Riak was originally designed as an [eventually consistent]({{< product-version-root >}}foundations/consistency/eventual-consistency/) system, fundamentally geared toward providing partition
 (i.e. fault) tolerance and high read and write availability.
 
 While this focus on high availability is a great fit for many data

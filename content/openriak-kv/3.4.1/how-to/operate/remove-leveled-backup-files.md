@@ -33,7 +33,7 @@ A healthy cluster, current backups, and access to cluster status and logs. Recor
 
 The leveled backend will in some cases persist to disk work in progress during compaction, and then find that work in progress orphaned if it is interrupted by a restart before the change can be applied - there is space consumed on disk by files not referred to in the manifest for the store.  At the next restart, within the leveled ledger, such orphaned files will be renamed as `*.bak` files.
 
-**Available from OpenRiak KV 3.4.1.**As well as examining the ledger, the journal will also be checked on startup, to detect journal files present on disk but not in the manifest.  These orphaned journal files will, as with the orphaned ledger files, be renamed with a `*.bak` extension.  On releases prior to Riak 3.4.1, [detecting such files in the journal is a manual process](https://github.com/martinsumner/leveled/issues/444).
+**Available from OpenRiak KV {{< current-version >}}.**As well as examining the ledger, the journal will also be checked on startup, to detect journal files present on disk but not in the manifest.  These orphaned journal files will, as with the orphaned ledger files, be renamed with a `*.bak` extension.  On releases prior to Riak {{< current-version >}}, [detecting such files in the journal is a manual process](https://github.com/martinsumner/leveled/issues/444).
 
 Clearing up the history of these orphaned files is a manual process.  It is always safe to delete `*.bak` files, but for extra caution one may choose to only delete those files unmodified since before the previous start of Riak.
 

@@ -70,7 +70,7 @@ As well as the pending changes, there are four inputs to that planning process:
 - The `target_n_val`; which should be greater than or equal to the `n_val`.
   - If this is set to the `n_val` this will simply guarantee that all primary locations for an object will be on separate nodes.
   - If this is set to `n_val + N`, then even after `N` failures each the object will still be stored on separate nodes.
-  - The `target_n_val` is the number of [primaries and fallbacks]({{< product-version-root >}}explanation/foundations/clusters-rings-and-partitions/) which must be on distinct nodes.
+  - The `target_n_val` is the number of [primaries and fallbacks]({{< product-version-root >}}foundations/foundations/clusters-rings-and-partitions/) which must be on distinct nodes.
 - The `target_location_n_val`; which defaults to `target_n_val` minus one, but the supportable value will depend greatly on the number of locations and how evenly the nodes are spread across those locations.
   - The higher the `target_location_n_val`, and the `target_n_val` the more certain the availability of data in the cluster is.
   - For experimenting with checking the validity of larger settings, there is an offline [ring calculator](https://github.com/OpenRiak/ring_calculator) which may be used before planning a cluster expansion.

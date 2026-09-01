@@ -53,7 +53,7 @@ instructions.
 
 ##### Oracle Linux 9 (x86_64)
 
-OpenRiak KV 3.4.0 packages are available for Oracle Linux 9 with OTP 24 and
+OpenRiak KV {{< current-version >}} packages are available for Oracle Linux 9 with OTP 24 and
 OTP 26.
 
 Before installing Riak on Oracle Linux 9, we need to satisfy some Erlang dependencies
@@ -66,12 +66,12 @@ sudo yum install -y epel-release
 Once EPEL has been installed, install the OTP 26 package using `yum`:
 
 ```bash
-wget https://files.tiot.jp/riak/kv/3.4/3.4.0/oracle/9/riak-3.4.0.OTP26-1.el9.x86_64.rpm
-sudo yum install -y riak-3.4.0.OTP26-1.el9.x86_64.rpm
+wget https://files.tiot.jp/riak/kv/3.4/{{< current-version >}}/oracle/9/riak-{{< current-version >}}.OTP26-1.el9.x86_64.rpm
+sudo yum install -y riak-{{< current-version >}}.OTP26-1.el9.x86_64.rpm
 ```
 
 For OTP 24, download and install
-[`riak-3.4.0.OTP24-1.el9.x86_64.rpm`](https://files.tiot.jp/riak/kv/3.4/3.4.0/oracle/9/riak-3.4.0.OTP24-1.el9.x86_64.rpm).
+[`riak-{{< current-version >}}.OTP24-1.el9.x86_64.rpm`](https://files.tiot.jp/riak/kv/3.4/{{< current-version >}}/oracle/9/riak-{{< current-version >}}.OTP24-1.el9.x86_64.rpm).
 
 #### Next Steps
 
@@ -80,7 +80,7 @@ Now that Riak is installed, check out [Verifying a Riak Installation][install ve
 ### RHEL and CentOS
 
 OpenRiak KV can be installed on RHEL-based systems using a binary package or by
-[compiling OpenRiak KV from source code][install source index]. A 3.4.0 binary
+[compiling OpenRiak KV from source code][install source index]. A {{< current-version >}} binary
 package is published for RHEL 9. Rocky Linux 9 users should use the corresponding
 RHEL 9 package.
 
@@ -94,7 +94,7 @@ instructions.
 
 #### RHEL 8 or Rocky Linux 8
 
-No RHEL 8 binary package is published for OpenRiak KV 3.4.0. Follow
+No RHEL 8 binary package is published for OpenRiak KV {{< current-version >}}. Follow
 [the source installation guide][install source index] if you must run this
 release on RHEL 8 or Rocky Linux 8.
 
@@ -103,15 +103,15 @@ release on RHEL 8 or Rocky Linux 8.
 Install the OTP 26 package using `yum`:
 
 ```bash
-wget https://files.tiot.jp/riak/kv/3.4/3.4.0/rhel/9/riak-3.4.0.OTP26-1.el9.x86_64.rpm
-sudo yum localinstall -y riak-3.4.0.OTP26-1.el9.x86_64.rpm
+wget https://files.tiot.jp/riak/kv/3.4/{{< current-version >}}/rhel/9/riak-{{< current-version >}}.OTP26-1.el9.x86_64.rpm
+sudo yum localinstall -y riak-{{< current-version >}}.OTP26-1.el9.x86_64.rpm
 ```
 
 Or install the `.rpm` package manually:
 
 ```bash
-wget https://files.tiot.jp/riak/kv/3.4/3.4.0/rhel/9/riak-3.4.0.OTP26-1.el9.x86_64.rpm
-sudo rpm -Uvh riak-3.4.0.OTP26-1.el9.x86_64.rpm
+wget https://files.tiot.jp/riak/kv/3.4/{{< current-version >}}/rhel/9/riak-{{< current-version >}}.OTP26-1.el9.x86_64.rpm
+sudo rpm -Uvh riak-{{< current-version >}}.OTP26-1.el9.x86_64.rpm
 ```
 
 #### Installing From Source
@@ -134,7 +134,7 @@ sudo yum install gcc gcc-c++ glibc-devel make git pam-devel
 ```
 
 Follow [the source installation guide][install source index] to obtain and build
-the OpenRiak KV 3.4.0 source tree. A successful build creates the release in
+the OpenRiak KV {{< current-version >}} source tree. A successful build creates the release in
 the `rel/riak` directory.
 
 #### Next Steps

@@ -236,7 +236,7 @@ nodes in the cluster.
 ##### Ring View
 
 One level deeper than the cluster view is the ring view. This is where you can
-see the health of each [vnode]({{< product-version-root >}}explanation/foundations/glossary/#vnode).
+see the health of each [vnode]({{< product-version-root >}}foundations/foundations/glossary/#vnode).
 
 [ ![Ring View]({{< baseurl >}}images/control_current_ring.png) ] (/images/control_current_ring.png)
 

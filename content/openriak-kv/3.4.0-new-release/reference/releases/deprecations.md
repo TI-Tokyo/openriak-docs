@@ -24,7 +24,7 @@ last_reviewed: '2026-08-28'
 review_scope: 'editorial-and-site-integration'
 ---
 
-List deprecated 3.4.0 features, preferred alternatives, compatibility implications, and possible future removal.
+List deprecated {{< current-version >}} features, preferred alternatives, compatibility implications, and possible future removal.
 
 ## Details
 

@@ -63,7 +63,7 @@ Overview of Riak Control, a web-based administrative console for Riak clusters.
 ### Cluster Administration Commands
 
 [use admin riak admin#cluster]: {{< product-version-root >}}reference/commands/riak-admin/#cluster
-[concept clusters]: {{< product-version-root >}}explanation/foundations/clusters-rings-and-partitions/
+[concept clusters]: {{< product-version-root >}}foundations/foundations/clusters-rings-and-partitions/
 [cluster ops add remove node]: {{< product-version-root >}}tutorials/operations/change-cluster-membership/
 [use admin riak admin#cluster-plan]: {{< product-version-root >}}reference/commands/riak-admin/
 [use admin riak admin#cluster-commit]: {{< product-version-root >}}reference/commands/riak-admin/

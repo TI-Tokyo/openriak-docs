@@ -92,7 +92,7 @@ Some changes can be applied using GET/PUT specific parameters, which will overri
 
 #### Property - dvv_enabled
 
-In Riak 2.0 the handling of siblings was improved by the enabling of dotted [version vectors]({{< product-version-root >}}explanation/data-model/version-vectors-and-siblings/).  All buckets should use `{dvv_enabled, true}`.  The introduction of DVV did not force non-typed buckets to use DVV, and by default non-typed buckets will continue to use legacy vector clocks.
+In Riak 2.0 the handling of siblings was improved by the enabling of dotted [version vectors]({{< product-version-root >}}foundations/data-model/version-vectors-and-siblings/).  All buckets should use `{dvv_enabled, true}`.  The introduction of DVV did not force non-typed buckets to use DVV, and by default non-typed buckets will continue to use legacy vector clocks.
 
 To correct this the following configuration should be added to the `riak.conf`:  `buckets.default.merge_strategy = 2`.
 
@@ -160,9 +160,9 @@ If replicating between clusters and `one` is used as the `sync_on_write` bucket 
 
 #### Property - aae_tree_exclude
 
-**Available from OpenRiak KV 3.4.0.**
+**Available from OpenRiak KV {{< current-version >}}.**
 
-The `aae_tree_exclude` bucket property has a default value of `false` and allows for flexibility when reconciling between clusters using nextgenrepl full-sync.  In general with Riak nextgenrepl it is assumed that clusters aim to contain the same data.  It is possible to replicate specific buckets between specific sources, and also possible to reconcile only individual buckets between clusters - but per-bucket reconciliation is not as efficient as full-cluster reconciliation.  The efficiency of full cluster reconciliation is based on the use of cached and mergeable [AAE (active anti-entropy) merkle trees]({{< product-version-root >}}explanation/replication/active-anti-entropy/) that represent all the data in the store.
+The `aae_tree_exclude` bucket property has a default value of `false` and allows for flexibility when reconciling between clusters using nextgenrepl full-sync.  In general with Riak nextgenrepl it is assumed that clusters aim to contain the same data.  It is possible to replicate specific buckets between specific sources, and also possible to reconcile only individual buckets between clusters - but per-bucket reconciliation is not as efficient as full-cluster reconciliation.  The efficiency of full cluster reconciliation is based on the use of cached and mergeable [AAE (active anti-entropy) merkle trees]({{< product-version-root >}}foundations/replication/active-anti-entropy/) that represent all the data in the store.
 
 The purpose of `aae_tree_exclude` is to not include the bucket in the cached tree, so that the bucket isn't considered in any all-data reconciliation jobs.  For example, this may help when:
 

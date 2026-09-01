@@ -104,7 +104,7 @@ optional bytes    context = 1;
 If the `include_context` option is specified, an opaque "context" value
 will be returned along with the user-readable data. When sending an
 update request, the client should send this context as well, just as one
-would send a [vclock]({{< product-version-root >}}explanation/foundations/glossary/#vector-clock) for standard KV updates.
+would send a [vclock]({{< product-version-root >}}foundations/foundations/glossary/#vector-clock) for standard KV updates.
 
 The type of the Data Type is specified in the `type` field, and must be
 one of the three possible values of the `DataType` enum (`COUNTER`,

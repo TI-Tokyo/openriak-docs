@@ -34,10 +34,10 @@ A non-production OpenRiak KV cluster, client credentials, and disposable test da
 ### Advanced MapReduce
 
 [usage 2i]: {{< product-version-root >}}how-to/develop/query-secondary-indexes/
-[apps replication properties]: {{< product-version-root >}}explanation/replication/references-and-triggers/
+[apps replication properties]: {{< product-version-root >}}foundations/replication/references-and-triggers/
 [use ref custom code]: {{< product-version-root >}}reference/operations/custom-code/
 [usage bucket types]: {{< product-version-root >}}how-to/develop/use-bucket-types/
-[glossary vnode]: {{< product-version-root >}}explanation/foundations/glossary/#vnode
+[glossary vnode]: {{< product-version-root >}}foundations/foundations/glossary/#vnode
 [config reference]: {{< product-version-root >}}reference/configuration/
 [google mr]: http://research.google.com/archive/mapreduce.html
 [mapping list]: http://hackage.haskell.org/package/base-4.7.0.0/docs/Prelude.html#v:map
@@ -805,7 +805,7 @@ false
 [usage types]: {{< product-version-root >}}how-to/develop/use-bucket-types/
 [api http]: {{< product-version-root >}}reference/http-api/
 [api pb]: {{< product-version-root >}}reference/protocol-buffers/
-[glossary vnode]: {{< product-version-root >}}explanation/foundations/glossary/#vnode
+[glossary vnode]: {{< product-version-root >}}foundations/foundations/glossary/#vnode
 [guide mapreduce]: {{< product-version-root >}}how-to/develop/run-mapreduce/
 
 **Use MapReduce sparingly**

@@ -31,7 +31,7 @@ Define runtime files, metrics, state, and operational behavior used during clust
 
 [ref log]: {{< product-version-root >}}reference/operations/
 [ref handoff]: ./handoff
-[ref bucket types]: {{< product-version-root >}}explanation/data-model/bucket-types/
+[ref bucket types]: {{< product-version-root >}}foundations/data-model/bucket-types/
 [ref obj del]: ./object-deletion/
 [ref runtime]: {{< product-version-root >}}reference/operations/
 [ref monitoring]: {{< product-version-root >}}reference/operations/

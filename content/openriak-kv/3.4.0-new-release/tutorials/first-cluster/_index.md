@@ -37,7 +37,7 @@ Introduce supported learning environments for creating a disposable first cluste
 To create a local development cluster, which is ideal for experimenting with Riak, run `make devclean; make devrel`.  This will clean and rebuild a group of 8 Riak instances in the `dev/dev<n>` folder within the repository clone.
 
 > [!WARNING]
-> Migration review required: Release-specific installation, upgrade, downgrade, or quick-start instructions require verification against OpenRiak KV 3.4.0 packages.
+> Migration review required: Release-specific installation, upgrade, downgrade, or quick-start instructions require verification against OpenRiak KV {{< current-version >}} packages.
 
 ## What you will learn
 

@@ -21,7 +21,7 @@ last_reviewed: '2026-08-28'
 review_scope: 'editorial-and-site-integration'
 ---
 
-Show operators how to request and monitor optimized reconciliation for one bucket in OpenRiak KV 3.4.1.
+Show operators how to request and monitor optimized reconciliation for one bucket in OpenRiak KV {{< current-version >}}.
 
 ## Before you begin
 

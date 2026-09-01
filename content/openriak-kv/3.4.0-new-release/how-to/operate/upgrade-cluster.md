@@ -76,8 +76,8 @@ A tutorial on updating to OpenRiak KV 3.2.5
 [config reference]: {{< product-version-root >}}reference/configuration/
 [config backend]: {{< product-version-root >}}how-to/configure/backends/
 [usage conflict resolution]: {{< product-version-root >}}how-to/develop/resolve-conflicts/
-[concept eventual consistency]: {{< product-version-root >}}explanation/consistency/eventual-consistency/
-[apps replication properties]: {{< product-version-root >}}explanation/replication/references-and-triggers/
+[concept eventual consistency]: {{< product-version-root >}}foundations/consistency/eventual-consistency/
+[apps replication properties]: {{< product-version-root >}}foundations/replication/references-and-triggers/
 [concept strong consistency]: {{< product-version-root >}}reference/specialized-apis/strong-consistency-api/
 [cluster ops bucket types]: {{< product-version-root >}}how-to/operate/manage-bucket-types/
 [use admin commands]: {{< product-version-root >}}reference/commands/
@@ -487,7 +487,7 @@ More direct upgrade paths skipping steps may be possible.  New features are adde
 
 It is not possible via rolling restart to upgrade from an OTP version 22 or prior, to an upgrade with an OTP version of 25 or higher.  For example, direct upgrades from `3.0.n` to `3.4.n` are not supported unless `3.0.n` is built with OTP 22, and `3.4.n` is built with OTP 24.
 
-It is recommended to test all upgrades in pre-production environments.  If no pre-production environment is available, then a pilot node should be upgraded first in the cluster for an agreed time period (e.g. 24 hours).  If there are issues with the upgrade, then the pilot node can be stopped, cleared and [repaired]({{< product-version-root >}}how-to/operate/replace-node/).  Most large-scale production users of Riak rely on pre-production testing or pilot nodes to assure changes, and do not depend on a [backup/restore safety net]({{< product-version-root >}}explanation/operations/backups-and-restores/) during a rolling upgrade.
+It is recommended to test all upgrades in pre-production environments.  If no pre-production environment is available, then a pilot node should be upgraded first in the cluster for an agreed time period (e.g. 24 hours).  If there are issues with the upgrade, then the pilot node can be stopped, cleared and [repaired]({{< product-version-root >}}how-to/operate/replace-node/).  Most large-scale production users of Riak rely on pre-production testing or pilot nodes to assure changes, and do not depend on a [backup/restore safety net]({{< product-version-root >}}foundations/operations/backups-and-restores/) during a rolling upgrade.
 
 If local changes have been made to `riak.conf`, the package manager should leave the `riak.conf` file unchanged during an upgrade.  A release change may alter a default value in configuration, and if that default value was originally added to the `riak.conf` uncommented - the new default will not take effect following the upgrade, as the `riak.conf` is not altered.
 
@@ -496,7 +496,7 @@ If local changes have been made to `riak.conf`, the package manager should leave
 As with other rolling operations, the operations can be accelerated through the use of locations, by changing a location per-cycle not just a node per-cycle.  Awaiting both the triggering and completion of handoffs between cycles is required for a smooth transition.
 
 > [!WARNING]
-> Migration review required: Release-specific installation, upgrade, downgrade, or quick-start instructions require verification against OpenRiak KV 3.4.0 packages; Commands or links derived from the 3.2.5 documentation were version-normalized for 3.4.0 and require technical verification; Legacy version text or MDX syntax remains and requires editorial review.
+> Migration review required: Release-specific installation, upgrade, downgrade, or quick-start instructions require verification against OpenRiak KV {{< current-version >}} packages; Commands or links derived from the 3.2.5 documentation were version-normalized for {{< current-version >}} and require technical verification; Legacy version text or MDX syntax remains and requires editorial review.
 
 ## Verify the result
 

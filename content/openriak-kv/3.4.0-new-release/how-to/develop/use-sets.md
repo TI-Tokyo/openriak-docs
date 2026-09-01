@@ -415,7 +415,7 @@ we need to remove it from the list.
 
 Note that removing an element from a set is trickier than adding elements. In
 order to remove an item (or multiple items), we need to first fetch the
-set, which provides our client access to the set's [causal context]({{< product-version-root >}}explanation/data-model/causal-context/).
+set, which provides our client access to the set's [causal context]({{< product-version-root >}}foundations/data-model/causal-context/).
 
 Once we've fetched the set, we can remove the element `Montreal` and
 store the set:

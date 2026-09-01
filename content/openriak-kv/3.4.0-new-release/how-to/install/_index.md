@@ -121,7 +121,7 @@ The mappings for current and planned releases are:
 |:------------|:------------:|
 | OpenRiak KV 3.0.16 | OTP 22.3 |
 | OpenRiak KV 3.2.6 | OTP 24.3 |
-| OpenRiak KV 3.4.0 | OTP 24.3 or OTP 26.2 (recommended) |
+| OpenRiak KV {{< current-version >}} | OTP 24.3 or OTP 26.2 (recommended) |
 | OpenRiak KV 4.0 (planned) | OTP 26.2 or OTP 28.3 |
 
 Any updates to this mappings will be announced on the [Riak discussion forum](https://github.com/orgs/OpenRiak/discussions).
@@ -135,7 +135,7 @@ Riak can be potentially built on most Unix-flavour systems, including OSX for de
 Organisations within the OpenRiak community do offer pre-built packages as part of their service offering, and these are [freely available](https://files.tiot.jp/riak/).  The use of pre-built packages is _not_ recommended by the OpenRiak community where end-to-end assurance of the software supply-chain is required.  The building of packages in a customer-specific secure environment is the preferred approach.
 
 > [!WARNING]
-> Migration review required: Release-specific installation, upgrade, downgrade, or quick-start instructions require verification against OpenRiak KV 3.4.0 packages.
+> Migration review required: Release-specific installation, upgrade, downgrade, or quick-start instructions require verification against OpenRiak KV {{< current-version >}} packages.
 
 ## Verify the result
 

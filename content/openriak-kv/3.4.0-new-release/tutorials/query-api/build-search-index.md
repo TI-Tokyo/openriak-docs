@@ -47,7 +47,7 @@ Indexes are added using [the Object API]({{< product-version-root >}}reference/d
 
 There is no direct support for schema management within Riak, as Riak is designed to act independently of the format and the content of the application-provided object body.  It is expected that for an application to make use of secondary indexes within Riak, the object-handling logic within the application will require an extension; where that extension will examine the object body, and calculate the required index entries before completing a PUT.  As the schema is managed externally to Riak, schema changes are also required to be managed within the application.  Consideration of how to make such schema changes is the responsibility of the application designer e.g. versioning, rolling updates, querying-planning during transition etc.
 
-The design of secondary indexes in Riak make them best suited to environments where the query demands are relatively predictable in advance, and also the approximate cardinality of the data elements.  The [expected performance of queries is governed by the factors highlighted in the performance section]({{< product-version-root >}}explanation/performance/query-execution/), and consideration of those factors is required when defining the indexes and planning the queries to be used.  Riak contains no query planning logic; the optimal path to resolve a query needs to be determined by the application.
+The design of secondary indexes in Riak make them best suited to environments where the query demands are relatively predictable in advance, and also the approximate cardinality of the data elements.  The [expected performance of queries is governed by the factors highlighted in the performance section]({{< product-version-root >}}foundations/performance/query-execution/), and consideration of those factors is required when defining the indexes and planning the queries to be used.  Riak contains no query planning logic; the optimal path to resolve a query needs to be determined by the application.
 
 Index entries can be made up of simple sort keys:
 
@@ -416,7 +416,7 @@ If the same results are required, but this time a count by age at today's date (
 
 #### Example (3) - Simple Variations and Limitations
 
-In using report-style queries, counting results or grouping counts by a projected attribute - the type of `accumulation_option` used is important.  There is support for both `raw` and non-`raw` forms of each `accumulation_option`.  The `raw` form of each accumulator [will be significantly more efficient when covering large result sets]({{< product-version-root >}}explanation/performance/query-execution/), but it will not deduplicate the result set by object key before counting.
+In using report-style queries, counting results or grouping counts by a projected attribute - the type of `accumulation_option` used is important.  There is support for both `raw` and non-`raw` forms of each `accumulation_option`.  The `raw` form of each accumulator [will be significantly more efficient when covering large result sets]({{< product-version-root >}}foundations/performance/query-execution/), but it will not deduplicate the result set by object key before counting.
 
 ## What you will learn
 
