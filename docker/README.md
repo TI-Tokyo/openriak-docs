@@ -55,9 +55,11 @@ archive or shared template.
 ./docker/build.static.sh release
 ```
 
-The multi-stage image builds core and archives independently, rejects overlapping
-output paths, and exports one complete Hugo output tree to `public/`. Rsync that
-directory to the server directory corresponding to `/docs/`.
+The multi-stage image builds core and archives independently and rejects
+overlapping output paths. The export container copies the selected artifact
+through the bind-mounted `docker-wip/` staging directory; after the container
+exits, the host script moves that tree to `public/`. Rsync `public/` to the
+server directory corresponding to the path in `HUGO_BASEURL`.
 
 `./docker/build.static.sh development` exports core with one selected Riak KV
 release. `./docker/build.static.sh beta-test` exports core with all releases.

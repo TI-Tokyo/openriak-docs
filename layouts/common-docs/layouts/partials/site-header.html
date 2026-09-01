@@ -10,7 +10,7 @@
     <a class="brand-home" href="{{ $page.Site.Home.RelPermalink }}" aria-label="OpenRiak homepage">
       <img src="{{ `images/branding/openriak-mark.png` | relURL }}?v=official-mark" alt="OpenRiak">
     </a>
-    <a class="brand-section" href="{{ $section.url }}" aria-label="{{ $section.name }} landing page">{{ $section.name }}</a>
+    <a class="brand-section" href="{{ partial "site-section-url.html" $section.url }}" aria-label="{{ $section.name }} landing page">{{ $section.name }}</a>
   </div>
   <nav class="header-controls" aria-label="Site preferences">
     <div class="site-section-control" data-site-section-picker>
@@ -23,7 +23,7 @@
         <h2>Site sections</h2>
         {{ range hugo.Data.site_sections }}
           {{ if or (eq .id "openriak-kv") (eq .id "community") }}<div class="site-section-separator" role="separator"></div>{{ end }}
-          <a href="{{ .url }}" data-site-section-id="{{ .id }}" class="site-section-option{{ if eq .id $section.id }} is-active{{ end }}"{{ if eq .id $section.id }} aria-current="page"{{ end }}>
+          <a href="{{ partial "site-section-url.html" .url }}" data-site-section-id="{{ .id }}" class="site-section-option{{ if eq .id $section.id }} is-active{{ end }}"{{ if eq .id $section.id }} aria-current="page"{{ end }}>
             {{ partial "site-picker-icon.html" . }}
             <span class="site-section-name">{{ .name }}</span>
           </a>

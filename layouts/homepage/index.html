@@ -41,7 +41,7 @@
     <h2 class="site-sections-title">Site sections</h2>
     <nav class="site-sections" aria-label="Site sections">
       {{ range where hugo.Data.site_sections "showOnHomepage" "ne" false }}
-        <a class="site-section" href="{{ .url }}">
+        <a class="site-section" href="{{ partial "site-section-url.html" .url }}">
           <span class="site-section-heading">{{ partial "site-picker-icon.html" . }}<span>{{ .name }}</span></span>
           <span>{{ .description }}</span>
           <strong>{{ .action }}</strong>

@@ -4,9 +4,13 @@
 {{- range $key, $value := $productContext.versions -}}
   {{- $versions = $versions | append $value -}}
 {{- end -}}
+{{- $siteSections := slice -}}
+{{- range hugo.Data.site_sections -}}
+  {{- $siteSections = $siteSections | append (merge . (dict "url" (partial "site-section-url.html" .url))) -}}
+{{- end -}}
 {{- $context := dict
   "product" $productContext.product
-  "siteSections" hugo.Data.site_sections
+  "siteSections" $siteSections
   "versions" $versions
   "currentVersion" $version
   "productBase" $productContext.productBase
