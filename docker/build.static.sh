@@ -33,7 +33,7 @@ if command -v docker >/dev/null 2>&1 && docker info >/dev/null 2>&1; then
     --tag "$export_image" "$repository_root"
   docker run --rm --user "$(id -u):$(id -g)" --entrypoint sh \
     --mount "type=bind,source=$staging,target=/output" \
-    "$export_image" -c 'cp -a /project/public/. /output/'
+    "$export_image" -ec 'set -o pipefail; tar -C /project/public -cf - . | tar -C /output -xf -'
 elif command -v docker.exe >/dev/null 2>&1 && command -v wslpath >/dev/null 2>&1 && docker.exe info >/dev/null 2>&1; then
   docker_cli=docker.exe
   repository_windows=$(wslpath -w "$repository_root")
@@ -44,7 +44,7 @@ elif command -v docker.exe >/dev/null 2>&1 && command -v wslpath >/dev/null 2>&1
     --tag "$export_image" "$repository_windows"
   docker.exe run --rm --user "$(id -u):$(id -g)" --entrypoint sh \
     --mount "type=bind,source=$staging_windows,target=/output" \
-    "$export_image" -c 'cp -a /project/public/. /output/'
+    "$export_image" -ec 'set -o pipefail; tar -C /project/public -cf - . | tar -C /output -xf -'
 else
   echo 'Unable to build because the Docker daemon is not accessible.' >&2
   exit 1

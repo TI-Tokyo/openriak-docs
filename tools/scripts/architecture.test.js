@@ -68,7 +68,7 @@ assert.match(dockerComposeSource, /archives:[\s\S]*profiles: \['release'\]/, 'th
 assert.match(localRunnerSource, /development\|beta-test\|release[\s\S]*--profile "\$compose_profile"/, 'the local runner must expose all three build profiles');
 assert.match(dockerfileSource, /FROM scratch AS core-static[\s\S]*FROM scratch AS static/, 'Docker must expose separate core-only and assembled static targets');
 assert.match(staticBuilderSource, /development\|beta-test\)[\s\S]*core-build[\s\S]*release\)[\s\S]*assembled/, 'static builds must use runnable core-only and assembled stages for mounted export');
-assert.match(staticBuilderSource, /staging="\$repository_root\/docker-wip"[\s\S]*--mount "type=bind,source=\$staging,target=\/output"[\s\S]*cp -a \/project\/public\/\. \/output\//, 'static builds must export through bind-mounted docker-wip staging');
+assert.match(staticBuilderSource, /staging="\$repository_root\/docker-wip"[\s\S]*--mount "type=bind,source=\$staging,target=\/output"[\s\S]*tar -C \/project\/public -cf - \. \| tar -C \/output -xf -/, 'static builds must export through bind-mounted docker-wip staging without preserving container ownership');
 assert.doesNotMatch(staticBuilderSource, /--output/, 'static builds must not use the slow BuildKit local exporter');
 assert.match(shellBuilderSource, /development\|beta-test\|release[\s\S]*if \[ "\$build_profile" = release \]/, 'local Hugo builds must assemble archives only for release');
 assert.match(headSource, /docs\.css[^"\n]+\?v=/, 'shared stylesheet must be cache-busted');
