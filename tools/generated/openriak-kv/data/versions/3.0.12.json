@@ -13,16 +13,29 @@
   "operatingSystems": [],
   "downloadOperatingSystems": [
     {
-      "id": "debian-9-amd64",
+      "id": "centos-7-x86_64",
+      "family": "centos",
+      "name": "CentOS",
+      "displayName": "CentOS 7",
+      "version": "7",
+      "codename": "x86_64",
+      "architecture": "x86_64",
+      "packageFamily": "rpm",
+      "logo": "images/os/centos.svg",
+      "defaultForFamily": true,
+      "aliasOf": "rhel-7-x86_64"
+    },
+    {
+      "id": "debian-11-amd64",
       "family": "debian",
       "name": "Debian",
-      "displayName": "Debian 9",
-      "version": "9",
-      "codename": "9",
+      "displayName": "Debian 11",
+      "version": "11",
+      "codename": "11",
       "architecture": "amd64",
       "packageFamily": "deb",
       "logo": "images/os/debian.svg",
-      "defaultForFamily": false
+      "defaultForFamily": true
     },
     {
       "id": "debian-10-amd64",
@@ -37,16 +50,29 @@
       "defaultForFamily": false
     },
     {
-      "id": "debian-11-amd64",
+      "id": "debian-9-amd64",
       "family": "debian",
       "name": "Debian",
-      "displayName": "Debian 11",
-      "version": "11",
-      "codename": "11",
+      "displayName": "Debian 9",
+      "version": "9",
+      "codename": "9",
       "architecture": "amd64",
       "packageFamily": "deb",
       "logo": "images/os/debian.svg",
-      "defaultForFamily": true
+      "defaultForFamily": false
+    },
+    {
+      "id": "fedora-7-x86_64",
+      "family": "fedora",
+      "name": "Fedora",
+      "displayName": "Fedora 7",
+      "version": "7",
+      "codename": "x86_64",
+      "architecture": "x86_64",
+      "packageFamily": "rpm",
+      "logo": "images/os/fedora.svg",
+      "defaultForFamily": true,
+      "aliasOf": "rhel-7-x86_64"
     },
     {
       "id": "raspbian-11-arm64",
@@ -73,16 +99,42 @@
       "defaultForFamily": true
     },
     {
-      "id": "ubuntu-bionic-amd64",
+      "id": "rocky-7-x86_64",
+      "family": "rocky",
+      "name": "Rocky Linux",
+      "displayName": "Rocky Linux 7",
+      "version": "7",
+      "codename": "x86_64",
+      "architecture": "x86_64",
+      "packageFamily": "rpm",
+      "logo": "images/os/rocky.svg",
+      "defaultForFamily": true,
+      "aliasOf": "rhel-7-x86_64"
+    },
+    {
+      "id": "suse-7-x86_64",
+      "family": "suse",
+      "name": "SUSE Linux",
+      "displayName": "SUSE Linux 7",
+      "version": "7",
+      "codename": "x86_64",
+      "architecture": "x86_64",
+      "packageFamily": "rpm",
+      "logo": "images/os/suse.svg",
+      "defaultForFamily": true,
+      "aliasOf": "rhel-7-x86_64"
+    },
+    {
+      "id": "ubuntu-jammy-amd64",
       "family": "ubuntu",
       "name": "Ubuntu",
-      "displayName": "Ubuntu 18.04",
-      "version": "18.04",
-      "codename": "bionic64",
+      "displayName": "Ubuntu 22.04",
+      "version": "22.04",
+      "codename": "jammy64",
       "architecture": "amd64",
       "packageFamily": "deb",
       "logo": "images/os/ubuntu.svg",
-      "defaultForFamily": false
+      "defaultForFamily": true
     },
     {
       "id": "ubuntu-focal-amd64",
@@ -97,20 +149,36 @@
       "defaultForFamily": false
     },
     {
-      "id": "ubuntu-jammy-amd64",
+      "id": "ubuntu-bionic-amd64",
       "family": "ubuntu",
       "name": "Ubuntu",
-      "displayName": "Ubuntu 22.04",
-      "version": "22.04",
-      "codename": "jammy64",
+      "displayName": "Ubuntu 18.04",
+      "version": "18.04",
+      "codename": "bionic64",
       "architecture": "amd64",
       "packageFamily": "deb",
       "logo": "images/os/ubuntu.svg",
-      "defaultForFamily": true
+      "defaultForFamily": false
     }
   ],
   "downloads": {
-    "debian-9-amd64": [
+    "centos-7-x86_64": [
+      {
+        "id": "otp22-x86_64-1",
+        "otp": 22,
+        "architecture": "x86_64",
+        "format": "rpm",
+        "filename": "riak-3.0.12.OTP22-1.el7.x86_64.rpm",
+        "packageRevision": "1",
+        "variant": "",
+        "url": "https://files.tiot.jp/riak/kv/3.0/3.0.12/rhel/7/riak-3.0.12.OTP22-1.el7.x86_64.rpm",
+        "checksum": {
+          "algorithm": "sha256",
+          "value": "72e8ce59907a201cc9ad2aff096e79c73b36fbb0cd0fc0a7ae5ca187ac2a488a"
+        }
+      }
+    ],
+    "debian-11-amd64": [
       {
         "id": "otp-unspecified-amd64",
         "otp": 22,
@@ -119,10 +187,10 @@
         "filename": "riak_3.0.12-OTP22.3_amd64.deb",
         "packageRevision": null,
         "variant": "",
-        "url": "https://files.tiot.jp/riak/kv/3.0/3.0.12/debian/9/riak_3.0.12-OTP22.3_amd64.deb",
+        "url": "https://files.tiot.jp/riak/kv/3.0/3.0.12/debian/11/riak_3.0.12-OTP22.3_amd64.deb",
         "checksum": {
           "algorithm": "sha256",
-          "value": "b559f702af725746d417a0d49fb9b56faa081d6fad27807e8bb6c2cfc4703841"
+          "value": "c031f4f01b0c4e5bd85e2328bb7ff8761601734f399b92a1aee5b3725b494959"
         }
       }
     ],
@@ -142,7 +210,7 @@
         }
       }
     ],
-    "debian-11-amd64": [
+    "debian-9-amd64": [
       {
         "id": "otp-unspecified-amd64",
         "otp": 22,
@@ -151,10 +219,26 @@
         "filename": "riak_3.0.12-OTP22.3_amd64.deb",
         "packageRevision": null,
         "variant": "",
-        "url": "https://files.tiot.jp/riak/kv/3.0/3.0.12/debian/11/riak_3.0.12-OTP22.3_amd64.deb",
+        "url": "https://files.tiot.jp/riak/kv/3.0/3.0.12/debian/9/riak_3.0.12-OTP22.3_amd64.deb",
         "checksum": {
           "algorithm": "sha256",
-          "value": "c031f4f01b0c4e5bd85e2328bb7ff8761601734f399b92a1aee5b3725b494959"
+          "value": "b559f702af725746d417a0d49fb9b56faa081d6fad27807e8bb6c2cfc4703841"
+        }
+      }
+    ],
+    "fedora-7-x86_64": [
+      {
+        "id": "otp22-x86_64-1",
+        "otp": 22,
+        "architecture": "x86_64",
+        "format": "rpm",
+        "filename": "riak-3.0.12.OTP22-1.el7.x86_64.rpm",
+        "packageRevision": "1",
+        "variant": "",
+        "url": "https://files.tiot.jp/riak/kv/3.0/3.0.12/rhel/7/riak-3.0.12.OTP22-1.el7.x86_64.rpm",
+        "checksum": {
+          "algorithm": "sha256",
+          "value": "72e8ce59907a201cc9ad2aff096e79c73b36fbb0cd0fc0a7ae5ca187ac2a488a"
         }
       }
     ],
@@ -190,7 +274,39 @@
         }
       }
     ],
-    "ubuntu-bionic-amd64": [
+    "rocky-7-x86_64": [
+      {
+        "id": "otp22-x86_64-1",
+        "otp": 22,
+        "architecture": "x86_64",
+        "format": "rpm",
+        "filename": "riak-3.0.12.OTP22-1.el7.x86_64.rpm",
+        "packageRevision": "1",
+        "variant": "",
+        "url": "https://files.tiot.jp/riak/kv/3.0/3.0.12/rhel/7/riak-3.0.12.OTP22-1.el7.x86_64.rpm",
+        "checksum": {
+          "algorithm": "sha256",
+          "value": "72e8ce59907a201cc9ad2aff096e79c73b36fbb0cd0fc0a7ae5ca187ac2a488a"
+        }
+      }
+    ],
+    "suse-7-x86_64": [
+      {
+        "id": "otp22-x86_64-1",
+        "otp": 22,
+        "architecture": "x86_64",
+        "format": "rpm",
+        "filename": "riak-3.0.12.OTP22-1.el7.x86_64.rpm",
+        "packageRevision": "1",
+        "variant": "",
+        "url": "https://files.tiot.jp/riak/kv/3.0/3.0.12/rhel/7/riak-3.0.12.OTP22-1.el7.x86_64.rpm",
+        "checksum": {
+          "algorithm": "sha256",
+          "value": "72e8ce59907a201cc9ad2aff096e79c73b36fbb0cd0fc0a7ae5ca187ac2a488a"
+        }
+      }
+    ],
+    "ubuntu-jammy-amd64": [
       {
         "id": "otp-unspecified-amd64",
         "otp": 22,
@@ -199,10 +315,10 @@
         "filename": "riak_3.0.12-OTP22.3_amd64.deb",
         "packageRevision": null,
         "variant": "",
-        "url": "https://files.tiot.jp/riak/kv/3.0/3.0.12/ubuntu/bionic64/riak_3.0.12-OTP22.3_amd64.deb",
+        "url": "https://files.tiot.jp/riak/kv/3.0/3.0.12/ubuntu/jammy64/riak_3.0.12-OTP22.3_amd64.deb",
         "checksum": {
           "algorithm": "sha256",
-          "value": "387360cf65817711132927043e1a6e8f62594e0f92708c5dfe18bc0c2c5d9843"
+          "value": "507bb437a3eba04a4b31527a6d7ac06386883fa2f683eeaae1eae1f5b796b21b"
         }
       }
     ],
@@ -222,7 +338,7 @@
         }
       }
     ],
-    "ubuntu-jammy-amd64": [
+    "ubuntu-bionic-amd64": [
       {
         "id": "otp-unspecified-amd64",
         "otp": 22,
@@ -231,10 +347,10 @@
         "filename": "riak_3.0.12-OTP22.3_amd64.deb",
         "packageRevision": null,
         "variant": "",
-        "url": "https://files.tiot.jp/riak/kv/3.0/3.0.12/ubuntu/jammy64/riak_3.0.12-OTP22.3_amd64.deb",
+        "url": "https://files.tiot.jp/riak/kv/3.0/3.0.12/ubuntu/bionic64/riak_3.0.12-OTP22.3_amd64.deb",
         "checksum": {
           "algorithm": "sha256",
-          "value": "507bb437a3eba04a4b31527a6d7ac06386883fa2f683eeaae1eae1f5b796b21b"
+          "value": "387360cf65817711132927043e1a6e8f62594e0f92708c5dfe18bc0c2c5d9843"
         }
       }
     ]

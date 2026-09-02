@@ -1,0 +1,28 @@
+{{- $current := .current -}}
+{{- $menuKey := .menuKey -}}
+<ul class="nav-tree">
+  {{- range .entries -}}
+    {{- $children := .Children -}}
+    {{- $hasChildren := .HasChildren -}}
+    {{- $isCurrent := $current.IsMenuCurrent $menuKey . -}}
+    {{- $expanded := and $hasChildren (or $isCurrent ($current.HasMenuCurrent $menuKey .)) -}}
+    {{- $url := .URL | relURL -}}
+    {{- with .Page }}{{ $url = .RelPermalink }}{{ end -}}
+    {{- $childrenID := printf "nav-children-%s" (md5 (printf "%s:%s" $menuKey .Identifier)) -}}
+    <li class="nav-tree-node">
+      <div class="nav-tree-row">
+        {{- if $hasChildren -}}
+          <button class="nav-tree-toggle" type="button" data-nav-tree-toggle aria-expanded="{{ $expanded }}" aria-controls="{{ $childrenID }}" aria-label="{{ if $expanded }}Collapse{{ else }}Expand{{ end }} {{ .Name }}"></button>
+        {{- else -}}
+          <span class="nav-tree-spacer" aria-hidden="true"></span>
+        {{- end -}}
+        <a href="{{ $url }}"{{ if $isCurrent }} aria-current="page"{{ end }}>{{ .Name }}</a>
+      </div>
+      {{- if $hasChildren -}}
+        <div id="{{ $childrenID }}" data-nav-tree-children{{ if not $expanded }} hidden{{ end }}>
+          {{ partial "menu-nav-tree.html" (dict "entries" $children "current" $current "menuKey" $menuKey) }}
+        </div>
+      {{- end -}}
+    </li>
+  {{- end -}}
+</ul>

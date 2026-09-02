@@ -1,2 +1,11 @@
 <a class="sidebar-title" href="{{ .product.versionHome.RelPermalink }}">{{ .product.versionHome.Title }}</a>
-<nav class="sidebar-page-tree" tabindex="-1" aria-label="Page tree">{{ partial "nav-tree.html" (dict "pages" .product.versionHome.Pages "current" .page) }}</nav>
+{{- $project := .product.versionHome.Params.project | default "" -}}
+{{- $menuKey := printf "%s-%s" $project .version -}}
+{{- $versionMenu := index site.Menus $menuKey -}}
+<nav class="sidebar-page-tree" tabindex="-1" aria-label="Page tree">
+  {{- if $versionMenu -}}
+    {{- partial "menu-nav-tree.html" (dict "entries" $versionMenu "current" .page "menuKey" $menuKey) -}}
+  {{- else -}}
+    {{- partial "nav-tree.html" (dict "pages" .product.versionHome.Pages "current" .page) -}}
+  {{- end -}}
+</nav>

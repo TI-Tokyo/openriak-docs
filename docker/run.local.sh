@@ -101,7 +101,7 @@ fi
 if command -v docker.exe >/dev/null 2>&1 && command -v wslpath >/dev/null 2>&1; then
   if docker.exe info >/dev/null 2>&1 && docker.exe compose version >/dev/null 2>&1; then
     export OPENRIAK_DOCS_ZONEINFO_DIR=$(wslpath -w "$zoneinfo_directory")
-    export WSLENV="${WSLENV:+$WSLENV:}OPENRIAK_DOCS_TZ:OPENRIAK_DOCS_ZONEINFO_DIR"
+    export WSLENV="${WSLENV:+$WSLENV:}OPENRIAK_DOCS_BUILD_PROFILE:OPENRIAK_DOCS_RIAK_KV_VERSION:OPENRIAK_DOCS_TZ:OPENRIAK_DOCS_ZONEINFO_DIR"
     if [ -n "$compose_profile" ]; then
       exec docker.exe compose --file "$(wslpath -w "$compose_file")" --profile "$compose_profile" up "$@"
     fi

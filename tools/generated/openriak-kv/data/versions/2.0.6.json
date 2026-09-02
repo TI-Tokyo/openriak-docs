@@ -13,16 +13,30 @@
   "operatingSystems": [],
   "downloadOperatingSystems": [
     {
-      "id": "debian-6-amd64",
-      "family": "debian",
-      "name": "Debian",
-      "displayName": "Debian 6",
+      "id": "centos-6-x86_64",
+      "family": "centos",
+      "name": "CentOS",
+      "displayName": "CentOS 6",
       "version": "6",
-      "codename": "6",
-      "architecture": "amd64",
-      "packageFamily": "deb",
-      "logo": "images/os/debian.svg",
-      "defaultForFamily": false
+      "codename": "x86_64",
+      "architecture": "x86_64",
+      "packageFamily": "rpm",
+      "logo": "images/os/centos.svg",
+      "defaultForFamily": true,
+      "aliasOf": "rhel-6-x86_64"
+    },
+    {
+      "id": "centos-5-x86_64",
+      "family": "centos",
+      "name": "CentOS",
+      "displayName": "CentOS 5",
+      "version": "5",
+      "codename": "x86_64",
+      "architecture": "x86_64",
+      "packageFamily": "rpm",
+      "logo": "images/os/centos.svg",
+      "defaultForFamily": false,
+      "aliasOf": "rhel-5-x86_64"
     },
     {
       "id": "debian-7-amd64",
@@ -37,6 +51,18 @@
       "defaultForFamily": true
     },
     {
+      "id": "debian-6-amd64",
+      "family": "debian",
+      "name": "Debian",
+      "displayName": "Debian 6",
+      "version": "6",
+      "codename": "6",
+      "architecture": "amd64",
+      "packageFamily": "deb",
+      "logo": "images/os/debian.svg",
+      "defaultForFamily": false
+    },
+    {
       "id": "fedora-19-x86_64",
       "family": "fedora",
       "name": "Fedora",
@@ -45,7 +71,19 @@
       "codename": "19",
       "architecture": "x86_64",
       "packageFamily": "rpm",
-      "logo": "images/os/fedora.png",
+      "logo": "images/os/fedora.svg",
+      "defaultForFamily": true
+    },
+    {
+      "id": "rhel-6-x86_64",
+      "family": "rhel",
+      "name": "Red Hat Enterprise Linux",
+      "displayName": "Red Hat Enterprise Linux 6",
+      "version": "6",
+      "codename": "6",
+      "architecture": "x86_64",
+      "packageFamily": "rpm",
+      "logo": "images/os/red-hat.svg",
       "defaultForFamily": true
     },
     {
@@ -61,16 +99,30 @@
       "defaultForFamily": false
     },
     {
-      "id": "rhel-6-x86_64",
-      "family": "rhel",
-      "name": "Red Hat Enterprise Linux",
-      "displayName": "Red Hat Enterprise Linux 6",
+      "id": "rocky-6-x86_64",
+      "family": "rocky",
+      "name": "Rocky Linux",
+      "displayName": "Rocky Linux 6",
       "version": "6",
-      "codename": "6",
+      "codename": "x86_64",
       "architecture": "x86_64",
       "packageFamily": "rpm",
-      "logo": "images/os/red-hat.svg",
-      "defaultForFamily": true
+      "logo": "images/os/rocky.svg",
+      "defaultForFamily": true,
+      "aliasOf": "rhel-6-x86_64"
+    },
+    {
+      "id": "rocky-5-x86_64",
+      "family": "rocky",
+      "name": "Rocky Linux",
+      "displayName": "Rocky Linux 5",
+      "version": "5",
+      "codename": "x86_64",
+      "architecture": "x86_64",
+      "packageFamily": "rpm",
+      "logo": "images/os/rocky.svg",
+      "defaultForFamily": false,
+      "aliasOf": "rhel-5-x86_64"
     },
     {
       "id": "sles-11-x86_64",
@@ -81,20 +133,20 @@
       "codename": "11",
       "architecture": "x86_64",
       "packageFamily": "rpm",
-      "logo": "images/os/suse.png",
+      "logo": "images/os/suse.svg",
       "defaultForFamily": true
     },
     {
-      "id": "ubuntu-lucid-amd64",
+      "id": "ubuntu-trusty-amd64",
       "family": "ubuntu",
       "name": "Ubuntu",
-      "displayName": "Ubuntu 10.04",
-      "version": "10.04",
-      "codename": "lucid",
+      "displayName": "Ubuntu 14.04",
+      "version": "14.04",
+      "codename": "trusty",
       "architecture": "amd64",
       "packageFamily": "deb",
       "logo": "images/os/ubuntu.svg",
-      "defaultForFamily": false
+      "defaultForFamily": true
     },
     {
       "id": "ubuntu-precise-amd64",
@@ -109,32 +161,48 @@
       "defaultForFamily": false
     },
     {
-      "id": "ubuntu-trusty-amd64",
+      "id": "ubuntu-lucid-amd64",
       "family": "ubuntu",
       "name": "Ubuntu",
-      "displayName": "Ubuntu 14.04",
-      "version": "14.04",
-      "codename": "trusty",
+      "displayName": "Ubuntu 10.04",
+      "version": "10.04",
+      "codename": "lucid",
       "architecture": "amd64",
       "packageFamily": "deb",
       "logo": "images/os/ubuntu.svg",
-      "defaultForFamily": true
+      "defaultForFamily": false
     }
   ],
   "downloads": {
-    "debian-6-amd64": [
+    "centos-6-x86_64": [
       {
-        "id": "otp-unspecified-amd64",
+        "id": "otp-unspecified-x86_64-1",
         "otp": "R16B02",
-        "architecture": "amd64",
-        "format": "deb",
-        "filename": "riak_2.0.6-1_amd64.deb",
-        "packageRevision": null,
+        "architecture": "x86_64",
+        "format": "rpm",
+        "filename": "riak-2.0.6-1.el6.x86_64.rpm",
+        "packageRevision": "1",
         "variant": "",
-        "url": "https://files.tiot.jp/riak/kv/2.0/2.0.6/debian/6/riak_2.0.6-1_amd64.deb",
+        "url": "https://files.tiot.jp/riak/kv/2.0/2.0.6/rhel/6/riak-2.0.6-1.el6.x86_64.rpm",
         "checksum": {
           "algorithm": "sha256",
-          "value": "750ccfe6565cc56c4bc9cbebf8e9515dc00fbbf2b58bac75217d545ea53ea579"
+          "value": "f89e8a6b80da218e2c1af0e3ea8575e92a87f197bc4dda0c111bb379dc68a564"
+        }
+      }
+    ],
+    "centos-5-x86_64": [
+      {
+        "id": "otp-unspecified-x86_64-1",
+        "otp": "R16B02",
+        "architecture": "x86_64",
+        "format": "rpm",
+        "filename": "riak-2.0.6-1.el5.x86_64.rpm",
+        "packageRevision": "1",
+        "variant": "",
+        "url": "https://files.tiot.jp/riak/kv/2.0/2.0.6/rhel/5/riak-2.0.6-1.el5.x86_64.rpm",
+        "checksum": {
+          "algorithm": "sha256",
+          "value": "e54e175df0866855386518e1db1ae12a1f71f1a87541655b6596edab11c24711"
         }
       }
     ],
@@ -154,6 +222,22 @@
         }
       }
     ],
+    "debian-6-amd64": [
+      {
+        "id": "otp-unspecified-amd64",
+        "otp": "R16B02",
+        "architecture": "amd64",
+        "format": "deb",
+        "filename": "riak_2.0.6-1_amd64.deb",
+        "packageRevision": null,
+        "variant": "",
+        "url": "https://files.tiot.jp/riak/kv/2.0/2.0.6/debian/6/riak_2.0.6-1_amd64.deb",
+        "checksum": {
+          "algorithm": "sha256",
+          "value": "750ccfe6565cc56c4bc9cbebf8e9515dc00fbbf2b58bac75217d545ea53ea579"
+        }
+      }
+    ],
     "fedora-19-x86_64": [
       {
         "id": "otp-unspecified-x86_64-1",
@@ -167,22 +251,6 @@
         "checksum": {
           "algorithm": "sha256",
           "value": "7f886443dc91bd27142ab46f9f93223394e663c2b6b779e51f798545a4d050af"
-        }
-      }
-    ],
-    "rhel-5-x86_64": [
-      {
-        "id": "otp-unspecified-x86_64-1",
-        "otp": "R16B02",
-        "architecture": "x86_64",
-        "format": "rpm",
-        "filename": "riak-2.0.6-1.el5.x86_64.rpm",
-        "packageRevision": "1",
-        "variant": "",
-        "url": "https://files.tiot.jp/riak/kv/2.0/2.0.6/rhel/5/riak-2.0.6-1.el5.x86_64.rpm",
-        "checksum": {
-          "algorithm": "sha256",
-          "value": "e54e175df0866855386518e1db1ae12a1f71f1a87541655b6596edab11c24711"
         }
       }
     ],
@@ -202,6 +270,54 @@
         }
       }
     ],
+    "rhel-5-x86_64": [
+      {
+        "id": "otp-unspecified-x86_64-1",
+        "otp": "R16B02",
+        "architecture": "x86_64",
+        "format": "rpm",
+        "filename": "riak-2.0.6-1.el5.x86_64.rpm",
+        "packageRevision": "1",
+        "variant": "",
+        "url": "https://files.tiot.jp/riak/kv/2.0/2.0.6/rhel/5/riak-2.0.6-1.el5.x86_64.rpm",
+        "checksum": {
+          "algorithm": "sha256",
+          "value": "e54e175df0866855386518e1db1ae12a1f71f1a87541655b6596edab11c24711"
+        }
+      }
+    ],
+    "rocky-6-x86_64": [
+      {
+        "id": "otp-unspecified-x86_64-1",
+        "otp": "R16B02",
+        "architecture": "x86_64",
+        "format": "rpm",
+        "filename": "riak-2.0.6-1.el6.x86_64.rpm",
+        "packageRevision": "1",
+        "variant": "",
+        "url": "https://files.tiot.jp/riak/kv/2.0/2.0.6/rhel/6/riak-2.0.6-1.el6.x86_64.rpm",
+        "checksum": {
+          "algorithm": "sha256",
+          "value": "f89e8a6b80da218e2c1af0e3ea8575e92a87f197bc4dda0c111bb379dc68a564"
+        }
+      }
+    ],
+    "rocky-5-x86_64": [
+      {
+        "id": "otp-unspecified-x86_64-1",
+        "otp": "R16B02",
+        "architecture": "x86_64",
+        "format": "rpm",
+        "filename": "riak-2.0.6-1.el5.x86_64.rpm",
+        "packageRevision": "1",
+        "variant": "",
+        "url": "https://files.tiot.jp/riak/kv/2.0/2.0.6/rhel/5/riak-2.0.6-1.el5.x86_64.rpm",
+        "checksum": {
+          "algorithm": "sha256",
+          "value": "e54e175df0866855386518e1db1ae12a1f71f1a87541655b6596edab11c24711"
+        }
+      }
+    ],
     "sles-11-x86_64": [
       {
         "id": "otp-unspecified-x86_64-1",
@@ -218,7 +334,7 @@
         }
       }
     ],
-    "ubuntu-lucid-amd64": [
+    "ubuntu-trusty-amd64": [
       {
         "id": "otp-unspecified-amd64",
         "otp": "R16B02",
@@ -227,10 +343,10 @@
         "filename": "riak_2.0.6-1_amd64.deb",
         "packageRevision": null,
         "variant": "",
-        "url": "https://files.tiot.jp/riak/kv/2.0/2.0.6/ubuntu/lucid/riak_2.0.6-1_amd64.deb",
+        "url": "https://files.tiot.jp/riak/kv/2.0/2.0.6/ubuntu/trusty/riak_2.0.6-1_amd64.deb",
         "checksum": {
           "algorithm": "sha256",
-          "value": "37e2dec66745ec7616ad1472c8092c073982a115733e47225213c4a2e7259507"
+          "value": "27c9385b2463bc377b15087cef0e5c93ac7d4307b9e0c6936861c22e923800ec"
         }
       }
     ],
@@ -250,7 +366,7 @@
         }
       }
     ],
-    "ubuntu-trusty-amd64": [
+    "ubuntu-lucid-amd64": [
       {
         "id": "otp-unspecified-amd64",
         "otp": "R16B02",
@@ -259,10 +375,10 @@
         "filename": "riak_2.0.6-1_amd64.deb",
         "packageRevision": null,
         "variant": "",
-        "url": "https://files.tiot.jp/riak/kv/2.0/2.0.6/ubuntu/trusty/riak_2.0.6-1_amd64.deb",
+        "url": "https://files.tiot.jp/riak/kv/2.0/2.0.6/ubuntu/lucid/riak_2.0.6-1_amd64.deb",
         "checksum": {
           "algorithm": "sha256",
-          "value": "27c9385b2463bc377b15087cef0e5c93ac7d4307b9e0c6936861c22e923800ec"
+          "value": "37e2dec66745ec7616ad1472c8092c073982a115733e47225213c4a2e7259507"
         }
       }
     ]

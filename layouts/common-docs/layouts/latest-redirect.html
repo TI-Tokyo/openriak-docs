@@ -1,4 +1,8 @@
-{{- $sourceRoot := printf "%s/latest/" .Params.latest_redirect_route | relURL -}}
+{{- $sourceRoute := printf "%s/latest" .Params.latest_redirect_route -}}
+{{- with .Params.redirect_source_route -}}
+  {{- $sourceRoute = . -}}
+{{- end -}}
+{{- $sourceRoot := printf "%s/" $sourceRoute | relURL -}}
 {{- $targetRoot := printf "%s/%s/" .Params.latest_redirect_product .Params.latest_redirect_version | relURL -}}
 {{- $suffix := strings.TrimPrefix $sourceRoot .RelPermalink -}}
 {{- $target := printf "%s%s" $targetRoot $suffix -}}

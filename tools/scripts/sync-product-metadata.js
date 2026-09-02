@@ -66,6 +66,9 @@ const familyNames = {
   'oracle-linux': 'Oracle Linux',
   raspbian: 'Raspbian',
   rhel: 'Red Hat Enterprise Linux',
+  rocky: 'Rocky Linux',
+  centos: 'CentOS',
+  suse: 'SUSE Linux',
   sles: 'SUSE Linux Enterprise Server',
   ubuntu: 'Ubuntu'
 };
@@ -78,9 +81,20 @@ const familyLogos = {
   'oracle-linux': 'images/os/oracle.png',
   raspbian: 'images/os/raspbian.png',
   rhel: 'images/os/red-hat.svg',
-  sles: 'images/os/suse.png',
+  rocky: 'images/os/rocky.svg',
+  centos: 'images/os/centos.svg',
+  suse: 'images/os/suse.svg',
+  fedora: 'images/os/fedora.svg',
+  sles: 'images/os/suse.svg',
   ubuntu: 'images/os/ubuntu.svg'
 };
+
+const rhelAliases = [
+  { family: 'rocky', name: familyNames.rocky, logo: familyLogos.rocky },
+  { family: 'centos', name: familyNames.centos, logo: familyLogos.centos },
+  { family: 'suse', name: familyNames.suse, logo: familyLogos.suse, nativeFamily: 'sles' },
+  { family: 'fedora', name: familyNames.fedora, logo: familyLogos.fedora, nativeFamily: 'fedora' }
+];
 
 const preferredFamilyDefaults = {
   alpine: 'alpine-3.21-x86_64',
@@ -228,11 +242,33 @@ for (const product of products) {
       const members = operatingSystems.filter((os) => os.family === family);
       if (!members.some((os) => os.defaultForFamily)) members.at(-1).defaultForFamily = true;
     }
+    const nativeFamilies = new Set(operatingSystems.map((os) => os.family));
+    const rhelOperatingSystems = operatingSystems.filter((os) => os.family === 'rhel');
+    for (const alias of rhelAliases) {
+      if (alias.nativeFamily && nativeFamilies.has(alias.nativeFamily)) continue;
+      for (const rhel of rhelOperatingSystems) {
+        operatingSystems.push({
+          ...rhel,
+          id: rhel.id.replace(/^rhel-/, `${alias.family}-`),
+          family: alias.family,
+          name: alias.name,
+          displayName: `${alias.name} ${rhel.version}`,
+          codename: rhel.architecture,
+          logo: alias.logo,
+          aliasOf: rhel.id
+        });
+      }
+    }
+    operatingSystems.sort((left, right) => (
+      left.name.localeCompare(right.name)
+      || String(right.version).localeCompare(String(left.version), undefined, { numeric: true })
+      || left.architecture.localeCompare(right.architecture)
+    ));
 
     const values = {};
     if (defaults) {
       for (const os of operatingSystems) {
-        const effective = defaults.effective_defaults[os.id] || {};
+        const effective = defaults.effective_defaults[os.aliasOf || os.id] || {};
         values[os.id] = {};
         for (const key of requestedKeys) {
           const setting = effective[key];
@@ -250,7 +286,7 @@ for (const product of products) {
 
     const normalizedDownloads = {};
     for (const os of operatingSystems) {
-      normalizedDownloads[os.id] = Object.entries(downloads.downloads[os.id] || {})
+      normalizedDownloads[os.id] = Object.entries(downloads.downloads[os.aliasOf || os.id] || {})
         .map(([id, item]) => ({
           id,
           otp: downloadOtp(product, version, os.id, id, item),

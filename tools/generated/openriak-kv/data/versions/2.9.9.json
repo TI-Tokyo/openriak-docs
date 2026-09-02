@@ -13,6 +13,18 @@
   "operatingSystems": [],
   "downloadOperatingSystems": [
     {
+      "id": "amazon-linux-2-x86_64",
+      "family": "amazon-linux",
+      "name": "Amazon Linux",
+      "displayName": "Amazon Linux 2",
+      "version": "2",
+      "codename": "2",
+      "architecture": "x86_64",
+      "packageFamily": "rpm",
+      "logo": "images/os/amazon.png",
+      "defaultForFamily": true
+    },
+    {
       "id": "amazon-linux-1-x86_64",
       "family": "amazon-linux",
       "name": "Amazon Linux",
@@ -25,15 +37,41 @@
       "defaultForFamily": false
     },
     {
-      "id": "amazon-linux-2-x86_64",
-      "family": "amazon-linux",
-      "name": "Amazon Linux",
-      "displayName": "Amazon Linux 2",
-      "version": "2",
-      "codename": "2",
+      "id": "centos-8-x86_64",
+      "family": "centos",
+      "name": "CentOS",
+      "displayName": "CentOS 8",
+      "version": "8",
+      "codename": "x86_64",
       "architecture": "x86_64",
       "packageFamily": "rpm",
-      "logo": "images/os/amazon.png",
+      "logo": "images/os/centos.svg",
+      "defaultForFamily": true,
+      "aliasOf": "rhel-8-x86_64"
+    },
+    {
+      "id": "centos-7-x86_64",
+      "family": "centos",
+      "name": "CentOS",
+      "displayName": "CentOS 7",
+      "version": "7",
+      "codename": "x86_64",
+      "architecture": "x86_64",
+      "packageFamily": "rpm",
+      "logo": "images/os/centos.svg",
+      "defaultForFamily": false,
+      "aliasOf": "rhel-7-x86_64"
+    },
+    {
+      "id": "debian-9-amd64",
+      "family": "debian",
+      "name": "Debian",
+      "displayName": "Debian 9",
+      "version": "9",
+      "codename": "9",
+      "architecture": "amd64",
+      "packageFamily": "deb",
+      "logo": "images/os/debian.svg",
       "defaultForFamily": true
     },
     {
@@ -49,16 +87,30 @@
       "defaultForFamily": false
     },
     {
-      "id": "debian-9-amd64",
-      "family": "debian",
-      "name": "Debian",
-      "displayName": "Debian 9",
-      "version": "9",
-      "codename": "9",
-      "architecture": "amd64",
-      "packageFamily": "deb",
-      "logo": "images/os/debian.svg",
-      "defaultForFamily": true
+      "id": "fedora-8-x86_64",
+      "family": "fedora",
+      "name": "Fedora",
+      "displayName": "Fedora 8",
+      "version": "8",
+      "codename": "x86_64",
+      "architecture": "x86_64",
+      "packageFamily": "rpm",
+      "logo": "images/os/fedora.svg",
+      "defaultForFamily": true,
+      "aliasOf": "rhel-8-x86_64"
+    },
+    {
+      "id": "fedora-7-x86_64",
+      "family": "fedora",
+      "name": "Fedora",
+      "displayName": "Fedora 7",
+      "version": "7",
+      "codename": "x86_64",
+      "architecture": "x86_64",
+      "packageFamily": "rpm",
+      "logo": "images/os/fedora.svg",
+      "defaultForFamily": false,
+      "aliasOf": "rhel-7-x86_64"
     },
     {
       "id": "oracle-linux-8-x86_64",
@@ -70,6 +122,18 @@
       "architecture": "x86_64",
       "packageFamily": "rpm",
       "logo": "images/os/oracle.png",
+      "defaultForFamily": true
+    },
+    {
+      "id": "rhel-8-x86_64",
+      "family": "rhel",
+      "name": "Red Hat Enterprise Linux",
+      "displayName": "Red Hat Enterprise Linux 8",
+      "version": "8",
+      "codename": "8",
+      "architecture": "x86_64",
+      "packageFamily": "rpm",
+      "logo": "images/os/red-hat.svg",
       "defaultForFamily": true
     },
     {
@@ -85,28 +149,56 @@
       "defaultForFamily": false
     },
     {
-      "id": "rhel-8-x86_64",
-      "family": "rhel",
-      "name": "Red Hat Enterprise Linux",
-      "displayName": "Red Hat Enterprise Linux 8",
+      "id": "rocky-8-x86_64",
+      "family": "rocky",
+      "name": "Rocky Linux",
+      "displayName": "Rocky Linux 8",
       "version": "8",
-      "codename": "8",
+      "codename": "x86_64",
       "architecture": "x86_64",
       "packageFamily": "rpm",
-      "logo": "images/os/red-hat.svg",
-      "defaultForFamily": true
+      "logo": "images/os/rocky.svg",
+      "defaultForFamily": true,
+      "aliasOf": "rhel-8-x86_64"
     },
     {
-      "id": "ubuntu-bionic-amd64",
-      "family": "ubuntu",
-      "name": "Ubuntu",
-      "displayName": "Ubuntu 18.04",
-      "version": "18.04",
-      "codename": "bionic64",
-      "architecture": "amd64",
-      "packageFamily": "deb",
-      "logo": "images/os/ubuntu.svg",
-      "defaultForFamily": false
+      "id": "rocky-7-x86_64",
+      "family": "rocky",
+      "name": "Rocky Linux",
+      "displayName": "Rocky Linux 7",
+      "version": "7",
+      "codename": "x86_64",
+      "architecture": "x86_64",
+      "packageFamily": "rpm",
+      "logo": "images/os/rocky.svg",
+      "defaultForFamily": false,
+      "aliasOf": "rhel-7-x86_64"
+    },
+    {
+      "id": "suse-8-x86_64",
+      "family": "suse",
+      "name": "SUSE Linux",
+      "displayName": "SUSE Linux 8",
+      "version": "8",
+      "codename": "x86_64",
+      "architecture": "x86_64",
+      "packageFamily": "rpm",
+      "logo": "images/os/suse.svg",
+      "defaultForFamily": true,
+      "aliasOf": "rhel-8-x86_64"
+    },
+    {
+      "id": "suse-7-x86_64",
+      "family": "suse",
+      "name": "SUSE Linux",
+      "displayName": "SUSE Linux 7",
+      "version": "7",
+      "codename": "x86_64",
+      "architecture": "x86_64",
+      "packageFamily": "rpm",
+      "logo": "images/os/suse.svg",
+      "defaultForFamily": false,
+      "aliasOf": "rhel-7-x86_64"
     },
     {
       "id": "ubuntu-focal-amd64",
@@ -121,12 +213,12 @@
       "defaultForFamily": false
     },
     {
-      "id": "ubuntu-trusty-amd64",
+      "id": "ubuntu-bionic-amd64",
       "family": "ubuntu",
       "name": "Ubuntu",
-      "displayName": "Ubuntu 14.04",
-      "version": "14.04",
-      "codename": "trusty64",
+      "displayName": "Ubuntu 18.04",
+      "version": "18.04",
+      "codename": "bionic64",
       "architecture": "amd64",
       "packageFamily": "deb",
       "logo": "images/os/ubuntu.svg",
@@ -143,25 +235,21 @@
       "packageFamily": "deb",
       "logo": "images/os/ubuntu.svg",
       "defaultForFamily": true
+    },
+    {
+      "id": "ubuntu-trusty-amd64",
+      "family": "ubuntu",
+      "name": "Ubuntu",
+      "displayName": "Ubuntu 14.04",
+      "version": "14.04",
+      "codename": "trusty64",
+      "architecture": "amd64",
+      "packageFamily": "deb",
+      "logo": "images/os/ubuntu.svg",
+      "defaultForFamily": false
     }
   ],
   "downloads": {
-    "amazon-linux-1-x86_64": [
-      {
-        "id": "otp-unspecified-x86_64-1",
-        "otp": "R16B02",
-        "architecture": "x86_64",
-        "format": "rpm",
-        "filename": "riak-2.9.9-1.amzn1.x86_64.rpm",
-        "packageRevision": "1",
-        "variant": "",
-        "url": "https://files.tiot.jp/riak/kv/2.9/2.9.9/amazon/2016.09/riak-2.9.9-1.amzn1.x86_64.rpm",
-        "checksum": {
-          "algorithm": "sha256",
-          "value": "a8fbf3dfa7239a857391b81581f9966ca72ed5900ef88ac16d47c3c58e28505a"
-        }
-      }
-    ],
     "amazon-linux-2-x86_64": [
       {
         "id": "otp-unspecified-x86_64-1",
@@ -178,19 +266,51 @@
         }
       }
     ],
-    "debian-8-amd64": [
+    "amazon-linux-1-x86_64": [
       {
-        "id": "otp-unspecified-amd64",
+        "id": "otp-unspecified-x86_64-1",
         "otp": "R16B02",
-        "architecture": "amd64",
-        "format": "deb",
-        "filename": "riak_2.9.9-1_amd64.deb",
-        "packageRevision": null,
+        "architecture": "x86_64",
+        "format": "rpm",
+        "filename": "riak-2.9.9-1.amzn1.x86_64.rpm",
+        "packageRevision": "1",
         "variant": "",
-        "url": "https://files.tiot.jp/riak/kv/2.9/2.9.9/debian/8/riak_2.9.9-1_amd64.deb",
+        "url": "https://files.tiot.jp/riak/kv/2.9/2.9.9/amazon/2016.09/riak-2.9.9-1.amzn1.x86_64.rpm",
         "checksum": {
           "algorithm": "sha256",
-          "value": "d5068e17b86981245d9923296141ee6ae5ed6e418ca607920a921e7da952ccf9"
+          "value": "a8fbf3dfa7239a857391b81581f9966ca72ed5900ef88ac16d47c3c58e28505a"
+        }
+      }
+    ],
+    "centos-8-x86_64": [
+      {
+        "id": "otp-unspecified-x86_64-1",
+        "otp": "R16B02",
+        "architecture": "x86_64",
+        "format": "rpm",
+        "filename": "riak-2.9.9-1.el8.x86_64.rpm",
+        "packageRevision": "1",
+        "variant": "",
+        "url": "https://files.tiot.jp/riak/kv/2.9/2.9.9/rhel/8/riak-2.9.9-1.el8.x86_64.rpm",
+        "checksum": {
+          "algorithm": "sha256",
+          "value": "6deae6f65c16a9fcc0f82393d8df280baf154aec125c60e9d7633efa74ef9206"
+        }
+      }
+    ],
+    "centos-7-x86_64": [
+      {
+        "id": "otp-unspecified-x86_64-1",
+        "otp": "R16B02",
+        "architecture": "x86_64",
+        "format": "rpm",
+        "filename": "riak-2.9.9-1.el7.x86_64.rpm",
+        "packageRevision": "1",
+        "variant": "",
+        "url": "https://files.tiot.jp/riak/kv/2.9/2.9.9/rhel/7/riak-2.9.9-1.el7.x86_64.rpm",
+        "checksum": {
+          "algorithm": "sha256",
+          "value": "44362fba76d0cf2f4d2e25c6bf51604c435c6cc6d4f7470fa5c1d6a16384241b"
         }
       }
     ],
@@ -210,6 +330,54 @@
         }
       }
     ],
+    "debian-8-amd64": [
+      {
+        "id": "otp-unspecified-amd64",
+        "otp": "R16B02",
+        "architecture": "amd64",
+        "format": "deb",
+        "filename": "riak_2.9.9-1_amd64.deb",
+        "packageRevision": null,
+        "variant": "",
+        "url": "https://files.tiot.jp/riak/kv/2.9/2.9.9/debian/8/riak_2.9.9-1_amd64.deb",
+        "checksum": {
+          "algorithm": "sha256",
+          "value": "d5068e17b86981245d9923296141ee6ae5ed6e418ca607920a921e7da952ccf9"
+        }
+      }
+    ],
+    "fedora-8-x86_64": [
+      {
+        "id": "otp-unspecified-x86_64-1",
+        "otp": "R16B02",
+        "architecture": "x86_64",
+        "format": "rpm",
+        "filename": "riak-2.9.9-1.el8.x86_64.rpm",
+        "packageRevision": "1",
+        "variant": "",
+        "url": "https://files.tiot.jp/riak/kv/2.9/2.9.9/rhel/8/riak-2.9.9-1.el8.x86_64.rpm",
+        "checksum": {
+          "algorithm": "sha256",
+          "value": "6deae6f65c16a9fcc0f82393d8df280baf154aec125c60e9d7633efa74ef9206"
+        }
+      }
+    ],
+    "fedora-7-x86_64": [
+      {
+        "id": "otp-unspecified-x86_64-1",
+        "otp": "R16B02",
+        "architecture": "x86_64",
+        "format": "rpm",
+        "filename": "riak-2.9.9-1.el7.x86_64.rpm",
+        "packageRevision": "1",
+        "variant": "",
+        "url": "https://files.tiot.jp/riak/kv/2.9/2.9.9/rhel/7/riak-2.9.9-1.el7.x86_64.rpm",
+        "checksum": {
+          "algorithm": "sha256",
+          "value": "44362fba76d0cf2f4d2e25c6bf51604c435c6cc6d4f7470fa5c1d6a16384241b"
+        }
+      }
+    ],
     "oracle-linux-8-x86_64": [
       {
         "id": "otp-unspecified-x86_64-1",
@@ -223,22 +391,6 @@
         "checksum": {
           "algorithm": "sha256",
           "value": "866c3a923540e5b6193472236fc0537d9df510849a682487a16951e2da8a1b18"
-        }
-      }
-    ],
-    "rhel-7-x86_64": [
-      {
-        "id": "otp-unspecified-x86_64-1",
-        "otp": "R16B02",
-        "architecture": "x86_64",
-        "format": "rpm",
-        "filename": "riak-2.9.9-1.el7.x86_64.rpm",
-        "packageRevision": "1",
-        "variant": "",
-        "url": "https://files.tiot.jp/riak/kv/2.9/2.9.9/rhel/7/riak-2.9.9-1.el7.x86_64.rpm",
-        "checksum": {
-          "algorithm": "sha256",
-          "value": "44362fba76d0cf2f4d2e25c6bf51604c435c6cc6d4f7470fa5c1d6a16384241b"
         }
       }
     ],
@@ -258,19 +410,83 @@
         }
       }
     ],
-    "ubuntu-bionic-amd64": [
+    "rhel-7-x86_64": [
       {
-        "id": "otp-unspecified-amd64",
+        "id": "otp-unspecified-x86_64-1",
         "otp": "R16B02",
-        "architecture": "amd64",
-        "format": "deb",
-        "filename": "riak_2.9.9-1_amd64.deb",
-        "packageRevision": null,
+        "architecture": "x86_64",
+        "format": "rpm",
+        "filename": "riak-2.9.9-1.el7.x86_64.rpm",
+        "packageRevision": "1",
         "variant": "",
-        "url": "https://files.tiot.jp/riak/kv/2.9/2.9.9/ubuntu/bionic64/riak_2.9.9-1_amd64.deb",
+        "url": "https://files.tiot.jp/riak/kv/2.9/2.9.9/rhel/7/riak-2.9.9-1.el7.x86_64.rpm",
         "checksum": {
           "algorithm": "sha256",
-          "value": "f15a1734af04c668ca4c108a7cf33122bc75c350b97c4a537bfb94bcdd91710c"
+          "value": "44362fba76d0cf2f4d2e25c6bf51604c435c6cc6d4f7470fa5c1d6a16384241b"
+        }
+      }
+    ],
+    "rocky-8-x86_64": [
+      {
+        "id": "otp-unspecified-x86_64-1",
+        "otp": "R16B02",
+        "architecture": "x86_64",
+        "format": "rpm",
+        "filename": "riak-2.9.9-1.el8.x86_64.rpm",
+        "packageRevision": "1",
+        "variant": "",
+        "url": "https://files.tiot.jp/riak/kv/2.9/2.9.9/rhel/8/riak-2.9.9-1.el8.x86_64.rpm",
+        "checksum": {
+          "algorithm": "sha256",
+          "value": "6deae6f65c16a9fcc0f82393d8df280baf154aec125c60e9d7633efa74ef9206"
+        }
+      }
+    ],
+    "rocky-7-x86_64": [
+      {
+        "id": "otp-unspecified-x86_64-1",
+        "otp": "R16B02",
+        "architecture": "x86_64",
+        "format": "rpm",
+        "filename": "riak-2.9.9-1.el7.x86_64.rpm",
+        "packageRevision": "1",
+        "variant": "",
+        "url": "https://files.tiot.jp/riak/kv/2.9/2.9.9/rhel/7/riak-2.9.9-1.el7.x86_64.rpm",
+        "checksum": {
+          "algorithm": "sha256",
+          "value": "44362fba76d0cf2f4d2e25c6bf51604c435c6cc6d4f7470fa5c1d6a16384241b"
+        }
+      }
+    ],
+    "suse-8-x86_64": [
+      {
+        "id": "otp-unspecified-x86_64-1",
+        "otp": "R16B02",
+        "architecture": "x86_64",
+        "format": "rpm",
+        "filename": "riak-2.9.9-1.el8.x86_64.rpm",
+        "packageRevision": "1",
+        "variant": "",
+        "url": "https://files.tiot.jp/riak/kv/2.9/2.9.9/rhel/8/riak-2.9.9-1.el8.x86_64.rpm",
+        "checksum": {
+          "algorithm": "sha256",
+          "value": "6deae6f65c16a9fcc0f82393d8df280baf154aec125c60e9d7633efa74ef9206"
+        }
+      }
+    ],
+    "suse-7-x86_64": [
+      {
+        "id": "otp-unspecified-x86_64-1",
+        "otp": "R16B02",
+        "architecture": "x86_64",
+        "format": "rpm",
+        "filename": "riak-2.9.9-1.el7.x86_64.rpm",
+        "packageRevision": "1",
+        "variant": "",
+        "url": "https://files.tiot.jp/riak/kv/2.9/2.9.9/rhel/7/riak-2.9.9-1.el7.x86_64.rpm",
+        "checksum": {
+          "algorithm": "sha256",
+          "value": "44362fba76d0cf2f4d2e25c6bf51604c435c6cc6d4f7470fa5c1d6a16384241b"
         }
       }
     ],
@@ -290,7 +506,7 @@
         }
       }
     ],
-    "ubuntu-trusty-amd64": [
+    "ubuntu-bionic-amd64": [
       {
         "id": "otp-unspecified-amd64",
         "otp": "R16B02",
@@ -299,10 +515,10 @@
         "filename": "riak_2.9.9-1_amd64.deb",
         "packageRevision": null,
         "variant": "",
-        "url": "https://files.tiot.jp/riak/kv/2.9/2.9.9/ubuntu/trusty64/riak_2.9.9-1_amd64.deb",
+        "url": "https://files.tiot.jp/riak/kv/2.9/2.9.9/ubuntu/bionic64/riak_2.9.9-1_amd64.deb",
         "checksum": {
           "algorithm": "sha256",
-          "value": "82c45114c1a9ef524c279b1565d00b9bcc730c32914be87f5bcf754f17991f26"
+          "value": "f15a1734af04c668ca4c108a7cf33122bc75c350b97c4a537bfb94bcdd91710c"
         }
       }
     ],
@@ -319,6 +535,22 @@
         "checksum": {
           "algorithm": "sha256",
           "value": "3b454b89e99d3c4f49f5bc545e67f955a852a01adf50d5278e1b08b62b578ebf"
+        }
+      }
+    ],
+    "ubuntu-trusty-amd64": [
+      {
+        "id": "otp-unspecified-amd64",
+        "otp": "R16B02",
+        "architecture": "amd64",
+        "format": "deb",
+        "filename": "riak_2.9.9-1_amd64.deb",
+        "packageRevision": null,
+        "variant": "",
+        "url": "https://files.tiot.jp/riak/kv/2.9/2.9.9/ubuntu/trusty64/riak_2.9.9-1_amd64.deb",
+        "checksum": {
+          "algorithm": "sha256",
+          "value": "82c45114c1a9ef524c279b1565d00b9bcc730c32914be87f5bcf754f17991f26"
         }
       }
     ]

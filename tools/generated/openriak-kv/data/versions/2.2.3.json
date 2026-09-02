@@ -13,6 +13,19 @@
   "operatingSystems": [],
   "downloadOperatingSystems": [
     {
+      "id": "centos-6-x86_64",
+      "family": "centos",
+      "name": "CentOS",
+      "displayName": "CentOS 6",
+      "version": "6",
+      "codename": "x86_64",
+      "architecture": "x86_64",
+      "packageFamily": "rpm",
+      "logo": "images/os/centos.svg",
+      "defaultForFamily": true,
+      "aliasOf": "rhel-6-x86_64"
+    },
+    {
       "id": "debian-2.2-amd64",
       "family": "debian",
       "name": "Debian",
@@ -23,6 +36,19 @@
       "packageFamily": "deb",
       "logo": "images/os/debian.svg",
       "defaultForFamily": true
+    },
+    {
+      "id": "fedora-6-x86_64",
+      "family": "fedora",
+      "name": "Fedora",
+      "displayName": "Fedora 6",
+      "version": "6",
+      "codename": "x86_64",
+      "architecture": "x86_64",
+      "packageFamily": "rpm",
+      "logo": "images/os/fedora.svg",
+      "defaultForFamily": true,
+      "aliasOf": "rhel-6-x86_64"
     },
     {
       "id": "rhel-6-x86_64",
@@ -37,6 +63,19 @@
       "defaultForFamily": true
     },
     {
+      "id": "rocky-6-x86_64",
+      "family": "rocky",
+      "name": "Rocky Linux",
+      "displayName": "Rocky Linux 6",
+      "version": "6",
+      "codename": "x86_64",
+      "architecture": "x86_64",
+      "packageFamily": "rpm",
+      "logo": "images/os/rocky.svg",
+      "defaultForFamily": true,
+      "aliasOf": "rhel-6-x86_64"
+    },
+    {
       "id": "sles-11-x86_64",
       "family": "sles",
       "name": "SUSE Linux Enterprise Server",
@@ -45,20 +84,20 @@
       "codename": "11",
       "architecture": "x86_64",
       "packageFamily": "rpm",
-      "logo": "images/os/suse.png",
+      "logo": "images/os/suse.svg",
       "defaultForFamily": true
     },
     {
-      "id": "ubuntu-precise-amd64",
+      "id": "ubuntu-xenial-amd64",
       "family": "ubuntu",
       "name": "Ubuntu",
-      "displayName": "Ubuntu 12.04",
-      "version": "12.04",
-      "codename": "precise",
+      "displayName": "Ubuntu 16.04",
+      "version": "16.04",
+      "codename": "xenial",
       "architecture": "amd64",
       "packageFamily": "deb",
       "logo": "images/os/ubuntu.svg",
-      "defaultForFamily": false
+      "defaultForFamily": true
     },
     {
       "id": "ubuntu-trusty-amd64",
@@ -73,19 +112,35 @@
       "defaultForFamily": false
     },
     {
-      "id": "ubuntu-xenial-amd64",
+      "id": "ubuntu-precise-amd64",
       "family": "ubuntu",
       "name": "Ubuntu",
-      "displayName": "Ubuntu 16.04",
-      "version": "16.04",
-      "codename": "xenial",
+      "displayName": "Ubuntu 12.04",
+      "version": "12.04",
+      "codename": "precise",
       "architecture": "amd64",
       "packageFamily": "deb",
       "logo": "images/os/ubuntu.svg",
-      "defaultForFamily": true
+      "defaultForFamily": false
     }
   ],
   "downloads": {
+    "centos-6-x86_64": [
+      {
+        "id": "otp-unspecified-x86_64-1",
+        "otp": "R16B02",
+        "architecture": "x86_64",
+        "format": "rpm",
+        "filename": "riak-2.2.3-1.el6.x86_64.rpm",
+        "packageRevision": "1",
+        "variant": "",
+        "url": "https://files.tiot.jp/riak/kv/2.2/2.2.3/rhel/6/riak-2.2.3-1.el6.x86_64.rpm",
+        "checksum": {
+          "algorithm": "sha256",
+          "value": "bb166904a42583bc43043c2710c73aea1aed3917f88a3eedd091ae23a9db181d"
+        }
+      }
+    ],
     "debian-2.2-amd64": [
       {
         "id": "otp-unspecified-amd64",
@@ -116,7 +171,39 @@
         }
       }
     ],
+    "fedora-6-x86_64": [
+      {
+        "id": "otp-unspecified-x86_64-1",
+        "otp": "R16B02",
+        "architecture": "x86_64",
+        "format": "rpm",
+        "filename": "riak-2.2.3-1.el6.x86_64.rpm",
+        "packageRevision": "1",
+        "variant": "",
+        "url": "https://files.tiot.jp/riak/kv/2.2/2.2.3/rhel/6/riak-2.2.3-1.el6.x86_64.rpm",
+        "checksum": {
+          "algorithm": "sha256",
+          "value": "bb166904a42583bc43043c2710c73aea1aed3917f88a3eedd091ae23a9db181d"
+        }
+      }
+    ],
     "rhel-6-x86_64": [
+      {
+        "id": "otp-unspecified-x86_64-1",
+        "otp": "R16B02",
+        "architecture": "x86_64",
+        "format": "rpm",
+        "filename": "riak-2.2.3-1.el6.x86_64.rpm",
+        "packageRevision": "1",
+        "variant": "",
+        "url": "https://files.tiot.jp/riak/kv/2.2/2.2.3/rhel/6/riak-2.2.3-1.el6.x86_64.rpm",
+        "checksum": {
+          "algorithm": "sha256",
+          "value": "bb166904a42583bc43043c2710c73aea1aed3917f88a3eedd091ae23a9db181d"
+        }
+      }
+    ],
+    "rocky-6-x86_64": [
       {
         "id": "otp-unspecified-x86_64-1",
         "otp": "R16B02",
@@ -148,7 +235,7 @@
         }
       }
     ],
-    "ubuntu-precise-amd64": [
+    "ubuntu-xenial-amd64": [
       {
         "id": "otp-unspecified-amd64",
         "otp": "R16B02",
@@ -157,10 +244,10 @@
         "filename": "riak_2.2.3-1_amd64.deb",
         "packageRevision": null,
         "variant": "",
-        "url": "https://files.tiot.jp/riak/kv/2.2/2.2.3/ubuntu/precise/riak_2.2.3-1_amd64.deb",
+        "url": "https://files.tiot.jp/riak/kv/2.2/2.2.3/ubuntu/xenial/riak_2.2.3-1_amd64.deb",
         "checksum": {
           "algorithm": "sha256",
-          "value": "45f2a17435d9576efdadd77e15bc72472f2d3358b88c8e1befa50f439d669b64"
+          "value": "ef62d2abeb6deee83cb160415277e07cf73a629080091936aef8015f9a690802"
         }
       }
     ],
@@ -180,7 +267,7 @@
         }
       }
     ],
-    "ubuntu-xenial-amd64": [
+    "ubuntu-precise-amd64": [
       {
         "id": "otp-unspecified-amd64",
         "otp": "R16B02",
@@ -189,10 +276,10 @@
         "filename": "riak_2.2.3-1_amd64.deb",
         "packageRevision": null,
         "variant": "",
-        "url": "https://files.tiot.jp/riak/kv/2.2/2.2.3/ubuntu/xenial/riak_2.2.3-1_amd64.deb",
+        "url": "https://files.tiot.jp/riak/kv/2.2/2.2.3/ubuntu/precise/riak_2.2.3-1_amd64.deb",
         "checksum": {
           "algorithm": "sha256",
-          "value": "ef62d2abeb6deee83cb160415277e07cf73a629080091936aef8015f9a690802"
+          "value": "45f2a17435d9576efdadd77e15bc72472f2d3358b88c8e1befa50f439d669b64"
         }
       }
     ]

@@ -13,28 +13,30 @@
   "operatingSystems": [],
   "downloadOperatingSystems": [
     {
-      "id": "debian-8-amd64",
-      "family": "debian",
-      "name": "Debian",
-      "displayName": "Debian 8",
+      "id": "centos-8-x86_64",
+      "family": "centos",
+      "name": "CentOS",
+      "displayName": "CentOS 8",
       "version": "8",
-      "codename": "8",
-      "architecture": "amd64",
-      "packageFamily": "deb",
-      "logo": "images/os/debian.svg",
-      "defaultForFamily": false
+      "codename": "x86_64",
+      "architecture": "x86_64",
+      "packageFamily": "rpm",
+      "logo": "images/os/centos.svg",
+      "defaultForFamily": true,
+      "aliasOf": "rhel-8-x86_64"
     },
     {
-      "id": "debian-9-amd64",
-      "family": "debian",
-      "name": "Debian",
-      "displayName": "Debian 9",
-      "version": "9",
-      "codename": "9",
-      "architecture": "amd64",
-      "packageFamily": "deb",
-      "logo": "images/os/debian.svg",
-      "defaultForFamily": false
+      "id": "centos-7-x86_64",
+      "family": "centos",
+      "name": "CentOS",
+      "displayName": "CentOS 7",
+      "version": "7",
+      "codename": "x86_64",
+      "architecture": "x86_64",
+      "packageFamily": "rpm",
+      "logo": "images/os/centos.svg",
+      "defaultForFamily": false,
+      "aliasOf": "rhel-7-x86_64"
     },
     {
       "id": "debian-10-amd64",
@@ -49,6 +51,56 @@
       "defaultForFamily": true
     },
     {
+      "id": "debian-9-amd64",
+      "family": "debian",
+      "name": "Debian",
+      "displayName": "Debian 9",
+      "version": "9",
+      "codename": "9",
+      "architecture": "amd64",
+      "packageFamily": "deb",
+      "logo": "images/os/debian.svg",
+      "defaultForFamily": false
+    },
+    {
+      "id": "debian-8-amd64",
+      "family": "debian",
+      "name": "Debian",
+      "displayName": "Debian 8",
+      "version": "8",
+      "codename": "8",
+      "architecture": "amd64",
+      "packageFamily": "deb",
+      "logo": "images/os/debian.svg",
+      "defaultForFamily": false
+    },
+    {
+      "id": "fedora-8-x86_64",
+      "family": "fedora",
+      "name": "Fedora",
+      "displayName": "Fedora 8",
+      "version": "8",
+      "codename": "x86_64",
+      "architecture": "x86_64",
+      "packageFamily": "rpm",
+      "logo": "images/os/fedora.svg",
+      "defaultForFamily": true,
+      "aliasOf": "rhel-8-x86_64"
+    },
+    {
+      "id": "fedora-7-x86_64",
+      "family": "fedora",
+      "name": "Fedora",
+      "displayName": "Fedora 7",
+      "version": "7",
+      "codename": "x86_64",
+      "architecture": "x86_64",
+      "packageFamily": "rpm",
+      "logo": "images/os/fedora.svg",
+      "defaultForFamily": false,
+      "aliasOf": "rhel-7-x86_64"
+    },
+    {
       "id": "raspbian-10-armhf",
       "family": "raspbian",
       "name": "Raspbian",
@@ -58,6 +110,18 @@
       "architecture": "armhf",
       "packageFamily": "deb",
       "logo": "images/os/raspbian.png",
+      "defaultForFamily": true
+    },
+    {
+      "id": "rhel-8-x86_64",
+      "family": "rhel",
+      "name": "Red Hat Enterprise Linux",
+      "displayName": "Red Hat Enterprise Linux 8",
+      "version": "8",
+      "codename": "8",
+      "architecture": "x86_64",
+      "packageFamily": "rpm",
+      "logo": "images/os/red-hat.svg",
       "defaultForFamily": true
     },
     {
@@ -73,28 +137,56 @@
       "defaultForFamily": false
     },
     {
-      "id": "rhel-8-x86_64",
-      "family": "rhel",
-      "name": "Red Hat Enterprise Linux",
-      "displayName": "Red Hat Enterprise Linux 8",
+      "id": "rocky-8-x86_64",
+      "family": "rocky",
+      "name": "Rocky Linux",
+      "displayName": "Rocky Linux 8",
       "version": "8",
-      "codename": "8",
+      "codename": "x86_64",
       "architecture": "x86_64",
       "packageFamily": "rpm",
-      "logo": "images/os/red-hat.svg",
-      "defaultForFamily": true
+      "logo": "images/os/rocky.svg",
+      "defaultForFamily": true,
+      "aliasOf": "rhel-8-x86_64"
     },
     {
-      "id": "ubuntu-bionic-amd64",
-      "family": "ubuntu",
-      "name": "Ubuntu",
-      "displayName": "Ubuntu 18.04",
-      "version": "18.04",
-      "codename": "bionic64",
-      "architecture": "amd64",
-      "packageFamily": "deb",
-      "logo": "images/os/ubuntu.svg",
-      "defaultForFamily": false
+      "id": "rocky-7-x86_64",
+      "family": "rocky",
+      "name": "Rocky Linux",
+      "displayName": "Rocky Linux 7",
+      "version": "7",
+      "codename": "x86_64",
+      "architecture": "x86_64",
+      "packageFamily": "rpm",
+      "logo": "images/os/rocky.svg",
+      "defaultForFamily": false,
+      "aliasOf": "rhel-7-x86_64"
+    },
+    {
+      "id": "suse-8-x86_64",
+      "family": "suse",
+      "name": "SUSE Linux",
+      "displayName": "SUSE Linux 8",
+      "version": "8",
+      "codename": "x86_64",
+      "architecture": "x86_64",
+      "packageFamily": "rpm",
+      "logo": "images/os/suse.svg",
+      "defaultForFamily": true,
+      "aliasOf": "rhel-8-x86_64"
+    },
+    {
+      "id": "suse-7-x86_64",
+      "family": "suse",
+      "name": "SUSE Linux",
+      "displayName": "SUSE Linux 7",
+      "version": "7",
+      "codename": "x86_64",
+      "architecture": "x86_64",
+      "packageFamily": "rpm",
+      "logo": "images/os/suse.svg",
+      "defaultForFamily": false,
+      "aliasOf": "rhel-7-x86_64"
     },
     {
       "id": "ubuntu-focal-amd64",
@@ -109,12 +201,12 @@
       "defaultForFamily": false
     },
     {
-      "id": "ubuntu-trusty-amd64",
+      "id": "ubuntu-bionic-amd64",
       "family": "ubuntu",
       "name": "Ubuntu",
-      "displayName": "Ubuntu 14.04",
-      "version": "14.04",
-      "codename": "trusty64",
+      "displayName": "Ubuntu 18.04",
+      "version": "18.04",
+      "codename": "bionic64",
       "architecture": "amd64",
       "packageFamily": "deb",
       "logo": "images/os/ubuntu.svg",
@@ -131,122 +223,78 @@
       "packageFamily": "deb",
       "logo": "images/os/ubuntu.svg",
       "defaultForFamily": true
+    },
+    {
+      "id": "ubuntu-trusty-amd64",
+      "family": "ubuntu",
+      "name": "Ubuntu",
+      "displayName": "Ubuntu 14.04",
+      "version": "14.04",
+      "codename": "trusty64",
+      "architecture": "amd64",
+      "packageFamily": "deb",
+      "logo": "images/os/ubuntu.svg",
+      "defaultForFamily": false
     }
   ],
   "downloads": {
-    "debian-8-amd64": [
+    "centos-8-x86_64": [
       {
-        "id": "otp-unspecified-amd64",
+        "id": "otp20-x86_64-1",
         "otp": 20,
-        "architecture": "amd64",
-        "format": "deb",
-        "filename": "riak_3.0.2-OTP20.3_amd64.deb",
-        "packageRevision": null,
+        "architecture": "x86_64",
+        "format": "rpm",
+        "filename": "riak-3.0.2-OTP20.3-1.el8x86_64.rpm",
+        "packageRevision": "1",
         "variant": "",
-        "url": "https://files.tiot.jp/riak/kv/3.0/3.0.2/debian/8/riak_3.0.2-OTP20.3_amd64.deb",
+        "url": "https://files.tiot.jp/riak/kv/3.0/3.0.2/rhel/8/riak-3.0.2-OTP20.3-1.el8x86_64.rpm",
         "checksum": {
           "algorithm": "sha256",
-          "value": "edfb204cec4caa4ce02d8914a0f31e5194a942d315185b1b7ec09031d528bde7"
+          "value": "31d0f674050b95974ffa41d3a27da8df39c8a948299ebfc6719edfcd30c614fb"
         }
       },
       {
-        "id": "otp-unspecified-amd64-3",
-        "otp": 20,
-        "architecture": "amd64",
-        "format": "deb",
-        "filename": "riak_3.0.2-yokozuna-OTP20.3_amd64.deb",
-        "packageRevision": null,
-        "variant": "",
-        "url": "https://files.tiot.jp/riak/kv/3.0/3.0.2/debian/8/riak_3.0.2-yokozuna-OTP20.3_amd64.deb",
-        "checksum": {
-          "algorithm": "sha256",
-          "value": "c1532a0e0b611e34174b79f8dedfdc0f87fdd9878bb4546512ee9f4296ec215a"
-        }
-      },
-      {
-        "id": "otp-unspecified-amd64-2",
+        "id": "otp22-x86_64-1",
         "otp": 22,
-        "architecture": "amd64",
-        "format": "deb",
-        "filename": "riak_3.0.2-OTP22.3_amd64.deb",
-        "packageRevision": null,
+        "architecture": "x86_64",
+        "format": "rpm",
+        "filename": "riak-3.0.2-OTP22.3-1.el8x86_64.rpm",
+        "packageRevision": "1",
         "variant": "",
-        "url": "https://files.tiot.jp/riak/kv/3.0/3.0.2/debian/8/riak_3.0.2-OTP22.3_amd64.deb",
+        "url": "https://files.tiot.jp/riak/kv/3.0/3.0.2/rhel/8/riak-3.0.2-OTP22.3-1.el8x86_64.rpm",
         "checksum": {
           "algorithm": "sha256",
-          "value": "7adf15fe5f9c24f9276c2202cf7afefbc4a31188d23a402d14b050b60e506b59"
-        }
-      },
-      {
-        "id": "otp-unspecified-amd64-4",
-        "otp": 22,
-        "architecture": "amd64",
-        "format": "deb",
-        "filename": "riak_3.0.2-yokozuna-OTP22.3_amd64.deb",
-        "packageRevision": null,
-        "variant": "",
-        "url": "https://files.tiot.jp/riak/kv/3.0/3.0.2/debian/8/riak_3.0.2-yokozuna-OTP22.3_amd64.deb",
-        "checksum": {
-          "algorithm": "sha256",
-          "value": "38597f4f2323a64ad39b18cd2146f4c97e818134346a957d4f87043c6a5c5faa"
+          "value": "2a5c3d61be1c8657f650f83b2135758c2b688441322612c9489bd41e12f748d4"
         }
       }
     ],
-    "debian-9-amd64": [
+    "centos-7-x86_64": [
       {
-        "id": "otp-unspecified-amd64",
+        "id": "otp20-x86_64-1",
         "otp": 20,
-        "architecture": "amd64",
-        "format": "deb",
-        "filename": "riak_3.0.2-OTP20.3_amd64.deb",
-        "packageRevision": null,
+        "architecture": "x86_64",
+        "format": "rpm",
+        "filename": "riak-3.0.2-OTP20.3-1.el7x86_64.rpm",
+        "packageRevision": "1",
         "variant": "",
-        "url": "https://files.tiot.jp/riak/kv/3.0/3.0.2/debian/9/riak_3.0.2-OTP20.3_amd64.deb",
+        "url": "https://files.tiot.jp/riak/kv/3.0/3.0.2/rhel/7/riak-3.0.2-OTP20.3-1.el7x86_64.rpm",
         "checksum": {
           "algorithm": "sha256",
-          "value": "7dc148d58dbf06cb02a5f05db74473e80f42fe9e9bb97b25311fa533a2157ad8"
+          "value": "c49290c26fad3c5c7e53d38ad1e07e7c61df8509d440aead73b3f9a16ebd3cf1"
         }
       },
       {
-        "id": "otp-unspecified-amd64-3",
-        "otp": 20,
-        "architecture": "amd64",
-        "format": "deb",
-        "filename": "riak_3.0.2-yokozuna-OTP20.3_amd64.deb",
-        "packageRevision": null,
-        "variant": "",
-        "url": "https://files.tiot.jp/riak/kv/3.0/3.0.2/debian/9/riak_3.0.2-yokozuna-OTP20.3_amd64.deb",
-        "checksum": {
-          "algorithm": "sha256",
-          "value": "356e6a475917249cb33c33196fbbf97ef31bd320c9cde58436af33bd81643c26"
-        }
-      },
-      {
-        "id": "otp-unspecified-amd64-2",
+        "id": "otp22-x86_64-1",
         "otp": 22,
-        "architecture": "amd64",
-        "format": "deb",
-        "filename": "riak_3.0.2-OTP22.3_amd64.deb",
-        "packageRevision": null,
+        "architecture": "x86_64",
+        "format": "rpm",
+        "filename": "riak-3.0.2-OTP22.3-1.el7x86_64.rpm",
+        "packageRevision": "1",
         "variant": "",
-        "url": "https://files.tiot.jp/riak/kv/3.0/3.0.2/debian/9/riak_3.0.2-OTP22.3_amd64.deb",
+        "url": "https://files.tiot.jp/riak/kv/3.0/3.0.2/rhel/7/riak-3.0.2-OTP22.3-1.el7x86_64.rpm",
         "checksum": {
           "algorithm": "sha256",
-          "value": "4f8677f9b91ff0044027a1f305b7fd6c564ea722644296666bdf83d5281b9c66"
-        }
-      },
-      {
-        "id": "otp-unspecified-amd64-4",
-        "otp": 22,
-        "architecture": "amd64",
-        "format": "deb",
-        "filename": "riak_3.0.2-yokozuna-OTP22.3_amd64.deb",
-        "packageRevision": null,
-        "variant": "",
-        "url": "https://files.tiot.jp/riak/kv/3.0/3.0.2/debian/9/riak_3.0.2-yokozuna-OTP22.3_amd64.deb",
-        "checksum": {
-          "algorithm": "sha256",
-          "value": "6b34ffd49c4ce9676fac18c2235520a258e6cd1467d3f2181762bbc2000512d8"
+          "value": "dbe622438ac1cdb3b6dda8f6e8563da5b8d6e8958e78403e499591c308af0256"
         }
       }
     ],
@@ -308,6 +356,182 @@
         }
       }
     ],
+    "debian-9-amd64": [
+      {
+        "id": "otp-unspecified-amd64",
+        "otp": 20,
+        "architecture": "amd64",
+        "format": "deb",
+        "filename": "riak_3.0.2-OTP20.3_amd64.deb",
+        "packageRevision": null,
+        "variant": "",
+        "url": "https://files.tiot.jp/riak/kv/3.0/3.0.2/debian/9/riak_3.0.2-OTP20.3_amd64.deb",
+        "checksum": {
+          "algorithm": "sha256",
+          "value": "7dc148d58dbf06cb02a5f05db74473e80f42fe9e9bb97b25311fa533a2157ad8"
+        }
+      },
+      {
+        "id": "otp-unspecified-amd64-3",
+        "otp": 20,
+        "architecture": "amd64",
+        "format": "deb",
+        "filename": "riak_3.0.2-yokozuna-OTP20.3_amd64.deb",
+        "packageRevision": null,
+        "variant": "",
+        "url": "https://files.tiot.jp/riak/kv/3.0/3.0.2/debian/9/riak_3.0.2-yokozuna-OTP20.3_amd64.deb",
+        "checksum": {
+          "algorithm": "sha256",
+          "value": "356e6a475917249cb33c33196fbbf97ef31bd320c9cde58436af33bd81643c26"
+        }
+      },
+      {
+        "id": "otp-unspecified-amd64-2",
+        "otp": 22,
+        "architecture": "amd64",
+        "format": "deb",
+        "filename": "riak_3.0.2-OTP22.3_amd64.deb",
+        "packageRevision": null,
+        "variant": "",
+        "url": "https://files.tiot.jp/riak/kv/3.0/3.0.2/debian/9/riak_3.0.2-OTP22.3_amd64.deb",
+        "checksum": {
+          "algorithm": "sha256",
+          "value": "4f8677f9b91ff0044027a1f305b7fd6c564ea722644296666bdf83d5281b9c66"
+        }
+      },
+      {
+        "id": "otp-unspecified-amd64-4",
+        "otp": 22,
+        "architecture": "amd64",
+        "format": "deb",
+        "filename": "riak_3.0.2-yokozuna-OTP22.3_amd64.deb",
+        "packageRevision": null,
+        "variant": "",
+        "url": "https://files.tiot.jp/riak/kv/3.0/3.0.2/debian/9/riak_3.0.2-yokozuna-OTP22.3_amd64.deb",
+        "checksum": {
+          "algorithm": "sha256",
+          "value": "6b34ffd49c4ce9676fac18c2235520a258e6cd1467d3f2181762bbc2000512d8"
+        }
+      }
+    ],
+    "debian-8-amd64": [
+      {
+        "id": "otp-unspecified-amd64",
+        "otp": 20,
+        "architecture": "amd64",
+        "format": "deb",
+        "filename": "riak_3.0.2-OTP20.3_amd64.deb",
+        "packageRevision": null,
+        "variant": "",
+        "url": "https://files.tiot.jp/riak/kv/3.0/3.0.2/debian/8/riak_3.0.2-OTP20.3_amd64.deb",
+        "checksum": {
+          "algorithm": "sha256",
+          "value": "edfb204cec4caa4ce02d8914a0f31e5194a942d315185b1b7ec09031d528bde7"
+        }
+      },
+      {
+        "id": "otp-unspecified-amd64-3",
+        "otp": 20,
+        "architecture": "amd64",
+        "format": "deb",
+        "filename": "riak_3.0.2-yokozuna-OTP20.3_amd64.deb",
+        "packageRevision": null,
+        "variant": "",
+        "url": "https://files.tiot.jp/riak/kv/3.0/3.0.2/debian/8/riak_3.0.2-yokozuna-OTP20.3_amd64.deb",
+        "checksum": {
+          "algorithm": "sha256",
+          "value": "c1532a0e0b611e34174b79f8dedfdc0f87fdd9878bb4546512ee9f4296ec215a"
+        }
+      },
+      {
+        "id": "otp-unspecified-amd64-2",
+        "otp": 22,
+        "architecture": "amd64",
+        "format": "deb",
+        "filename": "riak_3.0.2-OTP22.3_amd64.deb",
+        "packageRevision": null,
+        "variant": "",
+        "url": "https://files.tiot.jp/riak/kv/3.0/3.0.2/debian/8/riak_3.0.2-OTP22.3_amd64.deb",
+        "checksum": {
+          "algorithm": "sha256",
+          "value": "7adf15fe5f9c24f9276c2202cf7afefbc4a31188d23a402d14b050b60e506b59"
+        }
+      },
+      {
+        "id": "otp-unspecified-amd64-4",
+        "otp": 22,
+        "architecture": "amd64",
+        "format": "deb",
+        "filename": "riak_3.0.2-yokozuna-OTP22.3_amd64.deb",
+        "packageRevision": null,
+        "variant": "",
+        "url": "https://files.tiot.jp/riak/kv/3.0/3.0.2/debian/8/riak_3.0.2-yokozuna-OTP22.3_amd64.deb",
+        "checksum": {
+          "algorithm": "sha256",
+          "value": "38597f4f2323a64ad39b18cd2146f4c97e818134346a957d4f87043c6a5c5faa"
+        }
+      }
+    ],
+    "fedora-8-x86_64": [
+      {
+        "id": "otp20-x86_64-1",
+        "otp": 20,
+        "architecture": "x86_64",
+        "format": "rpm",
+        "filename": "riak-3.0.2-OTP20.3-1.el8x86_64.rpm",
+        "packageRevision": "1",
+        "variant": "",
+        "url": "https://files.tiot.jp/riak/kv/3.0/3.0.2/rhel/8/riak-3.0.2-OTP20.3-1.el8x86_64.rpm",
+        "checksum": {
+          "algorithm": "sha256",
+          "value": "31d0f674050b95974ffa41d3a27da8df39c8a948299ebfc6719edfcd30c614fb"
+        }
+      },
+      {
+        "id": "otp22-x86_64-1",
+        "otp": 22,
+        "architecture": "x86_64",
+        "format": "rpm",
+        "filename": "riak-3.0.2-OTP22.3-1.el8x86_64.rpm",
+        "packageRevision": "1",
+        "variant": "",
+        "url": "https://files.tiot.jp/riak/kv/3.0/3.0.2/rhel/8/riak-3.0.2-OTP22.3-1.el8x86_64.rpm",
+        "checksum": {
+          "algorithm": "sha256",
+          "value": "2a5c3d61be1c8657f650f83b2135758c2b688441322612c9489bd41e12f748d4"
+        }
+      }
+    ],
+    "fedora-7-x86_64": [
+      {
+        "id": "otp20-x86_64-1",
+        "otp": 20,
+        "architecture": "x86_64",
+        "format": "rpm",
+        "filename": "riak-3.0.2-OTP20.3-1.el7x86_64.rpm",
+        "packageRevision": "1",
+        "variant": "",
+        "url": "https://files.tiot.jp/riak/kv/3.0/3.0.2/rhel/7/riak-3.0.2-OTP20.3-1.el7x86_64.rpm",
+        "checksum": {
+          "algorithm": "sha256",
+          "value": "c49290c26fad3c5c7e53d38ad1e07e7c61df8509d440aead73b3f9a16ebd3cf1"
+        }
+      },
+      {
+        "id": "otp22-x86_64-1",
+        "otp": 22,
+        "architecture": "x86_64",
+        "format": "rpm",
+        "filename": "riak-3.0.2-OTP22.3-1.el7x86_64.rpm",
+        "packageRevision": "1",
+        "variant": "",
+        "url": "https://files.tiot.jp/riak/kv/3.0/3.0.2/rhel/7/riak-3.0.2-OTP22.3-1.el7x86_64.rpm",
+        "checksum": {
+          "algorithm": "sha256",
+          "value": "dbe622438ac1cdb3b6dda8f6e8563da5b8d6e8958e78403e499591c308af0256"
+        }
+      }
+    ],
     "raspbian-10-armhf": [
       {
         "id": "otp-unspecified-armhf",
@@ -366,36 +590,6 @@
         }
       }
     ],
-    "rhel-7-x86_64": [
-      {
-        "id": "otp20-x86_64-1",
-        "otp": 20,
-        "architecture": "x86_64",
-        "format": "rpm",
-        "filename": "riak-3.0.2-OTP20.3-1.el7x86_64.rpm",
-        "packageRevision": "1",
-        "variant": "",
-        "url": "https://files.tiot.jp/riak/kv/3.0/3.0.2/rhel/7/riak-3.0.2-OTP20.3-1.el7x86_64.rpm",
-        "checksum": {
-          "algorithm": "sha256",
-          "value": "c49290c26fad3c5c7e53d38ad1e07e7c61df8509d440aead73b3f9a16ebd3cf1"
-        }
-      },
-      {
-        "id": "otp22-x86_64-1",
-        "otp": 22,
-        "architecture": "x86_64",
-        "format": "rpm",
-        "filename": "riak-3.0.2-OTP22.3-1.el7x86_64.rpm",
-        "packageRevision": "1",
-        "variant": "",
-        "url": "https://files.tiot.jp/riak/kv/3.0/3.0.2/rhel/7/riak-3.0.2-OTP22.3-1.el7x86_64.rpm",
-        "checksum": {
-          "algorithm": "sha256",
-          "value": "dbe622438ac1cdb3b6dda8f6e8563da5b8d6e8958e78403e499591c308af0256"
-        }
-      }
-    ],
     "rhel-8-x86_64": [
       {
         "id": "otp20-x86_64-1",
@@ -426,61 +620,153 @@
         }
       }
     ],
-    "ubuntu-bionic-amd64": [
+    "rhel-7-x86_64": [
       {
-        "id": "otp-unspecified-amd64",
+        "id": "otp20-x86_64-1",
         "otp": 20,
-        "architecture": "amd64",
-        "format": "deb",
-        "filename": "riak_3.0.2-OTP20.3_amd64.deb",
-        "packageRevision": null,
+        "architecture": "x86_64",
+        "format": "rpm",
+        "filename": "riak-3.0.2-OTP20.3-1.el7x86_64.rpm",
+        "packageRevision": "1",
         "variant": "",
-        "url": "https://files.tiot.jp/riak/kv/3.0/3.0.2/ubuntu/bionic64/riak_3.0.2-OTP20.3_amd64.deb",
+        "url": "https://files.tiot.jp/riak/kv/3.0/3.0.2/rhel/7/riak-3.0.2-OTP20.3-1.el7x86_64.rpm",
         "checksum": {
           "algorithm": "sha256",
-          "value": "86b6bd4367b7281534b58e1ddc2b16ab3d422302ea483fa84989446d21285a01"
+          "value": "c49290c26fad3c5c7e53d38ad1e07e7c61df8509d440aead73b3f9a16ebd3cf1"
         }
       },
       {
-        "id": "otp-unspecified-amd64-3",
+        "id": "otp22-x86_64-1",
+        "otp": 22,
+        "architecture": "x86_64",
+        "format": "rpm",
+        "filename": "riak-3.0.2-OTP22.3-1.el7x86_64.rpm",
+        "packageRevision": "1",
+        "variant": "",
+        "url": "https://files.tiot.jp/riak/kv/3.0/3.0.2/rhel/7/riak-3.0.2-OTP22.3-1.el7x86_64.rpm",
+        "checksum": {
+          "algorithm": "sha256",
+          "value": "dbe622438ac1cdb3b6dda8f6e8563da5b8d6e8958e78403e499591c308af0256"
+        }
+      }
+    ],
+    "rocky-8-x86_64": [
+      {
+        "id": "otp20-x86_64-1",
         "otp": 20,
-        "architecture": "amd64",
-        "format": "deb",
-        "filename": "riak_3.0.2-yokozuna-OTP20.3_amd64.deb",
-        "packageRevision": null,
+        "architecture": "x86_64",
+        "format": "rpm",
+        "filename": "riak-3.0.2-OTP20.3-1.el8x86_64.rpm",
+        "packageRevision": "1",
         "variant": "",
-        "url": "https://files.tiot.jp/riak/kv/3.0/3.0.2/ubuntu/bionic64/riak_3.0.2-yokozuna-OTP20.3_amd64.deb",
+        "url": "https://files.tiot.jp/riak/kv/3.0/3.0.2/rhel/8/riak-3.0.2-OTP20.3-1.el8x86_64.rpm",
         "checksum": {
           "algorithm": "sha256",
-          "value": "f6fff1cab849277359898fc72d67d7fcd775e1119fa464d1aa7e049961803661"
+          "value": "31d0f674050b95974ffa41d3a27da8df39c8a948299ebfc6719edfcd30c614fb"
         }
       },
       {
-        "id": "otp-unspecified-amd64-2",
+        "id": "otp22-x86_64-1",
         "otp": 22,
-        "architecture": "amd64",
-        "format": "deb",
-        "filename": "riak_3.0.2-OTP22.3_amd64.deb",
-        "packageRevision": null,
+        "architecture": "x86_64",
+        "format": "rpm",
+        "filename": "riak-3.0.2-OTP22.3-1.el8x86_64.rpm",
+        "packageRevision": "1",
         "variant": "",
-        "url": "https://files.tiot.jp/riak/kv/3.0/3.0.2/ubuntu/bionic64/riak_3.0.2-OTP22.3_amd64.deb",
+        "url": "https://files.tiot.jp/riak/kv/3.0/3.0.2/rhel/8/riak-3.0.2-OTP22.3-1.el8x86_64.rpm",
         "checksum": {
           "algorithm": "sha256",
-          "value": "152baccdac15787c5c60cbed2668db26bab9bafc810cb1a60de6b277fd8bd12b"
+          "value": "2a5c3d61be1c8657f650f83b2135758c2b688441322612c9489bd41e12f748d4"
+        }
+      }
+    ],
+    "rocky-7-x86_64": [
+      {
+        "id": "otp20-x86_64-1",
+        "otp": 20,
+        "architecture": "x86_64",
+        "format": "rpm",
+        "filename": "riak-3.0.2-OTP20.3-1.el7x86_64.rpm",
+        "packageRevision": "1",
+        "variant": "",
+        "url": "https://files.tiot.jp/riak/kv/3.0/3.0.2/rhel/7/riak-3.0.2-OTP20.3-1.el7x86_64.rpm",
+        "checksum": {
+          "algorithm": "sha256",
+          "value": "c49290c26fad3c5c7e53d38ad1e07e7c61df8509d440aead73b3f9a16ebd3cf1"
         }
       },
       {
-        "id": "otp-unspecified-amd64-4",
+        "id": "otp22-x86_64-1",
         "otp": 22,
-        "architecture": "amd64",
-        "format": "deb",
-        "filename": "riak_3.0.2-yokozuna-OTP22.3_amd64.deb",
-        "packageRevision": null,
+        "architecture": "x86_64",
+        "format": "rpm",
+        "filename": "riak-3.0.2-OTP22.3-1.el7x86_64.rpm",
+        "packageRevision": "1",
         "variant": "",
-        "url": "https://files.tiot.jp/riak/kv/3.0/3.0.2/ubuntu/bionic64/riak_3.0.2-yokozuna-OTP22.3_amd64.deb",
+        "url": "https://files.tiot.jp/riak/kv/3.0/3.0.2/rhel/7/riak-3.0.2-OTP22.3-1.el7x86_64.rpm",
         "checksum": {
           "algorithm": "sha256",
-          "value": "247e23fb8197c682675e283ff58ae961490a5cd6b5597fbb85c7f4ea31206330"
+          "value": "dbe622438ac1cdb3b6dda8f6e8563da5b8d6e8958e78403e499591c308af0256"
+        }
+      }
+    ],
+    "suse-8-x86_64": [
+      {
+        "id": "otp20-x86_64-1",
+        "otp": 20,
+        "architecture": "x86_64",
+        "format": "rpm",
+        "filename": "riak-3.0.2-OTP20.3-1.el8x86_64.rpm",
+        "packageRevision": "1",
+        "variant": "",
+        "url": "https://files.tiot.jp/riak/kv/3.0/3.0.2/rhel/8/riak-3.0.2-OTP20.3-1.el8x86_64.rpm",
+        "checksum": {
+          "algorithm": "sha256",
+          "value": "31d0f674050b95974ffa41d3a27da8df39c8a948299ebfc6719edfcd30c614fb"
+        }
+      },
+      {
+        "id": "otp22-x86_64-1",
+        "otp": 22,
+        "architecture": "x86_64",
+        "format": "rpm",
+        "filename": "riak-3.0.2-OTP22.3-1.el8x86_64.rpm",
+        "packageRevision": "1",
+        "variant": "",
+        "url": "https://files.tiot.jp/riak/kv/3.0/3.0.2/rhel/8/riak-3.0.2-OTP22.3-1.el8x86_64.rpm",
+        "checksum": {
+          "algorithm": "sha256",
+          "value": "2a5c3d61be1c8657f650f83b2135758c2b688441322612c9489bd41e12f748d4"
+        }
+      }
+    ],
+    "suse-7-x86_64": [
+      {
+        "id": "otp20-x86_64-1",
+        "otp": 20,
+        "architecture": "x86_64",
+        "format": "rpm",
+        "filename": "riak-3.0.2-OTP20.3-1.el7x86_64.rpm",
+        "packageRevision": "1",
+        "variant": "",
+        "url": "https://files.tiot.jp/riak/kv/3.0/3.0.2/rhel/7/riak-3.0.2-OTP20.3-1.el7x86_64.rpm",
+        "checksum": {
+          "algorithm": "sha256",
+          "value": "c49290c26fad3c5c7e53d38ad1e07e7c61df8509d440aead73b3f9a16ebd3cf1"
+        }
+      },
+      {
+        "id": "otp22-x86_64-1",
+        "otp": 22,
+        "architecture": "x86_64",
+        "format": "rpm",
+        "filename": "riak-3.0.2-OTP22.3-1.el7x86_64.rpm",
+        "packageRevision": "1",
+        "variant": "",
+        "url": "https://files.tiot.jp/riak/kv/3.0/3.0.2/rhel/7/riak-3.0.2-OTP22.3-1.el7x86_64.rpm",
+        "checksum": {
+          "algorithm": "sha256",
+          "value": "dbe622438ac1cdb3b6dda8f6e8563da5b8d6e8958e78403e499591c308af0256"
         }
       }
     ],
@@ -542,7 +828,7 @@
         }
       }
     ],
-    "ubuntu-trusty-amd64": [
+    "ubuntu-bionic-amd64": [
       {
         "id": "otp-unspecified-amd64",
         "otp": 20,
@@ -551,10 +837,10 @@
         "filename": "riak_3.0.2-OTP20.3_amd64.deb",
         "packageRevision": null,
         "variant": "",
-        "url": "https://files.tiot.jp/riak/kv/3.0/3.0.2/ubuntu/trusty64/riak_3.0.2-OTP20.3_amd64.deb",
+        "url": "https://files.tiot.jp/riak/kv/3.0/3.0.2/ubuntu/bionic64/riak_3.0.2-OTP20.3_amd64.deb",
         "checksum": {
           "algorithm": "sha256",
-          "value": "95736f1a2bf3bbbb5ebd106b61042ea2e83f4420ccdae7dcb96708906f72bfb2"
+          "value": "86b6bd4367b7281534b58e1ddc2b16ab3d422302ea483fa84989446d21285a01"
         }
       },
       {
@@ -565,10 +851,10 @@
         "filename": "riak_3.0.2-yokozuna-OTP20.3_amd64.deb",
         "packageRevision": null,
         "variant": "",
-        "url": "https://files.tiot.jp/riak/kv/3.0/3.0.2/ubuntu/trusty64/riak_3.0.2-yokozuna-OTP20.3_amd64.deb",
+        "url": "https://files.tiot.jp/riak/kv/3.0/3.0.2/ubuntu/bionic64/riak_3.0.2-yokozuna-OTP20.3_amd64.deb",
         "checksum": {
           "algorithm": "sha256",
-          "value": "cde86776cc1eaf867cd35660d56472cee4661ed0b3605ee7b42f9e9438b3c271"
+          "value": "f6fff1cab849277359898fc72d67d7fcd775e1119fa464d1aa7e049961803661"
         }
       },
       {
@@ -579,10 +865,10 @@
         "filename": "riak_3.0.2-OTP22.3_amd64.deb",
         "packageRevision": null,
         "variant": "",
-        "url": "https://files.tiot.jp/riak/kv/3.0/3.0.2/ubuntu/trusty64/riak_3.0.2-OTP22.3_amd64.deb",
+        "url": "https://files.tiot.jp/riak/kv/3.0/3.0.2/ubuntu/bionic64/riak_3.0.2-OTP22.3_amd64.deb",
         "checksum": {
           "algorithm": "sha256",
-          "value": "52bbc2f0c4d217a4004a4fc8b8c23f7c080138324e63c381a6b2baee66636c7c"
+          "value": "152baccdac15787c5c60cbed2668db26bab9bafc810cb1a60de6b277fd8bd12b"
         }
       },
       {
@@ -593,10 +879,10 @@
         "filename": "riak_3.0.2-yokozuna-OTP22.3_amd64.deb",
         "packageRevision": null,
         "variant": "",
-        "url": "https://files.tiot.jp/riak/kv/3.0/3.0.2/ubuntu/trusty64/riak_3.0.2-yokozuna-OTP22.3_amd64.deb",
+        "url": "https://files.tiot.jp/riak/kv/3.0/3.0.2/ubuntu/bionic64/riak_3.0.2-yokozuna-OTP22.3_amd64.deb",
         "checksum": {
           "algorithm": "sha256",
-          "value": "780b29fef47ef2b0828072c7579f295b8b8e73552346a0a297665a627b3fc242"
+          "value": "247e23fb8197c682675e283ff58ae961490a5cd6b5597fbb85c7f4ea31206330"
         }
       }
     ],
@@ -655,6 +941,64 @@
         "checksum": {
           "algorithm": "sha256",
           "value": "bc583000f08488e2a3cc3e763661028336621856e8ab65d68b7695dca2e7a8fa"
+        }
+      }
+    ],
+    "ubuntu-trusty-amd64": [
+      {
+        "id": "otp-unspecified-amd64",
+        "otp": 20,
+        "architecture": "amd64",
+        "format": "deb",
+        "filename": "riak_3.0.2-OTP20.3_amd64.deb",
+        "packageRevision": null,
+        "variant": "",
+        "url": "https://files.tiot.jp/riak/kv/3.0/3.0.2/ubuntu/trusty64/riak_3.0.2-OTP20.3_amd64.deb",
+        "checksum": {
+          "algorithm": "sha256",
+          "value": "95736f1a2bf3bbbb5ebd106b61042ea2e83f4420ccdae7dcb96708906f72bfb2"
+        }
+      },
+      {
+        "id": "otp-unspecified-amd64-3",
+        "otp": 20,
+        "architecture": "amd64",
+        "format": "deb",
+        "filename": "riak_3.0.2-yokozuna-OTP20.3_amd64.deb",
+        "packageRevision": null,
+        "variant": "",
+        "url": "https://files.tiot.jp/riak/kv/3.0/3.0.2/ubuntu/trusty64/riak_3.0.2-yokozuna-OTP20.3_amd64.deb",
+        "checksum": {
+          "algorithm": "sha256",
+          "value": "cde86776cc1eaf867cd35660d56472cee4661ed0b3605ee7b42f9e9438b3c271"
+        }
+      },
+      {
+        "id": "otp-unspecified-amd64-2",
+        "otp": 22,
+        "architecture": "amd64",
+        "format": "deb",
+        "filename": "riak_3.0.2-OTP22.3_amd64.deb",
+        "packageRevision": null,
+        "variant": "",
+        "url": "https://files.tiot.jp/riak/kv/3.0/3.0.2/ubuntu/trusty64/riak_3.0.2-OTP22.3_amd64.deb",
+        "checksum": {
+          "algorithm": "sha256",
+          "value": "52bbc2f0c4d217a4004a4fc8b8c23f7c080138324e63c381a6b2baee66636c7c"
+        }
+      },
+      {
+        "id": "otp-unspecified-amd64-4",
+        "otp": 22,
+        "architecture": "amd64",
+        "format": "deb",
+        "filename": "riak_3.0.2-yokozuna-OTP22.3_amd64.deb",
+        "packageRevision": null,
+        "variant": "",
+        "url": "https://files.tiot.jp/riak/kv/3.0/3.0.2/ubuntu/trusty64/riak_3.0.2-yokozuna-OTP22.3_amd64.deb",
+        "checksum": {
+          "algorithm": "sha256",
+          "value": "780b29fef47ef2b0828072c7579f295b8b8e73552346a0a297665a627b3fc242"
         }
       }
     ]

@@ -34,8 +34,12 @@ const docsContactEmailShortcodeSource = fs.readFileSync(path.join(themeRoot, 'la
 const currentVersionShortcodeSource = fs.readFileSync(path.join(themeRoot, 'layouts', 'shortcodes', 'current-version.html'), 'utf8');
 const previousVersionShortcodeSource = fs.readFileSync(path.join(themeRoot, 'layouts', 'shortcodes', 'previous-version.html'), 'utf8');
 const previousVersionPartialSource = fs.readFileSync(path.join(themeRoot, 'layouts', 'partials', 'previous-version.html'), 'utf8');
+const docsSidebarTreeSource = fs.readFileSync(path.join(themeRoot, 'layouts', 'partials', 'docs-sidebar-tree.html'), 'utf8');
+const menuNavTreeSource = fs.readFileSync(path.join(themeRoot, 'layouts', 'partials', 'menu-nav-tree.html'), 'utf8');
 const headerSource = fs.readFileSync(path.join(themeRoot, 'layouts', 'partials', 'header.html'), 'utf8');
 const sharedHeaderSource = fs.readFileSync(path.join(repositoryRoot, 'layouts', 'common-docs', 'layouts', 'partials', 'site-header.html'), 'utf8');
+const latestRedirectSource = fs.readFileSync(path.join(repositoryRoot, 'layouts', 'common-docs', 'layouts', 'latest-redirect.html'), 'utf8');
+const cs213RedirectSource = fs.readFileSync(path.join(repositoryRoot, 'content', 'openriak-cs', 'pages', '2.1.3', '_index.md'), 'utf8');
 const siteSectionUrlSource = fs.readFileSync(path.join(repositoryRoot, 'layouts', 'common-docs', 'layouts', 'partials', 'site-section-url.html'), 'utf8');
 const contextDataSource = fs.readFileSync(path.join(themeRoot, 'layouts', 'partials', 'context-data.html'), 'utf8');
 const sharedSidebarSource = fs.readFileSync(path.join(repositoryRoot, 'layouts', 'common-docs', 'layouts', 'partials', 'sidebar-shell.html'), 'utf8');
@@ -58,6 +62,12 @@ const baseSource = fs.readFileSync(path.join(themeRoot, 'layouts', 'baseof.html'
 const homepageSource = fs.readFileSync(path.join(repositoryRoot, 'layouts', 'homepage', 'index.html'), 'utf8');
 const faviconPath = path.join(commonAssets, 'images', 'ui', 'favicon.png');
 const projectLogoPath = path.join(commonAssets, 'images', 'branding', 'openriak-mark.png');
+const aliasedOsBrandColors = {
+  'rocky.svg': '#10B981',
+  'centos.svg': '#262577',
+  'suse.svg': '#0C322C',
+  'fedora.svg': '#51A2DA'
+};
 const siteSections = JSON.parse(fs.readFileSync(path.join(repositoryRoot, 'layouts', 'common-docs', 'data', 'site_sections.json'), 'utf8'));
 const dockerComposeSource = fs.readFileSync(path.join(repositoryRoot, 'docker', 'compose.yaml'), 'utf8');
 const dockerfileSource = fs.readFileSync(path.join(repositoryRoot, 'docker', 'Dockerfile'), 'utf8');
@@ -68,6 +78,7 @@ assert.match(dockerComposeSource, /OPENRIAK_DOCS_BUILD_PROFILE:[\s\S]*--include-
 assert.match(dockerComposeSource, /--include-latest riak-cs[\s\S]*--include-latest riak-ts/, 'development compose must resolve only the latest legacy Riak CS and TS releases');
 assert.match(dockerComposeSource, /archives:[\s\S]*profiles: \['release'\]/, 'the archive Hugo service must run only in the release profile');
 assert.match(localRunnerSource, /development\|beta-test\|release[\s\S]*--profile "\$compose_profile"/, 'the local runner must expose all three build profiles');
+assert.match(localRunnerSource, /WSLENV=.*OPENRIAK_DOCS_BUILD_PROFILE:OPENRIAK_DOCS_RIAK_KV_VERSION/, 'the WSL Docker Desktop path must forward the requested build profile and development KV version');
 assert.match(dockerfileSource, /FROM scratch AS core-static[\s\S]*FROM scratch AS static/, 'Docker must expose separate core-only and assembled static targets');
 assert.match(dockerfileSource, /COPY content\/riak-ts \.\/content\/riak-ts[\s\S]*COPY content\/riak-cs \.\/content\/riak-cs/, 'Docker metadata builds must include imported Riak TS and CS source trees');
 assert.match(staticBuilderSource, /development\|beta-test\)[\s\S]*core-build[\s\S]*release\)[\s\S]*assembled/, 'static builds must use runnable core-only and assembled stages for mounted export');
@@ -77,7 +88,16 @@ assert.match(shellBuilderSource, /development\|beta-test\|release[\s\S]*if \[ "\
 assert.match(headSource, /docs\.css[^"\n]+\?v=/, 'shared stylesheet must be cache-busted');
 assert.match(contactEmailShortcodeSource, /contactUsEmail[\s\S]*info@riak\.info/, 'legacy contact-email links must have a supported default');
 assert.equal(docsContactEmailShortcodeSource, contactEmailShortcodeSource, 'docscontactusemail must remain a compatibility alias for contactusemail');
+assert.match(docsSidebarTreeSource, /index site\.Menus \$menuKey[\s\S]*partial "menu-nav-tree\.html"[\s\S]*partial "nav-tree\.html"/, 'documentation sidebars must prefer imported version menus and retain the page-tree fallback');
+assert.match(menuNavTreeSource, /\.Children[\s\S]*\.HasMenuCurrent \$menuKey/, 'imported version menus must retain their parent-child hierarchy and current branch expansion');
+assert.match(cs213RedirectSource, /^redirect_source_route: openriak-cs\/2\.1\.3$/m, 'the removed Riak CS 2.1.3 placeholder must retain a compatibility route');
+assert.match(cs213RedirectSource, /^latest_redirect_version: 3\.0\.1$/m, 'the Riak CS 2.1.3 compatibility route must target the newest imported release');
+assert.match(latestRedirectSource, /with \.Params\.redirect_source_route/, 'the shared redirect template must support non-latest compatibility routes');
 assert.match(currentVersionShortcodeSource, /partial "current-version\.html" \.Page \| strings\.TrimSpace/, 'the current-version shortcode must use the canonical rendered-page version');
+for (const [icon, color] of Object.entries(aliasedOsBrandColors)) {
+  const source = fs.readFileSync(path.join(commonAssets, 'images', 'os', icon), 'utf8');
+  assert.match(source, new RegExp(`<svg[^>]+fill=["']${color}["']`, 'i'), `${icon} must retain its published brand color`);
+}
 assert.match(currentVersionShortcodeSource, /\.Get "format" \| default "full"[\s\S]*eq \$format "major-minor"[\s\S]*printf "%s\.%s"/, 'the current-version shortcode must support full and major-minor plain-text formats');
 assert.match(currentVersionShortcodeSource, /format must be full or major-minor/, 'the current-version shortcode must reject unknown formats');
 assert.match(previousVersionShortcodeSource, /partial "previous-version\.html" \.Page \| strings\.TrimSpace/, 'the previous-version shortcode must use the canonical previous-release resolver');
@@ -86,11 +106,12 @@ assert.match(previousVersionPartialSource, /previous-version has no previous rel
 assert.match(baseSource, /js\/theme\.js[^"\n]+\?v=/, 'theme picker script must be cache-busted');
 assert.match(baseSource, /js\/docs-runtime\.js[^"\n]+\?v=20260902-ts-cs-import/, 'the documentation runtime must use its current cache key');
 assert.match(headSource, /css\/docs\.css[^"\n]+\?v=20260902-ts-cs-import/, 'documentation styling must use its current cache key');
+assert.match(headSource, /resources\.Get "css\/vendors\/admonitions\.css"[\s\S]*admonition-style-loaded-flag/, 'product HTML must load admonition CSS deterministically before render hooks run');
 assert.match(headSource, /images\/ui\/favicon\.png[^"\n]+\?v=/, 'documentation pages must use the shared OpenRiak favicon');
 assert.match(homepageSource, /images\/ui\/favicon\.png[^"\n]+\?v=/, 'the homepage must use the shared OpenRiak favicon');
 assert.ok(fs.existsSync(faviconPath), 'the shared OpenRiak favicon must exist');
 assert.ok(fs.existsSync(projectLogoPath), 'the shared OpenRiak project mark must exist');
-assert.match(sharedHeaderSource, /class="brand-home" href="\{\{ \$page\.Site\.Home\.RelPermalink \}\}"[\s\S]*openriak-mark\.png/, 'the OpenRiak project mark must always link to the site homepage');
+assert.match(sharedHeaderSource, /class="brand-home" href="\{\{ partial "site-section-url\.html" "" \}\}"[\s\S]*openriak-mark\.png/, 'the OpenRiak project mark must always link to the configured site root, including in archive subprojects');
 assert.match(sharedHeaderSource, /class="brand-section" href="\{\{ partial "site-section-url\.html" \$section\.url \}\}"[\s\S]*\{\{ \$section\.name \}\}/, 'the Site section name must resolve its configured landing path against baseURL');
 assert.match(sharedHeaderSource, /data-site-section-picker[\s\S]*>Site sections<\/h2>/, 'the cross-site picker must be named Site sections');
 assert.match(sharedHeaderSource, /eq \.id "openriak-kv"[\s\S]*eq \.id "community"[\s\S]*role="separator"/, 'the Site section picker must separate Homepage, products, and community/archive groups');
@@ -299,8 +320,11 @@ for (const [version, adapter] of [['3.4.0', v340], ['3.4.1', v341]]) {
   const metadataRoot = path.join(repositoryRoot, 'content', 'openriak-kv', 'metadata', version);
   const supportedMetadata = JSON.parse(fs.readFileSync(path.join(metadataRoot, 'supported-os.json')));
   const downloadMetadata = JSON.parse(fs.readFileSync(path.join(metadataRoot, 'downloads.json')));
-  assert.equal(adapter.operatingSystems.length, supportedMetadata.operating_systems.length, 'all ' + version + ' metadata OS targets must be exposed');
-  assert.equal(Object.values(adapter.downloads).flat().length, Object.values(downloadMetadata.downloads).flatMap(Object.values).length, 'all ' + version + ' metadata downloads must be exposed');
+  assert.equal(adapter.operatingSystems.filter((os) => !os.aliasOf).length, supportedMetadata.operating_systems.length, 'all ' + version + ' metadata OS targets must be exposed');
+  const nativeDownloadCount = adapter.downloadOperatingSystems
+    .filter((os) => !os.aliasOf)
+    .reduce((count, os) => count + (adapter.downloads[os.id] || []).length, 0);
+  assert.equal(nativeDownloadCount, Object.values(downloadMetadata.downloads).flatMap(Object.values).length, 'all ' + version + ' metadata downloads must be exposed');
 }
 
 assert.deepEqual(

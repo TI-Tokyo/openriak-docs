@@ -25,16 +25,30 @@
       "defaultForFamily": true
     },
     {
-      "id": "debian-9-amd64",
-      "family": "debian",
-      "name": "Debian",
-      "displayName": "Debian 9",
-      "version": "9",
-      "codename": "9",
-      "architecture": "amd64",
-      "packageFamily": "deb",
-      "logo": "images/os/debian.svg",
-      "defaultForFamily": false
+      "id": "centos-8-x86_64",
+      "family": "centos",
+      "name": "CentOS",
+      "displayName": "CentOS 8",
+      "version": "8",
+      "codename": "x86_64",
+      "architecture": "x86_64",
+      "packageFamily": "rpm",
+      "logo": "images/os/centos.svg",
+      "defaultForFamily": true,
+      "aliasOf": "rhel-8-x86_64"
+    },
+    {
+      "id": "centos-7-x86_64",
+      "family": "centos",
+      "name": "CentOS",
+      "displayName": "CentOS 7",
+      "version": "7",
+      "codename": "x86_64",
+      "architecture": "x86_64",
+      "packageFamily": "rpm",
+      "logo": "images/os/centos.svg",
+      "defaultForFamily": false,
+      "aliasOf": "rhel-7-x86_64"
     },
     {
       "id": "debian-10-amd64",
@@ -47,6 +61,44 @@
       "packageFamily": "deb",
       "logo": "images/os/debian.svg",
       "defaultForFamily": true
+    },
+    {
+      "id": "debian-9-amd64",
+      "family": "debian",
+      "name": "Debian",
+      "displayName": "Debian 9",
+      "version": "9",
+      "codename": "9",
+      "architecture": "amd64",
+      "packageFamily": "deb",
+      "logo": "images/os/debian.svg",
+      "defaultForFamily": false
+    },
+    {
+      "id": "fedora-8-x86_64",
+      "family": "fedora",
+      "name": "Fedora",
+      "displayName": "Fedora 8",
+      "version": "8",
+      "codename": "x86_64",
+      "architecture": "x86_64",
+      "packageFamily": "rpm",
+      "logo": "images/os/fedora.svg",
+      "defaultForFamily": true,
+      "aliasOf": "rhel-8-x86_64"
+    },
+    {
+      "id": "fedora-7-x86_64",
+      "family": "fedora",
+      "name": "Fedora",
+      "displayName": "Fedora 7",
+      "version": "7",
+      "codename": "x86_64",
+      "architecture": "x86_64",
+      "packageFamily": "rpm",
+      "logo": "images/os/fedora.svg",
+      "defaultForFamily": false,
+      "aliasOf": "rhel-7-x86_64"
     },
     {
       "id": "oracle-linux-8-x86_64",
@@ -73,18 +125,6 @@
       "defaultForFamily": true
     },
     {
-      "id": "rhel-7-x86_64",
-      "family": "rhel",
-      "name": "Red Hat Enterprise Linux",
-      "displayName": "Red Hat Enterprise Linux 7",
-      "version": "7",
-      "codename": "7",
-      "architecture": "x86_64",
-      "packageFamily": "rpm",
-      "logo": "images/os/red-hat.svg",
-      "defaultForFamily": false
-    },
-    {
       "id": "rhel-8-x86_64",
       "family": "rhel",
       "name": "Red Hat Enterprise Linux",
@@ -97,6 +137,44 @@
       "defaultForFamily": true
     },
     {
+      "id": "rhel-7-x86_64",
+      "family": "rhel",
+      "name": "Red Hat Enterprise Linux",
+      "displayName": "Red Hat Enterprise Linux 7",
+      "version": "7",
+      "codename": "7",
+      "architecture": "x86_64",
+      "packageFamily": "rpm",
+      "logo": "images/os/red-hat.svg",
+      "defaultForFamily": false
+    },
+    {
+      "id": "rocky-8-x86_64",
+      "family": "rocky",
+      "name": "Rocky Linux",
+      "displayName": "Rocky Linux 8",
+      "version": "8",
+      "codename": "x86_64",
+      "architecture": "x86_64",
+      "packageFamily": "rpm",
+      "logo": "images/os/rocky.svg",
+      "defaultForFamily": true,
+      "aliasOf": "rhel-8-x86_64"
+    },
+    {
+      "id": "rocky-7-x86_64",
+      "family": "rocky",
+      "name": "Rocky Linux",
+      "displayName": "Rocky Linux 7",
+      "version": "7",
+      "codename": "x86_64",
+      "architecture": "x86_64",
+      "packageFamily": "rpm",
+      "logo": "images/os/rocky.svg",
+      "defaultForFamily": false,
+      "aliasOf": "rhel-7-x86_64"
+    },
+    {
       "id": "sles-15-x86_64",
       "family": "sles",
       "name": "SUSE Linux Enterprise Server",
@@ -105,7 +183,19 @@
       "codename": "15",
       "architecture": "x86_64",
       "packageFamily": "rpm",
-      "logo": "images/os/suse.png",
+      "logo": "images/os/suse.svg",
+      "defaultForFamily": true
+    },
+    {
+      "id": "ubuntu-jammy-amd64",
+      "family": "ubuntu",
+      "name": "Ubuntu",
+      "displayName": "Ubuntu 22.04",
+      "version": "22.04",
+      "codename": "jammy64",
+      "architecture": "amd64",
+      "packageFamily": "deb",
+      "logo": "images/os/ubuntu.svg",
       "defaultForFamily": true
     },
     {
@@ -119,18 +209,6 @@
       "packageFamily": "deb",
       "logo": "images/os/ubuntu.svg",
       "defaultForFamily": false
-    },
-    {
-      "id": "ubuntu-jammy-amd64",
-      "family": "ubuntu",
-      "name": "Ubuntu",
-      "displayName": "Ubuntu 22.04",
-      "version": "22.04",
-      "codename": "jammy64",
-      "architecture": "amd64",
-      "packageFamily": "deb",
-      "logo": "images/os/ubuntu.svg",
-      "defaultForFamily": true
     }
   ],
   "downloads": {
@@ -150,19 +228,35 @@
         }
       }
     ],
-    "debian-9-amd64": [
+    "centos-8-x86_64": [
       {
-        "id": "otp22-amd64",
+        "id": "otp22-x86_64-1",
         "otp": 22,
-        "architecture": "amd64",
-        "format": "deb",
-        "filename": "riak-cs_3.0.0-OTP22_amd64.deb",
-        "packageRevision": null,
+        "architecture": "x86_64",
+        "format": "rpm",
+        "filename": "riak-cs-3.0.0.OTP22-1.el8.x86_64.rpm",
+        "packageRevision": "1",
         "variant": "",
-        "url": "https://files.tiot.jp/riak/cs/3.0/3.0.0/debian/9/riak-cs_3.0.0-OTP22_amd64.deb",
+        "url": "https://files.tiot.jp/riak/cs/3.0/3.0.0/rhel/8/riak-cs-3.0.0.OTP22-1.el8.x86_64.rpm",
         "checksum": {
           "algorithm": "sha256",
-          "value": "8c631d0fe8a03214187a50c7bf9071eeaa809054a80211c6fb602a029d6e7d8b"
+          "value": "edf42b320464298a751ead0e21ce9a81d92097687bfbe9660671f57b13c33e4a"
+        }
+      }
+    ],
+    "centos-7-x86_64": [
+      {
+        "id": "otp22-x86_64-1",
+        "otp": 22,
+        "architecture": "x86_64",
+        "format": "rpm",
+        "filename": "riak-cs-3.0.0.OTP22-1.el7.x86_64.rpm",
+        "packageRevision": "1",
+        "variant": "",
+        "url": "https://files.tiot.jp/riak/cs/3.0/3.0.0/rhel/7/riak-cs-3.0.0.OTP22-1.el7.x86_64.rpm",
+        "checksum": {
+          "algorithm": "sha256",
+          "value": "e174b2e26951c2ab29c4b8086fc775b3f83799886bf23193e9e766b7e8dcfc53"
         }
       }
     ],
@@ -179,6 +273,54 @@
         "checksum": {
           "algorithm": "sha256",
           "value": "88e0fd918ee17eef62b73247f2b48e4d78c87cd6cc90c570b461aa8897645d0e"
+        }
+      }
+    ],
+    "debian-9-amd64": [
+      {
+        "id": "otp22-amd64",
+        "otp": 22,
+        "architecture": "amd64",
+        "format": "deb",
+        "filename": "riak-cs_3.0.0-OTP22_amd64.deb",
+        "packageRevision": null,
+        "variant": "",
+        "url": "https://files.tiot.jp/riak/cs/3.0/3.0.0/debian/9/riak-cs_3.0.0-OTP22_amd64.deb",
+        "checksum": {
+          "algorithm": "sha256",
+          "value": "8c631d0fe8a03214187a50c7bf9071eeaa809054a80211c6fb602a029d6e7d8b"
+        }
+      }
+    ],
+    "fedora-8-x86_64": [
+      {
+        "id": "otp22-x86_64-1",
+        "otp": 22,
+        "architecture": "x86_64",
+        "format": "rpm",
+        "filename": "riak-cs-3.0.0.OTP22-1.el8.x86_64.rpm",
+        "packageRevision": "1",
+        "variant": "",
+        "url": "https://files.tiot.jp/riak/cs/3.0/3.0.0/rhel/8/riak-cs-3.0.0.OTP22-1.el8.x86_64.rpm",
+        "checksum": {
+          "algorithm": "sha256",
+          "value": "edf42b320464298a751ead0e21ce9a81d92097687bfbe9660671f57b13c33e4a"
+        }
+      }
+    ],
+    "fedora-7-x86_64": [
+      {
+        "id": "otp22-x86_64-1",
+        "otp": 22,
+        "architecture": "x86_64",
+        "format": "rpm",
+        "filename": "riak-cs-3.0.0.OTP22-1.el7.x86_64.rpm",
+        "packageRevision": "1",
+        "variant": "",
+        "url": "https://files.tiot.jp/riak/cs/3.0/3.0.0/rhel/7/riak-cs-3.0.0.OTP22-1.el7.x86_64.rpm",
+        "checksum": {
+          "algorithm": "sha256",
+          "value": "e174b2e26951c2ab29c4b8086fc775b3f83799886bf23193e9e766b7e8dcfc53"
         }
       }
     ],
@@ -214,6 +356,22 @@
         }
       }
     ],
+    "rhel-8-x86_64": [
+      {
+        "id": "otp22-x86_64-1",
+        "otp": 22,
+        "architecture": "x86_64",
+        "format": "rpm",
+        "filename": "riak-cs-3.0.0.OTP22-1.el8.x86_64.rpm",
+        "packageRevision": "1",
+        "variant": "",
+        "url": "https://files.tiot.jp/riak/cs/3.0/3.0.0/rhel/8/riak-cs-3.0.0.OTP22-1.el8.x86_64.rpm",
+        "checksum": {
+          "algorithm": "sha256",
+          "value": "edf42b320464298a751ead0e21ce9a81d92097687bfbe9660671f57b13c33e4a"
+        }
+      }
+    ],
     "rhel-7-x86_64": [
       {
         "id": "otp22-x86_64-1",
@@ -230,7 +388,7 @@
         }
       }
     ],
-    "rhel-8-x86_64": [
+    "rocky-8-x86_64": [
       {
         "id": "otp22-x86_64-1",
         "otp": 22,
@@ -243,6 +401,22 @@
         "checksum": {
           "algorithm": "sha256",
           "value": "edf42b320464298a751ead0e21ce9a81d92097687bfbe9660671f57b13c33e4a"
+        }
+      }
+    ],
+    "rocky-7-x86_64": [
+      {
+        "id": "otp22-x86_64-1",
+        "otp": 22,
+        "architecture": "x86_64",
+        "format": "rpm",
+        "filename": "riak-cs-3.0.0.OTP22-1.el7.x86_64.rpm",
+        "packageRevision": "1",
+        "variant": "",
+        "url": "https://files.tiot.jp/riak/cs/3.0/3.0.0/rhel/7/riak-cs-3.0.0.OTP22-1.el7.x86_64.rpm",
+        "checksum": {
+          "algorithm": "sha256",
+          "value": "e174b2e26951c2ab29c4b8086fc775b3f83799886bf23193e9e766b7e8dcfc53"
         }
       }
     ],
@@ -262,22 +436,6 @@
         }
       }
     ],
-    "ubuntu-focal-amd64": [
-      {
-        "id": "otp22-amd64",
-        "otp": 22,
-        "architecture": "amd64",
-        "format": "deb",
-        "filename": "riak-cs_3.0.0-OTP22_amd64.deb",
-        "packageRevision": null,
-        "variant": "",
-        "url": "https://files.tiot.jp/riak/cs/3.0/3.0.0/ubuntu/focal64/riak-cs_3.0.0-OTP22_amd64.deb",
-        "checksum": {
-          "algorithm": "sha256",
-          "value": "085bc4428701a015d73157724e90f607e377b3c947c71e191ad02816cc53f7b3"
-        }
-      }
-    ],
     "ubuntu-jammy-amd64": [
       {
         "id": "otp22-amd64",
@@ -291,6 +449,22 @@
         "checksum": {
           "algorithm": "sha256",
           "value": "3d848850f6948312cbb633e4d5dae541db1ee4070dd2150eb69c89c8cc5293f5"
+        }
+      }
+    ],
+    "ubuntu-focal-amd64": [
+      {
+        "id": "otp22-amd64",
+        "otp": 22,
+        "architecture": "amd64",
+        "format": "deb",
+        "filename": "riak-cs_3.0.0-OTP22_amd64.deb",
+        "packageRevision": null,
+        "variant": "",
+        "url": "https://files.tiot.jp/riak/cs/3.0/3.0.0/ubuntu/focal64/riak-cs_3.0.0-OTP22_amd64.deb",
+        "checksum": {
+          "algorithm": "sha256",
+          "value": "085bc4428701a015d73157724e90f607e377b3c947c71e191ad02816cc53f7b3"
         }
       }
     ]

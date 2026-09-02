@@ -51,9 +51,38 @@ for (const product of productCases) {
     }
     assert.equal(adapter.metadataStatus.downloads, 'complete');
     assert.ok(adapter.downloadOperatingSystems.length > 0);
+    const familyNamesInOrder = [...new Set(adapter.downloadOperatingSystems.map((os) => os.name))];
+    assert.deepEqual(familyNamesInOrder, [...familyNamesInOrder].sort((left, right) => left.localeCompare(right)));
+    for (const name of familyNamesInOrder) {
+      const releases = adapter.downloadOperatingSystems.filter((os) => os.name === name).map((os) => String(os.version));
+      assert.deepEqual(releases, [...releases].sort((left, right) => right.localeCompare(left, undefined, { numeric: true })));
+    }
     assert.ok(downloads.length > 0);
     assert.ok(downloads.every((download) => download.checksum?.algorithm === 'sha256'));
     assert.ok(downloads.every((download) => /^[0-9a-f]{64}$/.test(download.checksum?.value || '')));
+    const nativeFamilies = new Set(adapter.downloadOperatingSystems.filter((os) => !os.aliasOf).map((os) => os.family));
+    const rhelOperatingSystems = adapter.downloadOperatingSystems.filter((os) => os.family === 'rhel');
+    for (const alias of [
+      { family: 'rocky', logo: 'images/os/rocky.svg' },
+      { family: 'centos', logo: 'images/os/centos.svg' },
+      { family: 'suse', logo: 'images/os/suse.svg', nativeFamily: 'sles' },
+      { family: 'fedora', logo: 'images/os/fedora.svg', nativeFamily: 'fedora' }
+    ]) {
+      const aliases = adapter.downloadOperatingSystems.filter((os) => os.family === alias.family && os.aliasOf);
+      if (!rhelOperatingSystems.length || (alias.nativeFamily && nativeFamilies.has(alias.nativeFamily))) {
+        assert.deepEqual(aliases, []);
+        continue;
+      }
+      assert.equal(aliases.length, rhelOperatingSystems.length);
+      for (const os of aliases) {
+        const rhel = rhelOperatingSystems.find((candidate) => candidate.id === os.aliasOf);
+        assert.ok(rhel);
+        assert.equal(os.logo, alias.logo);
+        assert.doesNotMatch(`${os.name} ${os.displayName}`, /Red Hat|RHEL/i);
+        assert.deepEqual(adapter.downloads[os.id], adapter.downloads[rhel.id]);
+        if (modernKv) assert.deepEqual(adapter.values[os.id], adapter.values[rhel.id]);
+      }
+    }
     if (version.startsWith(`${product.forcedOtpMajor}.`)) {
       assert.ok(downloads.every((download) => download.otp === 'R16B02'));
     }
