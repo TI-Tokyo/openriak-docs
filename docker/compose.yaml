@@ -41,11 +41,17 @@ services:
         development)
         node /project/tools/scripts/generate-version-mounts.js
         --base-config /project/content/hugo.yaml --output /tmp/openriak-core.yaml
-        --version-data-root /tmp/openriak-development-data/versions
-        --include-version "riak-kv=$${OPENRIAK_DOCS_RIAK_KV_VERSION}" &&
+        --version-data-root openriak-kv=/tmp/openriak-development-data/openriak-kv/data/versions
+        --version-data-root openriak-cs=/tmp/openriak-development-data/openriak-cs/data/versions
+        --version-data-root openriak-ts=/tmp/openriak-development-data/openriak-ts/data/versions
+        --include-version "riak-kv=$${OPENRIAK_DOCS_RIAK_KV_VERSION}"
+        --include-latest riak-cs
+        --include-latest riak-ts &&
         node /project/tools/scripts/sync-product-metadata.js
         --output-root /tmp/openriak-development-data
-        --include-version "riak-kv=$${OPENRIAK_DOCS_RIAK_KV_VERSION}" ;;
+        --include-version "riak-kv=$${OPENRIAK_DOCS_RIAK_KV_VERSION}"
+        --include-latest riak-cs
+        --include-latest riak-ts ;;
         beta-test|release)
         node /project/tools/scripts/generate-version-mounts.js
         --base-config /project/content/hugo.yaml --output /tmp/openriak-core.yaml &&

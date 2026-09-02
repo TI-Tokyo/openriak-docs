@@ -2,6 +2,9 @@
   {{ partial "breadcrumbs.html" . }}
   {{- $context := partial "product-context.html" . -}}
   {{- $versionData := index $context.versions $context.version -}}
+  {{- $brand := partial "brand-for-version.html" (dict "page" . "version" $context.version) -}}
+  {{- $downloadProductName := $brand.name -}}
+  {{- $downloadsBaseUrl := $context.product.downloadsBaseUrl | default "https://files.tiot.jp/riak/kv/" -}}
   {{- $isModern := gt (len $versionData.operatingSystems) 0 -}}
   {{- $downloadOperatingSystems := $versionData.downloadOperatingSystems | default $versionData.operatingSystems -}}
   {{- $installPages := dict
@@ -48,7 +51,7 @@
             {{- with $familyOperatingSystems -}}
               {{- $first := index . 0 -}}
               <section class="downloads-family" id="downloads-{{ $family }}">
-                <h3 class="downloads-family-heading"><img src="{{ $first.logo | relURL }}" alt="">OpenRiak KV for {{ $first.name }}</h3>
+                <h3 class="downloads-family-heading"><img src="{{ $first.logo | relURL }}" alt="">{{ $downloadProductName }} for {{ $first.name }}</h3>
                 {{- $seenDisplayNames := newScratch -}}
                 {{- range $os := $familyOperatingSystems -}}
                   {{- if not ($seenDisplayNames.Get $os.displayName) -}}
@@ -65,20 +68,20 @@
       </details>
     {{- else -}}
       {{ .Content }}
-      <h2>Riak KV {{ $context.version }}</h2>
+      <h2>{{ $downloadProductName }} {{ $context.version }}</h2>
       <p>You should be able to find your operating system in the choices below.</p>
-      <p>All files (except Alpine Linux) are available on <a href="https://files.tiot.jp/riak/kv/">the file store</a>.</p>
+      <p>All files (except Alpine Linux) are available on <a href="{{ $downloadsBaseUrl }}">the file store</a>.</p>
 
       {{- range $family := $familyOrder -}}
         {{- $familyOperatingSystems := where $downloadOperatingSystems "family" $family -}}
         {{- with $familyOperatingSystems -}}
           {{- $first := index . 0 -}}
           <section class="downloads-family legacy-downloads-family" id="{{ $family }}">
-            <h2 class="downloads-family-heading"><img src="{{ $first.logo | relURL }}" alt="">Riak KV for {{ $first.name }}</h2>
+            <h2 class="downloads-family-heading"><img src="{{ $first.logo | relURL }}" alt="">{{ $downloadProductName }} for {{ $first.name }}</h2>
             {{- if eq $family "alpine" -}}
               {{- $alpinePage := site.GetPage (printf "/%s/%s/setup/installing/alpine-linux" $context.id $context.version) -}}
               <h3>Alpine Linux 64-bit</h3>
-              <p class="legacy-downloads-install">Installing Riak KV on Alpine Linux uses the
+              <p class="legacy-downloads-install">Installing {{ $downloadProductName }} on Alpine Linux uses the
                 {{- if $alpinePage }} <a href="{{ $alpinePage.RelPermalink }}">Alpine Linux Riak Repository for x86_64 and aarch64 architectures</a>{{ else }} Alpine Linux Riak Repository for x86_64 and aarch64 architectures{{ end }}.
               </p>
             {{- else -}}
@@ -93,7 +96,7 @@
               {{- end -}}
               {{- with index $installPages $family -}}
                 {{- $installPage := site.GetPage (printf "/%s/%s/%s" $context.id $context.version .) -}}
-                {{- with $installPage }}<p class="legacy-downloads-install">Here are further instructions for <a href="{{ .RelPermalink }}">installing Riak KV on this system</a>.</p>{{ end -}}
+                {{- with $installPage }}<p class="legacy-downloads-install">Here are further instructions for <a href="{{ .RelPermalink }}">installing {{ $downloadProductName }} on this system</a>.</p>{{ end -}}
               {{- end -}}
             {{- end -}}
           </section>

@@ -1,0 +1,32 @@
+---
+title: "Download Riak TS"
+description: "Download Riak TS 1.1.0"
+menu:
+  riak_ts-1.2.0:
+    name: "Download Riak TS"
+    identifier: "download"
+    weight: 103
+    pre: download-alt
+project: "riak_ts"
+project_version: "1.2.0"
+lastmod: 2016-02-16T00:00:00-00:00
+sitemap:
+  priority: 0.1
+toc: true
+aliases:
+    - /riakts/1.2.0/riakts-downloads/
+    - /riakts/1.2.0/downloads/
+    - /openriak-ts/1.2.0/downloads/
+    - /openriak-ts/1.2.0/riakts-downloads/
+linkTitle: "Download Riak TS"
+weight: 103
+---
+
+[enterprise]: http://basho.com/contact/
+[installing]: ../installing/
+
+# Download Riak TS 1.2.0
+
+Riak TS is currently only available to our [enterprise] customers.
+
+Enterprise customers can download the Riak TS package from ZenDesk. Once you have downloaded the package, check out how to [install][installing] it.

@@ -6,9 +6,10 @@
 
 The main build entry points are `tools/scripts/build.sh` and
 `tools/scripts/build.ps1`. Both accept `development`, `beta-test`, or `release`.
-Development builds core with one selected historical Riak KV version, beta-test
-builds the complete core project, and release additionally builds the archives
-before `assemble-site.sh` validates ownership and combines them into `public/`.
+Development builds core with one selected historical Riak KV version, the newest
+legacy Riak CS and Riak TS versions, and every OpenRiak version. Beta-test builds
+the complete core project, and release additionally builds the archives before
+`assemble-site.sh` validates ownership and combines them into `public/`.
 
 `tools/scripts/generate-version-mounts.js` scans the flat product/version
 directories and expands their cumulative inheritance chains into
@@ -18,7 +19,9 @@ section roots in `tools/generated/latest-redirects/`. The legacy `riak-kv/latest
 route targets the newest `openriak-kv` release. `--include-version
 SOURCE=VERSION` limits generated targets for one source family while preserving
 the selected release's required inheritance layers; the development profile uses
-this to select one `riak-kv` release.
+this to select one `riak-kv` release. `--include-latest SOURCE` similarly limits
+a source family to its highest semantic version; development uses it for
+`riak-cs` and `riak-ts`.
 
 ## Importing Hugo 0.18 content
 

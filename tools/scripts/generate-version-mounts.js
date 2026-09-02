@@ -10,7 +10,9 @@ const defaultOutput = path.join(repositoryRoot, 'tools', 'generated', 'hugo.yaml
 const defaultLatestRedirectRoot = path.join(repositoryRoot, 'tools', 'generated', 'latest-redirects');
 const mountMarker = '    # GENERATED_VERSION_MOUNTS';
 const latestAliases = {
-  'openriak-kv': ['riak-kv']
+  'openriak-kv': ['riak-kv'],
+  'openriak-cs': ['riak-cs'],
+  'openriak-ts': ['riak-ts']
 };
 
 const productSources = [
@@ -25,8 +27,26 @@ const productSources = [
     target: 'openriak-kv',
     minVersion: '3.4.0'
   },
-  { source: 'openriak-cs', target: 'openriak-cs' },
-  { source: 'openriak-ts', target: 'openriak-ts' }
+  {
+    source: 'riak-cs',
+    target: 'openriak-cs',
+    maxVersionExclusive: '3.0.2'
+  },
+  {
+    source: 'openriak-cs',
+    target: 'openriak-cs',
+    minVersion: '3.0.2'
+  },
+  {
+    source: 'riak-ts',
+    target: 'openriak-ts',
+    maxVersionExclusive: '3.0.1'
+  },
+  {
+    source: 'openriak-ts',
+    target: 'openriak-ts',
+    minVersion: '3.0.1'
+  }
 ];
 
 const semverPattern = /^(0|[1-9]\d*)\.(0|[1-9]\d*)\.(0|[1-9]\d*)(?:-([0-9A-Za-z.-]+))?$/;
@@ -276,21 +296,33 @@ const generateConfig = ({
   latestRedirectRoot = defaultLatestRedirectRoot,
   products = productSources,
   includeVersions = {},
-  versionDataRoot
+  includeLatest = [],
+  versionDataRoot,
+  versionDataRoots = {}
 } = {}) => {
   const source = fs.readFileSync(baseConfig, 'utf8');
   const markerCount = source.split(mountMarker).length - 1;
   if (markerCount !== 1) throw new Error(`Expected exactly one ${mountMarker.trim()} marker in ${baseConfig}`);
 
-  const mounts = createVersionMounts(contentRoot, products, includeVersions);
+  const resolvedIncludeVersions = { ...includeVersions };
+  for (const source of includeLatest) {
+    const product = products.find((candidate) => candidate.source === source);
+    if (!product) throw new Error(`Unknown product source for --include-latest: ${source}`);
+    const versions = discoverVersions(contentRoot, product);
+    if (!versions.length) throw new Error(`No versions exist in content/${source}`);
+    resolvedIncludeVersions[source] = [versions.at(-1).raw];
+  }
+  const mounts = createVersionMounts(contentRoot, products, resolvedIncludeVersions);
   const latestRedirects = discoverLatestRedirects(contentRoot, products);
   writeLatestRedirectRoots(latestRedirects, latestRedirectRoot);
   let generated = source.replace(mountMarker, renderMounts(mounts));
-  if (versionDataRoot) {
-    const canonicalMount = "    - {source: '../tools/generated/openriak-kv/data/versions', target: 'data/versions/openriak-kv'}";
-    if (!generated.includes(canonicalMount)) throw new Error('Unable to locate the OpenRiak KV version-data mount');
-    const normalizedRoot = versionDataRoot.split(path.sep).join('/');
-    generated = generated.replace(canonicalMount, `    - {source: '${normalizedRoot}', target: 'data/versions/openriak-kv'}`);
+  const dataRoots = { ...versionDataRoots };
+  if (versionDataRoot) dataRoots['openriak-kv'] = versionDataRoot;
+  for (const [product, dataRoot] of Object.entries(dataRoots)) {
+    const canonicalMount = `    - {source: '../tools/generated/${product}/data/versions', target: 'data/versions/${product}'}`;
+    if (!generated.includes(canonicalMount)) throw new Error(`Unable to locate the ${product} version-data mount`);
+    const normalizedRoot = dataRoot.split(path.sep).join('/');
+    generated = generated.replace(canonicalMount, `    - {source: '${normalizedRoot}', target: 'data/versions/${product}'}`);
   }
   fs.mkdirSync(path.dirname(output), { recursive: true });
   fs.writeFileSync(output, generated, 'utf8');
@@ -298,14 +330,24 @@ const generateConfig = ({
 };
 
 const parseArguments = (argumentsList) => {
-  const options = { includeVersions: {} };
+  const options = { includeVersions: {}, includeLatest: [] };
   for (let index = 0; index < argumentsList.length; index += 1) {
     const argument = argumentsList[index];
     if (argument === '--output') options.output = path.resolve(argumentsList[++index]);
     else if (argument === '--base-config') options.baseConfig = path.resolve(argumentsList[++index]);
     else if (argument === '--content-root') options.contentRoot = path.resolve(argumentsList[++index]);
     else if (argument === '--latest-redirect-root') options.latestRedirectRoot = path.resolve(argumentsList[++index]);
-    else if (argument === '--version-data-root') options.versionDataRoot = path.resolve(argumentsList[++index]);
+    else if (argument === '--version-data-root') {
+      const value = argumentsList[++index] || '';
+      const separator = value.indexOf('=');
+      if (separator < 0) options.versionDataRoot = path.resolve(value);
+      else {
+        const product = value.slice(0, separator);
+        const dataRoot = value.slice(separator + 1);
+        if (!product || !dataRoot) throw new Error('--version-data-root expects PRODUCT=PATH');
+        (options.versionDataRoots ||= {})[product] = path.resolve(dataRoot);
+      }
+    }
     else if (argument === '--include-version') {
       const value = argumentsList[++index] || '';
       const separator = value.indexOf('=');
@@ -317,6 +359,7 @@ const parseArguments = (argumentsList) => {
       parseSemver(version);
       (options.includeVersions[source] ||= []).push(version);
     }
+    else if (argument === '--include-latest') options.includeLatest.push(argumentsList[++index] || '');
     else throw new Error(`Unknown argument: ${argument}`);
   }
   return options;

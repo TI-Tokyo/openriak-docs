@@ -14,6 +14,7 @@ const {
 
 const fixture = fs.mkdtempSync(path.join(os.tmpdir(), 'openriak-version-mounts-'));
 const makeVersions = (product, versions) => {
+  fs.mkdirSync(path.join(fixture, product), { recursive: true });
   for (const version of versions) fs.mkdirSync(path.join(fixture, product, version), { recursive: true });
 };
 
@@ -29,8 +30,10 @@ try {
     '2.2.1-new-release'
   ]);
   makeVersions('openriak-kv', ['3.4.0-new-release', '3.4.1', '3.4.2']);
-  makeVersions('openriak-cs', ['2.1.3-new-release', '2.1.4']);
-  makeVersions('openriak-ts', ['1.5.2-new-release']);
+  makeVersions('riak-cs', ['2.1.2-new-release', '3.0.1-new-release']);
+  makeVersions('openriak-cs', []);
+  makeVersions('riak-ts', ['1.5.2-new-release', '3.0.0-new-release']);
+  makeVersions('openriak-ts', []);
 
   const mounts = createVersionMounts(fixture, productSources);
   const sourcesFor = (target) => mounts.filter((mount) => mount.target === target).map((mount) => mount.source);
@@ -59,11 +62,8 @@ try {
     'openriak-kv/3.4.1',
     'openriak-kv/3.4.0-new-release'
   ]);
-  assert.deepEqual(sourcesFor('content/openriak-cs/2.1.4'), [
-    'openriak-cs/2.1.4',
-    'openriak-cs/2.1.3-new-release'
-  ]);
-  assert.deepEqual(sourcesFor('content/openriak-ts/1.5.2'), ['openriak-ts/1.5.2-new-release']);
+  assert.deepEqual(sourcesFor('content/openriak-cs/3.0.1'), ['riak-cs/3.0.1-new-release']);
+  assert.deepEqual(sourcesFor('content/openriak-ts/3.0.0'), ['riak-ts/3.0.0-new-release']);
   assert.ok(sourcesFor('content/openriak-kv/3.4.2').every((source) => source.startsWith('openriak-kv/')));
   assert.ok(sourcesFor('content/openriak-kv/2.2.1').every((source) => source.startsWith('riak-kv/')));
   assert.ok(compareSemver('3.10.0', '3.9.9') > 0);
@@ -84,8 +84,11 @@ try {
   ]);
   assert.deepEqual(sourcesFor('content/openriak-cs/latest'), [
     '../tools/generated/latest-redirects/openriak-cs',
-    'openriak-cs/2.1.4',
-    'openriak-cs/2.1.3-new-release'
+    'riak-cs/3.0.1-new-release'
+  ]);
+  assert.deepEqual(sourcesFor('content/riak-cs/latest'), [
+    '../tools/generated/latest-redirects/riak-cs',
+    'riak-cs/3.0.1-new-release'
   ]);
 
   const developmentMounts = createVersionMounts(fixture, productSources, { 'riak-kv': ['2.1.1'] });
@@ -109,11 +112,12 @@ try {
   assert.deepEqual(parseArguments(['--include-version', 'riak-kv=2.1.1']).includeVersions, {
     'riak-kv': ['2.1.1']
   });
+  assert.deepEqual(parseArguments(['--include-latest', 'riak-cs']).includeLatest, ['riak-cs']);
 
   const baseConfig = path.join(fixture, 'hugo.yaml');
   const output = path.join(fixture, 'generated.yaml');
   const latestRedirectRoot = path.join(fixture, 'latest-redirects');
-  fs.writeFileSync(baseConfig, `module:\n  mounts:\n    - {source: '../tools/generated/openriak-kv/data/versions', target: 'data/versions/openriak-kv'}\n    # GENERATED_VERSION_MOUNTS\n`, 'utf8');
+  fs.writeFileSync(baseConfig, `module:\n  mounts:\n    - {source: '../tools/generated/openriak-kv/data/versions', target: 'data/versions/openriak-kv'}\n    - {source: '../tools/generated/openriak-cs/data/versions', target: 'data/versions/openriak-cs'}\n    - {source: '../tools/generated/openriak-ts/data/versions', target: 'data/versions/openriak-ts'}\n    # GENERATED_VERSION_MOUNTS\n`, 'utf8');
   generateConfig({ contentRoot: fixture, baseConfig, output, latestRedirectRoot, products: productSources });
   const generated = fs.readFileSync(output, 'utf8');
   assert.match(generated, /source: 'openriak-kv\/3\.4\.0-new-release', target: 'content\/openriak-kv\/3\.4\.2'/);
@@ -127,7 +131,8 @@ try {
   assert.match(legacySectionRoot, /render: never/);
 
   const filteredOutput = path.join(fixture, 'development.yaml');
-  const filteredDataRoot = path.join(fixture, 'development-data', 'versions');
+  const filteredDataRoot = path.join(fixture, 'development-data', 'openriak-kv', 'versions');
+  const filteredCsDataRoot = path.join(fixture, 'development-data', 'openriak-cs', 'versions');
   generateConfig({
     contentRoot: fixture,
     baseConfig,
@@ -135,9 +140,29 @@ try {
     latestRedirectRoot,
     products: productSources,
     includeVersions: { 'riak-kv': ['2.1.1'] },
-    versionDataRoot: filteredDataRoot
+    versionDataRoots: {
+      'openriak-kv': filteredDataRoot,
+      'openriak-cs': filteredCsDataRoot
+    }
   });
-  assert.match(fs.readFileSync(filteredOutput, 'utf8'), new RegExp(`source: '${filteredDataRoot.replace(/\\/g, '/')}'`));
+  const filteredConfig = fs.readFileSync(filteredOutput, 'utf8');
+  assert.match(filteredConfig, new RegExp(`source: '${filteredDataRoot.replace(/\\/g, '/')}'`));
+  assert.match(filteredConfig, new RegExp(`source: '${filteredCsDataRoot.replace(/\\/g, '/')}'`));
+
+  const latestOnlyOutput = path.join(fixture, 'latest-only.yaml');
+  generateConfig({
+    contentRoot: fixture,
+    baseConfig,
+    output: latestOnlyOutput,
+    latestRedirectRoot,
+    products: productSources,
+    includeLatest: ['riak-cs', 'riak-ts']
+  });
+  const latestOnlyConfig = fs.readFileSync(latestOnlyOutput, 'utf8');
+  assert.match(latestOnlyConfig, /source: 'riak-cs\/3\.0\.1-new-release', target: 'content\/openriak-cs\/3\.0\.1'/);
+  assert.doesNotMatch(latestOnlyConfig, /target: 'content\/openriak-cs\/2\.1\.2'/);
+  assert.match(latestOnlyConfig, /source: 'riak-ts\/3\.0\.0-new-release', target: 'content\/openriak-ts\/3\.0\.0'/);
+  assert.doesNotMatch(latestOnlyConfig, /target: 'content\/openriak-ts\/1\.5\.2'/);
 
   makeVersions('duplicate-product', ['1.0.0', '1.0.0-new-release']);
   assert.throws(

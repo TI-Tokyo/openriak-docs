@@ -12,6 +12,8 @@ COPY content/hugo.yaml ./content/hugo.yaml
 COPY content/homepage ./content/homepage
 COPY content/community ./content/community
 COPY content/riak-kv ./content/riak-kv
+COPY content/riak-ts ./content/riak-ts
+COPY content/riak-cs ./content/riak-cs
 COPY content/openriak-kv ./content/openriak-kv
 COPY content/openriak-cs ./content/openriak-cs
 COPY content/openriak-ts ./content/openriak-ts
@@ -25,9 +27,13 @@ RUN case "$CORE_BUILD_PROFILE" in \
         node tools/scripts/generate-version-mounts.js \
           --base-config /project/content/hugo.yaml \
           --output /project/tools/generated/hugo.yaml \
-          --include-version "riak-kv=$RIAK_KV_VERSION" && \
+          --include-version "riak-kv=$RIAK_KV_VERSION" \
+          --include-latest riak-cs \
+          --include-latest riak-ts && \
         node tools/scripts/sync-product-metadata.js \
-          --include-version "riak-kv=$RIAK_KV_VERSION" ;; \
+          --include-version "riak-kv=$RIAK_KV_VERSION" \
+          --include-latest riak-cs \
+          --include-latest riak-ts ;; \
       beta-test|release) \
         node tools/scripts/generate-version-mounts.js \
           --base-config /project/content/hugo.yaml \

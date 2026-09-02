@@ -31,7 +31,7 @@ case "$project" in
   core)
     if [ "$build_profile" = development ]; then
       generated_config=${HUGO_GENERATED_CONFIG:-$site_root/build/generated-development/hugo.yaml}
-      development_data_root=${OPENRIAK_DOCS_DEVELOPMENT_DATA_ROOT:-$site_root/build/generated-development/openriak-kv/data}
+      development_data_root=${OPENRIAK_DOCS_DEVELOPMENT_DATA_ROOT:-$site_root/build/generated-development}
     else
       generated_config=${HUGO_GENERATED_CONFIG:-$site_root/tools/generated/hugo.yaml}
     fi
@@ -43,11 +43,17 @@ case "$project" in
       node "$site_root/tools/scripts/generate-version-mounts.js" \
         --base-config "$site_root/content/hugo.yaml" \
         --output "$generated_config" \
-        --version-data-root "$development_data_root/versions" \
-        --include-version "riak-kv=$development_riak_kv_version"
+        --version-data-root "openriak-kv=$development_data_root/openriak-kv/data/versions" \
+        --version-data-root "openriak-cs=$development_data_root/openriak-cs/data/versions" \
+        --version-data-root "openriak-ts=$development_data_root/openriak-ts/data/versions" \
+        --include-version "riak-kv=$development_riak_kv_version" \
+        --include-latest riak-cs \
+        --include-latest riak-ts
       node "$site_root/tools/scripts/sync-product-metadata.js" \
         --output-root "$development_data_root" \
-        --include-version "riak-kv=$development_riak_kv_version"
+        --include-version "riak-kv=$development_riak_kv_version" \
+        --include-latest riak-cs \
+        --include-latest riak-ts
     else
       node "$site_root/tools/scripts/generate-version-mounts.js" \
         --base-config "$site_root/content/hugo.yaml" \

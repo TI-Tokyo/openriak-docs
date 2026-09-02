@@ -5,15 +5,23 @@ const path = require('node:path');
 
 const repositoryRoot = path.resolve(__dirname, '..', '..');
 const contentRoot = path.join(repositoryRoot, 'content');
-const productRoot = path.join(repositoryRoot, 'content', 'openriak-kv');
-const metadataProduct = 'kv';
-const productId = 'openriak-kv';
 const { compareSemver, discoverVersions, productSources } = require('./generate-version-mounts.js');
+
+const products = [
+  { productId: 'openriak-kv', metadataProduct: 'kv', pickerSource: 'openriak-kv' },
+  { productId: 'openriak-cs', metadataProduct: 'cs' },
+  { productId: 'openriak-ts', metadataProduct: 'ts' }
+];
+
 const parseOptions = (argumentsList) => {
-  const options = { includeVersions: {} };
+  const options = { includeVersions: {}, includeLatest: [] };
   for (let index = 0; index < argumentsList.length; index += 1) {
     if (argumentsList[index] === '--output-root') {
       options.outputRoot = path.resolve(argumentsList[++index] || '');
+      continue;
+    }
+    if (argumentsList[index] === '--include-latest') {
+      options.includeLatest.push(argumentsList[++index] || '');
       continue;
     }
     if (argumentsList[index] !== '--include-version') throw new Error(`Unknown argument: ${argumentsList[index]}`);
@@ -26,26 +34,29 @@ const parseOptions = (argumentsList) => {
   }
   return options;
 };
+
 const options = parseOptions(process.argv.slice(2));
 const includedVersions = options.includeVersions;
-const generatedDataRoot = options.outputRoot || path.join(repositoryRoot, 'tools', 'generated', 'openriak-kv', 'data');
-const allVersionEntries = productSources
-  .filter((product) => product.target === productId)
-  .flatMap((product) => discoverVersions(contentRoot, product).map((version) => ({
-    version: version.raw,
-    sourceDirectory: version.sourceDirectory,
-    source: product.source
-  })))
-  .sort((left, right) => compareSemver(left.version, right.version));
+const generatedProductsRoot = options.outputRoot || path.join(repositoryRoot, 'tools', 'generated');
+const allVersionEntries = productSources.flatMap((product) => discoverVersions(contentRoot, product).map((version) => ({
+  productId: product.target,
+  version: version.raw,
+  sourceDirectory: version.sourceDirectory,
+  source: product.source
+})));
+
+for (const source of options.includeLatest) {
+  const versions = allVersionEntries.filter((entry) => entry.source === source).sort((left, right) => compareSemver(left.version, right.version));
+  if (!versions.length) throw new Error(`No versions exist in content/${source}`);
+  includedVersions[source] = new Set([versions.at(-1).version]);
+}
+
 for (const [source, selected] of Object.entries(includedVersions)) {
   const discovered = new Set(allVersionEntries.filter((entry) => entry.source === source).map((entry) => entry.version));
   for (const version of selected) {
     if (!discovered.has(version)) throw new Error(`Requested version ${version} does not exist in content/${source}`);
   }
 }
-const versionEntries = allVersionEntries.filter(({ source, version }) => (
-  !includedVersions[source] || includedVersions[source].has(version)
-));
 
 const familyNames = {
   alpine: 'Alpine Linux',
@@ -81,14 +92,8 @@ const preferredFamilyDefaults = {
 };
 
 const readJson = (file) => JSON.parse(fs.readFileSync(file, 'utf8'));
-const versionsRoot = path.join(generatedDataRoot, 'versions');
-const writeVersionData = (version, output) => {
-  const target = path.join(versionsRoot, `${version}.json`);
-  fs.mkdirSync(path.dirname(target), { recursive: true });
-  fs.writeFileSync(target, `${JSON.stringify(output, null, 2)}\n`, 'utf8');
-};
 
-const referencedValueKeys = () => {
+const referencedValueKeys = (productRoot) => {
   const keys = new Set();
   const visit = (directory) => {
     for (const entry of fs.readdirSync(directory, { withFileTypes: true })) {
@@ -118,166 +123,183 @@ const otpFromFilename = (version, filename) => {
   return alpine ? Number(alpine[1]) : null;
 };
 
-const downloadOtp = (version, osId, downloadId, item) => {
-  if (version.startsWith('2.')) {
-    if (item.otp !== null && item.otp !== undefined && item.otp !== '' && item.otp !== 'R16B02') {
-      throw new Error(`Unexpected OTP metadata for ${metadataProduct}/${version}/${osId}/${downloadId}: ${item.otp} != R16B02`);
+const forcedLegacyOtp = (metadataProduct, version) => (
+  (metadataProduct === 'kv' && version.startsWith('2.'))
+  || (metadataProduct === 'cs' && version.startsWith('2.'))
+  || (metadataProduct === 'ts' && version.startsWith('1.'))
+);
+
+const downloadOtp = (product, version, osId, downloadId, item) => {
+  if (forcedLegacyOtp(product.metadataProduct, version)) {
+    if (product.metadataProduct === 'kv' && item.otp !== null && item.otp !== undefined && item.otp !== '' && item.otp !== 'R16B02') {
+      throw new Error(`Unexpected OTP metadata for ${product.metadataProduct}/${version}/${osId}/${downloadId}: ${item.otp} != R16B02`);
     }
     return 'R16B02';
   }
   const filenameOtp = otpFromFilename(version, item.filename);
   if (item.otp !== null && item.otp !== undefined && item.otp !== '') {
     if (filenameOtp !== null && String(item.otp) !== String(filenameOtp)) {
-      throw new Error(`OTP metadata does not match filename for ${metadataProduct}/${version}/${osId}/${downloadId}: ${item.otp} != ${filenameOtp}`);
+      throw new Error(`OTP metadata does not match filename for ${product.metadataProduct}/${version}/${osId}/${downloadId}: ${item.otp} != ${filenameOtp}`);
     }
     return item.otp;
   }
   if (filenameOtp !== null) return filenameOtp;
-  throw new Error(`Unable to infer OTP version for ${metadataProduct}/${version}/${osId}/${downloadId}: ${item.filename}`);
+  if ((product.metadataProduct === 'cs' || product.metadataProduct === 'ts') && version.startsWith('3.')) return null;
+  throw new Error(`Unable to infer OTP version for ${product.metadataProduct}/${version}/${osId}/${downloadId}: ${item.filename}`);
 };
 
-const normalizeChecksum = (checksum, version, osId, downloadId) => {
+const normalizeChecksum = (product, checksum, version, osId, downloadId) => {
   if (!checksum || checksum.algorithm !== 'sha256' || !/^[0-9a-f]{64}$/.test(checksum.value || '')) {
-    throw new Error(`Missing or invalid SHA-256 checksum for ${metadataProduct}/${version}/${osId}/${downloadId}`);
+    throw new Error(`Missing or invalid SHA-256 checksum for ${product.metadataProduct}/${version}/${osId}/${downloadId}`);
   }
   return { algorithm: 'sha256', value: checksum.value };
 };
 
-const requestedKeys = referencedValueKeys();
-const requiredValueKeys = ['ring_size', 'nodename'];
-for (const key of requiredValueKeys) requestedKeys.add(key);
-
-for (const { version, sourceDirectory, source } of versionEntries) {
-  const exposesOperatingSystemPicker = source === productId;
-  const metadataRoot = path.join(productRoot, 'metadata', version);
-  const files = {
-    supported: path.join(metadataRoot, 'supported-os.json'),
-    downloads: path.join(metadataRoot, 'downloads.json'),
-    defaults: path.join(metadataRoot, 'defaults.json')
+for (const product of products) {
+  const productRoot = path.join(contentRoot, product.productId);
+  const versionsRoot = path.join(generatedProductsRoot, product.productId, 'data', 'versions');
+  const writeVersionData = (version, output) => {
+    const target = path.join(versionsRoot, `${version}.json`);
+    fs.mkdirSync(path.dirname(target), { recursive: true });
+    fs.writeFileSync(target, `${JSON.stringify(output, null, 2)}\n`, 'utf8');
   };
-  const hasSupported = fs.existsSync(files.supported);
-  const hasDownloads = fs.existsSync(files.downloads);
-  if (!hasSupported && !hasDownloads) {
-    writeVersionData(version, {
-      product: productId,
+  const requestedKeys = referencedValueKeys(productRoot);
+  const requiredValueKeys = product.metadataProduct === 'kv' ? ['ring_size', 'nodename'] : [];
+  for (const key of requiredValueKeys) requestedKeys.add(key);
+  const versionEntries = allVersionEntries
+    .filter((entry) => entry.productId === product.productId)
+    .filter(({ source, version }) => !includedVersions[source] || includedVersions[source].has(version))
+    .sort((left, right) => compareSemver(left.version, right.version));
+
+  for (const { version, sourceDirectory, source } of versionEntries) {
+    const exposesOperatingSystemPicker = source === product.pickerSource;
+    const metadataRoot = path.join(productRoot, 'metadata', version);
+    const files = {
+      supported: path.join(metadataRoot, 'supported-os.json'),
+      downloads: path.join(metadataRoot, 'downloads.json'),
+      defaults: path.join(metadataRoot, 'defaults.json')
+    };
+    const hasSupported = fs.existsSync(files.supported);
+    const hasDownloads = fs.existsSync(files.downloads);
+    if (!hasSupported && !hasDownloads) {
+      writeVersionData(version, {
+        product: product.productId,
+        version,
+        generatedFrom: `content/${source}/${sourceDirectory}`,
+        metadataStatus: { supportedOs: 'unavailable', downloads: 'unavailable', defaults: 'unavailable' },
+        metadataWarnings: ['No structured operating-system, download, or default-value metadata is available for this legacy release.'],
+        defaultOs: null,
+        operatingSystems: [],
+        downloadOperatingSystems: [],
+        downloads: {},
+        values: {}
+      });
+      console.log(`Synced ${product.productId} ${version}: legacy content without structured OS metadata.`);
+      continue;
+    }
+    if (!hasSupported || !hasDownloads) {
+      const missing = hasSupported ? files.downloads : files.supported;
+      throw new Error(`Incomplete metadata for ${product.metadataProduct}/${version}: missing ${path.basename(missing)}`);
+    }
+
+    const supported = readJson(files.supported);
+    const downloads = readJson(files.downloads);
+    const defaults = fs.existsSync(files.defaults) ? readJson(files.defaults) : null;
+    const documents = { supported, downloads, ...(defaults ? { defaults } : {}) };
+    for (const [name, document] of Object.entries(documents)) {
+      const acceptedStatuses = name === 'defaults' ? ['complete', 'partial'] : ['complete', 'unavailable'];
+      if (!acceptedStatuses.includes(document.status)) throw new Error(`Incomplete ${name} metadata for ${product.metadataProduct}/${version}: ${document.status}`);
+      if (document.product !== product.metadataProduct || document.version !== version) throw new Error(`Mismatched ${name} metadata for ${product.metadataProduct}/${version}`);
+    }
+
+    const operatingSystems = supported.operating_systems.map((os) => ({
+      id: os.id,
+      family: os.family,
+      name: familyNames[os.family] || os.display_name,
+      displayName: os.display_name,
+      version: os.release_version || os.release,
+      codename: os.source_label || os.architecture,
+      architecture: os.architecture,
+      packageFamily: os.package_family,
+      logo: familyLogos[os.family] || 'images/os/linux.svg',
+      defaultForFamily: preferredFamilyDefaults[os.family] === os.id
+    }));
+    for (const family of new Set(operatingSystems.map((os) => os.family))) {
+      const members = operatingSystems.filter((os) => os.family === family);
+      if (!members.some((os) => os.defaultForFamily)) members.at(-1).defaultForFamily = true;
+    }
+
+    const values = {};
+    if (defaults) {
+      for (const os of operatingSystems) {
+        const effective = defaults.effective_defaults[os.id] || {};
+        values[os.id] = {};
+        for (const key of requestedKeys) {
+          const setting = effective[key];
+          if (!setting || !setting.has_default) continue;
+          const value = setting.resolved_value ?? setting.value;
+          if (value !== null && value !== undefined) values[os.id][key] = value;
+        }
+      }
+      for (const os of operatingSystems) {
+        for (const key of requiredValueKeys) {
+          if (!(key in values[os.id])) throw new Error(`Missing required default ${key} for ${product.metadataProduct}/${version}/${os.id}`);
+        }
+      }
+    }
+
+    const normalizedDownloads = {};
+    for (const os of operatingSystems) {
+      normalizedDownloads[os.id] = Object.entries(downloads.downloads[os.id] || {})
+        .map(([id, item]) => ({
+          id,
+          otp: downloadOtp(product, version, os.id, id, item),
+          architecture: item.architecture,
+          format: item.format,
+          filename: item.filename,
+          packageRevision: item.package_revision,
+          variant: downloadVariant(item.url),
+          url: item.url,
+          checksum: normalizeChecksum(product, item.checksum, version, os.id, id)
+        }))
+        .sort((left, right) => String(left.otp ?? '').localeCompare(String(right.otp ?? ''), undefined, { numeric: true }) || left.id.localeCompare(right.id));
+    }
+
+    const output = {
+      product: product.productId,
       version,
-      generatedFrom: `content/${source}/${sourceDirectory}`,
+      generatedFrom: `content/${product.productId}/metadata/${version}`,
+      metadataSchemaVersion: supported.schema_version,
       metadataStatus: {
-        supportedOs: 'unavailable',
-        downloads: 'unavailable',
-        defaults: 'unavailable'
+        supportedOs: supported.status,
+        downloads: downloads.status,
+        defaults: defaults?.status || 'not_generated'
       },
-      metadataWarnings: ['No structured operating-system, download, or default-value metadata is available for this legacy release.'],
-      defaultOs: null,
-      operatingSystems: [],
-      downloads: {},
-      values: {}
-    });
-    console.log(`Synced ${productId} ${version}: legacy content without structured OS metadata.`);
-    continue;
-  }
-  if (!hasSupported || !hasDownloads) {
-    const missing = hasSupported ? files.downloads : files.supported;
-    throw new Error(`Incomplete metadata for ${metadataProduct}/${version}: missing ${path.basename(missing)}`);
+      metadataWarnings: [...new Set([
+        ...(supported.warnings || []),
+        ...(downloads.warnings || []),
+        ...(defaults?.warnings || [])
+      ])],
+      defaultOs: exposesOperatingSystemPicker
+        ? (operatingSystems.some((os) => os.id === 'ubuntu-noble-amd64') ? 'ubuntu-noble-amd64' : operatingSystems[0]?.id)
+        : null,
+      operatingSystems: exposesOperatingSystemPicker ? operatingSystems : [],
+      downloadOperatingSystems: operatingSystems,
+      downloads: normalizedDownloads,
+      values
+    };
+
+    writeVersionData(version, output);
+    const valueKeyCount = defaults ? requestedKeys.size : 0;
+    console.log(`Synced ${product.productId} ${version}: ${operatingSystems.length} OS targets, ${Object.values(normalizedDownloads).flat().length} downloads, ${valueKeyCount} referenced value keys.`);
   }
 
-  const supported = readJson(files.supported);
-  const downloads = readJson(files.downloads);
-  const defaults = fs.existsSync(files.defaults) ? readJson(files.defaults) : null;
-  const documents = { supported, downloads, ...(defaults ? { defaults } : {}) };
-  for (const [name, document] of Object.entries(documents)) {
-    const acceptedStatuses = name === 'defaults' ? ['complete', 'partial'] : ['complete'];
-    if (!acceptedStatuses.includes(document.status)) throw new Error(`Incomplete ${name} metadata for ${metadataProduct}/${version}: ${document.status}`);
-    if (document.product !== metadataProduct || document.version !== version) throw new Error(`Mismatched ${name} metadata for ${metadataProduct}/${version}`);
-  }
-
-  const operatingSystems = supported.operating_systems.map((os) => ({
-    id: os.id,
-    family: os.family,
-    name: familyNames[os.family] || os.display_name,
-    displayName: os.display_name,
-    version: os.release_version || os.release,
-    codename: os.source_label || os.architecture,
-    architecture: os.architecture,
-    packageFamily: os.package_family,
-    logo: familyLogos[os.family] || 'images/os/linux.svg',
-    defaultForFamily: preferredFamilyDefaults[os.family] === os.id
-  }));
-  for (const family of new Set(operatingSystems.map((os) => os.family))) {
-    const members = operatingSystems.filter((os) => os.family === family);
-    if (!members.some((os) => os.defaultForFamily)) members.at(-1).defaultForFamily = true;
-  }
-
-  const values = {};
-  if (defaults) {
-    for (const os of operatingSystems) {
-      const effective = defaults.effective_defaults[os.id] || {};
-      values[os.id] = {};
-      for (const key of requestedKeys) {
-        const setting = effective[key];
-        if (!setting || !setting.has_default) continue;
-        const value = setting.resolved_value ?? setting.value;
-        if (value !== null && value !== undefined) values[os.id][key] = value;
-      }
+  fs.mkdirSync(versionsRoot, { recursive: true });
+  const expectedVersionFiles = new Set(versionEntries.map(({ version }) => `${version}.json`));
+  for (const entry of fs.readdirSync(versionsRoot, { withFileTypes: true })) {
+    if (entry.isFile() && entry.name.endsWith('.json') && !expectedVersionFiles.has(entry.name)) {
+      fs.rmSync(path.join(versionsRoot, entry.name));
+      console.log(`Removed stale ${product.productId} version metadata: ${entry.name}`);
     }
-
-    for (const os of operatingSystems) {
-      for (const key of requiredValueKeys) {
-        if (!(key in values[os.id])) throw new Error(`Missing required default ${key} for ${metadataProduct}/${version}/${os.id}`);
-      }
-    }
-  }
-
-  const normalizedDownloads = {};
-  for (const os of operatingSystems) {
-    normalizedDownloads[os.id] = Object.entries(downloads.downloads[os.id] || {})
-      .map(([id, item]) => ({
-        id,
-        otp: downloadOtp(version, os.id, id, item),
-        architecture: item.architecture,
-        format: item.format,
-        filename: item.filename,
-        packageRevision: item.package_revision,
-        variant: downloadVariant(item.url),
-        url: item.url,
-        checksum: normalizeChecksum(item.checksum, version, os.id, id)
-      }))
-      .sort((left, right) => left.otp - right.otp || left.id.localeCompare(right.id));
-  }
-
-  const output = {
-    product: productId,
-    version,
-    generatedFrom: `content/openriak-kv/metadata/${version}`,
-    metadataSchemaVersion: supported.schema_version,
-    metadataStatus: {
-      supportedOs: supported.status,
-      downloads: downloads.status,
-      defaults: defaults?.status || 'not_generated'
-    },
-    metadataWarnings: [...new Set([
-      ...(supported.warnings || []),
-      ...(downloads.warnings || []),
-      ...(defaults?.warnings || [])
-    ])],
-    defaultOs: exposesOperatingSystemPicker
-      ? (operatingSystems.some((os) => os.id === 'ubuntu-noble-amd64') ? 'ubuntu-noble-amd64' : operatingSystems[0]?.id)
-      : null,
-    operatingSystems: exposesOperatingSystemPicker ? operatingSystems : [],
-    downloadOperatingSystems: operatingSystems,
-    downloads: normalizedDownloads,
-    values
-  };
-
-  writeVersionData(version, output);
-  const valueKeyCount = defaults ? requestedKeys.size : 0;
-  console.log(`Synced ${productId} ${version}: ${operatingSystems.length} OS targets, ${Object.values(normalizedDownloads).flat().length} downloads, ${valueKeyCount} referenced value keys.`);
-}
-
-const expectedVersionFiles = new Set(versionEntries.map(({ version }) => `${version}.json`));
-for (const entry of fs.readdirSync(versionsRoot, { withFileTypes: true })) {
-  if (entry.isFile() && entry.name.endsWith('.json') && !expectedVersionFiles.has(entry.name)) {
-    fs.rmSync(path.join(versionsRoot, entry.name));
-    console.log(`Removed stale ${productId} version metadata: ${entry.name}`);
   }
 }

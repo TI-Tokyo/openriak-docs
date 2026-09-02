@@ -25,17 +25,29 @@ $generatedConfig = if ($Profile -eq 'development') {
 } else {
     Join-Path $siteRoot 'tools/generated/hugo.yaml'
 }
-$developmentDataRoot = Join-Path $siteRoot 'build/generated-development/openriak-kv/data'
+$developmentDataRoot = Join-Path $siteRoot 'build/generated-development'
 
 $mountArguments = @('--base-config', (Join-Path $siteRoot 'content/hugo.yaml'), '--output', $generatedConfig)
 if ($Profile -eq 'development') {
-    $mountArguments += @('--version-data-root', (Join-Path $developmentDataRoot 'versions'), '--include-version', "riak-kv=$RiakKVVersion")
+    $mountArguments += @(
+        '--version-data-root', "openriak-kv=$((Join-Path $developmentDataRoot 'openriak-kv/data/versions'))",
+        '--version-data-root', "openriak-cs=$((Join-Path $developmentDataRoot 'openriak-cs/data/versions'))",
+        '--version-data-root', "openriak-ts=$((Join-Path $developmentDataRoot 'openriak-ts/data/versions'))",
+        '--include-version', "riak-kv=$RiakKVVersion",
+        '--include-latest', 'riak-cs',
+        '--include-latest', 'riak-ts'
+    )
 }
 & node (Join-Path $PSScriptRoot 'generate-version-mounts.js') @mountArguments
 if ($LASTEXITCODE -ne 0) { throw 'Version mount generation failed' }
 $metadataArguments = @()
 if ($Profile -eq 'development') {
-    $metadataArguments += @('--output-root', $developmentDataRoot, '--include-version', "riak-kv=$RiakKVVersion")
+    $metadataArguments += @(
+        '--output-root', $developmentDataRoot,
+        '--include-version', "riak-kv=$RiakKVVersion",
+        '--include-latest', 'riak-cs',
+        '--include-latest', 'riak-ts'
+    )
 }
 & node (Join-Path $PSScriptRoot 'sync-product-metadata.js') @metadataArguments
 if ($LASTEXITCODE -ne 0) { throw 'Metadata synchronization failed' }

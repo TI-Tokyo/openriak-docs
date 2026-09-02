@@ -30,6 +30,7 @@ const downloadTableSource = fs.readFileSync(path.join(themeRoot, 'layouts', 'par
 const downloadCopyIconSource = fs.readFileSync(path.join(themeRoot, 'layouts', 'partials', 'download-icon-copy.html'), 'utf8');
 const downloadHashIconSource = fs.readFileSync(path.join(themeRoot, 'layouts', 'partials', 'download-icon-hash.html'), 'utf8');
 const contactEmailShortcodeSource = fs.readFileSync(path.join(themeRoot, 'layouts', 'shortcodes', 'contactusemail.html'), 'utf8');
+const docsContactEmailShortcodeSource = fs.readFileSync(path.join(themeRoot, 'layouts', 'shortcodes', 'docscontactusemail.html'), 'utf8');
 const currentVersionShortcodeSource = fs.readFileSync(path.join(themeRoot, 'layouts', 'shortcodes', 'current-version.html'), 'utf8');
 const previousVersionShortcodeSource = fs.readFileSync(path.join(themeRoot, 'layouts', 'shortcodes', 'previous-version.html'), 'utf8');
 const previousVersionPartialSource = fs.readFileSync(path.join(themeRoot, 'layouts', 'partials', 'previous-version.html'), 'utf8');
@@ -64,15 +65,18 @@ const localRunnerSource = fs.readFileSync(path.join(repositoryRoot, 'docker', 'r
 const staticBuilderSource = fs.readFileSync(path.join(repositoryRoot, 'docker', 'build.static.sh'), 'utf8');
 const shellBuilderSource = fs.readFileSync(path.join(repositoryRoot, 'tools', 'scripts', 'build.sh'), 'utf8');
 assert.match(dockerComposeSource, /OPENRIAK_DOCS_BUILD_PROFILE:[\s\S]*--include-version "riak-kv=\$\$\{OPENRIAK_DOCS_RIAK_KV_VERSION\}"/, 'development compose must mount one selectable Riak KV release');
+assert.match(dockerComposeSource, /--include-latest riak-cs[\s\S]*--include-latest riak-ts/, 'development compose must resolve only the latest legacy Riak CS and TS releases');
 assert.match(dockerComposeSource, /archives:[\s\S]*profiles: \['release'\]/, 'the archive Hugo service must run only in the release profile');
 assert.match(localRunnerSource, /development\|beta-test\|release[\s\S]*--profile "\$compose_profile"/, 'the local runner must expose all three build profiles');
 assert.match(dockerfileSource, /FROM scratch AS core-static[\s\S]*FROM scratch AS static/, 'Docker must expose separate core-only and assembled static targets');
+assert.match(dockerfileSource, /COPY content\/riak-ts \.\/content\/riak-ts[\s\S]*COPY content\/riak-cs \.\/content\/riak-cs/, 'Docker metadata builds must include imported Riak TS and CS source trees');
 assert.match(staticBuilderSource, /development\|beta-test\)[\s\S]*core-build[\s\S]*release\)[\s\S]*assembled/, 'static builds must use runnable core-only and assembled stages for mounted export');
 assert.match(staticBuilderSource, /staging="\$repository_root\/docker-wip"[\s\S]*--mount "type=bind,source=\$staging,target=\/output"[\s\S]*tar -C \/project\/public -cf - \. \| tar -C \/output -xf -/, 'static builds must export through bind-mounted docker-wip staging without preserving container ownership');
 assert.doesNotMatch(staticBuilderSource, /--output/, 'static builds must not use the slow BuildKit local exporter');
 assert.match(shellBuilderSource, /development\|beta-test\|release[\s\S]*if \[ "\$build_profile" = release \]/, 'local Hugo builds must assemble archives only for release');
 assert.match(headSource, /docs\.css[^"\n]+\?v=/, 'shared stylesheet must be cache-busted');
 assert.match(contactEmailShortcodeSource, /contactUsEmail[\s\S]*info@riak\.info/, 'legacy contact-email links must have a supported default');
+assert.equal(docsContactEmailShortcodeSource, contactEmailShortcodeSource, 'docscontactusemail must remain a compatibility alias for contactusemail');
 assert.match(currentVersionShortcodeSource, /partial "current-version\.html" \.Page \| strings\.TrimSpace/, 'the current-version shortcode must use the canonical rendered-page version');
 assert.match(currentVersionShortcodeSource, /\.Get "format" \| default "full"[\s\S]*eq \$format "major-minor"[\s\S]*printf "%s\.%s"/, 'the current-version shortcode must support full and major-minor plain-text formats');
 assert.match(currentVersionShortcodeSource, /format must be full or major-minor/, 'the current-version shortcode must reject unknown formats');
@@ -80,8 +84,8 @@ assert.match(previousVersionShortcodeSource, /partial "previous-version\.html" \
 assert.match(previousVersionPartialSource, /index hugo\.Data\.versions \$productID[\s\S]*\$isEarlier[\s\S]*\$isLaterThanPrevious/, 'previous-version must select the greatest semantic version below the current release');
 assert.match(previousVersionPartialSource, /previous-version has no previous release: product=%s version=%s page=%s/, 'previous-version must stop the build when no earlier release exists');
 assert.match(baseSource, /js\/theme\.js[^"\n]+\?v=/, 'theme picker script must be cache-busted');
-assert.match(baseSource, /js\/docs-runtime\.js[^"\n]+\?v=20260901-selected-download-table/, 'the download checksum runtime must use its current cache key');
-assert.match(headSource, /css\/docs\.css[^"\n]+\?v=20260902-otp-column/, 'download table styling must use its current cache key');
+assert.match(baseSource, /js\/docs-runtime\.js[^"\n]+\?v=20260902-ts-cs-import/, 'the documentation runtime must use its current cache key');
+assert.match(headSource, /css\/docs\.css[^"\n]+\?v=20260902-ts-cs-import/, 'documentation styling must use its current cache key');
 assert.match(headSource, /images\/ui\/favicon\.png[^"\n]+\?v=/, 'documentation pages must use the shared OpenRiak favicon');
 assert.match(homepageSource, /images\/ui\/favicon\.png[^"\n]+\?v=/, 'the homepage must use the shared OpenRiak favicon');
 assert.ok(fs.existsSync(faviconPath), 'the shared OpenRiak favicon must exist');
@@ -145,7 +149,8 @@ assert.match(docsCssSource, /\.version-panel \{[^}]*width: max-content[^}]*max-w
 assert.match(docsCssSource, /\.version-row \{[^}]*grid-template-columns: 3\.2rem minmax\(0,1fr\)[^}]*width: 100%/, 'version rows must fit the picker width');
 assert.match(docsCssSource, /\.version-releases \{[^}]*flex-wrap: wrap/, 'version releases must wrap at every viewport width');
 assert.match(runtimeSource, /section\.dataset\.brand = brand\.name/, 'version brands must expose a stable styling hook');
-assert.match(docsCssSource, /\.version-brand\[data-brand="Riak KV"\] \{ --version-brand-logo-height: 24\.7px; \}/, 'the Riak KV picker logo must be 65 percent of the OpenRiak logo height');
+assert.match(runtimeSource, /if \(!matching\.length\)[\s\S]*comingSoon\.textContent = 'Coming soon'/, 'empty OpenRiak product brands must remain visible as Coming soon');
+assert.match(docsCssSource, /\.version-brand\[data-brand\^="Riak "\] \{ --version-brand-logo-height: 24\.7px; \}/, 'legacy Riak picker logos must be 65 percent of the OpenRiak logo height');
 assert.match(docsCssSource, /\.version-option:first-child \{ border-top-left-radius: \.875rem; \}/, 'the first release in each version family must curve at the top left');
 assert.match(docsCssSource, /\.version-option:not\(\[hidden\]\):not\(:has\(~ \.version-option:not\(\[hidden\]\)\)\) \{ border-bottom-right-radius: \.875rem; \}/, 'the last visible release in each version family must curve at the bottom right');
 assert.match(docsCssSource, /\.download-os-index button \{[^}]*border-radius: 0/, 'download operating-system buttons must use square intermediate corners');
@@ -161,7 +166,7 @@ assert.match(runtimeSource, /data-selected-download-os[\s\S]*data-selected-downl
 assert.match(downloadsTemplateSource, /data-download-os-select[\s\S]*<h2>Download<\/h2>[\s\S]*modern-downloads-selected-os[\s\S]*data-doc-downloads[\s\S]*partial "download-table\.html"[\s\S]*data-all-downloads-link[\s\S]*<summary>Source Code<\/summary>[\s\S]*<summary>All downloads<\/summary>/, 'OpenRiak downloads must use an OS selector, title/subtitle selected table, collapsed disclosures, and an All downloads expansion link');
 assert.match(downloadsTemplateSource, /data-legacy-downloads[\s\S]*Alpine Linux Riak Repository/, 'Riak KV downloads must retain the legacy grouped layout and Alpine repository link');
 assert.equal((downloadsTemplateSource.match(/partial "download-table\.html"/g) || []).length, 3, 'selected, modern All downloads, and legacy downloads must share the grouped download table');
-assert.match(downloadsTemplateSource, /OpenRiak KV for[\s\S]*Riak KV for/, 'modern and legacy download groups must identify their product and operating-system family');
+assert.match(downloadsTemplateSource, /\$downloadProductName[\s\S]*\$downloadsBaseUrl[\s\S]*\{\{ \$downloadProductName \}\} for/, 'download groups must derive product labels and file-store URLs from product data');
 assert.match(downloadTableSource, /<th>OTP<\/th><th>Architecture<\/th><th>Package<\/th><th class="download-table-actions">Actions<\/th>[\s\S]*data-download-os-id="\{\{ \$os\.id \}\}"[\s\S]*data-download-checksum-toggle[\s\S]*data-copy-label="Copy URL"[\s\S]*data-download-checksum-row hidden[\s\S]*<td aria-hidden="true"><\/td>[\s\S]*colspan="3"/, 'shared download tables must identify their OS and use four columns, right-aligned actions, and a checksum row spanning architecture through actions');
 assert.match(downloadChecksumSource, /<div class="download-actions">[\s\S]*data-download-checksum-toggle[\s\S]*data-copy-label="Copy URL"[\s\S]*data-download-checksum-panel hidden[\s\S]*data-copy-label="Copy checksum"/, 'copy URL must sit beside the checksum toggle while copy checksum remains inside its hidden panel');
 assert.match(downloadCopyIconSource, /download-copy-glyph[\s\S]*download-copy-tick/, 'copy actions must share the standard copy icon with an overlaid success tick');
@@ -206,8 +211,14 @@ assert.ok(compareSemVer('3.4.1', '3.4.1-rc.1') > 0);
 assert.throws(() => parseSemVer('3.4'));
 
 const kvProduct = JSON.parse(fs.readFileSync(path.join(repositoryRoot, 'content', 'openriak-kv', 'data', 'product.json')));
+const csProduct = JSON.parse(fs.readFileSync(path.join(repositoryRoot, 'content', 'openriak-cs', 'data', 'product.json')));
+const tsProduct = JSON.parse(fs.readFileSync(path.join(repositoryRoot, 'content', 'openriak-ts', 'data', 'product.json')));
 assert.equal(resolveBrand('3.4.0', kvProduct.brands).name, 'OpenRiak KV');
 assert.equal(resolveBrand('2.0.0', kvProduct.brands).name, 'Riak KV');
+assert.equal(resolveBrand('3.0.1', csProduct.brands).name, 'Riak CS');
+assert.equal(resolveBrand('3.0.0', tsProduct.brands).name, 'Riak TS');
+assert.equal(resolveBrand('3.0.2', csProduct.brands).name, 'OpenRiak CS');
+assert.equal(resolveBrand('3.0.1', tsProduct.brands).name, 'OpenRiak TS');
 
 const v341 = JSON.parse(fs.readFileSync(path.join(generatedProductsRoot, 'openriak-kv', 'data', 'versions', '3.4.1.json')));
 const v340 = JSON.parse(fs.readFileSync(path.join(generatedProductsRoot, 'openriak-kv', 'data', 'versions', '3.4.0.json')));
@@ -236,6 +247,27 @@ for (const version of importedKvVersions) {
   assert.equal(adapter.defaultOs, null);
   assert.ok(adapter.downloadOperatingSystems.length > 0, `${version} downloads page must retain OS metadata`);
   assert.ok(Object.values(adapter.downloads).flat().length > 0, `${version} downloads page must retain package metadata`);
+}
+const importedLegacyProducts = [
+  { source: 'riak-ts', target: 'openriak-ts', versions: ['1.0.0', '1.1.0', '1.2.0', '1.3.0', '1.3.1', '1.4.0', '1.5.0', '1.5.1', '1.5.2', '3.0.0'] },
+  { source: 'riak-cs', target: 'openriak-cs', versions: ['2.0.0', '2.0.1', '2.1.0', '2.1.1', '2.1.2', '3.0.0', '3.0.1'] }
+];
+for (const product of importedLegacyProducts) {
+  assert.ok(!fs.existsSync(path.join(repositoryRoot, 'content', product.target, product.target === 'openriak-ts' ? '1.5.2' : '2.1.3')), `${product.target} placeholder version must be removed`);
+  for (const version of product.versions) {
+    assert.ok(fs.existsSync(path.join(repositoryRoot, 'content', product.source, `${version}-new-release`)), `missing imported ${product.source} ${version} baseline`);
+    assert.ok(fs.existsSync(path.join(repositoryRoot, 'content', product.target, 'metadata', version, 'supported-os.json')), `missing ${product.source} ${version} supported OS metadata`);
+    assert.ok(fs.existsSync(path.join(repositoryRoot, 'content', product.target, 'metadata', version, 'downloads.json')), `missing ${product.source} ${version} download metadata`);
+    const adapter = JSON.parse(fs.readFileSync(path.join(generatedProductsRoot, product.target, 'data', 'versions', `${version}.json`)));
+    assert.deepEqual(adapter.operatingSystems, [], `${product.source} ${version} must not expose an OS picker`);
+    if (adapter.metadataStatus.downloads === 'unavailable') {
+      assert.deepEqual(adapter.downloadOperatingSystems, [], `${product.source} ${version} has no file-store packages`);
+      assert.deepEqual(Object.values(adapter.downloads).flat(), [], `${product.source} ${version} has no file-store packages`);
+    } else {
+      assert.ok(adapter.downloadOperatingSystems.length > 0, `${product.source} ${version} must retain OS metadata for its downloads page`);
+      assert.ok(Object.values(adapter.downloads).flat().length > 0, `${product.source} ${version} must retain package metadata`);
+    }
+  }
 }
 assert.ok(!fs.existsSync(path.join(repositoryRoot, 'content', 'riak-kv', '2.9.0p5-new-release')), '2.9.0p5 must publish as 2.9.0');
 const ubuntu2404 = v341.operatingSystems.find((os) => os.id === 'ubuntu-noble-amd64');
@@ -301,6 +333,10 @@ assert.deepEqual(
 assert.ok(kv34Mounts.every((line) => /source: 'openriak-kv\//.test(line)), 'OpenRiak KV 3.4.x must never inherit Riak KV sources');
 const legacyKvMounts = hugoConfig.split(/\r?\n/).filter((line) => /target: 'content\/openriak-kv\/2\./.test(line));
 assert.ok(legacyKvMounts.length > 0 && legacyKvMounts.every((line) => /source: 'riak-kv\//.test(line)), 'Riak KV versions must inherit only Riak KV sources while retaining OpenRiak KV URLs');
+for (const product of importedLegacyProducts) {
+  const mounts = hugoConfig.split(/\r?\n/).filter((line) => line.includes(`target: 'content/${product.target}/`));
+  assert.ok(mounts.length > 0 && mounts.every((line) => line.includes(`source: '${product.source}/`) || line.includes("source: '../tools/generated/latest-redirects/")), `${product.source} versions must publish under ${product.target} URLs`);
+}
 assert.match(fs.readFileSync(path.join(repositoryRoot, 'content', 'openriak-kv', '3.4.0-new-release', '_index.md'), 'utf8'), /^release_baseline: true$/m, '3.4.0 must remain explicitly marked as a release baseline');
 assert.doesNotMatch(hugoConfig, /\/(?:releases|layers)\//, 'generated version mounts must use flat product/version sources');
 assert.match(hugoConfig, /source: 'homepage\/pages'/, 'the homepage must be mounted into the core project');
@@ -397,9 +433,14 @@ for (const author of expectedAuthors) {
   assert.match(fs.readFileSync(authorPage, 'utf8'), new RegExp(`^author: ${JSON.stringify(author).replace(/[.*+?^${}()|[\]\\]/g, '\\$&')}$`, 'm'), `author archive metadata must match ${author}`);
 }
 
+const sourcePatternByProduct = {
+  'openriak-kv': '(?:openriak-kv|riak-kv)',
+  'openriak-cs': 'riak-cs',
+  'openriak-ts': 'riak-ts'
+};
 for (const productId of productIds) {
   const productRoot = path.join(repositoryRoot, 'content', productId);
-  assert.match(hugoConfig, new RegExp(`source: '${productId}/\\d+\\.\\d+\\.\\d+`), `${productId} versions must be mounted into the unified project`);
+  assert.match(hugoConfig, new RegExp(`source: '${sourcePatternByProduct[productId]}/\\d+\\.\\d+\\.\\d+`), `${productId} versions must be mounted into the unified project`);
   assert.match(hugoConfig, new RegExp(`target: 'content/${productId}/`), `${productId} must publish below its product path`);
   const product = JSON.parse(fs.readFileSync(path.join(productRoot, 'data', 'product.json')));
   const versionDir = path.join(generatedProductsRoot, productId, 'data', 'versions');

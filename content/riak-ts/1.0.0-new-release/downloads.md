@@ -1,0 +1,29 @@
+---
+title: "Download Riak TS"
+description: "Download Riak TS 1.0.0"
+menu:
+  riak_ts-1.0.0:
+    name: "Download Riak TS"
+    identifier: "download"
+    weight: 103
+    pre: download-alt
+project: "riak_ts"
+project_version: "1.0.0"
+lastmod: 2015-12-15T00:00:00-00:00
+sitemap:
+  priority: 0.1
+toc: true
+aliases:
+    - /riakts/1.0.0/riakts-downloads/
+    - /riakts/1.0.0/downloads/
+    - /openriak-ts/1.0.0/downloads/
+    - /openriak-ts/1.0.0/riakts-downloads/
+linkTitle: "Download Riak TS"
+weight: 103
+---
+
+[installing]: ../installing/
+
+# Download Riak TS 1.0.0
+
+Enterprise customers can download the Riak TS package from ZenDesk. Once you have downloaded the package, check out how to [install][installing] it.

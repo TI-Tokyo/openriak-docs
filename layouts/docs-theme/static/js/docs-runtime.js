@@ -491,13 +491,20 @@
     const brands = [...context.product.brands].sort((a, b) => (a.displayOrder || 0) - (b.displayOrder || 0));
     brands.forEach((brand) => {
       const matching = versions.filter((version) => versionInBrand(version.version, brand));
-      if (!matching.length) return;
       const section = document.createElement('section');
       section.className = 'version-brand';
       section.dataset.brand = brand.name;
       const heading = document.createElement('h2');
       heading.innerHTML = `<img src="${resolveAssetUrl(brand.logo, context.assetBase, window.location.origin)}" alt=""> <span>${brand.name}</span>`;
       section.append(heading);
+      if (!matching.length) {
+        const comingSoon = document.createElement('p');
+        comingSoon.className = 'version-coming-soon';
+        comingSoon.textContent = 'Coming soon';
+        section.append(comingSoon);
+        panel.append(section);
+        return;
+      }
       const rows = new Map();
       matching.forEach((version) => {
         const parsed = parseSemVer(version.version);
