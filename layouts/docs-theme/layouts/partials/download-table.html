@@ -10,7 +10,10 @@
         <tbody class="download-package-group" data-download-os-id="{{ $os.id }}">
           <tr class="download-package-row">
             <td>{{ with .otp }}OTP {{ . }}{{ end }}</td>
-            <td>{{ .architecture }}</td>
+            <td>
+              <span>{{ .architecture }}</span>
+              {{- with .subArchitecture }}<span class="download-sub-architecture">{{ . }}</span>{{ end }}
+            </td>
             <td><a href="{{ .url | safeURL }}">{{ .filename }}</a></td>
             <td class="download-table-actions">
               <div class="download-table-action-links">

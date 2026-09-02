@@ -28,6 +28,7 @@ class Package:
     version: str
     otp: int | None
     architecture: str
+    sub_architecture: str | None
     format: str
     revision: str | None
     filename: str
@@ -59,7 +60,8 @@ def parse_package(filename: str, product: str, version: str, url: str, path_part
     target = normalize_target(path_parts, fmt, arch, data.get("target"))
     if not target:
         return None
-    return Package(product, version, int(data["otp"]) if data.get("otp") else None, arch, fmt,
+    return Package(product, version, int(data["otp"]) if data.get("otp") else None, arch,
+                   _sub_architecture_from_path(path_parts), fmt,
                    data.get("rev"), filename, url, None, target)
 
 
@@ -68,6 +70,11 @@ def _arch_from_path(parts: list[str]) -> str | None:
         if item in ARCHES:
             return item
     return None
+
+
+def _sub_architecture_from_path(parts: list[str]) -> str | None:
+    match = re.search(r"\(\s*graviton\s*(\d+)\s*\)", "/".join(parts), re.IGNORECASE)
+    return f"Graviton {match.group(1)}" if match else None
 
 
 def normalize_target(parts: list[str], fmt: str, arch: str, rpm_target: str | None = None) -> dict | None:
@@ -182,6 +189,8 @@ class PackageCatalog:
         downloads: dict[str, dict] = {}
         for package in packages:
             key = f"otp{package.otp if package.otp is not None else '-unspecified'}-{package.architecture}"
+            if package.sub_architecture:
+                key += "-" + re.sub(r"[^a-z0-9]+", "-", package.sub_architecture.lower()).strip("-")
             if package.revision:
                 key += f"-{package.revision}"
             bucket = downloads.setdefault(package.target["id"], {})
@@ -189,11 +198,14 @@ class PackageCatalog:
             suffix = 2
             while candidate in bucket:
                 candidate, suffix = f"{key}-{suffix}", suffix + 1
-            bucket[candidate] = {"otp": package.otp, "architecture": package.architecture,
-                                     "package_revision": package.revision, "format": package.format,
-                                     "filename": package.filename, "url": package.url,
-                                     "checksum": ({"algorithm": "sha256", "value": checksums[package.url]}
-                                                  if package.url in checksums else None)}
+            item = {"otp": package.otp, "architecture": package.architecture,
+                    "package_revision": package.revision, "format": package.format,
+                    "filename": package.filename, "url": package.url,
+                    "checksum": ({"algorithm": "sha256", "value": checksums[package.url]}
+                                 if package.url in checksums else None)}
+            if package.sub_architecture:
+                item["sub_architecture"] = package.sub_architecture
+            bucket[candidate] = item
         return operating_systems, downloads, warnings
 
     def _crawl(self, root: str, alpine: bool = False):

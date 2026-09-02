@@ -33,7 +33,8 @@ def parse_package(filename: str, product: str, version: str, url: str, path_part
         target = normalize_target(path_parts, "rpm", data["arch"], data["target"])
         if not target:
             return None
-        return Package(product, version, int(data["otp"]), data["arch"], "rpm", data["rev"],
+        return Package(product, version, int(data["otp"]), data["arch"],
+                       _implementation._sub_architecture_from_path(path_parts), "rpm", data["rev"],
                        filename, url, None, target)
     match = _LEGACY_DEB.match(filename) or _LEGACY_RPM.match(filename)
     if not match or match.group("name") != _NAMES[product] or match.group("version") != version:
@@ -43,7 +44,8 @@ def parse_package(filename: str, product: str, version: str, url: str, path_part
     target = normalize_target(path_parts, file_format, data["arch"], data.get("target"))
     if not target:
         return None
-    return Package(product, version, None, data["arch"], file_format, data.get("rev"),
+    return Package(product, version, None, data["arch"], _implementation._sub_architecture_from_path(path_parts),
+                   file_format, data.get("rev"),
                    filename, url, None, target)
 
 

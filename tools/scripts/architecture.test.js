@@ -65,7 +65,7 @@ const projectLogoPath = path.join(commonAssets, 'images', 'branding', 'openriak-
 const aliasedOsBrandColors = {
   'rocky.svg': '#10B981',
   'centos.svg': '#262577',
-  'suse.svg': '#0C322C',
+  'suse.svg': '#30BA78',
   'fedora.svg': '#51A2DA'
 };
 const siteSections = JSON.parse(fs.readFileSync(path.join(repositoryRoot, 'layouts', 'common-docs', 'data', 'site_sections.json'), 'utf8'));
@@ -189,6 +189,8 @@ assert.match(downloadsTemplateSource, /data-legacy-downloads[\s\S]*Alpine Linux 
 assert.equal((downloadsTemplateSource.match(/partial "download-table\.html"/g) || []).length, 3, 'selected, modern All downloads, and legacy downloads must share the grouped download table');
 assert.match(downloadsTemplateSource, /\$downloadProductName[\s\S]*\$downloadsBaseUrl[\s\S]*\{\{ \$downloadProductName \}\} for/, 'download groups must derive product labels and file-store URLs from product data');
 assert.match(downloadTableSource, /<th>OTP<\/th><th>Architecture<\/th><th>Package<\/th><th class="download-table-actions">Actions<\/th>[\s\S]*data-download-os-id="\{\{ \$os\.id \}\}"[\s\S]*data-download-checksum-toggle[\s\S]*data-copy-label="Copy URL"[\s\S]*data-download-checksum-row hidden[\s\S]*<td aria-hidden="true"><\/td>[\s\S]*colspan="3"/, 'shared download tables must identify their OS and use four columns, right-aligned actions, and a checksum row spanning architecture through actions');
+assert.match(downloadTableSource, /\.architecture[\s\S]*with \.subArchitecture[\s\S]*download-sub-architecture/, 'download tables must render sub-architecture variants beneath the base architecture');
+assert.match(docsCssSource, /\.download-sub-architecture \{[^}]*display: block[^}]*color: var\(--muted\)/, 'download sub-architectures must appear as secondary lines in the Architecture column');
 assert.match(downloadChecksumSource, /<div class="download-actions">[\s\S]*data-download-checksum-toggle[\s\S]*data-copy-label="Copy URL"[\s\S]*data-download-checksum-panel hidden[\s\S]*data-copy-label="Copy checksum"/, 'copy URL must sit beside the checksum toggle while copy checksum remains inside its hidden panel');
 assert.match(downloadCopyIconSource, /download-copy-glyph[\s\S]*download-copy-tick/, 'copy actions must share the standard copy icon with an overlaid success tick');
 assert.match(downloadHashIconSource, /download-hash-icon[\s\S]*M10 3 8 21/, 'checksum toggles must use the standard hash icon');

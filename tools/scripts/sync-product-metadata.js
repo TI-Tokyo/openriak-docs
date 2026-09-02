@@ -68,7 +68,7 @@ const familyNames = {
   rhel: 'Red Hat Enterprise Linux',
   rocky: 'Rocky Linux',
   centos: 'CentOS',
-  suse: 'SUSE Linux',
+  suse: 'SUSE Linux Enterprise Server',
   sles: 'SUSE Linux Enterprise Server',
   ubuntu: 'Ubuntu'
 };
@@ -89,10 +89,18 @@ const familyLogos = {
   ubuntu: 'images/os/ubuntu.svg'
 };
 
+const suseReleaseAliases = {
+  5: { id: '10-sp1', version: '10 SP1' },
+  6: { id: '11-sp1', version: '11 SP1' },
+  7: { id: '12', version: '12' },
+  8: { id: '15-sp1', version: '15 SP1' },
+  9: { id: '15-sp4', version: '15 SP4' }
+};
+
 const rhelAliases = [
   { family: 'rocky', name: familyNames.rocky, logo: familyLogos.rocky },
   { family: 'centos', name: familyNames.centos, logo: familyLogos.centos },
-  { family: 'suse', name: familyNames.suse, logo: familyLogos.suse, nativeFamily: 'sles' },
+  { family: 'suse', name: familyNames.suse, logo: familyLogos.suse, nativeFamily: 'sles', releases: suseReleaseAliases },
   { family: 'fedora', name: familyNames.fedora, logo: familyLogos.fedora, nativeFamily: 'fedora' }
 ];
 
@@ -247,12 +255,16 @@ for (const product of products) {
     for (const alias of rhelAliases) {
       if (alias.nativeFamily && nativeFamilies.has(alias.nativeFamily)) continue;
       for (const rhel of rhelOperatingSystems) {
+        const release = alias.releases?.[String(rhel.version)];
         operatingSystems.push({
           ...rhel,
-          id: rhel.id.replace(/^rhel-/, `${alias.family}-`),
+          id: release
+            ? `${alias.family}-${release.id}-${rhel.architecture}`
+            : rhel.id.replace(/^rhel-/, `${alias.family}-`),
           family: alias.family,
           name: alias.name,
-          displayName: `${alias.name} ${rhel.version}`,
+          displayName: `${alias.name} ${release?.version || rhel.version}`,
+          version: release?.version || rhel.version,
           codename: rhel.architecture,
           logo: alias.logo,
           aliasOf: rhel.id
@@ -287,17 +299,20 @@ for (const product of products) {
     const normalizedDownloads = {};
     for (const os of operatingSystems) {
       normalizedDownloads[os.id] = Object.entries(downloads.downloads[os.aliasOf || os.id] || {})
-        .map(([id, item]) => ({
-          id,
-          otp: downloadOtp(product, version, os.id, id, item),
-          architecture: item.architecture,
-          format: item.format,
-          filename: item.filename,
-          packageRevision: item.package_revision,
-          variant: downloadVariant(item.url),
-          url: item.url,
-          checksum: normalizeChecksum(product, item.checksum, version, os.id, id)
-        }))
+        .map(([id, item]) => {
+          const subArchitecture = item.sub_architecture || downloadVariant(item.url);
+          return {
+            id,
+            otp: downloadOtp(product, version, os.id, id, item),
+            architecture: item.architecture,
+            ...(subArchitecture ? { subArchitecture } : {}),
+            format: item.format,
+            filename: item.filename,
+            packageRevision: item.package_revision,
+            url: item.url,
+            checksum: normalizeChecksum(product, item.checksum, version, os.id, id)
+          };
+        })
         .sort((left, right) => String(left.otp ?? '').localeCompare(String(right.otp ?? ''), undefined, { numeric: true }) || left.id.localeCompare(right.id));
     }
 

@@ -27,6 +27,16 @@ class PackageParsingTests(unittest.TestCase):
             self.assertEqual(package.target["id"], "alpine-3.21-x86_64")
             self.assertEqual(package.revision, "r1")
 
+    def test_graviton_sub_architectures_are_retained(self):
+        cases = [
+            (["riak", "kv", "3.4", "3.4.1", "amazon", "2023 (graviton2)"], "Graviton 2"),
+            (["riak", "kv", "3.4", "3.4.1", "amazon", "2023 (graviton 3)"], "Graviton 3"),
+        ]
+        for parts, expected in cases:
+            with self.subTest(expected=expected):
+                package = self.parse("riak-3.4.1.OTP26-1.amzn2023.aarch64.rpm", parts=parts)
+                self.assertEqual(package.sub_architecture, expected)
+
     def test_non_installable_files_are_ignored(self):
         for filename in ("riak-3.4.1.OTP26-1.el9.src.rpm", "riak_3.4.1-OTP26_amd64.deb.sha",
                          "riak-openrc-3.4.1.26-r1.apk", "riak-debug-3.4.1.26-r1.apk"):

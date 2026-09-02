@@ -81,6 +81,19 @@ for (const product of productCases) {
         assert.doesNotMatch(`${os.name} ${os.displayName}`, /Red Hat|RHEL/i);
         assert.deepEqual(adapter.downloads[os.id], adapter.downloads[rhel.id]);
         if (modernKv) assert.deepEqual(adapter.values[os.id], adapter.values[rhel.id]);
+        if (alias.family === 'suse') {
+          const expected = {
+            5: ['10-sp1', '10 SP1'],
+            6: ['11-sp1', '11 SP1'],
+            7: ['12', '12'],
+            8: ['15-sp1', '15 SP1'],
+            9: ['15-sp4', '15 SP4']
+          }[rhel.version];
+          assert.ok(expected);
+          assert.equal(os.id, `suse-${expected[0]}-${rhel.architecture}`);
+          assert.equal(os.version, expected[1]);
+          assert.equal(os.displayName, `SUSE Linux Enterprise Server ${expected[1]}`);
+        }
       }
     }
     if (version.startsWith(`${product.forcedOtpMajor}.`)) {
@@ -105,6 +118,10 @@ assert.equal(downloadNamed('openriak-kv', '3.2.0', 'riak_3.2.0-tiot2-OTP24_arm64
 assert.equal(downloadNamed('openriak-kv', '3.2.0', 'riak_3.2.0-tiot2-OTP25_arm64.deb').otp, 25);
 assert.equal(downloadNamed('openriak-kv', '3.4.1', 'riak-3.4.1.24-r1.apk').otp, 24);
 assert.equal(downloadNamed('openriak-kv', '3.4.1', 'riak-3.4.1.26-r1.apk').otp, 26);
+const gravitonDownloads = adapterDownloads('openriak-kv', '3.4.1')
+  .filter((download) => /graviton/i.test(download.url));
+assert.ok(gravitonDownloads.length > 0);
+assert.deepEqual([...new Set(gravitonDownloads.map((download) => download.subArchitecture))].sort(), ['Graviton 2', 'Graviton 3']);
 
 for (const product of ['openriak-cs', 'openriak-ts']) {
   for (const version of productCases.find((item) => item.id === product).sources.flatMap(versionsFor).filter(({ major }) => major === 3)) {
