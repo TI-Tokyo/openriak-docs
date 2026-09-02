@@ -110,6 +110,32 @@ const downloadVariant = (url) => {
   return match ? match[1].replace(/graviton\s*/i, 'Graviton ') : '';
 };
 
+const otpFromFilename = (version, filename) => {
+  const explicit = filename.match(/(?:^|[-_.])OTP([0-9]+)(?:\.[0-9]+)?(?:[-_.]|$)/i);
+  if (explicit) return Number(explicit[1]);
+  const escapedVersion = version.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
+  const alpine = filename.match(new RegExp(`^riak-${escapedVersion}\\.([0-9]+)-r[0-9]+\\.apk$`, 'i'));
+  return alpine ? Number(alpine[1]) : null;
+};
+
+const downloadOtp = (version, osId, downloadId, item) => {
+  if (version.startsWith('2.')) {
+    if (item.otp !== null && item.otp !== undefined && item.otp !== '' && item.otp !== 'R16B02') {
+      throw new Error(`Unexpected OTP metadata for ${metadataProduct}/${version}/${osId}/${downloadId}: ${item.otp} != R16B02`);
+    }
+    return 'R16B02';
+  }
+  const filenameOtp = otpFromFilename(version, item.filename);
+  if (item.otp !== null && item.otp !== undefined && item.otp !== '') {
+    if (filenameOtp !== null && String(item.otp) !== String(filenameOtp)) {
+      throw new Error(`OTP metadata does not match filename for ${metadataProduct}/${version}/${osId}/${downloadId}: ${item.otp} != ${filenameOtp}`);
+    }
+    return item.otp;
+  }
+  if (filenameOtp !== null) return filenameOtp;
+  throw new Error(`Unable to infer OTP version for ${metadataProduct}/${version}/${osId}/${downloadId}: ${item.filename}`);
+};
+
 const normalizeChecksum = (checksum, version, osId, downloadId) => {
   if (!checksum || checksum.algorithm !== 'sha256' || !/^[0-9a-f]{64}$/.test(checksum.value || '')) {
     throw new Error(`Missing or invalid SHA-256 checksum for ${metadataProduct}/${version}/${osId}/${downloadId}`);
@@ -207,7 +233,7 @@ for (const { version, sourceDirectory, source } of versionEntries) {
     normalizedDownloads[os.id] = Object.entries(downloads.downloads[os.id] || {})
       .map(([id, item]) => ({
         id,
-        otp: item.otp,
+        otp: downloadOtp(version, os.id, id, item),
         architecture: item.architecture,
         format: item.format,
         filename: item.filename,
