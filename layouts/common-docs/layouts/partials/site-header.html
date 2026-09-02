@@ -36,16 +36,31 @@
         <span data-theme-trigger-label>Default</span>
         <span class="picker-chevron" aria-hidden="true"></span>
       </button>
-      <div id="theme-panel" class="theme-panel" data-theme-panel role="listbox" aria-label="Colour theme" hidden>
-        <button class="theme-option" type="button" role="option" data-theme-value="system" data-theme-icon="{{ `images/ui/theme-system.svg` | relURL }}">
-          <img src="{{ `images/ui/theme-system.svg` | relURL }}" alt=""><span><strong>Default</strong><small>Use device setting</small></span>
-        </button>
-        <button class="theme-option" type="button" role="option" data-theme-value="dark" data-theme-icon="{{ `images/ui/theme-dark.svg` | relURL }}">
-          <img src="{{ `images/ui/theme-dark.svg` | relURL }}" alt=""><span><strong>Dark</strong><small>Dark colour theme</small></span>
-        </button>
-        <button class="theme-option" type="button" role="option" data-theme-value="light" data-theme-icon="{{ `images/ui/theme-light.svg` | relURL }}">
-          <img src="{{ `images/ui/theme-light.svg` | relURL }}" alt=""><span><strong>Light</strong><small>Light colour theme</small></span>
-        </button>
+      <div id="theme-panel" class="theme-panel" data-theme-panel role="dialog" aria-label="Appearance preferences" hidden>
+        <div class="theme-panel-group" role="group" aria-labelledby="colour-theme-heading">
+          <h2 id="colour-theme-heading">Colour theme</h2>
+          <button class="theme-option" type="button" data-theme-value="system" data-theme-icon="{{ `images/ui/theme-system.svg` | relURL }}" aria-pressed="false">
+            <img src="{{ `images/ui/theme-system.svg` | relURL }}" alt=""><span><strong>Default</strong><small>Use device setting</small></span>
+          </button>
+          <button class="theme-option" type="button" data-theme-value="dark" data-theme-icon="{{ `images/ui/theme-dark.svg` | relURL }}" aria-pressed="false">
+            <img src="{{ `images/ui/theme-dark.svg` | relURL }}" alt=""><span><strong>Dark</strong><small>Dark colour theme</small></span>
+          </button>
+          <button class="theme-option" type="button" data-theme-value="light" data-theme-icon="{{ `images/ui/theme-light.svg` | relURL }}" aria-pressed="false">
+            <img src="{{ `images/ui/theme-light.svg` | relURL }}" alt=""><span><strong>Light</strong><small>Light colour theme</small></span>
+          </button>
+        </div>
+        {{ if .showContentWidth }}
+          <div class="theme-panel-separator" role="separator"></div>
+          <div class="theme-panel-group" role="group" aria-labelledby="content-width-heading">
+            <h2 id="content-width-heading">Content width</h2>
+            <div class="content-width-options">
+              <button class="content-width-option" type="button" data-content-width-value="50" aria-pressed="false"><strong>50%</strong><small>Compact</small></button>
+              <button class="content-width-option" type="button" data-content-width-value="75" aria-pressed="false"><strong>75%</strong><small>Standard</small></button>
+              <button class="content-width-option" type="button" data-content-width-value="90" aria-pressed="false"><strong>90%</strong><small>Wide</small></button>
+              <button class="content-width-option" type="button" data-content-width-value="98" aria-pressed="false"><strong>98%</strong><small>Maximum</small></button>
+            </div>
+          </div>
+        {{ end }}
       </div>
     </div>
   </nav>

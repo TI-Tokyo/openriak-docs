@@ -1433,7 +1433,7 @@
       "erlang.crash_dump": {
         "has_default": true,
         "os_default": null,
-        "package_default": "{{platform_log_dir}}/erl_crash.dump",
+        "package_default": "/var/log/riak/erl_crash.dump",
         "provenance": [
           {
             "line": 192,
@@ -1447,15 +1447,16 @@
           }
         ],
         "release_default": null,
-        "resolved_schema_default": "{{platform_log_dir}}/erl_crash.dump",
-        "resolved_value": "{{platform_log_dir}}/erl_crash.dump",
+        "resolved_schema_default": "/var/log/riak/erl_crash.dump",
+        "resolved_value": "/var/log/riak/erl_crash.dump",
         "schema_default": "{{crash_dump}}",
         "schema_expression": "{{crash_dump}}",
         "source_layer": "package",
         "template_variables": [
-          "crash_dump"
+          "crash_dump",
+          "platform_log_dir"
         ],
-        "value": "{{platform_log_dir}}/erl_crash.dump"
+        "value": "/var/log/riak/erl_crash.dump"
       },
       "erlang.distribution.interface": {
         "has_default": false,
@@ -3021,21 +3022,35 @@
       "listener.http.$name": {
         "has_default": true,
         "os_default": null,
-        "package_default": null,
+        "package_default": {
+          "$erlang_tuple": [
+            "127.0.0.1",
+            8098
+          ]
+        },
         "provenance": [
           {
             "line": 5,
             "path": "priv/riak_api.schema",
             "repository": "riak_api"
+          },
+          {
+            "line": 1,
+            "path": "rel/pkg/alpine/vars.config",
+            "repository": "root"
           }
         ],
         "release_default": null,
+        "resolved_schema_default": {
+          "$erlang_tuple": [
+            "127.0.0.1",
+            8098
+          ]
+        },
         "resolved_value": {
           "$erlang_tuple": [
-            "{{web_ip}}",
-            {
-              "$template": "{{web_port}}"
-            }
+            "127.0.0.1",
+            8098
           ]
         },
         "schema_default": {
@@ -3046,13 +3061,16 @@
             }
           ]
         },
-        "source_layer": "schema",
+        "schema_expression": "{{{web_ip}}, {{web_port}}}",
+        "source_layer": "package",
+        "template_variables": [
+          "web_ip",
+          "web_port"
+        ],
         "value": {
           "$erlang_tuple": [
-            "{{web_ip}}",
-            {
-              "$template": "{{web_port}}"
-            }
+            "127.0.0.1",
+            8098
           ]
         }
       },
@@ -3071,21 +3089,35 @@
       "listener.protobuf.$name": {
         "has_default": true,
         "os_default": null,
-        "package_default": null,
+        "package_default": {
+          "$erlang_tuple": [
+            "127.0.0.1",
+            8087
+          ]
+        },
         "provenance": [
           {
             "line": 21,
             "path": "priv/riak_api.schema",
             "repository": "riak_api"
+          },
+          {
+            "line": 1,
+            "path": "rel/pkg/alpine/vars.config",
+            "repository": "root"
           }
         ],
         "release_default": null,
+        "resolved_schema_default": {
+          "$erlang_tuple": [
+            "127.0.0.1",
+            8087
+          ]
+        },
         "resolved_value": {
           "$erlang_tuple": [
-            "{{pb_ip}}",
-            {
-              "$template": "{{pb_port}}"
-            }
+            "127.0.0.1",
+            8087
           ]
         },
         "schema_default": {
@@ -3096,13 +3128,16 @@
             }
           ]
         },
-        "source_layer": "schema",
+        "schema_expression": "{{{pb_ip}}, {{pb_port}}}",
+        "source_layer": "package",
+        "template_variables": [
+          "pb_ip",
+          "pb_port"
+        ],
         "value": {
           "$erlang_tuple": [
-            "{{pb_ip}}",
-            {
-              "$template": "{{pb_port}}"
-            }
+            "127.0.0.1",
+            8087
           ]
         }
       },
@@ -3665,21 +3700,35 @@
       "mdc.cluster_manager": {
         "has_default": true,
         "os_default": null,
-        "package_default": null,
+        "package_default": {
+          "$erlang_tuple": [
+            "127.0.0.1",
+            9080
+          ]
+        },
         "provenance": [
           {
             "line": 16,
             "path": "priv/riak_repl.schema",
             "repository": "riak_repl"
+          },
+          {
+            "line": 1,
+            "path": "rel/pkg/alpine/vars.config",
+            "repository": "root"
           }
         ],
         "release_default": null,
+        "resolved_schema_default": {
+          "$erlang_tuple": [
+            "127.0.0.1",
+            9080
+          ]
+        },
         "resolved_value": {
           "$erlang_tuple": [
-            "{{cluster_manager_ip}}",
-            {
-              "$template": "{{cluster_manager_port}}"
-            }
+            "127.0.0.1",
+            9080
           ]
         },
         "schema_default": {
@@ -3690,20 +3739,23 @@
             }
           ]
         },
-        "source_layer": "schema",
+        "schema_expression": "{{{cluster_manager_ip}}, {{cluster_manager_port}}}",
+        "source_layer": "package",
+        "template_variables": [
+          "cluster_manager_ip",
+          "cluster_manager_port"
+        ],
         "value": {
           "$erlang_tuple": [
-            "{{cluster_manager_ip}}",
-            {
-              "$template": "{{cluster_manager_port}}"
-            }
+            "127.0.0.1",
+            9080
           ]
         }
       },
       "mdc.data_root": {
         "has_default": true,
         "os_default": null,
-        "package_default": "{{platform_data_dir}}/riak_repl",
+        "package_default": "/var/lib/riak/riak_repl",
         "provenance": [
           {
             "line": 6,
@@ -3717,15 +3769,16 @@
           }
         ],
         "release_default": null,
-        "resolved_schema_default": "{{platform_data_dir}}/riak_repl",
-        "resolved_value": "{{platform_data_dir}}/riak_repl",
+        "resolved_schema_default": "/var/lib/riak/riak_repl",
+        "resolved_value": "/var/lib/riak/riak_repl",
         "schema_default": "{{repl_data_root}}",
         "schema_expression": "{{repl_data_root}}",
         "source_layer": "package",
         "template_variables": [
-          "repl_data_root"
+          "repl_data_root",
+          "platform_data_dir"
         ],
-        "value": "{{platform_data_dir}}/riak_repl"
+        "value": "/var/lib/riak/riak_repl"
       },
       "mdc.fssource_retry_wait": {
         "has_default": true,
@@ -8585,7 +8638,7 @@
       "erlang.crash_dump": {
         "has_default": true,
         "os_default": null,
-        "package_default": "{{platform_log_dir}}/erl_crash.dump",
+        "package_default": "/var/log/riak/erl_crash.dump",
         "provenance": [
           {
             "line": 192,
@@ -8599,15 +8652,16 @@
           }
         ],
         "release_default": null,
-        "resolved_schema_default": "{{platform_log_dir}}/erl_crash.dump",
-        "resolved_value": "{{platform_log_dir}}/erl_crash.dump",
+        "resolved_schema_default": "/var/log/riak/erl_crash.dump",
+        "resolved_value": "/var/log/riak/erl_crash.dump",
         "schema_default": "{{crash_dump}}",
         "schema_expression": "{{crash_dump}}",
         "source_layer": "package",
         "template_variables": [
-          "crash_dump"
+          "crash_dump",
+          "platform_log_dir"
         ],
-        "value": "{{platform_log_dir}}/erl_crash.dump"
+        "value": "/var/log/riak/erl_crash.dump"
       },
       "erlang.distribution.interface": {
         "has_default": false,
@@ -10173,21 +10227,35 @@
       "listener.http.$name": {
         "has_default": true,
         "os_default": null,
-        "package_default": null,
+        "package_default": {
+          "$erlang_tuple": [
+            "127.0.0.1",
+            8098
+          ]
+        },
         "provenance": [
           {
             "line": 5,
             "path": "priv/riak_api.schema",
             "repository": "riak_api"
+          },
+          {
+            "line": 1,
+            "path": "rel/pkg/alpine/vars.config",
+            "repository": "root"
           }
         ],
         "release_default": null,
+        "resolved_schema_default": {
+          "$erlang_tuple": [
+            "127.0.0.1",
+            8098
+          ]
+        },
         "resolved_value": {
           "$erlang_tuple": [
-            "{{web_ip}}",
-            {
-              "$template": "{{web_port}}"
-            }
+            "127.0.0.1",
+            8098
           ]
         },
         "schema_default": {
@@ -10198,13 +10266,16 @@
             }
           ]
         },
-        "source_layer": "schema",
+        "schema_expression": "{{{web_ip}}, {{web_port}}}",
+        "source_layer": "package",
+        "template_variables": [
+          "web_ip",
+          "web_port"
+        ],
         "value": {
           "$erlang_tuple": [
-            "{{web_ip}}",
-            {
-              "$template": "{{web_port}}"
-            }
+            "127.0.0.1",
+            8098
           ]
         }
       },
@@ -10223,21 +10294,35 @@
       "listener.protobuf.$name": {
         "has_default": true,
         "os_default": null,
-        "package_default": null,
+        "package_default": {
+          "$erlang_tuple": [
+            "127.0.0.1",
+            8087
+          ]
+        },
         "provenance": [
           {
             "line": 21,
             "path": "priv/riak_api.schema",
             "repository": "riak_api"
+          },
+          {
+            "line": 1,
+            "path": "rel/pkg/alpine/vars.config",
+            "repository": "root"
           }
         ],
         "release_default": null,
+        "resolved_schema_default": {
+          "$erlang_tuple": [
+            "127.0.0.1",
+            8087
+          ]
+        },
         "resolved_value": {
           "$erlang_tuple": [
-            "{{pb_ip}}",
-            {
-              "$template": "{{pb_port}}"
-            }
+            "127.0.0.1",
+            8087
           ]
         },
         "schema_default": {
@@ -10248,13 +10333,16 @@
             }
           ]
         },
-        "source_layer": "schema",
+        "schema_expression": "{{{pb_ip}}, {{pb_port}}}",
+        "source_layer": "package",
+        "template_variables": [
+          "pb_ip",
+          "pb_port"
+        ],
         "value": {
           "$erlang_tuple": [
-            "{{pb_ip}}",
-            {
-              "$template": "{{pb_port}}"
-            }
+            "127.0.0.1",
+            8087
           ]
         }
       },
@@ -10817,21 +10905,35 @@
       "mdc.cluster_manager": {
         "has_default": true,
         "os_default": null,
-        "package_default": null,
+        "package_default": {
+          "$erlang_tuple": [
+            "127.0.0.1",
+            9080
+          ]
+        },
         "provenance": [
           {
             "line": 16,
             "path": "priv/riak_repl.schema",
             "repository": "riak_repl"
+          },
+          {
+            "line": 1,
+            "path": "rel/pkg/alpine/vars.config",
+            "repository": "root"
           }
         ],
         "release_default": null,
+        "resolved_schema_default": {
+          "$erlang_tuple": [
+            "127.0.0.1",
+            9080
+          ]
+        },
         "resolved_value": {
           "$erlang_tuple": [
-            "{{cluster_manager_ip}}",
-            {
-              "$template": "{{cluster_manager_port}}"
-            }
+            "127.0.0.1",
+            9080
           ]
         },
         "schema_default": {
@@ -10842,20 +10944,23 @@
             }
           ]
         },
-        "source_layer": "schema",
+        "schema_expression": "{{{cluster_manager_ip}}, {{cluster_manager_port}}}",
+        "source_layer": "package",
+        "template_variables": [
+          "cluster_manager_ip",
+          "cluster_manager_port"
+        ],
         "value": {
           "$erlang_tuple": [
-            "{{cluster_manager_ip}}",
-            {
-              "$template": "{{cluster_manager_port}}"
-            }
+            "127.0.0.1",
+            9080
           ]
         }
       },
       "mdc.data_root": {
         "has_default": true,
         "os_default": null,
-        "package_default": "{{platform_data_dir}}/riak_repl",
+        "package_default": "/var/lib/riak/riak_repl",
         "provenance": [
           {
             "line": 6,
@@ -10869,15 +10974,16 @@
           }
         ],
         "release_default": null,
-        "resolved_schema_default": "{{platform_data_dir}}/riak_repl",
-        "resolved_value": "{{platform_data_dir}}/riak_repl",
+        "resolved_schema_default": "/var/lib/riak/riak_repl",
+        "resolved_value": "/var/lib/riak/riak_repl",
         "schema_default": "{{repl_data_root}}",
         "schema_expression": "{{repl_data_root}}",
         "source_layer": "package",
         "template_variables": [
-          "repl_data_root"
+          "repl_data_root",
+          "platform_data_dir"
         ],
-        "value": "{{platform_data_dir}}/riak_repl"
+        "value": "/var/lib/riak/riak_repl"
       },
       "mdc.fssource_retry_wait": {
         "has_default": true,
@@ -14470,7 +14576,7 @@
           }
         ],
         "release_default": null,
-        "resolved_value": "%{_localstatedir}/lib/riak/anti_entropy",
+        "resolved_value": "/var/lib/riak/anti_entropy",
         "schema_default": "$(platform_data_dir)/anti_entropy",
         "source_layer": "schema",
         "value": "$(platform_data_dir)/anti_entropy"
@@ -14698,7 +14804,7 @@
           }
         ],
         "release_default": null,
-        "resolved_value": "%{_localstatedir}/lib/riak/bitcask",
+        "resolved_value": "/var/lib/riak/bitcask",
         "schema_default": "$(platform_data_dir)/bitcask",
         "source_layer": "schema",
         "value": "$(platform_data_dir)/bitcask"
@@ -15596,7 +15702,7 @@
           }
         ],
         "release_default": null,
-        "resolved_value": "%{_localstatedir}/lib/riak/kv_eraser",
+        "resolved_value": "/var/lib/riak/kv_eraser",
         "schema_default": "$(platform_data_dir)/kv_eraser",
         "source_layer": "schema",
         "value": "$(platform_data_dir)/kv_eraser"
@@ -15737,7 +15843,7 @@
       "erlang.crash_dump": {
         "has_default": true,
         "os_default": null,
-        "package_default": "%{_localstatedir}/log/riak/erl_crash.dump",
+        "package_default": "/var/log/riak/erl_crash.dump",
         "provenance": [
           {
             "line": 192,
@@ -15758,15 +15864,15 @@
           }
         ],
         "release_default": null,
-        "resolved_schema_default": "%{_localstatedir}/log/riak/erl_crash.dump",
-        "resolved_value": "%{_localstatedir}/log/riak/erl_crash.dump",
+        "resolved_schema_default": "/var/log/riak/erl_crash.dump",
+        "resolved_value": "/var/log/riak/erl_crash.dump",
         "schema_default": "{{crash_dump}}",
         "schema_expression": "{{crash_dump}}",
         "source_layer": "package",
         "template_variables": [
           "crash_dump"
         ],
-        "value": "%{_localstatedir}/log/riak/erl_crash.dump"
+        "value": "/var/log/riak/erl_crash.dump"
       },
       "erlang.distribution.interface": {
         "has_default": false,
@@ -16651,7 +16757,7 @@
           }
         ],
         "release_default": null,
-        "resolved_value": "%{_localstatedir}/lib/riak/leveldb",
+        "resolved_value": "/var/lib/riak/leveldb",
         "schema_default": "$(platform_data_dir)/leveldb",
         "source_layer": "schema",
         "value": "$(platform_data_dir)/leveldb"
@@ -17083,7 +17189,7 @@
           }
         ],
         "release_default": null,
-        "resolved_value": "%{_localstatedir}/lib/riak/leveled",
+        "resolved_value": "/var/lib/riak/leveled",
         "schema_default": "$(platform_data_dir)/leveled",
         "source_layer": "schema",
         "value": "$(platform_data_dir)/leveled"
@@ -17346,21 +17452,42 @@
       "listener.http.$name": {
         "has_default": true,
         "os_default": null,
-        "package_default": null,
+        "package_default": {
+          "$erlang_tuple": [
+            "127.0.0.1",
+            8098
+          ]
+        },
         "provenance": [
           {
             "line": 5,
             "path": "priv/riak_api.schema",
             "repository": "riak_api"
+          },
+          {
+            "line": 1,
+            "path": "rel/pkg/rpm/vars.config.part",
+            "repository": "root",
+            "source_type": "rpm-generated-vars"
+          },
+          {
+            "line": 1,
+            "path": "rel/pkg/rpm/specfile",
+            "repository": "root",
+            "source_type": "rpm-generated-vars"
           }
         ],
         "release_default": null,
+        "resolved_schema_default": {
+          "$erlang_tuple": [
+            "127.0.0.1",
+            8098
+          ]
+        },
         "resolved_value": {
           "$erlang_tuple": [
-            "{{web_ip}}",
-            {
-              "$template": "{{web_port}}"
-            }
+            "127.0.0.1",
+            8098
           ]
         },
         "schema_default": {
@@ -17371,13 +17498,16 @@
             }
           ]
         },
-        "source_layer": "schema",
+        "schema_expression": "{{{web_ip}}, {{web_port}}}",
+        "source_layer": "package",
+        "template_variables": [
+          "web_ip",
+          "web_port"
+        ],
         "value": {
           "$erlang_tuple": [
-            "{{web_ip}}",
-            {
-              "$template": "{{web_port}}"
-            }
+            "127.0.0.1",
+            8098
           ]
         }
       },
@@ -17396,21 +17526,42 @@
       "listener.protobuf.$name": {
         "has_default": true,
         "os_default": null,
-        "package_default": null,
+        "package_default": {
+          "$erlang_tuple": [
+            "127.0.0.1",
+            8087
+          ]
+        },
         "provenance": [
           {
             "line": 21,
             "path": "priv/riak_api.schema",
             "repository": "riak_api"
+          },
+          {
+            "line": 1,
+            "path": "rel/pkg/rpm/vars.config.part",
+            "repository": "root",
+            "source_type": "rpm-generated-vars"
+          },
+          {
+            "line": 1,
+            "path": "rel/pkg/rpm/specfile",
+            "repository": "root",
+            "source_type": "rpm-generated-vars"
           }
         ],
         "release_default": null,
+        "resolved_schema_default": {
+          "$erlang_tuple": [
+            "127.0.0.1",
+            8087
+          ]
+        },
         "resolved_value": {
           "$erlang_tuple": [
-            "{{pb_ip}}",
-            {
-              "$template": "{{pb_port}}"
-            }
+            "127.0.0.1",
+            8087
           ]
         },
         "schema_default": {
@@ -17421,13 +17572,16 @@
             }
           ]
         },
-        "source_layer": "schema",
+        "schema_expression": "{{{pb_ip}}, {{pb_port}}}",
+        "source_layer": "package",
+        "template_variables": [
+          "pb_ip",
+          "pb_port"
+        ],
         "value": {
           "$erlang_tuple": [
-            "{{pb_ip}}",
-            {
-              "$template": "{{pb_port}}"
-            }
+            "127.0.0.1",
+            8087
           ]
         }
       },
@@ -17460,7 +17614,7 @@
           }
         ],
         "release_default": null,
-        "resolved_value": "%{_localstatedir}/log/riak/console.log",
+        "resolved_value": "/var/log/riak/console.log",
         "schema_default": "$(platform_log_dir)/console.log",
         "source_layer": "schema",
         "value": "$(platform_log_dir)/console.log"
@@ -17511,7 +17665,7 @@
           }
         ],
         "release_default": null,
-        "resolved_value": "%{_localstatedir}/log/riak/crash.log",
+        "resolved_value": "/var/log/riak/crash.log",
         "schema_default": "$(platform_log_dir)/crash.log",
         "source_layer": "schema",
         "value": "$(platform_log_dir)/crash.log"
@@ -17596,7 +17750,7 @@
           }
         ],
         "release_default": null,
-        "resolved_value": "%{_localstatedir}/log/riak/error.log",
+        "resolved_value": "/var/log/riak/error.log",
         "schema_default": "$(platform_log_dir)/error.log",
         "source_layer": "schema",
         "value": "$(platform_log_dir)/error.log"
@@ -17749,7 +17903,7 @@
           }
         ],
         "release_default": null,
-        "resolved_value": "%{_localstatedir}/log/riak/backend.log",
+        "resolved_value": "/var/log/riak/backend.log",
         "schema_default": "$(platform_log_dir)/backend.log",
         "source_layer": "schema",
         "value": "$(platform_log_dir)/backend.log"
@@ -17766,7 +17920,7 @@
           }
         ],
         "release_default": null,
-        "resolved_value": "%{_localstatedir}/log/riak/background.log",
+        "resolved_value": "/var/log/riak/background.log",
         "schema_default": "$(platform_log_dir)/background.log",
         "source_layer": "schema",
         "value": "$(platform_log_dir)/background.log"
@@ -17783,7 +17937,7 @@
           }
         ],
         "release_default": null,
-        "resolved_value": "%{_localstatedir}/log/riak/crash.log",
+        "resolved_value": "/var/log/riak/crash.log",
         "schema_default": "$(platform_log_dir)/crash.log",
         "source_layer": "schema",
         "value": "$(platform_log_dir)/crash.log"
@@ -17817,7 +17971,7 @@
           }
         ],
         "release_default": null,
-        "resolved_value": "%{_localstatedir}/log/riak/error.log",
+        "resolved_value": "/var/log/riak/error.log",
         "schema_default": "$(platform_log_dir)/error.log",
         "source_layer": "schema",
         "value": "$(platform_log_dir)/error.log"
@@ -17834,7 +17988,7 @@
           }
         ],
         "release_default": null,
-        "resolved_value": "%{_localstatedir}/log/riak/console.log",
+        "resolved_value": "/var/log/riak/console.log",
         "schema_default": "$(platform_log_dir)/console.log",
         "source_layer": "schema",
         "value": "$(platform_log_dir)/console.log"
@@ -17868,7 +18022,7 @@
           }
         ],
         "release_default": null,
-        "resolved_value": "%{_localstatedir}/log/riak/json.log",
+        "resolved_value": "/var/log/riak/json.log",
         "schema_default": "$(platform_log_dir)/json.log",
         "source_layer": "schema",
         "value": "$(platform_log_dir)/json.log"
@@ -17955,7 +18109,7 @@
           }
         ],
         "release_default": null,
-        "resolved_value": "%{_localstatedir}/log/riak/report.log",
+        "resolved_value": "/var/log/riak/report.log",
         "schema_default": "$(platform_log_dir)/report.log",
         "source_layer": "schema",
         "value": "$(platform_log_dir)/report.log"
@@ -17997,21 +18151,42 @@
       "mdc.cluster_manager": {
         "has_default": true,
         "os_default": null,
-        "package_default": null,
+        "package_default": {
+          "$erlang_tuple": [
+            "127.0.0.1",
+            9080
+          ]
+        },
         "provenance": [
           {
             "line": 16,
             "path": "priv/riak_repl.schema",
             "repository": "riak_repl"
+          },
+          {
+            "line": 1,
+            "path": "rel/pkg/rpm/vars.config.part",
+            "repository": "root",
+            "source_type": "rpm-generated-vars"
+          },
+          {
+            "line": 1,
+            "path": "rel/pkg/rpm/specfile",
+            "repository": "root",
+            "source_type": "rpm-generated-vars"
           }
         ],
         "release_default": null,
+        "resolved_schema_default": {
+          "$erlang_tuple": [
+            "127.0.0.1",
+            9080
+          ]
+        },
         "resolved_value": {
           "$erlang_tuple": [
-            "{{cluster_manager_ip}}",
-            {
-              "$template": "{{cluster_manager_port}}"
-            }
+            "127.0.0.1",
+            9080
           ]
         },
         "schema_default": {
@@ -18022,20 +18197,23 @@
             }
           ]
         },
-        "source_layer": "schema",
+        "schema_expression": "{{{cluster_manager_ip}}, {{cluster_manager_port}}}",
+        "source_layer": "package",
+        "template_variables": [
+          "cluster_manager_ip",
+          "cluster_manager_port"
+        ],
         "value": {
           "$erlang_tuple": [
-            "{{cluster_manager_ip}}",
-            {
-              "$template": "{{cluster_manager_port}}"
-            }
+            "127.0.0.1",
+            9080
           ]
         }
       },
       "mdc.data_root": {
         "has_default": true,
         "os_default": null,
-        "package_default": "%{_localstatedir}/lib/riak/riak_repl",
+        "package_default": "/var/lib/riak/riak_repl",
         "provenance": [
           {
             "line": 6,
@@ -18056,15 +18234,15 @@
           }
         ],
         "release_default": null,
-        "resolved_schema_default": "%{_localstatedir}/lib/riak/riak_repl",
-        "resolved_value": "%{_localstatedir}/lib/riak/riak_repl",
+        "resolved_schema_default": "/var/lib/riak/riak_repl",
+        "resolved_value": "/var/lib/riak/riak_repl",
         "schema_default": "{{repl_data_root}}",
         "schema_expression": "{{repl_data_root}}",
         "source_layer": "package",
         "template_variables": [
           "repl_data_root"
         ],
-        "value": "%{_localstatedir}/lib/riak/riak_repl"
+        "value": "/var/lib/riak/riak_repl"
       },
       "mdc.fssource_retry_wait": {
         "has_default": true,
@@ -19225,7 +19403,7 @@
           }
         ],
         "release_default": null,
-        "resolved_value": "%{_localstatedir}/lib/riak/leveled",
+        "resolved_value": "/var/lib/riak/leveled",
         "schema_default": "$(platform_data_dir)/leveled",
         "source_layer": "schema",
         "value": "$(platform_data_dir)/leveled"
@@ -19660,7 +19838,7 @@
       "platform_bin_dir": {
         "has_default": true,
         "os_default": null,
-        "package_default": "%{_libdir}/riak/bin",
+        "package_default": "/usr/lib64/riak/bin",
         "provenance": [
           {
             "line": 225,
@@ -19681,20 +19859,20 @@
           }
         ],
         "release_default": null,
-        "resolved_schema_default": "%{_libdir}/riak/bin",
-        "resolved_value": "%{_libdir}/riak/bin",
+        "resolved_schema_default": "/usr/lib64/riak/bin",
+        "resolved_value": "/usr/lib64/riak/bin",
         "schema_default": "{{platform_bin_dir}}",
         "schema_expression": "{{platform_bin_dir}}",
         "source_layer": "package",
         "template_variables": [
           "platform_bin_dir"
         ],
-        "value": "%{_libdir}/riak/bin"
+        "value": "/usr/lib64/riak/bin"
       },
       "platform_data_dir": {
         "has_default": true,
         "os_default": null,
-        "package_default": "%{_localstatedir}/lib/riak",
+        "package_default": "/var/lib/riak",
         "provenance": [
           {
             "line": 231,
@@ -19715,20 +19893,20 @@
           }
         ],
         "release_default": null,
-        "resolved_schema_default": "%{_localstatedir}/lib/riak",
-        "resolved_value": "%{_localstatedir}/lib/riak",
+        "resolved_schema_default": "/var/lib/riak",
+        "resolved_value": "/var/lib/riak",
         "schema_default": "{{platform_data_dir}}",
         "schema_expression": "{{platform_data_dir}}",
         "source_layer": "package",
         "template_variables": [
           "platform_data_dir"
         ],
-        "value": "%{_localstatedir}/lib/riak"
+        "value": "/var/lib/riak"
       },
       "platform_etc_dir": {
         "has_default": true,
         "os_default": null,
-        "package_default": "%{_sysconfdir}/riak",
+        "package_default": "/etc/riak",
         "provenance": [
           {
             "line": 237,
@@ -19749,20 +19927,20 @@
           }
         ],
         "release_default": null,
-        "resolved_schema_default": "%{_sysconfdir}/riak",
-        "resolved_value": "%{_sysconfdir}/riak",
+        "resolved_schema_default": "/etc/riak",
+        "resolved_value": "/etc/riak",
         "schema_default": "{{platform_etc_dir}}",
         "schema_expression": "{{platform_etc_dir}}",
         "source_layer": "package",
         "template_variables": [
           "platform_etc_dir"
         ],
-        "value": "%{_sysconfdir}/riak"
+        "value": "/etc/riak"
       },
       "platform_lib_dir": {
         "has_default": true,
         "os_default": null,
-        "package_default": "%{_libdir}/riak/lib",
+        "package_default": "/usr/lib64/riak/lib",
         "provenance": [
           {
             "line": 243,
@@ -19783,20 +19961,20 @@
           }
         ],
         "release_default": null,
-        "resolved_schema_default": "%{_libdir}/riak/lib",
-        "resolved_value": "%{_libdir}/riak/lib",
+        "resolved_schema_default": "/usr/lib64/riak/lib",
+        "resolved_value": "/usr/lib64/riak/lib",
         "schema_default": "{{platform_lib_dir}}",
         "schema_expression": "{{platform_lib_dir}}",
         "source_layer": "package",
         "template_variables": [
           "platform_lib_dir"
         ],
-        "value": "%{_libdir}/riak/lib"
+        "value": "/usr/lib64/riak/lib"
       },
       "platform_log_dir": {
         "has_default": true,
         "os_default": null,
-        "package_default": "%{_localstatedir}/log/riak",
+        "package_default": "/var/log/riak",
         "provenance": [
           {
             "line": 249,
@@ -19817,15 +19995,15 @@
           }
         ],
         "release_default": null,
-        "resolved_schema_default": "%{_localstatedir}/log/riak",
-        "resolved_value": "%{_localstatedir}/log/riak",
+        "resolved_schema_default": "/var/log/riak",
+        "resolved_value": "/var/log/riak",
         "schema_default": "{{platform_log_dir}}",
         "schema_expression": "{{platform_log_dir}}",
         "source_layer": "package",
         "template_variables": [
           "platform_log_dir"
         ],
-        "value": "%{_localstatedir}/log/riak"
+        "value": "/var/log/riak"
       },
       "prevent_overlapping_partitions": {
         "has_default": true,
@@ -19907,7 +20085,7 @@
           }
         ],
         "release_default": null,
-        "resolved_value": "%{_localstatedir}/lib/riak/kv_query",
+        "resolved_value": "/var/lib/riak/kv_query",
         "schema_default": "$(platform_data_dir)/kv_query",
         "source_layer": "schema",
         "value": "$(platform_data_dir)/kv_query"
@@ -19958,7 +20136,7 @@
           }
         ],
         "release_default": null,
-        "resolved_value": "%{_localstatedir}/lib/riak/kv_reader",
+        "resolved_value": "/var/lib/riak/kv_reader",
         "schema_default": "$(platform_data_dir)/kv_reader",
         "source_layer": "schema",
         "value": "$(platform_data_dir)/kv_reader"
@@ -19975,7 +20153,7 @@
           }
         ],
         "release_default": null,
-        "resolved_value": "%{_localstatedir}/lib/riak/kv_reaper",
+        "resolved_value": "/var/lib/riak/kv_reaper",
         "schema_default": "$(platform_data_dir)/kv_reaper",
         "source_layer": "schema",
         "value": "$(platform_data_dir)/kv_reaper"
@@ -20125,7 +20303,7 @@
           }
         ],
         "release_default": null,
-        "resolved_value": "%{_localstatedir}/lib/riak/kv_replrtqsrc",
+        "resolved_value": "/var/lib/riak/kv_replrtqsrc",
         "schema_default": "$(platform_data_dir)/kv_replrtqsrc",
         "source_layer": "schema",
         "value": "$(platform_data_dir)/kv_replrtqsrc"
@@ -20382,7 +20560,7 @@
           }
         ],
         "release_default": null,
-        "resolved_value": "%{_localstatedir}/lib/riak/ring",
+        "resolved_value": "/var/lib/riak/ring",
         "schema_default": "$(platform_data_dir)/ring",
         "source_layer": "schema",
         "value": "$(platform_data_dir)/ring"
@@ -20777,7 +20955,7 @@
           }
         ],
         "release_default": null,
-        "resolved_value": "%{_localstatedir}/lib/riak/tictac_aae",
+        "resolved_value": "/var/lib/riak/tictac_aae",
         "schema_default": "$(platform_data_dir)/tictac_aae",
         "source_layer": "schema",
         "value": "$(platform_data_dir)/tictac_aae"
@@ -21706,7 +21884,7 @@
           }
         ],
         "release_default": null,
-        "resolved_value": "%{_localstatedir}/lib/riak/anti_entropy",
+        "resolved_value": "/var/lib/riak/anti_entropy",
         "schema_default": "$(platform_data_dir)/anti_entropy",
         "source_layer": "schema",
         "value": "$(platform_data_dir)/anti_entropy"
@@ -21934,7 +22112,7 @@
           }
         ],
         "release_default": null,
-        "resolved_value": "%{_localstatedir}/lib/riak/bitcask",
+        "resolved_value": "/var/lib/riak/bitcask",
         "schema_default": "$(platform_data_dir)/bitcask",
         "source_layer": "schema",
         "value": "$(platform_data_dir)/bitcask"
@@ -22832,7 +23010,7 @@
           }
         ],
         "release_default": null,
-        "resolved_value": "%{_localstatedir}/lib/riak/kv_eraser",
+        "resolved_value": "/var/lib/riak/kv_eraser",
         "schema_default": "$(platform_data_dir)/kv_eraser",
         "source_layer": "schema",
         "value": "$(platform_data_dir)/kv_eraser"
@@ -22973,7 +23151,7 @@
       "erlang.crash_dump": {
         "has_default": true,
         "os_default": null,
-        "package_default": "%{_localstatedir}/log/riak/erl_crash.dump",
+        "package_default": "/var/log/riak/erl_crash.dump",
         "provenance": [
           {
             "line": 192,
@@ -22994,15 +23172,15 @@
           }
         ],
         "release_default": null,
-        "resolved_schema_default": "%{_localstatedir}/log/riak/erl_crash.dump",
-        "resolved_value": "%{_localstatedir}/log/riak/erl_crash.dump",
+        "resolved_schema_default": "/var/log/riak/erl_crash.dump",
+        "resolved_value": "/var/log/riak/erl_crash.dump",
         "schema_default": "{{crash_dump}}",
         "schema_expression": "{{crash_dump}}",
         "source_layer": "package",
         "template_variables": [
           "crash_dump"
         ],
-        "value": "%{_localstatedir}/log/riak/erl_crash.dump"
+        "value": "/var/log/riak/erl_crash.dump"
       },
       "erlang.distribution.interface": {
         "has_default": false,
@@ -23887,7 +24065,7 @@
           }
         ],
         "release_default": null,
-        "resolved_value": "%{_localstatedir}/lib/riak/leveldb",
+        "resolved_value": "/var/lib/riak/leveldb",
         "schema_default": "$(platform_data_dir)/leveldb",
         "source_layer": "schema",
         "value": "$(platform_data_dir)/leveldb"
@@ -24319,7 +24497,7 @@
           }
         ],
         "release_default": null,
-        "resolved_value": "%{_localstatedir}/lib/riak/leveled",
+        "resolved_value": "/var/lib/riak/leveled",
         "schema_default": "$(platform_data_dir)/leveled",
         "source_layer": "schema",
         "value": "$(platform_data_dir)/leveled"
@@ -24582,21 +24760,42 @@
       "listener.http.$name": {
         "has_default": true,
         "os_default": null,
-        "package_default": null,
+        "package_default": {
+          "$erlang_tuple": [
+            "127.0.0.1",
+            8098
+          ]
+        },
         "provenance": [
           {
             "line": 5,
             "path": "priv/riak_api.schema",
             "repository": "riak_api"
+          },
+          {
+            "line": 1,
+            "path": "rel/pkg/rpm/vars.config.part",
+            "repository": "root",
+            "source_type": "rpm-generated-vars"
+          },
+          {
+            "line": 1,
+            "path": "rel/pkg/rpm/specfile",
+            "repository": "root",
+            "source_type": "rpm-generated-vars"
           }
         ],
         "release_default": null,
+        "resolved_schema_default": {
+          "$erlang_tuple": [
+            "127.0.0.1",
+            8098
+          ]
+        },
         "resolved_value": {
           "$erlang_tuple": [
-            "{{web_ip}}",
-            {
-              "$template": "{{web_port}}"
-            }
+            "127.0.0.1",
+            8098
           ]
         },
         "schema_default": {
@@ -24607,13 +24806,16 @@
             }
           ]
         },
-        "source_layer": "schema",
+        "schema_expression": "{{{web_ip}}, {{web_port}}}",
+        "source_layer": "package",
+        "template_variables": [
+          "web_ip",
+          "web_port"
+        ],
         "value": {
           "$erlang_tuple": [
-            "{{web_ip}}",
-            {
-              "$template": "{{web_port}}"
-            }
+            "127.0.0.1",
+            8098
           ]
         }
       },
@@ -24632,21 +24834,42 @@
       "listener.protobuf.$name": {
         "has_default": true,
         "os_default": null,
-        "package_default": null,
+        "package_default": {
+          "$erlang_tuple": [
+            "127.0.0.1",
+            8087
+          ]
+        },
         "provenance": [
           {
             "line": 21,
             "path": "priv/riak_api.schema",
             "repository": "riak_api"
+          },
+          {
+            "line": 1,
+            "path": "rel/pkg/rpm/vars.config.part",
+            "repository": "root",
+            "source_type": "rpm-generated-vars"
+          },
+          {
+            "line": 1,
+            "path": "rel/pkg/rpm/specfile",
+            "repository": "root",
+            "source_type": "rpm-generated-vars"
           }
         ],
         "release_default": null,
+        "resolved_schema_default": {
+          "$erlang_tuple": [
+            "127.0.0.1",
+            8087
+          ]
+        },
         "resolved_value": {
           "$erlang_tuple": [
-            "{{pb_ip}}",
-            {
-              "$template": "{{pb_port}}"
-            }
+            "127.0.0.1",
+            8087
           ]
         },
         "schema_default": {
@@ -24657,13 +24880,16 @@
             }
           ]
         },
-        "source_layer": "schema",
+        "schema_expression": "{{{pb_ip}}, {{pb_port}}}",
+        "source_layer": "package",
+        "template_variables": [
+          "pb_ip",
+          "pb_port"
+        ],
         "value": {
           "$erlang_tuple": [
-            "{{pb_ip}}",
-            {
-              "$template": "{{pb_port}}"
-            }
+            "127.0.0.1",
+            8087
           ]
         }
       },
@@ -24696,7 +24922,7 @@
           }
         ],
         "release_default": null,
-        "resolved_value": "%{_localstatedir}/log/riak/console.log",
+        "resolved_value": "/var/log/riak/console.log",
         "schema_default": "$(platform_log_dir)/console.log",
         "source_layer": "schema",
         "value": "$(platform_log_dir)/console.log"
@@ -24747,7 +24973,7 @@
           }
         ],
         "release_default": null,
-        "resolved_value": "%{_localstatedir}/log/riak/crash.log",
+        "resolved_value": "/var/log/riak/crash.log",
         "schema_default": "$(platform_log_dir)/crash.log",
         "source_layer": "schema",
         "value": "$(platform_log_dir)/crash.log"
@@ -24832,7 +25058,7 @@
           }
         ],
         "release_default": null,
-        "resolved_value": "%{_localstatedir}/log/riak/error.log",
+        "resolved_value": "/var/log/riak/error.log",
         "schema_default": "$(platform_log_dir)/error.log",
         "source_layer": "schema",
         "value": "$(platform_log_dir)/error.log"
@@ -24985,7 +25211,7 @@
           }
         ],
         "release_default": null,
-        "resolved_value": "%{_localstatedir}/log/riak/backend.log",
+        "resolved_value": "/var/log/riak/backend.log",
         "schema_default": "$(platform_log_dir)/backend.log",
         "source_layer": "schema",
         "value": "$(platform_log_dir)/backend.log"
@@ -25002,7 +25228,7 @@
           }
         ],
         "release_default": null,
-        "resolved_value": "%{_localstatedir}/log/riak/background.log",
+        "resolved_value": "/var/log/riak/background.log",
         "schema_default": "$(platform_log_dir)/background.log",
         "source_layer": "schema",
         "value": "$(platform_log_dir)/background.log"
@@ -25019,7 +25245,7 @@
           }
         ],
         "release_default": null,
-        "resolved_value": "%{_localstatedir}/log/riak/crash.log",
+        "resolved_value": "/var/log/riak/crash.log",
         "schema_default": "$(platform_log_dir)/crash.log",
         "source_layer": "schema",
         "value": "$(platform_log_dir)/crash.log"
@@ -25053,7 +25279,7 @@
           }
         ],
         "release_default": null,
-        "resolved_value": "%{_localstatedir}/log/riak/error.log",
+        "resolved_value": "/var/log/riak/error.log",
         "schema_default": "$(platform_log_dir)/error.log",
         "source_layer": "schema",
         "value": "$(platform_log_dir)/error.log"
@@ -25070,7 +25296,7 @@
           }
         ],
         "release_default": null,
-        "resolved_value": "%{_localstatedir}/log/riak/console.log",
+        "resolved_value": "/var/log/riak/console.log",
         "schema_default": "$(platform_log_dir)/console.log",
         "source_layer": "schema",
         "value": "$(platform_log_dir)/console.log"
@@ -25104,7 +25330,7 @@
           }
         ],
         "release_default": null,
-        "resolved_value": "%{_localstatedir}/log/riak/json.log",
+        "resolved_value": "/var/log/riak/json.log",
         "schema_default": "$(platform_log_dir)/json.log",
         "source_layer": "schema",
         "value": "$(platform_log_dir)/json.log"
@@ -25191,7 +25417,7 @@
           }
         ],
         "release_default": null,
-        "resolved_value": "%{_localstatedir}/log/riak/report.log",
+        "resolved_value": "/var/log/riak/report.log",
         "schema_default": "$(platform_log_dir)/report.log",
         "source_layer": "schema",
         "value": "$(platform_log_dir)/report.log"
@@ -25233,21 +25459,42 @@
       "mdc.cluster_manager": {
         "has_default": true,
         "os_default": null,
-        "package_default": null,
+        "package_default": {
+          "$erlang_tuple": [
+            "127.0.0.1",
+            9080
+          ]
+        },
         "provenance": [
           {
             "line": 16,
             "path": "priv/riak_repl.schema",
             "repository": "riak_repl"
+          },
+          {
+            "line": 1,
+            "path": "rel/pkg/rpm/vars.config.part",
+            "repository": "root",
+            "source_type": "rpm-generated-vars"
+          },
+          {
+            "line": 1,
+            "path": "rel/pkg/rpm/specfile",
+            "repository": "root",
+            "source_type": "rpm-generated-vars"
           }
         ],
         "release_default": null,
+        "resolved_schema_default": {
+          "$erlang_tuple": [
+            "127.0.0.1",
+            9080
+          ]
+        },
         "resolved_value": {
           "$erlang_tuple": [
-            "{{cluster_manager_ip}}",
-            {
-              "$template": "{{cluster_manager_port}}"
-            }
+            "127.0.0.1",
+            9080
           ]
         },
         "schema_default": {
@@ -25258,20 +25505,23 @@
             }
           ]
         },
-        "source_layer": "schema",
+        "schema_expression": "{{{cluster_manager_ip}}, {{cluster_manager_port}}}",
+        "source_layer": "package",
+        "template_variables": [
+          "cluster_manager_ip",
+          "cluster_manager_port"
+        ],
         "value": {
           "$erlang_tuple": [
-            "{{cluster_manager_ip}}",
-            {
-              "$template": "{{cluster_manager_port}}"
-            }
+            "127.0.0.1",
+            9080
           ]
         }
       },
       "mdc.data_root": {
         "has_default": true,
         "os_default": null,
-        "package_default": "%{_localstatedir}/lib/riak/riak_repl",
+        "package_default": "/var/lib/riak/riak_repl",
         "provenance": [
           {
             "line": 6,
@@ -25292,15 +25542,15 @@
           }
         ],
         "release_default": null,
-        "resolved_schema_default": "%{_localstatedir}/lib/riak/riak_repl",
-        "resolved_value": "%{_localstatedir}/lib/riak/riak_repl",
+        "resolved_schema_default": "/var/lib/riak/riak_repl",
+        "resolved_value": "/var/lib/riak/riak_repl",
         "schema_default": "{{repl_data_root}}",
         "schema_expression": "{{repl_data_root}}",
         "source_layer": "package",
         "template_variables": [
           "repl_data_root"
         ],
-        "value": "%{_localstatedir}/lib/riak/riak_repl"
+        "value": "/var/lib/riak/riak_repl"
       },
       "mdc.fssource_retry_wait": {
         "has_default": true,
@@ -26461,7 +26711,7 @@
           }
         ],
         "release_default": null,
-        "resolved_value": "%{_localstatedir}/lib/riak/leveled",
+        "resolved_value": "/var/lib/riak/leveled",
         "schema_default": "$(platform_data_dir)/leveled",
         "source_layer": "schema",
         "value": "$(platform_data_dir)/leveled"
@@ -26896,7 +27146,7 @@
       "platform_bin_dir": {
         "has_default": true,
         "os_default": null,
-        "package_default": "%{_libdir}/riak/bin",
+        "package_default": "/usr/lib64/riak/bin",
         "provenance": [
           {
             "line": 225,
@@ -26917,20 +27167,20 @@
           }
         ],
         "release_default": null,
-        "resolved_schema_default": "%{_libdir}/riak/bin",
-        "resolved_value": "%{_libdir}/riak/bin",
+        "resolved_schema_default": "/usr/lib64/riak/bin",
+        "resolved_value": "/usr/lib64/riak/bin",
         "schema_default": "{{platform_bin_dir}}",
         "schema_expression": "{{platform_bin_dir}}",
         "source_layer": "package",
         "template_variables": [
           "platform_bin_dir"
         ],
-        "value": "%{_libdir}/riak/bin"
+        "value": "/usr/lib64/riak/bin"
       },
       "platform_data_dir": {
         "has_default": true,
         "os_default": null,
-        "package_default": "%{_localstatedir}/lib/riak",
+        "package_default": "/var/lib/riak",
         "provenance": [
           {
             "line": 231,
@@ -26951,20 +27201,20 @@
           }
         ],
         "release_default": null,
-        "resolved_schema_default": "%{_localstatedir}/lib/riak",
-        "resolved_value": "%{_localstatedir}/lib/riak",
+        "resolved_schema_default": "/var/lib/riak",
+        "resolved_value": "/var/lib/riak",
         "schema_default": "{{platform_data_dir}}",
         "schema_expression": "{{platform_data_dir}}",
         "source_layer": "package",
         "template_variables": [
           "platform_data_dir"
         ],
-        "value": "%{_localstatedir}/lib/riak"
+        "value": "/var/lib/riak"
       },
       "platform_etc_dir": {
         "has_default": true,
         "os_default": null,
-        "package_default": "%{_sysconfdir}/riak",
+        "package_default": "/etc/riak",
         "provenance": [
           {
             "line": 237,
@@ -26985,20 +27235,20 @@
           }
         ],
         "release_default": null,
-        "resolved_schema_default": "%{_sysconfdir}/riak",
-        "resolved_value": "%{_sysconfdir}/riak",
+        "resolved_schema_default": "/etc/riak",
+        "resolved_value": "/etc/riak",
         "schema_default": "{{platform_etc_dir}}",
         "schema_expression": "{{platform_etc_dir}}",
         "source_layer": "package",
         "template_variables": [
           "platform_etc_dir"
         ],
-        "value": "%{_sysconfdir}/riak"
+        "value": "/etc/riak"
       },
       "platform_lib_dir": {
         "has_default": true,
         "os_default": null,
-        "package_default": "%{_libdir}/riak/lib",
+        "package_default": "/usr/lib64/riak/lib",
         "provenance": [
           {
             "line": 243,
@@ -27019,20 +27269,20 @@
           }
         ],
         "release_default": null,
-        "resolved_schema_default": "%{_libdir}/riak/lib",
-        "resolved_value": "%{_libdir}/riak/lib",
+        "resolved_schema_default": "/usr/lib64/riak/lib",
+        "resolved_value": "/usr/lib64/riak/lib",
         "schema_default": "{{platform_lib_dir}}",
         "schema_expression": "{{platform_lib_dir}}",
         "source_layer": "package",
         "template_variables": [
           "platform_lib_dir"
         ],
-        "value": "%{_libdir}/riak/lib"
+        "value": "/usr/lib64/riak/lib"
       },
       "platform_log_dir": {
         "has_default": true,
         "os_default": null,
-        "package_default": "%{_localstatedir}/log/riak",
+        "package_default": "/var/log/riak",
         "provenance": [
           {
             "line": 249,
@@ -27053,15 +27303,15 @@
           }
         ],
         "release_default": null,
-        "resolved_schema_default": "%{_localstatedir}/log/riak",
-        "resolved_value": "%{_localstatedir}/log/riak",
+        "resolved_schema_default": "/var/log/riak",
+        "resolved_value": "/var/log/riak",
         "schema_default": "{{platform_log_dir}}",
         "schema_expression": "{{platform_log_dir}}",
         "source_layer": "package",
         "template_variables": [
           "platform_log_dir"
         ],
-        "value": "%{_localstatedir}/log/riak"
+        "value": "/var/log/riak"
       },
       "prevent_overlapping_partitions": {
         "has_default": true,
@@ -27143,7 +27393,7 @@
           }
         ],
         "release_default": null,
-        "resolved_value": "%{_localstatedir}/lib/riak/kv_query",
+        "resolved_value": "/var/lib/riak/kv_query",
         "schema_default": "$(platform_data_dir)/kv_query",
         "source_layer": "schema",
         "value": "$(platform_data_dir)/kv_query"
@@ -27194,7 +27444,7 @@
           }
         ],
         "release_default": null,
-        "resolved_value": "%{_localstatedir}/lib/riak/kv_reader",
+        "resolved_value": "/var/lib/riak/kv_reader",
         "schema_default": "$(platform_data_dir)/kv_reader",
         "source_layer": "schema",
         "value": "$(platform_data_dir)/kv_reader"
@@ -27211,7 +27461,7 @@
           }
         ],
         "release_default": null,
-        "resolved_value": "%{_localstatedir}/lib/riak/kv_reaper",
+        "resolved_value": "/var/lib/riak/kv_reaper",
         "schema_default": "$(platform_data_dir)/kv_reaper",
         "source_layer": "schema",
         "value": "$(platform_data_dir)/kv_reaper"
@@ -27361,7 +27611,7 @@
           }
         ],
         "release_default": null,
-        "resolved_value": "%{_localstatedir}/lib/riak/kv_replrtqsrc",
+        "resolved_value": "/var/lib/riak/kv_replrtqsrc",
         "schema_default": "$(platform_data_dir)/kv_replrtqsrc",
         "source_layer": "schema",
         "value": "$(platform_data_dir)/kv_replrtqsrc"
@@ -27618,7 +27868,7 @@
           }
         ],
         "release_default": null,
-        "resolved_value": "%{_localstatedir}/lib/riak/ring",
+        "resolved_value": "/var/lib/riak/ring",
         "schema_default": "$(platform_data_dir)/ring",
         "source_layer": "schema",
         "value": "$(platform_data_dir)/ring"
@@ -28013,7 +28263,7 @@
           }
         ],
         "release_default": null,
-        "resolved_value": "%{_localstatedir}/lib/riak/tictac_aae",
+        "resolved_value": "/var/lib/riak/tictac_aae",
         "schema_default": "$(platform_data_dir)/tictac_aae",
         "source_layer": "schema",
         "value": "$(platform_data_dir)/tictac_aae"
@@ -30209,7 +30459,7 @@
       "erlang.crash_dump": {
         "has_default": true,
         "os_default": null,
-        "package_default": "{{platform_log_dir}}/erl_crash.dump",
+        "package_default": "/var/log/riak/erl_crash.dump",
         "provenance": [
           {
             "line": 192,
@@ -30223,15 +30473,16 @@
           }
         ],
         "release_default": null,
-        "resolved_schema_default": "{{platform_log_dir}}/erl_crash.dump",
-        "resolved_value": "{{platform_log_dir}}/erl_crash.dump",
+        "resolved_schema_default": "/var/log/riak/erl_crash.dump",
+        "resolved_value": "/var/log/riak/erl_crash.dump",
         "schema_default": "{{crash_dump}}",
         "schema_expression": "{{crash_dump}}",
         "source_layer": "package",
         "template_variables": [
-          "crash_dump"
+          "crash_dump",
+          "platform_log_dir"
         ],
-        "value": "{{platform_log_dir}}/erl_crash.dump"
+        "value": "/var/log/riak/erl_crash.dump"
       },
       "erlang.distribution.interface": {
         "has_default": false,
@@ -31797,21 +32048,35 @@
       "listener.http.$name": {
         "has_default": true,
         "os_default": null,
-        "package_default": null,
+        "package_default": {
+          "$erlang_tuple": [
+            "127.0.0.1",
+            8098
+          ]
+        },
         "provenance": [
           {
             "line": 5,
             "path": "priv/riak_api.schema",
             "repository": "riak_api"
+          },
+          {
+            "line": 1,
+            "path": "rel/pkg/deb/vars.config",
+            "repository": "root"
           }
         ],
         "release_default": null,
+        "resolved_schema_default": {
+          "$erlang_tuple": [
+            "127.0.0.1",
+            8098
+          ]
+        },
         "resolved_value": {
           "$erlang_tuple": [
-            "{{web_ip}}",
-            {
-              "$template": "{{web_port}}"
-            }
+            "127.0.0.1",
+            8098
           ]
         },
         "schema_default": {
@@ -31822,13 +32087,16 @@
             }
           ]
         },
-        "source_layer": "schema",
+        "schema_expression": "{{{web_ip}}, {{web_port}}}",
+        "source_layer": "package",
+        "template_variables": [
+          "web_ip",
+          "web_port"
+        ],
         "value": {
           "$erlang_tuple": [
-            "{{web_ip}}",
-            {
-              "$template": "{{web_port}}"
-            }
+            "127.0.0.1",
+            8098
           ]
         }
       },
@@ -31847,21 +32115,35 @@
       "listener.protobuf.$name": {
         "has_default": true,
         "os_default": null,
-        "package_default": null,
+        "package_default": {
+          "$erlang_tuple": [
+            "127.0.0.1",
+            8087
+          ]
+        },
         "provenance": [
           {
             "line": 21,
             "path": "priv/riak_api.schema",
             "repository": "riak_api"
+          },
+          {
+            "line": 1,
+            "path": "rel/pkg/deb/vars.config",
+            "repository": "root"
           }
         ],
         "release_default": null,
+        "resolved_schema_default": {
+          "$erlang_tuple": [
+            "127.0.0.1",
+            8087
+          ]
+        },
         "resolved_value": {
           "$erlang_tuple": [
-            "{{pb_ip}}",
-            {
-              "$template": "{{pb_port}}"
-            }
+            "127.0.0.1",
+            8087
           ]
         },
         "schema_default": {
@@ -31872,13 +32154,16 @@
             }
           ]
         },
-        "source_layer": "schema",
+        "schema_expression": "{{{pb_ip}}, {{pb_port}}}",
+        "source_layer": "package",
+        "template_variables": [
+          "pb_ip",
+          "pb_port"
+        ],
         "value": {
           "$erlang_tuple": [
-            "{{pb_ip}}",
-            {
-              "$template": "{{pb_port}}"
-            }
+            "127.0.0.1",
+            8087
           ]
         }
       },
@@ -32441,21 +32726,35 @@
       "mdc.cluster_manager": {
         "has_default": true,
         "os_default": null,
-        "package_default": null,
+        "package_default": {
+          "$erlang_tuple": [
+            "127.0.0.1",
+            9080
+          ]
+        },
         "provenance": [
           {
             "line": 16,
             "path": "priv/riak_repl.schema",
             "repository": "riak_repl"
+          },
+          {
+            "line": 1,
+            "path": "rel/pkg/deb/vars.config",
+            "repository": "root"
           }
         ],
         "release_default": null,
+        "resolved_schema_default": {
+          "$erlang_tuple": [
+            "127.0.0.1",
+            9080
+          ]
+        },
         "resolved_value": {
           "$erlang_tuple": [
-            "{{cluster_manager_ip}}",
-            {
-              "$template": "{{cluster_manager_port}}"
-            }
+            "127.0.0.1",
+            9080
           ]
         },
         "schema_default": {
@@ -32466,20 +32765,23 @@
             }
           ]
         },
-        "source_layer": "schema",
+        "schema_expression": "{{{cluster_manager_ip}}, {{cluster_manager_port}}}",
+        "source_layer": "package",
+        "template_variables": [
+          "cluster_manager_ip",
+          "cluster_manager_port"
+        ],
         "value": {
           "$erlang_tuple": [
-            "{{cluster_manager_ip}}",
-            {
-              "$template": "{{cluster_manager_port}}"
-            }
+            "127.0.0.1",
+            9080
           ]
         }
       },
       "mdc.data_root": {
         "has_default": true,
         "os_default": null,
-        "package_default": "{{platform_data_dir}}/riak_repl",
+        "package_default": "/var/lib/riak/riak_repl",
         "provenance": [
           {
             "line": 6,
@@ -32493,15 +32795,16 @@
           }
         ],
         "release_default": null,
-        "resolved_schema_default": "{{platform_data_dir}}/riak_repl",
-        "resolved_value": "{{platform_data_dir}}/riak_repl",
+        "resolved_schema_default": "/var/lib/riak/riak_repl",
+        "resolved_value": "/var/lib/riak/riak_repl",
         "schema_default": "{{repl_data_root}}",
         "schema_expression": "{{repl_data_root}}",
         "source_layer": "package",
         "template_variables": [
-          "repl_data_root"
+          "repl_data_root",
+          "platform_data_dir"
         ],
-        "value": "{{platform_data_dir}}/riak_repl"
+        "value": "/var/lib/riak/riak_repl"
       },
       "mdc.fssource_retry_wait": {
         "has_default": true,
@@ -37361,7 +37664,7 @@
       "erlang.crash_dump": {
         "has_default": true,
         "os_default": null,
-        "package_default": "{{platform_log_dir}}/erl_crash.dump",
+        "package_default": "/var/log/riak/erl_crash.dump",
         "provenance": [
           {
             "line": 192,
@@ -37375,15 +37678,16 @@
           }
         ],
         "release_default": null,
-        "resolved_schema_default": "{{platform_log_dir}}/erl_crash.dump",
-        "resolved_value": "{{platform_log_dir}}/erl_crash.dump",
+        "resolved_schema_default": "/var/log/riak/erl_crash.dump",
+        "resolved_value": "/var/log/riak/erl_crash.dump",
         "schema_default": "{{crash_dump}}",
         "schema_expression": "{{crash_dump}}",
         "source_layer": "package",
         "template_variables": [
-          "crash_dump"
+          "crash_dump",
+          "platform_log_dir"
         ],
-        "value": "{{platform_log_dir}}/erl_crash.dump"
+        "value": "/var/log/riak/erl_crash.dump"
       },
       "erlang.distribution.interface": {
         "has_default": false,
@@ -38949,21 +39253,35 @@
       "listener.http.$name": {
         "has_default": true,
         "os_default": null,
-        "package_default": null,
+        "package_default": {
+          "$erlang_tuple": [
+            "127.0.0.1",
+            8098
+          ]
+        },
         "provenance": [
           {
             "line": 5,
             "path": "priv/riak_api.schema",
             "repository": "riak_api"
+          },
+          {
+            "line": 1,
+            "path": "rel/pkg/deb/vars.config",
+            "repository": "root"
           }
         ],
         "release_default": null,
+        "resolved_schema_default": {
+          "$erlang_tuple": [
+            "127.0.0.1",
+            8098
+          ]
+        },
         "resolved_value": {
           "$erlang_tuple": [
-            "{{web_ip}}",
-            {
-              "$template": "{{web_port}}"
-            }
+            "127.0.0.1",
+            8098
           ]
         },
         "schema_default": {
@@ -38974,13 +39292,16 @@
             }
           ]
         },
-        "source_layer": "schema",
+        "schema_expression": "{{{web_ip}}, {{web_port}}}",
+        "source_layer": "package",
+        "template_variables": [
+          "web_ip",
+          "web_port"
+        ],
         "value": {
           "$erlang_tuple": [
-            "{{web_ip}}",
-            {
-              "$template": "{{web_port}}"
-            }
+            "127.0.0.1",
+            8098
           ]
         }
       },
@@ -38999,21 +39320,35 @@
       "listener.protobuf.$name": {
         "has_default": true,
         "os_default": null,
-        "package_default": null,
+        "package_default": {
+          "$erlang_tuple": [
+            "127.0.0.1",
+            8087
+          ]
+        },
         "provenance": [
           {
             "line": 21,
             "path": "priv/riak_api.schema",
             "repository": "riak_api"
+          },
+          {
+            "line": 1,
+            "path": "rel/pkg/deb/vars.config",
+            "repository": "root"
           }
         ],
         "release_default": null,
+        "resolved_schema_default": {
+          "$erlang_tuple": [
+            "127.0.0.1",
+            8087
+          ]
+        },
         "resolved_value": {
           "$erlang_tuple": [
-            "{{pb_ip}}",
-            {
-              "$template": "{{pb_port}}"
-            }
+            "127.0.0.1",
+            8087
           ]
         },
         "schema_default": {
@@ -39024,13 +39359,16 @@
             }
           ]
         },
-        "source_layer": "schema",
+        "schema_expression": "{{{pb_ip}}, {{pb_port}}}",
+        "source_layer": "package",
+        "template_variables": [
+          "pb_ip",
+          "pb_port"
+        ],
         "value": {
           "$erlang_tuple": [
-            "{{pb_ip}}",
-            {
-              "$template": "{{pb_port}}"
-            }
+            "127.0.0.1",
+            8087
           ]
         }
       },
@@ -39593,21 +39931,35 @@
       "mdc.cluster_manager": {
         "has_default": true,
         "os_default": null,
-        "package_default": null,
+        "package_default": {
+          "$erlang_tuple": [
+            "127.0.0.1",
+            9080
+          ]
+        },
         "provenance": [
           {
             "line": 16,
             "path": "priv/riak_repl.schema",
             "repository": "riak_repl"
+          },
+          {
+            "line": 1,
+            "path": "rel/pkg/deb/vars.config",
+            "repository": "root"
           }
         ],
         "release_default": null,
+        "resolved_schema_default": {
+          "$erlang_tuple": [
+            "127.0.0.1",
+            9080
+          ]
+        },
         "resolved_value": {
           "$erlang_tuple": [
-            "{{cluster_manager_ip}}",
-            {
-              "$template": "{{cluster_manager_port}}"
-            }
+            "127.0.0.1",
+            9080
           ]
         },
         "schema_default": {
@@ -39618,20 +39970,23 @@
             }
           ]
         },
-        "source_layer": "schema",
+        "schema_expression": "{{{cluster_manager_ip}}, {{cluster_manager_port}}}",
+        "source_layer": "package",
+        "template_variables": [
+          "cluster_manager_ip",
+          "cluster_manager_port"
+        ],
         "value": {
           "$erlang_tuple": [
-            "{{cluster_manager_ip}}",
-            {
-              "$template": "{{cluster_manager_port}}"
-            }
+            "127.0.0.1",
+            9080
           ]
         }
       },
       "mdc.data_root": {
         "has_default": true,
         "os_default": null,
-        "package_default": "{{platform_data_dir}}/riak_repl",
+        "package_default": "/var/lib/riak/riak_repl",
         "provenance": [
           {
             "line": 6,
@@ -39645,15 +40000,16 @@
           }
         ],
         "release_default": null,
-        "resolved_schema_default": "{{platform_data_dir}}/riak_repl",
-        "resolved_value": "{{platform_data_dir}}/riak_repl",
+        "resolved_schema_default": "/var/lib/riak/riak_repl",
+        "resolved_value": "/var/lib/riak/riak_repl",
         "schema_default": "{{repl_data_root}}",
         "schema_expression": "{{repl_data_root}}",
         "source_layer": "package",
         "template_variables": [
-          "repl_data_root"
+          "repl_data_root",
+          "platform_data_dir"
         ],
-        "value": "{{platform_data_dir}}/riak_repl"
+        "value": "/var/lib/riak/riak_repl"
       },
       "mdc.fssource_retry_wait": {
         "has_default": true,
@@ -43246,7 +43602,7 @@
           }
         ],
         "release_default": null,
-        "resolved_value": "%{_localstatedir}/lib/riak/anti_entropy",
+        "resolved_value": "/var/lib/riak/anti_entropy",
         "schema_default": "$(platform_data_dir)/anti_entropy",
         "source_layer": "schema",
         "value": "$(platform_data_dir)/anti_entropy"
@@ -43474,7 +43830,7 @@
           }
         ],
         "release_default": null,
-        "resolved_value": "%{_localstatedir}/lib/riak/bitcask",
+        "resolved_value": "/var/lib/riak/bitcask",
         "schema_default": "$(platform_data_dir)/bitcask",
         "source_layer": "schema",
         "value": "$(platform_data_dir)/bitcask"
@@ -44372,7 +44728,7 @@
           }
         ],
         "release_default": null,
-        "resolved_value": "%{_localstatedir}/lib/riak/kv_eraser",
+        "resolved_value": "/var/lib/riak/kv_eraser",
         "schema_default": "$(platform_data_dir)/kv_eraser",
         "source_layer": "schema",
         "value": "$(platform_data_dir)/kv_eraser"
@@ -44513,7 +44869,7 @@
       "erlang.crash_dump": {
         "has_default": true,
         "os_default": null,
-        "package_default": "%{_localstatedir}/log/riak/erl_crash.dump",
+        "package_default": "/var/log/riak/erl_crash.dump",
         "provenance": [
           {
             "line": 192,
@@ -44534,15 +44890,15 @@
           }
         ],
         "release_default": null,
-        "resolved_schema_default": "%{_localstatedir}/log/riak/erl_crash.dump",
-        "resolved_value": "%{_localstatedir}/log/riak/erl_crash.dump",
+        "resolved_schema_default": "/var/log/riak/erl_crash.dump",
+        "resolved_value": "/var/log/riak/erl_crash.dump",
         "schema_default": "{{crash_dump}}",
         "schema_expression": "{{crash_dump}}",
         "source_layer": "package",
         "template_variables": [
           "crash_dump"
         ],
-        "value": "%{_localstatedir}/log/riak/erl_crash.dump"
+        "value": "/var/log/riak/erl_crash.dump"
       },
       "erlang.distribution.interface": {
         "has_default": false,
@@ -45427,7 +45783,7 @@
           }
         ],
         "release_default": null,
-        "resolved_value": "%{_localstatedir}/lib/riak/leveldb",
+        "resolved_value": "/var/lib/riak/leveldb",
         "schema_default": "$(platform_data_dir)/leveldb",
         "source_layer": "schema",
         "value": "$(platform_data_dir)/leveldb"
@@ -45859,7 +46215,7 @@
           }
         ],
         "release_default": null,
-        "resolved_value": "%{_localstatedir}/lib/riak/leveled",
+        "resolved_value": "/var/lib/riak/leveled",
         "schema_default": "$(platform_data_dir)/leveled",
         "source_layer": "schema",
         "value": "$(platform_data_dir)/leveled"
@@ -46122,21 +46478,42 @@
       "listener.http.$name": {
         "has_default": true,
         "os_default": null,
-        "package_default": null,
+        "package_default": {
+          "$erlang_tuple": [
+            "127.0.0.1",
+            8098
+          ]
+        },
         "provenance": [
           {
             "line": 5,
             "path": "priv/riak_api.schema",
             "repository": "riak_api"
+          },
+          {
+            "line": 1,
+            "path": "rel/pkg/rpm/vars.config.part",
+            "repository": "root",
+            "source_type": "rpm-generated-vars"
+          },
+          {
+            "line": 1,
+            "path": "rel/pkg/rpm/specfile",
+            "repository": "root",
+            "source_type": "rpm-generated-vars"
           }
         ],
         "release_default": null,
+        "resolved_schema_default": {
+          "$erlang_tuple": [
+            "127.0.0.1",
+            8098
+          ]
+        },
         "resolved_value": {
           "$erlang_tuple": [
-            "{{web_ip}}",
-            {
-              "$template": "{{web_port}}"
-            }
+            "127.0.0.1",
+            8098
           ]
         },
         "schema_default": {
@@ -46147,13 +46524,16 @@
             }
           ]
         },
-        "source_layer": "schema",
+        "schema_expression": "{{{web_ip}}, {{web_port}}}",
+        "source_layer": "package",
+        "template_variables": [
+          "web_ip",
+          "web_port"
+        ],
         "value": {
           "$erlang_tuple": [
-            "{{web_ip}}",
-            {
-              "$template": "{{web_port}}"
-            }
+            "127.0.0.1",
+            8098
           ]
         }
       },
@@ -46172,21 +46552,42 @@
       "listener.protobuf.$name": {
         "has_default": true,
         "os_default": null,
-        "package_default": null,
+        "package_default": {
+          "$erlang_tuple": [
+            "127.0.0.1",
+            8087
+          ]
+        },
         "provenance": [
           {
             "line": 21,
             "path": "priv/riak_api.schema",
             "repository": "riak_api"
+          },
+          {
+            "line": 1,
+            "path": "rel/pkg/rpm/vars.config.part",
+            "repository": "root",
+            "source_type": "rpm-generated-vars"
+          },
+          {
+            "line": 1,
+            "path": "rel/pkg/rpm/specfile",
+            "repository": "root",
+            "source_type": "rpm-generated-vars"
           }
         ],
         "release_default": null,
+        "resolved_schema_default": {
+          "$erlang_tuple": [
+            "127.0.0.1",
+            8087
+          ]
+        },
         "resolved_value": {
           "$erlang_tuple": [
-            "{{pb_ip}}",
-            {
-              "$template": "{{pb_port}}"
-            }
+            "127.0.0.1",
+            8087
           ]
         },
         "schema_default": {
@@ -46197,13 +46598,16 @@
             }
           ]
         },
-        "source_layer": "schema",
+        "schema_expression": "{{{pb_ip}}, {{pb_port}}}",
+        "source_layer": "package",
+        "template_variables": [
+          "pb_ip",
+          "pb_port"
+        ],
         "value": {
           "$erlang_tuple": [
-            "{{pb_ip}}",
-            {
-              "$template": "{{pb_port}}"
-            }
+            "127.0.0.1",
+            8087
           ]
         }
       },
@@ -46236,7 +46640,7 @@
           }
         ],
         "release_default": null,
-        "resolved_value": "%{_localstatedir}/log/riak/console.log",
+        "resolved_value": "/var/log/riak/console.log",
         "schema_default": "$(platform_log_dir)/console.log",
         "source_layer": "schema",
         "value": "$(platform_log_dir)/console.log"
@@ -46287,7 +46691,7 @@
           }
         ],
         "release_default": null,
-        "resolved_value": "%{_localstatedir}/log/riak/crash.log",
+        "resolved_value": "/var/log/riak/crash.log",
         "schema_default": "$(platform_log_dir)/crash.log",
         "source_layer": "schema",
         "value": "$(platform_log_dir)/crash.log"
@@ -46372,7 +46776,7 @@
           }
         ],
         "release_default": null,
-        "resolved_value": "%{_localstatedir}/log/riak/error.log",
+        "resolved_value": "/var/log/riak/error.log",
         "schema_default": "$(platform_log_dir)/error.log",
         "source_layer": "schema",
         "value": "$(platform_log_dir)/error.log"
@@ -46525,7 +46929,7 @@
           }
         ],
         "release_default": null,
-        "resolved_value": "%{_localstatedir}/log/riak/backend.log",
+        "resolved_value": "/var/log/riak/backend.log",
         "schema_default": "$(platform_log_dir)/backend.log",
         "source_layer": "schema",
         "value": "$(platform_log_dir)/backend.log"
@@ -46542,7 +46946,7 @@
           }
         ],
         "release_default": null,
-        "resolved_value": "%{_localstatedir}/log/riak/background.log",
+        "resolved_value": "/var/log/riak/background.log",
         "schema_default": "$(platform_log_dir)/background.log",
         "source_layer": "schema",
         "value": "$(platform_log_dir)/background.log"
@@ -46559,7 +46963,7 @@
           }
         ],
         "release_default": null,
-        "resolved_value": "%{_localstatedir}/log/riak/crash.log",
+        "resolved_value": "/var/log/riak/crash.log",
         "schema_default": "$(platform_log_dir)/crash.log",
         "source_layer": "schema",
         "value": "$(platform_log_dir)/crash.log"
@@ -46593,7 +46997,7 @@
           }
         ],
         "release_default": null,
-        "resolved_value": "%{_localstatedir}/log/riak/error.log",
+        "resolved_value": "/var/log/riak/error.log",
         "schema_default": "$(platform_log_dir)/error.log",
         "source_layer": "schema",
         "value": "$(platform_log_dir)/error.log"
@@ -46610,7 +47014,7 @@
           }
         ],
         "release_default": null,
-        "resolved_value": "%{_localstatedir}/log/riak/console.log",
+        "resolved_value": "/var/log/riak/console.log",
         "schema_default": "$(platform_log_dir)/console.log",
         "source_layer": "schema",
         "value": "$(platform_log_dir)/console.log"
@@ -46644,7 +47048,7 @@
           }
         ],
         "release_default": null,
-        "resolved_value": "%{_localstatedir}/log/riak/json.log",
+        "resolved_value": "/var/log/riak/json.log",
         "schema_default": "$(platform_log_dir)/json.log",
         "source_layer": "schema",
         "value": "$(platform_log_dir)/json.log"
@@ -46731,7 +47135,7 @@
           }
         ],
         "release_default": null,
-        "resolved_value": "%{_localstatedir}/log/riak/report.log",
+        "resolved_value": "/var/log/riak/report.log",
         "schema_default": "$(platform_log_dir)/report.log",
         "source_layer": "schema",
         "value": "$(platform_log_dir)/report.log"
@@ -46773,21 +47177,42 @@
       "mdc.cluster_manager": {
         "has_default": true,
         "os_default": null,
-        "package_default": null,
+        "package_default": {
+          "$erlang_tuple": [
+            "127.0.0.1",
+            9080
+          ]
+        },
         "provenance": [
           {
             "line": 16,
             "path": "priv/riak_repl.schema",
             "repository": "riak_repl"
+          },
+          {
+            "line": 1,
+            "path": "rel/pkg/rpm/vars.config.part",
+            "repository": "root",
+            "source_type": "rpm-generated-vars"
+          },
+          {
+            "line": 1,
+            "path": "rel/pkg/rpm/specfile",
+            "repository": "root",
+            "source_type": "rpm-generated-vars"
           }
         ],
         "release_default": null,
+        "resolved_schema_default": {
+          "$erlang_tuple": [
+            "127.0.0.1",
+            9080
+          ]
+        },
         "resolved_value": {
           "$erlang_tuple": [
-            "{{cluster_manager_ip}}",
-            {
-              "$template": "{{cluster_manager_port}}"
-            }
+            "127.0.0.1",
+            9080
           ]
         },
         "schema_default": {
@@ -46798,20 +47223,23 @@
             }
           ]
         },
-        "source_layer": "schema",
+        "schema_expression": "{{{cluster_manager_ip}}, {{cluster_manager_port}}}",
+        "source_layer": "package",
+        "template_variables": [
+          "cluster_manager_ip",
+          "cluster_manager_port"
+        ],
         "value": {
           "$erlang_tuple": [
-            "{{cluster_manager_ip}}",
-            {
-              "$template": "{{cluster_manager_port}}"
-            }
+            "127.0.0.1",
+            9080
           ]
         }
       },
       "mdc.data_root": {
         "has_default": true,
         "os_default": null,
-        "package_default": "%{_localstatedir}/lib/riak/riak_repl",
+        "package_default": "/var/lib/riak/riak_repl",
         "provenance": [
           {
             "line": 6,
@@ -46832,15 +47260,15 @@
           }
         ],
         "release_default": null,
-        "resolved_schema_default": "%{_localstatedir}/lib/riak/riak_repl",
-        "resolved_value": "%{_localstatedir}/lib/riak/riak_repl",
+        "resolved_schema_default": "/var/lib/riak/riak_repl",
+        "resolved_value": "/var/lib/riak/riak_repl",
         "schema_default": "{{repl_data_root}}",
         "schema_expression": "{{repl_data_root}}",
         "source_layer": "package",
         "template_variables": [
           "repl_data_root"
         ],
-        "value": "%{_localstatedir}/lib/riak/riak_repl"
+        "value": "/var/lib/riak/riak_repl"
       },
       "mdc.fssource_retry_wait": {
         "has_default": true,
@@ -48001,7 +48429,7 @@
           }
         ],
         "release_default": null,
-        "resolved_value": "%{_localstatedir}/lib/riak/leveled",
+        "resolved_value": "/var/lib/riak/leveled",
         "schema_default": "$(platform_data_dir)/leveled",
         "source_layer": "schema",
         "value": "$(platform_data_dir)/leveled"
@@ -48436,7 +48864,7 @@
       "platform_bin_dir": {
         "has_default": true,
         "os_default": null,
-        "package_default": "%{_libdir}/riak/bin",
+        "package_default": "/usr/lib64/riak/bin",
         "provenance": [
           {
             "line": 225,
@@ -48457,20 +48885,20 @@
           }
         ],
         "release_default": null,
-        "resolved_schema_default": "%{_libdir}/riak/bin",
-        "resolved_value": "%{_libdir}/riak/bin",
+        "resolved_schema_default": "/usr/lib64/riak/bin",
+        "resolved_value": "/usr/lib64/riak/bin",
         "schema_default": "{{platform_bin_dir}}",
         "schema_expression": "{{platform_bin_dir}}",
         "source_layer": "package",
         "template_variables": [
           "platform_bin_dir"
         ],
-        "value": "%{_libdir}/riak/bin"
+        "value": "/usr/lib64/riak/bin"
       },
       "platform_data_dir": {
         "has_default": true,
         "os_default": null,
-        "package_default": "%{_localstatedir}/lib/riak",
+        "package_default": "/var/lib/riak",
         "provenance": [
           {
             "line": 231,
@@ -48491,20 +48919,20 @@
           }
         ],
         "release_default": null,
-        "resolved_schema_default": "%{_localstatedir}/lib/riak",
-        "resolved_value": "%{_localstatedir}/lib/riak",
+        "resolved_schema_default": "/var/lib/riak",
+        "resolved_value": "/var/lib/riak",
         "schema_default": "{{platform_data_dir}}",
         "schema_expression": "{{platform_data_dir}}",
         "source_layer": "package",
         "template_variables": [
           "platform_data_dir"
         ],
-        "value": "%{_localstatedir}/lib/riak"
+        "value": "/var/lib/riak"
       },
       "platform_etc_dir": {
         "has_default": true,
         "os_default": null,
-        "package_default": "%{_sysconfdir}/riak",
+        "package_default": "/etc/riak",
         "provenance": [
           {
             "line": 237,
@@ -48525,20 +48953,20 @@
           }
         ],
         "release_default": null,
-        "resolved_schema_default": "%{_sysconfdir}/riak",
-        "resolved_value": "%{_sysconfdir}/riak",
+        "resolved_schema_default": "/etc/riak",
+        "resolved_value": "/etc/riak",
         "schema_default": "{{platform_etc_dir}}",
         "schema_expression": "{{platform_etc_dir}}",
         "source_layer": "package",
         "template_variables": [
           "platform_etc_dir"
         ],
-        "value": "%{_sysconfdir}/riak"
+        "value": "/etc/riak"
       },
       "platform_lib_dir": {
         "has_default": true,
         "os_default": null,
-        "package_default": "%{_libdir}/riak/lib",
+        "package_default": "/usr/lib64/riak/lib",
         "provenance": [
           {
             "line": 243,
@@ -48559,20 +48987,20 @@
           }
         ],
         "release_default": null,
-        "resolved_schema_default": "%{_libdir}/riak/lib",
-        "resolved_value": "%{_libdir}/riak/lib",
+        "resolved_schema_default": "/usr/lib64/riak/lib",
+        "resolved_value": "/usr/lib64/riak/lib",
         "schema_default": "{{platform_lib_dir}}",
         "schema_expression": "{{platform_lib_dir}}",
         "source_layer": "package",
         "template_variables": [
           "platform_lib_dir"
         ],
-        "value": "%{_libdir}/riak/lib"
+        "value": "/usr/lib64/riak/lib"
       },
       "platform_log_dir": {
         "has_default": true,
         "os_default": null,
-        "package_default": "%{_localstatedir}/log/riak",
+        "package_default": "/var/log/riak",
         "provenance": [
           {
             "line": 249,
@@ -48593,15 +49021,15 @@
           }
         ],
         "release_default": null,
-        "resolved_schema_default": "%{_localstatedir}/log/riak",
-        "resolved_value": "%{_localstatedir}/log/riak",
+        "resolved_schema_default": "/var/log/riak",
+        "resolved_value": "/var/log/riak",
         "schema_default": "{{platform_log_dir}}",
         "schema_expression": "{{platform_log_dir}}",
         "source_layer": "package",
         "template_variables": [
           "platform_log_dir"
         ],
-        "value": "%{_localstatedir}/log/riak"
+        "value": "/var/log/riak"
       },
       "prevent_overlapping_partitions": {
         "has_default": true,
@@ -48683,7 +49111,7 @@
           }
         ],
         "release_default": null,
-        "resolved_value": "%{_localstatedir}/lib/riak/kv_query",
+        "resolved_value": "/var/lib/riak/kv_query",
         "schema_default": "$(platform_data_dir)/kv_query",
         "source_layer": "schema",
         "value": "$(platform_data_dir)/kv_query"
@@ -48734,7 +49162,7 @@
           }
         ],
         "release_default": null,
-        "resolved_value": "%{_localstatedir}/lib/riak/kv_reader",
+        "resolved_value": "/var/lib/riak/kv_reader",
         "schema_default": "$(platform_data_dir)/kv_reader",
         "source_layer": "schema",
         "value": "$(platform_data_dir)/kv_reader"
@@ -48751,7 +49179,7 @@
           }
         ],
         "release_default": null,
-        "resolved_value": "%{_localstatedir}/lib/riak/kv_reaper",
+        "resolved_value": "/var/lib/riak/kv_reaper",
         "schema_default": "$(platform_data_dir)/kv_reaper",
         "source_layer": "schema",
         "value": "$(platform_data_dir)/kv_reaper"
@@ -48901,7 +49329,7 @@
           }
         ],
         "release_default": null,
-        "resolved_value": "%{_localstatedir}/lib/riak/kv_replrtqsrc",
+        "resolved_value": "/var/lib/riak/kv_replrtqsrc",
         "schema_default": "$(platform_data_dir)/kv_replrtqsrc",
         "source_layer": "schema",
         "value": "$(platform_data_dir)/kv_replrtqsrc"
@@ -49158,7 +49586,7 @@
           }
         ],
         "release_default": null,
-        "resolved_value": "%{_localstatedir}/lib/riak/ring",
+        "resolved_value": "/var/lib/riak/ring",
         "schema_default": "$(platform_data_dir)/ring",
         "source_layer": "schema",
         "value": "$(platform_data_dir)/ring"
@@ -49553,7 +49981,7 @@
           }
         ],
         "release_default": null,
-        "resolved_value": "%{_localstatedir}/lib/riak/tictac_aae",
+        "resolved_value": "/var/lib/riak/tictac_aae",
         "schema_default": "$(platform_data_dir)/tictac_aae",
         "source_layer": "schema",
         "value": "$(platform_data_dir)/tictac_aae"
@@ -50482,7 +50910,7 @@
           }
         ],
         "release_default": null,
-        "resolved_value": "%{_localstatedir}/lib/riak/anti_entropy",
+        "resolved_value": "/var/lib/riak/anti_entropy",
         "schema_default": "$(platform_data_dir)/anti_entropy",
         "source_layer": "schema",
         "value": "$(platform_data_dir)/anti_entropy"
@@ -50710,7 +51138,7 @@
           }
         ],
         "release_default": null,
-        "resolved_value": "%{_localstatedir}/lib/riak/bitcask",
+        "resolved_value": "/var/lib/riak/bitcask",
         "schema_default": "$(platform_data_dir)/bitcask",
         "source_layer": "schema",
         "value": "$(platform_data_dir)/bitcask"
@@ -51608,7 +52036,7 @@
           }
         ],
         "release_default": null,
-        "resolved_value": "%{_localstatedir}/lib/riak/kv_eraser",
+        "resolved_value": "/var/lib/riak/kv_eraser",
         "schema_default": "$(platform_data_dir)/kv_eraser",
         "source_layer": "schema",
         "value": "$(platform_data_dir)/kv_eraser"
@@ -51749,7 +52177,7 @@
       "erlang.crash_dump": {
         "has_default": true,
         "os_default": null,
-        "package_default": "%{_localstatedir}/log/riak/erl_crash.dump",
+        "package_default": "/var/log/riak/erl_crash.dump",
         "provenance": [
           {
             "line": 192,
@@ -51770,15 +52198,15 @@
           }
         ],
         "release_default": null,
-        "resolved_schema_default": "%{_localstatedir}/log/riak/erl_crash.dump",
-        "resolved_value": "%{_localstatedir}/log/riak/erl_crash.dump",
+        "resolved_schema_default": "/var/log/riak/erl_crash.dump",
+        "resolved_value": "/var/log/riak/erl_crash.dump",
         "schema_default": "{{crash_dump}}",
         "schema_expression": "{{crash_dump}}",
         "source_layer": "package",
         "template_variables": [
           "crash_dump"
         ],
-        "value": "%{_localstatedir}/log/riak/erl_crash.dump"
+        "value": "/var/log/riak/erl_crash.dump"
       },
       "erlang.distribution.interface": {
         "has_default": false,
@@ -52663,7 +53091,7 @@
           }
         ],
         "release_default": null,
-        "resolved_value": "%{_localstatedir}/lib/riak/leveldb",
+        "resolved_value": "/var/lib/riak/leveldb",
         "schema_default": "$(platform_data_dir)/leveldb",
         "source_layer": "schema",
         "value": "$(platform_data_dir)/leveldb"
@@ -53095,7 +53523,7 @@
           }
         ],
         "release_default": null,
-        "resolved_value": "%{_localstatedir}/lib/riak/leveled",
+        "resolved_value": "/var/lib/riak/leveled",
         "schema_default": "$(platform_data_dir)/leveled",
         "source_layer": "schema",
         "value": "$(platform_data_dir)/leveled"
@@ -53358,21 +53786,42 @@
       "listener.http.$name": {
         "has_default": true,
         "os_default": null,
-        "package_default": null,
+        "package_default": {
+          "$erlang_tuple": [
+            "127.0.0.1",
+            8098
+          ]
+        },
         "provenance": [
           {
             "line": 5,
             "path": "priv/riak_api.schema",
             "repository": "riak_api"
+          },
+          {
+            "line": 1,
+            "path": "rel/pkg/rpm/vars.config.part",
+            "repository": "root",
+            "source_type": "rpm-generated-vars"
+          },
+          {
+            "line": 1,
+            "path": "rel/pkg/rpm/specfile",
+            "repository": "root",
+            "source_type": "rpm-generated-vars"
           }
         ],
         "release_default": null,
+        "resolved_schema_default": {
+          "$erlang_tuple": [
+            "127.0.0.1",
+            8098
+          ]
+        },
         "resolved_value": {
           "$erlang_tuple": [
-            "{{web_ip}}",
-            {
-              "$template": "{{web_port}}"
-            }
+            "127.0.0.1",
+            8098
           ]
         },
         "schema_default": {
@@ -53383,13 +53832,16 @@
             }
           ]
         },
-        "source_layer": "schema",
+        "schema_expression": "{{{web_ip}}, {{web_port}}}",
+        "source_layer": "package",
+        "template_variables": [
+          "web_ip",
+          "web_port"
+        ],
         "value": {
           "$erlang_tuple": [
-            "{{web_ip}}",
-            {
-              "$template": "{{web_port}}"
-            }
+            "127.0.0.1",
+            8098
           ]
         }
       },
@@ -53408,21 +53860,42 @@
       "listener.protobuf.$name": {
         "has_default": true,
         "os_default": null,
-        "package_default": null,
+        "package_default": {
+          "$erlang_tuple": [
+            "127.0.0.1",
+            8087
+          ]
+        },
         "provenance": [
           {
             "line": 21,
             "path": "priv/riak_api.schema",
             "repository": "riak_api"
+          },
+          {
+            "line": 1,
+            "path": "rel/pkg/rpm/vars.config.part",
+            "repository": "root",
+            "source_type": "rpm-generated-vars"
+          },
+          {
+            "line": 1,
+            "path": "rel/pkg/rpm/specfile",
+            "repository": "root",
+            "source_type": "rpm-generated-vars"
           }
         ],
         "release_default": null,
+        "resolved_schema_default": {
+          "$erlang_tuple": [
+            "127.0.0.1",
+            8087
+          ]
+        },
         "resolved_value": {
           "$erlang_tuple": [
-            "{{pb_ip}}",
-            {
-              "$template": "{{pb_port}}"
-            }
+            "127.0.0.1",
+            8087
           ]
         },
         "schema_default": {
@@ -53433,13 +53906,16 @@
             }
           ]
         },
-        "source_layer": "schema",
+        "schema_expression": "{{{pb_ip}}, {{pb_port}}}",
+        "source_layer": "package",
+        "template_variables": [
+          "pb_ip",
+          "pb_port"
+        ],
         "value": {
           "$erlang_tuple": [
-            "{{pb_ip}}",
-            {
-              "$template": "{{pb_port}}"
-            }
+            "127.0.0.1",
+            8087
           ]
         }
       },
@@ -53472,7 +53948,7 @@
           }
         ],
         "release_default": null,
-        "resolved_value": "%{_localstatedir}/log/riak/console.log",
+        "resolved_value": "/var/log/riak/console.log",
         "schema_default": "$(platform_log_dir)/console.log",
         "source_layer": "schema",
         "value": "$(platform_log_dir)/console.log"
@@ -53523,7 +53999,7 @@
           }
         ],
         "release_default": null,
-        "resolved_value": "%{_localstatedir}/log/riak/crash.log",
+        "resolved_value": "/var/log/riak/crash.log",
         "schema_default": "$(platform_log_dir)/crash.log",
         "source_layer": "schema",
         "value": "$(platform_log_dir)/crash.log"
@@ -53608,7 +54084,7 @@
           }
         ],
         "release_default": null,
-        "resolved_value": "%{_localstatedir}/log/riak/error.log",
+        "resolved_value": "/var/log/riak/error.log",
         "schema_default": "$(platform_log_dir)/error.log",
         "source_layer": "schema",
         "value": "$(platform_log_dir)/error.log"
@@ -53761,7 +54237,7 @@
           }
         ],
         "release_default": null,
-        "resolved_value": "%{_localstatedir}/log/riak/backend.log",
+        "resolved_value": "/var/log/riak/backend.log",
         "schema_default": "$(platform_log_dir)/backend.log",
         "source_layer": "schema",
         "value": "$(platform_log_dir)/backend.log"
@@ -53778,7 +54254,7 @@
           }
         ],
         "release_default": null,
-        "resolved_value": "%{_localstatedir}/log/riak/background.log",
+        "resolved_value": "/var/log/riak/background.log",
         "schema_default": "$(platform_log_dir)/background.log",
         "source_layer": "schema",
         "value": "$(platform_log_dir)/background.log"
@@ -53795,7 +54271,7 @@
           }
         ],
         "release_default": null,
-        "resolved_value": "%{_localstatedir}/log/riak/crash.log",
+        "resolved_value": "/var/log/riak/crash.log",
         "schema_default": "$(platform_log_dir)/crash.log",
         "source_layer": "schema",
         "value": "$(platform_log_dir)/crash.log"
@@ -53829,7 +54305,7 @@
           }
         ],
         "release_default": null,
-        "resolved_value": "%{_localstatedir}/log/riak/error.log",
+        "resolved_value": "/var/log/riak/error.log",
         "schema_default": "$(platform_log_dir)/error.log",
         "source_layer": "schema",
         "value": "$(platform_log_dir)/error.log"
@@ -53846,7 +54322,7 @@
           }
         ],
         "release_default": null,
-        "resolved_value": "%{_localstatedir}/log/riak/console.log",
+        "resolved_value": "/var/log/riak/console.log",
         "schema_default": "$(platform_log_dir)/console.log",
         "source_layer": "schema",
         "value": "$(platform_log_dir)/console.log"
@@ -53880,7 +54356,7 @@
           }
         ],
         "release_default": null,
-        "resolved_value": "%{_localstatedir}/log/riak/json.log",
+        "resolved_value": "/var/log/riak/json.log",
         "schema_default": "$(platform_log_dir)/json.log",
         "source_layer": "schema",
         "value": "$(platform_log_dir)/json.log"
@@ -53967,7 +54443,7 @@
           }
         ],
         "release_default": null,
-        "resolved_value": "%{_localstatedir}/log/riak/report.log",
+        "resolved_value": "/var/log/riak/report.log",
         "schema_default": "$(platform_log_dir)/report.log",
         "source_layer": "schema",
         "value": "$(platform_log_dir)/report.log"
@@ -54009,21 +54485,42 @@
       "mdc.cluster_manager": {
         "has_default": true,
         "os_default": null,
-        "package_default": null,
+        "package_default": {
+          "$erlang_tuple": [
+            "127.0.0.1",
+            9080
+          ]
+        },
         "provenance": [
           {
             "line": 16,
             "path": "priv/riak_repl.schema",
             "repository": "riak_repl"
+          },
+          {
+            "line": 1,
+            "path": "rel/pkg/rpm/vars.config.part",
+            "repository": "root",
+            "source_type": "rpm-generated-vars"
+          },
+          {
+            "line": 1,
+            "path": "rel/pkg/rpm/specfile",
+            "repository": "root",
+            "source_type": "rpm-generated-vars"
           }
         ],
         "release_default": null,
+        "resolved_schema_default": {
+          "$erlang_tuple": [
+            "127.0.0.1",
+            9080
+          ]
+        },
         "resolved_value": {
           "$erlang_tuple": [
-            "{{cluster_manager_ip}}",
-            {
-              "$template": "{{cluster_manager_port}}"
-            }
+            "127.0.0.1",
+            9080
           ]
         },
         "schema_default": {
@@ -54034,20 +54531,23 @@
             }
           ]
         },
-        "source_layer": "schema",
+        "schema_expression": "{{{cluster_manager_ip}}, {{cluster_manager_port}}}",
+        "source_layer": "package",
+        "template_variables": [
+          "cluster_manager_ip",
+          "cluster_manager_port"
+        ],
         "value": {
           "$erlang_tuple": [
-            "{{cluster_manager_ip}}",
-            {
-              "$template": "{{cluster_manager_port}}"
-            }
+            "127.0.0.1",
+            9080
           ]
         }
       },
       "mdc.data_root": {
         "has_default": true,
         "os_default": null,
-        "package_default": "%{_localstatedir}/lib/riak/riak_repl",
+        "package_default": "/var/lib/riak/riak_repl",
         "provenance": [
           {
             "line": 6,
@@ -54068,15 +54568,15 @@
           }
         ],
         "release_default": null,
-        "resolved_schema_default": "%{_localstatedir}/lib/riak/riak_repl",
-        "resolved_value": "%{_localstatedir}/lib/riak/riak_repl",
+        "resolved_schema_default": "/var/lib/riak/riak_repl",
+        "resolved_value": "/var/lib/riak/riak_repl",
         "schema_default": "{{repl_data_root}}",
         "schema_expression": "{{repl_data_root}}",
         "source_layer": "package",
         "template_variables": [
           "repl_data_root"
         ],
-        "value": "%{_localstatedir}/lib/riak/riak_repl"
+        "value": "/var/lib/riak/riak_repl"
       },
       "mdc.fssource_retry_wait": {
         "has_default": true,
@@ -55237,7 +55737,7 @@
           }
         ],
         "release_default": null,
-        "resolved_value": "%{_localstatedir}/lib/riak/leveled",
+        "resolved_value": "/var/lib/riak/leveled",
         "schema_default": "$(platform_data_dir)/leveled",
         "source_layer": "schema",
         "value": "$(platform_data_dir)/leveled"
@@ -55672,7 +56172,7 @@
       "platform_bin_dir": {
         "has_default": true,
         "os_default": null,
-        "package_default": "%{_libdir}/riak/bin",
+        "package_default": "/usr/lib64/riak/bin",
         "provenance": [
           {
             "line": 225,
@@ -55693,20 +56193,20 @@
           }
         ],
         "release_default": null,
-        "resolved_schema_default": "%{_libdir}/riak/bin",
-        "resolved_value": "%{_libdir}/riak/bin",
+        "resolved_schema_default": "/usr/lib64/riak/bin",
+        "resolved_value": "/usr/lib64/riak/bin",
         "schema_default": "{{platform_bin_dir}}",
         "schema_expression": "{{platform_bin_dir}}",
         "source_layer": "package",
         "template_variables": [
           "platform_bin_dir"
         ],
-        "value": "%{_libdir}/riak/bin"
+        "value": "/usr/lib64/riak/bin"
       },
       "platform_data_dir": {
         "has_default": true,
         "os_default": null,
-        "package_default": "%{_localstatedir}/lib/riak",
+        "package_default": "/var/lib/riak",
         "provenance": [
           {
             "line": 231,
@@ -55727,20 +56227,20 @@
           }
         ],
         "release_default": null,
-        "resolved_schema_default": "%{_localstatedir}/lib/riak",
-        "resolved_value": "%{_localstatedir}/lib/riak",
+        "resolved_schema_default": "/var/lib/riak",
+        "resolved_value": "/var/lib/riak",
         "schema_default": "{{platform_data_dir}}",
         "schema_expression": "{{platform_data_dir}}",
         "source_layer": "package",
         "template_variables": [
           "platform_data_dir"
         ],
-        "value": "%{_localstatedir}/lib/riak"
+        "value": "/var/lib/riak"
       },
       "platform_etc_dir": {
         "has_default": true,
         "os_default": null,
-        "package_default": "%{_sysconfdir}/riak",
+        "package_default": "/etc/riak",
         "provenance": [
           {
             "line": 237,
@@ -55761,20 +56261,20 @@
           }
         ],
         "release_default": null,
-        "resolved_schema_default": "%{_sysconfdir}/riak",
-        "resolved_value": "%{_sysconfdir}/riak",
+        "resolved_schema_default": "/etc/riak",
+        "resolved_value": "/etc/riak",
         "schema_default": "{{platform_etc_dir}}",
         "schema_expression": "{{platform_etc_dir}}",
         "source_layer": "package",
         "template_variables": [
           "platform_etc_dir"
         ],
-        "value": "%{_sysconfdir}/riak"
+        "value": "/etc/riak"
       },
       "platform_lib_dir": {
         "has_default": true,
         "os_default": null,
-        "package_default": "%{_libdir}/riak/lib",
+        "package_default": "/usr/lib64/riak/lib",
         "provenance": [
           {
             "line": 243,
@@ -55795,20 +56295,20 @@
           }
         ],
         "release_default": null,
-        "resolved_schema_default": "%{_libdir}/riak/lib",
-        "resolved_value": "%{_libdir}/riak/lib",
+        "resolved_schema_default": "/usr/lib64/riak/lib",
+        "resolved_value": "/usr/lib64/riak/lib",
         "schema_default": "{{platform_lib_dir}}",
         "schema_expression": "{{platform_lib_dir}}",
         "source_layer": "package",
         "template_variables": [
           "platform_lib_dir"
         ],
-        "value": "%{_libdir}/riak/lib"
+        "value": "/usr/lib64/riak/lib"
       },
       "platform_log_dir": {
         "has_default": true,
         "os_default": null,
-        "package_default": "%{_localstatedir}/log/riak",
+        "package_default": "/var/log/riak",
         "provenance": [
           {
             "line": 249,
@@ -55829,15 +56329,15 @@
           }
         ],
         "release_default": null,
-        "resolved_schema_default": "%{_localstatedir}/log/riak",
-        "resolved_value": "%{_localstatedir}/log/riak",
+        "resolved_schema_default": "/var/log/riak",
+        "resolved_value": "/var/log/riak",
         "schema_default": "{{platform_log_dir}}",
         "schema_expression": "{{platform_log_dir}}",
         "source_layer": "package",
         "template_variables": [
           "platform_log_dir"
         ],
-        "value": "%{_localstatedir}/log/riak"
+        "value": "/var/log/riak"
       },
       "prevent_overlapping_partitions": {
         "has_default": true,
@@ -55919,7 +56419,7 @@
           }
         ],
         "release_default": null,
-        "resolved_value": "%{_localstatedir}/lib/riak/kv_query",
+        "resolved_value": "/var/lib/riak/kv_query",
         "schema_default": "$(platform_data_dir)/kv_query",
         "source_layer": "schema",
         "value": "$(platform_data_dir)/kv_query"
@@ -55970,7 +56470,7 @@
           }
         ],
         "release_default": null,
-        "resolved_value": "%{_localstatedir}/lib/riak/kv_reader",
+        "resolved_value": "/var/lib/riak/kv_reader",
         "schema_default": "$(platform_data_dir)/kv_reader",
         "source_layer": "schema",
         "value": "$(platform_data_dir)/kv_reader"
@@ -55987,7 +56487,7 @@
           }
         ],
         "release_default": null,
-        "resolved_value": "%{_localstatedir}/lib/riak/kv_reaper",
+        "resolved_value": "/var/lib/riak/kv_reaper",
         "schema_default": "$(platform_data_dir)/kv_reaper",
         "source_layer": "schema",
         "value": "$(platform_data_dir)/kv_reaper"
@@ -56137,7 +56637,7 @@
           }
         ],
         "release_default": null,
-        "resolved_value": "%{_localstatedir}/lib/riak/kv_replrtqsrc",
+        "resolved_value": "/var/lib/riak/kv_replrtqsrc",
         "schema_default": "$(platform_data_dir)/kv_replrtqsrc",
         "source_layer": "schema",
         "value": "$(platform_data_dir)/kv_replrtqsrc"
@@ -56394,7 +56894,7 @@
           }
         ],
         "release_default": null,
-        "resolved_value": "%{_localstatedir}/lib/riak/ring",
+        "resolved_value": "/var/lib/riak/ring",
         "schema_default": "$(platform_data_dir)/ring",
         "source_layer": "schema",
         "value": "$(platform_data_dir)/ring"
@@ -56789,7 +57289,7 @@
           }
         ],
         "release_default": null,
-        "resolved_value": "%{_localstatedir}/lib/riak/tictac_aae",
+        "resolved_value": "/var/lib/riak/tictac_aae",
         "schema_default": "$(platform_data_dir)/tictac_aae",
         "source_layer": "schema",
         "value": "$(platform_data_dir)/tictac_aae"
@@ -57718,7 +58218,7 @@
           }
         ],
         "release_default": null,
-        "resolved_value": "%{_localstatedir}/lib/riak/anti_entropy",
+        "resolved_value": "/var/lib/riak/anti_entropy",
         "schema_default": "$(platform_data_dir)/anti_entropy",
         "source_layer": "schema",
         "value": "$(platform_data_dir)/anti_entropy"
@@ -57946,7 +58446,7 @@
           }
         ],
         "release_default": null,
-        "resolved_value": "%{_localstatedir}/lib/riak/bitcask",
+        "resolved_value": "/var/lib/riak/bitcask",
         "schema_default": "$(platform_data_dir)/bitcask",
         "source_layer": "schema",
         "value": "$(platform_data_dir)/bitcask"
@@ -58844,7 +59344,7 @@
           }
         ],
         "release_default": null,
-        "resolved_value": "%{_localstatedir}/lib/riak/kv_eraser",
+        "resolved_value": "/var/lib/riak/kv_eraser",
         "schema_default": "$(platform_data_dir)/kv_eraser",
         "source_layer": "schema",
         "value": "$(platform_data_dir)/kv_eraser"
@@ -58985,7 +59485,7 @@
       "erlang.crash_dump": {
         "has_default": true,
         "os_default": null,
-        "package_default": "%{_localstatedir}/log/riak/erl_crash.dump",
+        "package_default": "/var/log/riak/erl_crash.dump",
         "provenance": [
           {
             "line": 192,
@@ -59006,15 +59506,15 @@
           }
         ],
         "release_default": null,
-        "resolved_schema_default": "%{_localstatedir}/log/riak/erl_crash.dump",
-        "resolved_value": "%{_localstatedir}/log/riak/erl_crash.dump",
+        "resolved_schema_default": "/var/log/riak/erl_crash.dump",
+        "resolved_value": "/var/log/riak/erl_crash.dump",
         "schema_default": "{{crash_dump}}",
         "schema_expression": "{{crash_dump}}",
         "source_layer": "package",
         "template_variables": [
           "crash_dump"
         ],
-        "value": "%{_localstatedir}/log/riak/erl_crash.dump"
+        "value": "/var/log/riak/erl_crash.dump"
       },
       "erlang.distribution.interface": {
         "has_default": false,
@@ -59899,7 +60399,7 @@
           }
         ],
         "release_default": null,
-        "resolved_value": "%{_localstatedir}/lib/riak/leveldb",
+        "resolved_value": "/var/lib/riak/leveldb",
         "schema_default": "$(platform_data_dir)/leveldb",
         "source_layer": "schema",
         "value": "$(platform_data_dir)/leveldb"
@@ -60331,7 +60831,7 @@
           }
         ],
         "release_default": null,
-        "resolved_value": "%{_localstatedir}/lib/riak/leveled",
+        "resolved_value": "/var/lib/riak/leveled",
         "schema_default": "$(platform_data_dir)/leveled",
         "source_layer": "schema",
         "value": "$(platform_data_dir)/leveled"
@@ -60594,21 +61094,42 @@
       "listener.http.$name": {
         "has_default": true,
         "os_default": null,
-        "package_default": null,
+        "package_default": {
+          "$erlang_tuple": [
+            "127.0.0.1",
+            8098
+          ]
+        },
         "provenance": [
           {
             "line": 5,
             "path": "priv/riak_api.schema",
             "repository": "riak_api"
+          },
+          {
+            "line": 1,
+            "path": "rel/pkg/rpm/vars.config.part",
+            "repository": "root",
+            "source_type": "rpm-generated-vars"
+          },
+          {
+            "line": 1,
+            "path": "rel/pkg/rpm/specfile",
+            "repository": "root",
+            "source_type": "rpm-generated-vars"
           }
         ],
         "release_default": null,
+        "resolved_schema_default": {
+          "$erlang_tuple": [
+            "127.0.0.1",
+            8098
+          ]
+        },
         "resolved_value": {
           "$erlang_tuple": [
-            "{{web_ip}}",
-            {
-              "$template": "{{web_port}}"
-            }
+            "127.0.0.1",
+            8098
           ]
         },
         "schema_default": {
@@ -60619,13 +61140,16 @@
             }
           ]
         },
-        "source_layer": "schema",
+        "schema_expression": "{{{web_ip}}, {{web_port}}}",
+        "source_layer": "package",
+        "template_variables": [
+          "web_ip",
+          "web_port"
+        ],
         "value": {
           "$erlang_tuple": [
-            "{{web_ip}}",
-            {
-              "$template": "{{web_port}}"
-            }
+            "127.0.0.1",
+            8098
           ]
         }
       },
@@ -60644,21 +61168,42 @@
       "listener.protobuf.$name": {
         "has_default": true,
         "os_default": null,
-        "package_default": null,
+        "package_default": {
+          "$erlang_tuple": [
+            "127.0.0.1",
+            8087
+          ]
+        },
         "provenance": [
           {
             "line": 21,
             "path": "priv/riak_api.schema",
             "repository": "riak_api"
+          },
+          {
+            "line": 1,
+            "path": "rel/pkg/rpm/vars.config.part",
+            "repository": "root",
+            "source_type": "rpm-generated-vars"
+          },
+          {
+            "line": 1,
+            "path": "rel/pkg/rpm/specfile",
+            "repository": "root",
+            "source_type": "rpm-generated-vars"
           }
         ],
         "release_default": null,
+        "resolved_schema_default": {
+          "$erlang_tuple": [
+            "127.0.0.1",
+            8087
+          ]
+        },
         "resolved_value": {
           "$erlang_tuple": [
-            "{{pb_ip}}",
-            {
-              "$template": "{{pb_port}}"
-            }
+            "127.0.0.1",
+            8087
           ]
         },
         "schema_default": {
@@ -60669,13 +61214,16 @@
             }
           ]
         },
-        "source_layer": "schema",
+        "schema_expression": "{{{pb_ip}}, {{pb_port}}}",
+        "source_layer": "package",
+        "template_variables": [
+          "pb_ip",
+          "pb_port"
+        ],
         "value": {
           "$erlang_tuple": [
-            "{{pb_ip}}",
-            {
-              "$template": "{{pb_port}}"
-            }
+            "127.0.0.1",
+            8087
           ]
         }
       },
@@ -60708,7 +61256,7 @@
           }
         ],
         "release_default": null,
-        "resolved_value": "%{_localstatedir}/log/riak/console.log",
+        "resolved_value": "/var/log/riak/console.log",
         "schema_default": "$(platform_log_dir)/console.log",
         "source_layer": "schema",
         "value": "$(platform_log_dir)/console.log"
@@ -60759,7 +61307,7 @@
           }
         ],
         "release_default": null,
-        "resolved_value": "%{_localstatedir}/log/riak/crash.log",
+        "resolved_value": "/var/log/riak/crash.log",
         "schema_default": "$(platform_log_dir)/crash.log",
         "source_layer": "schema",
         "value": "$(platform_log_dir)/crash.log"
@@ -60844,7 +61392,7 @@
           }
         ],
         "release_default": null,
-        "resolved_value": "%{_localstatedir}/log/riak/error.log",
+        "resolved_value": "/var/log/riak/error.log",
         "schema_default": "$(platform_log_dir)/error.log",
         "source_layer": "schema",
         "value": "$(platform_log_dir)/error.log"
@@ -60997,7 +61545,7 @@
           }
         ],
         "release_default": null,
-        "resolved_value": "%{_localstatedir}/log/riak/backend.log",
+        "resolved_value": "/var/log/riak/backend.log",
         "schema_default": "$(platform_log_dir)/backend.log",
         "source_layer": "schema",
         "value": "$(platform_log_dir)/backend.log"
@@ -61014,7 +61562,7 @@
           }
         ],
         "release_default": null,
-        "resolved_value": "%{_localstatedir}/log/riak/background.log",
+        "resolved_value": "/var/log/riak/background.log",
         "schema_default": "$(platform_log_dir)/background.log",
         "source_layer": "schema",
         "value": "$(platform_log_dir)/background.log"
@@ -61031,7 +61579,7 @@
           }
         ],
         "release_default": null,
-        "resolved_value": "%{_localstatedir}/log/riak/crash.log",
+        "resolved_value": "/var/log/riak/crash.log",
         "schema_default": "$(platform_log_dir)/crash.log",
         "source_layer": "schema",
         "value": "$(platform_log_dir)/crash.log"
@@ -61065,7 +61613,7 @@
           }
         ],
         "release_default": null,
-        "resolved_value": "%{_localstatedir}/log/riak/error.log",
+        "resolved_value": "/var/log/riak/error.log",
         "schema_default": "$(platform_log_dir)/error.log",
         "source_layer": "schema",
         "value": "$(platform_log_dir)/error.log"
@@ -61082,7 +61630,7 @@
           }
         ],
         "release_default": null,
-        "resolved_value": "%{_localstatedir}/log/riak/console.log",
+        "resolved_value": "/var/log/riak/console.log",
         "schema_default": "$(platform_log_dir)/console.log",
         "source_layer": "schema",
         "value": "$(platform_log_dir)/console.log"
@@ -61116,7 +61664,7 @@
           }
         ],
         "release_default": null,
-        "resolved_value": "%{_localstatedir}/log/riak/json.log",
+        "resolved_value": "/var/log/riak/json.log",
         "schema_default": "$(platform_log_dir)/json.log",
         "source_layer": "schema",
         "value": "$(platform_log_dir)/json.log"
@@ -61203,7 +61751,7 @@
           }
         ],
         "release_default": null,
-        "resolved_value": "%{_localstatedir}/log/riak/report.log",
+        "resolved_value": "/var/log/riak/report.log",
         "schema_default": "$(platform_log_dir)/report.log",
         "source_layer": "schema",
         "value": "$(platform_log_dir)/report.log"
@@ -61245,21 +61793,42 @@
       "mdc.cluster_manager": {
         "has_default": true,
         "os_default": null,
-        "package_default": null,
+        "package_default": {
+          "$erlang_tuple": [
+            "127.0.0.1",
+            9080
+          ]
+        },
         "provenance": [
           {
             "line": 16,
             "path": "priv/riak_repl.schema",
             "repository": "riak_repl"
+          },
+          {
+            "line": 1,
+            "path": "rel/pkg/rpm/vars.config.part",
+            "repository": "root",
+            "source_type": "rpm-generated-vars"
+          },
+          {
+            "line": 1,
+            "path": "rel/pkg/rpm/specfile",
+            "repository": "root",
+            "source_type": "rpm-generated-vars"
           }
         ],
         "release_default": null,
+        "resolved_schema_default": {
+          "$erlang_tuple": [
+            "127.0.0.1",
+            9080
+          ]
+        },
         "resolved_value": {
           "$erlang_tuple": [
-            "{{cluster_manager_ip}}",
-            {
-              "$template": "{{cluster_manager_port}}"
-            }
+            "127.0.0.1",
+            9080
           ]
         },
         "schema_default": {
@@ -61270,20 +61839,23 @@
             }
           ]
         },
-        "source_layer": "schema",
+        "schema_expression": "{{{cluster_manager_ip}}, {{cluster_manager_port}}}",
+        "source_layer": "package",
+        "template_variables": [
+          "cluster_manager_ip",
+          "cluster_manager_port"
+        ],
         "value": {
           "$erlang_tuple": [
-            "{{cluster_manager_ip}}",
-            {
-              "$template": "{{cluster_manager_port}}"
-            }
+            "127.0.0.1",
+            9080
           ]
         }
       },
       "mdc.data_root": {
         "has_default": true,
         "os_default": null,
-        "package_default": "%{_localstatedir}/lib/riak/riak_repl",
+        "package_default": "/var/lib/riak/riak_repl",
         "provenance": [
           {
             "line": 6,
@@ -61304,15 +61876,15 @@
           }
         ],
         "release_default": null,
-        "resolved_schema_default": "%{_localstatedir}/lib/riak/riak_repl",
-        "resolved_value": "%{_localstatedir}/lib/riak/riak_repl",
+        "resolved_schema_default": "/var/lib/riak/riak_repl",
+        "resolved_value": "/var/lib/riak/riak_repl",
         "schema_default": "{{repl_data_root}}",
         "schema_expression": "{{repl_data_root}}",
         "source_layer": "package",
         "template_variables": [
           "repl_data_root"
         ],
-        "value": "%{_localstatedir}/lib/riak/riak_repl"
+        "value": "/var/lib/riak/riak_repl"
       },
       "mdc.fssource_retry_wait": {
         "has_default": true,
@@ -62473,7 +63045,7 @@
           }
         ],
         "release_default": null,
-        "resolved_value": "%{_localstatedir}/lib/riak/leveled",
+        "resolved_value": "/var/lib/riak/leveled",
         "schema_default": "$(platform_data_dir)/leveled",
         "source_layer": "schema",
         "value": "$(platform_data_dir)/leveled"
@@ -62908,7 +63480,7 @@
       "platform_bin_dir": {
         "has_default": true,
         "os_default": null,
-        "package_default": "%{_libdir}/riak/bin",
+        "package_default": "/usr/lib64/riak/bin",
         "provenance": [
           {
             "line": 225,
@@ -62929,20 +63501,20 @@
           }
         ],
         "release_default": null,
-        "resolved_schema_default": "%{_libdir}/riak/bin",
-        "resolved_value": "%{_libdir}/riak/bin",
+        "resolved_schema_default": "/usr/lib64/riak/bin",
+        "resolved_value": "/usr/lib64/riak/bin",
         "schema_default": "{{platform_bin_dir}}",
         "schema_expression": "{{platform_bin_dir}}",
         "source_layer": "package",
         "template_variables": [
           "platform_bin_dir"
         ],
-        "value": "%{_libdir}/riak/bin"
+        "value": "/usr/lib64/riak/bin"
       },
       "platform_data_dir": {
         "has_default": true,
         "os_default": null,
-        "package_default": "%{_localstatedir}/lib/riak",
+        "package_default": "/var/lib/riak",
         "provenance": [
           {
             "line": 231,
@@ -62963,20 +63535,20 @@
           }
         ],
         "release_default": null,
-        "resolved_schema_default": "%{_localstatedir}/lib/riak",
-        "resolved_value": "%{_localstatedir}/lib/riak",
+        "resolved_schema_default": "/var/lib/riak",
+        "resolved_value": "/var/lib/riak",
         "schema_default": "{{platform_data_dir}}",
         "schema_expression": "{{platform_data_dir}}",
         "source_layer": "package",
         "template_variables": [
           "platform_data_dir"
         ],
-        "value": "%{_localstatedir}/lib/riak"
+        "value": "/var/lib/riak"
       },
       "platform_etc_dir": {
         "has_default": true,
         "os_default": null,
-        "package_default": "%{_sysconfdir}/riak",
+        "package_default": "/etc/riak",
         "provenance": [
           {
             "line": 237,
@@ -62997,20 +63569,20 @@
           }
         ],
         "release_default": null,
-        "resolved_schema_default": "%{_sysconfdir}/riak",
-        "resolved_value": "%{_sysconfdir}/riak",
+        "resolved_schema_default": "/etc/riak",
+        "resolved_value": "/etc/riak",
         "schema_default": "{{platform_etc_dir}}",
         "schema_expression": "{{platform_etc_dir}}",
         "source_layer": "package",
         "template_variables": [
           "platform_etc_dir"
         ],
-        "value": "%{_sysconfdir}/riak"
+        "value": "/etc/riak"
       },
       "platform_lib_dir": {
         "has_default": true,
         "os_default": null,
-        "package_default": "%{_libdir}/riak/lib",
+        "package_default": "/usr/lib64/riak/lib",
         "provenance": [
           {
             "line": 243,
@@ -63031,20 +63603,20 @@
           }
         ],
         "release_default": null,
-        "resolved_schema_default": "%{_libdir}/riak/lib",
-        "resolved_value": "%{_libdir}/riak/lib",
+        "resolved_schema_default": "/usr/lib64/riak/lib",
+        "resolved_value": "/usr/lib64/riak/lib",
         "schema_default": "{{platform_lib_dir}}",
         "schema_expression": "{{platform_lib_dir}}",
         "source_layer": "package",
         "template_variables": [
           "platform_lib_dir"
         ],
-        "value": "%{_libdir}/riak/lib"
+        "value": "/usr/lib64/riak/lib"
       },
       "platform_log_dir": {
         "has_default": true,
         "os_default": null,
-        "package_default": "%{_localstatedir}/log/riak",
+        "package_default": "/var/log/riak",
         "provenance": [
           {
             "line": 249,
@@ -63065,15 +63637,15 @@
           }
         ],
         "release_default": null,
-        "resolved_schema_default": "%{_localstatedir}/log/riak",
-        "resolved_value": "%{_localstatedir}/log/riak",
+        "resolved_schema_default": "/var/log/riak",
+        "resolved_value": "/var/log/riak",
         "schema_default": "{{platform_log_dir}}",
         "schema_expression": "{{platform_log_dir}}",
         "source_layer": "package",
         "template_variables": [
           "platform_log_dir"
         ],
-        "value": "%{_localstatedir}/log/riak"
+        "value": "/var/log/riak"
       },
       "prevent_overlapping_partitions": {
         "has_default": true,
@@ -63155,7 +63727,7 @@
           }
         ],
         "release_default": null,
-        "resolved_value": "%{_localstatedir}/lib/riak/kv_query",
+        "resolved_value": "/var/lib/riak/kv_query",
         "schema_default": "$(platform_data_dir)/kv_query",
         "source_layer": "schema",
         "value": "$(platform_data_dir)/kv_query"
@@ -63206,7 +63778,7 @@
           }
         ],
         "release_default": null,
-        "resolved_value": "%{_localstatedir}/lib/riak/kv_reader",
+        "resolved_value": "/var/lib/riak/kv_reader",
         "schema_default": "$(platform_data_dir)/kv_reader",
         "source_layer": "schema",
         "value": "$(platform_data_dir)/kv_reader"
@@ -63223,7 +63795,7 @@
           }
         ],
         "release_default": null,
-        "resolved_value": "%{_localstatedir}/lib/riak/kv_reaper",
+        "resolved_value": "/var/lib/riak/kv_reaper",
         "schema_default": "$(platform_data_dir)/kv_reaper",
         "source_layer": "schema",
         "value": "$(platform_data_dir)/kv_reaper"
@@ -63373,7 +63945,7 @@
           }
         ],
         "release_default": null,
-        "resolved_value": "%{_localstatedir}/lib/riak/kv_replrtqsrc",
+        "resolved_value": "/var/lib/riak/kv_replrtqsrc",
         "schema_default": "$(platform_data_dir)/kv_replrtqsrc",
         "source_layer": "schema",
         "value": "$(platform_data_dir)/kv_replrtqsrc"
@@ -63630,7 +64202,7 @@
           }
         ],
         "release_default": null,
-        "resolved_value": "%{_localstatedir}/lib/riak/ring",
+        "resolved_value": "/var/lib/riak/ring",
         "schema_default": "$(platform_data_dir)/ring",
         "source_layer": "schema",
         "value": "$(platform_data_dir)/ring"
@@ -64025,7 +64597,7 @@
           }
         ],
         "release_default": null,
-        "resolved_value": "%{_localstatedir}/lib/riak/tictac_aae",
+        "resolved_value": "/var/lib/riak/tictac_aae",
         "schema_default": "$(platform_data_dir)/tictac_aae",
         "source_layer": "schema",
         "value": "$(platform_data_dir)/tictac_aae"
@@ -66221,7 +66793,7 @@
       "erlang.crash_dump": {
         "has_default": true,
         "os_default": null,
-        "package_default": "{{platform_log_dir}}/erl_crash.dump",
+        "package_default": "/var/log/riak/erl_crash.dump",
         "provenance": [
           {
             "line": 192,
@@ -66235,15 +66807,16 @@
           }
         ],
         "release_default": null,
-        "resolved_schema_default": "{{platform_log_dir}}/erl_crash.dump",
-        "resolved_value": "{{platform_log_dir}}/erl_crash.dump",
+        "resolved_schema_default": "/var/log/riak/erl_crash.dump",
+        "resolved_value": "/var/log/riak/erl_crash.dump",
         "schema_default": "{{crash_dump}}",
         "schema_expression": "{{crash_dump}}",
         "source_layer": "package",
         "template_variables": [
-          "crash_dump"
+          "crash_dump",
+          "platform_log_dir"
         ],
-        "value": "{{platform_log_dir}}/erl_crash.dump"
+        "value": "/var/log/riak/erl_crash.dump"
       },
       "erlang.distribution.interface": {
         "has_default": false,
@@ -67809,21 +68382,35 @@
       "listener.http.$name": {
         "has_default": true,
         "os_default": null,
-        "package_default": null,
+        "package_default": {
+          "$erlang_tuple": [
+            "127.0.0.1",
+            8098
+          ]
+        },
         "provenance": [
           {
             "line": 5,
             "path": "priv/riak_api.schema",
             "repository": "riak_api"
+          },
+          {
+            "line": 1,
+            "path": "rel/pkg/deb/vars.config",
+            "repository": "root"
           }
         ],
         "release_default": null,
+        "resolved_schema_default": {
+          "$erlang_tuple": [
+            "127.0.0.1",
+            8098
+          ]
+        },
         "resolved_value": {
           "$erlang_tuple": [
-            "{{web_ip}}",
-            {
-              "$template": "{{web_port}}"
-            }
+            "127.0.0.1",
+            8098
           ]
         },
         "schema_default": {
@@ -67834,13 +68421,16 @@
             }
           ]
         },
-        "source_layer": "schema",
+        "schema_expression": "{{{web_ip}}, {{web_port}}}",
+        "source_layer": "package",
+        "template_variables": [
+          "web_ip",
+          "web_port"
+        ],
         "value": {
           "$erlang_tuple": [
-            "{{web_ip}}",
-            {
-              "$template": "{{web_port}}"
-            }
+            "127.0.0.1",
+            8098
           ]
         }
       },
@@ -67859,21 +68449,35 @@
       "listener.protobuf.$name": {
         "has_default": true,
         "os_default": null,
-        "package_default": null,
+        "package_default": {
+          "$erlang_tuple": [
+            "127.0.0.1",
+            8087
+          ]
+        },
         "provenance": [
           {
             "line": 21,
             "path": "priv/riak_api.schema",
             "repository": "riak_api"
+          },
+          {
+            "line": 1,
+            "path": "rel/pkg/deb/vars.config",
+            "repository": "root"
           }
         ],
         "release_default": null,
+        "resolved_schema_default": {
+          "$erlang_tuple": [
+            "127.0.0.1",
+            8087
+          ]
+        },
         "resolved_value": {
           "$erlang_tuple": [
-            "{{pb_ip}}",
-            {
-              "$template": "{{pb_port}}"
-            }
+            "127.0.0.1",
+            8087
           ]
         },
         "schema_default": {
@@ -67884,13 +68488,16 @@
             }
           ]
         },
-        "source_layer": "schema",
+        "schema_expression": "{{{pb_ip}}, {{pb_port}}}",
+        "source_layer": "package",
+        "template_variables": [
+          "pb_ip",
+          "pb_port"
+        ],
         "value": {
           "$erlang_tuple": [
-            "{{pb_ip}}",
-            {
-              "$template": "{{pb_port}}"
-            }
+            "127.0.0.1",
+            8087
           ]
         }
       },
@@ -68453,21 +69060,35 @@
       "mdc.cluster_manager": {
         "has_default": true,
         "os_default": null,
-        "package_default": null,
+        "package_default": {
+          "$erlang_tuple": [
+            "127.0.0.1",
+            9080
+          ]
+        },
         "provenance": [
           {
             "line": 16,
             "path": "priv/riak_repl.schema",
             "repository": "riak_repl"
+          },
+          {
+            "line": 1,
+            "path": "rel/pkg/deb/vars.config",
+            "repository": "root"
           }
         ],
         "release_default": null,
+        "resolved_schema_default": {
+          "$erlang_tuple": [
+            "127.0.0.1",
+            9080
+          ]
+        },
         "resolved_value": {
           "$erlang_tuple": [
-            "{{cluster_manager_ip}}",
-            {
-              "$template": "{{cluster_manager_port}}"
-            }
+            "127.0.0.1",
+            9080
           ]
         },
         "schema_default": {
@@ -68478,20 +69099,23 @@
             }
           ]
         },
-        "source_layer": "schema",
+        "schema_expression": "{{{cluster_manager_ip}}, {{cluster_manager_port}}}",
+        "source_layer": "package",
+        "template_variables": [
+          "cluster_manager_ip",
+          "cluster_manager_port"
+        ],
         "value": {
           "$erlang_tuple": [
-            "{{cluster_manager_ip}}",
-            {
-              "$template": "{{cluster_manager_port}}"
-            }
+            "127.0.0.1",
+            9080
           ]
         }
       },
       "mdc.data_root": {
         "has_default": true,
         "os_default": null,
-        "package_default": "{{platform_data_dir}}/riak_repl",
+        "package_default": "/var/lib/riak/riak_repl",
         "provenance": [
           {
             "line": 6,
@@ -68505,15 +69129,16 @@
           }
         ],
         "release_default": null,
-        "resolved_schema_default": "{{platform_data_dir}}/riak_repl",
-        "resolved_value": "{{platform_data_dir}}/riak_repl",
+        "resolved_schema_default": "/var/lib/riak/riak_repl",
+        "resolved_value": "/var/lib/riak/riak_repl",
         "schema_default": "{{repl_data_root}}",
         "schema_expression": "{{repl_data_root}}",
         "source_layer": "package",
         "template_variables": [
-          "repl_data_root"
+          "repl_data_root",
+          "platform_data_dir"
         ],
-        "value": "{{platform_data_dir}}/riak_repl"
+        "value": "/var/lib/riak/riak_repl"
       },
       "mdc.fssource_retry_wait": {
         "has_default": true,
@@ -73373,7 +73998,7 @@
       "erlang.crash_dump": {
         "has_default": true,
         "os_default": null,
-        "package_default": "{{platform_log_dir}}/erl_crash.dump",
+        "package_default": "/var/log/riak/erl_crash.dump",
         "provenance": [
           {
             "line": 192,
@@ -73387,15 +74012,16 @@
           }
         ],
         "release_default": null,
-        "resolved_schema_default": "{{platform_log_dir}}/erl_crash.dump",
-        "resolved_value": "{{platform_log_dir}}/erl_crash.dump",
+        "resolved_schema_default": "/var/log/riak/erl_crash.dump",
+        "resolved_value": "/var/log/riak/erl_crash.dump",
         "schema_default": "{{crash_dump}}",
         "schema_expression": "{{crash_dump}}",
         "source_layer": "package",
         "template_variables": [
-          "crash_dump"
+          "crash_dump",
+          "platform_log_dir"
         ],
-        "value": "{{platform_log_dir}}/erl_crash.dump"
+        "value": "/var/log/riak/erl_crash.dump"
       },
       "erlang.distribution.interface": {
         "has_default": false,
@@ -74961,21 +75587,35 @@
       "listener.http.$name": {
         "has_default": true,
         "os_default": null,
-        "package_default": null,
+        "package_default": {
+          "$erlang_tuple": [
+            "127.0.0.1",
+            8098
+          ]
+        },
         "provenance": [
           {
             "line": 5,
             "path": "priv/riak_api.schema",
             "repository": "riak_api"
+          },
+          {
+            "line": 1,
+            "path": "rel/pkg/deb/vars.config",
+            "repository": "root"
           }
         ],
         "release_default": null,
+        "resolved_schema_default": {
+          "$erlang_tuple": [
+            "127.0.0.1",
+            8098
+          ]
+        },
         "resolved_value": {
           "$erlang_tuple": [
-            "{{web_ip}}",
-            {
-              "$template": "{{web_port}}"
-            }
+            "127.0.0.1",
+            8098
           ]
         },
         "schema_default": {
@@ -74986,13 +75626,16 @@
             }
           ]
         },
-        "source_layer": "schema",
+        "schema_expression": "{{{web_ip}}, {{web_port}}}",
+        "source_layer": "package",
+        "template_variables": [
+          "web_ip",
+          "web_port"
+        ],
         "value": {
           "$erlang_tuple": [
-            "{{web_ip}}",
-            {
-              "$template": "{{web_port}}"
-            }
+            "127.0.0.1",
+            8098
           ]
         }
       },
@@ -75011,21 +75654,35 @@
       "listener.protobuf.$name": {
         "has_default": true,
         "os_default": null,
-        "package_default": null,
+        "package_default": {
+          "$erlang_tuple": [
+            "127.0.0.1",
+            8087
+          ]
+        },
         "provenance": [
           {
             "line": 21,
             "path": "priv/riak_api.schema",
             "repository": "riak_api"
+          },
+          {
+            "line": 1,
+            "path": "rel/pkg/deb/vars.config",
+            "repository": "root"
           }
         ],
         "release_default": null,
+        "resolved_schema_default": {
+          "$erlang_tuple": [
+            "127.0.0.1",
+            8087
+          ]
+        },
         "resolved_value": {
           "$erlang_tuple": [
-            "{{pb_ip}}",
-            {
-              "$template": "{{pb_port}}"
-            }
+            "127.0.0.1",
+            8087
           ]
         },
         "schema_default": {
@@ -75036,13 +75693,16 @@
             }
           ]
         },
-        "source_layer": "schema",
+        "schema_expression": "{{{pb_ip}}, {{pb_port}}}",
+        "source_layer": "package",
+        "template_variables": [
+          "pb_ip",
+          "pb_port"
+        ],
         "value": {
           "$erlang_tuple": [
-            "{{pb_ip}}",
-            {
-              "$template": "{{pb_port}}"
-            }
+            "127.0.0.1",
+            8087
           ]
         }
       },
@@ -75605,21 +76265,35 @@
       "mdc.cluster_manager": {
         "has_default": true,
         "os_default": null,
-        "package_default": null,
+        "package_default": {
+          "$erlang_tuple": [
+            "127.0.0.1",
+            9080
+          ]
+        },
         "provenance": [
           {
             "line": 16,
             "path": "priv/riak_repl.schema",
             "repository": "riak_repl"
+          },
+          {
+            "line": 1,
+            "path": "rel/pkg/deb/vars.config",
+            "repository": "root"
           }
         ],
         "release_default": null,
+        "resolved_schema_default": {
+          "$erlang_tuple": [
+            "127.0.0.1",
+            9080
+          ]
+        },
         "resolved_value": {
           "$erlang_tuple": [
-            "{{cluster_manager_ip}}",
-            {
-              "$template": "{{cluster_manager_port}}"
-            }
+            "127.0.0.1",
+            9080
           ]
         },
         "schema_default": {
@@ -75630,20 +76304,23 @@
             }
           ]
         },
-        "source_layer": "schema",
+        "schema_expression": "{{{cluster_manager_ip}}, {{cluster_manager_port}}}",
+        "source_layer": "package",
+        "template_variables": [
+          "cluster_manager_ip",
+          "cluster_manager_port"
+        ],
         "value": {
           "$erlang_tuple": [
-            "{{cluster_manager_ip}}",
-            {
-              "$template": "{{cluster_manager_port}}"
-            }
+            "127.0.0.1",
+            9080
           ]
         }
       },
       "mdc.data_root": {
         "has_default": true,
         "os_default": null,
-        "package_default": "{{platform_data_dir}}/riak_repl",
+        "package_default": "/var/lib/riak/riak_repl",
         "provenance": [
           {
             "line": 6,
@@ -75657,15 +76334,16 @@
           }
         ],
         "release_default": null,
-        "resolved_schema_default": "{{platform_data_dir}}/riak_repl",
-        "resolved_value": "{{platform_data_dir}}/riak_repl",
+        "resolved_schema_default": "/var/lib/riak/riak_repl",
+        "resolved_value": "/var/lib/riak/riak_repl",
         "schema_default": "{{repl_data_root}}",
         "schema_expression": "{{repl_data_root}}",
         "source_layer": "package",
         "template_variables": [
-          "repl_data_root"
+          "repl_data_root",
+          "platform_data_dir"
         ],
-        "value": "{{platform_data_dir}}/riak_repl"
+        "value": "/var/lib/riak/riak_repl"
       },
       "mdc.fssource_retry_wait": {
         "has_default": true,
@@ -80525,7 +81203,7 @@
       "erlang.crash_dump": {
         "has_default": true,
         "os_default": null,
-        "package_default": "{{platform_log_dir}}/erl_crash.dump",
+        "package_default": "/var/log/riak/erl_crash.dump",
         "provenance": [
           {
             "line": 192,
@@ -80539,15 +81217,16 @@
           }
         ],
         "release_default": null,
-        "resolved_schema_default": "{{platform_log_dir}}/erl_crash.dump",
-        "resolved_value": "{{platform_log_dir}}/erl_crash.dump",
+        "resolved_schema_default": "/var/log/riak/erl_crash.dump",
+        "resolved_value": "/var/log/riak/erl_crash.dump",
         "schema_default": "{{crash_dump}}",
         "schema_expression": "{{crash_dump}}",
         "source_layer": "package",
         "template_variables": [
-          "crash_dump"
+          "crash_dump",
+          "platform_log_dir"
         ],
-        "value": "{{platform_log_dir}}/erl_crash.dump"
+        "value": "/var/log/riak/erl_crash.dump"
       },
       "erlang.distribution.interface": {
         "has_default": false,
@@ -82113,21 +82792,35 @@
       "listener.http.$name": {
         "has_default": true,
         "os_default": null,
-        "package_default": null,
+        "package_default": {
+          "$erlang_tuple": [
+            "127.0.0.1",
+            8098
+          ]
+        },
         "provenance": [
           {
             "line": 5,
             "path": "priv/riak_api.schema",
             "repository": "riak_api"
+          },
+          {
+            "line": 1,
+            "path": "rel/pkg/deb/vars.config",
+            "repository": "root"
           }
         ],
         "release_default": null,
+        "resolved_schema_default": {
+          "$erlang_tuple": [
+            "127.0.0.1",
+            8098
+          ]
+        },
         "resolved_value": {
           "$erlang_tuple": [
-            "{{web_ip}}",
-            {
-              "$template": "{{web_port}}"
-            }
+            "127.0.0.1",
+            8098
           ]
         },
         "schema_default": {
@@ -82138,13 +82831,16 @@
             }
           ]
         },
-        "source_layer": "schema",
+        "schema_expression": "{{{web_ip}}, {{web_port}}}",
+        "source_layer": "package",
+        "template_variables": [
+          "web_ip",
+          "web_port"
+        ],
         "value": {
           "$erlang_tuple": [
-            "{{web_ip}}",
-            {
-              "$template": "{{web_port}}"
-            }
+            "127.0.0.1",
+            8098
           ]
         }
       },
@@ -82163,21 +82859,35 @@
       "listener.protobuf.$name": {
         "has_default": true,
         "os_default": null,
-        "package_default": null,
+        "package_default": {
+          "$erlang_tuple": [
+            "127.0.0.1",
+            8087
+          ]
+        },
         "provenance": [
           {
             "line": 21,
             "path": "priv/riak_api.schema",
             "repository": "riak_api"
+          },
+          {
+            "line": 1,
+            "path": "rel/pkg/deb/vars.config",
+            "repository": "root"
           }
         ],
         "release_default": null,
+        "resolved_schema_default": {
+          "$erlang_tuple": [
+            "127.0.0.1",
+            8087
+          ]
+        },
         "resolved_value": {
           "$erlang_tuple": [
-            "{{pb_ip}}",
-            {
-              "$template": "{{pb_port}}"
-            }
+            "127.0.0.1",
+            8087
           ]
         },
         "schema_default": {
@@ -82188,13 +82898,16 @@
             }
           ]
         },
-        "source_layer": "schema",
+        "schema_expression": "{{{pb_ip}}, {{pb_port}}}",
+        "source_layer": "package",
+        "template_variables": [
+          "pb_ip",
+          "pb_port"
+        ],
         "value": {
           "$erlang_tuple": [
-            "{{pb_ip}}",
-            {
-              "$template": "{{pb_port}}"
-            }
+            "127.0.0.1",
+            8087
           ]
         }
       },
@@ -82757,21 +83470,35 @@
       "mdc.cluster_manager": {
         "has_default": true,
         "os_default": null,
-        "package_default": null,
+        "package_default": {
+          "$erlang_tuple": [
+            "127.0.0.1",
+            9080
+          ]
+        },
         "provenance": [
           {
             "line": 16,
             "path": "priv/riak_repl.schema",
             "repository": "riak_repl"
+          },
+          {
+            "line": 1,
+            "path": "rel/pkg/deb/vars.config",
+            "repository": "root"
           }
         ],
         "release_default": null,
+        "resolved_schema_default": {
+          "$erlang_tuple": [
+            "127.0.0.1",
+            9080
+          ]
+        },
         "resolved_value": {
           "$erlang_tuple": [
-            "{{cluster_manager_ip}}",
-            {
-              "$template": "{{cluster_manager_port}}"
-            }
+            "127.0.0.1",
+            9080
           ]
         },
         "schema_default": {
@@ -82782,20 +83509,23 @@
             }
           ]
         },
-        "source_layer": "schema",
+        "schema_expression": "{{{cluster_manager_ip}}, {{cluster_manager_port}}}",
+        "source_layer": "package",
+        "template_variables": [
+          "cluster_manager_ip",
+          "cluster_manager_port"
+        ],
         "value": {
           "$erlang_tuple": [
-            "{{cluster_manager_ip}}",
-            {
-              "$template": "{{cluster_manager_port}}"
-            }
+            "127.0.0.1",
+            9080
           ]
         }
       },
       "mdc.data_root": {
         "has_default": true,
         "os_default": null,
-        "package_default": "{{platform_data_dir}}/riak_repl",
+        "package_default": "/var/lib/riak/riak_repl",
         "provenance": [
           {
             "line": 6,
@@ -82809,15 +83539,16 @@
           }
         ],
         "release_default": null,
-        "resolved_schema_default": "{{platform_data_dir}}/riak_repl",
-        "resolved_value": "{{platform_data_dir}}/riak_repl",
+        "resolved_schema_default": "/var/lib/riak/riak_repl",
+        "resolved_value": "/var/lib/riak/riak_repl",
         "schema_default": "{{repl_data_root}}",
         "schema_expression": "{{repl_data_root}}",
         "source_layer": "package",
         "template_variables": [
-          "repl_data_root"
+          "repl_data_root",
+          "platform_data_dir"
         ],
-        "value": "{{platform_data_dir}}/riak_repl"
+        "value": "/var/lib/riak/riak_repl"
       },
       "mdc.fssource_retry_wait": {
         "has_default": true,

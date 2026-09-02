@@ -323,6 +323,11 @@ const generateConfig = ({
     if (!generated.includes(canonicalMount)) throw new Error(`Unable to locate the ${product} version-data mount`);
     const normalizedRoot = dataRoot.split(path.sep).join('/');
     generated = generated.replace(canonicalMount, `    - {source: '${normalizedRoot}', target: 'data/versions/${product}'}`);
+    const configurationMount = `    - {source: '../tools/generated/${product}/data/configuration-reference', target: 'data/configuration-reference/${product}'}`;
+    if (generated.includes(configurationMount)) {
+      const configurationRoot = `${path.posix.dirname(normalizedRoot)}/configuration-reference`;
+      generated = generated.replace(configurationMount, `    - {source: '${configurationRoot}', target: 'data/configuration-reference/${product}'}`);
+    }
   }
   fs.mkdirSync(path.dirname(output), { recursive: true });
   fs.writeFileSync(output, generated, 'utf8');

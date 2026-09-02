@@ -10,7 +10,8 @@ const {
   resolveOs,
   resolveValue,
   buildVersionCandidates,
-  resolveAssetUrl
+  resolveAssetUrl,
+  configurationDefaultForOs
 } = require('../../layouts/docs-theme/static/js/docs-runtime.js');
 
 const repositoryRoot = path.resolve(__dirname, '..', '..');
@@ -24,6 +25,7 @@ const searchIndexSource = fs.readFileSync(path.join(themeRoot, 'layouts', '_defa
 const sharedSearchSource = fs.readFileSync(path.join(repositoryRoot, 'layouts', 'common-docs', 'static', 'js', 'sidebar-search.js'), 'utf8');
 const highlightSource = fs.readFileSync(path.join(repositoryRoot, 'layouts', 'common-docs', 'static', 'js', 'search-highlight.js'), 'utf8');
 const docsCssSource = fs.readFileSync(path.join(themeRoot, 'static', 'css', 'docs.css'), 'utf8');
+const themeSource = fs.readFileSync(path.join(themeRoot, 'static', 'js', 'theme.js'), 'utf8');
 const downloadsTemplateSource = fs.readFileSync(path.join(themeRoot, 'layouts', '_default', 'downloads.html'), 'utf8');
 const downloadChecksumSource = fs.readFileSync(path.join(themeRoot, 'layouts', 'partials', 'download-checksum.html'), 'utf8');
 const downloadTableSource = fs.readFileSync(path.join(themeRoot, 'layouts', 'partials', 'download-table.html'), 'utf8');
@@ -33,6 +35,8 @@ const contactEmailShortcodeSource = fs.readFileSync(path.join(themeRoot, 'layout
 const docsContactEmailShortcodeSource = fs.readFileSync(path.join(themeRoot, 'layouts', 'shortcodes', 'docscontactusemail.html'), 'utf8');
 const currentVersionShortcodeSource = fs.readFileSync(path.join(themeRoot, 'layouts', 'shortcodes', 'current-version.html'), 'utf8');
 const previousVersionShortcodeSource = fs.readFileSync(path.join(themeRoot, 'layouts', 'shortcodes', 'previous-version.html'), 'utf8');
+const configurationReferenceShortcodeSource = fs.readFileSync(path.join(themeRoot, 'layouts', 'shortcodes', 'configuration-reference-table.html'), 'utf8');
+const configurationReferenceTestPageSource = fs.readFileSync(path.join(repositoryRoot, 'content', 'openriak-kv', '3.4.1', 'configuration-reference-table-test.md'), 'utf8');
 const previousVersionPartialSource = fs.readFileSync(path.join(themeRoot, 'layouts', 'partials', 'previous-version.html'), 'utf8');
 const docsSidebarTreeSource = fs.readFileSync(path.join(themeRoot, 'layouts', 'partials', 'docs-sidebar-tree.html'), 'utf8');
 const menuNavTreeSource = fs.readFileSync(path.join(themeRoot, 'layouts', 'partials', 'menu-nav-tree.html'), 'utf8');
@@ -104,8 +108,23 @@ assert.match(previousVersionShortcodeSource, /partial "previous-version\.html" \
 assert.match(previousVersionPartialSource, /index hugo\.Data\.versions \$productID[\s\S]*\$isEarlier[\s\S]*\$isLaterThanPrevious/, 'previous-version must select the greatest semantic version below the current release');
 assert.match(previousVersionPartialSource, /previous-version has no previous release: product=%s version=%s page=%s/, 'previous-version must stop the build when no earlier release exists');
 assert.match(baseSource, /js\/theme\.js[^"\n]+\?v=/, 'theme picker script must be cache-busted');
-assert.match(baseSource, /js\/docs-runtime\.js[^"\n]+\?v=20260902-ts-cs-import/, 'the documentation runtime must use its current cache key');
-assert.match(headSource, /css\/docs\.css[^"\n]+\?v=20260902-ts-cs-import/, 'documentation styling must use its current cache key');
+assert.match(baseSource, /js\/docs-runtime\.js[^"\n]+\?v=20260902-configuration-reference/, 'the documentation runtime must use its current cache key');
+assert.match(headSource, /css\/docs\.css[^"\n]+\?v=20260902-responsive-default-column/, 'documentation styling must use its current cache key');
+assert.match(configurationReferenceShortcodeSource, /strings\.Split \.Inner "\\n"/, 'configuration reference filters must be one regex per body line so commas remain part of the regex');
+assert.match(configurationReferenceShortcodeSource, /\.Get "area"[\s\S]*in \$setting\.areas \$area/, 'configuration references must support repository-area filtering');
+assert.match(configurationReferenceShortcodeSource, /data-configuration-default-copy[\s\S]*data-configuration-os-icon/, 'configuration references must render copyable defaults and OS-specific indicators');
+assert.match(configurationReferenceShortcodeSource, /configuration-reference-arrow[^>]*[^<]*→[\s\S]*data-copy-label="Copy internal name"/, 'configuration names must point directly to their copyable internal names');
+assert.match(configurationReferenceShortcodeSource, /if and \$setting\.internalName \(ne \$setting\.internalName \$setting\.name\)/, 'identical public and internal configuration names must not be repeated');
+assert.doesNotMatch(configurationReferenceShortcodeSource, /<small>Internal<\/small>/, 'configuration names must not include a redundant Internal label');
+assert.match(configurationReferenceShortcodeSource, /eq \$setting\.datatype\.label "Enum"[\s\S]*eq \$setting\.datatype\.label "Flag"[\s\S]*data-copy-label="Copy value/, 'enum and flag values must each have a copy control');
+assert.doesNotMatch(configurationReferenceShortcodeSource, /No explicit default/, 'missing configuration defaults must be labelled None');
+assert.match(configurationReferenceShortcodeSource, /<span[^>]+data-configuration-default-empty[^>]*>None\.<\/span>/, 'missing defaults must render as plain punctuated text');
+assert.match(runtimeSource, /value\.hidden = !selectedDefault\.hasDefault[\s\S]*empty\.hidden = selectedDefault\.hasDefault[\s\S]*copy\.hidden = !selectedDefault\.hasDefault/, 'OS changes must hide code and copy controls when no default exists');
+assert.match(configurationReferenceTestPageSource, /^draft: true$/m, 'the configuration reference playground must remain a draft page');
+assert.match(configurationReferenceTestPageSource, /configuration-reference-table area="riak_repl"/, 'the configuration reference playground must exercise area filtering');
+assert.match(configurationReferenceTestPageSource, /\(\?:,legacy\)\?/, 'the configuration reference playground must prove commas are preserved inside a regex');
+assert.match(runtimeSource, /applyConfigurationReferences\(\)/, 'OS changes must update rendered configuration defaults');
+assert.match(docsCssSource, /\.configuration-reference-table/, 'configuration reference tables must have dedicated responsive styling');
 assert.match(headSource, /resources\.Get "css\/vendors\/admonitions\.css"[\s\S]*admonition-style-loaded-flag/, 'product HTML must load admonition CSS deterministically before render hooks run');
 assert.match(headSource, /images\/ui\/favicon\.png[^"\n]+\?v=/, 'documentation pages must use the shared OpenRiak favicon');
 assert.match(homepageSource, /images\/ui\/favicon\.png[^"\n]+\?v=/, 'the homepage must use the shared OpenRiak favicon');
@@ -163,6 +182,14 @@ assert.ok(!sharedHeaderSource.includes('⌄') && !sidebarSource.includes('⌄'),
 assert.match(sharedHeaderSource, /data-theme-picker[\s\S]*class="theme-trigger"[\s\S]*class="picker-chevron"/, 'Theme must use the shared custom picker and chevron');
 assert.ok(!sharedHeaderSource.includes('data-theme-select') && !sharedHeaderSource.includes('<select'), 'Theme picker must not use a native select');
 assert.match(sharedHeaderSource, /theme-system\.svg[\s\S]*theme-dark\.svg[\s\S]*theme-light\.svg/, 'Theme picker must provide icons for default, dark, and light');
+assert.match(sharedHeaderSource, /showContentWidth[\s\S]*data-content-width-value="50"[\s\S]*data-content-width-value="75"[\s\S]*data-content-width-value="90"[\s\S]*data-content-width-value="98"/, 'product documentation must offer all supported content widths in the appearance picker');
+assert.match(headerSource, /"showContentWidth" true/, 'product documentation must enable the shared content-width picker');
+assert.match(themeSource, /openriak-docs-content-width[\s\S]*localStorage\.getItem\(contentWidthKey\)[\s\S]*localStorage\.setItem\(contentWidthKey, value\)/, 'the selected content width must persist in local storage');
+assert.match(themeSource, /document\.documentElement\.dataset\.contentWidth = selectedValue/, 'the selected content width must be applied to the document root');
+assert.match(headSource, /openriak-docs-content-width[\s\S]*dataset\.contentWidth/, 'the stored content width must be applied before styles load to avoid a layout shift');
+assert.match(docsCssSource, /--docs-content-width: 75%[\s\S]*data-content-width="50"[\s\S]*data-content-width="90"[\s\S]*data-content-width="98"/, 'documentation styling must map every width preference and default to 75 percent');
+assert.match(docsCssSource, /\.configuration-reference-default \{ width: 18rem; \}[\s\S]*data-content-width="50"[^}]*\.configuration-reference-default \{ width: 15rem; \}/, 'configuration-reference default values must use 15rem at 50 percent content width and 18rem otherwise');
+assert.match(docsCssSource, /@media \(max-width: 760px\)[\s\S]*\.doc-article, \.breadcrumbs \{ width: 100%; \}/, 'content width preferences must not squeeze documentation on small screens');
 assert.match(sharedHeaderCss, /picker-chevron::before \{[^}]*content: '›'/, 'pickers must use the page-tree chevron');
 assert.ok(docsCssSource.includes('.docs-sidebar:has(.picker-panel:not([hidden]))') && docsCssSource.includes('overflow: visible;'), 'open sidebar flyouts must escape the sidebar scroller');
 assert.ok(docsCssSource.includes('.picker-panel {') && docsCssSource.includes('width: max-content;'), 'desktop picker panels must use intrinsic width');
@@ -317,6 +344,14 @@ assert.equal(
   resolveAssetUrl('images/os/ubuntu.svg', '/docs/', 'https://docs.example'),
   'https://docs.example/docs/images/os/ubuntu.svg',
   'shared assets must resolve from the site base rather than a product route'
+);
+assert.deepEqual(
+  configurationDefaultForOs({ ubuntu: { hasDefault: true, value: 64, osSpecific: true } }, 'ubuntu'),
+  { hasDefault: true, value: '64', osSpecific: true }
+);
+assert.deepEqual(
+  configurationDefaultForOs({}, 'missing'),
+  { hasDefault: false, value: '', osSpecific: false }
 );
 for (const [version, adapter] of [['3.4.0', v340], ['3.4.1', v341]]) {
   const metadataRoot = path.join(repositoryRoot, 'content', 'openriak-kv', 'metadata', version);

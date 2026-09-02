@@ -23,6 +23,10 @@ const readAdapter = (product, version) => JSON.parse(fs.readFileSync(
   path.join(generatedRoot, product, 'data', 'versions', `${version}.json`),
   'utf8'
 ));
+const readConfigurationReference = (version) => JSON.parse(fs.readFileSync(
+  path.join(generatedRoot, 'openriak-kv', 'data', 'configuration-reference', `${version}.json`),
+  'utf8'
+));
 const adapterDownloads = (product, version) => Object.values(readAdapter(product, version).downloads).flat();
 const downloadNamed = (product, version, filename) => adapterDownloads(product, version)
   .find((download) => download.filename === filename);
@@ -128,5 +132,39 @@ for (const product of ['openriak-cs', 'openriak-ts']) {
     assert.ok(adapterDownloads(product, version.raw).every((download) => download.otp === null || Number.isInteger(download.otp)));
   }
 }
+
+const configurationReferenceVersions = fs.readdirSync(path.join(generatedRoot, 'openriak-kv', 'data', 'configuration-reference'))
+  .filter((file) => file.endsWith('.json'))
+  .map((file) => file.slice(0, -5))
+  .sort();
+const expectedConfigurationReferenceVersions = productCases[0].sources.flatMap(versionsFor)
+  .map(({ raw }) => raw)
+  .filter((version) => compareSemver(version, '3.4.0') >= 0)
+  .sort();
+assert.deepEqual(configurationReferenceVersions, expectedConfigurationReferenceVersions);
+const configurationReference = readConfigurationReference('3.4.1');
+assert.equal(configurationReference.product, 'openriak-kv');
+assert.equal(configurationReference.version, '3.4.1');
+assert.ok(configurationReference.settings.length > 0);
+const tictacaaeActive = configurationReference.settings.find((setting) => setting.name === 'tictacaae_active');
+assert.ok(tictacaaeActive);
+assert.equal(tictacaaeActive.internalName, 'riak_kv.tictacaae_active');
+assert.deepEqual(tictacaaeActive.areas, ['riak_kv']);
+assert.equal(tictacaaeActive.datatype.label, 'Enum');
+assert.deepEqual(tictacaaeActive.datatype.options, ['active', 'passive']);
+assert.ok(Object.keys(tictacaaeActive.defaults).length > 0);
+assert.ok(Object.values(tictacaaeActive.defaults).every((value) => !value.osSpecific));
+const bitcaskDataRoot = configurationReference.settings.find((setting) => setting.name === 'bitcask.data_root');
+assert.ok(Object.values(bitcaskDataRoot.defaults).every((value) => value.value === '/var/lib/riak/bitcask'));
+assert.ok(Object.values(bitcaskDataRoot.defaults).every((value) => !value.osSpecific));
+const platformLibDir = configurationReference.settings.find((setting) => setting.name === 'platform_lib_dir');
+assert.ok(Object.values(platformLibDir.defaults).some((value) => value.osSpecific));
+assert.ok(Object.values(platformLibDir.defaults).some((value) => !value.osSpecific));
+assert.ok(configurationReference.settings.some((setting) => setting.areas.includes('riak_repl')));
+assert.ok(configurationReference.settings.some((setting) => setting.datatype.constraints.length > 0));
+assert.ok(configurationReference.settings.some((setting) => Object.values(setting.defaults).some((value) => value.osSpecific)));
+assert.ok(configurationReference.settings.every((setting) => Object.values(setting.defaults).every((value) =>
+  !/%\{[^}]+\}|\{\{[^}]+\}\}|\$\([^)]+\)/.test(JSON.stringify(value.value))
+)), 'configuration-reference defaults must not expose unresolved package or configuration variables');
 
 console.log('Product metadata synchronization tests passed.');

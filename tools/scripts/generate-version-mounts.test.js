@@ -117,7 +117,7 @@ try {
   const baseConfig = path.join(fixture, 'hugo.yaml');
   const output = path.join(fixture, 'generated.yaml');
   const latestRedirectRoot = path.join(fixture, 'latest-redirects');
-  fs.writeFileSync(baseConfig, `module:\n  mounts:\n    - {source: '../tools/generated/openriak-kv/data/versions', target: 'data/versions/openriak-kv'}\n    - {source: '../tools/generated/openriak-cs/data/versions', target: 'data/versions/openriak-cs'}\n    - {source: '../tools/generated/openriak-ts/data/versions', target: 'data/versions/openriak-ts'}\n    # GENERATED_VERSION_MOUNTS\n`, 'utf8');
+  fs.writeFileSync(baseConfig, `module:\n  mounts:\n    - {source: '../tools/generated/openriak-kv/data/versions', target: 'data/versions/openriak-kv'}\n    - {source: '../tools/generated/openriak-kv/data/configuration-reference', target: 'data/configuration-reference/openriak-kv'}\n    - {source: '../tools/generated/openriak-cs/data/versions', target: 'data/versions/openriak-cs'}\n    - {source: '../tools/generated/openriak-ts/data/versions', target: 'data/versions/openriak-ts'}\n    # GENERATED_VERSION_MOUNTS\n`, 'utf8');
   generateConfig({ contentRoot: fixture, baseConfig, output, latestRedirectRoot, products: productSources });
   const generated = fs.readFileSync(output, 'utf8');
   assert.match(generated, /source: 'openriak-kv\/3\.4\.0-new-release', target: 'content\/openriak-kv\/3\.4\.2'/);
@@ -148,6 +148,7 @@ try {
   const filteredConfig = fs.readFileSync(filteredOutput, 'utf8');
   assert.match(filteredConfig, new RegExp(`source: '${filteredDataRoot.replace(/\\/g, '/')}'`));
   assert.match(filteredConfig, new RegExp(`source: '${filteredCsDataRoot.replace(/\\/g, '/')}'`));
+  assert.match(filteredConfig, new RegExp(`source: '${path.join(path.dirname(filteredDataRoot), 'configuration-reference').replace(/\\/g, '/')}'`));
 
   const latestOnlyOutput = path.join(fixture, 'latest-only.yaml');
   generateConfig({

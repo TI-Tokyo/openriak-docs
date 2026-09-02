@@ -1,12 +1,16 @@
 (() => {
   'use strict';
   const key = 'openriak-docs-theme';
+  const contentWidthKey = 'openriak-docs-content-width';
+  const contentWidthDefault = '75';
+  const contentWidths = ['50', '75', '90', '98'];
   const picker = document.querySelector('[data-theme-picker]');
   const trigger = picker?.querySelector('.theme-trigger');
   const panel = picker?.querySelector('[data-theme-panel]');
   const triggerIcon = picker?.querySelector('[data-theme-trigger-icon]');
   const triggerLabel = picker?.querySelector('[data-theme-trigger-label]');
   const options = [...(picker?.querySelectorAll('[data-theme-value]') || [])];
+  const contentWidthOptions = [...(picker?.querySelectorAll('[data-content-width-value]') || [])];
   const media = window.matchMedia('(prefers-color-scheme: dark)');
   const stored = () => {
     try {
@@ -20,12 +24,27 @@
     options.forEach((option) => {
       const active = option === selected;
       option.classList.toggle('is-active', active);
-      option.setAttribute('aria-selected', String(active));
+      option.setAttribute('aria-pressed', String(active));
     });
     if (selected && triggerIcon && triggerLabel) {
       triggerIcon.src = selected.dataset.themeIcon;
       triggerLabel.textContent = selected.querySelector('strong')?.textContent || 'Default';
     }
+  };
+  const storedContentWidth = () => {
+    try {
+      const value = window.localStorage.getItem(contentWidthKey) || contentWidthDefault;
+      return contentWidths.includes(value) ? value : contentWidthDefault;
+    } catch { return contentWidthDefault; }
+  };
+  const applyContentWidth = (value) => {
+    const selectedValue = contentWidths.includes(value) ? value : contentWidthDefault;
+    document.documentElement.dataset.contentWidth = selectedValue;
+    contentWidthOptions.forEach((option) => {
+      const active = option.dataset.contentWidthValue === selectedValue;
+      option.classList.toggle('is-active', active);
+      option.setAttribute('aria-pressed', String(active));
+    });
   };
   const close = (returnFocus = false) => {
     if (!panel || !trigger) return;
@@ -35,6 +54,7 @@
     if (returnFocus && wasOpen) trigger.focus();
   };
   apply(stored());
+  applyContentWidth(storedContentWidth());
   trigger?.addEventListener('click', () => {
     panel.hidden = !panel.hidden;
     trigger.setAttribute('aria-expanded', String(!panel.hidden));
@@ -43,6 +63,12 @@
     const value = option.dataset.themeValue;
     try { window.localStorage.setItem(key, value); } catch {}
     apply(value);
+    close(true);
+  }));
+  contentWidthOptions.forEach((option) => option.addEventListener('click', () => {
+    const value = option.dataset.contentWidthValue;
+    try { window.localStorage.setItem(contentWidthKey, value); } catch {}
+    applyContentWidth(value);
     close(true);
   }));
   document.addEventListener('click', (event) => { if (picker && !picker.contains(event.target)) close(); });

@@ -1,0 +1,90 @@
+{{- $context := partial "product-context.html" .Page -}}
+{{- $configurationData := index hugo.Data "configuration-reference" -}}
+{{- $productData := index $configurationData $context.id -}}
+{{- $reference := index $productData $context.version -}}
+{{- if not $reference -}}
+  {{- errorf "configuration-reference-table requires configuration metadata for %s %s on %s" $context.id $context.version .Page.File.Path -}}
+{{- end -}}
+{{- $area := .Get "area" | default "" -}}
+{{- $filters := slice -}}
+{{- range strings.Split .Inner "\n" -}}
+  {{- $filter := strings.TrimSpace . -}}
+  {{- if $filter }}{{ $filters = $filters | append $filter }}{{ end -}}
+{{- end -}}
+{{- $matches := slice -}}
+{{- range $setting := $reference.settings -}}
+  {{- $areaMatches := or (not $area) (in $setting.areas $area) -}}
+  {{- $filterMatches := eq (len $filters) 0 -}}
+  {{- range $filter := $filters -}}
+    {{- if findRE $filter $setting.name 1 }}{{ $filterMatches = true }}{{ end -}}
+  {{- end -}}
+  {{- if and $areaMatches $filterMatches }}{{ $matches = $matches | append $setting }}{{ end -}}
+{{- end -}}
+{{- if not $matches -}}
+  {{- errorf "configuration-reference-table matched no settings for area=%q on %s" $area .Page.File.Path -}}
+{{- end -}}
+{{- $versionData := index $context.versions $context.version -}}
+{{- $defaultOs := $versionData.defaultOs -}}
+{{- $selectedOperatingSystems := where $versionData.operatingSystems "id" $defaultOs -}}
+{{- $selectedOperatingSystem := index $selectedOperatingSystems 0 -}}
+{{- $clientDefaults := dict -}}
+<div class="configuration-reference-wrap" data-configuration-reference>
+  <div class="configuration-reference-scroll">
+    <table class="configuration-reference-table">
+      <thead>
+        <tr>
+          <th>Config name</th>
+          <th>Description</th>
+          <th>Datatype</th>
+          <th>Default value</th>
+        </tr>
+      </thead>
+      <tbody>
+        {{- range $setting := $matches -}}
+          {{- $clientDefaults = merge $clientDefaults (dict $setting.name $setting.defaults) -}}
+          {{- $default := index $setting.defaults $defaultOs | default dict -}}
+          <tr data-configuration-key="{{ $setting.name }}">
+            <td class="configuration-reference-name">
+              <div class="configuration-copyable">
+                <code>{{ $setting.name }}</code>
+                <button class="download-copy" type="button" data-copy-value="{{ $setting.name }}" data-copy-label="Copy config name" aria-label="Copy config name" title="Copy config name" aria-live="polite">{{ partial "download-icon-copy.html" . }}</button>
+              </div>
+              {{- if and $setting.internalName (ne $setting.internalName $setting.name) }}
+                <div class="configuration-copyable configuration-reference-internal">
+                  <span class="configuration-reference-arrow" aria-hidden="true">→</span>
+                  <code>{{ $setting.internalName }}</code>
+                  <button class="download-copy" type="button" data-copy-value="{{ $setting.internalName }}" data-copy-label="Copy internal name" aria-label="Copy internal name" title="Copy internal name" aria-live="polite">{{ partial "download-icon-copy.html" . }}</button>
+                </div>
+              {{- end }}
+            </td>
+            <td class="configuration-reference-description">{{ with $setting.description }}{{ . | markdownify }}{{ else }}<span class="configuration-reference-empty">No description available.</span>{{ end }}</td>
+            <td class="configuration-reference-datatype">
+              <strong>{{ $setting.datatype.label }}</strong>
+              {{- with $setting.datatype.options }}
+                {{- $copyDatatypeOptions := or (eq $setting.datatype.label "Enum") (eq $setting.datatype.label "Flag") -}}
+                <small>Values:</small>
+                <span class="configuration-reference-options">{{ range $index, $value := . }}{{ if $index }}, {{ end }}<span class="configuration-reference-option"><code>{{ $value }}</code>{{ if $copyDatatypeOptions }}<button class="download-copy" type="button" data-copy-value="{{ $value }}" data-copy-label="Copy value {{ $value }}" aria-label="Copy value {{ $value }}" title="Copy value {{ $value }}" aria-live="polite">{{ partial "download-icon-copy.html" . }}</button>{{ end }}</span>{{ end }}</span>
+              {{- end }}
+              {{- with $setting.datatype.units }}
+                <small>Units:</small>
+                <span class="configuration-reference-options">{{ range $index, $value := . }}{{ if $index }}, {{ end }}<code>{{ $value }}</code>{{ end }}</span>
+              {{- end }}
+              {{- range $setting.datatype.constraints }}<span class="configuration-reference-constraint">{{ . | markdownify }}</span>{{ end }}
+            </td>
+            <td class="configuration-reference-default">
+              <div class="configuration-copyable">
+                <code data-configuration-default-value{{ if not $default.hasDefault }} hidden{{ end }}>{{ $default.value }}</code>
+                <span class="configuration-reference-no-default" data-configuration-default-empty{{ if $default.hasDefault }} hidden{{ end }}>None.</span>
+                <button class="download-copy" type="button" data-configuration-default-copy data-copy-value="{{ $default.value }}" data-copy-label="Copy default value" aria-label="Copy default value" title="Copy default value" aria-live="polite"{{ if not $default.hasDefault }} hidden{{ end }}>{{ partial "download-icon-copy.html" . }}</button>
+              </div>
+              <span class="configuration-reference-os" data-configuration-os-specific{{ if not $default.osSpecific }} hidden{{ end }}>
+                on <img data-configuration-os-icon src="{{ $selectedOperatingSystem.logo | relURL }}" alt="{{ $selectedOperatingSystem.displayName }}" title="{{ $selectedOperatingSystem.displayName }}">
+              </span>
+            </td>
+          </tr>
+        {{- end }}
+      </tbody>
+    </table>
+  </div>
+  <script type="application/json" data-configuration-reference-defaults>{{ $clientDefaults | jsonify | safeJS }}</script>
+</div>

@@ -8,6 +8,18 @@ from .schema import merge_mappings, parse_schema
 from .source import Repository, is_erlang_repository
 
 
+_RPM_BUILTIN_MACROS = {
+    "_prefix": "/usr",
+    "_exec_prefix": "%{_prefix}",
+    "_bindir": "%{_exec_prefix}/bin",
+    "_sbindir": "%{_exec_prefix}/sbin",
+    "_libdir": "%{_exec_prefix}/lib64",
+    "_sysconfdir": "/etc",
+    "_sharedstatedir": "/var/lib",
+    "_localstatedir": "/var",
+}
+
+
 def extract_defaults(product: dict, version: str, targets: list[dict], root: Repository,
                      repositories: list[Repository], initial_warnings: list[str]) -> dict:
     warnings = list(initial_warnings)
@@ -173,7 +185,8 @@ def parse_rpm_vars(directory: Path, root: Path) -> tuple[dict, list[dict]]:
     spec = directory / "specfile"
     if not spec.exists(): return values, sources
     text = spec.read_text("utf-8", errors="replace")
-    macros = {name: value.strip() for name, value in re.findall(r"(?m)^%(?:define|global)\s+(\w+)\s+(.+)$", text)}
+    macros = dict(_RPM_BUILTIN_MACROS)
+    macros.update({name: value.strip() for name, value in re.findall(r"(?m)^%(?:define|global)\s+(\w+)\s+(.+)$", text)})
     def expand(value: str) -> str:
         previous = None
         while value != previous:
@@ -228,28 +241,57 @@ def calculate_default(key: str, setting: dict, context: dict, release_vars: dict
 
 
 def resolve_templates(value, context: dict) -> tuple[object, list[str], bool]:
-    if isinstance(value, dict) and "$template" in value:
-        expression = value["$template"]
-        names = re.findall(r"\{\{\s*([A-Za-z_]\w*)\s*\}\}", expression)
-        if len(names) == 1 and expression.strip() == "{{" + names[0] + "}}":
-            return context.get(names[0]), names, names[0] in context
-        rendered = expression
+    def render(current, stack: tuple[str, ...] = ()) -> tuple[object, list[str], bool]:
+        if isinstance(current, dict):
+            if "$template" in current:
+                return render(current["$template"], stack)
+            rendered, names, complete = {}, [], True
+            for key, child in current.items():
+                rendered_child, child_names, child_complete = render(child, stack)
+                rendered[key] = rendered_child
+                names.extend(child_names)
+                complete = complete and child_complete
+            return rendered, names, complete
+        if isinstance(current, list):
+            rendered, names, complete = [], [], True
+            for child in current:
+                rendered_child, child_names, child_complete = render(child, stack)
+                rendered.append(rendered_child)
+                names.extend(child_names)
+                complete = complete and child_complete
+            return rendered, names, complete
+        if not isinstance(current, str):
+            return current, [], True
+        current_names = re.findall(r"\{\{\s*([A-Za-z_]\w*)\s*\}\}", current)
+        stripped = current.strip()
+        if len(current_names) == 1 and re.fullmatch(r"\{\{\s*" + re.escape(current_names[0]) + r"\s*\}\}", stripped):
+            name = current_names[0]
+            if name not in context or name in stack:
+                return current, current_names, False
+            replacement, nested_names, complete = render(context[name], stack + (name,))
+            return replacement, current_names + nested_names, complete
+        rendered = current
         complete = True
-        for name in names:
-            if name not in context: complete = False
-            else: rendered = rendered.replace("{{" + name + "}}", str(context[name]))
+        names = list(current_names)
+        for name in current_names:
+            if name not in context or name in stack:
+                complete = False
+                continue
+            replacement, nested_names, resolved = render(context[name], stack + (name,))
+            names.extend(nested_names)
+            complete = complete and resolved
+            rendered = re.sub(r"\{\{\s*" + re.escape(name) + r"\s*\}\}", str(replacement), rendered)
         return rendered, names, complete
-    if isinstance(value, str):
-        names = re.findall(r"\{\{\s*([A-Za-z_]\w*)\s*\}\}", value)
-        rendered, complete = value, True
-        for name in names:
-            if name not in context: complete = False
-            else: rendered = re.sub(r"\{\{\s*" + re.escape(name) + r"\s*\}\}", str(context[name]), rendered)
-        return rendered, names, complete
-    return value, [], True
+
+    rendered, names, complete = render(value)
+    return rendered, list(dict.fromkeys(names)), complete
 
 
 def resolve_config_references(value, settings: dict, context: dict, stack: tuple[str, ...] = ()):
+    if isinstance(value, dict):
+        return {key: resolve_config_references(child, settings, context, stack) for key, child in value.items()}
+    if isinstance(value, list):
+        return [resolve_config_references(child, settings, context, stack) for child in value]
     if not isinstance(value, str): return value
     complete = True
     def replace(match):

@@ -88,6 +88,16 @@
 
   const resolveAssetUrl = (asset, assetBase, origin) => new URL(asset, new URL(assetBase, origin)).href;
 
+  const configurationDefaultForOs = (defaults, osId) => {
+    const selected = defaults?.[osId];
+    if (!selected) return { hasDefault: false, value: '', osSpecific: false };
+    return {
+      hasDefault: Boolean(selected.hasDefault),
+      value: selected.value == null ? '' : String(selected.value),
+      osSpecific: Boolean(selected.osSpecific)
+    };
+  };
+
   const writeClipboard = async (value) => {
     if (navigator.clipboard?.writeText && window.isSecureContext) {
       await navigator.clipboard.writeText(value);
@@ -194,7 +204,7 @@
     return actions;
   };
 
-  const api = { parseSemVer, compareSemVer, resolveBrand, resolveOs, resolveValue, buildVersionCandidates, resolveAssetUrl };
+  const api = { parseSemVer, compareSemVer, resolveBrand, resolveOs, resolveValue, buildVersionCandidates, resolveAssetUrl, configurationDefaultForOs };
   if (typeof module !== 'undefined' && module.exports) module.exports = api;
   if (typeof window !== 'undefined') window.OpenRiakDocs = api;
   if (typeof document === 'undefined') return;
@@ -237,6 +247,39 @@
       if (!value) return;
       if (node.dataset.docBind === 'href') node.href = value;
       else node.textContent = value;
+    });
+  };
+
+  const applyConfigurationReferences = () => {
+    document.querySelectorAll('[data-configuration-reference]').forEach((reference) => {
+      if (!reference.configurationDefaults) {
+        const data = reference.querySelector('[data-configuration-reference-defaults]');
+        reference.configurationDefaults = data ? JSON.parse(data.textContent) : {};
+      }
+      reference.querySelectorAll('[data-configuration-key]').forEach((row) => {
+        const defaults = reference.configurationDefaults[row.dataset.configurationKey] || {};
+        const selectedDefault = configurationDefaultForOs(defaults, selectedOs.id);
+        const value = row.querySelector('[data-configuration-default-value]');
+        const empty = row.querySelector('[data-configuration-default-empty]');
+        const copy = row.querySelector('[data-configuration-default-copy]');
+        const osSpecific = row.querySelector('[data-configuration-os-specific]');
+        const osIcon = row.querySelector('[data-configuration-os-icon]');
+        if (value) {
+          value.hidden = !selectedDefault.hasDefault;
+          value.textContent = selectedDefault.value;
+        }
+        if (empty) empty.hidden = selectedDefault.hasDefault;
+        if (copy) {
+          copy.hidden = !selectedDefault.hasDefault;
+          copy.dataset.copyValue = selectedDefault.value;
+        }
+        if (osSpecific) osSpecific.hidden = !selectedDefault.osSpecific;
+        if (osIcon) {
+          osIcon.src = osAssetUrl(selectedOs.logo);
+          osIcon.alt = selectedOs.displayName;
+          osIcon.title = selectedOs.displayName;
+        }
+      });
     });
   };
 
@@ -440,6 +483,7 @@
     window.history.replaceState({}, '', url);
     renderOsPicker();
     applyValues();
+    applyConfigurationReferences();
     renderDownloads();
     preserveOsOnInternalLinks();
   };
