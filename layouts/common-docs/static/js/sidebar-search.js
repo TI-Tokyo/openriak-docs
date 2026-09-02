@@ -3,6 +3,7 @@
   const root = document.querySelector('[data-sidebar-search]');
   const input = root?.querySelector('[data-search-input]');
   const results = root?.querySelector('[data-search-results]');
+  const status = root?.querySelector('[data-search-status]');
   if (!root || !input || !results) return;
   root.dataset.sharedSearchReady = 'true';
   let indexPromise;
@@ -10,8 +11,6 @@
   const hide = () => { results.hidden = true; };
   const resultUrl = (value, query) => {
     const url = new URL(value, window.location.href);
-    const os = new URL(window.location.href).searchParams.get('os');
-    if (os && url.origin === window.location.origin) url.searchParams.set('os', os);
     url.searchParams.set('highlight', query);
     return url.href;
   };
@@ -44,6 +43,10 @@
     });
     if (!pages.length) results.textContent = root.dataset.emptyMessage || 'No results.';
     results.hidden = false;
+    results.setAttribute('aria-busy', 'false');
+    if (status) status.textContent = pages.length
+      ? `${pages.length} search result${pages.length === 1 ? '' : 's'} found.`
+      : (root.dataset.emptyMessage || 'No results.');
   };
   input.addEventListener('keydown', (event) => {
     if (event.key !== 'Escape') return;
@@ -52,6 +55,8 @@
     input.value = '';
     cachedQuery = '';
     results.replaceChildren();
+    results.setAttribute('aria-busy', 'false');
+    if (status) status.textContent = '';
     hide();
   });
   input.addEventListener('click', () => {
@@ -62,7 +67,14 @@
     const query = input.value.trim().toLowerCase();
     cachedQuery = '';
     hide();
-    if (query.length < 2) { results.replaceChildren(); return; }
+    if (query.length < 2) {
+      results.replaceChildren();
+      results.setAttribute('aria-busy', 'false');
+      if (status) status.textContent = '';
+      return;
+    }
+    results.setAttribute('aria-busy', 'true');
+    if (status) status.textContent = 'Searching…';
     try {
       const pages = await loadIndex();
       if (input.value.trim().toLowerCase() !== query) return;
@@ -76,6 +88,8 @@
     } catch (error) {
       if (input.value.trim().toLowerCase() !== query) return;
       results.textContent = 'Search is temporarily unavailable.';
+      results.setAttribute('aria-busy', 'false');
+      if (status) status.textContent = 'Search is temporarily unavailable.';
       results.hidden = false;
       console.error(error);
     }

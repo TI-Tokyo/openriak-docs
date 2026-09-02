@@ -227,12 +227,6 @@
     return osById(currentVersion, currentVersion.defaultOs) || currentVersion.operatingSystems[0];
   };
 
-  const withOs = (href, osId = selectedOs?.id) => {
-    const url = new URL(href, window.location.href);
-    if (osId) url.searchParams.set('os', osId);
-    return url.href;
-  };
-
   const applyValues = () => {
     document.querySelectorAll('[data-doc-value]').forEach((node) => {
       const optional = node.dataset.docOptional === 'true';
@@ -359,13 +353,6 @@
     if (window.location.hash === '#all-downloads' && allDownloads) allDownloads.open = true;
   };
 
-  const preserveOsOnInternalLinks = () => {
-    document.querySelectorAll('main a[href], .docs-sidebar a[href], .breadcrumbs a[href]').forEach((link) => {
-      const url = new URL(link.href, window.location.href);
-      if (url.origin === window.location.origin && url.pathname.startsWith(context.productBase)) link.href = withOs(url.href);
-    });
-  };
-
   const osDetails = (os) => {
     const details = [];
     if (os.codename) details.push(os.codename);
@@ -478,14 +465,16 @@
   const setOs = (os) => {
     selectedOs = os;
     window.localStorage.setItem(storageKey, os.id);
+    document.documentElement.dataset.selectedOs = os.id;
     const url = new URL(window.location.href);
-    url.searchParams.set('os', os.id);
-    window.history.replaceState({}, '', url);
+    if (url.searchParams.has('os')) {
+      url.searchParams.delete('os');
+      window.history.replaceState(window.history.state, '', url);
+    }
     renderOsPicker();
     applyValues();
     applyConfigurationReferences();
     renderDownloads();
-    preserveOsOnInternalLinks();
   };
 
   const pageExists = async (url) => {
@@ -508,13 +497,14 @@
       currentVersion: currentVersion.version,
       targetVersion: target.version
     });
+    if (targetOs) window.localStorage.setItem(storageKey, targetOs.id);
     for (const candidate of candidates) {
       if (await pageExists(candidate)) {
-        window.location.assign(withOs(candidate, targetOs?.id));
+        window.location.assign(candidate);
         return;
       }
     }
-    window.location.assign(withOs(new URL(`${target.version}/`, new URL(context.productBase, window.location.origin)).href, targetOs?.id));
+    window.location.assign(new URL(`${target.version}/`, new URL(context.productBase, window.location.origin)).href);
   };
 
   const setupVersionWarning = () => {
@@ -612,12 +602,13 @@
     if (root?.dataset.sharedSearchReady === 'true') return;
     const input = document.querySelector('[data-search-input]');
     const results = document.querySelector('[data-search-results]');
+    const status = root?.querySelector('[data-search-status]');
     if (!root || !input || !results) return;
     let indexPromise;
     let cachedQuery = '';
     const hideResults = () => { results.hidden = true; };
     const highlightedUrl = (value, query) => {
-      const url = new URL(withOs(value), window.location.href);
+      const url = new URL(value, window.location.href);
       url.searchParams.set('highlight', query);
       return url.href;
     };
@@ -651,6 +642,8 @@
       cachedQuery = '';
       hideResults();
       results.replaceChildren();
+      results.setAttribute('aria-busy', 'false');
+      if (status) status.textContent = '';
     });
     input.addEventListener('click', showCachedResults);
     document.addEventListener('click', (event) => { if (!root.contains(event.target)) hideResults(); });
@@ -658,7 +651,14 @@
       const query = input.value.trim().toLowerCase();
       cachedQuery = '';
       hideResults();
-      if (query.length < 2) { results.replaceChildren(); return; }
+      if (query.length < 2) {
+        results.replaceChildren();
+        results.setAttribute('aria-busy', 'false');
+        if (status) status.textContent = '';
+        return;
+      }
+      results.setAttribute('aria-busy', 'true');
+      if (status) status.textContent = 'Searching…';
       try {
         const pages = await loadIndex();
         if (input.value.trim().toLowerCase() !== query) return;
@@ -678,11 +678,17 @@
         if (!matches.length) results.textContent = 'No results in this version.';
         cachedQuery = query;
         results.hidden = false;
+        results.setAttribute('aria-busy', 'false');
+        if (status) status.textContent = matches.length
+          ? `${matches.length} search result${matches.length === 1 ? '' : 's'} found.`
+          : 'No results in this version.';
       } catch (error) {
         if (input.value.trim().toLowerCase() !== query) return;
         results.textContent = 'Search is temporarily unavailable.';
         cachedQuery = query;
         results.hidden = false;
+        results.setAttribute('aria-busy', 'false');
+        if (status) status.textContent = 'Search is temporarily unavailable.';
         console.error(error);
       }
     });

@@ -2,8 +2,9 @@
 {{- $operatingSystems := .operatingSystems -}}
 <div class="downloads-table-wrap">
   <table class="downloads-table">
+    <caption class="sr-only">Available package downloads by operating system</caption>
     <thead>
-      <tr><th>OTP</th><th>Architecture</th><th>Package</th><th class="download-table-actions">Actions</th></tr>
+      <tr><th scope="col">OTP</th><th scope="col">Architecture</th><th scope="col">Package</th><th scope="col" class="download-table-actions">Actions</th></tr>
     </thead>
     {{- range $os := $operatingSystems -}}
       {{- range (index $versionData.downloads $os.id | default slice) -}}

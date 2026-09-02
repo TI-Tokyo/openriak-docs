@@ -53,6 +53,7 @@
     const loadIndex = () => {
       if (!indexPromise) {
         status.textContent = 'Loading search index…';
+        results.setAttribute('aria-busy', 'true');
         indexPromise = fetch(root.dataset.indexUrl)
           .then((response) => {
             if (!response.ok) throw new Error(`Search index returned ${response.status}`);
@@ -66,6 +67,7 @@
           })))
           .catch((error) => {
             indexPromise = undefined;
+            results.setAttribute('aria-busy', 'false');
             status.textContent = 'Search is temporarily unavailable.';
             throw error;
           });
@@ -77,6 +79,7 @@
       results.replaceChildren();
       if (!matches.length) {
         results.hidden = true;
+        results.setAttribute('aria-busy', 'false');
         status.textContent = `No conversations found for “${query}”.`;
         return;
       }
@@ -95,6 +98,7 @@
       });
       results.append(fragment);
       results.hidden = false;
+      results.setAttribute('aria-busy', 'false');
       status.textContent = `${matches.length} conversation${matches.length === 1 ? '' : 's'} found${matches.length > 30 ? '; showing 30' : ''}.`;
     };
 
@@ -104,9 +108,12 @@
       if (terms.join('').length < 2) {
         results.hidden = true;
         results.replaceChildren();
+        results.setAttribute('aria-busy', 'false');
         status.textContent = '';
         return;
       }
+      results.setAttribute('aria-busy', 'true');
+      status.textContent = 'Searching…';
       const items = await loadIndex();
       const matches = [];
       items.forEach((item) => {

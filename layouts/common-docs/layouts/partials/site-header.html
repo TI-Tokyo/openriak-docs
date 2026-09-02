@@ -12,7 +12,7 @@
     </a>
     <a class="brand-section" href="{{ partial "site-section-url.html" $section.url }}" aria-label="{{ $section.name }} landing page">{{ $section.name }}</a>
   </div>
-  <nav class="header-controls" aria-label="Site preferences">
+  <nav class="header-controls" aria-label="Site controls">
     <div class="site-section-control" data-site-section-picker>
       <button class="site-section-trigger" type="button" aria-expanded="false" aria-controls="site-section-panel" aria-label="Site sections, current section: {{ $section.name }}">
         {{ partial "site-picker-icon.html" $section }}
@@ -30,13 +30,52 @@
         {{ end }}
       </div>
     </div>
-    <div class="theme-control" data-theme-picker>
-      <button class="theme-trigger" type="button" aria-expanded="false" aria-controls="theme-panel">
-        <img data-theme-trigger-icon src="{{ `images/ui/theme-system.svg` | relURL }}" alt="">
-        <span data-theme-trigger-label>Default</span>
+    <div class="share-control" data-share-control>
+      <button class="share-trigger" type="button" aria-expanded="false" aria-haspopup="menu" aria-controls="share-panel" aria-label="Share this page">
+        <svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="18" cy="5" r="2.5"/><circle cx="6" cy="12" r="2.5"/><circle cx="18" cy="19" r="2.5"/><path d="m8.2 10.8 7.6-4.5M8.2 13.2l7.6 4.5"/></svg>
+        <span class="share-trigger-label">Share</span>
         <span class="picker-chevron" aria-hidden="true"></span>
       </button>
-      <div id="theme-panel" class="theme-panel" data-theme-panel role="dialog" aria-label="Appearance preferences" hidden>
+      <div id="share-panel" class="share-panel" data-share-panel role="menu" aria-label="Share this page" hidden>
+        <button class="share-option" type="button" role="menuitem" data-share-copy>
+          <svg class="share-option-icon" viewBox="0 0 24 24" aria-hidden="true"><rect x="8" y="8" width="11" height="11" rx="2"/><path d="M16 8V6a2 2 0 0 0-2-2H6a2 2 0 0 0-2 2v8a2 2 0 0 0 2 2h2"/></svg>
+          <span data-share-copy-label>Copy to clipboard</span>
+        </button>
+        <button class="share-option" type="button" role="menuitem" data-share-native hidden>
+          <svg class="share-option-icon" viewBox="0 0 24 24" aria-hidden="true"><circle cx="18" cy="5" r="2.5"/><circle cx="6" cy="12" r="2.5"/><circle cx="18" cy="19" r="2.5"/><path d="m8.2 10.8 7.6-4.5M8.2 13.2l7.6 4.5"/></svg>
+          <span>Share using device…</span>
+        </button>
+        <a class="share-option" role="menuitem" data-share-target="email" href="#">
+          <svg class="share-option-icon" viewBox="0 0 24 24" aria-hidden="true"><rect x="3" y="5" width="18" height="14" rx="2"/><path d="m4 7 8 6 8-6"/></svg>
+          <span>Email</span>
+        </a>
+        <div class="share-separator" role="separator"></div>
+        <a class="share-option" role="menuitem" data-share-target="bluesky" href="#" target="_blank" rel="noopener noreferrer">
+          <svg class="share-option-icon share-option-icon--brand" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 10.8C10.9 8.7 8 4.8 5.2 2.8 2.6 1 1.6 1.3.9 1.6.1 1.9 0 3.2 0 4c0 .7.4 6.2.7 7.1.9 2.9 4 3.9 6.7 3.4-4.8.8-6 3.5-3.4 6.2 5 5.7 7.2-1.1 8.2-6 3.5 2.9 5.9-.5 6.8-3.4.3-.9.7-6.4.7-7.1 0-.8-.1-2.1-.9-2.4-.7-.3-1.7-.6-4.3 1.2-2.8 2-5.7 5.9-6.8 8Z"/></svg>
+          <span>Bluesky</span>
+        </a>
+        <a class="share-option" role="menuitem" data-share-target="linkedin" href="#" target="_blank" rel="noopener noreferrer">
+          <svg class="share-option-icon share-option-icon--brand" viewBox="0 0 24 24" aria-hidden="true"><path d="M5.1 7.8H1.8V22h3.3V7.8ZM3.4 2a2 2 0 1 0 0 4 2 2 0 0 0 0-4ZM8 7.8h3.2v1.9h.1c.4-.9 1.6-2.3 4.3-2.3 4.5 0 5.4 3 5.4 6.9V22h-3.3v-6.8c0-1.6 0-3.7-2.3-3.7-2.3 0-2.7 1.8-2.7 3.6V22H8V7.8Z"/></svg>
+          <span>LinkedIn</span>
+        </a>
+        <a class="share-option" role="menuitem" data-share-target="reddit" href="#" target="_blank" rel="noopener noreferrer">
+          <svg class="share-option-icon" viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="13" r="7.5"/><circle cx="8.7" cy="12.2" r="1"/><circle cx="15.3" cy="12.2" r="1"/><path d="M8.5 15.5c1.8 1.2 5.2 1.2 7 0M13.1 5.6l1-3.1 3.1.7M5.2 9.8a2.3 2.3 0 1 0-1 4.4M18.8 9.8a2.3 2.3 0 1 1 1 4.4"/></svg>
+          <span>Reddit</span>
+        </a>
+        <a class="share-option" role="menuitem" data-share-target="x" href="#" target="_blank" rel="noopener noreferrer">
+          <svg class="share-option-icon share-option-icon--brand" viewBox="0 0 24 24" aria-hidden="true"><path d="M4 3h4.9l3.9 5.2L17.4 3H20l-6 7.1L20.8 21h-4.9l-4.5-6-5.1 6H3.7l6.5-7.9L4 3Zm3.6 2 9.3 14h1.5L9.1 5H7.6Z"/></svg>
+          <span>X / Twitter</span>
+        </a>
+      </div>
+      <span class="sr-only" data-share-status role="status" aria-live="polite" aria-atomic="true"></span>
+    </div>
+    <div class="theme-control" data-theme-picker>
+      <button class="theme-trigger" type="button" aria-expanded="false" aria-controls="theme-panel" aria-label="Display preferences">
+        <span class="display-trigger-icon" aria-hidden="true">Aa</span>
+        <span class="display-trigger-label">Display</span>
+        <span class="picker-chevron" aria-hidden="true"></span>
+      </button>
+      <div id="theme-panel" class="theme-panel" data-theme-panel role="region" aria-label="Appearance preferences" hidden>
         <div class="theme-panel-group" role="group" aria-labelledby="colour-theme-heading">
           <h2 id="colour-theme-heading">Colour theme</h2>
           <button class="theme-option" type="button" data-theme-value="system" data-theme-icon="{{ `images/ui/theme-system.svg` | relURL }}" aria-pressed="false">
@@ -61,6 +100,18 @@
             </div>
           </div>
         {{ end }}
+        <div class="theme-panel-separator" role="separator"></div>
+        <div class="theme-panel-group" role="group" aria-labelledby="font-size-heading">
+          <h2 id="font-size-heading">Font size</h2>
+          <div class="font-size-options">
+            <button class="font-size-option" type="button" data-font-size-value="100" aria-pressed="false"><strong>100%</strong><small>Normal</small></button>
+            <button class="font-size-option" type="button" data-font-size-value="110" aria-pressed="false"><strong>110%</strong><small>Slightly larger</small></button>
+            <button class="font-size-option" type="button" data-font-size-value="125" aria-pressed="false"><strong>125%</strong><small>Large</small></button>
+            <button class="font-size-option" type="button" data-font-size-value="150" aria-pressed="false"><strong>150%</strong><small>Extra large</small></button>
+            <button class="font-size-option" type="button" data-font-size-value="200" aria-pressed="false"><strong>200%</strong><small>Very large</small></button>
+            <button class="font-size-option" type="button" data-font-size-value="250" aria-pressed="false"><strong>250%</strong><small>Maximum</small></button>
+          </div>
+        </div>
       </div>
     </div>
   </nav>

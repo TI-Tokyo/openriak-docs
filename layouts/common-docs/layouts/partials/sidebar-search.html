@@ -1,6 +1,11 @@
 {{- $id := .id | default "sidebar-search" -}}
+{{- $statusID := printf "%s-status" $id -}}
 <div class="sidebar-control search-control" data-search data-sidebar-search data-index-url="{{ .indexURL }}" data-empty-message="{{ .emptyMessage | default `No results.` }}">
   <label class="control-label" for="{{ $id }}">{{ .label | default "Search" }}</label>
-  <input id="{{ $id }}" type="search" placeholder="{{ .placeholder | default `Search this section` }}" autocomplete="off" data-search-input>
-  <div class="search-results" data-search-results hidden></div>
+  <div class="search-input-wrap">
+    <input id="{{ $id }}" type="search" placeholder="{{ .placeholder | default `Search this section` }}" autocomplete="off" aria-describedby="{{ $statusID }}" aria-keyshortcuts="/ Control+K Meta+K" data-search-input>
+    <kbd class="search-shortcut" aria-hidden="true">/</kbd>
+  </div>
+  <p id="{{ $statusID }}" class="search-status" data-search-status role="status" aria-live="polite" aria-atomic="true"></p>
+  <div class="search-results" data-search-results role="region" aria-label="Search results" hidden></div>
 </div>
