@@ -81,7 +81,7 @@ assert.match(previousVersionPartialSource, /index hugo\.Data\.versions \$product
 assert.match(previousVersionPartialSource, /previous-version has no previous release: product=%s version=%s page=%s/, 'previous-version must stop the build when no earlier release exists');
 assert.match(baseSource, /js\/theme\.js[^"\n]+\?v=/, 'theme picker script must be cache-busted');
 assert.match(baseSource, /js\/docs-runtime\.js[^"\n]+\?v=20260901-selected-download-table/, 'the download checksum runtime must use its current cache key');
-assert.match(headSource, /css\/docs\.css[^"\n]+\?v=20260901-selected-download-table/, 'download table styling must use its current cache key');
+assert.match(headSource, /css\/docs\.css[^"\n]+\?v=20260902-otp-column/, 'download table styling must use its current cache key');
 assert.match(headSource, /images\/ui\/favicon\.png[^"\n]+\?v=/, 'documentation pages must use the shared OpenRiak favicon');
 assert.match(homepageSource, /images\/ui\/favicon\.png[^"\n]+\?v=/, 'the homepage must use the shared OpenRiak favicon');
 assert.ok(fs.existsSync(faviconPath), 'the shared OpenRiak favicon must exist');
