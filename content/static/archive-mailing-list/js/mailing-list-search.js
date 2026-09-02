@@ -1,4 +1,46 @@
 (() => {
+  'use strict';
+  const upgradeThreadIndex = () => {
+    const oldIndex = document.querySelector('nav.mailing-list-toc');
+    if (!oldIndex) return;
+    [...oldIndex.querySelectorAll('ol')].reverse().forEach((orderedList) => {
+      const list = document.createElement('ul');
+      list.append(...orderedList.childNodes);
+      orderedList.replaceWith(list);
+    });
+    oldIndex.querySelector('h2')?.remove();
+    const disclosure = document.createElement('details');
+    disclosure.className = 'mailing-list-toc';
+    const summary = document.createElement('summary');
+    summary.textContent = 'In this thread';
+    oldIndex.replaceWith(disclosure);
+    oldIndex.className = '';
+    disclosure.append(summary, oldIndex);
+  };
+  const expandReply = (target, scroll = true) => {
+    if (!target) return;
+    for (let element = target; element; element = element.parentElement) {
+      if (element instanceof HTMLDetailsElement) element.open = true;
+    }
+    if (scroll) window.requestAnimationFrame(() => target.scrollIntoView({ block: 'start' }));
+  };
+  const revealHashReply = () => {
+    if (window.location.hash.length < 2) return;
+    let id;
+    try { id = decodeURIComponent(window.location.hash.slice(1)); } catch { return; }
+    expandReply(document.getElementById(id));
+  };
+  upgradeThreadIndex();
+  document.addEventListener('click', (event) => {
+    const link = event.target.closest('.mailing-list-toc a[href^="#"]');
+    if (!link) return;
+    expandReply(document.getElementById(link.getAttribute('href').slice(1)), false);
+  });
+  window.addEventListener('hashchange', revealHashReply);
+  revealHashReply();
+})();
+
+(() => {
   const normalize = (value) => String(value || '').normalize('NFKD').replace(/[\u0300-\u036f]/g, '').toLowerCase();
 
   document.querySelectorAll('[data-mailing-list-search]').forEach((root) => {

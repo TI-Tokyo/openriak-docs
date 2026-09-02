@@ -40,21 +40,19 @@
 .blog-menu.site-sidebar .blog-menu-tree { position: static; max-height: none; overflow: visible; padding: 0; }
 .blog-menu.site-sidebar .blog-menu-group:last-child { margin-bottom: 0; }
 
-@media (min-width: 901px) {
+@media (min-width: 761px) {
   :root.sidebar-collapsed .blog-layout { grid-template-columns: 4.25rem minmax(0, 1fr); }
   :root.sidebar-collapsed .blog-menu.site-sidebar { overflow: visible; padding: .8rem .75rem; }
   :root.sidebar-collapsed .blog-menu.site-sidebar .sidebar-collapse, :root.sidebar-collapsed .blog-menu.site-sidebar .sidebar-expanded { display: none; }
   :root.sidebar-collapsed .blog-menu.site-sidebar .sidebar-rail { display: grid; justify-items: center; gap: .55rem; }
 }
-@media (max-width: 900px) {
-  .blog-menu.site-sidebar { position: static; height: auto; overflow: visible; padding: 0; border-right: 0; }
+@media (max-width: 760px) {
+  .blog-menu.site-sidebar { position: fixed; top: 64px; bottom: 0; left: 0; z-index: 38; align-self: stretch; width: min(20rem, 88vw); height: auto; overflow: auto; padding: 1.25rem 1.1rem 2rem; transform: translateX(-102%); transition: transform .18s ease; box-shadow: 8px 0 30px var(--shadow); }
   .blog-menu.site-sidebar .sidebar-collapse, .blog-menu.site-sidebar .sidebar-rail { display: none; }
   .blog-menu.site-sidebar .sidebar-expanded { display: block; padding-top: 0; }
-  .blog-menu.site-sidebar .sidebar-tools { margin: 0; padding: 14px 20px; border-bottom: 1px solid var(--line); }
-  .blog-menu.site-sidebar .blog-menu-tree { display: none; max-height: 65vh; overflow: auto; padding: 8px 20px 28px; }
-  .blog-menu.site-sidebar .blog-menu-disclosure[open] .blog-menu-tree { display: block; }
-}
-@media (max-width: 760px) {
+  .blog-menu.site-sidebar .blog-menu-tree { display: block; max-height: none; overflow: visible; padding: 0; }
+  body.nav-open .blog-menu.site-sidebar { transform: none; }
+  .blog-layout > .sidebar-scrim { position: fixed; inset: 64px 0 0; z-index: 37; display: block; width: 100%; border: 0; border-radius: 0; background: rgba(12,19,25,.52); }
   .site-sidebar .sidebar-collapse, .site-sidebar .sidebar-rail { display: none; }
   .docs-sidebar.site-sidebar .sidebar-expanded { padding-top: 0; }
 }

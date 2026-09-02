@@ -50,6 +50,13 @@ const sharedSidebarSource = fs.readFileSync(path.join(repositoryRoot, 'layouts',
 const blogBaseSource = fs.readFileSync(path.join(repositoryRoot, 'layouts', 'archive-technical-blog', '_default', 'baseof.html'), 'utf8');
 const mailingListBaseSource = fs.readFileSync(path.join(repositoryRoot, 'layouts', 'archive-mailing-list', '_default', 'baseof.html'), 'utf8');
 const mailingListSearchSource = fs.readFileSync(path.join(repositoryRoot, 'content', 'static', 'archive-mailing-list', 'js', 'mailing-list-search.js'), 'utf8');
+const mailingListCssSource = fs.readFileSync(path.join(repositoryRoot, 'content', 'static', 'archive-mailing-list', 'css', 'mailing-list.css'), 'utf8');
+const mailingListImporterSource = fs.readFileSync(path.join(repositoryRoot, 'tools', 'scripts', 'import-mailing-list.py'), 'utf8');
+const archivePaginationSource = fs.readFileSync(path.join(repositoryRoot, 'layouts', 'common-docs', 'static', 'js', 'archive-pagination.js'), 'utf8');
+const archivePageSizeSource = fs.readFileSync(path.join(repositoryRoot, 'layouts', 'common-docs', 'layouts', 'partials', 'archive-page-size.html'), 'utf8');
+const mailingListCategorySource = fs.readFileSync(path.join(repositoryRoot, 'layouts', 'archive-mailing-list', 'category.html'), 'utf8');
+const mailingListDateSource = fs.readFileSync(path.join(repositoryRoot, 'layouts', 'archive-mailing-list', 'date.html'), 'utf8');
+const mailingListMenuSource = fs.readFileSync(path.join(repositoryRoot, 'layouts', 'archive-mailing-list', 'partials', 'mailing-list-sidebar-tree.html'), 'utf8');
 const blogIndexSource = fs.readFileSync(path.join(repositoryRoot, 'layouts', 'archive-technical-blog', 'index.html'), 'utf8');
 const blogByYearSource = fs.readFileSync(path.join(repositoryRoot, 'layouts', 'archive-technical-blog', 'by-year.html'), 'utf8');
 const blogSingleSource = fs.readFileSync(path.join(repositoryRoot, 'layouts', 'archive-technical-blog', '_default', 'single.html'), 'utf8');
@@ -60,6 +67,9 @@ const blogMenuSource = fs.readFileSync(path.join(repositoryRoot, 'layouts', 'arc
 const blogSortSource = fs.readFileSync(path.join(repositoryRoot, 'layouts', 'archive-technical-blog', 'partials', 'blog-sort.html'), 'utf8');
 const blogAuthorSource = fs.readFileSync(path.join(repositoryRoot, 'layouts', 'archive-technical-blog', 'author.html'), 'utf8');
 const sharedHeaderCss = fs.readFileSync(path.join(repositoryRoot, 'layouts', 'common-docs', 'static', 'css', 'site-header.css'), 'utf8');
+const sharedSidebarCss = fs.readFileSync(path.join(repositoryRoot, 'layouts', 'common-docs', 'static', 'css', 'sidebar-shell.css'), 'utf8');
+const siteSectionBaseSource = fs.readFileSync(path.join(repositoryRoot, 'layouts', 'common-docs', 'layouts', 'site-section', 'baseof.html'), 'utf8');
+const archiveStylesSource = fs.readFileSync(path.join(repositoryRoot, 'content', 'static', 'archive-technical-blog', 'assets', 'styles.css'), 'utf8');
 const sidebarSource = fs.readFileSync(path.join(themeRoot, 'layouts', 'partials', 'sidebar.html'), 'utf8');
 const headSource = fs.readFileSync(path.join(themeRoot, 'layouts', 'partials', 'head.html'), 'utf8');
 const baseSource = fs.readFileSync(path.join(themeRoot, 'layouts', 'baseof.html'), 'utf8');
@@ -81,6 +91,7 @@ const shellBuilderSource = fs.readFileSync(path.join(repositoryRoot, 'tools', 's
 assert.match(dockerComposeSource, /OPENRIAK_DOCS_BUILD_PROFILE:[\s\S]*--include-version "riak-kv=\$\$\{OPENRIAK_DOCS_RIAK_KV_VERSION\}"/, 'development compose must mount one selectable Riak KV release');
 assert.match(dockerComposeSource, /--include-latest riak-cs[\s\S]*--include-latest riak-ts/, 'development compose must resolve only the latest legacy Riak CS and TS releases');
 assert.match(dockerComposeSource, /archives:[\s\S]*profiles: \['release'\]/, 'the archive Hugo service must run only in the release profile');
+assert.match(dockerComposeSource, /archives:[\s\S]*--noTimes/, 'the archive Hugo service must not preserve timestamps on its Docker Desktop bind mount');
 assert.match(localRunnerSource, /development\|beta-test\|release[\s\S]*--profile "\$compose_profile"/, 'the local runner must expose all three build profiles');
 assert.match(localRunnerSource, /WSLENV=.*OPENRIAK_DOCS_BUILD_PROFILE:OPENRIAK_DOCS_RIAK_KV_VERSION/, 'the WSL Docker Desktop path must forward the requested build profile and development KV version');
 assert.match(dockerfileSource, /FROM scratch AS core-static[\s\S]*FROM scratch AS static/, 'Docker must expose separate core-only and assembled static targets');
@@ -151,9 +162,9 @@ assert.match(blogMenuSource, /GroupByDate "January" "desc"/, 'archive menu month
 assert.match(blogMenuSource, /href="\{\{ \$yearHomeURL \}\}">By Year<\/a>[\s\S]*href="\{\{ \$categoryHomeURL \}\}">By Category<\/a>/, 'archive menu group headings must link to the year and category indexes');
 assert.match(blogMenuSource, /\.Pages\.ByTitle/, 'archive menu categories must use alphabetical order');
 assert.match(blogMenuSource, /Params\.categories" "intersect"[\s\S]*len \$categoryPosts/, 'archive menu category counts must include multi-category articles');
-assert.match(blogDateSource, /Date\.Year[\s\S]*Date\.Month[\s\S]*Paginate/, 'year and month pages must filter and paginate archived posts');
-assert.match(blogCategorySource, /Params\.sort[\s\S]*ByDate\.Reverse[\s\S]*ByTitle[\s\S]*Paginate/, 'category archives must support globally paginated date and name sorting');
-assert.match(blogDateSource, /Params\.sort[\s\S]*ByDate\.Reverse[\s\S]*ByTitle[\s\S]*Paginate/, 'date archives must support globally paginated date and name sorting');
+assert.match(blogDateSource, /Date\.Year[\s\S]*Date\.Month[\s\S]*data-archive-listing/, 'year and month pages must filter archived posts before applying variable client-side pagination');
+assert.match(blogCategorySource, /Params\.sort[\s\S]*ByDate\.Reverse[\s\S]*ByTitle[\s\S]*data-archive-item/, 'category archives must sort the complete result set before applying variable pagination');
+assert.match(blogDateSource, /Params\.sort[\s\S]*ByDate\.Reverse[\s\S]*ByTitle[\s\S]*data-archive-item/, 'date archives must sort the complete result set before applying variable pagination');
 assert.match(blogSortSource, />Date<\/a>[\s\S]*>Title<\/a>/, 'archive sort controls must offer Date and Title options');
 assert.match(blogSingleSource, /authors\/%s\/[\s\S]*by-year\/%s\/%s\/[\s\S]*class="byline-link"/, 'article bylines must link authors and publication months to their archives');
 assert.match(blogSingleSource, /replaceRE `\[\^a-z0-9\]\+` `-` \(\$author \| lower\)/, 'author links must use the same punctuation-normalizing slug rule as authored author pages');
@@ -184,6 +195,28 @@ assert.ok(!sharedHeaderSource.includes('data-theme-select') && !sharedHeaderSour
 assert.match(sharedHeaderSource, /theme-system\.svg[\s\S]*theme-dark\.svg[\s\S]*theme-light\.svg/, 'Theme picker must provide icons for default, dark, and light');
 assert.match(sharedHeaderSource, /showContentWidth[\s\S]*data-content-width-value="50"[\s\S]*data-content-width-value="75"[\s\S]*data-content-width-value="90"[\s\S]*data-content-width-value="98"/, 'product documentation must offer all supported content widths in the appearance picker');
 assert.match(headerSource, /"showContentWidth" true/, 'product documentation must enable the shared content-width picker');
+for (const [name, source] of [['homepage', homepageSource], ['community', siteSectionBaseSource], ['technical blog', blogBaseSource], ['mailing list', mailingListBaseSource]]) {
+  assert.match(source, /"showContentWidth" true/, `${name} must enable the shared content-width picker`);
+  assert.match(source, /openriak-docs-content-width[\s\S]*dataset\.contentWidth/, `${name} must apply the stored content width before page paint`);
+}
+assert.match(sharedHeaderCss, /--site-content-width: 75%[\s\S]*data-content-width="50"[\s\S]*data-content-width="90"[\s\S]*data-content-width="98"/, 'shared pages must map every content-width preference');
+assert.match(archiveStylesSource, /\.blog-layout \{[^}]*grid-template-columns: 20rem minmax\(0, 1fr\)/, 'archive sidebars must use the same 20rem width as product sidebars');
+assert.match(archiveStylesSource, /\.posts-grid \{[^}]*grid-template-columns: repeat\(3,[\s\S]*data-content-width="50"[^}]*\.posts-grid \{ grid-template-columns: repeat\(2,/, 'archive listings must retain three columns normally and use two columns at 50 percent content width');
+assert.match(sharedSidebarCss, /@media \(max-width: 760px\)[\s\S]*\.blog-menu\.site-sidebar \{[^}]*position: fixed[\s\S]*body\.nav-open \.blog-menu\.site-sidebar \{ transform: none; \}/, 'archive sidebars must use the shared mobile drawer behavior');
+assert.match(blogBaseSource, /"showNavToggle" true[\s\S]*archive-pagination\.js/, 'technical-blog pages must expose the mobile navigation toggle and variable pagination runtime');
+assert.match(mailingListBaseSource, /"showNavToggle" true[\s\S]*archive-pagination\.js/, 'mailing-list pages must expose the mobile navigation toggle and variable pagination runtime');
+assert.match(archivePageSizeSource, /value="12"[\s\S]*value="24"[\s\S]*value="48"[\s\S]*value="96"[\s\S]*value="all"/, 'archive page-size controls must offer 12, 24, 48, 96, and All when the result count supports them');
+assert.match(archivePaginationSource, /data-archive-item[\s\S]*searchParams\.get\('items'\)[\s\S]*selectedSize === 'all'[\s\S]*data-archive-page/, 'archive pagination must support selectable page sizes and query-addressable pages');
+for (const source of [blogCategorySource, blogDateSource, mailingListCategorySource, mailingListDateSource]) {
+  assert.match(source, /archive-page-size\.html[\s\S]*data-archive-pagination/, 'archive category and date results must expose page-size and pagination controls');
+  assert.doesNotMatch(source, /\.Paginate/, 'variable-size archive listings must render the complete filtered result set once');
+}
+assert.match(mailingListImporterSource, /<details class="mailing-list-toc"><summary>In this thread<\/summary>[\s\S]*<ul>/, 'generated mailing-list thread indexes must be collapsed by default and bulleted');
+assert.match(mailingListCssSource, /\.mailing-list-toc ul\{[^}]*list-style:disc/, 'mailing-list thread indexes must visibly use bullets');
+assert.match(mailingListSearchSource, /expandReply[\s\S]*HTMLDetailsElement[\s\S]*hashchange[\s\S]*revealHashReply/, 'mailing-list reply anchors must expand the target and all ancestor replies');
+assert.match(mailingListSearchSource, /upgradeThreadIndex[\s\S]*querySelectorAll\('ol'\)[\s\S]*createElement\('ul'\)[\s\S]*createElement\('details'\)/, 'existing generated mailing-list indexes must be upgraded to collapsed bulleted disclosures at runtime');
+assert.match(blogMenuSource, /not \(hasPrefix \$page\.RelPermalink \$categoryHomeURL\)/, 'technical-blog category pages must collapse date branches to their root years');
+assert.match(mailingListMenuSource, /not \(hasPrefix \$\.page\.RelPermalink \$\.categoryHomeURL\)/, 'mailing-list category pages must collapse date branches to their root years');
 assert.match(themeSource, /openriak-docs-content-width[\s\S]*localStorage\.getItem\(contentWidthKey\)[\s\S]*localStorage\.setItem\(contentWidthKey, value\)/, 'the selected content width must persist in local storage');
 assert.match(themeSource, /document\.documentElement\.dataset\.contentWidth = selectedValue/, 'the selected content width must be applied to the document root');
 assert.match(headSource, /openriak-docs-content-width[\s\S]*dataset\.contentWidth/, 'the stored content width must be applied before styles load to avoid a layout shift');

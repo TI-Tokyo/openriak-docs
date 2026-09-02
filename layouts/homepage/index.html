@@ -5,7 +5,7 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>{{ .Title }}</title>
-  <script>document.documentElement.classList.remove('no-js');try{var t=localStorage.getItem('openriak-docs-theme')||'system';document.documentElement.dataset.theme=t==='dark'||(t==='system'&&matchMedia('(prefers-color-scheme: dark)').matches)?'dark':'light'}catch(e){}</script>
+  <script>document.documentElement.classList.remove('no-js');try{var t=localStorage.getItem('openriak-docs-theme')||'system';document.documentElement.dataset.theme=t==='dark'||(t==='system'&&matchMedia('(prefers-color-scheme: dark)').matches)?'dark':'light';var w=localStorage.getItem('openriak-docs-content-width')||'75';document.documentElement.dataset.contentWidth=['50','75','90','98'].includes(w)?w:'75'}catch(e){}</script>
   <link rel="icon" href="{{ `images/ui/favicon.png` | relURL }}?v=openriak-mark" type="image/png">
   <style>
     :root { color-scheme: light; --home-ink: #17222b; --home-muted: #56656f; --home-canvas: #f3f6f8; --home-surface: #fff; --home-line: #d8e0e5; --home-accent: #85181b; --home-hover: #b52226; --home-shadow: rgba(23,34,43,.06); font-family: Inter, ui-sans-serif, system-ui, sans-serif; color: var(--home-ink); background: var(--home-canvas); }
@@ -14,7 +14,7 @@
     body { margin: 0; color: var(--home-ink); background: var(--home-canvas); }
     .skip-link { position: fixed; left: .75rem; top: .75rem; z-index: 100; padding: .55rem .85rem; transform: translateY(-200%); background: var(--home-surface); }
     .skip-link:focus { transform: none; }
-    main { width: min(70rem, calc(100% - 2rem)); margin: 0 auto; padding: clamp(3rem, 8vw, 7rem) 0; }
+    main { width: var(--site-content-width); max-width: none; margin: 0 auto; padding: clamp(3rem, 8vw, 7rem) 0; }
     h1 { max-width: 12ch; margin: 0; font-size: clamp(3rem, 8vw, 6.5rem); line-height: .95; letter-spacing: -.06em; }
     .intro { max-width: 44rem; margin: 1.5rem 0 2.5rem; color: var(--home-muted); font-size: 1.15rem; }
     .site-sections-title { margin: 0 0 1rem; font-size: 1rem; letter-spacing: .06em; text-transform: uppercase; }
@@ -27,13 +27,14 @@
     .site-section-heading .site-section-icon--openriak img { width: 50px; height: 50px; object-fit: contain; }
     .site-section-heading .site-section-at { font-size: 2rem; font-weight: 800; line-height: 1; }
     .site-section strong { align-self: end; color: var(--home-accent); }
+    @media (max-width: 760px) { main { width: calc(100% - 2rem); } }
     @media (max-width: 720px) { .site-sections { grid-template-columns: 1fr; } }
   </style>
-  <link rel="stylesheet" href="{{ `css/site-header.css` | relURL }}?v=20260830-compact-picker">
+  <link rel="stylesheet" href="{{ `css/site-header.css` | relURL }}?v=20260902-shared-content-width">
 </head>
 <body>
   <a class="skip-link" href="#main-content">Skip to content</a>
-  {{ partial "site-header.html" (dict "page" . "section" $homepage "showNavToggle" false) }}
+  {{ partial "site-header.html" (dict "page" . "section" $homepage "showNavToggle" false "showContentWidth" true) }}
   <main id="main-content">
     <p>OpenRiak</p>
     <h1>{{ .Title }}</h1>
@@ -49,7 +50,7 @@
       {{ end }}
     </nav>
   </main>
-  <script src="{{ `js/theme.js` | relURL }}?v=20260829-shared-header" defer></script>
+  <script src="{{ `js/theme.js` | relURL }}?v=20260902-shared-content-width" defer></script>
   <script src="{{ `js/docs-shell.js` | relURL }}?v=20260829-shared-header" defer></script>
 </body>
 </html>

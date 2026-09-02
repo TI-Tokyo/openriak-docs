@@ -8,22 +8,22 @@
   {{ if gt $month 0 }}{{ $threads = where $threads "Date.Month" $month }}{{ end }}
   {{ $sortedThreads := $threads.ByDate.Reverse }}
   {{ if eq $sort "title" }}{{ $sortedThreads = $threads.ByTitle }}{{ end }}
-  {{ $paginator := .Paginate $sortedThreads 12 }}
   <section class="category-hero">
     <a class="back-link category-back" href="{{ printf `%sby-date/` $archiveHome.RelPermalink }}">← All dates</a>
     <div class="eyebrow">Conversations by date</div>
     <h1>{{ .Title }}</h1>
     <p>{{ .Description }}</p>
   </section>
-  <section class="archive-shell category-shell">
+  <section class="archive-shell category-shell" data-archive-listing data-item-label="conversations">
     <div class="results-line">
       <h2>Conversations</h2>
       <div class="results-actions">
-        <span>Page {{ $paginator.PageNumber }} of {{ $paginator.TotalPages }} · {{ len $threads }} conversations</span>
+        <span data-archive-page-summary>{{ len $threads }} conversations</span>
         {{ partial "mailing-list-sort.html" (dict "page" . "sort" $sort) }}
+        {{ partial "archive-page-size.html" (dict "count" (len $threads)) }}
       </div>
     </div>
-    {{ partial "mailing-list-cards.html" (dict "pages" $paginator.Pages) }}
-    {{ partial "mailing-list-pagination.html" $paginator }}
+    {{ partial "mailing-list-cards.html" (dict "pages" $sortedThreads) }}
+    <nav class="pagination" data-archive-pagination aria-label="Pagination"></nav>
   </section>
 {{ end }}

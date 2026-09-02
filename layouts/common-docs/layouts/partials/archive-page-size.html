@@ -1,0 +1,13 @@
+{{- $count := int .count -}}
+{{- if gt $count 12 -}}
+  <label class="page-size-options">
+    <span>Items per page</span>
+    <select data-archive-page-size>
+      <option value="12">12</option>
+      {{- if gt $count 24 }}<option value="24">24</option>{{ end -}}
+      {{- if gt $count 48 }}<option value="48">48</option>{{ end -}}
+      {{- if gt $count 96 }}<option value="96">96</option>{{ end -}}
+      <option value="all">All</option>
+    </select>
+  </label>
+{{- end -}}

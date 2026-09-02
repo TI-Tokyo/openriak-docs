@@ -16,7 +16,7 @@
         {{ range $years }}
           {{ $year := .Key }}
           {{ $yearURL := printf "%sby-year/%s/" $archiveHome.RelPermalink $year }}
-          <details class="blog-year"{{ if or (eq $pageYear $year) (and (not $pageYear) (eq $year $newestYear)) }} open{{ end }}>
+          <details class="blog-year"{{ if or (eq $pageYear $year) (and (not $pageYear) (not (hasPrefix $page.RelPermalink $categoryHomeURL)) (eq $year $newestYear)) }} open{{ end }}>
             <summary><a class="blog-menu-link{{ if hasPrefix $page.RelPermalink $yearURL }} active{{ end }}" href="{{ $yearURL }}">{{ $year }}</a><span>{{ len .Pages }}</span></summary>
             <ul>{{ range .Pages.GroupByDate "January" "desc" }}{{ $monthURL := printf "%sby-year/%s/%s/" $archiveHome.RelPermalink $year (.Key | urlize) }}<li><a class="blog-menu-link{{ if hasPrefix $page.RelPermalink $monthURL }} active{{ end }}" href="{{ $monthURL }}">{{ .Key }}</a><span>{{ len .Pages }}</span></li>{{ end }}</ul>
           </details>

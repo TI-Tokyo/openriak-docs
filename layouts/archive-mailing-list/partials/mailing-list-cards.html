@@ -1,6 +1,6 @@
 <div class="posts-grid">
   {{ range .pages }}
-    <a class="post-card" href="{{ .RelPermalink }}">
+    <a class="post-card" href="{{ .RelPermalink }}" data-archive-item>
       <div class="card-meta"><span class="card-categories">{{ delimit .Params.categories " · " }}</span><time datetime="{{ .Date.Format `2006-01-02` }}">{{ .Date.Format "Jan 2, 2006" }}</time></div>
       <h3>{{ .Title }}</h3>
       <div class="card-foot"><span>{{ .Params.author }} · {{ .Params.reply_count }} {{ if eq .Params.reply_count 1 }}reply{{ else }}replies{{ end }}</span><b aria-hidden="true">→</b></div>

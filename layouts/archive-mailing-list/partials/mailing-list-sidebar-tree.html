@@ -4,7 +4,7 @@
       {{ range .years }}
         {{- $year := .Key -}}{{- $yearURL := printf "%sby-date/%s/" $.archiveHome.RelPermalink $year -}}{{- $yearReplies := 0 -}}
         {{- range .Pages }}{{ $yearReplies = add $yearReplies (int (.Params.reply_count | default 0)) }}{{ end -}}
-        <details class="blog-year"{{ if or (eq $.pageYear $year) (and (not $.pageYear) (eq $year $.newestYear)) }} open{{ end }}><summary><a class="blog-menu-link{{ if hasPrefix $.page.RelPermalink $yearURL }} active{{ end }}" href="{{ $yearURL }}">{{ $year }}</a><span>{{ len .Pages }} (+{{ $yearReplies }})</span></summary><ul>
+        <details class="blog-year"{{ if or (eq $.pageYear $year) (and (not $.pageYear) (not (hasPrefix $.page.RelPermalink $.categoryHomeURL)) (eq $year $.newestYear)) }} open{{ end }}><summary><a class="blog-menu-link{{ if hasPrefix $.page.RelPermalink $yearURL }} active{{ end }}" href="{{ $yearURL }}">{{ $year }}</a><span>{{ len .Pages }} (+{{ $yearReplies }})</span></summary><ul>
           {{ range .Pages.GroupByDate "January" "desc" }}
             {{- $monthURL := printf "%sby-date/%s/%s/" $.archiveHome.RelPermalink $year (.Key | urlize) -}}{{- $monthReplies := 0 -}}
             {{- range .Pages }}{{ $monthReplies = add $monthReplies (int (.Params.reply_count | default 0)) }}{{ end -}}

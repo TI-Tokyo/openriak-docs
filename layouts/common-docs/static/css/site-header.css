@@ -1,3 +1,9 @@
+:root { --site-content-width: 75%; }
+:root[data-content-width="50"] { --site-content-width: 50%; }
+:root[data-content-width="75"] { --site-content-width: 75%; }
+:root[data-content-width="90"] { --site-content-width: 90%; }
+:root[data-content-width="98"] { --site-content-width: 98%; }
+
 .global-header {
   --global-ink: #454d54;
   --global-muted: #6b737a;
@@ -84,6 +90,7 @@
 .global-header .content-width-option small { color: var(--global-muted); font-size: .7rem; }
 .global-header .nav-toggle { display: none; margin-right: .7rem; padding: .35rem .55rem; border: 1px solid rgba(255,255,255,.3); border-radius: 3px; background: transparent; color: #fff; font: inherit; cursor: pointer; }
 @media (max-width: 760px) {
+  :root { --site-content-width: 100%; }
   .global-header { padding-inline: .75rem; }
   .global-header .nav-toggle { display: block; }
   .global-header .brand-home img { width: 34px; height: 34px; }

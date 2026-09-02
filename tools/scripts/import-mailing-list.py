@@ -343,7 +343,7 @@ def render_reply(message, children):
 
 def render_toc_item(message, children):
     nested = "".join(render_toc_item(child, children) for child in children.get(message["id"], []))
-    nested = f"<ol>{nested}</ol>" if nested else ""
+    nested = f"<ul>{nested}</ul>" if nested else ""
     return (
         f'<li><a href="#{message["id"]}"><span>{html.escape(message["title"])}</span>'
         f'<small>{html.escape(message["author"])} · {message["date"].strftime("%b %-d, %Y")}</small></a>{nested}</li>'
@@ -355,8 +355,8 @@ def render_thread(root, children):
     replies = "".join(render_reply(child, children) for child in children.get(root["id"], []))
     replies = f'<ol class="mailing-list-replies">{replies}</ol>' if replies else ""
     return (
-        '<nav class="mailing-list-toc" aria-label="Thread contents"><h2>In this thread</h2>'
-        f'<ol>{toc}</ol></nav>'
+        '<details class="mailing-list-toc"><summary>In this thread</summary>'
+        f'<nav aria-label="Thread contents"><ul>{toc}</ul></nav></details>'
         f'<section class="mailing-list-thread" data-thread-root="{root["id"]}">'
         f'<article id="{root["id"]}" class="mailing-list-message mailing-list-message--root">'
         f'{render_header(root)}{render_body(root)}{replies}</article></section>'
