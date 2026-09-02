@@ -203,6 +203,7 @@ assert.match(sharedHeaderCss, /--site-content-width: 75%[\s\S]*data-content-widt
 assert.match(archiveStylesSource, /\.blog-layout \{[^}]*grid-template-columns: 20rem minmax\(0, 1fr\)/, 'archive sidebars must use the same 20rem width as product sidebars');
 assert.match(archiveStylesSource, /\.posts-grid \{[^}]*grid-template-columns: repeat\(3,[\s\S]*data-content-width="50"[^}]*\.posts-grid \{ grid-template-columns: repeat\(2,/, 'archive listings must retain three columns normally and use two columns at 50 percent content width');
 assert.match(sharedSidebarCss, /@media \(max-width: 760px\)[\s\S]*\.blog-menu\.site-sidebar \{[^}]*position: fixed[\s\S]*body\.nav-open \.blog-menu\.site-sidebar \{ transform: none; \}/, 'archive sidebars must use the shared mobile drawer behavior');
+assert.match(sharedSidebarCss, /\.sidebar-scrim\[hidden\] \{ display: none !important; \}/, 'a closed shared mobile sidebar must not leave its scrim visible');
 assert.match(blogBaseSource, /"showNavToggle" true[\s\S]*archive-pagination\.js/, 'technical-blog pages must expose the mobile navigation toggle and variable pagination runtime');
 assert.match(mailingListBaseSource, /"showNavToggle" true[\s\S]*archive-pagination\.js/, 'mailing-list pages must expose the mobile navigation toggle and variable pagination runtime');
 assert.match(archivePageSizeSource, /value="12"[\s\S]*value="24"[\s\S]*value="48"[\s\S]*value="96"[\s\S]*value="all"/, 'archive page-size controls must offer 12, 24, 48, 96, and All when the result count supports them');
