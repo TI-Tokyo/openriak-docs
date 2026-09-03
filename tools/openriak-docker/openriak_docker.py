@@ -30,6 +30,9 @@ REPOSITORY_ROOT = pathlib.Path(__file__).resolve().parents[2]
 METADATA_ROOT = REPOSITORY_ROOT / "content" / "openriak-kv" / "metadata"
 CACHE_ROOT = REPOSITORY_ROOT / "tools" / "cache" / "openriak-docker"
 STATIC_ROOT = REPOSITORY_ROOT / "content" / "static" / "openriak-kv" / "downloads" / "docker"
+DEFAULT_NETWORK_SUBNET = "172.16.0.0/24"
+DEFAULT_NETWORK_GATEWAY = "172.16.0.254"
+DEFAULT_NODE_IPV4 = "172.16.0.1"
 
 ARCHITECTURE_PLATFORMS = {
     "x86_64": "linux/amd64",
@@ -361,10 +364,71 @@ data_dir=/var/lib/riak
 log_dir=/var/log/riak
 defaults_dir=/opt/openriak-defaults/etc-riak
 
+log() {
+    printf '%s [openriak-entrypoint] %s\n' "$(date -u +'%Y-%m-%dT%H:%M:%SZ')" "$*"
+}
+
+one_line() {
+    tr '\n' ' ' | sed 's/[[:space:]][[:space:]]*/ /g; s/[[:space:]]$//'
+}
+
+riak_command() {
+    if command -v su-exec >/dev/null 2>&1
+    then
+        su-exec riak /usr/sbin/riak "$@"
+        return
+    fi
+    if command -v runuser >/dev/null 2>&1
+    then
+        runuser -u riak -- /usr/sbin/riak "$@"
+        return
+    fi
+    su -s /bin/sh riak -c "/usr/sbin/riak $*"
+}
+
+beam_running() {
+    pgrep -x beam.smp >/dev/null 2>&1
+}
+
+shutdown() {
+    shutdown_signal=$1
+    trap - HUP INT TERM
+    log "shutdown: received ${shutdown_signal}"
+    if beam_running
+    then
+        log "shutdown: requesting OpenRiak stop"
+        if riak_command stop
+        then
+            log "shutdown: OpenRiak accepted the stop request"
+        else
+            log "shutdown: OpenRiak stop command returned an error"
+        fi
+    else
+        log "shutdown: BEAM is already stopped"
+    fi
+    shutdown_attempt=0
+    while beam_running
+    do
+        shutdown_attempt=$((shutdown_attempt + 1))
+        log "shutdown: waiting for BEAM to stop (attempt ${shutdown_attempt})"
+        sleep "${RIAK_SHUTDOWN_POLL_SECONDS:-1}"
+    done
+    log "shutdown: BEAM stopped; container is exiting"
+    exit 0
+}
+
+trap 'shutdown SIGHUP' HUP
+trap 'shutdown SIGINT' INT
+trap 'shutdown SIGTERM' TERM
+
+log "configuration: preparing mounted directories"
 mkdir -p "$config_dir" "$data_dir" "$log_dir" /run/riak
 if [ ! -s "$config_dir/riak.conf" ]
 then
+    log "configuration: seeding /etc/riak from packaged defaults"
     cp -a "$defaults_dir/." "$config_dir/"
+else
+    log "configuration: using existing /etc/riak/riak.conf"
 fi
 
 set_setting() {
@@ -377,6 +441,7 @@ set_setting() {
     else
         printf '\n%s = %s\n' "$key" "$value" >> "$config_dir/riak.conf"
     fi
+    log "configuration: ${key} = ${value}"
 }
 
 node_host=${RIAK_NODE_HOST:-$(hostname)}
@@ -392,19 +457,109 @@ set_setting listener.protobuf.internal "$RIAK_PB_LISTENER"
 chown -R riak:riak "$config_dir" "$data_dir" "$log_dir" /run/riak
 if [ "${RIAK_INIT_ONLY:-0}" = "1" ]
 then
+    log "initialization: volume setup complete; RIAK_INIT_ONLY requested"
     exit 0
 fi
 
 ulimit -n "${RIAK_NOFILE_LIMIT:-100000}"
-if command -v su-exec >/dev/null 2>&1
+log "startup: starting OpenRiak as a daemon"
+if riak_command daemon
 then
-    exec su-exec riak /usr/sbin/riak console
+    log "startup: daemon command completed"
+else
+    log "startup: daemon command failed"
+    exit 1
 fi
-if command -v runuser >/dev/null 2>&1
+
+startup_attempt=0
+log "startup: waiting for BEAM and riak ping"
+while :
+do
+    startup_attempt=$((startup_attempt + 1))
+    beam_status=stopped
+    if beam_running
+    then
+        beam_status=running
+    fi
+    ping_output=$(riak_command ping 2>&1 || true)
+    ping_value=$(printf '%s' "$ping_output" | tr -d '\\r\\n')
+    if [ "$beam_status" = "running" ] && [ "$ping_value" = "pong" ]
+    then
+        log "startup: BEAM is running and riak ping returned pong"
+        break
+    fi
+    ping_summary=$(printf '%s' "$ping_output" | one_line)
+    log "startup: waiting for BEAM/ping (attempt ${startup_attempt}, beam=${beam_status}, ping=${ping_summary:-no-response})"
+    sleep "${RIAK_STARTUP_POLL_SECONDS:-1}"
+done
+
+service_attempt=0
+log "startup: waiting for the riak_kv service"
+while :
+do
+    service_attempt=$((service_attempt + 1))
+    services_output=$(riak_command admin services 2>&1 || true)
+    if printf '%s\n' "$services_output" | grep -Fq 'riak_kv'
+    then
+        services_summary=$(printf '%s' "$services_output" | one_line)
+        log "startup: riak_kv service is up (${services_summary})"
+        break
+    fi
+    services_summary=$(printf '%s' "$services_output" | one_line)
+    log "startup: waiting for riak_kv (attempt ${service_attempt}, services=${services_summary:-no-response})"
+    sleep "${RIAK_STARTUP_POLL_SECONDS:-1}"
+done
+
+transfer_attempt=0
+log "startup: waiting for Riak transfers to complete"
+while :
+do
+    transfer_attempt=$((transfer_attempt + 1))
+    transfers_output=$(riak_command admin transfers 2>&1 || true)
+    if printf '%s\n' "$transfers_output" | grep -Eq 'No transfers (active|in progress)'
+    then
+        transfers_summary=$(printf '%s' "$transfers_output" | one_line)
+        log "startup: transfers complete (${transfers_summary})"
+        break
+    fi
+    transfers_summary=$(printf '%s' "$transfers_output" | one_line)
+    log "startup: waiting for transfers (attempt ${transfer_attempt}, transfers=${transfers_summary:-no-response})"
+    sleep "${RIAK_STARTUP_POLL_SECONDS:-1}"
+done
+
+log "startup: OpenRiak is ready"
+while :
+do
+    log "monitor: sleeping for ${RIAK_MONITOR_INTERVAL_SECONDS:-10}s"
+    sleep "${RIAK_MONITOR_INTERVAL_SECONDS:-10}"
+    if beam_running
+    then
+        log "monitor: BEAM is running"
+    else
+        log "monitor: BEAM stopped unexpectedly; container is exiting"
+        exit 1
+    fi
+done
+"""
+
+
+HEALTHCHECK_SCRIPT = """#!/bin/sh
+set -eu
+
+if ! pgrep -x beam.smp >/dev/null 2>&1
 then
-    exec runuser -u riak -- /usr/sbin/riak console
+    echo "OpenRiak healthcheck failed: beam.smp is not running"
+    exit 1
 fi
-exec su -s /bin/sh riak -c 'exec /usr/sbin/riak console'
+
+ping_output=$(/usr/sbin/riak ping 2>/dev/null || true)
+if [ "$ping_output" != "pong" ]
+then
+    echo "OpenRiak healthcheck failed: riak ping did not return pong"
+    exit 1
+fi
+
+echo "OpenRiak healthcheck passed: BEAM is running and riak ping returned pong"
 """
 
 
@@ -431,6 +586,9 @@ ENV RIAK_HTTP_LISTENER="0.0.0.0:8098"
 ENV RIAK_PB_LISTENER="0.0.0.0:8087"
 ENV RIAK_NOFILE_LIMIT="100000"
 ENV RIAK_INIT_ONLY="0"
+ENV RIAK_STARTUP_POLL_SECONDS="1"
+ENV RIAK_SHUTDOWN_POLL_SECONDS="1"
+ENV RIAK_MONITOR_INTERVAL_SECONDS="10"
 
 ADD --checksum=sha256:{checksum} {package_url} /tmp/{filename}
 RUN <<'OPENRIAK_PACKAGE_INSTALL'
@@ -443,22 +601,32 @@ set -eu
 {create_riak_user_script(target)}
 test -x /usr/sbin/riak
 id riak
-mkdir -p /opt/openriak-defaults/etc-riak /var/lib/riak /var/log/riak /run/riak
+mkdir -p /opt/openriak-defaults/etc-riak /var/lib/riak /var/log/riak /run/riak /usr/lib/riak/log
 cp -a /etc/riak/. /opt/openriak-defaults/etc-riak/
-chown -R riak:riak /var/lib/riak /var/log/riak /run/riak
+chown -R riak:riak /var/lib/riak /var/log/riak /run/riak /usr/lib/riak/log
 OPENRIAK_IMAGE_SETUP
 
 COPY <<'OPENRIAK_ENTRYPOINT' /usr/local/bin/openriak-entrypoint
 {ENTRYPOINT_SCRIPT.rstrip()}
 OPENRIAK_ENTRYPOINT
 
-RUN chmod 0755 /usr/local/bin/openriak-entrypoint
+COPY <<'OPENRIAK_HEALTHCHECK' /usr/local/bin/openriak-healthcheck
+{HEALTHCHECK_SCRIPT.rstrip()}
+OPENRIAK_HEALTHCHECK
+
+RUN <<'OPENRIAK_SCRIPT_SETUP'
+set -eu
+chmod 0755 /usr/local/bin/openriak-entrypoint
+chmod 0755 /usr/local/bin/openriak-healthcheck
+OPENRIAK_SCRIPT_SETUP
 
 VOLUME ["/etc/riak"]
 VOLUME ["/var/lib/riak"]
 VOLUME ["/var/log/riak"]
 EXPOSE 8087
 EXPOSE 8098
+HEALTHCHECK --interval=10s --timeout=10s --start-period=60s --retries=3 CMD ["/usr/local/bin/openriak-healthcheck"]
+STOPSIGNAL SIGTERM
 ENTRYPOINT ["/usr/local/bin/openriak-entrypoint"]
 """
 
@@ -472,12 +640,13 @@ services:
   node:
     build:
       context: .
-      dockerfile: Dockerfile
+      dockerfile: ./Dockerfile
     image: {target.image}
     container_name: "${{OPENRIAK_CONTAINER_NAME:-{node}}}"
     hostname: {node}
     environment:
-      RIAK_NODE_NAME: "${{OPENRIAK_NODE_NAME:-riak@{node}}}"
+      RIAK_NODE_NAME: "${{OPENRIAK_NODE_NAME:-riak@{DEFAULT_NODE_IPV4}}}"
+      RIAK_MONITOR_INTERVAL_SECONDS: "${{OPENRIAK_MONITOR_INTERVAL_SECONDS:-10}}"
     ports:
       - "${{OPENRIAK_PB_PORT:-8087}}:8087"
       - "${{OPENRIAK_HTTP_PORT:-8098}}:8098"
@@ -485,11 +654,22 @@ services:
       - "./{node}/config:/etc/riak"
       - "./{node}/data:/var/lib/riak"
       - "./{node}/logs:/var/log/riak"
+    networks:
+      openriak:
+        ipv4_address: "${{OPENRIAK_NODE_IPV4:-{DEFAULT_NODE_IPV4}}}"
     ulimits:
       nofile:
         soft: 100000
         hard: 100000
     stop_grace_period: 2m
+
+networks:
+  openriak:
+    driver: bridge
+    ipam:
+      config:
+        - subnet: "${{OPENRIAK_NETWORK_SUBNET:-{DEFAULT_NETWORK_SUBNET}}}"
+          gateway: "${{OPENRIAK_NETWORK_GATEWAY:-{DEFAULT_NETWORK_GATEWAY}}}"
 """
 
 
@@ -644,6 +824,77 @@ def wait_for_node(
     )
 
 
+def wait_for_container_log(
+    container_name: str,
+    marker: str,
+    timeout_seconds: int,
+    log_path: pathlib.Path,
+) -> str:
+    docker = docker_command()
+    deadline = time.monotonic() + timeout_seconds
+    last_output = ""
+    with log_path.open("w", encoding="utf-8", newline="\n") as log:
+        while time.monotonic() < deadline:
+            result = subprocess.run(
+                [docker, "logs", container_name],
+                text=True,
+                stdout=subprocess.PIPE,
+                stderr=subprocess.STDOUT,
+                encoding="utf-8",
+                errors="replace",
+                check=False,
+            )
+            last_output = result.stdout
+            found = result.returncode == 0 and marker in last_output
+            log.write(f"{isoformat()} exit={result.returncode} marker_found={found}\n")
+            log.flush()
+            if found:
+                return last_output
+            time.sleep(1)
+    raise DockerToolError(
+        f"Container log did not contain {marker!r} after {timeout_seconds}s"
+    )
+
+
+def wait_for_container_health(
+    container_name: str,
+    timeout_seconds: int,
+    log_path: pathlib.Path,
+) -> str:
+    docker = docker_command()
+    deadline = time.monotonic() + timeout_seconds
+    last_status = "unknown"
+    with log_path.open("w", encoding="utf-8", newline="\n") as log:
+        while time.monotonic() < deadline:
+            result = subprocess.run(
+                [
+                    docker,
+                    "container",
+                    "inspect",
+                    "--format",
+                    "{{if .State.Health}}{{.State.Health.Status}}{{else}}missing{{end}}",
+                    container_name,
+                ],
+                text=True,
+                stdout=subprocess.PIPE,
+                stderr=subprocess.STDOUT,
+                encoding="utf-8",
+                errors="replace",
+                check=False,
+            )
+            last_status = result.stdout.strip()
+            log.write(
+                f"{isoformat()} exit={result.returncode} health={last_status!r}\n"
+            )
+            log.flush()
+            if result.returncode == 0 and last_status == "healthy":
+                return last_status
+            time.sleep(1)
+    raise DockerToolError(
+        f"Container healthcheck did not become healthy after {timeout_seconds}s; status={last_status!r}"
+    )
+
+
 def record_step(report: dict[str, Any], name: str, action: Any) -> Any:
     started = time.monotonic()
     item: dict[str, Any] = {"name": name, "status": "running", "started_at": isoformat()}
@@ -740,6 +991,12 @@ def initial_report(target: Target, identifier: str) -> dict[str, Any]:
             "data": {"container": "/var/lib/riak", "default": f"./{target.node_name}/data"},
             "logs": {"container": "/var/log/riak", "default": f"./{target.node_name}/logs"},
         },
+        "network": {
+            "subnet": DEFAULT_NETWORK_SUBNET,
+            "gateway": DEFAULT_NETWORK_GATEWAY,
+            "node_ipv4": DEFAULT_NODE_IPV4,
+            "riak_node_name": f"riak@{DEFAULT_NODE_IPV4}",
+        },
         "ports": {"protobuf": 8087, "http": 8098},
         "steps": [],
         "tests": {},
@@ -814,10 +1071,27 @@ def refresh_target(target: Target, timeout_seconds: int, keep_workdir: bool = Fa
             OPENRIAK_CONTAINER_NAME=test_container_name,
             OPENRIAK_PB_PORT=str(free_tcp_port()),
             OPENRIAK_HTTP_PORT=str(free_tcp_port()),
+            OPENRIAK_MONITOR_INTERVAL_SECONDS="1",
+        )
+        compose_environment = test_directory / ".env"
+        compose_environment.write_text(
+            "\n".join(
+                [
+                    f"OPENRIAK_CONTAINER_NAME={environment['OPENRIAK_CONTAINER_NAME']}",
+                    f"OPENRIAK_PB_PORT={environment['OPENRIAK_PB_PORT']}",
+                    f"OPENRIAK_HTTP_PORT={environment['OPENRIAK_HTTP_PORT']}",
+                    "OPENRIAK_MONITOR_INTERVAL_SECONDS=1",
+                    "",
+                ]
+            ),
+            encoding="utf-8",
+            newline="\n",
         )
         compose_command = [
             docker,
             "compose",
+            "--env-file",
+            str(compose_environment),
             "--project-directory",
             str(test_directory),
             "--file",
@@ -859,11 +1133,30 @@ def refresh_target(target: Target, timeout_seconds: int, keep_workdir: bool = Fa
         config_path = config_directory / "riak.conf"
         record_step(
             report,
+            "make_test_config_writable",
+            lambda: run_logged(
+                compose_command
+                + [
+                    "run",
+                    "--rm",
+                    "--entrypoint",
+                    "chmod",
+                    "node",
+                    "0666",
+                    "/etc/riak/riak.conf",
+                ],
+                logs / "compose-config-permissions.log",
+                cwd=test_directory,
+                environment=environment,
+            ),
+        )
+        record_step(
+            report,
             "configure_node",
-            lambda: configure_test_node(config_path, target.node_name),
+            lambda: configure_test_node(config_path, DEFAULT_NODE_IPV4),
         )
         expected_settings = {
-            "nodename": f"riak@{target.node_name}",
+            "nodename": f"riak@{DEFAULT_NODE_IPV4}",
             "ring_size": "8",
             "storage_backend": "leveled",
             "anti_entropy": "passive",
@@ -893,6 +1186,35 @@ def refresh_target(target: Target, timeout_seconds: int, keep_workdir: bool = Fa
             ),
         )
         compose_started = True
+        lifecycle_output = record_step(
+            report,
+            "wait_for_entrypoint_readiness",
+            lambda: wait_for_container_log(
+                test_container_name,
+                "monitor: BEAM is running",
+                timeout_seconds,
+                logs / "entrypoint-readiness.log",
+            ),
+        )
+        startup_markers = [
+            "startup: starting OpenRiak as a daemon",
+            "startup: BEAM is running and riak ping returned pong",
+            "startup: riak_kv service is up",
+            "startup: transfers complete",
+            "startup: OpenRiak is ready",
+            "monitor: BEAM is running",
+        ]
+        missing_startup_markers = [
+            marker for marker in startup_markers if marker not in lifecycle_output
+        ]
+        if missing_startup_markers:
+            raise DockerToolError(
+                f"Container log is missing lifecycle messages: {missing_startup_markers!r}"
+            )
+        report["tests"]["entrypoint_startup"] = {
+            "status": "passed",
+            "required_log_messages": startup_markers,
+        }
         cli_response, http_response = record_step(
             report,
             "wait_for_cli_and_http",
@@ -915,6 +1237,20 @@ def refresh_target(target: Target, timeout_seconds: int, keep_workdir: bool = Fa
             "status_code": 200,
             "response": http_response,
         }
+        health_status = record_step(
+            report,
+            "wait_for_healthcheck",
+            lambda: wait_for_container_health(
+                test_container_name,
+                timeout_seconds,
+                logs / "healthcheck.log",
+            ),
+        )
+        report["tests"]["healthcheck"] = {
+            "status": "passed",
+            "docker_status": health_status,
+            "checks": ["beam.smp", "riak ping == pong"],
+        }
         if not populated(data_directory) or not populated(log_directory):
             raise DockerToolError("OpenRiak startup did not populate both data and log volumes")
         report["tests"]["populated_volumes"] = {
@@ -922,6 +1258,41 @@ def refresh_target(target: Target, timeout_seconds: int, keep_workdir: bool = Fa
             "config": sorted(path.name for path in config_directory.iterdir()),
             "data": sorted(path.name for path in data_directory.iterdir()),
             "logs": sorted(path.name for path in log_directory.iterdir()),
+        }
+        record_step(
+            report,
+            "graceful_stop",
+            lambda: run_logged(
+                compose_command + ["stop", "--timeout", "120"],
+                logs / "compose-stop.log",
+                cwd=test_directory,
+                environment=environment,
+            ),
+        )
+        stopped_logs = record_step(
+            report,
+            "verify_graceful_shutdown_logging",
+            lambda: run_logged(
+                [docker, "logs", test_container_name],
+                logs / "graceful-shutdown.log",
+            ).stdout,
+        )
+        shutdown_markers = [
+            "shutdown: received SIGTERM",
+            "shutdown: requesting OpenRiak stop",
+            "shutdown: BEAM stopped; container is exiting",
+        ]
+        missing_shutdown_markers = [
+            marker for marker in shutdown_markers if marker not in stopped_logs
+        ]
+        if missing_shutdown_markers:
+            raise DockerToolError(
+                f"Container log is missing graceful shutdown messages: {missing_shutdown_markers!r}"
+            )
+        report["tests"]["graceful_shutdown"] = {
+            "status": "passed",
+            "signal": "SIGTERM",
+            "required_log_messages": shutdown_markers,
         }
         report["artifacts"] = artifact_downloads(target, dockerfile, compose)
         report["status"] = "passed"
@@ -933,6 +1304,8 @@ def refresh_target(target: Target, timeout_seconds: int, keep_workdir: bool = Fa
             compose_command = [
                 docker,
                 "compose",
+                "--env-file",
+                str(test_directory / ".env"),
                 "--project-directory",
                 str(test_directory),
                 "--file",

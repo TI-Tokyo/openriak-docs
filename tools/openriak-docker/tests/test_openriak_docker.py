@@ -44,35 +44,56 @@ class OpenRiakDockerTests(unittest.TestCase):
         )
         self.assertIn(f"FROM --platform=linux/amd64 alpine:3.21@{digest}", source)
         self.assertNotIn("latest", source.lower())
+        self.assertNotIn("\r", source)
         self.assertIn("ADD --checksum=sha256:140f1d", source)
         self.assertIn("adduser -S -D -H", source)
+        self.assertIn("/usr/lib/riak/log", source)
         self.assertIn("# OpenRiak KV default settings", source)
         self.assertIn('ENV RIAK_RING_SIZE="8"', source)
         self.assertIn('ENV RIAK_STORAGE_BACKEND="leveled"', source)
         self.assertIn('ENV RIAK_TICTACAAE_ACTIVE="active"', source)
         self.assertIn('ENV RIAK_TICTACAAE_STOREHEADS="enabled"', source)
+        self.assertIn('ENV RIAK_MONITOR_INTERVAL_SECONDS="10"', source)
         self.assertIn('VOLUME ["/etc/riak"]', source)
         self.assertIn('VOLUME ["/var/lib/riak"]', source)
         self.assertIn('VOLUME ["/var/log/riak"]', source)
         self.assertIn("ENTRYPOINT", source)
         self.assertIn("COPY <<'OPENRIAK_ENTRYPOINT'", source)
+        self.assertIn("COPY <<'OPENRIAK_HEALTHCHECK'", source)
+        self.assertIn("riak_command daemon", source)
+        self.assertIn("riak_command admin services", source)
+        self.assertIn("riak_command admin transfers", source)
+        self.assertIn("riak_command stop", source)
+        self.assertIn("pgrep -x beam.smp", source)
+        self.assertIn("HEALTHCHECK --interval=10s", source)
+        self.assertIn("STOPSIGNAL SIGTERM", source)
+        self.assertIn('log "startup: OpenRiak is ready"', source)
+        self.assertIn('log "monitor: BEAM is running"', source)
+        self.assertNotIn("/usr/sbin/riak console", source)
         for line in source.splitlines():
             if line.startswith("RUN "):
                 self.assertNotIn(" && ", line)
                 self.assertNotIn("; ", line)
 
-    def test_compose_has_requested_identity_ports_and_relative_volumes(self):
+    def test_compose_has_requested_identity_ports_volumes_and_network(self):
         source = docker_tool.render_compose(self.target)
         node = "openriak-kv-3.4.0-alpine-3.21-otp24-x86_64-node"
-        self.assertIn("build:\n      context: .\n      dockerfile: Dockerfile", source)
+        self.assertIn("build:\n      context: .\n      dockerfile: ./Dockerfile", source)
         self.assertIn(f'container_name: "${{OPENRIAK_CONTAINER_NAME:-{node}}}"', source)
         self.assertIn(f"hostname: {node}", source)
-        self.assertIn(f'RIAK_NODE_NAME: "${{OPENRIAK_NODE_NAME:-riak@{node}}}"', source)
+        self.assertIn('RIAK_NODE_NAME: "${OPENRIAK_NODE_NAME:-riak@172.16.0.1}"', source)
+        self.assertIn(
+            'RIAK_MONITOR_INTERVAL_SECONDS: "${OPENRIAK_MONITOR_INTERVAL_SECONDS:-10}"',
+            source,
+        )
         self.assertIn('"${OPENRIAK_PB_PORT:-8087}:8087"', source)
         self.assertIn('"${OPENRIAK_HTTP_PORT:-8098}:8098"', source)
         self.assertIn(f'"./{node}/config:/etc/riak"', source)
         self.assertIn(f'"./{node}/data:/var/lib/riak"', source)
         self.assertIn(f'"./{node}/logs:/var/log/riak"', source)
+        self.assertIn('ipv4_address: "${OPENRIAK_NODE_IPV4:-172.16.0.1}"', source)
+        self.assertIn('subnet: "${OPENRIAK_NETWORK_SUBNET:-172.16.0.0/24}"', source)
+        self.assertIn('gateway: "${OPENRIAK_NETWORK_GATEWAY:-172.16.0.254}"', source)
 
     def test_configure_node_sets_all_test_values(self):
         source = """nodename = riak@127.0.0.1

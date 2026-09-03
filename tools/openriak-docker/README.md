@@ -14,6 +14,9 @@ and exercises the generated Compose file. A refresh checks that:
 - `nodename`, `ring_size = 8`, `storage_backend = leveled`, TicTac AAE, and storeheads can be configured;
 - the node starts and `riak ping` returns `pong`;
 - `GET /ping` returns HTTP 200 with the body `OK`;
+- the image healthcheck sees both `beam.smp` and a `pong` response;
+- daemon startup, service readiness, transfer completion, monitoring, and
+  graceful shutdown are reported in the container log;
 - Protocol Buffers and HTTP are published on ports 8087 and 8098 by default.
 
 List targets without changing anything:
@@ -68,9 +71,22 @@ The generated Compose file names its one container after the full target and
 uses a matching relative directory containing `config`, `data`, and `logs`.
 Set `OPENRIAK_CONTAINER_NAME`, `OPENRIAK_NODE_NAME`, `OPENRIAK_PB_PORT`, or
 `OPENRIAK_HTTP_PORT` to override its container name, full Erlang node name, or
-host-side ports. `RIAK_NODE_NAME` remains the image runtime setting, so a later
-cluster Compose file can assign a distinct Erlang node name directly to every
-container.
+host-side ports. The single-node example uses the `172.16.0.0/24` bridge
+network, assigns `172.16.0.1` to OpenRiak, reserves `172.16.0.254` as the
+gateway, and sets the default Erlang node name to `riak@172.16.0.1`. Override
+`OPENRIAK_NODE_IPV4`, `OPENRIAK_NETWORK_SUBNET`, and
+`OPENRIAK_NETWORK_GATEWAY` together with `OPENRIAK_NODE_NAME` when changing
+the network. `RIAK_NODE_NAME` remains the image runtime setting, so a later
+cluster Compose file can assign a distinct IP-based Erlang node name directly
+to every container.
+
+The entrypoint starts OpenRiak with `riak daemon`, waits for BEAM and `riak
+ping`, waits for the `riak_kv` service and all Riak transfers, and then monitors
+the BEAM process at the interval set by `RIAK_MONITOR_INTERVAL_SECONDS`. It
+logs every lifecycle stage to standard output. `SIGTERM`, `SIGINT`, and
+`SIGHUP` trigger `riak stop` followed by a wait for BEAM to exit. `SIGKILL`
+cannot be trapped or handled by any container entrypoint; use `docker stop` or
+send `SIGTERM` when graceful shutdown is required.
 
 Run the unit tests with:
 
