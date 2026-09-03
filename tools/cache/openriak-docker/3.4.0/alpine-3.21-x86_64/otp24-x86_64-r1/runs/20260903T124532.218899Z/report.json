@@ -1,0 +1,185 @@
+{
+  "artifacts": {
+    "compose": {
+      "filename": "compose.yaml",
+      "sha256": "9b0759e86af0ca97576ed8b7c54255e947f907ed175baa86f09f85e8f4542dfb",
+      "url": "downloads/docker/3.4.0/3.4.0-alpine-3.21-otp24-x86_64/compose.yaml"
+    },
+    "dockerfile": {
+      "filename": "Dockerfile",
+      "sha256": "62dd9b7501b3602b1a3cef05a52eb90f99696166a36355d7dfe0a3f1421e2913",
+      "url": "downloads/docker/3.4.0/3.4.0-alpine-3.21-otp24-x86_64/Dockerfile"
+    }
+  },
+  "base_image": {
+    "pinned": "alpine:3.21@sha256:48b0309ca019d89d40f670aa1bc06e426dc0931948452e8491e3d65087abc07d",
+    "requested": "alpine:3.21",
+    "resolved_at": "2026-09-03T12:45:39Z"
+  },
+  "error": null,
+  "finished_at": "2026-09-03T12:46:33Z",
+  "image": "openriak/openriak-kv:3.4.0-alpine-3.21-otp24-x86_64",
+  "metadata_sources": [
+    "content/openriak-kv/metadata/3.4.0/supported-os.json",
+    "content/openriak-kv/metadata/3.4.0/downloads.json"
+  ],
+  "node": "openriak-kv-3.4.0-alpine-3.21-otp24-x86_64-node",
+  "package": {
+    "checksum": {
+      "algorithm": "sha256",
+      "value": "140f1decb585e5855990c140b58afcb2ba3629e5dc65fffab8d0eaaa0621cc69"
+    },
+    "filename": "riak-3.4.0.24-r1.apk",
+    "format": "apk",
+    "url": "https://files.tiot.jp/alpine/v3.21/main/x86_64/riak-3.4.0.24-r1.apk"
+  },
+  "ports": {
+    "http": 8098,
+    "protobuf": 8087
+  },
+  "product": "openriak-kv",
+  "run_id": "20260903T124532.218899Z",
+  "schema_version": 1,
+  "started_at": "2026-09-03T12:45:32Z",
+  "status": "passed",
+  "steps": [
+    {
+      "duration_seconds": 6.859,
+      "finished_at": "2026-09-03T12:45:39Z",
+      "name": "pull_and_pin_base_image",
+      "started_at": "2026-09-03T12:45:32Z",
+      "status": "passed"
+    },
+    {
+      "duration_seconds": 0.0,
+      "finished_at": "2026-09-03T12:45:39Z",
+      "name": "generate_artifacts",
+      "started_at": "2026-09-03T12:45:39Z",
+      "status": "passed"
+    },
+    {
+      "duration_seconds": 16.01,
+      "finished_at": "2026-09-03T12:45:57Z",
+      "name": "build_image",
+      "started_at": "2026-09-03T12:45:39Z",
+      "status": "passed"
+    },
+    {
+      "duration_seconds": 4.909,
+      "finished_at": "2026-09-03T12:46:04Z",
+      "name": "initialize_volumes",
+      "started_at": "2026-09-03T12:45:59Z",
+      "status": "passed"
+    },
+    {
+      "duration_seconds": 5.273,
+      "finished_at": "2026-09-03T12:46:09Z",
+      "name": "make_test_config_writable",
+      "started_at": "2026-09-03T12:46:04Z",
+      "status": "passed"
+    },
+    {
+      "duration_seconds": 0.009,
+      "finished_at": "2026-09-03T12:46:09Z",
+      "name": "configure_node",
+      "started_at": "2026-09-03T12:46:09Z",
+      "status": "passed"
+    },
+    {
+      "duration_seconds": 4.734,
+      "finished_at": "2026-09-03T12:46:14Z",
+      "name": "start_compose_node",
+      "started_at": "2026-09-03T12:46:09Z",
+      "status": "passed"
+    },
+    {
+      "duration_seconds": 8.272,
+      "finished_at": "2026-09-03T12:46:22Z",
+      "name": "wait_for_cli_and_http",
+      "started_at": "2026-09-03T12:46:14Z",
+      "status": "passed"
+    }
+  ],
+  "target": {
+    "architecture": "x86_64",
+    "docker_platform": "linux/amd64",
+    "download_id": "otp24-x86_64-r1",
+    "os_family": "alpine",
+    "os_id": "alpine-3.21-x86_64",
+    "os_name": "Alpine Linux 3.21",
+    "os_release": "3.21",
+    "otp": "24",
+    "version": "3.4.0"
+  },
+  "tests": {
+    "cli_ping": {
+      "command": "riak ping",
+      "response": "pong",
+      "status": "passed"
+    },
+    "configuration": {
+      "settings": {
+        "anti_entropy": "passive",
+        "listener.http.internal": "0.0.0.0:8098",
+        "listener.protobuf.internal": "0.0.0.0:8087",
+        "nodename": "riak@openriak-kv-3.4.0-alpine-3.21-otp24-x86_64-node",
+        "ring_size": "8",
+        "storage_backend": "leveled",
+        "tictacaae_active": "active",
+        "tictacaae_storeheads": "enabled"
+      },
+      "status": "passed"
+    },
+    "http_ping": {
+      "request": "GET /ping",
+      "response": "OK",
+      "status": "passed",
+      "status_code": 200
+    },
+    "populated_volumes": {
+      "config": [
+        "advanced.config",
+        "riak.conf"
+      ],
+      "data": [
+        "cluster_meta",
+        "generated.conf",
+        "kv_eraser",
+        "kv_reader",
+        "kv_reaper",
+        "kv_replrtqsrc",
+        "ring",
+        "setup",
+        "sys.config",
+        "vm.args"
+      ],
+      "logs": [
+        "console.log"
+      ],
+      "status": "passed"
+    },
+    "riak_start": {
+      "status": "passed"
+    },
+    "volume_initialization": {
+      "config_populated": true,
+      "data_directory_created": true,
+      "logs_directory_created": true,
+      "status": "passed"
+    }
+  },
+  "volumes": {
+    "config": {
+      "container": "/etc/riak",
+      "default": "./openriak-kv-3.4.0-alpine-3.21-otp24-x86_64-node/config"
+    },
+    "data": {
+      "container": "/var/lib/riak",
+      "default": "./openriak-kv-3.4.0-alpine-3.21-otp24-x86_64-node/data"
+    },
+    "logs": {
+      "container": "/var/log/riak",
+      "default": "./openriak-kv-3.4.0-alpine-3.21-otp24-x86_64-node/logs"
+    }
+  }
+}

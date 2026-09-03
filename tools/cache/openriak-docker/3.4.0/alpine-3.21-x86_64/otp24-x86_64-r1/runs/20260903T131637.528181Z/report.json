@@ -1,0 +1,251 @@
+{
+  "artifacts": {
+    "compose": {
+      "filename": "compose.yaml",
+      "sha256": "ac4520deeb555ffd0aa72ba4aba2a92b449255dd90de31a4fe2b31e9a703d05e",
+      "url": "downloads/docker/3.4.0/3.4.0-alpine-3.21-otp24-x86_64/compose.yaml"
+    },
+    "dockerfile": {
+      "filename": "Dockerfile",
+      "sha256": "f60d6e9610e48eeb44d450d604a8f3ac032c7b5688490976607771ce3b9e16c3",
+      "url": "downloads/docker/3.4.0/3.4.0-alpine-3.21-otp24-x86_64/Dockerfile"
+    }
+  },
+  "base_image": {
+    "pinned": "alpine:3.21@sha256:48b0309ca019d89d40f670aa1bc06e426dc0931948452e8491e3d65087abc07d",
+    "requested": "alpine:3.21",
+    "resolved_at": "2026-09-03T13:16:42Z"
+  },
+  "error": null,
+  "finished_at": "2026-09-03T13:17:48Z",
+  "image": "openriak/openriak-kv:3.4.0-alpine-3.21-otp24-x86_64",
+  "metadata_sources": [
+    "content/openriak-kv/metadata/3.4.0/supported-os.json",
+    "content/openriak-kv/metadata/3.4.0/downloads.json"
+  ],
+  "network": {
+    "gateway": "172.16.0.254",
+    "node_ipv4": "172.16.0.1",
+    "riak_node_name": "riak@172.16.0.1",
+    "subnet": "172.16.0.0/24"
+  },
+  "node": "openriak-kv-3.4.0-alpine-3.21-otp24-x86_64-node",
+  "package": {
+    "checksum": {
+      "algorithm": "sha256",
+      "value": "140f1decb585e5855990c140b58afcb2ba3629e5dc65fffab8d0eaaa0621cc69"
+    },
+    "filename": "riak-3.4.0.24-r1.apk",
+    "format": "apk",
+    "url": "https://files.tiot.jp/alpine/v3.21/main/x86_64/riak-3.4.0.24-r1.apk"
+  },
+  "ports": {
+    "http": 8098,
+    "protobuf": 8087
+  },
+  "product": "openriak-kv",
+  "run_id": "20260903T131637.528181Z",
+  "schema_version": 1,
+  "started_at": "2026-09-03T13:16:37Z",
+  "status": "passed",
+  "steps": [
+    {
+      "duration_seconds": 4.988,
+      "finished_at": "2026-09-03T13:16:42Z",
+      "name": "pull_and_pin_base_image",
+      "started_at": "2026-09-03T13:16:37Z",
+      "status": "passed"
+    },
+    {
+      "duration_seconds": 0.0,
+      "finished_at": "2026-09-03T13:16:42Z",
+      "name": "generate_artifacts",
+      "started_at": "2026-09-03T13:16:42Z",
+      "status": "passed"
+    },
+    {
+      "duration_seconds": 12.64,
+      "finished_at": "2026-09-03T13:16:57Z",
+      "name": "build_image",
+      "started_at": "2026-09-03T13:16:42Z",
+      "status": "passed"
+    },
+    {
+      "duration_seconds": 3.132,
+      "finished_at": "2026-09-03T13:17:02Z",
+      "name": "initialize_volumes",
+      "started_at": "2026-09-03T13:16:58Z",
+      "status": "passed"
+    },
+    {
+      "duration_seconds": 3.04,
+      "finished_at": "2026-09-03T13:17:05Z",
+      "name": "make_test_config_writable",
+      "started_at": "2026-09-03T13:17:02Z",
+      "status": "passed"
+    },
+    {
+      "duration_seconds": 0.017,
+      "finished_at": "2026-09-03T13:17:05Z",
+      "name": "configure_node",
+      "started_at": "2026-09-03T13:17:05Z",
+      "status": "passed"
+    },
+    {
+      "duration_seconds": 3.161,
+      "finished_at": "2026-09-03T13:17:08Z",
+      "name": "start_compose_node",
+      "started_at": "2026-09-03T13:17:05Z",
+      "status": "passed"
+    },
+    {
+      "duration_seconds": 19.649,
+      "finished_at": "2026-09-03T13:17:30Z",
+      "name": "wait_for_entrypoint_readiness",
+      "started_at": "2026-09-03T13:17:08Z",
+      "status": "passed"
+    },
+    {
+      "duration_seconds": 2.744,
+      "finished_at": "2026-09-03T13:17:32Z",
+      "name": "wait_for_cli_and_http",
+      "started_at": "2026-09-03T13:17:30Z",
+      "status": "passed"
+    },
+    {
+      "duration_seconds": 2.078,
+      "finished_at": "2026-09-03T13:17:34Z",
+      "name": "wait_for_healthcheck",
+      "started_at": "2026-09-03T13:17:32Z",
+      "status": "passed"
+    },
+    {
+      "duration_seconds": 6.961,
+      "finished_at": "2026-09-03T13:17:41Z",
+      "name": "graceful_stop",
+      "started_at": "2026-09-03T13:17:34Z",
+      "status": "passed"
+    },
+    {
+      "duration_seconds": 1.903,
+      "finished_at": "2026-09-03T13:17:43Z",
+      "name": "verify_graceful_shutdown_logging",
+      "started_at": "2026-09-03T13:17:41Z",
+      "status": "passed"
+    }
+  ],
+  "target": {
+    "architecture": "x86_64",
+    "docker_platform": "linux/amd64",
+    "download_id": "otp24-x86_64-r1",
+    "os_family": "alpine",
+    "os_id": "alpine-3.21-x86_64",
+    "os_name": "Alpine Linux 3.21",
+    "os_release": "3.21",
+    "otp": "24",
+    "version": "3.4.0"
+  },
+  "tests": {
+    "cli_ping": {
+      "command": "riak ping",
+      "response": "pong",
+      "status": "passed"
+    },
+    "configuration": {
+      "settings": {
+        "anti_entropy": "passive",
+        "listener.http.internal": "0.0.0.0:8098",
+        "listener.protobuf.internal": "0.0.0.0:8087",
+        "nodename": "riak@172.16.0.1",
+        "ring_size": "8",
+        "storage_backend": "leveled",
+        "tictacaae_active": "active",
+        "tictacaae_storeheads": "enabled"
+      },
+      "status": "passed"
+    },
+    "entrypoint_startup": {
+      "required_log_messages": [
+        "startup: starting OpenRiak as a daemon",
+        "startup: BEAM is running and riak ping returned pong",
+        "startup: riak_kv service is up",
+        "startup: transfers complete",
+        "startup: OpenRiak is ready",
+        "monitor: BEAM is running"
+      ],
+      "status": "passed"
+    },
+    "graceful_shutdown": {
+      "required_log_messages": [
+        "shutdown: received SIGTERM",
+        "shutdown: requesting OpenRiak stop",
+        "shutdown: BEAM stopped; container is exiting"
+      ],
+      "signal": "SIGTERM",
+      "status": "passed"
+    },
+    "healthcheck": {
+      "checks": [
+        "beam.smp",
+        "riak ping == pong"
+      ],
+      "docker_status": "healthy",
+      "status": "passed"
+    },
+    "http_ping": {
+      "request": "GET /ping",
+      "response": "OK",
+      "status": "passed",
+      "status_code": 200
+    },
+    "populated_volumes": {
+      "config": [
+        "advanced.config",
+        "riak.conf"
+      ],
+      "data": [
+        "cluster_meta",
+        "generated.conf",
+        "kv_eraser",
+        "kv_reader",
+        "kv_reaper",
+        "kv_replrtqsrc",
+        "kv_vnode",
+        "leveled",
+        "riak_repl",
+        "ring",
+        "setup",
+        "sys.config",
+        "tictac_aae",
+        "vm.args"
+      ],
+      "logs": [
+        "console.log"
+      ],
+      "status": "passed"
+    },
+    "riak_start": {
+      "status": "passed"
+    },
+    "volume_initialization": {
+      "config_populated": true,
+      "data_directory_created": true,
+      "logs_directory_created": true,
+      "status": "passed"
+    }
+  },
+  "volumes": {
+    "config": {
+      "container": "/etc/riak",
+      "default": "./openriak-kv-3.4.0-alpine-3.21-otp24-x86_64-node/config"
+    },
+    "data": {
+      "container": "/var/lib/riak",
+      "default": "./openriak-kv-3.4.0-alpine-3.21-otp24-x86_64-node/data"
+    },
+    "logs": {
+      "container": "/var/log/riak",
+      "default": "./openriak-kv-3.4.0-alpine-3.21-otp24-x86_64-node/logs"
+    }
+  }
+}
