@@ -46,15 +46,27 @@ class OpenRiakDockerTests(unittest.TestCase):
         self.assertNotIn("latest", source.lower())
         self.assertIn("ADD --checksum=sha256:140f1d", source)
         self.assertIn("adduser -S -D -H", source)
-        self.assertIn('VOLUME ["/etc/riak", "/var/lib/riak", "/var/log/riak"]', source)
+        self.assertIn("# OpenRiak KV default settings", source)
+        self.assertIn('ENV RIAK_RING_SIZE="8"', source)
+        self.assertIn('ENV RIAK_STORAGE_BACKEND="leveled"', source)
+        self.assertIn('ENV RIAK_TICTACAAE_ACTIVE="active"', source)
+        self.assertIn('ENV RIAK_TICTACAAE_STOREHEADS="enabled"', source)
+        self.assertIn('VOLUME ["/etc/riak"]', source)
+        self.assertIn('VOLUME ["/var/lib/riak"]', source)
+        self.assertIn('VOLUME ["/var/log/riak"]', source)
         self.assertIn("ENTRYPOINT", source)
-        self.assertNotIn("COPY ", source)
+        self.assertIn("COPY <<'OPENRIAK_ENTRYPOINT'", source)
+        for line in source.splitlines():
+            if line.startswith("RUN "):
+                self.assertNotIn(" && ", line)
+                self.assertNotIn("; ", line)
 
     def test_compose_has_requested_identity_ports_and_relative_volumes(self):
         source = docker_tool.render_compose(self.target)
         node = "openriak-kv-3.4.0-alpine-3.21-otp24-x86_64-node"
         self.assertIn("build:\n      context: .\n      dockerfile: Dockerfile", source)
-        self.assertIn(f"container_name: {node}", source)
+        self.assertIn(f'container_name: "${{OPENRIAK_CONTAINER_NAME:-{node}}}"', source)
+        self.assertIn(f"hostname: {node}", source)
         self.assertIn(f'RIAK_NODE_NAME: "${{OPENRIAK_NODE_NAME:-riak@{node}}}"', source)
         self.assertIn('"${OPENRIAK_PB_PORT:-8087}:8087"', source)
         self.assertIn('"${OPENRIAK_HTTP_PORT:-8098}:8098"', source)

@@ -7,7 +7,7 @@ services:
       context: .
       dockerfile: Dockerfile
     image: openriak/openriak-kv:3.4.0-alpine-3.21-otp24-x86_64
-    container_name: openriak-kv-3.4.0-alpine-3.21-otp24-x86_64-node
+    container_name: "${OPENRIAK_CONTAINER_NAME:-openriak-kv-3.4.0-alpine-3.21-otp24-x86_64-node}"
     hostname: openriak-kv-3.4.0-alpine-3.21-otp24-x86_64-node
     environment:
       RIAK_NODE_NAME: "${OPENRIAK_NODE_NAME:-riak@openriak-kv-3.4.0-alpine-3.21-otp24-x86_64-node}"

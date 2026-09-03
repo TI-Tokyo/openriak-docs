@@ -4,7 +4,6 @@
 from __future__ import annotations
 
 import argparse
-import base64
 import contextlib
 import dataclasses
 import datetime as dt
@@ -159,7 +158,11 @@ def read_json(path: pathlib.Path) -> dict[str, Any]:
 def write_json(path: pathlib.Path, value: dict[str, Any]) -> None:
     path.parent.mkdir(parents=True, exist_ok=True)
     temporary = path.with_suffix(f"{path.suffix}.tmp")
-    temporary.write_text(json.dumps(value, indent=2, sort_keys=True) + "\n", encoding="utf-8")
+    temporary.write_text(
+        json.dumps(value, indent=2, sort_keys=True) + "\n",
+        encoding="utf-8",
+        newline="\n",
+    )
     temporary.replace(path)
 
 
@@ -290,54 +293,64 @@ def base_image_for(target: Target) -> str:
     raise DockerToolError(f"No base-image mapping for OS family: {family}")
 
 
-def package_install_command(target: Target) -> str:
+def package_install_script(target: Target) -> str:
     filename = target.package["filename"]
     if not re.fullmatch(r"[A-Za-z0-9_.+-]+", filename):
         raise DockerToolError(f"Unsafe package filename in metadata: {filename}")
     package_path = f"/tmp/{filename}"
     package_family = target.operating_system["package_family"]
     if package_family == "apk":
-        return (
-            "apk add --no-cache bash ca-certificates curl su-exec && "
-            f"apk add --no-cache --allow-untrusted {package_path} && "
-            f"rm -f {package_path}"
-        )
+        return f"""apk add --no-cache bash ca-certificates curl su-exec
+apk add --no-cache --allow-untrusted {package_path}
+rm -f {package_path}"""
     if package_family == "deb":
-        return (
-            "apt-get update && "
-            "DEBIAN_FRONTEND=noninteractive apt-get install -y --no-install-recommends "
-            f"ca-certificates curl passwd procps {package_path} && "
-            "rm -rf /var/lib/apt/lists/* "
-            f"{package_path}"
-        )
+        return f"""apt-get update
+DEBIAN_FRONTEND=noninteractive apt-get install -y --no-install-recommends ca-certificates curl passwd procps {package_path}
+rm -rf /var/lib/apt/lists/*
+rm -f {package_path}"""
     if package_family == "rpm":
-        return (
-            "if command -v dnf >/dev/null 2>&1; then "
-            f"dnf install -y ca-certificates curl procps-ng shadow-utils {package_path} && dnf clean all; "
-            "elif command -v microdnf >/dev/null 2>&1; then "
-            f"microdnf install -y ca-certificates curl procps-ng shadow-utils {package_path} && microdnf clean all; "
-            "elif command -v yum >/dev/null 2>&1; then "
-            f"yum install -y ca-certificates curl procps-ng shadow-utils {package_path} && yum clean all; "
-            "elif command -v zypper >/dev/null 2>&1; then "
-            f"zypper --non-interactive install -y ca-certificates curl procps {package_path} && zypper clean --all; "
-            "else echo 'No supported RPM package manager found' >&2; exit 1; fi && "
-            f"rm -f {package_path}"
-        )
+        return f"""if command -v dnf >/dev/null 2>&1
+then
+    dnf install -y ca-certificates curl procps-ng shadow-utils {package_path}
+    dnf clean all
+elif command -v microdnf >/dev/null 2>&1
+then
+    microdnf install -y ca-certificates curl procps-ng shadow-utils {package_path}
+    microdnf clean all
+elif command -v yum >/dev/null 2>&1
+then
+    yum install -y ca-certificates curl procps-ng shadow-utils {package_path}
+    yum clean all
+elif command -v zypper >/dev/null 2>&1
+then
+    zypper --non-interactive install -y ca-certificates curl procps {package_path}
+    zypper clean --all
+else
+    echo 'No supported RPM package manager found' >&2
+    exit 1
+fi
+rm -f {package_path}"""
     raise DockerToolError(f"Unsupported package family: {package_family}")
 
 
-def create_riak_user_command(target: Target) -> str:
+def create_riak_user_script(target: Target) -> str:
     if target.operating_system["package_family"] == "apk":
-        return (
-            "getent group riak >/dev/null 2>&1 || addgroup -S riak; "
-            "id riak >/dev/null 2>&1 || "
-            "adduser -S -D -H -h /var/lib/riak -s /sbin/nologin -G riak riak"
-        )
-    return (
-        "getent group riak >/dev/null 2>&1 || groupadd --system riak; "
-        "id riak >/dev/null 2>&1 || "
-        "useradd --system --gid riak --home-dir /var/lib/riak --shell /sbin/nologin riak"
-    )
+        return """if ! getent group riak >/dev/null 2>&1
+then
+    addgroup -S riak
+fi
+if ! id riak >/dev/null 2>&1
+then
+    adduser -S -D -H -h /var/lib/riak -s /sbin/nologin -G riak riak
+fi"""
+    return """if ! getent group riak >/dev/null 2>&1
+then
+    groupadd --system riak
+fi
+if ! id riak >/dev/null 2>&1
+then
+    useradd --system --gid riak --home-dir /var/lib/riak --shell /sbin/nologin riak
+fi"""
 
 
 ENTRYPOINT_SCRIPT = """#!/bin/sh
@@ -349,7 +362,8 @@ log_dir=/var/log/riak
 defaults_dir=/opt/openriak-defaults/etc-riak
 
 mkdir -p "$config_dir" "$data_dir" "$log_dir" /run/riak
-if [ ! -s "$config_dir/riak.conf" ]; then
+if [ ! -s "$config_dir/riak.conf" ]
+then
     cp -a "$defaults_dir/." "$config_dir/"
 fi
 
@@ -357,7 +371,8 @@ set_setting() {
     key=$1
     value=$2
     escaped_key=$(printf '%s' "$key" | sed 's/[.[\\*^$()+?{|]/\\\\&/g')
-    if grep -Eq "^[[:space:]]*${escaped_key}[[:space:]]*=" "$config_dir/riak.conf"; then
+    if grep -Eq "^[[:space:]]*${escaped_key}[[:space:]]*=" "$config_dir/riak.conf"
+    then
         sed -i -E "s|^[[:space:]]*${escaped_key}[[:space:]]*=.*$|${key} = ${value}|" "$config_dir/riak.conf"
     else
         printf '\n%s = %s\n' "$key" "$value" >> "$config_dir/riak.conf"
@@ -366,19 +381,27 @@ set_setting() {
 
 node_host=${RIAK_NODE_HOST:-$(hostname)}
 set_setting nodename "${RIAK_NODE_NAME:-riak@$node_host}"
-set_setting listener.http.internal "0.0.0.0:8098"
-set_setting listener.protobuf.internal "0.0.0.0:8087"
+set_setting ring_size "$RIAK_RING_SIZE"
+set_setting storage_backend "$RIAK_STORAGE_BACKEND"
+set_setting anti_entropy "$RIAK_ANTI_ENTROPY"
+set_setting tictacaae_active "$RIAK_TICTACAAE_ACTIVE"
+set_setting tictacaae_storeheads "$RIAK_TICTACAAE_STOREHEADS"
+set_setting listener.http.internal "$RIAK_HTTP_LISTENER"
+set_setting listener.protobuf.internal "$RIAK_PB_LISTENER"
 
 chown -R riak:riak "$config_dir" "$data_dir" "$log_dir" /run/riak
-if [ "${RIAK_INIT_ONLY:-0}" = "1" ]; then
+if [ "${RIAK_INIT_ONLY:-0}" = "1" ]
+then
     exit 0
 fi
 
 ulimit -n "${RIAK_NOFILE_LIMIT:-100000}"
-if command -v su-exec >/dev/null 2>&1; then
+if command -v su-exec >/dev/null 2>&1
+then
     exec su-exec riak /usr/sbin/riak console
 fi
-if command -v runuser >/dev/null 2>&1; then
+if command -v runuser >/dev/null 2>&1
+then
     exec runuser -u riak -- /usr/sbin/riak console
 fi
 exec su -s /bin/sh riak -c 'exec /usr/sbin/riak console'
@@ -386,7 +409,6 @@ exec su -s /bin/sh riak -c 'exec /usr/sbin/riak console'
 
 
 def render_dockerfile(target: Target, pinned_base_image: str) -> str:
-    entrypoint = base64.b64encode(ENTRYPOINT_SCRIPT.encode("utf-8")).decode("ascii")
     checksum = target.package["checksum"]["value"]
     filename = target.package["filename"]
     package_url = target.package["url"]
@@ -394,19 +416,49 @@ def render_dockerfile(target: Target, pinned_base_image: str) -> str:
 # Generated and tested by tools/openriak-docker/openriak-docker. Do not edit by hand.
 FROM --platform={target.platform} {pinned_base_image}
 
-ADD --checksum=sha256:{checksum} {package_url} /tmp/{filename}
-RUN {package_install_command(target)}
-RUN {create_riak_user_command(target)} && \\
-    test -x /usr/sbin/riak && id riak && \\
-    mkdir -p /opt/openriak-defaults/etc-riak /var/lib/riak /var/log/riak /run/riak && \\
-    cp -a /etc/riak/. /opt/openriak-defaults/etc-riak/ && \\
-    printf '%s' '{entrypoint}' | base64 -d > /usr/local/bin/openriak-entrypoint && \\
-    chmod 0755 /usr/local/bin/openriak-entrypoint && \\
-    chown -R riak:riak /var/lib/riak /var/log/riak /run/riak
+# -----------------------------------------------------------------------------
+# OpenRiak KV default settings
+# Override any value with `docker run --env NAME=value` or Compose `environment`.
+# -----------------------------------------------------------------------------
+ENV RIAK_NODE_HOST=""
+ENV RIAK_NODE_NAME=""
+ENV RIAK_RING_SIZE="8"
+ENV RIAK_STORAGE_BACKEND="leveled"
+ENV RIAK_ANTI_ENTROPY="passive"
+ENV RIAK_TICTACAAE_ACTIVE="active"
+ENV RIAK_TICTACAAE_STOREHEADS="enabled"
+ENV RIAK_HTTP_LISTENER="0.0.0.0:8098"
+ENV RIAK_PB_LISTENER="0.0.0.0:8087"
+ENV RIAK_NOFILE_LIMIT="100000"
+ENV RIAK_INIT_ONLY="0"
 
-ENV RIAK_NOFILE_LIMIT=100000
-VOLUME ["/etc/riak", "/var/lib/riak", "/var/log/riak"]
-EXPOSE 8087 8098
+ADD --checksum=sha256:{checksum} {package_url} /tmp/{filename}
+RUN <<'OPENRIAK_PACKAGE_INSTALL'
+set -eu
+{package_install_script(target)}
+OPENRIAK_PACKAGE_INSTALL
+
+RUN <<'OPENRIAK_IMAGE_SETUP'
+set -eu
+{create_riak_user_script(target)}
+test -x /usr/sbin/riak
+id riak
+mkdir -p /opt/openriak-defaults/etc-riak /var/lib/riak /var/log/riak /run/riak
+cp -a /etc/riak/. /opt/openriak-defaults/etc-riak/
+chown -R riak:riak /var/lib/riak /var/log/riak /run/riak
+OPENRIAK_IMAGE_SETUP
+
+COPY <<'OPENRIAK_ENTRYPOINT' /usr/local/bin/openriak-entrypoint
+{ENTRYPOINT_SCRIPT.rstrip()}
+OPENRIAK_ENTRYPOINT
+
+RUN chmod 0755 /usr/local/bin/openriak-entrypoint
+
+VOLUME ["/etc/riak"]
+VOLUME ["/var/lib/riak"]
+VOLUME ["/var/log/riak"]
+EXPOSE 8087
+EXPOSE 8098
 ENTRYPOINT ["/usr/local/bin/openriak-entrypoint"]
 """
 
@@ -422,7 +474,7 @@ services:
       context: .
       dockerfile: Dockerfile
     image: {target.image}
-    container_name: {node}
+    container_name: "${{OPENRIAK_CONTAINER_NAME:-{node}}}"
     hostname: {node}
     environment:
       RIAK_NODE_NAME: "${{OPENRIAK_NODE_NAME:-riak@{node}}}"
@@ -469,7 +521,7 @@ def run_logged(
         errors="replace",
         check=False,
     )
-    with log_path.open("a", encoding="utf-8") as handle:
+    with log_path.open("a", encoding="utf-8", newline="\n") as handle:
         handle.write(f"$ {' '.join(command)}\n")
         handle.write(f"started: {started}\nexit_code: {result.returncode}\n")
         handle.write(result.stdout)
@@ -528,7 +580,7 @@ def configure_test_node(config_path: pathlib.Path, node_name: str) -> None:
     }
     for key, value in settings.items():
         source = set_riak_setting(source, key, value)
-    config_path.write_text(source, encoding="utf-8")
+    config_path.write_text(source, encoding="utf-8", newline="\n")
 
 
 def effective_riak_settings(config_path: pathlib.Path, keys: Iterable[str]) -> dict[str, str]:
@@ -552,7 +604,7 @@ def free_tcp_port() -> int:
 
 
 def wait_for_node(
-    target: Target,
+    container_name: str,
     http_port: int,
     timeout_seconds: int,
     logs: pathlib.Path,
@@ -561,10 +613,10 @@ def wait_for_node(
     deadline = time.monotonic() + timeout_seconds
     last_cli = ""
     last_http = ""
-    with (logs / "readiness.log").open("w", encoding="utf-8") as log:
+    with (logs / "readiness.log").open("w", encoding="utf-8", newline="\n") as log:
         while time.monotonic() < deadline:
             cli = subprocess.run(
-                [docker, "exec", target.node_name, "riak", "ping"],
+                [docker, "exec", container_name, "riak", "ping"],
                 text=True,
                 stdout=subprocess.PIPE,
                 stderr=subprocess.STDOUT,
@@ -720,8 +772,16 @@ def refresh_target(target: Target, timeout_seconds: int, keep_workdir: bool = Fa
         }
 
         def generate() -> None:
-            dockerfile.write_text(render_dockerfile(target, pinned_base), encoding="utf-8")
-            compose.write_text(render_compose(target), encoding="utf-8")
+            dockerfile.write_text(
+                render_dockerfile(target, pinned_base),
+                encoding="utf-8",
+                newline="\n",
+            )
+            compose.write_text(
+                render_compose(target),
+                encoding="utf-8",
+                newline="\n",
+            )
 
         record_step(report, "generate_artifacts", generate)
         record_step(
@@ -748,7 +808,10 @@ def refresh_target(target: Target, timeout_seconds: int, keep_workdir: bool = Fa
         shutil.copy2(compose, test_directory / "compose.yaml")
         shutil.copy2(dockerfile, test_directory / "Dockerfile")
         node_directory = test_directory / target.node_name
+        test_suffix = identifier[-8:].lower().replace(".", "")
+        test_container_name = f"{target.node_name}-t-{test_suffix}"
         environment.update(
+            OPENRIAK_CONTAINER_NAME=test_container_name,
             OPENRIAK_PB_PORT=str(free_tcp_port()),
             OPENRIAK_HTTP_PORT=str(free_tcp_port()),
         )
@@ -762,13 +825,13 @@ def refresh_target(target: Target, timeout_seconds: int, keep_workdir: bool = Fa
         ]
 
         existing = run_logged(
-            [docker, "container", "inspect", target.node_name],
+            [docker, "container", "inspect", test_container_name],
             logs / "container-name-check.log",
             check=False,
         )
         if existing.returncode == 0:
             raise DockerToolError(
-                f"Container name {target.node_name} is already in use; refusing to remove it"
+                f"Container name {test_container_name} is already in use; refusing to remove it"
             )
 
         record_step(
@@ -834,7 +897,7 @@ def refresh_target(target: Target, timeout_seconds: int, keep_workdir: bool = Fa
             report,
             "wait_for_cli_and_http",
             lambda: wait_for_node(
-                target,
+                test_container_name,
                 int(environment["OPENRIAK_HTTP_PORT"]),
                 timeout_seconds,
                 logs,
@@ -860,12 +923,6 @@ def refresh_target(target: Target, timeout_seconds: int, keep_workdir: bool = Fa
             "data": sorted(path.name for path in data_directory.iterdir()),
             "logs": sorted(path.name for path in log_directory.iterdir()),
         }
-        run_logged(
-            compose_command + ["logs", "--no-color"],
-            logs / "compose-runtime.log",
-            cwd=test_directory,
-            environment=environment,
-        )
         report["artifacts"] = artifact_downloads(target, dockerfile, compose)
         report["status"] = "passed"
     except Exception as error:
@@ -882,6 +939,13 @@ def refresh_target(target: Target, timeout_seconds: int, keep_workdir: bool = Fa
                 str(test_directory / "compose.yaml"),
             ]
             if compose_started:
+                run_logged(
+                    compose_command + ["logs", "--no-color"],
+                    logs / "compose-runtime.log",
+                    cwd=test_directory,
+                    environment=environment,
+                    check=False,
+                )
                 run_logged(
                     compose_command + ["down", "--remove-orphans"],
                     logs / "compose-down.log",

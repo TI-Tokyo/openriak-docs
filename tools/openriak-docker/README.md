@@ -51,6 +51,12 @@ directory. A passed run is copied to
 Dockerfile and Compose file. Failed runs remain cached but are not advertised
 on the downloads page.
 
+Git retains the current target artifacts and every historical run's compact
+`report.json`. Historical `logs/`, `Dockerfile`, and `compose.yaml` copies are
+local diagnostics and are ignored by Git. CI systems that require full audit
+logs should upload those ignored files as workflow artifacts rather than add
+them to the repository.
+
 To restore static copies from already-tested cache entries without pulling,
 building, or testing anything:
 
@@ -60,10 +66,11 @@ tools/openriak-docker/openriak-docker sync-static
 
 The generated Compose file names its one container after the full target and
 uses a matching relative directory containing `config`, `data`, and `logs`.
-Set `OPENRIAK_NODE_NAME`, `OPENRIAK_PB_PORT`, or `OPENRIAK_HTTP_PORT` to
-override its full Erlang node name or host-side ports. `RIAK_NODE_NAME` remains
-the image runtime setting, so a later cluster Compose file can assign a
-distinct Erlang node name directly to every container.
+Set `OPENRIAK_CONTAINER_NAME`, `OPENRIAK_NODE_NAME`, `OPENRIAK_PB_PORT`, or
+`OPENRIAK_HTTP_PORT` to override its container name, full Erlang node name, or
+host-side ports. `RIAK_NODE_NAME` remains the image runtime setting, so a later
+cluster Compose file can assign a distinct Erlang node name directly to every
+container.
 
 Run the unit tests with:
 
