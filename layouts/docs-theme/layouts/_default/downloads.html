@@ -42,6 +42,35 @@
         <p class="modern-downloads-all-link"><a href="#all-downloads" data-all-downloads-link>All downloads</a></p>
       </section>
 
+      {{- with $versionData.dockerImages }}
+        <section class="modern-downloads-selected docker-downloads" aria-labelledby="docker-downloads-heading">
+          <h2 id="docker-downloads-heading">Tested Docker configurations</h2>
+          <p>These files were generated from the packages above and retained after a successful container test.</p>
+          <div class="downloads-table-wrap">
+            <table class="downloads-table">
+              <caption class="sr-only">Tested Docker configurations</caption>
+              <thead>
+                <tr><th scope="col">Platform</th><th scope="col">Image tag</th><th scope="col">Tested</th><th scope="col">Downloads</th></tr>
+              </thead>
+              <tbody>
+                {{- range . }}
+                  <tr>
+                    <td>{{ .osName }} {{ .osRelease }} — OTP {{ .otp }} — {{ .architecture }}</td>
+                    <td><code>{{ .image }}</code></td>
+                    <td><time datetime="{{ .testedAt }}">{{ .testedAt }}</time></td>
+                    <td>
+                      <a href="{{ .dockerfile.url | relURL }}" download="Dockerfile">Dockerfile</a>
+                      ·
+                      <a href="{{ .compose.url | relURL }}" download="compose.yaml">Compose</a>
+                    </td>
+                  </tr>
+                {{- end }}
+              </tbody>
+            </table>
+          </div>
+        </section>
+      {{- end }}
+
       <details class="modern-downloads-disclosure" data-downloads-source>
         <summary>Source Code</summary>
         <div class="modern-downloads-disclosure-content">{{ .Content }}</div>

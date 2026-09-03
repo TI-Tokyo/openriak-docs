@@ -1,4 +1,9 @@
-{{- $provenance := partial "page-version-status.html" . -}}
+{{- $context := partial "product-context.html" . -}}
+{{- $versionData := index $context.versions $context.version -}}
+{{- $documentationSource := $versionData.documentationSource | default "" -}}
+{{- $showProvenance := strings.HasPrefix $documentationSource "openriak-" -}}
+{{- $provenance := dict -}}
+{{- if $showProvenance }}{{ $provenance = partial "page-version-status.html" . }}{{ end -}}
 {{- $wordCount := .WordCount -}}
 {{- $wordsPerMinute := int (site.Params.technicalReadingWordsPerMinute | default 150) -}}
 {{- $codeBlockSeconds := int (site.Params.technicalReadingCodeBlockSeconds | default 15) -}}
@@ -18,15 +23,17 @@
 {{- $readingMinutes := div (add $readingSeconds 59) 60 -}}
 {{- if lt $readingMinutes 1 }}{{ $readingMinutes = 1 }}{{ end -}}
 <div class="doc-summary" aria-label="Page information">
-  <span class="doc-version-status doc-version-status--{{ $provenance.status }}">
-    {{- if eq $provenance.status "new" -}}
-      New for this version
-    {{- else if eq $provenance.status "updated" -}}
-      Updated for this version
-    {{- else -}}
-      Last changed in version {{ $provenance.since }}
-    {{- end -}}
-  </span>
+  {{- if $showProvenance }}
+    <span class="doc-version-status doc-version-status--{{ $provenance.status }}">
+      {{- if eq $provenance.status "new" -}}
+        New for this version
+      {{- else if eq $provenance.status "updated" -}}
+        Updated for this version
+      {{- else -}}
+        Last changed in version {{ $provenance.since }}
+      {{- end -}}
+    </span>
+  {{- end }}
   <span class="doc-reading-time">
     <svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 2"/></svg>
     {{ $readingMinutes }} min read

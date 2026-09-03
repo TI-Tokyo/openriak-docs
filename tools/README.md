@@ -2,6 +2,8 @@
 
 - `scripts/` — split production builds, assembly, architecture checks, metadata synchronization, and link validation.
 - `openriak-metadata/` — Python release-metadata package, CLI, and tests.
+- `openriak-docker/` — manually refreshed Docker generation, runtime testing, and cache publication.
+- `cache/openriak-docker/` — retained Dockerfiles, Compose files, JSON reports, and per-run test logs.
 - `generated/` — generated Hugo data adapters; safe for build tools to rewrite.
 
 The main build entry points are `tools/scripts/build.sh` and
@@ -29,6 +31,15 @@ renamed, or edited, so new pages do not require restarting the Docker stack.
 During the short regeneration window, a previously unseen page is treated as
 new for its current version. Static builds still fail if generated provenance is
 missing.
+
+## OpenRiak KV Docker cache
+
+Docker configurations are generated from the authoritative KV operating-system
+and package metadata, then built and tested only when an operator explicitly
+runs `openriak-docker refresh`. Documentation builds consume passed cached
+results and never pull base images or run containers. See
+`openriak-docker/README.md` for target selection, cache layout, test coverage,
+and publication details.
 
 ## Importing Hugo 0.18 content
 

@@ -1,0 +1,128 @@
+import importlib.util
+import pathlib
+import sys
+import tempfile
+import unittest
+
+
+MODULE_PATH = pathlib.Path(__file__).resolve().parents[1] / "openriak_docker.py"
+SPEC = importlib.util.spec_from_file_location("openriak_docker", MODULE_PATH)
+docker_tool = importlib.util.module_from_spec(SPEC)
+assert SPEC.loader is not None
+sys.modules[SPEC.name] = docker_tool
+SPEC.loader.exec_module(docker_tool)
+
+
+class OpenRiakDockerTests(unittest.TestCase):
+    @classmethod
+    def setUpClass(cls):
+        matches = docker_tool.discover_targets(
+            ["3.4.0"],
+            os_id="alpine-3.21-x86_64",
+            download_id="otp24-x86_64-r1",
+        )
+        assert len(matches) == 1
+        cls.target = matches[0]
+
+    def test_metadata_selects_expected_initial_target(self):
+        self.assertEqual(self.target.otp, "24")
+        self.assertEqual(self.target.architecture, "x86_64")
+        self.assertEqual(self.target.platform, "linux/amd64")
+        self.assertEqual(
+            self.target.image,
+            "openriak/openriak-kv:3.4.0-alpine-3.21-otp24-x86_64",
+        )
+        self.assertEqual(
+            self.target.package["checksum"]["value"],
+            "140f1decb585e5855990c140b58afcb2ba3629e5dc65fffab8d0eaaa0621cc69",
+        )
+
+    def test_dockerfile_is_pinned_and_self_contained(self):
+        digest = "sha256:" + "a" * 64
+        source = docker_tool.render_dockerfile(
+            self.target, f"alpine:3.21@{digest}"
+        )
+        self.assertIn(f"FROM --platform=linux/amd64 alpine:3.21@{digest}", source)
+        self.assertNotIn("latest", source.lower())
+        self.assertIn("ADD --checksum=sha256:140f1d", source)
+        self.assertIn("adduser -S -D -H", source)
+        self.assertIn('VOLUME ["/etc/riak", "/var/lib/riak", "/var/log/riak"]', source)
+        self.assertIn("ENTRYPOINT", source)
+        self.assertNotIn("COPY ", source)
+
+    def test_compose_has_requested_identity_ports_and_relative_volumes(self):
+        source = docker_tool.render_compose(self.target)
+        node = "openriak-kv-3.4.0-alpine-3.21-otp24-x86_64-node"
+        self.assertIn("build:\n      context: .\n      dockerfile: Dockerfile", source)
+        self.assertIn(f"container_name: {node}", source)
+        self.assertIn(f'RIAK_NODE_NAME: "${{OPENRIAK_NODE_NAME:-riak@{node}}}"', source)
+        self.assertIn('"${OPENRIAK_PB_PORT:-8087}:8087"', source)
+        self.assertIn('"${OPENRIAK_HTTP_PORT:-8098}:8098"', source)
+        self.assertIn(f'"./{node}/config:/etc/riak"', source)
+        self.assertIn(f'"./{node}/data:/var/lib/riak"', source)
+        self.assertIn(f'"./{node}/logs:/var/log/riak"', source)
+
+    def test_configure_node_sets_all_test_values(self):
+        source = """nodename = riak@127.0.0.1
+## ring_size = 64
+storage_backend = bitcask
+anti_entropy = active
+tictacaae_active = passive
+tictacaae_storeheads = disabled
+listener.http.internal = 127.0.0.1:8098
+listener.protobuf.internal = 127.0.0.1:8087
+"""
+        with tempfile.TemporaryDirectory() as directory:
+            config = pathlib.Path(directory) / "riak.conf"
+            config.write_text(source, encoding="utf-8")
+            docker_tool.configure_test_node(config, self.target.node_name)
+            values = docker_tool.effective_riak_settings(
+                config,
+                [
+                    "nodename",
+                    "ring_size",
+                    "storage_backend",
+                    "anti_entropy",
+                    "tictacaae_active",
+                    "tictacaae_storeheads",
+                    "listener.http.internal",
+                    "listener.protobuf.internal",
+                ],
+            )
+        self.assertEqual(values["nodename"], f"riak@{self.target.node_name}")
+        self.assertEqual(values["ring_size"], "8")
+        self.assertEqual(values["storage_backend"], "leveled")
+        self.assertEqual(values["anti_entropy"], "passive")
+        self.assertEqual(values["tictacaae_active"], "active")
+        self.assertEqual(values["tictacaae_storeheads"], "enabled")
+        self.assertEqual(values["listener.http.internal"], "0.0.0.0:8098")
+        self.assertEqual(values["listener.protobuf.internal"], "0.0.0.0:8087")
+
+    def test_base_image_uses_release_tag(self):
+        self.assertEqual(docker_tool.base_image_for(self.target), "alpine:3.21")
+
+    def test_complete_metadata_matrix_is_discoverable(self):
+        targets = docker_tool.discover_targets()
+        self.assertGreater(len(targets), 20)
+        self.assertTrue(
+            all(
+                docker_tool.semver_key(target.version)
+                >= docker_tool.MINIMUM_OPENRIAK_VERSION
+                for target in targets
+            )
+        )
+        self.assertTrue(all(target.otp for target in targets))
+        self.assertTrue(all(target.platform.startswith("linux/") for target in targets))
+        self.assertTrue(all("latest" not in docker_tool.base_image_for(target) for target in targets))
+        self.assertEqual(len({target.image for target in targets}), len(targets))
+
+    def test_rejects_pre_openriak_versions(self):
+        with self.assertRaisesRegex(
+            docker_tool.DockerToolError,
+            "OpenRiak KV Docker targets start at 3.4.0",
+        ):
+            docker_tool.discover_targets(["3.3.9"])
+
+
+if __name__ == "__main__":
+    unittest.main()

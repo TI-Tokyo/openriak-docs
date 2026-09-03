@@ -42,9 +42,11 @@ for (const product of productCases) {
 
   for (const { raw: version } of discoveredVersions) {
     const adapter = readAdapter(product.id, version);
+    const expectedDocumentationSource = product.sources.find((source) => versionsFor(source).some((entry) => entry.raw === version));
     const downloads = Object.values(adapter.downloads).flat();
     const modernKv = product.id === 'openriak-kv' && compareSemver(version, '3.4.0') >= 0;
     assert.equal(adapter.generatedFrom, `content/${product.id}/metadata/${version}`);
+    assert.equal(adapter.documentationSource, expectedDocumentationSource);
     assert.equal(adapter.metadataStatus.supportedOs, adapter.metadataStatus.downloads);
     if (modernKv) assert.ok(['complete', 'partial'].includes(adapter.metadataStatus.defaults));
     else assert.equal(adapter.metadataStatus.defaults, 'not_generated');

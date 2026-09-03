@@ -36,9 +36,7 @@ Use `configuration-reference-table` to render a filtered collection of settings.
 Use `configuration-reference-item` when a page needs the complete details for one
 exact mapping name:
 
-```go-html-template
-{{</* configuration-reference-item config-name="mdc.fullsync_interval.$cluster_name" */>}}
-```
+<pre><code>&#123;&#123;&lt; configuration-reference-item config-name="mdc.fullsync_interval.$cluster_name" &gt;&#125;&#125;</code></pre>
 
 The item shortcode fails the Hugo build when `config-name` is missing or does not
 match exactly one generated setting. Its default value follows the selected

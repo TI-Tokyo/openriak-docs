@@ -312,6 +312,7 @@ for (const product of products) {
       writeVersionData(version, {
         product: product.productId,
         version,
+        documentationSource: source,
         generatedFrom: `content/${source}/${sourceDirectory}`,
         metadataStatus: { supportedOs: 'unavailable', downloads: 'unavailable', defaults: 'unavailable' },
         metadataWarnings: ['No structured operating-system, download, or default-value metadata is available for this legacy release.'],
@@ -429,6 +430,7 @@ for (const product of products) {
     const output = {
       product: product.productId,
       version,
+      documentationSource: source,
       generatedFrom: `content/${product.productId}/metadata/${version}`,
       metadataSchemaVersion: supported.schema_version,
       metadataStatus: {
