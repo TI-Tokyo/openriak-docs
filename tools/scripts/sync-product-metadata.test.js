@@ -44,6 +44,18 @@ for (const product of productCases) {
     const adapter = readAdapter(product.id, version);
     const expectedDocumentationSource = product.sources.find((source) => versionsFor(source).some((entry) => entry.raw === version));
     const downloads = Object.values(adapter.downloads).flat();
+    const dockerImages = adapter.dockerImages || [];
+    assert.ok(Array.isArray(dockerImages));
+    if (product.id !== 'openriak-kv') assert.deepEqual(dockerImages, []);
+    for (const image of dockerImages) {
+      assert.match(image.image, new RegExp(`^openriak/openriak-kv:${version.replaceAll('.', '\\.')}-`));
+      assert.ok(image.node.endsWith('-node'));
+      assert.ok(image.baseImage.includes('@sha256:'));
+      assert.match(image.dockerfile.sha256, /^[0-9a-f]{64}$/);
+      assert.match(image.compose.sha256, /^[0-9a-f]{64}$/);
+      assert.ok(image.dockerfile.url.startsWith(`downloads/docker/${version}/`));
+      assert.ok(image.compose.url.startsWith(`downloads/docker/${version}/`));
+    }
     const modernKv = product.id === 'openriak-kv' && compareSemver(version, '3.4.0') >= 0;
     assert.equal(adapter.generatedFrom, `content/${product.id}/metadata/${version}`);
     assert.equal(adapter.documentationSource, expectedDocumentationSource);
@@ -173,5 +185,12 @@ assert.ok(configurationReference.settings.some((setting) => Object.values(settin
 assert.ok(configurationReference.settings.every((setting) => Object.values(setting.defaults).every((value) =>
   !/%\{[^}]+\}|\{\{[^}]+\}\}|\$\([^)]+\)/.test(JSON.stringify(value.value))
 )), 'configuration-reference defaults must not expose unresolved package or configuration variables');
+
+const alpineDocker = readAdapter('openriak-kv', '3.4.0').dockerImages.find((image) => (
+  image.osId === 'alpine-3.21-x86_64' && String(image.otp) === '24' && image.architecture === 'x86_64'
+));
+assert.ok(alpineDocker, 'Expected the passed Alpine 3.21 x86_64 OTP 24 Docker cache result');
+assert.equal(alpineDocker.image, 'openriak/openriak-kv:3.4.0-alpine-3.21-otp24-x86_64');
+assert.equal(alpineDocker.node, 'openriak-kv-3.4.0-alpine-3.21-otp24-x86_64-node');
 
 console.log('Product metadata synchronization tests passed.');

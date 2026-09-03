@@ -1,10 +1,13 @@
 'use strict';
 
+const crypto = require('node:crypto');
 const fs = require('node:fs');
 const path = require('node:path');
 
 const repositoryRoot = path.resolve(__dirname, '..', '..');
 const contentRoot = path.join(repositoryRoot, 'content');
+const dockerCacheRoot = path.join(repositoryRoot, 'tools', 'cache', 'openriak-docker');
+const dockerStaticRoot = path.join(contentRoot, 'static', 'openriak-kv');
 const { compareSemver, discoverVersions, productSources } = require('./generate-version-mounts.js');
 
 const products = [
@@ -114,6 +117,70 @@ const preferredFamilyDefaults = {
 };
 
 const readJson = (file) => JSON.parse(fs.readFileSync(file, 'utf8'));
+const sha256File = (file) => crypto.createHash('sha256').update(fs.readFileSync(file)).digest('hex');
+
+const dockerImagesForVersion = (version) => {
+  const versionRoot = path.join(dockerCacheRoot, version);
+  if (!fs.existsSync(versionRoot)) return [];
+  const images = [];
+  for (const osEntry of fs.readdirSync(versionRoot, { withFileTypes: true })) {
+    if (!osEntry.isDirectory()) continue;
+    const osRoot = path.join(versionRoot, osEntry.name);
+    for (const downloadEntry of fs.readdirSync(osRoot, { withFileTypes: true })) {
+      if (!downloadEntry.isDirectory()) continue;
+      const targetRoot = path.join(osRoot, downloadEntry.name);
+      const reportFile = path.join(targetRoot, 'report.json');
+      if (!fs.existsSync(reportFile)) continue;
+      const report = readJson(reportFile);
+      if (report.schema_version !== 1 || report.status !== 'passed') continue;
+      if (report.product !== 'openriak-kv' || report.target?.version !== version) {
+        throw new Error(`Mismatched Docker cache report: ${reportFile}`);
+      }
+      if (report.target.os_id !== osEntry.name || report.target.download_id !== downloadEntry.name) {
+        throw new Error(`Misplaced Docker cache report: ${reportFile}`);
+      }
+      const artifacts = report.artifacts || {};
+      for (const [name, filename] of [['dockerfile', 'Dockerfile'], ['compose', 'compose.yaml']]) {
+        const artifact = artifacts[name];
+        const expectedPrefix = `downloads/docker/${version}/`;
+        if (!artifact || artifact.filename !== filename || !artifact.url?.startsWith(expectedPrefix)
+          || !/^[0-9a-f]{64}$/.test(artifact.sha256 || '')) {
+          throw new Error(`Invalid ${name} artifact in Docker cache report: ${reportFile}`);
+        }
+        const cachedFile = path.join(targetRoot, filename);
+        const publishedFile = path.join(dockerStaticRoot, artifact.url);
+        if (!fs.existsSync(cachedFile)) {
+          throw new Error(`Missing cached ${filename} for Docker cache report: ${reportFile}`);
+        }
+        if (!fs.existsSync(publishedFile)) {
+          throw new Error(`Missing published ${filename} for Docker cache report: ${reportFile}`);
+        }
+        if (sha256File(cachedFile) !== artifact.sha256 || sha256File(publishedFile) !== artifact.sha256) {
+          throw new Error(`Checksum mismatch for ${filename} in Docker cache report: ${reportFile}`);
+        }
+      }
+      images.push({
+        osId: report.target.os_id,
+        osName: report.target.os_name,
+        osRelease: report.target.os_release,
+        otp: report.target.otp,
+        architecture: report.target.architecture,
+        image: report.image,
+        node: report.node,
+        testedAt: report.finished_at,
+        baseImage: report.base_image?.pinned || '',
+        dockerfile: artifacts.dockerfile,
+        compose: artifacts.compose
+      });
+    }
+  }
+  return images.sort((left, right) => (
+    left.osName.localeCompare(right.osName)
+    || String(left.osRelease).localeCompare(String(right.osRelease), undefined, { numeric: true })
+    || String(left.otp).localeCompare(String(right.otp), undefined, { numeric: true })
+    || left.architecture.localeCompare(right.architecture)
+  ));
+};
 
 const referencedValueKeys = (productRoot) => {
   const keys = new Set();
@@ -427,6 +494,7 @@ for (const product of products) {
         .sort((left, right) => String(left.otp ?? '').localeCompare(String(right.otp ?? ''), undefined, { numeric: true }) || left.id.localeCompare(right.id));
     }
 
+    const dockerImages = product.productId === 'openriak-kv' ? dockerImagesForVersion(version) : [];
     const output = {
       product: product.productId,
       version,
@@ -449,6 +517,7 @@ for (const product of products) {
       operatingSystems: exposesOperatingSystemPicker ? operatingSystems : [],
       downloadOperatingSystems: operatingSystems,
       downloads: normalizedDownloads,
+      ...(dockerImages.length ? { dockerImages } : {}),
       values
     };
 
