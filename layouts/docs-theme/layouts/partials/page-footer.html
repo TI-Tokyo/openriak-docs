@@ -1,0 +1,41 @@
+{{- $context := partial "product-context.html" . -}}
+{{- $issuesURL := site.Params.documentationIssuesURL | default "https://github.com/TI-Tokyo/openriak-docs/issues" -}}
+{{- $feedbackPath := site.Params.documentationFeedbackTrackingPath | default "feedback/page-vote.svg" -}}
+{{- $markdown := printf "# %s\n\n%s" .Title .RawContent -}}
+<footer class="doc-page-footer"
+  data-doc-page-tools
+  data-page-title="{{ .Title }}"
+  data-page-path="{{ .RelPermalink }}"
+  data-product-name="{{ $context.product.name }}"
+  data-product-version="{{ $context.version }}"
+  data-issue-base="{{ $issuesURL }}"
+  data-feedback-endpoint="{{ $feedbackPath | relURL }}">
+  <div class="doc-page-actions" aria-label="Page actions">
+    <button type="button" class="doc-page-action" data-copy-page-markdown aria-live="polite">
+      <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 4h14v16H5zM8 8l3 3-3 3M12 14h4"/></svg>
+      <span>Copy page as Markdown</span>
+    </button>
+    <a class="doc-page-action" data-report-documentation href="{{ $issuesURL }}" target="_blank" rel="noopener noreferrer">
+      <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 3a9 9 0 1 0 9 9 9 9 0 0 0-9-9Z"/><path d="M12 7v6M12 17h.01"/></svg>
+      <span>Report a documentation problem</span>
+    </a>
+  </div>
+  <section class="doc-feedback" aria-labelledby="doc-feedback-heading">
+    <h2 id="doc-feedback-heading">Was this page helpful?</h2>
+    <div class="doc-feedback-buttons">
+      <button type="button" data-feedback-vote="yes" aria-pressed="false">
+        <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M7 10v11H3V10h4Zm0 9h10.3a2 2 0 0 0 2-1.7l1.1-7A2 2 0 0 0 18.5 8H14l.7-3.1A2.4 2.4 0 0 0 12.4 2L7 10v9Z"/></svg>
+        Yes
+      </button>
+      <button type="button" data-feedback-vote="no" aria-pressed="false">
+        <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M7 14V3H3v11h4Zm0-9h10.3a2 2 0 0 1 2 1.7l1.1 7a2 2 0 0 1-1.9 2.3H14l.7 3.1a2.4 2.4 0 0 1-2.3 2.9L7 14V5Z"/></svg>
+        No
+      </button>
+    </div>
+    <p class="doc-feedback-status" data-feedback-status role="status" aria-live="polite"></p>
+    <p class="doc-feedback-follow-up" data-feedback-follow-up hidden>
+      Please <a data-report-documentation href="{{ $issuesURL }}" target="_blank" rel="noopener noreferrer">tell us what was missing or incorrect</a>.
+    </p>
+  </section>
+  <script type="application/json" data-page-markdown-source>{{ $markdown | jsonify | safeJS }}</script>
+</footer>

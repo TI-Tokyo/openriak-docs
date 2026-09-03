@@ -1,0 +1,33 @@
+{{- with .Params.related -}}
+  {{- $context := partial "product-context.html" $ -}}
+  <aside class="related-documentation" aria-labelledby="related-documentation-heading">
+    <h2 id="related-documentation-heading">Related documentation</h2>
+    <ul>
+      {{- range . -}}
+        {{- $reference := "" -}}
+        {{- $customTitle := "" -}}
+        {{- $reason := "" -}}
+        {{- if reflect.IsMap . -}}
+          {{- $reference = index . "page" | default "" -}}
+          {{- $customTitle = index . "title" | default "" -}}
+          {{- $reason = index . "reason" | default "" -}}
+        {{- else -}}
+          {{- $reference = printf "%v" . -}}
+        {{- end -}}
+        {{- $reference = $reference | strings.TrimSpace | strings.TrimPrefix "/" | strings.TrimSuffix "/" | strings.TrimSuffix ".md" -}}
+        {{- if or (not $reference) (strings.Contains $reference "..") -}}
+          {{- errorf "invalid related page reference %q on %s" $reference $.Path -}}
+        {{- end -}}
+        {{- $targetPath := printf "/%s/%s/%s" $context.id $context.version $reference -}}
+        {{- $target := site.GetPage $targetPath -}}
+        {{- if not $target -}}
+          {{- errorf "related page %q on %s does not exist in %s %s" $reference $.Path $context.id $context.version -}}
+        {{- end -}}
+        <li>
+          <a href="{{ $target.RelPermalink }}">{{ $customTitle | default $target.LinkTitle }}</a>
+          {{- with $reason }}<span>{{ . }}</span>{{ end -}}
+        </li>
+      {{- end }}
+    </ul>
+  </aside>
+{{- end -}}

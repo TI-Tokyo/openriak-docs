@@ -184,6 +184,13 @@ const configurationValueText = (value) => {
   return JSON.stringify(value);
 };
 
+const configurationConstraintText = (value) => {
+  if (value && typeof value === 'object' && typeof value.$erlang_expression === 'string') {
+    return `Calculated at runtime: \`${value.$erlang_expression}\``;
+  }
+  return configurationValueText(value);
+};
+
 const complexDatatypeOptions = (type) => {
   const options = [];
   const add = (value) => { if (value && !options.includes(value)) options.push(value); };
@@ -223,7 +230,9 @@ const configurationDatatype = (setting, validators) => {
       ? (datatype.arguments || [])
       : simple ? [] : complexDatatypeOptions(type);
   const units = type === 'duration' ? (datatype.arguments || []) : [];
-  const constraints = [...new Set((setting.validators || []).map((name) => validators[name]?.message || name))];
+  const constraints = [...new Set((setting.validators || [])
+    .map((name) => validators[name]?.message || name)
+    .map(configurationConstraintText))];
   return {
     label: simple ? labels[type] : 'One of',
     options: options.map(configurationValueText),

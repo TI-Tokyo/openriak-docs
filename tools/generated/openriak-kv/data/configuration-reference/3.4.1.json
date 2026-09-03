@@ -9448,12 +9448,8 @@
         "options": [],
         "units": [],
         "constraints": [
-          {
-            "$erlang_expression": "( \"must be divisible by \" ++ integer_to_list ( erlang:system_info ( { wordsize , external } ) ) )"
-          },
-          {
-            "$erlang_expression": "begin WordSize = erlang:system_info ( { wordsize , external } ) , ( \"must be in the range of \" ++ cuttlefish_bytesize:to_string ( 16 * 1024 * WordSize ) ++ \" to \" ++ cuttlefish_bytesize:to_string ( 8192 * 1024 * WordSize ) ) end"
-          }
+          "Calculated at runtime: `( \"must be divisible by \" ++ integer_to_list ( erlang:system_info ( { wordsize , external } ) ) )`",
+          "Calculated at runtime: `begin WordSize = erlang:system_info ( { wordsize , external } ) , ( \"must be in the range of \" ++ cuttlefish_bytesize:to_string ( 16 * 1024 * WordSize ) ++ \" to \" ++ cuttlefish_bytesize:to_string ( 8192 * 1024 * WordSize ) ) end`"
         ]
       },
       "defaults": {

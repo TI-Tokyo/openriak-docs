@@ -1,0 +1,59 @@
+{{- $declaredLanguage := .Type | default "" -}}
+{{- $filename := index .Attributes "filename" | default "" -}}
+{{- $partialName := index .Attributes "partialname" | default "" -}}
+{{- $attributeExtension := index .Attributes "extension" | default "" -}}
+{{- /* Imported pages use path-like info strings as filename labels. Hugo exposes the label as Type rather than a language. */ -}}
+{{- $legacyFilenameFence := and (ne $declaredLanguage "") (gt (len (findRE `[/\\]` $declaredLanguage)) 0) -}}
+{{- $language := cond $legacyFilenameFence "text" ($declaredLanguage | default "text") -}}
+{{- $languageLabel := cond $legacyFilenameFence $declaredLanguage ($language | humanize) -}}
+{{- $extensionOverrides := cond (and (ne $declaredLanguage "") (not $legacyFilenameFence)) $attributeExtension "" -}}
+{{- $extensionByLanguage := dict "advancedconfig" "advanced.config" "bash" "sh" "shell" "sh" "sh" "sh" "console" "txt" "text" "txt" "plaintext" "txt" "conf" "conf" "erlang" "erl" "javascript" "js" "json" "json" "python" "py" "sql" "sql" "toml" "toml" "xml" "xml" "yaml" "yaml" "yml" "yml" -}}
+{{- $extension := $extensionOverrides | default (index $extensionByLanguage (lower $language)) | default ((lower $language) | urlize) | default "txt" -}}
+{{- $invalidPortableChars := `[<>:"/\\|?*\x00-\x1F]` -}}
+{{- $invalidPortableEnding := `[ .]$` -}}
+{{- $reservedPortableName := `(?i)^(con|prn|aux|nul|com[1-9]|lpt[1-9])(?:\.|$)` -}}
+{{- range slice (dict "field" "filename" "value" $filename "reserved" true) (dict "field" "partialname" "value" $partialName "reserved" true) (dict "field" "extension" "value" $extension "reserved" false) -}}
+  {{- $value := printf "%v" .value -}}
+  {{- if and $value (or (gt (len (findRE $invalidPortableChars $value)) 0) (gt (len (findRE $invalidPortableEnding $value)) 0) (and .reserved (gt (len (findRE $reservedPortableName $value)) 0))) -}}
+    {{- errorf "Invalid portable code-download %s %q on %s; avoid Windows/Linux filename control characters, reserved characters and device names, and trailing spaces or dots" .field $value $.Page.File.Path -}}
+  {{- end -}}
+{{- end -}}
+{{- $productName := .Page.Params.product | default "documentation" | urlize -}}
+{{- $productVersion := .Page.Params.product_version | default "" | urlize -}}
+{{- $pageName := .Page.Title | default "page" | urlize -}}
+{{- $shellLanguages := slice "bash" "shell" "sh" -}}
+{{- $highlightLanguage := cond (eq (lower $language) "advancedconfig") "erlang" $language -}}
+<div class="doc-code-block" data-code-block data-code-language="{{ $language }}" data-code-product="{{ $productName }}" data-code-version="{{ $productVersion }}" data-code-page="{{ $pageName }}" data-code-extension="{{ $extension }}"{{ with $filename }} data-code-filename="{{ . }}"{{ end }}{{ with $partialName }} data-code-partial-name="{{ . }}"{{ end }}>
+  <div class="doc-code-toolbar">
+    <span class="doc-code-language">{{ $languageLabel }}</span>
+    <div class="doc-code-actions">
+      <button type="button" role="switch" data-code-lines aria-checked="false" aria-label="Line numbers" title="Line numbers">
+        <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M9 6h11M9 12h11M9 18h11M4 6h1M4 12h1M4 18h1"/></svg>
+        <span>Line numbers</span>
+      </button>
+      <button type="button" data-code-wrap aria-pressed="false" aria-label="Wrap" title="Wrap">
+        <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 7h12a4 4 0 0 1 0 8H9M12 12l-3 3 3 3M4 12h2"/></svg>
+        <span>Wrap</span>
+      </button>
+      {{- if in $shellLanguages (lower $language) }}
+      <button type="button" data-code-shell-wrap aria-pressed="false" aria-label="Split command" title="Split command">
+        <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 5h14M5 12h10M5 19h7M17 9l3 3-3 3"/></svg>
+        <span>Split command</span>
+      </button>
+      {{- end }}
+      <button type="button" data-code-download aria-label="Download" title="Download">
+        <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 3v12M7 10l5 5 5-5M4 20h16"/></svg>
+        <span>Download</span>
+      </button>
+      <button type="button" data-code-copy aria-label="Copy code" title="Copy code" aria-live="polite">
+        <svg viewBox="0 0 24 24" aria-hidden="true"><rect x="8" y="8" width="11" height="11" rx="2"/><path d="M16 8V6a2 2 0 0 0-2-2H6a2 2 0 0 0-2 2v8a2 2 0 0 0 2 2h2"/></svg>
+        <span>Copy</span>
+      </button>
+    </div>
+  </div>
+  <div class="doc-code-content">
+    <div class="doc-code-highlight" data-code-highlight>{{ transform.Highlight .Inner $highlightLanguage "noClasses=false" }}</div>
+    <pre class="doc-code-shell-view chroma" data-code-shell-view hidden><code></code></pre>
+  </div>
+  <script type="application/json" data-code-source>{{ .Inner | jsonify | safeJS }}</script>
+</div>

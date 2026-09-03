@@ -23,25 +23,50 @@
 {{- if not $matches -}}
   {{- errorf "configuration-reference-table matched no settings for area=%q on %s" $area .Page.File.Path -}}
 {{- end -}}
+{{- .Page.Store.Add "configurationReferenceRowCount" (len $matches) -}}
 {{- $versionData := index $context.versions $context.version -}}
 {{- $defaultOs := $versionData.defaultOs -}}
 {{- $selectedOperatingSystems := where $versionData.operatingSystems "id" $defaultOs -}}
 {{- $selectedOperatingSystem := index $selectedOperatingSystems 0 -}}
 {{- $clientDefaults := dict -}}
 <div class="configuration-reference-wrap" data-configuration-reference>
+  <div class="configuration-reference-controls">
+    <div class="configuration-reference-search-controls">
+      <label class="configuration-reference-search">
+        <span>Search this table</span>
+        <input type="search" data-configuration-search placeholder="Search all fields" autocomplete="off" spellcheck="false">
+      </label>
+      <label class="configuration-reference-search-mode">
+        <span>Match</span>
+        <select data-configuration-search-mode>
+          <option value="contains">Contains</option>
+          <option value="whole-word">Whole word</option>
+          <option value="word-prefix">Word prefix</option>
+          <option value="word-suffix">Word suffix</option>
+          <option value="regex">Regular expression</option>
+        </select>
+      </label>
+    </div>
+    <output class="configuration-reference-results" data-configuration-results aria-live="polite">{{ len $matches }} rows</output>
+  </div>
   <div class="configuration-reference-scroll">
     <table class="configuration-reference-table">
       <caption class="sr-only">Configuration reference values and defaults</caption>
       <thead>
         <tr>
-          <th scope="col">Config name</th>
+          <th scope="col" data-configuration-sort-heading aria-sort="ascending">
+            <button class="configuration-reference-sort" type="button" data-configuration-sort data-sort-direction="ascending" aria-label="Sort config name descending" title="Sort config name descending">
+              <span>Config name</span>
+              <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M8 7l4-4 4 4M12 3v18"/></svg>
+            </button>
+          </th>
           <th scope="col">Description</th>
           <th scope="col">Datatype</th>
           <th scope="col">Default value</th>
         </tr>
       </thead>
       <tbody>
-        {{- range $setting := $matches -}}
+        {{- range $setting := sort $matches "name" "asc" -}}
           {{- $clientDefaults = merge $clientDefaults (dict $setting.name $setting.defaults) -}}
           {{- $default := index $setting.defaults $defaultOs | default dict -}}
           <tr data-configuration-key="{{ $setting.name }}">
@@ -70,12 +95,22 @@
                 <small>Units:</small>
                 <span class="configuration-reference-options">{{ range $index, $value := . }}{{ if $index }}, {{ end }}<code>{{ $value }}</code>{{ end }}</span>
               {{- end }}
-              {{- range $setting.datatype.constraints }}<span class="configuration-reference-constraint">{{ . | markdownify }}</span>{{ end }}
+              {{- range $setting.datatype.constraints -}}
+                {{- $constraint := . -}}
+                {{- if reflect.IsMap $constraint -}}
+                  {{- with index $constraint "$erlang_expression" -}}
+                    {{- $constraint = printf "Calculated at runtime: `%s`" . -}}
+                  {{- else -}}
+                    {{- $constraint = $constraint | jsonify -}}
+                  {{- end -}}
+                {{- end -}}
+                <span class="configuration-reference-constraint">{{ $constraint | markdownify }}</span>
+              {{- end }}
             </td>
             <td class="configuration-reference-default">
               <div class="configuration-copyable">
                 <code data-configuration-default-value{{ if not $default.hasDefault }} hidden{{ end }}>{{ $default.value }}</code>
-                <span class="configuration-reference-no-default" data-configuration-default-empty{{ if $default.hasDefault }} hidden{{ end }}>None.</span>
+                <span class="configuration-reference-no-default" data-configuration-default-empty{{ if $default.hasDefault }} hidden{{ end }}>No default value.</span>
                 <button class="download-copy" type="button" data-configuration-default-copy data-copy-value="{{ $default.value }}" data-copy-label="Copy default value" aria-label="Copy default value" title="Copy default value" aria-live="polite"{{ if not $default.hasDefault }} hidden{{ end }}>{{ partial "download-icon-copy.html" . }}</button>
               </div>
               <span class="configuration-reference-os" data-configuration-os-specific{{ if not $default.osSpecific }} hidden{{ end }}>

@@ -17,6 +17,11 @@ editorial_review: 'not-required'
 technical_review: 'required'
 last_reviewed: '2026-09-02'
 review_scope: 'shortcode-integration'
+related:
+  - page: 'reference/configuration'
+    reason: 'Understand the configuration files and their precedence.'
+  - page: 'reference/faq'
+    title: 'Frequently asked questions'
 ---
 
 Use this draft page to exercise the configuration reference table. Change the selected operating system and verify that defaults and OS badges update without reloading the page. The copy buttons should copy the mapping name, internal name, or currently displayed default.
@@ -31,6 +36,18 @@ Each non-empty shortcode body line is an independent regular expression. Matchin
 ^platform_lib_dir$
 {{< /configuration-reference-table >}}
 
+## Single configuration item
+
+This renders one exact configuration key as a compact detail table and follows the currently selected operating system when displaying its default.
+
+{{< configuration-reference-item config-name="mdc.fullsync_interval.$cluster_name" >}}
+
+### Enum-valued item
+
+This second example exercises the per-value copy controls for an enum.
+
+{{< configuration-reference-item config-name="anti_entropy" >}}
+
 ## Repository area and filters
 
 The `area` parameter limits matches to settings defined by the `riak_repl` repository. The body expressions are still additive within that area.
@@ -39,3 +56,7 @@ The `area` parameter limits matches to settings defined by the `riak_repl` repos
 ^mdc\.fullsync\.stat_refresh_interval$
 ^mdc\.fullsync_(on_connect|interval\.\$cluster_name)$
 {{< /configuration-reference-table >}}
+
+# single item detail
+
+{{< configuration-reference-item config-name="mdc.fullsync_interval.$cluster_name" >}}

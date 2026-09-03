@@ -1,0 +1,19 @@
+{{- $context := partial "product-context.html" . -}}
+{{- $versionData := index hugo.Data.page_provenance $context.id $context.version -}}
+{{- $prefix := printf "%s/%s/" $context.id $context.version -}}
+{{- $contentPath := strings.TrimPrefix "/" .Path -}}
+{{- $pageKey := strings.TrimPrefix $prefix $contentPath | strings.TrimSuffix "/" -}}
+{{- $entry := dict -}}
+{{- if eq $pageKey "downloads" -}}
+  {{- $entry = dict "status" "updated" "since" $context.version -}}
+{{- else -}}
+  {{- $entry = index $versionData $pageKey -}}
+  {{- if not $entry -}}
+    {{- if hugo.IsServer -}}
+      {{- $entry = dict "status" "new" "since" $context.version -}}
+    {{- else -}}
+      {{- errorf "missing page provenance for product=%s version=%s page=%s" $context.id $context.version $pageKey -}}
+    {{- end -}}
+  {{- end -}}
+{{- end -}}
+{{- return $entry -}}

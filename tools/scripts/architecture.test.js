@@ -11,7 +11,9 @@ const {
   resolveValue,
   buildVersionCandidates,
   resolveAssetUrl,
-  configurationDefaultForOs
+  configurationDefaultForOs,
+  configurationSearchPattern,
+  configurationSearchExpression
 } = require('../../layouts/docs-theme/static/js/docs-runtime.js');
 
 const repositoryRoot = path.resolve(__dirname, '..', '..');
@@ -27,6 +29,15 @@ const highlightSource = fs.readFileSync(path.join(repositoryRoot, 'layouts', 'co
 const docsCssSource = fs.readFileSync(path.join(themeRoot, 'static', 'css', 'docs.css'), 'utf8');
 const themeSource = fs.readFileSync(path.join(themeRoot, 'static', 'js', 'theme.js'), 'utf8');
 const shareSource = fs.readFileSync(path.join(repositoryRoot, 'layouts', 'common-docs', 'static', 'js', 'share.js'), 'utf8');
+const pageToolsSource = fs.readFileSync(path.join(themeRoot, 'static', 'js', 'page-tools.js'), 'utf8');
+const singleTemplateSource = fs.readFileSync(path.join(themeRoot, 'layouts', '_default', 'single.html'), 'utf8');
+const listTemplateSource = fs.readFileSync(path.join(themeRoot, 'layouts', '_default', 'list.html'), 'utf8');
+const pageSummarySource = fs.readFileSync(path.join(themeRoot, 'layouts', 'partials', 'page-summary.html'), 'utf8');
+const pageFooterSource = fs.readFileSync(path.join(themeRoot, 'layouts', 'partials', 'page-footer.html'), 'utf8');
+const pageVersionStatusSource = fs.readFileSync(path.join(themeRoot, 'layouts', 'partials', 'page-version-status.html'), 'utf8');
+const relatedDocumentationSource = fs.readFileSync(path.join(themeRoot, 'layouts', 'partials', 'related-documentation.html'), 'utf8');
+const headingRenderHookSource = fs.readFileSync(path.join(themeRoot, 'layouts', '_markup', 'render-heading.html'), 'utf8');
+const codeRenderHookSource = fs.readFileSync(path.join(themeRoot, 'layouts', '_markup', 'render-codeblock.html'), 'utf8');
 const downloadsTemplateSource = fs.readFileSync(path.join(themeRoot, 'layouts', '_default', 'downloads.html'), 'utf8');
 const downloadChecksumSource = fs.readFileSync(path.join(themeRoot, 'layouts', 'partials', 'download-checksum.html'), 'utf8');
 const downloadTableSource = fs.readFileSync(path.join(themeRoot, 'layouts', 'partials', 'download-table.html'), 'utf8');
@@ -37,6 +48,7 @@ const docsContactEmailShortcodeSource = fs.readFileSync(path.join(themeRoot, 'la
 const currentVersionShortcodeSource = fs.readFileSync(path.join(themeRoot, 'layouts', 'shortcodes', 'current-version.html'), 'utf8');
 const previousVersionShortcodeSource = fs.readFileSync(path.join(themeRoot, 'layouts', 'shortcodes', 'previous-version.html'), 'utf8');
 const configurationReferenceShortcodeSource = fs.readFileSync(path.join(themeRoot, 'layouts', 'shortcodes', 'configuration-reference-table.html'), 'utf8');
+const configurationReferenceItemShortcodeSource = fs.readFileSync(path.join(themeRoot, 'layouts', 'shortcodes', 'configuration-reference-item.html'), 'utf8');
 const configurationReferenceTestPageSource = fs.readFileSync(path.join(repositoryRoot, 'content', 'openriak-kv', '3.4.1', 'configuration-reference-table-test.md'), 'utf8');
 const previousVersionPartialSource = fs.readFileSync(path.join(themeRoot, 'layouts', 'partials', 'previous-version.html'), 'utf8');
 const docsSidebarTreeSource = fs.readFileSync(path.join(themeRoot, 'layouts', 'partials', 'docs-sidebar-tree.html'), 'utf8');
@@ -77,6 +89,8 @@ const sidebarSource = fs.readFileSync(path.join(themeRoot, 'layouts', 'partials'
 const headSource = fs.readFileSync(path.join(themeRoot, 'layouts', 'partials', 'head.html'), 'utf8');
 const baseSource = fs.readFileSync(path.join(themeRoot, 'layouts', 'baseof.html'), 'utf8');
 const homepageSource = fs.readFileSync(path.join(repositoryRoot, 'layouts', 'homepage', 'index.html'), 'utf8');
+const hugoConfigSource = fs.readFileSync(path.join(repositoryRoot, 'content', 'hugo.yaml'), 'utf8');
+const feedbackPixelPath = path.join(commonAssets, 'feedback', 'page-vote.svg');
 const faviconPath = path.join(commonAssets, 'images', 'ui', 'favicon.png');
 const projectLogoPath = path.join(commonAssets, 'images', 'branding', 'openriak-mark.png');
 const aliasedOsBrandColors = {
@@ -122,11 +136,37 @@ assert.match(previousVersionShortcodeSource, /partial "previous-version\.html" \
 assert.match(previousVersionPartialSource, /index hugo\.Data\.versions \$productID[\s\S]*\$isEarlier[\s\S]*\$isLaterThanPrevious/, 'previous-version must select the greatest semantic version below the current release');
 assert.match(previousVersionPartialSource, /previous-version has no previous release: product=%s version=%s page=%s/, 'previous-version must stop the build when no earlier release exists');
 assert.match(baseSource, /js\/theme\.js[^"\n]+\?v=/, 'theme picker script must be cache-busted');
-assert.match(baseSource, /js\/docs-runtime\.js[^"\n]+\?v=20260903-share-icons/, 'the documentation runtime must use its current cache key');
-assert.match(headSource, /css\/docs\.css[^"\n]+\?v=20260902-accessibility/, 'documentation styling must use its current cache key');
+assert.match(baseSource, /js\/docs-runtime\.js[^"\n]+\?v=20260903-search-mode-memory/, 'the documentation runtime must use its current cache key');
+assert.match(headSource, /css\/docs\.css[^"\n]+\?v=20260903-config-search-modes/, 'documentation styling must use its current cache key');
 assert.match(configurationReferenceShortcodeSource, /strings\.Split \.Inner "\\n"/, 'configuration reference filters must be one regex per body line so commas remain part of the regex');
 assert.match(configurationReferenceShortcodeSource, /\.Get "area"[\s\S]*in \$setting\.areas \$area/, 'configuration references must support repository-area filtering');
 assert.match(configurationReferenceShortcodeSource, /data-configuration-default-copy[\s\S]*data-configuration-os-icon/, 'configuration references must render copyable defaults and OS-specific indicators');
+assert.match(configurationReferenceItemShortcodeSource, /\.Get "config-name"[\s\S]*where \$reference\.settings "name" \$configName[\s\S]*ne \(len \$matches\) 1[\s\S]*Application name[\s\S]*with values[\s\S]*data-configuration-default-copy[\s\S]*data-configuration-reference-defaults/, 'single configuration items must require one exact setting and render OS-aware, copyable details and datatype values');
+assert.match(configurationReferenceTestPageSource, /configuration-reference-item config-name="mdc\.fullsync_interval\.\$cluster_name"/, 'the configuration reference playground must exercise the single-item shortcode');
+assert.match(configurationReferenceShortcodeSource, /data-configuration-search[\s\S]*data-configuration-search-mode[\s\S]*whole-word[\s\S]*word-prefix[\s\S]*word-suffix[\s\S]*regex[\s\S]*data-configuration-results[\s\S]*aria-sort="ascending"[\s\S]*data-configuration-sort[\s\S]*sort \$matches "name" "asc"/, 'each configuration table must provide independent search modes and config-name sorting with ascending server-rendered order');
+assert.match(runtimeSource, /setupConfigurationReferenceTables[\s\S]*searchableTextNodes[\s\S]*data-configuration-search-highlight[\s\S]*row\.hidden = !matches[\s\S]*localeCompare[\s\S]*aria-sort/, 'configuration table search must filter and highlight matching row text while config-name sorting toggles direction');
+assert.match(runtimeSource, /mode === 'regex' \? input\.value : input\.value\.trim\(\)/, 'regular-expression searches must preserve leading and trailing whitespace while plain searches trim it');
+assert.match(runtimeSource, /openriak-docs-configuration-search-mode[\s\S]*localStorage\.getItem[\s\S]*modeSelect\.value = rememberedSearchMode[\s\S]*localStorage\.setItem[\s\S]*querySelectorAll\('\[data-configuration-search-mode\]'\)/, 'the configuration search mode must be remembered globally and synchronized across tables');
+assert.ok(new RegExp(configurationSearchPattern('worker pool'), 'iu').test('worker-pool'));
+assert.ok(new RegExp(configurationSearchPattern('worker pool'), 'iu').test('worker_pool'));
+assert.ok(new RegExp(configurationSearchPattern('worker pool'), 'iu').test('worker.pool'));
+assert.ok(new RegExp(configurationSearchPattern('worker pool'), 'iu').test('worker pool'));
+assert.ok(new RegExp(configurationSearchPattern('worker-pool'), 'iu').test('worker-pool'));
+assert.ok(!new RegExp(configurationSearchPattern('worker-pool'), 'iu').test('worker_pool'));
+assert.ok(new RegExp(configurationSearchPattern('worker_pool'), 'iu').test('worker_pool'));
+assert.ok(!new RegExp(configurationSearchPattern('worker_pool'), 'iu').test('worker-pool'));
+assert.ok(new RegExp(configurationSearchPattern('worker.pool'), 'iu').test('worker.pool'));
+assert.ok(!new RegExp(configurationSearchPattern('worker.pool'), 'iu').test('worker_pool'));
+const searchMatches = (mode, query, value) => configurationSearchExpression(query, mode).test(value);
+assert.ok(['ring', 'ringing', 'repairing', 'ring_size'].every((value) => searchMatches('contains', 'ring', value)));
+assert.ok(['ring', 'ring_size'].every((value) => searchMatches('whole-word', 'ring', value)));
+assert.ok(['ringing', 'repairing'].every((value) => !searchMatches('whole-word', 'ring', value)));
+assert.ok(['ring', 'ring_size', 'ringing'].every((value) => searchMatches('word-prefix', 'ring', value)));
+assert.ok(!searchMatches('word-prefix', 'ring', 'repairing'));
+assert.ok(['ring', 'ring_size', 'repairing'].every((value) => searchMatches('word-suffix', 'ring', value)));
+assert.ok(!searchMatches('word-suffix', 'ring', 'ringing'));
+assert.ok(['ring', 'bing'].every((value) => searchMatches('regex', '[rb]ing', value)));
+assert.throws(() => configurationSearchExpression('[', 'regex'));
 assert.match(configurationReferenceShortcodeSource, /configuration-reference-arrow[^>]*[^<]*→[\s\S]*data-copy-label="Copy internal name"/, 'configuration names must point directly to their copyable internal names');
 assert.match(configurationReferenceShortcodeSource, /if and \$setting\.internalName \(ne \$setting\.internalName \$setting\.name\)/, 'identical public and internal configuration names must not be repeated');
 assert.doesNotMatch(configurationReferenceShortcodeSource, /<small>Internal<\/small>/, 'configuration names must not include a redundant Internal label');
@@ -137,6 +177,8 @@ assert.match(runtimeSource, /value\.hidden = !selectedDefault\.hasDefault[\s\S]*
 assert.match(configurationReferenceTestPageSource, /^draft: true$/m, 'the configuration reference playground must remain a draft page');
 assert.match(configurationReferenceTestPageSource, /configuration-reference-table area="riak_repl"/, 'the configuration reference playground must exercise area filtering');
 assert.match(configurationReferenceTestPageSource, /\(\?:,legacy\)\?/, 'the configuration reference playground must prove commas are preserved inside a regex');
+assert.match(configurationReferenceTestPageSource, /^related:[\s\S]*page: 'reference\/configuration'[\s\S]*page: 'reference\/faq'/m, 'the configuration playground must exercise version-independent related-page references');
+assert.match(configurationReferenceTestPageSource, /```text \{filename="riak\.conf"\}[\s\S]*```conf \{filename="riak"\}[\s\S]*```erlang \{partialname="ring-size"\}[\s\S]*```advancedconfig \{partialname="advanced-ring-size"\}[\s\S]*```bash \{partialname="start-riak"\}[\s\S]*extension="yml"/, 'the configuration playground must exercise exact stems, partial names, inferred extensions, advanced.config, extension overrides, and shell splitting');
 assert.match(runtimeSource, /applyConfigurationReferences\(\)/, 'OS changes must update rendered configuration defaults');
 assert.match(docsCssSource, /\.configuration-reference-table/, 'configuration reference tables must have dedicated responsive styling');
 assert.match(headSource, /resources\.Get "css\/vendors\/admonitions\.css"[\s\S]*admonition-style-loaded-flag/, 'product HTML must load admonition CSS deterministically before render hooks run');
@@ -197,6 +239,7 @@ assert.match(sharedHeaderSource, /data-theme-picker[\s\S]*class="theme-trigger"[
 assert.match(themeSource, /syncTriggerLabel[\s\S]*Display preferences: \$\{themeLabel\}, \$\{currentContentWidth\}% width, \$\{currentFontSize\}% text/, 'the Display trigger must announce the current theme, width, and text size');
 assert.match(sharedHeaderCss, /\.display-trigger-icon[\s\S]*\.display-trigger-label[\s\S]*@media \(max-width: 760px\)[\s\S]*\.display-trigger-label \{ display: none; \}/, 'the Display trigger must retain its Aa symbol while hiding its text label on mobile');
 assert.match(baseSource, /js\/theme\.js[^"\n]+\?v=20260903-display-menu/, 'documentation pages must load the cache-busted Display preferences runtime');
+assert.match(baseSource, /js\/page-tools\.js[^"\n]+\?v=20260903-heading-copy/, 'documentation pages must load the cache-busted page and code tools runtime');
 assert.match(headSource, /css\/site-header\.css[^"\n]+\?v=20260903-share-icons/, 'documentation pages must load the cache-busted shared-header styling');
 assert.match(sharedHeaderSource, /data-site-section-picker[\s\S]*data-share-control[\s\S]*data-theme-picker/, 'Share must appear between Site sections and Display');
 assert.match(sharedHeaderSource, /class="share-trigger"[^>]*aria-haspopup="menu"[\s\S]*data-share-copy[\s\S]*Copy to clipboard[\s\S]*data-share-native hidden[\s\S]*Share using device…[\s\S]*data-share-target="email"[\s\S]*data-share-target="bluesky"[\s\S]*data-share-target="linkedin"[\s\S]*data-share-target="reddit"[\s\S]*data-share-target="x"/, 'the Share menu must provide utility actions followed by alphabetically ordered Bluesky, LinkedIn, Reddit, and X actions');
@@ -215,6 +258,56 @@ assert.match(runtimeSource, /dataset\.selectedOs = os\.id[\s\S]*searchParams\.de
 assert.doesNotMatch(runtimeSource, /preserveOsOnInternalLinks|const withOs/, 'ordinary product navigation must not retain OS query parameters');
 assert.doesNotMatch(sharedSearchSource, /searchParams\.set\('os'/, 'ordinary search-result links must not retain OS query parameters');
 assert.match(runtimeSource, /if \(targetOs\) window\.localStorage\.setItem\(storageKey, targetOs\.id\)[\s\S]*window\.location\.assign\(candidate\)/, 'version switching must preserve the resolved OS through local storage without exposing it in the URL');
+assert.match(singleTemplateSource, /page-summary\.html[\s\S]*\.Content[\s\S]*related-documentation\.html[\s\S]*page-footer\.html/, 'product pages must render summary, related links, and page tools around their content');
+assert.match(listTemplateSource, /page-summary\.html[\s\S]*\.Content[\s\S]*\.Pages[\s\S]*related-documentation\.html[\s\S]*page-footer\.html/, 'product container pages must render provenance, reading time, related links, feedback, and reporting tools around their content and child list');
+assert.match(pageSummarySource, /\.WordCount[\s\S]*technicalReadingWordsPerMinute[\s\S]*technicalReadingCodeBlockSeconds[\s\S]*findRE "\(\?ms\)\^```[\s\S]*configurationReferenceRowCount[\s\S]*\$readingMinutes[\s\S]*min read/, 'page summaries must calculate technical reading time from prose, fenced code lines, and configuration-reference rows');
+assert.match(pageSummarySource, /\.TableOfContents[\s\S]*<details class="doc-table-of-contents">[\s\S]*<summary>On this page<\/summary>/, 'the top table of contents must be collapsed by default');
+assert.match(pageSummarySource, /Params\.related[\s\S]*related-documentation-heading[\s\S]*replaceRE[\s\S]*TableOfContents/, 'related documentation must be appended to the table of contents when related front matter is present');
+assert.doesNotMatch(pageSummarySource, /<details[^>]+open/, 'the top table of contents must not initially be expanded');
+assert.match(pageVersionStatusSource, /index hugo\.Data\.page_provenance \$context\.id \$context\.version[\s\S]*hugo\.IsServer[\s\S]*\$entry = dict "status" "new"[\s\S]*missing page provenance/, 'local servers must render newly added pages while static builds still fail on missing provenance');
+assert.match(pageVersionStatusSource, /eq \$pageKey "downloads"[\s\S]*\$entry = dict "status" "updated" "since" \$context\.version/, 'dynamically generated Downloads pages must always be updated in their current product version');
+assert.match(downloadsTemplateSource, /<h1>\{\{ \.Title \}\}<\/h1>[\s\S]*partial "page-summary\.html" \.[\s\S]*related-documentation\.html[\s\S]*page-footer\.html/, 'Downloads pages must render their version provenance summary, related links, feedback, and reporting tools');
+assert.match(relatedDocumentationSource, /index \. "page"[\s\S]*printf "\/%s\/%s\/%s" \$context\.id \$context\.version \$reference[\s\S]*site\.GetPage[\s\S]*related page/, 'related documentation must resolve version-independent front matter references in the current product release');
+assert.match(pageFooterSource, /documentationIssuesURL[\s\S]*documentationFeedbackTrackingPath[\s\S]*data-copy-page-markdown[\s\S]*data-feedback-vote="yes"[\s\S]*data-feedback-vote="no"/, 'page footers must expose configurable reporting, feedback, and Markdown copying');
+assert.match(hugoConfigSource, /documentationIssuesURL: 'https:\/\/github\.com\/TI-Tokyo\/openriak-docs\/issues'[\s\S]*documentationFeedbackTrackingPath: 'feedback\/page-vote\.svg'/, 'documentation issue and static feedback destinations must be configurable');
+assert.match(hugoConfigSource, /technicalReadingWordsPerMinute: 150[\s\S]*technicalReadingCodeBlockSeconds: 15[\s\S]*technicalReadingCodeLineSeconds: 1[\s\S]*technicalReadingReferenceRowSeconds: 4/, 'technical reading-time prose speed and code/table weights must be configurable');
+assert.ok(fs.existsSync(feedbackPixelPath), 'the static feedback tracking resource must exist for access-log collection');
+assert.match(pageToolsSource, /data-feedback-vote[\s\S]*14 \* 24 \* 60 \* 60 \* 1000[\s\S]*expiresAt/, 'page votes must be remembered locally for two weeks and remain changeable');
+assert.match(pageToolsSource, /endpoint\.searchParams\.set\('vote'[\s\S]*endpoint\.searchParams\.set\('page'[\s\S]*fetch\(endpoint,[^}]*cache: 'no-store'[^}]*keepalive: true/, 'feedback must be recorded through cache-bypassed requests that appear in static-server access logs');
+assert.ok(pageToolsSource.includes("if (/\\/issues\\/?$/.test(url.pathname))"), 'a configured GitHub issues page must resolve to its new-issue form');
+assert.match(pageToolsSource, /Documentation problem[\s\S]*Operating system:[\s\S]*What is missing or incorrect\?/, 'problem reports must include the suggested page context');
+assert.match(pageFooterSource, /\.RawContent[\s\S]*data-page-markdown-source/, 'copying a page as Markdown must use its authored Markdown source');
+assert.match(pageToolsSource, /data-copy-page-markdown[\s\S]*writeClipboard\(markdownSource\)/, 'the page tools runtime must copy the embedded Markdown source');
+assert.match(headingRenderHookSource, /id="\{\{ \.Anchor[\s\S]*class="heading-permalink"[\s\S]*href="#\{\{ \.Anchor[\s\S]*aria-label="Copy link to this section"/, 'rendered headings must expose accessible copy-link controls');
+assert.match(pageToolsSource, /heading-permalink[\s\S]*preventDefault\(\)[\s\S]*writeClipboard\(new URL\(link\.getAttribute\('href'\), window\.location\.href\)\.href\)/, 'heading permalink activation must copy the absolute section URL without navigating');
+assert.match(codeRenderHookSource, /data-code-lines[\s\S]*data-code-wrap[\s\S]*data-code-shell-wrap[\s\S]*data-code-download[\s\S]*data-code-copy[\s\S]*transform\.Highlight[\s\S]*data-code-source/, 'code blocks must provide copy, line-number, ordinary-wrap, shell-split, download, highlighting, and raw-source controls');
+assert.match(codeRenderHookSource, /data-code-lines[\s\S]*data-code-wrap[\s\S]*data-code-download[\s\S]*data-code-copy/, 'Copy must be the final code-block toolbar action');
+assert.match(codeRenderHookSource, /data-code-lines[^>]+aria-label="Line numbers"[\s\S]*data-code-wrap[^>]+aria-label="Wrap"[\s\S]*data-code-download[^>]+aria-label="Download"/, 'icon-only code controls must retain explicit accessible names');
+assert.match(codeRenderHookSource, /filename[\s\S]*partialname[\s\S]*extension[\s\S]*invalidPortableChars[\s\S]*reservedPortableName[\s\S]*errorf "Invalid portable code-download/, 'author-supplied filename fields must fail the Hugo build when they are not portable across Linux and Windows');
+assert.match(codeRenderHookSource, /\$declaredLanguage := \.Type[\s\S]*\$attributeExtension := index \.Attributes "extension"[\s\S]*\$legacyFilenameFence := and[\s\S]*findRE `\[\/\\\\\]` \$declaredLanguage[\s\S]*\$language := cond \$legacyFilenameFence "text"[\s\S]*not \$legacyFilenameFence/, 'path-like legacy filename fences must render as text without being mistaken for explicit extension overrides');
+assert.match(codeRenderHookSource, /"advancedconfig" "advanced\.config"[\s\S]*\$highlightLanguage := cond \(eq \(lower \$language\) "advancedconfig"\) "erlang"[\s\S]*transform\.Highlight \.Inner \$highlightLanguage "noClasses=false"/, 'advancedconfig must use Erlang highlighting and the .advanced.config extension');
+assert.match(codeRenderHookSource, /data-code-product="\{\{ \$productName \}\}"[\s\S]*data-code-version="\{\{ \$productVersion \}\}"[\s\S]*data-code-page="\{\{ \$pageName \}\}"[\s\S]*data-code-extension="\{\{ \$extension \}\}"/, 'code blocks must expose sanitised page context and the inferred or explicit extension for downloads');
+assert.match(pageToolsSource, /data-code-block[\s\S]*activeCodeSource[\s\S]*writeClipboard\(activeCodeSource\(\)\)[\s\S]*applyOption[\s\S]*has-line-numbers[\s\S]*is-wrapped[\s\S]*is-shell-wrapped/, 'code controls must independently apply line numbers, text wrapping, and shell splitting while copying the active source');
+assert.match(pageToolsSource, /openriak-docs-code-options-v1[\s\S]*codeControllersByLanguage[\s\S]*syncCodeOption[\s\S]*localStorage\.setItem/, 'code display options must be shared by language and persisted across pages');
+assert.match(pageToolsSource, /preserveCodeBlockPosition[\s\S]*getBoundingClientRect\(\)\.top[\s\S]*scrollBy/, 'changing a shared code option must keep the initiating block anchored in the viewport');
+assert.match(pageToolsSource, /pagehide[\s\S]*openriak-docs-code-anchor-v1|openriak-docs-code-anchor-v1[\s\S]*pagehide[\s\S]*pageshow/, 'code-block viewport anchoring must survive page refreshes');
+assert.doesNotMatch(pageToolsSource, /wrapButton[\s\S]{0,500}classList\.remove\('is-shell-wrapped'\)|shellWrapButton[\s\S]{0,500}classList\.remove\('is-wrapped'\)/, 'ordinary wrapping and shell splitting must not turn each other off');
+assert.match(pageToolsSource, /shellTokens[\s\S]*splitShellCommands[\s\S]*\^--\?\[A-Za-z\][\s\S]*groups\.forEach/, 'shell splitting must tokenise quoted values and split at option boundaries');
+assert.match(pageToolsSource, /if \(!line\.trim\(\)\)[\s\S]*lines\.push\(line\)/, 'shell splitting must preserve empty and whitespace-only source lines');
+assert.match(pageToolsSource, /lineNumbers: lines\.map\(\(_, index\) => String\(index \+ 1\)\)/, 'each generated shell continuation line must receive its own sequential line number');
+assert.match(pageToolsSource, /shellCommentIndex[\s\S]*highlightShellLine[\s\S]*'s1'[\s\S]*'s2'[\s\S]*'nv'[\s\S]*'o'[\s\S]*'nb'[\s\S]*c1 doc-code-shell-comment/, 'split Bash commands must apply Chroma-compatible highlighting to strings, variables, operators, commands, and comments');
+assert.match(codeRenderHookSource, /class="doc-code-shell-view chroma"/, 'the transformed Bash view must inherit the standard light and dark Chroma token palette');
+assert.match(pageToolsSource, /doc-code-line-content[\s\S]*while \(line\.firstChild\) content\.append\(line\.firstChild\)/, 'each numbered line must keep its complete highlighted content in one independently wrapping flex item');
+assert.match(pageToolsSource, /span\.textContent = line\.length \? line : '\\u00a0'/, 'empty shell lines must retain visible height in the split-command view');
+assert.match(pageToolsSource, /--code-line-number-digits[\s\S]*setLineNumberWidth/, 'line-number gutters must resize for the active original or transformed view');
+assert.match(pageToolsSource, /block\.dataset\.codeFilename \|\| generatedStem[\s\S]*block\.dataset\.codeExtension[\s\S]*activeCodeSource[\s\S]*new Blob\(\[downloadSource\]/, 'downloads must apply stems and extensions and use transformed Bash when shell splitting is active');
+assert.match(docsCssSource, /is-wrapped \.doc-code-highlight \.doc-code-line[\s\S]*is-wrapped \.doc-code-line-content[\s\S]*overflow-wrap: break-word[\s\S]*is-wrapped \.doc-code-shell-view \.doc-code-line[\s\S]*has-line-numbers \.doc-code-line::before[\s\S]*content: attr\(data-line-number\)/, 'line-number gutters must remain separate while complete source lines wrap at word boundaries in either code view');
+assert.match(docsCssSource, /\.doc-code-shell-comment[\s\S]*font-style: italic/, 'split Bash comments must retain italic comment styling');
+assert.match(docsCssSource, /@media \(max-width: 760px\)[\s\S]*\.doc-code-actions button > span \{[^}]*position: absolute[^}]*clip: rect\(0 0 0 0\)/, 'mobile code controls must visually collapse to icons while retaining accessible labels');
+assert.match(docsCssSource, /button\[aria-pressed="true"\][\s\S]*button\[aria-checked="true"\]/, 'line numbers must use the same visible selected state as the other code toggles');
+assert.match(docsCssSource, /flex: 0 0 calc\(var\(--code-line-number-digits, 1\) \* 1ch \+ \.55rem\)[\s\S]*white-space: nowrap/, 'line-number gutters must use digit-aware widths with non-wrapping numbers and compact padding');
+assert.match(docsCssSource, /\.doc-code-block \.highlight, \.doc-code-block \.chroma \{ background: transparent; color: var\(--ink\); \}[\s\S]*:root\[data-theme="dark"\] \.doc-code-block \.highlight/, 'syntax highlighting must use explicit light and dark theme palettes without an embedded dark background');
+assert.match(hugoConfigSource, /render-heading\.html'[\s\S]*render-codeblock\.html'/, 'the product build must mount heading and code-block render hooks');
 assert.ok(!sharedHeaderSource.includes('data-theme-select') && !sharedHeaderSource.includes('<select'), 'Theme picker must not use a native select');
 assert.match(sharedHeaderSource, /theme-system\.svg[\s\S]*theme-dark\.svg[\s\S]*theme-light\.svg/, 'Theme picker must provide icons for default, dark, and light');
 assert.match(sharedHeaderSource, /showContentWidth[\s\S]*data-content-width-value="50"[\s\S]*data-content-width-value="75"[\s\S]*data-content-width-value="90"[\s\S]*data-content-width-value="98"/, 'product documentation must offer all supported content widths in the appearance picker');

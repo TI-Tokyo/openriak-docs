@@ -162,6 +162,11 @@ assert.ok(Object.values(platformLibDir.defaults).some((value) => value.osSpecifi
 assert.ok(Object.values(platformLibDir.defaults).some((value) => !value.osSpecific));
 assert.ok(configurationReference.settings.some((setting) => setting.areas.includes('riak_repl')));
 assert.ok(configurationReference.settings.some((setting) => setting.datatype.constraints.length > 0));
+assert.ok(configurationReference.settings.every((setting) =>
+  setting.datatype.constraints.every((constraint) => typeof constraint === 'string')
+), 'configuration-reference constraints must be renderable strings');
+const asyncThreadStackSize = configurationReference.settings.find((setting) => setting.name === 'erlang.async_threads.stack_size');
+assert.ok(asyncThreadStackSize.datatype.constraints.some((constraint) => constraint.startsWith('Calculated at runtime: `')));
 assert.ok(configurationReference.settings.some((setting) => Object.values(setting.defaults).some((value) => value.osSpecific)));
 assert.ok(configurationReference.settings.every((setting) => Object.values(setting.defaults).every((value) =>
   !/%\{[^}]+\}|\{\{[^}]+\}\}|\$\([^)]+\)/.test(JSON.stringify(value.value))

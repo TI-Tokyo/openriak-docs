@@ -8,6 +8,7 @@ const {
   compareSemver,
   createVersionMounts,
   generateConfig,
+  generatePageProvenance,
   parseArguments,
   productSources
 } = require('./generate-version-mounts.js');
@@ -34,6 +35,16 @@ try {
   makeVersions('openriak-cs', []);
   makeVersions('riak-ts', ['1.5.2-new-release', '3.0.0-new-release']);
   makeVersions('openriak-ts', []);
+
+  const writePage = (relative, body) => {
+    const filename = path.join(fixture, relative);
+    fs.mkdirSync(path.dirname(filename), { recursive: true });
+    fs.writeFileSync(filename, `---\ntitle: Test\n---\n\n${body}\n`, 'utf8');
+  };
+  writePage('openriak-kv/3.4.0-new-release/stable.md', 'Unchanged body.');
+  writePage('openriak-kv/3.4.0-new-release/changed.md', 'Original body.');
+  writePage('openriak-kv/3.4.1/changed.md', 'Updated body.');
+  writePage('openriak-kv/3.4.1/new-page.md', 'New body.');
 
   const mounts = createVersionMounts(fixture, productSources);
   const sourcesFor = (target) => mounts.filter((mount) => mount.target === target).map((mount) => mount.source);
@@ -117,8 +128,9 @@ try {
   const baseConfig = path.join(fixture, 'hugo.yaml');
   const output = path.join(fixture, 'generated.yaml');
   const latestRedirectRoot = path.join(fixture, 'latest-redirects');
+  const pageProvenanceRoot = path.join(fixture, 'page-provenance');
   fs.writeFileSync(baseConfig, `module:\n  mounts:\n    - {source: '../tools/generated/openriak-kv/data/versions', target: 'data/versions/openriak-kv'}\n    - {source: '../tools/generated/openriak-kv/data/configuration-reference', target: 'data/configuration-reference/openriak-kv'}\n    - {source: '../tools/generated/openriak-cs/data/versions', target: 'data/versions/openriak-cs'}\n    - {source: '../tools/generated/openriak-ts/data/versions', target: 'data/versions/openriak-ts'}\n    # GENERATED_VERSION_MOUNTS\n`, 'utf8');
-  generateConfig({ contentRoot: fixture, baseConfig, output, latestRedirectRoot, products: productSources });
+  generateConfig({ contentRoot: fixture, baseConfig, output, latestRedirectRoot, pageProvenanceRoot, products: productSources });
   const generated = fs.readFileSync(output, 'utf8');
   assert.match(generated, /source: 'openriak-kv\/3\.4\.0-new-release', target: 'content\/openriak-kv\/3\.4\.2'/);
   assert.doesNotMatch(generated, /target: 'content\/openriak-kv\/[^']*-new-release'/);
@@ -129,6 +141,17 @@ try {
   const legacySectionRoot = fs.readFileSync(path.join(latestRedirectRoot, 'riak-kv-section', '_index.md'), 'utf8');
   assert.match(legacySectionRoot, /outputs: \[\]/);
   assert.match(legacySectionRoot, /render: never/);
+  const provenance341 = JSON.parse(fs.readFileSync(path.join(pageProvenanceRoot, 'openriak-kv', '3.4.1.json'), 'utf8'));
+  const provenance342 = JSON.parse(fs.readFileSync(path.join(pageProvenanceRoot, 'openriak-kv', '3.4.2.json'), 'utf8'));
+  assert.deepEqual(provenance341.stable, { status: 'inherited', since: '3.4.0' });
+  assert.deepEqual(provenance341.changed, { status: 'updated', since: '3.4.1' });
+  assert.deepEqual(provenance341['new-page'], { status: 'new', since: '3.4.1' });
+  assert.deepEqual(provenance342.changed, { status: 'inherited', since: '3.4.1' });
+  assert.deepEqual(provenance342['new-page'], { status: 'inherited', since: '3.4.1' });
+  const unchangedProvenanceFile = path.join(pageProvenanceRoot, 'openriak-kv', '3.4.1.json');
+  const unchangedProvenanceMtime = fs.statSync(unchangedProvenanceFile).mtimeMs;
+  generatePageProvenance(fixture, productSources, pageProvenanceRoot);
+  assert.equal(fs.statSync(unchangedProvenanceFile).mtimeMs, unchangedProvenanceMtime, 'unchanged provenance files must not be rewritten');
 
   const filteredOutput = path.join(fixture, 'development.yaml');
   const filteredDataRoot = path.join(fixture, 'development-data', 'openriak-kv', 'versions');
@@ -138,6 +161,7 @@ try {
     baseConfig,
     output: filteredOutput,
     latestRedirectRoot,
+    pageProvenanceRoot,
     products: productSources,
     includeVersions: { 'riak-kv': ['2.1.1'] },
     versionDataRoots: {
@@ -156,6 +180,7 @@ try {
     baseConfig,
     output: latestOnlyOutput,
     latestRedirectRoot,
+    pageProvenanceRoot,
     products: productSources,
     includeLatest: ['riak-cs', 'riak-ts']
   });

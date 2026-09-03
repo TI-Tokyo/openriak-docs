@@ -1,0 +1,50 @@
+{{- $provenance := partial "page-version-status.html" . -}}
+{{- $wordCount := .WordCount -}}
+{{- $wordsPerMinute := int (site.Params.technicalReadingWordsPerMinute | default 150) -}}
+{{- $codeBlockSeconds := int (site.Params.technicalReadingCodeBlockSeconds | default 15) -}}
+{{- $codeLineSeconds := int (site.Params.technicalReadingCodeLineSeconds | default 1) -}}
+{{- $referenceRowSeconds := int (site.Params.technicalReadingReferenceRowSeconds | default 4) -}}
+{{- $readingSeconds := div (add (mul $wordCount 60) (sub $wordsPerMinute 1)) $wordsPerMinute -}}
+{{- range $block := findRE "(?ms)^```[^\\n]*\\n.*?^```\\s*$" .RawContent -}}
+  {{- $lines := sub (len (strings.Split (strings.TrimSpace $block) "\n")) 2 -}}
+  {{- $readingSeconds = add $readingSeconds (add $codeBlockSeconds (mul (cond (gt $lines 0) $lines 1) $codeLineSeconds)) -}}
+{{- end -}}
+{{- range $block := findRE `(?ms)^~~~[^\n]*\n.*?^~~~\s*$` .RawContent -}}
+  {{- $lines := sub (len (strings.Split (strings.TrimSpace $block) "\n")) 2 -}}
+  {{- $readingSeconds = add $readingSeconds (add $codeBlockSeconds (mul (cond (gt $lines 0) $lines 1) $codeLineSeconds)) -}}
+{{- end -}}
+{{- $referenceRows := int (.Store.Get "configurationReferenceRowCount" | default 0) -}}
+{{- $readingSeconds = add $readingSeconds (mul $referenceRows $referenceRowSeconds) -}}
+{{- $readingMinutes := div (add $readingSeconds 59) 60 -}}
+{{- if lt $readingMinutes 1 }}{{ $readingMinutes = 1 }}{{ end -}}
+<div class="doc-summary" aria-label="Page information">
+  <span class="doc-version-status doc-version-status--{{ $provenance.status }}">
+    {{- if eq $provenance.status "new" -}}
+      New for this version
+    {{- else if eq $provenance.status "updated" -}}
+      Updated for this version
+    {{- else -}}
+      Last changed in version {{ $provenance.since }}
+    {{- end -}}
+  </span>
+  <span class="doc-reading-time">
+    <svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 2"/></svg>
+    {{ $readingMinutes }} min read
+  </span>
+</div>
+{{- $toc := .TableOfContents -}}
+{{- $hasRelatedDocumentation := gt (len (.Params.related | default (slice))) 0 -}}
+{{- if $hasRelatedDocumentation -}}
+  {{- $relatedItem := `<li><a href="#related-documentation-heading">Related documentation</a></li>` -}}
+  {{- if in $toc "<li>" -}}
+    {{- $toc = replaceRE `(?s)(</ul>\s*</nav>\s*)$` (printf "%s$1" $relatedItem) $toc -}}
+  {{- else -}}
+    {{- $toc = printf `<nav id="TableOfContents"><ul>%s</ul></nav>` $relatedItem -}}
+  {{- end -}}
+{{- end -}}
+{{- if or (in $toc "<li>") $hasRelatedDocumentation }}
+  <details class="doc-table-of-contents">
+    <summary>On this page</summary>
+    <div class="doc-table-of-contents-body">{{ $toc | safeHTML }}</div>
+  </details>
+{{- end }}

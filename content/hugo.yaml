@@ -30,6 +30,12 @@ outputs:
 params:
   description: 'Documentation and technical archives for the OpenRiak product family.'
   securityContactEmail: 'security@riak.info'
+  documentationIssuesURL: 'https://github.com/TI-Tokyo/openriak-docs/issues'
+  documentationFeedbackTrackingPath: 'feedback/page-vote.svg'
+  technicalReadingWordsPerMinute: 150
+  technicalReadingCodeBlockSeconds: 15
+  technicalReadingCodeLineSeconds: 1
+  technicalReadingReferenceRowSeconds: 4
 
 module:
   mounts:
@@ -52,6 +58,7 @@ module:
     - {source: '../tools/generated/openriak-kv/data/configuration-reference', target: 'data/configuration-reference/openriak-kv'}
     - {source: '../tools/generated/openriak-cs/data/versions', target: 'data/versions/openriak-cs'}
     - {source: '../tools/generated/openriak-ts/data/versions', target: 'data/versions/openriak-ts'}
+    - {source: '../tools/generated/page-provenance', target: 'data/page_provenance'}
     - {source: '../layouts/common-docs/data', target: 'data'}
 
     # Homepage, Community, and product template families.
@@ -66,6 +73,8 @@ module:
     - {source: '../layouts/common-docs/layouts/partials', target: 'layouts/_partials'}
     - {source: '../layouts/common-docs/layouts/site-section', target: 'layouts/site-section'}
     - {source: '../layouts/docs-theme/layouts/shortcodes', target: 'layouts/_shortcodes'}
+    - {source: '../layouts/docs-theme/layouts/_markup/render-heading.html', target: 'layouts/_markup/render-heading.html'}
+    - {source: '../layouts/docs-theme/layouts/_markup/render-codeblock.html', target: 'layouts/_markup/render-codeblock.html'}
 
     # Vendored GitHub-style admonitions. Explicit mounts are required because
     # this project assembles its component roots rather than loading a theme.

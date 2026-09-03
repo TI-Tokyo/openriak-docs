@@ -84,20 +84,20 @@ To turn on FullSync replication, a scope of operation (`ttaaefs_scope`) is neede
 
 To FullSync replicate all buckets, use the `ttaaefs_scope` of `any`. For example, to FullSync replicate all buckets, set this value:
 
-```
+```conf {partialname="riak-conf-ttaaefs-scope"}
 ttaaefs_scope = all
 ```
 
 To FullSync replicate using a bucket name filter, use the `ttaaefs_scope` of `bucket` and the `ttaaefs_bucketfilter_name` setting. For example, to only FullSync replicate the bucket "my-bucket-name", set these values:
 
-```
+```conf {partialname="riak-conf-ttaaefs-scope-and-bucketfilter-name"}
 ttaaefs_scope = bucket
 ttaaefs_bucketfilter_name = my-bucket-name
 ```
 
 To FullSync replicate all buckets using a bucket type filter, use the `ttaaefs_scope` of `type` and the `ttaaefs_bucketfilter_type` setting. For example, to only FullSync replicate all buckets of bucket type "my-bucket-type", set these values:
 
-```
+```conf {partialname="riak-conf-ttaaefs-scope-and-bucketfilter-type"}
 ttaaefs_scope = type
 ttaaefs_bucketfilter_type = my-bucket-type
 ```
@@ -108,7 +108,7 @@ FullSync will send all changes from the sink cluster to the queue configured usi
 
 For example, to set the FullSync queue name to the default of `q1_ttaaefs`, set `ttaaefs_queuename` like this:
 
-```
+```conf {partialname="riak-conf-ttaaefs-queuename"}
 ttaaefs_queuename = q1_ttaaefs
 ```
 
@@ -301,12 +301,6 @@ riak repl pause-fullsync
 v2 Multi-Datacenter Replication is deprecated and will be removed in a future version. Please use [v3]({{< product-version-root >}}how-to/configure/replication/configure-fullsync/) instead.
 
 #### Scheduling Fullsync Operation
-
-```bash
-#!/bin/sh
-
-```bash
-#!/bin/sh
 
 ### Scheduling Fullsync
 

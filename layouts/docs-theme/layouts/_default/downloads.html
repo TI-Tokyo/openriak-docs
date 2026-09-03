@@ -21,6 +21,7 @@
   {{- $familyOrder := slice "alpine" "amazon-linux" "centos" "debian" "fedora" "oracle-linux" "raspbian" "rhel" "rocky" "suse" "sles" "ubuntu" -}}
   <article class="doc-article"{{ if $isModern }} data-modern-downloads{{ else }} data-legacy-downloads{{ end }}>
     <h1>{{ .Title }}</h1>
+    {{ partial "page-summary.html" . }}
     {{- if $isModern }}
       <nav class="download-os-index" aria-label="Download operating systems">
         <h2>Operating systems</h2>
@@ -106,5 +107,7 @@
         {{- end -}}
       {{- end -}}
     {{- end -}}
+    {{ partial "related-documentation.html" . }}
+    {{ partial "page-footer.html" . }}
   </article>
 {{ end }}

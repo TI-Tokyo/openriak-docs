@@ -23,6 +23,13 @@ this to select one `riak-kv` release. `--include-latest SOURCE` similarly limits
 a source family to its highest semantic version; development uses it for
 `riak-cs` and `riak-ts`.
 
+Local `hugo server` runs also start `scripts/watch-page-provenance.js`. It
+regenerates page-version provenance after Markdown pages are added, removed,
+renamed, or edited, so new pages do not require restarting the Docker stack.
+During the short regeneration window, a previously unseen page is treated as
+new for its current version. Static builds still fail if generated provenance is
+missing.
+
 ## Importing Hugo 0.18 content
 
 `scripts/import_hugo_018.py` converts an old Hugo content directory into the

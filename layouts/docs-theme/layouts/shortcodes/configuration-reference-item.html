@@ -1,0 +1,76 @@
+{{- $context := partial "product-context.html" .Page -}}
+{{- $configurationData := index hugo.Data "configuration-reference" -}}
+{{- $productData := index $configurationData $context.id -}}
+{{- $reference := index $productData $context.version -}}
+{{- if not $reference -}}
+  {{- errorf "configuration-reference-item requires configuration metadata for %s %s on %s" $context.id $context.version .Page.File.Path -}}
+{{- end -}}
+{{- $configName := .Get "config-name" | default "" | strings.TrimSpace -}}
+{{- if not $configName -}}
+  {{- errorf "configuration-reference-item requires config-name on %s" .Page.File.Path -}}
+{{- end -}}
+{{- $matches := where $reference.settings "name" $configName -}}
+{{- if ne (len $matches) 1 -}}
+  {{- errorf "configuration-reference-item config-name %q matched %d settings on %s" $configName (len $matches) .Page.File.Path -}}
+{{- end -}}
+{{- $setting := index $matches 0 -}}
+{{- .Page.Store.Add "configurationReferenceRowCount" 1 -}}
+{{- $versionData := index $context.versions $context.version -}}
+{{- $defaultOs := $versionData.defaultOs -}}
+{{- $selectedOperatingSystems := where $versionData.operatingSystems "id" $defaultOs -}}
+{{- $selectedOperatingSystem := index $selectedOperatingSystems 0 -}}
+{{- $default := index $setting.defaults $defaultOs | default dict -}}
+{{- $applicationName := $setting.internalName | default $setting.name -}}
+<div class="configuration-reference-item-wrap" data-configuration-reference>
+  <div class="configuration-reference-item-scroll">
+    <table class="configuration-reference-item">
+      <caption class="sr-only">Configuration details for {{ $setting.name }}</caption>
+      <tbody data-configuration-key="{{ $setting.name }}">
+        <tr>
+          <th scope="row">Config name</th>
+          <td><div class="configuration-copyable"><code>{{ $setting.name }}</code><button class="download-copy" type="button" data-copy-value="{{ $setting.name }}" data-copy-label="Copy config name" aria-label="Copy config name" title="Copy config name" aria-live="polite">{{ partial "download-icon-copy.html" . }}</button></div></td>
+        </tr>
+        <tr>
+          <th scope="row">Application name</th>
+          <td><div class="configuration-copyable"><code>{{ $applicationName }}</code><button class="download-copy" type="button" data-copy-value="{{ $applicationName }}" data-copy-label="Copy application name" aria-label="Copy application name" title="Copy application name" aria-live="polite">{{ partial "download-icon-copy.html" . }}</button></div></td>
+        </tr>
+        <tr>
+          <th scope="row">Description</th>
+          <td class="configuration-reference-description">{{ with $setting.description }}{{ . | markdownify }}{{ else }}<span class="configuration-reference-empty">No description available.</span>{{ end }}</td>
+        </tr>
+        <tr>
+          <th scope="row">Datatype</th>
+          <td class="configuration-reference-item-datatype">
+            <strong>{{ $setting.datatype.label }}</strong>{{ with $setting.datatype.options }}, with values
+              <ul>{{ range $value := . }}<li><span class="configuration-reference-option"><code>{{ $value }}</code><button class="download-copy" type="button" data-copy-value="{{ $value }}" data-copy-label="Copy value {{ $value }}" aria-label="Copy value {{ $value }}" title="Copy value {{ $value }}" aria-live="polite">{{ partial "download-icon-copy.html" . }}</button></span></li>{{ end }}</ul>
+            {{- end }}
+            {{- with $setting.datatype.units }}<span class="configuration-reference-item-detail">Units: {{ delimit . ", " }}</span>{{ end -}}
+            {{- range $setting.datatype.constraints -}}
+              {{- $constraint := . -}}
+              {{- if reflect.IsMap $constraint -}}
+                {{- with index $constraint "$erlang_expression" -}}
+                  {{- $constraint = printf "Calculated at runtime: `%s`" . -}}
+                {{- else -}}
+                  {{- $constraint = $constraint | jsonify -}}
+                {{- end -}}
+              {{- end -}}
+              <span class="configuration-reference-item-detail">{{ $constraint | markdownify }}</span>
+            {{- end -}}
+          </td>
+        </tr>
+        <tr>
+          <th scope="row">Default value</th>
+          <td class="configuration-reference-default">
+            <div class="configuration-copyable">
+              <code data-configuration-default-value{{ if not $default.hasDefault }} hidden{{ end }}>{{ $default.value }}</code>
+              <span class="configuration-reference-no-default" data-configuration-default-empty{{ if $default.hasDefault }} hidden{{ end }}>No default value.</span>
+              <button class="download-copy" type="button" data-configuration-default-copy data-copy-value="{{ $default.value }}" data-copy-label="Copy default value" aria-label="Copy default value" title="Copy default value" aria-live="polite"{{ if not $default.hasDefault }} hidden{{ end }}>{{ partial "download-icon-copy.html" . }}</button>
+            </div>
+            <span class="configuration-reference-os" data-configuration-os-specific{{ if not $default.osSpecific }} hidden{{ end }}>on <img data-configuration-os-icon src="{{ $selectedOperatingSystem.logo | relURL }}" alt="{{ $selectedOperatingSystem.displayName }}" title="{{ $selectedOperatingSystem.displayName }}"></span>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+  <script type="application/json" data-configuration-reference-defaults>{{ dict $setting.name $setting.defaults | jsonify | safeJS }}</script>
+</div>

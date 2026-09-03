@@ -204,7 +204,21 @@
     return actions;
   };
 
-  const api = { parseSemVer, compareSemVer, resolveBrand, resolveOs, resolveValue, buildVersionCandidates, resolveAssetUrl, configurationDefaultForOs };
+  const configurationSearchPattern = (value) => String(value)
+    .split(/\s+/u)
+    .map((part) => part.replace(/[.*+?^${}()|[\]\\]/g, '\\$&'))
+    .join('[\\s._-]+');
+
+  const configurationSearchExpression = (value, mode = 'contains', flags = 'iu') => {
+    const pattern = mode === 'regex' ? String(value) : configurationSearchPattern(value);
+    const wordCharacter = '[^\\s._-]';
+    if (mode === 'whole-word') return new RegExp(`(?<!${wordCharacter})${pattern}(?!${wordCharacter})`, flags);
+    if (mode === 'word-prefix') return new RegExp(`(?<!${wordCharacter})${pattern}`, flags);
+    if (mode === 'word-suffix') return new RegExp(`${pattern}(?!${wordCharacter})`, flags);
+    return new RegExp(pattern, flags);
+  };
+
+  const api = { parseSemVer, compareSemVer, resolveBrand, resolveOs, resolveValue, buildVersionCandidates, resolveAssetUrl, configurationDefaultForOs, configurationSearchPattern, configurationSearchExpression };
   if (typeof module !== 'undefined' && module.exports) module.exports = api;
   if (typeof window !== 'undefined') window.OpenRiakDocs = api;
   if (typeof document === 'undefined') return;
@@ -274,6 +288,120 @@
           osIcon.title = selectedOs.displayName;
         }
       });
+      reference.refreshConfigurationTable?.();
+    });
+  };
+
+  const setupConfigurationReferenceTables = () => {
+    const searchModeStorageKey = 'openriak-docs-configuration-search-mode';
+    const searchModes = new Set(['contains', 'whole-word', 'word-prefix', 'word-suffix', 'regex']);
+    const storedSearchMode = window.localStorage.getItem(searchModeStorageKey);
+    const rememberedSearchMode = searchModes.has(storedSearchMode) ? storedSearchMode : 'contains';
+    const searchableTextNodes = (row) => {
+      const nodes = [];
+      const walker = document.createTreeWalker(row, NodeFilter.SHOW_TEXT);
+      while (walker.nextNode()) {
+        const node = walker.currentNode;
+        const parent = node.parentElement;
+        const excluded = parent?.closest('button, script, style, [hidden], .sr-only');
+        if (!node.nodeValue || !parent || (excluded && excluded !== row)) continue;
+        nodes.push(node);
+      }
+      return nodes;
+    };
+    const clearHighlights = (reference) => {
+      reference.querySelectorAll('mark[data-configuration-search-highlight]').forEach((mark) => {
+        const parent = mark.parentNode;
+        mark.replaceWith(document.createTextNode(mark.textContent));
+        parent?.normalize();
+      });
+    };
+    const highlightMatches = (row, query, mode) => {
+      searchableTextNodes(row).forEach((node) => {
+        const text = node.nodeValue;
+        const expression = configurationSearchExpression(query, mode, 'giu');
+        let start = 0;
+        let match = expression.exec(text);
+        if (!match) return;
+        const fragment = document.createDocumentFragment();
+        while (match) {
+          if (!match[0].length) return;
+          fragment.append(document.createTextNode(text.slice(start, match.index)));
+          const mark = document.createElement('mark');
+          mark.dataset.configurationSearchHighlight = '';
+          mark.textContent = match[0];
+          fragment.append(mark);
+          start = expression.lastIndex;
+          match = expression.exec(text);
+        }
+        fragment.append(document.createTextNode(text.slice(start)));
+        node.replaceWith(fragment);
+      });
+    };
+    document.querySelectorAll('[data-configuration-reference]').forEach((reference) => {
+      const input = reference.querySelector('[data-configuration-search]');
+      const modeSelect = reference.querySelector('[data-configuration-search-mode]');
+      const result = reference.querySelector('[data-configuration-results]');
+      const sortButton = reference.querySelector('[data-configuration-sort]');
+      const sortHeading = reference.querySelector('[data-configuration-sort-heading]');
+      const body = reference.querySelector('.configuration-reference-table tbody');
+      if (!input || !modeSelect || !result || !sortButton || !sortHeading || !body) return;
+      modeSelect.value = rememberedSearchMode;
+      const rows = () => [...body.querySelectorAll('[data-configuration-key]')];
+      const refresh = () => {
+        clearHighlights(reference);
+        const mode = modeSelect.value;
+        const query = mode === 'regex' ? input.value : input.value.trim();
+        let queryExpression = null;
+        try {
+          queryExpression = query ? configurationSearchExpression(query, mode) : null;
+          input.removeAttribute('aria-invalid');
+          result.removeAttribute('data-configuration-search-error');
+        } catch (error) {
+          input.setAttribute('aria-invalid', 'true');
+          result.dataset.configurationSearchError = '';
+          result.value = 'Invalid regular expression';
+          result.textContent = result.value;
+          rows().forEach((row) => { row.hidden = false; });
+          return;
+        }
+        let visible = 0;
+        rows().forEach((row) => {
+          const nodes = searchableTextNodes(row);
+          const matches = !queryExpression || nodes.some((node) => queryExpression.test(node.nodeValue));
+          row.hidden = !matches;
+          if (!matches) return;
+          visible += 1;
+          if (query) highlightMatches(row, query, mode);
+        });
+        const total = rows().length;
+        result.value = query ? `${visible} of ${total} rows` : `${total} rows`;
+        result.textContent = result.value;
+      };
+      reference.refreshConfigurationTable = refresh;
+      input.addEventListener('input', refresh);
+      modeSelect.addEventListener('change', () => {
+        if (!searchModes.has(modeSelect.value)) return;
+        window.localStorage.setItem(searchModeStorageKey, modeSelect.value);
+        document.querySelectorAll('[data-configuration-search-mode]').forEach((select) => {
+          select.value = modeSelect.value;
+          select.closest('[data-configuration-reference]')?.refreshConfigurationTable?.();
+        });
+      });
+      sortButton.addEventListener('click', () => {
+        const direction = sortButton.dataset.sortDirection === 'ascending' ? 'descending' : 'ascending';
+        const multiplier = direction === 'ascending' ? 1 : -1;
+        rows()
+          .sort((left, right) => multiplier * left.dataset.configurationKey.localeCompare(right.dataset.configurationKey, undefined, { numeric: true, sensitivity: 'base' }))
+          .forEach((row) => body.append(row));
+        sortButton.dataset.sortDirection = direction;
+        sortHeading.setAttribute('aria-sort', direction);
+        const nextDirection = direction === 'ascending' ? 'descending' : 'ascending';
+        sortButton.setAttribute('aria-label', `Sort config name ${nextDirection}`);
+        sortButton.title = `Sort config name ${nextDirection}`;
+        refresh();
+      });
+      refresh();
     });
   };
 
@@ -695,6 +823,7 @@
   };
 
   setupOsPicker();
+  setupConfigurationReferenceTables();
   selectedOs = initialOs();
   renderVersionPicker();
   setupVersionWarning();

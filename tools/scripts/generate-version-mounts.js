@@ -8,6 +8,7 @@ const defaultContentRoot = path.join(repositoryRoot, 'content');
 const defaultBaseConfig = path.join(defaultContentRoot, 'hugo.yaml');
 const defaultOutput = path.join(repositoryRoot, 'tools', 'generated', 'hugo.yaml');
 const defaultLatestRedirectRoot = path.join(repositoryRoot, 'tools', 'generated', 'latest-redirects');
+const defaultPageProvenanceRoot = path.join(repositoryRoot, 'tools', 'generated', 'page-provenance');
 const mountMarker = '    # GENERATED_VERSION_MOUNTS';
 const latestAliases = {
   'openriak-kv': ['riak-kv'],
@@ -152,6 +153,110 @@ const discoverLatestRedirects = (contentRoot, products = productSources) => {
     })));
 };
 
+const markdownBody = (source) => {
+  const normalized = source.replace(/\r\n?/g, '\n');
+  return normalized.replace(/^product_version:\s*.*\n/gm, '').trim();
+};
+
+const pageKey = (relativePath) => relativePath
+  .split(path.sep).join('/')
+  .replace(/\.md$/i, '')
+  .replace(/\/_index$/i, '')
+  .replace(/\/index$/i, '')
+  .replace(/^_index$/i, '')
+  .toLowerCase();
+
+const readMarkdownPages = (directory) => {
+  const pages = new Map();
+  if (!fs.existsSync(directory)) return pages;
+  const visit = (current) => {
+    for (const entry of fs.readdirSync(current, { withFileTypes: true })) {
+      const absolute = path.join(current, entry.name);
+      if (entry.isDirectory()) visit(absolute);
+      else if (entry.isFile() && entry.name.toLowerCase().endsWith('.md')) {
+        const relative = path.relative(directory, absolute);
+        const key = pageKey(relative);
+        if (pages.has(key)) throw new Error(`Case-insensitive page path collision in ${directory}: ${relative}`);
+        pages.set(key, markdownBody(fs.readFileSync(absolute, 'utf8')));
+      }
+    }
+  };
+  visit(directory);
+  return pages;
+};
+
+const generatePageProvenance = (
+  contentRoot = defaultContentRoot,
+  products = productSources,
+  outputRoot = defaultPageProvenanceRoot
+) => {
+  const releasesByTarget = new Map();
+  for (const product of products) {
+    let effectivePages = new Map();
+    for (const version of discoverVersions(contentRoot, product)) {
+      if (version.newRelease) effectivePages = new Map();
+      const releaseDirectory = path.join(contentRoot, product.source, version.sourceDirectory);
+      for (const [key, body] of readMarkdownPages(releaseDirectory)) effectivePages.set(key, body);
+      const releases = releasesByTarget.get(product.target) || [];
+      releases.push({ version: version.raw, pages: new Map(effectivePages) });
+      releasesByTarget.set(product.target, releases);
+    }
+  }
+
+  const generatedFiles = new Map();
+  for (const [target, releases] of releasesByTarget) {
+    releases.sort((left, right) => compareSemver(left.version, right.version));
+    let previousPages = new Map();
+    let previousProvenance = {};
+    for (const release of releases) {
+      const provenance = {};
+      for (const [key, body] of release.pages) {
+        if (!previousPages.has(key)) {
+          provenance[key] = { status: 'new', since: release.version };
+        } else if (previousPages.get(key) !== body) {
+          provenance[key] = { status: 'updated', since: release.version };
+        } else {
+          provenance[key] = {
+            status: 'inherited',
+            since: previousProvenance[key]?.since || release.version
+          };
+        }
+      }
+      generatedFiles.set(
+        path.resolve(outputRoot, target, `${release.version}.json`),
+        `${JSON.stringify(provenance, null, 2)}\n`
+      );
+      previousPages = release.pages;
+      previousProvenance = provenance;
+    }
+  }
+
+  for (const [filename, contents] of generatedFiles) {
+    let current = null;
+    try { current = fs.readFileSync(filename, 'utf8'); } catch (error) {
+      if (error.code !== 'ENOENT') throw error;
+    }
+    if (current === contents) continue;
+    fs.mkdirSync(path.dirname(filename), { recursive: true });
+    fs.writeFileSync(filename, contents, 'utf8');
+  }
+
+  const removeStale = (directory) => {
+    if (!fs.existsSync(directory)) return;
+    for (const entry of fs.readdirSync(directory, { withFileTypes: true })) {
+      const filename = path.join(directory, entry.name);
+      if (entry.isDirectory()) {
+        removeStale(filename);
+        if (fs.readdirSync(filename).length === 0) fs.rmdirSync(filename);
+      } else if (entry.isFile() && entry.name.endsWith('.json') && !generatedFiles.has(path.resolve(filename))) {
+        fs.rmSync(filename);
+      }
+    }
+  };
+  removeStale(outputRoot);
+  return outputRoot;
+};
+
 const selectedVersionsFor = (includeVersions, source) => {
   const selected = includeVersions instanceof Map
     ? includeVersions.get(source)
@@ -294,6 +399,7 @@ const generateConfig = ({
   baseConfig = defaultBaseConfig,
   output = defaultOutput,
   latestRedirectRoot = defaultLatestRedirectRoot,
+  pageProvenanceRoot = defaultPageProvenanceRoot,
   products = productSources,
   includeVersions = {},
   includeLatest = [],
@@ -315,6 +421,7 @@ const generateConfig = ({
   const mounts = createVersionMounts(contentRoot, products, resolvedIncludeVersions);
   const latestRedirects = discoverLatestRedirects(contentRoot, products);
   writeLatestRedirectRoots(latestRedirects, latestRedirectRoot);
+  generatePageProvenance(contentRoot, products, pageProvenanceRoot);
   let generated = source.replace(mountMarker, renderMounts(mounts));
   const dataRoots = { ...versionDataRoots };
   if (versionDataRoot) dataRoots['openriak-kv'] = versionDataRoot;
@@ -331,7 +438,7 @@ const generateConfig = ({
   }
   fs.mkdirSync(path.dirname(output), { recursive: true });
   fs.writeFileSync(output, generated, 'utf8');
-  return { latestRedirects, mounts, output };
+  return { latestRedirects, mounts, output, pageProvenanceRoot };
 };
 
 const parseArguments = (argumentsList) => {
@@ -342,6 +449,7 @@ const parseArguments = (argumentsList) => {
     else if (argument === '--base-config') options.baseConfig = path.resolve(argumentsList[++index]);
     else if (argument === '--content-root') options.contentRoot = path.resolve(argumentsList[++index]);
     else if (argument === '--latest-redirect-root') options.latestRedirectRoot = path.resolve(argumentsList[++index]);
+    else if (argument === '--page-provenance-root') options.pageProvenanceRoot = path.resolve(argumentsList[++index]);
     else if (argument === '--version-data-root') {
       const value = argumentsList[++index] || '';
       const separator = value.indexOf('=');
@@ -386,6 +494,8 @@ module.exports = {
   discoverLatestRedirects,
   discoverVersions,
   generateConfig,
+  generatePageProvenance,
+  markdownBody,
   parseSemver,
   parseArguments,
   parseVersionDirectory,
