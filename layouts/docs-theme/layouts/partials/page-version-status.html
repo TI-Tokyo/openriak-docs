@@ -1,8 +1,12 @@
 {{- $context := partial "product-context.html" . -}}
 {{- $versionData := index hugo.Data.page_provenance $context.id $context.version -}}
-{{- $prefix := printf "%s/%s/" $context.id $context.version -}}
-{{- $contentPath := strings.TrimPrefix "/" .Path -}}
-{{- $pageKey := strings.TrimPrefix $prefix $contentPath | strings.TrimSuffix "/" -}}
+{{- $versionRoot := printf "%s/%s" $context.id $context.version -}}
+{{- $prefix := printf "%s/" $versionRoot -}}
+{{- $contentPath := strings.TrimPrefix "/" .Path | strings.TrimSuffix "/" -}}
+{{- $pageKey := "" -}}
+{{- if and (ne $contentPath $context.id) (ne $contentPath $versionRoot) -}}
+  {{- $pageKey = strings.TrimPrefix $prefix $contentPath -}}
+{{- end -}}
 {{- $entry := dict -}}
 {{- if eq $pageKey "downloads" -}}
   {{- $entry = dict "status" "updated" "since" $context.version -}}
