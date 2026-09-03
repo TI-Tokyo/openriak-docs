@@ -137,7 +137,7 @@ assert.match(previousVersionPartialSource, /index hugo\.Data\.versions \$product
 assert.match(previousVersionPartialSource, /previous-version has no previous release: product=%s version=%s page=%s/, 'previous-version must stop the build when no earlier release exists');
 assert.match(baseSource, /js\/theme\.js[^"\n]+\?v=/, 'theme picker script must be cache-busted');
 assert.match(baseSource, /js\/docs-runtime\.js[^"\n]+\?v=20260903-search-mode-memory/, 'the documentation runtime must use its current cache key');
-assert.match(headSource, /css\/docs\.css[^"\n]+\?v=20260903-config-search-modes/, 'documentation styling must use its current cache key');
+assert.match(headSource, /css\/docs\.css[^"\n]+\?v=20260903-config-column-mins/, 'documentation styling must use its current cache key');
 assert.match(configurationReferenceShortcodeSource, /strings\.Split \.Inner "\\n"/, 'configuration reference filters must be one regex per body line so commas remain part of the regex');
 assert.match(configurationReferenceShortcodeSource, /\.Get "area"[\s\S]*in \$setting\.areas \$area/, 'configuration references must support repository-area filtering');
 assert.match(configurationReferenceShortcodeSource, /data-configuration-default-copy[\s\S]*data-configuration-os-icon/, 'configuration references must render copyable defaults and OS-specific indicators');
@@ -371,7 +371,7 @@ assert.match(sharedHeaderCss, /--site-header-height: max\(64px, calc\(42px \+ 1\
 assert.match(sharedHeaderCss, /\.global-header \.theme-panel \{[^}]*max-height: calc\(100vh - var\(--site-header-height\) - 1rem\)[^}]*overflow: auto/, 'the appearance menu must remain scrollable at large font settings');
 assert.match(docsCssSource, /top: var\(--site-header-height\)[\s\S]*calc\(100vh - var\(--site-header-height\)\)/, 'documentation sidebars must follow the scaled header height');
 assert.match(docsCssSource, /--docs-content-width: 75%[\s\S]*data-content-width="50"[\s\S]*data-content-width="90"[\s\S]*data-content-width="98"/, 'documentation styling must map every width preference and default to 75 percent');
-assert.match(docsCssSource, /\.configuration-reference-default \{ width: 18rem; \}[\s\S]*data-content-width="50"[^}]*\.configuration-reference-default \{ width: 15rem; \}/, 'configuration-reference default values must use 15rem at 50 percent content width and 18rem otherwise');
+assert.match(docsCssSource, /\.configuration-reference-table \{[^}]*min-width: 68rem;[^}]*\}[\s\S]*\.configuration-reference-name \{[^}]*min-width: 16rem;[^}]*\}[\s\S]*\.configuration-reference-description \{ min-width: 18rem; \}[\s\S]*\.configuration-reference-default \{[^}]*width: 18rem;[^}]*min-width: 14rem;[^}]*\}[\s\S]*data-content-width="50"[^}]*\.configuration-reference-default \{[^}]*width: 15rem;[^}]*min-width: 14rem;[^}]*\}/, 'configuration-reference columns must keep readable minimum widths while allowing the description to yield space');
 assert.match(docsCssSource, /@media \(max-width: 760px\)[\s\S]*\.doc-article, \.breadcrumbs \{ width: 100%; \}/, 'content width preferences must not squeeze documentation on small screens');
 assert.match(sharedHeaderCss, /picker-chevron::before \{[^}]*content: '›'/, 'pickers must use the page-tree chevron');
 assert.ok(docsCssSource.includes('.docs-sidebar:has(.picker-panel:not([hidden]))') && docsCssSource.includes('overflow: visible;'), 'open sidebar flyouts must escape the sidebar scroller');
