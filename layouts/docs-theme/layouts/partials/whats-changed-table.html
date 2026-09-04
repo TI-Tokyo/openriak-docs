@@ -1,0 +1,21 @@
+<div class="whats-changed-scroll">
+  <table class="whats-changed-table">
+    <thead>
+      <tr>
+        <th scope="col">Page</th>
+        <th scope="col">Type</th>
+        <th scope="col">Update Summary</th>
+      </tr>
+    </thead>
+    <tbody>
+      {{- range . }}
+        {{- $summary := strings.TrimSpace (printf "%v" (index .page.Params "update-summary" | default "")) -}}
+        <tr>
+          <td class="whats-changed-page"><a href="{{ .page.RelPermalink }}">{{ .page.LinkTitle | default .page.Title }}</a></td>
+          <td class="whats-changed-type"><span class="doc-version-status doc-version-status--{{ .status }}">{{ .status }}</span></td>
+          <td class="whats-changed-summary">{{ if $summary }}{{ $summary | markdownify }}{{ else }}Updated content{{ end }}</td>
+        </tr>
+      {{- end }}
+    </tbody>
+  </table>
+</div>

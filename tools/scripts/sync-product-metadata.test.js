@@ -52,9 +52,18 @@ for (const product of productCases) {
       assert.ok(image.node.endsWith('-node'));
       assert.ok(image.baseImage.includes('@sha256:'));
       assert.match(image.dockerfile.sha256, /^[0-9a-f]{64}$/);
-      assert.match(image.compose.sha256, /^[0-9a-f]{64}$/);
       assert.ok(image.dockerfile.url.startsWith(`downloads/docker/${version}/`));
-      assert.ok(image.compose.url.startsWith(`downloads/docker/${version}/`));
+      if (image.composeSingle) {
+        assert.match(image.composeSingle.sha256, /^[0-9a-f]{64}$/);
+        assert.match(image.composeCluster.sha256, /^[0-9a-f]{64}$/);
+        assert.ok(image.composeSingle.url.startsWith(`downloads/docker/${version}/`));
+        assert.ok(image.composeCluster.url.startsWith(`downloads/docker/${version}/`));
+        assert.ok(Number.isInteger(image.clusterNodes));
+        assert.ok(image.clusterNodes >= 2);
+      } else {
+        assert.match(image.compose.sha256, /^[0-9a-f]{64}$/);
+        assert.ok(image.compose.url.startsWith(`downloads/docker/${version}/`));
+      }
     }
     const modernKv = product.id === 'openriak-kv' && compareSemver(version, '3.4.0') >= 0;
     assert.equal(adapter.generatedFrom, `content/${product.id}/metadata/${version}`);
@@ -192,5 +201,6 @@ const alpineDocker = readAdapter('openriak-kv', '3.4.0').dockerImages.find((imag
 assert.ok(alpineDocker, 'Expected the passed Alpine 3.21 x86_64 OTP 24 Docker cache result');
 assert.equal(alpineDocker.image, 'openriak/openriak-kv:3.4.0-alpine-3.21-otp24-x86_64');
 assert.equal(alpineDocker.node, 'openriak-kv-3.4.0-alpine-3.21-otp24-x86_64-node');
+assert.ok(alpineDocker.compose || alpineDocker.composeSingle);
 
 console.log('Product metadata synchronization tests passed.');

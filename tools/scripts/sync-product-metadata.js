@@ -119,6 +119,21 @@ const preferredFamilyDefaults = {
 const readJson = (file) => JSON.parse(fs.readFileSync(file, 'utf8'));
 const sha256File = (file) => crypto.createHash('sha256').update(fs.readFileSync(file)).digest('hex');
 
+const successfulDockerReports = (targetRoot) => {
+  const reportFiles = [path.join(targetRoot, 'report.json')];
+  const runsRoot = path.join(targetRoot, 'runs');
+  if (fs.existsSync(runsRoot)) {
+    for (const entry of fs.readdirSync(runsRoot, { withFileTypes: true })) {
+      if (entry.isDirectory()) reportFiles.push(path.join(runsRoot, entry.name, 'report.json'));
+    }
+  }
+  return reportFiles
+    .filter((file) => fs.existsSync(file))
+    .map((file) => ({ file, report: readJson(file) }))
+    .filter(({ report }) => [1, 2].includes(report.schema_version) && report.status === 'passed')
+    .sort((left, right) => String(right.report.finished_at || '').localeCompare(String(left.report.finished_at || '')));
+};
+
 const dockerImagesForVersion = (version) => {
   const versionRoot = path.join(dockerCacheRoot, version);
   if (!fs.existsSync(versionRoot)) return [];
@@ -129,10 +144,9 @@ const dockerImagesForVersion = (version) => {
     for (const downloadEntry of fs.readdirSync(osRoot, { withFileTypes: true })) {
       if (!downloadEntry.isDirectory()) continue;
       const targetRoot = path.join(osRoot, downloadEntry.name);
-      const reportFile = path.join(targetRoot, 'report.json');
-      if (!fs.existsSync(reportFile)) continue;
-      const report = readJson(reportFile);
-      if (report.schema_version !== 1 || report.status !== 'passed') continue;
+      const successfulReports = successfulDockerReports(targetRoot);
+      if (!successfulReports.length) continue;
+      const { file: reportFile, report } = successfulReports[0];
       if (report.product !== 'openriak-kv' || report.target?.version !== version) {
         throw new Error(`Mismatched Docker cache report: ${reportFile}`);
       }
@@ -140,14 +154,17 @@ const dockerImagesForVersion = (version) => {
         throw new Error(`Misplaced Docker cache report: ${reportFile}`);
       }
       const artifacts = report.artifacts || {};
-      for (const [name, filename] of [['dockerfile', 'Dockerfile'], ['compose', 'compose.yaml']]) {
+      const artifactNames = report.schema_version === 2
+        ? [['dockerfile', 'Dockerfile'], ['compose_single', 'compose.single.yaml'], ['compose_cluster', 'compose.cluster.yaml']]
+        : [['dockerfile', 'Dockerfile'], ['compose', 'compose.yaml']];
+      for (const [name, filename] of artifactNames) {
         const artifact = artifacts[name];
         const expectedPrefix = `downloads/docker/${version}/`;
         if (!artifact || artifact.filename !== filename || !artifact.url?.startsWith(expectedPrefix)
           || !/^[0-9a-f]{64}$/.test(artifact.sha256 || '')) {
           throw new Error(`Invalid ${name} artifact in Docker cache report: ${reportFile}`);
         }
-        const cachedFile = path.join(targetRoot, filename);
+        const cachedFile = path.join(path.dirname(reportFile), filename);
         const publishedFile = path.join(dockerStaticRoot, artifact.url);
         if (!fs.existsSync(cachedFile)) {
           throw new Error(`Missing cached ${filename} for Docker cache report: ${reportFile}`);
@@ -159,7 +176,7 @@ const dockerImagesForVersion = (version) => {
           throw new Error(`Checksum mismatch for ${filename} in Docker cache report: ${reportFile}`);
         }
       }
-      images.push({
+      const image = {
         osId: report.target.os_id,
         osName: report.target.os_name,
         osRelease: report.target.os_release,
@@ -169,9 +186,16 @@ const dockerImagesForVersion = (version) => {
         node: report.node,
         testedAt: report.finished_at,
         baseImage: report.base_image?.pinned || '',
-        dockerfile: artifacts.dockerfile,
-        compose: artifacts.compose
-      });
+        dockerfile: artifacts.dockerfile
+      };
+      if (report.schema_version === 2) {
+        image.composeSingle = artifacts.compose_single;
+        image.composeCluster = artifacts.compose_cluster;
+        image.clusterNodes = report.generation?.cluster_nodes || null;
+      } else {
+        image.compose = artifacts.compose;
+      }
+      images.push(image);
     }
   }
   return images.sort((left, right) => (

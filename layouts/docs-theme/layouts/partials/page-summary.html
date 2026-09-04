@@ -1,7 +1,7 @@
 {{- $context := partial "product-context.html" . -}}
 {{- $versionData := index $context.versions $context.version -}}
 {{- $documentationSource := $versionData.documentationSource | default "" -}}
-{{- $showProvenance := strings.HasPrefix $documentationSource "openriak-" -}}
+{{- $showProvenance := and (strings.HasPrefix $documentationSource "openriak-") (not (.Params.hide_provenance | default false)) -}}
 {{- $provenance := dict -}}
 {{- if $showProvenance }}{{ $provenance = partial "page-version-status.html" . }}{{ end -}}
 {{- $wordCount := .WordCount -}}

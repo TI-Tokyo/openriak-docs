@@ -54,6 +54,9 @@ class OpenRiakDockerTests(unittest.TestCase):
         self.assertIn('ENV RIAK_TICTACAAE_ACTIVE="active"', source)
         self.assertIn('ENV RIAK_TICTACAAE_STOREHEADS="enabled"', source)
         self.assertIn('ENV RIAK_MONITOR_INTERVAL_SECONDS="10"', source)
+        self.assertIn('ENV OPENRIAK_CLUSTER_MODE="single"', source)
+        self.assertIn('ENV OPENRIAK_CLUSTER_WAIT_SECONDS="300"', source)
+        self.assertIn('ENV role=""', source)
         self.assertIn('VOLUME ["/etc/riak"]', source)
         self.assertIn('VOLUME ["/var/lib/riak"]', source)
         self.assertIn('VOLUME ["/var/log/riak"]', source)
@@ -68,7 +71,16 @@ class OpenRiakDockerTests(unittest.TestCase):
         self.assertIn("HEALTHCHECK --interval=10s", source)
         self.assertIn("STOPSIGNAL SIGTERM", source)
         self.assertIn('log "startup: OpenRiak is ready"', source)
-        self.assertIn('log "monitor: BEAM is running"', source)
+        self.assertIn('log "monitor: BEAM is running and riak ping returned pong"', source)
+        self.assertIn('log "cluster: Role: Coordinator"', source)
+        self.assertIn('log "cluster: Role: Follower"', source)
+        self.assertIn('riak_admin_command cluster join "$coordinator_node"', source)
+        self.assertIn("riak_admin_command cluster plan", source)
+        self.assertIn("riak_admin_command cluster commit", source)
+        self.assertIn("plan_output_is_successful", source)
+        self.assertIn("commit_output_is_successful", source)
+        self.assertIn("*-coordinator", source)
+        self.assertIn("-approved", source)
         self.assertNotIn("/usr/sbin/riak console", source)
         for line in source.splitlines():
             if line.startswith("RUN "):
@@ -76,7 +88,7 @@ class OpenRiakDockerTests(unittest.TestCase):
                 self.assertNotIn("; ", line)
 
     def test_compose_has_requested_identity_ports_volumes_and_network(self):
-        source = docker_tool.render_compose(self.target)
+        source = docker_tool.render_single_compose(self.target)
         node = "openriak-kv-3.4.0-alpine-3.21-otp24-x86_64-node"
         self.assertIn("build:\n      context: .\n      dockerfile: ./Dockerfile", source)
         self.assertIn(f'container_name: "${{OPENRIAK_CONTAINER_NAME:-{node}}}"', source)
@@ -94,6 +106,35 @@ class OpenRiakDockerTests(unittest.TestCase):
         self.assertIn('ipv4_address: "${OPENRIAK_NODE_IPV4:-172.16.0.1}"', source)
         self.assertIn('subnet: "${OPENRIAK_NETWORK_SUBNET:-172.16.0.0/24}"', source)
         self.assertIn('gateway: "${OPENRIAK_NETWORK_GATEWAY:-172.16.0.254}"', source)
+
+    def test_cluster_compose_has_five_nodes_one_coordinator_and_shared_control(self):
+        source = docker_tool.render_cluster_compose(self.target)
+        for index in range(1, 6):
+            node = f"{self.target.node_name}-{index}"
+            self.assertIn(f"  node{index}:", source)
+            self.assertIn(f"hostname: {node}", source)
+            self.assertIn(f"riak@172.16.0.{index}", source)
+            self.assertIn(f'"./{node}/config:/etc/riak"', source)
+            self.assertIn(f'"./{node}/data:/var/lib/riak"', source)
+            self.assertIn(f'"./{node}/logs:/var/log/riak"', source)
+        self.assertEqual(source.count("      role: coordinator"), 1)
+        self.assertEqual(source.count("      OPENRIAK_CLUSTER_MODE: cluster"), 5)
+        self.assertEqual(
+            source.count(
+                f'"./{self.target.node_name}-cluster-control:'
+                f'{docker_tool.CONTROL_DIRECTORY}"'
+            ),
+            5,
+        )
+        self.assertNotIn("configured-node-count", source)
+
+    def test_cluster_node_count_is_generator_control_not_runtime_configuration(self):
+        source = docker_tool.render_cluster_compose(self.target, 3)
+        self.assertIn("  node3:", source)
+        self.assertNotIn("  node4:", source)
+        self.assertEqual(source.count("      role: coordinator"), 1)
+        with self.assertRaisesRegex(docker_tool.DockerToolError, "between 2 and 253"):
+            docker_tool.render_cluster_compose(self.target, 1)
 
     def test_configure_node_sets_all_test_values(self):
         source = """nodename = riak@127.0.0.1
@@ -131,6 +172,19 @@ listener.protobuf.internal = 127.0.0.1:8087
         self.assertEqual(values["listener.http.internal"], "0.0.0.0:8098")
         self.assertEqual(values["listener.protobuf.internal"], "0.0.0.0:8087")
 
+    def test_commented_setting_replacement_ignores_whitespace(self):
+        source = "    ##          ring_size  =        64         \n"
+        updated = docker_tool.set_riak_setting(source, "ring_size", "8")
+        self.assertEqual(updated, "ring_size = 8\n")
+
+    def test_single_hash_comment_is_not_treated_as_disabled_setting(self):
+        source = "# ring_size = documentation\n"
+        updated = docker_tool.set_riak_setting(source, "ring_size", "8")
+        self.assertEqual(
+            updated,
+            "# ring_size = documentation\nring_size = 8\n",
+        )
+
     def test_base_image_uses_release_tag(self):
         self.assertEqual(docker_tool.base_image_for(self.target), "alpine:3.21")
 
@@ -155,6 +209,20 @@ listener.protobuf.internal = 127.0.0.1:8087
             "OpenRiak KV Docker targets start at 3.4.0",
         ):
             docker_tool.discover_targets(["3.3.9"])
+
+    def test_refresh_parser_has_cache_and_cluster_controls(self):
+        options = docker_tool.parser().parse_args(
+            [
+                "refresh",
+                "--version",
+                "3.4.0",
+                "--cluster-nodes",
+                "7",
+                "--force",
+            ]
+        )
+        self.assertEqual(options.cluster_nodes, 7)
+        self.assertTrue(options.force)
 
 
 if __name__ == "__main__":

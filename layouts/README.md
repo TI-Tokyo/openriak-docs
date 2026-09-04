@@ -103,3 +103,13 @@ device names such as `CON`, `NUL`, `COM1`, and `LPT1`.
 The version-mount generator compares effective Markdown pages across releases
 and writes page status data under `tools/generated/page-provenance/`. Product
 pages use it to label pages as new, updated, or last changed in an earlier version.
+
+For a page changed in a maintenance release, add an `update-summary` front
+matter value containing a short description of the change since the previous
+version. The release's **What's Changed** page groups new and updated pages by
+their immediate container path, creates a heading for every container with
+changes, and orders containers and pages as they appear in the sidebar. The
+product-version landing page and **What's Changed** itself are excluded. A
+missing or blank value is displayed as “Updated content”. Set
+`hide_provenance: true` only on pages, such as **What's Changed**, that must not
+display their own provenance.

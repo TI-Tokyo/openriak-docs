@@ -43,6 +43,7 @@ try {
   };
   writePage('openriak-kv/3.4.0-new-release/stable.md', 'Unchanged body.');
   writePage('openriak-kv/3.4.0-new-release/changed.md', 'Original body.');
+  writePage('openriak-kv/3.4.0-new-release/whats-changed.md', 'Everything changed.');
   writePage('openriak-kv/3.4.1/changed.md', 'Updated body.');
   writePage('openriak-kv/3.4.1/new-page.md', 'New body.');
 
@@ -146,8 +147,10 @@ try {
   assert.deepEqual(provenance341.stable, { status: 'inherited', since: '3.4.0' });
   assert.deepEqual(provenance341.changed, { status: 'updated', since: '3.4.1' });
   assert.deepEqual(provenance341['new-page'], { status: 'new', since: '3.4.1' });
+  assert.equal(provenance341['whats-changed'], undefined, "What's Changed must not have generated provenance");
   assert.deepEqual(provenance342.changed, { status: 'inherited', since: '3.4.1' });
   assert.deepEqual(provenance342['new-page'], { status: 'inherited', since: '3.4.1' });
+  assert.equal(provenance342['whats-changed'], undefined, "What's Changed must remain outside generated provenance");
   const unchangedProvenanceFile = path.join(pageProvenanceRoot, 'openriak-kv', '3.4.1.json');
   const unchangedProvenanceMtime = fs.statSync(unchangedProvenanceFile).mtimeMs;
   generatePageProvenance(fixture, productSources, pageProvenanceRoot);

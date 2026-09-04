@@ -1,0 +1,19 @@
+{{- $context := partial "product-context.html" .Page -}}
+{{- $versionHome := $context.versionHome -}}
+{{- $general := slice -}}
+{{- range $candidate := $versionHome.Pages.ByWeight -}}
+  {{- if and (ne $candidate.Kind "section") (ne $candidate.File.ContentBaseName "whats-changed") -}}
+    {{- $provenance := partial "page-version-status.html" $candidate -}}
+    {{- if in (slice "new" "updated") $provenance.status -}}
+      {{- $general = $general | append (dict "page" $candidate "status" $provenance.status) -}}
+    {{- end -}}
+  {{- end -}}
+{{- end -}}
+
+{{- if gt (len $general) 0 }}
+  <h2>General</h2>
+  {{ partial "whats-changed-table.html" $general }}
+{{- end -}}
+{{- range $section := $versionHome.Sections.ByWeight -}}
+  {{- partial "whats-changed-section.html" (dict "section" $section "pathTitles" (slice)) -}}
+{{- end -}}

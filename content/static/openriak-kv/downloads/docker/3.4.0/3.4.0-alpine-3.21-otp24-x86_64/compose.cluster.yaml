@@ -1,0 +1,159 @@
+# Generated and tested by tools/openriak-docker/openriak-docker. Do not edit by hand.
+# Set role=coordinator on exactly one service. An omitted or empty role is a follower.
+name: openriak-kv-3.4.0-alpine-3.21-otp24-x86_64-node-cluster
+
+services:
+  node1:
+    build:
+      context: .
+      dockerfile: ./Dockerfile
+    image: openriak/openriak-kv:3.4.0-alpine-3.21-otp24-x86_64
+    container_name: "${OPENRIAK_NODE_1_CONTAINER_NAME:-openriak-kv-3.4.0-alpine-3.21-otp24-x86_64-node-1}"
+    hostname: openriak-kv-3.4.0-alpine-3.21-otp24-x86_64-node-1
+    environment:
+      OPENRIAK_CLUSTER_MODE: cluster
+      role: coordinator
+      RIAK_NODE_NAME: "${OPENRIAK_NODE_1_NAME:-riak@172.16.0.1}"
+      RIAK_MONITOR_INTERVAL_SECONDS: "${OPENRIAK_MONITOR_INTERVAL_SECONDS:-10}"
+      OPENRIAK_CLUSTER_POLL_SECONDS: "${OPENRIAK_CLUSTER_POLL_SECONDS:-1}"
+      OPENRIAK_CLUSTER_WAIT_SECONDS: "${OPENRIAK_CLUSTER_WAIT_SECONDS:-300}"
+    ports:
+      - "${OPENRIAK_NODE_1_PB_PORT:-18087}:8087"
+      - "${OPENRIAK_NODE_1_HTTP_PORT:-18098}:8098"
+    volumes:
+      - "./openriak-kv-3.4.0-alpine-3.21-otp24-x86_64-node-1/config:/etc/riak"
+      - "./openriak-kv-3.4.0-alpine-3.21-otp24-x86_64-node-1/data:/var/lib/riak"
+      - "./openriak-kv-3.4.0-alpine-3.21-otp24-x86_64-node-1/logs:/var/log/riak"
+      - "./openriak-kv-3.4.0-alpine-3.21-otp24-x86_64-node-cluster-control:/var/lib/openriak-cluster-control"
+    networks:
+      openriak:
+        ipv4_address: "${OPENRIAK_NODE_1_IPV4:-172.16.0.1}"
+    ulimits:
+      nofile:
+        soft: 100000
+        hard: 100000
+    stop_grace_period: 2m
+  node2:
+    build:
+      context: .
+      dockerfile: ./Dockerfile
+    image: openriak/openriak-kv:3.4.0-alpine-3.21-otp24-x86_64
+    container_name: "${OPENRIAK_NODE_2_CONTAINER_NAME:-openriak-kv-3.4.0-alpine-3.21-otp24-x86_64-node-2}"
+    hostname: openriak-kv-3.4.0-alpine-3.21-otp24-x86_64-node-2
+    environment:
+      OPENRIAK_CLUSTER_MODE: cluster
+      RIAK_NODE_NAME: "${OPENRIAK_NODE_2_NAME:-riak@172.16.0.2}"
+      RIAK_MONITOR_INTERVAL_SECONDS: "${OPENRIAK_MONITOR_INTERVAL_SECONDS:-10}"
+      OPENRIAK_CLUSTER_POLL_SECONDS: "${OPENRIAK_CLUSTER_POLL_SECONDS:-1}"
+      OPENRIAK_CLUSTER_WAIT_SECONDS: "${OPENRIAK_CLUSTER_WAIT_SECONDS:-300}"
+    ports:
+      - "${OPENRIAK_NODE_2_PB_PORT:-18187}:8087"
+      - "${OPENRIAK_NODE_2_HTTP_PORT:-18198}:8098"
+    volumes:
+      - "./openriak-kv-3.4.0-alpine-3.21-otp24-x86_64-node-2/config:/etc/riak"
+      - "./openriak-kv-3.4.0-alpine-3.21-otp24-x86_64-node-2/data:/var/lib/riak"
+      - "./openriak-kv-3.4.0-alpine-3.21-otp24-x86_64-node-2/logs:/var/log/riak"
+      - "./openriak-kv-3.4.0-alpine-3.21-otp24-x86_64-node-cluster-control:/var/lib/openriak-cluster-control"
+    networks:
+      openriak:
+        ipv4_address: "${OPENRIAK_NODE_2_IPV4:-172.16.0.2}"
+    ulimits:
+      nofile:
+        soft: 100000
+        hard: 100000
+    stop_grace_period: 2m
+  node3:
+    build:
+      context: .
+      dockerfile: ./Dockerfile
+    image: openriak/openriak-kv:3.4.0-alpine-3.21-otp24-x86_64
+    container_name: "${OPENRIAK_NODE_3_CONTAINER_NAME:-openriak-kv-3.4.0-alpine-3.21-otp24-x86_64-node-3}"
+    hostname: openriak-kv-3.4.0-alpine-3.21-otp24-x86_64-node-3
+    environment:
+      OPENRIAK_CLUSTER_MODE: cluster
+      RIAK_NODE_NAME: "${OPENRIAK_NODE_3_NAME:-riak@172.16.0.3}"
+      RIAK_MONITOR_INTERVAL_SECONDS: "${OPENRIAK_MONITOR_INTERVAL_SECONDS:-10}"
+      OPENRIAK_CLUSTER_POLL_SECONDS: "${OPENRIAK_CLUSTER_POLL_SECONDS:-1}"
+      OPENRIAK_CLUSTER_WAIT_SECONDS: "${OPENRIAK_CLUSTER_WAIT_SECONDS:-300}"
+    ports:
+      - "${OPENRIAK_NODE_3_PB_PORT:-18287}:8087"
+      - "${OPENRIAK_NODE_3_HTTP_PORT:-18298}:8098"
+    volumes:
+      - "./openriak-kv-3.4.0-alpine-3.21-otp24-x86_64-node-3/config:/etc/riak"
+      - "./openriak-kv-3.4.0-alpine-3.21-otp24-x86_64-node-3/data:/var/lib/riak"
+      - "./openriak-kv-3.4.0-alpine-3.21-otp24-x86_64-node-3/logs:/var/log/riak"
+      - "./openriak-kv-3.4.0-alpine-3.21-otp24-x86_64-node-cluster-control:/var/lib/openriak-cluster-control"
+    networks:
+      openriak:
+        ipv4_address: "${OPENRIAK_NODE_3_IPV4:-172.16.0.3}"
+    ulimits:
+      nofile:
+        soft: 100000
+        hard: 100000
+    stop_grace_period: 2m
+  node4:
+    build:
+      context: .
+      dockerfile: ./Dockerfile
+    image: openriak/openriak-kv:3.4.0-alpine-3.21-otp24-x86_64
+    container_name: "${OPENRIAK_NODE_4_CONTAINER_NAME:-openriak-kv-3.4.0-alpine-3.21-otp24-x86_64-node-4}"
+    hostname: openriak-kv-3.4.0-alpine-3.21-otp24-x86_64-node-4
+    environment:
+      OPENRIAK_CLUSTER_MODE: cluster
+      RIAK_NODE_NAME: "${OPENRIAK_NODE_4_NAME:-riak@172.16.0.4}"
+      RIAK_MONITOR_INTERVAL_SECONDS: "${OPENRIAK_MONITOR_INTERVAL_SECONDS:-10}"
+      OPENRIAK_CLUSTER_POLL_SECONDS: "${OPENRIAK_CLUSTER_POLL_SECONDS:-1}"
+      OPENRIAK_CLUSTER_WAIT_SECONDS: "${OPENRIAK_CLUSTER_WAIT_SECONDS:-300}"
+    ports:
+      - "${OPENRIAK_NODE_4_PB_PORT:-18387}:8087"
+      - "${OPENRIAK_NODE_4_HTTP_PORT:-18398}:8098"
+    volumes:
+      - "./openriak-kv-3.4.0-alpine-3.21-otp24-x86_64-node-4/config:/etc/riak"
+      - "./openriak-kv-3.4.0-alpine-3.21-otp24-x86_64-node-4/data:/var/lib/riak"
+      - "./openriak-kv-3.4.0-alpine-3.21-otp24-x86_64-node-4/logs:/var/log/riak"
+      - "./openriak-kv-3.4.0-alpine-3.21-otp24-x86_64-node-cluster-control:/var/lib/openriak-cluster-control"
+    networks:
+      openriak:
+        ipv4_address: "${OPENRIAK_NODE_4_IPV4:-172.16.0.4}"
+    ulimits:
+      nofile:
+        soft: 100000
+        hard: 100000
+    stop_grace_period: 2m
+  node5:
+    build:
+      context: .
+      dockerfile: ./Dockerfile
+    image: openriak/openriak-kv:3.4.0-alpine-3.21-otp24-x86_64
+    container_name: "${OPENRIAK_NODE_5_CONTAINER_NAME:-openriak-kv-3.4.0-alpine-3.21-otp24-x86_64-node-5}"
+    hostname: openriak-kv-3.4.0-alpine-3.21-otp24-x86_64-node-5
+    environment:
+      OPENRIAK_CLUSTER_MODE: cluster
+      RIAK_NODE_NAME: "${OPENRIAK_NODE_5_NAME:-riak@172.16.0.5}"
+      RIAK_MONITOR_INTERVAL_SECONDS: "${OPENRIAK_MONITOR_INTERVAL_SECONDS:-10}"
+      OPENRIAK_CLUSTER_POLL_SECONDS: "${OPENRIAK_CLUSTER_POLL_SECONDS:-1}"
+      OPENRIAK_CLUSTER_WAIT_SECONDS: "${OPENRIAK_CLUSTER_WAIT_SECONDS:-300}"
+    ports:
+      - "${OPENRIAK_NODE_5_PB_PORT:-18487}:8087"
+      - "${OPENRIAK_NODE_5_HTTP_PORT:-18498}:8098"
+    volumes:
+      - "./openriak-kv-3.4.0-alpine-3.21-otp24-x86_64-node-5/config:/etc/riak"
+      - "./openriak-kv-3.4.0-alpine-3.21-otp24-x86_64-node-5/data:/var/lib/riak"
+      - "./openriak-kv-3.4.0-alpine-3.21-otp24-x86_64-node-5/logs:/var/log/riak"
+      - "./openriak-kv-3.4.0-alpine-3.21-otp24-x86_64-node-cluster-control:/var/lib/openriak-cluster-control"
+    networks:
+      openriak:
+        ipv4_address: "${OPENRIAK_NODE_5_IPV4:-172.16.0.5}"
+    ulimits:
+      nofile:
+        soft: 100000
+        hard: 100000
+    stop_grace_period: 2m
+
+networks:
+  openriak:
+    driver: bridge
+    ipam:
+      config:
+        - subnet: "${OPENRIAK_NETWORK_SUBNET:-172.16.0.0/24}"
+          gateway: "${OPENRIAK_NETWORK_GATEWAY:-172.16.0.254}"

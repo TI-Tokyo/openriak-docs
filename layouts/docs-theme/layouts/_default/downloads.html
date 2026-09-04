@@ -54,6 +54,7 @@
               </thead>
               <tbody>
                 {{- range . }}
+                  {{- $image := . -}}
                   <tr>
                     <td>{{ .osName }} {{ .osRelease }} — OTP {{ .otp }} — {{ .architecture }}</td>
                     <td><code>{{ .image }}</code></td>
@@ -61,7 +62,13 @@
                     <td>
                       <a href="{{ .dockerfile.url | relURL }}" download="Dockerfile">Dockerfile</a>
                       ·
-                      <a href="{{ .compose.url | relURL }}" download="compose.yaml">Compose</a>
+                      {{- with $image.composeSingle }}
+                        <a href="{{ .url | relURL }}" download="compose.single.yaml">Single node</a>
+                        ·
+                        <a href="{{ $image.composeCluster.url | relURL }}" download="compose.cluster.yaml">{{ $image.clusterNodes }}-node cluster</a>
+                      {{- else }}
+                        <a href="{{ $image.compose.url | relURL }}" download="compose.yaml">Compose</a>
+                      {{- end }}
                     </td>
                   </tr>
                 {{- end }}

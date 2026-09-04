@@ -35,6 +35,7 @@ const listTemplateSource = fs.readFileSync(path.join(themeRoot, 'layouts', '_def
 const pageSummarySource = fs.readFileSync(path.join(themeRoot, 'layouts', 'partials', 'page-summary.html'), 'utf8');
 const pageFooterSource = fs.readFileSync(path.join(themeRoot, 'layouts', 'partials', 'page-footer.html'), 'utf8');
 const pageVersionStatusSource = fs.readFileSync(path.join(themeRoot, 'layouts', 'partials', 'page-version-status.html'), 'utf8');
+const versionMountGeneratorSource = fs.readFileSync(path.join(repositoryRoot, 'tools', 'scripts', 'generate-version-mounts.js'), 'utf8');
 const relatedDocumentationSource = fs.readFileSync(path.join(themeRoot, 'layouts', 'partials', 'related-documentation.html'), 'utf8');
 const headingRenderHookSource = fs.readFileSync(path.join(themeRoot, 'layouts', '_markup', 'render-heading.html'), 'utf8');
 const codeRenderHookSource = fs.readFileSync(path.join(themeRoot, 'layouts', '_markup', 'render-codeblock.html'), 'utf8');
@@ -49,6 +50,11 @@ const currentVersionShortcodeSource = fs.readFileSync(path.join(themeRoot, 'layo
 const previousVersionShortcodeSource = fs.readFileSync(path.join(themeRoot, 'layouts', 'shortcodes', 'previous-version.html'), 'utf8');
 const configurationReferenceShortcodeSource = fs.readFileSync(path.join(themeRoot, 'layouts', 'shortcodes', 'configuration-reference-table.html'), 'utf8');
 const configurationReferenceItemShortcodeSource = fs.readFileSync(path.join(themeRoot, 'layouts', 'shortcodes', 'configuration-reference-item.html'), 'utf8');
+const whatsChangedShortcodeSource = fs.readFileSync(path.join(themeRoot, 'layouts', 'shortcodes', 'whats-changed.html'), 'utf8');
+const whatsChangedTableSource = fs.readFileSync(path.join(themeRoot, 'layouts', 'partials', 'whats-changed-table.html'), 'utf8');
+const whatsChangedSectionSource = fs.readFileSync(path.join(themeRoot, 'layouts', 'partials', 'whats-changed-section.html'), 'utf8');
+const whatsChanged340Source = fs.readFileSync(path.join(repositoryRoot, 'content', 'openriak-kv', '3.4.0-new-release', 'whats-changed.md'), 'utf8');
+const whatsChanged341Source = fs.readFileSync(path.join(repositoryRoot, 'content', 'openriak-kv', '3.4.1', 'whats-changed.md'), 'utf8');
 const configurationReferenceTestPageSource = fs.readFileSync(path.join(repositoryRoot, 'content', 'openriak-kv', '3.4.1', 'configuration-reference-table-test.md'), 'utf8');
 const previousVersionPartialSource = fs.readFileSync(path.join(themeRoot, 'layouts', 'partials', 'previous-version.html'), 'utf8');
 const docsSidebarTreeSource = fs.readFileSync(path.join(themeRoot, 'layouts', 'partials', 'docs-sidebar-tree.html'), 'utf8');
@@ -137,7 +143,7 @@ assert.match(previousVersionPartialSource, /index hugo\.Data\.versions \$product
 assert.match(previousVersionPartialSource, /previous-version has no previous release: product=%s version=%s page=%s/, 'previous-version must stop the build when no earlier release exists');
 assert.match(baseSource, /js\/theme\.js[^"\n]+\?v=/, 'theme picker script must be cache-busted');
 assert.match(baseSource, /js\/docs-runtime\.js[^"\n]+\?v=20260903-search-mode-memory/, 'the documentation runtime must use its current cache key');
-assert.match(headSource, /css\/docs\.css[^"\n]+\?v=20260903-config-column-mins/, 'documentation styling must use its current cache key');
+assert.match(headSource, /css\/docs\.css[^"\n]+\?v=20260904-whats-changed/, 'documentation styling must use its current cache key');
 assert.match(configurationReferenceShortcodeSource, /strings\.Split \.Inner "\\n"/, 'configuration reference filters must be one regex per body line so commas remain part of the regex');
 assert.match(configurationReferenceShortcodeSource, /\.Get "area"[\s\S]*in \$setting\.areas \$area/, 'configuration references must support repository-area filtering');
 assert.match(configurationReferenceShortcodeSource, /data-configuration-default-copy[\s\S]*data-configuration-os-icon/, 'configuration references must render copyable defaults and OS-specific indicators');
@@ -172,7 +178,7 @@ assert.match(configurationReferenceShortcodeSource, /if and \$setting\.internalN
 assert.doesNotMatch(configurationReferenceShortcodeSource, /<small>Internal<\/small>/, 'configuration names must not include a redundant Internal label');
 assert.match(configurationReferenceShortcodeSource, /eq \$setting\.datatype\.label "Enum"[\s\S]*eq \$setting\.datatype\.label "Flag"[\s\S]*data-copy-label="Copy value/, 'enum and flag values must each have a copy control');
 assert.doesNotMatch(configurationReferenceShortcodeSource, /No explicit default/, 'missing configuration defaults must be labelled None');
-assert.match(configurationReferenceShortcodeSource, /<span[^>]+data-configuration-default-empty[^>]*>None\.<\/span>/, 'missing defaults must render as plain punctuated text');
+assert.match(configurationReferenceShortcodeSource, /<span[^>]+data-configuration-default-empty[^>]*>No default value\.<\/span>/, 'missing defaults must render as plain punctuated text');
 assert.match(runtimeSource, /value\.hidden = !selectedDefault\.hasDefault[\s\S]*empty\.hidden = selectedDefault\.hasDefault[\s\S]*copy\.hidden = !selectedDefault\.hasDefault/, 'OS changes must hide code and copy controls when no default exists');
 assert.match(configurationReferenceTestPageSource, /^draft: true$/m, 'the configuration reference playground must remain a draft page');
 assert.match(configurationReferenceTestPageSource, /configuration-reference-table area="riak_repl"/, 'the configuration reference playground must exercise area filtering');
@@ -262,12 +268,24 @@ assert.match(singleTemplateSource, /page-summary\.html[\s\S]*\.Content[\s\S]*rel
 assert.match(listTemplateSource, /page-summary\.html[\s\S]*\.Content[\s\S]*\.Pages[\s\S]*related-documentation\.html[\s\S]*page-footer\.html/, 'product container pages must render provenance, reading time, related links, feedback, and reporting tools around their content and child list');
 assert.match(pageSummarySource, /\.WordCount[\s\S]*technicalReadingWordsPerMinute[\s\S]*technicalReadingCodeBlockSeconds[\s\S]*findRE "\(\?ms\)\^```[\s\S]*configurationReferenceRowCount[\s\S]*\$readingMinutes[\s\S]*min read/, 'page summaries must calculate technical reading time from prose, fenced code lines, and configuration-reference rows');
 assert.match(pageSummarySource, /documentationSource[\s\S]*strings\.HasPrefix \$documentationSource "openriak-"[\s\S]*if \$showProvenance[\s\S]*partial "page-version-status\.html"[\s\S]*if \$showProvenance[\s\S]*doc-version-status/, 'page provenance must only be resolved and rendered for OpenRiak source releases');
+assert.match(pageSummarySource, /Params\.hide_provenance[\s\S]*not/, 'individual generated pages must be able to suppress their own provenance');
+assert.match(whatsChangedShortcodeSource, /versionHome\.Pages\.ByWeight[\s\S]*ne \$candidate\.Kind "section"[\s\S]*ne \$candidate\.File\.ContentBaseName "whats-changed"[\s\S]*page-version-status\.html[\s\S]*slice "new" "updated"[\s\S]*<h2>General<\/h2>[\s\S]*versionHome\.Sections\.ByWeight/, "What's Changed must exclude the version root, itself, inherited pages, and group General before menu-ordered root sections");
+assert.match(whatsChangedShortcodeSource, /partial "whats-changed-section\.html"/, "What's Changed must render a separate group for each changed container path");
+assert.match(whatsChangedSectionSource, /section\.Pages\.ByWeight[\s\S]*ne \$child\.Kind "section"[\s\S]*delimit \$pathTitles " \/ "[\s\S]*whats-changed-table\.html[\s\S]*section\.Sections\.ByWeight[\s\S]*partial "whats-changed-section\.html"/, "What's Changed container groups must include direct changed pages and recurse through container paths in menu order");
+assert.match(whatsChangedTableSource, /<th scope="col">Page<\/th>[\s\S]*<th scope="col">Type<\/th>[\s\S]*<th scope="col">Update Summary<\/th>[\s\S]*index \.page\.Params "update-summary"[\s\S]*Updated content[\s\S]*doc-version-status--\{\{ \.status \}\}/, "What's Changed tables must link pages and render styled change types with update-summary fallbacks");
+for (const source of [whatsChanged340Source, whatsChanged341Source]) {
+  assert.match(source, /^weight: -15$/m, "What's Changed must appear between Release Notes and Downloads");
+  assert.match(source, /^hide_provenance: true$/m, "What's Changed must not show page provenance");
+}
+assert.match(whatsChanged340Source, /entirely new documentation, so everything has changed/i, '3.4.0 must explain that the complete documentation set changed');
+assert.match(whatsChanged341Source, /\{\{< whats-changed >\}\}/, '3.4.1 must render its generated change list');
 assert.match(pageSummarySource, /\.TableOfContents[\s\S]*<details class="doc-table-of-contents">[\s\S]*<summary>On this page<\/summary>/, 'the top table of contents must be collapsed by default');
 assert.match(pageSummarySource, /Params\.related[\s\S]*related-documentation-heading[\s\S]*replaceRE[\s\S]*TableOfContents/, 'related documentation must be appended to the table of contents when related front matter is present');
 assert.doesNotMatch(pageSummarySource, /<details[^>]+open/, 'the top table of contents must not initially be expanded');
 assert.match(pageVersionStatusSource, /index hugo\.Data\.page_provenance \$context\.id \$context\.version[\s\S]*hugo\.IsServer[\s\S]*\$entry = dict "status" "new"[\s\S]*missing page provenance/, 'local servers must render newly added pages while static builds still fail on missing provenance');
 assert.match(pageVersionStatusSource, /\$versionRoot := printf "%s\/%s"[\s\S]*ne \$contentPath \$context\.id[\s\S]*ne \$contentPath \$versionRoot[\s\S]*\$pageKey = strings\.TrimPrefix/, 'product and version landing pages must resolve the generated empty provenance key');
 assert.match(pageVersionStatusSource, /eq \$pageKey "downloads"[\s\S]*\$entry = dict "status" "updated" "since" \$context\.version/, 'dynamically generated Downloads pages must always be updated in their current product version');
+assert.match(versionMountGeneratorSource, /key === 'whats-changed'\) continue/, "What's Changed must be excluded from generated page provenance");
 assert.match(downloadsTemplateSource, /<h1>\{\{ \.Title \}\}<\/h1>[\s\S]*partial "page-summary\.html" \.[\s\S]*related-documentation\.html[\s\S]*page-footer\.html/, 'Downloads pages must render their version provenance summary, related links, feedback, and reporting tools');
 assert.match(relatedDocumentationSource, /index \. "page"[\s\S]*printf "\/%s\/%s\/%s" \$context\.id \$context\.version \$reference[\s\S]*site\.GetPage[\s\S]*related page/, 'related documentation must resolve version-independent front matter references in the current product release');
 assert.match(pageFooterSource, /documentationIssuesURL[\s\S]*documentationFeedbackTrackingPath[\s\S]*data-copy-page-markdown[\s\S]*data-feedback-vote="yes"[\s\S]*data-feedback-vote="no"/, 'page footers must expose configurable reporting, feedback, and Markdown copying');

@@ -211,6 +211,7 @@ const generatePageProvenance = (
     for (const release of releases) {
       const provenance = {};
       for (const [key, body] of release.pages) {
+        if (key === 'whats-changed') continue;
         if (!previousPages.has(key)) {
           provenance[key] = { status: 'new', since: release.version };
         } else if (previousPages.get(key) !== body) {

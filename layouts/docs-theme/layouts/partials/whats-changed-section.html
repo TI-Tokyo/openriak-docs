@@ -1,0 +1,23 @@
+{{- $section := .section -}}
+{{- $sectionTitle := $section.LinkTitle | default $section.Title -}}
+{{- $pathTitles := .pathTitles | append $sectionTitle -}}
+{{- $changes := slice -}}
+{{- $sectionProvenance := partial "page-version-status.html" $section -}}
+{{- if in (slice "new" "updated") $sectionProvenance.status -}}
+  {{- $changes = $changes | append (dict "page" $section "status" $sectionProvenance.status) -}}
+{{- end -}}
+{{- range $child := $section.Pages.ByWeight -}}
+  {{- if ne $child.Kind "section" -}}
+    {{- $provenance := partial "page-version-status.html" $child -}}
+    {{- if in (slice "new" "updated") $provenance.status -}}
+      {{- $changes = $changes | append (dict "page" $child "status" $provenance.status) -}}
+    {{- end -}}
+  {{- end -}}
+{{- end -}}
+{{- if gt (len $changes) 0 }}
+  <h2>{{ delimit $pathTitles " / " }}</h2>
+  {{ partial "whats-changed-table.html" $changes }}
+{{- end -}}
+{{- range $childSection := $section.Sections.ByWeight -}}
+  {{- partial "whats-changed-section.html" (dict "section" $childSection "pathTitles" $pathTitles) -}}
+{{- end -}}
