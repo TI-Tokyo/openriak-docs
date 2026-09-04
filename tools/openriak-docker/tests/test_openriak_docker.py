@@ -237,6 +237,14 @@ listener.protobuf.internal = 127.0.0.1:8087
     def test_base_image_uses_release_tag(self):
         self.assertEqual(docker_tool.base_image_for(self.target), "alpine:3.21")
 
+    def test_pull_output_digest_pattern_supports_containerd_image_store(self):
+        output = "Digest: sha256:" + "b" * 64 + "\nStatus: Downloaded newer image\n"
+        self.assertEqual(
+            docker_tool.digest_from_pull_output(output),
+            "sha256:" + "b" * 64,
+        )
+        self.assertIsNone(docker_tool.digest_from_pull_output("Status: up to date\n"))
+
     def test_cookie_and_environment_example_are_generated(self):
         first = docker_tool.generate_distributed_cookie()
         second = docker_tool.generate_distributed_cookie()

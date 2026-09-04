@@ -1445,10 +1445,22 @@ def run_logged(
     return result
 
 
+def digest_from_pull_output(output: str) -> str | None:
+    match = re.search(
+        r"^Digest:[ \t]*(sha256:[0-9a-f]{64})[ \t]*$",
+        output,
+        re.MULTILINE,
+    )
+    return match.group(1) if match else None
+
+
 def resolve_base_image(target: Target, logs: pathlib.Path) -> tuple[str, str]:
     docker = docker_command()
     base = base_image_for(target)
-    run_logged([docker, "pull", "--platform", target.platform, base], logs / "base-image-pull.log")
+    pull_result = run_logged(
+        [docker, "pull", "--platform", target.platform, base],
+        logs / "base-image-pull.log",
+    )
     result = run_logged(
         [docker, "image", "inspect", "--format", "{{json .RepoDigests}}", base],
         logs / "base-image-inspect.log",
@@ -1457,10 +1469,13 @@ def resolve_base_image(target: Target, logs: pathlib.Path) -> tuple[str, str]:
         repo_digests = json.loads(result.stdout.strip())
     except json.JSONDecodeError as error:
         raise DockerToolError(f"Docker returned invalid RepoDigests for {base}") from error
-    if not repo_digests:
-        raise DockerToolError(f"Docker did not return a digest for {base}")
-    digest_reference = str(repo_digests[0])
-    digest = digest_reference.rsplit("@", 1)[-1]
+    if repo_digests:
+        digest_reference = str(repo_digests[0])
+        digest = digest_reference.rsplit("@", 1)[-1]
+    else:
+        digest = digest_from_pull_output(pull_result.stdout)
+        if digest is None:
+            raise DockerToolError(f"Docker did not return a digest for {base}")
     repository = base.rsplit(":", 1)[0]
     return base, f"{base}@{digest}" if "@" not in base else f"{repository}@{digest}"
 
