@@ -66,6 +66,10 @@
                         <a href="{{ .url | relURL }}" download="compose.single.yaml">Single node</a>
                         ·
                         <a href="{{ $image.composeCluster.url | relURL }}" download="compose.cluster.yaml">{{ $image.clusterNodes }}-node cluster</a>
+                        {{- with $image.environmentExample }}
+                          ·
+                          <a href="{{ .url | relURL }}" download=".env.example">Sample .env</a>
+                        {{- end }}
                       {{- else }}
                         <a href="{{ $image.compose.url | relURL }}" download="compose.yaml">Compose</a>
                       {{- end }}

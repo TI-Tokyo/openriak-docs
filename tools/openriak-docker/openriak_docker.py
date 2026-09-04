@@ -12,30 +12,31 @@ import json
 import os
 import pathlib
 import re
+import secrets
 import shutil
 import socket
 import subprocess
 import sys
 import tempfile
 import time
-import urllib.error
 import urllib.parse
-import urllib.request
 from typing import Any, Iterable
 
 
-SCHEMA_VERSION = 2
+SCHEMA_VERSION = 3
 MINIMUM_OPENRIAK_VERSION = (3, 4, 0)
 REPOSITORY_ROOT = pathlib.Path(__file__).resolve().parents[2]
 METADATA_ROOT = REPOSITORY_ROOT / "content" / "openriak-kv" / "metadata"
 CACHE_ROOT = REPOSITORY_ROOT / "tools" / "cache" / "openriak-docker"
 STATIC_ROOT = REPOSITORY_ROOT / "content" / "static" / "openriak-kv" / "downloads" / "docker"
-DEFAULT_NETWORK_SUBNET = "172.16.0.0/24"
-DEFAULT_NETWORK_GATEWAY = "172.16.0.254"
-DEFAULT_NODE_IPV4 = "172.16.0.1"
 DEFAULT_CLUSTER_NODES = 5
 CONTROL_DIRECTORY = "/var/lib/openriak-cluster-control"
-ARTIFACT_FILENAMES = ("Dockerfile", "compose.single.yaml", "compose.cluster.yaml")
+ARTIFACT_FILENAMES = (
+    "Dockerfile",
+    "compose.single.yaml",
+    "compose.cluster.yaml",
+    ".env.example",
+)
 
 ARCHITECTURE_PLATFORMS = {
     "x86_64": "linux/amd64",
@@ -154,6 +155,17 @@ def isoformat(value: dt.datetime | None = None) -> str:
 
 def run_id(value: dt.datetime | None = None) -> str:
     return (value or utc_now()).strftime("%Y%m%dT%H%M%S.%fZ")
+
+
+def generate_distributed_cookie() -> str:
+    """Return a Docker-target-specific, shell-safe Erlang distribution cookie."""
+    return f"openriak-{secrets.token_hex(16)}"
+
+
+def default_node_host(index: int) -> str:
+    if index < 1 or index > 253:
+        raise DockerToolError("OpenRiak node indexes must be between 1 and 253")
+    return f"node-{index:02d}.cluster-a.openriak"
 
 
 def read_json(path: pathlib.Path) -> dict[str, Any]:
@@ -447,15 +459,70 @@ ping_works() {
 }
 
 validate_nodename() {
-    printf '%s\n' "$1" | grep -Eq '^riak@[A-Za-z0-9][A-Za-z0-9._:-]*$'
+    printf '%s\n' "$1" | grep -Eq '^openriak-kv@[A-Za-z0-9][A-Za-z0-9._:-]*$'
+}
+
+validate_ipv4() {
+    printf '%s\n' "$1" | awk -F. '
+        NF != 4 { exit 1 }
+        {
+            for (octet = 1; octet <= 4; octet += 1) {
+                if ($octet !~ /^[0-9]+$/ || $octet < 0 || $octet > 255) exit 1
+            }
+        }
+    '
+}
+
+current_node_ipv4() {
+    node_ip_candidates=$(hostname -i 2>/dev/null || true)
+    if [ -z "$node_ip_candidates" ]
+    then
+        node_ip_candidates=$(getent hosts "$(hostname)" 2>/dev/null | awk '{print $1}' || true)
+    fi
+    for node_ip_candidate in $node_ip_candidates
+    do
+        case "$node_ip_candidate" in
+            127.*|*:* )
+                continue
+                ;;
+        esac
+        if validate_ipv4 "$node_ip_candidate"
+        then
+            printf '%s\n' "$node_ip_candidate"
+            return 0
+        fi
+    done
+    return 1
+}
+
+nodename_resolves_to_ip() {
+    resolution_node=$1
+    resolution_ip=$2
+    resolution_host=${resolution_node#*@}
+    getent hosts "$resolution_host" 2>/dev/null | awk -v expected="$resolution_ip" '
+        $1 == expected { found = 1 }
+        END { exit(found ? 0 : 1) }
+    '
+}
+
+control_value() {
+    control_file=$1
+    control_key=$2
+    sed -n "s/^${control_key}=//p" "$control_file" | sed -n '1p'
 }
 
 atomic_control_file() {
     control_path=$1
     control_node=$2
-    control_suffix=$3
+    control_ip=$3
+    control_coordinator=$4
+    control_suffix=$5
     control_temporary="${control_path}.tmp.$$"
-    printf '%s\n%s\n' "$control_node" "$control_suffix" > "$control_temporary"
+    printf 'nodename=%s\nip=%s\ncoordinator=%s\nsuffix=%s\n' \
+        "$control_node" \
+        "$control_ip" \
+        "$control_coordinator" \
+        "$control_suffix" > "$control_temporary"
     mv -f "$control_temporary" "$control_path"
 }
 
@@ -540,7 +607,13 @@ stop_with_error() {
 publish_failure() {
     failure_suffix=$1
     failure_message=$2
-    atomic_control_file "$control_dir/${riak_node_name}-${failure_suffix}-failed" "$riak_node_name" "$failure_suffix"
+    failure_coordinator=${3:-}
+    atomic_control_file \
+        "$control_dir/${riak_node_name}-${failure_suffix}-failed" \
+        "$riak_node_name" \
+        "$node_ip" \
+        "$failure_coordinator" \
+        "$failure_suffix"
     stop_with_error "$failure_message"
 }
 
@@ -618,13 +691,26 @@ set_setting() {
 }
 
 node_host=${RIAK_NODE_HOST:-$(hostname)}
-riak_node_name=${RIAK_NODE_NAME:-riak@$node_host}
+riak_node_name=${RIAK_NODE_NAME:-openriak-kv@$node_host}
 if ! validate_nodename "$riak_node_name"
 then
     log "configuration: invalid RIAK_NODE_NAME: ${riak_node_name}"
     exit 1
 fi
+node_ip=$(current_node_ipv4 || true)
+if [ -n "$node_ip" ]
+then
+    log "configuration: current Docker IPv4 address = ${node_ip}"
+else
+    log "configuration: no non-loopback Docker IPv4 address is currently available"
+fi
+if ! printf '%s\n' "$RIAK_DISTRIBUTED_COOKIE" | grep -Eq '^[A-Za-z0-9_-]+$'
+then
+    log "configuration: RIAK_DISTRIBUTED_COOKIE must contain only letters, numbers, underscores, and hyphens"
+    exit 1
+fi
 set_setting nodename "$riak_node_name"
+set_setting distributed_cookie "$RIAK_DISTRIBUTED_COOKIE"
 set_setting ring_size "$RIAK_RING_SIZE"
 set_setting storage_backend "$RIAK_STORAGE_BACKEND"
 set_setting anti_entropy "$RIAK_ANTI_ENTROPY"
@@ -641,6 +727,16 @@ then
 fi
 
 ulimit -n "${RIAK_NOFILE_LIMIT:-100000}"
+log "startup: validating configuration and generating VM arguments"
+if chkconfig_output=$(riak_command chkconfig 2>&1)
+then
+    chkconfig_summary=$(printf '%s' "$chkconfig_output" | one_line)
+    log "startup: configuration is valid (${chkconfig_summary})"
+else
+    chkconfig_summary=$(printf '%s' "$chkconfig_output" | one_line)
+    log "startup: configuration validation failed (${chkconfig_summary:-no-response})"
+    exit 1
+fi
 log "startup: starting OpenRiak as a daemon"
 if riak_command daemon
 then
@@ -701,6 +797,10 @@ then
     log "cluster: invalid OPENRIAK_CLUSTER_MODE: ${cluster_mode}"
     exit 1
 fi
+if [ -z "$node_ip" ]
+then
+    stop_with_error "a non-loopback Docker IPv4 address is required in cluster mode"
+fi
 
 mkdir -p "$control_dir"
 role_value=${role:-follower}
@@ -728,11 +828,23 @@ run_follower() {
         for coordinator_file in "$control_dir/"*-coordinator
         do
             [ -e "$coordinator_file" ] || continue
-            coordinator_node=$(sed -n '1p' "$coordinator_file")
-            coordinator_suffix=$(sed -n '2p' "$coordinator_file")
+            coordinator_node=$(control_value "$coordinator_file" nodename)
+            coordinator_ip=$(control_value "$coordinator_file" ip)
+            advertised_coordinator=$(control_value "$coordinator_file" coordinator)
+            coordinator_suffix=$(control_value "$coordinator_file" suffix)
             if ! validate_nodename "$coordinator_node"
             then
                 log "cluster: ignoring invalid coordinator file $(basename "$coordinator_file")"
+                continue
+            fi
+            if ! validate_ipv4 "$coordinator_ip"
+            then
+                log "cluster: ignoring coordinator file with invalid IPv4 address $(basename "$coordinator_file")"
+                continue
+            fi
+            if [ "$advertised_coordinator" != "$coordinator_node" ]
+            then
+                log "cluster: ignoring coordinator file whose coordinator field does not match its nodename"
                 continue
             fi
             if ! printf '%s\n' "$coordinator_suffix" | grep -Eq '^[0-9a-f]{16}$'
@@ -746,6 +858,11 @@ run_follower() {
                 log "cluster: ignoring coordinator file whose contents do not match its name"
                 continue
             fi
+            if ! nodename_resolves_to_ip "$coordinator_node" "$coordinator_ip"
+            then
+                log "cluster: coordinator ${coordinator_node} does not currently resolve to advertised IPv4 ${coordinator_ip}; retrying"
+                continue
+            fi
             if cluster_failure_exists "$coordinator_suffix"
             then
                 continue
@@ -756,8 +873,13 @@ run_follower() {
             complete_file="$control_dir/${riak_node_name}-${coordinator_suffix}-complete"
             if [ ! -e "$ready_file" ] && [ ! -e "$approved_file" ] && [ ! -e "$joined_file" ] && [ ! -e "$complete_file" ]
             then
-                atomic_control_file "$ready_file" "$coordinator_node" "$coordinator_suffix"
-                log "cluster: announced readiness for coordinator ${coordinator_node} (${coordinator_suffix})"
+                atomic_control_file \
+                    "$ready_file" \
+                    "$riak_node_name" \
+                    "$node_ip" \
+                    "$coordinator_node" \
+                    "$coordinator_suffix"
+                log "cluster: announced ${riak_node_name} at ${node_ip} to coordinator ${coordinator_node} (${coordinator_suffix})"
             fi
         done
 
@@ -778,10 +900,15 @@ run_follower() {
         fi
         if [ "$approval_count" -eq 1 ]
         then
-            coordinator_node=$(sed -n '1p' "$selected_approval")
-            coordinator_suffix=$(sed -n '2p' "$selected_approval")
+            approved_node=$(control_value "$selected_approval" nodename)
+            approved_ip=$(control_value "$selected_approval" ip)
+            coordinator_node=$(control_value "$selected_approval" coordinator)
+            coordinator_suffix=$(control_value "$selected_approval" suffix)
             coordinator_file="$control_dir/${coordinator_node}-${coordinator_suffix}-coordinator"
-            if [ ! -e "$coordinator_file" ] || ! validate_nodename "$coordinator_node"
+            if [ "$approved_node" != "$riak_node_name" ] \
+                || [ "$approved_ip" != "$node_ip" ] \
+                || [ ! -e "$coordinator_file" ] \
+                || ! validate_nodename "$coordinator_node"
             then
                 log "cluster: approval no longer has a valid coordinator; clearing follower state"
                 clean_owned_control_files
@@ -807,6 +934,23 @@ run_follower() {
                         then
                             wait_for_ring
                             wait_for_transfers
+                            log "cluster: waiting for coordinator completion confirmation"
+                            while [ ! -e "$complete_file" ]
+                            do
+                                if cluster_failure_exists "$coordinator_suffix"
+                                then
+                                    stop_with_error "another node reported a failure for ${coordinator_suffix}"
+                                fi
+                                if [ ! -e "$coordinator_file" ]
+                                then
+                                    publish_failure \
+                                        "$coordinator_suffix" \
+                                        "coordinator marker disappeared before completion" \
+                                        "$coordinator_node"
+                                fi
+                                sleep "$cluster_poll"
+                            done
+                            log "cluster: coordinator confirmed completion for ${riak_node_name}"
                             rm -f "$control_dir/${riak_node_name}-"*
                             log "cluster: follower joined ${coordinator_node} successfully"
                             monitor_node
@@ -823,7 +967,12 @@ run_follower() {
         cluster_waited=$((cluster_waited + cluster_poll))
         if [ "$cluster_waited" -ge "$cluster_timeout" ]
         then
-            atomic_control_file "$control_dir/${riak_node_name}-startup-failed" "$riak_node_name" startup
+            atomic_control_file \
+                "$control_dir/${riak_node_name}-startup-failed" \
+                "$riak_node_name" \
+                "$node_ip" \
+                "" \
+                startup
             stop_with_error "no coordinator approved this follower within ${cluster_timeout}s"
         fi
         log "cluster: follower waiting for coordinator approval (${cluster_waited}s/${cluster_timeout}s)"
@@ -847,8 +996,13 @@ run_coordinator() {
     done
     coordinator_suffix=$(od -An -N8 -tx1 /dev/urandom | tr -d ' \\n')
     coordinator_file="$control_dir/${riak_node_name}-${coordinator_suffix}-coordinator"
-    atomic_control_file "$coordinator_file" "$riak_node_name" "$coordinator_suffix"
-    log "cluster: published coordinator marker $(basename "$coordinator_file")"
+    atomic_control_file \
+        "$coordinator_file" \
+        "$riak_node_name" \
+        "$node_ip" \
+        "$riak_node_name" \
+        "$coordinator_suffix"
+    log "cluster: published coordinator ${riak_node_name} at ${node_ip} in $(basename "$coordinator_file")"
 
     if cluster_member
     then
@@ -863,24 +1017,41 @@ run_coordinator() {
         for failure_file in "$control_dir/"*-failed
         do
             [ -e "$failure_file" ] || continue
-            atomic_control_file "$control_dir/${riak_node_name}-${coordinator_suffix}-failed" "$riak_node_name" "$coordinator_suffix"
+            atomic_control_file \
+                "$control_dir/${riak_node_name}-${coordinator_suffix}-failed" \
+                "$riak_node_name" \
+                "$node_ip" \
+                "$riak_node_name" \
+                "$coordinator_suffix"
             stop_with_error "cluster participant reported failure in $(basename "$failure_file")"
         done
 
         for ready_file in "$control_dir/"*-"${coordinator_suffix}"-ready
         do
             [ -e "$ready_file" ] || continue
-            requested_coordinator=$(sed -n '1p' "$ready_file")
-            requested_suffix=$(sed -n '2p' "$ready_file")
-            if [ "$requested_coordinator" != "$riak_node_name" ] || [ "$requested_suffix" != "$coordinator_suffix" ]
+            follower_node=$(control_value "$ready_file" nodename)
+            follower_ip=$(control_value "$ready_file" ip)
+            requested_coordinator=$(control_value "$ready_file" coordinator)
+            requested_suffix=$(control_value "$ready_file" suffix)
+            expected_ready="$control_dir/${follower_node}-${coordinator_suffix}-ready"
+            if ! validate_nodename "$follower_node" \
+                || ! validate_ipv4 "$follower_ip" \
+                || [ "$requested_coordinator" != "$riak_node_name" ] \
+                || [ "$requested_suffix" != "$coordinator_suffix" ] \
+                || [ "$ready_file" != "$expected_ready" ]
             then
                 log "cluster: rejecting malformed readiness file $(basename "$ready_file")"
                 rm -f "$ready_file"
                 continue
             fi
+            if ! nodename_resolves_to_ip "$follower_node" "$follower_ip"
+            then
+                log "cluster: waiting for ${follower_node} to resolve to advertised IPv4 ${follower_ip}"
+                continue
+            fi
             approved_file=${ready_file%-ready}-approved
             mv -f "$ready_file" "$approved_file"
-            log "cluster: approved follower $(basename "${approved_file%-approved}")"
+            log "cluster: approved follower ${follower_node} at ${follower_ip}"
         done
 
         joined_count=0
@@ -889,7 +1060,17 @@ run_coordinator() {
             [ -e "$joined_file" ] || continue
             joined_count=$((joined_count + 1))
         done
-        if [ "$joined_count" -gt 0 ]
+        pending_count=0
+        for pending_file in "$control_dir/"*-"${coordinator_suffix}"-ready "$control_dir/"*-"${coordinator_suffix}"-approved
+        do
+            [ -e "$pending_file" ] || continue
+            pending_count=$((pending_count + 1))
+        done
+        if [ "$joined_count" -gt 0 ] && [ "$pending_count" -gt 0 ]
+        then
+            log "cluster: waiting for ${pending_count} approved or ready node(s) before planning ${joined_count} joined node(s)"
+        fi
+        if [ "$joined_count" -gt 0 ] && [ "$pending_count" -eq 0 ]
         then
             log "cluster: planning a batch of ${joined_count} joined node(s)"
             if plan_output=$(riak_admin_command cluster plan 2>&1)
@@ -930,7 +1111,12 @@ run_coordinator() {
         then
             log "monitor: Coordinator is healthy; sleeping for ${cluster_poll}s"
         else
-            atomic_control_file "$control_dir/${riak_node_name}-${coordinator_suffix}-failed" "$riak_node_name" "$coordinator_suffix"
+            atomic_control_file \
+                "$control_dir/${riak_node_name}-${coordinator_suffix}-failed" \
+                "$riak_node_name" \
+                "$node_ip" \
+                "$riak_node_name" \
+                "$coordinator_suffix"
             stop_with_error "coordinator health check failed"
         fi
         sleep "$cluster_poll"
@@ -972,7 +1158,12 @@ echo "OpenRiak healthcheck passed: BEAM is running and riak ping returned pong"
 """
 
 
-def render_dockerfile(target: Target, pinned_base_image: str) -> str:
+def render_dockerfile(
+    target: Target,
+    pinned_base_image: str,
+    distributed_cookie: str | None = None,
+) -> str:
+    distributed_cookie = distributed_cookie or generate_distributed_cookie()
     checksum = target.package["checksum"]["value"]
     filename = target.package["filename"]
     package_url = target.package["url"]
@@ -986,6 +1177,7 @@ FROM --platform={target.platform} {pinned_base_image}
 # -----------------------------------------------------------------------------
 ENV RIAK_NODE_HOST=""
 ENV RIAK_NODE_NAME=""
+ENV RIAK_DISTRIBUTED_COOKIE="{distributed_cookie}"
 ENV RIAK_RING_SIZE="8"
 ENV RIAK_STORAGE_BACKEND="leveled"
 ENV RIAK_ANTI_ENTROPY="passive"
@@ -1045,8 +1237,18 @@ ENTRYPOINT ["/usr/local/bin/openriak-entrypoint"]
 """
 
 
-def render_single_compose(target: Target) -> str:
+def render_single_compose(
+    target: Target,
+    distributed_cookie: str | None = None,
+    publish_ports: bool = True,
+) -> str:
+    distributed_cookie = distributed_cookie or generate_distributed_cookie()
     node = target.node_name
+    host = default_node_host(1)
+    ports = f'''    ports:
+      - "${{OPENRIAK_PB_PORT:-8087}}:8087"
+      - "${{OPENRIAK_HTTP_PORT:-8098}}:8098"
+''' if publish_ports else ""
     return f"""# Generated and tested by tools/openriak-docker/openriak-docker. Do not edit by hand.
 name: {node}
 
@@ -1057,20 +1259,19 @@ services:
       dockerfile: ./Dockerfile
     image: {target.image}
     container_name: "${{OPENRIAK_CONTAINER_NAME:-{node}}}"
-    hostname: {node}
+    hostname: "${{OPENRIAK_NODE_1_HOST:-{host}}}"
     environment:
-      RIAK_NODE_NAME: "${{OPENRIAK_NODE_NAME:-riak@{DEFAULT_NODE_IPV4}}}"
+      RIAK_NODE_HOST: "${{OPENRIAK_NODE_1_HOST:-{host}}}"
+      RIAK_DISTRIBUTED_COOKIE: "${{OPENRIAK_DISTRIBUTED_COOKIE:-{distributed_cookie}}}"
       RIAK_MONITOR_INTERVAL_SECONDS: "${{OPENRIAK_MONITOR_INTERVAL_SECONDS:-10}}"
-    ports:
-      - "${{OPENRIAK_PB_PORT:-8087}}:8087"
-      - "${{OPENRIAK_HTTP_PORT:-8098}}:8098"
-    volumes:
-      - "./{node}/config:/etc/riak"
-      - "./{node}/data:/var/lib/riak"
-      - "./{node}/logs:/var/log/riak"
+{ports}    volumes:
+      - "${{OPENRIAK_CONFIG_PATH:-./{node}/config}}:/etc/riak"
+      - "${{OPENRIAK_DATA_PATH:-./{node}/data}}:/var/lib/riak"
+      - "${{OPENRIAK_LOGS_PATH:-./{node}/logs}}:/var/log/riak"
     networks:
       openriak:
-        ipv4_address: "${{OPENRIAK_NODE_IPV4:-{DEFAULT_NODE_IPV4}}}"
+        aliases:
+          - "${{OPENRIAK_NODE_1_HOST:-{host}}}"
     ulimits:
       nofile:
         soft: 100000
@@ -1080,10 +1281,6 @@ services:
 networks:
   openriak:
     driver: bridge
-    ipam:
-      config:
-        - subnet: "${{OPENRIAK_NETWORK_SUBNET:-{DEFAULT_NETWORK_SUBNET}}}"
-          gateway: "${{OPENRIAK_NETWORK_GATEWAY:-{DEFAULT_NETWORK_GATEWAY}}}"
 """
 
 
@@ -1091,35 +1288,43 @@ def cluster_node_name(target: Target, index: int) -> str:
     return f"{target.node_name}-{index}"
 
 
-def render_cluster_service(target: Target, index: int) -> str:
+def render_cluster_service(
+    target: Target,
+    index: int,
+    distributed_cookie: str,
+    publish_ports: bool,
+) -> str:
     node = cluster_node_name(target, index)
-    ipv4 = f"172.16.0.{index}"
+    host = default_node_host(index)
     port_prefix = 18000 + (index - 1) * 100
     role_line = "      role: coordinator\n" if index == 1 else ""
+    ports = f'''    ports:
+      - "${{OPENRIAK_NODE_{index}_PB_PORT:-{port_prefix + 87}}}:8087"
+      - "${{OPENRIAK_NODE_{index}_HTTP_PORT:-{port_prefix + 98}}}:8098"
+''' if publish_ports else ""
     return f"""  node{index}:
     build:
       context: .
       dockerfile: ./Dockerfile
     image: {target.image}
     container_name: "${{OPENRIAK_NODE_{index}_CONTAINER_NAME:-{node}}}"
-    hostname: {node}
+    hostname: "${{OPENRIAK_NODE_{index}_HOST:-{host}}}"
     environment:
       OPENRIAK_CLUSTER_MODE: cluster
-{role_line}      RIAK_NODE_NAME: "${{OPENRIAK_NODE_{index}_NAME:-riak@{ipv4}}}"
+{role_line}      RIAK_NODE_HOST: "${{OPENRIAK_NODE_{index}_HOST:-{host}}}"
+      RIAK_DISTRIBUTED_COOKIE: "${{OPENRIAK_DISTRIBUTED_COOKIE:-{distributed_cookie}}}"
       RIAK_MONITOR_INTERVAL_SECONDS: "${{OPENRIAK_MONITOR_INTERVAL_SECONDS:-10}}"
       OPENRIAK_CLUSTER_POLL_SECONDS: "${{OPENRIAK_CLUSTER_POLL_SECONDS:-1}}"
       OPENRIAK_CLUSTER_WAIT_SECONDS: "${{OPENRIAK_CLUSTER_WAIT_SECONDS:-300}}"
-    ports:
-      - "${{OPENRIAK_NODE_{index}_PB_PORT:-{port_prefix + 87}}}:8087"
-      - "${{OPENRIAK_NODE_{index}_HTTP_PORT:-{port_prefix + 98}}}:8098"
-    volumes:
-      - "./{node}/config:/etc/riak"
-      - "./{node}/data:/var/lib/riak"
-      - "./{node}/logs:/var/log/riak"
-      - "./{target.node_name}-cluster-control:{CONTROL_DIRECTORY}"
+{ports}    volumes:
+      - "${{OPENRIAK_NODE_{index}_CONFIG_PATH:-./{node}/config}}:/etc/riak"
+      - "${{OPENRIAK_NODE_{index}_DATA_PATH:-./{node}/data}}:/var/lib/riak"
+      - "${{OPENRIAK_NODE_{index}_LOGS_PATH:-./{node}/logs}}:/var/log/riak"
+      - "${{OPENRIAK_CLUSTER_CONTROL_PATH:-./{target.node_name}-cluster-control}}:{CONTROL_DIRECTORY}"
     networks:
       openriak:
-        ipv4_address: "${{OPENRIAK_NODE_{index}_IPV4:-{ipv4}}}"
+        aliases:
+          - "${{OPENRIAK_NODE_{index}_HOST:-{host}}}"
     ulimits:
       nofile:
         soft: 100000
@@ -1128,11 +1333,18 @@ def render_cluster_service(target: Target, index: int) -> str:
 """
 
 
-def render_cluster_compose(target: Target, node_count: int = DEFAULT_CLUSTER_NODES) -> str:
+def render_cluster_compose(
+    target: Target,
+    node_count: int = DEFAULT_CLUSTER_NODES,
+    distributed_cookie: str | None = None,
+    publish_ports: bool = True,
+) -> str:
     if node_count < 2 or node_count > 253:
         raise DockerToolError("Cluster Compose generation supports between 2 and 253 nodes")
+    distributed_cookie = distributed_cookie or generate_distributed_cookie()
     services = "\n".join(
-        render_cluster_service(target, index).rstrip() for index in range(1, node_count + 1)
+        render_cluster_service(target, index, distributed_cookie, publish_ports).rstrip()
+        for index in range(1, node_count + 1)
     )
     return f"""# Generated and tested by tools/openriak-docker/openriak-docker. Do not edit by hand.
 # Set role=coordinator on exactly one service. An omitted or empty role is a follower.
@@ -1144,11 +1356,52 @@ services:
 networks:
   openriak:
     driver: bridge
-    ipam:
-      config:
-        - subnet: "${{OPENRIAK_NETWORK_SUBNET:-{DEFAULT_NETWORK_SUBNET}}}"
-          gateway: "${{OPENRIAK_NETWORK_GATEWAY:-{DEFAULT_NETWORK_GATEWAY}}}"
 """
+
+
+def render_environment_example(
+    target: Target,
+    distributed_cookie: str,
+    node_count: int = DEFAULT_CLUSTER_NODES,
+) -> str:
+    lines = [
+        "# Copy this file to .env before running either Compose file.",
+        "# All values below match the generated defaults and may be edited.",
+        "# Every member of one cluster must use the same distributed cookie.",
+        f"OPENRIAK_DISTRIBUTED_COOKIE={distributed_cookie}",
+        "OPENRIAK_MONITOR_INTERVAL_SECONDS=10",
+        "OPENRIAK_CLUSTER_POLL_SECONDS=1",
+        "OPENRIAK_CLUSTER_WAIT_SECONDS=300",
+        "",
+        "# Single-node container, ports, and bind-mount source paths.",
+        f"OPENRIAK_CONTAINER_NAME={target.node_name}",
+        "OPENRIAK_PB_PORT=8087",
+        "OPENRIAK_HTTP_PORT=8098",
+        f"OPENRIAK_CONFIG_PATH=./{target.node_name}/config",
+        f"OPENRIAK_DATA_PATH=./{target.node_name}/data",
+        f"OPENRIAK_LOGS_PATH=./{target.node_name}/logs",
+        "",
+        "# Cluster-wide shared control-directory source path.",
+        f"OPENRIAK_CLUSTER_CONTROL_PATH=./{target.node_name}-cluster-control",
+        "",
+        "# Cluster node identities, ports, and bind-mount source paths.",
+    ]
+    for index in range(1, node_count + 1):
+        node = cluster_node_name(target, index)
+        port_prefix = 18000 + (index - 1) * 100
+        lines.extend(
+            [
+                f"OPENRIAK_NODE_{index}_HOST={default_node_host(index)}",
+                f"OPENRIAK_NODE_{index}_CONTAINER_NAME={node}",
+                f"OPENRIAK_NODE_{index}_PB_PORT={port_prefix + 87}",
+                f"OPENRIAK_NODE_{index}_HTTP_PORT={port_prefix + 98}",
+                f"OPENRIAK_NODE_{index}_CONFIG_PATH=./{node}/config",
+                f"OPENRIAK_NODE_{index}_DATA_PATH=./{node}/data",
+                f"OPENRIAK_NODE_{index}_LOGS_PATH=./{node}/logs",
+                "",
+            ]
+        )
+    return "\n".join(lines)
 
 
 def docker_command() -> str:
@@ -1227,7 +1480,7 @@ def set_riak_setting(source: str, key: str, value: str) -> str:
 def configure_test_node(config_path: pathlib.Path, node_name: str) -> None:
     source = config_path.read_text(encoding="utf-8")
     settings = {
-        "nodename": f"riak@{node_name}",
+        "nodename": f"openriak-kv@{node_name}",
         "ring_size": "8",
         "storage_backend": "leveled",
         "anti_entropy": "passive",
@@ -1261,9 +1514,36 @@ def free_tcp_port() -> int:
         return int(handle.getsockname()[1])
 
 
+def container_http_ping(container_name: str) -> tuple[int, str, int]:
+    docker = docker_command()
+    result = subprocess.run(
+        [
+            docker,
+            "exec",
+            container_name,
+            "curl",
+            "--silent",
+            "--show-error",
+            "--output",
+            "-",
+            "--write-out",
+            "\\n%{http_code}",
+            "http://127.0.0.1:8098/ping",
+        ],
+        text=True,
+        stdout=subprocess.PIPE,
+        stderr=subprocess.STDOUT,
+        encoding="utf-8",
+        errors="replace",
+        check=False,
+    )
+    body, separator, status = result.stdout.strip().rpartition("\n")
+    status_code = int(status) if separator and status.isdigit() else 0
+    return result.returncode, body if separator else result.stdout.strip(), status_code
+
+
 def wait_for_node(
     container_name: str,
-    http_port: int,
     timeout_seconds: int,
     logs: pathlib.Path,
 ) -> tuple[str, str]:
@@ -1283,15 +1563,11 @@ def wait_for_node(
                 check=False,
             )
             last_cli = cli.stdout.strip()
-            try:
-                with urllib.request.urlopen(f"http://127.0.0.1:{http_port}/ping", timeout=3) as response:
-                    last_http = response.read().decode("utf-8", errors="replace").strip()
-                    http_ok = response.status == 200 and last_http == "OK"
-            except (urllib.error.URLError, TimeoutError, ConnectionError) as error:
-                last_http = str(error)
-                http_ok = False
+            http_exit, last_http, http_status = container_http_ping(container_name)
+            http_ok = http_exit == 0 and http_status == 200 and last_http == "OK"
             log.write(
-                f"{isoformat()} cli_exit={cli.returncode} cli={last_cli!r} http={last_http!r}\n"
+                f"{isoformat()} cli_exit={cli.returncode} cli={last_cli!r} "
+                f"http_exit={http_exit} http_status={http_status} http={last_http!r}\n"
             )
             log.flush()
             if cli.returncode == 0 and last_cli == "pong" and http_ok:
@@ -1376,7 +1652,6 @@ def wait_for_container_health(
 def wait_for_cluster(
     container_names: list[str],
     expected_nodenames: list[str],
-    http_ports: list[int],
     timeout_seconds: int,
     log_path: pathlib.Path,
 ) -> dict[str, Any]:
@@ -1390,7 +1665,7 @@ def wait_for_cluster(
         while time.monotonic() < deadline:
             all_ready = True
             state: dict[str, Any] = {}
-            for container_name, http_port in zip(container_names, http_ports):
+            for container_name in container_names:
                 commands = {
                     "members": ["riak", "admin", "member-status"],
                     "ring": ["riak", "admin", "ringready"],
@@ -1412,15 +1687,8 @@ def wait_for_cluster(
                         "exit": result.returncode,
                         "output": result.stdout.strip(),
                     }
-                try:
-                    with urllib.request.urlopen(
-                        f"http://127.0.0.1:{http_port}/ping", timeout=3
-                    ) as response:
-                        http_body = response.read().decode("utf-8", errors="replace").strip()
-                        http_ok = response.status == 200 and http_body == "OK"
-                except (urllib.error.URLError, TimeoutError, ConnectionError) as error:
-                    http_body = str(error)
-                    http_ok = False
+                http_exit, http_body, http_status = container_http_ping(container_name)
+                http_ok = http_exit == 0 and http_status == 200 and http_body == "OK"
                 members_output = outputs["members"]["output"]
                 node_ready = (
                     outputs["members"]["exit"] == 0
@@ -1484,6 +1752,7 @@ def artifact_downloads(
     dockerfile: pathlib.Path,
     compose_single: pathlib.Path,
     compose_cluster: pathlib.Path,
+    environment_example: pathlib.Path,
 ) -> dict[str, Any]:
     base_url = f"downloads/docker/{target.version}/{target.image_tag}"
     return {
@@ -1501,6 +1770,11 @@ def artifact_downloads(
             "filename": "compose.cluster.yaml",
             "url": f"{base_url}/compose.cluster.yaml",
             "sha256": sha256_file(compose_cluster),
+        },
+        "environment_example": {
+            "filename": ".env.example",
+            "url": f"{base_url}/.env.example",
+            "sha256": sha256_file(environment_example),
         },
     }
 
@@ -1529,7 +1803,12 @@ def publish_current_run(target: Target, run_root: pathlib.Path, report: dict[str
                 (target.static_directory / filename).unlink()
 
 
-def initial_report(target: Target, identifier: str, cluster_nodes: int) -> dict[str, Any]:
+def initial_report(
+    target: Target,
+    identifier: str,
+    cluster_nodes: int,
+    distributed_cookie: str,
+) -> dict[str, Any]:
     package = target.package
     return {
         "schema_version": SCHEMA_VERSION,
@@ -1557,7 +1836,10 @@ def initial_report(target: Target, identifier: str, cluster_nodes: int) -> dict[
         },
         "image": target.image,
         "node": target.node_name,
-        "generation": {"cluster_nodes": cluster_nodes},
+        "generation": {
+            "cluster_nodes": cluster_nodes,
+            "distributed_cookie": distributed_cookie,
+        },
         "metadata_sources": [
             f"content/openriak-kv/metadata/{target.version}/supported-os.json",
             f"content/openriak-kv/metadata/{target.version}/downloads.json",
@@ -1569,10 +1851,9 @@ def initial_report(target: Target, identifier: str, cluster_nodes: int) -> dict[
             "logs": {"container": "/var/log/riak", "default": f"./{target.node_name}/logs"},
         },
         "network": {
-            "subnet": DEFAULT_NETWORK_SUBNET,
-            "gateway": DEFAULT_NETWORK_GATEWAY,
-            "node_ipv4": DEFAULT_NODE_IPV4,
-            "riak_node_name": f"riak@{DEFAULT_NODE_IPV4}",
+            "address_assignment": "docker",
+            "node_host": default_node_host(1),
+            "riak_node_name": f"openriak-kv@{default_node_host(1)}",
         },
         "ports": {"protobuf": 8087, "http": 8098},
         "steps": [],
@@ -1592,10 +1873,12 @@ def refresh_target(
     run_root = target.cache_directory / "runs" / identifier
     logs = run_root / "logs"
     run_root.mkdir(parents=True, exist_ok=False)
-    report = initial_report(target, identifier, cluster_nodes)
+    distributed_cookie = generate_distributed_cookie()
+    report = initial_report(target, identifier, cluster_nodes, distributed_cookie)
     dockerfile = run_root / "Dockerfile"
     compose_single = run_root / "compose.single.yaml"
     compose_cluster = run_root / "compose.cluster.yaml"
+    environment_example = run_root / ".env.example"
     test_directory: pathlib.Path | None = None
     compose_started = False
     cluster_started = False
@@ -1614,22 +1897,48 @@ def refresh_target(
 
         def generate() -> None:
             dockerfile.write_text(
-                render_dockerfile(target, pinned_base),
+                render_dockerfile(target, pinned_base, distributed_cookie),
                 encoding="utf-8",
                 newline="\n",
             )
             compose_single.write_text(
-                render_single_compose(target),
+                render_single_compose(target, distributed_cookie),
                 encoding="utf-8",
                 newline="\n",
             )
             compose_cluster.write_text(
-                render_cluster_compose(target, cluster_nodes),
+                render_cluster_compose(target, cluster_nodes, distributed_cookie),
+                encoding="utf-8",
+                newline="\n",
+            )
+            environment_example.write_text(
+                render_environment_example(target, distributed_cookie, cluster_nodes),
                 encoding="utf-8",
                 newline="\n",
             )
 
         record_step(report, "generate_artifacts", generate)
+
+        def validate_compose_artifacts() -> None:
+            for compose_path, log_name in (
+                (compose_single, "compose-single-config.log"),
+                (compose_cluster, "compose-cluster-config.log"),
+            ):
+                run_logged(
+                    [
+                        docker,
+                        "compose",
+                        "--project-directory",
+                        str(run_root),
+                        "--file",
+                        str(compose_path),
+                        "config",
+                        "--quiet",
+                    ],
+                    logs / log_name,
+                )
+
+        record_step(report, "validate_compose_artifacts", validate_compose_artifacts)
         record_step(
             report,
             "build_image",
@@ -1651,9 +1960,25 @@ def refresh_target(
         )
 
         test_directory = pathlib.Path(tempfile.mkdtemp(prefix=f"openriak-docker-{target.image_tag}-"))
-        shutil.copy2(compose_single, test_directory / "compose.single.yaml")
-        shutil.copy2(compose_cluster, test_directory / "compose.cluster.yaml")
+        compose_single_test = test_directory / "compose.single.test.yaml"
+        compose_cluster_test = test_directory / "compose.cluster.test.yaml"
+        compose_single_test.write_text(
+            render_single_compose(target, distributed_cookie, publish_ports=False),
+            encoding="utf-8",
+            newline="\n",
+        )
+        compose_cluster_test.write_text(
+            render_cluster_compose(
+                target,
+                cluster_nodes,
+                distributed_cookie,
+                publish_ports=False,
+            ),
+            encoding="utf-8",
+            newline="\n",
+        )
         shutil.copy2(dockerfile, test_directory / "Dockerfile")
+        shutil.copy2(environment_example, test_directory / ".env.example")
         node_directory = test_directory / target.node_name
         test_suffix = identifier[-8:].lower().replace(".", "")
         test_container_name = f"{target.node_name}-t-{test_suffix}"
@@ -1663,20 +1988,16 @@ def refresh_target(
             OPENRIAK_HTTP_PORT=str(free_tcp_port()),
             OPENRIAK_MONITOR_INTERVAL_SECONDS="1",
         )
-        network_octet = 20 + int(hashlib.sha256(identifier.encode()).hexdigest()[:2], 16) % 200
-        cluster_network_prefix = f"10.245.{network_octet}"
         cluster_container_names = [
             f"{cluster_node_name(target, index)}-t-{test_suffix}"
             for index in range(1, cluster_nodes + 1)
         ]
         cluster_nodenames = [
-            f"riak@{cluster_network_prefix}.{index}" for index in range(1, cluster_nodes + 1)
+            f"openriak-kv@{default_node_host(index)}" for index in range(1, cluster_nodes + 1)
         ]
         cluster_pb_ports = [18087 + (index - 1) * 100 for index in range(1, cluster_nodes + 1)]
         cluster_http_ports = [18098 + (index - 1) * 100 for index in range(1, cluster_nodes + 1)]
         cluster_environment_lines = [
-            f"OPENRIAK_NETWORK_SUBNET={cluster_network_prefix}.0/24",
-            f"OPENRIAK_NETWORK_GATEWAY={cluster_network_prefix}.254",
             "OPENRIAK_CLUSTER_POLL_SECONDS=1",
             "OPENRIAK_CLUSTER_WAIT_SECONDS=300",
         ]
@@ -1684,8 +2005,6 @@ def refresh_target(
             cluster_environment_lines.extend(
                 [
                     f"OPENRIAK_NODE_{index}_CONTAINER_NAME={cluster_container_names[index - 1]}",
-                    f"OPENRIAK_NODE_{index}_IPV4={cluster_network_prefix}.{index}",
-                    f"OPENRIAK_NODE_{index}_NAME={cluster_nodenames[index - 1]}",
                     f"OPENRIAK_NODE_{index}_PB_PORT={cluster_pb_ports[index - 1]}",
                     f"OPENRIAK_NODE_{index}_HTTP_PORT={cluster_http_ports[index - 1]}",
                 ]
@@ -1718,7 +2037,7 @@ def refresh_target(
             "--project-directory",
             str(test_directory),
             "--file",
-            str(test_directory / "compose.single.yaml"),
+            str(compose_single_test),
         ]
 
         existing = run_logged(
@@ -1776,10 +2095,10 @@ def refresh_target(
         record_step(
             report,
             "configure_node",
-            lambda: configure_test_node(config_path, DEFAULT_NODE_IPV4),
+            lambda: configure_test_node(config_path, default_node_host(1)),
         )
         expected_settings = {
-            "nodename": f"riak@{DEFAULT_NODE_IPV4}",
+            "nodename": f"openriak-kv@{default_node_host(1)}",
             "ring_size": "8",
             "storage_backend": "leveled",
             "anti_entropy": "passive",
@@ -1798,6 +2117,7 @@ def refresh_target(
             "settings": actual_settings,
         }
 
+        compose_started = True
         record_step(
             report,
             "start_compose_node",
@@ -1808,7 +2128,6 @@ def refresh_target(
                 environment=environment,
             ),
         )
-        compose_started = True
         lifecycle_output = record_step(
             report,
             "wait_for_entrypoint_readiness",
@@ -1843,7 +2162,6 @@ def refresh_target(
             "wait_for_cli_and_http",
             lambda: wait_for_node(
                 test_container_name,
-                int(environment["OPENRIAK_HTTP_PORT"]),
                 timeout_seconds,
                 logs,
             ),
@@ -1937,7 +2255,7 @@ def refresh_target(
             "--project-directory",
             str(test_directory),
             "--file",
-            str(test_directory / "compose.cluster.yaml"),
+            str(compose_cluster_test),
         ]
         for cluster_container_name in cluster_container_names:
             existing = run_logged(
@@ -1967,7 +2285,6 @@ def refresh_target(
             lambda: wait_for_cluster(
                 cluster_container_names,
                 cluster_nodenames,
-                cluster_http_ports,
                 max(timeout_seconds, 300),
                 logs / "cluster-readiness.log",
             ),
@@ -2033,7 +2350,7 @@ def refresh_target(
         )
         cluster_started = False
         report["artifacts"] = artifact_downloads(
-            target, dockerfile, compose_single, compose_cluster
+            target, dockerfile, compose_single, compose_cluster, environment_example
         )
         report["status"] = "passed"
     except Exception as error:
@@ -2049,7 +2366,7 @@ def refresh_target(
                 "--project-directory",
                 str(test_directory),
                 "--file",
-                str(test_directory / "compose.single.yaml"),
+                str(test_directory / "compose.single.test.yaml"),
             ]
             if compose_started:
                 run_logged(
@@ -2075,7 +2392,7 @@ def refresh_target(
                     "--project-directory",
                     str(test_directory),
                     "--file",
-                    str(test_directory / "compose.cluster.yaml"),
+                    str(test_directory / "compose.cluster.test.yaml"),
                 ]
                 run_logged(
                     cluster_command + ["logs", "--no-color"],
@@ -2137,6 +2454,7 @@ def cache_state(target: Target, cluster_nodes: int = DEFAULT_CLUSTER_NODES) -> t
         "dockerfile": "Dockerfile",
         "compose_single": "compose.single.yaml",
         "compose_cluster": "compose.cluster.yaml",
+        "environment_example": ".env.example",
     }
     for key, filename in artifact_names.items():
         artifact = report.get("artifacts", {}).get(key, {})

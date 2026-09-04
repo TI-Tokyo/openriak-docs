@@ -39,8 +39,9 @@ class OpenRiakDockerTests(unittest.TestCase):
 
     def test_dockerfile_is_pinned_and_self_contained(self):
         digest = "sha256:" + "a" * 64
+        cookie = "openriak-0123456789abcdef0123456789abcdef"
         source = docker_tool.render_dockerfile(
-            self.target, f"alpine:3.21@{digest}"
+            self.target, f"alpine:3.21@{digest}", cookie
         )
         self.assertIn(f"FROM --platform=linux/amd64 alpine:3.21@{digest}", source)
         self.assertNotIn("latest", source.lower())
@@ -50,6 +51,7 @@ class OpenRiakDockerTests(unittest.TestCase):
         self.assertIn("/usr/lib/riak/log", source)
         self.assertIn("# OpenRiak KV default settings", source)
         self.assertIn('ENV RIAK_RING_SIZE="8"', source)
+        self.assertIn(f'ENV RIAK_DISTRIBUTED_COOKIE="{cookie}"', source)
         self.assertIn('ENV RIAK_STORAGE_BACKEND="leveled"', source)
         self.assertIn('ENV RIAK_TICTACAAE_ACTIVE="active"', source)
         self.assertIn('ENV RIAK_TICTACAAE_STOREHEADS="enabled"', source)
@@ -64,6 +66,8 @@ class OpenRiakDockerTests(unittest.TestCase):
         self.assertIn("COPY <<'OPENRIAK_ENTRYPOINT'", source)
         self.assertIn("COPY <<'OPENRIAK_HEALTHCHECK'", source)
         self.assertIn("riak_command daemon", source)
+        self.assertIn("riak_command chkconfig", source)
+        self.assertIn('log "startup: configuration is valid', source)
         self.assertIn("riak_command admin services", source)
         self.assertIn("riak_command admin transfers", source)
         self.assertIn("riak_command stop", source)
@@ -77,8 +81,21 @@ class OpenRiakDockerTests(unittest.TestCase):
         self.assertIn('riak_admin_command cluster join "$coordinator_node"', source)
         self.assertIn("riak_admin_command cluster plan", source)
         self.assertIn("riak_admin_command cluster commit", source)
+        self.assertIn('pending_file in "$control_dir/"*-"${coordinator_suffix}"-ready', source)
+        self.assertIn('[ "$pending_count" -eq 0 ]', source)
+        self.assertIn('while [ ! -e "$complete_file" ]', source)
+        self.assertIn("cluster: coordinator confirmed completion", source)
         self.assertIn("plan_output_is_successful", source)
         self.assertIn("commit_output_is_successful", source)
+        self.assertIn("current_node_ipv4", source)
+        self.assertIn("nodename_resolves_to_ip", source)
+        self.assertIn('set_setting distributed_cookie "$RIAK_DISTRIBUTED_COOKIE"', source)
+        self.assertIn('log "configuration: ${key} = ${value}"', source)
+        self.assertIn("for (octet = 1; octet <= 4; octet += 1)", source)
+        self.assertIn("nodename=%s", source)
+        self.assertIn("ip=%s", source)
+        self.assertIn("coordinator=%s", source)
+        self.assertIn("suffix=%s", source)
         self.assertIn("*-coordinator", source)
         self.assertIn("-approved", source)
         self.assertNotIn("/usr/sbin/riak console", source)
@@ -88,45 +105,60 @@ class OpenRiakDockerTests(unittest.TestCase):
                 self.assertNotIn("; ", line)
 
     def test_compose_has_requested_identity_ports_volumes_and_network(self):
-        source = docker_tool.render_single_compose(self.target)
+        cookie = "openriak-0123456789abcdef0123456789abcdef"
+        source = docker_tool.render_single_compose(self.target, cookie)
         node = "openriak-kv-3.4.0-alpine-3.21-otp24-x86_64-node"
+        host = "node-01.cluster-a.openriak"
         self.assertIn("build:\n      context: .\n      dockerfile: ./Dockerfile", source)
         self.assertIn(f'container_name: "${{OPENRIAK_CONTAINER_NAME:-{node}}}"', source)
-        self.assertIn(f"hostname: {node}", source)
-        self.assertIn('RIAK_NODE_NAME: "${OPENRIAK_NODE_NAME:-riak@172.16.0.1}"', source)
+        self.assertIn(f'hostname: "${{OPENRIAK_NODE_1_HOST:-{host}}}"', source)
+        self.assertIn(f'RIAK_NODE_HOST: "${{OPENRIAK_NODE_1_HOST:-{host}}}"', source)
+        self.assertIn(f'RIAK_DISTRIBUTED_COOKIE: "${{OPENRIAK_DISTRIBUTED_COOKIE:-{cookie}}}"', source)
         self.assertIn(
             'RIAK_MONITOR_INTERVAL_SECONDS: "${OPENRIAK_MONITOR_INTERVAL_SECONDS:-10}"',
             source,
         )
         self.assertIn('"${OPENRIAK_PB_PORT:-8087}:8087"', source)
         self.assertIn('"${OPENRIAK_HTTP_PORT:-8098}:8098"', source)
-        self.assertIn(f'"./{node}/config:/etc/riak"', source)
-        self.assertIn(f'"./{node}/data:/var/lib/riak"', source)
-        self.assertIn(f'"./{node}/logs:/var/log/riak"', source)
-        self.assertIn('ipv4_address: "${OPENRIAK_NODE_IPV4:-172.16.0.1}"', source)
-        self.assertIn('subnet: "${OPENRIAK_NETWORK_SUBNET:-172.16.0.0/24}"', source)
-        self.assertIn('gateway: "${OPENRIAK_NETWORK_GATEWAY:-172.16.0.254}"', source)
+        self.assertIn(f'"${{OPENRIAK_CONFIG_PATH:-./{node}/config}}:/etc/riak"', source)
+        self.assertIn(f'"${{OPENRIAK_DATA_PATH:-./{node}/data}}:/var/lib/riak"', source)
+        self.assertIn(f'"${{OPENRIAK_LOGS_PATH:-./{node}/logs}}:/var/log/riak"', source)
+        self.assertIn(f'aliases:\n          - "${{OPENRIAK_NODE_1_HOST:-{host}}}"', source)
+        self.assertNotIn("ipv4_address", source)
+        self.assertNotIn("ipam", source)
 
     def test_cluster_compose_has_five_nodes_one_coordinator_and_shared_control(self):
-        source = docker_tool.render_cluster_compose(self.target)
+        cookie = "openriak-0123456789abcdef0123456789abcdef"
+        source = docker_tool.render_cluster_compose(self.target, distributed_cookie=cookie)
         for index in range(1, 6):
             node = f"{self.target.node_name}-{index}"
+            host = f"node-{index:02d}.cluster-a.openriak"
             self.assertIn(f"  node{index}:", source)
-            self.assertIn(f"hostname: {node}", source)
-            self.assertIn(f"riak@172.16.0.{index}", source)
-            self.assertIn(f'"./{node}/config:/etc/riak"', source)
-            self.assertIn(f'"./{node}/data:/var/lib/riak"', source)
-            self.assertIn(f'"./{node}/logs:/var/log/riak"', source)
+            self.assertIn(f'hostname: "${{OPENRIAK_NODE_{index}_HOST:-{host}}}"', source)
+            self.assertIn(
+                f'RIAK_NODE_HOST: "${{OPENRIAK_NODE_{index}_HOST:-{host}}}"',
+                source,
+            )
+            self.assertIn(
+                f'aliases:\n          - "${{OPENRIAK_NODE_{index}_HOST:-{host}}}"',
+                source,
+            )
+            self.assertIn(f'"${{OPENRIAK_NODE_{index}_CONFIG_PATH:-./{node}/config}}:/etc/riak"', source)
+            self.assertIn(f'"${{OPENRIAK_NODE_{index}_DATA_PATH:-./{node}/data}}:/var/lib/riak"', source)
+            self.assertIn(f'"${{OPENRIAK_NODE_{index}_LOGS_PATH:-./{node}/logs}}:/var/log/riak"', source)
+        self.assertEqual(source.count(f'RIAK_DISTRIBUTED_COOKIE: "${{OPENRIAK_DISTRIBUTED_COOKIE:-{cookie}}}"'), 5)
         self.assertEqual(source.count("      role: coordinator"), 1)
         self.assertEqual(source.count("      OPENRIAK_CLUSTER_MODE: cluster"), 5)
         self.assertEqual(
             source.count(
-                f'"./{self.target.node_name}-cluster-control:'
+                f'"${{OPENRIAK_CLUSTER_CONTROL_PATH:-./{self.target.node_name}-cluster-control}}:'
                 f'{docker_tool.CONTROL_DIRECTORY}"'
             ),
             5,
         )
         self.assertNotIn("configured-node-count", source)
+        self.assertNotIn("ipv4_address", source)
+        self.assertNotIn("OPENRIAK_NETWORK_SUBNET", source)
 
     def test_cluster_node_count_is_generator_control_not_runtime_configuration(self):
         source = docker_tool.render_cluster_compose(self.target, 3)
@@ -135,6 +167,23 @@ class OpenRiakDockerTests(unittest.TestCase):
         self.assertEqual(source.count("      role: coordinator"), 1)
         with self.assertRaisesRegex(docker_tool.DockerToolError, "between 2 and 253"):
             docker_tool.render_cluster_compose(self.target, 1)
+
+    def test_runtime_compose_can_disable_host_port_publication(self):
+        cookie = "openriak-0123456789abcdef0123456789abcdef"
+        single = docker_tool.render_single_compose(
+            self.target,
+            cookie,
+            publish_ports=False,
+        )
+        cluster = docker_tool.render_cluster_compose(
+            self.target,
+            distributed_cookie=cookie,
+            publish_ports=False,
+        )
+        self.assertNotIn("    ports:", single)
+        self.assertNotIn("    ports:", cluster)
+        self.assertIn("EXPOSE 8087", docker_tool.render_dockerfile(self.target, "alpine:3.21", cookie))
+        self.assertIn("EXPOSE 8098", docker_tool.render_dockerfile(self.target, "alpine:3.21", cookie))
 
     def test_configure_node_sets_all_test_values(self):
         source = """nodename = riak@127.0.0.1
@@ -163,7 +212,7 @@ listener.protobuf.internal = 127.0.0.1:8087
                     "listener.protobuf.internal",
                 ],
             )
-        self.assertEqual(values["nodename"], f"riak@{self.target.node_name}")
+        self.assertEqual(values["nodename"], f"openriak-kv@{self.target.node_name}")
         self.assertEqual(values["ring_size"], "8")
         self.assertEqual(values["storage_backend"], "leveled")
         self.assertEqual(values["anti_entropy"], "passive")
@@ -187,6 +236,18 @@ listener.protobuf.internal = 127.0.0.1:8087
 
     def test_base_image_uses_release_tag(self):
         self.assertEqual(docker_tool.base_image_for(self.target), "alpine:3.21")
+
+    def test_cookie_and_environment_example_are_generated(self):
+        first = docker_tool.generate_distributed_cookie()
+        second = docker_tool.generate_distributed_cookie()
+        self.assertRegex(first, r"^openriak-[0-9a-f]{32}$")
+        self.assertNotEqual(first, second)
+        source = docker_tool.render_environment_example(self.target, first)
+        self.assertIn(f"OPENRIAK_DISTRIBUTED_COOKIE={first}", source)
+        self.assertIn("OPENRIAK_NODE_1_HOST=node-01.cluster-a.openriak", source)
+        self.assertIn("OPENRIAK_NODE_5_HOST=node-05.cluster-a.openriak", source)
+        self.assertIn("OPENRIAK_CONFIG_PATH=./", source)
+        self.assertIn("OPENRIAK_NODE_1_CONFIG_PATH=./", source)
 
     def test_complete_metadata_matrix_is_discoverable(self):
         targets = docker_tool.discover_targets()
@@ -223,6 +284,12 @@ listener.protobuf.internal = 127.0.0.1:8087
         )
         self.assertEqual(options.cluster_nodes, 7)
         self.assertTrue(options.force)
+
+    def test_partial_single_compose_start_is_marked_for_cleanup(self):
+        source = MODULE_PATH.read_text(encoding="utf-8")
+        marked = source.index("        compose_started = True\n        record_step(\n            report,\n            \"start_compose_node\"")
+        started = source.index('compose_command + ["up", "--detach", "--no-build"]', marked)
+        self.assertLess(marked, started)
 
 
 if __name__ == "__main__":

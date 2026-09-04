@@ -130,7 +130,7 @@ const successfulDockerReports = (targetRoot) => {
   return reportFiles
     .filter((file) => fs.existsSync(file))
     .map((file) => ({ file, report: readJson(file) }))
-    .filter(({ report }) => [1, 2].includes(report.schema_version) && report.status === 'passed')
+    .filter(({ report }) => [1, 2, 3].includes(report.schema_version) && report.status === 'passed')
     .sort((left, right) => String(right.report.finished_at || '').localeCompare(String(left.report.finished_at || '')));
 };
 
@@ -154,9 +154,11 @@ const dockerImagesForVersion = (version) => {
         throw new Error(`Misplaced Docker cache report: ${reportFile}`);
       }
       const artifacts = report.artifacts || {};
-      const artifactNames = report.schema_version === 2
-        ? [['dockerfile', 'Dockerfile'], ['compose_single', 'compose.single.yaml'], ['compose_cluster', 'compose.cluster.yaml']]
-        : [['dockerfile', 'Dockerfile'], ['compose', 'compose.yaml']];
+      const artifactNames = report.schema_version === 3
+        ? [['dockerfile', 'Dockerfile'], ['compose_single', 'compose.single.yaml'], ['compose_cluster', 'compose.cluster.yaml'], ['environment_example', '.env.example']]
+        : report.schema_version === 2
+          ? [['dockerfile', 'Dockerfile'], ['compose_single', 'compose.single.yaml'], ['compose_cluster', 'compose.cluster.yaml']]
+          : [['dockerfile', 'Dockerfile'], ['compose', 'compose.yaml']];
       for (const [name, filename] of artifactNames) {
         const artifact = artifacts[name];
         const expectedPrefix = `downloads/docker/${version}/`;
@@ -188,10 +190,11 @@ const dockerImagesForVersion = (version) => {
         baseImage: report.base_image?.pinned || '',
         dockerfile: artifacts.dockerfile
       };
-      if (report.schema_version === 2) {
+      if (report.schema_version >= 2) {
         image.composeSingle = artifacts.compose_single;
         image.composeCluster = artifacts.compose_cluster;
         image.clusterNodes = report.generation?.cluster_nodes || null;
+        if (report.schema_version >= 3) image.environmentExample = artifacts.environment_example;
       } else {
         image.compose = artifacts.compose;
       }

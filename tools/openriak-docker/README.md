@@ -58,18 +58,17 @@ tools/cache/openriak-docker/{version}/{os-id}/{download-id}/runs/{UTC-run-id}/
 ```
 
 The same target directory contains the current `Dockerfile`,
-`compose.single.yaml`, `compose.cluster.yaml`, and `report.json`. Per-command
-output is kept under the run's `logs/`
-directory. A passed run is copied to
+`compose.single.yaml`, `compose.cluster.yaml`, `.env.example`, and
+`report.json`. Per-command output is kept under the run's `logs/` directory. A passed run is copied to
 `content/static/openriak-kv/downloads/docker/` so Hugo can publish the
-Dockerfile and both Compose files. Failed runs remain cached but are not
-advertised on the downloads page.
+Dockerfile, both Compose files, and the sample environment file. Failed runs
+remain cached but are not advertised on the downloads page.
 
 Git retains the current target artifacts and every historical run's compact
 `report.json`. Historical `logs/`, `Dockerfile`, `compose.single.yaml`, and
-`compose.cluster.yaml` copies are local diagnostics and are ignored by Git. CI
-systems that require full audit logs should upload those ignored files as
-workflow artifacts rather than add them to the repository.
+`compose.cluster.yaml`, and `.env.example` copies are local diagnostics and are
+ignored by Git. CI systems that require full audit logs should upload those
+ignored files as workflow artifacts rather than add them to the repository.
 
 To restore static copies from already-tested cache entries without pulling,
 building, or testing anything:
@@ -78,28 +77,41 @@ building, or testing anything:
 tools/openriak-docker/openriak-docker sync-static
 ```
 
-The generated `compose.single.yaml` names its one container after the full target and
-uses a matching relative directory containing `config`, `data`, and `logs`.
-Set `OPENRIAK_CONTAINER_NAME`, `OPENRIAK_NODE_NAME`, `OPENRIAK_PB_PORT`, or
-`OPENRIAK_HTTP_PORT` to override its container name, full Erlang node name, or
-host-side ports. The single-node example uses the `172.16.0.0/24` bridge
-network, assigns `172.16.0.1` to OpenRiak, reserves `172.16.0.254` as the
-gateway, and sets the default Erlang node name to `riak@172.16.0.1`. Override
-`OPENRIAK_NODE_IPV4`, `OPENRIAK_NETWORK_SUBNET`, and
-`OPENRIAK_NETWORK_GATEWAY` together with `OPENRIAK_NODE_NAME` when changing
-the network.
+The generated `compose.single.yaml` names its one container after the full
+target and uses a matching relative directory containing `config`, `data`, and
+`logs`. Copy `.env.example` to `.env` to see and edit every supported Compose
+variable. The single-node file uses `OPENRIAK_CONTAINER_NAME`,
+`OPENRIAK_PB_PORT`, `OPENRIAK_HTTP_PORT`, and
+`OPENRIAK_{CONFIG,DATA,LOGS}_PATH`. Both Compose files use
+`OPENRIAK_NODE_1_HOST`, whose default is `node-01.cluster-a.openriak`. The
+network alias, container hostname, and default Erlang nodename all derive from
+that one value; the resulting nodename is
+`openriak-kv@node-01.cluster-a.openriak`.
 
-`compose.cluster.yaml` assigns sequential static IP addresses and distinct
-IP-based Erlang node names. It mounts a shared cluster-control directory and
+`compose.cluster.yaml` gives each node a distinct stable Docker DNS alias and
+uses it for the Erlang nodename. Docker assigns addresses without a hard-coded
+subnet. The file mounts a shared cluster-control directory and
 sets `role=coordinator` on exactly one service; an omitted or empty `role`
 means follower. Both roles are logged at startup. Followers remove their own
-stale control files, advertise readiness for discovered coordinator markers,
-wait for approval, and then run their own join command. The coordinator removes
-all stale coordinator markers, publishes a new random-suffix marker, approves
-followers for that suffix, and continuously plans and commits non-empty joined
-batches. Coordination progresses through `ready`, `approved`, `joined`, and
-`complete` files. Riak's ring state remains authoritative after restarts, and
-any bootstrap failure is published so participating nodes stop cleanly.
+stale control files, discover their current IPv4 address, and advertise their
+nodename and address for discovered coordinator markers. The coordinator
+removes all stale coordinator markers, publishes its stable nodename and
+current address under a new random suffix, and verifies that each advertised
+nodename resolves to its advertised address before approval. Followers then
+run their own join command, and the coordinator continuously plans and commits
+non-empty joined batches. Coordination progresses through `ready`, `approved`,
+`joined`, and `complete` files. Each file contains the node's stable nodename,
+current IPv4 address, coordinator, and suffix. Riak's ring state remains
+authoritative after restarts, and any bootstrap failure is published so
+participating nodes stop cleanly.
+
+Every refresh generates a new `openriak-` cookie followed by 32 lowercase hex
+characters. The same cookie is baked into that target's Dockerfile and written
+to `.env.example`, so all services generated together can communicate while
+unrelated generated images do not mix accidentally. OpenRiak logs the
+effective cookie during startup. The cookie is public image configuration, not
+a secret. For intentional rolling upgrades or mixed-image clusters, set the
+same `OPENRIAK_DISTRIBUTED_COOKIE` value for every node.
 
 The image entrypoint starts OpenRiak with `riak daemon`, waits for BEAM and `riak
 ping`, waits for the `riak_kv` service and all Riak transfers, and then monitors

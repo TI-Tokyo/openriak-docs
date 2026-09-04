@@ -1,0 +1,144 @@
+{
+  "artifacts": {},
+  "base_image": {
+    "pinned": "alpine:3.21@sha256:48b0309ca019d89d40f670aa1bc06e426dc0931948452e8491e3d65087abc07d",
+    "requested": "alpine:3.21",
+    "resolved_at": "2026-09-04T10:07:16Z"
+  },
+  "error": {
+    "message": "Command failed with exit code 1: /usr/bin/docker compose --env-file /tmp/openriak-docker-3.4.0-alpine-3.21-otp24-x86_64-82kv4seg/.env.single --project-directory /tmp/openriak-docker-3.4.0-alpine-3.21-otp24-x86_64-82kv4seg --file /tmp/openriak-docker-3.4.0-alpine-3.21-otp24-x86_64-82kv4seg/compose.single.yaml up --detach --no-build (see /home/peter/GitHub/TI-Tokyo/openriak-docs/tools/cache/openriak-docker/3.4.0/alpine-3.21-x86_64/otp24-x86_64-r1/runs/20260904T100714.874696Z/logs/compose-up.log)",
+    "type": "DockerToolError"
+  },
+  "finished_at": "2026-09-04T10:07:32Z",
+  "generation": {
+    "cluster_nodes": 5,
+    "distributed_cookie": "openriak-3f46404b555680bea702f0e2b6132303"
+  },
+  "image": "openriak/openriak-kv:3.4.0-alpine-3.21-otp24-x86_64",
+  "metadata_sources": [
+    "content/openriak-kv/metadata/3.4.0/supported-os.json",
+    "content/openriak-kv/metadata/3.4.0/downloads.json"
+  ],
+  "network": {
+    "address_assignment": "docker",
+    "node_host": "node-01.cluster-a.openriak",
+    "riak_node_name": "openriak-kv@node-01.cluster-a.openriak"
+  },
+  "node": "openriak-kv-3.4.0-alpine-3.21-otp24-x86_64-node",
+  "package": {
+    "checksum": {
+      "algorithm": "sha256",
+      "value": "140f1decb585e5855990c140b58afcb2ba3629e5dc65fffab8d0eaaa0621cc69"
+    },
+    "filename": "riak-3.4.0.24-r1.apk",
+    "format": "apk",
+    "url": "https://files.tiot.jp/alpine/v3.21/main/x86_64/riak-3.4.0.24-r1.apk"
+  },
+  "ports": {
+    "http": 8098,
+    "protobuf": 8087
+  },
+  "product": "openriak-kv",
+  "run_id": "20260904T100714.874696Z",
+  "schema_version": 3,
+  "started_at": "2026-09-04T10:07:14Z",
+  "status": "failed",
+  "steps": [
+    {
+      "duration_seconds": 1.955,
+      "finished_at": "2026-09-04T10:07:16Z",
+      "name": "pull_and_pin_base_image",
+      "started_at": "2026-09-04T10:07:14Z",
+      "status": "passed"
+    },
+    {
+      "duration_seconds": 0.001,
+      "finished_at": "2026-09-04T10:07:16Z",
+      "name": "generate_artifacts",
+      "started_at": "2026-09-04T10:07:16Z",
+      "status": "passed"
+    },
+    {
+      "duration_seconds": 10.663,
+      "finished_at": "2026-09-04T10:07:29Z",
+      "name": "build_image",
+      "started_at": "2026-09-04T10:07:16Z",
+      "status": "passed"
+    },
+    {
+      "duration_seconds": 2.095,
+      "finished_at": "2026-09-04T10:07:31Z",
+      "name": "initialize_volumes",
+      "started_at": "2026-09-04T10:07:29Z",
+      "status": "passed"
+    },
+    {
+      "duration_seconds": 0.764,
+      "finished_at": "2026-09-04T10:07:32Z",
+      "name": "make_test_config_writable",
+      "started_at": "2026-09-04T10:07:31Z",
+      "status": "passed"
+    },
+    {
+      "duration_seconds": 0.003,
+      "finished_at": "2026-09-04T10:07:32Z",
+      "name": "configure_node",
+      "started_at": "2026-09-04T10:07:32Z",
+      "status": "passed"
+    },
+    {
+      "duration_seconds": 0.316,
+      "error": "Command failed with exit code 1: /usr/bin/docker compose --env-file /tmp/openriak-docker-3.4.0-alpine-3.21-otp24-x86_64-82kv4seg/.env.single --project-directory /tmp/openriak-docker-3.4.0-alpine-3.21-otp24-x86_64-82kv4seg --file /tmp/openriak-docker-3.4.0-alpine-3.21-otp24-x86_64-82kv4seg/compose.single.yaml up --detach --no-build (see /home/peter/GitHub/TI-Tokyo/openriak-docs/tools/cache/openriak-docker/3.4.0/alpine-3.21-x86_64/otp24-x86_64-r1/runs/20260904T100714.874696Z/logs/compose-up.log)",
+      "finished_at": "2026-09-04T10:07:32Z",
+      "name": "start_compose_node",
+      "started_at": "2026-09-04T10:07:32Z",
+      "status": "failed"
+    }
+  ],
+  "target": {
+    "architecture": "x86_64",
+    "docker_platform": "linux/amd64",
+    "download_id": "otp24-x86_64-r1",
+    "os_family": "alpine",
+    "os_id": "alpine-3.21-x86_64",
+    "os_name": "Alpine Linux 3.21",
+    "os_release": "3.21",
+    "otp": "24",
+    "version": "3.4.0"
+  },
+  "tests": {
+    "configuration": {
+      "settings": {
+        "anti_entropy": "passive",
+        "listener.http.internal": "0.0.0.0:8098",
+        "listener.protobuf.internal": "0.0.0.0:8087",
+        "nodename": "openriak-kv@node-01.cluster-a.openriak",
+        "ring_size": "8",
+        "storage_backend": "leveled",
+        "tictacaae_active": "active",
+        "tictacaae_storeheads": "enabled"
+      },
+      "status": "passed"
+    },
+    "volume_initialization": {
+      "config_populated": true,
+      "data_directory_created": true,
+      "logs_directory_created": true,
+      "status": "passed"
+    }
+  },
+  "volumes": {
+    "config": {
+      "container": "/etc/riak",
+      "default": "./openriak-kv-3.4.0-alpine-3.21-otp24-x86_64-node/config"
+    },
+    "data": {
+      "container": "/var/lib/riak",
+      "default": "./openriak-kv-3.4.0-alpine-3.21-otp24-x86_64-node/data"
+    },
+    "logs": {
+      "container": "/var/log/riak",
+      "default": "./openriak-kv-3.4.0-alpine-3.21-otp24-x86_64-node/logs"
+    }
+  }
+}

@@ -8,6 +8,7 @@ FROM --platform=linux/amd64 alpine:3.21@sha256:48b0309ca019d89d40f670aa1bc06e426
 # -----------------------------------------------------------------------------
 ENV RIAK_NODE_HOST=""
 ENV RIAK_NODE_NAME=""
+ENV RIAK_DISTRIBUTED_COOKIE="openriak-13263ffa044cf907170dda82e36864cc"
 ENV RIAK_RING_SIZE="8"
 ENV RIAK_STORAGE_BACKEND="leveled"
 ENV RIAK_ANTI_ENTROPY="passive"
@@ -147,17 +148,72 @@ ping_works() {
 
 validate_nodename() {
     printf '%s
-' "$1" | grep -Eq '^riak@[A-Za-z0-9][A-Za-z0-9._:-]*$'
+' "$1" | grep -Eq '^openriak-kv@[A-Za-z0-9][A-Za-z0-9._:-]*$'
+}
+
+validate_ipv4() {
+    printf '%s
+' "$1" | awk -F. '
+        NF != 4 { exit 1 }
+        {
+            for (octet = 1; octet <= 4; octet += 1) {
+                if ($octet !~ /^[0-9]+$/ || $octet < 0 || $octet > 255) exit 1
+            }
+        }
+    '
+}
+
+current_node_ipv4() {
+    node_ip_candidates=$(hostname -i 2>/dev/null || true)
+    if [ -z "$node_ip_candidates" ]
+    then
+        node_ip_candidates=$(getent hosts "$(hostname)" 2>/dev/null | awk '{print $1}' || true)
+    fi
+    for node_ip_candidate in $node_ip_candidates
+    do
+        case "$node_ip_candidate" in
+            127.*|*:* )
+                continue
+                ;;
+        esac
+        if validate_ipv4 "$node_ip_candidate"
+        then
+            printf '%s
+' "$node_ip_candidate"
+            return 0
+        fi
+    done
+    return 1
+}
+
+nodename_resolves_to_ip() {
+    resolution_node=$1
+    resolution_ip=$2
+    resolution_host=${resolution_node#*@}
+    getent hosts "$resolution_host" 2>/dev/null | awk -v expected="$resolution_ip" '
+        $1 == expected { found = 1 }
+        END { exit(found ? 0 : 1) }
+    '
+}
+
+control_value() {
+    control_file=$1
+    control_key=$2
+    sed -n "s/^${control_key}=//p" "$control_file" | sed -n '1p'
 }
 
 atomic_control_file() {
     control_path=$1
     control_node=$2
-    control_suffix=$3
+    control_ip=$3
+    control_coordinator=$4
+    control_suffix=$5
     control_temporary="${control_path}.tmp.$$"
-    printf '%s
-%s
-' "$control_node" "$control_suffix" > "$control_temporary"
+    printf 'nodename=%s
+ip=%s
+coordinator=%s
+suffix=%s
+'         "$control_node"         "$control_ip"         "$control_coordinator"         "$control_suffix" > "$control_temporary"
     mv -f "$control_temporary" "$control_path"
 }
 
@@ -245,7 +301,8 @@ stop_with_error() {
 publish_failure() {
     failure_suffix=$1
     failure_message=$2
-    atomic_control_file "$control_dir/${riak_node_name}-${failure_suffix}-failed" "$riak_node_name" "$failure_suffix"
+    failure_coordinator=${3:-}
+    atomic_control_file         "$control_dir/${riak_node_name}-${failure_suffix}-failed"         "$riak_node_name"         "$node_ip"         "$failure_coordinator"         "$failure_suffix"
     stop_with_error "$failure_message"
 }
 
@@ -325,13 +382,27 @@ set_setting() {
 }
 
 node_host=${RIAK_NODE_HOST:-$(hostname)}
-riak_node_name=${RIAK_NODE_NAME:-riak@$node_host}
+riak_node_name=${RIAK_NODE_NAME:-openriak-kv@$node_host}
 if ! validate_nodename "$riak_node_name"
 then
     log "configuration: invalid RIAK_NODE_NAME: ${riak_node_name}"
     exit 1
 fi
+node_ip=$(current_node_ipv4 || true)
+if [ -n "$node_ip" ]
+then
+    log "configuration: current Docker IPv4 address = ${node_ip}"
+else
+    log "configuration: no non-loopback Docker IPv4 address is currently available"
+fi
+if ! printf '%s
+' "$RIAK_DISTRIBUTED_COOKIE" | grep -Eq '^[A-Za-z0-9_-]+$'
+then
+    log "configuration: RIAK_DISTRIBUTED_COOKIE must contain only letters, numbers, underscores, and hyphens"
+    exit 1
+fi
 set_setting nodename "$riak_node_name"
+set_setting distributed_cookie "$RIAK_DISTRIBUTED_COOKIE"
 set_setting ring_size "$RIAK_RING_SIZE"
 set_setting storage_backend "$RIAK_STORAGE_BACKEND"
 set_setting anti_entropy "$RIAK_ANTI_ENTROPY"
@@ -348,6 +419,16 @@ then
 fi
 
 ulimit -n "${RIAK_NOFILE_LIMIT:-100000}"
+log "startup: validating configuration and generating VM arguments"
+if chkconfig_output=$(riak_command chkconfig 2>&1)
+then
+    chkconfig_summary=$(printf '%s' "$chkconfig_output" | one_line)
+    log "startup: configuration is valid (${chkconfig_summary})"
+else
+    chkconfig_summary=$(printf '%s' "$chkconfig_output" | one_line)
+    log "startup: configuration validation failed (${chkconfig_summary:-no-response})"
+    exit 1
+fi
 log "startup: starting OpenRiak as a daemon"
 if riak_command daemon
 then
@@ -409,6 +490,10 @@ then
     log "cluster: invalid OPENRIAK_CLUSTER_MODE: ${cluster_mode}"
     exit 1
 fi
+if [ -z "$node_ip" ]
+then
+    stop_with_error "a non-loopback Docker IPv4 address is required in cluster mode"
+fi
 
 mkdir -p "$control_dir"
 role_value=${role:-follower}
@@ -436,11 +521,23 @@ run_follower() {
         for coordinator_file in "$control_dir/"*-coordinator
         do
             [ -e "$coordinator_file" ] || continue
-            coordinator_node=$(sed -n '1p' "$coordinator_file")
-            coordinator_suffix=$(sed -n '2p' "$coordinator_file")
+            coordinator_node=$(control_value "$coordinator_file" nodename)
+            coordinator_ip=$(control_value "$coordinator_file" ip)
+            advertised_coordinator=$(control_value "$coordinator_file" coordinator)
+            coordinator_suffix=$(control_value "$coordinator_file" suffix)
             if ! validate_nodename "$coordinator_node"
             then
                 log "cluster: ignoring invalid coordinator file $(basename "$coordinator_file")"
+                continue
+            fi
+            if ! validate_ipv4 "$coordinator_ip"
+            then
+                log "cluster: ignoring coordinator file with invalid IPv4 address $(basename "$coordinator_file")"
+                continue
+            fi
+            if [ "$advertised_coordinator" != "$coordinator_node" ]
+            then
+                log "cluster: ignoring coordinator file whose coordinator field does not match its nodename"
                 continue
             fi
             if ! printf '%s
@@ -455,6 +552,11 @@ run_follower() {
                 log "cluster: ignoring coordinator file whose contents do not match its name"
                 continue
             fi
+            if ! nodename_resolves_to_ip "$coordinator_node" "$coordinator_ip"
+            then
+                log "cluster: coordinator ${coordinator_node} does not currently resolve to advertised IPv4 ${coordinator_ip}; retrying"
+                continue
+            fi
             if cluster_failure_exists "$coordinator_suffix"
             then
                 continue
@@ -465,8 +567,8 @@ run_follower() {
             complete_file="$control_dir/${riak_node_name}-${coordinator_suffix}-complete"
             if [ ! -e "$ready_file" ] && [ ! -e "$approved_file" ] && [ ! -e "$joined_file" ] && [ ! -e "$complete_file" ]
             then
-                atomic_control_file "$ready_file" "$coordinator_node" "$coordinator_suffix"
-                log "cluster: announced readiness for coordinator ${coordinator_node} (${coordinator_suffix})"
+                atomic_control_file                     "$ready_file"                     "$riak_node_name"                     "$node_ip"                     "$coordinator_node"                     "$coordinator_suffix"
+                log "cluster: announced ${riak_node_name} at ${node_ip} to coordinator ${coordinator_node} (${coordinator_suffix})"
             fi
         done
 
@@ -487,10 +589,12 @@ run_follower() {
         fi
         if [ "$approval_count" -eq 1 ]
         then
-            coordinator_node=$(sed -n '1p' "$selected_approval")
-            coordinator_suffix=$(sed -n '2p' "$selected_approval")
+            approved_node=$(control_value "$selected_approval" nodename)
+            approved_ip=$(control_value "$selected_approval" ip)
+            coordinator_node=$(control_value "$selected_approval" coordinator)
+            coordinator_suffix=$(control_value "$selected_approval" suffix)
             coordinator_file="$control_dir/${coordinator_node}-${coordinator_suffix}-coordinator"
-            if [ ! -e "$coordinator_file" ] || ! validate_nodename "$coordinator_node"
+            if [ "$approved_node" != "$riak_node_name" ]                 || [ "$approved_ip" != "$node_ip" ]                 || [ ! -e "$coordinator_file" ]                 || ! validate_nodename "$coordinator_node"
             then
                 log "cluster: approval no longer has a valid coordinator; clearing follower state"
                 clean_owned_control_files
@@ -516,6 +620,20 @@ run_follower() {
                         then
                             wait_for_ring
                             wait_for_transfers
+                            log "cluster: waiting for coordinator completion confirmation"
+                            while [ ! -e "$complete_file" ]
+                            do
+                                if cluster_failure_exists "$coordinator_suffix"
+                                then
+                                    stop_with_error "another node reported a failure for ${coordinator_suffix}"
+                                fi
+                                if [ ! -e "$coordinator_file" ]
+                                then
+                                    publish_failure                                         "$coordinator_suffix"                                         "coordinator marker disappeared before completion"                                         "$coordinator_node"
+                                fi
+                                sleep "$cluster_poll"
+                            done
+                            log "cluster: coordinator confirmed completion for ${riak_node_name}"
                             rm -f "$control_dir/${riak_node_name}-"*
                             log "cluster: follower joined ${coordinator_node} successfully"
                             monitor_node
@@ -532,7 +650,7 @@ run_follower() {
         cluster_waited=$((cluster_waited + cluster_poll))
         if [ "$cluster_waited" -ge "$cluster_timeout" ]
         then
-            atomic_control_file "$control_dir/${riak_node_name}-startup-failed" "$riak_node_name" startup
+            atomic_control_file                 "$control_dir/${riak_node_name}-startup-failed"                 "$riak_node_name"                 "$node_ip"                 ""                 startup
             stop_with_error "no coordinator approved this follower within ${cluster_timeout}s"
         fi
         log "cluster: follower waiting for coordinator approval (${cluster_waited}s/${cluster_timeout}s)"
@@ -556,8 +674,8 @@ run_coordinator() {
     done
     coordinator_suffix=$(od -An -N8 -tx1 /dev/urandom | tr -d ' \n')
     coordinator_file="$control_dir/${riak_node_name}-${coordinator_suffix}-coordinator"
-    atomic_control_file "$coordinator_file" "$riak_node_name" "$coordinator_suffix"
-    log "cluster: published coordinator marker $(basename "$coordinator_file")"
+    atomic_control_file         "$coordinator_file"         "$riak_node_name"         "$node_ip"         "$riak_node_name"         "$coordinator_suffix"
+    log "cluster: published coordinator ${riak_node_name} at ${node_ip} in $(basename "$coordinator_file")"
 
     if cluster_member
     then
@@ -572,24 +690,32 @@ run_coordinator() {
         for failure_file in "$control_dir/"*-failed
         do
             [ -e "$failure_file" ] || continue
-            atomic_control_file "$control_dir/${riak_node_name}-${coordinator_suffix}-failed" "$riak_node_name" "$coordinator_suffix"
+            atomic_control_file                 "$control_dir/${riak_node_name}-${coordinator_suffix}-failed"                 "$riak_node_name"                 "$node_ip"                 "$riak_node_name"                 "$coordinator_suffix"
             stop_with_error "cluster participant reported failure in $(basename "$failure_file")"
         done
 
         for ready_file in "$control_dir/"*-"${coordinator_suffix}"-ready
         do
             [ -e "$ready_file" ] || continue
-            requested_coordinator=$(sed -n '1p' "$ready_file")
-            requested_suffix=$(sed -n '2p' "$ready_file")
-            if [ "$requested_coordinator" != "$riak_node_name" ] || [ "$requested_suffix" != "$coordinator_suffix" ]
+            follower_node=$(control_value "$ready_file" nodename)
+            follower_ip=$(control_value "$ready_file" ip)
+            requested_coordinator=$(control_value "$ready_file" coordinator)
+            requested_suffix=$(control_value "$ready_file" suffix)
+            expected_ready="$control_dir/${follower_node}-${coordinator_suffix}-ready"
+            if ! validate_nodename "$follower_node"                 || ! validate_ipv4 "$follower_ip"                 || [ "$requested_coordinator" != "$riak_node_name" ]                 || [ "$requested_suffix" != "$coordinator_suffix" ]                 || [ "$ready_file" != "$expected_ready" ]
             then
                 log "cluster: rejecting malformed readiness file $(basename "$ready_file")"
                 rm -f "$ready_file"
                 continue
             fi
+            if ! nodename_resolves_to_ip "$follower_node" "$follower_ip"
+            then
+                log "cluster: waiting for ${follower_node} to resolve to advertised IPv4 ${follower_ip}"
+                continue
+            fi
             approved_file=${ready_file%-ready}-approved
             mv -f "$ready_file" "$approved_file"
-            log "cluster: approved follower $(basename "${approved_file%-approved}")"
+            log "cluster: approved follower ${follower_node} at ${follower_ip}"
         done
 
         joined_count=0
@@ -598,7 +724,17 @@ run_coordinator() {
             [ -e "$joined_file" ] || continue
             joined_count=$((joined_count + 1))
         done
-        if [ "$joined_count" -gt 0 ]
+        pending_count=0
+        for pending_file in "$control_dir/"*-"${coordinator_suffix}"-ready "$control_dir/"*-"${coordinator_suffix}"-approved
+        do
+            [ -e "$pending_file" ] || continue
+            pending_count=$((pending_count + 1))
+        done
+        if [ "$joined_count" -gt 0 ] && [ "$pending_count" -gt 0 ]
+        then
+            log "cluster: waiting for ${pending_count} approved or ready node(s) before planning ${joined_count} joined node(s)"
+        fi
+        if [ "$joined_count" -gt 0 ] && [ "$pending_count" -eq 0 ]
         then
             log "cluster: planning a batch of ${joined_count} joined node(s)"
             if plan_output=$(riak_admin_command cluster plan 2>&1)
@@ -639,7 +775,7 @@ run_coordinator() {
         then
             log "monitor: Coordinator is healthy; sleeping for ${cluster_poll}s"
         else
-            atomic_control_file "$control_dir/${riak_node_name}-${coordinator_suffix}-failed" "$riak_node_name" "$coordinator_suffix"
+            atomic_control_file                 "$control_dir/${riak_node_name}-${coordinator_suffix}-failed"                 "$riak_node_name"                 "$node_ip"                 "$riak_node_name"                 "$coordinator_suffix"
             stop_with_error "coordinator health check failed"
         fi
         sleep "$cluster_poll"

@@ -58,6 +58,10 @@ for (const product of productCases) {
         assert.match(image.composeCluster.sha256, /^[0-9a-f]{64}$/);
         assert.ok(image.composeSingle.url.startsWith(`downloads/docker/${version}/`));
         assert.ok(image.composeCluster.url.startsWith(`downloads/docker/${version}/`));
+        if (image.environmentExample) {
+          assert.match(image.environmentExample.sha256, /^[0-9a-f]{64}$/);
+          assert.ok(image.environmentExample.url.startsWith(`downloads/docker/${version}/`));
+        }
         assert.ok(Number.isInteger(image.clusterNodes));
         assert.ok(image.clusterNodes >= 2);
       } else {
@@ -202,5 +206,6 @@ assert.ok(alpineDocker, 'Expected the passed Alpine 3.21 x86_64 OTP 24 Docker ca
 assert.equal(alpineDocker.image, 'openriak/openriak-kv:3.4.0-alpine-3.21-otp24-x86_64');
 assert.equal(alpineDocker.node, 'openriak-kv-3.4.0-alpine-3.21-otp24-x86_64-node');
 assert.ok(alpineDocker.compose || alpineDocker.composeSingle);
+assert.ok(alpineDocker.environmentExample);
 
 console.log('Product metadata synchronization tests passed.');
