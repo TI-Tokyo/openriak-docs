@@ -1,0 +1,276 @@
+{
+  "artifacts": {},
+  "base_image": {
+    "pinned": "ubuntu:noble@sha256:33ceb71981b602c1a7443a53469e4dba065f7503eab3078a2d7a57a2ab987517",
+    "requested": "ubuntu:noble",
+    "resolved_at": "2026-09-04T17:45:51Z"
+  },
+  "error": {
+    "message": "Container healthcheck did not become healthy after 1800s; status='unhealthy'",
+    "type": "DockerToolError"
+  },
+  "finished_at": "2026-09-04T18:51:30Z",
+  "generation": {
+    "cluster_nodes": 5,
+    "distributed_cookie": "openriak-4d02faa4c6ead5f724602110b7283c9d"
+  },
+  "image": "openriak/openriak-kv:3.4.0-ubuntu-noble-otp24-arm64",
+  "metadata_sources": [
+    "content/openriak-kv/metadata/3.4.0/supported-os.json",
+    "content/openriak-kv/metadata/3.4.0/downloads.json"
+  ],
+  "network": {
+    "address_assignment": "docker",
+    "node_host": "node-01.cluster-a.openriak",
+    "riak_node_name": "openriak-kv@node-01.cluster-a.openriak"
+  },
+  "node": "openriak-kv-3.4.0-ubuntu-noble-otp24-arm64-node",
+  "package": {
+    "checksum": {
+      "algorithm": "sha256",
+      "value": "e3d548c78cb540b12bbfc64e8153693820d1a722f01c949a01aaf4bb4352c0f6"
+    },
+    "filename": "riak_3.4.0-OTP24_arm64.deb",
+    "format": "deb",
+    "url": "https://files.tiot.jp/riak/kv/3.4/3.4.0/ubuntu/noble64/riak_3.4.0-OTP24_arm64.deb"
+  },
+  "ports": {
+    "http": 8098,
+    "protobuf": 8087
+  },
+  "product": "openriak-kv",
+  "run_id": "20260904T174546.118608Z",
+  "schema_version": 3,
+  "started_at": "2026-09-04T17:45:46Z",
+  "status": "failed",
+  "steps": [
+    {
+      "duration_seconds": 5.463,
+      "finished_at": "2026-09-04T17:45:51Z",
+      "name": "pull_and_pin_base_image",
+      "started_at": "2026-09-04T17:45:46Z",
+      "status": "passed"
+    },
+    {
+      "duration_seconds": 0.001,
+      "finished_at": "2026-09-04T17:45:51Z",
+      "name": "generate_artifacts",
+      "started_at": "2026-09-04T17:45:51Z",
+      "status": "passed"
+    },
+    {
+      "duration_seconds": 0.158,
+      "finished_at": "2026-09-04T17:45:51Z",
+      "name": "validate_compose_artifacts",
+      "started_at": "2026-09-04T17:45:51Z",
+      "status": "passed"
+    },
+    {
+      "duration_seconds": 121.482,
+      "finished_at": "2026-09-04T17:48:02Z",
+      "name": "build_image",
+      "started_at": "2026-09-04T17:45:51Z",
+      "status": "passed"
+    },
+    {
+      "duration_seconds": 3.018,
+      "finished_at": "2026-09-04T17:48:08Z",
+      "name": "initialize_volumes",
+      "started_at": "2026-09-04T17:48:02Z",
+      "status": "passed"
+    },
+    {
+      "duration_seconds": 0.852,
+      "finished_at": "2026-09-04T17:48:09Z",
+      "name": "make_test_config_writable",
+      "started_at": "2026-09-04T17:48:08Z",
+      "status": "passed"
+    },
+    {
+      "duration_seconds": 0.003,
+      "finished_at": "2026-09-04T17:48:09Z",
+      "name": "configure_node",
+      "started_at": "2026-09-04T17:48:09Z",
+      "status": "passed"
+    },
+    {
+      "duration_seconds": 0.611,
+      "finished_at": "2026-09-04T17:48:09Z",
+      "name": "start_compose_node",
+      "started_at": "2026-09-04T17:48:09Z",
+      "status": "passed"
+    },
+    {
+      "duration_seconds": 97.339,
+      "finished_at": "2026-09-04T17:49:54Z",
+      "name": "wait_for_entrypoint_readiness",
+      "started_at": "2026-09-04T17:48:09Z",
+      "status": "passed"
+    },
+    {
+      "duration_seconds": 5.577,
+      "finished_at": "2026-09-04T17:49:59Z",
+      "name": "wait_for_cli_and_http",
+      "started_at": "2026-09-04T17:49:54Z",
+      "status": "passed"
+    },
+    {
+      "duration_seconds": 0.041,
+      "finished_at": "2026-09-04T17:49:59Z",
+      "name": "wait_for_healthcheck",
+      "started_at": "2026-09-04T17:49:59Z",
+      "status": "passed"
+    },
+    {
+      "duration_seconds": 16.914,
+      "finished_at": "2026-09-04T17:50:19Z",
+      "name": "graceful_stop",
+      "started_at": "2026-09-04T17:49:59Z",
+      "status": "passed"
+    },
+    {
+      "duration_seconds": 0.029,
+      "finished_at": "2026-09-04T17:50:19Z",
+      "name": "verify_graceful_shutdown_logging",
+      "started_at": "2026-09-04T17:50:19Z",
+      "status": "passed"
+    },
+    {
+      "duration_seconds": 0.355,
+      "finished_at": "2026-09-04T17:50:19Z",
+      "name": "remove_single_node_test",
+      "started_at": "2026-09-04T17:50:19Z",
+      "status": "passed"
+    },
+    {
+      "duration_seconds": 0.913,
+      "finished_at": "2026-09-04T17:50:20Z",
+      "name": "start_compose_cluster",
+      "started_at": "2026-09-04T17:50:19Z",
+      "status": "passed"
+    },
+    {
+      "duration_seconds": 1088.826,
+      "finished_at": "2026-09-04T18:09:24Z",
+      "name": "wait_for_cluster",
+      "started_at": "2026-09-04T17:50:20Z",
+      "status": "passed"
+    }
+  ],
+  "target": {
+    "architecture": "arm64",
+    "docker_platform": "linux/arm64",
+    "download_id": "otp24-arm64",
+    "os_family": "ubuntu",
+    "os_id": "ubuntu-noble-arm64",
+    "os_name": "Ubuntu 24.04",
+    "os_release": "noble",
+    "otp": "24",
+    "version": "3.4.0"
+  },
+  "tests": {
+    "cli_ping": {
+      "command": "riak ping",
+      "response": "pong",
+      "status": "passed"
+    },
+    "configuration": {
+      "settings": {
+        "anti_entropy": "passive",
+        "listener.http.internal": "0.0.0.0:8098",
+        "listener.protobuf.internal": "0.0.0.0:8087",
+        "nodename": "openriak-kv@node-01.cluster-a.openriak",
+        "ring_size": "8",
+        "storage_backend": "leveled",
+        "tictacaae_active": "active",
+        "tictacaae_storeheads": "enabled"
+      },
+      "status": "passed"
+    },
+    "entrypoint_startup": {
+      "required_log_messages": [
+        "startup: starting OpenRiak as a daemon",
+        "startup: BEAM is running and riak ping returned pong",
+        "startup: riak_kv service is up",
+        "startup: transfers complete",
+        "startup: OpenRiak is ready",
+        "monitor: BEAM is running"
+      ],
+      "status": "passed"
+    },
+    "graceful_shutdown": {
+      "required_log_messages": [
+        "shutdown: received SIGTERM",
+        "shutdown: requesting OpenRiak stop",
+        "shutdown: BEAM stopped; container is exiting"
+      ],
+      "signal": "SIGTERM",
+      "status": "passed"
+    },
+    "healthcheck": {
+      "checks": [
+        "beam.smp",
+        "riak ping == pong"
+      ],
+      "docker_status": "healthy",
+      "status": "passed"
+    },
+    "http_ping": {
+      "request": "GET /ping",
+      "response": "OK",
+      "status": "passed",
+      "status_code": 200
+    },
+    "populated_volumes": {
+      "config": [
+        "advanced.config",
+        "riak.conf"
+      ],
+      "data": [
+        "cluster_meta",
+        "generated.conf",
+        "kv_eraser",
+        "kv_reader",
+        "kv_reaper",
+        "kv_replrtqsrc",
+        "kv_vnode",
+        "leveled",
+        "riak_repl",
+        "ring",
+        "setup",
+        "sys.config",
+        "tictac_aae",
+        "vm.args"
+      ],
+      "logs": [
+        "console.log",
+        "erlang.log.1",
+        "run_erl.log"
+      ],
+      "status": "passed"
+    },
+    "riak_start": {
+      "status": "passed"
+    },
+    "volume_initialization": {
+      "config_populated": true,
+      "data_directory_created": true,
+      "logs_directory_created": true,
+      "status": "passed"
+    }
+  },
+  "volumes": {
+    "config": {
+      "container": "/etc/riak",
+      "default": "./openriak-kv-3.4.0-ubuntu-noble-otp24-arm64-node/config"
+    },
+    "data": {
+      "container": "/var/lib/riak",
+      "default": "./openriak-kv-3.4.0-ubuntu-noble-otp24-arm64-node/data"
+    },
+    "logs": {
+      "container": "/var/log/riak",
+      "default": "./openriak-kv-3.4.0-ubuntu-noble-otp24-arm64-node/logs"
+    }
+  }
+}

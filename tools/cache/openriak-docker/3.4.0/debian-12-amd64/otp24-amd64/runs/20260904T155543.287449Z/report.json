@@ -1,0 +1,78 @@
+{
+  "artifacts": {},
+  "base_image": null,
+  "error": {
+    "message": "Command failed with exit code 1: /usr/bin/docker pull --platform linux/amd64 debian:bookworm-slim (see /home/peter/GitHub/TI-Tokyo/openriak-docs/tools/cache/openriak-docker/3.4.0/debian-12-amd64/otp24-amd64/runs/20260904T155543.287449Z/logs/base-image-pull.log)",
+    "type": "DockerToolError"
+  },
+  "finished_at": "2026-09-04T15:55:43Z",
+  "generation": {
+    "cluster_nodes": 5,
+    "distributed_cookie": "openriak-729ae07a59e57d540dda640bdf8ddf2d"
+  },
+  "image": "openriak/openriak-kv:3.4.0-debian-12-otp24-amd64",
+  "metadata_sources": [
+    "content/openriak-kv/metadata/3.4.0/supported-os.json",
+    "content/openriak-kv/metadata/3.4.0/downloads.json"
+  ],
+  "network": {
+    "address_assignment": "docker",
+    "node_host": "node-01.cluster-a.openriak",
+    "riak_node_name": "openriak-kv@node-01.cluster-a.openriak"
+  },
+  "node": "openriak-kv-3.4.0-debian-12-otp24-amd64-node",
+  "package": {
+    "checksum": {
+      "algorithm": "sha256",
+      "value": "7563dd2574285d2fece2d36baa1222ef006db9dd4ae78d372ce974bfb6e116c3"
+    },
+    "filename": "riak_3.4.0-OTP24_amd64.deb",
+    "format": "deb",
+    "url": "https://files.tiot.jp/riak/kv/3.4/3.4.0/debian/12/riak_3.4.0-OTP24_amd64.deb"
+  },
+  "ports": {
+    "http": 8098,
+    "protobuf": 8087
+  },
+  "product": "openriak-kv",
+  "run_id": "20260904T155543.287449Z",
+  "schema_version": 3,
+  "started_at": "2026-09-04T15:55:43Z",
+  "status": "failed",
+  "steps": [
+    {
+      "duration_seconds": 0.083,
+      "error": "Command failed with exit code 1: /usr/bin/docker pull --platform linux/amd64 debian:bookworm-slim (see /home/peter/GitHub/TI-Tokyo/openriak-docs/tools/cache/openriak-docker/3.4.0/debian-12-amd64/otp24-amd64/runs/20260904T155543.287449Z/logs/base-image-pull.log)",
+      "finished_at": "2026-09-04T15:55:43Z",
+      "name": "pull_and_pin_base_image",
+      "started_at": "2026-09-04T15:55:43Z",
+      "status": "failed"
+    }
+  ],
+  "target": {
+    "architecture": "amd64",
+    "docker_platform": "linux/amd64",
+    "download_id": "otp24-amd64",
+    "os_family": "debian",
+    "os_id": "debian-12-amd64",
+    "os_name": "Debian 12",
+    "os_release": "12",
+    "otp": "24",
+    "version": "3.4.0"
+  },
+  "tests": {},
+  "volumes": {
+    "config": {
+      "container": "/etc/riak",
+      "default": "./openriak-kv-3.4.0-debian-12-otp24-amd64-node/config"
+    },
+    "data": {
+      "container": "/var/lib/riak",
+      "default": "./openriak-kv-3.4.0-debian-12-otp24-amd64-node/data"
+    },
+    "logs": {
+      "container": "/var/log/riak",
+      "default": "./openriak-kv-3.4.0-debian-12-otp24-amd64-node/logs"
+    }
+  }
+}

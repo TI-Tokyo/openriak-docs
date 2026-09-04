@@ -8,8 +8,10 @@ releases are rejected. It does not run as part of a normal documentation build.
 `refresh` is the only operation that pulls an OS image or runs containers. A
 complete cached target is skipped by default. Pass `--force` to pull the
 release-specific base tag again, pin its newly resolved digest, regenerate the
-files, build the image, and rerun the tests. An incomplete or incompatible
-cache is reported as an error unless `--force` is present. A refresh checks that:
+files, build the image, and rerun the tests. Pass `--retry-failed` to retain
+passed caches while regenerating failed, interrupted, or incompatible targets.
+An incomplete or incompatible cache is reported as an error unless
+`--retry-failed` or `--force` is present. A refresh checks that:
 
 - `/etc/riak`, `/var/lib/riak`, and `/var/log/riak` use bind mounts and are populated;
 - `nodename`, `ring_size = 8`, `storage_backend = leveled`, TicTac AAE, and storeheads can be configured;

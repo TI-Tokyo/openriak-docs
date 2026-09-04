@@ -3,6 +3,7 @@ import pathlib
 import sys
 import tempfile
 import unittest
+from unittest import mock
 
 
 MODULE_PATH = pathlib.Path(__file__).resolve().parents[1] / "openriak_docker.py"
@@ -47,6 +48,10 @@ class OpenRiakDockerTests(unittest.TestCase):
         self.assertNotIn("latest", source.lower())
         self.assertNotIn("\r", source)
         self.assertIn("ADD --checksum=sha256:140f1d", source)
+        self.assertIn(
+            "apk add --no-cache bash ca-certificates coreutils curl su-exec",
+            source,
+        )
         self.assertIn("adduser -S -D -H", source)
         self.assertIn("/usr/lib/riak/log", source)
         self.assertIn("# OpenRiak KV default settings", source)
@@ -293,11 +298,55 @@ listener.protobuf.internal = 127.0.0.1:8087
         self.assertEqual(options.cluster_nodes, 7)
         self.assertTrue(options.force)
 
+        retry_options = docker_tool.parser().parse_args(
+            [
+                "refresh",
+                "--version",
+                "3.4.0",
+                "--retry-failed",
+            ]
+        )
+        self.assertTrue(retry_options.retry_failed)
+        self.assertFalse(retry_options.force)
+
     def test_partial_single_compose_start_is_marked_for_cleanup(self):
         source = MODULE_PATH.read_text(encoding="utf-8")
         marked = source.index("        compose_started = True\n        record_step(\n            report,\n            \"start_compose_node\"")
         started = source.index('compose_command + ["up", "--detach", "--no-build"]', marked)
         self.assertLess(marked, started)
+
+    def test_container_log_wait_fails_immediately_when_container_exits(self):
+        log_result = docker_tool.subprocess.CompletedProcess(
+            args=["docker", "logs", "failed-node"],
+            returncode=0,
+            stdout="startup: configuration validation failed\n",
+        )
+        state_result = docker_tool.subprocess.CompletedProcess(
+            args=["docker", "container", "inspect", "failed-node"],
+            returncode=0,
+            stdout="false 1\n",
+        )
+        with tempfile.TemporaryDirectory() as directory:
+            log_path = pathlib.Path(directory) / "readiness.log"
+            with mock.patch.object(
+                docker_tool, "docker_command", return_value="/usr/bin/docker"
+            ), mock.patch.object(
+                docker_tool.subprocess,
+                "run",
+                side_effect=[log_result, state_result],
+            ) as run:
+                with self.assertRaisesRegex(
+                    docker_tool.DockerToolError,
+                    "exited with code 1",
+                ):
+                    docker_tool.wait_for_container_log(
+                        "failed-node",
+                        "monitor: BEAM is running",
+                        1800,
+                        log_path,
+                    )
+            self.assertEqual(run.call_count, 2)
+            self.assertIn("state='false 1'", log_path.read_text(encoding="utf-8"))
 
 
 if __name__ == "__main__":

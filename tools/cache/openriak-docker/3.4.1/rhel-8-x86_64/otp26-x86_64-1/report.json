@@ -1,0 +1,78 @@
+{
+  "artifacts": {},
+  "base_image": null,
+  "error": {
+    "message": "Command failed with exit code 1: /usr/bin/docker pull --platform linux/amd64 registry.access.redhat.com/ubi8/ubi:8 (see /home/peter/GitHub/TI-Tokyo/openriak-docs/tools/cache/openriak-docker/3.4.1/rhel-8-x86_64/otp26-x86_64-1/runs/20260904T155545.010317Z/logs/base-image-pull.log)",
+    "type": "DockerToolError"
+  },
+  "finished_at": "2026-09-04T15:55:45Z",
+  "generation": {
+    "cluster_nodes": 5,
+    "distributed_cookie": "openriak-0b14902bdd4fe0b0eb2011ceae7db925"
+  },
+  "image": "openriak/openriak-kv:3.4.1-rhel-8-otp26-x86_64",
+  "metadata_sources": [
+    "content/openriak-kv/metadata/3.4.1/supported-os.json",
+    "content/openriak-kv/metadata/3.4.1/downloads.json"
+  ],
+  "network": {
+    "address_assignment": "docker",
+    "node_host": "node-01.cluster-a.openriak",
+    "riak_node_name": "openriak-kv@node-01.cluster-a.openriak"
+  },
+  "node": "openriak-kv-3.4.1-rhel-8-otp26-x86_64-node",
+  "package": {
+    "checksum": {
+      "algorithm": "sha256",
+      "value": "ffcc9ce4af826a508e4927a8c725d5e21dd6dcb565d8adba4ae3ca6ef3f146ea"
+    },
+    "filename": "riak-3.4.1.OTP26-1.el8.x86_64.rpm",
+    "format": "rpm",
+    "url": "https://files.tiot.jp/riak/kv/3.4/3.4.1/rhel/8/riak-3.4.1.OTP26-1.el8.x86_64.rpm"
+  },
+  "ports": {
+    "http": 8098,
+    "protobuf": 8087
+  },
+  "product": "openriak-kv",
+  "run_id": "20260904T155545.010317Z",
+  "schema_version": 3,
+  "started_at": "2026-09-04T15:55:45Z",
+  "status": "failed",
+  "steps": [
+    {
+      "duration_seconds": 0.081,
+      "error": "Command failed with exit code 1: /usr/bin/docker pull --platform linux/amd64 registry.access.redhat.com/ubi8/ubi:8 (see /home/peter/GitHub/TI-Tokyo/openriak-docs/tools/cache/openriak-docker/3.4.1/rhel-8-x86_64/otp26-x86_64-1/runs/20260904T155545.010317Z/logs/base-image-pull.log)",
+      "finished_at": "2026-09-04T15:55:45Z",
+      "name": "pull_and_pin_base_image",
+      "started_at": "2026-09-04T15:55:45Z",
+      "status": "failed"
+    }
+  ],
+  "target": {
+    "architecture": "x86_64",
+    "docker_platform": "linux/amd64",
+    "download_id": "otp26-x86_64-1",
+    "os_family": "rhel",
+    "os_id": "rhel-8-x86_64",
+    "os_name": "Red Hat Enterprise Linux 8",
+    "os_release": "8",
+    "otp": "26",
+    "version": "3.4.1"
+  },
+  "tests": {},
+  "volumes": {
+    "config": {
+      "container": "/etc/riak",
+      "default": "./openriak-kv-3.4.1-rhel-8-otp26-x86_64-node/config"
+    },
+    "data": {
+      "container": "/var/lib/riak",
+      "default": "./openriak-kv-3.4.1-rhel-8-otp26-x86_64-node/data"
+    },
+    "logs": {
+      "container": "/var/log/riak",
+      "default": "./openriak-kv-3.4.1-rhel-8-otp26-x86_64-node/logs"
+    }
+  }
+}

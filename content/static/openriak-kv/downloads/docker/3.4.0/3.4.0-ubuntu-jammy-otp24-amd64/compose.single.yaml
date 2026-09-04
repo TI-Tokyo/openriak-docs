@@ -1,0 +1,35 @@
+# Generated and tested by tools/openriak-docker/openriak-docker. Do not edit by hand.
+name: openriak-kv-3.4.0-ubuntu-jammy-otp24-amd64-node
+
+services:
+  node:
+    build:
+      context: .
+      dockerfile: ./Dockerfile
+    image: openriak/openriak-kv:3.4.0-ubuntu-jammy-otp24-amd64
+    container_name: "${OPENRIAK_CONTAINER_NAME:-openriak-kv-3.4.0-ubuntu-jammy-otp24-amd64-node}"
+    hostname: "${OPENRIAK_NODE_1_HOST:-node-01.cluster-a.openriak}"
+    environment:
+      RIAK_NODE_HOST: "${OPENRIAK_NODE_1_HOST:-node-01.cluster-a.openriak}"
+      RIAK_DISTRIBUTED_COOKIE: "${OPENRIAK_DISTRIBUTED_COOKIE:-openriak-0d907764a654bcafaeaff51417310431}"
+      RIAK_MONITOR_INTERVAL_SECONDS: "${OPENRIAK_MONITOR_INTERVAL_SECONDS:-10}"
+    ports:
+      - "${OPENRIAK_PB_PORT:-8087}:8087"
+      - "${OPENRIAK_HTTP_PORT:-8098}:8098"
+    volumes:
+      - "${OPENRIAK_CONFIG_PATH:-./openriak-kv-3.4.0-ubuntu-jammy-otp24-amd64-node/config}:/etc/riak"
+      - "${OPENRIAK_DATA_PATH:-./openriak-kv-3.4.0-ubuntu-jammy-otp24-amd64-node/data}:/var/lib/riak"
+      - "${OPENRIAK_LOGS_PATH:-./openriak-kv-3.4.0-ubuntu-jammy-otp24-amd64-node/logs}:/var/log/riak"
+    networks:
+      openriak:
+        aliases:
+          - "${OPENRIAK_NODE_1_HOST:-node-01.cluster-a.openriak}"
+    ulimits:
+      nofile:
+        soft: 100000
+        hard: 100000
+    stop_grace_period: 2m
+
+networks:
+  openriak:
+    driver: bridge

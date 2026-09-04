@@ -318,7 +318,7 @@ def package_install_script(target: Target) -> str:
     package_path = f"/tmp/{filename}"
     package_family = target.operating_system["package_family"]
     if package_family == "apk":
-        return f"""apk add --no-cache bash ca-certificates curl su-exec
+        return f"""apk add --no-cache bash ca-certificates coreutils curl su-exec
 apk add --no-cache --allow-untrusted {package_path}
 rm -f {package_path}"""
     if package_family == "deb":
@@ -1615,9 +1615,42 @@ def wait_for_container_log(
             )
             last_output = result.stdout
             found = result.returncode == 0 and marker in last_output
-            log.write(f"{isoformat()} exit={result.returncode} marker_found={found}\n")
+            state = subprocess.run(
+                [
+                    docker,
+                    "container",
+                    "inspect",
+                    "--format",
+                    "{{.State.Running}} {{.State.ExitCode}}",
+                    container_name,
+                ],
+                text=True,
+                stdout=subprocess.PIPE,
+                stderr=subprocess.STDOUT,
+                encoding="utf-8",
+                errors="replace",
+                check=False,
+            )
+            state_output = state.stdout.strip()
+            state_parts = state_output.split()
+            running = (
+                state.returncode == 0
+                and len(state_parts) >= 1
+                and state_parts[0] == "true"
+            )
+            log.write(
+                f"{isoformat()} logs_exit={result.returncode} marker_found={found} "
+                f"inspect_exit={state.returncode} state={state_output!r}\n"
+            )
             log.flush()
-            if found:
+            if state.returncode == 0 and not running:
+                exit_code = state_parts[1] if len(state_parts) >= 2 else "unknown"
+                output_tail = "\n".join(last_output.strip().splitlines()[-20:]) or "<empty>"
+                raise DockerToolError(
+                    f"Container {container_name!r} exited with code {exit_code} before "
+                    f"its log contained {marker!r}; last log output:\n{output_tail}"
+                )
+            if found and running:
                 return last_output
             time.sleep(1)
     raise DockerToolError(
@@ -2553,10 +2586,16 @@ def parser() -> argparse.ArgumentParser:
     refresh.add_argument("--download-id")
     refresh.add_argument("--timeout", type=int, default=180)
     refresh.add_argument("--cluster-nodes", type=int, default=DEFAULT_CLUSTER_NODES)
-    refresh.add_argument(
+    regeneration = refresh.add_mutually_exclusive_group()
+    regeneration.add_argument(
         "--force",
         action="store_true",
         help="Regenerate and retest even when a complete cached result exists",
+    )
+    regeneration.add_argument(
+        "--retry-failed",
+        action="store_true",
+        help="Regenerate failed or incompatible targets while keeping passed caches",
     )
     refresh.add_argument("--keep-test-workdir", action="store_true")
     refresh.add_argument(
@@ -2599,9 +2638,10 @@ def main(arguments: list[str] | None = None) -> int:
             if state == "valid" and not options.force:
                 print(f"[{index}/{len(targets)}] SKIPPED {target.image} (complete cache exists)")
                 continue
-            if state == "invalid" and not options.force:
+            if state == "invalid" and not (options.force or options.retry_failed):
                 raise DockerToolError(
-                    f"Incomplete or incompatible cache for {target.image}: {reason}; use --force to regenerate"
+                    f"Incomplete or incompatible cache for {target.image}: {reason}; "
+                    "use --retry-failed or --force to regenerate"
                 )
             print(f"[{index}/{len(targets)}] Refreshing {target.image}", flush=True)
             passed = refresh_target(

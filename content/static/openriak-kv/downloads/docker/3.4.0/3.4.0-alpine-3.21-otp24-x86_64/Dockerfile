@@ -8,7 +8,7 @@ FROM --platform=linux/amd64 alpine:3.21@sha256:48b0309ca019d89d40f670aa1bc06e426
 # -----------------------------------------------------------------------------
 ENV RIAK_NODE_HOST=""
 ENV RIAK_NODE_NAME=""
-ENV RIAK_DISTRIBUTED_COOKIE="openriak-13263ffa044cf907170dda82e36864cc"
+ENV RIAK_DISTRIBUTED_COOKIE="openriak-eea061074eef397c43d5dee8270552ae"
 ENV RIAK_RING_SIZE="8"
 ENV RIAK_STORAGE_BACKEND="leveled"
 ENV RIAK_ANTI_ENTROPY="passive"
