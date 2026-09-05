@@ -1,0 +1,158 @@
+{
+  "artifacts": {},
+  "base_image": {
+    "pinned": "amazonlinux:2023@sha256:181f98c48832fe926f8ca3b6ffeafcce128e96e77b93d08fbe9a9bc9403ce284",
+    "requested": "amazonlinux:2023",
+    "resolved_at": "2026-09-05T00:42:51Z"
+  },
+  "error": {
+    "message": "Container 'openriak-kv-3.4.0-amazon-linux-2023-otp24-aarch64-node-t-980710z' exited with code 1 before its log contained 'monitor: BEAM is running'; last log output:\n2026-09-05T00:45:58Z [openriak-entrypoint] configuration: preparing mounted directories\n2026-09-05T00:45:58Z [openriak-entrypoint] configuration: using existing /etc/riak/riak.conf\n/usr/local/bin/openriak-entrypoint: line 115: hostname: command not found\n2026-09-05T00:45:58Z [openriak-entrypoint] configuration: no non-loopback Docker IPv4 address is currently available\n2026-09-05T00:45:58Z [openriak-entrypoint] configuration: nodename = openriak-kv@node-01.cluster-a.openriak\n2026-09-05T00:45:59Z [openriak-entrypoint] configuration: distributed_cookie = openriak-08ef241fe5bb2412696b0de00475baf2\n2026-09-05T00:45:59Z [openriak-entrypoint] configuration: ring_size = 8\n2026-09-05T00:45:59Z [openriak-entrypoint] configuration: storage_backend = leveled\n2026-09-05T00:45:59Z [openriak-entrypoint] configuration: anti_entropy = passive\n2026-09-05T00:45:59Z [openriak-entrypoint] configuration: tictacaae_active = active\n2026-09-05T00:46:00Z [openriak-entrypoint] configuration: tictacaae_storeheads = enabled\n2026-09-05T00:46:00Z [openriak-entrypoint] configuration: listener.http.internal = 0.0.0.0:8098\n2026-09-05T00:46:00Z [openriak-entrypoint] configuration: listener.protobuf.internal = 0.0.0.0:8087\n2026-09-05T00:46:00Z [openriak-entrypoint] startup: validating configuration and generating VM arguments\n2026-09-05T00:46:00Z [openriak-entrypoint] startup: configuration validation failed (/usr/local/bin/openriak-entrypoint: line 31: su: command not found)",
+    "type": "DockerToolError"
+  },
+  "finished_at": "2026-09-05T00:46:02Z",
+  "generation": {
+    "cluster_nodes": 5,
+    "distributed_cookie": "openriak-08ef241fe5bb2412696b0de00475baf2"
+  },
+  "image": "openriak/openriak-kv:3.4.0-amazon-linux-2023-otp24-aarch64",
+  "metadata_sources": [
+    "content/openriak-kv/metadata/3.4.0/supported-os.json",
+    "content/openriak-kv/metadata/3.4.0/downloads.json"
+  ],
+  "network": {
+    "address_assignment": "docker",
+    "node_host": "node-01.cluster-a.openriak",
+    "riak_node_name": "openriak-kv@node-01.cluster-a.openriak"
+  },
+  "node": "openriak-kv-3.4.0-amazon-linux-2023-otp24-aarch64-node",
+  "package": {
+    "checksum": {
+      "algorithm": "sha256",
+      "value": "80b56fc4973fd6b3fcce39d787c2ab1295c51f81c492719acf577129e1e6b3dd"
+    },
+    "filename": "riak-3.4.0.OTP24-1.amzn2023.aarch64.rpm",
+    "format": "rpm",
+    "url": "https://files.tiot.jp/riak/kv/3.4/3.4.0/amazon/2023%20(graviton3)/riak-3.4.0.OTP24-1.amzn2023.aarch64.rpm"
+  },
+  "ports": {
+    "http": 8098,
+    "protobuf": 8087
+  },
+  "product": "openriak-kv",
+  "run_id": "20260905T004248.980710Z",
+  "schema_version": 3,
+  "started_at": "2026-09-05T00:42:48Z",
+  "status": "failed",
+  "steps": [
+    {
+      "duration_seconds": 2.226,
+      "finished_at": "2026-09-05T00:42:51Z",
+      "name": "pull_and_pin_base_image",
+      "started_at": "2026-09-05T00:42:48Z",
+      "status": "passed"
+    },
+    {
+      "duration_seconds": 0.0,
+      "finished_at": "2026-09-05T00:42:51Z",
+      "name": "generate_artifacts",
+      "started_at": "2026-09-05T00:42:51Z",
+      "status": "passed"
+    },
+    {
+      "duration_seconds": 0.105,
+      "finished_at": "2026-09-05T00:42:51Z",
+      "name": "validate_compose_artifacts",
+      "started_at": "2026-09-05T00:42:51Z",
+      "status": "passed"
+    },
+    {
+      "duration_seconds": 179.125,
+      "finished_at": "2026-09-05T00:45:54Z",
+      "name": "build_image",
+      "started_at": "2026-09-05T00:42:51Z",
+      "status": "passed"
+    },
+    {
+      "duration_seconds": 3.12,
+      "finished_at": "2026-09-05T00:45:57Z",
+      "name": "initialize_volumes",
+      "started_at": "2026-09-05T00:45:54Z",
+      "status": "passed"
+    },
+    {
+      "duration_seconds": 0.547,
+      "finished_at": "2026-09-05T00:45:57Z",
+      "name": "make_test_config_writable",
+      "started_at": "2026-09-05T00:45:57Z",
+      "status": "passed"
+    },
+    {
+      "duration_seconds": 0.004,
+      "finished_at": "2026-09-05T00:45:57Z",
+      "name": "configure_node",
+      "started_at": "2026-09-05T00:45:57Z",
+      "status": "passed"
+    },
+    {
+      "duration_seconds": 0.366,
+      "finished_at": "2026-09-05T00:45:58Z",
+      "name": "start_compose_node",
+      "started_at": "2026-09-05T00:45:57Z",
+      "status": "passed"
+    },
+    {
+      "duration_seconds": 3.242,
+      "error": "Container 'openriak-kv-3.4.0-amazon-linux-2023-otp24-aarch64-node-t-980710z' exited with code 1 before its log contained 'monitor: BEAM is running'; last log output:\n2026-09-05T00:45:58Z [openriak-entrypoint] configuration: preparing mounted directories\n2026-09-05T00:45:58Z [openriak-entrypoint] configuration: using existing /etc/riak/riak.conf\n/usr/local/bin/openriak-entrypoint: line 115: hostname: command not found\n2026-09-05T00:45:58Z [openriak-entrypoint] configuration: no non-loopback Docker IPv4 address is currently available\n2026-09-05T00:45:58Z [openriak-entrypoint] configuration: nodename = openriak-kv@node-01.cluster-a.openriak\n2026-09-05T00:45:59Z [openriak-entrypoint] configuration: distributed_cookie = openriak-08ef241fe5bb2412696b0de00475baf2\n2026-09-05T00:45:59Z [openriak-entrypoint] configuration: ring_size = 8\n2026-09-05T00:45:59Z [openriak-entrypoint] configuration: storage_backend = leveled\n2026-09-05T00:45:59Z [openriak-entrypoint] configuration: anti_entropy = passive\n2026-09-05T00:45:59Z [openriak-entrypoint] configuration: tictacaae_active = active\n2026-09-05T00:46:00Z [openriak-entrypoint] configuration: tictacaae_storeheads = enabled\n2026-09-05T00:46:00Z [openriak-entrypoint] configuration: listener.http.internal = 0.0.0.0:8098\n2026-09-05T00:46:00Z [openriak-entrypoint] configuration: listener.protobuf.internal = 0.0.0.0:8087\n2026-09-05T00:46:00Z [openriak-entrypoint] startup: validating configuration and generating VM arguments\n2026-09-05T00:46:00Z [openriak-entrypoint] startup: configuration validation failed (/usr/local/bin/openriak-entrypoint: line 31: su: command not found)",
+      "finished_at": "2026-09-05T00:46:01Z",
+      "name": "wait_for_entrypoint_readiness",
+      "started_at": "2026-09-05T00:45:58Z",
+      "status": "failed"
+    }
+  ],
+  "target": {
+    "architecture": "aarch64",
+    "docker_platform": "linux/arm64",
+    "download_id": "otp24-aarch64-1",
+    "os_family": "amazon-linux",
+    "os_id": "amazon-linux-2023-aarch64",
+    "os_name": "Amazon Linux 2023",
+    "os_release": "2023",
+    "otp": "24",
+    "version": "3.4.0"
+  },
+  "tests": {
+    "configuration": {
+      "settings": {
+        "anti_entropy": "passive",
+        "listener.http.internal": "0.0.0.0:8098",
+        "listener.protobuf.internal": "0.0.0.0:8087",
+        "nodename": "openriak-kv@node-01.cluster-a.openriak",
+        "ring_size": "8",
+        "storage_backend": "leveled",
+        "tictacaae_active": "active",
+        "tictacaae_storeheads": "enabled"
+      },
+      "status": "passed"
+    },
+    "volume_initialization": {
+      "config_populated": true,
+      "data_directory_created": true,
+      "logs_directory_created": true,
+      "status": "passed"
+    }
+  },
+  "volumes": {
+    "config": {
+      "container": "/etc/riak",
+      "default": "./openriak-kv-3.4.0-amazon-linux-2023-otp24-aarch64-node/config"
+    },
+    "data": {
+      "container": "/var/lib/riak",
+      "default": "./openriak-kv-3.4.0-amazon-linux-2023-otp24-aarch64-node/data"
+    },
+    "logs": {
+      "container": "/var/log/riak",
+      "default": "./openriak-kv-3.4.0-amazon-linux-2023-otp24-aarch64-node/logs"
+    }
+  }
+}

@@ -1,0 +1,78 @@
+{
+  "artifacts": {},
+  "base_image": null,
+  "error": {
+    "message": "Command failed with exit code 1: /usr/bin/docker pull --platform linux/amd64 debian:bookworm-slim (see /home/peter/GitHub/TI-Tokyo/openriak-docs/tools/cache/openriak-docker/3.4.1/debian-12-amd64/otp26-amd64/runs/20260905T035854.725264Z/logs/base-image-pull.log)",
+    "type": "DockerToolError"
+  },
+  "finished_at": "2026-09-05T03:58:54Z",
+  "generation": {
+    "cluster_nodes": 5,
+    "distributed_cookie": "openriak-4fc8e3a44de391e8993c49268f2a3d58"
+  },
+  "image": "openriak/openriak-kv:3.4.1-debian-12-otp26-amd64",
+  "metadata_sources": [
+    "content/openriak-kv/metadata/3.4.1/supported-os.json",
+    "content/openriak-kv/metadata/3.4.1/downloads.json"
+  ],
+  "network": {
+    "address_assignment": "docker",
+    "node_host": "node-01.cluster-a.openriak",
+    "riak_node_name": "openriak-kv@node-01.cluster-a.openriak"
+  },
+  "node": "openriak-kv-3.4.1-debian-12-otp26-amd64-node",
+  "package": {
+    "checksum": {
+      "algorithm": "sha256",
+      "value": "d186f029af2e639edeb786f6a221bb823588e9484bd93682a1f95c96a88590ce"
+    },
+    "filename": "riak_3.4.1-OTP26_amd64.deb",
+    "format": "deb",
+    "url": "https://files.tiot.jp/riak/kv/3.4/3.4.1/debian/12/riak_3.4.1-OTP26_amd64.deb"
+  },
+  "ports": {
+    "http": 8098,
+    "protobuf": 8087
+  },
+  "product": "openriak-kv",
+  "run_id": "20260905T035854.725264Z",
+  "schema_version": 3,
+  "started_at": "2026-09-05T03:58:54Z",
+  "status": "failed",
+  "steps": [
+    {
+      "duration_seconds": 0.015,
+      "error": "Command failed with exit code 1: /usr/bin/docker pull --platform linux/amd64 debian:bookworm-slim (see /home/peter/GitHub/TI-Tokyo/openriak-docs/tools/cache/openriak-docker/3.4.1/debian-12-amd64/otp26-amd64/runs/20260905T035854.725264Z/logs/base-image-pull.log)",
+      "finished_at": "2026-09-05T03:58:54Z",
+      "name": "pull_and_pin_base_image",
+      "started_at": "2026-09-05T03:58:54Z",
+      "status": "failed"
+    }
+  ],
+  "target": {
+    "architecture": "amd64",
+    "docker_platform": "linux/amd64",
+    "download_id": "otp26-amd64",
+    "os_family": "debian",
+    "os_id": "debian-12-amd64",
+    "os_name": "Debian 12",
+    "os_release": "12",
+    "otp": "26",
+    "version": "3.4.1"
+  },
+  "tests": {},
+  "volumes": {
+    "config": {
+      "container": "/etc/riak",
+      "default": "./openriak-kv-3.4.1-debian-12-otp26-amd64-node/config"
+    },
+    "data": {
+      "container": "/var/lib/riak",
+      "default": "./openriak-kv-3.4.1-debian-12-otp26-amd64-node/data"
+    },
+    "logs": {
+      "container": "/var/log/riak",
+      "default": "./openriak-kv-3.4.1-debian-12-otp26-amd64-node/logs"
+    }
+  }
+}

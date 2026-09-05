@@ -20,7 +20,7 @@ import sys
 import tempfile
 import time
 import urllib.parse
-from typing import Any, Iterable
+from typing import Any, Callable, Iterable
 
 
 SCHEMA_VERSION = 3
@@ -66,6 +66,11 @@ DEBIAN_CODENAMES = {
     "10": "buster",
     "11": "bullseye",
     "12": "bookworm",
+}
+
+RHEL_UBI_RELEASES = {
+    "8": "8.10",
+    "9": "9.8",
 }
 
 
@@ -151,6 +156,10 @@ def utc_now() -> dt.datetime:
 
 def isoformat(value: dt.datetime | None = None) -> str:
     return (value or utc_now()).isoformat(timespec="seconds").replace("+00:00", "Z")
+
+
+def log_timestamp(value: dt.datetime | None = None) -> str:
+    return (value or dt.datetime.now().astimezone()).strftime("%Y-%m-%d %H:%M:%S")
 
 
 def run_id(value: dt.datetime | None = None) -> str:
@@ -303,7 +312,13 @@ def base_image_for(target: Target) -> str:
         repository = "arm32v7/debian" if architecture == "armhf" else "arm64v8/debian"
         return f"{repository}:{DEBIAN_CODENAMES.get(release, release)}-slim"
     if family == "rhel":
-        return f"registry.access.redhat.com/ubi{release}/ubi:{release}"
+        try:
+            ubi_release = RHEL_UBI_RELEASES[release]
+        except KeyError as error:
+            raise DockerToolError(
+                f"No release-specific UBI image mapping for RHEL {release}"
+            ) from error
+        return f"registry.access.redhat.com/ubi{release}/ubi:{ubi_release}"
     if family == "sles":
         return f"registry.suse.com/suse/sles{release}:{release}"
     if family == "ubuntu":
@@ -327,6 +342,56 @@ DEBIAN_FRONTEND=noninteractive apt-get install -y --no-install-recommends ca-cer
 rm -rf /var/lib/apt/lists/*
 rm -f {package_path}"""
     if package_family == "rpm":
+        if target.family in {"amazon-linux", "oracle-linux", "rhel"}:
+            dependencies = (
+                "bash ca-certificates glibc hostname libgcc libstdc++ ncurses-libs "
+                "openssl-libs pam procps-ng shadow-utils sudo util-linux zlib"
+            )
+            return f"""if command -v dnf >/dev/null 2>&1
+then
+    dnf install -y {dependencies}
+    if ! command -v curl >/dev/null 2>&1
+    then
+        dnf install -y curl
+    fi
+    dnf clean all
+elif command -v microdnf >/dev/null 2>&1
+then
+    microdnf install -y dnf
+    dnf install -y {dependencies}
+    if ! command -v curl >/dev/null 2>&1
+    then
+        dnf install -y curl
+    fi
+    dnf clean all
+elif command -v yum >/dev/null 2>&1
+then
+    yum install -y {dependencies}
+    if ! command -v curl >/dev/null 2>&1
+    then
+        yum install -y curl
+    fi
+    yum clean all
+else
+    echo 'No supported RPM package manager found' >&2
+    exit 1
+fi
+# These RPMs bundle their matching OTP runtime, including escript, but their
+# generated dependency metadata requires /usr/bin/escript outside the payload.
+rpm -Uvh --replacepkgs --nodeps {package_path}
+if [ ! -e /usr/bin/escript ]
+then
+    for bundled_escript in /usr/lib64/riak/erts-*/bin/escript /usr/lib/riak/erts-*/bin/escript
+    do
+        if [ -x "$bundled_escript" ]
+        then
+            ln -s "$bundled_escript" /usr/bin/escript
+            break
+        fi
+    done
+fi
+test -x /usr/bin/escript
+rm -f {package_path}"""
         return f"""if command -v dnf >/dev/null 2>&1
 then
     dnf install -y ca-certificates curl procps-ng shadow-utils {package_path}
@@ -403,6 +468,18 @@ riak_command() {
 }
 
 riak_admin_command() {
+    admin_command=
+    for admin_candidate in /usr/lib64/riak/bin/riak-admin /usr/lib/riak/bin/riak-admin
+    do
+        [ -x "$admin_candidate" ] || continue
+        admin_command=$admin_candidate
+        break
+    done
+    if [ -z "$admin_command" ]
+    then
+        log "cluster: packaged riak-admin executable is not available"
+        return 1
+    fi
     admin_vmargs=
     for admin_vmargs_candidate in "$data_dir"/generated.conf/vm.*.args
     do
@@ -416,15 +493,15 @@ riak_admin_command() {
     fi
     if command -v su-exec >/dev/null 2>&1
     then
-        VMARGS_PATH="$admin_vmargs" su-exec riak /usr/lib/riak/bin/riak-admin "$@"
+        VMARGS_PATH="$admin_vmargs" su-exec riak "$admin_command" "$@"
         return
     fi
     if command -v runuser >/dev/null 2>&1
     then
-        VMARGS_PATH="$admin_vmargs" runuser -u riak -- /usr/lib/riak/bin/riak-admin "$@"
+        VMARGS_PATH="$admin_vmargs" runuser -u riak -- "$admin_command" "$@"
         return
     fi
-    su -s /bin/sh riak -c "VMARGS_PATH='$admin_vmargs' /usr/lib/riak/bin/riak-admin $*"
+    su -s /bin/sh riak -c "VMARGS_PATH='$admin_vmargs' '$admin_command' $*"
 }
 
 log_cluster_command_output() {
@@ -500,7 +577,7 @@ nodename_resolves_to_ip() {
     resolution_ip=$2
     resolution_host=${resolution_node#*@}
     getent hosts "$resolution_host" 2>/dev/null | awk -v expected="$resolution_ip" '
-        $1 == expected { found = 1 }
+        $1 == expected || $1 == "::ffff:" expected { found = 1 }
         END { exit(found ? 0 : 1) }
     '
 }
@@ -1231,7 +1308,7 @@ VOLUME ["/var/lib/riak"]
 VOLUME ["/var/log/riak"]
 EXPOSE 8087
 EXPOSE 8098
-HEALTHCHECK --interval=10s --timeout=10s --start-period=60s --retries=3 CMD ["/usr/local/bin/openriak-healthcheck"]
+HEALTHCHECK --interval=10s --timeout=60s --start-period=120s --retries=3 CMD ["/usr/local/bin/openriak-healthcheck"]
 STOPSIGNAL SIGTERM
 ENTRYPOINT ["/usr/local/bin/openriak-entrypoint"]
 """
@@ -1418,20 +1495,38 @@ def run_logged(
     cwd: pathlib.Path | None = None,
     environment: dict[str, str] | None = None,
     check: bool = True,
+    timeout_seconds: int | None = None,
 ) -> subprocess.CompletedProcess[str]:
     log_path.parent.mkdir(parents=True, exist_ok=True)
     started = isoformat()
-    result = subprocess.run(
-        command,
-        cwd=cwd,
-        env=environment,
-        text=True,
-        stdout=subprocess.PIPE,
-        stderr=subprocess.STDOUT,
-        encoding="utf-8",
-        errors="replace",
-        check=False,
-    )
+    try:
+        result = subprocess.run(
+            command,
+            cwd=cwd,
+            env=environment,
+            text=True,
+            stdout=subprocess.PIPE,
+            stderr=subprocess.STDOUT,
+            encoding="utf-8",
+            errors="replace",
+            check=False,
+            timeout=timeout_seconds,
+        )
+    except subprocess.TimeoutExpired as error:
+        output = error.stdout or ""
+        if isinstance(output, bytes):
+            output = output.decode("utf-8", errors="replace")
+        with log_path.open("a", encoding="utf-8", newline="\n") as handle:
+            handle.write(f"$ {' '.join(command)}\n")
+            handle.write(f"started: {started}\n")
+            handle.write(f"timeout_seconds: {timeout_seconds}\nexit_code: timeout\n")
+            handle.write(output)
+            if output and not output.endswith("\n"):
+                handle.write("\n")
+        raise DockerToolError(
+            f"Command timed out after {timeout_seconds}s: {' '.join(command)} "
+            f"(see {log_path})"
+        ) from error
     with log_path.open("a", encoding="utf-8", newline="\n") as handle:
         handle.write(f"$ {' '.join(command)}\n")
         handle.write(f"started: {started}\nexit_code: {result.returncode}\n")
@@ -1454,16 +1549,22 @@ def digest_from_pull_output(output: str) -> str | None:
     return match.group(1) if match else None
 
 
-def resolve_base_image(target: Target, logs: pathlib.Path) -> tuple[str, str]:
+def resolve_base_image(
+    target: Target,
+    logs: pathlib.Path,
+    timeout_seconds: int | None = None,
+) -> tuple[str, str]:
     docker = docker_command()
     base = base_image_for(target)
     pull_result = run_logged(
         [docker, "pull", "--platform", target.platform, base],
         logs / "base-image-pull.log",
+        timeout_seconds=timeout_seconds,
     )
     result = run_logged(
         [docker, "image", "inspect", "--format", "{{json .RepoDigests}}", base],
         logs / "base-image-inspect.log",
+        timeout_seconds=timeout_seconds,
     )
     try:
         repo_digests = json.loads(result.stdout.strip())
@@ -1714,6 +1815,35 @@ def wait_for_cluster(
             all_ready = True
             state: dict[str, Any] = {}
             for container_name in container_names:
+                running = subprocess.run(
+                    [
+                        docker,
+                        "container",
+                        "inspect",
+                        "--format",
+                        "{{.State.Running}} {{.State.ExitCode}}",
+                        container_name,
+                    ],
+                    text=True,
+                    stdout=subprocess.PIPE,
+                    stderr=subprocess.STDOUT,
+                    encoding="utf-8",
+                    errors="replace",
+                    check=False,
+                )
+                running_state = running.stdout.strip()
+                if running.returncode != 0 or not running_state.startswith("true "):
+                    state[container_name] = {
+                        "ready": False,
+                        "running": running_state,
+                    }
+                    last_state = state
+                    log.write(f"{isoformat()} {json.dumps(state, sort_keys=True)}\n")
+                    log.flush()
+                    raise DockerToolError(
+                        f"OpenRiak cluster container {container_name!r} stopped "
+                        f"before the cluster became ready; state={running_state!r}"
+                    )
                 commands = {
                     "members": ["riak", "admin", "member-status"],
                     "ring": ["riak", "admin", "ringready"],
@@ -1916,6 +2046,7 @@ def refresh_target(
     timeout_seconds: int,
     keep_workdir: bool = False,
     cluster_nodes: int = DEFAULT_CLUSTER_NODES,
+    progress: Callable[[str], None] | None = None,
 ) -> bool:
     identifier = run_id()
     run_root = target.cache_directory / "runs" / identifier
@@ -1933,15 +2064,24 @@ def refresh_target(
     environment = os.environ.copy()
     docker = docker_command()
 
+    def report_progress(message: str) -> None:
+        if progress is not None:
+            progress(message)
+
     try:
+        report_progress(f"Pulling and pinning base image (timeout {timeout_seconds}s)")
         base, pinned_base = record_step(
-            report, "pull_and_pin_base_image", lambda: resolve_base_image(target, logs)
+            report,
+            "pull_and_pin_base_image",
+            lambda: resolve_base_image(target, logs, timeout_seconds),
         )
         report["base_image"] = {
             "requested": base,
             "pinned": pinned_base,
             "resolved_at": isoformat(),
         }
+
+        report_progress("Creating Dockerfile, compose YAML files and .env for this run")
 
         def generate() -> None:
             dockerfile.write_text(
@@ -1987,6 +2127,7 @@ def refresh_target(
                 )
 
         record_step(report, "validate_compose_artifacts", validate_compose_artifacts)
+        report_progress(f"Building image (timeout {timeout_seconds}s)")
         record_step(
             report,
             "build_image",
@@ -2004,9 +2145,11 @@ def refresh_target(
                     str(run_root),
                 ],
                 logs / "image-build.log",
+                timeout_seconds=timeout_seconds,
             ),
         )
 
+        report_progress(f"Testing single node (timeout {timeout_seconds}s)")
         test_directory = pathlib.Path(tempfile.mkdtemp(prefix=f"openriak-docker-{target.image_tag}-"))
         compose_single_test = test_directory / "compose.single.test.yaml"
         compose_cluster_test = test_directory / "compose.cluster.test.yaml"
@@ -2295,6 +2438,9 @@ def refresh_target(
         )
         compose_started = False
 
+        report_progress(
+            f"Testing {cluster_nodes}-node cluster (timeout {max(timeout_seconds, 300)}s)"
+        )
         cluster_command = [
             docker,
             "compose",
@@ -2564,6 +2710,28 @@ def print_matrix(targets: list[Target], as_json: bool) -> None:
         )
 
 
+def print_refresh_header(
+    options: argparse.Namespace,
+    targets: list[Target],
+    started_at: dt.datetime | None = None,
+) -> None:
+    versions = "all" if options.all else ", ".join(dict.fromkeys(t.version for t in targets))
+    os_selection = options.os_id or "all"
+    if options.os_id or options.download_id:
+        architectures = ", ".join(dict.fromkeys(t.architecture for t in targets))
+    else:
+        architectures = "all"
+    separator = "=" * 64
+    print(separator)
+    print(f"Docker script started at {log_timestamp(started_at)}")
+    print(f"Version:       {versions}")
+    print(f"OS:            {os_selection}")
+    print(f"Architecture:  {architectures}")
+    print(f"Timeout:       {options.timeout}s")
+    print(f"Cluster nodes: {options.cluster_nodes}")
+    print(separator, flush=True)
+
+
 def parser() -> argparse.ArgumentParser:
     result = argparse.ArgumentParser(description=__doc__)
     subcommands = result.add_subparsers(dest="command", required=True)
@@ -2632,25 +2800,40 @@ def main(arguments: list[str] | None = None) -> int:
         if options.cluster_nodes < 2 or options.cluster_nodes > 253:
             raise DockerToolError("--cluster-nodes must be between 2 and 253")
 
+        print_refresh_header(options, targets)
         failures = 0
         for index, target in enumerate(targets, start=1):
+            prefix = f"[{index}/{len(targets)}]"
+
+            def target_progress(message: str) -> None:
+                print(f"{prefix} {log_timestamp()}   - {message}", flush=True)
+
             state, reason = cache_state(target, options.cluster_nodes)
             if state == "valid" and not options.force:
-                print(f"[{index}/{len(targets)}] SKIPPED {target.image} (complete cache exists)")
+                print(
+                    f"{prefix} {log_timestamp()} SKIPPED {target.image} "
+                    "(complete cache exists)",
+                    flush=True,
+                )
                 continue
             if state == "invalid" and not (options.force or options.retry_failed):
                 raise DockerToolError(
                     f"Incomplete or incompatible cache for {target.image}: {reason}; "
                     "use --retry-failed or --force to regenerate"
                 )
-            print(f"[{index}/{len(targets)}] Refreshing {target.image}", flush=True)
+            print(f"{prefix} {log_timestamp()} Refreshing {target.image}", flush=True)
+            target_started = time.monotonic()
             passed = refresh_target(
                 target,
                 options.timeout,
                 options.keep_test_workdir,
                 options.cluster_nodes,
+                target_progress,
             )
-            print(f"[{index}/{len(targets)}] {'PASSED' if passed else 'FAILED'} {target.image}", flush=True)
+            duration = round(time.monotonic() - target_started)
+            target_progress(
+                f"{'PASSED' if passed else 'FAILED'} (duration {duration}s)"
+            )
             failures += int(not passed)
         return 1 if failures else 0
     except (DockerToolError, OSError, json.JSONDecodeError) as error:

@@ -1,4 +1,6 @@
+import contextlib
 import importlib.util
+import io
 import pathlib
 import sys
 import tempfile
@@ -77,7 +79,10 @@ class OpenRiakDockerTests(unittest.TestCase):
         self.assertIn("riak_command admin transfers", source)
         self.assertIn("riak_command stop", source)
         self.assertIn("pgrep -x beam.smp", source)
-        self.assertIn("HEALTHCHECK --interval=10s", source)
+        self.assertIn(
+            "HEALTHCHECK --interval=10s --timeout=60s --start-period=120s --retries=3",
+            source,
+        )
         self.assertIn("STOPSIGNAL SIGTERM", source)
         self.assertIn('log "startup: OpenRiak is ready"', source)
         self.assertIn('log "monitor: BEAM is running and riak ping returned pong"', source)
@@ -94,6 +99,7 @@ class OpenRiakDockerTests(unittest.TestCase):
         self.assertIn("commit_output_is_successful", source)
         self.assertIn("current_node_ipv4", source)
         self.assertIn("nodename_resolves_to_ip", source)
+        self.assertIn('$1 == expected || $1 == "::ffff:" expected', source)
         self.assertIn('set_setting distributed_cookie "$RIAK_DISTRIBUTED_COOKIE"', source)
         self.assertIn('log "configuration: ${key} = ${value}"', source)
         self.assertIn("for (octet = 1; octet <= 4; octet += 1)", source)
@@ -242,6 +248,95 @@ listener.protobuf.internal = 127.0.0.1:8087
     def test_base_image_uses_release_tag(self):
         self.assertEqual(docker_tool.base_image_for(self.target), "alpine:3.21")
 
+    def test_admin_command_uses_installed_package_layout(self):
+        source = docker_tool.ENTRYPOINT_SCRIPT
+        function = source[source.index("riak_admin_command() {"):source.index("log_cluster_command_output() {")]
+        for layout in ("lib64", "lib", "missing"):
+            with self.subTest(layout=layout), tempfile.TemporaryDirectory() as directory:
+                root = pathlib.Path(directory)
+                vmargs = root / "generated.conf" / "vm.test.args"
+                vmargs.parent.mkdir()
+                vmargs.touch()
+                executable = root / layout / "riak/bin/riak-admin"
+                if layout != "missing":
+                    executable.parent.mkdir(parents=True)
+                    executable.write_text('#!/bin/sh\nprintf "%s\\n" "$VMARGS_PATH" "$@"\n')
+                    executable.chmod(0o755)
+                script = function.replace("/usr/lib64/", f"{root}/lib64/").replace("/usr/lib/", f"{root}/lib/")
+                script += '\nlog() { printf "%s\\n" "$*"; }\n'
+                launcher = root / "su-exec"
+                launcher.write_text('#!/bin/sh\nshift\nexec "$@"\n')
+                launcher.chmod(0o755)
+                script += f"PATH='{root}':$PATH\n"
+                script += f"data_dir='{root}'\nriak_admin_command cluster join openriak-kv@node-01.cluster-a.openriak\n"
+                result = docker_tool.subprocess.run(
+                    ["/bin/sh", "-eu", "-c", script], capture_output=True, text=True,
+                )
+                if layout == "missing":
+                    self.assertEqual(result.returncode, 1)
+                    self.assertIn("packaged riak-admin executable is not available", result.stdout)
+                else:
+                    self.assertEqual(result.returncode, 0, result.stderr)
+                    self.assertEqual(result.stdout.splitlines(), [
+                        str(vmargs), "cluster", "join", "openriak-kv@node-01.cluster-a.openriak",
+                    ])
+
+    def test_rhel_base_images_use_current_release_specific_tags(self):
+        rhel_targets = {
+            target.release: target
+            for target in docker_tool.discover_targets()
+            if target.family == "rhel"
+        }
+        self.assertEqual(
+            docker_tool.base_image_for(rhel_targets["8"]),
+            "registry.access.redhat.com/ubi8/ubi:8.10",
+        )
+        self.assertEqual(
+            docker_tool.base_image_for(rhel_targets["9"]),
+            "registry.access.redhat.com/ubi9/ubi:9.8",
+        )
+
+    def test_amazon_linux_keeps_existing_curl_and_uses_bundled_escript(self):
+        target = next(
+            target
+            for target in docker_tool.discover_targets()
+            if target.family == "amazon-linux"
+        )
+        script = docker_tool.package_install_script(target)
+        self.assertIn("if ! command -v curl", script)
+        self.assertNotIn("dnf install -y ca-certificates curl ", script)
+        self.assertIn("rpm -Uvh --replacepkgs --nodeps", script)
+        self.assertIn("/usr/lib64/riak/erts-*/bin/escript", script)
+        self.assertIn("test -x /usr/bin/escript", script)
+
+    def test_rhel_keeps_existing_curl_minimal(self):
+        target = next(
+            target
+            for target in docker_tool.discover_targets()
+            if target.family == "rhel"
+        )
+        script = docker_tool.package_install_script(target)
+        self.assertIn("if ! command -v curl", script)
+        self.assertNotIn("dnf install -y ca-certificates curl ", script)
+
+    def test_microdnf_installs_dependencies_before_local_rpm(self):
+        target = next(
+            target
+            for target in docker_tool.discover_targets()
+            if target.family == "oracle-linux"
+        )
+        script = docker_tool.package_install_script(target)
+        self.assertIn("microdnf install -y dnf", script)
+        self.assertIn(
+            "dnf install -y bash ca-certificates glibc hostname libgcc libstdc++",
+            script,
+        )
+        self.assertIn("shadow-utils sudo util-linux zlib", script)
+        self.assertIn(
+            f"rpm -Uvh --replacepkgs --nodeps /tmp/{target.package['filename']}",
+            script,
+        )
+
     def test_pull_output_digest_pattern_supports_containerd_image_store(self):
         output = "Digest: sha256:" + "b" * 64 + "\nStatus: Downloaded newer image\n"
         self.assertEqual(
@@ -309,6 +404,69 @@ listener.protobuf.internal = 127.0.0.1:8087
         self.assertTrue(retry_options.retry_failed)
         self.assertFalse(retry_options.force)
 
+    def test_refresh_log_header_and_skipped_target_are_timestamped(self):
+        output = io.StringIO()
+        with mock.patch.object(
+            docker_tool, "discover_targets", return_value=[self.target]
+        ), mock.patch.object(
+            docker_tool, "cache_state", return_value=("valid", "")
+        ), mock.patch.object(
+            docker_tool, "log_timestamp", return_value="2026-09-05 11:01:22"
+        ), contextlib.redirect_stdout(output):
+            exit_code = docker_tool.main(["refresh", "--version", "3.4.0"])
+        source = output.getvalue()
+        self.assertEqual(exit_code, 0)
+        self.assertIn("Docker script started at 2026-09-05 11:01:22", source)
+        self.assertIn("Version:       3.4.0", source)
+        self.assertIn("OS:            all", source)
+        self.assertIn("Architecture:  all", source)
+        self.assertIn("Timeout:       180s", source)
+        self.assertIn("Cluster nodes: 5", source)
+        self.assertIn(
+            f"[1/1] 2026-09-05 11:01:22 SKIPPED {self.target.image} "
+            "(complete cache exists)",
+            source,
+        )
+
+    def test_refresh_target_has_timestamped_phase_progress_hooks(self):
+        source = MODULE_PATH.read_text(encoding="utf-8")
+        self.assertIn('report_progress(f"Pulling and pinning base image (timeout ', source)
+        self.assertIn(
+            'report_progress("Creating Dockerfile, compose YAML files and .env for this run")',
+            source,
+        )
+        self.assertIn('report_progress(f"Building image (timeout ', source)
+        self.assertIn('report_progress(f"Testing single node (timeout ', source)
+        self.assertIn('f"Testing {cluster_nodes}-node cluster (timeout ', source)
+
+    def test_run_logged_records_and_reports_command_timeout(self):
+        command = ["docker", "build", "."]
+        timeout = docker_tool.subprocess.TimeoutExpired(
+            command,
+            1800,
+            output="partial build output\n",
+        )
+        with tempfile.TemporaryDirectory() as directory:
+            log_path = pathlib.Path(directory) / "build.log"
+            with mock.patch.object(
+                docker_tool.subprocess,
+                "run",
+                side_effect=timeout,
+            ):
+                with self.assertRaisesRegex(
+                    docker_tool.DockerToolError,
+                    "timed out after 1800s",
+                ):
+                    docker_tool.run_logged(
+                        command,
+                        log_path,
+                        timeout_seconds=1800,
+                    )
+            log = log_path.read_text(encoding="utf-8")
+            self.assertIn("timeout_seconds: 1800", log)
+            self.assertIn("exit_code: timeout", log)
+            self.assertIn("partial build output", log)
+
     def test_partial_single_compose_start_is_marked_for_cleanup(self):
         source = MODULE_PATH.read_text(encoding="utf-8")
         marked = source.index("        compose_started = True\n        record_step(\n            report,\n            \"start_compose_node\"")
@@ -347,6 +505,34 @@ listener.protobuf.internal = 127.0.0.1:8087
                     )
             self.assertEqual(run.call_count, 2)
             self.assertIn("state='false 1'", log_path.read_text(encoding="utf-8"))
+
+    def test_cluster_wait_fails_immediately_when_a_container_exits(self):
+        state_result = docker_tool.subprocess.CompletedProcess(
+            args=["docker", "container", "inspect", "failed-node"],
+            returncode=0,
+            stdout="false 7\n",
+        )
+        with tempfile.TemporaryDirectory() as directory:
+            log_path = pathlib.Path(directory) / "cluster-readiness.log"
+            with mock.patch.object(
+                docker_tool, "docker_command", return_value="/usr/bin/docker"
+            ), mock.patch.object(
+                docker_tool.subprocess,
+                "run",
+                return_value=state_result,
+            ) as run:
+                with self.assertRaisesRegex(
+                    docker_tool.DockerToolError,
+                    "stopped before the cluster became ready",
+                ):
+                    docker_tool.wait_for_cluster(
+                        ["failed-node"],
+                        ["openriak-kv@failed-node"],
+                        1800,
+                        log_path,
+                    )
+            self.assertEqual(run.call_count, 1)
+            self.assertIn('"running": "false 7"', log_path.read_text(encoding="utf-8"))
 
 
 if __name__ == "__main__":
