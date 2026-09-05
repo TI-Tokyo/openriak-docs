@@ -1,4 +1,6 @@
-# Generated and tested by tools/openriak-docker/openriak-docker. Do not edit by hand.
+# Created by TI Tokyo, www.tiot.jp, for the OpenRiak project at https://openriak.org
+# WARNING: Edit only if you understand the effect of your changes.
+# Original image tag: openriak/openriak-kv:3.4.1-debian-12-otp26-amd64
 # Set role=coordinator on exactly one service. An omitted or empty role is a follower.
 name: openriak-kv-3.4.1-debian-12-otp26-amd64-node-cluster
 
@@ -11,12 +13,19 @@ services:
     container_name: "${OPENRIAK_NODE_1_CONTAINER_NAME:-openriak-kv-3.4.1-debian-12-otp26-amd64-node-1}"
     hostname: "${OPENRIAK_NODE_1_HOST:-node-01.cluster-a.openriak}"
     environment:
+      # Use single-node startup or shared-directory cluster discovery.
       OPENRIAK_CLUSTER_MODE: cluster
+      # Coordinator on exactly one cluster service; empty or omitted means follower.
       role: coordinator
+      # DNS hostname used to derive the OpenRiak KV nodename.
       RIAK_NODE_HOST: "${OPENRIAK_NODE_1_HOST:-node-01.cluster-a.openriak}"
+      # Erlang cookie; use the same value for every cluster member.
       RIAK_DISTRIBUTED_COOKIE: "${OPENRIAK_DISTRIBUTED_COOKIE:-openriak-e096f965330436fb4ff7125b55e0dd77}"
+      # Seconds between running-node health checks.
       RIAK_MONITOR_INTERVAL_SECONDS: "${OPENRIAK_MONITOR_INTERVAL_SECONDS:-10}"
+      # Seconds between cluster discovery checks.
       OPENRIAK_CLUSTER_POLL_SECONDS: "${OPENRIAK_CLUSTER_POLL_SECONDS:-1}"
+      # Maximum seconds to wait for cluster discovery approval.
       OPENRIAK_CLUSTER_WAIT_SECONDS: "${OPENRIAK_CLUSTER_WAIT_SECONDS:-300}"
     ports:
       - "${OPENRIAK_NODE_1_PB_PORT:-18087}:8087"
@@ -43,11 +52,17 @@ services:
     container_name: "${OPENRIAK_NODE_2_CONTAINER_NAME:-openriak-kv-3.4.1-debian-12-otp26-amd64-node-2}"
     hostname: "${OPENRIAK_NODE_2_HOST:-node-02.cluster-a.openriak}"
     environment:
+      # Use single-node startup or shared-directory cluster discovery.
       OPENRIAK_CLUSTER_MODE: cluster
+      # DNS hostname used to derive the OpenRiak KV nodename.
       RIAK_NODE_HOST: "${OPENRIAK_NODE_2_HOST:-node-02.cluster-a.openriak}"
+      # Erlang cookie; use the same value for every cluster member.
       RIAK_DISTRIBUTED_COOKIE: "${OPENRIAK_DISTRIBUTED_COOKIE:-openriak-e096f965330436fb4ff7125b55e0dd77}"
+      # Seconds between running-node health checks.
       RIAK_MONITOR_INTERVAL_SECONDS: "${OPENRIAK_MONITOR_INTERVAL_SECONDS:-10}"
+      # Seconds between cluster discovery checks.
       OPENRIAK_CLUSTER_POLL_SECONDS: "${OPENRIAK_CLUSTER_POLL_SECONDS:-1}"
+      # Maximum seconds to wait for cluster discovery approval.
       OPENRIAK_CLUSTER_WAIT_SECONDS: "${OPENRIAK_CLUSTER_WAIT_SECONDS:-300}"
     ports:
       - "${OPENRIAK_NODE_2_PB_PORT:-18187}:8087"
@@ -74,11 +89,17 @@ services:
     container_name: "${OPENRIAK_NODE_3_CONTAINER_NAME:-openriak-kv-3.4.1-debian-12-otp26-amd64-node-3}"
     hostname: "${OPENRIAK_NODE_3_HOST:-node-03.cluster-a.openriak}"
     environment:
+      # Use single-node startup or shared-directory cluster discovery.
       OPENRIAK_CLUSTER_MODE: cluster
+      # DNS hostname used to derive the OpenRiak KV nodename.
       RIAK_NODE_HOST: "${OPENRIAK_NODE_3_HOST:-node-03.cluster-a.openriak}"
+      # Erlang cookie; use the same value for every cluster member.
       RIAK_DISTRIBUTED_COOKIE: "${OPENRIAK_DISTRIBUTED_COOKIE:-openriak-e096f965330436fb4ff7125b55e0dd77}"
+      # Seconds between running-node health checks.
       RIAK_MONITOR_INTERVAL_SECONDS: "${OPENRIAK_MONITOR_INTERVAL_SECONDS:-10}"
+      # Seconds between cluster discovery checks.
       OPENRIAK_CLUSTER_POLL_SECONDS: "${OPENRIAK_CLUSTER_POLL_SECONDS:-1}"
+      # Maximum seconds to wait for cluster discovery approval.
       OPENRIAK_CLUSTER_WAIT_SECONDS: "${OPENRIAK_CLUSTER_WAIT_SECONDS:-300}"
     ports:
       - "${OPENRIAK_NODE_3_PB_PORT:-18287}:8087"
@@ -105,11 +126,17 @@ services:
     container_name: "${OPENRIAK_NODE_4_CONTAINER_NAME:-openriak-kv-3.4.1-debian-12-otp26-amd64-node-4}"
     hostname: "${OPENRIAK_NODE_4_HOST:-node-04.cluster-a.openriak}"
     environment:
+      # Use single-node startup or shared-directory cluster discovery.
       OPENRIAK_CLUSTER_MODE: cluster
+      # DNS hostname used to derive the OpenRiak KV nodename.
       RIAK_NODE_HOST: "${OPENRIAK_NODE_4_HOST:-node-04.cluster-a.openriak}"
+      # Erlang cookie; use the same value for every cluster member.
       RIAK_DISTRIBUTED_COOKIE: "${OPENRIAK_DISTRIBUTED_COOKIE:-openriak-e096f965330436fb4ff7125b55e0dd77}"
+      # Seconds between running-node health checks.
       RIAK_MONITOR_INTERVAL_SECONDS: "${OPENRIAK_MONITOR_INTERVAL_SECONDS:-10}"
+      # Seconds between cluster discovery checks.
       OPENRIAK_CLUSTER_POLL_SECONDS: "${OPENRIAK_CLUSTER_POLL_SECONDS:-1}"
+      # Maximum seconds to wait for cluster discovery approval.
       OPENRIAK_CLUSTER_WAIT_SECONDS: "${OPENRIAK_CLUSTER_WAIT_SECONDS:-300}"
     ports:
       - "${OPENRIAK_NODE_4_PB_PORT:-18387}:8087"
@@ -136,11 +163,17 @@ services:
     container_name: "${OPENRIAK_NODE_5_CONTAINER_NAME:-openriak-kv-3.4.1-debian-12-otp26-amd64-node-5}"
     hostname: "${OPENRIAK_NODE_5_HOST:-node-05.cluster-a.openriak}"
     environment:
+      # Use single-node startup or shared-directory cluster discovery.
       OPENRIAK_CLUSTER_MODE: cluster
+      # DNS hostname used to derive the OpenRiak KV nodename.
       RIAK_NODE_HOST: "${OPENRIAK_NODE_5_HOST:-node-05.cluster-a.openriak}"
+      # Erlang cookie; use the same value for every cluster member.
       RIAK_DISTRIBUTED_COOKIE: "${OPENRIAK_DISTRIBUTED_COOKIE:-openriak-e096f965330436fb4ff7125b55e0dd77}"
+      # Seconds between running-node health checks.
       RIAK_MONITOR_INTERVAL_SECONDS: "${OPENRIAK_MONITOR_INTERVAL_SECONDS:-10}"
+      # Seconds between cluster discovery checks.
       OPENRIAK_CLUSTER_POLL_SECONDS: "${OPENRIAK_CLUSTER_POLL_SECONDS:-1}"
+      # Maximum seconds to wait for cluster discovery approval.
       OPENRIAK_CLUSTER_WAIT_SECONDS: "${OPENRIAK_CLUSTER_WAIT_SECONDS:-300}"
     ports:
       - "${OPENRIAK_NODE_5_PB_PORT:-18487}:8087"

@@ -19,6 +19,10 @@ const products = [
 const parseOptions = (argumentsList) => {
   const options = { includeVersions: {}, includeLatest: [] };
   for (let index = 0; index < argumentsList.length; index += 1) {
+    if (argumentsList[index] === '--docker-only') {
+      options.dockerOnly = true;
+      continue;
+    }
     if (argumentsList[index] === '--output-root') {
       options.outputRoot = path.resolve(argumentsList[++index] || '');
       continue;
@@ -92,20 +96,10 @@ const familyLogos = {
   ubuntu: 'images/os/ubuntu.svg'
 };
 
-const suseReleaseAliases = {
-  5: { id: '10-sp1', version: '10 SP1' },
-  6: { id: '11-sp1', version: '11 SP1' },
-  7: { id: '12', version: '12' },
-  8: { id: '15-sp1', version: '15 SP1' },
-  9: { id: '15-sp4', version: '15 SP4' }
-};
-
-const rhelAliases = [
-  { family: 'rocky', name: familyNames.rocky, logo: familyLogos.rocky },
-  { family: 'centos', name: familyNames.centos, logo: familyLogos.centos },
-  { family: 'suse', name: familyNames.suse, logo: familyLogos.suse, nativeFamily: 'sles', releases: suseReleaseAliases },
-  { family: 'fedora', name: familyNames.fedora, logo: familyLogos.fedora, nativeFamily: 'fedora' }
-];
+const osAliases = require('../../content/openriak-kv/metadata/os-aliases.json');
+const rhelAliases = osAliases.aliases.map((alias) => ({
+  ...alias, name: alias.name, logo: familyLogos[alias.family]
+}));
 
 const preferredFamilyDefaults = {
   alpine: 'alpine-3.21-x86_64',
@@ -155,7 +149,7 @@ const dockerImagesForVersion = (version) => {
       }
       const artifacts = report.artifacts || {};
       const artifactNames = report.schema_version === 3
-        ? [['dockerfile', 'Dockerfile'], ['compose_single', 'compose.single.yaml'], ['compose_cluster', 'compose.cluster.yaml'], ['environment_example', '.env.example']]
+        ? [['dockerfile', 'Dockerfile'], ['compose_single', 'compose.single.yaml'], ['compose_cluster', 'compose.cluster.yaml'], ['environment_example', artifacts.environment_example?.filename === 'example.env' ? 'example.env' : '.env.example']]
         : report.schema_version === 2
           ? [['dockerfile', 'Dockerfile'], ['compose_single', 'compose.single.yaml'], ['compose_cluster', 'compose.cluster.yaml']]
           : [['dockerfile', 'Dockerfile'], ['compose', 'compose.yaml']];
@@ -370,7 +364,24 @@ const configurationReference = (product, version, defaults, operatingSystems) =>
   return { product: product.productId, version, settings };
 };
 
-for (const product of products) {
+if (options.dockerOnly) {
+  const versions = includedVersions['openriak-kv'];
+  if (!versions?.size || Object.keys(includedVersions).some((source) => source !== 'openriak-kv')) {
+    throw new Error('--docker-only requires explicit --include-version openriak-kv=VERSION selections');
+  }
+  for (const version of versions) {
+    const target = path.join(generatedProductsRoot, 'openriak-kv', 'data', 'versions', `${version}.json`);
+    const output = readJson(target);
+    output.dockerImages = dockerImagesForVersion(version);
+    const serialized = `${JSON.stringify(output, null, 2)}\n`;
+    if (fs.readFileSync(target, 'utf8') !== serialized) {
+      const temporary = `${target}.${process.pid}.tmp`;
+      fs.writeFileSync(temporary, serialized, 'utf8');
+      fs.renameSync(temporary, target);
+    }
+    console.log(`Synced OpenRiak KV ${version}: ${output.dockerImages.length} tested Docker targets.`);
+  }
+} else for (const product of products) {
   const productRoot = path.join(contentRoot, product.productId);
   const versionsRoot = path.join(generatedProductsRoot, product.productId, 'data', 'versions');
   const configurationReferenceRoot = path.join(generatedProductsRoot, product.productId, 'data', 'configuration-reference');
@@ -451,11 +462,13 @@ for (const product of products) {
       if (!members.some((os) => os.defaultForFamily)) members.at(-1).defaultForFamily = true;
     }
     const nativeFamilies = new Set(operatingSystems.map((os) => os.family));
-    const rhelOperatingSystems = operatingSystems.filter((os) => os.family === 'rhel');
+    const rhelOperatingSystems = operatingSystems.filter((os) => os.family === osAliases.source_family);
     for (const alias of rhelAliases) {
       if (alias.nativeFamily && nativeFamilies.has(alias.nativeFamily)) continue;
       for (const rhel of rhelOperatingSystems) {
-        const release = alias.releases?.[String(rhel.version)];
+        // Preserve legacy product aliases; current OpenRiak KV uses Fedora's own releases.
+        const releases = exposesOperatingSystemPicker ? (alias.modernReleases || alias.releases) : (alias.family !== 'fedora' ? alias.releases : undefined);
+        const release = releases?.[String(rhel.version)];
         operatingSystems.push({
           ...rhel,
           id: release

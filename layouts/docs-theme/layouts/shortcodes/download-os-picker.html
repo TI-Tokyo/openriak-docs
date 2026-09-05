@@ -1,0 +1,9 @@
+{{- $context := partial "product-context.html" .Page -}}
+{{- $versionData := index $context.versions $context.version -}}
+<nav class="download-os-index" aria-label="Download operating systems">
+  <ul>
+    {{ range $versionData.operatingSystems }}
+    <li><button type="button" data-download-os-select="{{ .id }}" aria-pressed="{{ eq .id $versionData.defaultOs }}">{{ .displayName }} — {{ .architecture }}</button></li>
+    {{ end }}
+  </ul>
+</nav>

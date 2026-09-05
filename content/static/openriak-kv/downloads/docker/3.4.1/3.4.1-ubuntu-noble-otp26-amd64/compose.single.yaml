@@ -1,4 +1,6 @@
-# Generated and tested by tools/openriak-docker/openriak-docker. Do not edit by hand.
+# Created by TI Tokyo, www.tiot.jp, for the OpenRiak project at https://openriak.org
+# WARNING: Edit only if you understand the effect of your changes.
+# Original image tag: openriak/openriak-kv:3.4.1-ubuntu-noble-otp26-amd64
 name: openriak-kv-3.4.1-ubuntu-noble-otp26-amd64-node
 
 services:
@@ -10,8 +12,11 @@ services:
     container_name: "${OPENRIAK_CONTAINER_NAME:-openriak-kv-3.4.1-ubuntu-noble-otp26-amd64-node}"
     hostname: "${OPENRIAK_NODE_1_HOST:-node-01.cluster-a.openriak}"
     environment:
+      # DNS hostname used to derive the OpenRiak KV nodename.
       RIAK_NODE_HOST: "${OPENRIAK_NODE_1_HOST:-node-01.cluster-a.openriak}"
+      # Erlang cookie; use the same value for every cluster member.
       RIAK_DISTRIBUTED_COOKIE: "${OPENRIAK_DISTRIBUTED_COOKIE:-openriak-f8fd317cd55f2d280cc575c62ab1d09b}"
+      # Seconds between running-node health checks.
       RIAK_MONITOR_INTERVAL_SECONDS: "${OPENRIAK_MONITOR_INTERVAL_SECONDS:-10}"
     ports:
       - "${OPENRIAK_PB_PORT:-8087}:8087"

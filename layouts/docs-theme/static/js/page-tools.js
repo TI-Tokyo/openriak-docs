@@ -445,6 +445,108 @@
     });
   });
 
+  const languageStorageKey = 'openriak-docs-code-language';
+  const languageAliases = { js: 'javascript', py: 'python', rb: 'ruby', 'c#': 'csharp', cs: 'csharp', go: 'golang', yml: 'yaml', sh: 'bash', shell: 'bash' };
+  const languageLabels = { javascript: 'JavaScript', typescript: 'TypeScript', csharp: 'C#', golang: 'Golang', php: 'PHP', json: 'JSON', yaml: 'YAML', sql: 'SQL', html: 'HTML', css: 'CSS', xml: 'XML' };
+  const tabLanguage = (block) => {
+    const language = (block?.dataset.codeLanguage || '').toLowerCase();
+    return ['', 'text', 'plaintext'].includes(language) ? '' : (languageAliases[language] || language);
+  };
+  let preferredLanguage;
+  try { preferredLanguage = window.localStorage.getItem(languageStorageKey); } catch (_) { /* Use the first tab. */ }
+  const tabGroups = [];
+  const selectLanguage = (group, language) => {
+    if (!group.tabs.some((tab) => tab.language === language)) return;
+    group.tabs.forEach((tab) => {
+      const selected = tab.language === language;
+      tab.button.setAttribute('aria-selected', String(selected));
+      tab.button.tabIndex = selected ? 0 : -1;
+      tab.block.hidden = !selected;
+      tab.actions.hidden = !selected;
+    });
+    group.updateToolbar?.();
+  };
+  const chooseLanguage = (group, language) => {
+    preserveCodeBlockPosition(group.element, () => tabGroups.forEach((item) => selectLanguage(item, language)));
+    preferredLanguage = language;
+    try { window.localStorage.setItem(languageStorageKey, language); } catch (_) { /* Keep the page selection. */ }
+  };
+  document.querySelectorAll('[data-code-block]').forEach((first) => {
+    if (first.closest('.doc-code-tabs') || !tabLanguage(first)) return;
+    const blocks = [first];
+    const languages = new Set([tabLanguage(first)]);
+    let next = first.nextSibling;
+    while (next) {
+      if (next.nodeType === Node.COMMENT_NODE || (next.nodeType === Node.TEXT_NODE && !next.textContent.trim())) {
+        next = next.nextSibling;
+        continue;
+      }
+      if (next.nodeType !== Node.ELEMENT_NODE || !next.matches('[data-code-block]')) break;
+      const language = tabLanguage(next);
+      // Repeated languages may be sequential steps, rather than alternatives.
+      if (!language || languages.has(language)) break;
+      blocks.push(next);
+      languages.add(language);
+      next = next.nextSibling;
+    }
+    if (blocks.length < 2) return;
+    const element = document.createElement('div');
+    element.className = 'doc-code-tabs';
+    const list = document.createElement('div');
+    list.className = 'doc-code-tab-list';
+    list.setAttribute('role', 'tablist');
+    list.setAttribute('aria-label', 'Code example language');
+    const toolbar = document.createElement('div');
+    toolbar.className = 'doc-code-tabs-toolbar';
+    toolbar.append(list);
+    element.append(toolbar);
+    first.before(element);
+    const group = { element, tabs: [] };
+    blocks.forEach((block, index) => {
+      const language = tabLanguage(block);
+      const button = document.createElement('button');
+      const id = `code-example-${tabGroups.length + 1}-${index + 1}`;
+      button.type = 'button';
+      button.id = `${id}-tab`;
+      button.setAttribute('role', 'tab');
+      button.setAttribute('aria-controls', block.id || `${id}-panel`);
+      button.textContent = languageLabels[language] || block.querySelector('.doc-code-language')?.textContent || language;
+      block.id = button.getAttribute('aria-controls');
+      block.setAttribute('role', 'tabpanel');
+      block.setAttribute('aria-labelledby', button.id);
+      block.tabIndex = 0;
+      button.addEventListener('click', () => chooseLanguage(group, language));
+      button.addEventListener('keydown', (event) => {
+        let target;
+        if (event.key === 'ArrowRight') target = (index + 1) % blocks.length;
+        else if (event.key === 'ArrowLeft') target = (index + blocks.length - 1) % blocks.length;
+        else if (event.key === 'Home') target = 0;
+        else if (event.key === 'End') target = blocks.length - 1;
+        else return;
+        event.preventDefault();
+        chooseLanguage(group, group.tabs[target].language);
+        group.tabs[target].button.focus({ preventScroll: true });
+        group.tabs[target].button.scrollIntoView({ block: 'nearest', inline: 'nearest' });
+      });
+      const actions = block.querySelector('.doc-code-actions');
+      toolbar.append(actions);
+      group.tabs.push({ language, button, block, actions });
+      list.append(button);
+      element.append(block);
+    });
+    tabGroups.push(group);
+    group.updateToolbar = () => {
+      toolbar.classList.remove('is-compact');
+      const actions = group.tabs.find((tab) => !tab.block.hidden)?.actions;
+      if (!actions || !toolbar.clientWidth) return;
+      const style = getComputedStyle(toolbar);
+      const available = toolbar.clientWidth - parseFloat(style.paddingLeft) - parseFloat(style.paddingRight);
+      toolbar.classList.toggle('is-compact', list.scrollWidth + actions.offsetWidth + parseFloat(style.columnGap) > available);
+    };
+    selectLanguage(group, languages.has(preferredLanguage) ? preferredLanguage : tabLanguage(first));
+    new ResizeObserver(group.updateToolbar).observe(toolbar);
+  });
+
   window.addEventListener('storage', (event) => {
     if (event.key !== codeOptionsStorageKey) return;
     try {
@@ -486,6 +588,7 @@
     if (!anchor || anchor.path !== window.location.pathname || !codeControllers[anchor.index]) return;
     window.requestAnimationFrame(() => window.requestAnimationFrame(() => {
       const block = codeControllers[anchor.index].block;
+      if (block.hidden) return;
       window.scrollBy(0, block.getBoundingClientRect().top - anchor.top);
     }));
   });

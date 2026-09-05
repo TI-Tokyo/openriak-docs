@@ -112,13 +112,20 @@ for (const product of productCases) {
         assert.doesNotMatch(`${os.name} ${os.displayName}`, /Red Hat|RHEL/i);
         assert.deepEqual(adapter.downloads[os.id], adapter.downloads[rhel.id]);
         if (modernKv) assert.deepEqual(adapter.values[os.id], adapter.values[rhel.id]);
+        if (modernKv && alias.family === 'fedora') {
+          const release = { 8: '29', 9: '43' }[rhel.version];
+          assert.ok(release);
+          assert.equal(os.id, `fedora-${release}-${rhel.architecture}`);
+          assert.equal(os.version, release);
+          assert.equal(os.displayName, `Fedora ${release}`);
+        }
         if (alias.family === 'suse') {
           const expected = {
             5: ['10-sp1', '10 SP1'],
             6: ['11-sp1', '11 SP1'],
             7: ['12', '12'],
-            8: ['15-sp1', '15 SP1'],
-            9: ['15-sp4', '15 SP4']
+            8: modernKv ? ['15-sp4', '15 SP4'] : ['15-sp1', '15 SP1'],
+            9: modernKv ? ['16.0', '16.0'] : ['15-sp4', '15 SP4']
           }[rhel.version];
           assert.ok(expected);
           assert.equal(os.id, `suse-${expected[0]}-${rhel.architecture}`);
@@ -209,3 +216,22 @@ assert.ok(alpineDocker.compose || alpineDocker.composeSingle);
 assert.ok(alpineDocker.environmentExample);
 
 console.log('Product metadata synchronization tests passed.');
+
+// Refreshing Docker results must preserve OS aliases and other adapter fields.
+const dockerOnlyRoot = fs.mkdtempSync(path.join(require('node:os').tmpdir(), 'openriak-docker-metadata-'));
+try {
+  const target = path.join(dockerOnlyRoot, 'openriak-kv', 'data', 'versions', '3.4.0.json');
+  const original = { ...readAdapter('openriak-kv', '3.4.0'), dockerImages: [], testMarker: 'preserve' };
+  fs.mkdirSync(path.dirname(target), { recursive: true });
+  fs.writeFileSync(target, JSON.stringify(original));
+  require('node:child_process').execFileSync(process.execPath, [
+    path.join(__dirname, 'sync-product-metadata.js'), '--docker-only',
+    '--output-root', dockerOnlyRoot, '--include-version', 'openriak-kv=3.4.0'
+  ]);
+  const updated = JSON.parse(fs.readFileSync(target, 'utf8'));
+  assert.deepEqual({ ...updated, dockerImages: [] }, original);
+  assert.ok(updated.dockerImages.some((image) => image.osId === 'amazon-linux-2023-aarch64' && image.otp === '24'));
+  assert.deepEqual(fs.readdirSync(dockerOnlyRoot), ['openriak-kv']);
+} finally {
+  fs.rmSync(dockerOnlyRoot, { recursive: true, force: true });
+}

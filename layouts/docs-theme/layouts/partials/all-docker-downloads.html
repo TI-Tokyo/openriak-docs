@@ -1,0 +1,20 @@
+{{- $context := partial "product-context.html" .Page -}}
+{{- $versionData := index $context.versions $context.version -}}
+{{- $systems := $versionData.downloadOperatingSystems | default $versionData.operatingSystems -}}
+{{- $available := slice -}}
+{{- range $versionData.dockerImages }}{{ $available = $available | append .osId }}{{ end -}}
+{{- $systems = where $systems "id" "in" $available -}}
+<div data-all-docker-downloads>
+  {{ if not $systems }}<p>No tested Docker files are available for this version yet.</p>{{ end }}
+  {{- $seen := newScratch -}}
+  {{ range $os := $systems }}
+    {{ if not ($seen.Get $os.displayName) }}
+      {{ $seen.Set $os.displayName true }}
+      {{ $matching := where $systems "displayName" $os.displayName }}
+      <section class="downloads-family">
+        <h3 class="downloads-family-heading"><img src="{{ $os.logo | relURL }}" alt="">{{ $os.displayName }}</h3>
+        {{ partial "docker-download-table.html" (dict "versionData" $versionData "operatingSystems" $matching) }}
+      </section>
+    {{ end }}
+  {{ end }}
+</div>

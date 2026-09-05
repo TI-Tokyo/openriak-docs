@@ -1,30 +1,52 @@
 # syntax=docker/dockerfile:1.7
-# Generated and tested by tools/openriak-docker/openriak-docker. Do not edit by hand.
+# Created by TI Tokyo, www.tiot.jp, for the OpenRiak project at https://openriak.org
+# WARNING: Edit only if you understand the effect of your changes.
+# Original image tag: openriak/openriak-kv:3.4.1-ubuntu-noble-otp26-arm64
 FROM --platform=linux/arm64 ubuntu:noble@sha256:33ceb71981b602c1a7443a53469e4dba065f7503eab3078a2d7a57a2ab987517
 
 # -----------------------------------------------------------------------------
 # OpenRiak KV default settings
 # Override any value with `docker run --env NAME=value` or Compose `environment`.
 # -----------------------------------------------------------------------------
+# DNS hostname used to derive the OpenRiak KV nodename.
 ENV RIAK_NODE_HOST=""
+# Explicit nodename; empty derives openriak-kv@<hostname>.
 ENV RIAK_NODE_NAME=""
+# Erlang cookie; use the same value for every cluster member.
 ENV RIAK_DISTRIBUTED_COOKIE="openriak-d6bf8b7b9928b2e8f3724a70181c74fe"
+# Partition count for a new ring; do not change on an existing cluster.
 ENV RIAK_RING_SIZE="8"
+# Storage backend used by OpenRiak KV.
 ENV RIAK_STORAGE_BACKEND="leveled"
+# Legacy active anti-entropy mode (passive disables active exchanges).
 ENV RIAK_ANTI_ENTROPY="passive"
+# Enable TicTac active anti-entropy.
 ENV RIAK_TICTACAAE_ACTIVE="active"
+# Store object heads in the TicTac anti-entropy store.
 ENV RIAK_TICTACAAE_STOREHEADS="enabled"
+# Container HTTP bind address and port.
 ENV RIAK_HTTP_LISTENER="0.0.0.0:8098"
+# Container Protocol Buffers bind address and port.
 ENV RIAK_PB_LISTENER="0.0.0.0:8087"
+# Requested open-file limit; bounded by container ulimits.
 ENV RIAK_NOFILE_LIMIT="100000"
+# Initialize configuration and directories without starting the daemon when 1.
 ENV RIAK_INIT_ONLY="0"
+# Seconds between daemon startup checks.
 ENV RIAK_STARTUP_POLL_SECONDS="1"
+# Seconds between BEAM shutdown checks.
 ENV RIAK_SHUTDOWN_POLL_SECONDS="1"
+# Seconds between running-node health checks.
 ENV RIAK_MONITOR_INTERVAL_SECONDS="10"
+# Use single-node startup or shared-directory cluster discovery.
 ENV OPENRIAK_CLUSTER_MODE="single"
+# Container directory shared by cluster discovery participants.
 ENV OPENRIAK_CLUSTER_CONTROL_DIR="/var/lib/openriak-cluster-control"
+# Seconds between cluster discovery checks.
 ENV OPENRIAK_CLUSTER_POLL_SECONDS="1"
+# Maximum seconds to wait for cluster discovery approval.
 ENV OPENRIAK_CLUSTER_WAIT_SECONDS="300"
+# Coordinator on exactly one cluster service; empty or omitted means follower.
 ENV role=""
 
 ADD --checksum=sha256:10db7a40a0a6a96a494b281102335d871581b722e45badb7280e7874c491fab4 https://files.tiot.jp/riak/kv/3.4/3.4.1/ubuntu/noble%20(graviton3)/riak_3.4.1-OTP26_arm64.deb /tmp/riak_3.4.1-OTP26_arm64.deb

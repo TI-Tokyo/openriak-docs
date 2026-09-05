@@ -58,6 +58,10 @@ services:
         node /project/tools/scripts/sync-product-metadata.js ;;
         *) echo "Unknown build profile: $${OPENRIAK_DOCS_BUILD_PROFILE}" >&2; exit 2 ;;
         esac || exit "$$?";
+        if [ "$${OPENRIAK_DOCS_BUILD_PROFILE}" = development ]; then
+        node /project/tools/scripts/watch-docker-metadata.js
+        /tmp/openriak-development-data/openriak-kv/data/versions &
+        fi;
         node /project/tools/scripts/watch-page-provenance.js &
         exec hugo server --source=/project/content --config=/tmp/openriak-core.yaml
         --bind=0.0.0.0 --port=1411 --baseURL=http://localhost:1410/docs/

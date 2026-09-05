@@ -1,0 +1,11 @@
+{{- $context := partial "product-context.html" .Page -}}
+{{- $versionData := index $context.versions $context.version -}}
+<section class="modern-downloads-selected" data-selected-download-panels>
+  <h2>Download Docker Files</h2>
+  {{ range $os := $versionData.operatingSystems }}
+  <div data-download-panel-os="{{ $os.id }}"{{ if ne $os.id $versionData.defaultOs }} hidden{{ end }}>
+    <h3 class="modern-downloads-selected-os"><img src="{{ $os.logo | relURL }}" alt="">{{ $os.displayName }} — {{ $os.architecture }}</h3>
+    {{ partial "docker-download-table.html" (dict "versionData" $versionData "operatingSystems" (slice $os)) }}
+  </div>
+  {{ end }}
+</section>

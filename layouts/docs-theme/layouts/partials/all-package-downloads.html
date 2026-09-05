@@ -1,0 +1,16 @@
+{{- $context := partial "product-context.html" .Page -}}
+{{- $versionData := index $context.versions $context.version -}}
+{{- $systems := $versionData.downloadOperatingSystems | default $versionData.operatingSystems -}}
+<div data-all-package-downloads>
+  {{- $seen := newScratch -}}
+  {{ range $os := $systems }}
+    {{ if not ($seen.Get $os.displayName) }}
+      {{ $seen.Set $os.displayName true }}
+      {{ $matching := where $systems "displayName" $os.displayName }}
+      <section class="downloads-family">
+        <h3 class="downloads-family-heading"><img src="{{ $os.logo | relURL }}" alt="">{{ $os.displayName }}</h3>
+        {{ partial "download-table.html" (dict "versionData" $versionData "operatingSystems" $matching) }}
+      </section>
+    {{ end }}
+  {{ end }}
+</div>

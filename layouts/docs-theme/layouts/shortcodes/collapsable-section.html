@@ -1,0 +1,13 @@
+{{- $title := .Get "title" -}}
+{{- $level := string (.Get "level" | default "") -}}
+{{- if and $level (not (in (slice "1" "2" "3" "4" "5" "6") $level)) -}}
+  {{- errorf "collapsable-section level must be between 1 and 6: %s" .Position -}}
+{{- end -}}
+{{- $id := .Get "id" -}}
+{{- if and $level (not $id) -}}
+  {{- $id = printf "%s-%d" ($title | anchorize) .Ordinal -}}
+{{- end -}}
+<details class="modern-downloads-disclosure"{{ if and $id (not $level) }} id="{{ $id }}"{{ end }}>
+  <summary>{{ if $level }}<h{{ $level }} id="{{ $id }}">{{ $title }}</h{{ $level }}>{{ else }}{{ $title }}{{ end }}</summary>
+  <div class="modern-downloads-disclosure-content">{{ .Inner | .Page.RenderString (dict "display" "block") }}</div>
+</details>

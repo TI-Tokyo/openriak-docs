@@ -1,0 +1,105 @@
+{
+  "artifacts": {},
+  "base_image": {
+    "pinned": "fedora:36@sha256:64cd00a0e2b92d527c0a0954162a73e85f160e3a53c38325b51e87d6aab4e266",
+    "requested": "fedora:36",
+    "resolved_at": "2026-09-05T12:14:34Z"
+  },
+  "error": {
+    "message": "Command failed with exit code 1: /usr/bin/docker build --platform linux/amd64 --pull=false --tag openriak/openriak-kv:3.4.0-fedora-36-otp26-x86_64 --file /home/peter/GitHub/TI-Tokyo/openriak-docs/tools/cache/openriak-docker/3.4.0/fedora-36-x86_64/otp26-x86_64-1/runs/20260905T121431.674831Z/Dockerfile /home/peter/GitHub/TI-Tokyo/openriak-docs/tools/cache/openriak-docker/3.4.0/fedora-36-x86_64/otp26-x86_64-1/runs/20260905T121431.674831Z (see /home/peter/GitHub/TI-Tokyo/openriak-docs/tools/cache/openriak-docker/3.4.0/fedora-36-x86_64/otp26-x86_64-1/runs/20260905T121431.674831Z/logs/image-build.log)",
+    "type": "DockerToolError"
+  },
+  "finished_at": "2026-09-05T12:16:23Z",
+  "generation": {
+    "cluster_nodes": 5,
+    "distributed_cookie": "openriak-e096f9e43a86498f77710259f7e822d5"
+  },
+  "image": "openriak/openriak-kv:3.4.0-fedora-36-otp26-x86_64",
+  "metadata_sources": [
+    "content/openriak-kv/metadata/3.4.0/supported-os.json",
+    "content/openriak-kv/metadata/3.4.0/downloads.json",
+    "content/openriak-kv/metadata/os-aliases.json"
+  ],
+  "network": {
+    "address_assignment": "docker",
+    "node_host": "node-01.cluster-a.openriak",
+    "riak_node_name": "openriak-kv@node-01.cluster-a.openriak"
+  },
+  "node": "openriak-kv-3.4.0-fedora-36-otp26-x86_64-node",
+  "package": {
+    "checksum": {
+      "algorithm": "sha256",
+      "value": "72c02db420dc5a0cde5c27a2bd1813fc74e56b663f1167b9b7a0795fae5bfc77"
+    },
+    "filename": "riak-3.4.0.OTP26-1.el9.x86_64.rpm",
+    "format": "rpm",
+    "url": "https://files.tiot.jp/riak/kv/3.4/3.4.0/rhel/9/riak-3.4.0.OTP26-1.el9.x86_64.rpm"
+  },
+  "ports": {
+    "http": 8098,
+    "protobuf": 8087
+  },
+  "product": "openriak-kv",
+  "run_id": "20260905T121431.674831Z",
+  "schema_version": 3,
+  "started_at": "2026-09-05T12:14:31Z",
+  "status": "failed",
+  "steps": [
+    {
+      "duration_seconds": 2.338,
+      "finished_at": "2026-09-05T12:14:34Z",
+      "name": "pull_and_pin_base_image",
+      "started_at": "2026-09-05T12:14:31Z",
+      "status": "passed"
+    },
+    {
+      "duration_seconds": 0.001,
+      "finished_at": "2026-09-05T12:14:34Z",
+      "name": "generate_artifacts",
+      "started_at": "2026-09-05T12:14:34Z",
+      "status": "passed"
+    },
+    {
+      "duration_seconds": 0.171,
+      "finished_at": "2026-09-05T12:14:34Z",
+      "name": "validate_compose_artifacts",
+      "started_at": "2026-09-05T12:14:34Z",
+      "status": "passed"
+    },
+    {
+      "duration_seconds": 103.647,
+      "error": "Command failed with exit code 1: /usr/bin/docker build --platform linux/amd64 --pull=false --tag openriak/openriak-kv:3.4.0-fedora-36-otp26-x86_64 --file /home/peter/GitHub/TI-Tokyo/openriak-docs/tools/cache/openriak-docker/3.4.0/fedora-36-x86_64/otp26-x86_64-1/runs/20260905T121431.674831Z/Dockerfile /home/peter/GitHub/TI-Tokyo/openriak-docs/tools/cache/openriak-docker/3.4.0/fedora-36-x86_64/otp26-x86_64-1/runs/20260905T121431.674831Z (see /home/peter/GitHub/TI-Tokyo/openriak-docs/tools/cache/openriak-docker/3.4.0/fedora-36-x86_64/otp26-x86_64-1/runs/20260905T121431.674831Z/logs/image-build.log)",
+      "finished_at": "2026-09-05T12:16:23Z",
+      "name": "build_image",
+      "started_at": "2026-09-05T12:14:34Z",
+      "status": "failed"
+    }
+  ],
+  "target": {
+    "architecture": "x86_64",
+    "docker_platform": "linux/amd64",
+    "download_id": "otp26-x86_64-1",
+    "os_family": "fedora",
+    "os_id": "fedora-36-x86_64",
+    "os_name": "Fedora 36",
+    "os_release": "36",
+    "otp": "26",
+    "package_os_id": "rhel-9-x86_64",
+    "version": "3.4.0"
+  },
+  "tests": {},
+  "volumes": {
+    "config": {
+      "container": "/etc/riak",
+      "default": "./openriak-kv-3.4.0-fedora-36-otp26-x86_64-node/config"
+    },
+    "data": {
+      "container": "/var/lib/riak",
+      "default": "./openriak-kv-3.4.0-fedora-36-otp26-x86_64-node/data"
+    },
+    "logs": {
+      "container": "/var/log/riak",
+      "default": "./openriak-kv-3.4.0-fedora-36-otp26-x86_64-node/logs"
+    }
+  }
+}

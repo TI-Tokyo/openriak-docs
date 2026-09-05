@@ -37,6 +37,12 @@ riak-{{</* current-version */>}}
 ```
 ````
 
+Consecutive fenced code blocks with different language labels become language
+tabs in product documentation. Text between blocks, unlabelled blocks, and
+repeated languages end a tab group. The selected language is remembered in the
+browser and selected in other groups where available. Code controls remain
+available for each example; printing or disabling JavaScript shows every block.
+
 ## Repository layout
 
 - `content/` — authored content, the core `hugo.yaml`, and `hugo-archives.yaml`.
@@ -121,3 +127,36 @@ docker build -f docker/Dockerfile --build-arg HUGO_BASEURL=https://www.openriak.
 
 The image contains the same assembled static site below `/docs/`. Public servers
 do not require Hugo, Node.js, or multiple containers.
+
+### Downloads page shortcodes
+
+OpenRiak KV Downloads pages control their section order in Markdown:
+
+```markdown
+## Recommended Downloads
+
+{{< download-os-picker >}}
+{{< package-downloads >}}
+{{< docker-downloads >}}
+
+{{< collapsable-section title="Source code" >}}
+Source-code documentation goes here, including Markdown and other shortcodes.
+{{< /collapsable-section >}}
+
+{{< collapsable-section title="All Download Packages" id="all-downloads" >}}
+{{< all-package-downloads >}}
+{{< /collapsable-section >}}
+
+{{< collapsable-section title="All Docker Files" id="all-docker-files" >}}
+{{< all-docker-downloads >}}
+{{< /collapsable-section >}}
+```
+
+The package and Docker recommendations follow the shared OS selection. Each
+shortcode works independently of the all-download lists. Docker tables use only
+published, passed cache data; displaying them does not run Docker tests.
+Disclosures start collapsed; `title` sets the summary and optional `id` provides
+an anchor. Optional `level="2"` renders the title as an `h2` (equivalent to `##`)
+and includes it in “On this page”; levels 1 through 6 are supported and nested
+accordingly. Without `level`, the title is not included in the table of contents.
+These shortcodes use the version being viewed, including inherited pages.

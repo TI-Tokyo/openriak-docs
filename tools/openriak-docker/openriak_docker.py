@@ -14,6 +14,7 @@ import pathlib
 import re
 import secrets
 import shutil
+import signal
 import socket
 import subprocess
 import sys
@@ -27,6 +28,7 @@ SCHEMA_VERSION = 3
 MINIMUM_OPENRIAK_VERSION = (3, 4, 0)
 REPOSITORY_ROOT = pathlib.Path(__file__).resolve().parents[2]
 METADATA_ROOT = REPOSITORY_ROOT / "content" / "openriak-kv" / "metadata"
+OS_ALIASES_PATH = METADATA_ROOT / "os-aliases.json"
 CACHE_ROOT = REPOSITORY_ROOT / "tools" / "cache" / "openriak-docker"
 STATIC_ROOT = REPOSITORY_ROOT / "content" / "static" / "openriak-kv" / "downloads" / "docker"
 DEFAULT_CLUSTER_NODES = 5
@@ -35,7 +37,7 @@ ARTIFACT_FILENAMES = (
     "Dockerfile",
     "compose.single.yaml",
     "compose.cluster.yaml",
-    ".env.example",
+    "example.env",
 )
 
 ARCHITECTURE_PLATFORMS = {
@@ -247,10 +249,37 @@ def targets_for_version(version: str) -> list[Target]:
     if supported.get("status") != "complete" or downloads.get("status") != "complete":
         return []
 
+    operating_systems = list(supported.get("operating_systems", []))
+    alias_rules = read_json(OS_ALIASES_PATH)
+    native_families = {item["family"] for item in operating_systems}
+    native_ids = {item["id"] for item in operating_systems}
+    for source in supported.get("operating_systems", []):
+        if source["family"] != alias_rules["source_family"]:
+            continue
+        for alias in alias_rules["aliases"]:
+            if alias.get("docker") is False:
+                continue
+            if alias.get("nativeFamily", alias["family"]) in native_families:
+                continue
+            release = alias.get("modernReleases", alias.get("releases", {})).get(str(source["release"]))
+            alias_release = release["id"] if release else source["release"]
+            alias_id = f"{alias['family']}-{alias_release}-{source['architecture']}"
+            if alias_id in native_ids:
+                continue
+            operating_systems.append({
+                **source,
+                "id": alias_id,
+                "family": alias["family"],
+                "release": alias_release,
+                "display_name": f"{alias.get('name', alias['family'])} {release['version'] if release else alias_release}",
+                "alias_of": source["id"],
+            })
+
     targets: list[Target] = []
-    for operating_system in supported.get("operating_systems", []):
+    for operating_system in operating_systems:
         os_id = operating_system["id"]
-        for download_id, package in downloads.get("downloads", {}).get(os_id, {}).items():
+        package_os_id = operating_system.get("alias_of", os_id)
+        for download_id, package in downloads.get("downloads", {}).get(package_os_id, {}).items():
             checksum = package.get("checksum", {})
             if checksum.get("algorithm") != "sha256" or not re.fullmatch(
                 r"[0-9a-f]{64}", str(checksum.get("value", ""))
@@ -308,6 +337,10 @@ def base_image_for(target: Target) -> str:
         return f"fedora:{release}"
     if family == "oracle-linux":
         return f"oraclelinux:{release}-slim"
+    if family == "rocky":
+        return f"rockylinux:{release}"
+    if family == "centos":
+        return f"quay.io/centos/centos:stream{release}"
     if family == "raspbian":
         repository = "arm32v7/debian" if architecture == "armhf" else "arm64v8/debian"
         return f"{repository}:{DEBIAN_CODENAMES.get(release, release)}-slim"
@@ -319,8 +352,12 @@ def base_image_for(target: Target) -> str:
                 f"No release-specific UBI image mapping for RHEL {release}"
             ) from error
         return f"registry.access.redhat.com/ubi{release}/ubi:{ubi_release}"
-    if family == "sles":
-        return f"registry.suse.com/suse/sles{release}:{release}"
+    if family in {"sles", "suse"}:
+        sle_release = re.sub(r"-sp", ".", release.lower())
+        major = sle_release.split(".")[0]
+        if int(major) >= 16:
+            return f"registry.suse.com/bci/bci-base:{sle_release}"
+        return f"registry.suse.com/suse/sle{major}:{sle_release}"
     if family == "ubuntu":
         return f"ubuntu:{UBUNTU_RELEASES.get(release, release)}"
     raise DockerToolError(f"No base-image mapping for OS family: {family}")
@@ -342,12 +379,19 @@ DEBIAN_FRONTEND=noninteractive apt-get install -y --no-install-recommends ca-cer
 rm -rf /var/lib/apt/lists/*
 rm -f {package_path}"""
     if package_family == "rpm":
-        if target.family in {"amazon-linux", "oracle-linux", "rhel"}:
+        if target.family in {"amazon-linux", "oracle-linux", "rhel", "rocky", "centos", "fedora", "suse", "sles"}:
+            repository_setup = ""
+            if target.family == "centos" and target.release == "8":
+                repository_setup = r"""# CentOS Stream 8 repositories were moved to the release archive.
+sed -i 's|^mirrorlist=|#mirrorlist=|' /etc/yum.repos.d/CentOS-Stream-*.repo
+sed -i 's|^#baseurl=http://mirror.centos.org/\$contentdir/\$stream/|baseurl=https://vault.centos.org/8-stream/|' /etc/yum.repos.d/CentOS-Stream-*.repo
+"""
             dependencies = (
                 "bash ca-certificates glibc hostname libgcc libstdc++ ncurses-libs "
                 "openssl-libs pam procps-ng shadow-utils sudo util-linux zlib"
             )
-            return f"""if command -v dnf >/dev/null 2>&1
+            suse_openssl = "libopenssl3" if target.operating_system.get("alias_of", "").startswith("rhel-9-") else "libopenssl1_1"
+            return f"""{repository_setup}if command -v dnf >/dev/null 2>&1
 then
     dnf install -y {dependencies}
     if ! command -v curl >/dev/null 2>&1
@@ -372,6 +416,10 @@ then
         yum install -y curl
     fi
     yum clean all
+elif command -v zypper >/dev/null 2>&1
+then
+    zypper --non-interactive install --no-recommends bash ca-certificates curl gawk glibc hostname libgcc_s1 libstdc++6 libncurses6 {suse_openssl} pam procps shadow sudo util-linux libz1
+    zypper clean --all
 else
     echo 'No supported RPM package manager found' >&2
     exit 1
@@ -391,6 +439,16 @@ then
     done
 fi
 test -x /usr/bin/escript
+# Check the bundled runtime and its OpenSSL NIF before starting integration tests.
+for bundled_erl in /usr/lib64/riak/erts-*/bin/erl /usr/lib/riak/erts-*/bin/erl
+do
+    if [ -x "$bundled_erl" ]
+    then
+        runtime_root=${{bundled_erl%/erts-*}}
+        "$bundled_erl" +S 2:2 -boot "$runtime_root/bin/no_dot_erlang" -pa "$runtime_root"/lib/crypto-*/ebin -noshell -eval 'crypto:strong_rand_bytes(1), halt().'
+        break
+    fi
+done
 rm -f {package_path}"""
         return f"""if command -v dnf >/dev/null 2>&1
 then
@@ -526,7 +584,16 @@ commit_output_is_successful() {
 }
 
 beam_running() {
-    pgrep -x beam.smp >/dev/null 2>&1
+    for beam_pid in $(pgrep -x beam.smp 2>/dev/null)
+    do
+        beam_stat=$(cat "/proc/$beam_pid/stat" 2>/dev/null) || continue
+        beam_stat=${beam_stat##*) }
+        case "$beam_stat" in
+            Z*|X*) continue ;;
+        esac
+        return 0
+    done
+    return 1
 }
 
 ping_works() {
@@ -850,6 +917,12 @@ log "startup: waiting for the riak_kv service"
 while :
 do
     service_attempt=$((service_attempt + 1))
+    if ! beam_running
+    then
+        log "startup: BEAM exited while waiting for the riak_kv service"
+        tail -n 80 /var/log/riak/console.log 2>/dev/null || true
+        exit 1
+    fi
     services_output=$(riak_command admin services 2>&1 || true)
     if printf '%s\n' "$services_output" | grep -Fq 'riak_kv'
     then
@@ -1235,6 +1308,76 @@ echo "OpenRiak healthcheck passed: BEAM is running and riak ping returned pong"
 """
 
 
+# Shared descriptions keep Dockerfile, Compose, and example.env terminology aligned.
+SETTING_COMMENTS = {
+    "RIAK_NODE_HOST": "DNS hostname used to derive the OpenRiak KV nodename.",
+    "RIAK_NODE_NAME": "Explicit nodename; empty derives openriak-kv@<hostname>.",
+    "RIAK_DISTRIBUTED_COOKIE": "Erlang cookie; use the same value for every cluster member.",
+    "RIAK_RING_SIZE": "Partition count for a new ring; do not change on an existing cluster.",
+    "RIAK_STORAGE_BACKEND": "Storage backend used by OpenRiak KV.",
+    "RIAK_ANTI_ENTROPY": "Legacy active anti-entropy mode (passive disables active exchanges).",
+    "RIAK_TICTACAAE_ACTIVE": "Enable TicTac active anti-entropy.",
+    "RIAK_TICTACAAE_STOREHEADS": "Store object heads in the TicTac anti-entropy store.",
+    "RIAK_HTTP_LISTENER": "Container HTTP bind address and port.",
+    "RIAK_PB_LISTENER": "Container Protocol Buffers bind address and port.",
+    "RIAK_NOFILE_LIMIT": "Requested open-file limit; bounded by container ulimits.",
+    "RIAK_INIT_ONLY": "Initialize configuration and directories without starting the daemon when 1.",
+    "RIAK_STARTUP_POLL_SECONDS": "Seconds between daemon startup checks.",
+    "RIAK_SHUTDOWN_POLL_SECONDS": "Seconds between BEAM shutdown checks.",
+    "RIAK_MONITOR_INTERVAL_SECONDS": "Seconds between running-node health checks.",
+    "OPENRIAK_CLUSTER_MODE": "Use single-node startup or shared-directory cluster discovery.",
+    "OPENRIAK_CLUSTER_CONTROL_DIR": "Container directory shared by cluster discovery participants.",
+    "OPENRIAK_CLUSTER_POLL_SECONDS": "Seconds between cluster discovery checks.",
+    "OPENRIAK_CLUSTER_WAIT_SECONDS": "Maximum seconds to wait for cluster discovery approval.",
+    "role": "Coordinator on exactly one cluster service; empty or omitted means follower.",
+    "OPENRIAK_CONTAINER_NAME": "Single-node Docker container name.",
+    "OPENRIAK_PB_PORT": "Host port forwarded to container Protocol Buffers port 8087.",
+    "OPENRIAK_HTTP_PORT": "Host port forwarded to container HTTP port 8098.",
+    "OPENRIAK_CONFIG_PATH": "Host bind-mount directory for /etc/riak configuration.",
+    "OPENRIAK_DATA_PATH": "Host bind-mount directory for /var/lib/riak data.",
+    "OPENRIAK_LOGS_PATH": "Host bind-mount directory for /var/log/riak logs.",
+    "OPENRIAK_CLUSTER_CONTROL_PATH": "Host directory shared by all cluster discovery participants.",
+}
+
+
+def setting_comment(name: str) -> str:
+    canonical = re.sub(r"^OPENRIAK_NODE_\d+_", "OPENRIAK_", name)
+    if canonical == "OPENRIAK_HOST":
+        canonical = "RIAK_NODE_HOST"
+    if canonical == "OPENRIAK_CONTAINER_NAME" and "_NODE_" in name:
+        return "Docker container name for this cluster node."
+    if canonical not in SETTING_COMMENTS and canonical.startswith("OPENRIAK_"):
+        canonical = canonical.replace("OPENRIAK_", "RIAK_", 1)
+    return SETTING_COMMENTS[canonical]
+
+
+def annotate_artifact(contents: str, kind: str, image: str) -> str:
+    """Add documentation only, preserving every executable/configuration line."""
+    notice = [
+        "# Created by TI Tokyo, www.tiot.jp, for the OpenRiak project at https://openriak.org",
+        "# WARNING: Edit only if you understand the effect of your changes.",
+        f"# Original image tag: {image}",
+    ]
+    lines = contents.splitlines()
+    lines = [line for line in lines if not line.startswith("# Generated and tested by tools/openriak-docker/")]
+    insertion = 1 if lines and lines[0].startswith("# syntax=") else 0
+    lines[insertion:insertion] = notice
+    output = []
+    for line in lines:
+        match = None
+        if kind == "Dockerfile":
+            match = re.match(r"ENV ([A-Za-z_][A-Za-z_0-9]*)=", line)
+        elif kind == "example.env":
+            match = re.match(r"([A-Za-z_][A-Za-z_0-9]*)=", line)
+        else:
+            match = re.match(r"      ((?:RIAK_|OPENRIAK_)[A-Z_0-9]+|role):", line)
+        if match:
+            indent = line[:len(line) - len(line.lstrip())]
+            output.append(f"{indent}# {setting_comment(match[1])}")
+        output.append(line)
+    return "\n".join(output) + "\n"
+
+
 def render_dockerfile(
     target: Target,
     pinned_base_image: str,
@@ -1244,7 +1387,7 @@ def render_dockerfile(
     checksum = target.package["checksum"]["value"]
     filename = target.package["filename"]
     package_url = target.package["url"]
-    return f"""# syntax=docker/dockerfile:1.7
+    return annotate_artifact(f"""# syntax=docker/dockerfile:1.7
 # Generated and tested by tools/openriak-docker/openriak-docker. Do not edit by hand.
 FROM --platform={target.platform} {pinned_base_image}
 
@@ -1311,7 +1454,7 @@ EXPOSE 8098
 HEALTHCHECK --interval=10s --timeout=60s --start-period=120s --retries=3 CMD ["/usr/local/bin/openriak-healthcheck"]
 STOPSIGNAL SIGTERM
 ENTRYPOINT ["/usr/local/bin/openriak-entrypoint"]
-"""
+""", "Dockerfile", target.image)
 
 
 def render_single_compose(
@@ -1326,7 +1469,7 @@ def render_single_compose(
       - "${{OPENRIAK_PB_PORT:-8087}}:8087"
       - "${{OPENRIAK_HTTP_PORT:-8098}}:8098"
 ''' if publish_ports else ""
-    return f"""# Generated and tested by tools/openriak-docker/openriak-docker. Do not edit by hand.
+    return annotate_artifact(f"""# Generated and tested by tools/openriak-docker/openriak-docker. Do not edit by hand.
 name: {node}
 
 services:
@@ -1358,7 +1501,7 @@ services:
 networks:
   openriak:
     driver: bridge
-"""
+""", "compose.single.yaml", target.image)
 
 
 def cluster_node_name(target: Target, index: int) -> str:
@@ -1423,7 +1566,7 @@ def render_cluster_compose(
         render_cluster_service(target, index, distributed_cookie, publish_ports).rstrip()
         for index in range(1, node_count + 1)
     )
-    return f"""# Generated and tested by tools/openriak-docker/openriak-docker. Do not edit by hand.
+    return annotate_artifact(f"""# Generated and tested by tools/openriak-docker/openriak-docker. Do not edit by hand.
 # Set role=coordinator on exactly one service. An omitted or empty role is a follower.
 name: {target.node_name}-cluster
 
@@ -1433,7 +1576,7 @@ services:
 networks:
   openriak:
     driver: bridge
-"""
+""", "compose.cluster.yaml", target.image)
 
 
 def render_environment_example(
@@ -1478,7 +1621,7 @@ def render_environment_example(
                 "",
             ]
         )
-    return "\n".join(lines)
+    return annotate_artifact("\n".join(lines), "example.env", target.image)
 
 
 def docker_command() -> str:
@@ -1538,6 +1681,21 @@ def run_logged(
             f"Command failed with exit code {result.returncode}: {' '.join(command)} (see {log_path})"
         )
     return result
+
+
+def verify_admin_test(container: str, timeout_seconds: int, log_path: pathlib.Path) -> dict[str, Any]:
+    result = run_logged(
+        [docker_command(), "exec", container, "riak", "admin", "test"],
+        log_path,
+        timeout_seconds=timeout_seconds,
+    )
+    if not re.search(r"Successfully completed [1-9][0-9]* read/write cycles? to ", result.stdout):
+        raise DockerToolError(f"riak admin test did not confirm a read/write cycle (see {log_path})")
+    return {
+        "status": "passed",
+        "command": "riak admin test",
+        "response": result.stdout.strip(),
+    }
 
 
 def digest_from_pull_output(output: str) -> str | None:
@@ -1950,11 +2108,27 @@ def artifact_downloads(
             "sha256": sha256_file(compose_cluster),
         },
         "environment_example": {
-            "filename": ".env.example",
-            "url": f"{base_url}/.env.example",
+            "filename": "example.env",
+            "url": f"{base_url}/example.env",
             "sha256": sha256_file(environment_example),
         },
     }
+
+
+def sync_download_metadata(versions: Iterable[str]) -> None:
+    versions = sorted(set(versions), key=semver_key)
+    if not versions:
+        return
+    node = shutil.which("node")
+    if not node:
+        raise DockerToolError("Node.js is required to update Docker download metadata; install Node.js and run sync-static")
+    command = [node, str(REPOSITORY_ROOT / "tools/scripts/sync-product-metadata.js"), "--docker-only"]
+    for version in versions:
+        command.extend(["--include-version", f"openriak-kv={version}"])
+    result = subprocess.run(command, cwd=REPOSITORY_ROOT, text=True, capture_output=True)
+    if result.returncode:
+        raise DockerToolError(f"Could not update Docker download metadata: {result.stderr.strip()}; cached test results are retained")
+    print(result.stdout, end="", flush=True)
 
 
 def publish_current_run(target: Target, run_root: pathlib.Path, report: dict[str, Any]) -> None:
@@ -1979,6 +2153,7 @@ def publish_current_run(target: Target, run_root: pathlib.Path, report: dict[str
         for filename in ARTIFACT_FILENAMES:
             with contextlib.suppress(FileNotFoundError):
                 (target.static_directory / filename).unlink()
+    sync_download_metadata([target.version])
 
 
 def initial_report(
@@ -2005,6 +2180,8 @@ def initial_report(
             "architecture": target.architecture,
             "docker_platform": target.platform,
             "download_id": target.download_id,
+            **({"package_os_id": target.operating_system["alias_of"]}
+               if "alias_of" in target.operating_system else {}),
         },
         "package": {
             "filename": package["filename"],
@@ -2021,6 +2198,8 @@ def initial_report(
         "metadata_sources": [
             f"content/openriak-kv/metadata/{target.version}/supported-os.json",
             f"content/openriak-kv/metadata/{target.version}/downloads.json",
+            *([str(OS_ALIASES_PATH.relative_to(REPOSITORY_ROOT))]
+              if "alias_of" in target.operating_system else []),
         ],
         "base_image": None,
         "volumes": {
@@ -2057,7 +2236,7 @@ def refresh_target(
     dockerfile = run_root / "Dockerfile"
     compose_single = run_root / "compose.single.yaml"
     compose_cluster = run_root / "compose.cluster.yaml"
-    environment_example = run_root / ".env.example"
+    environment_example = run_root / "example.env"
     test_directory: pathlib.Path | None = None
     compose_started = False
     cluster_started = False
@@ -2169,7 +2348,7 @@ def refresh_target(
             newline="\n",
         )
         shutil.copy2(dockerfile, test_directory / "Dockerfile")
-        shutil.copy2(environment_example, test_directory / ".env.example")
+        shutil.copy2(environment_example, test_directory / "example.env")
         node_directory = test_directory / target.node_name
         test_suffix = identifier[-8:].lower().replace(".", "")
         test_container_name = f"{target.node_name}-t-{test_suffix}"
@@ -2369,6 +2548,11 @@ def refresh_target(
             "status_code": 200,
             "response": http_response,
         }
+        report["tests"]["admin_test"] = record_step(
+            report,
+            "single_node_admin_test",
+            lambda: verify_admin_test(test_container_name, timeout_seconds, logs / "admin-test.log"),
+        )
         health_status = record_step(
             report,
             "wait_for_healthcheck",
@@ -2483,6 +2667,8 @@ def refresh_target(
                 logs / "cluster-readiness.log",
             ),
         )
+        cluster_admin_tests: dict[str, Any] = {}
+        report["tests"]["cluster_admin_test"] = cluster_admin_tests
         role_logs: dict[str, str] = {}
         for index, cluster_container_name in enumerate(cluster_container_names, start=1):
             container_logs = run_logged(
@@ -2499,6 +2685,13 @@ def refresh_target(
                 cluster_container_name,
                 timeout_seconds,
                 logs / f"cluster-node-{index}-health.log",
+            )
+            cluster_admin_tests[cluster_container_name] = record_step(
+                report,
+                f"cluster_node_{index}_admin_test",
+                lambda: verify_admin_test(
+                    cluster_container_name, timeout_seconds, logs / f"cluster-node-{index}-admin-test.log"
+                ),
             )
             cluster_node_directory = test_directory / cluster_node_name(target, index)
             for volume_name in ("config", "data", "logs"):
@@ -2517,6 +2710,7 @@ def refresh_target(
                 "transfers complete",
                 "riak ping == pong",
                 "HTTP 200/OK",
+                "riak admin test read/write cycle",
                 "Docker healthcheck healthy",
                 "config/data/log volumes populated",
             ],
@@ -2547,6 +2741,10 @@ def refresh_target(
             target, dockerfile, compose_single, compose_cluster, environment_example
         )
         report["status"] = "passed"
+    except KeyboardInterrupt:
+        report["status"] = "interrupted"
+        report["error"] = {"type": "KeyboardInterrupt", "message": "Refresh stopped by operator"}
+        raise
     except Exception as error:
         report["status"] = "failed"
         report["error"] = {"type": type(error).__name__, "message": str(error)}
@@ -2602,6 +2800,9 @@ def refresh_target(
                     environment=environment,
                     check=False,
                 )
+            for node_logs in test_directory.glob("*/logs"):
+                if node_logs.is_dir():
+                    shutil.copytree(node_logs, logs / "riak-runtime" / node_logs.parent.name, dirs_exist_ok=True)
             if keep_workdir:
                 report["test_workdir"] = str(test_directory)
             else:
@@ -2623,9 +2824,18 @@ def cached_current_reports() -> Iterable[tuple[pathlib.Path, dict[str, Any]]]:
     return reports
 
 
+def report_artifact_filenames(report: dict[str, Any]) -> tuple[str, ...]:
+    environment = report.get("artifacts", {}).get("environment_example", {}).get("filename")
+    return (*ARTIFACT_FILENAMES[:3], ".env.example" if environment == ".env.example" else "example.env")
+
+
 def cache_state(target: Target, cluster_nodes: int = DEFAULT_CLUSTER_NODES) -> tuple[str, str]:
     report_path = target.cache_directory / "report.json"
-    expected_paths = [target.cache_directory / filename for filename in ARTIFACT_FILENAMES]
+    try:
+        report = read_json(report_path) if report_path.exists() else {}
+    except (OSError, json.JSONDecodeError) as error:
+        return "invalid", f"unreadable report: {error}"
+    expected_paths = [target.cache_directory / filename for filename in report_artifact_filenames(report)]
     present = [path for path in [report_path, *expected_paths] if path.exists()]
     if not present:
         return "missing", ""
@@ -2648,7 +2858,7 @@ def cache_state(target: Target, cluster_nodes: int = DEFAULT_CLUSTER_NODES) -> t
         "dockerfile": "Dockerfile",
         "compose_single": "compose.single.yaml",
         "compose_cluster": "compose.cluster.yaml",
-        "environment_example": ".env.example",
+        "environment_example": report_artifact_filenames(report)[-1],
     }
     for key, filename in artifact_names.items():
         artifact = report.get("artifacts", {}).get(key, {})
@@ -2660,7 +2870,9 @@ def cache_state(target: Target, cluster_nodes: int = DEFAULT_CLUSTER_NODES) -> t
 
 def sync_static() -> int:
     copied = 0
+    versions = set()
     for report_path, report in cached_current_reports():
+        versions.add(report["target"]["version"])
         if report.get("schema_version") != SCHEMA_VERSION or report.get("status") != "passed":
             continue
         target_data = report["target"]
@@ -2674,7 +2886,7 @@ def sync_static() -> int:
         target = matches[0]
         destination = target.static_directory
         destination.mkdir(parents=True, exist_ok=True)
-        for filename in ARTIFACT_FILENAMES:
+        for filename in report_artifact_filenames(report):
             source = report_path.parent / filename
             if not source.is_file():
                 raise DockerToolError(f"Cached report is missing {source}")
@@ -2682,6 +2894,7 @@ def sync_static() -> int:
         with contextlib.suppress(FileNotFoundError):
             (destination / "compose.yaml").unlink()
         copied += 1
+    sync_download_metadata(versions)
     return copied
 
 
@@ -2835,11 +3048,19 @@ def main(arguments: list[str] | None = None) -> int:
                 f"{'PASSED' if passed else 'FAILED'} (duration {duration}s)"
             )
             failures += int(not passed)
+        sync_download_metadata(target.version for target in targets)
         return 1 if failures else 0
+    except KeyboardInterrupt:
+        print("Refresh stopped by operator; current test cleanup completed.", file=sys.stderr)
+        return 130
     except (DockerToolError, OSError, json.JSONDecodeError) as error:
         print(f"error: {error}", file=sys.stderr)
         return 2
 
 
 if __name__ == "__main__":
+    def stop_refresh(signum: int, frame: Any) -> None:
+        raise KeyboardInterrupt
+
+    signal.signal(signal.SIGTERM, stop_refresh)
     raise SystemExit(main())

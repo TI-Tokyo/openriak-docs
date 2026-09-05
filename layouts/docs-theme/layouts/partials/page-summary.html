@@ -40,6 +40,16 @@
   </span>
 </div>
 {{- $toc := .TableOfContents -}}
+{{- if .HasShortcode "collapsable-section" -}}
+  {{- $headings := slice -}}
+  {{- range findRE `(?s)<h[1-6]\s[^>]*id="[^"]+"[^>]*>.*?</h[1-6]>` .Content -}}
+    {{- $level := int (replaceRE `(?s)^<h([1-6]).*$` "$1" .) -}}
+    {{- $id := replaceRE `(?s)^<h[1-6]\s[^>]*id="([^"]+)".*$` "$1" . -}}
+    {{- $title := replaceRE `(?s)<a\s[^>]*class="heading-permalink".*?</a>` "" . | plainify | htmlUnescape -}}
+    {{- $headings = $headings | append (dict "level" $level "id" $id "title" $title) -}}
+  {{- end -}}
+  {{- $toc = printf `<nav id="TableOfContents">%s</nav>` (partial "heading-toc.html" $headings) -}}
+{{- end -}}
 {{- $hasRelatedDocumentation := gt (len (.Params.related | default (slice))) 0 -}}
 {{- if $hasRelatedDocumentation -}}
   {{- $relatedItem := `<li><a href="#related-documentation-heading">Related documentation</a></li>` -}}

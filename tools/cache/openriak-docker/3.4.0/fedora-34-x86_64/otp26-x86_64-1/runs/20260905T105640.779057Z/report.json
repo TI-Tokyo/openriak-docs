@@ -1,0 +1,160 @@
+{
+  "artifacts": {},
+  "base_image": {
+    "pinned": "fedora:34@sha256:55a74d948c47bb002edff3c7a9a7e864152c686d7c2dc8e3df1ac4d611a20898",
+    "requested": "fedora:34",
+    "resolved_at": "2026-09-05T10:56:55Z"
+  },
+  "error": {
+    "message": "Container 'openriak-kv-3.4.0-fedora-34-otp26-x86_64-node-t-779057z' exited with code 1 before its log contained 'monitor: BEAM is running'; last log output:\n2026-09-05T10:58:05Z [openriak-entrypoint] configuration: preparing mounted directories\n2026-09-05T10:58:05Z [openriak-entrypoint] configuration: using existing /etc/riak/riak.conf\n2026-09-05T10:58:05Z [openriak-entrypoint] configuration: current Docker IPv4 address = 172.25.0.2\n2026-09-05T10:58:06Z [openriak-entrypoint] configuration: nodename = openriak-kv@node-01.cluster-a.openriak\n2026-09-05T10:58:06Z [openriak-entrypoint] configuration: distributed_cookie = openriak-f3343ce4e4878f115f51e496389a6afa\n2026-09-05T10:58:06Z [openriak-entrypoint] configuration: ring_size = 8\n2026-09-05T10:58:06Z [openriak-entrypoint] configuration: storage_backend = leveled\n2026-09-05T10:58:06Z [openriak-entrypoint] configuration: anti_entropy = passive\n2026-09-05T10:58:06Z [openriak-entrypoint] configuration: tictacaae_active = active\n2026-09-05T10:58:06Z [openriak-entrypoint] configuration: tictacaae_storeheads = enabled\n2026-09-05T10:58:06Z [openriak-entrypoint] configuration: listener.http.internal = 0.0.0.0:8098\n2026-09-05T10:58:06Z [openriak-entrypoint] configuration: listener.protobuf.internal = 0.0.0.0:8087\n2026-09-05T10:58:06Z [openriak-entrypoint] startup: validating configuration and generating VM arguments\n2026-09-05T10:58:06Z [openriak-entrypoint] startup: configuration validation failed (/usr/lib64/riak/erts-14.2.5.12/bin/erl: /lib64/libc.so.6: version `GLIBC_2.34' not found (required by /usr/lib64/riak/erts-14.2.5.12/bin/erl))",
+    "type": "DockerToolError"
+  },
+  "finished_at": "2026-09-05T10:58:07Z",
+  "generation": {
+    "cluster_nodes": 5,
+    "distributed_cookie": "openriak-f3343ce4e4878f115f51e496389a6afa"
+  },
+  "image": "openriak/openriak-kv:3.4.0-fedora-34-otp26-x86_64",
+  "metadata_sources": [
+    "content/openriak-kv/metadata/3.4.0/supported-os.json",
+    "content/openriak-kv/metadata/3.4.0/downloads.json",
+    "content/openriak-kv/metadata/os-aliases.json"
+  ],
+  "network": {
+    "address_assignment": "docker",
+    "node_host": "node-01.cluster-a.openriak",
+    "riak_node_name": "openriak-kv@node-01.cluster-a.openriak"
+  },
+  "node": "openriak-kv-3.4.0-fedora-34-otp26-x86_64-node",
+  "package": {
+    "checksum": {
+      "algorithm": "sha256",
+      "value": "72c02db420dc5a0cde5c27a2bd1813fc74e56b663f1167b9b7a0795fae5bfc77"
+    },
+    "filename": "riak-3.4.0.OTP26-1.el9.x86_64.rpm",
+    "format": "rpm",
+    "url": "https://files.tiot.jp/riak/kv/3.4/3.4.0/rhel/9/riak-3.4.0.OTP26-1.el9.x86_64.rpm"
+  },
+  "ports": {
+    "http": 8098,
+    "protobuf": 8087
+  },
+  "product": "openriak-kv",
+  "run_id": "20260905T105640.779057Z",
+  "schema_version": 3,
+  "started_at": "2026-09-05T10:56:40Z",
+  "status": "failed",
+  "steps": [
+    {
+      "duration_seconds": 12.609,
+      "finished_at": "2026-09-05T10:56:55Z",
+      "name": "pull_and_pin_base_image",
+      "started_at": "2026-09-05T10:56:40Z",
+      "status": "passed"
+    },
+    {
+      "duration_seconds": 0.001,
+      "finished_at": "2026-09-05T10:56:55Z",
+      "name": "generate_artifacts",
+      "started_at": "2026-09-05T10:56:55Z",
+      "status": "passed"
+    },
+    {
+      "duration_seconds": 0.188,
+      "finished_at": "2026-09-05T10:56:55Z",
+      "name": "validate_compose_artifacts",
+      "started_at": "2026-09-05T10:56:55Z",
+      "status": "passed"
+    },
+    {
+      "duration_seconds": 63.953,
+      "finished_at": "2026-09-05T10:58:03Z",
+      "name": "build_image",
+      "started_at": "2026-09-05T10:56:55Z",
+      "status": "passed"
+    },
+    {
+      "duration_seconds": 1.34,
+      "finished_at": "2026-09-05T10:58:04Z",
+      "name": "initialize_volumes",
+      "started_at": "2026-09-05T10:58:03Z",
+      "status": "passed"
+    },
+    {
+      "duration_seconds": 0.994,
+      "finished_at": "2026-09-05T10:58:05Z",
+      "name": "make_test_config_writable",
+      "started_at": "2026-09-05T10:58:04Z",
+      "status": "passed"
+    },
+    {
+      "duration_seconds": 0.004,
+      "finished_at": "2026-09-05T10:58:05Z",
+      "name": "configure_node",
+      "started_at": "2026-09-05T10:58:05Z",
+      "status": "passed"
+    },
+    {
+      "duration_seconds": 0.531,
+      "finished_at": "2026-09-05T10:58:06Z",
+      "name": "start_compose_node",
+      "started_at": "2026-09-05T10:58:05Z",
+      "status": "passed"
+    },
+    {
+      "duration_seconds": 1.2,
+      "error": "Container 'openriak-kv-3.4.0-fedora-34-otp26-x86_64-node-t-779057z' exited with code 1 before its log contained 'monitor: BEAM is running'; last log output:\n2026-09-05T10:58:05Z [openriak-entrypoint] configuration: preparing mounted directories\n2026-09-05T10:58:05Z [openriak-entrypoint] configuration: using existing /etc/riak/riak.conf\n2026-09-05T10:58:05Z [openriak-entrypoint] configuration: current Docker IPv4 address = 172.25.0.2\n2026-09-05T10:58:06Z [openriak-entrypoint] configuration: nodename = openriak-kv@node-01.cluster-a.openriak\n2026-09-05T10:58:06Z [openriak-entrypoint] configuration: distributed_cookie = openriak-f3343ce4e4878f115f51e496389a6afa\n2026-09-05T10:58:06Z [openriak-entrypoint] configuration: ring_size = 8\n2026-09-05T10:58:06Z [openriak-entrypoint] configuration: storage_backend = leveled\n2026-09-05T10:58:06Z [openriak-entrypoint] configuration: anti_entropy = passive\n2026-09-05T10:58:06Z [openriak-entrypoint] configuration: tictacaae_active = active\n2026-09-05T10:58:06Z [openriak-entrypoint] configuration: tictacaae_storeheads = enabled\n2026-09-05T10:58:06Z [openriak-entrypoint] configuration: listener.http.internal = 0.0.0.0:8098\n2026-09-05T10:58:06Z [openriak-entrypoint] configuration: listener.protobuf.internal = 0.0.0.0:8087\n2026-09-05T10:58:06Z [openriak-entrypoint] startup: validating configuration and generating VM arguments\n2026-09-05T10:58:06Z [openriak-entrypoint] startup: configuration validation failed (/usr/lib64/riak/erts-14.2.5.12/bin/erl: /lib64/libc.so.6: version `GLIBC_2.34' not found (required by /usr/lib64/riak/erts-14.2.5.12/bin/erl))",
+      "finished_at": "2026-09-05T10:58:07Z",
+      "name": "wait_for_entrypoint_readiness",
+      "started_at": "2026-09-05T10:58:06Z",
+      "status": "failed"
+    }
+  ],
+  "target": {
+    "architecture": "x86_64",
+    "docker_platform": "linux/amd64",
+    "download_id": "otp26-x86_64-1",
+    "os_family": "fedora",
+    "os_id": "fedora-34-x86_64",
+    "os_name": "Fedora 34",
+    "os_release": "34",
+    "otp": "26",
+    "package_os_id": "rhel-9-x86_64",
+    "version": "3.4.0"
+  },
+  "tests": {
+    "configuration": {
+      "settings": {
+        "anti_entropy": "passive",
+        "listener.http.internal": "0.0.0.0:8098",
+        "listener.protobuf.internal": "0.0.0.0:8087",
+        "nodename": "openriak-kv@node-01.cluster-a.openriak",
+        "ring_size": "8",
+        "storage_backend": "leveled",
+        "tictacaae_active": "active",
+        "tictacaae_storeheads": "enabled"
+      },
+      "status": "passed"
+    },
+    "volume_initialization": {
+      "config_populated": true,
+      "data_directory_created": true,
+      "logs_directory_created": true,
+      "status": "passed"
+    }
+  },
+  "volumes": {
+    "config": {
+      "container": "/etc/riak",
+      "default": "./openriak-kv-3.4.0-fedora-34-otp26-x86_64-node/config"
+    },
+    "data": {
+      "container": "/var/lib/riak",
+      "default": "./openriak-kv-3.4.0-fedora-34-otp26-x86_64-node/data"
+    },
+    "logs": {
+      "container": "/var/log/riak",
+      "default": "./openriak-kv-3.4.0-fedora-34-otp26-x86_64-node/logs"
+    }
+  }
+}

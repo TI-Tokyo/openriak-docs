@@ -245,7 +245,7 @@ assert.match(sharedHeaderSource, /data-theme-picker[\s\S]*class="theme-trigger"[
 assert.match(themeSource, /syncTriggerLabel[\s\S]*Display preferences: \$\{themeLabel\}, \$\{currentContentWidth\}% width, \$\{currentFontSize\}% text/, 'the Display trigger must announce the current theme, width, and text size');
 assert.match(sharedHeaderCss, /\.display-trigger-icon[\s\S]*\.display-trigger-label[\s\S]*@media \(max-width: 760px\)[\s\S]*\.display-trigger-label \{ display: none; \}/, 'the Display trigger must retain its Aa symbol while hiding its text label on mobile');
 assert.match(baseSource, /js\/theme\.js[^"\n]+\?v=20260903-display-menu/, 'documentation pages must load the cache-busted Display preferences runtime');
-assert.match(baseSource, /js\/page-tools\.js[^"\n]+\?v=20260903-heading-copy/, 'documentation pages must load the cache-busted page and code tools runtime');
+assert.match(baseSource, /js\/page-tools\.js[^"\n]+\?v=20260905-code-tab-toolbar/, 'documentation pages must load the cache-busted page and code tools runtime');
 assert.match(headSource, /css\/site-header\.css[^"\n]+\?v=20260903-share-icons/, 'documentation pages must load the cache-busted shared-header styling');
 assert.match(sharedHeaderSource, /data-site-section-picker[\s\S]*data-share-control[\s\S]*data-theme-picker/, 'Share must appear between Site sections and Display');
 assert.match(sharedHeaderSource, /class="share-trigger"[^>]*aria-haspopup="menu"[\s\S]*data-share-copy[\s\S]*Copy to clipboard[\s\S]*data-share-native hidden[\s\S]*Share using device…[\s\S]*data-share-target="email"[\s\S]*data-share-target="bluesky"[\s\S]*data-share-target="linkedin"[\s\S]*data-share-target="reddit"[\s\S]*data-share-target="x"/, 'the Share menu must provide utility actions followed by alphabetically ordered Bluesky, LinkedIn, Reddit, and X actions');
@@ -413,9 +413,9 @@ assert.match(runtimeSource, /option\.append\(optionLogo, copy\)/, 'OS picker opt
 assert.match(runtimeSource, /data-download-os-select[\s\S]*setOs\(os\)/, 'the operating-system list must update the selected download state');
 assert.match(runtimeSource, /data-all-downloads-link[\s\S]*allDownloads\.open = true/, 'the selected download box must expand All downloads before following its anchor');
 assert.match(runtimeSource, /data-selected-download-os[\s\S]*data-selected-download-logo[\s\S]*data-doc-downloads[\s\S]*sourceGroups[\s\S]*downloads-table/, 'changing OS must update the selected download subtitle, logo, and package table');
-assert.match(downloadsTemplateSource, /data-download-os-select[\s\S]*<h2>Download<\/h2>[\s\S]*modern-downloads-selected-os[\s\S]*data-doc-downloads[\s\S]*partial "download-table\.html"[\s\S]*data-all-downloads-link[\s\S]*<summary>Source Code<\/summary>[\s\S]*<summary>All downloads<\/summary>/, 'OpenRiak downloads must use an OS selector, title/subtitle selected table, collapsed disclosures, and an All downloads expansion link');
+assert.match(downloadsTemplateSource, /if \$isModern[\s\S]*\{\{ \.Content \}\}/, 'modern Downloads composition must be controlled by page shortcodes');
 assert.match(downloadsTemplateSource, /data-legacy-downloads[\s\S]*Alpine Linux Riak Repository/, 'Riak KV downloads must retain the legacy grouped layout and Alpine repository link');
-assert.equal((downloadsTemplateSource.match(/partial "download-table\.html"/g) || []).length, 3, 'selected, modern All downloads, and legacy downloads must share the grouped download table');
+assert.equal((downloadsTemplateSource.match(/partial "download-table\.html"/g) || []).length, 1, 'the layout must only render legacy package tables directly');
 assert.match(downloadsTemplateSource, /\$downloadProductName[\s\S]*\$downloadsBaseUrl[\s\S]*\{\{ \$downloadProductName \}\} for/, 'download groups must derive product labels and file-store URLs from product data');
 assert.match(downloadTableSource, /<th scope="col">OTP<\/th><th scope="col">Architecture<\/th><th scope="col">Package<\/th><th scope="col" class="download-table-actions">Actions<\/th>[\s\S]*data-download-os-id="\{\{ \$os\.id \}\}"[\s\S]*data-download-checksum-toggle[\s\S]*data-copy-label="Copy URL"[\s\S]*data-download-checksum-row hidden[\s\S]*<td aria-hidden="true"><\/td>[\s\S]*colspan="3"/, 'shared download tables must identify their OS and use four columns, right-aligned actions, and a checksum row spanning architecture through actions');
 assert.match(downloadTableSource, /\.architecture[\s\S]*with \.subArchitecture[\s\S]*download-sub-architecture/, 'download tables must render sub-architecture variants beneath the base architecture');
@@ -787,9 +787,9 @@ if (fs.existsSync(buildRoot)) {
   const foundationsMenuIndex = html.indexOf('>Foundations</a>');
   assert.ok(releaseNotesMenuIndex >= 0 && releaseNotesMenuIndex < downloadsMenuIndex && downloadsMenuIndex < foundationsMenuIndex, 'Release Notes and Downloads must be the first two labelled top-level menu items');
   assert.match(html, /aria-label="Download operating systems"[\s\S]*data-download-os-select=ubuntu-noble-amd64/, 'the modern downloads page must render every OS as an in-page selector');
-  assert.match(html, /data-selected-downloads[\s\S]*<summary>Source Code<\/summary>[\s\S]*<summary>All downloads<\/summary>/, 'the selected OS downloads must render before the collapsed Source Code and All downloads disclosures');
+  assert.match(html, /data-selected-download-panels[\s\S]*<summary>Source code<\/summary>[\s\S]*<summary>All Download Packages<\/summary>[\s\S]*<summary>All Docker Files<\/summary>/, 'recommended downloads must precede the three author-controlled disclosures');
   assert.doesNotMatch(html, /<details[^>]+(?:data-downloads-source|data-all-downloads)[^>]+open/, 'Source Code and All downloads must be collapsed by default');
-  assert.match(html, />All downloads<[\s\S]*data-download-os=alpine-3\.21-x86_64/, 'All downloads must include the initially selected OS');
+  assert.match(html, />All Download Packages<[\s\S]*data-download-os-id=alpine-3\.21-x86_64/, 'All packages must include the initially selected OS');
   assert.match(html, /files\.tiot\.jp\/riak\/kv\/3\.4\/3\.4\.1/);
 
   const inheritedHtml = fs.readFileSync(path.join(buildRoot, '3.4.1', 'reference', 'faq', 'index.html'), 'utf8');

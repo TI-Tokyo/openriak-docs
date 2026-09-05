@@ -1,0 +1,46 @@
+{{- $images := slice -}}
+{{- $ids := slice -}}
+{{- range .operatingSystems }}{{ $ids = $ids | append .id }}{{ end -}}
+{{- range .versionData.dockerImages }}{{ if in $ids .osId }}{{ $images = $images | append . }}{{ end }}{{ end -}}
+{{ if $images }}
+<div class="downloads-table-wrap">
+  <table class="downloads-table docker-downloads-table">
+    <caption class="sr-only">Tested Docker files by operating system</caption>
+    <colgroup><col class="docker-column-otp"><col class="docker-column-architecture"><col class="docker-column-tested"><col class="docker-column-image"><col><col class="docker-column-actions"></colgroup>
+    <thead><tr><th scope="col">OTP</th><th scope="col">Architecture</th><th scope="col">Tested</th><th scope="col">Image tag</th><th scope="col">Downloads</th><th scope="col" class="download-table-actions">Actions</th></tr></thead>
+    {{ range $image := $images }}
+      {{ $files := slice (dict "label" "Dockerfile" "file" .dockerfile) (dict "label" "Single Node Compose File" "file" .composeSingle) (dict "label" (printf "%v-node Cluster Compose File" .clusterNodes) "file" .composeCluster) (dict "label" "Example Environment File" "file" .environmentExample "filename" "example.env") }}
+      {{ $rows := 0 }}
+      {{ range $files }}{{ with .file }}{{ $rows = add $rows 1 }}{{ with .sha256 }}{{ $rows = add $rows 1 }}{{ end }}{{ end }}{{ end }}
+      <tbody class="download-package-group" data-download-os-id="{{ $image.osId }}">
+      {{ range $index, $entry := $files }}
+      {{ with $entry.file }}
+        <tr class="download-package-row">
+          {{ if eq $index 0 }}
+          <td rowspan="{{ $rows }}">OTP {{ $image.otp }}</td>
+          <td rowspan="{{ $rows }}">{{ $image.architecture }}</td>
+          <td rowspan="{{ $rows }}"><time datetime="{{ $image.testedAt }}" title="{{ $image.testedAt }}">{{ dateFormat "2006-01-02" $image.testedAt }}</time></td>
+          {{ end }}
+          <td class="docker-image-cell{{ if eq $index (sub (len $files) 1) }} docker-image-cell-last{{ end }}">{{ if eq $index 0 }}<div class="docker-image-tag"><code>{{ $image.image }}</code><button class="download-copy" type="button" data-copy-value="{{ $image.image }}" data-copy-label="Copy image tag" aria-label="Copy image tag" title="Copy image tag" aria-live="polite">{{ partial "download-icon-copy.html" . }}</button></div>{{ end }}</td>
+          <td class="download-docker-file-cell"><a href="{{ .url | relURL }}" download="{{ $entry.filename | default .filename }}" data-download-file>{{ $entry.label }}</a></td>
+          <td class="download-table-actions"><div class="download-table-action-links">
+            {{ with .sha256 }}<button class="download-checksum-toggle" type="button" data-download-checksum-toggle aria-label="Show checksum for {{ $entry.label }}" title="Show checksum" aria-expanded="false">{{ partial "download-icon-hash.html" . }}</button>{{ end }}
+            <button class="download-copy download-copy-url" type="button" data-copy-value="{{ .url | absURL }}" data-copy-label="Copy URL" aria-label="Copy URL for {{ $entry.label }}" title="Copy URL" aria-live="polite">{{ partial "download-icon-copy.html" . }}</button>
+          </div></td>
+        </tr>
+        {{ with .sha256 }}
+        <tr class="download-checksum-row" data-download-checksum-row hidden><td class="download-table-checksum-cell" colspan="3">
+          <div class="download-checksum-panel"><p class="download-checksum-value"><strong>SHA-256</strong><code>{{ . }}</code></p>
+            <div class="download-checksum-actions"><button class="download-copy" type="button" data-copy-value="{{ . }}" data-copy-label="Copy checksum" aria-label="Copy checksum" title="Copy checksum" aria-live="polite">{{ partial "download-icon-copy.html" . }}</button></div>
+          </div>
+        </td></tr>
+        {{ end }}
+      {{ end }}
+      {{ end }}
+      </tbody>
+    {{ end }}
+  </table>
+</div>
+{{ else }}
+<p>No tested Docker files are available for this operating system yet.</p>
+{{ end }}

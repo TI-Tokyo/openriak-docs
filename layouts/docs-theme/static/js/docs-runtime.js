@@ -223,6 +223,34 @@
   if (typeof window !== 'undefined') window.OpenRiakDocs = api;
   if (typeof document === 'undefined') return;
 
+  // Reveal collapsed sections before navigating to their headings or content.
+  const revealSection = (hash) => {
+    let id;
+    try { id = decodeURIComponent(hash.replace(/^#/, '')); } catch { return; }
+    const target = document.getElementById(id);
+    if (!target) return;
+    let section = target.closest('details');
+    while (section) {
+      section.open = true;
+      section = section.parentElement?.closest('details');
+    }
+    return target;
+  };
+  document.addEventListener('click', (event) => {
+    const link = event.target.closest?.('a[href*="#"]');
+    if (!link) return;
+    const url = new URL(link.href, window.location.href);
+    if (url.origin === window.location.origin && url.pathname === window.location.pathname && url.search === window.location.search) {
+      revealSection(url.hash);
+    }
+  });
+  const revealHash = () => {
+    const target = revealSection(window.location.hash);
+    if (target?.closest('.modern-downloads-disclosure')) target.scrollIntoView();
+  };
+  window.addEventListener('hashchange', revealHash);
+  revealHash();
+
   const contextNode = document.getElementById('docs-context');
   if (!contextNode) return;
   const context = JSON.parse(contextNode.textContent);
@@ -406,6 +434,9 @@
   };
 
   const renderDownloads = () => {
+    document.querySelectorAll('[data-download-panel-os]').forEach((panel) => {
+      panel.hidden = panel.dataset.downloadPanelOs !== selectedOs.id;
+    });
     document.querySelectorAll('[data-download-os-select]').forEach((button) => {
       const isSelected = button.dataset.downloadOsSelect === selectedOs.id;
       button.setAttribute('aria-pressed', String(isSelected));
@@ -448,7 +479,32 @@
   };
 
   const setupDownloadControls = () => {
-    document.addEventListener('click', (event) => {
+    document.addEventListener('click', async (event) => {
+      const file = event.target.closest?.('[data-download-file]');
+      if (file && !event.ctrlKey && !event.metaKey && !event.shiftKey && !event.altKey) {
+        event.preventDefault();
+        if (file.dataset.downloading) return;
+        file.dataset.downloading = 'true';
+        try {
+          const response = await fetch(file.href);
+          if (!response.ok) throw new Error(`Download failed: ${response.status}`);
+          // Avoid text/plain MIME handling adding .txt to extensionless filenames.
+          const blob = new Blob([await response.arrayBuffer()], { type: 'application/octet-stream' });
+          const url = URL.createObjectURL(blob);
+          const link = document.createElement('a');
+          link.href = url;
+          link.download = file.download;
+          document.body.append(link);
+          link.click();
+          link.remove();
+          window.setTimeout(() => URL.revokeObjectURL(url), 60000);
+        } catch (error) {
+          window.alert('Unable to download this file. Please try again.');
+        } finally {
+          delete file.dataset.downloading;
+        }
+        return;
+      }
       const toggle = event.target.closest?.('[data-download-checksum-toggle]');
       if (toggle) {
         const packageRow = toggle.closest('.download-package-row');

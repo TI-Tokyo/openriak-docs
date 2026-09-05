@@ -27,6 +27,66 @@ class OpenRiakDockerTests(unittest.TestCase):
         assert len(matches) == 1
         cls.target = matches[0]
 
+    def test_artifact_documentation_preserves_settings_and_shared_defaults(self):
+        cookie = "openriak-0123456789abcdef0123456789abcdef"
+        sources = {
+            "Dockerfile": docker_tool.render_dockerfile(self.target, "alpine:3.21@sha256:" + "a" * 64, cookie),
+            "compose.single.yaml": docker_tool.render_single_compose(self.target, cookie),
+            "compose.cluster.yaml": docker_tool.render_cluster_compose(self.target, distributed_cookie=cookie),
+            "example.env": docker_tool.render_environment_example(self.target, cookie),
+        }
+        for name, source in sources.items():
+            self.assertIn("TI Tokyo, www.tiot.jp", source)
+            self.assertIn("https://openriak.org", source)
+            self.assertIn("# Original image tag: " + self.target.image, source)
+            self.assertNotIn("Do not edit by hand", source)
+            self.assertIn(cookie, source)
+            lines = source.splitlines()
+            for index, line in enumerate(lines):
+                is_setting = line.startswith("ENV ") if name == "Dockerfile" else (
+                    line.startswith("OPENRIAK_") if name == "example.env" else
+                    line.startswith(("      RIAK_", "      OPENRIAK_", "      role:"))
+                )
+                if is_setting:
+                    self.assertTrue(lines[index - 1].lstrip().startswith("# "), line)
+            stripped = [line for line in lines if line.strip() and not line.lstrip().startswith("#")]
+            annotated = docker_tool.annotate_artifact(source, name, self.target.image)
+            self.assertEqual(stripped, [line for line in annotated.splitlines()
+                                      if line.strip() and not line.lstrip().startswith("#")])
+        self.assertEqual(docker_tool.setting_comment("OPENRIAK_NODE_1_HOST"),
+                         docker_tool.setting_comment("RIAK_NODE_HOST"))
+        self.assertEqual(docker_tool.setting_comment("OPENRIAK_DISTRIBUTED_COOKIE"),
+                         docker_tool.setting_comment("RIAK_DISTRIBUTED_COOKIE"))
+
+    def test_environment_filename_accepts_historical_reports(self):
+        self.assertEqual(docker_tool.ARTIFACT_FILENAMES[-1], "example.env")
+        for filename in ("example.env", ".env.example"):
+            report = {"artifacts": {"environment_example": {"filename": filename}}}
+            self.assertEqual(docker_tool.report_artifact_filenames(report)[-1], filename)
+
+    def test_admin_test_requires_successful_read_write_and_logs_with_timeout(self):
+        path = pathlib.Path("admin-test.log")
+        for output, code, passes in (
+            ("Successfully completed 1 read/write cycle to 'openriak-kv@node'", 0, True),
+            ("Successfully completed 3 read/write cycles to 'openriak-kv@node'", 0, True),
+            ("Successfully completed 0 read/write cycles to 'openriak-kv@node'", 0, False),
+            ("Read/write failed", 0, False),
+            ("Successfully completed 1 read/write cycle to 'node'", 1, False),
+        ):
+            with self.subTest(output=output, code=code), tempfile.TemporaryDirectory() as directory:
+                path = pathlib.Path(directory) / "admin-test.log"
+                with mock.patch.object(docker_tool, "docker_command", return_value="docker"), mock.patch.object(
+                    docker_tool.subprocess, "run", return_value=mock.Mock(returncode=code, stdout=output)
+                ) as run:
+                    if passes:
+                        self.assertEqual(docker_tool.verify_admin_test("test-node", 1800, path)["status"], "passed")
+                    else:
+                        with self.assertRaises(docker_tool.DockerToolError):
+                            docker_tool.verify_admin_test("test-node", 1800, path)
+                    self.assertEqual(run.call_args.args[0], ["docker", "exec", "test-node", "riak", "admin", "test"])
+                    self.assertEqual(run.call_args.kwargs["timeout"], 1800)
+                    self.assertIn(output, path.read_text())
+
     def test_metadata_selects_expected_initial_target(self):
         self.assertEqual(self.target.otp, "24")
         self.assertEqual(self.target.architecture, "x86_64")
@@ -372,6 +432,145 @@ listener.protobuf.internal = 127.0.0.1:8087
         self.assertTrue(all("latest" not in docker_tool.base_image_for(target) for target in targets))
         self.assertEqual(len({target.image for target in targets}), len(targets))
 
+    def test_alias_targets_use_their_own_os_and_original_package(self):
+        targets = docker_tool.discover_targets(["3.4.0", "3.4.1"])
+        by_key = {(t.version, t.os_id, t.otp): t for t in targets}
+        aliases = [t for t in targets if "alias_of" in t.operating_system]
+        self.assertEqual(len(aliases), 12)
+        for target in aliases:
+            with self.subTest(image=target.image):
+                original = by_key[(target.version, target.operating_system["alias_of"], target.otp)]
+                self.assertEqual(target.package, original.package)
+                self.assertNotEqual(target.image, original.image)
+                self.assertNotEqual(target.cache_directory, original.cache_directory)
+                self.assertNotEqual(target.static_directory, original.static_directory)
+                self.assertNotEqual(docker_tool.base_image_for(target), docker_tool.base_image_for(original))
+
+    def test_suse_dockerfile_uses_suse_base_and_rhel_package(self):
+        target, = docker_tool.discover_targets(["3.4.0"], os_id="suse-16.0-x86_64")
+        base = docker_tool.base_image_for(target)
+        self.assertEqual(base, "registry.suse.com/bci/bci-base:16.0")
+        digest = "sha256:" + "a" * 64
+        source = docker_tool.render_dockerfile(target, f"{base}@{digest}")
+        self.assertIn(f"FROM --platform=linux/amd64 {base}@{digest}", source)
+        self.assertIn(target.package["url"], source)
+        self.assertIn("zypper --non-interactive install --no-recommends", source)
+        self.assertIn("curl gawk glibc", source)
+        self.assertIn("rpm -Uvh --replacepkgs --nodeps", source)
+        self.assertIn("/usr/lib64/riak/erts-*/bin/escript", source)
+        report = docker_tool.initial_report(target, "test", 5, "test-cookie")
+        self.assertEqual(report["target"]["os_id"], "suse-16.0-x86_64")
+        self.assertEqual(report["target"]["package_os_id"], "rhel-9-x86_64")
+        self.assertEqual(report["status"], "running")
+        self.assertIn("content/openriak-kv/metadata/os-aliases.json", report["metadata_sources"])
+
+    def test_fedora_alias_releases_match_runtime_requirements(self):
+        targets = docker_tool.discover_targets(["3.4.1"])
+        fedora = {t.release: t for t in targets if t.family == "fedora"}
+        self.assertEqual(set(fedora), {"29", "43"})
+        for release, rhel in [("29", "8"), ("43", "9")]:
+            target = fedora[release]
+            self.assertEqual(target.os_id, f"fedora-{release}-x86_64")
+            self.assertEqual(target.operating_system["alias_of"], f"rhel-{rhel}-x86_64")
+            self.assertEqual(docker_tool.base_image_for(target), f"fedora:{release}")
+            self.assertIn(f"/rhel/{rhel}/", target.package["url"])
+
+    def test_suse_releases_install_matching_openssl_abi(self):
+        for release, rhel, library in [("15-sp4", "8", "libopenssl1_1"), ("16.0", "9", "libopenssl3")]:
+            target, = docker_tool.discover_targets(["3.4.1"], os_id=f"suse-{release}-x86_64")
+            self.assertEqual(target.operating_system["alias_of"], f"rhel-{rhel}-x86_64")
+            script = docker_tool.package_install_script(target)
+            self.assertIn(library, script)
+            self.assertIn("crypto:strong_rand_bytes(1), halt().", script)
+
+    def test_interrupted_refresh_records_interruption_and_propagates(self):
+        with tempfile.TemporaryDirectory() as directory:
+            with mock.patch.object(docker_tool, "CACHE_ROOT", pathlib.Path(directory)), \
+                 mock.patch.object(docker_tool, "docker_command", return_value="docker"), \
+                 mock.patch.object(docker_tool, "resolve_base_image", side_effect=KeyboardInterrupt), \
+                 mock.patch.object(docker_tool, "publish_current_run") as publish:
+                with self.assertRaises(KeyboardInterrupt):
+                    docker_tool.refresh_target(self.target, 1800)
+                report = publish.call_args.args[2]
+                self.assertEqual(report["status"], "interrupted")
+                self.assertIsNotNone(report["finished_at"])
+
+    def test_beam_running_ignores_zombie_processes(self):
+        import subprocess
+        source = docker_tool.render_dockerfile(self.target, "alpine:3.21@sha256:" + "a" * 64)
+        start = source.index("beam_running() {")
+        end = source.index("\nping_works()", start)
+        function = source[start:end]
+        for state, expected in [("S", 0), ("Z", 1), ("X", 1)]:
+            with self.subTest(state=state):
+                stubs = 'pgrep() { echo 123; }\ncat() { echo "123 (beam.smp) ' + state + ' 1 2 3"; }\n'
+                result = subprocess.run(["sh", "-c", stubs + function + "\nbeam_running"], capture_output=True, timeout=5)
+                self.assertEqual(result.returncode, expected)
+
+    def test_service_wait_exits_when_beam_dies(self):
+        import subprocess
+        source = docker_tool.render_dockerfile(self.target, "alpine:3.21@sha256:" + "a" * 64)
+        start = source.index("service_attempt=0")
+        end = source.index("\nwait_for_transfers", start)
+        script = "beam_running() { return 1; }\nlog() { echo \"$*\"; }\n" + source[start:end]
+        result = subprocess.run(["sh", "-c", script], capture_output=True, text=True, timeout=5)
+        self.assertEqual(result.returncode, 1)
+        self.assertIn("BEAM exited", result.stdout)
+
+    def test_aliases_do_not_replace_native_os_packages(self):
+        version = "3.4.0"
+        supported = docker_tool.read_json(docker_tool.METADATA_ROOT / version / "supported-os.json")
+        downloads = docker_tool.read_json(docker_tool.METADATA_ROOT / version / "downloads.json")
+        native = next(os for os in supported["operating_systems"] if os["id"] == "rhel-9-x86_64")
+        native_suse = {**native, "id": "sles-15.4-x86_64", "family": "sles", "release": "15.4"}
+        supported["operating_systems"].append(native_suse)
+        downloads["downloads"][native_suse["id"]] = downloads["downloads"][native["id"]]
+        with tempfile.TemporaryDirectory() as directory:
+            root = pathlib.Path(directory)
+            docker_tool.write_json(root / version / "supported-os.json", supported)
+            docker_tool.write_json(root / version / "downloads.json", downloads)
+            with mock.patch.object(docker_tool, "METADATA_ROOT", root):
+                targets = docker_tool.discover_targets([version])
+        self.assertTrue(any(t.os_id == native_suse["id"] for t in targets))
+        self.assertFalse(any(t.family == "suse" for t in targets))
+
+    def test_alias_install_scripts_are_valid_shell(self):
+        for target in docker_tool.discover_targets(["3.4.1"]):
+            if "alias_of" not in target.operating_system:
+                continue
+            with self.subTest(image=target.image):
+                result = docker_tool.subprocess.run(
+                    ["/bin/sh", "-n"], input=docker_tool.package_install_script(target),
+                    capture_output=True, text=True,
+                )
+                self.assertEqual(result.returncode, 0, result.stderr)
+
+    def test_centos_stream_8_uses_archive_without_disabling_signature_checks(self):
+        target, = docker_tool.discover_targets(["3.4.1"], os_id="centos-8-x86_64")
+        script = docker_tool.package_install_script(target)
+        setup = script.split("if command -v dnf", 1)[0]
+        with tempfile.TemporaryDirectory() as directory:
+            repo = pathlib.Path(directory) / "CentOS-Stream-AppStream.repo"
+            repo.write_text(
+                "[appstream]\n"
+                "mirrorlist=http://mirrorlist.centos.org/?release=$stream\n"
+                "#baseurl=http://mirror.centos.org/$contentdir/$stream/AppStream/$basearch/os/\n"
+                "gpgcheck=1\nenabled=1\n"
+                "gpgkey=file:///etc/pki/rpm-gpg/RPM-GPG-KEY-centosofficial\n"
+            )
+            result = docker_tool.subprocess.run(
+                ["/bin/sh", "-eu", "-c", setup.replace("/etc/yum.repos.d", directory)],
+                capture_output=True, text=True,
+            )
+            self.assertEqual(result.returncode, 0, result.stderr)
+            updated = repo.read_text()
+            self.assertIn("#mirrorlist=", updated)
+            self.assertIn("baseurl=https://vault.centos.org/8-stream/AppStream/$basearch/os/", updated)
+            self.assertIn("gpgcheck=1\nenabled=1", updated)
+            self.assertIn("gpgkey=file:///etc/pki/rpm-gpg/RPM-GPG-KEY-centosofficial", updated)
+        newer, = docker_tool.discover_targets(["3.4.1"], os_id="centos-9-x86_64")
+        self.assertNotIn("vault.centos.org", docker_tool.package_install_script(newer))
+
     def test_rejects_pre_openriak_versions(self):
         with self.assertRaisesRegex(
             docker_tool.DockerToolError,
@@ -412,8 +611,9 @@ listener.protobuf.internal = 127.0.0.1:8087
             docker_tool, "cache_state", return_value=("valid", "")
         ), mock.patch.object(
             docker_tool, "log_timestamp", return_value="2026-09-05 11:01:22"
-        ), contextlib.redirect_stdout(output):
+        ), mock.patch.object(docker_tool, "sync_download_metadata") as sync_metadata, contextlib.redirect_stdout(output):
             exit_code = docker_tool.main(["refresh", "--version", "3.4.0"])
+        self.assertEqual(list(sync_metadata.call_args.args[0]), ["3.4.0"])
         source = output.getvalue()
         self.assertEqual(exit_code, 0)
         self.assertIn("Docker script started at 2026-09-05 11:01:22", source)
@@ -427,6 +627,38 @@ listener.protobuf.internal = 127.0.0.1:8087
             "(complete cache exists)",
             source,
         )
+
+    def test_publish_updates_metadata_after_files_and_retains_passed_evidence_on_error(self):
+        with tempfile.TemporaryDirectory() as directory:
+            root = pathlib.Path(directory)
+            run = root / "run"
+            run.mkdir()
+            for filename in docker_tool.ARTIFACT_FILENAMES:
+                (run / filename).write_text(filename)
+            with mock.patch.object(docker_tool, "CACHE_ROOT", root / "cache"), \
+                 mock.patch.object(docker_tool, "STATIC_ROOT", root / "static"), \
+                 mock.patch.object(docker_tool, "sync_download_metadata") as sync:
+                def verify_published(versions):
+                    self.assertEqual(versions, ["3.4.0"])
+                    for filename in docker_tool.ARTIFACT_FILENAMES:
+                        self.assertTrue((self.target.static_directory / filename).is_file())
+                    raise docker_tool.DockerToolError("metadata unavailable")
+                sync.side_effect = verify_published
+                with self.assertRaises(docker_tool.DockerToolError):
+                    docker_tool.publish_current_run(self.target, run, {"status": "passed"})
+                report = docker_tool.read_json(self.target.cache_directory / "report.json")
+                self.assertEqual(report["status"], "passed")
+                sync.side_effect = None
+                docker_tool.publish_current_run(self.target, run, {"status": "failed"})
+                self.assertEqual(sync.call_count, 2)
+                self.assertFalse((self.target.static_directory / "Dockerfile").exists())
+
+    def test_metadata_sync_is_docker_only_and_deduplicates_versions(self):
+        with mock.patch.object(docker_tool.shutil, "which", return_value="/usr/bin/node"), \
+             mock.patch.object(docker_tool.subprocess, "run", return_value=mock.Mock(returncode=0, stdout="")) as run:
+            docker_tool.sync_download_metadata(["3.4.1", "3.4.0", "3.4.1"])
+        command = run.call_args.args[0]
+        self.assertEqual(command[2:], ["--docker-only", "--include-version", "openriak-kv=3.4.0", "--include-version", "openriak-kv=3.4.1"])
 
     def test_refresh_target_has_timestamped_phase_progress_hooks(self):
         source = MODULE_PATH.read_text(encoding="utf-8")

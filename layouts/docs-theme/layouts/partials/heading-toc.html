@@ -1,0 +1,20 @@
+{{- /* Nest headings by their actual levels, including skipped levels. */ -}}
+{{- if . -}}
+<ul>
+  {{- $headings := . -}}
+  {{- $next := 0 -}}
+  {{- range $index, $heading := $headings -}}
+    {{- if ge $index $next -}}
+      {{- $next = len $headings -}}
+      {{- range $childIndex, $child := $headings -}}
+        {{- if and (gt $childIndex $index) (lt $childIndex $next) (le $child.level $heading.level) -}}
+          {{- $next = $childIndex -}}
+        {{- end -}}
+      {{- end -}}
+      <li><a href="#{{ $heading.id }}">{{ $heading.title }}</a>
+        {{- partial "heading-toc.html" (after (add $index 1) (first $next $headings)) -}}
+      </li>
+    {{- end -}}
+  {{- end -}}
+</ul>
+{{- end -}}

@@ -1,0 +1,406 @@
+{
+  "artifacts": {
+    "compose_cluster": {
+      "filename": "compose.cluster.yaml",
+      "sha256": "096f0615d5a4424ad95519a10cd2b6944c329e829a64eccbcec1934d3c0184f9",
+      "url": "downloads/docker/3.4.1/3.4.1-rocky-9-otp26-x86_64/compose.cluster.yaml"
+    },
+    "compose_single": {
+      "filename": "compose.single.yaml",
+      "sha256": "8ebff361ba16e982d088504ec720e354f8e3d5e6176d7fa9788e15bcd71fc0dd",
+      "url": "downloads/docker/3.4.1/3.4.1-rocky-9-otp26-x86_64/compose.single.yaml"
+    },
+    "dockerfile": {
+      "filename": "Dockerfile",
+      "sha256": "ce6803887100525ed0112d8b66a5413e9a90ffcdd971410c5289c7dc95120f1b",
+      "url": "downloads/docker/3.4.1/3.4.1-rocky-9-otp26-x86_64/Dockerfile"
+    },
+    "environment_example": {
+      "filename": "example.env",
+      "sha256": "44663b59578ff44fccde6cb3b6853bd14f884da14f63845db654bee0092f130e",
+      "url": "downloads/docker/3.4.1/3.4.1-rocky-9-otp26-x86_64/example.env"
+    }
+  },
+  "base_image": {
+    "pinned": "rockylinux:9@sha256:d7be1c094cc5845ee815d4632fe377514ee6ebcf8efaed6892889657e5ddaaa6",
+    "requested": "rockylinux:9",
+    "resolved_at": "2026-09-05T13:28:21Z"
+  },
+  "error": null,
+  "finished_at": "2026-09-05T13:33:11Z",
+  "generation": {
+    "cluster_nodes": 5,
+    "distributed_cookie": "openriak-ed5f8ec4e86b5e6313256514125177f2"
+  },
+  "image": "openriak/openriak-kv:3.4.1-rocky-9-otp26-x86_64",
+  "metadata_sources": [
+    "content/openriak-kv/metadata/3.4.1/supported-os.json",
+    "content/openriak-kv/metadata/3.4.1/downloads.json",
+    "content/openriak-kv/metadata/os-aliases.json"
+  ],
+  "network": {
+    "address_assignment": "docker",
+    "node_host": "node-01.cluster-a.openriak",
+    "riak_node_name": "openriak-kv@node-01.cluster-a.openriak"
+  },
+  "node": "openriak-kv-3.4.1-rocky-9-otp26-x86_64-node",
+  "package": {
+    "checksum": {
+      "algorithm": "sha256",
+      "value": "952f04a57622b160ef01d7aa15d3871924221766f1cd08dc74bf5ecd3ffbe9ea"
+    },
+    "filename": "riak-3.4.1.OTP26-1.el9.x86_64.rpm",
+    "format": "rpm",
+    "url": "https://files.tiot.jp/riak/kv/3.4/3.4.1/rhel/9/riak-3.4.1.OTP26-1.el9.x86_64.rpm"
+  },
+  "ports": {
+    "http": 8098,
+    "protobuf": 8087
+  },
+  "presentation_update": {
+    "description": "Added attribution and setting comments; renamed .env.example to example.env. Executable configuration unchanged; integration tests not rerun.",
+    "tested_artifacts": {
+      "compose_cluster": {
+        "filename": "compose.cluster.yaml",
+        "sha256": "7049b1527d0d5a3cc3a7f227962f9905c6c8e309bd52431985525653188698e2",
+        "url": "downloads/docker/3.4.1/3.4.1-rocky-9-otp26-x86_64/compose.cluster.yaml"
+      },
+      "compose_single": {
+        "filename": "compose.single.yaml",
+        "sha256": "2f8e83cfe9a6db983e4de5faea3409d54c88bcf3208c1b3ab8a6ff87a53a624e",
+        "url": "downloads/docker/3.4.1/3.4.1-rocky-9-otp26-x86_64/compose.single.yaml"
+      },
+      "dockerfile": {
+        "filename": "Dockerfile",
+        "sha256": "cc718e91415ea36b4232d5ddceafedd807eba66fc3a50acb1fc730ccdaa09516",
+        "url": "downloads/docker/3.4.1/3.4.1-rocky-9-otp26-x86_64/Dockerfile"
+      },
+      "environment_example": {
+        "filename": ".env.example",
+        "sha256": "4224468a51afc07c7c3004e3a681e1c3b65f0386e2f18782c2ffd0eace124c02",
+        "url": "downloads/docker/3.4.1/3.4.1-rocky-9-otp26-x86_64/.env.example"
+      }
+    },
+    "tested_report": "runs/20260905T132819.890067Z/report.json",
+    "updated_at": "2026-09-05T14:00:13Z"
+  },
+  "product": "openriak-kv",
+  "run_id": "20260905T132819.890067Z",
+  "schema_version": 3,
+  "started_at": "2026-09-05T13:28:19Z",
+  "status": "passed",
+  "steps": [
+    {
+      "duration_seconds": 2.089,
+      "finished_at": "2026-09-05T13:28:21Z",
+      "name": "pull_and_pin_base_image",
+      "started_at": "2026-09-05T13:28:19Z",
+      "status": "passed"
+    },
+    {
+      "duration_seconds": 0.001,
+      "finished_at": "2026-09-05T13:28:21Z",
+      "name": "generate_artifacts",
+      "started_at": "2026-09-05T13:28:21Z",
+      "status": "passed"
+    },
+    {
+      "duration_seconds": 0.243,
+      "finished_at": "2026-09-05T13:28:22Z",
+      "name": "validate_compose_artifacts",
+      "started_at": "2026-09-05T13:28:21Z",
+      "status": "passed"
+    },
+    {
+      "duration_seconds": 25.168,
+      "finished_at": "2026-09-05T13:28:49Z",
+      "name": "build_image",
+      "started_at": "2026-09-05T13:28:22Z",
+      "status": "passed"
+    },
+    {
+      "duration_seconds": 1.062,
+      "finished_at": "2026-09-05T13:28:50Z",
+      "name": "initialize_volumes",
+      "started_at": "2026-09-05T13:28:49Z",
+      "status": "passed"
+    },
+    {
+      "duration_seconds": 0.647,
+      "finished_at": "2026-09-05T13:28:51Z",
+      "name": "make_test_config_writable",
+      "started_at": "2026-09-05T13:28:50Z",
+      "status": "passed"
+    },
+    {
+      "duration_seconds": 0.004,
+      "finished_at": "2026-09-05T13:28:51Z",
+      "name": "configure_node",
+      "started_at": "2026-09-05T13:28:51Z",
+      "status": "passed"
+    },
+    {
+      "duration_seconds": 0.434,
+      "finished_at": "2026-09-05T13:28:51Z",
+      "name": "start_compose_node",
+      "started_at": "2026-09-05T13:28:51Z",
+      "status": "passed"
+    },
+    {
+      "duration_seconds": 19.763,
+      "finished_at": "2026-09-05T13:29:13Z",
+      "name": "wait_for_entrypoint_readiness",
+      "started_at": "2026-09-05T13:28:51Z",
+      "status": "passed"
+    },
+    {
+      "duration_seconds": 0.54,
+      "finished_at": "2026-09-05T13:29:13Z",
+      "name": "wait_for_cli_and_http",
+      "started_at": "2026-09-05T13:29:13Z",
+      "status": "passed"
+    },
+    {
+      "duration_seconds": 0.037,
+      "finished_at": "2026-09-05T13:29:13Z",
+      "name": "wait_for_healthcheck",
+      "started_at": "2026-09-05T13:29:13Z",
+      "status": "passed"
+    },
+    {
+      "duration_seconds": 4.438,
+      "finished_at": "2026-09-05T13:29:18Z",
+      "name": "graceful_stop",
+      "started_at": "2026-09-05T13:29:13Z",
+      "status": "passed"
+    },
+    {
+      "duration_seconds": 0.095,
+      "finished_at": "2026-09-05T13:29:18Z",
+      "name": "verify_graceful_shutdown_logging",
+      "started_at": "2026-09-05T13:29:18Z",
+      "status": "passed"
+    },
+    {
+      "duration_seconds": 0.508,
+      "finished_at": "2026-09-05T13:29:18Z",
+      "name": "remove_single_node_test",
+      "started_at": "2026-09-05T13:29:18Z",
+      "status": "passed"
+    },
+    {
+      "duration_seconds": 1.724,
+      "finished_at": "2026-09-05T13:29:20Z",
+      "name": "start_compose_cluster",
+      "started_at": "2026-09-05T13:29:19Z",
+      "status": "passed"
+    },
+    {
+      "duration_seconds": 209.608,
+      "finished_at": "2026-09-05T13:33:04Z",
+      "name": "wait_for_cluster",
+      "started_at": "2026-09-05T13:29:20Z",
+      "status": "passed"
+    },
+    {
+      "duration_seconds": 5.903,
+      "finished_at": "2026-09-05T13:33:11Z",
+      "name": "graceful_stop_cluster",
+      "started_at": "2026-09-05T13:33:05Z",
+      "status": "passed"
+    },
+    {
+      "duration_seconds": 0.586,
+      "finished_at": "2026-09-05T13:33:11Z",
+      "name": "remove_cluster_test",
+      "started_at": "2026-09-05T13:33:11Z",
+      "status": "passed"
+    }
+  ],
+  "target": {
+    "architecture": "x86_64",
+    "docker_platform": "linux/amd64",
+    "download_id": "otp26-x86_64-1",
+    "os_family": "rocky",
+    "os_id": "rocky-9-x86_64",
+    "os_name": "Rocky Linux 9",
+    "os_release": "9",
+    "otp": "26",
+    "package_os_id": "rhel-9-x86_64",
+    "version": "3.4.1"
+  },
+  "tests": {
+    "cli_ping": {
+      "command": "riak ping",
+      "response": "pong",
+      "status": "passed"
+    },
+    "cluster": {
+      "checks": [
+        "same member set",
+        "ring ready",
+        "transfers complete",
+        "riak ping == pong",
+        "HTTP 200/OK",
+        "Docker healthcheck healthy",
+        "config/data/log volumes populated"
+      ],
+      "members": [
+        "openriak-kv@node-01.cluster-a.openriak",
+        "openriak-kv@node-02.cluster-a.openriak",
+        "openriak-kv@node-03.cluster-a.openriak",
+        "openriak-kv@node-04.cluster-a.openriak",
+        "openriak-kv@node-05.cluster-a.openriak"
+      ],
+      "node_count": 5,
+      "roles": {
+        "openriak-kv-3.4.1-rocky-9-otp26-x86_64-node-1-t-890067z": "Coordinator",
+        "openriak-kv-3.4.1-rocky-9-otp26-x86_64-node-2-t-890067z": "Follower",
+        "openriak-kv-3.4.1-rocky-9-otp26-x86_64-node-3-t-890067z": "Follower",
+        "openriak-kv-3.4.1-rocky-9-otp26-x86_64-node-4-t-890067z": "Follower",
+        "openriak-kv-3.4.1-rocky-9-otp26-x86_64-node-5-t-890067z": "Follower"
+      },
+      "state": {
+        "openriak-kv-3.4.1-rocky-9-otp26-x86_64-node-1-t-890067z": {
+          "http": "OK",
+          "members": "================================= Membership ==================================\nStatus     Ring    Pending    Node\n-------------------------------------------------------------------------------\nvalid      25.0%      --      openriak-kv@node-01.cluster-a.openriak\nvalid      25.0%      --      openriak-kv@node-02.cluster-a.openriak\nvalid      25.0%      --      openriak-kv@node-03.cluster-a.openriak\nvalid      12.5%      --      openriak-kv@node-04.cluster-a.openriak\nvalid      12.5%      --      openriak-kv@node-05.cluster-a.openriak\n-------------------------------------------------------------------------------\nValid:5 / Leaving:0 / Exiting:0 / Joining:0 / Down:0\nok",
+          "ping": "pong",
+          "ready": true,
+          "ring": "TRUE All nodes agree on the ring ['openriak-kv@node-01.cluster-a.openriak',\n                                  'openriak-kv@node-02.cluster-a.openriak',\n                                  'openriak-kv@node-03.cluster-a.openriak',\n                                  'openriak-kv@node-04.cluster-a.openriak',\n                                  'openriak-kv@node-05.cluster-a.openriak']\nok",
+          "transfers": "No transfers active\n\nActive Transfers:\n\n\nok"
+        },
+        "openriak-kv-3.4.1-rocky-9-otp26-x86_64-node-2-t-890067z": {
+          "http": "OK",
+          "members": "================================= Membership ==================================\nStatus     Ring    Pending    Node\n-------------------------------------------------------------------------------\nvalid      25.0%      --      openriak-kv@node-01.cluster-a.openriak\nvalid      25.0%      --      openriak-kv@node-02.cluster-a.openriak\nvalid      25.0%      --      openriak-kv@node-03.cluster-a.openriak\nvalid      12.5%      --      openriak-kv@node-04.cluster-a.openriak\nvalid      12.5%      --      openriak-kv@node-05.cluster-a.openriak\n-------------------------------------------------------------------------------\nValid:5 / Leaving:0 / Exiting:0 / Joining:0 / Down:0\nok",
+          "ping": "pong",
+          "ready": true,
+          "ring": "TRUE All nodes agree on the ring ['openriak-kv@node-01.cluster-a.openriak',\n                                  'openriak-kv@node-02.cluster-a.openriak',\n                                  'openriak-kv@node-03.cluster-a.openriak',\n                                  'openriak-kv@node-04.cluster-a.openriak',\n                                  'openriak-kv@node-05.cluster-a.openriak']\nok",
+          "transfers": "No transfers active\n\nActive Transfers:\n\n\nok"
+        },
+        "openriak-kv-3.4.1-rocky-9-otp26-x86_64-node-3-t-890067z": {
+          "http": "OK",
+          "members": "================================= Membership ==================================\nStatus     Ring    Pending    Node\n-------------------------------------------------------------------------------\nvalid      25.0%      --      openriak-kv@node-01.cluster-a.openriak\nvalid      25.0%      --      openriak-kv@node-02.cluster-a.openriak\nvalid      25.0%      --      openriak-kv@node-03.cluster-a.openriak\nvalid      12.5%      --      openriak-kv@node-04.cluster-a.openriak\nvalid      12.5%      --      openriak-kv@node-05.cluster-a.openriak\n-------------------------------------------------------------------------------\nValid:5 / Leaving:0 / Exiting:0 / Joining:0 / Down:0\nok",
+          "ping": "pong",
+          "ready": true,
+          "ring": "TRUE All nodes agree on the ring ['openriak-kv@node-01.cluster-a.openriak',\n                                  'openriak-kv@node-02.cluster-a.openriak',\n                                  'openriak-kv@node-03.cluster-a.openriak',\n                                  'openriak-kv@node-04.cluster-a.openriak',\n                                  'openriak-kv@node-05.cluster-a.openriak']\nok",
+          "transfers": "No transfers active\n\nActive Transfers:\n\n\nok"
+        },
+        "openriak-kv-3.4.1-rocky-9-otp26-x86_64-node-4-t-890067z": {
+          "http": "OK",
+          "members": "================================= Membership ==================================\nStatus     Ring    Pending    Node\n-------------------------------------------------------------------------------\nvalid      25.0%      --      openriak-kv@node-01.cluster-a.openriak\nvalid      25.0%      --      openriak-kv@node-02.cluster-a.openriak\nvalid      25.0%      --      openriak-kv@node-03.cluster-a.openriak\nvalid      12.5%      --      openriak-kv@node-04.cluster-a.openriak\nvalid      12.5%      --      openriak-kv@node-05.cluster-a.openriak\n-------------------------------------------------------------------------------\nValid:5 / Leaving:0 / Exiting:0 / Joining:0 / Down:0\nok",
+          "ping": "pong",
+          "ready": true,
+          "ring": "TRUE All nodes agree on the ring ['openriak-kv@node-01.cluster-a.openriak',\n                                  'openriak-kv@node-02.cluster-a.openriak',\n                                  'openriak-kv@node-03.cluster-a.openriak',\n                                  'openriak-kv@node-04.cluster-a.openriak',\n                                  'openriak-kv@node-05.cluster-a.openriak']\nok",
+          "transfers": "No transfers active\n\nActive Transfers:\n\n\nok"
+        },
+        "openriak-kv-3.4.1-rocky-9-otp26-x86_64-node-5-t-890067z": {
+          "http": "OK",
+          "members": "================================= Membership ==================================\nStatus     Ring    Pending    Node\n-------------------------------------------------------------------------------\nvalid      25.0%      --      openriak-kv@node-01.cluster-a.openriak\nvalid      25.0%      --      openriak-kv@node-02.cluster-a.openriak\nvalid      25.0%      --      openriak-kv@node-03.cluster-a.openriak\nvalid      12.5%      --      openriak-kv@node-04.cluster-a.openriak\nvalid      12.5%      --      openriak-kv@node-05.cluster-a.openriak\n-------------------------------------------------------------------------------\nValid:5 / Leaving:0 / Exiting:0 / Joining:0 / Down:0\nok",
+          "ping": "pong",
+          "ready": true,
+          "ring": "TRUE All nodes agree on the ring ['openriak-kv@node-01.cluster-a.openriak',\n                                  'openriak-kv@node-02.cluster-a.openriak',\n                                  'openriak-kv@node-03.cluster-a.openriak',\n                                  'openriak-kv@node-04.cluster-a.openriak',\n                                  'openriak-kv@node-05.cluster-a.openriak']\nok",
+          "transfers": "No transfers active\n\nActive Transfers:\n\n\nok"
+        }
+      },
+      "status": "passed"
+    },
+    "configuration": {
+      "settings": {
+        "anti_entropy": "passive",
+        "listener.http.internal": "0.0.0.0:8098",
+        "listener.protobuf.internal": "0.0.0.0:8087",
+        "nodename": "openriak-kv@node-01.cluster-a.openriak",
+        "ring_size": "8",
+        "storage_backend": "leveled",
+        "tictacaae_active": "active",
+        "tictacaae_storeheads": "enabled"
+      },
+      "status": "passed"
+    },
+    "entrypoint_startup": {
+      "required_log_messages": [
+        "startup: starting OpenRiak as a daemon",
+        "startup: BEAM is running and riak ping returned pong",
+        "startup: riak_kv service is up",
+        "startup: transfers complete",
+        "startup: OpenRiak is ready",
+        "monitor: BEAM is running"
+      ],
+      "status": "passed"
+    },
+    "graceful_shutdown": {
+      "required_log_messages": [
+        "shutdown: received SIGTERM",
+        "shutdown: requesting OpenRiak stop",
+        "shutdown: BEAM stopped; container is exiting"
+      ],
+      "signal": "SIGTERM",
+      "status": "passed"
+    },
+    "healthcheck": {
+      "checks": [
+        "beam.smp",
+        "riak ping == pong"
+      ],
+      "docker_status": "healthy",
+      "status": "passed"
+    },
+    "http_ping": {
+      "request": "GET /ping",
+      "response": "OK",
+      "status": "passed",
+      "status_code": 200
+    },
+    "populated_volumes": {
+      "config": [
+        "advanced.config",
+        "riak.conf"
+      ],
+      "data": [
+        "cluster_meta",
+        "generated.conf",
+        "kv_eraser",
+        "kv_reader",
+        "kv_reaper",
+        "kv_replrtqsrc",
+        "kv_vnode",
+        "leveled",
+        "riak_repl",
+        "ring",
+        "setup",
+        "sys.config",
+        "tictac_aae",
+        "vm.args"
+      ],
+      "logs": [
+        "console.log",
+        "erlang.log.1",
+        "run_erl.log"
+      ],
+      "status": "passed"
+    },
+    "riak_start": {
+      "status": "passed"
+    },
+    "volume_initialization": {
+      "config_populated": true,
+      "data_directory_created": true,
+      "logs_directory_created": true,
+      "status": "passed"
+    }
+  },
+  "volumes": {
+    "config": {
+      "container": "/etc/riak",
+      "default": "./openriak-kv-3.4.1-rocky-9-otp26-x86_64-node/config"
+    },
+    "data": {
+      "container": "/var/lib/riak",
+      "default": "./openriak-kv-3.4.1-rocky-9-otp26-x86_64-node/data"
+    },
+    "logs": {
+      "container": "/var/log/riak",
+      "default": "./openriak-kv-3.4.1-rocky-9-otp26-x86_64-node/logs"
+    }
+  }
+}
