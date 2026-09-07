@@ -23,6 +23,7 @@ import tempfile
 import time
 
 from openriak_defaults import DEFAULT_TIMEOUT_SECONDS
+from openriak_cve_storage import write_report
 
 
 def configure_parser(parser):
@@ -340,7 +341,7 @@ def collect_scout(reference, platform, mode, options, record, save):
                     raise ValueError('Scout returned empty details')
                 output.update(status='complete', data=data)
                 save()
-                return
+                return data
             except (ValueError, TypeError, AttributeError) as error:
                 result['error'] = str(error)
         save()
@@ -366,13 +367,13 @@ def scan_image(plan, report, options, tool, save):
         save()
         print(f'{tool.log_timestamp()}   Scanning {plan["image"]} {platform} {descriptor["digest"]}', flush=True)
         for mode in ('sarif', 'sbom', 'details'):
-            collect_scout(reference, platform, mode, options, record, save)
+            data = collect_scout(reference, platform, mode, options, record, save)
+            if mode == 'sarif' and record[mode]['status'] == 'complete':
+                runs = data['runs']
+                record['finding_count'] = sum(len(r.get('results') or []) for r in runs)
+                record['cve_ids'] = sorted({r.get('ruleId', '') for run in runs for r in (run.get('results') or []) if r.get('ruleId')})
         record['status'] = 'complete' if all(record[m]['status'] == 'complete' for m in ('sarif', 'sbom', 'details')) else 'failed'
         record['finished_at'] = tool.isoformat()
-        if record['sarif']['status'] == 'complete':
-            runs = record['sarif']['data']['runs']
-            record['finding_count'] = sum(len(r.get('results') or []) for r in runs)
-            record['cve_ids'] = sorted({r.get('ruleId', '') for run in runs for r in (run.get('results') or []) if r.get('ruleId')})
         save()
     report['scan_status'] = 'complete' if all(s['status'] == 'complete' for s in report['scans'].values()) else 'failed'
     save()
@@ -434,14 +435,14 @@ def main(options, tool):
         jobs.append((plan, report, path))
         summary['images'].append({'image': plan['image'], 'expected_digest': plan['archive']['digest'],
                                   'report': str(path.relative_to(directory))})
-        tool.write_json(path, report)
+        write_report(path, report)
     tool.write_json(directory / 'report.json', summary)
     print(f'{tool.log_timestamp()} Push PID: {os.getpid()}; reports: {directory}', flush=True)
     try:
         with docker_auth(options, tool) as auth_args:
             options.auth_args = auth_args
             for plan, report, path in jobs:
-                save = lambda p=path, r=report: tool.write_json(p, r)
+                save = lambda p=path, r=report: write_report(p, r)
                 report['status'] = 'pushing'
                 try:
                     push_tags(plan, report, options, tool, save)
@@ -455,7 +456,7 @@ def main(options, tool):
             print(f'{tool.log_timestamp()} All uploads finished; waiting {options.wait_seconds:g}s before Scout scans', flush=True)
             time.sleep(options.wait_seconds)
         for plan, report, path in jobs:
-            save = lambda p=path, r=report: tool.write_json(p, r)
+            save = lambda p=path, r=report: write_report(p, r)
             report['status'] = 'scanning'
             save()
             try:
@@ -474,7 +475,7 @@ def main(options, tool):
         for _, report, path in jobs:
             if report['status'] not in ('complete', 'failed'):
                 report.update(status='interrupted', finished_at=tool.isoformat())
-                tool.write_json(path, report)
+                write_report(path, report)
         print(f'{tool.log_timestamp()} Push/scan interrupted; reports retained at {directory}', flush=True)
         return 130
     except (OSError, ValueError, tool.DockerToolError) as error:
@@ -482,7 +483,7 @@ def main(options, tool):
         for _, report, path in jobs:
             if report['status'] not in ('complete', 'failed'):
                 report.update(status='failed', error=str(error), finished_at=tool.isoformat())
-                tool.write_json(path, report)
+                write_report(path, report)
     finally:
         summary['finished_at'] = tool.isoformat()
         for item, (_, report, _) in zip(summary['images'], jobs):

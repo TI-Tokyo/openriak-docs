@@ -939,7 +939,9 @@ Each invocation writes a new directory, printed at startup:
 ```text
 tools/cache/openriak-docker-multiarch/pushes/{UTC-run-id}/
 ├── report.json
-└── {version}/{image-tag}/cve-report.json
+└── {version}/{image-tag}/
+    ├── cve-report.json
+    └── scout-output/{sha256}.gz
 ```
 
 Each `cve-report.json` contains:
@@ -949,11 +951,40 @@ Each `cve-report.json` contains:
   layer digests and image configurations/labels.
 - The original approval and each platform's full test report, including tested
   timestamps, base-image digests, package URLs/checksums and artifact hashes.
-- Per-platform immutable scan references, timestamps, full Scout SARIF (CVE IDs,
+- Per-platform immutable scan references, timestamps, and references to full Scout SARIF (CVE IDs,
   severities, scores, package identifiers, affected/fixed versions, locations and
   all other fields Scout returns), the complete JSON SBOM, and detailed text/EPSS output.
 - Tool versions, settings, command arguments, complete stdout/stderr, durations,
-  exit codes, retry attempts and errors. Raw reports are retained without field filtering.
+  exit codes, retry attempts and errors. Large stdout is referenced rather than embedded.
+
+Per-image report schema 2 stores Scout payloads once in gzip files alongside the
+report. `data_file` and `stdout_file` references include their relative path,
+uncompressed SHA-256, byte length, compression and format. Successful parsed data
+and its exact raw stdout share one payload; failed attempts are also retained.
+No Scout fields, file locations, or original output text are discarded. Keep
+the JSON and its `scout-output` directory together when copying or committing
+evidence. Use `gzip -dc PATH/scout-output/HASH.gz` to read a payload.
+
+The Downloads metadata reader accepts both historical inline reports and schema
+2 reports, verifies payload hashes, and treats missing/corrupt payloads as
+incomplete scans. The preview watcher detects changes to payload files as well
+as the report. Restart an already-running preview once when installing this
+reader update.
+
+Compact existing completed, failed, or interrupted reports without Docker,
+uploads, scans, or changes to their findings:
+
+```sh
+python3 tools/openriak-docker/openriak_cve_storage.py compact \
+  tools/cache/openriak-docker-multiarch/pushes
+```
+
+Pass one or more individual `cve-report.json` paths or report directories; add
+`--whatif` to list candidates without changes. Conversion verifies a lossless
+round-trip before atomically replacing each JSON index, records its original
+SHA-256 and byte size, refuses active reports, and leaves schema 2 reports alone.
+For Python audit code, `openriak_cve_storage.hydrate_report(path)` restores the
+full `data` and `stdout` fields from either storage format.
 
 Reports are written atomically throughout the run. An interruption leaves useful
 partial reports; rerunning creates a new history directory. CVE findings do not
