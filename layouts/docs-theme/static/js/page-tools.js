@@ -1,4 +1,4 @@
-(() => {
+(async () => {
   'use strict';
 
   const writeClipboard = async (value) => {
@@ -18,10 +18,6 @@
     } finally {
       field.remove();
     }
-  };
-
-  const parseJsonSource = (element) => {
-    try { return JSON.parse(element?.textContent || '""'); } catch (_) { return ''; }
   };
 
   document.querySelectorAll('.heading-permalink').forEach((link) => {
@@ -146,11 +142,11 @@
     }));
 
     const markdownButton = pageTools.querySelector('[data-copy-page-markdown]');
-    const markdownSource = parseJsonSource(pageTools.querySelector('[data-page-markdown-source]'));
+    const markdownSource = pageTools.querySelector('[data-page-markdown-source]');
     markdownButton?.addEventListener('click', async () => {
       const label = markdownButton.querySelector('span');
       try {
-        await writeClipboard(markdownSource);
+        await writeClipboard(await window.OpenRiakMetadata.read(markdownSource));
         label.textContent = 'Copied Markdown';
       } catch (_) {
         label.textContent = 'Copy failed';
@@ -361,9 +357,21 @@
     storeCodeOptions();
   };
 
-  document.querySelectorAll('[data-code-block]').forEach((block, index) => {
+  const codeBlocks = [...document.querySelectorAll('[data-code-block]')];
+  const codeSources = new Map();
+  await Promise.all(codeBlocks.map(async (block) => {
+    try {
+      codeSources.set(block, await window.OpenRiakMetadata.read(block.querySelector('[data-code-source]')));
+    } catch (error) {
+      // Keep the server-rendered code visible if its helper file is unavailable.
+      block.querySelectorAll('button').forEach((button) => { button.disabled = true; });
+      console.error('Code source could not be loaded', error);
+    }
+  }));
+  codeBlocks.forEach((block, index) => {
+    if (!codeSources.has(block)) return;
     const language = (block.dataset.codeLanguage || 'text').toLowerCase();
-    const source = parseJsonSource(block.querySelector('[data-code-source]'));
+    const source = codeSources.get(block);
     const copyButton = block.querySelector('[data-code-copy]');
     const lineButton = block.querySelector('[data-code-lines]');
     const wrapButton = block.querySelector('[data-code-wrap]');
@@ -577,7 +585,7 @@
       // Native scroll restoration remains available when session storage is unavailable.
     }
   });
-  window.addEventListener('pageshow', () => {
+  const restoreCodeAnchor = () => {
     let anchor;
     try {
       anchor = JSON.parse(window.sessionStorage.getItem(codeAnchorStorageKey) || 'null');
@@ -591,5 +599,8 @@
       if (block.hidden) return;
       window.scrollBy(0, block.getBoundingClientRect().top - anchor.top);
     }));
-  });
-})();
+  };
+  window.addEventListener('pageshow', restoreCodeAnchor);
+  // Fetching helper files can finish after the initial pageshow event.
+  if (document.readyState === 'complete') restoreCodeAnchor();
+})().catch((error) => console.error('Page tools could not be initialized', error));

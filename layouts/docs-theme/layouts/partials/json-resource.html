@@ -1,0 +1,4 @@
+{{- /* Identical payloads share a URL; changed content gets a new cache key. */ -}}
+{{- $json := . | jsonify -}}
+{{- $resource := resources.FromString (printf "metadata/%s.json" (crypto.SHA256 $json)) $json -}}
+{{- return $resource.RelPermalink -}}

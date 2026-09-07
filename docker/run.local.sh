@@ -4,6 +4,9 @@ set -eu
 docker_directory=$(CDPATH= cd -- "$(dirname -- "$0")" && pwd)
 compose_file="$docker_directory/compose.yaml"
 native_docker_found=false
+# Recreate preview containers below as well as this directory: Docker Desktop
+# can retain stale bind mounts after build/archives has been deleted/recreated.
+# Named Hugo cache volumes are retained when containers are recreated.
 mkdir -p "$docker_directory/../build/archives"
 
 build_profile=development
@@ -78,18 +81,18 @@ if command -v docker >/dev/null 2>&1; then
   if docker info >/dev/null 2>&1; then
     if docker compose version >/dev/null 2>&1; then
       if [ -n "$compose_profile" ]; then
-        exec docker compose --file "$compose_file" --profile "$compose_profile" up "$@"
+        exec docker compose --file "$compose_file" --profile "$compose_profile" up --force-recreate "$@"
       fi
       docker compose --file "$compose_file" --profile release stop archives >/dev/null 2>&1 || true
-      exec docker compose --file "$compose_file" up "$@"
+      exec docker compose --file "$compose_file" up --force-recreate "$@"
     fi
 
     if command -v docker-compose >/dev/null 2>&1; then
       if [ -n "$compose_profile" ]; then
-        exec docker-compose --file "$compose_file" --profile "$compose_profile" up "$@"
+        exec docker-compose --file "$compose_file" --profile "$compose_profile" up --force-recreate "$@"
       fi
       docker-compose --file "$compose_file" --profile release stop archives >/dev/null 2>&1 || true
-      exec docker-compose --file "$compose_file" up "$@"
+      exec docker-compose --file "$compose_file" up --force-recreate "$@"
     fi
 
     echo 'Docker is running, but Docker Compose is unavailable.' >&2
@@ -103,10 +106,10 @@ if command -v docker.exe >/dev/null 2>&1 && command -v wslpath >/dev/null 2>&1; 
     export OPENRIAK_DOCS_ZONEINFO_DIR=$(wslpath -w "$zoneinfo_directory")
     export WSLENV="${WSLENV:+$WSLENV:}OPENRIAK_DOCS_BUILD_PROFILE:OPENRIAK_DOCS_RIAK_KV_VERSION:OPENRIAK_DOCS_TZ:OPENRIAK_DOCS_ZONEINFO_DIR"
     if [ -n "$compose_profile" ]; then
-      exec docker.exe compose --file "$(wslpath -w "$compose_file")" --profile "$compose_profile" up "$@"
+      exec docker.exe compose --file "$(wslpath -w "$compose_file")" --profile "$compose_profile" up --force-recreate "$@"
     fi
     docker.exe compose --file "$(wslpath -w "$compose_file")" --profile release stop archives >/dev/null 2>&1 || true
-    exec docker.exe compose --file "$(wslpath -w "$compose_file")" up "$@"
+    exec docker.exe compose --file "$(wslpath -w "$compose_file")" up --force-recreate "$@"
   fi
 fi
 

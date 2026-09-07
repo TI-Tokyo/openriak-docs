@@ -65,6 +65,19 @@ for supported operating systems, package downloads, and replaceable configuratio
 values. Build tools generate browser/Hugo adapters under `tools/generated/` and
 never write under `content/`.
 
+Hugo publishes browser metadata as shared JSON helpers under
+`metadata/{content-sha256}.json`. Pages link to these files instead of embedding
+the metadata in their HTML. The version picker shares a compact product index,
+and pages of the same version share its OS and configuration values. Package
+and Docker/CVE records are used only by the download tables that render them.
+Configuration-reference defaults and raw code also use shared helpers; the
+Markdown copy helper loads only when requested. Identical content reuses the
+same URL and browser cache, while changed content automatically gets a new URL.
+Deploy the generated `metadata/` directory alongside the HTML and other assets.
+
+Run `node tools/scripts/metadata-loader.test.js` to check helper caching and
+failure handling.
+
 ## Build profiles
 
 The same source tree supports three explicit profiles:
@@ -110,6 +123,11 @@ projects and assemble the same `public/` layout.
 ```sh
 ./docker/run.local.sh development
 ```
+
+The launcher recreates preview containers on each invocation, retaining their
+named Hugo cache volumes. This renews Docker Desktop bind mounts if you deleted
+`build/` or `build/archives` between runs; the archive directory is recreated
+automatically. Cleaning `public/` does not affect this preview.
 
 Use `./docker/run.local.sh beta-test` to preview all core releases, or
 `./docker/run.local.sh release` to run core and archives together. The gateway

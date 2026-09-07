@@ -1,4 +1,4 @@
-(() => {
+(async () => {
   'use strict';
 
   const SEMVER_PATTERN = /^(0|[1-9]\d*)\.(0|[1-9]\d*)\.(0|[1-9]\d*)(?:-([0-9A-Za-z-]+(?:\.[0-9A-Za-z-]+)*))?(?:\+[0-9A-Za-z-]+(?:\.[0-9A-Za-z-]+)*)?$/;
@@ -253,9 +253,12 @@
 
   const contextNode = document.getElementById('docs-context');
   if (!contextNode) return;
-  const context = JSON.parse(contextNode.textContent);
+  const [context, versionData] = await Promise.all([
+    window.OpenRiakMetadata.read(contextNode),
+    contextNode.dataset.versionSrc ? window.OpenRiakMetadata.load(contextNode.dataset.versionSrc) : null
+  ]);
   const versions = [...context.versions].sort((a, b) => compareSemVer(b.version, a.version));
-  const currentVersion = versions.find((item) => item.version === context.currentVersion) || versions[0];
+  const currentVersion = versionData || versions.find((item) => item.version === context.currentVersion) || versions[0];
   const storageKey = `openriak-docs-os:${context.product.id}`;
   let selectedOs;
 
@@ -286,12 +289,14 @@
     });
   };
 
+  await Promise.all([...document.querySelectorAll('[data-configuration-reference]')].map(async reference => {
+    const data = reference.querySelector('[data-configuration-reference-defaults]');
+    try { reference.configurationDefaults = data ? await window.OpenRiakMetadata.read(data) : {}; }
+    catch (error) { console.error('Configuration defaults could not be loaded', error); }
+  }));
   const applyConfigurationReferences = () => {
     document.querySelectorAll('[data-configuration-reference]').forEach((reference) => {
-      if (!reference.configurationDefaults) {
-        const data = reference.querySelector('[data-configuration-reference-defaults]');
-        reference.configurationDefaults = data ? JSON.parse(data.textContent) : {};
-      }
+      if (!reference.configurationDefaults) return;
       reference.querySelectorAll('[data-configuration-key]').forEach((row) => {
         const defaults = reference.configurationDefaults[row.dataset.configurationKey] || {};
         const selectedDefault = configurationDefaultForOs(defaults, selectedOs.id);
@@ -923,4 +928,4 @@
   if (selectedOs) setOs(selectedOs);
   setupDownloadControls();
   setupSearch();
-})();
+})().catch(error => console.error('Documentation controls could not be initialized', error));

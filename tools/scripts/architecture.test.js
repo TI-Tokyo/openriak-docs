@@ -142,7 +142,7 @@ assert.match(previousVersionShortcodeSource, /partial "previous-version\.html" \
 assert.match(previousVersionPartialSource, /index hugo\.Data\.versions \$productID[\s\S]*\$isEarlier[\s\S]*\$isLaterThanPrevious/, 'previous-version must select the greatest semantic version below the current release');
 assert.match(previousVersionPartialSource, /previous-version has no previous release: product=%s version=%s page=%s/, 'previous-version must stop the build when no earlier release exists');
 assert.match(baseSource, /js\/theme\.js[^"\n]+\?v=/, 'theme picker script must be cache-busted');
-assert.match(baseSource, /js\/docs-runtime\.js[^"\n]+\?v=20260907-cve-column/, 'the documentation runtime must use its current cache key');
+assert.match(baseSource, /js\/metadata\.js[\s\S]*js\/docs-runtime\.js[^"\n]+\?v=20260907-shared-metadata/, 'shared metadata must load before the documentation runtime with its current cache key');
 assert.match(headSource, /css\/docs\.css[^"\n]+\?v=20260907-cve-column/, 'documentation styling must use its current cache key');
 assert.match(configurationReferenceShortcodeSource, /strings\.Split \.Inner "\\n"/, 'configuration reference filters must be one regex per body line so commas remain part of the regex');
 assert.match(configurationReferenceShortcodeSource, /\.Get "area"[\s\S]*in \$setting\.areas \$area/, 'configuration references must support repository-area filtering');
@@ -245,7 +245,7 @@ assert.match(sharedHeaderSource, /data-theme-picker[\s\S]*class="theme-trigger"[
 assert.match(themeSource, /syncTriggerLabel[\s\S]*Display preferences: \$\{themeLabel\}, \$\{currentContentWidth\}% width, \$\{currentFontSize\}% text/, 'the Display trigger must announce the current theme, width, and text size');
 assert.match(sharedHeaderCss, /\.display-trigger-icon[\s\S]*\.display-trigger-label[\s\S]*@media \(max-width: 760px\)[\s\S]*\.display-trigger-label \{ display: none; \}/, 'the Display trigger must retain its Aa symbol while hiding its text label on mobile');
 assert.match(baseSource, /js\/theme\.js[^"\n]+\?v=20260903-display-menu/, 'documentation pages must load the cache-busted Display preferences runtime');
-assert.match(baseSource, /js\/page-tools\.js[^"\n]+\?v=20260905-code-tab-toolbar/, 'documentation pages must load the cache-busted page and code tools runtime');
+assert.match(baseSource, /js\/page-tools\.js[^"\n]+\?v=20260907-shared-metadata/, 'documentation pages must load the cache-busted page and code tools runtime');
 assert.match(headSource, /css\/site-header\.css[^"\n]+\?v=20260903-share-icons/, 'documentation pages must load the cache-busted shared-header styling');
 assert.match(sharedHeaderSource, /data-site-section-picker[\s\S]*data-share-control[\s\S]*data-theme-picker/, 'Share must appear between Site sections and Display');
 assert.match(sharedHeaderSource, /class="share-trigger"[^>]*aria-haspopup="menu"[\s\S]*data-share-copy[\s\S]*Copy to clipboard[\s\S]*data-share-native hidden[\s\S]*Share using device…[\s\S]*data-share-target="email"[\s\S]*data-share-target="bluesky"[\s\S]*data-share-target="linkedin"[\s\S]*data-share-target="reddit"[\s\S]*data-share-target="x"/, 'the Share menu must provide utility actions followed by alphabetically ordered Bluesky, LinkedIn, Reddit, and X actions');
@@ -770,10 +770,16 @@ if (fs.existsSync(buildRoot)) {
   assert.ok(exists('3.4.1/downloads/index.html'), '3.4.1 Downloads must be top-level');
   assert.ok(exists('3.4.1/release-notes/index.html'), '3.4.1 Release Notes must be top-level');
   const html = fs.readFileSync(path.join(buildRoot, '3.4.1', 'downloads', 'index.html'), 'utf8');
-  const contextMatch = html.match(/<script id=docs-context type=application\/json>([\s\S]*?)<\/script>/);
-  assert.ok(contextMatch, 'runtime context must be embedded');
-  const context = JSON.parse(contextMatch[1]);
-  assert.equal(context.currentVersion, '3.4.1');
+  const contextMatch = html.match(/<script id=docs-context type=application\/json data-json-src=([^ >]+) data-version-src=([^ >]+)><\/script>/);
+  assert.ok(contextMatch, 'runtime context must reference shared helpers without inline metadata');
+  const readHelper = (url) => JSON.parse(fs.readFileSync(path.join(buildRoot, '..', url.replace(/^"|"$/g, '').replace(/^\/docs\//, '')), 'utf8'));
+  const context = readHelper(contextMatch[1]);
+  const activeVersion = readHelper(contextMatch[2]);
+  assert.equal(activeVersion.version, '3.4.1');
+  assert.ok(activeVersion.values);
+  for (const version of context.versions) {
+    assert.ok(!('dockerImages' in version) && !('downloads' in version) && !('values' in version), 'the shared version index must not contain downloads, CVEs, or per-version binding values');
+  }
   assert.equal(context.productBase, '/docs/openriak-kv/');
   assert.equal(context.assetBase, '/docs/');
   assert.match(html, /data-os-trigger/, 'OS picker trigger must be rendered');

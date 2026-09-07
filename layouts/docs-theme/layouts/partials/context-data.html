@@ -1,8 +1,20 @@
 {{- $productContext := partial "product-context.html" . -}}
 {{- $version := $productContext.version -}}
 {{- $versions := slice -}}
+{{- $currentVersion := dict -}}
 {{- range $key, $value := $productContext.versions -}}
-  {{- $versions = $versions | append $value -}}
+  {{/* Only export the fields consumed by docs-runtime.js. Package downloads,
+       Docker artifacts and CVEs are rendered by their own page partials. */}}
+  {{- $runtimeVersion := dict
+    "version" $value.version
+    "product" $value.product
+    "defaultOs" $value.defaultOs
+    "operatingSystems" ($value.operatingSystems | default slice)
+  -}}
+  {{- if eq $value.version $version -}}
+    {{- $currentVersion = merge $runtimeVersion (dict "values" ($value.values | default dict)) -}}
+  {{- end -}}
+  {{- $versions = $versions | append $runtimeVersion -}}
 {{- end -}}
 {{- $siteSections := slice -}}
 {{- range hugo.Data.site_sections -}}
@@ -12,8 +24,7 @@
   "product" $productContext.product
   "siteSections" $siteSections
   "versions" $versions
-  "currentVersion" $version
   "productBase" $productContext.productBase
   "assetBase" site.Home.RelPermalink
 -}}
-<script id="docs-context" type="application/json">{{ $context | jsonify | safeJS }}</script>
+<script id="docs-context" type="application/json" data-json-src="{{ partial "json-resource.html" $context }}" data-version-src="{{ partial "json-resource.html" $currentVersion }}"></script>
