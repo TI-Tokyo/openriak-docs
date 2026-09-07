@@ -9,7 +9,7 @@ from openriak_metadata.cli import build_parser, main
 class CliTests(unittest.TestCase):
     def test_exact_version_is_validated_by_main_contract(self):
         args = build_parser().parse_args(["generate", "--product", "kv", "--version", "1.10.0", "--output", "out"])
-        self.assertEqual(args.version, "1.10.0")
+        self.assertEqual(args.versions, ["1.10.0"])
 
     def test_generate_accepts_skip_defaults(self):
         args = build_parser().parse_args([

@@ -413,12 +413,11 @@ button, select, input { border: 1px solid var(--line); border-radius: 3px; backg
 .docker-column-actions { width: 5.75rem; }
 .docker-downloads-table code { overflow-wrap: anywhere; white-space: normal; }
 .docker-downloads-table time { white-space: nowrap; font-size: .85rem; font-variant-numeric: tabular-nums; }
-.docker-image-tag { display: flex; width: max-content; align-items: flex-start; gap: .35rem; }
-.docker-image-tag code { white-space: nowrap; overflow-wrap: normal; }
+.docker-image-tag { display: flex; min-width: 0; align-items: flex-start; gap: .35rem; }
+.docker-image-tag code { flex: 1; min-width: 0; white-space: normal; overflow-wrap: anywhere; }
 .docker-image-tag .download-copy { flex: 0 0 auto; }
 .docker-downloads-table th:nth-child(2) { padding-right: 1.75rem; white-space: nowrap; }
 .docker-downloads-table td.download-docker-file-cell { width: 100%; min-width: 11rem; }
 
-.docker-downloads-table td.docker-image-cell { border-bottom-color: transparent; }
+.docker-downloads-table td.docker-image-cell { min-width: 18rem; border-bottom-color: var(--line); }
 .docker-downloads-table tbody { border-bottom: 1px solid var(--line); }
-.docker-downloads-table td.docker-image-cell-last { border-bottom-color: var(--line); }

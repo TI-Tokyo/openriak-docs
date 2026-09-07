@@ -1,0 +1,298 @@
+# Created by TI Tokyo, www.tiot.jp, for the OpenRiak project at https://openriak.org
+# WARNING: Edit only if you understand the effect of your changes.
+# Original image tag: tiotjp/openriak-kv:3.4.0-oracle-linux-9-otp24
+# Set role=coordinator on exactly one service. An omitted or empty role is a follower.
+name: openriak-kv-3.4.0-oracle-linux-9-otp24-node-cluster
+
+services:
+  node1:
+    build:
+      context: .
+      dockerfile: ./Dockerfile
+    image: tiotjp/openriak-kv:3.4.0-oracle-linux-9-otp24
+    container_name: "${OPENRIAK_NODE_1_CONTAINER_NAME:-openriak-kv-3.4.0-oracle-linux-9-otp24-node-1}"
+    hostname: "${OPENRIAK_NODE_1_HOST:-node-01.cluster-a.openriak}"
+    environment:
+      # IANA timezone for the process and entrypoint logs, for example Asia/Tokyo.
+      TZ: "${TZ:-Etc/UTC}"
+      # Optional nonzero UID for riak; empty retains the package UID. Mounted directories are chowned.
+      RIAK_UID: "${RIAK_UID:-}"
+      # Optional nonzero GID for riak; empty retains the package GID. Mounted directories are chowned.
+      RIAK_GID: "${RIAK_GID:-}"
+      # Maximum size per OpenRiak logger file; initializes new configurations only.
+      RIAK_LOG_MAX_FILE_SIZE: "${RIAK_LOG_MAX_FILE_SIZE:-1MB}"
+      # Maximum file count per OpenRiak logger handler; initializes new configurations only.
+      RIAK_LOG_MAX_FILES: "${RIAK_LOG_MAX_FILES:-10}"
+      # Use single-node startup or shared-directory cluster discovery.
+      OPENRIAK_CLUSTER_MODE: cluster
+      # Coordinator on exactly one cluster service; empty or omitted means follower.
+      role: coordinator
+      # DNS hostname used to derive the OpenRiak KV nodename.
+      RIAK_NODE_HOST: "${OPENRIAK_NODE_1_HOST:-node-01.cluster-a.openriak}"
+      # Initial cookie; existing riak.conf wins and new followers adopt the coordinator cookie.
+      RIAK_DISTRIBUTED_COOKIE: "${OPENRIAK_DISTRIBUTED_COOKIE:-openriak-f485767b73d3813e5a5d6bae5a9cc1e6}"
+      # Seconds between running-node health checks.
+      RIAK_MONITOR_INTERVAL_SECONDS: "${OPENRIAK_MONITOR_INTERVAL_SECONDS:-10}"
+      # Seconds between cluster discovery checks.
+      OPENRIAK_CLUSTER_POLL_SECONDS: "${OPENRIAK_CLUSTER_POLL_SECONDS:-1}"
+      # Maximum seconds to wait for cluster discovery approval.
+      OPENRIAK_CLUSTER_WAIT_SECONDS: "${OPENRIAK_CLUSTER_WAIT_SECONDS:-300}"
+    ports:
+      - "${OPENRIAK_NODE_1_PB_PORT:-18087}:8087"
+      - "${OPENRIAK_NODE_1_HTTP_PORT:-18098}:8098"
+    volumes:
+      - "${OPENRIAK_NODE_1_CONFIG_PATH:-./openriak-kv-3.4.0-oracle-linux-9-otp24-node-1/config}:/etc/riak"
+      - "${OPENRIAK_NODE_1_DATA_PATH:-./openriak-kv-3.4.0-oracle-linux-9-otp24-node-1/data}:/var/lib/riak"
+      - "${OPENRIAK_NODE_1_LOGS_PATH:-./openriak-kv-3.4.0-oracle-linux-9-otp24-node-1/logs}:/var/log/riak"
+      - "${OPENRIAK_CLUSTER_CONTROL_PATH:-./openriak-kv-3.4.0-oracle-linux-9-otp24-node-cluster-control}:/var/lib/openriak-cluster-control"
+    networks:
+      openriak:
+        aliases:
+          - "${OPENRIAK_NODE_1_HOST:-node-01.cluster-a.openriak}"
+    ulimits:
+      nofile:
+        soft: 100000
+        hard: 100000
+    # Optional per-node resource limits; zero leaves the resource unrestricted.
+    cpus: "${OPENRIAK_CPUS:-0}"
+    mem_limit: "${OPENRIAK_MEMORY_LIMIT:-0}"
+    # Rotate Docker stdout/stderr logs separately from OpenRiak KV file logs.
+    logging:
+      driver: json-file
+      options:
+        max-size: "${OPENRIAK_DOCKER_LOG_MAX_SIZE:-10m}"
+        max-file: "${OPENRIAK_DOCKER_LOG_MAX_FILES:-3}"
+    # Time allowed for graceful OpenRiak KV shutdown before Docker sends SIGKILL.
+    stop_grace_period: 120s
+  node2:
+    build:
+      context: .
+      dockerfile: ./Dockerfile
+    image: tiotjp/openriak-kv:3.4.0-oracle-linux-9-otp24
+    container_name: "${OPENRIAK_NODE_2_CONTAINER_NAME:-openriak-kv-3.4.0-oracle-linux-9-otp24-node-2}"
+    hostname: "${OPENRIAK_NODE_2_HOST:-node-02.cluster-a.openriak}"
+    environment:
+      # IANA timezone for the process and entrypoint logs, for example Asia/Tokyo.
+      TZ: "${TZ:-Etc/UTC}"
+      # Optional nonzero UID for riak; empty retains the package UID. Mounted directories are chowned.
+      RIAK_UID: "${RIAK_UID:-}"
+      # Optional nonzero GID for riak; empty retains the package GID. Mounted directories are chowned.
+      RIAK_GID: "${RIAK_GID:-}"
+      # Maximum size per OpenRiak logger file; initializes new configurations only.
+      RIAK_LOG_MAX_FILE_SIZE: "${RIAK_LOG_MAX_FILE_SIZE:-1MB}"
+      # Maximum file count per OpenRiak logger handler; initializes new configurations only.
+      RIAK_LOG_MAX_FILES: "${RIAK_LOG_MAX_FILES:-10}"
+      # Use single-node startup or shared-directory cluster discovery.
+      OPENRIAK_CLUSTER_MODE: cluster
+      # DNS hostname used to derive the OpenRiak KV nodename.
+      RIAK_NODE_HOST: "${OPENRIAK_NODE_2_HOST:-node-02.cluster-a.openriak}"
+      # Initial cookie; existing riak.conf wins and new followers adopt the coordinator cookie.
+      RIAK_DISTRIBUTED_COOKIE: "${OPENRIAK_DISTRIBUTED_COOKIE:-openriak-f485767b73d3813e5a5d6bae5a9cc1e6}"
+      # Seconds between running-node health checks.
+      RIAK_MONITOR_INTERVAL_SECONDS: "${OPENRIAK_MONITOR_INTERVAL_SECONDS:-10}"
+      # Seconds between cluster discovery checks.
+      OPENRIAK_CLUSTER_POLL_SECONDS: "${OPENRIAK_CLUSTER_POLL_SECONDS:-1}"
+      # Maximum seconds to wait for cluster discovery approval.
+      OPENRIAK_CLUSTER_WAIT_SECONDS: "${OPENRIAK_CLUSTER_WAIT_SECONDS:-300}"
+    ports:
+      - "${OPENRIAK_NODE_2_PB_PORT:-18187}:8087"
+      - "${OPENRIAK_NODE_2_HTTP_PORT:-18198}:8098"
+    volumes:
+      - "${OPENRIAK_NODE_2_CONFIG_PATH:-./openriak-kv-3.4.0-oracle-linux-9-otp24-node-2/config}:/etc/riak"
+      - "${OPENRIAK_NODE_2_DATA_PATH:-./openriak-kv-3.4.0-oracle-linux-9-otp24-node-2/data}:/var/lib/riak"
+      - "${OPENRIAK_NODE_2_LOGS_PATH:-./openriak-kv-3.4.0-oracle-linux-9-otp24-node-2/logs}:/var/log/riak"
+      - "${OPENRIAK_CLUSTER_CONTROL_PATH:-./openriak-kv-3.4.0-oracle-linux-9-otp24-node-cluster-control}:/var/lib/openriak-cluster-control"
+    networks:
+      openriak:
+        aliases:
+          - "${OPENRIAK_NODE_2_HOST:-node-02.cluster-a.openriak}"
+    ulimits:
+      nofile:
+        soft: 100000
+        hard: 100000
+    # Optional per-node resource limits; zero leaves the resource unrestricted.
+    cpus: "${OPENRIAK_CPUS:-0}"
+    mem_limit: "${OPENRIAK_MEMORY_LIMIT:-0}"
+    # Rotate Docker stdout/stderr logs separately from OpenRiak KV file logs.
+    logging:
+      driver: json-file
+      options:
+        max-size: "${OPENRIAK_DOCKER_LOG_MAX_SIZE:-10m}"
+        max-file: "${OPENRIAK_DOCKER_LOG_MAX_FILES:-3}"
+    # Time allowed for graceful OpenRiak KV shutdown before Docker sends SIGKILL.
+    stop_grace_period: 120s
+  node3:
+    build:
+      context: .
+      dockerfile: ./Dockerfile
+    image: tiotjp/openriak-kv:3.4.0-oracle-linux-9-otp24
+    container_name: "${OPENRIAK_NODE_3_CONTAINER_NAME:-openriak-kv-3.4.0-oracle-linux-9-otp24-node-3}"
+    hostname: "${OPENRIAK_NODE_3_HOST:-node-03.cluster-a.openriak}"
+    environment:
+      # IANA timezone for the process and entrypoint logs, for example Asia/Tokyo.
+      TZ: "${TZ:-Etc/UTC}"
+      # Optional nonzero UID for riak; empty retains the package UID. Mounted directories are chowned.
+      RIAK_UID: "${RIAK_UID:-}"
+      # Optional nonzero GID for riak; empty retains the package GID. Mounted directories are chowned.
+      RIAK_GID: "${RIAK_GID:-}"
+      # Maximum size per OpenRiak logger file; initializes new configurations only.
+      RIAK_LOG_MAX_FILE_SIZE: "${RIAK_LOG_MAX_FILE_SIZE:-1MB}"
+      # Maximum file count per OpenRiak logger handler; initializes new configurations only.
+      RIAK_LOG_MAX_FILES: "${RIAK_LOG_MAX_FILES:-10}"
+      # Use single-node startup or shared-directory cluster discovery.
+      OPENRIAK_CLUSTER_MODE: cluster
+      # DNS hostname used to derive the OpenRiak KV nodename.
+      RIAK_NODE_HOST: "${OPENRIAK_NODE_3_HOST:-node-03.cluster-a.openriak}"
+      # Initial cookie; existing riak.conf wins and new followers adopt the coordinator cookie.
+      RIAK_DISTRIBUTED_COOKIE: "${OPENRIAK_DISTRIBUTED_COOKIE:-openriak-f485767b73d3813e5a5d6bae5a9cc1e6}"
+      # Seconds between running-node health checks.
+      RIAK_MONITOR_INTERVAL_SECONDS: "${OPENRIAK_MONITOR_INTERVAL_SECONDS:-10}"
+      # Seconds between cluster discovery checks.
+      OPENRIAK_CLUSTER_POLL_SECONDS: "${OPENRIAK_CLUSTER_POLL_SECONDS:-1}"
+      # Maximum seconds to wait for cluster discovery approval.
+      OPENRIAK_CLUSTER_WAIT_SECONDS: "${OPENRIAK_CLUSTER_WAIT_SECONDS:-300}"
+    ports:
+      - "${OPENRIAK_NODE_3_PB_PORT:-18287}:8087"
+      - "${OPENRIAK_NODE_3_HTTP_PORT:-18298}:8098"
+    volumes:
+      - "${OPENRIAK_NODE_3_CONFIG_PATH:-./openriak-kv-3.4.0-oracle-linux-9-otp24-node-3/config}:/etc/riak"
+      - "${OPENRIAK_NODE_3_DATA_PATH:-./openriak-kv-3.4.0-oracle-linux-9-otp24-node-3/data}:/var/lib/riak"
+      - "${OPENRIAK_NODE_3_LOGS_PATH:-./openriak-kv-3.4.0-oracle-linux-9-otp24-node-3/logs}:/var/log/riak"
+      - "${OPENRIAK_CLUSTER_CONTROL_PATH:-./openriak-kv-3.4.0-oracle-linux-9-otp24-node-cluster-control}:/var/lib/openriak-cluster-control"
+    networks:
+      openriak:
+        aliases:
+          - "${OPENRIAK_NODE_3_HOST:-node-03.cluster-a.openriak}"
+    ulimits:
+      nofile:
+        soft: 100000
+        hard: 100000
+    # Optional per-node resource limits; zero leaves the resource unrestricted.
+    cpus: "${OPENRIAK_CPUS:-0}"
+    mem_limit: "${OPENRIAK_MEMORY_LIMIT:-0}"
+    # Rotate Docker stdout/stderr logs separately from OpenRiak KV file logs.
+    logging:
+      driver: json-file
+      options:
+        max-size: "${OPENRIAK_DOCKER_LOG_MAX_SIZE:-10m}"
+        max-file: "${OPENRIAK_DOCKER_LOG_MAX_FILES:-3}"
+    # Time allowed for graceful OpenRiak KV shutdown before Docker sends SIGKILL.
+    stop_grace_period: 120s
+  node4:
+    build:
+      context: .
+      dockerfile: ./Dockerfile
+    image: tiotjp/openriak-kv:3.4.0-oracle-linux-9-otp24
+    container_name: "${OPENRIAK_NODE_4_CONTAINER_NAME:-openriak-kv-3.4.0-oracle-linux-9-otp24-node-4}"
+    hostname: "${OPENRIAK_NODE_4_HOST:-node-04.cluster-a.openriak}"
+    environment:
+      # IANA timezone for the process and entrypoint logs, for example Asia/Tokyo.
+      TZ: "${TZ:-Etc/UTC}"
+      # Optional nonzero UID for riak; empty retains the package UID. Mounted directories are chowned.
+      RIAK_UID: "${RIAK_UID:-}"
+      # Optional nonzero GID for riak; empty retains the package GID. Mounted directories are chowned.
+      RIAK_GID: "${RIAK_GID:-}"
+      # Maximum size per OpenRiak logger file; initializes new configurations only.
+      RIAK_LOG_MAX_FILE_SIZE: "${RIAK_LOG_MAX_FILE_SIZE:-1MB}"
+      # Maximum file count per OpenRiak logger handler; initializes new configurations only.
+      RIAK_LOG_MAX_FILES: "${RIAK_LOG_MAX_FILES:-10}"
+      # Use single-node startup or shared-directory cluster discovery.
+      OPENRIAK_CLUSTER_MODE: cluster
+      # DNS hostname used to derive the OpenRiak KV nodename.
+      RIAK_NODE_HOST: "${OPENRIAK_NODE_4_HOST:-node-04.cluster-a.openriak}"
+      # Initial cookie; existing riak.conf wins and new followers adopt the coordinator cookie.
+      RIAK_DISTRIBUTED_COOKIE: "${OPENRIAK_DISTRIBUTED_COOKIE:-openriak-f485767b73d3813e5a5d6bae5a9cc1e6}"
+      # Seconds between running-node health checks.
+      RIAK_MONITOR_INTERVAL_SECONDS: "${OPENRIAK_MONITOR_INTERVAL_SECONDS:-10}"
+      # Seconds between cluster discovery checks.
+      OPENRIAK_CLUSTER_POLL_SECONDS: "${OPENRIAK_CLUSTER_POLL_SECONDS:-1}"
+      # Maximum seconds to wait for cluster discovery approval.
+      OPENRIAK_CLUSTER_WAIT_SECONDS: "${OPENRIAK_CLUSTER_WAIT_SECONDS:-300}"
+    ports:
+      - "${OPENRIAK_NODE_4_PB_PORT:-18387}:8087"
+      - "${OPENRIAK_NODE_4_HTTP_PORT:-18398}:8098"
+    volumes:
+      - "${OPENRIAK_NODE_4_CONFIG_PATH:-./openriak-kv-3.4.0-oracle-linux-9-otp24-node-4/config}:/etc/riak"
+      - "${OPENRIAK_NODE_4_DATA_PATH:-./openriak-kv-3.4.0-oracle-linux-9-otp24-node-4/data}:/var/lib/riak"
+      - "${OPENRIAK_NODE_4_LOGS_PATH:-./openriak-kv-3.4.0-oracle-linux-9-otp24-node-4/logs}:/var/log/riak"
+      - "${OPENRIAK_CLUSTER_CONTROL_PATH:-./openriak-kv-3.4.0-oracle-linux-9-otp24-node-cluster-control}:/var/lib/openriak-cluster-control"
+    networks:
+      openriak:
+        aliases:
+          - "${OPENRIAK_NODE_4_HOST:-node-04.cluster-a.openriak}"
+    ulimits:
+      nofile:
+        soft: 100000
+        hard: 100000
+    # Optional per-node resource limits; zero leaves the resource unrestricted.
+    cpus: "${OPENRIAK_CPUS:-0}"
+    mem_limit: "${OPENRIAK_MEMORY_LIMIT:-0}"
+    # Rotate Docker stdout/stderr logs separately from OpenRiak KV file logs.
+    logging:
+      driver: json-file
+      options:
+        max-size: "${OPENRIAK_DOCKER_LOG_MAX_SIZE:-10m}"
+        max-file: "${OPENRIAK_DOCKER_LOG_MAX_FILES:-3}"
+    # Time allowed for graceful OpenRiak KV shutdown before Docker sends SIGKILL.
+    stop_grace_period: 120s
+  node5:
+    build:
+      context: .
+      dockerfile: ./Dockerfile
+    image: tiotjp/openriak-kv:3.4.0-oracle-linux-9-otp24
+    container_name: "${OPENRIAK_NODE_5_CONTAINER_NAME:-openriak-kv-3.4.0-oracle-linux-9-otp24-node-5}"
+    hostname: "${OPENRIAK_NODE_5_HOST:-node-05.cluster-a.openriak}"
+    environment:
+      # IANA timezone for the process and entrypoint logs, for example Asia/Tokyo.
+      TZ: "${TZ:-Etc/UTC}"
+      # Optional nonzero UID for riak; empty retains the package UID. Mounted directories are chowned.
+      RIAK_UID: "${RIAK_UID:-}"
+      # Optional nonzero GID for riak; empty retains the package GID. Mounted directories are chowned.
+      RIAK_GID: "${RIAK_GID:-}"
+      # Maximum size per OpenRiak logger file; initializes new configurations only.
+      RIAK_LOG_MAX_FILE_SIZE: "${RIAK_LOG_MAX_FILE_SIZE:-1MB}"
+      # Maximum file count per OpenRiak logger handler; initializes new configurations only.
+      RIAK_LOG_MAX_FILES: "${RIAK_LOG_MAX_FILES:-10}"
+      # Use single-node startup or shared-directory cluster discovery.
+      OPENRIAK_CLUSTER_MODE: cluster
+      # DNS hostname used to derive the OpenRiak KV nodename.
+      RIAK_NODE_HOST: "${OPENRIAK_NODE_5_HOST:-node-05.cluster-a.openriak}"
+      # Initial cookie; existing riak.conf wins and new followers adopt the coordinator cookie.
+      RIAK_DISTRIBUTED_COOKIE: "${OPENRIAK_DISTRIBUTED_COOKIE:-openriak-f485767b73d3813e5a5d6bae5a9cc1e6}"
+      # Seconds between running-node health checks.
+      RIAK_MONITOR_INTERVAL_SECONDS: "${OPENRIAK_MONITOR_INTERVAL_SECONDS:-10}"
+      # Seconds between cluster discovery checks.
+      OPENRIAK_CLUSTER_POLL_SECONDS: "${OPENRIAK_CLUSTER_POLL_SECONDS:-1}"
+      # Maximum seconds to wait for cluster discovery approval.
+      OPENRIAK_CLUSTER_WAIT_SECONDS: "${OPENRIAK_CLUSTER_WAIT_SECONDS:-300}"
+    ports:
+      - "${OPENRIAK_NODE_5_PB_PORT:-18487}:8087"
+      - "${OPENRIAK_NODE_5_HTTP_PORT:-18498}:8098"
+    volumes:
+      - "${OPENRIAK_NODE_5_CONFIG_PATH:-./openriak-kv-3.4.0-oracle-linux-9-otp24-node-5/config}:/etc/riak"
+      - "${OPENRIAK_NODE_5_DATA_PATH:-./openriak-kv-3.4.0-oracle-linux-9-otp24-node-5/data}:/var/lib/riak"
+      - "${OPENRIAK_NODE_5_LOGS_PATH:-./openriak-kv-3.4.0-oracle-linux-9-otp24-node-5/logs}:/var/log/riak"
+      - "${OPENRIAK_CLUSTER_CONTROL_PATH:-./openriak-kv-3.4.0-oracle-linux-9-otp24-node-cluster-control}:/var/lib/openriak-cluster-control"
+    networks:
+      openriak:
+        aliases:
+          - "${OPENRIAK_NODE_5_HOST:-node-05.cluster-a.openriak}"
+    ulimits:
+      nofile:
+        soft: 100000
+        hard: 100000
+    # Optional per-node resource limits; zero leaves the resource unrestricted.
+    cpus: "${OPENRIAK_CPUS:-0}"
+    mem_limit: "${OPENRIAK_MEMORY_LIMIT:-0}"
+    # Rotate Docker stdout/stderr logs separately from OpenRiak KV file logs.
+    logging:
+      driver: json-file
+      options:
+        max-size: "${OPENRIAK_DOCKER_LOG_MAX_SIZE:-10m}"
+        max-file: "${OPENRIAK_DOCKER_LOG_MAX_FILES:-3}"
+    # Time allowed for graceful OpenRiak KV shutdown before Docker sends SIGKILL.
+    stop_grace_period: 120s
+
+networks:
+  openriak:
+    driver: bridge

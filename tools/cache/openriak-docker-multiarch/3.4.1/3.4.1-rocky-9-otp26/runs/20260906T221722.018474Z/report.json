@@ -1,0 +1,214 @@
+{
+  "artifacts": {
+    "compose_cluster": {
+      "filename": "compose.cluster.yaml",
+      "sha256": "da3484c2a5a79076b557214bb7bb9fa22f1d220500519fc28c16c6efe3e07bd0",
+      "url": "downloads/docker/3.4.1/3.4.1-rocky-9-otp26/compose.cluster.yaml"
+    },
+    "compose_single": {
+      "filename": "compose.single.yaml",
+      "sha256": "595b266f9b06871d0d6bbecd93a74d7853987a6ac030bbb0b19e84d3544136d1",
+      "url": "downloads/docker/3.4.1/3.4.1-rocky-9-otp26/compose.single.yaml"
+    },
+    "dockerfile": {
+      "filename": "Dockerfile",
+      "sha256": "73aa0bef02f406d977848ec368ee848c47c3058f0fdd862dc52e31932703da41",
+      "url": "downloads/docker/3.4.1/3.4.1-rocky-9-otp26/Dockerfile"
+    },
+    "environment_example": {
+      "filename": "example.env",
+      "sha256": "8f36d9068a42e0ff96ea02b83bc1b223faae8e3366e9d2de92e2824ef644d9b3",
+      "url": "downloads/docker/3.4.1/3.4.1-rocky-9-otp26/example.env"
+    }
+  },
+  "base_images": {
+    "linux/amd64": {
+      "pinned": "rockylinux:9@sha256:d7be1c094cc5845ee815d4632fe377514ee6ebcf8efaed6892889657e5ddaaa6",
+      "requested": "rockylinux:9",
+      "resolved_at": "2026-09-06T22:17:23Z"
+    }
+  },
+  "build_tags": [
+    "tiotjp/openriak-kv:3.4.1-rocky-9-otp26",
+    "tiotjp/openriak-kv:3.4.1-rocky-9",
+    "tiotjp/openriak-kv:3.4.1-rocky"
+  ],
+  "cluster_nodes": 5,
+  "distributed_cookie": "openriak-924a492842bd78bae34a9a5110589601",
+  "error": null,
+  "finished_at": "2026-09-06T22:22:21Z",
+  "generated_artifacts": {
+    "Dockerfile": "73aa0bef02f406d977848ec368ee848c47c3058f0fdd862dc52e31932703da41",
+    "compose.cluster.yaml": "da3484c2a5a79076b557214bb7bb9fa22f1d220500519fc28c16c6efe3e07bd0",
+    "compose.single.yaml": "595b266f9b06871d0d6bbecd93a74d7853987a6ac030bbb0b19e84d3544136d1",
+    "example.env": "8f36d9068a42e0ff96ea02b83bc1b223faae8e3366e9d2de92e2824ef644d9b3"
+  },
+  "identity": {
+    "namespace": "tiotjp",
+    "source": "https://github.com/TI-Tokyo/openriak-docs",
+    "url": "https://www.tiot.jp/",
+    "vendor": "TI Tokyo"
+  },
+  "image": "tiotjp/openriak-kv:3.4.1-rocky-9-otp26",
+  "inputs": {
+    "cluster_nodes": 5,
+    "compose_options": {
+      "OPENRIAK_CPUS": [
+        "0",
+        "CPU limit per node, for example 2.0; 0 means unrestricted."
+      ],
+      "OPENRIAK_DOCKER_LOG_MAX_FILES": [
+        "3",
+        "Maximum number of Docker JSON log files retained per node."
+      ],
+      "OPENRIAK_DOCKER_LOG_MAX_SIZE": [
+        "10m",
+        "Maximum size of each Docker JSON log file per node."
+      ],
+      "OPENRIAK_MEMORY_LIMIT": [
+        "0",
+        "Memory limit per node, for example 4g; 0 means unrestricted."
+      ]
+    },
+    "identity": {
+      "namespace": "tiotjp",
+      "source": "https://github.com/TI-Tokyo/openriak-docs",
+      "url": "https://www.tiot.jp/",
+      "vendor": "TI Tokyo"
+    },
+    "labels": {
+      "org.opencontainers.image.description": "Package-backed OpenRiak KV with single-node and cluster startup support",
+      "org.opencontainers.image.source": "https://github.com/TI-Tokyo/openriak-docs",
+      "org.opencontainers.image.title": "OpenRiak KV",
+      "org.opencontainers.image.url": "https://www.tiot.jp/",
+      "org.opencontainers.image.vendor": "TI Tokyo",
+      "org.opencontainers.image.version": "3.4.1",
+      "org.openriak.image.tag": "tiotjp/openriak-kv:3.4.1-rocky-9-otp26",
+      "org.openriak.os.name": "rocky",
+      "org.openriak.os.release": "9",
+      "org.openriak.os.version": "9",
+      "org.openriak.otp.version": "26"
+    },
+    "lifecycle_options": {
+      "healthcheck_interval": 10,
+      "healthcheck_retries": 3,
+      "healthcheck_start_period": 120,
+      "healthcheck_timeout": 60,
+      "stop_grace_period": 120
+    },
+    "packages": {
+      "linux/amd64": {
+        "base": "rockylinux:9",
+        "checksum": {
+          "algorithm": "sha256",
+          "value": "952f04a57622b160ef01d7aa15d3871924221766f1cd08dc74bf5ecd3ffbe9ea"
+        },
+        "url": "https://files.tiot.jp/riak/kv/3.4/3.4.1/rhel/9/riak-3.4.1.OTP26-1.el9.x86_64.rpm"
+      }
+    },
+    "renderer_sha256": "af34f09721266663090a3977216a36509e48d5713616889172baf8e0c6fb6ec8",
+    "runtime_options": {
+      "RIAK_GID": [
+        "",
+        "Optional nonzero GID for riak; empty retains the package GID. Mounted directories are chowned."
+      ],
+      "RIAK_LOG_MAX_FILES": [
+        "10",
+        "Maximum file count per OpenRiak logger handler; initializes new configurations only."
+      ],
+      "RIAK_LOG_MAX_FILE_SIZE": [
+        "1MB",
+        "Maximum size per OpenRiak logger file; initializes new configurations only."
+      ],
+      "RIAK_UID": [
+        "",
+        "Optional nonzero UID for riak; empty retains the package UID. Mounted directories are chowned."
+      ],
+      "TZ": [
+        "Etc/UTC",
+        "IANA timezone for the process and entrypoint logs, for example Asia/Tokyo."
+      ]
+    },
+    "runtime_sha256": "b0f20a4604e8cff49f7060bf5e0cc5fa52df5829d46520d37095130f07f65656",
+    "schema_version": 4,
+    "tags": [
+      "tiotjp/openriak-kv:3.4.1-rocky-9-otp26",
+      "tiotjp/openriak-kv:3.4.1-rocky-9",
+      "tiotjp/openriak-kv:3.4.1-rocky"
+    ]
+  },
+  "local_tags_platform": "linux/amd64",
+  "node": "openriak-kv-3.4.1-rocky-9-otp26-node",
+  "oci_archive": "runs/20260906T221722.018474Z/image.oci.tar",
+  "os_family": "rocky",
+  "os_name": "Rocky Linux 9",
+  "os_release": "9",
+  "otp": "26",
+  "platform_results": {
+    "linux/amd64": {
+      "artifacts": {
+        "compose_cluster": {
+          "filename": "compose.cluster.yaml",
+          "sha256": "da3484c2a5a79076b557214bb7bb9fa22f1d220500519fc28c16c6efe3e07bd0",
+          "url": "downloads/docker/3.4.1/3.4.1-rocky-9-otp26/compose.cluster.yaml"
+        },
+        "compose_single": {
+          "filename": "compose.single.yaml",
+          "sha256": "595b266f9b06871d0d6bbecd93a74d7853987a6ac030bbb0b19e84d3544136d1",
+          "url": "downloads/docker/3.4.1/3.4.1-rocky-9-otp26/compose.single.yaml"
+        },
+        "dockerfile": {
+          "filename": "Dockerfile",
+          "sha256": "73aa0bef02f406d977848ec368ee848c47c3058f0fdd862dc52e31932703da41",
+          "url": "downloads/docker/3.4.1/3.4.1-rocky-9-otp26/Dockerfile"
+        },
+        "environment_example": {
+          "filename": "example.env",
+          "sha256": "8f36d9068a42e0ff96ea02b83bc1b223faae8e3366e9d2de92e2824ef644d9b3",
+          "url": "downloads/docker/3.4.1/3.4.1-rocky-9-otp26/example.env"
+        }
+      },
+      "finished_at": "2026-09-06T22:22:11Z",
+      "report": "platforms/linux-amd64/runs/20260906T221723.936093Z/report.json",
+      "run_id": "20260906T221723.936093Z",
+      "status": "passed"
+    }
+  },
+  "platforms": [
+    "linux/amd64"
+  ],
+  "product": "openriak-kv",
+  "run_id": "20260906T221722.018474Z",
+  "schema_version": 4,
+  "started_at": "2026-09-06T22:17:22Z",
+  "status": "passed",
+  "steps": [
+    {
+      "duration_seconds": 3.826,
+      "finished_at": "2026-09-06T22:22:15Z",
+      "name": "export_oci_image",
+      "started_at": "2026-09-06T22:22:11Z",
+      "status": "passed"
+    },
+    {
+      "duration_seconds": 5.679,
+      "finished_at": "2026-09-06T22:22:21Z",
+      "name": "load_local_tags",
+      "started_at": "2026-09-06T22:22:15Z",
+      "status": "passed"
+    }
+  ],
+  "tags": [
+    "tiotjp/openriak-kv:3.4.1-rocky-9-otp26",
+    "tiotjp/openriak-kv:3.4.1-rocky-9",
+    "tiotjp/openriak-kv:3.4.1-rocky"
+  ],
+  "targets": [
+    {
+      "architecture": "x86_64",
+      "download_id": "otp26-x86_64-1",
+      "os_id": "rocky-9-x86_64"
+    }
+  ],
+  "version": "3.4.1"
+}

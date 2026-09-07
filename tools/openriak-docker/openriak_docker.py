@@ -8,6 +8,9 @@ import contextlib
 import dataclasses
 import datetime as dt
 import hashlib
+import inspect
+import http.client
+import io
 import json
 import os
 import pathlib
@@ -23,6 +26,8 @@ import time
 import urllib.parse
 from typing import Any, Callable, Iterable
 
+from openriak_defaults import DEFAULT_TIMEOUT_SECONDS
+
 
 SCHEMA_VERSION = 3
 MINIMUM_OPENRIAK_VERSION = (3, 4, 0)
@@ -31,6 +36,9 @@ METADATA_ROOT = REPOSITORY_ROOT / "content" / "openriak-kv" / "metadata"
 OS_ALIASES_PATH = METADATA_ROOT / "os-aliases.json"
 CACHE_ROOT = REPOSITORY_ROOT / "tools" / "cache" / "openriak-docker"
 STATIC_ROOT = REPOSITORY_ROOT / "content" / "static" / "openriak-kv" / "downloads" / "docker"
+MULTIARCH_SCHEMA_VERSION = 4
+MULTIARCH_CACHE_ROOT = REPOSITORY_ROOT / "tools" / "cache" / "openriak-docker-multiarch"
+MULTIARCH_BUILDER = "openriak-kv-multiarch"
 DEFAULT_CLUSTER_NODES = 5
 CONTROL_DIRECTORY = "/var/lib/openriak-cluster-control"
 ARTIFACT_FILENAMES = (
@@ -48,36 +56,35 @@ ARCHITECTURE_PLATFORMS = {
     "armhf": "linux/arm/v7",
 }
 
-UBUNTU_RELEASES = {
-    "lucid": "lucid",
-    "precise": "precise",
-    "trusty": "trusty",
-    "xenial": "xenial",
-    "artful": "artful",
-    "bionic": "bionic",
-    "focal": "focal",
-    "jammy": "jammy",
-    "noble": "noble",
-}
-
-DEBIAN_CODENAMES = {
-    "6": "squeeze",
-    "7": "wheezy",
-    "8": "jessie",
-    "9": "stretch",
-    "10": "buster",
-    "11": "bullseye",
-    "12": "bookworm",
-}
-
-RHEL_UBI_RELEASES = {
-    "8": "8.10",
-    "9": "9.8",
-}
+BASE_IMAGES_PATH = pathlib.Path(__file__).with_name("base-images.json")
 
 
 class DockerToolError(RuntimeError):
     """An expected target, Docker, or test failure."""
+
+
+@dataclasses.dataclass(frozen=True)
+class ImageIdentity:
+    vendor: str = "OpenRiak"
+    source: str = "https://github.com/OpenRiak/openriak-docs"
+    url: str = "https://openriak.org"
+    namespace: str = "openriak"
+
+
+@dataclasses.dataclass(frozen=True)
+class LifecycleOptions:
+    healthcheck_interval: int = 10
+    healthcheck_timeout: int = 60
+    healthcheck_start_period: int = 120
+    healthcheck_retries: int = 3
+    stop_grace_period: int = 120
+
+
+def duration_seconds(value: str) -> int:
+    match = re.fullmatch(r"([0-9]+)([smh]?)", value)
+    if not match:
+        raise argparse.ArgumentTypeError("Use whole seconds or a duration such as 30s, 2m, or 1h")
+    return int(match[1]) * {"": 1, "s": 1, "m": 60, "h": 3600}[match[2]]
 
 
 @dataclasses.dataclass(frozen=True)
@@ -86,6 +93,10 @@ class Target:
     operating_system: dict[str, Any]
     download_id: str
     package: dict[str, Any]
+    grouped: bool = False
+    identity: ImageIdentity = dataclasses.field(default_factory=ImageIdentity)
+    output_root: pathlib.Path | None = None
+    lifecycle_options: LifecycleOptions = dataclasses.field(default_factory=LifecycleOptions)
 
     @property
     def os_id(self) -> str:
@@ -132,12 +143,13 @@ class Target:
     @property
     def image_tag(self) -> str:
         return "-".join(
-            [self.version, self.family, self.release, f"otp{self.otp}", self.architecture]
+            [self.version, self.family, self.release, f"otp{self.otp}"]
+            + ([] if self.grouped else [self.architecture])
         ).lower()
 
     @property
     def image(self) -> str:
-        return f"openriak/openriak-kv:{self.image_tag}"
+        return f"{self.identity.namespace}/openriak-kv:{self.image_tag}"
 
     @property
     def node_name(self) -> str:
@@ -145,7 +157,13 @@ class Target:
 
     @property
     def cache_directory(self) -> pathlib.Path:
-        return CACHE_ROOT / self.version / self.os_id / self.download_id
+        if self.grouped:
+            return self.group_directory / "platforms" / self.platform.replace("/", "-")
+        return (self.output_root or CACHE_ROOT) / self.version / self.os_id / self.download_id
+
+    @property
+    def group_directory(self) -> pathlib.Path:
+        return (self.output_root or MULTIARCH_CACHE_ROOT) / self.version / self.image_tag
 
     @property
     def static_directory(self) -> pathlib.Path:
@@ -324,43 +342,44 @@ def discover_targets(
 
 
 def base_image_for(target: Target) -> str:
-    family = target.family
-    release = target.release
-    architecture = target.architecture
-    if family == "alpine":
-        return f"alpine:{release}"
-    if family == "amazon-linux":
-        return f"amazonlinux:{release}"
-    if family == "debian":
-        return f"debian:{DEBIAN_CODENAMES.get(release, release)}-slim"
-    if family == "fedora":
-        return f"fedora:{release}"
-    if family == "oracle-linux":
-        return f"oraclelinux:{release}-slim"
-    if family == "rocky":
-        return f"rockylinux:{release}"
-    if family == "centos":
-        return f"quay.io/centos/centos:stream{release}"
-    if family == "raspbian":
-        repository = "arm32v7/debian" if architecture == "armhf" else "arm64v8/debian"
-        return f"{repository}:{DEBIAN_CODENAMES.get(release, release)}-slim"
-    if family == "rhel":
-        try:
-            ubi_release = RHEL_UBI_RELEASES[release]
-        except KeyError as error:
-            raise DockerToolError(
-                f"No release-specific UBI image mapping for RHEL {release}"
-            ) from error
-        return f"registry.access.redhat.com/ubi{release}/ubi:{ubi_release}"
-    if family in {"sles", "suse"}:
-        sle_release = re.sub(r"-sp", ".", release.lower())
-        major = sle_release.split(".")[0]
-        if int(major) >= 16:
-            return f"registry.suse.com/bci/bci-base:{sle_release}"
-        return f"registry.suse.com/suse/sle{major}:{sle_release}"
-    if family == "ubuntu":
-        return f"ubuntu:{UBUNTU_RELEASES.get(release, release)}"
-    raise DockerToolError(f"No base-image mapping for OS family: {family}")
+    try:
+        config = read_json(BASE_IMAGES_PATH)
+        if config.get("schema_version") != 1:
+            raise ValueError("unsupported schema_version")
+        families = config["families"]
+        family = target.family
+        visited = set()
+        while True:
+            if family in visited:
+                raise ValueError(f"cyclic family alias: {family}")
+            visited.add(family)
+            entry = families[family]
+            if "alias" not in entry:
+                break
+            family = entry["alias"]
+        release = target.release
+        for old, new in entry.get("release_replacements", {}).items():
+            release = release.lower().replace(old, new)
+        if "release_map" in entry:
+            mapping = config["release_maps"][entry["release_map"]]
+            if entry.get("require_release_mapping") and release not in mapping:
+                raise ValueError(f"No release-specific image mapping for {target.family} {target.release}")
+            release = mapping.get(release, release)
+        major = release.split(".")[0]
+        for rule in entry["rules"]:
+            if "architectures" in rule and target.architecture not in rule["architectures"]:
+                continue
+            if "minimum_major" in rule and int(major) < rule["minimum_major"]:
+                continue
+            image = rule["image"].format(release=release, os_release=target.release,
+                                         major=major, architecture=target.architecture)
+            # A release tag is mandatory; refresh resolves its immutable digest.
+            if not re.fullmatch(r"[a-z0-9][a-z0-9./:_-]*:[A-Za-z0-9_][A-Za-z0-9_.-]*", image) or image.rsplit(":", 1)[1].lower() == "latest":
+                raise ValueError(f"Expected a release-specific base image tag, got {image!r}")
+            return image
+        raise ValueError(f"No base-image rule matches architecture {target.architecture}")
+    except (KeyError, TypeError, ValueError, AttributeError, OSError) as error:
+        raise DockerToolError(f"Invalid base-image configuration {BASE_IMAGES_PATH} for {target.family} {target.release}: {error}") from error
 
 
 def package_install_script(target: Target) -> str:
@@ -370,12 +389,17 @@ def package_install_script(target: Target) -> str:
     package_path = f"/tmp/{filename}"
     package_family = target.operating_system["package_family"]
     if package_family == "apk":
-        return f"""apk add --no-cache bash ca-certificates coreutils curl su-exec
+        return f"""# Update installed OS packages from this release's configured repositories.
+apk upgrade --no-cache
+apk add --no-cache bash ca-certificates coreutils su-exec shadow tzdata
 apk add --no-cache --allow-untrusted {package_path}
 rm -f {package_path}"""
     if package_family == "deb":
-        return f"""apt-get update
-DEBIAN_FRONTEND=noninteractive apt-get install -y --no-install-recommends ca-certificates curl passwd procps {package_path}
+        return f"""# Update installed OS packages from this release's configured repositories.
+apt-get update
+DEBIAN_FRONTEND=noninteractive apt-get dist-upgrade -y --no-install-recommends
+DEBIAN_FRONTEND=noninteractive apt-get install -y --no-install-recommends ca-certificates passwd procps tzdata {package_path}
+apt-get clean
 rm -rf /var/lib/apt/lists/*
 rm -f {package_path}"""
     if package_family == "rpm":
@@ -388,37 +412,32 @@ sed -i 's|^#baseurl=http://mirror.centos.org/\$contentdir/\$stream/|baseurl=http
 """
             dependencies = (
                 "bash ca-certificates glibc hostname libgcc libstdc++ ncurses-libs "
-                "openssl-libs pam procps-ng shadow-utils sudo util-linux zlib"
+                "openssl-libs pam procps-ng shadow-utils sudo util-linux zlib tzdata"
             )
             suse_openssl = "libopenssl3" if target.operating_system.get("alias_of", "").startswith("rhel-9-") else "libopenssl1_1"
-            return f"""{repository_setup}if command -v dnf >/dev/null 2>&1
+            return f"""{repository_setup}# Update installed OS packages before installing the OpenRiak KV package.
+if command -v dnf >/dev/null 2>&1
 then
+    dnf upgrade --refresh -y
     dnf install -y {dependencies}
-    if ! command -v curl >/dev/null 2>&1
-    then
-        dnf install -y curl
-    fi
     dnf clean all
 elif command -v microdnf >/dev/null 2>&1
 then
+    microdnf upgrade --refresh -y
     microdnf install -y dnf
     dnf install -y {dependencies}
-    if ! command -v curl >/dev/null 2>&1
-    then
-        dnf install -y curl
-    fi
     dnf clean all
 elif command -v yum >/dev/null 2>&1
 then
+    yum clean expire-cache
+    yum update -y
     yum install -y {dependencies}
-    if ! command -v curl >/dev/null 2>&1
-    then
-        yum install -y curl
-    fi
     yum clean all
 elif command -v zypper >/dev/null 2>&1
 then
-    zypper --non-interactive install --no-recommends bash ca-certificates curl gawk glibc hostname libgcc_s1 libstdc++6 libncurses6 {suse_openssl} pam procps shadow sudo util-linux libz1
+    zypper --non-interactive refresh
+    zypper --non-interactive update --no-recommends
+    zypper --non-interactive install --no-recommends bash ca-certificates gawk glibc hostname libgcc_s1 libstdc++6 libncurses6 {suse_openssl} pam procps shadow sudo util-linux libz1 timezone
     zypper clean --all
 else
     echo 'No supported RPM package manager found' >&2
@@ -449,27 +468,40 @@ do
         break
     fi
 done
+# Clear caches from every package manager used in this installation layer.
+# In particular, dnf clean all does not clear microdnf's /var/cache/yum.
+rm -rf /var/cache/dnf /var/cache/yum /var/cache/zypp
 rm -f {package_path}"""
-        return f"""if command -v dnf >/dev/null 2>&1
+        return f"""# Update installed OS packages before installing the OpenRiak KV package.
+if command -v dnf >/dev/null 2>&1
 then
-    dnf install -y ca-certificates curl procps-ng shadow-utils {package_path}
+    dnf upgrade --refresh -y
+    dnf install -y ca-certificates procps-ng shadow-utils tzdata {package_path}
     dnf clean all
 elif command -v microdnf >/dev/null 2>&1
 then
-    microdnf install -y ca-certificates curl procps-ng shadow-utils {package_path}
+    microdnf upgrade --refresh -y
+    microdnf install -y ca-certificates procps-ng shadow-utils tzdata {package_path}
     microdnf clean all
 elif command -v yum >/dev/null 2>&1
 then
-    yum install -y ca-certificates curl procps-ng shadow-utils {package_path}
+    yum clean expire-cache
+    yum update -y
+    yum install -y ca-certificates procps-ng shadow-utils tzdata {package_path}
     yum clean all
 elif command -v zypper >/dev/null 2>&1
 then
-    zypper --non-interactive install -y ca-certificates curl procps {package_path}
+    zypper --non-interactive refresh
+    zypper --non-interactive update --no-recommends
+    zypper --non-interactive install -y ca-certificates procps timezone {package_path}
     zypper clean --all
 else
     echo 'No supported RPM package manager found' >&2
     exit 1
 fi
+# Clear caches from every package manager used in this installation layer.
+# In particular, dnf clean all does not clear microdnf's /var/cache/yum.
+rm -rf /var/cache/dnf /var/cache/yum /var/cache/zypp
 rm -f {package_path}"""
     raise DockerToolError(f"Unsupported package family: {package_family}")
 
@@ -502,13 +534,65 @@ data_dir=/var/lib/riak
 log_dir=/var/log/riak
 defaults_dir=/opt/openriak-defaults/etc-riak
 control_dir=${OPENRIAK_CLUSTER_CONTROL_DIR:-/var/lib/openriak-cluster-control}
-
+export RUNNER_LOG_DIR="$log_dir" # Keep daemon logs in the mounted directory owned by the runtime UID.
 log() {
-    printf '%s [openriak-entrypoint] %s\n' "$(date -u +'%Y-%m-%dT%H:%M:%SZ')" "$*"
+    printf '%s [openriak-entrypoint] %s\n' "$(date +'%Y-%m-%dT%H:%M:%S%:z')" "$*"
 }
 
 one_line() {
     tr '\n' ' ' | sed 's/[[:space:]][[:space:]]*/ /g; s/[[:space:]]$//'
+}
+
+configure_timezone() {
+    TZ=${TZ:-Etc/UTC}
+    case "$TZ" in
+        /*|*..*|*[!A-Za-z0-9_+/-]*|'')
+            log "configuration: invalid timezone: $TZ"
+            exit 1
+            ;;
+    esac
+    if [ ! -f "/usr/share/zoneinfo/$TZ" ]
+    then
+        log "configuration: unknown timezone: $TZ"
+        exit 1
+    fi
+    export TZ
+    log "configuration: timezone = $TZ"
+}
+
+configure_identity() {
+    requested_uid=${RIAK_UID:-$(id -u riak)}
+    requested_gid=${RIAK_GID:-$(id -g riak)}
+    for identity in "$requested_uid" "$requested_gid"
+    do
+        if ! printf '%s\\n' "$identity" | grep -Eq '^[1-9][0-9]{0,9}$' || [ "$identity" -ge 4294967295 ]
+        then
+            log "configuration: UID/GID must be a nonzero numeric ID below 4294967295"
+            exit 1
+        fi
+    done
+    uid_owner=$(getent passwd "$requested_uid" | cut -d: -f1 || true)
+    gid_owner=$(getent group "$requested_gid" | cut -d: -f1 || true)
+    if [ -n "$uid_owner" ] && [ "$uid_owner" != "riak" ]
+    then
+        log "configuration: requested UID belongs to $uid_owner"
+        exit 1
+    fi
+    if [ -n "$gid_owner" ] && [ "$gid_owner" != "riak" ]
+    then
+        log "configuration: requested GID belongs to $gid_owner"
+        exit 1
+    fi
+    if [ "$(id -g riak)" != "$requested_gid" ]
+    then
+        groupmod -g "$requested_gid" riak
+        usermod -g "$requested_gid" riak
+    fi
+    if [ "$(id -u riak)" != "$requested_uid" ]
+    then
+        usermod -u "$requested_uid" riak
+    fi
+    log "configuration: riak UID/GID = $requested_uid/$requested_gid"
 }
 
 riak_command() {
@@ -667,6 +751,11 @@ atomic_control_file() {
         "$control_ip" \
         "$control_coordinator" \
         "$control_suffix" > "$control_temporary"
+    case "$control_path" in
+        *-coordinator)
+            printf 'cookie=%s\\n' "$RIAK_DISTRIBUTED_COOKIE" >> "$control_temporary"
+            ;;
+    esac
     mv -f "$control_temporary" "$control_path"
 }
 
@@ -808,14 +897,104 @@ trap 'shutdown SIGHUP' HUP
 trap 'shutdown SIGINT' INT
 trap 'shutdown SIGTERM' TERM
 
+# Read only live settings; a disabled ## setting is not an established cookie.
+configured_cookie() {
+    [ -s "$config_dir/riak.conf" ] || return 0
+    awk -F= '
+        /^[[:space:]]*distributed_cookie[[:space:]]*=/ {
+            sub(/^[^=]*=[[:space:]]*/, "")
+            sub(/[[:space:]]*$/, "")
+            print
+            exit
+        }
+    ' "$config_dir/riak.conf"
+}
+
+validate_cookie() {
+    printf '%s\\n' "$1" | grep -Eq '^[A-Za-z0-9_.@+-]+$'
+}
+
+coordinator_cookie() {
+    marker=$1
+    marker_node=$(control_value "$marker" nodename)
+    marker_ip=$(control_value "$marker" ip)
+    marker_suffix=$(control_value "$marker" suffix)
+    marker_owner=$(control_value "$marker" coordinator)
+    marker_cookie=$(control_value "$marker" cookie)
+    validate_nodename "$marker_node" || return 1
+    validate_ipv4 "$marker_ip" || return 1
+    validate_cookie "$marker_cookie" || return 1
+    [ "$marker_owner" = "$marker_node" ] || return 1
+    printf '%s\\n' "$marker_suffix" | grep -Eq '^[0-9a-f]{16}$' || return 1
+    [ "$marker" = "$control_dir/${marker_node}-${marker_suffix}-coordinator" ] || return 1
+    nodename_resolves_to_ip "$marker_node" "$marker_ip" || return 1
+    printf '%s\\n' "$marker_cookie"
+}
+
+wait_for_coordinator_cookie() {
+    cookie_waited=0
+    cookie_timeout=${OPENRIAK_CLUSTER_WAIT_SECONDS:-300}
+    cookie_poll=${OPENRIAK_CLUSTER_POLL_SECONDS:-1}
+    while :
+    do
+        cookie_count=0
+        selected_cookie=
+        for marker in "$control_dir/"*-coordinator
+        do
+            [ -f "$marker" ] || continue
+            if candidate_cookie=$(coordinator_cookie "$marker")
+            then
+                cookie_count=$((cookie_count + 1))
+                selected_cookie=$candidate_cookie
+            fi
+        done
+        if [ "$cookie_count" -eq 1 ]
+        then
+            RIAK_DISTRIBUTED_COOKIE=$selected_cookie
+            export RIAK_DISTRIBUTED_COOKIE
+            log "configuration: adopted coordinator cookie before daemon startup"
+            return
+        fi
+        if [ "$cookie_count" -gt 1 ]
+        then
+            log "configuration: multiple valid coordinators; refusing ambiguous cookie"
+            exit 1
+        fi
+        if [ "$cookie_waited" -ge "$cookie_timeout" ]
+        then
+            log "configuration: timed out waiting for a valid coordinator cookie"
+            exit 1
+        fi
+        log "configuration: waiting for coordinator cookie before daemon startup"
+        sleep "$cookie_poll"
+        cookie_waited=$((cookie_waited + cookie_poll))
+    done
+}
+
+configure_timezone
+configure_identity
+
+existing_cookie=$(configured_cookie)
+if [ -e "$config_dir/.openriak-cookie-pending" ]
+then
+    existing_cookie=
+fi
+initialize_config=0
 log "configuration: preparing mounted directories"
 mkdir -p "$config_dir" "$data_dir" "$log_dir" /run/riak
 if [ ! -s "$config_dir/riak.conf" ]
 then
     log "configuration: seeding /etc/riak from packaged defaults"
+    touch "$config_dir/.openriak-cookie-pending"
+    touch "$config_dir/.openriak-config-pending"
     cp -a "$defaults_dir/." "$config_dir/"
 else
     log "configuration: using existing /etc/riak/riak.conf"
+fi
+
+if [ -e "$config_dir/.openriak-config-pending" ]
+then
+    initialize_config=1
 fi
 
 set_setting() {
@@ -834,8 +1013,39 @@ set_setting() {
     log "configuration: ${key} = ${value}"
 }
 
+# Existing configuration, including intentionally disabled settings, is authoritative.
+initialize_setting() {
+    if [ "${initialize_config:-0}" = "1" ]
+    then
+        set_setting "$1" "$2"
+    else
+        log "configuration: preserving $1 from existing riak.conf"
+    fi
+}
+
+configured_nodename() {
+    awk '
+        /^[[:space:]]*nodename[[:space:]]*=/ {
+            sub(/^[^=]*=[[:space:]]*/, "")
+            sub(/[[:space:]]*$/, "")
+            print
+            exit
+        }
+    ' "$config_dir/riak.conf"
+}
+
 node_host=${RIAK_NODE_HOST:-$(hostname)}
 riak_node_name=${RIAK_NODE_NAME:-openriak-kv@$node_host}
+if [ "$initialize_config" = "0" ]
+then
+    saved_nodename=$(configured_nodename)
+    if [ -z "$saved_nodename" ]
+    then
+        log "configuration: existing riak.conf requires a live nodename setting"
+        exit 1
+    fi
+    riak_node_name=$saved_nodename
+fi
 if ! validate_nodename "$riak_node_name"
 then
     log "configuration: invalid RIAK_NODE_NAME: ${riak_node_name}"
@@ -848,20 +1058,63 @@ then
 else
     log "configuration: no non-loopback Docker IPv4 address is currently available"
 fi
-if ! printf '%s\n' "$RIAK_DISTRIBUTED_COOKIE" | grep -Eq '^[A-Za-z0-9_-]+$'
+cluster_mode=${OPENRIAK_CLUSTER_MODE:-single}
+role_value=${role:-follower}
+case "$cluster_mode:$role_value" in
+    single:*|cluster:coordinator|cluster:follower) ;;
+    *) log "configuration: invalid cluster mode or role"; exit 1 ;;
+esac
+if [ "$cluster_mode" = "cluster" ]
 then
-    log "configuration: RIAK_DISTRIBUTED_COOKIE must contain only letters, numbers, underscores, and hyphens"
+    mkdir -p "$control_dir"
+    if [ "$role_value" = "coordinator" ]
+    then
+        # Remove old coordinator sessions before any new cookie is advertised.
+        for stale_file in "$control_dir/"*-coordinator "$control_dir/"*-ready "$control_dir/"*-approved "$control_dir/"*-joined "$control_dir/"*-complete "$control_dir/"*-failed
+        do
+            [ -e "$stale_file" ] || continue
+            rm -f "$stale_file"
+        done
+    else
+        clean_owned_control_files
+    fi
+fi
+if [ -n "$existing_cookie" ]
+then
+    RIAK_DISTRIBUTED_COOKIE=$existing_cookie
+    export RIAK_DISTRIBUTED_COOKIE
+    log "configuration: preserving distributed cookie from existing riak.conf"
+elif [ "$cluster_mode" = "cluster" ] && [ "$role_value" = "follower" ] && [ "${RIAK_INIT_ONLY:-0}" != "1" ]
+then
+    touch "$config_dir/.openriak-cookie-pending"
+    wait_for_coordinator_cookie
+fi
+if ! validate_cookie "$RIAK_DISTRIBUTED_COOKIE"
+then
+    log "configuration: invalid distributed cookie"
     exit 1
 fi
-set_setting nodename "$riak_node_name"
-set_setting distributed_cookie "$RIAK_DISTRIBUTED_COOKIE"
-set_setting ring_size "$RIAK_RING_SIZE"
-set_setting storage_backend "$RIAK_STORAGE_BACKEND"
-set_setting anti_entropy "$RIAK_ANTI_ENTROPY"
-set_setting tictacaae_active "$RIAK_TICTACAAE_ACTIVE"
-set_setting tictacaae_storeheads "$RIAK_TICTACAAE_STOREHEADS"
-set_setting listener.http.internal "$RIAK_HTTP_LISTENER"
-set_setting listener.protobuf.internal "$RIAK_PB_LISTENER"
+initialize_setting nodename "$riak_node_name"
+if [ -z "$existing_cookie" ]
+then
+    set_setting distributed_cookie "$RIAK_DISTRIBUTED_COOKIE"
+fi
+if [ "$cluster_mode" != "cluster" ] || [ "$role_value" = "coordinator" ] || [ "${RIAK_INIT_ONLY:-0}" != "1" ]
+then
+    rm -f "$config_dir/.openriak-cookie-pending"
+fi
+log "configuration: effective distributed cookie = ${RIAK_DISTRIBUTED_COOKIE}"
+initialize_setting ring_size "$RIAK_RING_SIZE"
+initialize_setting storage_backend "$RIAK_STORAGE_BACKEND"
+initialize_setting anti_entropy "$RIAK_ANTI_ENTROPY"
+initialize_setting tictacaae_active "$RIAK_TICTACAAE_ACTIVE"
+initialize_setting tictacaae_storeheads "$RIAK_TICTACAAE_STOREHEADS"
+initialize_setting listener.http.internal "$RIAK_HTTP_LISTENER"
+initialize_setting listener.protobuf.internal "$RIAK_PB_LISTENER"
+
+initialize_setting logger.max_file_size "${RIAK_LOG_MAX_FILE_SIZE:-1MB}"
+initialize_setting logger.max_files "${RIAK_LOG_MAX_FILES:-10}"
+rm -f "$config_dir/.openriak-config-pending"
 
 chown -R riak:riak "$config_dir" "$data_dir" "$log_dir" /run/riak
 if [ "${RIAK_INIT_ONLY:-0}" = "1" ]
@@ -1006,6 +1259,11 @@ run_follower() {
             if [ "$coordinator_file" != "$expected_coordinator" ]
             then
                 log "cluster: ignoring coordinator file whose contents do not match its name"
+                continue
+            fi
+            if [ "$(control_value "$coordinator_file" cookie)" != "$RIAK_DISTRIBUTED_COOKIE" ]
+            then
+                log "cluster: coordinator cookie differs from preserved node cookie; refusing join"
                 continue
             fi
             if ! nodename_resolves_to_ip "$coordinator_node" "$coordinator_ip"
@@ -1309,10 +1567,67 @@ echo "OpenRiak healthcheck passed: BEAM is running and riak ping returned pong"
 
 
 # Shared descriptions keep Dockerfile, Compose, and example.env terminology aligned.
+RUNTIME_OPTIONS = {
+    "TZ": ("Etc/UTC", "IANA timezone for the process and entrypoint logs, for example Asia/Tokyo."),
+    "RIAK_UID": ("", "Optional nonzero UID for riak; empty retains the package UID. Mounted directories are chowned."),
+    "RIAK_GID": ("", "Optional nonzero GID for riak; empty retains the package GID. Mounted directories are chowned."),
+    "RIAK_LOG_MAX_FILE_SIZE": ("1MB", "Maximum size per OpenRiak logger file; initializes new configurations only."),
+    "RIAK_LOG_MAX_FILES": ("10", "Maximum file count per OpenRiak logger handler; initializes new configurations only."),
+}
+COMPOSE_OPTIONS = {
+    "OPENRIAK_CPUS": ("0", "CPU limit per node, for example 2.0; 0 means unrestricted."),
+    "OPENRIAK_MEMORY_LIMIT": ("0", "Memory limit per node, for example 4g; 0 means unrestricted."),
+    "OPENRIAK_DOCKER_LOG_MAX_SIZE": ("10m", "Maximum size of each Docker JSON log file per node."),
+    "OPENRIAK_DOCKER_LOG_MAX_FILES": ("3", "Maximum number of Docker JSON log files retained per node."),
+}
+
+
+def compose_runtime_options() -> str:
+    return "".join(f'      {name}: "${{{name}:-{default}}}"\n' for name, (default, _) in RUNTIME_OPTIONS.items())
+
+
+def compose_resource_options() -> str:
+    return '''    # Optional per-node resource limits; zero leaves the resource unrestricted.
+    cpus: "${OPENRIAK_CPUS:-0}"
+    mem_limit: "${OPENRIAK_MEMORY_LIMIT:-0}"
+    # Rotate Docker stdout/stderr logs separately from OpenRiak KV file logs.
+    logging:
+      driver: json-file
+      options:
+        max-size: "${OPENRIAK_DOCKER_LOG_MAX_SIZE:-10m}"
+        max-file: "${OPENRIAK_DOCKER_LOG_MAX_FILES:-3}"
+'''
+
+
+def image_labels(target: Target) -> dict[str, str]:
+    return {
+        "org.opencontainers.image.title": "OpenRiak KV",
+        "org.opencontainers.image.description": "Package-backed OpenRiak KV with single-node and cluster startup support",
+        "org.opencontainers.image.version": target.version,
+        "org.opencontainers.image.vendor": target.identity.vendor,
+        "org.opencontainers.image.url": target.identity.url,
+        "org.opencontainers.image.source": target.identity.source,
+        "org.openriak.otp.version": target.otp,
+        "org.openriak.os.name": target.family,
+        "org.openriak.os.release": target.release,
+        "org.openriak.os.version": str(target.operating_system.get("release_version") or target.release),
+        "org.openriak.image.tag": target.image,
+    }
+
+
+def render_image_labels(target: Target) -> str:
+    lines = []
+    for key, value in image_labels(target).items():
+        quoted = json.dumps(value).replace("$", r"\$")
+        lines.append(f"LABEL {key}={quoted}")
+    return "\n".join(lines)
+
+
 SETTING_COMMENTS = {
+    **{name: description for name, (_, description) in {**RUNTIME_OPTIONS, **COMPOSE_OPTIONS}.items()},
     "RIAK_NODE_HOST": "DNS hostname used to derive the OpenRiak KV nodename.",
     "RIAK_NODE_NAME": "Explicit nodename; empty derives openriak-kv@<hostname>.",
-    "RIAK_DISTRIBUTED_COOKIE": "Erlang cookie; use the same value for every cluster member.",
+    "RIAK_DISTRIBUTED_COOKIE": "Initial cookie; existing riak.conf wins and new followers adopt the coordinator cookie.",
     "RIAK_RING_SIZE": "Partition count for a new ring; do not change on an existing cluster.",
     "RIAK_STORAGE_BACKEND": "Storage backend used by OpenRiak KV.",
     "RIAK_ANTI_ENTROPY": "Legacy active anti-entropy mode (passive disables active exchanges).",
@@ -1370,7 +1685,7 @@ def annotate_artifact(contents: str, kind: str, image: str) -> str:
         elif kind == "example.env":
             match = re.match(r"([A-Za-z_][A-Za-z_0-9]*)=", line)
         else:
-            match = re.match(r"      ((?:RIAK_|OPENRIAK_)[A-Z_0-9]+|role):", line)
+            match = re.match(r"      ((?:RIAK_|OPENRIAK_)[A-Z_0-9]+|role|TZ):", line)
         if match:
             indent = line[:len(line) - len(line.lstrip())]
             output.append(f"{indent}# {setting_comment(match[1])}")
@@ -1387,14 +1702,22 @@ def render_dockerfile(
     checksum = target.package["checksum"]["value"]
     filename = target.package["filename"]
     package_url = target.package["url"]
+    runtime_defaults = "\n".join(f"ENV {name}={json.dumps(default)}" for name, (default, _) in RUNTIME_OPTIONS.items())
     return annotate_artifact(f"""# syntax=docker/dockerfile:1.7
 # Generated and tested by tools/openriak-docker/openriak-docker. Do not edit by hand.
+# Download and verify in a separate stage; its layers are not in the final image.
+FROM scratch AS download
+ADD --checksum=sha256:{checksum} {package_url} /{filename}
+
 FROM --platform={target.platform} {pinned_base_image}
+
+{render_image_labels(target)}
 
 # -----------------------------------------------------------------------------
 # OpenRiak KV default settings
-# Override any value with `docker run --env NAME=value` or Compose `environment`.
+# Environment settings initialize new configurations; existing riak.conf is preserved.
 # -----------------------------------------------------------------------------
+{runtime_defaults}
 ENV RIAK_NODE_HOST=""
 ENV RIAK_NODE_NAME=""
 ENV RIAK_DISTRIBUTED_COOKIE="{distributed_cookie}"
@@ -1416,9 +1739,10 @@ ENV OPENRIAK_CLUSTER_POLL_SECONDS="1"
 ENV OPENRIAK_CLUSTER_WAIT_SECONDS="300"
 ENV role=""
 
-ADD --checksum=sha256:{checksum} {package_url} /tmp/{filename}
-RUN <<'OPENRIAK_PACKAGE_INSTALL'
+RUN --mount=type=bind,from=download,target=/opt/openriak-package,ro <<'OPENRIAK_PACKAGE_INSTALL'
 set -eu
+# Copy, install, and remove in this one layer; only the installed files persist.
+cp /opt/openriak-package/{filename} /tmp/{filename}
 {package_install_script(target)}
 OPENRIAK_PACKAGE_INSTALL
 
@@ -1451,7 +1775,8 @@ VOLUME ["/var/lib/riak"]
 VOLUME ["/var/log/riak"]
 EXPOSE 8087
 EXPOSE 8098
-HEALTHCHECK --interval=10s --timeout=60s --start-period=120s --retries=3 CMD ["/usr/local/bin/openriak-healthcheck"]
+# Health probe interval, maximum duration, startup allowance, and failure threshold.
+HEALTHCHECK --interval={target.lifecycle_options.healthcheck_interval}s --timeout={target.lifecycle_options.healthcheck_timeout}s --start-period={target.lifecycle_options.healthcheck_start_period}s --retries={target.lifecycle_options.healthcheck_retries} CMD ["/usr/local/bin/openriak-healthcheck"]
 STOPSIGNAL SIGTERM
 ENTRYPOINT ["/usr/local/bin/openriak-entrypoint"]
 """, "Dockerfile", target.image)
@@ -1481,7 +1806,7 @@ services:
     container_name: "${{OPENRIAK_CONTAINER_NAME:-{node}}}"
     hostname: "${{OPENRIAK_NODE_1_HOST:-{host}}}"
     environment:
-      RIAK_NODE_HOST: "${{OPENRIAK_NODE_1_HOST:-{host}}}"
+{compose_runtime_options()}      RIAK_NODE_HOST: "${{OPENRIAK_NODE_1_HOST:-{host}}}"
       RIAK_DISTRIBUTED_COOKIE: "${{OPENRIAK_DISTRIBUTED_COOKIE:-{distributed_cookie}}}"
       RIAK_MONITOR_INTERVAL_SECONDS: "${{OPENRIAK_MONITOR_INTERVAL_SECONDS:-10}}"
 {ports}    volumes:
@@ -1496,7 +1821,8 @@ services:
       nofile:
         soft: 100000
         hard: 100000
-    stop_grace_period: 2m
+{compose_resource_options()}    # Time allowed for graceful OpenRiak KV shutdown before Docker sends SIGKILL.
+    stop_grace_period: {target.lifecycle_options.stop_grace_period}s
 
 networks:
   openriak:
@@ -1530,7 +1856,7 @@ def render_cluster_service(
     container_name: "${{OPENRIAK_NODE_{index}_CONTAINER_NAME:-{node}}}"
     hostname: "${{OPENRIAK_NODE_{index}_HOST:-{host}}}"
     environment:
-      OPENRIAK_CLUSTER_MODE: cluster
+{compose_runtime_options()}      OPENRIAK_CLUSTER_MODE: cluster
 {role_line}      RIAK_NODE_HOST: "${{OPENRIAK_NODE_{index}_HOST:-{host}}}"
       RIAK_DISTRIBUTED_COOKIE: "${{OPENRIAK_DISTRIBUTED_COOKIE:-{distributed_cookie}}}"
       RIAK_MONITOR_INTERVAL_SECONDS: "${{OPENRIAK_MONITOR_INTERVAL_SECONDS:-10}}"
@@ -1549,7 +1875,8 @@ def render_cluster_service(
       nofile:
         soft: 100000
         hard: 100000
-    stop_grace_period: 2m
+{compose_resource_options()}    # Time allowed for graceful OpenRiak KV shutdown before Docker sends SIGKILL.
+    stop_grace_period: {target.lifecycle_options.stop_grace_period}s
 """
 
 
@@ -1588,6 +1915,7 @@ def render_environment_example(
         "# Copy this file to .env before running either Compose file.",
         "# All values below match the generated defaults and may be edited.",
         "# Every member of one cluster must use the same distributed cookie.",
+        *(f"{name}={default}" for name, (default, _) in {**RUNTIME_OPTIONS, **COMPOSE_OPTIONS}.items()),
         f"OPENRIAK_DISTRIBUTED_COOKIE={distributed_cookie}",
         "OPENRIAK_MONITOR_INTERVAL_SECONDS=10",
         "OPENRIAK_CLUSTER_POLL_SECONDS=1",
@@ -1638,7 +1966,7 @@ def run_logged(
     cwd: pathlib.Path | None = None,
     environment: dict[str, str] | None = None,
     check: bool = True,
-    timeout_seconds: int | None = None,
+    timeout_seconds: int = DEFAULT_TIMEOUT_SECONDS,
 ) -> subprocess.CompletedProcess[str]:
     log_path.parent.mkdir(parents=True, exist_ok=True)
     started = isoformat()
@@ -1677,9 +2005,58 @@ def run_logged(
         if result.stdout and not result.stdout.endswith("\n"):
             handle.write("\n")
     if check and result.returncode != 0:
+        failure_lines = [line.strip() for line in result.stdout.splitlines() if "ERROR:" in line or "error:" in line]
+        summary = failure_lines[-1] if failure_lines else result.stdout.strip()[-300:]
         raise DockerToolError(
-            f"Command failed with exit code {result.returncode}: {' '.join(command)} (see {log_path})"
+            f"Command failed with exit code {result.returncode}: {' '.join(command)} "
+            f"(see {log_path}): {summary}"
         )
+    return result
+
+
+def verify_runtime_options(container: str, target: Target, timeout_seconds: int, log_path: pathlib.Path) -> dict[str, Any]:
+    docker = docker_command()
+    output = run_logged(
+        [docker, "exec", container, "sh", "-c",
+         "date +%z\nid -u riak\nid -g riak\nstat -c '%u:%g' /etc/riak /var/lib/riak /var/log/riak"],
+        log_path, timeout_seconds=timeout_seconds,
+    ).stdout.splitlines()
+    if output != ["+0900", "19001", "19002", "19001:19002", "19001:19002", "19001:19002"]:
+        raise DockerToolError(f"Timezone or UID/GID checks failed for {container}: {output!r}")
+    inspection = json.loads(run_logged(
+        [docker, "container", "inspect", container], log_path, timeout_seconds=timeout_seconds,
+    ).stdout)[0]
+    labels = inspection["Config"].get("Labels", {})
+    if any(labels.get(key) != value for key, value in image_labels(target).items()):
+        raise DockerToolError(f"Image identification labels do not match {container}")
+    logging = inspection["HostConfig"]["LogConfig"]
+    if (logging.get("Type") != "json-file" or logging.get("Config", {}).get("max-size") != "10m"
+            or logging.get("Config", {}).get("max-file") != "3"):
+        raise DockerToolError(f"Docker log rotation is not configured for {container}")
+    result = {"status": "passed", "timezone": "Asia/Tokyo", "uid": 19001, "gid": 19002,
+              "labels": labels, "docker_logging": logging}
+    if target.family == "alpine":
+        # Assert the final runtime image is curl-free while retaining coreutils.
+        run_logged([docker, "exec", container, "sh", "-ec", """if command -v curl >/dev/null 2>&1
+then
+    echo 'Unexpected curl executable in Alpine image' >&2
+    exit 1
+fi
+for package in curl libcurl
+do
+    if apk info -e "$package" >/dev/null 2>&1
+    then
+        echo "Unexpected $package package in Alpine image" >&2
+        exit 1
+    fi
+done
+for library in /usr/lib/libcurl.so*
+do
+    test ! -e "$library"
+done
+apk info -e coreutils
+"""], log_path, timeout_seconds=timeout_seconds)
+        result["dependencies"] = {"curl": "absent", "libcurl": "absent", "coreutils": "installed"}
     return result
 
 
@@ -1710,7 +2087,7 @@ def digest_from_pull_output(output: str) -> str | None:
 def resolve_base_image(
     target: Target,
     logs: pathlib.Path,
-    timeout_seconds: int | None = None,
+    timeout_seconds: int = DEFAULT_TIMEOUT_SECONDS,
 ) -> tuple[str, str]:
     docker = docker_command()
     base = base_image_for(target)
@@ -1788,32 +2165,77 @@ def free_tcp_port() -> int:
         return int(handle.getsockname()[1])
 
 
-def container_http_ping(container_name: str) -> tuple[int, str, int]:
-    docker = docker_command()
-    result = subprocess.run(
-        [
-            docker,
-            "exec",
-            container_name,
-            "curl",
-            "--silent",
-            "--show-error",
-            "--output",
-            "-",
-            "--write-out",
-            "\\n%{http_code}",
-            "http://127.0.0.1:8098/ping",
-        ],
-        text=True,
+def remaining_timeout(deadline: float) -> float:
+    remaining = deadline - time.monotonic()
+    if remaining <= 0:
+        raise DockerToolError("Docker readiness wait reached its timeout")
+    return remaining
+
+
+def run_before_deadline(command: list[str], deadline: float, **kwargs: Any) -> subprocess.CompletedProcess[str]:
+    try:
+        return subprocess.run(command, timeout=remaining_timeout(deadline), **kwargs)
+    except subprocess.TimeoutExpired as error:
+        raise DockerToolError(f"Docker readiness command exceeded the wait timeout: {' '.join(command)}") from error
+
+
+# Use the package's existing Erlang runtime; no HTTP client package is needed.
+# HTTP/1.0 plus Connection: close lets gen_tcp collect the complete response.
+HTTP_PROBE_ERLANG = r"""
+Timeout = list_to_integer(os:getenv("OPENRIAK_HTTP_PROBE_TIMEOUT_MS")),
+case gen_tcp:connect({127,0,0,1}, 8098, [binary, {active,false}], Timeout) of
+    {ok, Socket} ->
+        ok = gen_tcp:send(Socket, <<"GET /ping HTTP/1.0\r\nHost: localhost\r\nConnection: close\r\n\r\n">>),
+        Receive = fun Again() ->
+            case gen_tcp:recv(Socket, 0, Timeout) of
+                {ok, Data} -> ok = file:write(standard_io, Data), Again();
+                {error, closed} -> halt(0);
+                {error, Reason} -> io:format(standard_error, "HTTP receive failed: ~p~n", [Reason]), halt(1)
+            end
+        end,
+        Receive();
+    {error, Reason} ->
+        io:format(standard_error, "HTTP connect failed: ~p~n", [Reason]), halt(1)
+end.
+"""
+HTTP_PROBE_COMMAND = """set -eu
+export OPENRIAK_HTTP_PROBE_TIMEOUT_MS="$2"
+for bundled_erl in /usr/lib64/riak/erts-*/bin/erl /usr/lib/riak/erts-*/bin/erl
+do
+    if [ -x "$bundled_erl" ]
+    then
+        runtime_root=${bundled_erl%/erts-*}
+        exec "$bundled_erl" +S 1:1 +SDcpu 1 +SDio 1 +A 1 -boot "$runtime_root/bin/no_dot_erlang" -noshell -eval "$1"
+    fi
+done
+echo 'Bundled Erlang runtime not found for HTTP probe' >&2
+exit 1
+"""
+
+
+def container_http_ping(container_name: str, timeout_seconds: float = DEFAULT_TIMEOUT_SECONDS) -> tuple[int, str, int]:
+    deadline = time.monotonic() + timeout_seconds
+    result = run_before_deadline(
+        [docker_command(), "exec", container_name, "sh", "-c", HTTP_PROBE_COMMAND,
+         "openriak-http-probe", HTTP_PROBE_ERLANG, str(max(1, int(timeout_seconds * 1000)))],
+        deadline=deadline,
         stdout=subprocess.PIPE,
-        stderr=subprocess.STDOUT,
-        encoding="utf-8",
-        errors="replace",
+        stderr=subprocess.PIPE,
         check=False,
     )
-    body, separator, status = result.stdout.strip().rpartition("\n")
-    status_code = int(status) if separator and status.isdigit() else 0
-    return result.returncode, body if separator else result.stdout.strip(), status_code
+    if result.returncode:
+        return result.returncode, result.stderr.decode("utf-8", errors="replace").strip(), 0
+
+    class ProbeSocket:
+        def makefile(self, mode: str) -> io.BytesIO:
+            return io.BytesIO(result.stdout)
+
+    try:
+        with http.client.HTTPResponse(ProbeSocket()) as response:
+            response.begin()
+            return 0, response.read().decode("utf-8", errors="replace").strip(), response.status
+    except (http.client.HTTPException, ValueError, OSError) as error:
+        return 1, f"Invalid HTTP probe response: {error}", 0
 
 
 def wait_for_node(
@@ -1827,8 +2249,9 @@ def wait_for_node(
     last_http = ""
     with (logs / "readiness.log").open("w", encoding="utf-8", newline="\n") as log:
         while time.monotonic() < deadline:
-            cli = subprocess.run(
+            cli = run_before_deadline(
                 [docker, "exec", container_name, "riak", "ping"],
+                deadline=deadline,
                 text=True,
                 stdout=subprocess.PIPE,
                 stderr=subprocess.STDOUT,
@@ -1837,7 +2260,7 @@ def wait_for_node(
                 check=False,
             )
             last_cli = cli.stdout.strip()
-            http_exit, last_http, http_status = container_http_ping(container_name)
+            http_exit, last_http, http_status = container_http_ping(container_name, remaining_timeout(deadline))
             http_ok = http_exit == 0 and http_status == 200 and last_http == "OK"
             log.write(
                 f"{isoformat()} cli_exit={cli.returncode} cli={last_cli!r} "
@@ -1846,7 +2269,7 @@ def wait_for_node(
             log.flush()
             if cli.returncode == 0 and last_cli == "pong" and http_ok:
                 return last_cli, last_http
-            time.sleep(2)
+            time.sleep(min(2, max(0, deadline - time.monotonic())))
     raise DockerToolError(
         f"OpenRiak node was not ready after {timeout_seconds}s; CLI={last_cli!r}, HTTP={last_http!r}"
     )
@@ -1863,8 +2286,9 @@ def wait_for_container_log(
     last_output = ""
     with log_path.open("w", encoding="utf-8", newline="\n") as log:
         while time.monotonic() < deadline:
-            result = subprocess.run(
+            result = run_before_deadline(
                 [docker, "logs", container_name],
+                deadline=deadline,
                 text=True,
                 stdout=subprocess.PIPE,
                 stderr=subprocess.STDOUT,
@@ -1874,7 +2298,7 @@ def wait_for_container_log(
             )
             last_output = result.stdout
             found = result.returncode == 0 and marker in last_output
-            state = subprocess.run(
+            state = run_before_deadline(
                 [
                     docker,
                     "container",
@@ -1883,6 +2307,7 @@ def wait_for_container_log(
                     "{{.State.Running}} {{.State.ExitCode}}",
                     container_name,
                 ],
+                deadline=deadline,
                 text=True,
                 stdout=subprocess.PIPE,
                 stderr=subprocess.STDOUT,
@@ -1911,7 +2336,7 @@ def wait_for_container_log(
                 )
             if found and running:
                 return last_output
-            time.sleep(1)
+            time.sleep(min(1, max(0, deadline - time.monotonic())))
     raise DockerToolError(
         f"Container log did not contain {marker!r} after {timeout_seconds}s"
     )
@@ -1927,7 +2352,7 @@ def wait_for_container_health(
     last_status = "unknown"
     with log_path.open("w", encoding="utf-8", newline="\n") as log:
         while time.monotonic() < deadline:
-            result = subprocess.run(
+            result = run_before_deadline(
                 [
                     docker,
                     "container",
@@ -1936,6 +2361,7 @@ def wait_for_container_health(
                     "{{if .State.Health}}{{.State.Health.Status}}{{else}}missing{{end}}",
                     container_name,
                 ],
+                deadline=deadline,
                 text=True,
                 stdout=subprocess.PIPE,
                 stderr=subprocess.STDOUT,
@@ -1950,7 +2376,7 @@ def wait_for_container_health(
             log.flush()
             if result.returncode == 0 and last_status == "healthy":
                 return last_status
-            time.sleep(1)
+            time.sleep(min(1, max(0, deadline - time.monotonic())))
     raise DockerToolError(
         f"Container healthcheck did not become healthy after {timeout_seconds}s; status={last_status!r}"
     )
@@ -1973,7 +2399,7 @@ def wait_for_cluster(
             all_ready = True
             state: dict[str, Any] = {}
             for container_name in container_names:
-                running = subprocess.run(
+                running = run_before_deadline(
                     [
                         docker,
                         "container",
@@ -1982,6 +2408,7 @@ def wait_for_cluster(
                         "{{.State.Running}} {{.State.ExitCode}}",
                         container_name,
                     ],
+                    deadline=deadline,
                     text=True,
                     stdout=subprocess.PIPE,
                     stderr=subprocess.STDOUT,
@@ -2010,8 +2437,9 @@ def wait_for_cluster(
                 }
                 outputs: dict[str, dict[str, Any]] = {}
                 for name, arguments in commands.items():
-                    result = subprocess.run(
+                    result = run_before_deadline(
                         [docker, "exec", container_name, *arguments],
+                        deadline=deadline,
                         text=True,
                         stdout=subprocess.PIPE,
                         stderr=subprocess.STDOUT,
@@ -2023,7 +2451,7 @@ def wait_for_cluster(
                         "exit": result.returncode,
                         "output": result.stdout.strip(),
                     }
-                http_exit, http_body, http_status = container_http_ping(container_name)
+                http_exit, http_body, http_status = container_http_ping(container_name, remaining_timeout(deadline))
                 http_ok = http_exit == 0 and http_status == 200 and http_body == "OK"
                 members_output = outputs["members"]["output"]
                 node_ready = (
@@ -2055,7 +2483,7 @@ def wait_for_cluster(
             log.flush()
             if all_ready:
                 return state
-            time.sleep(2)
+            time.sleep(min(2, max(0, deadline - time.monotonic())))
     raise DockerToolError(
         f"OpenRiak cluster was not ready after {timeout_seconds}s; last state={last_state!r}"
     )
@@ -2090,7 +2518,7 @@ def artifact_downloads(
     compose_cluster: pathlib.Path,
     environment_example: pathlib.Path,
 ) -> dict[str, Any]:
-    base_url = f"downloads/docker/{target.version}/{target.image_tag}"
+    base_url = "." if target.output_root is not None else f"downloads/docker/{target.version}/{target.image_tag}"
     return {
         "dockerfile": {
             "filename": "Dockerfile",
@@ -2115,7 +2543,7 @@ def artifact_downloads(
     }
 
 
-def sync_download_metadata(versions: Iterable[str]) -> None:
+def sync_download_metadata(versions: Iterable[str], timeout_seconds: int = DEFAULT_TIMEOUT_SECONDS) -> None:
     versions = sorted(set(versions), key=semver_key)
     if not versions:
         return
@@ -2125,10 +2553,13 @@ def sync_download_metadata(versions: Iterable[str]) -> None:
     command = [node, str(REPOSITORY_ROOT / "tools/scripts/sync-product-metadata.js"), "--docker-only"]
     for version in versions:
         command.extend(["--include-version", f"openriak-kv={version}"])
-    result = subprocess.run(command, cwd=REPOSITORY_ROOT, text=True, capture_output=True)
+    try:
+        result = subprocess.run(command, cwd=REPOSITORY_ROOT, text=True, capture_output=True, timeout=timeout_seconds)
+    except subprocess.TimeoutExpired as error:
+        raise DockerToolError(f"Docker download metadata update timed out after {timeout_seconds}s; cached test results are retained") from error
     if result.returncode:
         raise DockerToolError(f"Could not update Docker download metadata: {result.stderr.strip()}; cached test results are retained")
-    print(result.stdout, end="", flush=True)
+    print("".join(f"{log_timestamp()} {line}\n" for line in result.stdout.splitlines() if line.strip()), end="", flush=True)
 
 
 def publish_current_run(target: Target, run_root: pathlib.Path, report: dict[str, Any]) -> None:
@@ -2142,6 +2573,9 @@ def publish_current_run(target: Target, run_root: pathlib.Path, report: dict[str
         (current / "compose.yaml").unlink()
     write_json(run_root / "report.json", report)
     write_json(current / "report.json", report)
+
+    if target.grouped or target.output_root is not None:
+        return
 
     if report["status"] == "passed":
         target.static_directory.mkdir(parents=True, exist_ok=True)
@@ -2164,7 +2598,8 @@ def initial_report(
 ) -> dict[str, Any]:
     package = target.package
     return {
-        "schema_version": SCHEMA_VERSION,
+        "schema_version": MULTIARCH_SCHEMA_VERSION if target.grouped else SCHEMA_VERSION,
+        "identity": dataclasses.asdict(target.identity),
         "product": "openriak-kv",
         "status": "running",
         "run_id": identifier,
@@ -2226,13 +2661,16 @@ def refresh_target(
     keep_workdir: bool = False,
     cluster_nodes: int = DEFAULT_CLUSTER_NODES,
     progress: Callable[[str], None] | None = None,
+    prepared: dict[str, Any] | None = None,
 ) -> bool:
     identifier = run_id()
     run_root = target.cache_directory / "runs" / identifier
     logs = run_root / "logs"
     run_root.mkdir(parents=True, exist_ok=False)
-    distributed_cookie = generate_distributed_cookie()
+    distributed_cookie = prepared["distributed_cookie"] if prepared else generate_distributed_cookie()
     report = initial_report(target, identifier, cluster_nodes, distributed_cookie)
+    build_image_tag = (f"{target.identity.namespace}/openriak-kv:test-{target.image_tag}-{target.platform.replace('/', '-')}-{identifier.lower()}"
+                       if prepared else target.image)
     dockerfile = run_root / "Dockerfile"
     compose_single = run_root / "compose.single.yaml"
     compose_cluster = run_root / "compose.cluster.yaml"
@@ -2240,7 +2678,9 @@ def refresh_target(
     test_directory: pathlib.Path | None = None
     compose_started = False
     cluster_started = False
-    environment = os.environ.copy()
+    # Test containers must never inherit operator bind paths, identities, or cookies.
+    environment = {key: value for key, value in os.environ.items()
+                   if not key.startswith(("OPENRIAK_", "RIAK_")) and key not in {"role", "TZ"}}
     docker = docker_command()
 
     def report_progress(message: str) -> None:
@@ -2248,21 +2688,28 @@ def refresh_target(
             progress(message)
 
     try:
-        report_progress(f"Pulling and pinning base image (timeout {timeout_seconds}s)")
-        base, pinned_base = record_step(
-            report,
-            "pull_and_pin_base_image",
-            lambda: resolve_base_image(target, logs, timeout_seconds),
-        )
-        report["base_image"] = {
-            "requested": base,
-            "pinned": pinned_base,
-            "resolved_at": isoformat(),
-        }
-
+        if prepared:
+            report["base_image"] = prepared["base_images"][target.platform]
+            pinned_base = report["base_image"]["pinned"]
+        else:
+            report_progress(f"Pulling and pinning base image (timeout {timeout_seconds}s)")
+            base, pinned_base = record_step(
+                report,
+                "pull_and_pin_base_image",
+                lambda: resolve_base_image(target, logs, timeout_seconds),
+            )
+            report["base_image"] = {
+                "requested": base,
+                "pinned": pinned_base,
+                "resolved_at": isoformat(),
+            }
         report_progress("Creating Dockerfile, compose YAML files and .env for this run")
 
         def generate() -> None:
+            if prepared:
+                for filename in ARTIFACT_FILENAMES:
+                    shutil.copy2(target.group_directory / filename, run_root / filename)
+                return
             dockerfile.write_text(
                 render_dockerfile(target, pinned_base, distributed_cookie),
                 encoding="utf-8",
@@ -2303,6 +2750,7 @@ def refresh_target(
                         "--quiet",
                     ],
                     logs / log_name,
+                    timeout_seconds=timeout_seconds,
                 )
 
         record_step(report, "validate_compose_artifacts", validate_compose_artifacts)
@@ -2313,12 +2761,12 @@ def refresh_target(
             lambda: run_logged(
                 [
                     docker,
-                    "build",
+                    *( ["buildx", "build", "--builder", MULTIARCH_BUILDER, "--load"] if prepared else ["build"] ),
                     "--platform",
                     target.platform,
                     "--pull=false",
                     "--tag",
-                    target.image,
+                    build_image_tag,
                     "--file",
                     str(dockerfile),
                     str(run_root),
@@ -2347,6 +2795,22 @@ def refresh_target(
             encoding="utf-8",
             newline="\n",
         )
+        if prepared:
+            for compose_test in (compose_single_test, compose_cluster_test):
+                text = compose_test.read_text()
+                text = text.replace(f"    image: {target.image}\n", f"    image: {build_image_tag}\n    platform: {target.platform}\n")
+                if compose_test == compose_cluster_test:
+                    service_index = 0
+                    lines = []
+                    for line in text.splitlines():
+                        match = re.match(r"  node([0-9]+):", line)
+                        if match:
+                            service_index = int(match.group(1))
+                        if service_index > 1 and line.startswith("      RIAK_DISTRIBUTED_COOKIE:"):
+                            line = f'      RIAK_DISTRIBUTED_COOKIE: "{generate_distributed_cookie()}"'
+                        lines.append(line)
+                    text = "\n".join(lines) + "\n"
+                compose_test.write_text(text)
         shutil.copy2(dockerfile, test_directory / "Dockerfile")
         shutil.copy2(environment_example, test_directory / "example.env")
         node_directory = test_directory / target.node_name
@@ -2367,9 +2831,14 @@ def refresh_target(
         ]
         cluster_pb_ports = [18087 + (index - 1) * 100 for index in range(1, cluster_nodes + 1)]
         cluster_http_ports = [18098 + (index - 1) * 100 for index in range(1, cluster_nodes + 1)]
+        runtime_test_environment = [
+            "TZ=Asia/Tokyo", "RIAK_UID=19001", "RIAK_GID=19002",
+            "RIAK_LOG_MAX_FILE_SIZE=2MB", "RIAK_LOG_MAX_FILES=4",
+        ]
         cluster_environment_lines = [
+            *runtime_test_environment,
             "OPENRIAK_CLUSTER_POLL_SECONDS=1",
-            "OPENRIAK_CLUSTER_WAIT_SECONDS=300",
+            f"OPENRIAK_CLUSTER_WAIT_SECONDS={timeout_seconds}",
         ]
         for index in range(1, cluster_nodes + 1):
             cluster_environment_lines.extend(
@@ -2383,6 +2852,7 @@ def refresh_target(
         single_environment.write_text(
             "\n".join(
                 [
+                    *runtime_test_environment,
                     f"OPENRIAK_CONTAINER_NAME={environment['OPENRIAK_CONTAINER_NAME']}",
                     f"OPENRIAK_PB_PORT={environment['OPENRIAK_PB_PORT']}",
                     f"OPENRIAK_HTTP_PORT={environment['OPENRIAK_HTTP_PORT']}",
@@ -2414,6 +2884,7 @@ def refresh_target(
             [docker, "container", "inspect", test_container_name],
             logs / "container-name-check.log",
             check=False,
+            timeout_seconds=timeout_seconds,
         )
         if existing.returncode == 0:
             raise DockerToolError(
@@ -2428,6 +2899,7 @@ def refresh_target(
                 logs / "compose-init.log",
                 cwd=test_directory,
                 environment=environment,
+                timeout_seconds=timeout_seconds,
             ),
         )
         config_directory = node_directory / "config"
@@ -2460,6 +2932,7 @@ def refresh_target(
                 logs / "compose-config-permissions.log",
                 cwd=test_directory,
                 environment=environment,
+                timeout_seconds=timeout_seconds,
             ),
         )
         record_step(
@@ -2467,7 +2940,15 @@ def refresh_target(
             "configure_node",
             lambda: configure_test_node(config_path, default_node_host(1)),
         )
+        preserved_test_cookie = generate_distributed_cookie()
+        if prepared:
+            config_path.write_text(set_riak_setting(config_path.read_text(), "distributed_cookie", preserved_test_cookie))
+        # An operator-edited setting must survive startup despite a different ENV default.
+        config_path.write_text(set_riak_setting(config_path.read_text(), "logger.max_files", "7"))
+        preserved_config_hash = sha256_file(config_path)
         expected_settings = {
+            "logger.max_file_size": "2MB",
+            "logger.max_files": "7",
             "nodename": f"openriak-kv@{default_node_host(1)}",
             "ring_size": "8",
             "storage_backend": "leveled",
@@ -2496,6 +2977,7 @@ def refresh_target(
                 logs / "compose-up.log",
                 cwd=test_directory,
                 environment=environment,
+                timeout_seconds=timeout_seconds,
             ),
         )
         lifecycle_output = record_step(
@@ -2536,6 +3018,18 @@ def refresh_target(
                 logs,
             ),
         )
+        if sha256_file(config_path) != preserved_config_hash:
+            raise DockerToolError("Startup changed the existing riak.conf")
+        report["tests"]["preserved_configuration"] = {"status": "passed", "sha256": preserved_config_hash}
+        report["tests"]["runtime_options"] = record_step(
+            report, "verify_runtime_options",
+            lambda: verify_runtime_options(test_container_name, target, timeout_seconds, logs / "runtime-options.log"),
+        )
+        if prepared:
+            actual_cookie = effective_riak_settings(config_path, ["distributed_cookie"]).get("distributed_cookie")
+            if actual_cookie != preserved_test_cookie:
+                raise DockerToolError("Startup replaced the existing distributed cookie")
+            report["tests"]["preserved_cookie"] = {"status": "passed", "configuration_cookie": actual_cookie}
         report["tests"]["riak_start"] = {"status": "passed"}
         report["tests"]["cli_ping"] = {
             "status": "passed",
@@ -2579,10 +3073,11 @@ def refresh_target(
             report,
             "graceful_stop",
             lambda: run_logged(
-                compose_command + ["stop", "--timeout", "120"],
+                compose_command + ["stop", "--timeout", str(min(timeout_seconds, target.lifecycle_options.stop_grace_period))],
                 logs / "compose-stop.log",
                 cwd=test_directory,
                 environment=environment,
+                timeout_seconds=timeout_seconds,
             ),
         )
         stopped_logs = record_step(
@@ -2591,6 +3086,7 @@ def refresh_target(
             lambda: run_logged(
                 [docker, "logs", test_container_name],
                 logs / "graceful-shutdown.log",
+                timeout_seconds=timeout_seconds,
             ).stdout,
         )
         shutdown_markers = [
@@ -2614,16 +3110,17 @@ def refresh_target(
             report,
             "remove_single_node_test",
             lambda: run_logged(
-                compose_command + ["down", "--remove-orphans"],
+                compose_command + ["down", "--remove-orphans", "--timeout", str(min(timeout_seconds, target.lifecycle_options.stop_grace_period))],
                 logs / "compose-down.log",
                 cwd=test_directory,
                 environment=environment,
+                timeout_seconds=timeout_seconds,
             ),
         )
         compose_started = False
 
         report_progress(
-            f"Testing {cluster_nodes}-node cluster (timeout {max(timeout_seconds, 300)}s)"
+            f"Testing {cluster_nodes}-node cluster (timeout {timeout_seconds}s)"
         )
         cluster_command = [
             docker,
@@ -2640,6 +3137,7 @@ def refresh_target(
                 [docker, "container", "inspect", cluster_container_name],
                 logs / "cluster-container-name-check.log",
                 check=False,
+                timeout_seconds=timeout_seconds,
             )
             if existing.returncode == 0:
                 raise DockerToolError(
@@ -2655,6 +3153,7 @@ def refresh_target(
                 logs / "cluster-compose-up.log",
                 cwd=test_directory,
                 environment=environment,
+                timeout_seconds=timeout_seconds,
             ),
         )
         cluster_state = record_step(
@@ -2663,17 +3162,19 @@ def refresh_target(
             lambda: wait_for_cluster(
                 cluster_container_names,
                 cluster_nodenames,
-                max(timeout_seconds, 300),
+                timeout_seconds,
                 logs / "cluster-readiness.log",
             ),
         )
         cluster_admin_tests: dict[str, Any] = {}
         report["tests"]["cluster_admin_test"] = cluster_admin_tests
+        report["tests"]["cluster_runtime_options"] = {}
         role_logs: dict[str, str] = {}
         for index, cluster_container_name in enumerate(cluster_container_names, start=1):
             container_logs = run_logged(
                 [docker, "logs", cluster_container_name],
                 logs / f"cluster-node-{index}.log",
+                timeout_seconds=timeout_seconds,
             ).stdout
             expected_role = "Coordinator" if index == 1 else "Follower"
             if f"cluster: Role: {expected_role}" not in container_logs:
@@ -2693,6 +3194,20 @@ def refresh_target(
                     cluster_container_name, timeout_seconds, logs / f"cluster-node-{index}-admin-test.log"
                 ),
             )
+            report["tests"]["cluster_runtime_options"][cluster_container_name] = record_step(
+                report, f"cluster_node_{index}_runtime_options",
+                lambda: verify_runtime_options(cluster_container_name, target, timeout_seconds, logs / f"cluster-node-{index}-runtime-options.log"),
+            )
+            if prepared:
+                cookie_result = run_logged(
+                    [docker, "exec", cluster_container_name, "cat", "/etc/riak/riak.conf"],
+                    logs / f"cluster-node-{index}-configuration.log", timeout_seconds=timeout_seconds,
+                ).stdout
+                expected_cookie = re.search(r"(?m)^distributed_cookie\s*=\s*(\S+)\s*$", cookie_result)
+                if not expected_cookie or expected_cookie.group(1) != distributed_cookie:
+                    raise DockerToolError(f"Cluster node {index} did not retain the coordinator cookie")
+                if index > 1 and "adopted coordinator cookie before daemon startup" not in container_logs:
+                    raise DockerToolError(f"Cluster node {index} did not log cookie adoption before startup")
             cluster_node_directory = test_directory / cluster_node_name(target, index)
             for volume_name in ("config", "data", "logs"):
                 if not populated(cluster_node_directory / volume_name):
@@ -2715,25 +3230,28 @@ def refresh_target(
                 "config/data/log volumes populated",
             ],
             "state": cluster_state,
+            "coordinator_cookie_adoption": "passed" if prepared else "not tested",
         }
         record_step(
             report,
             "graceful_stop_cluster",
             lambda: run_logged(
-                cluster_command + ["stop", "--timeout", "120"],
+                cluster_command + ["stop", "--timeout", str(min(timeout_seconds, target.lifecycle_options.stop_grace_period))],
                 logs / "cluster-compose-stop.log",
                 cwd=test_directory,
                 environment=environment,
+                timeout_seconds=timeout_seconds,
             ),
         )
         record_step(
             report,
             "remove_cluster_test",
             lambda: run_logged(
-                cluster_command + ["down", "--remove-orphans"],
+                cluster_command + ["down", "--remove-orphans", "--timeout", str(min(timeout_seconds, target.lifecycle_options.stop_grace_period))],
                 logs / "cluster-compose-down.log",
                 cwd=test_directory,
                 environment=environment,
+                timeout_seconds=timeout_seconds,
             ),
         )
         cluster_started = False
@@ -2748,7 +3266,19 @@ def refresh_target(
     except Exception as error:
         report["status"] = "failed"
         report["error"] = {"type": type(error).__name__, "message": str(error)}
+        report_progress(f"FAILED {target.platform}: {error}")
     finally:
+        def cleanup_command(*args: Any, **kwargs: Any) -> None:
+            try:
+                result = run_logged(*args, **kwargs)
+                if result.returncode:
+                    raise DockerToolError(f"Cleanup command failed: {' '.join(args[0])}; see {args[1]}")
+            except (DockerToolError, OSError) as error:
+                report.setdefault("cleanup_errors", []).append(str(error))
+                if report["status"] != "interrupted":
+                    report["status"] = "failed"
+                report_progress(f"Cleanup failed: {error}")
+
         if test_directory is not None:
             compose_command = [
                 docker,
@@ -2761,19 +3291,21 @@ def refresh_target(
                 str(test_directory / "compose.single.test.yaml"),
             ]
             if compose_started:
-                run_logged(
+                cleanup_command(
                     compose_command + ["logs", "--no-color"],
                     logs / "compose-runtime.log",
                     cwd=test_directory,
                     environment=environment,
                     check=False,
+                    timeout_seconds=timeout_seconds,
                 )
-                run_logged(
-                    compose_command + ["down", "--remove-orphans"],
+                cleanup_command(
+                    compose_command + ["down", "--remove-orphans", "--timeout", str(min(timeout_seconds, target.lifecycle_options.stop_grace_period))],
                     logs / "compose-down.log",
                     cwd=test_directory,
                     environment=environment,
                     check=False,
+                    timeout_seconds=timeout_seconds,
                 )
             if cluster_started:
                 cluster_command = [
@@ -2786,27 +3318,32 @@ def refresh_target(
                     "--file",
                     str(test_directory / "compose.cluster.test.yaml"),
                 ]
-                run_logged(
+                cleanup_command(
                     cluster_command + ["logs", "--no-color"],
                     logs / "cluster-compose-runtime.log",
                     cwd=test_directory,
                     environment=environment,
                     check=False,
+                    timeout_seconds=timeout_seconds,
                 )
-                run_logged(
-                    cluster_command + ["down", "--remove-orphans"],
+                cleanup_command(
+                    cluster_command + ["down", "--remove-orphans", "--timeout", str(min(timeout_seconds, target.lifecycle_options.stop_grace_period))],
                     logs / "cluster-compose-down.log",
                     cwd=test_directory,
                     environment=environment,
                     check=False,
+                    timeout_seconds=timeout_seconds,
                 )
             for node_logs in test_directory.glob("*/logs"):
                 if node_logs.is_dir():
                     shutil.copytree(node_logs, logs / "riak-runtime" / node_logs.parent.name, dirs_exist_ok=True)
-            if keep_workdir:
+            if keep_workdir or report.get("cleanup_errors"):
                 report["test_workdir"] = str(test_directory)
             else:
                 shutil.rmtree(test_directory, ignore_errors=True)
+        if prepared:
+            cleanup_command([docker, "image", "rm", build_image_tag], logs / "remove-test-image.log",
+                            check=False, timeout_seconds=timeout_seconds)
         report["finished_at"] = isoformat()
         publish_current_run(target, run_root, report)
     return report["status"] == "passed"
@@ -2846,7 +3383,7 @@ def cache_state(target: Target, cluster_nodes: int = DEFAULT_CLUSTER_NODES) -> t
         report = read_json(report_path)
     except (OSError, json.JSONDecodeError) as error:
         return "invalid", f"unreadable report: {error}"
-    if report.get("schema_version") != SCHEMA_VERSION:
+    if report.get("schema_version") != (MULTIARCH_SCHEMA_VERSION if target.grouped else SCHEMA_VERSION):
         return "invalid", "cache schema is obsolete"
     if report.get("status") != "passed":
         return "invalid", f"current report status is {report.get('status')!r}"
@@ -2894,33 +3431,450 @@ def sync_static() -> int:
         with contextlib.suppress(FileNotFoundError):
             (destination / "compose.yaml").unlink()
         copied += 1
+    for group in grouped_targets(discover_targets()):
+        report_path = group[0].group_directory / "report.json"
+        if report_path.is_file():
+            report = read_json(report_path)
+            if report.get("status") == "passed":
+                identity = ImageIdentity(**report.get("identity", {}))
+                publish_group([dataclasses.replace(t, identity=identity) for t in group], report)
+                copied += 1
     sync_download_metadata(versions)
     return copied
 
 
+def grouped_targets(targets: list[Target]) -> list[list[Target]]:
+    groups: dict[str, dict[str, Target]] = {}
+    for original in targets:
+        target = dataclasses.replace(original, grouped=True)
+        platforms = groups.setdefault(target.image, {})
+        if target.platform in platforms and platforms[target.platform].package != target.package:
+            raise DockerToolError(f"Ambiguous packages for {target.image} {target.platform}")
+        platforms[target.platform] = target
+    return [list(sorted(platforms.values(), key=lambda t: t.platform)) for _, platforms in sorted(groups.items())]
+
+
+def release_key(target: Target) -> tuple[int, ...]:
+    release = str(target.operating_system.get("release_version", target.release))
+    numbers = tuple(int(part) for part in re.findall(r"\d+", release))
+    if not numbers:
+        raise DockerToolError(f"Metadata needs release_version to order {target.family} {release}")
+    return numbers
+
+
+def image_aliases(target: Target, all_targets: list[Target]) -> list[str]:
+    """Aliases are selected from metadata, never from whichever build finishes last."""
+    target = dataclasses.replace(target, grouped=True)
+    tags = [target.image]
+    peers = [t for t in all_targets if t.version == target.version and t.family == target.family]
+    same_release = [t for t in peers if t.release == target.release]
+    otp_key = lambda t: tuple(int(n) for n in t.otp.split("."))
+    if otp_key(target) != max(map(otp_key, same_release)):
+        return tags
+    prefix = f"{target.identity.namespace}/openriak-kv:{target.version}"
+    tags.append(f"{prefix}-{target.family}-{target.release}")
+    if release_key(target) != max(map(release_key, peers)):
+        return tags
+    tags.append(f"{prefix}-{target.family}")
+    if target.family == "alpine":
+        tags.append(prefix)
+        if semver_key(target.version) == max(semver_key(t.version) for t in all_targets):
+            tags.append(f"{target.identity.namespace}/openriak-kv:latest")
+    return tags
+
+
+def render_multiarch_dockerfile(
+    targets: list[Target], base_images: dict[str, dict[str, str]], cookie: str, tags: list[str],
+) -> str:
+    if not targets or len({(t.version, t.family, t.release, t.otp) for t in targets}) != 1:
+        raise DockerToolError("A shared Dockerfile requires one version, OS release, and OTP")
+    if len({t.platform.split("/")[1] for t in targets}) != len(targets):
+        raise DockerToolError("Multiple variants of the same TARGETARCH require separate image groups")
+    stages = []
+    for target in sorted(targets, key=lambda t: t.platform):
+        stage = target.platform.split("/")[1]
+        pinned = base_images[target.platform]["pinned"]
+        if not re.search(r"@sha256:[0-9a-f]{64}$", pinned):
+            raise DockerToolError(f"Unpinned base image for {target.platform}")
+        checksum = target.package["checksum"]["value"]
+        stages.append(f'''# {target.platform}: official package and immutable OS release base.
+# Download layers stay outside the final image; the install only mounts them.
+FROM scratch AS download-{stage}
+ADD --checksum=sha256:{checksum} {target.package['url']} /{target.package['filename']}
+
+FROM --platform={target.platform} {pinned} AS package-{stage}
+RUN --mount=type=bind,from=download-{stage},target=/opt/openriak-package,ro <<'OPENRIAK_PACKAGE_INSTALL'
+set -eu
+# Copy, install, and remove in this one layer; only the installed files persist.
+cp /opt/openriak-package/{target.package['filename']} /tmp/{target.package['filename']}
+{package_install_script(target)}
+OPENRIAK_PACKAGE_INSTALL
+''')
+    reference = render_dockerfile(targets[0], base_images[targets[0].platform]["pinned"], cookie)
+    defaults = reference[reference.index("# -----------------------------------------------------------------------------"):reference.index("RUN --mount=")]
+    runtime = reference[reference.index("RUN <<'OPENRIAK_IMAGE_SETUP'"):]
+    header = annotate_artifact("# syntax=docker/dockerfile:1.7\n", "Dockerfile", targets[0].image)
+    header += "# Supported platforms: " + ", ".join(t.platform for t in targets) + "\n"
+    header += "# Image tags: " + ", ".join(tags) + "\n"
+    header += "# BuildKit supplies TARGETARCH from --platform in the global scope.\n# Do not redeclare ARG TARGETARCH here: that clears its automatic value.\n\n"
+    return header + "\n".join(stages) + '\nFROM package-${TARGETARCH} AS final\n\n' + render_image_labels(targets[0]) + '\n\n' + defaults + runtime
+
+
+class MultiarchBuilderLifecycle:
+    """Restore builder state once per invocation, including interrupted builds."""
+
+    def __init__(self) -> None:
+        self.logs: pathlib.Path | None = None
+        self.timeout = 0
+        self.stop_required = False
+
+    def observe(self, inspection: subprocess.CompletedProcess[str], logs: pathlib.Path, timeout: int) -> None:
+        if self.logs is not None:
+            return
+        if inspection.returncode == 0:
+            states = re.findall(r"^Status:\s*(\S+)\s*$", inspection.stdout, re.MULTILINE)
+            if not states or any(state not in ("running", "stopped") for state in states):
+                raise DockerToolError(f"Cannot determine usable node states for builder {MULTIARCH_BUILDER}; inspect it before refresh")
+            stopped = all(state == "stopped" for state in states)
+            if not stopped and "stopped" in states:
+                raise DockerToolError(f"Builder {MULTIARCH_BUILDER} has mixed running/stopped nodes; start it explicitly before refresh")
+            if stopped and not re.search(r"^Driver:\s*docker-container\s*$", inspection.stdout, re.MULTILINE):
+                raise DockerToolError(f"Cannot temporarily start stopped builder {MULTIARCH_BUILDER}: expected the docker-container driver")
+            self.stop_required = stopped
+        self.logs = logs
+        self.timeout = timeout
+
+    def __enter__(self) -> MultiarchBuilderLifecycle:
+        return self
+
+    def __exit__(self, exception_type: Any, exception: Any, traceback: Any) -> None:
+        if self.stop_required:
+            print(f"{log_timestamp()} Stopping builder {MULTIARCH_BUILDER} started for this refresh", flush=True)
+            run_logged([docker_command(), "buildx", "stop", MULTIARCH_BUILDER],
+                       self.logs / "builder.log", timeout_seconds=self.timeout)
+
+
+def ensure_multiarch_builder(
+    logs: pathlib.Path, timeout: int, lifecycle: MultiarchBuilderLifecycle | None = None,
+) -> None:
+    docker = docker_command()
+    inspected = run_logged([docker, "buildx", "inspect", MULTIARCH_BUILDER], logs / "builder.log", check=False, timeout_seconds=timeout)
+    if lifecycle is not None:
+        lifecycle.observe(inspected, logs, timeout)
+    if inspected.returncode:
+        run_logged([docker, "buildx", "create", "--name", MULTIARCH_BUILDER, "--driver", "docker-container"], logs / "builder.log", timeout_seconds=timeout)
+        if lifecycle is not None:
+            lifecycle.stop_required = True
+    run_logged([docker, "buildx", "inspect", MULTIARCH_BUILDER, "--bootstrap"], logs / "builder.log", timeout_seconds=timeout)
+
+
+def group_input(targets: list[Target], cluster_nodes: int, tags: list[str]) -> dict[str, Any]:
+    return {
+        "schema_version": MULTIARCH_SCHEMA_VERSION,
+        "identity": dataclasses.asdict(targets[0].identity),
+        "lifecycle_options": dataclasses.asdict(targets[0].lifecycle_options),
+        "labels": image_labels(targets[0]),
+        "runtime_options": {k: list(v) for k, v in RUNTIME_OPTIONS.items()},
+        "compose_options": {k: list(v) for k, v in COMPOSE_OPTIONS.items()},
+        "cluster_nodes": cluster_nodes,
+        "tags": tags,
+        "packages": {t.platform: {"url": t.package["url"], "checksum": t.package["checksum"], "base": base_image_for(t)} for t in targets},
+        "runtime_sha256": hashlib.sha256((ENTRYPOINT_SCRIPT + HEALTHCHECK_SCRIPT).encode()).hexdigest(),
+        "renderer_sha256": hashlib.sha256("\n".join(inspect.getsource(fn) for fn in (
+            render_multiarch_dockerfile, render_dockerfile, render_single_compose,
+            render_cluster_compose, render_cluster_service, render_environment_example,
+            package_install_script, create_riak_user_script, render_image_labels, render_group_assets,
+            compose_runtime_options, compose_resource_options, annotate_artifact, setting_comment,
+        )).encode()).hexdigest(),
+    }
+
+
+def group_is_passed(targets: list[Target], report: dict[str, Any], inputs: dict[str, Any]) -> bool:
+    if report.get("status") != "passed" or report.get("inputs") != inputs:
+        return False
+    if set(report.get("platform_results", {})) != {t.platform for t in targets}:
+        return False
+    if any(result.get("status") != "passed" for result in report["platform_results"].values()):
+        return False
+    root = targets[0].group_directory
+    for artifact in report.get("artifacts", {}).values():
+        path = root / artifact["filename"]
+        if not path.is_file() or sha256_file(path) != artifact["sha256"]:
+            return False
+    return len(report.get("artifacts", {})) == len(ARTIFACT_FILENAMES)
+
+
+def publish_group(targets: list[Target], report: dict[str, Any], timeout_seconds: int = DEFAULT_TIMEOUT_SECONDS) -> None:
+    if report.get("status") != "passed":
+        return
+    target = targets[0]
+    if target.output_root is not None:
+        return
+    target.static_directory.mkdir(parents=True, exist_ok=True)
+    for artifact in report["artifacts"].values():
+        source = target.group_directory / artifact["filename"]
+        if sha256_file(source) != artifact["sha256"]:
+            raise DockerToolError(f"Grouped artifact checksum mismatch: {source}")
+        shutil.copy2(source, target.static_directory / source.name)
+    sync_download_metadata([target.version], timeout_seconds=timeout_seconds)
+
+
+def extra_namespace(value: str) -> str:
+    if not re.fullmatch(r"[a-z0-9]+(?:[._-][a-z0-9]+)*", value):
+        raise argparse.ArgumentTypeError("Use a lowercase namespace such as tiotjp, without a registry URL or slash")
+    return value
+
+
+def namespaced_tags(tags: list[str], namespaces: list[str]) -> list[str]:
+    if not tags or any(not re.fullmatch(r"[a-z0-9]+(?:[._-][a-z0-9]+)*/openriak-kv:[a-zA-Z0-9_][a-zA-Z0-9_.-]{0,127}", tag) for tag in tags):
+        raise DockerToolError("Image tags must use <namespace>/openriak-kv:<tag>")
+    result = list(tags)
+    for namespace in namespaces:
+        extra_namespace(namespace)
+        result.extend(f"{namespace}/openriak-kv:{tag.split(':', 1)[1]}" for tag in tags)
+    return list(dict.fromkeys(result))
+
+
+def approved_group_report(targets: list[Target]) -> dict[str, Any]:
+    """Validate recorded approval of saved bytes, independently of today's renderer."""
+    target = targets[0]
+    root = target.group_directory
+    path = root / "report.json"
+    if not path.is_file():
+        raise DockerToolError(f"No approved cache for {target.image}")
+    report = read_json(path)
+    if (report.get("schema_version") != MULTIARCH_SCHEMA_VERSION
+            or report.get("product") != "openriak-kv" or report.get("version") != target.version
+            or report.get("image") != target.image or report.get("status") != "passed"
+            or set(report.get("platforms", [])) != {t.platform for t in targets}
+            or not group_is_passed(targets, report, report.get("inputs", {}))):
+        raise DockerToolError(f"No complete, unchanged approval for {target.image}")
+    namespaced_tags(report.get("tags", []), [])
+    if target.image not in report["tags"]:
+        raise DockerToolError(f"Approval is missing the primary image tag: {target.image}")
+    keys = ("dockerfile", "compose_single", "compose_cluster", "environment_example")
+    for key, filename in zip(keys, ARTIFACT_FILENAMES):
+        artifact = report.get("artifacts", {}).get(key, {})
+        if artifact.get("filename") != filename or sha256_file(root / filename) != artifact.get("sha256"):
+            raise DockerToolError(f"Approved artifact is missing or changed: {root / filename}")
+    for platform in report["platforms"]:
+        result = report["platform_results"][platform]
+        proof_path = (root / result.get("report", "")).resolve()
+        if not proof_path.is_relative_to(root.resolve()) or not proof_path.is_file():
+            raise DockerToolError(f"Missing platform approval for {target.image} {platform}")
+        proof = read_json(proof_path)
+        tests = proof.get("tests", {})
+        cluster_tests = tests.get("cluster_admin_test", {})
+        if (proof.get("schema_version") != MULTIARCH_SCHEMA_VERSION
+                or proof.get("product") != "openriak-kv" or proof.get("status") != "passed"
+                or proof.get("image") != target.image or proof.get("run_id") != result.get("run_id")
+                or proof.get("target", {}).get("docker_platform") != platform
+                or tests.get("admin_test", {}).get("status") != "passed"
+                or tests.get("preserved_cookie", {}).get("status") != "passed"
+                or tests.get("cluster", {}).get("status") != "passed"
+                or tests.get("cluster", {}).get("coordinator_cookie_adoption") != "passed"
+                or len(cluster_tests) != report.get("cluster_nodes")
+                or any(test.get("status") != "passed" for test in cluster_tests.values())):
+            raise DockerToolError(f"Incomplete platform approval for {target.image} {platform}")
+        for key in keys:
+            if proof.get("artifacts", {}).get(key, {}).get("sha256") != report["artifacts"][key]["sha256"]:
+                raise DockerToolError(f"Platform approval does not cover current {key}: {target.image} {platform}")
+    return report
+
+
+def build_group_images(
+    target: Target, platforms: list[str], tags: list[str], context: pathlib.Path,
+    history: pathlib.Path, report: dict[str, Any], timeout: int, no_cache: bool = False,
+) -> None:
+    docker = docker_command()
+    logs = history / "logs"
+    tag_args = [part for tag in tags for part in ("--tag", tag)]
+    print(f"{log_timestamp()}   Exporting OCI image for {', '.join(platforms)} with {len(tags)} tag(s)", flush=True)
+    record_step(report, "export_oci_image", lambda: run_logged(
+        [docker, "buildx", "build", "--builder", MULTIARCH_BUILDER, "--platform", ",".join(platforms),
+         "--pull=false", *(["--no-cache"] if no_cache else []), *tag_args,
+         "--output", f"type=oci,dest={history / 'image.oci.tar'}", str(context)],
+        logs / "image-export.log", timeout_seconds=timeout))
+    report["oci_archive"] = str((history / "image.oci.tar").relative_to(target.group_directory))
+    report["build_tags"] = tags
+    host_arch = run_logged([docker, "info", "--format", "{{.Architecture}}"], logs / "host-platform.log", timeout_seconds=timeout).stdout.strip()
+    host_platform = ARCHITECTURE_PLATFORMS.get(host_arch)
+    if host_platform in platforms:
+        # Reuse the just-built layers while loading the host image and every alias.
+        record_step(report, "load_local_tags", lambda: run_logged(
+            [docker, "buildx", "build", "--builder", MULTIARCH_BUILDER, "--platform", host_platform,
+             "--pull=false", "--load", *tag_args, str(context)],
+            logs / "local-tags.log", timeout_seconds=timeout))
+        report["local_tags_platform"] = host_platform
+    else:
+        print(f"{log_timestamp()}   No {host_arch} package in this group; all tags are in the OCI archive", flush=True)
+
+
+def rebuild_approved_group(targets: list[Target], options: argparse.Namespace,
+                           builder_lifecycle: MultiarchBuilderLifecycle | None = None) -> bool:
+    target = targets[0]
+    root = target.group_directory
+    approval = approved_group_report(targets)
+    tags = namespaced_tags(approval["tags"], options.extra_namespace)
+    history = root / "rebuilds" / run_id()
+    history.mkdir(parents=True, exist_ok=False)
+    report = {
+        "schema_version": 1, "operation": "rebuild_without_tests", "status": "running",
+        "image": target.image, "build_tags": tags, "platforms": approval["platforms"],
+        "started_at": isoformat(), "finished_at": None, "steps": [], "error": None,
+        "tests": {"status": "not_run"}, "approved_run_id": approval["run_id"],
+        "approved_artifacts": approval["artifacts"],
+    }
+    write_json(history / "report.json", report)
+    write_json(history / "approval.json", approval)
+    try:
+        # Snapshot approved inputs so another refresh cannot change them during a build.
+        for artifact in approval["artifacts"].values():
+            destination = history / artifact["filename"]
+            shutil.copy2(root / artifact["filename"], destination)
+            if sha256_file(destination) != artifact["sha256"]:
+                raise DockerToolError(f"Approved file changed during rebuild preparation: {destination.name}")
+        (history / ".dockerignore").write_text("*\n")
+        ensure_multiarch_builder(history / "logs", options.timeout, builder_lifecycle)
+        build_group_images(target, approval["platforms"], tags, history, history, report, options.timeout, no_cache=True)
+        report["status"] = "built"
+    except KeyboardInterrupt:
+        report["status"] = "interrupted"
+        report["error"] = "Stopped by operator"
+        raise
+    except (DockerToolError, OSError) as error:
+        report["status"] = "failed"
+        report["error"] = str(error)
+        print(f"{log_timestamp()}   FAILED: {error}", flush=True)
+    finally:
+        report["finished_at"] = isoformat()
+        write_json(history / "report.json", report)
+    return report["status"] == "built"
+
+
+def refresh_group(targets: list[Target], options: argparse.Namespace, all_targets: list[Target],
+                  builder_lifecycle: MultiarchBuilderLifecycle | None = None) -> bool:
+    target = targets[0]
+    root = target.group_directory
+    tags = image_aliases(target, all_targets)
+    inputs = group_input(targets, options.cluster_nodes, tags)
+    report_path = root / "report.json"
+    report = read_json(report_path) if report_path.is_file() else {}
+    if group_is_passed(targets, report, inputs) and not options.force:
+        print(f"{log_timestamp()} SKIPPED {target.image} (all platforms passed)", flush=True)
+        publish_group(targets, report, timeout_seconds=options.timeout)
+        return True
+    if report and not (options.force or options.retry_failed):
+        raise DockerToolError(f"Incomplete or incompatible group {target.image}; use --retry-failed or --force")
+    identifier = run_id()
+    history = root / "runs" / identifier
+    logs = history / "logs"
+    history.mkdir(parents=True, exist_ok=False)
+    reusable = (
+        report.get("inputs") == inputs and not options.force
+        and set(report.get("base_images", {})) == {t.platform for t in targets}
+        and bool(report.get("distributed_cookie"))
+        and all((root / name).is_file() and sha256_file(root / name) == report.get("generated_artifacts", {}).get(name)
+                for name in ARTIFACT_FILENAMES)
+    )
+    previous = report
+    report = {
+        "schema_version": MULTIARCH_SCHEMA_VERSION, "product": "openriak-kv",
+        "status": "running", "image": target.image, "tags": tags,
+        "identity": dataclasses.asdict(target.identity),
+        "run_id": identifier, "started_at": isoformat(), "finished_at": None,
+        "inputs": inputs, "platforms": [t.platform for t in targets],
+        "targets": [{"os_id": t.os_id, "download_id": t.download_id, "architecture": t.architecture} for t in targets],
+        "version": target.version, "os_family": target.family, "os_release": target.release,
+        "os_name": target.operating_system["display_name"], "otp": target.otp,
+        "node": target.node_name, "cluster_nodes": options.cluster_nodes,
+        "steps": [], "platform_results": {}, "artifacts": {}, "error": None,
+    }
+    write_json(report_path, report)
+    try:
+        if reusable:
+            report["base_images"] = previous["base_images"]
+            report["distributed_cookie"] = previous["distributed_cookie"]
+        else:
+            report["base_images"] = {}
+            report["distributed_cookie"] = generate_distributed_cookie()
+            for platform_target in targets:
+                print(f"{log_timestamp()}   Pulling {base_image_for(platform_target)} for {platform_target.platform}", flush=True)
+                base, pinned = resolve_base_image(platform_target, logs / platform_target.platform.replace("/", "-"), options.timeout)
+                report["base_images"][platform_target.platform] = {"requested": base, "pinned": pinned, "resolved_at": isoformat()}
+            cookie = report["distributed_cookie"]
+            render_group_assets(targets, report["base_images"], cookie, tags, options.cluster_nodes, root)
+        report["generated_artifacts"] = {name: sha256_file(root / name) for name in ARTIFACT_FILENAMES}
+        for name in ARTIFACT_FILENAMES:
+            shutil.copy2(root / name, history / name)
+        write_json(report_path, report)
+        (root / ".dockerignore").write_text("*\n")
+        ensure_multiarch_builder(logs, options.timeout, builder_lifecycle)
+        for platform_target in targets:
+            state, _ = cache_state(platform_target, options.cluster_nodes)
+            matches = state == "valid" and all(sha256_file(platform_target.cache_directory / name) == sha256_file(root / name) for name in ARTIFACT_FILENAMES)
+            if matches and not options.force:
+                print(f"{log_timestamp()}   SKIPPED {platform_target.platform} (same shared files passed)", flush=True)
+                passed = True
+            else:
+                print(f"{log_timestamp()}   Testing {platform_target.platform} (timeout {options.timeout}s per phase)", flush=True)
+                passed = refresh_target(platform_target, options.timeout, options.keep_test_workdir, options.cluster_nodes,
+                    lambda message: print(f"{log_timestamp()}     {message}", flush=True), prepared=report)
+                print(f"{log_timestamp()}   {'PASSED' if passed else 'FAILED'} {platform_target.platform}", flush=True)
+            platform_report = read_json(platform_target.cache_directory / "report.json")
+            report["platform_results"][platform_target.platform] = {
+                "status": "passed" if passed else "failed", "run_id": platform_report["run_id"],
+                "finished_at": platform_report["finished_at"],
+                "report": str((platform_target.cache_directory / "runs" / platform_report["run_id"] / "report.json").relative_to(root)),
+                "artifacts": platform_report["artifacts"],
+            }
+            write_json(report_path, report)
+        if not all(result["status"] == "passed" for result in report["platform_results"].values()):
+            raise DockerToolError("One or more architecture tests failed; shared downloads will not be published")
+        build_group_images(target, report["platforms"],
+            namespaced_tags(tags, getattr(options, "extra_namespace", [])), root, history, report, options.timeout)
+        report["artifacts"] = artifact_downloads(target, *(root / name for name in ARTIFACT_FILENAMES))
+        report["status"] = "passed"
+    except KeyboardInterrupt:
+        report["status"] = "interrupted"
+        report["error"] = "Stopped by operator"
+        raise
+    except (DockerToolError, OSError) as error:
+        report["status"] = "failed"
+        report["error"] = str(error)
+        print(f"{log_timestamp()}   FAILED: {error}", flush=True)
+    finally:
+        report["finished_at"] = isoformat()
+        write_json(report_path, report)
+        write_json(history / "report.json", report)
+    publish_group(targets, report, timeout_seconds=options.timeout)
+    return report["status"] == "passed"
+
 def print_matrix(targets: list[Target], as_json: bool) -> None:
-    records = [
-        {
-            "version": target.version,
-            "os_id": target.os_id,
-            "otp": target.otp,
-            "architecture": target.architecture,
-            "download_id": target.download_id,
-            "image": target.image,
-            "base_image": base_image_for(target),
-            "cached": cache_state(target)[0] == "valid",
-        }
-        for target in targets
-    ]
+    all_targets = discover_targets()
+    selected = {(t.version, t.family, t.release, t.otp) for t in targets}
+    groups = grouped_targets([t for t in all_targets if (t.version, t.family, t.release, t.otp) in selected])
+    records = []
+    for group in groups:
+        target = group[0]
+        tags = image_aliases(target, all_targets)
+        path = target.group_directory / "report.json"
+        report = read_json(path) if path.is_file() else {}
+        records.append({
+            "version": target.version, "os_family": target.family, "os_release": target.release,
+            "otp": target.otp, "image": target.image, "tags": tags,
+            "platforms": [t.platform for t in group],
+            "packages": [{"os_id": t.os_id, "download_id": t.download_id, "platform": t.platform,
+                          "url": t.package["url"]} for t in group],
+            "cached": group_is_passed(group, report, group_input(group, DEFAULT_CLUSTER_NODES, tags)),
+        })
     if as_json:
         print(json.dumps(records, indent=2))
         return
     for record in records:
         marker = "cached" if record["cached"] else "not cached"
-        print(
-            f"{record['version']} {record['os_id']} OTP {record['otp']} "
-            f"{record['architecture']} ({record['download_id']}; {marker})"
-        )
+        print(f"{record['image']} ({', '.join(record['platforms'])}; {marker})")
+
 
 
 def print_refresh_header(
@@ -2936,13 +3890,176 @@ def print_refresh_header(
         architectures = "all"
     separator = "=" * 64
     print(separator)
-    print(f"Docker script started at {log_timestamp(started_at)}")
+    print(f"Docker script started at {log_timestamp(started_at)}\nPID:           {os.getpid()}\nLog file:      {os.environ.get('OPENRIAK_DOCKER_LOG_FILE', 'stdout/stderr')}")
     print(f"Version:       {versions}")
     print(f"OS:            {os_selection}")
     print(f"Architecture:  {architectures}")
+    print(f"Namespace:     {identity_from_options(options).namespace}")
+    print(f"Vendor:        {identity_from_options(options).vendor}")
+    print(f"Output:        {getattr(options, 'output', None) or 'docs cache'}")
+    print(f"Docs updates:  {'disabled' if getattr(options, 'output', None) or getattr(options, 'do_not_test', False) else 'enabled'}")
     print(f"Timeout:       {options.timeout}s")
-    print(f"Cluster nodes: {options.cluster_nodes}")
+    print(f"Cluster nodes: {'from approved files' if getattr(options, 'do_not_test', False) else options.cluster_nodes}")
     print(separator, flush=True)
+
+
+def label_text(value: str) -> str:
+    if not value.strip() or any(ord(char) < 32 or ord(char) == 127 for char in value):
+        raise argparse.ArgumentTypeError("Label values must be nonempty, single-line text")
+    return value
+
+
+def label_url(value: str) -> str:
+    label_text(value)
+    parsed = urllib.parse.urlsplit(value)
+    if parsed.scheme not in {"http", "https"} or not parsed.netloc or any(char.isspace() for char in value):
+        raise argparse.ArgumentTypeError("Use an absolute HTTP or HTTPS URL")
+    return value
+
+
+def standalone_output(value: str) -> pathlib.Path:
+    root = pathlib.Path(value).expanduser().resolve()
+    protected = (CACHE_ROOT, MULTIARCH_CACHE_ROOT, STATIC_ROOT, METADATA_ROOT,
+                 REPOSITORY_ROOT / "content", REPOSITORY_ROOT / "tools/generated", REPOSITORY_ROOT / ".git")
+    for path in protected:
+        path = path.resolve()
+        if root.is_relative_to(path) or path.is_relative_to(root):
+            raise DockerToolError(f"Standalone output must be separate from docs, generated metadata, and test caches: {root}")
+    return root
+
+
+def validate_output_targets(targets: list[Target]) -> None:
+    for target in targets:
+        if target.output_root is None:
+            continue
+        paths = [target.group_directory, target.cache_directory,
+                 target.group_directory / "runs", target.group_directory / "rebuilds",
+                 target.cache_directory / "runs"]
+        for directory in (target.group_directory, target.cache_directory):
+            paths.extend(directory / name for name in (*ARTIFACT_FILENAMES, "report.json", ".dockerignore"))
+        for path in paths:
+            if not path.resolve().is_relative_to(target.output_root.resolve()):
+                raise DockerToolError(f"Standalone output contains a path or symlink outside its root: {path}")
+
+
+def identity_from_options(options: argparse.Namespace) -> ImageIdentity:
+    defaults = ImageIdentity()
+    return ImageIdentity(**{field.name: getattr(options, field.name, None) or getattr(defaults, field.name)
+                            for field in dataclasses.fields(ImageIdentity)})
+
+
+def render_group_assets(targets: list[Target], bases: dict[str, dict[str, str]], cookie: str,
+                        tags: list[str], cluster_nodes: int, destination: pathlib.Path) -> None:
+    destination.mkdir(parents=True, exist_ok=True)
+    target = targets[0]
+    (destination / "Dockerfile").write_text(render_multiarch_dockerfile(targets, bases, cookie, tags))
+    (destination / "compose.single.yaml").write_text(render_single_compose(target, cookie))
+    (destination / "compose.cluster.yaml").write_text(render_cluster_compose(target, cluster_nodes, cookie))
+    (destination / "example.env").write_text(render_environment_example(target, cookie, cluster_nodes))
+
+
+def generate_group(targets: list[Target], options: argparse.Namespace, all_targets: list[Target]) -> bool:
+    """Render standalone files; no build, test approval, or docs publication."""
+    target = targets[0]
+    if target.output_root is None:
+        raise DockerToolError("generate requires a standalone --output path")
+    root = target.group_directory
+    tags = image_aliases(target, all_targets)
+    inputs = group_input(targets, options.cluster_nodes, tags)
+    report_path = root / "report.json"
+    previous = read_json(report_path) if report_path.is_file() else {}
+    if previous and not options.force:
+        valid = (previous.get("status") in {"generated", "passed"} and previous.get("inputs") == inputs
+                 and len(previous.get("generated_artifacts", {})) == len(ARTIFACT_FILENAMES)
+                 and all((root / name).is_file() and sha256_file(root / name) == previous["generated_artifacts"].get(name)
+                         for name in ARTIFACT_FILENAMES))
+        if valid:
+            print(f"{log_timestamp()} SKIPPED {target.image} (unchanged files already exist)", flush=True)
+            return True
+        raise DockerToolError(f"Output already contains changed or incompatible files; use --force: {root}")
+    if not previous and not options.force and any((root / name).exists() for name in ARTIFACT_FILENAMES):
+        raise DockerToolError(f"Output contains files without a generation report; use --force: {root}")
+    history = root / "runs" / run_id()
+    history.mkdir(parents=True, exist_ok=False)
+    # Keep any previous current files, including operator edits, before replacement.
+    for filename in (*ARTIFACT_FILENAMES, "report.json"):
+        if (root / filename).is_file():
+            (history / "previous").mkdir(exist_ok=True)
+            shutil.copy2(root / filename, history / "previous" / filename)
+    report = {
+        "schema_version": MULTIARCH_SCHEMA_VERSION, "product": "openriak-kv", "operation": "generate",
+        "status": "running", "tests": {"status": "not_run"}, "run_id": history.name,
+        "image": target.image, "tags": tags, "identity": dataclasses.asdict(target.identity),
+        "version": target.version, "cluster_nodes": options.cluster_nodes, "inputs": inputs,
+        "platforms": [t.platform for t in targets], "base_images": {}, "artifacts": {},
+        "started_at": isoformat(), "finished_at": None, "steps": [], "error": None,
+    }
+    try:
+        for platform_target in targets:
+            requested = base_image_for(platform_target)
+            base = None
+            if not options.force:
+                docs_target = dataclasses.replace(platform_target, identity=ImageIdentity(), output_root=None)
+                docs_report_path = docs_target.group_directory / "report.json"
+                cached = [previous]
+                if docs_report_path.is_file():
+                    cached.append(read_json(docs_report_path))
+                for candidate in cached:
+                    value = candidate.get("base_images", {}).get(platform_target.platform, {})
+                    if (value.get("requested") == requested
+                            and re.fullmatch(re.escape(requested) + r"@sha256:[0-9a-f]{64}", value.get("pinned", ""))):
+                        base = dict(value)
+                        print(f"{log_timestamp()}   Reusing recorded base digest for {requested} ({platform_target.platform})", flush=True)
+                        break
+            if base is None:
+                print(f"{log_timestamp()}   Pulling and pinning {requested} for {platform_target.platform}", flush=True)
+                requested, pinned = resolve_base_image(platform_target, history / "logs" / platform_target.platform.replace("/", "-"), options.timeout)
+                base = {"requested": requested, "pinned": pinned, "resolved_at": isoformat()}
+            report["base_images"][platform_target.platform] = base
+        report["distributed_cookie"] = generate_distributed_cookie()
+        render_group_assets(targets, report["base_images"], report["distributed_cookie"], tags,
+                            options.cluster_nodes, history)
+        for filename in ARTIFACT_FILENAMES:
+            shutil.copy2(history / filename, root / filename)
+        (root / ".dockerignore").write_text("*\n")
+        report["generated_artifacts"] = {name: sha256_file(root / name) for name in ARTIFACT_FILENAMES}
+        report["artifacts"] = artifact_downloads(target, *(root / name for name in ARTIFACT_FILENAMES))
+        report["status"] = "generated"
+    except KeyboardInterrupt:
+        report["status"] = "interrupted"
+        report["error"] = "Stopped by operator"
+        raise
+    except (DockerToolError, OSError) as error:
+        report["status"] = "failed"
+        report["error"] = str(error)
+        print(f"{log_timestamp()} FAILED: {error}", flush=True)
+    finally:
+        report["finished_at"] = isoformat()
+        write_json(history / "report.json", report)
+        write_json(report_path, report)
+    return report["status"] == "generated"
+
+
+class IndentedProgress:
+    """Indent continuation output, including prints split across multiple writes."""
+    def __init__(self, stream: Any, width: int):
+        self.stream = stream
+        self.indent = " " * width
+        self.line_start = True
+
+    def write(self, text: str) -> int:
+        for part in text.splitlines(keepends=True):
+            if self.line_start and part.strip("\r\n"):
+                self.stream.write(self.indent)
+            self.stream.write(part)
+            self.line_start = part.endswith(("\n", "\r"))
+        return len(text)
+
+    def flush(self) -> None:
+        self.stream.flush()
+
+    def __getattr__(self, name: str) -> Any:
+        return getattr(self.stream, name)
 
 
 def parser() -> argparse.ArgumentParser:
@@ -2965,7 +4082,8 @@ def parser() -> argparse.ArgumentParser:
     refresh.add_argument("--os-id")
     refresh.add_argument("--otp")
     refresh.add_argument("--download-id")
-    refresh.add_argument("--timeout", type=int, default=180)
+    refresh.add_argument("--timeout", type=int, default=DEFAULT_TIMEOUT_SECONDS, help="Seconds per operation or wait (default: 1800)")
+    refresh.add_argument("--whatif", action="store_true", help="Show what would rebuild or skip and why, without Docker or file changes")
     refresh.add_argument("--cluster-nodes", type=int, default=DEFAULT_CLUSTER_NODES)
     regeneration = refresh.add_mutually_exclusive_group()
     regeneration.add_argument(
@@ -2978,6 +4096,14 @@ def parser() -> argparse.ArgumentParser:
         action="store_true",
         help="Regenerate failed or incompatible targets while keeping passed caches",
     )
+    regeneration.add_argument(
+        "--do-not-test", action="store_true",
+        help="Rebuild only approved cached files without regeneration or integration tests",
+    )
+    refresh.add_argument(
+        "--extra-namespace", action="append", type=extra_namespace, default=[], metavar="NAMESPACE",
+        help="Also apply every built tag under this namespace (repeatable); does not push images",
+    )
     refresh.add_argument("--keep-test-workdir", action="store_true")
     refresh.add_argument(
         "--yes",
@@ -2985,13 +4111,45 @@ def parser() -> argparse.ArgumentParser:
         help="Required with --all because the complete historical matrix is large",
     )
 
+    generate = subcommands.add_parser("generate", help="Render standalone files without building, testing, or publishing docs")
+    generation_selection = generate.add_mutually_exclusive_group(required=True)
+    generation_selection.add_argument("--version", action="append", dest="versions")
+    generation_selection.add_argument("--all", action="store_true")
+    generate.add_argument("--os-id")
+    generate.add_argument("--otp")
+    generate.add_argument("--download-id")
+    generate.add_argument("--timeout", type=int, default=DEFAULT_TIMEOUT_SECONDS, help="Seconds per operation or wait (default: 1800)")
+    generate.add_argument("--cluster-nodes", type=int, default=DEFAULT_CLUSTER_NODES)
+    generate.add_argument("--force", action="store_true", help="Pull fresh base digests and regenerate, retaining previous output")
+    generate.add_argument("--yes", action="store_true", help="Required with --all")
+    generate.set_defaults(do_not_test=False)
+
+    for command in (refresh, generate):
+        for field in dataclasses.fields(LifecycleOptions):
+            command.add_argument("--" + field.name.replace("_", "-"),
+                                 type=int if field.name == "healthcheck_retries" else duration_seconds,
+                                 help=f"Generated {field.name.replace('_', ' ')} (default: {field.default}{'' if field.name == 'healthcheck_retries' else 's'})")
+        command.add_argument("--nohup", action="store_true", help="Run in the background and print the worker PID and timestamped log path")
+        command.add_argument("--vendor", type=label_text, help='Image vendor label (default: "OpenRiak")')
+        command.add_argument("--source", type=label_url, help="Image source label (default: https://github.com/OpenRiak/openriak-docs)")
+        command.add_argument("--url", type=label_url, help="Image project URL label (default: https://openriak.org)")
+        command.add_argument("--namespace", type=extra_namespace, help='Primary image namespace (default: "openriak")')
+        command.add_argument("--output", "--output-dir", required=command is generate, metavar="PATH",
+                             help="Separate output/cache root; automatically disables all docs publication")
+        command.add_argument("--no-docs", action="store_true", help="Explicitly disable docs updates (requires --output for isolation)")
+
     subcommands.add_parser("sync-static", help="Republish previously passed cache entries without retesting")
+    import openriak_cleanup
+    openriak_cleanup.configure_parser(subcommands.add_parser("cleanup", help="Preview or remove generator resources older than a supplied cutoff"))
     return result
 
 
 def main(arguments: list[str] | None = None) -> int:
     options = parser().parse_args(arguments)
     try:
+        if options.command == "cleanup":
+            import openriak_cleanup
+            return openriak_cleanup.main(options, sys.modules[__name__])
         if options.command == "sync-static":
             print(f"Published {sync_static()} cached Docker target(s).")
             return 0
@@ -3008,50 +4166,87 @@ def main(arguments: list[str] | None = None) -> int:
         if options.command == "matrix":
             print_matrix(targets, options.json)
             return 0
-        if options.all and not options.yes:
-            raise DockerToolError("refresh --all requires --yes")
+        if options.all and not options.yes and not getattr(options, "whatif", False):
+            raise DockerToolError(f"{options.command} --all requires --yes")
         if options.cluster_nodes < 2 or options.cluster_nodes > 253:
             raise DockerToolError("--cluster-nodes must be between 2 and 253")
 
-        print_refresh_header(options, targets)
+        if options.timeout <= 0:
+            raise DockerToolError("--timeout must be a positive number of seconds")
+
+        if options.no_docs and not options.output:
+            raise DockerToolError("--no-docs requires --output to keep standalone results outside the watched docs cache")
+        if options.do_not_test and any(getattr(options, name) is not None for name in ("vendor", "source", "url")):
+            raise DockerToolError("--do-not-test rebuilds approved labels unchanged; use generate or refresh to change --vendor/--source/--url")
+        lifecycle_values = {}
+        for field in dataclasses.fields(LifecycleOptions):
+            value = getattr(options, field.name)
+            if value is not None:
+                if options.do_not_test:
+                    raise DockerToolError("--do-not-test rebuilds approved files unchanged; lifecycle options require generate or refresh with tests")
+                if value < (0 if field.name == "healthcheck_start_period" else 1):
+                    raise DockerToolError(f"--{field.name.replace('_', '-')} must be {'nonnegative' if field.name == 'healthcheck_start_period' else 'positive'}")
+                lifecycle_values[field.name] = value
+        lifecycle_options = LifecycleOptions(**lifecycle_values)
+        identity = identity_from_options(options)
+        output_root = standalone_output(options.output) if options.output else None
+        all_targets = [dataclasses.replace(t, identity=identity, output_root=output_root, lifecycle_options=lifecycle_options) for t in discover_targets()]
+        selected_keys = {(t.version, t.family, t.release, t.otp) for t in targets}
+        groups = grouped_targets([t for t in all_targets if (t.version, t.family, t.release, t.otp) in selected_keys])
+        validate_output_targets([target for group in groups for target in group])
+        if getattr(options, "whatif", False):
+            import openriak_whatif
+            return openriak_whatif.run(sys.modules[__name__], groups, options, all_targets)
+        if options.do_not_test:
+            approved_groups = []
+            for group in groups:
+                path = group[0].group_directory / "report.json"
+                if path.is_file() and read_json(path).get("status") == "passed":
+                    approved_groups.append(group)
+                else:
+                    print(f"{log_timestamp()} SKIPPED {group[0].image} (no passed group approval)", flush=True)
+            groups = approved_groups
+            if not groups:
+                raise DockerToolError("No passed groups selected for --do-not-test")
+            print("Rebuilding approved cached files; integration tests will not run.", flush=True)
+        if options.nohup:
+            import openriak_background
+            return openriak_background.launch(sys.modules[__name__], options, sys.argv[1:] if arguments is None else arguments)
+        print_refresh_header(options, [target for group in groups for target in group])
         failures = 0
-        for index, target in enumerate(targets, start=1):
-            prefix = f"[{index}/{len(targets)}]"
-
-            def target_progress(message: str) -> None:
-                print(f"{prefix} {log_timestamp()}   - {message}", flush=True)
-
-            state, reason = cache_state(target, options.cluster_nodes)
-            if state == "valid" and not options.force:
-                print(
-                    f"{prefix} {log_timestamp()} SKIPPED {target.image} "
-                    "(complete cache exists)",
-                    flush=True,
-                )
-                continue
-            if state == "invalid" and not (options.force or options.retry_failed):
-                raise DockerToolError(
-                    f"Incomplete or incompatible cache for {target.image}: {reason}; "
-                    "use --retry-failed or --force to regenerate"
-                )
-            print(f"{prefix} {log_timestamp()} Refreshing {target.image}", flush=True)
-            target_started = time.monotonic()
-            passed = refresh_target(
-                target,
-                options.timeout,
-                options.keep_test_workdir,
-                options.cluster_nodes,
-                target_progress,
-            )
-            duration = round(time.monotonic() - target_started)
-            target_progress(
-                f"{'PASSED' if passed else 'FAILED'} (duration {duration}s)"
-            )
-            failures += int(not passed)
-        sync_download_metadata(target.version for target in targets)
+        matrix_started = time.monotonic()
+        counter_width = len(str(len(groups)))
+        with MultiarchBuilderLifecycle() as builder_lifecycle:
+            for index, group in enumerate(groups, start=1):
+                prefix = f"[{index:0{counter_width}d}/{len(groups)}] "
+                print(f"{prefix}{log_timestamp()} {group[0].image} ({', '.join(t.platform for t in group)})", flush=True)
+                group_started = time.monotonic()
+                with contextlib.redirect_stdout(IndentedProgress(sys.stdout, len(prefix))):
+                    try:
+                        if options.command == "generate":
+                            passed = generate_group(group, options, all_targets)
+                        elif options.do_not_test:
+                            passed = rebuild_approved_group(group, options, builder_lifecycle)
+                        else:
+                            passed = refresh_group(group, options, all_targets, builder_lifecycle)
+                    except (DockerToolError, OSError, json.JSONDecodeError) as error:
+                        print(f"{log_timestamp()} FAILED {group[0].image}: {error}", flush=True)
+                        passed = False
+                    failures += int(not passed)
+                    duration = round(time.monotonic() - group_started)
+                    success = ("GENERATED (not tested)" if options.command == "generate" else
+                               "BUILT (not retested)" if options.do_not_test else "PASSED")
+                    outcome = success if passed else "FAILED"
+                    print(f"{log_timestamp()} {outcome} {group[0].image} (duration {duration}s)", flush=True)
+        if options.command == "refresh" and not options.do_not_test and output_root is None:
+            sync_download_metadata((t.version for t in targets), timeout_seconds=options.timeout)
+        print(f"{log_timestamp()} Finished {len(groups)} groups: {failures} failed (duration {round(time.monotonic() - matrix_started)}s)", flush=True)
         return 1 if failures else 0
     except KeyboardInterrupt:
-        print("Refresh stopped by operator; current test cleanup completed.", file=sys.stderr)
+        message = ("Generation stopped by operator; its run record was retained." if options.command == "generate" else
+                   "Rebuild stopped by operator; its build record was retained." if getattr(options, "do_not_test", False)
+                   else "Refresh stopped by operator; current test cleanup completed.")
+        print(message, file=sys.stderr)
         return 130
     except (DockerToolError, OSError, json.JSONDecodeError) as error:
         print(f"error: {error}", file=sys.stderr)

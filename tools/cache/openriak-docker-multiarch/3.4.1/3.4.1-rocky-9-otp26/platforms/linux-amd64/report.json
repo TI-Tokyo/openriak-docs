@@ -1,0 +1,736 @@
+{
+  "artifacts": {
+    "compose_cluster": {
+      "filename": "compose.cluster.yaml",
+      "sha256": "da3484c2a5a79076b557214bb7bb9fa22f1d220500519fc28c16c6efe3e07bd0",
+      "url": "downloads/docker/3.4.1/3.4.1-rocky-9-otp26/compose.cluster.yaml"
+    },
+    "compose_single": {
+      "filename": "compose.single.yaml",
+      "sha256": "595b266f9b06871d0d6bbecd93a74d7853987a6ac030bbb0b19e84d3544136d1",
+      "url": "downloads/docker/3.4.1/3.4.1-rocky-9-otp26/compose.single.yaml"
+    },
+    "dockerfile": {
+      "filename": "Dockerfile",
+      "sha256": "73aa0bef02f406d977848ec368ee848c47c3058f0fdd862dc52e31932703da41",
+      "url": "downloads/docker/3.4.1/3.4.1-rocky-9-otp26/Dockerfile"
+    },
+    "environment_example": {
+      "filename": "example.env",
+      "sha256": "8f36d9068a42e0ff96ea02b83bc1b223faae8e3366e9d2de92e2824ef644d9b3",
+      "url": "downloads/docker/3.4.1/3.4.1-rocky-9-otp26/example.env"
+    }
+  },
+  "base_image": {
+    "pinned": "rockylinux:9@sha256:d7be1c094cc5845ee815d4632fe377514ee6ebcf8efaed6892889657e5ddaaa6",
+    "requested": "rockylinux:9",
+    "resolved_at": "2026-09-06T22:17:23Z"
+  },
+  "error": null,
+  "finished_at": "2026-09-06T22:22:11Z",
+  "generation": {
+    "cluster_nodes": 5,
+    "distributed_cookie": "openriak-924a492842bd78bae34a9a5110589601"
+  },
+  "identity": {
+    "namespace": "tiotjp",
+    "source": "https://github.com/TI-Tokyo/openriak-docs",
+    "url": "https://www.tiot.jp/",
+    "vendor": "TI Tokyo"
+  },
+  "image": "tiotjp/openriak-kv:3.4.1-rocky-9-otp26",
+  "metadata_sources": [
+    "content/openriak-kv/metadata/3.4.1/supported-os.json",
+    "content/openriak-kv/metadata/3.4.1/downloads.json",
+    "content/openriak-kv/metadata/os-aliases.json"
+  ],
+  "network": {
+    "address_assignment": "docker",
+    "node_host": "node-01.cluster-a.openriak",
+    "riak_node_name": "openriak-kv@node-01.cluster-a.openriak"
+  },
+  "node": "openriak-kv-3.4.1-rocky-9-otp26-node",
+  "package": {
+    "checksum": {
+      "algorithm": "sha256",
+      "value": "952f04a57622b160ef01d7aa15d3871924221766f1cd08dc74bf5ecd3ffbe9ea"
+    },
+    "filename": "riak-3.4.1.OTP26-1.el9.x86_64.rpm",
+    "format": "rpm",
+    "url": "https://files.tiot.jp/riak/kv/3.4/3.4.1/rhel/9/riak-3.4.1.OTP26-1.el9.x86_64.rpm"
+  },
+  "ports": {
+    "http": 8098,
+    "protobuf": 8087
+  },
+  "product": "openriak-kv",
+  "run_id": "20260906T221723.936093Z",
+  "schema_version": 4,
+  "started_at": "2026-09-06T22:17:23Z",
+  "status": "passed",
+  "steps": [
+    {
+      "duration_seconds": 0.001,
+      "finished_at": "2026-09-06T22:17:23Z",
+      "name": "generate_artifacts",
+      "started_at": "2026-09-06T22:17:23Z",
+      "status": "passed"
+    },
+    {
+      "duration_seconds": 0.147,
+      "finished_at": "2026-09-06T22:17:24Z",
+      "name": "validate_compose_artifacts",
+      "started_at": "2026-09-06T22:17:23Z",
+      "status": "passed"
+    },
+    {
+      "duration_seconds": 37.666,
+      "finished_at": "2026-09-06T22:18:01Z",
+      "name": "build_image",
+      "started_at": "2026-09-06T22:17:24Z",
+      "status": "passed"
+    },
+    {
+      "duration_seconds": 2.29,
+      "finished_at": "2026-09-06T22:18:04Z",
+      "name": "initialize_volumes",
+      "started_at": "2026-09-06T22:18:01Z",
+      "status": "passed"
+    },
+    {
+      "duration_seconds": 1.1,
+      "finished_at": "2026-09-06T22:18:05Z",
+      "name": "make_test_config_writable",
+      "started_at": "2026-09-06T22:18:04Z",
+      "status": "passed"
+    },
+    {
+      "duration_seconds": 0.003,
+      "finished_at": "2026-09-06T22:18:05Z",
+      "name": "configure_node",
+      "started_at": "2026-09-06T22:18:05Z",
+      "status": "passed"
+    },
+    {
+      "duration_seconds": 0.637,
+      "finished_at": "2026-09-06T22:18:06Z",
+      "name": "start_compose_node",
+      "started_at": "2026-09-06T22:18:05Z",
+      "status": "passed"
+    },
+    {
+      "duration_seconds": 22.041,
+      "finished_at": "2026-09-06T22:18:28Z",
+      "name": "wait_for_entrypoint_readiness",
+      "started_at": "2026-09-06T22:18:06Z",
+      "status": "passed"
+    },
+    {
+      "duration_seconds": 0.885,
+      "finished_at": "2026-09-06T22:18:28Z",
+      "name": "wait_for_cli_and_http",
+      "started_at": "2026-09-06T22:18:28Z",
+      "status": "passed"
+    },
+    {
+      "duration_seconds": 0.262,
+      "finished_at": "2026-09-06T22:18:29Z",
+      "name": "verify_runtime_options",
+      "started_at": "2026-09-06T22:18:28Z",
+      "status": "passed"
+    },
+    {
+      "duration_seconds": 1.907,
+      "finished_at": "2026-09-06T22:18:31Z",
+      "name": "single_node_admin_test",
+      "started_at": "2026-09-06T22:18:29Z",
+      "status": "passed"
+    },
+    {
+      "duration_seconds": 0.041,
+      "finished_at": "2026-09-06T22:18:31Z",
+      "name": "wait_for_healthcheck",
+      "started_at": "2026-09-06T22:18:31Z",
+      "status": "passed"
+    },
+    {
+      "duration_seconds": 4.589,
+      "finished_at": "2026-09-06T22:18:35Z",
+      "name": "graceful_stop",
+      "started_at": "2026-09-06T22:18:31Z",
+      "status": "passed"
+    },
+    {
+      "duration_seconds": 0.071,
+      "finished_at": "2026-09-06T22:18:35Z",
+      "name": "verify_graceful_shutdown_logging",
+      "started_at": "2026-09-06T22:18:35Z",
+      "status": "passed"
+    },
+    {
+      "duration_seconds": 0.552,
+      "finished_at": "2026-09-06T22:18:36Z",
+      "name": "remove_single_node_test",
+      "started_at": "2026-09-06T22:18:35Z",
+      "status": "passed"
+    },
+    {
+      "duration_seconds": 3.294,
+      "finished_at": "2026-09-06T22:18:39Z",
+      "name": "start_compose_cluster",
+      "started_at": "2026-09-06T22:18:36Z",
+      "status": "passed"
+    },
+    {
+      "duration_seconds": 192.409,
+      "finished_at": "2026-09-06T22:21:52Z",
+      "name": "wait_for_cluster",
+      "started_at": "2026-09-06T22:18:39Z",
+      "status": "passed"
+    },
+    {
+      "duration_seconds": 1.762,
+      "finished_at": "2026-09-06T22:21:54Z",
+      "name": "cluster_node_1_admin_test",
+      "started_at": "2026-09-06T22:21:52Z",
+      "status": "passed"
+    },
+    {
+      "duration_seconds": 0.188,
+      "finished_at": "2026-09-06T22:21:54Z",
+      "name": "cluster_node_1_runtime_options",
+      "started_at": "2026-09-06T22:21:54Z",
+      "status": "passed"
+    },
+    {
+      "duration_seconds": 1.811,
+      "finished_at": "2026-09-06T22:21:57Z",
+      "name": "cluster_node_2_admin_test",
+      "started_at": "2026-09-06T22:21:55Z",
+      "status": "passed"
+    },
+    {
+      "duration_seconds": 0.287,
+      "finished_at": "2026-09-06T22:21:57Z",
+      "name": "cluster_node_2_runtime_options",
+      "started_at": "2026-09-06T22:21:57Z",
+      "status": "passed"
+    },
+    {
+      "duration_seconds": 1.945,
+      "finished_at": "2026-09-06T22:21:59Z",
+      "name": "cluster_node_3_admin_test",
+      "started_at": "2026-09-06T22:21:57Z",
+      "status": "passed"
+    },
+    {
+      "duration_seconds": 0.132,
+      "finished_at": "2026-09-06T22:21:59Z",
+      "name": "cluster_node_3_runtime_options",
+      "started_at": "2026-09-06T22:21:59Z",
+      "status": "passed"
+    },
+    {
+      "duration_seconds": 1.768,
+      "finished_at": "2026-09-06T22:22:01Z",
+      "name": "cluster_node_4_admin_test",
+      "started_at": "2026-09-06T22:21:59Z",
+      "status": "passed"
+    },
+    {
+      "duration_seconds": 0.253,
+      "finished_at": "2026-09-06T22:22:02Z",
+      "name": "cluster_node_4_runtime_options",
+      "started_at": "2026-09-06T22:22:01Z",
+      "status": "passed"
+    },
+    {
+      "duration_seconds": 1.789,
+      "finished_at": "2026-09-06T22:22:04Z",
+      "name": "cluster_node_5_admin_test",
+      "started_at": "2026-09-06T22:22:02Z",
+      "status": "passed"
+    },
+    {
+      "duration_seconds": 0.195,
+      "finished_at": "2026-09-06T22:22:04Z",
+      "name": "cluster_node_5_runtime_options",
+      "started_at": "2026-09-06T22:22:04Z",
+      "status": "passed"
+    },
+    {
+      "duration_seconds": 5.695,
+      "finished_at": "2026-09-06T22:22:10Z",
+      "name": "graceful_stop_cluster",
+      "started_at": "2026-09-06T22:22:04Z",
+      "status": "passed"
+    },
+    {
+      "duration_seconds": 0.723,
+      "finished_at": "2026-09-06T22:22:10Z",
+      "name": "remove_cluster_test",
+      "started_at": "2026-09-06T22:22:10Z",
+      "status": "passed"
+    }
+  ],
+  "target": {
+    "architecture": "x86_64",
+    "docker_platform": "linux/amd64",
+    "download_id": "otp26-x86_64-1",
+    "os_family": "rocky",
+    "os_id": "rocky-9-x86_64",
+    "os_name": "Rocky Linux 9",
+    "os_release": "9",
+    "otp": "26",
+    "package_os_id": "rhel-9-x86_64",
+    "version": "3.4.1"
+  },
+  "tests": {
+    "admin_test": {
+      "command": "riak admin test",
+      "response": "Successfully completed 1 read/write cycle to 'openriak-kv@node-01.cluster-a.openriak'",
+      "status": "passed"
+    },
+    "cli_ping": {
+      "command": "riak ping",
+      "response": "pong",
+      "status": "passed"
+    },
+    "cluster": {
+      "checks": [
+        "same member set",
+        "ring ready",
+        "transfers complete",
+        "riak ping == pong",
+        "HTTP 200/OK",
+        "riak admin test read/write cycle",
+        "Docker healthcheck healthy",
+        "config/data/log volumes populated"
+      ],
+      "coordinator_cookie_adoption": "passed",
+      "members": [
+        "openriak-kv@node-01.cluster-a.openriak",
+        "openriak-kv@node-02.cluster-a.openriak",
+        "openriak-kv@node-03.cluster-a.openriak",
+        "openriak-kv@node-04.cluster-a.openriak",
+        "openriak-kv@node-05.cluster-a.openriak"
+      ],
+      "node_count": 5,
+      "roles": {
+        "openriak-kv-3.4.1-rocky-9-otp26-node-1-t-936093z": "Coordinator",
+        "openriak-kv-3.4.1-rocky-9-otp26-node-2-t-936093z": "Follower",
+        "openriak-kv-3.4.1-rocky-9-otp26-node-3-t-936093z": "Follower",
+        "openriak-kv-3.4.1-rocky-9-otp26-node-4-t-936093z": "Follower",
+        "openriak-kv-3.4.1-rocky-9-otp26-node-5-t-936093z": "Follower"
+      },
+      "state": {
+        "openriak-kv-3.4.1-rocky-9-otp26-node-1-t-936093z": {
+          "http": "OK",
+          "members": "================================= Membership ==================================\nStatus     Ring    Pending    Node\n-------------------------------------------------------------------------------\nvalid      25.0%      --      openriak-kv@node-01.cluster-a.openriak\nvalid      25.0%      --      openriak-kv@node-02.cluster-a.openriak\nvalid      25.0%      --      openriak-kv@node-03.cluster-a.openriak\nvalid      12.5%      --      openriak-kv@node-04.cluster-a.openriak\nvalid      12.5%      --      openriak-kv@node-05.cluster-a.openriak\n-------------------------------------------------------------------------------\nValid:5 / Leaving:0 / Exiting:0 / Joining:0 / Down:0\nok",
+          "ping": "pong",
+          "ready": true,
+          "ring": "TRUE All nodes agree on the ring ['openriak-kv@node-01.cluster-a.openriak',\n                                  'openriak-kv@node-02.cluster-a.openriak',\n                                  'openriak-kv@node-03.cluster-a.openriak',\n                                  'openriak-kv@node-04.cluster-a.openriak',\n                                  'openriak-kv@node-05.cluster-a.openriak']\nok",
+          "transfers": "No transfers active\n\nActive Transfers:\n\n\nok"
+        },
+        "openriak-kv-3.4.1-rocky-9-otp26-node-2-t-936093z": {
+          "http": "OK",
+          "members": "================================= Membership ==================================\nStatus     Ring    Pending    Node\n-------------------------------------------------------------------------------\nvalid      25.0%      --      openriak-kv@node-01.cluster-a.openriak\nvalid      25.0%      --      openriak-kv@node-02.cluster-a.openriak\nvalid      25.0%      --      openriak-kv@node-03.cluster-a.openriak\nvalid      12.5%      --      openriak-kv@node-04.cluster-a.openriak\nvalid      12.5%      --      openriak-kv@node-05.cluster-a.openriak\n-------------------------------------------------------------------------------\nValid:5 / Leaving:0 / Exiting:0 / Joining:0 / Down:0\nok",
+          "ping": "pong",
+          "ready": true,
+          "ring": "TRUE All nodes agree on the ring ['openriak-kv@node-01.cluster-a.openriak',\n                                  'openriak-kv@node-02.cluster-a.openriak',\n                                  'openriak-kv@node-03.cluster-a.openriak',\n                                  'openriak-kv@node-04.cluster-a.openriak',\n                                  'openriak-kv@node-05.cluster-a.openriak']\nok",
+          "transfers": "No transfers active\n\nActive Transfers:\n\n\nok"
+        },
+        "openriak-kv-3.4.1-rocky-9-otp26-node-3-t-936093z": {
+          "http": "OK",
+          "members": "================================= Membership ==================================\nStatus     Ring    Pending    Node\n-------------------------------------------------------------------------------\nvalid      25.0%      --      openriak-kv@node-01.cluster-a.openriak\nvalid      25.0%      --      openriak-kv@node-02.cluster-a.openriak\nvalid      25.0%      --      openriak-kv@node-03.cluster-a.openriak\nvalid      12.5%      --      openriak-kv@node-04.cluster-a.openriak\nvalid      12.5%      --      openriak-kv@node-05.cluster-a.openriak\n-------------------------------------------------------------------------------\nValid:5 / Leaving:0 / Exiting:0 / Joining:0 / Down:0\nok",
+          "ping": "pong",
+          "ready": true,
+          "ring": "TRUE All nodes agree on the ring ['openriak-kv@node-01.cluster-a.openriak',\n                                  'openriak-kv@node-02.cluster-a.openriak',\n                                  'openriak-kv@node-03.cluster-a.openriak',\n                                  'openriak-kv@node-04.cluster-a.openriak',\n                                  'openriak-kv@node-05.cluster-a.openriak']\nok",
+          "transfers": "No transfers active\n\nActive Transfers:\n\n\nok"
+        },
+        "openriak-kv-3.4.1-rocky-9-otp26-node-4-t-936093z": {
+          "http": "OK",
+          "members": "================================= Membership ==================================\nStatus     Ring    Pending    Node\n-------------------------------------------------------------------------------\nvalid      25.0%      --      openriak-kv@node-01.cluster-a.openriak\nvalid      25.0%      --      openriak-kv@node-02.cluster-a.openriak\nvalid      25.0%      --      openriak-kv@node-03.cluster-a.openriak\nvalid      12.5%      --      openriak-kv@node-04.cluster-a.openriak\nvalid      12.5%      --      openriak-kv@node-05.cluster-a.openriak\n-------------------------------------------------------------------------------\nValid:5 / Leaving:0 / Exiting:0 / Joining:0 / Down:0\nok",
+          "ping": "pong",
+          "ready": true,
+          "ring": "TRUE All nodes agree on the ring ['openriak-kv@node-01.cluster-a.openriak',\n                                  'openriak-kv@node-02.cluster-a.openriak',\n                                  'openriak-kv@node-03.cluster-a.openriak',\n                                  'openriak-kv@node-04.cluster-a.openriak',\n                                  'openriak-kv@node-05.cluster-a.openriak']\nok",
+          "transfers": "No transfers active\n\nActive Transfers:\n\n\nok"
+        },
+        "openriak-kv-3.4.1-rocky-9-otp26-node-5-t-936093z": {
+          "http": "OK",
+          "members": "================================= Membership ==================================\nStatus     Ring    Pending    Node\n-------------------------------------------------------------------------------\nvalid      25.0%      --      openriak-kv@node-01.cluster-a.openriak\nvalid      25.0%      --      openriak-kv@node-02.cluster-a.openriak\nvalid      25.0%      --      openriak-kv@node-03.cluster-a.openriak\nvalid      12.5%      --      openriak-kv@node-04.cluster-a.openriak\nvalid      12.5%      --      openriak-kv@node-05.cluster-a.openriak\n-------------------------------------------------------------------------------\nValid:5 / Leaving:0 / Exiting:0 / Joining:0 / Down:0\nok",
+          "ping": "pong",
+          "ready": true,
+          "ring": "TRUE All nodes agree on the ring ['openriak-kv@node-01.cluster-a.openriak',\n                                  'openriak-kv@node-02.cluster-a.openriak',\n                                  'openriak-kv@node-03.cluster-a.openriak',\n                                  'openriak-kv@node-04.cluster-a.openriak',\n                                  'openriak-kv@node-05.cluster-a.openriak']\nok",
+          "transfers": "No transfers active\n\nActive Transfers:\n\n\nok"
+        }
+      },
+      "status": "passed"
+    },
+    "cluster_admin_test": {
+      "openriak-kv-3.4.1-rocky-9-otp26-node-1-t-936093z": {
+        "command": "riak admin test",
+        "response": "Successfully completed 1 read/write cycle to 'openriak-kv@node-01.cluster-a.openriak'",
+        "status": "passed"
+      },
+      "openriak-kv-3.4.1-rocky-9-otp26-node-2-t-936093z": {
+        "command": "riak admin test",
+        "response": "Successfully completed 1 read/write cycle to 'openriak-kv@node-02.cluster-a.openriak'",
+        "status": "passed"
+      },
+      "openriak-kv-3.4.1-rocky-9-otp26-node-3-t-936093z": {
+        "command": "riak admin test",
+        "response": "Successfully completed 1 read/write cycle to 'openriak-kv@node-03.cluster-a.openriak'",
+        "status": "passed"
+      },
+      "openriak-kv-3.4.1-rocky-9-otp26-node-4-t-936093z": {
+        "command": "riak admin test",
+        "response": "Successfully completed 1 read/write cycle to 'openriak-kv@node-04.cluster-a.openriak'",
+        "status": "passed"
+      },
+      "openriak-kv-3.4.1-rocky-9-otp26-node-5-t-936093z": {
+        "command": "riak admin test",
+        "response": "Successfully completed 1 read/write cycle to 'openriak-kv@node-05.cluster-a.openriak'",
+        "status": "passed"
+      }
+    },
+    "cluster_runtime_options": {
+      "openriak-kv-3.4.1-rocky-9-otp26-node-1-t-936093z": {
+        "docker_logging": {
+          "Config": {
+            "max-file": "3",
+            "max-size": "10m"
+          },
+          "Type": "json-file"
+        },
+        "gid": 19002,
+        "labels": {
+          "com.docker.compose.config-hash": "8666dc556f52b1d21ba6d5fdcd50093fa80cec8b13aab6385c22c71eead38b34",
+          "com.docker.compose.container-number": "1",
+          "com.docker.compose.depends_on": "",
+          "com.docker.compose.image": "sha256:8bb45ae77d5160327276a0d3990d70ca2e0128255c6ad7e9d6883df1a5782c2f",
+          "com.docker.compose.oneoff": "False",
+          "com.docker.compose.project": "openriak-kv-341-rocky-9-otp26-node-cluster",
+          "com.docker.compose.project.config_files": "/tmp/openriak-docker-3.4.1-rocky-9-otp26-p_tuwsf1/compose.cluster.test.yaml",
+          "com.docker.compose.project.environment_file": "/tmp/openriak-docker-3.4.1-rocky-9-otp26-p_tuwsf1/.env.cluster",
+          "com.docker.compose.project.working_dir": "/tmp/openriak-docker-3.4.1-rocky-9-otp26-p_tuwsf1",
+          "com.docker.compose.service": "node1",
+          "com.docker.compose.version": "5.4.0",
+          "desktop.docker.io/wsl-distro": "Ubuntu",
+          "org.opencontainers.image.description": "Package-backed OpenRiak KV with single-node and cluster startup support",
+          "org.opencontainers.image.source": "https://github.com/TI-Tokyo/openriak-docs",
+          "org.opencontainers.image.title": "OpenRiak KV",
+          "org.opencontainers.image.url": "https://www.tiot.jp/",
+          "org.opencontainers.image.vendor": "TI Tokyo",
+          "org.opencontainers.image.version": "3.4.1",
+          "org.openriak.image.tag": "tiotjp/openriak-kv:3.4.1-rocky-9-otp26",
+          "org.openriak.os.name": "rocky",
+          "org.openriak.os.release": "9",
+          "org.openriak.os.version": "9",
+          "org.openriak.otp.version": "26"
+        },
+        "status": "passed",
+        "timezone": "Asia/Tokyo",
+        "uid": 19001
+      },
+      "openriak-kv-3.4.1-rocky-9-otp26-node-2-t-936093z": {
+        "docker_logging": {
+          "Config": {
+            "max-file": "3",
+            "max-size": "10m"
+          },
+          "Type": "json-file"
+        },
+        "gid": 19002,
+        "labels": {
+          "com.docker.compose.config-hash": "e9b8fd9ccbe2dc0dfe0b8b4c5f3081d3050065cd2479fc5916cf40c8b32860d2",
+          "com.docker.compose.container-number": "1",
+          "com.docker.compose.depends_on": "",
+          "com.docker.compose.image": "sha256:8bb45ae77d5160327276a0d3990d70ca2e0128255c6ad7e9d6883df1a5782c2f",
+          "com.docker.compose.oneoff": "False",
+          "com.docker.compose.project": "openriak-kv-341-rocky-9-otp26-node-cluster",
+          "com.docker.compose.project.config_files": "/tmp/openriak-docker-3.4.1-rocky-9-otp26-p_tuwsf1/compose.cluster.test.yaml",
+          "com.docker.compose.project.environment_file": "/tmp/openriak-docker-3.4.1-rocky-9-otp26-p_tuwsf1/.env.cluster",
+          "com.docker.compose.project.working_dir": "/tmp/openriak-docker-3.4.1-rocky-9-otp26-p_tuwsf1",
+          "com.docker.compose.service": "node2",
+          "com.docker.compose.version": "5.4.0",
+          "desktop.docker.io/wsl-distro": "Ubuntu",
+          "org.opencontainers.image.description": "Package-backed OpenRiak KV with single-node and cluster startup support",
+          "org.opencontainers.image.source": "https://github.com/TI-Tokyo/openriak-docs",
+          "org.opencontainers.image.title": "OpenRiak KV",
+          "org.opencontainers.image.url": "https://www.tiot.jp/",
+          "org.opencontainers.image.vendor": "TI Tokyo",
+          "org.opencontainers.image.version": "3.4.1",
+          "org.openriak.image.tag": "tiotjp/openriak-kv:3.4.1-rocky-9-otp26",
+          "org.openriak.os.name": "rocky",
+          "org.openriak.os.release": "9",
+          "org.openriak.os.version": "9",
+          "org.openriak.otp.version": "26"
+        },
+        "status": "passed",
+        "timezone": "Asia/Tokyo",
+        "uid": 19001
+      },
+      "openriak-kv-3.4.1-rocky-9-otp26-node-3-t-936093z": {
+        "docker_logging": {
+          "Config": {
+            "max-file": "3",
+            "max-size": "10m"
+          },
+          "Type": "json-file"
+        },
+        "gid": 19002,
+        "labels": {
+          "com.docker.compose.config-hash": "14a9058f0dec4a0ba8d0e5b07bcd0dd0ae26ebd9d2f47c2ad4a9fba37abe0938",
+          "com.docker.compose.container-number": "1",
+          "com.docker.compose.depends_on": "",
+          "com.docker.compose.image": "sha256:8bb45ae77d5160327276a0d3990d70ca2e0128255c6ad7e9d6883df1a5782c2f",
+          "com.docker.compose.oneoff": "False",
+          "com.docker.compose.project": "openriak-kv-341-rocky-9-otp26-node-cluster",
+          "com.docker.compose.project.config_files": "/tmp/openriak-docker-3.4.1-rocky-9-otp26-p_tuwsf1/compose.cluster.test.yaml",
+          "com.docker.compose.project.environment_file": "/tmp/openriak-docker-3.4.1-rocky-9-otp26-p_tuwsf1/.env.cluster",
+          "com.docker.compose.project.working_dir": "/tmp/openriak-docker-3.4.1-rocky-9-otp26-p_tuwsf1",
+          "com.docker.compose.service": "node3",
+          "com.docker.compose.version": "5.4.0",
+          "desktop.docker.io/wsl-distro": "Ubuntu",
+          "org.opencontainers.image.description": "Package-backed OpenRiak KV with single-node and cluster startup support",
+          "org.opencontainers.image.source": "https://github.com/TI-Tokyo/openriak-docs",
+          "org.opencontainers.image.title": "OpenRiak KV",
+          "org.opencontainers.image.url": "https://www.tiot.jp/",
+          "org.opencontainers.image.vendor": "TI Tokyo",
+          "org.opencontainers.image.version": "3.4.1",
+          "org.openriak.image.tag": "tiotjp/openriak-kv:3.4.1-rocky-9-otp26",
+          "org.openriak.os.name": "rocky",
+          "org.openriak.os.release": "9",
+          "org.openriak.os.version": "9",
+          "org.openriak.otp.version": "26"
+        },
+        "status": "passed",
+        "timezone": "Asia/Tokyo",
+        "uid": 19001
+      },
+      "openriak-kv-3.4.1-rocky-9-otp26-node-4-t-936093z": {
+        "docker_logging": {
+          "Config": {
+            "max-file": "3",
+            "max-size": "10m"
+          },
+          "Type": "json-file"
+        },
+        "gid": 19002,
+        "labels": {
+          "com.docker.compose.config-hash": "d140259f7c560e9629fdb8591fcdc3cf4c4f1ee229247ef396a6700c13c9c329",
+          "com.docker.compose.container-number": "1",
+          "com.docker.compose.depends_on": "",
+          "com.docker.compose.image": "sha256:8bb45ae77d5160327276a0d3990d70ca2e0128255c6ad7e9d6883df1a5782c2f",
+          "com.docker.compose.oneoff": "False",
+          "com.docker.compose.project": "openriak-kv-341-rocky-9-otp26-node-cluster",
+          "com.docker.compose.project.config_files": "/tmp/openriak-docker-3.4.1-rocky-9-otp26-p_tuwsf1/compose.cluster.test.yaml",
+          "com.docker.compose.project.environment_file": "/tmp/openriak-docker-3.4.1-rocky-9-otp26-p_tuwsf1/.env.cluster",
+          "com.docker.compose.project.working_dir": "/tmp/openriak-docker-3.4.1-rocky-9-otp26-p_tuwsf1",
+          "com.docker.compose.service": "node4",
+          "com.docker.compose.version": "5.4.0",
+          "desktop.docker.io/wsl-distro": "Ubuntu",
+          "org.opencontainers.image.description": "Package-backed OpenRiak KV with single-node and cluster startup support",
+          "org.opencontainers.image.source": "https://github.com/TI-Tokyo/openriak-docs",
+          "org.opencontainers.image.title": "OpenRiak KV",
+          "org.opencontainers.image.url": "https://www.tiot.jp/",
+          "org.opencontainers.image.vendor": "TI Tokyo",
+          "org.opencontainers.image.version": "3.4.1",
+          "org.openriak.image.tag": "tiotjp/openriak-kv:3.4.1-rocky-9-otp26",
+          "org.openriak.os.name": "rocky",
+          "org.openriak.os.release": "9",
+          "org.openriak.os.version": "9",
+          "org.openriak.otp.version": "26"
+        },
+        "status": "passed",
+        "timezone": "Asia/Tokyo",
+        "uid": 19001
+      },
+      "openriak-kv-3.4.1-rocky-9-otp26-node-5-t-936093z": {
+        "docker_logging": {
+          "Config": {
+            "max-file": "3",
+            "max-size": "10m"
+          },
+          "Type": "json-file"
+        },
+        "gid": 19002,
+        "labels": {
+          "com.docker.compose.config-hash": "4cc193aa59a8aa9c79a0256fc6d5e1bbae4e684ed76b260e73185662ba7a792f",
+          "com.docker.compose.container-number": "1",
+          "com.docker.compose.depends_on": "",
+          "com.docker.compose.image": "sha256:8bb45ae77d5160327276a0d3990d70ca2e0128255c6ad7e9d6883df1a5782c2f",
+          "com.docker.compose.oneoff": "False",
+          "com.docker.compose.project": "openriak-kv-341-rocky-9-otp26-node-cluster",
+          "com.docker.compose.project.config_files": "/tmp/openriak-docker-3.4.1-rocky-9-otp26-p_tuwsf1/compose.cluster.test.yaml",
+          "com.docker.compose.project.environment_file": "/tmp/openriak-docker-3.4.1-rocky-9-otp26-p_tuwsf1/.env.cluster",
+          "com.docker.compose.project.working_dir": "/tmp/openriak-docker-3.4.1-rocky-9-otp26-p_tuwsf1",
+          "com.docker.compose.service": "node5",
+          "com.docker.compose.version": "5.4.0",
+          "desktop.docker.io/wsl-distro": "Ubuntu",
+          "org.opencontainers.image.description": "Package-backed OpenRiak KV with single-node and cluster startup support",
+          "org.opencontainers.image.source": "https://github.com/TI-Tokyo/openriak-docs",
+          "org.opencontainers.image.title": "OpenRiak KV",
+          "org.opencontainers.image.url": "https://www.tiot.jp/",
+          "org.opencontainers.image.vendor": "TI Tokyo",
+          "org.opencontainers.image.version": "3.4.1",
+          "org.openriak.image.tag": "tiotjp/openriak-kv:3.4.1-rocky-9-otp26",
+          "org.openriak.os.name": "rocky",
+          "org.openriak.os.release": "9",
+          "org.openriak.os.version": "9",
+          "org.openriak.otp.version": "26"
+        },
+        "status": "passed",
+        "timezone": "Asia/Tokyo",
+        "uid": 19001
+      }
+    },
+    "configuration": {
+      "settings": {
+        "anti_entropy": "passive",
+        "listener.http.internal": "0.0.0.0:8098",
+        "listener.protobuf.internal": "0.0.0.0:8087",
+        "logger.max_file_size": "2MB",
+        "logger.max_files": "7",
+        "nodename": "openriak-kv@node-01.cluster-a.openriak",
+        "ring_size": "8",
+        "storage_backend": "leveled",
+        "tictacaae_active": "active",
+        "tictacaae_storeheads": "enabled"
+      },
+      "status": "passed"
+    },
+    "entrypoint_startup": {
+      "required_log_messages": [
+        "startup: starting OpenRiak as a daemon",
+        "startup: BEAM is running and riak ping returned pong",
+        "startup: riak_kv service is up",
+        "startup: transfers complete",
+        "startup: OpenRiak is ready",
+        "monitor: BEAM is running"
+      ],
+      "status": "passed"
+    },
+    "graceful_shutdown": {
+      "required_log_messages": [
+        "shutdown: received SIGTERM",
+        "shutdown: requesting OpenRiak stop",
+        "shutdown: BEAM stopped; container is exiting"
+      ],
+      "signal": "SIGTERM",
+      "status": "passed"
+    },
+    "healthcheck": {
+      "checks": [
+        "beam.smp",
+        "riak ping == pong"
+      ],
+      "docker_status": "healthy",
+      "status": "passed"
+    },
+    "http_ping": {
+      "request": "GET /ping",
+      "response": "OK",
+      "status": "passed",
+      "status_code": 200
+    },
+    "populated_volumes": {
+      "config": [
+        "advanced.config",
+        "riak.conf"
+      ],
+      "data": [
+        "cluster_meta",
+        "generated.conf",
+        "kv_eraser",
+        "kv_reader",
+        "kv_reaper",
+        "kv_replrtqsrc",
+        "kv_vnode",
+        "leveled",
+        "riak_repl",
+        "ring",
+        "setup",
+        "sys.config",
+        "tictac_aae",
+        "vm.args"
+      ],
+      "logs": [
+        "console.log",
+        "erlang.log.1",
+        "run_erl.log"
+      ],
+      "status": "passed"
+    },
+    "preserved_configuration": {
+      "sha256": "24c6e309c6d635d6bb99feba1cc8c496c0811e1e88ab9eb5a6f4a8a8638ae46e",
+      "status": "passed"
+    },
+    "preserved_cookie": {
+      "configuration_cookie": "openriak-7efdc82bd9f55c82a9b552ead6be1560",
+      "status": "passed"
+    },
+    "riak_start": {
+      "status": "passed"
+    },
+    "runtime_options": {
+      "docker_logging": {
+        "Config": {
+          "max-file": "3",
+          "max-size": "10m"
+        },
+        "Type": "json-file"
+      },
+      "gid": 19002,
+      "labels": {
+        "com.docker.compose.config-hash": "adc571854abc063266b9e787999044d3aaa1a9845e7ae399e5c3057c3054dfef",
+        "com.docker.compose.container-number": "1",
+        "com.docker.compose.depends_on": "",
+        "com.docker.compose.image": "sha256:8bb45ae77d5160327276a0d3990d70ca2e0128255c6ad7e9d6883df1a5782c2f",
+        "com.docker.compose.oneoff": "False",
+        "com.docker.compose.project": "openriak-kv-341-rocky-9-otp26-node",
+        "com.docker.compose.project.config_files": "/tmp/openriak-docker-3.4.1-rocky-9-otp26-p_tuwsf1/compose.single.test.yaml",
+        "com.docker.compose.project.environment_file": "/tmp/openriak-docker-3.4.1-rocky-9-otp26-p_tuwsf1/.env.single",
+        "com.docker.compose.project.working_dir": "/tmp/openriak-docker-3.4.1-rocky-9-otp26-p_tuwsf1",
+        "com.docker.compose.service": "node",
+        "com.docker.compose.version": "5.4.0",
+        "desktop.docker.io/wsl-distro": "Ubuntu",
+        "org.opencontainers.image.description": "Package-backed OpenRiak KV with single-node and cluster startup support",
+        "org.opencontainers.image.source": "https://github.com/TI-Tokyo/openriak-docs",
+        "org.opencontainers.image.title": "OpenRiak KV",
+        "org.opencontainers.image.url": "https://www.tiot.jp/",
+        "org.opencontainers.image.vendor": "TI Tokyo",
+        "org.opencontainers.image.version": "3.4.1",
+        "org.openriak.image.tag": "tiotjp/openriak-kv:3.4.1-rocky-9-otp26",
+        "org.openriak.os.name": "rocky",
+        "org.openriak.os.release": "9",
+        "org.openriak.os.version": "9",
+        "org.openriak.otp.version": "26"
+      },
+      "status": "passed",
+      "timezone": "Asia/Tokyo",
+      "uid": 19001
+    },
+    "volume_initialization": {
+      "config_populated": true,
+      "data_directory_created": true,
+      "logs_directory_created": true,
+      "status": "passed"
+    }
+  },
+  "volumes": {
+    "config": {
+      "container": "/etc/riak",
+      "default": "./openriak-kv-3.4.1-rocky-9-otp26-node/config"
+    },
+    "data": {
+      "container": "/var/lib/riak",
+      "default": "./openriak-kv-3.4.1-rocky-9-otp26-node/data"
+    },
+    "logs": {
+      "container": "/var/log/riak",
+      "default": "./openriak-kv-3.4.1-rocky-9-otp26-node/logs"
+    }
+  }
+}

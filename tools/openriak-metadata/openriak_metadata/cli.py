@@ -5,15 +5,18 @@ import json
 import logging
 import os
 import re
+import tempfile
 from pathlib import Path
 
 from .defaults import extract_defaults
 from .http import HttpClient
 from .packages import PackageCatalog
 from .registry import PRODUCTS
+from .repository import install_packages
 from .source import SourceResolver
 
 VERSION = re.compile(r"^\d+\.\d+\.\d+$")
+REPOSITORY_ROOT = Path(__file__).resolve().parents[3]
 
 
 def build_parser() -> argparse.ArgumentParser:
@@ -22,8 +25,13 @@ def build_parser() -> argparse.ArgumentParser:
     for name in ("generate", "packages", "defaults"):
         command = subcommands.add_parser(name)
         command.add_argument("--product", choices=sorted(PRODUCTS), required=True)
-        command.add_argument("--version", required=True)
-        command.add_argument("--output", type=Path, required=True)
+        command.add_argument("--version", action="append", dest="versions", required=True, metavar="VERSION",
+                             help="Exact release version (repeatable)")
+        destination = command.add_mutually_exclusive_group(required=True)
+        destination.add_argument("--output", type=Path)
+        if name == "packages":
+            destination.add_argument("--update-repo", nargs="?", const=REPOSITORY_ROOT, type=Path,
+                                     metavar="PATH", help="Stage and validate every version, then update repository package metadata (default: this checkout)")
         command.add_argument("--cache-dir", type=Path)
         command.add_argument("--refresh", action="store_true")
         command.add_argument("--checksum-workers", type=int, default=4,
@@ -44,10 +52,37 @@ def main(argv: list[str] | None = None) -> int:
     cli = build_parser()
     args = cli.parse_args(argv)
     logging.basicConfig(level=getattr(logging, args.log_level.upper()), format="%(levelname)s: %(message)s")
-    if not VERSION.fullmatch(args.version):
+    if any(not VERSION.fullmatch(version) for version in args.versions):
         cli.error("--version must be an exact major.minor.patch version")
     if args.checksum_workers < 1:
         cli.error("--checksum-workers must be at least 1")
+    versions = list(dict.fromkeys(args.versions))
+    repository = getattr(args, "update_repo", None)
+    if repository is not None:
+        repository = repository.expanduser().resolve()
+        if not (repository / "content" / f"openriak-{args.product}" / "metadata").is_dir():
+            cli.error(f"Repository metadata directory not found in {repository}; pass --update-repo PATH to select a checkout")
+    try:
+        if repository is not None:
+            # Incomplete server discovery must never replace authoritative metadata.
+            with tempfile.TemporaryDirectory(prefix="openriak-metadata-") as temporary:
+                stage = Path(temporary)
+                for version in versions:
+                    current = argparse.Namespace(**{**vars(args), "version": version, "output": stage, "strict": True})
+                    if generate_version(current):
+                        logging.error("Package metadata is incomplete for %s; repository files were not updated", version)
+                        return 2
+                count = install_packages(stage, repository, args.product, versions)
+                logging.info("Updated %s package metadata file(s) in %s for version(s) %s", count, repository, ", ".join(versions))
+            return 0
+        results = [generate_version(argparse.Namespace(**{**vars(args), "version": version})) for version in versions]
+        return max(results)
+    except (OSError, ValueError) as error:
+        logging.error("Metadata update failed: %s", error)
+        return 2
+
+
+def generate_version(args) -> int:
     product = PRODUCTS[args.product]
     destination = args.output / args.product / args.version
     destination.mkdir(parents=True, exist_ok=True)
@@ -70,6 +105,8 @@ def main(argv: list[str] | None = None) -> int:
     download_document = {"schema_version": 1, "product": args.product, "product_name": product["display_name"],
                          "version": args.version, "status": package_status, "downloads": downloads,
                          "warnings": sorted(set(warnings))}
+    for warning in supported["warnings"]:
+        logging.warning("%s %s: %s", product["display_name"], args.version, warning)
     _validate_packages(supported, download_document, require_checksums=generate_checksums)
     if args.command in ("generate", "packages"):
         write_json(destination / "supported-os.json", supported)

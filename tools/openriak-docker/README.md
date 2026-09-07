@@ -1,9 +1,440 @@
 # OpenRiak KV Docker cache
 
+For all commands, options, and defaults, see the [command reference](#command-reference).
+
 This tool derives Docker targets from the authoritative release records in
 `content/openriak-kv/metadata/{version}/supported-os.json` and
 `downloads.json`. It accepts OpenRiak KV 3.4.0 and newer only; legacy Riak KV
 releases are rejected. It does not run as part of a normal documentation build.
+
+Refresh the package listings from `files.tiot.jp` before discovering new Docker
+targets with the [metadata tool](../openriak-metadata/README.md):
+
+```sh
+tools/openriak-metadata/openriak-metadata packages \
+  --product kv --version 3.4.0 --version 3.4.1 --refresh --update-repo
+```
+
+The metadata tool stages and validates all requested versions before replacing
+the repository's OS/package JSON files. This command does not build images.
+
+The generator now creates one shared Dockerfile for each OpenRiak KV version,
+OS release, and OTP combination. Architecture-specific package stages select the
+matching official package using BuildKit's `TARGETARCH`; unsupported architectures
+are not advertised. Each stage pins its OS release image by digest. The current
+3.4.0/3.4.1 matrix size follows the current package metadata; use `matrix` to inspect the current targets.
+
+The generator does not explicitly install curl. Integration HTTP probes use the
+package-bundled Erlang runtime to request `/ping` and verify both HTTP status 200
+and body `OK`. Alpine retains GNU coreutils for runtime command compatibility.
+Other OS bases or package dependencies may already include curl/libcurl; these
+are not forcibly removed. Existing cached images require regeneration and
+retesting to adopt the dependency change.
+
+Every generated OS installation stage updates existing OS packages before
+installing OpenRiak KV: Alpine uses `apk upgrade`, Debian/Ubuntu use
+`apt-get update` and `apt-get dist-upgrade`, and RPM images use the available
+`dnf`, `microdnf`, `yum`, or `zypper` update command with refreshed repository
+metadata. Updates stay within the base image's configured release repositories;
+they do not switch OS releases. Archived releases can only receive updates
+available in their archives. Update failures fail the build.
+
+Updates run during image creation, never at container startup or during a normal
+docs build. Use `refresh --force` to regenerate, rebuild and retest existing
+images with this change. Existing approved Dockerfiles and published downloads
+are retained until explicitly refreshed. An immutable base digest pins the base
+image, but repository package updates can change between fresh builds.
+
+Package downloads are checksum-verified in separate `FROM scratch` stages.
+The installation stage uses a temporary read-only BuildKit bind mount, then
+copies, installs, and removes the package within one `RUN`. The final image
+inherits the OS and installed files, without the downloaded package layer.
+RPM installation also removes `/var/cache/dnf`, `/var/cache/yum`, and
+`/var/cache/zypp` before the installation layer is saved, including caches left
+by the switch from `microdnf` to `dnf`. Debian/Ubuntu run `apt-get clean` and
+remove repository lists; Alpine uses `apk --no-cache`. Runtime dependencies
+and package databases are retained.
+The download can remain in BuildKit's local cache for reuse. See the
+[Dockerfile mount reference](https://docs.docker.com/reference/dockerfile/#run---mounttypebind).
+
+Existing approved Dockerfiles retain their original contents. To adopt this
+change, regenerate and retest with the `--force` command below (add
+`--extra-namespace tiotjp` if wanted). `--do-not-test` deliberately uses saved
+approved files, so it cannot apply generator changes to older approvals.
+
+To rebuild every group overnight from the repository root:
+
+```sh
+tools/openriak-docker/openriak-docker refresh \
+  --version 3.4.0 --version 3.4.1 \
+  --timeout 1800 --force --nohup
+```
+
+`--nohup` starts a detached worker and returns immediately. It prints the worker
+PID, the absolute log path, a `tail -f` command, and a `kill -TERM` command for
+graceful shutdown. Do not add shell redirection or `&`; the tool handles both.
+Standard output and errors go to the same log with unbuffered Python output.
+The worker survives terminal hangups and runs in its own session.
+
+Log files are created beneath `tools/cache/openriak-docker/logs/` and named
+`refresh-YYYY-MM-DD_HH-MM-SS.microseconds+offset-unique.log`, using the launch
+time and local UTC offset. Each invocation gets a new file. With standalone
+`--output PATH`, logs go beneath `PATH/logs/` instead, keeping docs untouched.
+`generate` also accepts `--nohup` and uses a `generate-` log filename prefix.
+Both foreground and background startup headers include the process ID; a
+background header also identifies its log file.
+
+Use the same option with `--retry-failed` to resume an incomplete matrix in the
+background. Argument/selection validation happens before launching the worker.
+`--whatif --nohup` remains a read-only preview in the foreground and creates no
+background worker or log file. Subsequent worker failures are reported in its
+log, since the launching command has already returned.
+
+## Previewing rebuild decisions
+
+Add `--whatif` to a refresh command to see what would rebuild, what would skip,
+and why, without contacting Docker or changing generated files, caches,
+reports, published downloads, or metadata:
+
+```sh
+tools/openriak-docker/openriak-docker refresh \
+  --version 3.4.0 --version 3.4.1 \
+  --timeout 1800 --retry-failed --whatif
+```
+
+The plan compares cached inputs and artifact checksums using the existing
+refresh rules. Reasons include changed startup/healthcheck code, changed
+Dockerfile/Compose/environment generator code, changed packages or options,
+missing/modified files, incomplete platform results, and explicit `--force`.
+Generator content changes still invalidate passed caches and cause regeneration,
+rebuilding, and testing. The plan also shows which architectures can reuse
+passed tests when retrying an unchanged shared Dockerfile.
+
+`--whatif` accepts the usual selection, `--force`, `--retry-failed`, standalone
+`--output`, identity, and extra-namespace options. With `--do-not-test`, it checks
+saved approvals and lists the tags that would be applied without retesting.
+It reports blocked targets when the real command would require `--retry-failed`
+or `--force`, or cannot use a report. The exit status is nonzero for blocked
+targets or an empty `--do-not-test` selection. `--all --whatif` does not require
+`--yes`, since it cannot perform the expensive work.
+
+The result is a snapshot of local cache state. Running workers can change that
+state after the preview, and remote release-tag digests are not checked. To
+perform the planned work, rerun the same command without `--whatif`.
+
+## Cleaning up previous runs
+
+`--before` is optional and defaults to **now**, captured once when cleanup starts.
+Cleanup always logs the exact timestamp and UTC offset it uses before planning
+any removals. Activity at or after that cutoff is retained.
+
+Accepted cutoff formats:
+
+| Value | Meaning |
+| --- | --- |
+| `2026-09-06` | Midnight at the start of that date in the machine's local timezone |
+| `2026-09-06T15:30:00` | That date and time in the machine's local timezone |
+| `2026-09-06T15:30:00+09:00` | That exact instant with an explicit UTC offset |
+| Omitted | The current local date and time when cleanup starts |
+
+Local cutoffs use the machine's UTC offset applicable to that date, including
+daylight saving time where applicable. Explicit offsets and `Z` (UTC) remain
+supported. For example, on a machine in Japan, `2026-09-06` is logged as
+`2026-09-06T00:00:00.000000+09:00`.
+
+Preview old diagnostic files and OCI archives that can be removed:
+
+```sh
+tools/openriak-docker/openriak-docker cleanup --before 2026-09-06T15:30:00+09:00
+```
+
+For a preview using the current time, simply run:
+
+```sh
+tools/openriak-docker/openriak-docker cleanup
+```
+
+Add `--delete` to apply the previewed cleanup. Normal cleanup retains all JSON
+reports, current artifacts, and runs referenced by current reports. A run is
+retained in full if its recorded activity or any file modification is at or
+after the cutoff.
+
+To extend the same cutoff to current caches, Docker metadata, published files,
+images, build cache, and running generator workers, add `--remove-all`:
+
+```sh
+# Preview only; no workers are stopped and no files or Docker resources change.
+tools/openriak-docker/openriak-docker cleanup \
+  --before 2026-09-06T15:30:00+09:00 --remove-all
+
+# Apply the broader cleanup.
+tools/openriak-docker/openriak-docker cleanup \
+  --before 2026-09-06T15:30:00+09:00 --remove-all --delete
+```
+
+`--remove-all` still respects the cutoff; it does not mean an unconditional reset.
+It removes eligible old compact reports as well as old generated files. It
+updates only `dockerImages` in the generated version JSON files, which the
+preview metadata watcher picks up. Package download records and authoritative
+OS/package metadata remain unchanged.
+
+The broader mode sends SIGTERM to this repository's generator workers started
+before the cutoff and their subprocesses, then waits for graceful cleanup
+(`--timeout 1800` by default). Workers started at or after the cutoff are kept;
+if any are active, applying `--remove-all` refuses to proceed, to avoid racing
+their cache and metadata writes. Wait for those workers to finish, and do not
+start another generator invocation while cleanup is applying.
+
+Docker cleanup selects old harness test containers and their unused networks,
+recorded generated image tags (including recorded extra namespaces), and labeled
+generated images without tags. Images created or rebuilt since the cutoff, or
+used by retained containers, are kept. It prunes unused cache last used before
+the cutoff only in the dedicated `openriak-kv-multiarch` builder. The builder
+itself remains available, along with its newer cache records. Shared OS base
+images, unrelated containers/images, and other builders' cache are retained.
+If the dedicated builder is stopped, applying cleanup temporarily bootstraps it
+to prune its cache, then stops it again (including when pruning fails). A running
+builder remains running. Preview mode never starts or stops builders.
+See [Docker's cache filter documentation](https://docs.docker.com/reference/cli/docker/buildx/prune/#provide-filter-values---filter)
+for the `until` filter's last-use semantics.
+
+Cleanup covers the repository's legacy and multiarch cache roots and docs
+downloads; standalone output directories created with `--output` are outside
+this command's scope. Docker access is required only for `--remove-all`.
+Nothing is removed unless `--delete` is supplied.
+
+If cleanup reports a permission error, files from an earlier `sudo` refresh may
+still belong to root. Cleanup checks planned directory writes before stopping
+workers or deleting Docker resources and reports the full path and owner IDs.
+On the original WSL checkout, the legacy cache may need this one-time repair,
+run as your normal user from the repository root:
+
+```sh
+sudo find tools/cache/openriak-docker -uid 0 -exec chown -h "$(id -u):$(id -g)" {} +
+```
+
+This restores ownership only for root-owned entries in that cache and preserves
+their content and modification timestamps. Then retry the original cleanup
+command without `sudo`, so new reports and metadata remain owned by your user.
+
+## Branded images and standalone output
+
+`refresh` and `generate` accept the same image identity options:
+
+| Option | Default |
+| --- | --- |
+| `--vendor` | `OpenRiak` |
+| `--source` | `https://github.com/OpenRiak/openriak-docs` |
+| `--url` | `https://openriak.org` |
+| `--namespace` | `openriak` |
+
+`--namespace` selects the primary repository for **every** canonical tag and
+shorter alias, including `latest`, and updates Compose image references and the
+original-image label. `--extra-namespace` additionally mirrors a refresh's tags
+without changing its primary repository or labels. Label values and the primary
+namespace participate in cache compatibility checks.
+
+Generate company-branded files separately, without building images, running
+integration tests, or updating the docs:
+
+```sh
+tools/openriak-docker/openriak-docker generate \
+  --version 3.4.0 --version 3.4.1 \
+  --vendor "TI Tokyo" \
+  --source "https://github.com/TI-Tokyo/openriak-docs" \
+  --url "https://www.tiot.jp/openriak-docs/" \
+  --namespace tiotjp \
+  --output "$HOME/openriak-docker-tiotjp" --no-docs \
+  --timeout 1800
+```
+
+The output layout is `PATH/{version}/{image-tag}/`, containing `Dockerfile`,
+`compose.single.yaml`, `compose.cluster.yaml`, `example.env`, and `report.json`.
+Run snapshots and diagnostics are retained beneath `runs/`. Reports say
+`generated`, not `passed`: branding changes do not inherit a previous test
+approval. Each newly generated group receives a fresh initial cookie shared by
+its four files. Existing cluster cookies still follow the preservation and
+coordinator-adoption rules described below.
+
+`generate` requires `--output`. It reuses matching recorded base-image digests
+from the selected output or the docs cache; if none exists, it pulls and resolves
+the release tag. It never builds or tests. `--force` pulls fresh release digests
+and regenerates the selected files, retaining a snapshot of the previous files,
+including operator edits. Without `--force`, unchanged output is skipped and
+changed/incompatible files are reported as errors.
+
+To build and test the company set later, use the same identity and output options
+with `refresh --retry-failed`:
+
+```sh
+tools/openriak-docker/openriak-docker refresh \
+  --version 3.4.0 --version 3.4.1 \
+  --vendor "TI Tokyo" \
+  --source "https://github.com/TI-Tokyo/openriak-docs" \
+  --url "https://www.tiot.jp/openriak-docs/" \
+  --namespace tiotjp \
+  --output "$HOME/openriak-docker-tiotjp" --no-docs \
+  --retry-failed --timeout 1800
+```
+
+The separate output directory holds that set's test cache and build archives as
+well as its current files. Passed company targets remain outside the Downloads
+page. No registry push occurs. Running the normal `refresh --force` command
+above without identity/output overrides generates the default OpenRiak set for
+the docs.
+
+`--output` automatically disables publication, metadata regeneration, and preview
+updates. `--no-docs` makes the intent explicit and requires `--output` so the
+results cannot enter the watched docs cache indirectly. Output paths overlapping
+the docs content, generated metadata, or built-in test caches are rejected.
+
+Rebuild-only mode (`--do-not-test`) preserves approved labels. It rejects label
+change options (`--vendor`, `--source`, `--url`); use generation/refresh for those.
+For an approved company set, select it with `--namespace tiotjp --output PATH
+--do-not-test`; its recorded labels remain unchanged. The file headers continue
+to credit TI Tokyo as the creator of the generator, independently of image labels.
+
+Progress counters are zero-padded to the width of the total, for example
+`[01/35]`. Continuation lines and per-target results are indented so their
+timestamps align with the target line.
+
+To rebuild only already-approved groups without running integration tests:
+
+```sh
+tools/openriak-docker/openriak-docker refresh \
+  --all --yes --do-not-test --extra-namespace tiotjp --timeout 1800
+```
+
+`--do-not-test` uses the saved, approved Dockerfile and other artifacts exactly
+as tested. It verifies their SHA-256 values against the group and individual
+platform approvals before building. It does not regenerate files, cookies, or
+release-image digests, and it does not change test timestamps or publish new
+test results. Groups without a passed approval are skipped; changed or incomplete
+approved files are errors. An older approved renderer remains usable when its
+saved files and approvals still match. `--force` and `--retry-failed` cannot be
+combined with `--do-not-test`, because those options regenerate or retest files.
+
+This mode rebuilds all approved platforms with `--no-cache`, exports the OCI
+archive, then reuses those layers to load the host architecture locally. Build
+commands and separate `built`/`failed` records are stored under
+`{group-directory}/rebuilds/{run-id}/`; these are not new integration passes.
+The original passed report and downloadable files remain unchanged. The
+Dockerfile's package-installation checks still run as part of its build.
+
+`--extra-namespace tiotjp` retains every original tag and adds a corresponding
+`tiotjp/openriak-kv:...` tag, including applicable OS, version, and `latest`
+aliases. Repeat the option to add more namespaces. The tags apply to the OCI
+archive and, where supported, the host-platform image loaded into Docker; no
+registry push occurs. Extra namespaces also apply to builds made by a normal
+refresh. A passed group skipped by a normal refresh remains skipped; use
+`--do-not-test` to rebuild it and add the extra namespace. Additional tags are
+recorded in the build report, not added to the original test approval.
+
+To follow a background run, use the exact `tail -f` command printed by
+`--nohup`. Ctrl-C stops the log viewer. To stop the worker gracefully, use the
+printed `kill -TERM PID` command.
+
+Use `--retry-failed` instead of `--force` to resume. An unchanged group's passed
+platforms are retained, including when another platform failed. A force refresh
+resolves fresh release digests, creates a new initial cookie, and retests every
+platform. Architecture-specific filters select the entire matching OS/OTP group,
+including its other package-backed architectures. `matrix --json` lists the
+shared image, aliases, platforms, and individual package selections without
+pulling or building anything.
+
+The script requires Docker access, Buildx, Compose, Python 3, and Node.js. It
+creates/reuses the `openriak-kv-multiarch` Buildx container builder. `refresh`,
+including `--do-not-test`, starts it when needed and keeps it running across the
+selected groups. On completion, failure, Ctrl-C, or SIGTERM, it stops a builder
+that was initially stopped or was created by this invocation; an initially
+running builder stays running. The builder and its cache are retained. Runs
+that skip every build, and `--whatif`, leave the builder untouched. Docker works
+without sudo in this WSL checkout; run as the repository owner so generated
+files remain writable. Emulated builds and tests retain the selected phase
+timeout, including `riak admin test` on the single node and every cluster node.
+
+`refresh`, `generate`, and `cleanup` use a common `--timeout` default of 1,800
+seconds per operation or readiness wait. Cleanup applies it to Docker commands
+as well as worker shutdown. Readiness probes share the wait's remaining budget;
+there is no hidden 300-second cluster minimum. This is not a whole-matrix limit.
+Generated image healthchecks and Compose shutdown grace have separate settings:
+
+| Generator option | Default | Meaning |
+| --- | --- | --- |
+| `--healthcheck-interval` | `10s` | Time between health probes |
+| `--healthcheck-timeout` | `60s` | Maximum duration of one probe |
+| `--healthcheck-start-period` | `120s` | Startup period before failures count; `0` disables it |
+| `--healthcheck-retries` | `3` | Consecutive failures before unhealthy |
+| `--stop-grace-period` | `120s` | Compose shutdown allowance before SIGKILL |
+
+Use these options with `refresh` or standalone `generate`. Durations accept
+whole seconds, or `s`, `m`, and `h` suffixes (for example `--stop-grace-period 3m`).
+Health settings are written to the Dockerfile and inherited by both Compose
+examples. Stop grace is written to every service in both examples. Changes
+invalidate the cached generated files and require retesting. `--do-not-test`
+rejects these overrides because it must rebuild the approved files unchanged.
+During testing, stop grace is bounded by the selected operation timeout.
+Cleanup identifies harness Compose files by their directory and file names,
+including runs created under a custom `TMPDIR` from an earlier invocation.
+
+Base-image selection is configured in [`base-images.json`](base-images.json).
+Each family has ordered `rules` with an `image` template; optional `architectures`
+and `minimum_major` restrict a rule. Templates accept `{release}`, `{os_release}`
+(the original metadata release), `{major}`, and `{architecture}`. `release_maps`
+provide named substitutions such as RHEL-to-UBI versions; families can require a
+mapping rather than falling back. `release_replacements` normalizes names such
+as SUSE service packs, and `alias` reuses another family's mapping. Every image
+must have an explicit release tag; `latest` is rejected. The selected base tag
+is part of the cache inputs, so changed mappings require an affected target to
+be regenerated and retested. Editing this file does not add package targets.
+
+Image tag aliases are selected from the entire metadata set, independent of
+build order. For example:
+
+- `openriak/openriak-kv:3.4.0-ubuntu-noble-otp26` selects that OS release and OTP.
+- `openriak/openriak-kv:3.4.0-ubuntu-noble` selects its highest OTP.
+- `openriak/openriak-kv:3.4.0-ubuntu` selects the most recent Ubuntu release and its highest OTP.
+- `openriak/openriak-kv:3.4.0` selects the most recent Alpine release and its highest OTP.
+- `openriak/openriak-kv:latest` selects that Alpine default for the highest OpenRiak KV version.
+
+OS ordering uses numeric `release_version` metadata when present (for example,
+Ubuntu 22.04/24.04), otherwise the numeric release. Aliases have exactly the
+architecture coverage of their selected OTP group: currently 3.4.0's Alpine
+OTP26 package exists only for ARM64, so its `:3.4.0` default is ARM64-only.
+The `latest` tag is an OpenRiak KV output alias; OS base tags remain release-specific.
+
+No images are pushed to a registry. After all platform tests pass, Buildx exports
+an OCI image archive containing the group's platforms and tags. On this host's
+classic Docker image store, the script also loads the host architecture under
+those tags. A local tag in that store represents one platform; the OCI archive
+retains the multi-platform image. Building a downloaded Dockerfile with
+`docker buildx build --platform linux/amd64,linux/arm64 --output type=oci,dest=image.oci.tar .`
+requires a builder and an OS/OTP group supporting those platforms. See
+[Docker's multi-platform build documentation](https://docs.docker.com/build/building/multi-platform/).
+
+Shared caches use a separate schema (4) and directory:
+
+```text
+tools/cache/openriak-docker-multiarch/{version}/{image-tag}/
+  Dockerfile
+  compose.single.yaml
+  compose.cluster.yaml
+  example.env
+  report.json
+  platforms/{linux-amd64,linux-arm64}/report.json
+  platforms/{platform}/runs/{run-id}/report.json
+  runs/{run-id}/report.json
+  runs/{run-id}/image.oci.tar
+```
+
+Current artifacts and compact reports are retained. Historical artifact copies,
+command logs, and large OCI archives stay local and are ignored by Git. Each
+platform tests the exact same shared files. A group is published only after all
+its platforms pass, and its metadata contains one entry with all supported OS
+IDs, architectures, and image aliases. Older architecture-specific downloads
+remain available until their shared replacements pass; their cache evidence is
+preserved, but does not count as testing the new runtime. Normal docs builds
+only read these reports and never start Docker work.
 
 OS aliases are defined once in `content/openriak-kv/metadata/os-aliases.json`,
 shared with the Downloads page metadata adapter. An alias reuses its source OS's
@@ -23,7 +454,7 @@ and [CentOS container documentation](https://docs.centos.org/cloud-sig-documenta
 
 An alias is published only after its own single-node and cluster tests pass.
 Reusing a package does not establish compatibility on the new OS. Existing
-passed native caches remain reusable without a schema bump or retest.
+passed native caches remain as historical evidence; the shared runtime requires its own platform tests.
 
 Current OpenRiak KV aliases select OS releases for runtime compatibility, rather
 than release ancestry: RHEL 8 packages use Fedora 29 or SUSE 15 SP4; RHEL 9
@@ -31,7 +462,7 @@ packages use Fedora 43 or SUSE 16.0. These mappings live in `modernReleases`
 in the shared alias manifest; legacy documentation retains its previous mappings.
 Each target still requires its own passing integration tests before publication.
 
-The 3.4.0/3.4.1 matrix now contains 44 targets, including twelve new SUSE,
+The metadata-derived 3.4.0/3.4.1 matrix includes package-backed SUSE,
 Rocky Linux, CentOS, and Fedora targets. To build and test just SUSE 16.0 explicitly:
 
 ```sh
@@ -62,6 +493,95 @@ An incomplete or incompatible cache is reported as an error unless
   membership on every node, ready rings, completed transfers, healthy
   containers, and working CLI and HTTP pings.
 
+## Runtime options and identification
+
+Copy `example.env` to `.env` and edit the values before creating containers.
+Both Compose examples pass these options to every node:
+
+| Variable | Default | Purpose |
+| --- | --- | --- |
+| `TZ` | `Etc/UTC` | Named timezone, such as `Asia/Tokyo` or `America/New_York`. |
+| `RIAK_UID` / `RIAK_GID` | empty | Retain packaged IDs, or supply nonzero numeric IDs for the `riak` account. |
+| `RIAK_LOG_MAX_FILE_SIZE` | `1MB` | Initialize `logger.max_file_size` in a new configuration. |
+| `RIAK_LOG_MAX_FILES` | `10` | Initialize `logger.max_files` in a new configuration. |
+| `OPENRIAK_DOCKER_LOG_MAX_SIZE` | `10m` | Rotate Docker's JSON stdout/stderr logs at this size. |
+| `OPENRIAK_DOCKER_LOG_MAX_FILES` | `3` | Retain this many Docker JSON log files per container. |
+| `OPENRIAK_CPUS` | `0` | Per-node CPU limit, such as `2.0`; zero means unrestricted. |
+| `OPENRIAK_MEMORY_LIMIT` | `0` | Per-node memory limit, such as `4g`; zero means unrestricted. |
+
+For example:
+
+```dotenv
+TZ=Asia/Tokyo
+RIAK_UID=1000
+RIAK_GID=1000
+RIAK_LOG_MAX_FILE_SIZE=5MB
+RIAK_LOG_MAX_FILES=4
+OPENRIAK_DOCKER_LOG_MAX_SIZE=10m
+OPENRIAK_DOCKER_LOG_MAX_FILES=3
+OPENRIAK_CPUS=2.0
+OPENRIAK_MEMORY_LIMIT=4g
+```
+
+The CPU/memory example is illustrative, not a sizing recommendation. Limits
+apply separately to each node, rather than to the five-node cluster as a whole.
+Compose changes require recreating containers to change their Docker settings.
+For `docker run`, use `--cpus`, `--memory`, and `--log-opt`; `OPENRIAK_*` resource
+and Docker logging variables are Compose substitutions, not runtime controls.
+
+Timezone data is installed in each image. Startup rejects unknown or unsafe
+zone names. `TZ` is exported to the daemon, and entrypoint timestamps include
+an offset, for example `2026-09-06T15:30:00+09:00`. OpenRiak KV's own log
+formatter remains under its configuration's control. Changing the timezone
+does not change the system clock or stored timestamps.
+
+UID/GID overrides change only the container's `riak` account. An ID already
+owned by another container account is rejected before account changes. Startup
+runs as root to configure the account and recursively adjust ownership of the
+config/data/log bind mounts, then invokes OpenRiak KV as `riak`. Consequently,
+these ownership changes are visible on the host; changing IDs on a populated
+volume can take time. Leave IDs empty to retain the package defaults. Do not
+set Compose `user:` when using this initialization flow.
+
+For an empty config volume, startup seeds packaged defaults and applies the
+image/environment settings. A marker lets interrupted initialization finish on
+the next start. For an existing `riak.conf`, live and disabled settings are
+preserved, including nodename, ring size, backend, listeners, and logger limits.
+Edit that mounted file deliberately to change an established node; changing an
+ENV default does not overwrite it. The nodename must remain resolvable through
+Docker DNS. Existing cookies remain authoritative; fresh followers still adopt
+the coordinator cookie before starting OpenRiak KV.
+
+`logger.max_file_size` and `logger.max_files` are the active settings in both
+3.4.0 and 3.4.1. Limits apply per enabled logger handler. Docker log rotation is
+separate from these file logs; neither limit covers arbitrary crash dumps or
+other files written by applications.
+
+The generated image carries these [OCI labels](https://github.com/opencontainers/image-spec/blob/main/annotations.md):
+
+| Label | Value |
+| --- | --- |
+| `org.opencontainers.image.title` | `OpenRiak KV` |
+| `org.opencontainers.image.description` | Package-backed OpenRiak KV with single-node and cluster startup support |
+| `org.opencontainers.image.version` | OpenRiak KV version, e.g. `3.4.1` |
+| `org.opencontainers.image.vendor` | `OpenRiak` by default; configurable with `--vendor` |
+| `org.opencontainers.image.url` | `https://openriak.org` by default; configurable with `--url` |
+| `org.opencontainers.image.source` | `https://github.com/OpenRiak/openriak-docs` by default; configurable with `--source` |
+| `org.openriak.otp.version` | OTP version, e.g. `26` |
+| `org.openriak.os.name` | OS family, e.g. `ubuntu` |
+| `org.openriak.os.release` | OS release identifier or codename, e.g. `noble` |
+| `org.openriak.os.version` | Numeric `release_version` from metadata, e.g. `24.04`; falls back to the release identifier when absent |
+| `org.openriak.image.tag` | Original canonical image reference, before aliases or extra namespaces |
+
+Inspect them with `docker image inspect IMAGE --format '{{json .Config.Labels}}'`.
+Architecture is already part of Docker's image metadata. Saved Dockerfiles do
+not invent build timestamps, source revisions, or an aggregate license for the
+OS and bundled packages. Rebuilding approved files retains their identification.
+
+The integration harness tests a non-default timezone and UID/GID, checks mount
+ownership, image labels, and Docker log limits on every node, and checks that
+an operator-edited single-node configuration survives startup unchanged.
+
 List targets without changing anything:
 
 ```sh
@@ -90,11 +610,13 @@ because it is large:
 tools/openriak-docker/openriak-docker refresh --all --yes
 ```
 
-Each run is retained under:
+Legacy architecture-specific runs remain under:
 
 ```text
 tools/cache/openriak-docker/{version}/{os-id}/{download-id}/runs/{UTC-run-id}/
 ```
+
+New group and platform runs use the multiarch layout above.
 
 The same target directory contains the current `Dockerfile`,
 `compose.single.yaml`, `compose.cluster.yaml`, `example.env`, and
@@ -144,13 +666,34 @@ current IPv4 address, coordinator, and suffix. Riak's ring state remains
 authoritative after restarts, and any bootstrap failure is published so
 participating nodes stop cleanly.
 
-Every refresh generates a new `openriak-` cookie followed by 32 lowercase hex
-characters. The same cookie is baked into that target's Dockerfile and written
-to `example.env`, so all services generated together can communicate while
-unrelated generated images do not mix accidentally. OpenRiak logs the
-effective cookie during startup. The cookie is public image configuration, not
-a secret. For intentional rolling upgrades or mixed-image clusters, set the
-same `OPENRIAK_DISTRIBUTED_COOKIE` value for every node.
+Every regenerated group gets a new public `openriak-` cookie followed by 32
+lowercase hexadecimal characters. The same initial default is documented in
+its Dockerfile, Compose files, and `example.env`. Startup preserves an existing
+live `distributed_cookie` setting in the mounted `riak.conf`, even when the
+image or environment supplies a different cookie. To rotate an established
+cookie, deliberately change the persisted configuration on all cluster members.
+
+A fresh follower waits for exactly one valid `*-coordinator` file and adopts its
+`cookie` value before running `riak chkconfig` or starting the daemon. The marker
+also carries nodename, IPv4 address, coordinator identity, and session suffix;
+contents and DNS must match. Missing, invalid, or ambiguous markers prevent
+startup. New coordinators use their image/environment cookie; restarted
+coordinators publish their preserved cookie. An initialization marker prevents
+an interrupted first startup from treating the package's default cookie as an
+established cluster cookie. The effective cookie is logged at startup.
+
+For an image upgrade, retain the node's existing config/data/log mounts and
+nodename. New Compose defaults have architecture-free image/container names;
+point their path variables at your existing directories when migrating from
+older examples. Fresh followers require a coordinator using the new cookie
+marker format: upgrade the coordinator first when migrating this bootstrap
+protocol. Already-clustered nodes with persisted configuration keep their cookie
+and can restart without waiting for a marker. The shared control directory
+contains the cluster cookie and belongs to the participating nodes.
+
+The integration harness sets a persisted single-node cookie different from the
+new image default, and supplies different defaults to fresh followers. It checks
+that the former is preserved and every follower adopts the coordinator cookie.
 
 The image entrypoint starts OpenRiak with `riak daemon`, waits for BEAM and `riak
 ping`, waits for the `riak_kv` service and all Riak transfers, and then monitors
@@ -217,7 +760,7 @@ Copy the downloaded `example.env` to `.env` before using Compose. Historical
 reports using `.env.example` remain readable and their passed caches reusable.
 
 The 2026-09-05 presentation update adds comments and renames the example file
-without changing executable configuration, cookies, or pinned images. Current
+without changing executable configuration, cookies, or pinned images. Legacy current
 reports record the original tested hashes in `presentation_update`, retain their
 test timestamps, and link to the unchanged historical run reports. Published
 hashes describe the updated files; these documentation changes do not claim a
@@ -228,3 +771,112 @@ and `logs/cluster-node-N-admin-test.log` for each cluster member. New runs recor
 these checks in the report. Existing passed reports without this check remain
 cached; use an explicit `refresh --force` selection to include it in a new test
 run. The comment and filename update does not add test results to old reports.
+
+## Command reference
+
+Run from the repository root:
+
+```sh
+tools/openriak-docker/openriak-docker COMMAND [OPTIONS]
+```
+
+All commands apply exclusively to **OpenRiak KV 3.4.0 and newer**.
+
+| Command | Purpose |
+| --- | --- |
+| `matrix` | List metadata-derived targets, platforms, tags and cache status. Makes no changes. |
+| `refresh` | Generate files, build images, test, cache results and publish passed downloads to the docs. |
+| `generate` | Generate standalone files without building, testing or updating the docs. May pull base images to resolve digests. |
+| `sync-static` | Republish existing passed caches and update Docker download metadata. No pulling, building or testing. |
+| `cleanup` | Preview or remove older generator artifacts and, optionally, associated Docker resources. |
+
+`-h` or `--help` works globally and after every command:
+
+```sh
+tools/openriak-docker/openriak-docker refresh --help
+```
+
+### Selection options
+
+| Option | Commands | Explanation |
+| --- | --- | --- |
+| `--version VERSION` | `matrix`, `refresh`, `generate` | Select a version. Repeat to select several. |
+| `--all` | `refresh`, `generate` | Select every eligible version in metadata. Mutually exclusive with `--version`. |
+| `--yes` | `refresh`, `generate` | Required with `--all`, except for `refresh --whatif`. |
+| `--os-id ID` | `matrix`, `refresh`, `generate` | Filter by metadata OS ID. |
+| `--otp VERSION` | `matrix`, `refresh`, `generate` | Filter by OTP version. |
+| `--download-id ID` | `matrix`, `refresh`, `generate` | Filter by package download ID. |
+| `--json` | `matrix` | Output structured JSON. |
+
+Without `--version`, `matrix` lists all eligible versions. `refresh` and `generate`
+require either `--version` or `--all`. For generation/builds, an
+architecture-specific selection includes the other architectures belonging to
+the same shared OS-release/OTP image.
+
+### Shared refresh and generate options
+
+| Option | Default | Explanation |
+| --- | --- | --- |
+| `--timeout SECONDS` | `1800` | Maximum time per operation or readiness wait, not the whole run. |
+| `--cluster-nodes N` | `5` | Number of services in the generated cluster example; accepts 2–253. |
+| `--nohup` | Off | Run in the background; print PID, timestamped log path and monitoring commands. |
+| `--force` | Off | Regenerate even existing output, pulling fresh release-image digests. `refresh` also rebuilds and retests. |
+| `--vendor TEXT` | `OpenRiak` | Image vendor label. |
+| `--source URL` | `https://github.com/OpenRiak/openriak-docs` | Image source label. |
+| `--url URL` | `https://openriak.org` | Image project URL label. |
+| `--namespace NAME` | `openriak` | Primary image-tag namespace. |
+| `--output PATH` / `--output-dir PATH` | Docs cache for `refresh` | Use a separate output/cache directory and disable docs publication. **Required for `generate`.** |
+| `--no-docs` | Off | Explicitly disable docs updates. Requires `--output`, which already implies this behavior. |
+
+### Generated healthcheck and shutdown options
+
+These options are available on both `refresh` and `generate`.
+
+| Option | Default | Explanation |
+| --- | --- | --- |
+| `--healthcheck-interval DURATION` | `10s` | Interval between health probes. |
+| `--healthcheck-timeout DURATION` | `60s` | Maximum duration of one probe. |
+| `--healthcheck-start-period DURATION` | `120s` | Startup allowance before failures count. Accepts `0`. |
+| `--healthcheck-retries N` | `3` | Consecutive failures before Docker marks the container unhealthy. |
+| `--stop-grace-period DURATION` | `120s` | Compose shutdown allowance before Docker sends SIGKILL. |
+
+Durations accept whole seconds or `s`, `m`, and `h` suffixes: `90`, `90s`, `2m`,
+`1h`. Except for the start period, these settings must be positive. Healthcheck
+and shutdown settings are separate from the command's operation timeout.
+
+### Additional refresh options
+
+| Option | Explanation |
+| --- | --- |
+| `--retry-failed` | Retry failed, interrupted or incompatible caches while preserving unchanged, complete passed caches. |
+| `--do-not-test` | Rebuild approved cached Dockerfiles and apply their tags without regeneration or testing. |
+| `--extra-namespace NAME` | Also apply every image tag under another namespace. Repeatable; does not push images. |
+| `--whatif` | Show what would rebuild, skip or be blocked, and why. No Docker operations or file changes. |
+| `--keep-test-workdir` | Retain temporary integration-test directories for inspection. |
+
+`--force`, `--retry-failed` and `--do-not-test` are mutually exclusive.
+
+Without those switches, `refresh` builds missing caches, skips compatible passed
+caches, and reports existing failed/incompatible caches as errors.
+`--do-not-test` rejects vendor/source/URL and healthcheck/shutdown overrides
+because approved files must remain unchanged.
+
+### Cleanup options
+
+| Option | Default | Explanation |
+| --- | --- | --- |
+| `--before DATE_OR_TIMESTAMP` | Now | Remove only eligible activity older than this cutoff. Logs the exact resolved timestamp. |
+| `--remove-all` | Off | Also include older current caches, Docker download metadata, published files, associated images and dedicated builder cache; stop eligible older workers. |
+| `--delete` | Off | Apply the cleanup. Without it, only preview. |
+| `--timeout SECONDS` | `1800` | Timeout per Docker operation or worker-shutdown wait. |
+
+Accepted cutoff examples:
+
+- `2026-09-06` — midnight in the machine's local timezone.
+- `2026-09-06T15:30:00` — local date and time.
+- `2026-09-06T15:30:00+09:00` — explicit timezone.
+- `2026-09-06T06:30:00Z` — UTC.
+
+`sync-static` has no additional options beyond help. Base-image mappings are
+configured in [base-images.json](base-images.json), rather than through
+command-line switches.

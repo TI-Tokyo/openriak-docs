@@ -1,0 +1,904 @@
+{
+  "artifacts": {
+    "compose_cluster": {
+      "filename": "compose.cluster.yaml",
+      "sha256": "1fbf228e118a1b75cd5f7578d759a8b1706430df860b6844cc13247d6ae534b0",
+      "url": "downloads/docker/3.4.0/3.4.0-suse-16.0-otp26/compose.cluster.yaml"
+    },
+    "compose_single": {
+      "filename": "compose.single.yaml",
+      "sha256": "c92b10ad284eac1c14c7bb913e44a959ec4c34e630e2cee67b14dfe0e61271ee",
+      "url": "downloads/docker/3.4.0/3.4.0-suse-16.0-otp26/compose.single.yaml"
+    },
+    "dockerfile": {
+      "filename": "Dockerfile",
+      "sha256": "d7ed1112b818ae6d91843af88b6803adba62160e07e925fb3b60a682c030ebc5",
+      "url": "downloads/docker/3.4.0/3.4.0-suse-16.0-otp26/Dockerfile"
+    },
+    "environment_example": {
+      "filename": "example.env",
+      "sha256": "66d339996e5707d4d3155e9962f0399752bf8f2407e0b664c5fdd79e35cd2279",
+      "url": "downloads/docker/3.4.0/3.4.0-suse-16.0-otp26/example.env"
+    }
+  },
+  "base_image": {
+    "pinned": "registry.suse.com/bci/bci-base:16.0@sha256:5f69fcd8a54664891bb58f1f7767ac4884a67d7ab2617fa9da5fb624e13debf0",
+    "requested": "registry.suse.com/bci/bci-base:16.0",
+    "resolved_at": "2026-09-06T18:29:09Z"
+  },
+  "error": null,
+  "finished_at": "2026-09-06T18:33:28Z",
+  "generation": {
+    "cluster_nodes": 5,
+    "distributed_cookie": "openriak-6aa2ac583f3462bd55efe9e93a8e5ea8"
+  },
+  "identity": {
+    "namespace": "tiotjp",
+    "source": "https://github.com/TI-Tokyo/openriak-docs",
+    "url": "https://www.tiot.jp/",
+    "vendor": "TI Tokyo"
+  },
+  "image": "tiotjp/openriak-kv:3.4.0-suse-16.0-otp26",
+  "metadata_sources": [
+    "content/openriak-kv/metadata/3.4.0/supported-os.json",
+    "content/openriak-kv/metadata/3.4.0/downloads.json",
+    "content/openriak-kv/metadata/os-aliases.json"
+  ],
+  "network": {
+    "address_assignment": "docker",
+    "node_host": "node-01.cluster-a.openriak",
+    "riak_node_name": "openriak-kv@node-01.cluster-a.openriak"
+  },
+  "node": "openriak-kv-3.4.0-suse-16.0-otp26-node",
+  "package": {
+    "checksum": {
+      "algorithm": "sha256",
+      "value": "72c02db420dc5a0cde5c27a2bd1813fc74e56b663f1167b9b7a0795fae5bfc77"
+    },
+    "filename": "riak-3.4.0.OTP26-1.el9.x86_64.rpm",
+    "format": "rpm",
+    "url": "https://files.tiot.jp/riak/kv/3.4/3.4.0/rhel/9/riak-3.4.0.OTP26-1.el9.x86_64.rpm"
+  },
+  "ports": {
+    "http": 8098,
+    "protobuf": 8087
+  },
+  "product": "openriak-kv",
+  "run_id": "20260906T182909.789864Z",
+  "schema_version": 4,
+  "started_at": "2026-09-06T18:29:09Z",
+  "status": "passed",
+  "steps": [
+    {
+      "duration_seconds": 0.0,
+      "finished_at": "2026-09-06T18:29:09Z",
+      "name": "generate_artifacts",
+      "started_at": "2026-09-06T18:29:09Z",
+      "status": "passed"
+    },
+    {
+      "duration_seconds": 0.128,
+      "finished_at": "2026-09-06T18:29:09Z",
+      "name": "validate_compose_artifacts",
+      "started_at": "2026-09-06T18:29:09Z",
+      "status": "passed"
+    },
+    {
+      "duration_seconds": 31.021,
+      "finished_at": "2026-09-06T18:29:40Z",
+      "name": "build_image",
+      "started_at": "2026-09-06T18:29:09Z",
+      "status": "passed"
+    },
+    {
+      "duration_seconds": 1.705,
+      "finished_at": "2026-09-06T18:29:42Z",
+      "name": "initialize_volumes",
+      "started_at": "2026-09-06T18:29:40Z",
+      "status": "passed"
+    },
+    {
+      "duration_seconds": 0.86,
+      "finished_at": "2026-09-06T18:29:43Z",
+      "name": "make_test_config_writable",
+      "started_at": "2026-09-06T18:29:42Z",
+      "status": "passed"
+    },
+    {
+      "duration_seconds": 0.003,
+      "finished_at": "2026-09-06T18:29:43Z",
+      "name": "configure_node",
+      "started_at": "2026-09-06T18:29:43Z",
+      "status": "passed"
+    },
+    {
+      "duration_seconds": 0.506,
+      "finished_at": "2026-09-06T18:29:44Z",
+      "name": "start_compose_node",
+      "started_at": "2026-09-06T18:29:43Z",
+      "status": "passed"
+    },
+    {
+      "duration_seconds": 18.735,
+      "finished_at": "2026-09-06T18:30:02Z",
+      "name": "wait_for_entrypoint_readiness",
+      "started_at": "2026-09-06T18:29:44Z",
+      "status": "passed"
+    },
+    {
+      "duration_seconds": 0.518,
+      "finished_at": "2026-09-06T18:30:03Z",
+      "name": "wait_for_cli_and_http",
+      "started_at": "2026-09-06T18:30:02Z",
+      "status": "passed"
+    },
+    {
+      "duration_seconds": 0.149,
+      "finished_at": "2026-09-06T18:30:03Z",
+      "name": "verify_runtime_options",
+      "started_at": "2026-09-06T18:30:03Z",
+      "status": "passed"
+    },
+    {
+      "duration_seconds": 1.461,
+      "finished_at": "2026-09-06T18:30:04Z",
+      "name": "single_node_admin_test",
+      "started_at": "2026-09-06T18:30:03Z",
+      "status": "passed"
+    },
+    {
+      "duration_seconds": 0.03,
+      "finished_at": "2026-09-06T18:30:04Z",
+      "name": "wait_for_healthcheck",
+      "started_at": "2026-09-06T18:30:04Z",
+      "status": "passed"
+    },
+    {
+      "duration_seconds": 4.924,
+      "finished_at": "2026-09-06T18:30:09Z",
+      "name": "graceful_stop",
+      "started_at": "2026-09-06T18:30:04Z",
+      "status": "passed"
+    },
+    {
+      "duration_seconds": 0.037,
+      "finished_at": "2026-09-06T18:30:09Z",
+      "name": "verify_graceful_shutdown_logging",
+      "started_at": "2026-09-06T18:30:09Z",
+      "status": "passed"
+    },
+    {
+      "duration_seconds": 0.469,
+      "finished_at": "2026-09-06T18:30:10Z",
+      "name": "remove_single_node_test",
+      "started_at": "2026-09-06T18:30:09Z",
+      "status": "passed"
+    },
+    {
+      "duration_seconds": 2.348,
+      "finished_at": "2026-09-06T18:30:12Z",
+      "name": "start_compose_cluster",
+      "started_at": "2026-09-06T18:30:10Z",
+      "status": "passed"
+    },
+    {
+      "duration_seconds": 179.432,
+      "finished_at": "2026-09-06T18:33:12Z",
+      "name": "wait_for_cluster",
+      "started_at": "2026-09-06T18:30:12Z",
+      "status": "passed"
+    },
+    {
+      "duration_seconds": 1.621,
+      "finished_at": "2026-09-06T18:33:14Z",
+      "name": "cluster_node_1_admin_test",
+      "started_at": "2026-09-06T18:33:12Z",
+      "status": "passed"
+    },
+    {
+      "duration_seconds": 0.237,
+      "finished_at": "2026-09-06T18:33:14Z",
+      "name": "cluster_node_1_runtime_options",
+      "started_at": "2026-09-06T18:33:14Z",
+      "status": "passed"
+    },
+    {
+      "duration_seconds": 1.528,
+      "finished_at": "2026-09-06T18:33:16Z",
+      "name": "cluster_node_2_admin_test",
+      "started_at": "2026-09-06T18:33:14Z",
+      "status": "passed"
+    },
+    {
+      "duration_seconds": 0.181,
+      "finished_at": "2026-09-06T18:33:16Z",
+      "name": "cluster_node_2_runtime_options",
+      "started_at": "2026-09-06T18:33:16Z",
+      "status": "passed"
+    },
+    {
+      "duration_seconds": 1.83,
+      "finished_at": "2026-09-06T18:33:18Z",
+      "name": "cluster_node_3_admin_test",
+      "started_at": "2026-09-06T18:33:16Z",
+      "status": "passed"
+    },
+    {
+      "duration_seconds": 0.189,
+      "finished_at": "2026-09-06T18:33:18Z",
+      "name": "cluster_node_3_runtime_options",
+      "started_at": "2026-09-06T18:33:18Z",
+      "status": "passed"
+    },
+    {
+      "duration_seconds": 1.497,
+      "finished_at": "2026-09-06T18:33:20Z",
+      "name": "cluster_node_4_admin_test",
+      "started_at": "2026-09-06T18:33:18Z",
+      "status": "passed"
+    },
+    {
+      "duration_seconds": 0.181,
+      "finished_at": "2026-09-06T18:33:20Z",
+      "name": "cluster_node_4_runtime_options",
+      "started_at": "2026-09-06T18:33:20Z",
+      "status": "passed"
+    },
+    {
+      "duration_seconds": 1.587,
+      "finished_at": "2026-09-06T18:33:22Z",
+      "name": "cluster_node_5_admin_test",
+      "started_at": "2026-09-06T18:33:20Z",
+      "status": "passed"
+    },
+    {
+      "duration_seconds": 0.186,
+      "finished_at": "2026-09-06T18:33:22Z",
+      "name": "cluster_node_5_runtime_options",
+      "started_at": "2026-09-06T18:33:22Z",
+      "status": "passed"
+    },
+    {
+      "duration_seconds": 5.421,
+      "finished_at": "2026-09-06T18:33:28Z",
+      "name": "graceful_stop_cluster",
+      "started_at": "2026-09-06T18:33:22Z",
+      "status": "passed"
+    },
+    {
+      "duration_seconds": 0.544,
+      "finished_at": "2026-09-06T18:33:28Z",
+      "name": "remove_cluster_test",
+      "started_at": "2026-09-06T18:33:28Z",
+      "status": "passed"
+    }
+  ],
+  "target": {
+    "architecture": "x86_64",
+    "docker_platform": "linux/amd64",
+    "download_id": "otp26-x86_64-1",
+    "os_family": "suse",
+    "os_id": "suse-16.0-x86_64",
+    "os_name": "SUSE Linux Enterprise Server 16.0",
+    "os_release": "16.0",
+    "otp": "26",
+    "package_os_id": "rhel-9-x86_64",
+    "version": "3.4.0"
+  },
+  "tests": {
+    "admin_test": {
+      "command": "riak admin test",
+      "response": "Successfully completed 1 read/write cycle to 'openriak-kv@node-01.cluster-a.openriak'",
+      "status": "passed"
+    },
+    "cli_ping": {
+      "command": "riak ping",
+      "response": "pong",
+      "status": "passed"
+    },
+    "cluster": {
+      "checks": [
+        "same member set",
+        "ring ready",
+        "transfers complete",
+        "riak ping == pong",
+        "HTTP 200/OK",
+        "riak admin test read/write cycle",
+        "Docker healthcheck healthy",
+        "config/data/log volumes populated"
+      ],
+      "coordinator_cookie_adoption": "passed",
+      "members": [
+        "openriak-kv@node-01.cluster-a.openriak",
+        "openriak-kv@node-02.cluster-a.openriak",
+        "openriak-kv@node-03.cluster-a.openriak",
+        "openriak-kv@node-04.cluster-a.openriak",
+        "openriak-kv@node-05.cluster-a.openriak"
+      ],
+      "node_count": 5,
+      "roles": {
+        "openriak-kv-3.4.0-suse-16.0-otp26-node-1-t-789864z": "Coordinator",
+        "openriak-kv-3.4.0-suse-16.0-otp26-node-2-t-789864z": "Follower",
+        "openriak-kv-3.4.0-suse-16.0-otp26-node-3-t-789864z": "Follower",
+        "openriak-kv-3.4.0-suse-16.0-otp26-node-4-t-789864z": "Follower",
+        "openriak-kv-3.4.0-suse-16.0-otp26-node-5-t-789864z": "Follower"
+      },
+      "state": {
+        "openriak-kv-3.4.0-suse-16.0-otp26-node-1-t-789864z": {
+          "http": "OK",
+          "members": "================================= Membership ==================================\nStatus     Ring    Pending    Node\n-------------------------------------------------------------------------------\nvalid      25.0%      --      openriak-kv@node-01.cluster-a.openriak\nvalid      25.0%      --      openriak-kv@node-02.cluster-a.openriak\nvalid      25.0%      --      openriak-kv@node-03.cluster-a.openriak\nvalid      12.5%      --      openriak-kv@node-04.cluster-a.openriak\nvalid      12.5%      --      openriak-kv@node-05.cluster-a.openriak\n-------------------------------------------------------------------------------\nValid:5 / Leaving:0 / Exiting:0 / Joining:0 / Down:0\nok",
+          "ping": "pong",
+          "ready": true,
+          "ring": "TRUE All nodes agree on the ring ['openriak-kv@node-01.cluster-a.openriak',\n                                  'openriak-kv@node-02.cluster-a.openriak',\n                                  'openriak-kv@node-03.cluster-a.openriak',\n                                  'openriak-kv@node-04.cluster-a.openriak',\n                                  'openriak-kv@node-05.cluster-a.openriak']\nok",
+          "transfers": "No transfers active\n\nActive Transfers:\n\n\nok"
+        },
+        "openriak-kv-3.4.0-suse-16.0-otp26-node-2-t-789864z": {
+          "http": "OK",
+          "members": "================================= Membership ==================================\nStatus     Ring    Pending    Node\n-------------------------------------------------------------------------------\nvalid      25.0%      --      openriak-kv@node-01.cluster-a.openriak\nvalid      25.0%      --      openriak-kv@node-02.cluster-a.openriak\nvalid      25.0%      --      openriak-kv@node-03.cluster-a.openriak\nvalid      12.5%      --      openriak-kv@node-04.cluster-a.openriak\nvalid      12.5%      --      openriak-kv@node-05.cluster-a.openriak\n-------------------------------------------------------------------------------\nValid:5 / Leaving:0 / Exiting:0 / Joining:0 / Down:0\nok",
+          "ping": "pong",
+          "ready": true,
+          "ring": "TRUE All nodes agree on the ring ['openriak-kv@node-01.cluster-a.openriak',\n                                  'openriak-kv@node-02.cluster-a.openriak',\n                                  'openriak-kv@node-03.cluster-a.openriak',\n                                  'openriak-kv@node-04.cluster-a.openriak',\n                                  'openriak-kv@node-05.cluster-a.openriak']\nok",
+          "transfers": "No transfers active\n\nActive Transfers:\n\n\nok"
+        },
+        "openriak-kv-3.4.0-suse-16.0-otp26-node-3-t-789864z": {
+          "http": "OK",
+          "members": "================================= Membership ==================================\nStatus     Ring    Pending    Node\n-------------------------------------------------------------------------------\nvalid      25.0%      --      openriak-kv@node-01.cluster-a.openriak\nvalid      25.0%      --      openriak-kv@node-02.cluster-a.openriak\nvalid      25.0%      --      openriak-kv@node-03.cluster-a.openriak\nvalid      12.5%      --      openriak-kv@node-04.cluster-a.openriak\nvalid      12.5%      --      openriak-kv@node-05.cluster-a.openriak\n-------------------------------------------------------------------------------\nValid:5 / Leaving:0 / Exiting:0 / Joining:0 / Down:0\nok",
+          "ping": "pong",
+          "ready": true,
+          "ring": "TRUE All nodes agree on the ring ['openriak-kv@node-01.cluster-a.openriak',\n                                  'openriak-kv@node-02.cluster-a.openriak',\n                                  'openriak-kv@node-03.cluster-a.openriak',\n                                  'openriak-kv@node-04.cluster-a.openriak',\n                                  'openriak-kv@node-05.cluster-a.openriak']\nok",
+          "transfers": "No transfers active\n\nActive Transfers:\n\n\nok"
+        },
+        "openriak-kv-3.4.0-suse-16.0-otp26-node-4-t-789864z": {
+          "http": "OK",
+          "members": "================================= Membership ==================================\nStatus     Ring    Pending    Node\n-------------------------------------------------------------------------------\nvalid      25.0%      --      openriak-kv@node-01.cluster-a.openriak\nvalid      25.0%      --      openriak-kv@node-02.cluster-a.openriak\nvalid      25.0%      --      openriak-kv@node-03.cluster-a.openriak\nvalid      12.5%      --      openriak-kv@node-04.cluster-a.openriak\nvalid      12.5%      --      openriak-kv@node-05.cluster-a.openriak\n-------------------------------------------------------------------------------\nValid:5 / Leaving:0 / Exiting:0 / Joining:0 / Down:0\nok",
+          "ping": "pong",
+          "ready": true,
+          "ring": "TRUE All nodes agree on the ring ['openriak-kv@node-01.cluster-a.openriak',\n                                  'openriak-kv@node-02.cluster-a.openriak',\n                                  'openriak-kv@node-03.cluster-a.openriak',\n                                  'openriak-kv@node-04.cluster-a.openriak',\n                                  'openriak-kv@node-05.cluster-a.openriak']\nok",
+          "transfers": "No transfers active\n\nActive Transfers:\n\n\nok"
+        },
+        "openriak-kv-3.4.0-suse-16.0-otp26-node-5-t-789864z": {
+          "http": "OK",
+          "members": "================================= Membership ==================================\nStatus     Ring    Pending    Node\n-------------------------------------------------------------------------------\nvalid      25.0%      --      openriak-kv@node-01.cluster-a.openriak\nvalid      25.0%      --      openriak-kv@node-02.cluster-a.openriak\nvalid      25.0%      --      openriak-kv@node-03.cluster-a.openriak\nvalid      12.5%      --      openriak-kv@node-04.cluster-a.openriak\nvalid      12.5%      --      openriak-kv@node-05.cluster-a.openriak\n-------------------------------------------------------------------------------\nValid:5 / Leaving:0 / Exiting:0 / Joining:0 / Down:0\nok",
+          "ping": "pong",
+          "ready": true,
+          "ring": "TRUE All nodes agree on the ring ['openriak-kv@node-01.cluster-a.openriak',\n                                  'openriak-kv@node-02.cluster-a.openriak',\n                                  'openriak-kv@node-03.cluster-a.openriak',\n                                  'openriak-kv@node-04.cluster-a.openriak',\n                                  'openriak-kv@node-05.cluster-a.openriak']\nok",
+          "transfers": "No transfers active\n\nActive Transfers:\n\n\nok"
+        }
+      },
+      "status": "passed"
+    },
+    "cluster_admin_test": {
+      "openriak-kv-3.4.0-suse-16.0-otp26-node-1-t-789864z": {
+        "command": "riak admin test",
+        "response": "Successfully completed 1 read/write cycle to 'openriak-kv@node-01.cluster-a.openriak'",
+        "status": "passed"
+      },
+      "openriak-kv-3.4.0-suse-16.0-otp26-node-2-t-789864z": {
+        "command": "riak admin test",
+        "response": "Successfully completed 1 read/write cycle to 'openriak-kv@node-02.cluster-a.openriak'",
+        "status": "passed"
+      },
+      "openriak-kv-3.4.0-suse-16.0-otp26-node-3-t-789864z": {
+        "command": "riak admin test",
+        "response": "Successfully completed 1 read/write cycle to 'openriak-kv@node-03.cluster-a.openriak'",
+        "status": "passed"
+      },
+      "openriak-kv-3.4.0-suse-16.0-otp26-node-4-t-789864z": {
+        "command": "riak admin test",
+        "response": "Successfully completed 1 read/write cycle to 'openriak-kv@node-04.cluster-a.openriak'",
+        "status": "passed"
+      },
+      "openriak-kv-3.4.0-suse-16.0-otp26-node-5-t-789864z": {
+        "command": "riak admin test",
+        "response": "Successfully completed 1 read/write cycle to 'openriak-kv@node-05.cluster-a.openriak'",
+        "status": "passed"
+      }
+    },
+    "cluster_runtime_options": {
+      "openriak-kv-3.4.0-suse-16.0-otp26-node-1-t-789864z": {
+        "docker_logging": {
+          "Config": {
+            "max-file": "3",
+            "max-size": "10m"
+          },
+          "Type": "json-file"
+        },
+        "gid": 19002,
+        "labels": {
+          "com.docker.compose.config-hash": "dea83fcba5a1ef16504b0db1e599b113575e6d34b276352fa9a47f6eadd1ed14",
+          "com.docker.compose.container-number": "1",
+          "com.docker.compose.depends_on": "",
+          "com.docker.compose.image": "sha256:dba47911238ebe9d363155e0d8bb434a13b3627dbc7c85f9926b2c7b1e496080",
+          "com.docker.compose.oneoff": "False",
+          "com.docker.compose.project": "openriak-kv-340-suse-160-otp26-node-cluster",
+          "com.docker.compose.project.config_files": "/tmp/openriak-docker-3.4.0-suse-16.0-otp26-229lsdaa/compose.cluster.test.yaml",
+          "com.docker.compose.project.environment_file": "/tmp/openriak-docker-3.4.0-suse-16.0-otp26-229lsdaa/.env.cluster",
+          "com.docker.compose.project.working_dir": "/tmp/openriak-docker-3.4.0-suse-16.0-otp26-229lsdaa",
+          "com.docker.compose.service": "node1",
+          "com.docker.compose.version": "5.4.0",
+          "com.suse.bci.base.authors": "https://github.com/SUSE/bci/discussions",
+          "com.suse.bci.base.created": "2026-07-30T07:59:45.294458092Z",
+          "com.suse.bci.base.description": "Image for containers based on SUSE Linux Enterprise Server 16.0.",
+          "com.suse.bci.base.disturl": "obs://build.suse.de/SUSE:SLFO:Products:BCI:16.0/containerkiwi/7ad55602e294006a4f29582d407b795a-base-image",
+          "com.suse.bci.base.eula": "sle-bci",
+          "com.suse.bci.base.lifecycle-url": "https://www.suse.com/lifecycle#suse-linux-enterprise-server-16",
+          "com.suse.bci.base.name": "16.0-23.1",
+          "com.suse.bci.base.reference": "registry.suse.com/bci/bci-base:16.0-23.1",
+          "com.suse.bci.base.release-stage": "released",
+          "com.suse.bci.base.source": "https://sources.suse.com/SUSE:SLFO:Products:BCI:16.0/base-image/7ad55602e294006a4f29582d407b795a/",
+          "com.suse.bci.base.supportlevel": "l3",
+          "com.suse.bci.base.title": "SUSE Linux BCI 16.0 Base",
+          "com.suse.bci.base.until": "2027-11-30",
+          "com.suse.bci.base.url": "https://www.suse.com/products/base-container-images/",
+          "com.suse.bci.base.vendor": "SUSE LLC",
+          "com.suse.bci.base.version": "16.0-23.1",
+          "com.suse.eula": "sle-bci",
+          "com.suse.lifecycle-url": "https://www.suse.com/lifecycle#suse-linux-enterprise-server-16",
+          "com.suse.release-stage": "released",
+          "com.suse.supportlevel": "l3",
+          "com.suse.supportlevel.until": "2027-11-30",
+          "desktop.docker.io/wsl-distro": "Ubuntu",
+          "io.artifacthub.package.logo-url": "https://opensource.suse.com/bci/SLE_BCI_logomark_green.svg",
+          "io.artifacthub.package.readme-url": "https://sources.suse.com/SUSE:SLFO:Products:BCI:16.0/base-image/7ad55602e294006a4f29582d407b795a/README.md",
+          "org.openbuildservice.disturl": "obs://build.suse.de/SUSE:SLFO:Products:BCI:16.0/containerkiwi/7ad55602e294006a4f29582d407b795a-base-image",
+          "org.opencontainers.image.authors": "https://github.com/SUSE/bci/discussions",
+          "org.opencontainers.image.created": "2026-07-30T07:59:45.294458092Z",
+          "org.opencontainers.image.description": "Package-backed OpenRiak KV with single-node and cluster startup support",
+          "org.opencontainers.image.ref.name": "16.0-23.1",
+          "org.opencontainers.image.source": "https://github.com/TI-Tokyo/openriak-docs",
+          "org.opencontainers.image.title": "OpenRiak KV",
+          "org.opencontainers.image.url": "https://www.tiot.jp/",
+          "org.opencontainers.image.vendor": "TI Tokyo",
+          "org.opencontainers.image.version": "3.4.0",
+          "org.openriak.image.tag": "tiotjp/openriak-kv:3.4.0-suse-16.0-otp26",
+          "org.openriak.os.name": "suse",
+          "org.openriak.os.release": "16.0",
+          "org.openriak.os.version": "16.0",
+          "org.openriak.otp.version": "26",
+          "org.opensuse.reference": "registry.suse.com/bci/bci-base:16.0-23.1"
+        },
+        "status": "passed",
+        "timezone": "Asia/Tokyo",
+        "uid": 19001
+      },
+      "openriak-kv-3.4.0-suse-16.0-otp26-node-2-t-789864z": {
+        "docker_logging": {
+          "Config": {
+            "max-file": "3",
+            "max-size": "10m"
+          },
+          "Type": "json-file"
+        },
+        "gid": 19002,
+        "labels": {
+          "com.docker.compose.config-hash": "e7193ee267fbabc5cba231464c5ed92e142433b5cc1694ca8e93dcf7cead5387",
+          "com.docker.compose.container-number": "1",
+          "com.docker.compose.depends_on": "",
+          "com.docker.compose.image": "sha256:dba47911238ebe9d363155e0d8bb434a13b3627dbc7c85f9926b2c7b1e496080",
+          "com.docker.compose.oneoff": "False",
+          "com.docker.compose.project": "openriak-kv-340-suse-160-otp26-node-cluster",
+          "com.docker.compose.project.config_files": "/tmp/openriak-docker-3.4.0-suse-16.0-otp26-229lsdaa/compose.cluster.test.yaml",
+          "com.docker.compose.project.environment_file": "/tmp/openriak-docker-3.4.0-suse-16.0-otp26-229lsdaa/.env.cluster",
+          "com.docker.compose.project.working_dir": "/tmp/openriak-docker-3.4.0-suse-16.0-otp26-229lsdaa",
+          "com.docker.compose.service": "node2",
+          "com.docker.compose.version": "5.4.0",
+          "com.suse.bci.base.authors": "https://github.com/SUSE/bci/discussions",
+          "com.suse.bci.base.created": "2026-07-30T07:59:45.294458092Z",
+          "com.suse.bci.base.description": "Image for containers based on SUSE Linux Enterprise Server 16.0.",
+          "com.suse.bci.base.disturl": "obs://build.suse.de/SUSE:SLFO:Products:BCI:16.0/containerkiwi/7ad55602e294006a4f29582d407b795a-base-image",
+          "com.suse.bci.base.eula": "sle-bci",
+          "com.suse.bci.base.lifecycle-url": "https://www.suse.com/lifecycle#suse-linux-enterprise-server-16",
+          "com.suse.bci.base.name": "16.0-23.1",
+          "com.suse.bci.base.reference": "registry.suse.com/bci/bci-base:16.0-23.1",
+          "com.suse.bci.base.release-stage": "released",
+          "com.suse.bci.base.source": "https://sources.suse.com/SUSE:SLFO:Products:BCI:16.0/base-image/7ad55602e294006a4f29582d407b795a/",
+          "com.suse.bci.base.supportlevel": "l3",
+          "com.suse.bci.base.title": "SUSE Linux BCI 16.0 Base",
+          "com.suse.bci.base.until": "2027-11-30",
+          "com.suse.bci.base.url": "https://www.suse.com/products/base-container-images/",
+          "com.suse.bci.base.vendor": "SUSE LLC",
+          "com.suse.bci.base.version": "16.0-23.1",
+          "com.suse.eula": "sle-bci",
+          "com.suse.lifecycle-url": "https://www.suse.com/lifecycle#suse-linux-enterprise-server-16",
+          "com.suse.release-stage": "released",
+          "com.suse.supportlevel": "l3",
+          "com.suse.supportlevel.until": "2027-11-30",
+          "desktop.docker.io/wsl-distro": "Ubuntu",
+          "io.artifacthub.package.logo-url": "https://opensource.suse.com/bci/SLE_BCI_logomark_green.svg",
+          "io.artifacthub.package.readme-url": "https://sources.suse.com/SUSE:SLFO:Products:BCI:16.0/base-image/7ad55602e294006a4f29582d407b795a/README.md",
+          "org.openbuildservice.disturl": "obs://build.suse.de/SUSE:SLFO:Products:BCI:16.0/containerkiwi/7ad55602e294006a4f29582d407b795a-base-image",
+          "org.opencontainers.image.authors": "https://github.com/SUSE/bci/discussions",
+          "org.opencontainers.image.created": "2026-07-30T07:59:45.294458092Z",
+          "org.opencontainers.image.description": "Package-backed OpenRiak KV with single-node and cluster startup support",
+          "org.opencontainers.image.ref.name": "16.0-23.1",
+          "org.opencontainers.image.source": "https://github.com/TI-Tokyo/openriak-docs",
+          "org.opencontainers.image.title": "OpenRiak KV",
+          "org.opencontainers.image.url": "https://www.tiot.jp/",
+          "org.opencontainers.image.vendor": "TI Tokyo",
+          "org.opencontainers.image.version": "3.4.0",
+          "org.openriak.image.tag": "tiotjp/openriak-kv:3.4.0-suse-16.0-otp26",
+          "org.openriak.os.name": "suse",
+          "org.openriak.os.release": "16.0",
+          "org.openriak.os.version": "16.0",
+          "org.openriak.otp.version": "26",
+          "org.opensuse.reference": "registry.suse.com/bci/bci-base:16.0-23.1"
+        },
+        "status": "passed",
+        "timezone": "Asia/Tokyo",
+        "uid": 19001
+      },
+      "openriak-kv-3.4.0-suse-16.0-otp26-node-3-t-789864z": {
+        "docker_logging": {
+          "Config": {
+            "max-file": "3",
+            "max-size": "10m"
+          },
+          "Type": "json-file"
+        },
+        "gid": 19002,
+        "labels": {
+          "com.docker.compose.config-hash": "22c6e536386104ba15c298a743591e521222adab0a0803fcb031960212d44b3f",
+          "com.docker.compose.container-number": "1",
+          "com.docker.compose.depends_on": "",
+          "com.docker.compose.image": "sha256:dba47911238ebe9d363155e0d8bb434a13b3627dbc7c85f9926b2c7b1e496080",
+          "com.docker.compose.oneoff": "False",
+          "com.docker.compose.project": "openriak-kv-340-suse-160-otp26-node-cluster",
+          "com.docker.compose.project.config_files": "/tmp/openriak-docker-3.4.0-suse-16.0-otp26-229lsdaa/compose.cluster.test.yaml",
+          "com.docker.compose.project.environment_file": "/tmp/openriak-docker-3.4.0-suse-16.0-otp26-229lsdaa/.env.cluster",
+          "com.docker.compose.project.working_dir": "/tmp/openriak-docker-3.4.0-suse-16.0-otp26-229lsdaa",
+          "com.docker.compose.service": "node3",
+          "com.docker.compose.version": "5.4.0",
+          "com.suse.bci.base.authors": "https://github.com/SUSE/bci/discussions",
+          "com.suse.bci.base.created": "2026-07-30T07:59:45.294458092Z",
+          "com.suse.bci.base.description": "Image for containers based on SUSE Linux Enterprise Server 16.0.",
+          "com.suse.bci.base.disturl": "obs://build.suse.de/SUSE:SLFO:Products:BCI:16.0/containerkiwi/7ad55602e294006a4f29582d407b795a-base-image",
+          "com.suse.bci.base.eula": "sle-bci",
+          "com.suse.bci.base.lifecycle-url": "https://www.suse.com/lifecycle#suse-linux-enterprise-server-16",
+          "com.suse.bci.base.name": "16.0-23.1",
+          "com.suse.bci.base.reference": "registry.suse.com/bci/bci-base:16.0-23.1",
+          "com.suse.bci.base.release-stage": "released",
+          "com.suse.bci.base.source": "https://sources.suse.com/SUSE:SLFO:Products:BCI:16.0/base-image/7ad55602e294006a4f29582d407b795a/",
+          "com.suse.bci.base.supportlevel": "l3",
+          "com.suse.bci.base.title": "SUSE Linux BCI 16.0 Base",
+          "com.suse.bci.base.until": "2027-11-30",
+          "com.suse.bci.base.url": "https://www.suse.com/products/base-container-images/",
+          "com.suse.bci.base.vendor": "SUSE LLC",
+          "com.suse.bci.base.version": "16.0-23.1",
+          "com.suse.eula": "sle-bci",
+          "com.suse.lifecycle-url": "https://www.suse.com/lifecycle#suse-linux-enterprise-server-16",
+          "com.suse.release-stage": "released",
+          "com.suse.supportlevel": "l3",
+          "com.suse.supportlevel.until": "2027-11-30",
+          "desktop.docker.io/wsl-distro": "Ubuntu",
+          "io.artifacthub.package.logo-url": "https://opensource.suse.com/bci/SLE_BCI_logomark_green.svg",
+          "io.artifacthub.package.readme-url": "https://sources.suse.com/SUSE:SLFO:Products:BCI:16.0/base-image/7ad55602e294006a4f29582d407b795a/README.md",
+          "org.openbuildservice.disturl": "obs://build.suse.de/SUSE:SLFO:Products:BCI:16.0/containerkiwi/7ad55602e294006a4f29582d407b795a-base-image",
+          "org.opencontainers.image.authors": "https://github.com/SUSE/bci/discussions",
+          "org.opencontainers.image.created": "2026-07-30T07:59:45.294458092Z",
+          "org.opencontainers.image.description": "Package-backed OpenRiak KV with single-node and cluster startup support",
+          "org.opencontainers.image.ref.name": "16.0-23.1",
+          "org.opencontainers.image.source": "https://github.com/TI-Tokyo/openriak-docs",
+          "org.opencontainers.image.title": "OpenRiak KV",
+          "org.opencontainers.image.url": "https://www.tiot.jp/",
+          "org.opencontainers.image.vendor": "TI Tokyo",
+          "org.opencontainers.image.version": "3.4.0",
+          "org.openriak.image.tag": "tiotjp/openriak-kv:3.4.0-suse-16.0-otp26",
+          "org.openriak.os.name": "suse",
+          "org.openriak.os.release": "16.0",
+          "org.openriak.os.version": "16.0",
+          "org.openriak.otp.version": "26",
+          "org.opensuse.reference": "registry.suse.com/bci/bci-base:16.0-23.1"
+        },
+        "status": "passed",
+        "timezone": "Asia/Tokyo",
+        "uid": 19001
+      },
+      "openriak-kv-3.4.0-suse-16.0-otp26-node-4-t-789864z": {
+        "docker_logging": {
+          "Config": {
+            "max-file": "3",
+            "max-size": "10m"
+          },
+          "Type": "json-file"
+        },
+        "gid": 19002,
+        "labels": {
+          "com.docker.compose.config-hash": "e530704a1d7d73c04a733f3518dc9d6915b23ecd02168dd855bc08566eec2799",
+          "com.docker.compose.container-number": "1",
+          "com.docker.compose.depends_on": "",
+          "com.docker.compose.image": "sha256:dba47911238ebe9d363155e0d8bb434a13b3627dbc7c85f9926b2c7b1e496080",
+          "com.docker.compose.oneoff": "False",
+          "com.docker.compose.project": "openriak-kv-340-suse-160-otp26-node-cluster",
+          "com.docker.compose.project.config_files": "/tmp/openriak-docker-3.4.0-suse-16.0-otp26-229lsdaa/compose.cluster.test.yaml",
+          "com.docker.compose.project.environment_file": "/tmp/openriak-docker-3.4.0-suse-16.0-otp26-229lsdaa/.env.cluster",
+          "com.docker.compose.project.working_dir": "/tmp/openriak-docker-3.4.0-suse-16.0-otp26-229lsdaa",
+          "com.docker.compose.service": "node4",
+          "com.docker.compose.version": "5.4.0",
+          "com.suse.bci.base.authors": "https://github.com/SUSE/bci/discussions",
+          "com.suse.bci.base.created": "2026-07-30T07:59:45.294458092Z",
+          "com.suse.bci.base.description": "Image for containers based on SUSE Linux Enterprise Server 16.0.",
+          "com.suse.bci.base.disturl": "obs://build.suse.de/SUSE:SLFO:Products:BCI:16.0/containerkiwi/7ad55602e294006a4f29582d407b795a-base-image",
+          "com.suse.bci.base.eula": "sle-bci",
+          "com.suse.bci.base.lifecycle-url": "https://www.suse.com/lifecycle#suse-linux-enterprise-server-16",
+          "com.suse.bci.base.name": "16.0-23.1",
+          "com.suse.bci.base.reference": "registry.suse.com/bci/bci-base:16.0-23.1",
+          "com.suse.bci.base.release-stage": "released",
+          "com.suse.bci.base.source": "https://sources.suse.com/SUSE:SLFO:Products:BCI:16.0/base-image/7ad55602e294006a4f29582d407b795a/",
+          "com.suse.bci.base.supportlevel": "l3",
+          "com.suse.bci.base.title": "SUSE Linux BCI 16.0 Base",
+          "com.suse.bci.base.until": "2027-11-30",
+          "com.suse.bci.base.url": "https://www.suse.com/products/base-container-images/",
+          "com.suse.bci.base.vendor": "SUSE LLC",
+          "com.suse.bci.base.version": "16.0-23.1",
+          "com.suse.eula": "sle-bci",
+          "com.suse.lifecycle-url": "https://www.suse.com/lifecycle#suse-linux-enterprise-server-16",
+          "com.suse.release-stage": "released",
+          "com.suse.supportlevel": "l3",
+          "com.suse.supportlevel.until": "2027-11-30",
+          "desktop.docker.io/wsl-distro": "Ubuntu",
+          "io.artifacthub.package.logo-url": "https://opensource.suse.com/bci/SLE_BCI_logomark_green.svg",
+          "io.artifacthub.package.readme-url": "https://sources.suse.com/SUSE:SLFO:Products:BCI:16.0/base-image/7ad55602e294006a4f29582d407b795a/README.md",
+          "org.openbuildservice.disturl": "obs://build.suse.de/SUSE:SLFO:Products:BCI:16.0/containerkiwi/7ad55602e294006a4f29582d407b795a-base-image",
+          "org.opencontainers.image.authors": "https://github.com/SUSE/bci/discussions",
+          "org.opencontainers.image.created": "2026-07-30T07:59:45.294458092Z",
+          "org.opencontainers.image.description": "Package-backed OpenRiak KV with single-node and cluster startup support",
+          "org.opencontainers.image.ref.name": "16.0-23.1",
+          "org.opencontainers.image.source": "https://github.com/TI-Tokyo/openriak-docs",
+          "org.opencontainers.image.title": "OpenRiak KV",
+          "org.opencontainers.image.url": "https://www.tiot.jp/",
+          "org.opencontainers.image.vendor": "TI Tokyo",
+          "org.opencontainers.image.version": "3.4.0",
+          "org.openriak.image.tag": "tiotjp/openriak-kv:3.4.0-suse-16.0-otp26",
+          "org.openriak.os.name": "suse",
+          "org.openriak.os.release": "16.0",
+          "org.openriak.os.version": "16.0",
+          "org.openriak.otp.version": "26",
+          "org.opensuse.reference": "registry.suse.com/bci/bci-base:16.0-23.1"
+        },
+        "status": "passed",
+        "timezone": "Asia/Tokyo",
+        "uid": 19001
+      },
+      "openriak-kv-3.4.0-suse-16.0-otp26-node-5-t-789864z": {
+        "docker_logging": {
+          "Config": {
+            "max-file": "3",
+            "max-size": "10m"
+          },
+          "Type": "json-file"
+        },
+        "gid": 19002,
+        "labels": {
+          "com.docker.compose.config-hash": "a80e11908db22d0bf88124dd9e6a08f7cc31335a94ebafafb844dadd2e23d300",
+          "com.docker.compose.container-number": "1",
+          "com.docker.compose.depends_on": "",
+          "com.docker.compose.image": "sha256:dba47911238ebe9d363155e0d8bb434a13b3627dbc7c85f9926b2c7b1e496080",
+          "com.docker.compose.oneoff": "False",
+          "com.docker.compose.project": "openriak-kv-340-suse-160-otp26-node-cluster",
+          "com.docker.compose.project.config_files": "/tmp/openriak-docker-3.4.0-suse-16.0-otp26-229lsdaa/compose.cluster.test.yaml",
+          "com.docker.compose.project.environment_file": "/tmp/openriak-docker-3.4.0-suse-16.0-otp26-229lsdaa/.env.cluster",
+          "com.docker.compose.project.working_dir": "/tmp/openriak-docker-3.4.0-suse-16.0-otp26-229lsdaa",
+          "com.docker.compose.service": "node5",
+          "com.docker.compose.version": "5.4.0",
+          "com.suse.bci.base.authors": "https://github.com/SUSE/bci/discussions",
+          "com.suse.bci.base.created": "2026-07-30T07:59:45.294458092Z",
+          "com.suse.bci.base.description": "Image for containers based on SUSE Linux Enterprise Server 16.0.",
+          "com.suse.bci.base.disturl": "obs://build.suse.de/SUSE:SLFO:Products:BCI:16.0/containerkiwi/7ad55602e294006a4f29582d407b795a-base-image",
+          "com.suse.bci.base.eula": "sle-bci",
+          "com.suse.bci.base.lifecycle-url": "https://www.suse.com/lifecycle#suse-linux-enterprise-server-16",
+          "com.suse.bci.base.name": "16.0-23.1",
+          "com.suse.bci.base.reference": "registry.suse.com/bci/bci-base:16.0-23.1",
+          "com.suse.bci.base.release-stage": "released",
+          "com.suse.bci.base.source": "https://sources.suse.com/SUSE:SLFO:Products:BCI:16.0/base-image/7ad55602e294006a4f29582d407b795a/",
+          "com.suse.bci.base.supportlevel": "l3",
+          "com.suse.bci.base.title": "SUSE Linux BCI 16.0 Base",
+          "com.suse.bci.base.until": "2027-11-30",
+          "com.suse.bci.base.url": "https://www.suse.com/products/base-container-images/",
+          "com.suse.bci.base.vendor": "SUSE LLC",
+          "com.suse.bci.base.version": "16.0-23.1",
+          "com.suse.eula": "sle-bci",
+          "com.suse.lifecycle-url": "https://www.suse.com/lifecycle#suse-linux-enterprise-server-16",
+          "com.suse.release-stage": "released",
+          "com.suse.supportlevel": "l3",
+          "com.suse.supportlevel.until": "2027-11-30",
+          "desktop.docker.io/wsl-distro": "Ubuntu",
+          "io.artifacthub.package.logo-url": "https://opensource.suse.com/bci/SLE_BCI_logomark_green.svg",
+          "io.artifacthub.package.readme-url": "https://sources.suse.com/SUSE:SLFO:Products:BCI:16.0/base-image/7ad55602e294006a4f29582d407b795a/README.md",
+          "org.openbuildservice.disturl": "obs://build.suse.de/SUSE:SLFO:Products:BCI:16.0/containerkiwi/7ad55602e294006a4f29582d407b795a-base-image",
+          "org.opencontainers.image.authors": "https://github.com/SUSE/bci/discussions",
+          "org.opencontainers.image.created": "2026-07-30T07:59:45.294458092Z",
+          "org.opencontainers.image.description": "Package-backed OpenRiak KV with single-node and cluster startup support",
+          "org.opencontainers.image.ref.name": "16.0-23.1",
+          "org.opencontainers.image.source": "https://github.com/TI-Tokyo/openriak-docs",
+          "org.opencontainers.image.title": "OpenRiak KV",
+          "org.opencontainers.image.url": "https://www.tiot.jp/",
+          "org.opencontainers.image.vendor": "TI Tokyo",
+          "org.opencontainers.image.version": "3.4.0",
+          "org.openriak.image.tag": "tiotjp/openriak-kv:3.4.0-suse-16.0-otp26",
+          "org.openriak.os.name": "suse",
+          "org.openriak.os.release": "16.0",
+          "org.openriak.os.version": "16.0",
+          "org.openriak.otp.version": "26",
+          "org.opensuse.reference": "registry.suse.com/bci/bci-base:16.0-23.1"
+        },
+        "status": "passed",
+        "timezone": "Asia/Tokyo",
+        "uid": 19001
+      }
+    },
+    "configuration": {
+      "settings": {
+        "anti_entropy": "passive",
+        "listener.http.internal": "0.0.0.0:8098",
+        "listener.protobuf.internal": "0.0.0.0:8087",
+        "logger.max_file_size": "2MB",
+        "logger.max_files": "7",
+        "nodename": "openriak-kv@node-01.cluster-a.openriak",
+        "ring_size": "8",
+        "storage_backend": "leveled",
+        "tictacaae_active": "active",
+        "tictacaae_storeheads": "enabled"
+      },
+      "status": "passed"
+    },
+    "entrypoint_startup": {
+      "required_log_messages": [
+        "startup: starting OpenRiak as a daemon",
+        "startup: BEAM is running and riak ping returned pong",
+        "startup: riak_kv service is up",
+        "startup: transfers complete",
+        "startup: OpenRiak is ready",
+        "monitor: BEAM is running"
+      ],
+      "status": "passed"
+    },
+    "graceful_shutdown": {
+      "required_log_messages": [
+        "shutdown: received SIGTERM",
+        "shutdown: requesting OpenRiak stop",
+        "shutdown: BEAM stopped; container is exiting"
+      ],
+      "signal": "SIGTERM",
+      "status": "passed"
+    },
+    "healthcheck": {
+      "checks": [
+        "beam.smp",
+        "riak ping == pong"
+      ],
+      "docker_status": "healthy",
+      "status": "passed"
+    },
+    "http_ping": {
+      "request": "GET /ping",
+      "response": "OK",
+      "status": "passed",
+      "status_code": 200
+    },
+    "populated_volumes": {
+      "config": [
+        "advanced.config",
+        "riak.conf"
+      ],
+      "data": [
+        "cluster_meta",
+        "generated.conf",
+        "kv_eraser",
+        "kv_reader",
+        "kv_reaper",
+        "kv_replrtqsrc",
+        "kv_vnode",
+        "leveled",
+        "riak_repl",
+        "ring",
+        "setup",
+        "sys.config",
+        "tictac_aae",
+        "vm.args"
+      ],
+      "logs": [
+        "console.log",
+        "erlang.log.1",
+        "run_erl.log"
+      ],
+      "status": "passed"
+    },
+    "preserved_configuration": {
+      "sha256": "3584e079b8ec769f768c1c2d74209200c9425aee3fd0c77dbfe2e28f7e05afbe",
+      "status": "passed"
+    },
+    "preserved_cookie": {
+      "configuration_cookie": "openriak-ee273c475c575f53a178b26204a0d381",
+      "status": "passed"
+    },
+    "riak_start": {
+      "status": "passed"
+    },
+    "runtime_options": {
+      "docker_logging": {
+        "Config": {
+          "max-file": "3",
+          "max-size": "10m"
+        },
+        "Type": "json-file"
+      },
+      "gid": 19002,
+      "labels": {
+        "com.docker.compose.config-hash": "112b34be2695c5c7c3d9f67d1b7e0bfafbc19a05f570aac64a836daf4a15bc7d",
+        "com.docker.compose.container-number": "1",
+        "com.docker.compose.depends_on": "",
+        "com.docker.compose.image": "sha256:dba47911238ebe9d363155e0d8bb434a13b3627dbc7c85f9926b2c7b1e496080",
+        "com.docker.compose.oneoff": "False",
+        "com.docker.compose.project": "openriak-kv-340-suse-160-otp26-node",
+        "com.docker.compose.project.config_files": "/tmp/openriak-docker-3.4.0-suse-16.0-otp26-229lsdaa/compose.single.test.yaml",
+        "com.docker.compose.project.environment_file": "/tmp/openriak-docker-3.4.0-suse-16.0-otp26-229lsdaa/.env.single",
+        "com.docker.compose.project.working_dir": "/tmp/openriak-docker-3.4.0-suse-16.0-otp26-229lsdaa",
+        "com.docker.compose.service": "node",
+        "com.docker.compose.version": "5.4.0",
+        "com.suse.bci.base.authors": "https://github.com/SUSE/bci/discussions",
+        "com.suse.bci.base.created": "2026-07-30T07:59:45.294458092Z",
+        "com.suse.bci.base.description": "Image for containers based on SUSE Linux Enterprise Server 16.0.",
+        "com.suse.bci.base.disturl": "obs://build.suse.de/SUSE:SLFO:Products:BCI:16.0/containerkiwi/7ad55602e294006a4f29582d407b795a-base-image",
+        "com.suse.bci.base.eula": "sle-bci",
+        "com.suse.bci.base.lifecycle-url": "https://www.suse.com/lifecycle#suse-linux-enterprise-server-16",
+        "com.suse.bci.base.name": "16.0-23.1",
+        "com.suse.bci.base.reference": "registry.suse.com/bci/bci-base:16.0-23.1",
+        "com.suse.bci.base.release-stage": "released",
+        "com.suse.bci.base.source": "https://sources.suse.com/SUSE:SLFO:Products:BCI:16.0/base-image/7ad55602e294006a4f29582d407b795a/",
+        "com.suse.bci.base.supportlevel": "l3",
+        "com.suse.bci.base.title": "SUSE Linux BCI 16.0 Base",
+        "com.suse.bci.base.until": "2027-11-30",
+        "com.suse.bci.base.url": "https://www.suse.com/products/base-container-images/",
+        "com.suse.bci.base.vendor": "SUSE LLC",
+        "com.suse.bci.base.version": "16.0-23.1",
+        "com.suse.eula": "sle-bci",
+        "com.suse.lifecycle-url": "https://www.suse.com/lifecycle#suse-linux-enterprise-server-16",
+        "com.suse.release-stage": "released",
+        "com.suse.supportlevel": "l3",
+        "com.suse.supportlevel.until": "2027-11-30",
+        "desktop.docker.io/wsl-distro": "Ubuntu",
+        "io.artifacthub.package.logo-url": "https://opensource.suse.com/bci/SLE_BCI_logomark_green.svg",
+        "io.artifacthub.package.readme-url": "https://sources.suse.com/SUSE:SLFO:Products:BCI:16.0/base-image/7ad55602e294006a4f29582d407b795a/README.md",
+        "org.openbuildservice.disturl": "obs://build.suse.de/SUSE:SLFO:Products:BCI:16.0/containerkiwi/7ad55602e294006a4f29582d407b795a-base-image",
+        "org.opencontainers.image.authors": "https://github.com/SUSE/bci/discussions",
+        "org.opencontainers.image.created": "2026-07-30T07:59:45.294458092Z",
+        "org.opencontainers.image.description": "Package-backed OpenRiak KV with single-node and cluster startup support",
+        "org.opencontainers.image.ref.name": "16.0-23.1",
+        "org.opencontainers.image.source": "https://github.com/TI-Tokyo/openriak-docs",
+        "org.opencontainers.image.title": "OpenRiak KV",
+        "org.opencontainers.image.url": "https://www.tiot.jp/",
+        "org.opencontainers.image.vendor": "TI Tokyo",
+        "org.opencontainers.image.version": "3.4.0",
+        "org.openriak.image.tag": "tiotjp/openriak-kv:3.4.0-suse-16.0-otp26",
+        "org.openriak.os.name": "suse",
+        "org.openriak.os.release": "16.0",
+        "org.openriak.os.version": "16.0",
+        "org.openriak.otp.version": "26",
+        "org.opensuse.reference": "registry.suse.com/bci/bci-base:16.0-23.1"
+      },
+      "status": "passed",
+      "timezone": "Asia/Tokyo",
+      "uid": 19001
+    },
+    "volume_initialization": {
+      "config_populated": true,
+      "data_directory_created": true,
+      "logs_directory_created": true,
+      "status": "passed"
+    }
+  },
+  "volumes": {
+    "config": {
+      "container": "/etc/riak",
+      "default": "./openriak-kv-3.4.0-suse-16.0-otp26-node/config"
+    },
+    "data": {
+      "container": "/var/lib/riak",
+      "default": "./openriak-kv-3.4.0-suse-16.0-otp26-node/data"
+    },
+    "logs": {
+      "container": "/var/log/riak",
+      "default": "./openriak-kv-3.4.0-suse-16.0-otp26-node/logs"
+    }
+  }
+}

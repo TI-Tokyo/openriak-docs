@@ -9,6 +9,7 @@ from unittest import mock
 
 
 MODULE_PATH = pathlib.Path(__file__).resolve().parents[1] / "openriak_docker.py"
+sys.path.insert(0, str(MODULE_PATH.parent))
 SPEC = importlib.util.spec_from_file_location("openriak_docker", MODULE_PATH)
 docker_tool = importlib.util.module_from_spec(SPEC)
 assert SPEC.loader is not None
@@ -111,7 +112,7 @@ class OpenRiakDockerTests(unittest.TestCase):
         self.assertNotIn("\r", source)
         self.assertIn("ADD --checksum=sha256:140f1d", source)
         self.assertIn(
-            "apk add --no-cache bash ca-certificates coreutils curl su-exec",
+            "apk add --no-cache bash ca-certificates coreutils su-exec",
             source,
         )
         self.assertIn("adduser -S -D -H", source)
@@ -356,27 +357,27 @@ listener.protobuf.internal = 127.0.0.1:8087
             "registry.access.redhat.com/ubi9/ubi:9.8",
         )
 
-    def test_amazon_linux_keeps_existing_curl_and_uses_bundled_escript(self):
+    def test_amazon_linux_uses_bundled_escript_without_installing_curl(self):
         target = next(
             target
             for target in docker_tool.discover_targets()
             if target.family == "amazon-linux"
         )
         script = docker_tool.package_install_script(target)
-        self.assertIn("if ! command -v curl", script)
+        self.assertNotIn("curl", script)
         self.assertNotIn("dnf install -y ca-certificates curl ", script)
         self.assertIn("rpm -Uvh --replacepkgs --nodeps", script)
         self.assertIn("/usr/lib64/riak/erts-*/bin/escript", script)
         self.assertIn("test -x /usr/bin/escript", script)
 
-    def test_rhel_keeps_existing_curl_minimal(self):
+    def test_rhel_does_not_install_curl(self):
         target = next(
             target
             for target in docker_tool.discover_targets()
             if target.family == "rhel"
         )
         script = docker_tool.package_install_script(target)
-        self.assertIn("if ! command -v curl", script)
+        self.assertNotIn("curl", script)
         self.assertNotIn("dnf install -y ca-certificates curl ", script)
 
     def test_microdnf_installs_dependencies_before_local_rpm(self):
@@ -419,7 +420,19 @@ listener.protobuf.internal = 127.0.0.1:8087
 
     def test_complete_metadata_matrix_is_discoverable(self):
         targets = docker_tool.discover_targets()
-        self.assertGreater(len(targets), 20)
+        expected_native = set()
+        for version in docker_tool.metadata_versions():
+            supported = docker_tool.read_json(docker_tool.METADATA_ROOT / version / "supported-os.json")
+            downloads = docker_tool.read_json(docker_tool.METADATA_ROOT / version / "downloads.json")
+            if supported.get("status") != "complete" or downloads.get("status") != "complete":
+                continue
+            for os_record in supported["operating_systems"]:
+                for download_id, package in downloads["downloads"].get(os_record["id"], {}).items():
+                    target = docker_tool.Target(version, os_record, download_id, package)
+                    expected_native.add((version, os_record["id"], target.otp, target.architecture))
+        actual_native = {(t.version, t.os_id, t.otp, t.architecture)
+                         for t in targets if "alias_of" not in t.operating_system}
+        self.assertEqual(actual_native, expected_native)
         self.assertTrue(
             all(
                 docker_tool.semver_key(target.version)
@@ -436,7 +449,24 @@ listener.protobuf.internal = 127.0.0.1:8087
         targets = docker_tool.discover_targets(["3.4.0", "3.4.1"])
         by_key = {(t.version, t.os_id, t.otp): t for t in targets}
         aliases = [t for t in targets if "alias_of" in t.operating_system]
-        self.assertEqual(len(aliases), 12)
+        rules = docker_tool.read_json(docker_tool.OS_ALIASES_PATH)
+        expected_aliases = set()
+        for version in {t.version for t in targets}:
+            native = [t for t in targets if t.version == version and "alias_of" not in t.operating_system]
+            operating_systems = docker_tool.read_json(docker_tool.METADATA_ROOT / version / "supported-os.json")["operating_systems"]
+            native_families = {os_record["family"] for os_record in operating_systems}
+            native_ids = {os_record["id"] for os_record in operating_systems}
+            for source in native:
+                if source.family != rules["source_family"]:
+                    continue
+                for rule in rules["aliases"]:
+                    if rule.get("docker") is False or rule.get("nativeFamily", rule["family"]) in native_families:
+                        continue
+                    release = rule.get("modernReleases", rule.get("releases", {})).get(source.release)
+                    alias_id = f"{rule['family']}-{release['id'] if release else source.release}-{source.operating_system['architecture']}"
+                    if alias_id not in native_ids:
+                        expected_aliases.add((version, alias_id, source.otp))
+        self.assertEqual({(t.version, t.os_id, t.otp) for t in aliases}, expected_aliases)
         for target in aliases:
             with self.subTest(image=target.image):
                 original = by_key[(target.version, target.operating_system["alias_of"], target.otp)]
@@ -455,7 +485,7 @@ listener.protobuf.internal = 127.0.0.1:8087
         self.assertIn(f"FROM --platform=linux/amd64 {base}@{digest}", source)
         self.assertIn(target.package["url"], source)
         self.assertIn("zypper --non-interactive install --no-recommends", source)
-        self.assertIn("curl gawk glibc", source)
+        self.assertIn("ca-certificates gawk glibc", source)
         self.assertIn("rpm -Uvh --replacepkgs --nodeps", source)
         self.assertIn("/usr/lib64/riak/erts-*/bin/escript", source)
         report = docker_tool.initial_report(target, "test", 5, "test-cookie")
@@ -608,7 +638,7 @@ listener.protobuf.internal = 127.0.0.1:8087
         with mock.patch.object(
             docker_tool, "discover_targets", return_value=[self.target]
         ), mock.patch.object(
-            docker_tool, "cache_state", return_value=("valid", "")
+            docker_tool, "refresh_group", return_value=True
         ), mock.patch.object(
             docker_tool, "log_timestamp", return_value="2026-09-05 11:01:22"
         ), mock.patch.object(docker_tool, "sync_download_metadata") as sync_metadata, contextlib.redirect_stdout(output):
@@ -620,11 +650,10 @@ listener.protobuf.internal = 127.0.0.1:8087
         self.assertIn("Version:       3.4.0", source)
         self.assertIn("OS:            all", source)
         self.assertIn("Architecture:  all", source)
-        self.assertIn("Timeout:       180s", source)
+        self.assertIn(f"Timeout:       {docker_tool.DEFAULT_TIMEOUT_SECONDS}s", source)
         self.assertIn("Cluster nodes: 5", source)
         self.assertIn(
-            f"[1/1] 2026-09-05 11:01:22 SKIPPED {self.target.image} "
-            "(complete cache exists)",
+            "[1/1] 2026-09-05 11:01:22 openriak/openriak-kv:3.4.0-alpine-3.21-otp24 (linux/amd64)",
             source,
         )
 

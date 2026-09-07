@@ -1,0 +1,872 @@
+{
+  "artifacts": {
+    "compose_cluster": {
+      "filename": "compose.cluster.yaml",
+      "sha256": "14d5693b26fe77fa016ebd06b6885453f274ee07d7e5560201558a497cb621cd",
+      "url": "downloads/docker/3.4.0/3.4.0-rhel-9-otp26/compose.cluster.yaml"
+    },
+    "compose_single": {
+      "filename": "compose.single.yaml",
+      "sha256": "b09d5db71fdffdc7847190a54f729f6929d8f049706e0f0c527efaf66f09fe1f",
+      "url": "downloads/docker/3.4.0/3.4.0-rhel-9-otp26/compose.single.yaml"
+    },
+    "dockerfile": {
+      "filename": "Dockerfile",
+      "sha256": "e57087a22f637b061c31b843289a53f8df76c45c22705819d7cfcacf9408227c",
+      "url": "downloads/docker/3.4.0/3.4.0-rhel-9-otp26/Dockerfile"
+    },
+    "environment_example": {
+      "filename": "example.env",
+      "sha256": "45e4e0bbb4194b831edcc24c3d28d11b5c3d1fbcfbb495ee5dd8f27117104744",
+      "url": "downloads/docker/3.4.0/3.4.0-rhel-9-otp26/example.env"
+    }
+  },
+  "base_image": {
+    "pinned": "registry.access.redhat.com/ubi9/ubi:9.8@sha256:25a147defd01e19674714f55d17538c8dbe55d8c305fa157ecc3f9c8977b05b6",
+    "requested": "registry.access.redhat.com/ubi9/ubi:9.8",
+    "resolved_at": "2026-09-06T18:20:03Z"
+  },
+  "error": null,
+  "finished_at": "2026-09-06T18:24:16Z",
+  "generation": {
+    "cluster_nodes": 5,
+    "distributed_cookie": "openriak-3672fc6b9a26f971c62d431e78ee7fc2"
+  },
+  "identity": {
+    "namespace": "tiotjp",
+    "source": "https://github.com/TI-Tokyo/openriak-docs",
+    "url": "https://www.tiot.jp/",
+    "vendor": "TI Tokyo"
+  },
+  "image": "tiotjp/openriak-kv:3.4.0-rhel-9-otp26",
+  "metadata_sources": [
+    "content/openriak-kv/metadata/3.4.0/supported-os.json",
+    "content/openriak-kv/metadata/3.4.0/downloads.json"
+  ],
+  "network": {
+    "address_assignment": "docker",
+    "node_host": "node-01.cluster-a.openriak",
+    "riak_node_name": "openriak-kv@node-01.cluster-a.openriak"
+  },
+  "node": "openriak-kv-3.4.0-rhel-9-otp26-node",
+  "package": {
+    "checksum": {
+      "algorithm": "sha256",
+      "value": "72c02db420dc5a0cde5c27a2bd1813fc74e56b663f1167b9b7a0795fae5bfc77"
+    },
+    "filename": "riak-3.4.0.OTP26-1.el9.x86_64.rpm",
+    "format": "rpm",
+    "url": "https://files.tiot.jp/riak/kv/3.4/3.4.0/rhel/9/riak-3.4.0.OTP26-1.el9.x86_64.rpm"
+  },
+  "ports": {
+    "http": 8098,
+    "protobuf": 8087
+  },
+  "product": "openriak-kv",
+  "run_id": "20260906T182003.712335Z",
+  "schema_version": 4,
+  "started_at": "2026-09-06T18:20:03Z",
+  "status": "passed",
+  "steps": [
+    {
+      "duration_seconds": 0.0,
+      "finished_at": "2026-09-06T18:20:03Z",
+      "name": "generate_artifacts",
+      "started_at": "2026-09-06T18:20:03Z",
+      "status": "passed"
+    },
+    {
+      "duration_seconds": 0.135,
+      "finished_at": "2026-09-06T18:20:03Z",
+      "name": "validate_compose_artifacts",
+      "started_at": "2026-09-06T18:20:03Z",
+      "status": "passed"
+    },
+    {
+      "duration_seconds": 20.571,
+      "finished_at": "2026-09-06T18:20:24Z",
+      "name": "build_image",
+      "started_at": "2026-09-06T18:20:03Z",
+      "status": "passed"
+    },
+    {
+      "duration_seconds": 1.841,
+      "finished_at": "2026-09-06T18:20:26Z",
+      "name": "initialize_volumes",
+      "started_at": "2026-09-06T18:20:24Z",
+      "status": "passed"
+    },
+    {
+      "duration_seconds": 0.873,
+      "finished_at": "2026-09-06T18:20:27Z",
+      "name": "make_test_config_writable",
+      "started_at": "2026-09-06T18:20:26Z",
+      "status": "passed"
+    },
+    {
+      "duration_seconds": 0.003,
+      "finished_at": "2026-09-06T18:20:27Z",
+      "name": "configure_node",
+      "started_at": "2026-09-06T18:20:27Z",
+      "status": "passed"
+    },
+    {
+      "duration_seconds": 0.563,
+      "finished_at": "2026-09-06T18:20:27Z",
+      "name": "start_compose_node",
+      "started_at": "2026-09-06T18:20:27Z",
+      "status": "passed"
+    },
+    {
+      "duration_seconds": 19.042,
+      "finished_at": "2026-09-06T18:20:46Z",
+      "name": "wait_for_entrypoint_readiness",
+      "started_at": "2026-09-06T18:20:27Z",
+      "status": "passed"
+    },
+    {
+      "duration_seconds": 0.517,
+      "finished_at": "2026-09-06T18:20:47Z",
+      "name": "wait_for_cli_and_http",
+      "started_at": "2026-09-06T18:20:46Z",
+      "status": "passed"
+    },
+    {
+      "duration_seconds": 0.127,
+      "finished_at": "2026-09-06T18:20:47Z",
+      "name": "verify_runtime_options",
+      "started_at": "2026-09-06T18:20:47Z",
+      "status": "passed"
+    },
+    {
+      "duration_seconds": 1.395,
+      "finished_at": "2026-09-06T18:20:48Z",
+      "name": "single_node_admin_test",
+      "started_at": "2026-09-06T18:20:47Z",
+      "status": "passed"
+    },
+    {
+      "duration_seconds": 0.03,
+      "finished_at": "2026-09-06T18:20:48Z",
+      "name": "wait_for_healthcheck",
+      "started_at": "2026-09-06T18:20:48Z",
+      "status": "passed"
+    },
+    {
+      "duration_seconds": 4.944,
+      "finished_at": "2026-09-06T18:20:53Z",
+      "name": "graceful_stop",
+      "started_at": "2026-09-06T18:20:48Z",
+      "status": "passed"
+    },
+    {
+      "duration_seconds": 0.04,
+      "finished_at": "2026-09-06T18:20:53Z",
+      "name": "verify_graceful_shutdown_logging",
+      "started_at": "2026-09-06T18:20:53Z",
+      "status": "passed"
+    },
+    {
+      "duration_seconds": 0.432,
+      "finished_at": "2026-09-06T18:20:54Z",
+      "name": "remove_single_node_test",
+      "started_at": "2026-09-06T18:20:53Z",
+      "status": "passed"
+    },
+    {
+      "duration_seconds": 2.493,
+      "finished_at": "2026-09-06T18:20:56Z",
+      "name": "start_compose_cluster",
+      "started_at": "2026-09-06T18:20:54Z",
+      "status": "passed"
+    },
+    {
+      "duration_seconds": 182.407,
+      "finished_at": "2026-09-06T18:23:59Z",
+      "name": "wait_for_cluster",
+      "started_at": "2026-09-06T18:20:56Z",
+      "status": "passed"
+    },
+    {
+      "duration_seconds": 1.474,
+      "finished_at": "2026-09-06T18:24:00Z",
+      "name": "cluster_node_1_admin_test",
+      "started_at": "2026-09-06T18:23:59Z",
+      "status": "passed"
+    },
+    {
+      "duration_seconds": 0.158,
+      "finished_at": "2026-09-06T18:24:01Z",
+      "name": "cluster_node_1_runtime_options",
+      "started_at": "2026-09-06T18:24:00Z",
+      "status": "passed"
+    },
+    {
+      "duration_seconds": 1.692,
+      "finished_at": "2026-09-06T18:24:02Z",
+      "name": "cluster_node_2_admin_test",
+      "started_at": "2026-09-06T18:24:01Z",
+      "status": "passed"
+    },
+    {
+      "duration_seconds": 0.163,
+      "finished_at": "2026-09-06T18:24:03Z",
+      "name": "cluster_node_2_runtime_options",
+      "started_at": "2026-09-06T18:24:02Z",
+      "status": "passed"
+    },
+    {
+      "duration_seconds": 1.972,
+      "finished_at": "2026-09-06T18:24:05Z",
+      "name": "cluster_node_3_admin_test",
+      "started_at": "2026-09-06T18:24:03Z",
+      "status": "passed"
+    },
+    {
+      "duration_seconds": 0.246,
+      "finished_at": "2026-09-06T18:24:05Z",
+      "name": "cluster_node_3_runtime_options",
+      "started_at": "2026-09-06T18:24:05Z",
+      "status": "passed"
+    },
+    {
+      "duration_seconds": 1.73,
+      "finished_at": "2026-09-06T18:24:07Z",
+      "name": "cluster_node_4_admin_test",
+      "started_at": "2026-09-06T18:24:05Z",
+      "status": "passed"
+    },
+    {
+      "duration_seconds": 0.178,
+      "finished_at": "2026-09-06T18:24:07Z",
+      "name": "cluster_node_4_runtime_options",
+      "started_at": "2026-09-06T18:24:07Z",
+      "status": "passed"
+    },
+    {
+      "duration_seconds": 1.607,
+      "finished_at": "2026-09-06T18:24:09Z",
+      "name": "cluster_node_5_admin_test",
+      "started_at": "2026-09-06T18:24:08Z",
+      "status": "passed"
+    },
+    {
+      "duration_seconds": 0.157,
+      "finished_at": "2026-09-06T18:24:09Z",
+      "name": "cluster_node_5_runtime_options",
+      "started_at": "2026-09-06T18:24:09Z",
+      "status": "passed"
+    },
+    {
+      "duration_seconds": 5.337,
+      "finished_at": "2026-09-06T18:24:15Z",
+      "name": "graceful_stop_cluster",
+      "started_at": "2026-09-06T18:24:10Z",
+      "status": "passed"
+    },
+    {
+      "duration_seconds": 0.558,
+      "finished_at": "2026-09-06T18:24:15Z",
+      "name": "remove_cluster_test",
+      "started_at": "2026-09-06T18:24:15Z",
+      "status": "passed"
+    }
+  ],
+  "target": {
+    "architecture": "x86_64",
+    "docker_platform": "linux/amd64",
+    "download_id": "otp26-x86_64-1",
+    "os_family": "rhel",
+    "os_id": "rhel-9-x86_64",
+    "os_name": "Red Hat Enterprise Linux 9",
+    "os_release": "9",
+    "otp": "26",
+    "version": "3.4.0"
+  },
+  "tests": {
+    "admin_test": {
+      "command": "riak admin test",
+      "response": "Successfully completed 1 read/write cycle to 'openriak-kv@node-01.cluster-a.openriak'",
+      "status": "passed"
+    },
+    "cli_ping": {
+      "command": "riak ping",
+      "response": "pong",
+      "status": "passed"
+    },
+    "cluster": {
+      "checks": [
+        "same member set",
+        "ring ready",
+        "transfers complete",
+        "riak ping == pong",
+        "HTTP 200/OK",
+        "riak admin test read/write cycle",
+        "Docker healthcheck healthy",
+        "config/data/log volumes populated"
+      ],
+      "coordinator_cookie_adoption": "passed",
+      "members": [
+        "openriak-kv@node-01.cluster-a.openriak",
+        "openriak-kv@node-02.cluster-a.openriak",
+        "openriak-kv@node-03.cluster-a.openriak",
+        "openriak-kv@node-04.cluster-a.openriak",
+        "openriak-kv@node-05.cluster-a.openriak"
+      ],
+      "node_count": 5,
+      "roles": {
+        "openriak-kv-3.4.0-rhel-9-otp26-node-1-t-712335z": "Coordinator",
+        "openriak-kv-3.4.0-rhel-9-otp26-node-2-t-712335z": "Follower",
+        "openriak-kv-3.4.0-rhel-9-otp26-node-3-t-712335z": "Follower",
+        "openriak-kv-3.4.0-rhel-9-otp26-node-4-t-712335z": "Follower",
+        "openriak-kv-3.4.0-rhel-9-otp26-node-5-t-712335z": "Follower"
+      },
+      "state": {
+        "openriak-kv-3.4.0-rhel-9-otp26-node-1-t-712335z": {
+          "http": "OK",
+          "members": "================================= Membership ==================================\nStatus     Ring    Pending    Node\n-------------------------------------------------------------------------------\nvalid      25.0%      --      openriak-kv@node-01.cluster-a.openriak\nvalid      25.0%      --      openriak-kv@node-02.cluster-a.openriak\nvalid      25.0%      --      openriak-kv@node-03.cluster-a.openriak\nvalid      12.5%      --      openriak-kv@node-04.cluster-a.openriak\nvalid      12.5%      --      openriak-kv@node-05.cluster-a.openriak\n-------------------------------------------------------------------------------\nValid:5 / Leaving:0 / Exiting:0 / Joining:0 / Down:0\nok",
+          "ping": "pong",
+          "ready": true,
+          "ring": "TRUE All nodes agree on the ring ['openriak-kv@node-01.cluster-a.openriak',\n                                  'openriak-kv@node-02.cluster-a.openriak',\n                                  'openriak-kv@node-03.cluster-a.openriak',\n                                  'openriak-kv@node-04.cluster-a.openriak',\n                                  'openriak-kv@node-05.cluster-a.openriak']\nok",
+          "transfers": "No transfers active\n\nActive Transfers:\n\n\nok"
+        },
+        "openriak-kv-3.4.0-rhel-9-otp26-node-2-t-712335z": {
+          "http": "OK",
+          "members": "================================= Membership ==================================\nStatus     Ring    Pending    Node\n-------------------------------------------------------------------------------\nvalid      25.0%      --      openriak-kv@node-01.cluster-a.openriak\nvalid      25.0%      --      openriak-kv@node-02.cluster-a.openriak\nvalid      25.0%      --      openriak-kv@node-03.cluster-a.openriak\nvalid      12.5%      --      openriak-kv@node-04.cluster-a.openriak\nvalid      12.5%      --      openriak-kv@node-05.cluster-a.openriak\n-------------------------------------------------------------------------------\nValid:5 / Leaving:0 / Exiting:0 / Joining:0 / Down:0\nok",
+          "ping": "pong",
+          "ready": true,
+          "ring": "TRUE All nodes agree on the ring ['openriak-kv@node-01.cluster-a.openriak',\n                                  'openriak-kv@node-02.cluster-a.openriak',\n                                  'openriak-kv@node-03.cluster-a.openriak',\n                                  'openriak-kv@node-04.cluster-a.openriak',\n                                  'openriak-kv@node-05.cluster-a.openriak']\nok",
+          "transfers": "No transfers active\n\nActive Transfers:\n\n\nok"
+        },
+        "openriak-kv-3.4.0-rhel-9-otp26-node-3-t-712335z": {
+          "http": "OK",
+          "members": "================================= Membership ==================================\nStatus     Ring    Pending    Node\n-------------------------------------------------------------------------------\nvalid      25.0%      --      openriak-kv@node-01.cluster-a.openriak\nvalid      25.0%      --      openriak-kv@node-02.cluster-a.openriak\nvalid      25.0%      --      openriak-kv@node-03.cluster-a.openriak\nvalid      12.5%      --      openriak-kv@node-04.cluster-a.openriak\nvalid      12.5%      --      openriak-kv@node-05.cluster-a.openriak\n-------------------------------------------------------------------------------\nValid:5 / Leaving:0 / Exiting:0 / Joining:0 / Down:0\nok",
+          "ping": "pong",
+          "ready": true,
+          "ring": "TRUE All nodes agree on the ring ['openriak-kv@node-01.cluster-a.openriak',\n                                  'openriak-kv@node-02.cluster-a.openriak',\n                                  'openriak-kv@node-03.cluster-a.openriak',\n                                  'openriak-kv@node-04.cluster-a.openriak',\n                                  'openriak-kv@node-05.cluster-a.openriak']\nok",
+          "transfers": "No transfers active\n\nActive Transfers:\n\n\nok"
+        },
+        "openriak-kv-3.4.0-rhel-9-otp26-node-4-t-712335z": {
+          "http": "OK",
+          "members": "================================= Membership ==================================\nStatus     Ring    Pending    Node\n-------------------------------------------------------------------------------\nvalid      25.0%      --      openriak-kv@node-01.cluster-a.openriak\nvalid      25.0%      --      openriak-kv@node-02.cluster-a.openriak\nvalid      25.0%      --      openriak-kv@node-03.cluster-a.openriak\nvalid      12.5%      --      openriak-kv@node-04.cluster-a.openriak\nvalid      12.5%      --      openriak-kv@node-05.cluster-a.openriak\n-------------------------------------------------------------------------------\nValid:5 / Leaving:0 / Exiting:0 / Joining:0 / Down:0\nok",
+          "ping": "pong",
+          "ready": true,
+          "ring": "TRUE All nodes agree on the ring ['openriak-kv@node-01.cluster-a.openriak',\n                                  'openriak-kv@node-02.cluster-a.openriak',\n                                  'openriak-kv@node-03.cluster-a.openriak',\n                                  'openriak-kv@node-04.cluster-a.openriak',\n                                  'openriak-kv@node-05.cluster-a.openriak']\nok",
+          "transfers": "No transfers active\n\nActive Transfers:\n\n\nok"
+        },
+        "openriak-kv-3.4.0-rhel-9-otp26-node-5-t-712335z": {
+          "http": "OK",
+          "members": "================================= Membership ==================================\nStatus     Ring    Pending    Node\n-------------------------------------------------------------------------------\nvalid      25.0%      --      openriak-kv@node-01.cluster-a.openriak\nvalid      25.0%      --      openriak-kv@node-02.cluster-a.openriak\nvalid      25.0%      --      openriak-kv@node-03.cluster-a.openriak\nvalid      12.5%      --      openriak-kv@node-04.cluster-a.openriak\nvalid      12.5%      --      openriak-kv@node-05.cluster-a.openriak\n-------------------------------------------------------------------------------\nValid:5 / Leaving:0 / Exiting:0 / Joining:0 / Down:0\nok",
+          "ping": "pong",
+          "ready": true,
+          "ring": "TRUE All nodes agree on the ring ['openriak-kv@node-01.cluster-a.openriak',\n                                  'openriak-kv@node-02.cluster-a.openriak',\n                                  'openriak-kv@node-03.cluster-a.openriak',\n                                  'openriak-kv@node-04.cluster-a.openriak',\n                                  'openriak-kv@node-05.cluster-a.openriak']\nok",
+          "transfers": "No transfers active\n\nActive Transfers:\n\n\nok"
+        }
+      },
+      "status": "passed"
+    },
+    "cluster_admin_test": {
+      "openriak-kv-3.4.0-rhel-9-otp26-node-1-t-712335z": {
+        "command": "riak admin test",
+        "response": "Successfully completed 1 read/write cycle to 'openriak-kv@node-01.cluster-a.openriak'",
+        "status": "passed"
+      },
+      "openriak-kv-3.4.0-rhel-9-otp26-node-2-t-712335z": {
+        "command": "riak admin test",
+        "response": "Successfully completed 1 read/write cycle to 'openriak-kv@node-02.cluster-a.openriak'",
+        "status": "passed"
+      },
+      "openriak-kv-3.4.0-rhel-9-otp26-node-3-t-712335z": {
+        "command": "riak admin test",
+        "response": "Successfully completed 1 read/write cycle to 'openriak-kv@node-03.cluster-a.openriak'",
+        "status": "passed"
+      },
+      "openriak-kv-3.4.0-rhel-9-otp26-node-4-t-712335z": {
+        "command": "riak admin test",
+        "response": "Successfully completed 1 read/write cycle to 'openriak-kv@node-04.cluster-a.openriak'",
+        "status": "passed"
+      },
+      "openriak-kv-3.4.0-rhel-9-otp26-node-5-t-712335z": {
+        "command": "riak admin test",
+        "response": "Successfully completed 1 read/write cycle to 'openriak-kv@node-05.cluster-a.openriak'",
+        "status": "passed"
+      }
+    },
+    "cluster_runtime_options": {
+      "openriak-kv-3.4.0-rhel-9-otp26-node-1-t-712335z": {
+        "docker_logging": {
+          "Config": {
+            "max-file": "3",
+            "max-size": "10m"
+          },
+          "Type": "json-file"
+        },
+        "gid": 19002,
+        "labels": {
+          "architecture": "x86_64",
+          "build-date": "2026-09-01T06:45:46Z",
+          "com.docker.compose.config-hash": "8234db3c9fc3c95dec1bc4c865f746d838b443c23c9ff20a859c060bb61ce2e7",
+          "com.docker.compose.container-number": "1",
+          "com.docker.compose.depends_on": "",
+          "com.docker.compose.image": "sha256:8bd1ac45aa5fb0f2d6cc2096322c320ce6990204750875fbe1ebbae55b4305d8",
+          "com.docker.compose.oneoff": "False",
+          "com.docker.compose.project": "openriak-kv-340-rhel-9-otp26-node-cluster",
+          "com.docker.compose.project.config_files": "/tmp/openriak-docker-3.4.0-rhel-9-otp26-jsosb5x2/compose.cluster.test.yaml",
+          "com.docker.compose.project.environment_file": "/tmp/openriak-docker-3.4.0-rhel-9-otp26-jsosb5x2/.env.cluster",
+          "com.docker.compose.project.working_dir": "/tmp/openriak-docker-3.4.0-rhel-9-otp26-jsosb5x2",
+          "com.docker.compose.service": "node1",
+          "com.docker.compose.version": "5.4.0",
+          "com.redhat.component": "ubi9-container",
+          "com.redhat.license_terms": "https://www.redhat.com/en/about/red-hat-end-user-license-agreements#UBI",
+          "cpe": "cpe:/a:redhat:enterprise_linux:9::appstream",
+          "description": "The Universal Base Image is designed and engineered to be the base layer for all of your containerized applications, middleware and utilities. This base image is freely redistributable, but Red Hat only supports Red Hat technologies through subscriptions for Red Hat products. This image is maintained by Red Hat and updated regularly.",
+          "desktop.docker.io/wsl-distro": "Ubuntu",
+          "distribution-scope": "public",
+          "io.buildah.version": "1.44.0",
+          "io.k8s.description": "The Universal Base Image is designed and engineered to be the base layer for all of your containerized applications, middleware and utilities. This base image is freely redistributable, but Red Hat only supports Red Hat technologies through subscriptions for Red Hat products. This image is maintained by Red Hat and updated regularly.",
+          "io.k8s.display-name": "Red Hat Universal Base Image 9",
+          "io.openshift.expose-services": "",
+          "io.openshift.tags": "base rhel9",
+          "maintainer": "Red Hat, Inc.",
+          "name": "ubi9/ubi",
+          "org.opencontainers.image.created": "2026-09-01T06:45:46Z",
+          "org.opencontainers.image.description": "Package-backed OpenRiak KV with single-node and cluster startup support",
+          "org.opencontainers.image.revision": "b353a7c5167fc9b52dde0d7483a39f41ea885fef",
+          "org.opencontainers.image.source": "https://github.com/TI-Tokyo/openriak-docs",
+          "org.opencontainers.image.title": "OpenRiak KV",
+          "org.opencontainers.image.url": "https://www.tiot.jp/",
+          "org.opencontainers.image.vendor": "TI Tokyo",
+          "org.opencontainers.image.version": "3.4.0",
+          "org.openriak.image.tag": "tiotjp/openriak-kv:3.4.0-rhel-9-otp26",
+          "org.openriak.os.name": "rhel",
+          "org.openriak.os.release": "9",
+          "org.openriak.os.version": "9",
+          "org.openriak.otp.version": "26",
+          "release": "1788245065",
+          "summary": "Provides the latest release of Red Hat Universal Base Image 9.",
+          "url": "https://catalog.redhat.com/en/search?searchType=containers",
+          "vcs-ref": "b353a7c5167fc9b52dde0d7483a39f41ea885fef",
+          "vcs-type": "git",
+          "vendor": "Red Hat, Inc.",
+          "version": "9.8"
+        },
+        "status": "passed",
+        "timezone": "Asia/Tokyo",
+        "uid": 19001
+      },
+      "openriak-kv-3.4.0-rhel-9-otp26-node-2-t-712335z": {
+        "docker_logging": {
+          "Config": {
+            "max-file": "3",
+            "max-size": "10m"
+          },
+          "Type": "json-file"
+        },
+        "gid": 19002,
+        "labels": {
+          "architecture": "x86_64",
+          "build-date": "2026-09-01T06:45:46Z",
+          "com.docker.compose.config-hash": "c6f5ed744102ad9704a119f90bc59abb9d3bed7874d3b890dc956cc0ee1a76c2",
+          "com.docker.compose.container-number": "1",
+          "com.docker.compose.depends_on": "",
+          "com.docker.compose.image": "sha256:8bd1ac45aa5fb0f2d6cc2096322c320ce6990204750875fbe1ebbae55b4305d8",
+          "com.docker.compose.oneoff": "False",
+          "com.docker.compose.project": "openriak-kv-340-rhel-9-otp26-node-cluster",
+          "com.docker.compose.project.config_files": "/tmp/openriak-docker-3.4.0-rhel-9-otp26-jsosb5x2/compose.cluster.test.yaml",
+          "com.docker.compose.project.environment_file": "/tmp/openriak-docker-3.4.0-rhel-9-otp26-jsosb5x2/.env.cluster",
+          "com.docker.compose.project.working_dir": "/tmp/openriak-docker-3.4.0-rhel-9-otp26-jsosb5x2",
+          "com.docker.compose.service": "node2",
+          "com.docker.compose.version": "5.4.0",
+          "com.redhat.component": "ubi9-container",
+          "com.redhat.license_terms": "https://www.redhat.com/en/about/red-hat-end-user-license-agreements#UBI",
+          "cpe": "cpe:/a:redhat:enterprise_linux:9::appstream",
+          "description": "The Universal Base Image is designed and engineered to be the base layer for all of your containerized applications, middleware and utilities. This base image is freely redistributable, but Red Hat only supports Red Hat technologies through subscriptions for Red Hat products. This image is maintained by Red Hat and updated regularly.",
+          "desktop.docker.io/wsl-distro": "Ubuntu",
+          "distribution-scope": "public",
+          "io.buildah.version": "1.44.0",
+          "io.k8s.description": "The Universal Base Image is designed and engineered to be the base layer for all of your containerized applications, middleware and utilities. This base image is freely redistributable, but Red Hat only supports Red Hat technologies through subscriptions for Red Hat products. This image is maintained by Red Hat and updated regularly.",
+          "io.k8s.display-name": "Red Hat Universal Base Image 9",
+          "io.openshift.expose-services": "",
+          "io.openshift.tags": "base rhel9",
+          "maintainer": "Red Hat, Inc.",
+          "name": "ubi9/ubi",
+          "org.opencontainers.image.created": "2026-09-01T06:45:46Z",
+          "org.opencontainers.image.description": "Package-backed OpenRiak KV with single-node and cluster startup support",
+          "org.opencontainers.image.revision": "b353a7c5167fc9b52dde0d7483a39f41ea885fef",
+          "org.opencontainers.image.source": "https://github.com/TI-Tokyo/openriak-docs",
+          "org.opencontainers.image.title": "OpenRiak KV",
+          "org.opencontainers.image.url": "https://www.tiot.jp/",
+          "org.opencontainers.image.vendor": "TI Tokyo",
+          "org.opencontainers.image.version": "3.4.0",
+          "org.openriak.image.tag": "tiotjp/openriak-kv:3.4.0-rhel-9-otp26",
+          "org.openriak.os.name": "rhel",
+          "org.openriak.os.release": "9",
+          "org.openriak.os.version": "9",
+          "org.openriak.otp.version": "26",
+          "release": "1788245065",
+          "summary": "Provides the latest release of Red Hat Universal Base Image 9.",
+          "url": "https://catalog.redhat.com/en/search?searchType=containers",
+          "vcs-ref": "b353a7c5167fc9b52dde0d7483a39f41ea885fef",
+          "vcs-type": "git",
+          "vendor": "Red Hat, Inc.",
+          "version": "9.8"
+        },
+        "status": "passed",
+        "timezone": "Asia/Tokyo",
+        "uid": 19001
+      },
+      "openriak-kv-3.4.0-rhel-9-otp26-node-3-t-712335z": {
+        "docker_logging": {
+          "Config": {
+            "max-file": "3",
+            "max-size": "10m"
+          },
+          "Type": "json-file"
+        },
+        "gid": 19002,
+        "labels": {
+          "architecture": "x86_64",
+          "build-date": "2026-09-01T06:45:46Z",
+          "com.docker.compose.config-hash": "0db18253f9c6b04a756b1d5c0e7bda7e28c20ca0517df602187e19c711cf475b",
+          "com.docker.compose.container-number": "1",
+          "com.docker.compose.depends_on": "",
+          "com.docker.compose.image": "sha256:8bd1ac45aa5fb0f2d6cc2096322c320ce6990204750875fbe1ebbae55b4305d8",
+          "com.docker.compose.oneoff": "False",
+          "com.docker.compose.project": "openriak-kv-340-rhel-9-otp26-node-cluster",
+          "com.docker.compose.project.config_files": "/tmp/openriak-docker-3.4.0-rhel-9-otp26-jsosb5x2/compose.cluster.test.yaml",
+          "com.docker.compose.project.environment_file": "/tmp/openriak-docker-3.4.0-rhel-9-otp26-jsosb5x2/.env.cluster",
+          "com.docker.compose.project.working_dir": "/tmp/openriak-docker-3.4.0-rhel-9-otp26-jsosb5x2",
+          "com.docker.compose.service": "node3",
+          "com.docker.compose.version": "5.4.0",
+          "com.redhat.component": "ubi9-container",
+          "com.redhat.license_terms": "https://www.redhat.com/en/about/red-hat-end-user-license-agreements#UBI",
+          "cpe": "cpe:/a:redhat:enterprise_linux:9::appstream",
+          "description": "The Universal Base Image is designed and engineered to be the base layer for all of your containerized applications, middleware and utilities. This base image is freely redistributable, but Red Hat only supports Red Hat technologies through subscriptions for Red Hat products. This image is maintained by Red Hat and updated regularly.",
+          "desktop.docker.io/wsl-distro": "Ubuntu",
+          "distribution-scope": "public",
+          "io.buildah.version": "1.44.0",
+          "io.k8s.description": "The Universal Base Image is designed and engineered to be the base layer for all of your containerized applications, middleware and utilities. This base image is freely redistributable, but Red Hat only supports Red Hat technologies through subscriptions for Red Hat products. This image is maintained by Red Hat and updated regularly.",
+          "io.k8s.display-name": "Red Hat Universal Base Image 9",
+          "io.openshift.expose-services": "",
+          "io.openshift.tags": "base rhel9",
+          "maintainer": "Red Hat, Inc.",
+          "name": "ubi9/ubi",
+          "org.opencontainers.image.created": "2026-09-01T06:45:46Z",
+          "org.opencontainers.image.description": "Package-backed OpenRiak KV with single-node and cluster startup support",
+          "org.opencontainers.image.revision": "b353a7c5167fc9b52dde0d7483a39f41ea885fef",
+          "org.opencontainers.image.source": "https://github.com/TI-Tokyo/openriak-docs",
+          "org.opencontainers.image.title": "OpenRiak KV",
+          "org.opencontainers.image.url": "https://www.tiot.jp/",
+          "org.opencontainers.image.vendor": "TI Tokyo",
+          "org.opencontainers.image.version": "3.4.0",
+          "org.openriak.image.tag": "tiotjp/openriak-kv:3.4.0-rhel-9-otp26",
+          "org.openriak.os.name": "rhel",
+          "org.openriak.os.release": "9",
+          "org.openriak.os.version": "9",
+          "org.openriak.otp.version": "26",
+          "release": "1788245065",
+          "summary": "Provides the latest release of Red Hat Universal Base Image 9.",
+          "url": "https://catalog.redhat.com/en/search?searchType=containers",
+          "vcs-ref": "b353a7c5167fc9b52dde0d7483a39f41ea885fef",
+          "vcs-type": "git",
+          "vendor": "Red Hat, Inc.",
+          "version": "9.8"
+        },
+        "status": "passed",
+        "timezone": "Asia/Tokyo",
+        "uid": 19001
+      },
+      "openriak-kv-3.4.0-rhel-9-otp26-node-4-t-712335z": {
+        "docker_logging": {
+          "Config": {
+            "max-file": "3",
+            "max-size": "10m"
+          },
+          "Type": "json-file"
+        },
+        "gid": 19002,
+        "labels": {
+          "architecture": "x86_64",
+          "build-date": "2026-09-01T06:45:46Z",
+          "com.docker.compose.config-hash": "bfc0cba732a37ef086fb7d1c23102b8fdc328dd98013c14c0d4bb794ba9ad851",
+          "com.docker.compose.container-number": "1",
+          "com.docker.compose.depends_on": "",
+          "com.docker.compose.image": "sha256:8bd1ac45aa5fb0f2d6cc2096322c320ce6990204750875fbe1ebbae55b4305d8",
+          "com.docker.compose.oneoff": "False",
+          "com.docker.compose.project": "openriak-kv-340-rhel-9-otp26-node-cluster",
+          "com.docker.compose.project.config_files": "/tmp/openriak-docker-3.4.0-rhel-9-otp26-jsosb5x2/compose.cluster.test.yaml",
+          "com.docker.compose.project.environment_file": "/tmp/openriak-docker-3.4.0-rhel-9-otp26-jsosb5x2/.env.cluster",
+          "com.docker.compose.project.working_dir": "/tmp/openriak-docker-3.4.0-rhel-9-otp26-jsosb5x2",
+          "com.docker.compose.service": "node4",
+          "com.docker.compose.version": "5.4.0",
+          "com.redhat.component": "ubi9-container",
+          "com.redhat.license_terms": "https://www.redhat.com/en/about/red-hat-end-user-license-agreements#UBI",
+          "cpe": "cpe:/a:redhat:enterprise_linux:9::appstream",
+          "description": "The Universal Base Image is designed and engineered to be the base layer for all of your containerized applications, middleware and utilities. This base image is freely redistributable, but Red Hat only supports Red Hat technologies through subscriptions for Red Hat products. This image is maintained by Red Hat and updated regularly.",
+          "desktop.docker.io/wsl-distro": "Ubuntu",
+          "distribution-scope": "public",
+          "io.buildah.version": "1.44.0",
+          "io.k8s.description": "The Universal Base Image is designed and engineered to be the base layer for all of your containerized applications, middleware and utilities. This base image is freely redistributable, but Red Hat only supports Red Hat technologies through subscriptions for Red Hat products. This image is maintained by Red Hat and updated regularly.",
+          "io.k8s.display-name": "Red Hat Universal Base Image 9",
+          "io.openshift.expose-services": "",
+          "io.openshift.tags": "base rhel9",
+          "maintainer": "Red Hat, Inc.",
+          "name": "ubi9/ubi",
+          "org.opencontainers.image.created": "2026-09-01T06:45:46Z",
+          "org.opencontainers.image.description": "Package-backed OpenRiak KV with single-node and cluster startup support",
+          "org.opencontainers.image.revision": "b353a7c5167fc9b52dde0d7483a39f41ea885fef",
+          "org.opencontainers.image.source": "https://github.com/TI-Tokyo/openriak-docs",
+          "org.opencontainers.image.title": "OpenRiak KV",
+          "org.opencontainers.image.url": "https://www.tiot.jp/",
+          "org.opencontainers.image.vendor": "TI Tokyo",
+          "org.opencontainers.image.version": "3.4.0",
+          "org.openriak.image.tag": "tiotjp/openriak-kv:3.4.0-rhel-9-otp26",
+          "org.openriak.os.name": "rhel",
+          "org.openriak.os.release": "9",
+          "org.openriak.os.version": "9",
+          "org.openriak.otp.version": "26",
+          "release": "1788245065",
+          "summary": "Provides the latest release of Red Hat Universal Base Image 9.",
+          "url": "https://catalog.redhat.com/en/search?searchType=containers",
+          "vcs-ref": "b353a7c5167fc9b52dde0d7483a39f41ea885fef",
+          "vcs-type": "git",
+          "vendor": "Red Hat, Inc.",
+          "version": "9.8"
+        },
+        "status": "passed",
+        "timezone": "Asia/Tokyo",
+        "uid": 19001
+      },
+      "openriak-kv-3.4.0-rhel-9-otp26-node-5-t-712335z": {
+        "docker_logging": {
+          "Config": {
+            "max-file": "3",
+            "max-size": "10m"
+          },
+          "Type": "json-file"
+        },
+        "gid": 19002,
+        "labels": {
+          "architecture": "x86_64",
+          "build-date": "2026-09-01T06:45:46Z",
+          "com.docker.compose.config-hash": "9d9da09bd9ffd26678c1b6e55d9101f2e95d91fad39cc889dfddfcbb65252b40",
+          "com.docker.compose.container-number": "1",
+          "com.docker.compose.depends_on": "",
+          "com.docker.compose.image": "sha256:8bd1ac45aa5fb0f2d6cc2096322c320ce6990204750875fbe1ebbae55b4305d8",
+          "com.docker.compose.oneoff": "False",
+          "com.docker.compose.project": "openriak-kv-340-rhel-9-otp26-node-cluster",
+          "com.docker.compose.project.config_files": "/tmp/openriak-docker-3.4.0-rhel-9-otp26-jsosb5x2/compose.cluster.test.yaml",
+          "com.docker.compose.project.environment_file": "/tmp/openriak-docker-3.4.0-rhel-9-otp26-jsosb5x2/.env.cluster",
+          "com.docker.compose.project.working_dir": "/tmp/openriak-docker-3.4.0-rhel-9-otp26-jsosb5x2",
+          "com.docker.compose.service": "node5",
+          "com.docker.compose.version": "5.4.0",
+          "com.redhat.component": "ubi9-container",
+          "com.redhat.license_terms": "https://www.redhat.com/en/about/red-hat-end-user-license-agreements#UBI",
+          "cpe": "cpe:/a:redhat:enterprise_linux:9::appstream",
+          "description": "The Universal Base Image is designed and engineered to be the base layer for all of your containerized applications, middleware and utilities. This base image is freely redistributable, but Red Hat only supports Red Hat technologies through subscriptions for Red Hat products. This image is maintained by Red Hat and updated regularly.",
+          "desktop.docker.io/wsl-distro": "Ubuntu",
+          "distribution-scope": "public",
+          "io.buildah.version": "1.44.0",
+          "io.k8s.description": "The Universal Base Image is designed and engineered to be the base layer for all of your containerized applications, middleware and utilities. This base image is freely redistributable, but Red Hat only supports Red Hat technologies through subscriptions for Red Hat products. This image is maintained by Red Hat and updated regularly.",
+          "io.k8s.display-name": "Red Hat Universal Base Image 9",
+          "io.openshift.expose-services": "",
+          "io.openshift.tags": "base rhel9",
+          "maintainer": "Red Hat, Inc.",
+          "name": "ubi9/ubi",
+          "org.opencontainers.image.created": "2026-09-01T06:45:46Z",
+          "org.opencontainers.image.description": "Package-backed OpenRiak KV with single-node and cluster startup support",
+          "org.opencontainers.image.revision": "b353a7c5167fc9b52dde0d7483a39f41ea885fef",
+          "org.opencontainers.image.source": "https://github.com/TI-Tokyo/openriak-docs",
+          "org.opencontainers.image.title": "OpenRiak KV",
+          "org.opencontainers.image.url": "https://www.tiot.jp/",
+          "org.opencontainers.image.vendor": "TI Tokyo",
+          "org.opencontainers.image.version": "3.4.0",
+          "org.openriak.image.tag": "tiotjp/openriak-kv:3.4.0-rhel-9-otp26",
+          "org.openriak.os.name": "rhel",
+          "org.openriak.os.release": "9",
+          "org.openriak.os.version": "9",
+          "org.openriak.otp.version": "26",
+          "release": "1788245065",
+          "summary": "Provides the latest release of Red Hat Universal Base Image 9.",
+          "url": "https://catalog.redhat.com/en/search?searchType=containers",
+          "vcs-ref": "b353a7c5167fc9b52dde0d7483a39f41ea885fef",
+          "vcs-type": "git",
+          "vendor": "Red Hat, Inc.",
+          "version": "9.8"
+        },
+        "status": "passed",
+        "timezone": "Asia/Tokyo",
+        "uid": 19001
+      }
+    },
+    "configuration": {
+      "settings": {
+        "anti_entropy": "passive",
+        "listener.http.internal": "0.0.0.0:8098",
+        "listener.protobuf.internal": "0.0.0.0:8087",
+        "logger.max_file_size": "2MB",
+        "logger.max_files": "7",
+        "nodename": "openriak-kv@node-01.cluster-a.openriak",
+        "ring_size": "8",
+        "storage_backend": "leveled",
+        "tictacaae_active": "active",
+        "tictacaae_storeheads": "enabled"
+      },
+      "status": "passed"
+    },
+    "entrypoint_startup": {
+      "required_log_messages": [
+        "startup: starting OpenRiak as a daemon",
+        "startup: BEAM is running and riak ping returned pong",
+        "startup: riak_kv service is up",
+        "startup: transfers complete",
+        "startup: OpenRiak is ready",
+        "monitor: BEAM is running"
+      ],
+      "status": "passed"
+    },
+    "graceful_shutdown": {
+      "required_log_messages": [
+        "shutdown: received SIGTERM",
+        "shutdown: requesting OpenRiak stop",
+        "shutdown: BEAM stopped; container is exiting"
+      ],
+      "signal": "SIGTERM",
+      "status": "passed"
+    },
+    "healthcheck": {
+      "checks": [
+        "beam.smp",
+        "riak ping == pong"
+      ],
+      "docker_status": "healthy",
+      "status": "passed"
+    },
+    "http_ping": {
+      "request": "GET /ping",
+      "response": "OK",
+      "status": "passed",
+      "status_code": 200
+    },
+    "populated_volumes": {
+      "config": [
+        "advanced.config",
+        "riak.conf"
+      ],
+      "data": [
+        "cluster_meta",
+        "generated.conf",
+        "kv_eraser",
+        "kv_reader",
+        "kv_reaper",
+        "kv_replrtqsrc",
+        "kv_vnode",
+        "leveled",
+        "riak_repl",
+        "ring",
+        "setup",
+        "sys.config",
+        "tictac_aae",
+        "vm.args"
+      ],
+      "logs": [
+        "console.log",
+        "erlang.log.1",
+        "run_erl.log"
+      ],
+      "status": "passed"
+    },
+    "preserved_configuration": {
+      "sha256": "8926104410c6f4ba44bd83de98c1df57368a67d8aacfb75422693b1657d04ab1",
+      "status": "passed"
+    },
+    "preserved_cookie": {
+      "configuration_cookie": "openriak-26bd437c894c1588b705f48ee957e7e0",
+      "status": "passed"
+    },
+    "riak_start": {
+      "status": "passed"
+    },
+    "runtime_options": {
+      "docker_logging": {
+        "Config": {
+          "max-file": "3",
+          "max-size": "10m"
+        },
+        "Type": "json-file"
+      },
+      "gid": 19002,
+      "labels": {
+        "architecture": "x86_64",
+        "build-date": "2026-09-01T06:45:46Z",
+        "com.docker.compose.config-hash": "b7186d1ea71508fc8b8d44268e29bd7c96e3ed201c6d7bb71f18045e03b42a7d",
+        "com.docker.compose.container-number": "1",
+        "com.docker.compose.depends_on": "",
+        "com.docker.compose.image": "sha256:8bd1ac45aa5fb0f2d6cc2096322c320ce6990204750875fbe1ebbae55b4305d8",
+        "com.docker.compose.oneoff": "False",
+        "com.docker.compose.project": "openriak-kv-340-rhel-9-otp26-node",
+        "com.docker.compose.project.config_files": "/tmp/openriak-docker-3.4.0-rhel-9-otp26-jsosb5x2/compose.single.test.yaml",
+        "com.docker.compose.project.environment_file": "/tmp/openriak-docker-3.4.0-rhel-9-otp26-jsosb5x2/.env.single",
+        "com.docker.compose.project.working_dir": "/tmp/openriak-docker-3.4.0-rhel-9-otp26-jsosb5x2",
+        "com.docker.compose.service": "node",
+        "com.docker.compose.version": "5.4.0",
+        "com.redhat.component": "ubi9-container",
+        "com.redhat.license_terms": "https://www.redhat.com/en/about/red-hat-end-user-license-agreements#UBI",
+        "cpe": "cpe:/a:redhat:enterprise_linux:9::appstream",
+        "description": "The Universal Base Image is designed and engineered to be the base layer for all of your containerized applications, middleware and utilities. This base image is freely redistributable, but Red Hat only supports Red Hat technologies through subscriptions for Red Hat products. This image is maintained by Red Hat and updated regularly.",
+        "desktop.docker.io/wsl-distro": "Ubuntu",
+        "distribution-scope": "public",
+        "io.buildah.version": "1.44.0",
+        "io.k8s.description": "The Universal Base Image is designed and engineered to be the base layer for all of your containerized applications, middleware and utilities. This base image is freely redistributable, but Red Hat only supports Red Hat technologies through subscriptions for Red Hat products. This image is maintained by Red Hat and updated regularly.",
+        "io.k8s.display-name": "Red Hat Universal Base Image 9",
+        "io.openshift.expose-services": "",
+        "io.openshift.tags": "base rhel9",
+        "maintainer": "Red Hat, Inc.",
+        "name": "ubi9/ubi",
+        "org.opencontainers.image.created": "2026-09-01T06:45:46Z",
+        "org.opencontainers.image.description": "Package-backed OpenRiak KV with single-node and cluster startup support",
+        "org.opencontainers.image.revision": "b353a7c5167fc9b52dde0d7483a39f41ea885fef",
+        "org.opencontainers.image.source": "https://github.com/TI-Tokyo/openriak-docs",
+        "org.opencontainers.image.title": "OpenRiak KV",
+        "org.opencontainers.image.url": "https://www.tiot.jp/",
+        "org.opencontainers.image.vendor": "TI Tokyo",
+        "org.opencontainers.image.version": "3.4.0",
+        "org.openriak.image.tag": "tiotjp/openriak-kv:3.4.0-rhel-9-otp26",
+        "org.openriak.os.name": "rhel",
+        "org.openriak.os.release": "9",
+        "org.openriak.os.version": "9",
+        "org.openriak.otp.version": "26",
+        "release": "1788245065",
+        "summary": "Provides the latest release of Red Hat Universal Base Image 9.",
+        "url": "https://catalog.redhat.com/en/search?searchType=containers",
+        "vcs-ref": "b353a7c5167fc9b52dde0d7483a39f41ea885fef",
+        "vcs-type": "git",
+        "vendor": "Red Hat, Inc.",
+        "version": "9.8"
+      },
+      "status": "passed",
+      "timezone": "Asia/Tokyo",
+      "uid": 19001
+    },
+    "volume_initialization": {
+      "config_populated": true,
+      "data_directory_created": true,
+      "logs_directory_created": true,
+      "status": "passed"
+    }
+  },
+  "volumes": {
+    "config": {
+      "container": "/etc/riak",
+      "default": "./openriak-kv-3.4.0-rhel-9-otp26-node/config"
+    },
+    "data": {
+      "container": "/var/lib/riak",
+      "default": "./openriak-kv-3.4.0-rhel-9-otp26-node/data"
+    },
+    "logs": {
+      "container": "/var/log/riak",
+      "default": "./openriak-kv-3.4.0-rhel-9-otp26-node/logs"
+    }
+  }
+}

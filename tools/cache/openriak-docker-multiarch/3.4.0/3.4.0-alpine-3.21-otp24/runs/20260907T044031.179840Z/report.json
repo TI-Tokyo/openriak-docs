@@ -1,0 +1,157 @@
+{
+  "artifacts": {},
+  "base_images": {
+    "linux/amd64": {
+      "pinned": "alpine:3.21@sha256:48b0309ca019d89d40f670aa1bc06e426dc0931948452e8491e3d65087abc07d",
+      "requested": "alpine:3.21",
+      "resolved_at": "2026-09-07T04:40:33Z"
+    },
+    "linux/arm64": {
+      "pinned": "alpine:3.21@sha256:48b0309ca019d89d40f670aa1bc06e426dc0931948452e8491e3d65087abc07d",
+      "requested": "alpine:3.21",
+      "resolved_at": "2026-09-07T04:40:35Z"
+    }
+  },
+  "cluster_nodes": 5,
+  "distributed_cookie": "openriak-fbb305ed47ccee21f6deadb9f5b1a29e",
+  "error": "Stopped by operator",
+  "finished_at": "2026-09-07T04:41:43Z",
+  "generated_artifacts": {
+    "Dockerfile": "8135abe6a7852433349e4e2d5a3123e3903a3072b3ab9b0504b2285e694392a4",
+    "compose.cluster.yaml": "624955512e699dd88099ca673ca711941b29dbe5e49e0d08974a87c2a6bc3a79",
+    "compose.single.yaml": "8194c4ad962809b41e38856ede376e8353aeeda852f468f9b454c8ceafabe694",
+    "example.env": "1a7b23af8678364d853c928adc57793ec5f247be748081941d5ed09914060c27"
+  },
+  "identity": {
+    "namespace": "tiotjp",
+    "source": "https://github.com/TI-Tokyo/openriak-docs",
+    "url": "https://www.tiot.jp/",
+    "vendor": "TI Tokyo"
+  },
+  "image": "tiotjp/openriak-kv:3.4.0-alpine-3.21-otp24",
+  "inputs": {
+    "cluster_nodes": 5,
+    "compose_options": {
+      "OPENRIAK_CPUS": [
+        "0",
+        "CPU limit per node, for example 2.0; 0 means unrestricted."
+      ],
+      "OPENRIAK_DOCKER_LOG_MAX_FILES": [
+        "3",
+        "Maximum number of Docker JSON log files retained per node."
+      ],
+      "OPENRIAK_DOCKER_LOG_MAX_SIZE": [
+        "10m",
+        "Maximum size of each Docker JSON log file per node."
+      ],
+      "OPENRIAK_MEMORY_LIMIT": [
+        "0",
+        "Memory limit per node, for example 4g; 0 means unrestricted."
+      ]
+    },
+    "identity": {
+      "namespace": "tiotjp",
+      "source": "https://github.com/TI-Tokyo/openriak-docs",
+      "url": "https://www.tiot.jp/",
+      "vendor": "TI Tokyo"
+    },
+    "labels": {
+      "org.opencontainers.image.description": "Package-backed OpenRiak KV with single-node and cluster startup support",
+      "org.opencontainers.image.source": "https://github.com/TI-Tokyo/openriak-docs",
+      "org.opencontainers.image.title": "OpenRiak KV",
+      "org.opencontainers.image.url": "https://www.tiot.jp/",
+      "org.opencontainers.image.vendor": "TI Tokyo",
+      "org.opencontainers.image.version": "3.4.0",
+      "org.openriak.image.tag": "tiotjp/openriak-kv:3.4.0-alpine-3.21-otp24",
+      "org.openriak.os.name": "alpine",
+      "org.openriak.os.release": "3.21",
+      "org.openriak.os.version": "3.21",
+      "org.openriak.otp.version": "24"
+    },
+    "lifecycle_options": {
+      "healthcheck_interval": 10,
+      "healthcheck_retries": 3,
+      "healthcheck_start_period": 120,
+      "healthcheck_timeout": 60,
+      "stop_grace_period": 120
+    },
+    "packages": {
+      "linux/amd64": {
+        "base": "alpine:3.21",
+        "checksum": {
+          "algorithm": "sha256",
+          "value": "140f1decb585e5855990c140b58afcb2ba3629e5dc65fffab8d0eaaa0621cc69"
+        },
+        "url": "https://files.tiot.jp/alpine/v3.21/main/x86_64/riak-3.4.0.24-r1.apk"
+      },
+      "linux/arm64": {
+        "base": "alpine:3.21",
+        "checksum": {
+          "algorithm": "sha256",
+          "value": "9b29c72995e81c56dd11866f8e90b1d23d62152efe6ca96113309bb4ccda109a"
+        },
+        "url": "https://files.tiot.jp/alpine/v3.21/main/aarch64/riak-3.4.0.24-r1.apk"
+      }
+    },
+    "renderer_sha256": "4200b7e0f46aa9cf7cf72b2c4322d2a7607ec21b600e0f49237018952caed0e7",
+    "runtime_options": {
+      "RIAK_GID": [
+        "",
+        "Optional nonzero GID for riak; empty retains the package GID. Mounted directories are chowned."
+      ],
+      "RIAK_LOG_MAX_FILES": [
+        "10",
+        "Maximum file count per OpenRiak logger handler; initializes new configurations only."
+      ],
+      "RIAK_LOG_MAX_FILE_SIZE": [
+        "1MB",
+        "Maximum size per OpenRiak logger file; initializes new configurations only."
+      ],
+      "RIAK_UID": [
+        "",
+        "Optional nonzero UID for riak; empty retains the package UID. Mounted directories are chowned."
+      ],
+      "TZ": [
+        "Etc/UTC",
+        "IANA timezone for the process and entrypoint logs, for example Asia/Tokyo."
+      ]
+    },
+    "runtime_sha256": "b0f20a4604e8cff49f7060bf5e0cc5fa52df5829d46520d37095130f07f65656",
+    "schema_version": 4,
+    "tags": [
+      "tiotjp/openriak-kv:3.4.0-alpine-3.21-otp24"
+    ]
+  },
+  "node": "openriak-kv-3.4.0-alpine-3.21-otp24-node",
+  "os_family": "alpine",
+  "os_name": "Alpine Linux 3.21",
+  "os_release": "3.21",
+  "otp": "24",
+  "platform_results": {},
+  "platforms": [
+    "linux/amd64",
+    "linux/arm64"
+  ],
+  "product": "openriak-kv",
+  "run_id": "20260907T044031.179840Z",
+  "schema_version": 4,
+  "started_at": "2026-09-07T04:40:31Z",
+  "status": "interrupted",
+  "steps": [],
+  "tags": [
+    "tiotjp/openriak-kv:3.4.0-alpine-3.21-otp24"
+  ],
+  "targets": [
+    {
+      "architecture": "x86_64",
+      "download_id": "otp24-x86_64-r1",
+      "os_id": "alpine-3.21-x86_64"
+    },
+    {
+      "architecture": "aarch64",
+      "download_id": "otp24-aarch64-r1",
+      "os_id": "alpine-3.21-aarch64"
+    }
+  ],
+  "version": "3.4.0"
+}

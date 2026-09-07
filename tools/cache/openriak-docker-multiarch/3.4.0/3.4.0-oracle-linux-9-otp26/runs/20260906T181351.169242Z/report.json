@@ -1,0 +1,214 @@
+{
+  "artifacts": {
+    "compose_cluster": {
+      "filename": "compose.cluster.yaml",
+      "sha256": "807c4745340f51c253fd733864e160961af43c4026ebd129382db473caed59de",
+      "url": "downloads/docker/3.4.0/3.4.0-oracle-linux-9-otp26/compose.cluster.yaml"
+    },
+    "compose_single": {
+      "filename": "compose.single.yaml",
+      "sha256": "8075f3a03d172d013b9cea51be802c84975d54db519203e3153d24645622d2c5",
+      "url": "downloads/docker/3.4.0/3.4.0-oracle-linux-9-otp26/compose.single.yaml"
+    },
+    "dockerfile": {
+      "filename": "Dockerfile",
+      "sha256": "2c4a735dd65900a7216d18d387dd146bf97b6c5e73c608063a82c97a66fdd3c7",
+      "url": "downloads/docker/3.4.0/3.4.0-oracle-linux-9-otp26/Dockerfile"
+    },
+    "environment_example": {
+      "filename": "example.env",
+      "sha256": "f737a6cce85fc16f08b60b8dc3833eb1bc4c594d0550140da045abd72b478de3",
+      "url": "downloads/docker/3.4.0/3.4.0-oracle-linux-9-otp26/example.env"
+    }
+  },
+  "base_images": {
+    "linux/amd64": {
+      "pinned": "oraclelinux:9-slim@sha256:33bcb689f7c8e6bd15bcee9a253538bc0b7cafeadb8b1a9d6ac90669c4497ce3",
+      "requested": "oraclelinux:9-slim",
+      "resolved_at": "2026-09-06T18:13:52Z"
+    }
+  },
+  "build_tags": [
+    "tiotjp/openriak-kv:3.4.0-oracle-linux-9-otp26",
+    "tiotjp/openriak-kv:3.4.0-oracle-linux-9",
+    "tiotjp/openriak-kv:3.4.0-oracle-linux"
+  ],
+  "cluster_nodes": 5,
+  "distributed_cookie": "openriak-acbf1f3c9df945fccf23b52280292fa0",
+  "error": null,
+  "finished_at": "2026-09-06T18:20:00Z",
+  "generated_artifacts": {
+    "Dockerfile": "2c4a735dd65900a7216d18d387dd146bf97b6c5e73c608063a82c97a66fdd3c7",
+    "compose.cluster.yaml": "807c4745340f51c253fd733864e160961af43c4026ebd129382db473caed59de",
+    "compose.single.yaml": "8075f3a03d172d013b9cea51be802c84975d54db519203e3153d24645622d2c5",
+    "example.env": "f737a6cce85fc16f08b60b8dc3833eb1bc4c594d0550140da045abd72b478de3"
+  },
+  "identity": {
+    "namespace": "tiotjp",
+    "source": "https://github.com/TI-Tokyo/openriak-docs",
+    "url": "https://www.tiot.jp/",
+    "vendor": "TI Tokyo"
+  },
+  "image": "tiotjp/openriak-kv:3.4.0-oracle-linux-9-otp26",
+  "inputs": {
+    "cluster_nodes": 5,
+    "compose_options": {
+      "OPENRIAK_CPUS": [
+        "0",
+        "CPU limit per node, for example 2.0; 0 means unrestricted."
+      ],
+      "OPENRIAK_DOCKER_LOG_MAX_FILES": [
+        "3",
+        "Maximum number of Docker JSON log files retained per node."
+      ],
+      "OPENRIAK_DOCKER_LOG_MAX_SIZE": [
+        "10m",
+        "Maximum size of each Docker JSON log file per node."
+      ],
+      "OPENRIAK_MEMORY_LIMIT": [
+        "0",
+        "Memory limit per node, for example 4g; 0 means unrestricted."
+      ]
+    },
+    "identity": {
+      "namespace": "tiotjp",
+      "source": "https://github.com/TI-Tokyo/openriak-docs",
+      "url": "https://www.tiot.jp/",
+      "vendor": "TI Tokyo"
+    },
+    "labels": {
+      "org.opencontainers.image.description": "Package-backed OpenRiak KV with single-node and cluster startup support",
+      "org.opencontainers.image.source": "https://github.com/TI-Tokyo/openriak-docs",
+      "org.opencontainers.image.title": "OpenRiak KV",
+      "org.opencontainers.image.url": "https://www.tiot.jp/",
+      "org.opencontainers.image.vendor": "TI Tokyo",
+      "org.opencontainers.image.version": "3.4.0",
+      "org.openriak.image.tag": "tiotjp/openriak-kv:3.4.0-oracle-linux-9-otp26",
+      "org.openriak.os.name": "oracle-linux",
+      "org.openriak.os.release": "9",
+      "org.openriak.os.version": "9",
+      "org.openriak.otp.version": "26"
+    },
+    "lifecycle_options": {
+      "healthcheck_interval": 10,
+      "healthcheck_retries": 3,
+      "healthcheck_start_period": 120,
+      "healthcheck_timeout": 60,
+      "stop_grace_period": 120
+    },
+    "packages": {
+      "linux/amd64": {
+        "base": "oraclelinux:9-slim",
+        "checksum": {
+          "algorithm": "sha256",
+          "value": "db0ae81c7cd0546e2b38285fd2a20f3b06ed838f41edd39d4ac537ef59882503"
+        },
+        "url": "https://files.tiot.jp/riak/kv/3.4/3.4.0/oracle/9/riak-3.4.0.OTP26-1.el9.x86_64.rpm"
+      }
+    },
+    "renderer_sha256": "af34f09721266663090a3977216a36509e48d5713616889172baf8e0c6fb6ec8",
+    "runtime_options": {
+      "RIAK_GID": [
+        "",
+        "Optional nonzero GID for riak; empty retains the package GID. Mounted directories are chowned."
+      ],
+      "RIAK_LOG_MAX_FILES": [
+        "10",
+        "Maximum file count per OpenRiak logger handler; initializes new configurations only."
+      ],
+      "RIAK_LOG_MAX_FILE_SIZE": [
+        "1MB",
+        "Maximum size per OpenRiak logger file; initializes new configurations only."
+      ],
+      "RIAK_UID": [
+        "",
+        "Optional nonzero UID for riak; empty retains the package UID. Mounted directories are chowned."
+      ],
+      "TZ": [
+        "Etc/UTC",
+        "IANA timezone for the process and entrypoint logs, for example Asia/Tokyo."
+      ]
+    },
+    "runtime_sha256": "b0f20a4604e8cff49f7060bf5e0cc5fa52df5829d46520d37095130f07f65656",
+    "schema_version": 4,
+    "tags": [
+      "tiotjp/openriak-kv:3.4.0-oracle-linux-9-otp26",
+      "tiotjp/openriak-kv:3.4.0-oracle-linux-9",
+      "tiotjp/openriak-kv:3.4.0-oracle-linux"
+    ]
+  },
+  "local_tags_platform": "linux/amd64",
+  "node": "openriak-kv-3.4.0-oracle-linux-9-otp26-node",
+  "oci_archive": "runs/20260906T181351.169242Z/image.oci.tar",
+  "os_family": "oracle-linux",
+  "os_name": "Oracle Linux 9",
+  "os_release": "9",
+  "otp": "26",
+  "platform_results": {
+    "linux/amd64": {
+      "artifacts": {
+        "compose_cluster": {
+          "filename": "compose.cluster.yaml",
+          "sha256": "807c4745340f51c253fd733864e160961af43c4026ebd129382db473caed59de",
+          "url": "downloads/docker/3.4.0/3.4.0-oracle-linux-9-otp26/compose.cluster.yaml"
+        },
+        "compose_single": {
+          "filename": "compose.single.yaml",
+          "sha256": "8075f3a03d172d013b9cea51be802c84975d54db519203e3153d24645622d2c5",
+          "url": "downloads/docker/3.4.0/3.4.0-oracle-linux-9-otp26/compose.single.yaml"
+        },
+        "dockerfile": {
+          "filename": "Dockerfile",
+          "sha256": "2c4a735dd65900a7216d18d387dd146bf97b6c5e73c608063a82c97a66fdd3c7",
+          "url": "downloads/docker/3.4.0/3.4.0-oracle-linux-9-otp26/Dockerfile"
+        },
+        "environment_example": {
+          "filename": "example.env",
+          "sha256": "f737a6cce85fc16f08b60b8dc3833eb1bc4c594d0550140da045abd72b478de3",
+          "url": "downloads/docker/3.4.0/3.4.0-oracle-linux-9-otp26/example.env"
+        }
+      },
+      "finished_at": "2026-09-06T18:19:50Z",
+      "report": "platforms/linux-amd64/runs/20260906T181353.056840Z/report.json",
+      "run_id": "20260906T181353.056840Z",
+      "status": "passed"
+    }
+  },
+  "platforms": [
+    "linux/amd64"
+  ],
+  "product": "openriak-kv",
+  "run_id": "20260906T181351.169242Z",
+  "schema_version": 4,
+  "started_at": "2026-09-06T18:13:51Z",
+  "status": "passed",
+  "steps": [
+    {
+      "duration_seconds": 3.735,
+      "finished_at": "2026-09-06T18:19:53Z",
+      "name": "export_oci_image",
+      "started_at": "2026-09-06T18:19:50Z",
+      "status": "passed"
+    },
+    {
+      "duration_seconds": 6.756,
+      "finished_at": "2026-09-06T18:20:00Z",
+      "name": "load_local_tags",
+      "started_at": "2026-09-06T18:19:54Z",
+      "status": "passed"
+    }
+  ],
+  "tags": [
+    "tiotjp/openriak-kv:3.4.0-oracle-linux-9-otp26",
+    "tiotjp/openriak-kv:3.4.0-oracle-linux-9",
+    "tiotjp/openriak-kv:3.4.0-oracle-linux"
+  ],
+  "targets": [
+    {
+      "architecture": "x86_64",
+      "download_id": "otp26-x86_64-1",
+      "os_id": "oracle-linux-9-x86_64"
+    }
+  ],
+  "version": "3.4.0"
+}

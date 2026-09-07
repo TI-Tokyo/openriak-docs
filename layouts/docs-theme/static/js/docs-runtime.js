@@ -508,16 +508,23 @@
       const toggle = event.target.closest?.('[data-download-checksum-toggle]');
       if (toggle) {
         const packageRow = toggle.closest('.download-package-row');
-        const checksumRow = packageRow?.nextElementSibling?.matches('[data-download-checksum-row]')
-          ? packageRow.nextElementSibling
-          : null;
+        const group = toggle.closest('.download-package-group');
+        const checksumRow = toggle.dataset.downloadChecksumFile
+          ? [...(group?.querySelectorAll('[data-download-checksum-for]') || [])]
+            .find((row) => row.dataset.downloadChecksumFor === toggle.dataset.downloadChecksumFile)
+          : packageRow?.nextElementSibling?.matches('[data-download-checksum-row]')
+            ? packageRow.nextElementSibling
+            : null;
         const panel = checksumRow || toggle.closest('.download-actions')?.querySelector('[data-download-checksum-panel]');
         if (panel) {
           panel.hidden = !panel.hidden;
           toggle.setAttribute('aria-expanded', String(!panel.hidden));
           toggle.setAttribute('aria-label', panel.hidden ? 'Show checksum' : 'Hide checksum');
           toggle.title = panel.hidden ? 'Show checksum' : 'Hide checksum';
-          checksumRow?.closest('.download-package-group')?.classList.toggle('is-checksum-expanded', !panel.hidden);
+          if (checksumRow && group) {
+            group.classList.toggle('is-checksum-expanded',
+              [...group.querySelectorAll('[data-download-checksum-row]')].some((row) => !row.hidden));
+          }
         }
         return;
       }

@@ -1,0 +1,255 @@
+{
+  "artifacts": {
+    "compose_cluster": {
+      "filename": "compose.cluster.yaml",
+      "sha256": "7d8981e2442884e0d3c340e97371a48f90da45777b33ccf04398faf208507c65",
+      "url": "downloads/docker/3.4.0/3.4.0-ubuntu-noble-otp24/compose.cluster.yaml"
+    },
+    "compose_single": {
+      "filename": "compose.single.yaml",
+      "sha256": "b737b8144d7eaa4819b94b729fae7ce148ef8b6bcbdd7c16a65ab3ad8ddc4b06",
+      "url": "downloads/docker/3.4.0/3.4.0-ubuntu-noble-otp24/compose.single.yaml"
+    },
+    "dockerfile": {
+      "filename": "Dockerfile",
+      "sha256": "34fc9506e10431bc31d55fbc54a8bb2a44b9dd2c99ca17e861c2e66220992a8f",
+      "url": "downloads/docker/3.4.0/3.4.0-ubuntu-noble-otp24/Dockerfile"
+    },
+    "environment_example": {
+      "filename": "example.env",
+      "sha256": "564c23b437f500bdb79120c42cd7799b34f4c776c49e401b371c9c6e18b86358",
+      "url": "downloads/docker/3.4.0/3.4.0-ubuntu-noble-otp24/example.env"
+    }
+  },
+  "base_images": {
+    "linux/amd64": {
+      "pinned": "ubuntu:noble@sha256:33ceb71981b602c1a7443a53469e4dba065f7503eab3078a2d7a57a2ab987517",
+      "requested": "ubuntu:noble",
+      "resolved_at": "2026-09-06T18:43:16Z"
+    },
+    "linux/arm64": {
+      "pinned": "ubuntu:noble@sha256:33ceb71981b602c1a7443a53469e4dba065f7503eab3078a2d7a57a2ab987517",
+      "requested": "ubuntu:noble",
+      "resolved_at": "2026-09-06T18:43:17Z"
+    }
+  },
+  "build_tags": [
+    "tiotjp/openriak-kv:3.4.0-ubuntu-noble-otp24"
+  ],
+  "cluster_nodes": 5,
+  "distributed_cookie": "openriak-bf16c3eae51fb90db14a27e71ff406c9",
+  "error": null,
+  "finished_at": "2026-09-06T19:16:21Z",
+  "generated_artifacts": {
+    "Dockerfile": "34fc9506e10431bc31d55fbc54a8bb2a44b9dd2c99ca17e861c2e66220992a8f",
+    "compose.cluster.yaml": "7d8981e2442884e0d3c340e97371a48f90da45777b33ccf04398faf208507c65",
+    "compose.single.yaml": "b737b8144d7eaa4819b94b729fae7ce148ef8b6bcbdd7c16a65ab3ad8ddc4b06",
+    "example.env": "564c23b437f500bdb79120c42cd7799b34f4c776c49e401b371c9c6e18b86358"
+  },
+  "identity": {
+    "namespace": "tiotjp",
+    "source": "https://github.com/TI-Tokyo/openriak-docs",
+    "url": "https://www.tiot.jp/",
+    "vendor": "TI Tokyo"
+  },
+  "image": "tiotjp/openriak-kv:3.4.0-ubuntu-noble-otp24",
+  "inputs": {
+    "cluster_nodes": 5,
+    "compose_options": {
+      "OPENRIAK_CPUS": [
+        "0",
+        "CPU limit per node, for example 2.0; 0 means unrestricted."
+      ],
+      "OPENRIAK_DOCKER_LOG_MAX_FILES": [
+        "3",
+        "Maximum number of Docker JSON log files retained per node."
+      ],
+      "OPENRIAK_DOCKER_LOG_MAX_SIZE": [
+        "10m",
+        "Maximum size of each Docker JSON log file per node."
+      ],
+      "OPENRIAK_MEMORY_LIMIT": [
+        "0",
+        "Memory limit per node, for example 4g; 0 means unrestricted."
+      ]
+    },
+    "identity": {
+      "namespace": "tiotjp",
+      "source": "https://github.com/TI-Tokyo/openriak-docs",
+      "url": "https://www.tiot.jp/",
+      "vendor": "TI Tokyo"
+    },
+    "labels": {
+      "org.opencontainers.image.description": "Package-backed OpenRiak KV with single-node and cluster startup support",
+      "org.opencontainers.image.source": "https://github.com/TI-Tokyo/openriak-docs",
+      "org.opencontainers.image.title": "OpenRiak KV",
+      "org.opencontainers.image.url": "https://www.tiot.jp/",
+      "org.opencontainers.image.vendor": "TI Tokyo",
+      "org.opencontainers.image.version": "3.4.0",
+      "org.openriak.image.tag": "tiotjp/openriak-kv:3.4.0-ubuntu-noble-otp24",
+      "org.openriak.os.name": "ubuntu",
+      "org.openriak.os.release": "noble",
+      "org.openriak.os.version": "24.04",
+      "org.openriak.otp.version": "24"
+    },
+    "lifecycle_options": {
+      "healthcheck_interval": 10,
+      "healthcheck_retries": 3,
+      "healthcheck_start_period": 120,
+      "healthcheck_timeout": 60,
+      "stop_grace_period": 120
+    },
+    "packages": {
+      "linux/amd64": {
+        "base": "ubuntu:noble",
+        "checksum": {
+          "algorithm": "sha256",
+          "value": "9cf379046b315e704f89cdefbed05c691caf00d907cf3b9b233959ef65399f5a"
+        },
+        "url": "https://files.tiot.jp/riak/kv/3.4/3.4.0/ubuntu/noble64/riak_3.4.0-OTP24_amd64.deb"
+      },
+      "linux/arm64": {
+        "base": "ubuntu:noble",
+        "checksum": {
+          "algorithm": "sha256",
+          "value": "e3d548c78cb540b12bbfc64e8153693820d1a722f01c949a01aaf4bb4352c0f6"
+        },
+        "url": "https://files.tiot.jp/riak/kv/3.4/3.4.0/ubuntu/noble64/riak_3.4.0-OTP24_arm64.deb"
+      }
+    },
+    "renderer_sha256": "af34f09721266663090a3977216a36509e48d5713616889172baf8e0c6fb6ec8",
+    "runtime_options": {
+      "RIAK_GID": [
+        "",
+        "Optional nonzero GID for riak; empty retains the package GID. Mounted directories are chowned."
+      ],
+      "RIAK_LOG_MAX_FILES": [
+        "10",
+        "Maximum file count per OpenRiak logger handler; initializes new configurations only."
+      ],
+      "RIAK_LOG_MAX_FILE_SIZE": [
+        "1MB",
+        "Maximum size per OpenRiak logger file; initializes new configurations only."
+      ],
+      "RIAK_UID": [
+        "",
+        "Optional nonzero UID for riak; empty retains the package UID. Mounted directories are chowned."
+      ],
+      "TZ": [
+        "Etc/UTC",
+        "IANA timezone for the process and entrypoint logs, for example Asia/Tokyo."
+      ]
+    },
+    "runtime_sha256": "b0f20a4604e8cff49f7060bf5e0cc5fa52df5829d46520d37095130f07f65656",
+    "schema_version": 4,
+    "tags": [
+      "tiotjp/openriak-kv:3.4.0-ubuntu-noble-otp24"
+    ]
+  },
+  "local_tags_platform": "linux/amd64",
+  "node": "openriak-kv-3.4.0-ubuntu-noble-otp24-node",
+  "oci_archive": "runs/20260906T184314.419093Z/image.oci.tar",
+  "os_family": "ubuntu",
+  "os_name": "Ubuntu 24.04",
+  "os_release": "noble",
+  "otp": "24",
+  "platform_results": {
+    "linux/amd64": {
+      "artifacts": {
+        "compose_cluster": {
+          "filename": "compose.cluster.yaml",
+          "sha256": "7d8981e2442884e0d3c340e97371a48f90da45777b33ccf04398faf208507c65",
+          "url": "downloads/docker/3.4.0/3.4.0-ubuntu-noble-otp24/compose.cluster.yaml"
+        },
+        "compose_single": {
+          "filename": "compose.single.yaml",
+          "sha256": "b737b8144d7eaa4819b94b729fae7ce148ef8b6bcbdd7c16a65ab3ad8ddc4b06",
+          "url": "downloads/docker/3.4.0/3.4.0-ubuntu-noble-otp24/compose.single.yaml"
+        },
+        "dockerfile": {
+          "filename": "Dockerfile",
+          "sha256": "34fc9506e10431bc31d55fbc54a8bb2a44b9dd2c99ca17e861c2e66220992a8f",
+          "url": "downloads/docker/3.4.0/3.4.0-ubuntu-noble-otp24/Dockerfile"
+        },
+        "environment_example": {
+          "filename": "example.env",
+          "sha256": "564c23b437f500bdb79120c42cd7799b34f4c776c49e401b371c9c6e18b86358",
+          "url": "downloads/docker/3.4.0/3.4.0-ubuntu-noble-otp24/example.env"
+        }
+      },
+      "finished_at": "2026-09-06T18:47:36Z",
+      "report": "platforms/linux-amd64/runs/20260906T184317.966768Z/report.json",
+      "run_id": "20260906T184317.966768Z",
+      "status": "passed"
+    },
+    "linux/arm64": {
+      "artifacts": {
+        "compose_cluster": {
+          "filename": "compose.cluster.yaml",
+          "sha256": "7d8981e2442884e0d3c340e97371a48f90da45777b33ccf04398faf208507c65",
+          "url": "downloads/docker/3.4.0/3.4.0-ubuntu-noble-otp24/compose.cluster.yaml"
+        },
+        "compose_single": {
+          "filename": "compose.single.yaml",
+          "sha256": "b737b8144d7eaa4819b94b729fae7ce148ef8b6bcbdd7c16a65ab3ad8ddc4b06",
+          "url": "downloads/docker/3.4.0/3.4.0-ubuntu-noble-otp24/compose.single.yaml"
+        },
+        "dockerfile": {
+          "filename": "Dockerfile",
+          "sha256": "34fc9506e10431bc31d55fbc54a8bb2a44b9dd2c99ca17e861c2e66220992a8f",
+          "url": "downloads/docker/3.4.0/3.4.0-ubuntu-noble-otp24/Dockerfile"
+        },
+        "environment_example": {
+          "filename": "example.env",
+          "sha256": "564c23b437f500bdb79120c42cd7799b34f4c776c49e401b371c9c6e18b86358",
+          "url": "downloads/docker/3.4.0/3.4.0-ubuntu-noble-otp24/example.env"
+        }
+      },
+      "finished_at": "2026-09-06T19:16:12Z",
+      "report": "platforms/linux-arm64/runs/20260906T184736.035758Z/report.json",
+      "run_id": "20260906T184736.035758Z",
+      "status": "passed"
+    }
+  },
+  "platforms": [
+    "linux/amd64",
+    "linux/arm64"
+  ],
+  "product": "openriak-kv",
+  "run_id": "20260906T184314.419093Z",
+  "schema_version": 4,
+  "started_at": "2026-09-06T18:43:14Z",
+  "status": "passed",
+  "steps": [
+    {
+      "duration_seconds": 4.665,
+      "finished_at": "2026-09-06T19:16:17Z",
+      "name": "export_oci_image",
+      "started_at": "2026-09-06T19:16:12Z",
+      "status": "passed"
+    },
+    {
+      "duration_seconds": 3.986,
+      "finished_at": "2026-09-06T19:16:21Z",
+      "name": "load_local_tags",
+      "started_at": "2026-09-06T19:16:17Z",
+      "status": "passed"
+    }
+  ],
+  "tags": [
+    "tiotjp/openriak-kv:3.4.0-ubuntu-noble-otp24"
+  ],
+  "targets": [
+    {
+      "architecture": "amd64",
+      "download_id": "otp24-amd64",
+      "os_id": "ubuntu-noble-amd64"
+    },
+    {
+      "architecture": "arm64",
+      "download_id": "otp24-arm64",
+      "os_id": "ubuntu-noble-arm64"
+    }
+  ],
+  "version": "3.4.0"
+}

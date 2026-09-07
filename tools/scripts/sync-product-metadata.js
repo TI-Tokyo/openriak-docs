@@ -129,15 +129,22 @@ const successfulDockerReports = (targetRoot) => {
 };
 
 const dockerImagesForVersion = (version) => {
+  const grouped = require('./docker-multiarch-metadata.js').multiarchDockerImages(
+    version, path.join(repositoryRoot, 'tools', 'cache', 'openriak-docker-multiarch'), dockerStaticRoot
+  );
   const versionRoot = path.join(dockerCacheRoot, version);
-  if (!fs.existsSync(versionRoot)) return [];
-  const images = [];
+  if (!fs.existsSync(versionRoot)) return grouped;
+  const images = [...grouped];
   for (const osEntry of fs.readdirSync(versionRoot, { withFileTypes: true })) {
     if (!osEntry.isDirectory()) continue;
     const osRoot = path.join(versionRoot, osEntry.name);
     for (const downloadEntry of fs.readdirSync(osRoot, { withFileTypes: true })) {
       if (!downloadEntry.isDirectory()) continue;
       const targetRoot = path.join(osRoot, downloadEntry.name);
+      // Preserve legacy downloads until a tested shared replacement is published.
+      const replaced = grouped.some((image) => image.osIds.includes(osEntry.name)
+        && downloadEntry.name.match(/^otp([0-9.]+)/)?.[1] === String(image.otp));
+      if (replaced) continue;
       const successfulReports = successfulDockerReports(targetRoot);
       if (!successfulReports.length) continue;
       const { file: reportFile, report } = successfulReports[0];

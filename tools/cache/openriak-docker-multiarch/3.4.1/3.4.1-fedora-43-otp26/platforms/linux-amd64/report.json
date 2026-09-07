@@ -1,0 +1,742 @@
+{
+  "artifacts": {
+    "compose_cluster": {
+      "filename": "compose.cluster.yaml",
+      "sha256": "0909affecdbda82fd90c411aa9437437e865f0203c546d54c016c4c642c73c3b",
+      "url": "downloads/docker/3.4.1/3.4.1-fedora-43-otp26/compose.cluster.yaml"
+    },
+    "compose_single": {
+      "filename": "compose.single.yaml",
+      "sha256": "e27ee0d31987a0dab1749e5dbad640e17e35d9dd7910319f8b319eca0f7fa9a1",
+      "url": "downloads/docker/3.4.1/3.4.1-fedora-43-otp26/compose.single.yaml"
+    },
+    "dockerfile": {
+      "filename": "Dockerfile",
+      "sha256": "912bd1c169258b142229572b341c8771e4c1fd3795b142bff2c2c11f2b19e66e",
+      "url": "downloads/docker/3.4.1/3.4.1-fedora-43-otp26/Dockerfile"
+    },
+    "environment_example": {
+      "filename": "example.env",
+      "sha256": "8cf2bd44fadd06b724f720c11e199839898cec79b1f35a6d07e09cc94bc3ba3d",
+      "url": "downloads/docker/3.4.1/3.4.1-fedora-43-otp26/example.env"
+    }
+  },
+  "base_image": {
+    "pinned": "fedora:43@sha256:a651ddf48ea28a06ed4e1e6519f51c9f47e7a5a138722ade87369b8fbb7e5b42",
+    "requested": "fedora:43",
+    "resolved_at": "2026-09-06T21:51:05Z"
+  },
+  "error": null,
+  "finished_at": "2026-09-06T21:55:41Z",
+  "generation": {
+    "cluster_nodes": 5,
+    "distributed_cookie": "openriak-55aa3f62948f6882110fb74e88be4fe4"
+  },
+  "identity": {
+    "namespace": "tiotjp",
+    "source": "https://github.com/TI-Tokyo/openriak-docs",
+    "url": "https://www.tiot.jp/",
+    "vendor": "TI Tokyo"
+  },
+  "image": "tiotjp/openriak-kv:3.4.1-fedora-43-otp26",
+  "metadata_sources": [
+    "content/openriak-kv/metadata/3.4.1/supported-os.json",
+    "content/openriak-kv/metadata/3.4.1/downloads.json",
+    "content/openriak-kv/metadata/os-aliases.json"
+  ],
+  "network": {
+    "address_assignment": "docker",
+    "node_host": "node-01.cluster-a.openriak",
+    "riak_node_name": "openriak-kv@node-01.cluster-a.openriak"
+  },
+  "node": "openriak-kv-3.4.1-fedora-43-otp26-node",
+  "package": {
+    "checksum": {
+      "algorithm": "sha256",
+      "value": "952f04a57622b160ef01d7aa15d3871924221766f1cd08dc74bf5ecd3ffbe9ea"
+    },
+    "filename": "riak-3.4.1.OTP26-1.el9.x86_64.rpm",
+    "format": "rpm",
+    "url": "https://files.tiot.jp/riak/kv/3.4/3.4.1/rhel/9/riak-3.4.1.OTP26-1.el9.x86_64.rpm"
+  },
+  "ports": {
+    "http": 8098,
+    "protobuf": 8087
+  },
+  "product": "openriak-kv",
+  "run_id": "20260906T215106.103015Z",
+  "schema_version": 4,
+  "started_at": "2026-09-06T21:51:06Z",
+  "status": "passed",
+  "steps": [
+    {
+      "duration_seconds": 0.001,
+      "finished_at": "2026-09-06T21:51:06Z",
+      "name": "generate_artifacts",
+      "started_at": "2026-09-06T21:51:06Z",
+      "status": "passed"
+    },
+    {
+      "duration_seconds": 0.155,
+      "finished_at": "2026-09-06T21:51:06Z",
+      "name": "validate_compose_artifacts",
+      "started_at": "2026-09-06T21:51:06Z",
+      "status": "passed"
+    },
+    {
+      "duration_seconds": 22.561,
+      "finished_at": "2026-09-06T21:51:28Z",
+      "name": "build_image",
+      "started_at": "2026-09-06T21:51:06Z",
+      "status": "passed"
+    },
+    {
+      "duration_seconds": 2.112,
+      "finished_at": "2026-09-06T21:51:31Z",
+      "name": "initialize_volumes",
+      "started_at": "2026-09-06T21:51:28Z",
+      "status": "passed"
+    },
+    {
+      "duration_seconds": 1.175,
+      "finished_at": "2026-09-06T21:51:32Z",
+      "name": "make_test_config_writable",
+      "started_at": "2026-09-06T21:51:31Z",
+      "status": "passed"
+    },
+    {
+      "duration_seconds": 0.003,
+      "finished_at": "2026-09-06T21:51:32Z",
+      "name": "configure_node",
+      "started_at": "2026-09-06T21:51:32Z",
+      "status": "passed"
+    },
+    {
+      "duration_seconds": 0.702,
+      "finished_at": "2026-09-06T21:51:32Z",
+      "name": "start_compose_node",
+      "started_at": "2026-09-06T21:51:32Z",
+      "status": "passed"
+    },
+    {
+      "duration_seconds": 21.787,
+      "finished_at": "2026-09-06T21:51:54Z",
+      "name": "wait_for_entrypoint_readiness",
+      "started_at": "2026-09-06T21:51:32Z",
+      "status": "passed"
+    },
+    {
+      "duration_seconds": 0.861,
+      "finished_at": "2026-09-06T21:51:55Z",
+      "name": "wait_for_cli_and_http",
+      "started_at": "2026-09-06T21:51:54Z",
+      "status": "passed"
+    },
+    {
+      "duration_seconds": 0.171,
+      "finished_at": "2026-09-06T21:51:55Z",
+      "name": "verify_runtime_options",
+      "started_at": "2026-09-06T21:51:55Z",
+      "status": "passed"
+    },
+    {
+      "duration_seconds": 1.52,
+      "finished_at": "2026-09-06T21:51:57Z",
+      "name": "single_node_admin_test",
+      "started_at": "2026-09-06T21:51:55Z",
+      "status": "passed"
+    },
+    {
+      "duration_seconds": 0.05,
+      "finished_at": "2026-09-06T21:51:57Z",
+      "name": "wait_for_healthcheck",
+      "started_at": "2026-09-06T21:51:57Z",
+      "status": "passed"
+    },
+    {
+      "duration_seconds": 4.75,
+      "finished_at": "2026-09-06T21:52:02Z",
+      "name": "graceful_stop",
+      "started_at": "2026-09-06T21:51:57Z",
+      "status": "passed"
+    },
+    {
+      "duration_seconds": 0.052,
+      "finished_at": "2026-09-06T21:52:02Z",
+      "name": "verify_graceful_shutdown_logging",
+      "started_at": "2026-09-06T21:52:02Z",
+      "status": "passed"
+    },
+    {
+      "duration_seconds": 0.509,
+      "finished_at": "2026-09-06T21:52:02Z",
+      "name": "remove_single_node_test",
+      "started_at": "2026-09-06T21:52:02Z",
+      "status": "passed"
+    },
+    {
+      "duration_seconds": 2.845,
+      "finished_at": "2026-09-06T21:52:05Z",
+      "name": "start_compose_cluster",
+      "started_at": "2026-09-06T21:52:02Z",
+      "status": "passed"
+    },
+    {
+      "duration_seconds": 196.44,
+      "finished_at": "2026-09-06T21:55:22Z",
+      "name": "wait_for_cluster",
+      "started_at": "2026-09-06T21:52:05Z",
+      "status": "passed"
+    },
+    {
+      "duration_seconds": 1.735,
+      "finished_at": "2026-09-06T21:55:24Z",
+      "name": "cluster_node_1_admin_test",
+      "started_at": "2026-09-06T21:55:22Z",
+      "status": "passed"
+    },
+    {
+      "duration_seconds": 0.182,
+      "finished_at": "2026-09-06T21:55:24Z",
+      "name": "cluster_node_1_runtime_options",
+      "started_at": "2026-09-06T21:55:24Z",
+      "status": "passed"
+    },
+    {
+      "duration_seconds": 2.099,
+      "finished_at": "2026-09-06T21:55:27Z",
+      "name": "cluster_node_2_admin_test",
+      "started_at": "2026-09-06T21:55:24Z",
+      "status": "passed"
+    },
+    {
+      "duration_seconds": 0.235,
+      "finished_at": "2026-09-06T21:55:27Z",
+      "name": "cluster_node_2_runtime_options",
+      "started_at": "2026-09-06T21:55:27Z",
+      "status": "passed"
+    },
+    {
+      "duration_seconds": 1.801,
+      "finished_at": "2026-09-06T21:55:29Z",
+      "name": "cluster_node_3_admin_test",
+      "started_at": "2026-09-06T21:55:27Z",
+      "status": "passed"
+    },
+    {
+      "duration_seconds": 0.186,
+      "finished_at": "2026-09-06T21:55:29Z",
+      "name": "cluster_node_3_runtime_options",
+      "started_at": "2026-09-06T21:55:29Z",
+      "status": "passed"
+    },
+    {
+      "duration_seconds": 1.674,
+      "finished_at": "2026-09-06T21:55:31Z",
+      "name": "cluster_node_4_admin_test",
+      "started_at": "2026-09-06T21:55:29Z",
+      "status": "passed"
+    },
+    {
+      "duration_seconds": 0.241,
+      "finished_at": "2026-09-06T21:55:31Z",
+      "name": "cluster_node_4_runtime_options",
+      "started_at": "2026-09-06T21:55:31Z",
+      "status": "passed"
+    },
+    {
+      "duration_seconds": 1.803,
+      "finished_at": "2026-09-06T21:55:34Z",
+      "name": "cluster_node_5_admin_test",
+      "started_at": "2026-09-06T21:55:32Z",
+      "status": "passed"
+    },
+    {
+      "duration_seconds": 0.264,
+      "finished_at": "2026-09-06T21:55:34Z",
+      "name": "cluster_node_5_runtime_options",
+      "started_at": "2026-09-06T21:55:34Z",
+      "status": "passed"
+    },
+    {
+      "duration_seconds": 5.882,
+      "finished_at": "2026-09-06T21:55:40Z",
+      "name": "graceful_stop_cluster",
+      "started_at": "2026-09-06T21:55:34Z",
+      "status": "passed"
+    },
+    {
+      "duration_seconds": 0.732,
+      "finished_at": "2026-09-06T21:55:41Z",
+      "name": "remove_cluster_test",
+      "started_at": "2026-09-06T21:55:40Z",
+      "status": "passed"
+    }
+  ],
+  "target": {
+    "architecture": "x86_64",
+    "docker_platform": "linux/amd64",
+    "download_id": "otp26-x86_64-1",
+    "os_family": "fedora",
+    "os_id": "fedora-43-x86_64",
+    "os_name": "Fedora 43",
+    "os_release": "43",
+    "otp": "26",
+    "package_os_id": "rhel-9-x86_64",
+    "version": "3.4.1"
+  },
+  "tests": {
+    "admin_test": {
+      "command": "riak admin test",
+      "response": "Successfully completed 1 read/write cycle to 'openriak-kv@node-01.cluster-a.openriak'",
+      "status": "passed"
+    },
+    "cli_ping": {
+      "command": "riak ping",
+      "response": "pong",
+      "status": "passed"
+    },
+    "cluster": {
+      "checks": [
+        "same member set",
+        "ring ready",
+        "transfers complete",
+        "riak ping == pong",
+        "HTTP 200/OK",
+        "riak admin test read/write cycle",
+        "Docker healthcheck healthy",
+        "config/data/log volumes populated"
+      ],
+      "coordinator_cookie_adoption": "passed",
+      "members": [
+        "openriak-kv@node-01.cluster-a.openriak",
+        "openriak-kv@node-02.cluster-a.openriak",
+        "openriak-kv@node-03.cluster-a.openriak",
+        "openriak-kv@node-04.cluster-a.openriak",
+        "openriak-kv@node-05.cluster-a.openriak"
+      ],
+      "node_count": 5,
+      "roles": {
+        "openriak-kv-3.4.1-fedora-43-otp26-node-1-t-103015z": "Coordinator",
+        "openriak-kv-3.4.1-fedora-43-otp26-node-2-t-103015z": "Follower",
+        "openriak-kv-3.4.1-fedora-43-otp26-node-3-t-103015z": "Follower",
+        "openriak-kv-3.4.1-fedora-43-otp26-node-4-t-103015z": "Follower",
+        "openriak-kv-3.4.1-fedora-43-otp26-node-5-t-103015z": "Follower"
+      },
+      "state": {
+        "openriak-kv-3.4.1-fedora-43-otp26-node-1-t-103015z": {
+          "http": "OK",
+          "members": "================================= Membership ==================================\nStatus     Ring    Pending    Node\n-------------------------------------------------------------------------------\nvalid      25.0%      --      openriak-kv@node-01.cluster-a.openriak\nvalid      25.0%      --      openriak-kv@node-02.cluster-a.openriak\nvalid      25.0%      --      openriak-kv@node-03.cluster-a.openriak\nvalid      12.5%      --      openriak-kv@node-04.cluster-a.openriak\nvalid      12.5%      --      openriak-kv@node-05.cluster-a.openriak\n-------------------------------------------------------------------------------\nValid:5 / Leaving:0 / Exiting:0 / Joining:0 / Down:0\nok",
+          "ping": "pong",
+          "ready": true,
+          "ring": "TRUE All nodes agree on the ring ['openriak-kv@node-01.cluster-a.openriak',\n                                  'openriak-kv@node-02.cluster-a.openriak',\n                                  'openriak-kv@node-03.cluster-a.openriak',\n                                  'openriak-kv@node-04.cluster-a.openriak',\n                                  'openriak-kv@node-05.cluster-a.openriak']\nok",
+          "transfers": "No transfers active\n\nActive Transfers:\n\n\nok"
+        },
+        "openriak-kv-3.4.1-fedora-43-otp26-node-2-t-103015z": {
+          "http": "OK",
+          "members": "================================= Membership ==================================\nStatus     Ring    Pending    Node\n-------------------------------------------------------------------------------\nvalid      25.0%      --      openriak-kv@node-01.cluster-a.openriak\nvalid      25.0%      --      openriak-kv@node-02.cluster-a.openriak\nvalid      25.0%      --      openriak-kv@node-03.cluster-a.openriak\nvalid      12.5%      --      openriak-kv@node-04.cluster-a.openriak\nvalid      12.5%      --      openriak-kv@node-05.cluster-a.openriak\n-------------------------------------------------------------------------------\nValid:5 / Leaving:0 / Exiting:0 / Joining:0 / Down:0\nok",
+          "ping": "pong",
+          "ready": true,
+          "ring": "TRUE All nodes agree on the ring ['openriak-kv@node-01.cluster-a.openriak',\n                                  'openriak-kv@node-02.cluster-a.openriak',\n                                  'openriak-kv@node-03.cluster-a.openriak',\n                                  'openriak-kv@node-04.cluster-a.openriak',\n                                  'openriak-kv@node-05.cluster-a.openriak']\nok",
+          "transfers": "No transfers active\n\nActive Transfers:\n\n\nok"
+        },
+        "openriak-kv-3.4.1-fedora-43-otp26-node-3-t-103015z": {
+          "http": "OK",
+          "members": "================================= Membership ==================================\nStatus     Ring    Pending    Node\n-------------------------------------------------------------------------------\nvalid      25.0%      --      openriak-kv@node-01.cluster-a.openriak\nvalid      25.0%      --      openriak-kv@node-02.cluster-a.openriak\nvalid      25.0%      --      openriak-kv@node-03.cluster-a.openriak\nvalid      12.5%      --      openriak-kv@node-04.cluster-a.openriak\nvalid      12.5%      --      openriak-kv@node-05.cluster-a.openriak\n-------------------------------------------------------------------------------\nValid:5 / Leaving:0 / Exiting:0 / Joining:0 / Down:0\nok",
+          "ping": "pong",
+          "ready": true,
+          "ring": "TRUE All nodes agree on the ring ['openriak-kv@node-01.cluster-a.openriak',\n                                  'openriak-kv@node-02.cluster-a.openriak',\n                                  'openriak-kv@node-03.cluster-a.openriak',\n                                  'openriak-kv@node-04.cluster-a.openriak',\n                                  'openriak-kv@node-05.cluster-a.openriak']\nok",
+          "transfers": "No transfers active\n\nActive Transfers:\n\n\nok"
+        },
+        "openriak-kv-3.4.1-fedora-43-otp26-node-4-t-103015z": {
+          "http": "OK",
+          "members": "================================= Membership ==================================\nStatus     Ring    Pending    Node\n-------------------------------------------------------------------------------\nvalid      25.0%      --      openriak-kv@node-01.cluster-a.openriak\nvalid      25.0%      --      openriak-kv@node-02.cluster-a.openriak\nvalid      25.0%      --      openriak-kv@node-03.cluster-a.openriak\nvalid      12.5%      --      openriak-kv@node-04.cluster-a.openriak\nvalid      12.5%      --      openriak-kv@node-05.cluster-a.openriak\n-------------------------------------------------------------------------------\nValid:5 / Leaving:0 / Exiting:0 / Joining:0 / Down:0\nok",
+          "ping": "pong",
+          "ready": true,
+          "ring": "TRUE All nodes agree on the ring ['openriak-kv@node-01.cluster-a.openriak',\n                                  'openriak-kv@node-02.cluster-a.openriak',\n                                  'openriak-kv@node-03.cluster-a.openriak',\n                                  'openriak-kv@node-04.cluster-a.openriak',\n                                  'openriak-kv@node-05.cluster-a.openriak']\nok",
+          "transfers": "No transfers active\n\nActive Transfers:\n\n\nok"
+        },
+        "openriak-kv-3.4.1-fedora-43-otp26-node-5-t-103015z": {
+          "http": "OK",
+          "members": "================================= Membership ==================================\nStatus     Ring    Pending    Node\n-------------------------------------------------------------------------------\nvalid      25.0%      --      openriak-kv@node-01.cluster-a.openriak\nvalid      25.0%      --      openriak-kv@node-02.cluster-a.openriak\nvalid      25.0%      --      openriak-kv@node-03.cluster-a.openriak\nvalid      12.5%      --      openriak-kv@node-04.cluster-a.openriak\nvalid      12.5%      --      openriak-kv@node-05.cluster-a.openriak\n-------------------------------------------------------------------------------\nValid:5 / Leaving:0 / Exiting:0 / Joining:0 / Down:0\nok",
+          "ping": "pong",
+          "ready": true,
+          "ring": "TRUE All nodes agree on the ring ['openriak-kv@node-01.cluster-a.openriak',\n                                  'openriak-kv@node-02.cluster-a.openriak',\n                                  'openriak-kv@node-03.cluster-a.openriak',\n                                  'openriak-kv@node-04.cluster-a.openriak',\n                                  'openriak-kv@node-05.cluster-a.openriak']\nok",
+          "transfers": "No transfers active\n\nActive Transfers:\n\n\nok"
+        }
+      },
+      "status": "passed"
+    },
+    "cluster_admin_test": {
+      "openriak-kv-3.4.1-fedora-43-otp26-node-1-t-103015z": {
+        "command": "riak admin test",
+        "response": "Successfully completed 1 read/write cycle to 'openriak-kv@node-01.cluster-a.openriak'",
+        "status": "passed"
+      },
+      "openriak-kv-3.4.1-fedora-43-otp26-node-2-t-103015z": {
+        "command": "riak admin test",
+        "response": "Successfully completed 1 read/write cycle to 'openriak-kv@node-02.cluster-a.openriak'",
+        "status": "passed"
+      },
+      "openriak-kv-3.4.1-fedora-43-otp26-node-3-t-103015z": {
+        "command": "riak admin test",
+        "response": "Successfully completed 1 read/write cycle to 'openriak-kv@node-03.cluster-a.openriak'",
+        "status": "passed"
+      },
+      "openriak-kv-3.4.1-fedora-43-otp26-node-4-t-103015z": {
+        "command": "riak admin test",
+        "response": "Successfully completed 1 read/write cycle to 'openriak-kv@node-04.cluster-a.openriak'",
+        "status": "passed"
+      },
+      "openriak-kv-3.4.1-fedora-43-otp26-node-5-t-103015z": {
+        "command": "riak admin test",
+        "response": "Successfully completed 1 read/write cycle to 'openriak-kv@node-05.cluster-a.openriak'",
+        "status": "passed"
+      }
+    },
+    "cluster_runtime_options": {
+      "openriak-kv-3.4.1-fedora-43-otp26-node-1-t-103015z": {
+        "docker_logging": {
+          "Config": {
+            "max-file": "3",
+            "max-size": "10m"
+          },
+          "Type": "json-file"
+        },
+        "gid": 19002,
+        "labels": {
+          "com.docker.compose.config-hash": "d9ac2c008869aa6d846f6b6edfd8ab1fbb24a00e60b515abe6d29bd1f60a2801",
+          "com.docker.compose.container-number": "1",
+          "com.docker.compose.depends_on": "",
+          "com.docker.compose.image": "sha256:971b37fb19cee057180e7ddc66b13add0fc62b3f75674e67f347208b4dc12034",
+          "com.docker.compose.oneoff": "False",
+          "com.docker.compose.project": "openriak-kv-341-fedora-43-otp26-node-cluster",
+          "com.docker.compose.project.config_files": "/tmp/openriak-docker-3.4.1-fedora-43-otp26-7cvkoitk/compose.cluster.test.yaml",
+          "com.docker.compose.project.environment_file": "/tmp/openriak-docker-3.4.1-fedora-43-otp26-7cvkoitk/.env.cluster",
+          "com.docker.compose.project.working_dir": "/tmp/openriak-docker-3.4.1-fedora-43-otp26-7cvkoitk",
+          "com.docker.compose.service": "node1",
+          "com.docker.compose.version": "5.4.0",
+          "desktop.docker.io/wsl-distro": "Ubuntu",
+          "maintainer": "Clement Verna <cverna@fedoraproject.org>",
+          "org.opencontainers.image.description": "Package-backed OpenRiak KV with single-node and cluster startup support",
+          "org.opencontainers.image.source": "https://github.com/TI-Tokyo/openriak-docs",
+          "org.opencontainers.image.title": "OpenRiak KV",
+          "org.opencontainers.image.url": "https://www.tiot.jp/",
+          "org.opencontainers.image.vendor": "TI Tokyo",
+          "org.opencontainers.image.version": "3.4.1",
+          "org.openriak.image.tag": "tiotjp/openriak-kv:3.4.1-fedora-43-otp26",
+          "org.openriak.os.name": "fedora",
+          "org.openriak.os.release": "43",
+          "org.openriak.os.version": "43",
+          "org.openriak.otp.version": "26"
+        },
+        "status": "passed",
+        "timezone": "Asia/Tokyo",
+        "uid": 19001
+      },
+      "openriak-kv-3.4.1-fedora-43-otp26-node-2-t-103015z": {
+        "docker_logging": {
+          "Config": {
+            "max-file": "3",
+            "max-size": "10m"
+          },
+          "Type": "json-file"
+        },
+        "gid": 19002,
+        "labels": {
+          "com.docker.compose.config-hash": "9b140745c54dcb55cdd20d824ed2dec78c7287f570b094a7d71074e998abb0b1",
+          "com.docker.compose.container-number": "1",
+          "com.docker.compose.depends_on": "",
+          "com.docker.compose.image": "sha256:971b37fb19cee057180e7ddc66b13add0fc62b3f75674e67f347208b4dc12034",
+          "com.docker.compose.oneoff": "False",
+          "com.docker.compose.project": "openriak-kv-341-fedora-43-otp26-node-cluster",
+          "com.docker.compose.project.config_files": "/tmp/openriak-docker-3.4.1-fedora-43-otp26-7cvkoitk/compose.cluster.test.yaml",
+          "com.docker.compose.project.environment_file": "/tmp/openriak-docker-3.4.1-fedora-43-otp26-7cvkoitk/.env.cluster",
+          "com.docker.compose.project.working_dir": "/tmp/openriak-docker-3.4.1-fedora-43-otp26-7cvkoitk",
+          "com.docker.compose.service": "node2",
+          "com.docker.compose.version": "5.4.0",
+          "desktop.docker.io/wsl-distro": "Ubuntu",
+          "maintainer": "Clement Verna <cverna@fedoraproject.org>",
+          "org.opencontainers.image.description": "Package-backed OpenRiak KV with single-node and cluster startup support",
+          "org.opencontainers.image.source": "https://github.com/TI-Tokyo/openriak-docs",
+          "org.opencontainers.image.title": "OpenRiak KV",
+          "org.opencontainers.image.url": "https://www.tiot.jp/",
+          "org.opencontainers.image.vendor": "TI Tokyo",
+          "org.opencontainers.image.version": "3.4.1",
+          "org.openriak.image.tag": "tiotjp/openriak-kv:3.4.1-fedora-43-otp26",
+          "org.openriak.os.name": "fedora",
+          "org.openriak.os.release": "43",
+          "org.openriak.os.version": "43",
+          "org.openriak.otp.version": "26"
+        },
+        "status": "passed",
+        "timezone": "Asia/Tokyo",
+        "uid": 19001
+      },
+      "openriak-kv-3.4.1-fedora-43-otp26-node-3-t-103015z": {
+        "docker_logging": {
+          "Config": {
+            "max-file": "3",
+            "max-size": "10m"
+          },
+          "Type": "json-file"
+        },
+        "gid": 19002,
+        "labels": {
+          "com.docker.compose.config-hash": "d01ebacad963ccf3596c8abc5f36f2cd40759d427420f86ef04dcdbf6cb12377",
+          "com.docker.compose.container-number": "1",
+          "com.docker.compose.depends_on": "",
+          "com.docker.compose.image": "sha256:971b37fb19cee057180e7ddc66b13add0fc62b3f75674e67f347208b4dc12034",
+          "com.docker.compose.oneoff": "False",
+          "com.docker.compose.project": "openriak-kv-341-fedora-43-otp26-node-cluster",
+          "com.docker.compose.project.config_files": "/tmp/openriak-docker-3.4.1-fedora-43-otp26-7cvkoitk/compose.cluster.test.yaml",
+          "com.docker.compose.project.environment_file": "/tmp/openriak-docker-3.4.1-fedora-43-otp26-7cvkoitk/.env.cluster",
+          "com.docker.compose.project.working_dir": "/tmp/openriak-docker-3.4.1-fedora-43-otp26-7cvkoitk",
+          "com.docker.compose.service": "node3",
+          "com.docker.compose.version": "5.4.0",
+          "desktop.docker.io/wsl-distro": "Ubuntu",
+          "maintainer": "Clement Verna <cverna@fedoraproject.org>",
+          "org.opencontainers.image.description": "Package-backed OpenRiak KV with single-node and cluster startup support",
+          "org.opencontainers.image.source": "https://github.com/TI-Tokyo/openriak-docs",
+          "org.opencontainers.image.title": "OpenRiak KV",
+          "org.opencontainers.image.url": "https://www.tiot.jp/",
+          "org.opencontainers.image.vendor": "TI Tokyo",
+          "org.opencontainers.image.version": "3.4.1",
+          "org.openriak.image.tag": "tiotjp/openriak-kv:3.4.1-fedora-43-otp26",
+          "org.openriak.os.name": "fedora",
+          "org.openriak.os.release": "43",
+          "org.openriak.os.version": "43",
+          "org.openriak.otp.version": "26"
+        },
+        "status": "passed",
+        "timezone": "Asia/Tokyo",
+        "uid": 19001
+      },
+      "openriak-kv-3.4.1-fedora-43-otp26-node-4-t-103015z": {
+        "docker_logging": {
+          "Config": {
+            "max-file": "3",
+            "max-size": "10m"
+          },
+          "Type": "json-file"
+        },
+        "gid": 19002,
+        "labels": {
+          "com.docker.compose.config-hash": "10ea3723300aef8d53e41209b1260bc113dbdcdfc025ceefdde8de8124fc60ff",
+          "com.docker.compose.container-number": "1",
+          "com.docker.compose.depends_on": "",
+          "com.docker.compose.image": "sha256:971b37fb19cee057180e7ddc66b13add0fc62b3f75674e67f347208b4dc12034",
+          "com.docker.compose.oneoff": "False",
+          "com.docker.compose.project": "openriak-kv-341-fedora-43-otp26-node-cluster",
+          "com.docker.compose.project.config_files": "/tmp/openriak-docker-3.4.1-fedora-43-otp26-7cvkoitk/compose.cluster.test.yaml",
+          "com.docker.compose.project.environment_file": "/tmp/openriak-docker-3.4.1-fedora-43-otp26-7cvkoitk/.env.cluster",
+          "com.docker.compose.project.working_dir": "/tmp/openriak-docker-3.4.1-fedora-43-otp26-7cvkoitk",
+          "com.docker.compose.service": "node4",
+          "com.docker.compose.version": "5.4.0",
+          "desktop.docker.io/wsl-distro": "Ubuntu",
+          "maintainer": "Clement Verna <cverna@fedoraproject.org>",
+          "org.opencontainers.image.description": "Package-backed OpenRiak KV with single-node and cluster startup support",
+          "org.opencontainers.image.source": "https://github.com/TI-Tokyo/openriak-docs",
+          "org.opencontainers.image.title": "OpenRiak KV",
+          "org.opencontainers.image.url": "https://www.tiot.jp/",
+          "org.opencontainers.image.vendor": "TI Tokyo",
+          "org.opencontainers.image.version": "3.4.1",
+          "org.openriak.image.tag": "tiotjp/openriak-kv:3.4.1-fedora-43-otp26",
+          "org.openriak.os.name": "fedora",
+          "org.openriak.os.release": "43",
+          "org.openriak.os.version": "43",
+          "org.openriak.otp.version": "26"
+        },
+        "status": "passed",
+        "timezone": "Asia/Tokyo",
+        "uid": 19001
+      },
+      "openriak-kv-3.4.1-fedora-43-otp26-node-5-t-103015z": {
+        "docker_logging": {
+          "Config": {
+            "max-file": "3",
+            "max-size": "10m"
+          },
+          "Type": "json-file"
+        },
+        "gid": 19002,
+        "labels": {
+          "com.docker.compose.config-hash": "3d2e276f9acb01225580df81cea082f61ff418cbeb91b116d3ae4724f14379d3",
+          "com.docker.compose.container-number": "1",
+          "com.docker.compose.depends_on": "",
+          "com.docker.compose.image": "sha256:971b37fb19cee057180e7ddc66b13add0fc62b3f75674e67f347208b4dc12034",
+          "com.docker.compose.oneoff": "False",
+          "com.docker.compose.project": "openriak-kv-341-fedora-43-otp26-node-cluster",
+          "com.docker.compose.project.config_files": "/tmp/openriak-docker-3.4.1-fedora-43-otp26-7cvkoitk/compose.cluster.test.yaml",
+          "com.docker.compose.project.environment_file": "/tmp/openriak-docker-3.4.1-fedora-43-otp26-7cvkoitk/.env.cluster",
+          "com.docker.compose.project.working_dir": "/tmp/openriak-docker-3.4.1-fedora-43-otp26-7cvkoitk",
+          "com.docker.compose.service": "node5",
+          "com.docker.compose.version": "5.4.0",
+          "desktop.docker.io/wsl-distro": "Ubuntu",
+          "maintainer": "Clement Verna <cverna@fedoraproject.org>",
+          "org.opencontainers.image.description": "Package-backed OpenRiak KV with single-node and cluster startup support",
+          "org.opencontainers.image.source": "https://github.com/TI-Tokyo/openriak-docs",
+          "org.opencontainers.image.title": "OpenRiak KV",
+          "org.opencontainers.image.url": "https://www.tiot.jp/",
+          "org.opencontainers.image.vendor": "TI Tokyo",
+          "org.opencontainers.image.version": "3.4.1",
+          "org.openriak.image.tag": "tiotjp/openriak-kv:3.4.1-fedora-43-otp26",
+          "org.openriak.os.name": "fedora",
+          "org.openriak.os.release": "43",
+          "org.openriak.os.version": "43",
+          "org.openriak.otp.version": "26"
+        },
+        "status": "passed",
+        "timezone": "Asia/Tokyo",
+        "uid": 19001
+      }
+    },
+    "configuration": {
+      "settings": {
+        "anti_entropy": "passive",
+        "listener.http.internal": "0.0.0.0:8098",
+        "listener.protobuf.internal": "0.0.0.0:8087",
+        "logger.max_file_size": "2MB",
+        "logger.max_files": "7",
+        "nodename": "openriak-kv@node-01.cluster-a.openriak",
+        "ring_size": "8",
+        "storage_backend": "leveled",
+        "tictacaae_active": "active",
+        "tictacaae_storeheads": "enabled"
+      },
+      "status": "passed"
+    },
+    "entrypoint_startup": {
+      "required_log_messages": [
+        "startup: starting OpenRiak as a daemon",
+        "startup: BEAM is running and riak ping returned pong",
+        "startup: riak_kv service is up",
+        "startup: transfers complete",
+        "startup: OpenRiak is ready",
+        "monitor: BEAM is running"
+      ],
+      "status": "passed"
+    },
+    "graceful_shutdown": {
+      "required_log_messages": [
+        "shutdown: received SIGTERM",
+        "shutdown: requesting OpenRiak stop",
+        "shutdown: BEAM stopped; container is exiting"
+      ],
+      "signal": "SIGTERM",
+      "status": "passed"
+    },
+    "healthcheck": {
+      "checks": [
+        "beam.smp",
+        "riak ping == pong"
+      ],
+      "docker_status": "healthy",
+      "status": "passed"
+    },
+    "http_ping": {
+      "request": "GET /ping",
+      "response": "OK",
+      "status": "passed",
+      "status_code": 200
+    },
+    "populated_volumes": {
+      "config": [
+        "advanced.config",
+        "riak.conf"
+      ],
+      "data": [
+        "cluster_meta",
+        "generated.conf",
+        "kv_eraser",
+        "kv_reader",
+        "kv_reaper",
+        "kv_replrtqsrc",
+        "kv_vnode",
+        "leveled",
+        "riak_repl",
+        "ring",
+        "setup",
+        "sys.config",
+        "tictac_aae",
+        "vm.args"
+      ],
+      "logs": [
+        "console.log",
+        "erlang.log.1",
+        "run_erl.log"
+      ],
+      "status": "passed"
+    },
+    "preserved_configuration": {
+      "sha256": "07b7f11298916bb6b0a04055811ef65efc0e580c44c7015b4fd663350d70ba9a",
+      "status": "passed"
+    },
+    "preserved_cookie": {
+      "configuration_cookie": "openriak-c8bd668f73c2a71cfe298a76aea1ef2c",
+      "status": "passed"
+    },
+    "riak_start": {
+      "status": "passed"
+    },
+    "runtime_options": {
+      "docker_logging": {
+        "Config": {
+          "max-file": "3",
+          "max-size": "10m"
+        },
+        "Type": "json-file"
+      },
+      "gid": 19002,
+      "labels": {
+        "com.docker.compose.config-hash": "8cca33a3da351f35924bf19fd0aac812cb324599c11a7de9126f9c8353569da7",
+        "com.docker.compose.container-number": "1",
+        "com.docker.compose.depends_on": "",
+        "com.docker.compose.image": "sha256:971b37fb19cee057180e7ddc66b13add0fc62b3f75674e67f347208b4dc12034",
+        "com.docker.compose.oneoff": "False",
+        "com.docker.compose.project": "openriak-kv-341-fedora-43-otp26-node",
+        "com.docker.compose.project.config_files": "/tmp/openriak-docker-3.4.1-fedora-43-otp26-7cvkoitk/compose.single.test.yaml",
+        "com.docker.compose.project.environment_file": "/tmp/openriak-docker-3.4.1-fedora-43-otp26-7cvkoitk/.env.single",
+        "com.docker.compose.project.working_dir": "/tmp/openriak-docker-3.4.1-fedora-43-otp26-7cvkoitk",
+        "com.docker.compose.service": "node",
+        "com.docker.compose.version": "5.4.0",
+        "desktop.docker.io/wsl-distro": "Ubuntu",
+        "maintainer": "Clement Verna <cverna@fedoraproject.org>",
+        "org.opencontainers.image.description": "Package-backed OpenRiak KV with single-node and cluster startup support",
+        "org.opencontainers.image.source": "https://github.com/TI-Tokyo/openriak-docs",
+        "org.opencontainers.image.title": "OpenRiak KV",
+        "org.opencontainers.image.url": "https://www.tiot.jp/",
+        "org.opencontainers.image.vendor": "TI Tokyo",
+        "org.opencontainers.image.version": "3.4.1",
+        "org.openriak.image.tag": "tiotjp/openriak-kv:3.4.1-fedora-43-otp26",
+        "org.openriak.os.name": "fedora",
+        "org.openriak.os.release": "43",
+        "org.openriak.os.version": "43",
+        "org.openriak.otp.version": "26"
+      },
+      "status": "passed",
+      "timezone": "Asia/Tokyo",
+      "uid": 19001
+    },
+    "volume_initialization": {
+      "config_populated": true,
+      "data_directory_created": true,
+      "logs_directory_created": true,
+      "status": "passed"
+    }
+  },
+  "volumes": {
+    "config": {
+      "container": "/etc/riak",
+      "default": "./openriak-kv-3.4.1-fedora-43-otp26-node/config"
+    },
+    "data": {
+      "container": "/var/lib/riak",
+      "default": "./openriak-kv-3.4.1-fedora-43-otp26-node/data"
+    },
+    "logs": {
+      "container": "/var/log/riak",
+      "default": "./openriak-kv-3.4.1-fedora-43-otp26-node/logs"
+    }
+  }
+}

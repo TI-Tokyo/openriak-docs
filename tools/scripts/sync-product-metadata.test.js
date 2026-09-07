@@ -48,7 +48,7 @@ for (const product of productCases) {
     assert.ok(Array.isArray(dockerImages));
     if (product.id !== 'openriak-kv') assert.deepEqual(dockerImages, []);
     for (const image of dockerImages) {
-      assert.match(image.image, new RegExp(`^openriak/openriak-kv:${version.replaceAll('.', '\\.')}-`));
+      assert.match(image.image, new RegExp(`^[a-z0-9]+(?:[._-][a-z0-9]+)*/openriak-kv:${version.replaceAll('.', '\\.')}-`));
       assert.ok(image.node.endsWith('-node'));
       assert.ok(image.baseImage.includes('@sha256:'));
       assert.match(image.dockerfile.sha256, /^[0-9a-f]{64}$/);
@@ -207,11 +207,14 @@ assert.ok(configurationReference.settings.every((setting) => Object.values(setti
 )), 'configuration-reference defaults must not expose unresolved package or configuration variables');
 
 const alpineDocker = readAdapter('openriak-kv', '3.4.0').dockerImages.find((image) => (
-  image.osId === 'alpine-3.21-x86_64' && String(image.otp) === '24' && image.architecture === 'x86_64'
+  (image.osIds || [image.osId]).includes('alpine-3.21-x86_64') && String(image.otp) === '24'
 ));
-assert.ok(alpineDocker, 'Expected the passed Alpine 3.21 x86_64 OTP 24 Docker cache result');
-assert.equal(alpineDocker.image, 'openriak/openriak-kv:3.4.0-alpine-3.21-otp24-x86_64');
-assert.equal(alpineDocker.node, 'openriak-kv-3.4.0-alpine-3.21-otp24-x86_64-node');
+assert.ok(alpineDocker, 'Expected the passed Alpine 3.21 amd64 OTP 24 Docker cache result');
+const alpineTag = alpineDocker.platforms ? '3.4.0-alpine-3.21-otp24' : '3.4.0-alpine-3.21-otp24-x86_64';
+assert.equal(alpineDocker.image.split(':')[1], alpineTag);
+assert.equal(alpineDocker.node, `openriak-kv-${alpineTag}-node`);
+if (alpineDocker.platforms) assert.ok(alpineDocker.platforms.includes('linux/amd64'));
+else assert.equal(alpineDocker.architecture, 'x86_64');
 assert.ok(alpineDocker.compose || alpineDocker.composeSingle);
 assert.ok(alpineDocker.environmentExample);
 
@@ -230,7 +233,7 @@ try {
   ]);
   const updated = JSON.parse(fs.readFileSync(target, 'utf8'));
   assert.deepEqual({ ...updated, dockerImages: [] }, original);
-  assert.ok(updated.dockerImages.some((image) => image.osId === 'amazon-linux-2023-aarch64' && image.otp === '24'));
+  assert.ok(updated.dockerImages.some((image) => (image.osIds || [image.osId]).includes('amazon-linux-2023-aarch64') && String(image.otp) === '24'));
   assert.deepEqual(fs.readdirSync(dockerOnlyRoot), ['openriak-kv']);
 } finally {
   fs.rmSync(dockerOnlyRoot, { recursive: true, force: true });

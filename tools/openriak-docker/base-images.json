@@ -1,0 +1,122 @@
+{
+  "schema_version": 1,
+  "description": "Release-specific OS base images for package-backed OpenRiak KV targets. The first matching rule wins; targets still come from package metadata.",
+  "release_maps": {
+    "debian": {
+      "6": "squeeze",
+      "7": "wheezy",
+      "8": "jessie",
+      "9": "stretch",
+      "10": "buster",
+      "11": "bullseye",
+      "12": "bookworm"
+    },
+    "rhel_ubi": {
+      "8": "8.10",
+      "9": "9.8"
+    }
+  },
+  "families": {
+    "alpine": {
+      "rules": [
+        {
+          "image": "alpine:{release}"
+        }
+      ]
+    },
+    "amazon-linux": {
+      "rules": [
+        {
+          "image": "amazonlinux:{release}"
+        }
+      ]
+    },
+    "debian": {
+      "release_map": "debian",
+      "rules": [
+        {
+          "image": "debian:{release}-slim"
+        }
+      ]
+    },
+    "fedora": {
+      "rules": [
+        {
+          "image": "fedora:{release}"
+        }
+      ]
+    },
+    "oracle-linux": {
+      "rules": [
+        {
+          "image": "oraclelinux:{release}-slim"
+        }
+      ]
+    },
+    "rocky": {
+      "rules": [
+        {
+          "image": "rockylinux:{release}"
+        }
+      ]
+    },
+    "centos": {
+      "rules": [
+        {
+          "image": "quay.io/centos/centos:stream{release}"
+        }
+      ]
+    },
+    "raspbian": {
+      "release_map": "debian",
+      "rules": [
+        {
+          "architectures": [
+            "armhf"
+          ],
+          "image": "arm32v7/debian:{release}-slim"
+        },
+        {
+          "architectures": [
+            "arm64",
+            "aarch64"
+          ],
+          "image": "arm64v8/debian:{release}-slim"
+        }
+      ]
+    },
+    "rhel": {
+      "release_map": "rhel_ubi",
+      "require_release_mapping": true,
+      "rules": [
+        {
+          "image": "registry.access.redhat.com/ubi{os_release}/ubi:{release}"
+        }
+      ]
+    },
+    "suse": {
+      "release_replacements": {
+        "-sp": "."
+      },
+      "rules": [
+        {
+          "minimum_major": 16,
+          "image": "registry.suse.com/bci/bci-base:{release}"
+        },
+        {
+          "image": "registry.suse.com/suse/sle{major}:{release}"
+        }
+      ]
+    },
+    "sles": {
+      "alias": "suse"
+    },
+    "ubuntu": {
+      "rules": [
+        {
+          "image": "ubuntu:{release}"
+        }
+      ]
+    }
+  }
+}
