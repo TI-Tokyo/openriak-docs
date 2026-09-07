@@ -1,4 +1,4 @@
-(() => {
+(async () => {
   'use strict';
   const root = document.querySelector('[data-search-highlight-root]');
   const parameters = new URL(window.location.href).searchParams;
@@ -9,6 +9,10 @@
     .sort((left, right) => right.length - left.length)
     .slice(0, 8);
   if (!root || !terms.length) return;
+
+  // Code controls rebuild highlighted lines and group examples into tabs.
+  // Wait until that work is complete so marks survive and tabs can be revealed.
+  await window.OpenRiakPageToolsReady;
 
   const escaped = terms.map((term) => term.replace(/[.*+?^${}()|[\]\\]/g, '\\$&'));
   const pattern = new RegExp(`(${escaped.join('|')})`, 'gi');
@@ -41,8 +45,10 @@
     node.replaceWith(replacement);
   });
 
-  const first = root.querySelector('mark.search-highlight');
+  const first = [...root.querySelectorAll('mark.search-highlight')].find((mark) =>
+    !mark.closest('[data-code-highlight][hidden], [data-code-shell-view][hidden]'));
   if (!first) return;
+  first.dispatchEvent(new CustomEvent('openriak:reveal-code', { bubbles: true }));
   let disclosure = first.closest('details:not([open])');
   while (disclosure) {
     disclosure.open = true;
@@ -63,4 +69,4 @@
   });
   document.body.append(clear);
   requestAnimationFrame(() => first.scrollIntoView({ behavior: 'smooth', block: 'center' }));
-})();
+})().catch((error) => console.error('Search highlighting could not be initialized', error));

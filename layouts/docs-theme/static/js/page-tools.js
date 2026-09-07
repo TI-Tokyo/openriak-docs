@@ -1,4 +1,4 @@
-(async () => {
+window.OpenRiakPageToolsReady = (async () => {
   'use strict';
 
   const writeClipboard = async (value) => {
@@ -543,6 +543,11 @@
       element.append(block);
     });
     tabGroups.push(group);
+    element.addEventListener('openriak:reveal-code', (event) => {
+      const block = event.target.closest('[data-code-block]');
+      // Search navigation reveals this example without saving a language choice.
+      if (blocks.includes(block)) selectLanguage(group, tabLanguage(block));
+    });
     group.updateToolbar = () => {
       toolbar.classList.remove('is-compact');
       const actions = group.tabs.find((tab) => !tab.block.hidden)?.actions;
@@ -594,6 +599,8 @@
       return;
     }
     if (!anchor || anchor.path !== window.location.pathname || !codeControllers[anchor.index]) return;
+    // Search navigation scrolls to its match after code initialization.
+    if (new URLSearchParams(window.location.search).has('highlight')) return;
     window.requestAnimationFrame(() => window.requestAnimationFrame(() => {
       const block = codeControllers[anchor.index].block;
       if (block.hidden) return;

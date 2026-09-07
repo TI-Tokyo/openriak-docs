@@ -37,6 +37,13 @@ riak-{{</* current-version */>}}
 ```
 ````
 
+Search links highlight matching code after the code controls initialize and
+reveal the first matching language tab without changing the saved preference.
+With Playwright installed and the preview running, verify this with
+`node tools/scripts/search-highlight.browser.test.cjs`. Optional
+`OPENRIAK_BROWSER_EXECUTABLE` and `OPENRIAK_SEARCH_TEST_BASE` select the browser
+binary and the URL of the OpenRiak KV 3.4.0 documentation root.
+
 Consecutive fenced code blocks with different language labels become language
 tabs in product documentation. Text between blocks, unlabelled blocks, and
 repeated languages end a tab group. The selected language is remembered in the
