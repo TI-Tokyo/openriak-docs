@@ -39,6 +39,28 @@ metadata. Updates stay within the base image's configured release repositories;
 they do not switch OS releases. Archived releases can only receive updates
 available in their archives. Update failures fail the build.
 
+Amazon Linux 2023 uses `dnf --releasever=latest` for upgrades and dependency
+installation so an older base image's repository snapshot cannot hold back
+available fixes. This selects the newest **AL2023 repository snapshot**; the
+Docker base still uses the release-specific `amazonlinux:2023` tag and its
+resolved digest. See [Amazon's repository update documentation](https://docs.aws.amazon.com/linux/al2023/ug/managing-repos-os-updates.html).
+
+SUSE images remove `container-suseconnect` after repository operations and
+OpenRiak KV installation. This removes the registration helper's embedded Go
+runtime, which accounted for the SUSE findings in the September 2026 Scout
+review. RPM dependency checks remain enabled during removal. Derived images
+needing SUSE host-entitlement integration must reinstall the helper; ordinary
+OpenRiak KV startup does not require it. OS package databases and runtime
+dependencies remain present. Alpine continues to retain coreutils.
+Removal is verified in the running container and RPM database. Scout can still
+report the helper from the inherited SUSE base layer (observed on 15 SP4 and 16.0 during
+validation); this is not a guarantee that the published Scout count becomes zero.
+
+Package updates address fixes available from the selected repositories. They do
+not fix unsupported OS releases, vendor-deferred vulnerabilities, or every
+scanner finding. Do not replace system Python packages with arbitrary PyPI
+versions to bypass distro dependency checks.
+
 Updates run during image creation, never at container startup or during a normal
 docs build. Use `refresh --force` to regenerate, rebuild and retest existing
 images with this change. Existing approved Dockerfiles and published downloads
@@ -403,7 +425,7 @@ architecture coverage of their selected OTP group: currently 3.4.0's Alpine
 OTP26 package exists only for ARM64, so its `:3.4.0` default is ARM64-only.
 The `latest` tag is an OpenRiak KV output alias; OS base tags remain release-specific.
 
-No images are pushed to a registry. After all platform tests pass, Buildx exports
+`refresh` does not push images to a registry. After all platform tests pass, Buildx exports
 an OCI image archive containing the group's platforms and tags. On this host's
 classic Docker image store, the script also loads the host architecture under
 those tags. A local tag in that store represents one platform; the OCI archive
@@ -772,6 +794,178 @@ these checks in the report. Existing passed reports without this check remain
 cached; use an explicit `refresh --force` selection to include it in a new test
 run. The comment and filename update does not add test results to old reports.
 
+## Push images and collect Docker Scout reports
+
+### CVEs on the Downloads page
+
+The CVE column between Image tag and Downloads shows one clickable badge per
+image, displaying its highest reported CVSS score and severity (for example,
+`6.5 M`). Clicking it opens the image's Scout findings. An asterisk marks
+incomplete scans; unscanned images show `Not scanned` or `Pending`, and completed
+scans without findings show `None`.
+Rows show the CVE ID with a copy button, the numeric CVSS score and severity
+letter (C/H/M/L; U means unspecified), our status, and details links. Duplicate
+findings across packages/architectures are combined, using the highest reported
+severity and score and listing the affected architectures. The information icon
+opens Docker Scout's CVE page (the destination used by Docker Hub's CVE details);
+the external-link icon opens the affected image digest on Docker Hub.
+
+Edit `tools/openriak-docker/cve-statuses.json` to maintain our assessment:
+
+```json
+{
+  "defaultStatus": "Under investigation",
+  "cves": {
+    "CVE-2025-60876": "Waiting for an upstream package update"
+  },
+  "images": {
+    "tiotjp/openriak-kv:3.4.1-alpine-3.21-otp26": {
+      "CVE-2025-60876": "Reviewing impact on this image"
+    }
+  }
+}
+```
+
+These are example assessments, not findings of a completed review. Image keys
+are the full primary image tag; image-specific text takes precedence over the
+shared CVE text. Missing entries default to `Under investigation`. Status text
+is displayed as plain text, and status edits do not modify Scout evidence.
+
+Only reports matching the current passed image's approval run and artifact
+checksums are used. Each platform's scan digest must match the archive from a
+verified registry upload. Missing, pending, and partial scans are labelled;
+only a complete scan with no findings says that no CVEs were reported.
+
+Normal metadata generation reads the saved reports without running Docker or
+Scout. The development preview watcher also notices new reports and status
+edits automatically. Restart an already-running preview once after installing
+this watcher change. To refresh the generated repository data manually:
+
+```sh
+node tools/scripts/sync-product-metadata.js --docker-only \
+  --include-version openriak-kv=3.4.0 \
+  --include-version openriak-kv=3.4.1
+```
+
+The logo is the [CVE logo supplied via Wikimedia Commons](https://commons.wikimedia.org/wiki/File:Common_Vulnerabilities_and_Exposures_logo.svg),
+stored locally at `layouts/docs-theme/static/images/cve.svg`.
+
+### Upload and scan
+
+`push` uploads the saved OCI archive from each selected **passed refresh run**.
+It does not rebuild, test, change approved files, or update documentation.
+Both the primary image tag and all recorded secondary tags are uploaded,
+including recorded extra namespaces. All architectures and image attestations
+are preserved using [Skopeo's `copy --all --preserve-digests`](https://github.com/containers/skopeo/blob/main/docs/skopeo-copy.1.md).
+The host-only Docker image store is not used as the upload source.
+Archives may contain a multiarchitecture index or a direct single-architecture
+manifest. Both formats are accepted, with the original digest preserved and the
+contained platforms checked against the passed approval.
+
+Install Skopeo once (Ubuntu/WSL), and log in to Docker Hub as your normal user
+if you have not already done so:
+
+```sh
+sudo apt-get install skopeo
+docker login
+```
+
+Skopeo must support `skopeo copy --preserve-digests`. Older Ubuntu repositories
+may install Skopeo 1.4.1, which lacks this option and cannot copy the image
+attestations correctly. If `skopeo copy --help` does not list the option, use the
+[current Skopeo installation instructions](https://github.com/containers/skopeo/blob/main/install.md)
+to install a newer release. Uploads check this requirement before accessing
+credentials or pushing anything; `--whatif` only validates the cached files.
+
+Docker Scout must also be installed (`docker scout version`). The command uses
+your Docker Hub login from `DOCKER_CONFIG` or `~/.docker/config.json`. Docker
+credential helpers, including Docker Desktop's global `credsStore`, are supported.
+Credentials are passed to Skopeo through a temporary file with mode 0600, removed
+on normal completion or interruption. Credentials are never included in command
+arguments or reports. Temporary files follow the machine's `TMPDIR` setting.
+
+Preview all eligible images and tags without accessing the registry or writing files:
+
+```sh
+tools/openriak-docker/openriak-docker push --all --whatif
+```
+
+Push all passed images and scan them:
+
+```sh
+tools/openriak-docker/openriak-docker push --all --yes
+```
+
+Or select versions and optionally add another namespace:
+
+```sh
+tools/openriak-docker/openriak-docker push \
+  --version 3.4.0 --version 3.4.1 \
+  --extra-namespace tiotjp --wait-seconds 5
+```
+
+The recorded primary namespace is used automatically. `--namespace tiotjp`
+filters to approvals whose primary namespace is `tiotjp`; it does not rename
+images or change their labels. Use `--cache-root "$HOME/openriak-docker-tiotjp"`
+to publish a standalone company cache. The command never falls back to another
+cache or an unapproved local image.
+
+Before uploading anything, the command checks every selected passed approval,
+the four approved artifact hashes, each platform's test evidence, the saved run
+report, and OCI blob hashes/platforms. Missing, changed, or conflicting approved
+assets block the invocation. Failed/running/missing approvals are skipped.
+The archive must belong to that passed refresh run: untested `rebuilds/` exports
+are excluded. If cleanup removed an archive, regenerate it with `refresh` and
+tests before publishing. Generator changes do not modify historical approvals;
+run `refresh --force` first when the new image must include those changes.
+
+Each tag is checked against the expected image manifest or index digest. If it already matches,
+uploading is skipped and scanning still runs. After a copy, the registry digest
+must match exactly. Copy failures and digest mismatches are recorded separately;
+remaining tags/images continue. A successful digest check after a failed copy is
+recorded as `verified_after_copy_error`, not silently treated as a clean upload.
+Re-running `push` reconciles partially completed uploads by digest.
+
+After **all uploads**, the command waits once for `--wait-seconds` (default 5),
+then scans each architecture using its immutable registry manifest digest.
+Aliases sharing that content reuse the same report. Only images with at least
+one verified registry tag are scanned. The wait is a settling period, not a
+guarantee that Docker Hub's asynchronous scan has completed: Scout CLI requests
+its own analysis. Failed or malformed Scout responses are retried and retained;
+a failed scan is never recorded as zero vulnerabilities.
+
+Each invocation writes a new directory, printed at startup:
+
+```text
+tools/cache/openriak-docker-multiarch/pushes/{UTC-run-id}/
+├── report.json
+└── {version}/{image-tag}/cve-report.json
+```
+
+Each `cve-report.json` contains:
+
+- Primary/secondary tags, expected and observed registry digests, and every upload outcome.
+- Archive path, SHA-256 and size, full OCI index, architecture/attestation manifests,
+  layer digests and image configurations/labels.
+- The original approval and each platform's full test report, including tested
+  timestamps, base-image digests, package URLs/checksums and artifact hashes.
+- Per-platform immutable scan references, timestamps, full Scout SARIF (CVE IDs,
+  severities, scores, package identifiers, affected/fixed versions, locations and
+  all other fields Scout returns), the complete JSON SBOM, and detailed text/EPSS output.
+- Tool versions, settings, command arguments, complete stdout/stderr, durations,
+  exit codes, retry attempts and errors. Raw reports are retained without field filtering.
+
+Reports are written atomically throughout the run. An interruption leaves useful
+partial reports; rerunning creates a new history directory. CVE findings do not
+make the command fail: exit 0 means uploads and report collection completed,
+**not** that the images have no CVEs. Upload/scan failures return 1; selection or
+preflight errors return 2; interruption returns 130. No images are published to
+Docker Hub by `refresh`, `generate`, `sync-static`, or normal docs builds.
+
+See the [Scout CVE](https://docs.docker.com/reference/cli/docker/scout/cves/) and
+[SBOM](https://docs.docker.com/reference/cli/docker/scout/sbom/) command references
+for the upstream report formats.
+
 ## Command reference
 
 Run from the repository root:
@@ -789,6 +983,7 @@ All commands apply exclusively to **OpenRiak KV 3.4.0 and newer**.
 | `generate` | Generate standalone files without building, testing or updating the docs. May pull base images to resolve digests. |
 | `sync-static` | Republish existing passed caches and update Docker download metadata. No pulling, building or testing. |
 | `cleanup` | Preview or remove older generator artifacts and, optionally, associated Docker resources. |
+| `push` | Push passed OCI exports and all recorded aliases to Docker Hub, then save Scout CVE reports for every platform. |
 
 `-h` or `--help` works globally and after every command:
 
@@ -800,15 +995,15 @@ tools/openriak-docker/openriak-docker refresh --help
 
 | Option | Commands | Explanation |
 | --- | --- | --- |
-| `--version VERSION` | `matrix`, `refresh`, `generate` | Select a version. Repeat to select several. |
-| `--all` | `refresh`, `generate` | Select every eligible version in metadata. Mutually exclusive with `--version`. |
-| `--yes` | `refresh`, `generate` | Required with `--all`, except for `refresh --whatif`. |
-| `--os-id ID` | `matrix`, `refresh`, `generate` | Filter by metadata OS ID. |
-| `--otp VERSION` | `matrix`, `refresh`, `generate` | Filter by OTP version. |
+| `--version VERSION` | `matrix`, `refresh`, `generate`, `push` | Select a version. Repeat to select several. |
+| `--all` | `refresh`, `generate`, `push` | Select every eligible version in metadata. Mutually exclusive with `--version`. |
+| `--yes` | `refresh`, `generate`, `push` | Required with `--all`, except with `--whatif`. |
+| `--os-id ID` | `matrix`, `refresh`, `generate`, `push` | Filter by metadata OS ID. |
+| `--otp VERSION` | `matrix`, `refresh`, `generate`, `push` | Filter by OTP version. |
 | `--download-id ID` | `matrix`, `refresh`, `generate` | Filter by package download ID. |
 | `--json` | `matrix` | Output structured JSON. |
 
-Without `--version`, `matrix` lists all eligible versions. `refresh` and `generate`
+Without `--version`, `matrix` lists all eligible versions. `refresh`, `generate` and `push`
 require either `--version` or `--all`. For generation/builds, an
 architecture-specific selection includes the other architectures belonging to
 the same shared OS-release/OTP image.
@@ -860,6 +1055,23 @@ Without those switches, `refresh` builds missing caches, skips compatible passed
 caches, and reports existing failed/incompatible caches as errors.
 `--do-not-test` rejects vendor/source/URL and healthcheck/shutdown overrides
 because approved files must remain unchanged.
+
+### Push and Scout options
+
+`push` accepts `--version` (repeatable) or `--all`, plus `--yes`, `--os-id`, and
+`--otp` as described above. It has no automatic default selection.
+
+| Option | Default | Explanation |
+| --- | --- | --- |
+| `--namespace NAME` | Any recorded namespace | Filter by the approved primary namespace. Does not retag. |
+| `--extra-namespace NAME` | None | Also push every approved alias under this namespace. Repeatable. |
+| `--cache-root PATH` | `tools/cache/openriak-docker-multiarch` | Read existing approvals and OCI archives from this cache/output directory. |
+| `--reports-dir PATH` | `CACHE_ROOT/pushes` | Parent directory for timestamped push/CVE reports. |
+| `--wait-seconds N` | `5` | Wait once after all uploads before scanning; zero disables the wait. |
+| `--scan-retries N` | `3` | Additional attempts after a failed or malformed Scout response. |
+| `--scan-retry-delay N` | `5` | Seconds between failed Scout attempts. |
+| `--timeout SECONDS` | `1800` | Timeout for each upload, registry inspection, or Scout command. |
+| `--whatif` | Off | Validate saved evidence and list intended tags/digests; no network, credentials, or file changes. |
 
 ### Cleanup options
 

@@ -15,6 +15,7 @@ const multiarchDockerImages = (version, cacheRoot, staticRoot) => {
   const root = path.join(cacheRoot, version);
   if (!fs.existsSync(root)) return [];
   const images = [];
+  const cves = require('./docker-cve-metadata').cveReader(version, cacheRoot);
   for (const entry of fs.readdirSync(root, { withFileTypes: true })) {
     if (!entry.isDirectory()) continue;
     const directory = path.join(root, entry.name);
@@ -61,6 +62,7 @@ const multiarchDockerImages = (version, cacheRoot, staticRoot) => {
       osName: report.os_name, osRelease: report.os_release, otp: report.otp,
       architecture: report.platforms.map((platform) => platform.replace('linux/', '')).join(', '),
       platforms: report.platforms, image: report.image, tags: report.tags,
+      cves: cves(report),
       node: report.node, testedAt: report.finished_at, clusterNodes: report.cluster_nodes,
       baseImage: Object.values(report.base_images).map((base) => base.pinned).join(', '),
       dockerfile: report.artifacts.dockerfile, composeSingle: report.artifacts.compose_single,

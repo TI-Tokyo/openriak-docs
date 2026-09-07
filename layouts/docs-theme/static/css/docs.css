@@ -248,7 +248,7 @@ button, select, input { border: 1px solid var(--line); border-radius: 3px; backg
 .downloads-family-heading { display: flex; align-items: center; gap: .65rem; }
 .downloads-family-heading img { width: 2rem; height: 2rem; object-fit: contain; }
 .downloads-family > h4 { margin: 1.35rem 0 .45rem; font-size: 1.05rem; }
-.downloads-table-wrap { width: 100%; margin: .65rem 0 1rem; overflow-x: auto; }
+.downloads-table-wrap { position: relative; width: 100%; margin: .65rem 0 1rem; overflow-x: auto; }
 .downloads-table { width: 100%; min-width: 42rem; border-collapse: collapse; }
 .downloads-table th, .downloads-table td { padding: .55rem .65rem; border-bottom: 1px solid var(--line); text-align: left; vertical-align: top; }
 .downloads-table th { color: var(--muted); font-size: .75rem; letter-spacing: .04em; text-transform: uppercase; }
@@ -410,6 +410,7 @@ button, select, input { border: 1px solid var(--line); border-radius: 3px; backg
 .docker-column-architecture { width: 8rem; }
 .docker-column-tested { width: 6rem; }
 .docker-column-image { width: 1%; }
+.docker-column-cve { width: 1%; }
 .docker-column-actions { width: 5.75rem; }
 .docker-downloads-table code { overflow-wrap: anywhere; white-space: normal; }
 .docker-downloads-table time { white-space: nowrap; font-size: .85rem; font-variant-numeric: tabular-nums; }
@@ -421,3 +422,23 @@ button, select, input { border: 1px solid var(--line); border-radius: 3px; backg
 
 .docker-downloads-table td.docker-image-cell { min-width: 18rem; border-bottom-color: var(--line); }
 .docker-downloads-table tbody { border-bottom: 1px solid var(--line); }
+.download-cve-toggle, .download-cve-details { display: inline-grid; place-items: center; flex-shrink: 0; width: 1.65rem; height: 1.65rem; padding: 0; border: 0; background: transparent; color: var(--link); cursor: pointer; }
+.download-cve-toggle { width: auto; min-height: 1.65rem; font: inherit; }
+.docker-downloads-table td.docker-cve-cell { white-space: nowrap; border-bottom-color: var(--line); }
+.download-cve-toggle:hover, .download-cve-toggle[aria-expanded="true"] { background: var(--panel-cool); border-radius: 3px; }
+.download-cve-toggle:focus-visible, .download-cve-details:focus-visible { outline: 2px solid var(--orange); outline-offset: 3px; }
+.download-cve-row[hidden] { display: none; }
+.download-cve-panel { padding: .65rem .75rem; border: 1px solid var(--line); border-radius: 3px; background: var(--panel-cool); }
+.download-cve-panel p { margin: 0 0 .5rem; font-size: .85rem; }
+.download-cve-heading { display: flex; flex-wrap: wrap; gap: .5rem; align-items: baseline; }
+.download-cve-heading time, .download-cve-table small { color: var(--muted); font-size: .75rem; }
+.docker-downloads-table .download-cve-table { width: 100%; min-width: 29rem; border-collapse: collapse; }
+.docker-downloads-table .download-cve-table th, .docker-downloads-table .download-cve-table td { width: auto; padding: .45rem .5rem; white-space: normal; }
+.docker-downloads-table .download-cve-table td:nth-child(3) { min-width: 9rem; }
+.download-cve-id { display: flex; align-items: center; gap: .25rem; }
+.docker-downloads-table .download-cve-id code { white-space: nowrap; }
+.download-cve-severity { display: inline-block; padding: .15rem .4rem; border-radius: 3px; background: #e5e7eb; color: #24292f; white-space: nowrap; font-weight: 700; font-size: .8rem; font-variant-numeric: tabular-nums; }
+.severity-critical { background: #7f1d1d; color: #fff; }
+.severity-high { background: #b42318; color: #fff; }
+.severity-medium { background: #fde68a; color: #713f12; }
+.severity-low { background: #dbeafe; color: #1e40af; }

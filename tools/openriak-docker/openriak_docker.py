@@ -415,11 +415,27 @@ sed -i 's|^#baseurl=http://mirror.centos.org/\$contentdir/\$stream/|baseurl=http
                 "openssl-libs pam procps-ng shadow-utils sudo util-linux zlib tzdata"
             )
             suse_openssl = "libopenssl3" if target.operating_system.get("alias_of", "").startswith("rhel-9-") else "libopenssl1_1"
+            # AL2023 otherwise stays on the repository snapshot baked into its base.
+            # This selects updates within AL2023, not a different major OS release.
+            release_option = " --releasever=latest" if target.family == "amazon-linux" and target.release == "2023" else ""
+            if release_option:
+                repository_setup += "# Use the newest Amazon Linux 2023 repository snapshot during this tested build.\n"
+            runtime_cleanup = ""
+            if target.family in {"suse", "sles"}:
+                runtime_cleanup = """# Repository registration is only needed during installation, not by OpenRiak KV.
+# Remove the helper and its embedded Go runtime after all repository operations.
+# Keep RPM dependency checks: fail rather than remove any dependent package.
+if rpm -q container-suseconnect >/dev/null 2>&1
+then
+    rpm -e container-suseconnect
+fi
+test ! -e /usr/bin/container-suseconnect
+"""
             return f"""{repository_setup}# Update installed OS packages before installing the OpenRiak KV package.
 if command -v dnf >/dev/null 2>&1
 then
-    dnf upgrade --refresh -y
-    dnf install -y {dependencies}
+    dnf upgrade --refresh -y{release_option}
+    dnf install -y{release_option} {dependencies}
     dnf clean all
 elif command -v microdnf >/dev/null 2>&1
 then
@@ -468,7 +484,7 @@ do
         break
     fi
 done
-# Clear caches from every package manager used in this installation layer.
+{runtime_cleanup}# Clear caches from every package manager used in this installation layer.
 # In particular, dnf clean all does not clear microdnf's /var/cache/yum.
 rm -rf /var/cache/dnf /var/cache/yum /var/cache/zypp
 rm -f {package_path}"""
@@ -2035,6 +2051,14 @@ def verify_runtime_options(container: str, target: Target, timeout_seconds: int,
         raise DockerToolError(f"Docker log rotation is not configured for {container}")
     result = {"status": "passed", "timezone": "Asia/Tokyo", "uid": 19001, "gid": 19002,
               "labels": labels, "docker_logging": logging}
+    if target.family in {"suse", "sles"}:
+        run_logged([docker, "exec", container, "sh", "-ec", """test ! -e /usr/bin/container-suseconnect
+if rpm -q container-suseconnect >/dev/null 2>&1
+then
+    echo 'Unexpected SUSE registration helper in runtime image' >&2
+    exit 1
+fi"""], log_path, timeout_seconds=timeout_seconds)
+        result["dependencies"] = {"container-suseconnect": "absent"}
     if target.family == "alpine":
         # Assert the final runtime image is curl-free while retaining coreutils.
         run_logged([docker, "exec", container, "sh", "-ec", """if command -v curl >/dev/null 2>&1
@@ -4139,6 +4163,8 @@ def parser() -> argparse.ArgumentParser:
         command.add_argument("--no-docs", action="store_true", help="Explicitly disable docs updates (requires --output for isolation)")
 
     subcommands.add_parser("sync-static", help="Republish previously passed cache entries without retesting")
+    import openriak_push
+    openriak_push.configure_parser(subcommands.add_parser("push", help="Push approved OCI images and save detailed Scout CVE reports"))
     import openriak_cleanup
     openriak_cleanup.configure_parser(subcommands.add_parser("cleanup", help="Preview or remove generator resources older than a supplied cutoff"))
     return result
@@ -4147,6 +4173,9 @@ def parser() -> argparse.ArgumentParser:
 def main(arguments: list[str] | None = None) -> int:
     options = parser().parse_args(arguments)
     try:
+        if options.command == "push":
+            import openriak_push
+            return openriak_push.main(options, sys.modules[__name__])
         if options.command == "cleanup":
             import openriak_cleanup
             return openriak_cleanup.main(options, sys.modules[__name__])
@@ -4243,7 +4272,8 @@ def main(arguments: list[str] | None = None) -> int:
         print(f"{log_timestamp()} Finished {len(groups)} groups: {failures} failed (duration {round(time.monotonic() - matrix_started)}s)", flush=True)
         return 1 if failures else 0
     except KeyboardInterrupt:
-        message = ("Generation stopped by operator; its run record was retained." if options.command == "generate" else
+        message = ("Push/scan stopped by operator; any created reports were retained." if options.command == "push" else
+                   "Generation stopped by operator; its run record was retained." if options.command == "generate" else
                    "Rebuild stopped by operator; its build record was retained." if getattr(options, "do_not_test", False)
                    else "Refresh stopped by operator; current test cleanup completed.")
         print(message, file=sys.stderr)

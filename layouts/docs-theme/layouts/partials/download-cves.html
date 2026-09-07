@@ -1,0 +1,26 @@
+{{ $cves := .cves | default (dict "state" "unavailable" "items" slice) }}
+<div class="download-cve-panel">
+  <p class="download-cve-heading"><strong>Docker Scout CVEs</strong>{{ with $cves.scannedAt }} <time datetime="{{ . }}" title="{{ . }}">Scanned {{ dateFormat "2006-01-02" . }}</time>{{ end }}</p>
+  {{ if eq $cves.state "unavailable" }}
+    <p>No Scout report is available for this tested image.</p>
+  {{ else if eq $cves.state "pending" }}
+    <p>Scout results are not yet available for this image.</p>
+  {{ else }}
+    {{ if eq $cves.state "partial" }}<p>Scan incomplete. Results are missing for {{ delimit $cves.missingPlatforms ", " }}.</p>{{ end }}
+    {{ if $cves.items }}
+    <table class="download-cve-table">
+      <caption class="sr-only">CVEs reported for {{ .image }}</caption>
+      <thead><tr><th scope="col">CVE ID</th><th scope="col">Severity</th><th scope="col">Status</th><th scope="col">Actions</th></tr></thead>
+      <tbody>{{ range $cves.items }}
+        <tr>
+          <td><div class="download-cve-id"><code>{{ .id }}</code><button class="download-copy" type="button" data-copy-value="{{ .id }}" data-copy-label="Copy CVE ID" aria-label="Copy {{ .id }}" title="Copy CVE ID" aria-live="polite">{{ partial "download-icon-copy.html" . }}</button></div><small title="Affected architectures">{{ delimit .platforms ", " }}</small></td>
+          <td><span class="download-cve-severity severity-{{ .severity | lower }}" title="{{ .severity }}{{ if ne .score nil }} — CVSS {{ .score }}{{ end }}" aria-label="{{ .severity }}{{ if ne .score nil }}, CVSS {{ .score }}{{ end }}">{{ if ne .score nil }}{{ printf "%.1f" (float .score) }}{{ else }}?{{ end }} {{ substr .severity 0 1 }}</span></td>
+          <td>{{ .status }}</td>
+          <td><div class="download-cve-id"><a class="download-cve-details" href="{{ .detailsUrl }}" target="_blank" rel="noopener noreferrer" aria-label="Docker Scout details for {{ .id }} (opens in a new tab)" title="CVE details on Docker Scout">{{ partial "download-icon-info.html" . }}</a><a class="download-cve-details" href="{{ .hubUrl }}" target="_blank" rel="noopener noreferrer" aria-label="Image vulnerabilities on Docker Hub for {{ .id }} (opens in a new tab)" title="Image report on Docker Hub">{{ partial "download-icon-external.html" . }}</a></div></td>
+        </tr>
+      {{ end }}</tbody>
+    </table>
+    {{ else if eq $cves.state "complete" }}<p>No CVEs were reported by Docker Scout in this scan.</p>
+    {{ else }}<p>No CVEs were reported for the scanned architectures.</p>{{ end }}
+  {{ end }}
+</div>

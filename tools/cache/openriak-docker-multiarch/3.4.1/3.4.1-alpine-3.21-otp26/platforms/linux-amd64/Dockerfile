@@ -17,6 +17,8 @@ RUN --mount=type=bind,from=download-amd64,target=/opt/openriak-package,ro <<'OPE
 set -eu
 # Copy, install, and remove in this one layer; only the installed files persist.
 cp /opt/openriak-package/riak-3.4.1.26-r1.apk /tmp/riak-3.4.1.26-r1.apk
+# Update installed OS packages from this release's configured repositories.
+apk upgrade --no-cache
 apk add --no-cache bash ca-certificates coreutils su-exec shadow tzdata
 apk add --no-cache --allow-untrusted /tmp/riak-3.4.1.26-r1.apk
 rm -f /tmp/riak-3.4.1.26-r1.apk
@@ -32,6 +34,8 @@ RUN --mount=type=bind,from=download-arm64,target=/opt/openriak-package,ro <<'OPE
 set -eu
 # Copy, install, and remove in this one layer; only the installed files persist.
 cp /opt/openriak-package/riak-3.4.1.26-r1.apk /tmp/riak-3.4.1.26-r1.apk
+# Update installed OS packages from this release's configured repositories.
+apk upgrade --no-cache
 apk add --no-cache bash ca-certificates coreutils su-exec shadow tzdata
 apk add --no-cache --allow-untrusted /tmp/riak-3.4.1.26-r1.apk
 rm -f /tmp/riak-3.4.1.26-r1.apk
@@ -70,7 +74,7 @@ ENV RIAK_NODE_HOST=""
 # Explicit nodename; empty derives openriak-kv@<hostname>.
 ENV RIAK_NODE_NAME=""
 # Initial cookie; existing riak.conf wins and new followers adopt the coordinator cookie.
-ENV RIAK_DISTRIBUTED_COOKIE="openriak-f065e15b70eb3502f07f9d69b62998ba"
+ENV RIAK_DISTRIBUTED_COOKIE="openriak-8f1662e639ff884b561574bb56116d8d"
 # Partition count for a new ring; do not change on an existing cluster.
 ENV RIAK_RING_SIZE="8"
 # Storage backend used by OpenRiak KV.

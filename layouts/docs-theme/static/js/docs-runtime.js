@@ -433,7 +433,21 @@
     });
   };
 
+  const updateDockerRowspans = (group) => {
+    // Hidden checksum rows do not occupy a rendered table row. Keep the image
+    // fields above the full-width CVE panel as individual checksums are opened.
+    const rows = [...group.children].filter(row => !row.hidden && !row.hasAttribute('data-download-cve-row')).length;
+    group.querySelectorAll('[data-download-image-field]').forEach(cell => { cell.rowSpan = rows; });
+  };
+
   const renderDownloads = () => {
+    document.querySelectorAll('[data-download-cve-row]').forEach((panel, index) => {
+      panel.id = `download-cves-${index}`;
+      updateDockerRowspans(panel.closest('.download-package-group'));
+      panel.closest('.download-package-group').querySelectorAll('[data-download-cve-toggle]').forEach(button => {
+        button.setAttribute('aria-controls', panel.id);
+      });
+    });
     document.querySelectorAll('[data-download-panel-os]').forEach((panel) => {
       panel.hidden = panel.dataset.downloadPanelOs !== selectedOs.id;
     });
@@ -505,6 +519,21 @@
         }
         return;
       }
+      const cveToggle = event.target.closest?.('[data-download-cve-toggle]');
+      if (cveToggle) {
+        const group = cveToggle.closest('.download-package-group');
+        const panel = group?.querySelector('[data-download-cve-row]');
+        if (panel) {
+          panel.hidden = !panel.hidden;
+          updateDockerRowspans(group);
+          group.querySelectorAll('[data-download-cve-toggle]').forEach(button => {
+            button.setAttribute('aria-expanded', String(!panel.hidden));
+            button.title = panel.hidden ? 'Show image CVEs' : 'Hide image CVEs';
+            button.setAttribute('aria-label', button.getAttribute('aria-label').replace(/^(Show|Hide)/, panel.hidden ? 'Show' : 'Hide'));
+          });
+        }
+        return;
+      }
       const toggle = event.target.closest?.('[data-download-checksum-toggle]');
       if (toggle) {
         const packageRow = toggle.closest('.download-package-row');
@@ -522,6 +551,7 @@
           toggle.setAttribute('aria-label', panel.hidden ? 'Show checksum' : 'Hide checksum');
           toggle.title = panel.hidden ? 'Show checksum' : 'Hide checksum';
           if (checksumRow && group) {
+            updateDockerRowspans(group);
             group.classList.toggle('is-checksum-expanded',
               [...group.querySelectorAll('[data-download-checksum-row]')].some((row) => !row.hidden));
           }
@@ -894,4 +924,3 @@
   setupDownloadControls();
   setupSearch();
 })();
-

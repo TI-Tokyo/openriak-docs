@@ -370,6 +370,30 @@ listener.protobuf.internal = 127.0.0.1:8087
         self.assertIn("/usr/lib64/riak/erts-*/bin/escript", script)
         self.assertIn("test -x /usr/bin/escript", script)
 
+    def test_security_updates_precede_package_install_for_metadata_targets(self):
+        for target in docker_tool.discover_targets():
+            with self.subTest(os=target.os_id, download=target.download_id):
+                script = docker_tool.package_install_script(target)
+                family = target.operating_system["package_family"]
+                update = {"apk": "apk upgrade --no-cache", "deb": "apt-get dist-upgrade",
+                          "rpm": "dnf upgrade --refresh"}[family]
+                install = {"apk": "apk add --no-cache --allow-untrusted", "deb": "apt-get install",
+                           "rpm": "rpm -Uvh"}[family]
+                self.assertLess(script.index(update), script.index(install))
+                self.assertEqual("--releasever=latest" in script,
+                                 target.family == "amazon-linux" and target.release == "2023")
+                if target.family == "amazon-linux" and target.release == "2023":
+                    self.assertIn("dnf upgrade --refresh -y --releasever=latest", script)
+                    self.assertIn("dnf install -y --releasever=latest", script)
+                if target.family in {"suse", "sles"}:
+                    self.assertLess(script.index("zypper --non-interactive install"),
+                                    script.index("rpm -e container-suseconnect"))
+                    self.assertLess(script.index("rpm -Uvh"), script.index("rpm -e container-suseconnect"))
+                    self.assertIn("test ! -e /usr/bin/container-suseconnect", script)
+                    self.assertNotIn("rpm -e --nodeps", script)
+                else:
+                    self.assertNotIn("container-suseconnect", script)
+
     def test_rhel_does_not_install_curl(self):
         target = next(
             target

@@ -6,8 +6,8 @@
 <div class="downloads-table-wrap">
   <table class="downloads-table docker-downloads-table">
     <caption class="sr-only">Tested Docker files by operating system</caption>
-    <colgroup><col class="docker-column-otp"><col class="docker-column-architecture"><col class="docker-column-tested"><col class="docker-column-image"><col><col class="docker-column-actions"></colgroup>
-    <thead><tr><th scope="col">OTP</th><th scope="col">Architecture</th><th scope="col">Tested</th><th scope="col">Image tag</th><th scope="col">Downloads</th><th scope="col" class="download-table-actions">Actions</th></tr></thead>
+    <colgroup><col class="docker-column-otp"><col class="docker-column-architecture"><col class="docker-column-tested"><col class="docker-column-image"><col class="docker-column-cve"><col><col class="docker-column-actions"></colgroup>
+    <thead><tr><th scope="col">OTP</th><th scope="col">Architecture</th><th scope="col">Tested</th><th scope="col">Image tag</th><th scope="col">CVE</th><th scope="col">Downloads</th><th scope="col" class="download-table-actions">Actions</th></tr></thead>
     {{ range $image := $images }}
       {{ $files := slice (dict "label" "Dockerfile" "file" .dockerfile) (dict "label" "Single Node Compose File" "file" .composeSingle) (dict "label" (printf "%v-node Cluster Compose File" .clusterNodes) "file" .composeCluster) (dict "label" "Example Environment File" "file" .environmentExample "filename" "example.env") }}
       {{ $rows := 0 }}
@@ -17,11 +17,12 @@
       {{ with $entry.file }}
         <tr class="download-package-row">
           {{ if eq $index 0 }}
-          <td rowspan="{{ $rows }}">OTP {{ $image.otp }}</td>
-          <td rowspan="{{ $rows }}">{{ $image.architecture }}</td>
-          <td rowspan="{{ $rows }}"><time datetime="{{ $image.testedAt }}" title="{{ $image.testedAt }}">{{ dateFormat "2006-01-02" $image.testedAt }}</time></td>
+          <td data-download-image-field rowspan="{{ $rows }}">OTP {{ $image.otp }}</td>
+          <td data-download-image-field rowspan="{{ $rows }}">{{ $image.architecture }}</td>
+          <td data-download-image-field rowspan="{{ $rows }}"><time datetime="{{ $image.testedAt }}" title="{{ $image.testedAt }}">{{ dateFormat "2006-01-02" $image.testedAt }}</time></td>
           {{ end }}
-          {{ if eq $index 0 }}<td class="docker-image-cell" rowspan="{{ $rows }}"><div class="docker-image-tag"><code>{{ $image.image }}</code><button class="download-copy" type="button" data-copy-value="{{ $image.image }}" data-copy-label="Copy image tag" aria-label="Copy image tag" title="Copy image tag" aria-live="polite">{{ partial "download-icon-copy.html" . }}</button></div>{{ range $tag := $image.tags }}{{ if ne $tag $image.image }}<div class="docker-image-tag"><code>{{ $tag }}</code><button class="download-copy" type="button" data-copy-value="{{ $tag }}" data-copy-label="Copy image tag" aria-label="Copy image tag" title="Copy image tag" aria-live="polite">{{ partial "download-icon-copy.html" . }}</button></div>{{ end }}{{ end }}</td>{{ end }}
+          {{ if eq $index 0 }}<td class="docker-image-cell" data-download-image-field rowspan="{{ $rows }}"><div class="docker-image-tag"><code>{{ $image.image }}</code><button class="download-copy" type="button" data-copy-value="{{ $image.image }}" data-copy-label="Copy image tag" aria-label="Copy image tag" title="Copy image tag" aria-live="polite">{{ partial "download-icon-copy.html" . }}</button></div>{{ range $tag := $image.tags }}{{ if ne $tag $image.image }}<div class="docker-image-tag"><code>{{ $tag }}</code><button class="download-copy" type="button" data-copy-value="{{ $tag }}" data-copy-label="Copy image tag" aria-label="Copy image tag" title="Copy image tag" aria-live="polite">{{ partial "download-icon-copy.html" . }}</button></div>{{ end }}{{ end }}</td>{{ end }}
+          {{ if eq $index 0 }}<td class="docker-cve-cell" data-download-image-field rowspan="{{ $rows }}">{{ partial "download-cve-rating.html" $image }}</td>{{ end }}
           <td class="download-docker-file-cell"><a href="{{ .url | relURL }}" download="{{ $entry.filename | default .filename }}" data-download-file>{{ $entry.label }}</a></td>
           <td class="download-table-actions"><div class="download-table-action-links">
             {{ with .sha256 }}<button class="download-checksum-toggle" type="button" data-download-checksum-toggle data-download-checksum-file="{{ $entry.file.filename }}" aria-label="Show checksum for {{ $entry.label }}" title="Show checksum" aria-expanded="false">{{ partial "download-icon-hash.html" . }}</button>{{ end }}
@@ -37,6 +38,9 @@
         {{ end }}
       {{ end }}
       {{ end }}
+      <tr class="download-cve-row" data-download-cve-row hidden><td colspan="7">
+        {{ partial "download-cves.html" $image }}
+      </td></tr>
       </tbody>
     {{ end }}
   </table>
