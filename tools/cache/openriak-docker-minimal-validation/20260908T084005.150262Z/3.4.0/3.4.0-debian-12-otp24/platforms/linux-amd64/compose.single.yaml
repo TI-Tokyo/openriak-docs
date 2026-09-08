@@ -1,0 +1,60 @@
+# Created by TI Tokyo, www.tiot.jp, for the OpenRiak project at https://openriak.org
+# WARNING: Edit only if you understand the effect of your changes.
+# Original image tag: openriak-minimal-validation/openriak-kv:3.4.0-debian-12-otp24
+name: openriak-kv-3.4.0-debian-12-otp24-node
+
+services:
+  node:
+    build:
+      context: .
+      dockerfile: ./Dockerfile
+    image: openriak-minimal-validation/openriak-kv:3.4.0-debian-12-otp24
+    container_name: "${OPENRIAK_CONTAINER_NAME:-openriak-kv-3.4.0-debian-12-otp24-node}"
+    hostname: "${OPENRIAK_NODE_1_HOST:-node-01.cluster-a.openriak}"
+    environment:
+      # IANA timezone for the process and entrypoint logs, for example Asia/Tokyo.
+      TZ: "${TZ:-Etc/UTC}"
+      # Optional nonzero UID for riak; empty retains the package UID. Mounted directories are chowned.
+      RIAK_UID: "${RIAK_UID:-}"
+      # Optional nonzero GID for riak; empty retains the package GID. Mounted directories are chowned.
+      RIAK_GID: "${RIAK_GID:-}"
+      # Maximum size per OpenRiak logger file; initializes new configurations only.
+      RIAK_LOG_MAX_FILE_SIZE: "${RIAK_LOG_MAX_FILE_SIZE:-1MB}"
+      # Maximum file count per OpenRiak logger handler; initializes new configurations only.
+      RIAK_LOG_MAX_FILES: "${RIAK_LOG_MAX_FILES:-10}"
+      # DNS hostname used to derive the OpenRiak KV nodename.
+      RIAK_NODE_HOST: "${OPENRIAK_NODE_1_HOST:-node-01.cluster-a.openriak}"
+      # Initial cookie; existing riak.conf wins and new followers adopt the coordinator cookie.
+      RIAK_DISTRIBUTED_COOKIE: "${OPENRIAK_DISTRIBUTED_COOKIE:-openriak-868703931cad6d98e9beb29fb6914e6c}"
+      # Seconds between running-node health checks.
+      RIAK_MONITOR_INTERVAL_SECONDS: "${OPENRIAK_MONITOR_INTERVAL_SECONDS:-10}"
+    ports:
+      - "${OPENRIAK_PB_PORT:-8087}:8087"
+      - "${OPENRIAK_HTTP_PORT:-8098}:8098"
+    volumes:
+      - "${OPENRIAK_CONFIG_PATH:-./openriak-kv-3.4.0-debian-12-otp24-node/config}:/etc/riak"
+      - "${OPENRIAK_DATA_PATH:-./openriak-kv-3.4.0-debian-12-otp24-node/data}:/var/lib/riak"
+      - "${OPENRIAK_LOGS_PATH:-./openriak-kv-3.4.0-debian-12-otp24-node/logs}:/var/log/riak"
+    networks:
+      openriak:
+        aliases:
+          - "${OPENRIAK_NODE_1_HOST:-node-01.cluster-a.openriak}"
+    ulimits:
+      nofile:
+        soft: 100000
+        hard: 100000
+    # Optional per-node resource limits; zero leaves the resource unrestricted.
+    cpus: "${OPENRIAK_CPUS:-0}"
+    mem_limit: "${OPENRIAK_MEMORY_LIMIT:-0}"
+    # Rotate Docker stdout/stderr logs separately from OpenRiak KV file logs.
+    logging:
+      driver: json-file
+      options:
+        max-size: "${OPENRIAK_DOCKER_LOG_MAX_SIZE:-10m}"
+        max-file: "${OPENRIAK_DOCKER_LOG_MAX_FILES:-3}"
+    # Time allowed for graceful OpenRiak KV shutdown before Docker sends SIGKILL.
+    stop_grace_period: 120s
+
+networks:
+  openriak:
+    driver: bridge

@@ -1,0 +1,214 @@
+{
+  "artifacts": {
+    "compose_cluster": {
+      "filename": "compose.cluster.yaml",
+      "sha256": "5ce613fd376050fcb048991d99b9985bc2bbff92202fc64f532fb5a9da588bfa",
+      "url": "downloads/docker/3.4.0/3.4.0-debian-12-otp24/compose.cluster.yaml"
+    },
+    "compose_single": {
+      "filename": "compose.single.yaml",
+      "sha256": "b5fa32858452961b5eaf635d70ea674ab5eeb0824b739a399d4410afa8eefc0b",
+      "url": "downloads/docker/3.4.0/3.4.0-debian-12-otp24/compose.single.yaml"
+    },
+    "dockerfile": {
+      "filename": "Dockerfile",
+      "sha256": "ab9b7f05b38276bf582edc1489df9d0930cf5d60937bdd3caca1b2d6a276024b",
+      "url": "downloads/docker/3.4.0/3.4.0-debian-12-otp24/Dockerfile"
+    },
+    "environment_example": {
+      "filename": "example.env",
+      "sha256": "4dff91bdadbc38c6cc3baab08c2af0a6c6289c97a93c5978cf4ef85ec4602fd9",
+      "url": "downloads/docker/3.4.0/3.4.0-debian-12-otp24/example.env"
+    }
+  },
+  "base_images": {
+    "linux/amd64": {
+      "pinned": "tiotjp/debian:bookworm-slim-for-openriak@sha256:d48fefcffa3e3a49aac8317b5ad203a523d7e7e845694619fb56a1083653154e",
+      "requested": "tiotjp/debian:bookworm-slim-for-openriak",
+      "resolved_at": "2026-09-08T09:05:42Z"
+    }
+  },
+  "build_tags": [
+    "tiotjp/openriak-kv:3.4.0-debian-12-otp24"
+  ],
+  "cluster_nodes": 5,
+  "distributed_cookie": "openriak-962b1e3aec90eb054ba79db5eacf4ab7",
+  "error": null,
+  "finished_at": "2026-09-08T09:09:59Z",
+  "generated_artifacts": {
+    "Dockerfile": "ab9b7f05b38276bf582edc1489df9d0930cf5d60937bdd3caca1b2d6a276024b",
+    "compose.cluster.yaml": "5ce613fd376050fcb048991d99b9985bc2bbff92202fc64f532fb5a9da588bfa",
+    "compose.single.yaml": "b5fa32858452961b5eaf635d70ea674ab5eeb0824b739a399d4410afa8eefc0b",
+    "example.env": "4dff91bdadbc38c6cc3baab08c2af0a6c6289c97a93c5978cf4ef85ec4602fd9"
+  },
+  "identity": {
+    "namespace": "tiotjp",
+    "source": "https://github.com/TI-Tokyo/openriak-docs",
+    "url": "https://www.tiot.jp/",
+    "vendor": "TI Tokyo"
+  },
+  "image": "tiotjp/openriak-kv:3.4.0-debian-12-otp24",
+  "inputs": {
+    "cluster_nodes": 5,
+    "compose_options": {
+      "OPENRIAK_CPUS": [
+        "0",
+        "CPU limit per node, for example 2.0; 0 means unrestricted."
+      ],
+      "OPENRIAK_DOCKER_LOG_MAX_FILES": [
+        "3",
+        "Maximum number of Docker JSON log files retained per node."
+      ],
+      "OPENRIAK_DOCKER_LOG_MAX_SIZE": [
+        "10m",
+        "Maximum size of each Docker JSON log file per node."
+      ],
+      "OPENRIAK_MEMORY_LIMIT": [
+        "0",
+        "Memory limit per node, for example 4g; 0 means unrestricted."
+      ]
+    },
+    "identity": {
+      "namespace": "tiotjp",
+      "source": "https://github.com/TI-Tokyo/openriak-docs",
+      "url": "https://www.tiot.jp/",
+      "vendor": "TI Tokyo"
+    },
+    "labels": {
+      "org.opencontainers.image.description": "Package-backed OpenRiak KV with single-node and cluster startup support",
+      "org.opencontainers.image.source": "https://github.com/TI-Tokyo/openriak-docs",
+      "org.opencontainers.image.title": "OpenRiak KV",
+      "org.opencontainers.image.url": "https://www.tiot.jp/",
+      "org.opencontainers.image.vendor": "TI Tokyo",
+      "org.opencontainers.image.version": "3.4.0",
+      "org.openriak.image.tag": "tiotjp/openriak-kv:3.4.0-debian-12-otp24",
+      "org.openriak.os.name": "debian",
+      "org.openriak.os.release": "12",
+      "org.openriak.os.version": "12",
+      "org.openriak.otp.version": "24"
+    },
+    "lifecycle_options": {
+      "healthcheck_interval": 10,
+      "healthcheck_retries": 3,
+      "healthcheck_start_period": 120,
+      "healthcheck_timeout": 60,
+      "stop_grace_period": 120
+    },
+    "packages": {
+      "linux/amd64": {
+        "base": "tiotjp/debian:bookworm-slim-for-openriak",
+        "checksum": {
+          "algorithm": "sha256",
+          "value": "7563dd2574285d2fece2d36baa1222ef006db9dd4ae78d372ce974bfb6e116c3"
+        },
+        "url": "https://files.tiot.jp/riak/kv/3.4/3.4.0/debian/12/riak_3.4.0-OTP24_amd64.deb"
+      }
+    },
+    "renderer_sha256": "d8c8bef47418178c380a98d15100d6628542fa6b661d886a982689b91ae3b582",
+    "runtime_filesystem": {
+      "base_image": "debian:bookworm-slim-for-openriak",
+      "openssl_backport": "3.0.22",
+      "strategy": "clean-root"
+    },
+    "runtime_options": {
+      "RIAK_GID": [
+        "",
+        "Optional nonzero GID for riak; empty retains the package GID. Mounted directories are chowned."
+      ],
+      "RIAK_LOG_MAX_FILES": [
+        "10",
+        "Maximum file count per OpenRiak logger handler; initializes new configurations only."
+      ],
+      "RIAK_LOG_MAX_FILE_SIZE": [
+        "1MB",
+        "Maximum size per OpenRiak logger file; initializes new configurations only."
+      ],
+      "RIAK_UID": [
+        "",
+        "Optional nonzero UID for riak; empty retains the package UID. Mounted directories are chowned."
+      ],
+      "TZ": [
+        "Etc/UTC",
+        "IANA timezone for the process and entrypoint logs, for example Asia/Tokyo."
+      ]
+    },
+    "runtime_renderer_sha256": "1509af6f7feab4d573b567df4fa8ed2bbd3f06a9e5481e532c3c684144c00233",
+    "runtime_sha256": "b0f20a4604e8cff49f7060bf5e0cc5fa52df5829d46520d37095130f07f65656",
+    "schema_version": 4,
+    "tags": [
+      "tiotjp/openriak-kv:3.4.0-debian-12-otp24"
+    ]
+  },
+  "local_tags_platform": "linux/amd64",
+  "node": "openriak-kv-3.4.0-debian-12-otp24-node",
+  "oci_archive": "runs/20260908T090540.694685Z/image.oci.tar",
+  "os_family": "debian",
+  "os_name": "Debian 12",
+  "os_release": "12",
+  "otp": "24",
+  "platform_results": {
+    "linux/amd64": {
+      "artifacts": {
+        "compose_cluster": {
+          "filename": "compose.cluster.yaml",
+          "sha256": "5ce613fd376050fcb048991d99b9985bc2bbff92202fc64f532fb5a9da588bfa",
+          "url": "downloads/docker/3.4.0/3.4.0-debian-12-otp24/compose.cluster.yaml"
+        },
+        "compose_single": {
+          "filename": "compose.single.yaml",
+          "sha256": "b5fa32858452961b5eaf635d70ea674ab5eeb0824b739a399d4410afa8eefc0b",
+          "url": "downloads/docker/3.4.0/3.4.0-debian-12-otp24/compose.single.yaml"
+        },
+        "dockerfile": {
+          "filename": "Dockerfile",
+          "sha256": "ab9b7f05b38276bf582edc1489df9d0930cf5d60937bdd3caca1b2d6a276024b",
+          "url": "downloads/docker/3.4.0/3.4.0-debian-12-otp24/Dockerfile"
+        },
+        "environment_example": {
+          "filename": "example.env",
+          "sha256": "4dff91bdadbc38c6cc3baab08c2af0a6c6289c97a93c5978cf4ef85ec4602fd9",
+          "url": "downloads/docker/3.4.0/3.4.0-debian-12-otp24/example.env"
+        }
+      },
+      "finished_at": "2026-09-08T09:09:52Z",
+      "report": "platforms/linux-amd64/runs/20260908T090543.419880Z/report.json",
+      "run_id": "20260908T090543.419880Z",
+      "status": "passed"
+    }
+  },
+  "platforms": [
+    "linux/amd64"
+  ],
+  "product": "openriak-kv",
+  "run_id": "20260908T090540.694685Z",
+  "schema_version": 4,
+  "started_at": "2026-09-08T09:05:40Z",
+  "status": "passed",
+  "steps": [
+    {
+      "duration_seconds": 2.871,
+      "finished_at": "2026-09-08T09:09:54Z",
+      "name": "export_oci_image",
+      "started_at": "2026-09-08T09:09:52Z",
+      "status": "passed"
+    },
+    {
+      "duration_seconds": 3.714,
+      "finished_at": "2026-09-08T09:09:59Z",
+      "name": "load_local_tags",
+      "started_at": "2026-09-08T09:09:55Z",
+      "status": "passed"
+    }
+  ],
+  "tags": [
+    "tiotjp/openriak-kv:3.4.0-debian-12-otp24"
+  ],
+  "targets": [
+    {
+      "architecture": "amd64",
+      "download_id": "otp24-amd64",
+      "os_id": "debian-12-amd64"
+    }
+  ],
+  "version": "3.4.0"
+}

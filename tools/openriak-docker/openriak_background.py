@@ -29,6 +29,6 @@ def launch(tool, options, arguments):
                                   env=environment, start_new_session=True, close_fds=True)
     print(f'Background worker started. PID: {worker.pid}', flush=True)
     print(f'Log file: {logfile}', flush=True)
-    print(f'Follow: tail -f {shlex.quote(str(logfile))}', flush=True)
+    print(f'Follow: tail -n 100 -f {shlex.quote(str(logfile))}', flush=True)
     print(f'Stop gracefully: kill -TERM {worker.pid}', flush=True)
     return 0

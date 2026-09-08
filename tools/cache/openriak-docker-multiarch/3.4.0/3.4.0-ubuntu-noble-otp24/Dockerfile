@@ -17,8 +17,10 @@ RUN --mount=type=bind,from=download-amd64,target=/opt/openriak-package,ro <<'OPE
 set -eu
 # Copy, install, and remove in this one layer; only the installed files persist.
 cp /opt/openriak-package/riak_3.4.0-OTP24_amd64.deb /tmp/riak_3.4.0-OTP24_amd64.deb
+# Update installed OS packages from this release's configured repositories.
 apt-get update
-DEBIAN_FRONTEND=noninteractive apt-get install -y --no-install-recommends ca-certificates curl passwd procps tzdata /tmp/riak_3.4.0-OTP24_amd64.deb
+DEBIAN_FRONTEND=noninteractive apt-get dist-upgrade -y --no-install-recommends
+DEBIAN_FRONTEND=noninteractive apt-get install -y --no-install-recommends ca-certificates passwd procps tzdata /tmp/riak_3.4.0-OTP24_amd64.deb
 apt-get clean
 rm -rf /var/lib/apt/lists/*
 rm -f /tmp/riak_3.4.0-OTP24_amd64.deb
@@ -34,8 +36,10 @@ RUN --mount=type=bind,from=download-arm64,target=/opt/openriak-package,ro <<'OPE
 set -eu
 # Copy, install, and remove in this one layer; only the installed files persist.
 cp /opt/openriak-package/riak_3.4.0-OTP24_arm64.deb /tmp/riak_3.4.0-OTP24_arm64.deb
+# Update installed OS packages from this release's configured repositories.
 apt-get update
-DEBIAN_FRONTEND=noninteractive apt-get install -y --no-install-recommends ca-certificates curl passwd procps tzdata /tmp/riak_3.4.0-OTP24_arm64.deb
+DEBIAN_FRONTEND=noninteractive apt-get dist-upgrade -y --no-install-recommends
+DEBIAN_FRONTEND=noninteractive apt-get install -y --no-install-recommends ca-certificates passwd procps tzdata /tmp/riak_3.4.0-OTP24_arm64.deb
 apt-get clean
 rm -rf /var/lib/apt/lists/*
 rm -f /tmp/riak_3.4.0-OTP24_arm64.deb
@@ -74,7 +78,7 @@ ENV RIAK_NODE_HOST=""
 # Explicit nodename; empty derives openriak-kv@<hostname>.
 ENV RIAK_NODE_NAME=""
 # Initial cookie; existing riak.conf wins and new followers adopt the coordinator cookie.
-ENV RIAK_DISTRIBUTED_COOKIE="openriak-bf16c3eae51fb90db14a27e71ff406c9"
+ENV RIAK_DISTRIBUTED_COOKIE="openriak-4147ed355da4d652d715ba59b9f3b168"
 # Partition count for a new ring; do not change on an existing cluster.
 ENV RIAK_RING_SIZE="8"
 # Storage backend used by OpenRiak KV.

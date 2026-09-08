@@ -1,0 +1,734 @@
+{
+  "artifacts": {
+    "compose_cluster": {
+      "filename": "compose.cluster.yaml",
+      "sha256": "7003c8472c5ca996df6ce7447075bc0dc048900ad27ae41085079886da54462a",
+      "url": "downloads/docker/3.4.0/3.4.0-amazon-linux-2023-otp24/compose.cluster.yaml"
+    },
+    "compose_single": {
+      "filename": "compose.single.yaml",
+      "sha256": "955b931f7b9286f720e835dc400a45df0d0f5672898c9486d8f92b5bdeb2602a",
+      "url": "downloads/docker/3.4.0/3.4.0-amazon-linux-2023-otp24/compose.single.yaml"
+    },
+    "dockerfile": {
+      "filename": "Dockerfile",
+      "sha256": "e0d1d837576be908dc48389c2732a6f590e97f4d4e5e402a3f2b896be5c48509",
+      "url": "downloads/docker/3.4.0/3.4.0-amazon-linux-2023-otp24/Dockerfile"
+    },
+    "environment_example": {
+      "filename": "example.env",
+      "sha256": "c27ff7bdd51eeb599c26dee5b4e84a262694ded3dfdbbf9a0e4f5bacb6b60ead",
+      "url": "downloads/docker/3.4.0/3.4.0-amazon-linux-2023-otp24/example.env"
+    }
+  },
+  "base_image": {
+    "pinned": "amazonlinux:2023@sha256:181f98c48832fe926f8ca3b6ffeafcce128e96e77b93d08fbe9a9bc9403ce284",
+    "requested": "amazonlinux:2023",
+    "resolved_at": "2026-09-07T13:35:31Z"
+  },
+  "error": null,
+  "finished_at": "2026-09-07T14:11:02Z",
+  "generation": {
+    "cluster_nodes": 5,
+    "distributed_cookie": "openriak-965c0b67f44b7c506cf6bb6f982cd52a"
+  },
+  "identity": {
+    "namespace": "tiotjp",
+    "source": "https://github.com/TI-Tokyo/openriak-docs",
+    "url": "https://www.tiot.jp/",
+    "vendor": "TI Tokyo"
+  },
+  "image": "tiotjp/openriak-kv:3.4.0-amazon-linux-2023-otp24",
+  "metadata_sources": [
+    "content/openriak-kv/metadata/3.4.0/supported-os.json",
+    "content/openriak-kv/metadata/3.4.0/downloads.json"
+  ],
+  "network": {
+    "address_assignment": "docker",
+    "node_host": "node-01.cluster-a.openriak",
+    "riak_node_name": "openriak-kv@node-01.cluster-a.openriak"
+  },
+  "node": "openriak-kv-3.4.0-amazon-linux-2023-otp24-node",
+  "package": {
+    "checksum": {
+      "algorithm": "sha256",
+      "value": "80b56fc4973fd6b3fcce39d787c2ab1295c51f81c492719acf577129e1e6b3dd"
+    },
+    "filename": "riak-3.4.0.OTP24-1.amzn2023.aarch64.rpm",
+    "format": "rpm",
+    "url": "https://files.tiot.jp/riak/kv/3.4/3.4.0/amazon/2023%20(graviton3)/riak-3.4.0.OTP24-1.amzn2023.aarch64.rpm"
+  },
+  "ports": {
+    "http": 8098,
+    "protobuf": 8087
+  },
+  "product": "openriak-kv",
+  "run_id": "20260907T134120.249924Z",
+  "schema_version": 4,
+  "started_at": "2026-09-07T13:41:20Z",
+  "status": "passed",
+  "steps": [
+    {
+      "duration_seconds": 0.001,
+      "finished_at": "2026-09-07T13:41:20Z",
+      "name": "generate_artifacts",
+      "started_at": "2026-09-07T13:41:20Z",
+      "status": "passed"
+    },
+    {
+      "duration_seconds": 0.153,
+      "finished_at": "2026-09-07T13:41:20Z",
+      "name": "validate_compose_artifacts",
+      "started_at": "2026-09-07T13:41:20Z",
+      "status": "passed"
+    },
+    {
+      "duration_seconds": 213.671,
+      "finished_at": "2026-09-07T13:45:08Z",
+      "name": "build_image",
+      "started_at": "2026-09-07T13:41:20Z",
+      "status": "passed"
+    },
+    {
+      "duration_seconds": 6.458,
+      "finished_at": "2026-09-07T13:45:14Z",
+      "name": "initialize_volumes",
+      "started_at": "2026-09-07T13:45:08Z",
+      "status": "passed"
+    },
+    {
+      "duration_seconds": 1.723,
+      "finished_at": "2026-09-07T13:45:16Z",
+      "name": "make_test_config_writable",
+      "started_at": "2026-09-07T13:45:14Z",
+      "status": "passed"
+    },
+    {
+      "duration_seconds": 0.012,
+      "finished_at": "2026-09-07T13:45:16Z",
+      "name": "configure_node",
+      "started_at": "2026-09-07T13:45:16Z",
+      "status": "passed"
+    },
+    {
+      "duration_seconds": 1.08,
+      "finished_at": "2026-09-07T13:45:17Z",
+      "name": "start_compose_node",
+      "started_at": "2026-09-07T13:45:16Z",
+      "status": "passed"
+    },
+    {
+      "duration_seconds": 106.602,
+      "finished_at": "2026-09-07T13:47:11Z",
+      "name": "wait_for_entrypoint_readiness",
+      "started_at": "2026-09-07T13:45:17Z",
+      "status": "passed"
+    },
+    {
+      "duration_seconds": 6.278,
+      "finished_at": "2026-09-07T13:47:18Z",
+      "name": "wait_for_cli_and_http",
+      "started_at": "2026-09-07T13:47:11Z",
+      "status": "passed"
+    },
+    {
+      "duration_seconds": 0.436,
+      "finished_at": "2026-09-07T13:47:18Z",
+      "name": "verify_runtime_options",
+      "started_at": "2026-09-07T13:47:18Z",
+      "status": "passed"
+    },
+    {
+      "duration_seconds": 6.184,
+      "finished_at": "2026-09-07T13:47:24Z",
+      "name": "single_node_admin_test",
+      "started_at": "2026-09-07T13:47:18Z",
+      "status": "passed"
+    },
+    {
+      "duration_seconds": 0.039,
+      "finished_at": "2026-09-07T13:47:24Z",
+      "name": "wait_for_healthcheck",
+      "started_at": "2026-09-07T13:47:24Z",
+      "status": "passed"
+    },
+    {
+      "duration_seconds": 16.717,
+      "finished_at": "2026-09-07T13:47:43Z",
+      "name": "graceful_stop",
+      "started_at": "2026-09-07T13:47:24Z",
+      "status": "passed"
+    },
+    {
+      "duration_seconds": 0.04,
+      "finished_at": "2026-09-07T13:47:43Z",
+      "name": "verify_graceful_shutdown_logging",
+      "started_at": "2026-09-07T13:47:43Z",
+      "status": "passed"
+    },
+    {
+      "duration_seconds": 0.534,
+      "finished_at": "2026-09-07T13:47:44Z",
+      "name": "remove_single_node_test",
+      "started_at": "2026-09-07T13:47:43Z",
+      "status": "passed"
+    },
+    {
+      "duration_seconds": 2.602,
+      "finished_at": "2026-09-07T13:47:46Z",
+      "name": "start_compose_cluster",
+      "started_at": "2026-09-07T13:47:44Z",
+      "status": "passed"
+    },
+    {
+      "duration_seconds": 1194.173,
+      "finished_at": "2026-09-07T14:09:01Z",
+      "name": "wait_for_cluster",
+      "started_at": "2026-09-07T13:47:46Z",
+      "status": "passed"
+    },
+    {
+      "duration_seconds": 14.056,
+      "finished_at": "2026-09-07T14:09:15Z",
+      "name": "cluster_node_1_admin_test",
+      "started_at": "2026-09-07T14:09:01Z",
+      "status": "passed"
+    },
+    {
+      "duration_seconds": 0.942,
+      "finished_at": "2026-09-07T14:09:16Z",
+      "name": "cluster_node_1_runtime_options",
+      "started_at": "2026-09-07T14:09:15Z",
+      "status": "passed"
+    },
+    {
+      "duration_seconds": 14.461,
+      "finished_at": "2026-09-07T14:09:33Z",
+      "name": "cluster_node_2_admin_test",
+      "started_at": "2026-09-07T14:09:17Z",
+      "status": "passed"
+    },
+    {
+      "duration_seconds": 0.985,
+      "finished_at": "2026-09-07T14:09:34Z",
+      "name": "cluster_node_2_runtime_options",
+      "started_at": "2026-09-07T14:09:33Z",
+      "status": "passed"
+    },
+    {
+      "duration_seconds": 13.435,
+      "finished_at": "2026-09-07T14:09:48Z",
+      "name": "cluster_node_3_admin_test",
+      "started_at": "2026-09-07T14:09:35Z",
+      "status": "passed"
+    },
+    {
+      "duration_seconds": 0.812,
+      "finished_at": "2026-09-07T14:09:49Z",
+      "name": "cluster_node_3_runtime_options",
+      "started_at": "2026-09-07T14:09:48Z",
+      "status": "passed"
+    },
+    {
+      "duration_seconds": 13.754,
+      "finished_at": "2026-09-07T14:10:05Z",
+      "name": "cluster_node_4_admin_test",
+      "started_at": "2026-09-07T14:09:49Z",
+      "status": "passed"
+    },
+    {
+      "duration_seconds": 1.012,
+      "finished_at": "2026-09-07T14:10:06Z",
+      "name": "cluster_node_4_runtime_options",
+      "started_at": "2026-09-07T14:10:05Z",
+      "status": "passed"
+    },
+    {
+      "duration_seconds": 13.721,
+      "finished_at": "2026-09-07T14:10:20Z",
+      "name": "cluster_node_5_admin_test",
+      "started_at": "2026-09-07T14:10:07Z",
+      "status": "passed"
+    },
+    {
+      "duration_seconds": 0.884,
+      "finished_at": "2026-09-07T14:10:21Z",
+      "name": "cluster_node_5_runtime_options",
+      "started_at": "2026-09-07T14:10:20Z",
+      "status": "passed"
+    },
+    {
+      "duration_seconds": 34.771,
+      "finished_at": "2026-09-07T14:11:01Z",
+      "name": "graceful_stop_cluster",
+      "started_at": "2026-09-07T14:10:22Z",
+      "status": "passed"
+    },
+    {
+      "duration_seconds": 0.724,
+      "finished_at": "2026-09-07T14:11:01Z",
+      "name": "remove_cluster_test",
+      "started_at": "2026-09-07T14:11:01Z",
+      "status": "passed"
+    }
+  ],
+  "target": {
+    "architecture": "aarch64",
+    "docker_platform": "linux/arm64",
+    "download_id": "otp24-aarch64-graviton-3-1",
+    "os_family": "amazon-linux",
+    "os_id": "amazon-linux-2023-aarch64",
+    "os_name": "Amazon Linux 2023",
+    "os_release": "2023",
+    "otp": "24",
+    "version": "3.4.0"
+  },
+  "tests": {
+    "admin_test": {
+      "command": "riak admin test",
+      "response": "Successfully completed 1 read/write cycle to 'openriak-kv@node-01.cluster-a.openriak'",
+      "status": "passed"
+    },
+    "cli_ping": {
+      "command": "riak ping",
+      "response": "pong",
+      "status": "passed"
+    },
+    "cluster": {
+      "checks": [
+        "same member set",
+        "ring ready",
+        "transfers complete",
+        "riak ping == pong",
+        "HTTP 200/OK",
+        "riak admin test read/write cycle",
+        "Docker healthcheck healthy",
+        "config/data/log volumes populated"
+      ],
+      "coordinator_cookie_adoption": "passed",
+      "members": [
+        "openriak-kv@node-01.cluster-a.openriak",
+        "openriak-kv@node-02.cluster-a.openriak",
+        "openriak-kv@node-03.cluster-a.openriak",
+        "openriak-kv@node-04.cluster-a.openriak",
+        "openriak-kv@node-05.cluster-a.openriak"
+      ],
+      "node_count": 5,
+      "roles": {
+        "openriak-kv-3.4.0-amazon-linux-2023-otp24-node-1-t-249924z": "Coordinator",
+        "openriak-kv-3.4.0-amazon-linux-2023-otp24-node-2-t-249924z": "Follower",
+        "openriak-kv-3.4.0-amazon-linux-2023-otp24-node-3-t-249924z": "Follower",
+        "openriak-kv-3.4.0-amazon-linux-2023-otp24-node-4-t-249924z": "Follower",
+        "openriak-kv-3.4.0-amazon-linux-2023-otp24-node-5-t-249924z": "Follower"
+      },
+      "state": {
+        "openriak-kv-3.4.0-amazon-linux-2023-otp24-node-1-t-249924z": {
+          "http": "OK",
+          "members": "================================= Membership ==================================\nStatus     Ring    Pending    Node\n-------------------------------------------------------------------------------\nvalid      25.0%      --      openriak-kv@node-01.cluster-a.openriak\nvalid      25.0%      --      openriak-kv@node-02.cluster-a.openriak\nvalid      25.0%      --      openriak-kv@node-03.cluster-a.openriak\nvalid      12.5%      --      openriak-kv@node-04.cluster-a.openriak\nvalid      12.5%      --      openriak-kv@node-05.cluster-a.openriak\n-------------------------------------------------------------------------------\nValid:5 / Leaving:0 / Exiting:0 / Joining:0 / Down:0\nok",
+          "ping": "pong",
+          "ready": true,
+          "ring": "TRUE All nodes agree on the ring ['openriak-kv@node-01.cluster-a.openriak',\n                                  'openriak-kv@node-02.cluster-a.openriak',\n                                  'openriak-kv@node-03.cluster-a.openriak',\n                                  'openriak-kv@node-04.cluster-a.openriak',\n                                  'openriak-kv@node-05.cluster-a.openriak']\nok",
+          "transfers": "No transfers active\n\nActive Transfers:\n\n\nok"
+        },
+        "openriak-kv-3.4.0-amazon-linux-2023-otp24-node-2-t-249924z": {
+          "http": "OK",
+          "members": "================================= Membership ==================================\nStatus     Ring    Pending    Node\n-------------------------------------------------------------------------------\nvalid      25.0%      --      openriak-kv@node-01.cluster-a.openriak\nvalid      25.0%      --      openriak-kv@node-02.cluster-a.openriak\nvalid      25.0%      --      openriak-kv@node-03.cluster-a.openriak\nvalid      12.5%      --      openriak-kv@node-04.cluster-a.openriak\nvalid      12.5%      --      openriak-kv@node-05.cluster-a.openriak\n-------------------------------------------------------------------------------\nValid:5 / Leaving:0 / Exiting:0 / Joining:0 / Down:0\nok",
+          "ping": "pong",
+          "ready": true,
+          "ring": "TRUE All nodes agree on the ring ['openriak-kv@node-01.cluster-a.openriak',\n                                  'openriak-kv@node-02.cluster-a.openriak',\n                                  'openriak-kv@node-03.cluster-a.openriak',\n                                  'openriak-kv@node-04.cluster-a.openriak',\n                                  'openriak-kv@node-05.cluster-a.openriak']\nok",
+          "transfers": "No transfers active\n\nActive Transfers:\n\n\nok"
+        },
+        "openriak-kv-3.4.0-amazon-linux-2023-otp24-node-3-t-249924z": {
+          "http": "OK",
+          "members": "================================= Membership ==================================\nStatus     Ring    Pending    Node\n-------------------------------------------------------------------------------\nvalid      25.0%      --      openriak-kv@node-01.cluster-a.openriak\nvalid      25.0%      --      openriak-kv@node-02.cluster-a.openriak\nvalid      25.0%      --      openriak-kv@node-03.cluster-a.openriak\nvalid      12.5%      --      openriak-kv@node-04.cluster-a.openriak\nvalid      12.5%      --      openriak-kv@node-05.cluster-a.openriak\n-------------------------------------------------------------------------------\nValid:5 / Leaving:0 / Exiting:0 / Joining:0 / Down:0\nok",
+          "ping": "pong",
+          "ready": true,
+          "ring": "TRUE All nodes agree on the ring ['openriak-kv@node-01.cluster-a.openriak',\n                                  'openriak-kv@node-02.cluster-a.openriak',\n                                  'openriak-kv@node-03.cluster-a.openriak',\n                                  'openriak-kv@node-04.cluster-a.openriak',\n                                  'openriak-kv@node-05.cluster-a.openriak']\nok",
+          "transfers": "No transfers active\n\nActive Transfers:\n\n\nok"
+        },
+        "openriak-kv-3.4.0-amazon-linux-2023-otp24-node-4-t-249924z": {
+          "http": "OK",
+          "members": "================================= Membership ==================================\nStatus     Ring    Pending    Node\n-------------------------------------------------------------------------------\nvalid      25.0%      --      openriak-kv@node-01.cluster-a.openriak\nvalid      25.0%      --      openriak-kv@node-02.cluster-a.openriak\nvalid      25.0%      --      openriak-kv@node-03.cluster-a.openriak\nvalid      12.5%      --      openriak-kv@node-04.cluster-a.openriak\nvalid      12.5%      --      openriak-kv@node-05.cluster-a.openriak\n-------------------------------------------------------------------------------\nValid:5 / Leaving:0 / Exiting:0 / Joining:0 / Down:0\nok",
+          "ping": "pong",
+          "ready": true,
+          "ring": "TRUE All nodes agree on the ring ['openriak-kv@node-01.cluster-a.openriak',\n                                  'openriak-kv@node-02.cluster-a.openriak',\n                                  'openriak-kv@node-03.cluster-a.openriak',\n                                  'openriak-kv@node-04.cluster-a.openriak',\n                                  'openriak-kv@node-05.cluster-a.openriak']\nok",
+          "transfers": "No transfers active\n\nActive Transfers:\n\n\nok"
+        },
+        "openriak-kv-3.4.0-amazon-linux-2023-otp24-node-5-t-249924z": {
+          "http": "OK",
+          "members": "================================= Membership ==================================\nStatus     Ring    Pending    Node\n-------------------------------------------------------------------------------\nvalid      25.0%      --      openriak-kv@node-01.cluster-a.openriak\nvalid      25.0%      --      openriak-kv@node-02.cluster-a.openriak\nvalid      25.0%      --      openriak-kv@node-03.cluster-a.openriak\nvalid      12.5%      --      openriak-kv@node-04.cluster-a.openriak\nvalid      12.5%      --      openriak-kv@node-05.cluster-a.openriak\n-------------------------------------------------------------------------------\nValid:5 / Leaving:0 / Exiting:0 / Joining:0 / Down:0\nok",
+          "ping": "pong",
+          "ready": true,
+          "ring": "TRUE All nodes agree on the ring ['openriak-kv@node-01.cluster-a.openriak',\n                                  'openriak-kv@node-02.cluster-a.openriak',\n                                  'openriak-kv@node-03.cluster-a.openriak',\n                                  'openriak-kv@node-04.cluster-a.openriak',\n                                  'openriak-kv@node-05.cluster-a.openriak']\nok",
+          "transfers": "No transfers active\n\nActive Transfers:\n\n\nok"
+        }
+      },
+      "status": "passed"
+    },
+    "cluster_admin_test": {
+      "openriak-kv-3.4.0-amazon-linux-2023-otp24-node-1-t-249924z": {
+        "command": "riak admin test",
+        "response": "Successfully completed 1 read/write cycle to 'openriak-kv@node-01.cluster-a.openriak'",
+        "status": "passed"
+      },
+      "openriak-kv-3.4.0-amazon-linux-2023-otp24-node-2-t-249924z": {
+        "command": "riak admin test",
+        "response": "Successfully completed 1 read/write cycle to 'openriak-kv@node-02.cluster-a.openriak'",
+        "status": "passed"
+      },
+      "openriak-kv-3.4.0-amazon-linux-2023-otp24-node-3-t-249924z": {
+        "command": "riak admin test",
+        "response": "Successfully completed 1 read/write cycle to 'openriak-kv@node-03.cluster-a.openriak'",
+        "status": "passed"
+      },
+      "openriak-kv-3.4.0-amazon-linux-2023-otp24-node-4-t-249924z": {
+        "command": "riak admin test",
+        "response": "Successfully completed 1 read/write cycle to 'openriak-kv@node-04.cluster-a.openriak'",
+        "status": "passed"
+      },
+      "openriak-kv-3.4.0-amazon-linux-2023-otp24-node-5-t-249924z": {
+        "command": "riak admin test",
+        "response": "Successfully completed 1 read/write cycle to 'openriak-kv@node-05.cluster-a.openriak'",
+        "status": "passed"
+      }
+    },
+    "cluster_runtime_options": {
+      "openriak-kv-3.4.0-amazon-linux-2023-otp24-node-1-t-249924z": {
+        "docker_logging": {
+          "Config": {
+            "max-file": "3",
+            "max-size": "10m"
+          },
+          "Type": "json-file"
+        },
+        "gid": 19002,
+        "labels": {
+          "com.docker.compose.config-hash": "e49cf2d255e0b6e2018909e272e1e6240c3f4c2a0937a90f8588b74ea614241d",
+          "com.docker.compose.container-number": "1",
+          "com.docker.compose.depends_on": "",
+          "com.docker.compose.image": "sha256:7236c61afc4cc13d7043f9b93ef75d48999b375f0526e406957458376899abd8",
+          "com.docker.compose.oneoff": "False",
+          "com.docker.compose.project": "openriak-kv-340-amazon-linux-2023-otp24-node-cluster",
+          "com.docker.compose.project.config_files": "/tmp/openriak-docker-3.4.0-amazon-linux-2023-otp24-hm_5dthb/compose.cluster.test.yaml",
+          "com.docker.compose.project.environment_file": "/tmp/openriak-docker-3.4.0-amazon-linux-2023-otp24-hm_5dthb/.env.cluster",
+          "com.docker.compose.project.working_dir": "/tmp/openriak-docker-3.4.0-amazon-linux-2023-otp24-hm_5dthb",
+          "com.docker.compose.service": "node1",
+          "com.docker.compose.version": "5.4.0",
+          "desktop.docker.io/wsl-distro": "Ubuntu",
+          "org.opencontainers.image.description": "Package-backed OpenRiak KV with single-node and cluster startup support",
+          "org.opencontainers.image.source": "https://github.com/TI-Tokyo/openriak-docs",
+          "org.opencontainers.image.title": "OpenRiak KV",
+          "org.opencontainers.image.url": "https://www.tiot.jp/",
+          "org.opencontainers.image.vendor": "TI Tokyo",
+          "org.opencontainers.image.version": "3.4.0",
+          "org.openriak.image.tag": "tiotjp/openriak-kv:3.4.0-amazon-linux-2023-otp24",
+          "org.openriak.os.name": "amazon-linux",
+          "org.openriak.os.release": "2023",
+          "org.openriak.os.version": "2023",
+          "org.openriak.otp.version": "24"
+        },
+        "status": "passed",
+        "timezone": "Asia/Tokyo",
+        "uid": 19001
+      },
+      "openriak-kv-3.4.0-amazon-linux-2023-otp24-node-2-t-249924z": {
+        "docker_logging": {
+          "Config": {
+            "max-file": "3",
+            "max-size": "10m"
+          },
+          "Type": "json-file"
+        },
+        "gid": 19002,
+        "labels": {
+          "com.docker.compose.config-hash": "25d150a1fa6e2cd23e45ba8f24f61eb32044d6adb47035419a6115c61d136041",
+          "com.docker.compose.container-number": "1",
+          "com.docker.compose.depends_on": "",
+          "com.docker.compose.image": "sha256:7236c61afc4cc13d7043f9b93ef75d48999b375f0526e406957458376899abd8",
+          "com.docker.compose.oneoff": "False",
+          "com.docker.compose.project": "openriak-kv-340-amazon-linux-2023-otp24-node-cluster",
+          "com.docker.compose.project.config_files": "/tmp/openriak-docker-3.4.0-amazon-linux-2023-otp24-hm_5dthb/compose.cluster.test.yaml",
+          "com.docker.compose.project.environment_file": "/tmp/openriak-docker-3.4.0-amazon-linux-2023-otp24-hm_5dthb/.env.cluster",
+          "com.docker.compose.project.working_dir": "/tmp/openriak-docker-3.4.0-amazon-linux-2023-otp24-hm_5dthb",
+          "com.docker.compose.service": "node2",
+          "com.docker.compose.version": "5.4.0",
+          "desktop.docker.io/wsl-distro": "Ubuntu",
+          "org.opencontainers.image.description": "Package-backed OpenRiak KV with single-node and cluster startup support",
+          "org.opencontainers.image.source": "https://github.com/TI-Tokyo/openriak-docs",
+          "org.opencontainers.image.title": "OpenRiak KV",
+          "org.opencontainers.image.url": "https://www.tiot.jp/",
+          "org.opencontainers.image.vendor": "TI Tokyo",
+          "org.opencontainers.image.version": "3.4.0",
+          "org.openriak.image.tag": "tiotjp/openriak-kv:3.4.0-amazon-linux-2023-otp24",
+          "org.openriak.os.name": "amazon-linux",
+          "org.openriak.os.release": "2023",
+          "org.openriak.os.version": "2023",
+          "org.openriak.otp.version": "24"
+        },
+        "status": "passed",
+        "timezone": "Asia/Tokyo",
+        "uid": 19001
+      },
+      "openriak-kv-3.4.0-amazon-linux-2023-otp24-node-3-t-249924z": {
+        "docker_logging": {
+          "Config": {
+            "max-file": "3",
+            "max-size": "10m"
+          },
+          "Type": "json-file"
+        },
+        "gid": 19002,
+        "labels": {
+          "com.docker.compose.config-hash": "a9a77bb812a68e7443731e16dcf74bb7deb49130fe039f7258c18c6b0b553bf0",
+          "com.docker.compose.container-number": "1",
+          "com.docker.compose.depends_on": "",
+          "com.docker.compose.image": "sha256:7236c61afc4cc13d7043f9b93ef75d48999b375f0526e406957458376899abd8",
+          "com.docker.compose.oneoff": "False",
+          "com.docker.compose.project": "openriak-kv-340-amazon-linux-2023-otp24-node-cluster",
+          "com.docker.compose.project.config_files": "/tmp/openriak-docker-3.4.0-amazon-linux-2023-otp24-hm_5dthb/compose.cluster.test.yaml",
+          "com.docker.compose.project.environment_file": "/tmp/openriak-docker-3.4.0-amazon-linux-2023-otp24-hm_5dthb/.env.cluster",
+          "com.docker.compose.project.working_dir": "/tmp/openriak-docker-3.4.0-amazon-linux-2023-otp24-hm_5dthb",
+          "com.docker.compose.service": "node3",
+          "com.docker.compose.version": "5.4.0",
+          "desktop.docker.io/wsl-distro": "Ubuntu",
+          "org.opencontainers.image.description": "Package-backed OpenRiak KV with single-node and cluster startup support",
+          "org.opencontainers.image.source": "https://github.com/TI-Tokyo/openriak-docs",
+          "org.opencontainers.image.title": "OpenRiak KV",
+          "org.opencontainers.image.url": "https://www.tiot.jp/",
+          "org.opencontainers.image.vendor": "TI Tokyo",
+          "org.opencontainers.image.version": "3.4.0",
+          "org.openriak.image.tag": "tiotjp/openriak-kv:3.4.0-amazon-linux-2023-otp24",
+          "org.openriak.os.name": "amazon-linux",
+          "org.openriak.os.release": "2023",
+          "org.openriak.os.version": "2023",
+          "org.openriak.otp.version": "24"
+        },
+        "status": "passed",
+        "timezone": "Asia/Tokyo",
+        "uid": 19001
+      },
+      "openriak-kv-3.4.0-amazon-linux-2023-otp24-node-4-t-249924z": {
+        "docker_logging": {
+          "Config": {
+            "max-file": "3",
+            "max-size": "10m"
+          },
+          "Type": "json-file"
+        },
+        "gid": 19002,
+        "labels": {
+          "com.docker.compose.config-hash": "d2e0658e698c2425aa87d23596471c1a6136c60f5d9c92fce64bd3535fd4bc7f",
+          "com.docker.compose.container-number": "1",
+          "com.docker.compose.depends_on": "",
+          "com.docker.compose.image": "sha256:7236c61afc4cc13d7043f9b93ef75d48999b375f0526e406957458376899abd8",
+          "com.docker.compose.oneoff": "False",
+          "com.docker.compose.project": "openriak-kv-340-amazon-linux-2023-otp24-node-cluster",
+          "com.docker.compose.project.config_files": "/tmp/openriak-docker-3.4.0-amazon-linux-2023-otp24-hm_5dthb/compose.cluster.test.yaml",
+          "com.docker.compose.project.environment_file": "/tmp/openriak-docker-3.4.0-amazon-linux-2023-otp24-hm_5dthb/.env.cluster",
+          "com.docker.compose.project.working_dir": "/tmp/openriak-docker-3.4.0-amazon-linux-2023-otp24-hm_5dthb",
+          "com.docker.compose.service": "node4",
+          "com.docker.compose.version": "5.4.0",
+          "desktop.docker.io/wsl-distro": "Ubuntu",
+          "org.opencontainers.image.description": "Package-backed OpenRiak KV with single-node and cluster startup support",
+          "org.opencontainers.image.source": "https://github.com/TI-Tokyo/openriak-docs",
+          "org.opencontainers.image.title": "OpenRiak KV",
+          "org.opencontainers.image.url": "https://www.tiot.jp/",
+          "org.opencontainers.image.vendor": "TI Tokyo",
+          "org.opencontainers.image.version": "3.4.0",
+          "org.openriak.image.tag": "tiotjp/openriak-kv:3.4.0-amazon-linux-2023-otp24",
+          "org.openriak.os.name": "amazon-linux",
+          "org.openriak.os.release": "2023",
+          "org.openriak.os.version": "2023",
+          "org.openriak.otp.version": "24"
+        },
+        "status": "passed",
+        "timezone": "Asia/Tokyo",
+        "uid": 19001
+      },
+      "openriak-kv-3.4.0-amazon-linux-2023-otp24-node-5-t-249924z": {
+        "docker_logging": {
+          "Config": {
+            "max-file": "3",
+            "max-size": "10m"
+          },
+          "Type": "json-file"
+        },
+        "gid": 19002,
+        "labels": {
+          "com.docker.compose.config-hash": "e24e343ba598e59789a2b43a188c4fd874c2cd1c8aff89c95a34906d409c2997",
+          "com.docker.compose.container-number": "1",
+          "com.docker.compose.depends_on": "",
+          "com.docker.compose.image": "sha256:7236c61afc4cc13d7043f9b93ef75d48999b375f0526e406957458376899abd8",
+          "com.docker.compose.oneoff": "False",
+          "com.docker.compose.project": "openriak-kv-340-amazon-linux-2023-otp24-node-cluster",
+          "com.docker.compose.project.config_files": "/tmp/openriak-docker-3.4.0-amazon-linux-2023-otp24-hm_5dthb/compose.cluster.test.yaml",
+          "com.docker.compose.project.environment_file": "/tmp/openriak-docker-3.4.0-amazon-linux-2023-otp24-hm_5dthb/.env.cluster",
+          "com.docker.compose.project.working_dir": "/tmp/openriak-docker-3.4.0-amazon-linux-2023-otp24-hm_5dthb",
+          "com.docker.compose.service": "node5",
+          "com.docker.compose.version": "5.4.0",
+          "desktop.docker.io/wsl-distro": "Ubuntu",
+          "org.opencontainers.image.description": "Package-backed OpenRiak KV with single-node and cluster startup support",
+          "org.opencontainers.image.source": "https://github.com/TI-Tokyo/openriak-docs",
+          "org.opencontainers.image.title": "OpenRiak KV",
+          "org.opencontainers.image.url": "https://www.tiot.jp/",
+          "org.opencontainers.image.vendor": "TI Tokyo",
+          "org.opencontainers.image.version": "3.4.0",
+          "org.openriak.image.tag": "tiotjp/openriak-kv:3.4.0-amazon-linux-2023-otp24",
+          "org.openriak.os.name": "amazon-linux",
+          "org.openriak.os.release": "2023",
+          "org.openriak.os.version": "2023",
+          "org.openriak.otp.version": "24"
+        },
+        "status": "passed",
+        "timezone": "Asia/Tokyo",
+        "uid": 19001
+      }
+    },
+    "configuration": {
+      "settings": {
+        "anti_entropy": "passive",
+        "listener.http.internal": "0.0.0.0:8098",
+        "listener.protobuf.internal": "0.0.0.0:8087",
+        "logger.max_file_size": "2MB",
+        "logger.max_files": "7",
+        "nodename": "openriak-kv@node-01.cluster-a.openriak",
+        "ring_size": "8",
+        "storage_backend": "leveled",
+        "tictacaae_active": "active",
+        "tictacaae_storeheads": "enabled"
+      },
+      "status": "passed"
+    },
+    "entrypoint_startup": {
+      "required_log_messages": [
+        "startup: starting OpenRiak as a daemon",
+        "startup: BEAM is running and riak ping returned pong",
+        "startup: riak_kv service is up",
+        "startup: transfers complete",
+        "startup: OpenRiak is ready",
+        "monitor: BEAM is running"
+      ],
+      "status": "passed"
+    },
+    "graceful_shutdown": {
+      "required_log_messages": [
+        "shutdown: received SIGTERM",
+        "shutdown: requesting OpenRiak stop",
+        "shutdown: BEAM stopped; container is exiting"
+      ],
+      "signal": "SIGTERM",
+      "status": "passed"
+    },
+    "healthcheck": {
+      "checks": [
+        "beam.smp",
+        "riak ping == pong"
+      ],
+      "docker_status": "healthy",
+      "status": "passed"
+    },
+    "http_ping": {
+      "request": "GET /ping",
+      "response": "OK",
+      "status": "passed",
+      "status_code": 200
+    },
+    "populated_volumes": {
+      "config": [
+        "advanced.config",
+        "riak.conf"
+      ],
+      "data": [
+        "cluster_meta",
+        "generated.conf",
+        "kv_eraser",
+        "kv_reader",
+        "kv_reaper",
+        "kv_replrtqsrc",
+        "kv_vnode",
+        "leveled",
+        "riak_repl",
+        "ring",
+        "setup",
+        "sys.config",
+        "tictac_aae",
+        "vm.args"
+      ],
+      "logs": [
+        "console.log",
+        "erlang.log.1",
+        "run_erl.log"
+      ],
+      "status": "passed"
+    },
+    "preserved_configuration": {
+      "sha256": "3df5a3614dd7ca9f22054c2d2189abc4b32b86c6227454e8d030208133f04281",
+      "status": "passed"
+    },
+    "preserved_cookie": {
+      "configuration_cookie": "openriak-1c622871f655191fb447df02880c561e",
+      "status": "passed"
+    },
+    "riak_start": {
+      "status": "passed"
+    },
+    "runtime_options": {
+      "docker_logging": {
+        "Config": {
+          "max-file": "3",
+          "max-size": "10m"
+        },
+        "Type": "json-file"
+      },
+      "gid": 19002,
+      "labels": {
+        "com.docker.compose.config-hash": "7bbbed7ea0ab83bef5259e2fb89c53fd1e36b8e666570f78c560b17e95ce9804",
+        "com.docker.compose.container-number": "1",
+        "com.docker.compose.depends_on": "",
+        "com.docker.compose.image": "sha256:7236c61afc4cc13d7043f9b93ef75d48999b375f0526e406957458376899abd8",
+        "com.docker.compose.oneoff": "False",
+        "com.docker.compose.project": "openriak-kv-340-amazon-linux-2023-otp24-node",
+        "com.docker.compose.project.config_files": "/tmp/openriak-docker-3.4.0-amazon-linux-2023-otp24-hm_5dthb/compose.single.test.yaml",
+        "com.docker.compose.project.environment_file": "/tmp/openriak-docker-3.4.0-amazon-linux-2023-otp24-hm_5dthb/.env.single",
+        "com.docker.compose.project.working_dir": "/tmp/openriak-docker-3.4.0-amazon-linux-2023-otp24-hm_5dthb",
+        "com.docker.compose.service": "node",
+        "com.docker.compose.version": "5.4.0",
+        "desktop.docker.io/wsl-distro": "Ubuntu",
+        "org.opencontainers.image.description": "Package-backed OpenRiak KV with single-node and cluster startup support",
+        "org.opencontainers.image.source": "https://github.com/TI-Tokyo/openriak-docs",
+        "org.opencontainers.image.title": "OpenRiak KV",
+        "org.opencontainers.image.url": "https://www.tiot.jp/",
+        "org.opencontainers.image.vendor": "TI Tokyo",
+        "org.opencontainers.image.version": "3.4.0",
+        "org.openriak.image.tag": "tiotjp/openriak-kv:3.4.0-amazon-linux-2023-otp24",
+        "org.openriak.os.name": "amazon-linux",
+        "org.openriak.os.release": "2023",
+        "org.openriak.os.version": "2023",
+        "org.openriak.otp.version": "24"
+      },
+      "status": "passed",
+      "timezone": "Asia/Tokyo",
+      "uid": 19001
+    },
+    "volume_initialization": {
+      "config_populated": true,
+      "data_directory_created": true,
+      "logs_directory_created": true,
+      "status": "passed"
+    }
+  },
+  "volumes": {
+    "config": {
+      "container": "/etc/riak",
+      "default": "./openriak-kv-3.4.0-amazon-linux-2023-otp24-node/config"
+    },
+    "data": {
+      "container": "/var/lib/riak",
+      "default": "./openriak-kv-3.4.0-amazon-linux-2023-otp24-node/data"
+    },
+    "logs": {
+      "container": "/var/log/riak",
+      "default": "./openriak-kv-3.4.0-amazon-linux-2023-otp24-node/logs"
+    }
+  }
+}

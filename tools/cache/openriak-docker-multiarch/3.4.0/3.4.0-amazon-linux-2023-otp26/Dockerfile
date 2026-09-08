@@ -17,34 +17,30 @@ RUN --mount=type=bind,from=download-amd64,target=/opt/openriak-package,ro <<'OPE
 set -eu
 # Copy, install, and remove in this one layer; only the installed files persist.
 cp /opt/openriak-package/riak-3.4.0.OTP26-1.amzn2023.x86_64.rpm /tmp/riak-3.4.0.OTP26-1.amzn2023.x86_64.rpm
+# Use the newest Amazon Linux 2023 repository snapshot during this tested build.
+# Update installed OS packages before installing the OpenRiak KV package.
 if command -v dnf >/dev/null 2>&1
 then
-    dnf install -y bash ca-certificates glibc hostname libgcc libstdc++ ncurses-libs openssl-libs pam procps-ng shadow-utils sudo util-linux zlib tzdata
-    if ! command -v curl >/dev/null 2>&1
-    then
-        dnf install -y curl
-    fi
+    dnf upgrade --refresh -y --releasever=latest
+    dnf install -y --releasever=latest bash ca-certificates glibc hostname libgcc libstdc++ ncurses-libs openssl-libs pam procps-ng shadow-utils sudo util-linux zlib tzdata
     dnf clean all
 elif command -v microdnf >/dev/null 2>&1
 then
+    microdnf upgrade --refresh -y
     microdnf install -y dnf
     dnf install -y bash ca-certificates glibc hostname libgcc libstdc++ ncurses-libs openssl-libs pam procps-ng shadow-utils sudo util-linux zlib tzdata
-    if ! command -v curl >/dev/null 2>&1
-    then
-        dnf install -y curl
-    fi
     dnf clean all
 elif command -v yum >/dev/null 2>&1
 then
+    yum clean expire-cache
+    yum update -y
     yum install -y bash ca-certificates glibc hostname libgcc libstdc++ ncurses-libs openssl-libs pam procps-ng shadow-utils sudo util-linux zlib tzdata
-    if ! command -v curl >/dev/null 2>&1
-    then
-        yum install -y curl
-    fi
     yum clean all
 elif command -v zypper >/dev/null 2>&1
 then
-    zypper --non-interactive install --no-recommends bash ca-certificates curl gawk glibc hostname libgcc_s1 libstdc++6 libncurses6 libopenssl1_1 pam procps shadow sudo util-linux libz1 timezone
+    zypper --non-interactive refresh
+    zypper --non-interactive update --no-recommends
+    zypper --non-interactive install --no-recommends bash ca-certificates gawk glibc hostname libgcc_s1 libstdc++6 libncurses6 libopenssl1_1 pam procps shadow sudo util-linux libz1 timezone
     zypper clean --all
 else
     echo 'No supported RPM package manager found' >&2
@@ -91,34 +87,30 @@ RUN --mount=type=bind,from=download-arm64,target=/opt/openriak-package,ro <<'OPE
 set -eu
 # Copy, install, and remove in this one layer; only the installed files persist.
 cp /opt/openriak-package/riak-3.4.0.OTP26-1.amzn2023.aarch64.rpm /tmp/riak-3.4.0.OTP26-1.amzn2023.aarch64.rpm
+# Use the newest Amazon Linux 2023 repository snapshot during this tested build.
+# Update installed OS packages before installing the OpenRiak KV package.
 if command -v dnf >/dev/null 2>&1
 then
-    dnf install -y bash ca-certificates glibc hostname libgcc libstdc++ ncurses-libs openssl-libs pam procps-ng shadow-utils sudo util-linux zlib tzdata
-    if ! command -v curl >/dev/null 2>&1
-    then
-        dnf install -y curl
-    fi
+    dnf upgrade --refresh -y --releasever=latest
+    dnf install -y --releasever=latest bash ca-certificates glibc hostname libgcc libstdc++ ncurses-libs openssl-libs pam procps-ng shadow-utils sudo util-linux zlib tzdata
     dnf clean all
 elif command -v microdnf >/dev/null 2>&1
 then
+    microdnf upgrade --refresh -y
     microdnf install -y dnf
     dnf install -y bash ca-certificates glibc hostname libgcc libstdc++ ncurses-libs openssl-libs pam procps-ng shadow-utils sudo util-linux zlib tzdata
-    if ! command -v curl >/dev/null 2>&1
-    then
-        dnf install -y curl
-    fi
     dnf clean all
 elif command -v yum >/dev/null 2>&1
 then
+    yum clean expire-cache
+    yum update -y
     yum install -y bash ca-certificates glibc hostname libgcc libstdc++ ncurses-libs openssl-libs pam procps-ng shadow-utils sudo util-linux zlib tzdata
-    if ! command -v curl >/dev/null 2>&1
-    then
-        yum install -y curl
-    fi
     yum clean all
 elif command -v zypper >/dev/null 2>&1
 then
-    zypper --non-interactive install --no-recommends bash ca-certificates curl gawk glibc hostname libgcc_s1 libstdc++6 libncurses6 libopenssl1_1 pam procps shadow sudo util-linux libz1 timezone
+    zypper --non-interactive refresh
+    zypper --non-interactive update --no-recommends
+    zypper --non-interactive install --no-recommends bash ca-certificates gawk glibc hostname libgcc_s1 libstdc++6 libncurses6 libopenssl1_1 pam procps shadow sudo util-linux libz1 timezone
     zypper clean --all
 else
     echo 'No supported RPM package manager found' >&2
@@ -188,7 +180,7 @@ ENV RIAK_NODE_HOST=""
 # Explicit nodename; empty derives openriak-kv@<hostname>.
 ENV RIAK_NODE_NAME=""
 # Initial cookie; existing riak.conf wins and new followers adopt the coordinator cookie.
-ENV RIAK_DISTRIBUTED_COOKIE="openriak-aa90bdc0b40fbc98414992c263d19e00"
+ENV RIAK_DISTRIBUTED_COOKIE="openriak-4a29e939597c8ffb39802ea7f392d091"
 # Partition count for a new ring; do not change on an existing cluster.
 ENV RIAK_RING_SIZE="8"
 # Storage backend used by OpenRiak KV.

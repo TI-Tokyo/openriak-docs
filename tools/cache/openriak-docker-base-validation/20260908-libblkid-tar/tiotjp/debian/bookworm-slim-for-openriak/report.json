@@ -1,0 +1,51 @@
+{
+  "base_images": {
+    "linux/amd64": {
+      "pinned": "debian:bookworm-slim@sha256:88200866dfff7ea7f5cbcb6ec7c8a701889efe6fe859fe64d6990e4b07ea4171",
+      "requested": "debian:bookworm-slim"
+    }
+  },
+  "dockerfile_sha256": "c8b15fbbc1f23a9b7134b3f35cc4645400e59492d1bbf1c42216d9f898d8a115",
+  "error": "Command failed with exit code 1: /usr/bin/docker buildx build --builder openriak-kv-multiarch --pull=false --platform linux/amd64 --load --tag tiotjp/debian:test-20260908t105629.192930z-amd64 /home/peter/GitHub/TI-Tokyo/openriak-docs/tools/cache/openriak-docker-base-validation/20260908-libblkid-tar/tiotjp/debian/bookworm-slim-for-openriak/runs/20260908T105629.192930Z (see /home/peter/GitHub/TI-Tokyo/openriak-docs/tools/cache/openriak-docker-base-validation/20260908-libblkid-tar/tiotjp/debian/bookworm-slim-for-openriak/runs/20260908T105629.192930Z/logs/build-amd64.log): ERROR: failed to build: failed to solve: process \"/bin/sh -c set -eu\\ncd /build/util-linux-2.38.1\\ndpkg-source --before-build .\\nbuild=$(find obj-* -maxdepth 0 -type d)\\ntest -n \\\"$build\\\"\\nmake -C \\\"$build\\\" -j4 check-programs > /build/libblkid-check-programs.log 2>&1\\ntests/run.sh --srcdir=\\\"$PWD\\\" --builddir=\\\"$PWD/$build\\\" --parallel=4 blkid > /build/libblkid-tests.log 2>&1\\ncat /build/libblkid-tests.log\\ncat > openriak-partition-test.c <<'OPENRIAK_PARTITION_TEST'\\n\\n#include \\\"libblkid/src/partitions/partitions.c\\\"\\n#include <assert.h>\\nint main(void)\\n{\\n    blkid_partlist ls = calloc(1, sizeof(*ls));\\n    assert(ls);\\n    INIT_LIST_HEAD(&ls->l_tabs);\\n    for (int round = 0; round < 3; round++) {\\n        blkid_parttable table = blkid_partlist_new_parttable(ls, \\\"dos\\\", 0);\\n        assert(table);\\n        blkid_partition parent = blkid_partlist_add_partition(ls, table, 2048, 65536);\\n        assert(parent);\\n        ls->next_parent = parent;\\n        blkid_parttable child = blkid_partlist_new_parttable(ls, \\\"bsd\\\", 2048);\\n        assert(child);\\n        for (int i = 0; i < 4096; i++) {\\n            assert(blkid_partlist_add_partition(ls, child, 2048 + i, 1));\\n            assert(blkid_partlist_get_partition(ls, 0) == parent);\\n            assert(child->parent == parent);\\n            assert(blkid_partition_get_start(parent) == 2048);\\n        }\\n        reset_partlist(ls);\\n        assert(ls->nparts == 0);\\n    }\\n    partitions_free_data(NULL, ls);\\n    puts(\\\"CVE-2026-13595: nested partition pointers and reset passed\\\");\\n    return 0;\\n}\\nOPENRIAK_PARTITION_TEST\\ncc -g -O1 -DHAVE_CONFIG_H -I\\\"$build\\\" -I. -Iinclude -Ilibblkid/src openriak-partition-test.c \\\"$build/.libs/libblkid.a\\\" \\\"$build/libcommon.a\\\" -o /build/partition-test\\nvalgrind --error-exitcode=99 --leak-check=full --errors-for-leak-kinds=all /build/partition-test > /build/libblkid-regression.log 2>&1\\ncat /build/libblkid-regression.log\\n# Verify the regression rejects the unpatched implementation as well.\\ncp libblkid/src/partitions/partitions.c /build/partitions.patched.c\\npatch --reverse --fuzz=0 -p1 < debian/patches/openriak-CVE-2026-13595.patch\\ncc -g -O1 -DHAVE_CONFIG_H -I\\\"$build\\\" -I. -Iinclude -Ilibblkid/src openriak-partition-test.c \\\"$build/.libs/libblkid.a\\\" \\\"$build/libcommon.a\\\" -o /build/partition-unpatched\\nif valgrind --error-exitcode=99 /build/partition-unpatched > /build/libblkid-negative-control.log 2>&1\\nthen\\n    echo 'ERROR: regression did not reject vulnerable source' >&2\\n    exit 1\\nfi\\ncp /build/partitions.patched.c libblkid/src/partitions/partitions.c\\nmkdir /packages\\ncp /build/libblkid1_2.38.1-5+deb12u3+openriak1_*.deb /packages/\\ncp /build/libblkid-*.log /packages/\\nsha256sum /packages/*.deb > /packages/SHA256SUMS\\n\" did not complete successfully: exit code: 1",
+  "finished_at": "2026-09-08T10:58:51Z",
+  "identity": {
+    "namespace": "tiotjp",
+    "source": "https://github.com/TI-Tokyo/openriak-docs",
+    "url": "https://www.tiot.jp/",
+    "vendor": "TI Tokyo"
+  },
+  "image": "tiotjp/debian:bookworm-slim-for-openriak",
+  "inputs": {
+    "common_renderer_sha256": "a481b58a2e2e2803a41b26848c25cc31b0b906654d3b5dcb651f079cbf54c401",
+    "identity": {
+      "namespace": "tiotjp",
+      "source": "https://github.com/TI-Tokyo/openriak-docs",
+      "url": "https://www.tiot.jp/",
+      "vendor": "TI Tokyo"
+    },
+    "openssl_renderer_sha256": "b60a1da717ee3e74cd6a3cacaec3ea38c4c9c375300818c06a7b1095d56ea56c",
+    "platforms": [
+      "linux/amd64"
+    ],
+    "renderer_sha256": "debdb45ea74caf4f5d96ae5dc8ca1be37f6a22538910e863e3540239d26d0153",
+    "tags": [
+      "tiotjp/debian:bookworm-slim-for-openriak"
+    ],
+    "upstreams": {
+      "linux/amd64": "debian:bookworm-slim"
+    }
+  },
+  "pid": 1689056,
+  "platforms": [
+    "linux/amd64"
+  ],
+  "product": "openriak-base",
+  "run_id": "20260908T105629.192930Z",
+  "schema_version": 1,
+  "started_at": "2026-09-08T10:56:29Z",
+  "status": "failed",
+  "tags": [
+    "tiotjp/debian:bookworm-slim-for-openriak"
+  ],
+  "tests": {}
+}

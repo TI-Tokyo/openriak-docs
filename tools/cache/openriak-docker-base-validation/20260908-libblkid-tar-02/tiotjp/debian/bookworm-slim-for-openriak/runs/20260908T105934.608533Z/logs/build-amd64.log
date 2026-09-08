@@ -1,0 +1,321 @@
+$ /usr/bin/docker buildx build --builder openriak-kv-multiarch --pull=false --platform linux/amd64 --load --tag tiotjp/debian:test-20260908t105934.608533z-amd64 /home/peter/GitHub/TI-Tokyo/openriak-docs/tools/cache/openriak-docker-base-validation/20260908-libblkid-tar-02/tiotjp/debian/bookworm-slim-for-openriak/runs/20260908T105934.608533Z
+started: 2026-09-08T10:59:37Z
+exit_code: 1
+#0 building with "openriak-kv-multiarch" instance using docker-container driver
+
+#1 [internal] load build definition from Dockerfile
+#1 transferring dockerfile: 15.84kB done
+#1 DONE 0.0s
+
+#2 resolve image config for docker-image://docker.io/docker/dockerfile:1.7
+#2 ...
+
+#3 [auth] docker/dockerfile:pull token for registry-1.docker.io
+#3 DONE 0.0s
+
+#2 resolve image config for docker-image://docker.io/docker/dockerfile:1.7
+#2 DONE 1.1s
+
+#4 docker-image://docker.io/docker/dockerfile:1.7@sha256:a57df69d0ea827fb7266491f2813635de6f17269be881f696fbfdf2d83dda33e
+#4 resolve docker.io/docker/dockerfile:1.7@sha256:a57df69d0ea827fb7266491f2813635de6f17269be881f696fbfdf2d83dda33e 0.0s done
+#4 CACHED
+
+#5 [internal] load metadata for docker.io/library/debian:bookworm-slim@sha256:88200866dfff7ea7f5cbcb6ec7c8a701889efe6fe859fe64d6990e4b07ea4171
+#5 ...
+
+#6 [auth] library/debian:pull token for registry-1.docker.io
+#6 DONE 0.0s
+
+#5 [internal] load metadata for docker.io/library/debian:bookworm-slim@sha256:88200866dfff7ea7f5cbcb6ec7c8a701889efe6fe859fe64d6990e4b07ea4171
+#5 DONE 0.6s
+
+#7 [internal] load .dockerignore
+#7 transferring context: 42B done
+#7 DONE 0.0s
+
+#8 [libblkid-build-amd64 2/7] ADD --checksum=sha256:60492a19b44e6cf9a3ddff68325b333b8b52b6c59ce3ebd6a0ecaa4c5117e84f https://deb.debian.org/debian/pool/main/u/util-linux/util-linux_2.38.1.orig.tar.xz /sources/util-linux.tar.xz
+#8 DONE 0.0s
+
+#9 [libblkid-build-amd64 3/7] ADD --checksum=sha256:d46b85313f536fc4831a69ba3fa2c8160450b5b26c7c5dfafce4f078fe4f205c https://deb.debian.org/debian/pool/main/u/util-linux/util-linux_2.38.1-5+deb12u3.debian.tar.xz /sources/debian.tar.xz
+#9 DONE 0.0s
+
+#10 [openssl-build-amd64 3/6] ADD --checksum=sha256:7279efe85c359500c95aa88347e3395dd303d7566e2bb818d80d96e0c3bb9629 https://deb.debian.org/debian/pool/main/o/openssl/openssl_3.0.20-1~deb12u2.debian.tar.xz /sources/debian.tar.xz
+#10 DONE 0.0s
+
+#11 [openssl-build-amd64 2/6] ADD --checksum=sha256:67ebca7e50d17383028045486653492195b83db95f8558709701bb47b5c1ef81 https://github.com/openssl/openssl/releases/download/openssl-3.0.22/openssl-3.0.22.tar.gz /sources/openssl.tar.gz
+#11 DONE 0.0s
+
+#12 [libblkid-build-amd64 4/7] ADD --checksum=sha256:935ae9372061b9988c58297d1d5b12aa04cbc01e538e8606d0103b401f68de1c https://github.com/util-linux/util-linux/commit/132d9c8aa15a8efd0a23d8ca7ed8b98f365e84fa.patch /sources/upstream.patch
+#12 DONE 0.0s
+
+#13 [openssl-build-amd64 1/6] FROM docker.io/library/debian:bookworm-slim@sha256:88200866dfff7ea7f5cbcb6ec7c8a701889efe6fe859fe64d6990e4b07ea4171
+#13 resolve docker.io/library/debian:bookworm-slim@sha256:88200866dfff7ea7f5cbcb6ec7c8a701889efe6fe859fe64d6990e4b07ea4171 0.0s done
+#13 CACHED
+
+#14 [libblkid-build-amd64 4/7] ADD --checksum=sha256:935ae9372061b9988c58297d1d5b12aa04cbc01e538e8606d0103b401f68de1c https://github.com/util-linux/util-linux/commit/132d9c8aa15a8efd0a23d8ca7ed8b98f365e84fa.patch /sources/upstream.patch
+#14 CACHED
+
+#15 [libblkid-build-amd64 3/7] ADD --checksum=sha256:d46b85313f536fc4831a69ba3fa2c8160450b5b26c7c5dfafce4f078fe4f205c https://deb.debian.org/debian/pool/main/u/util-linux/util-linux_2.38.1-5+deb12u3.debian.tar.xz /sources/debian.tar.xz
+#15 CACHED
+
+#16 [libblkid-build-amd64 2/7] ADD --checksum=sha256:60492a19b44e6cf9a3ddff68325b333b8b52b6c59ce3ebd6a0ecaa4c5117e84f https://deb.debian.org/debian/pool/main/u/util-linux/util-linux_2.38.1.orig.tar.xz /sources/util-linux.tar.xz
+#16 CACHED
+
+#17 [libblkid-build-amd64 5/7] RUN <<'OPENRIAK_LIBBLKID_SOURCE' (set -eu...)
+#17 CACHED
+
+#18 [openssl-build-amd64 4/6] RUN <<'OPENRIAK_OPENSSL_BUILD' (set -eu...)
+#18 CACHED
+
+#19 [openssl-build-amd64 5/6] RUN --network=none <<'OPENRIAK_OPENSSL_PACKAGES' (set -eu...)
+#19 CACHED
+
+#20 [openssl-build-amd64 3/6] ADD --checksum=sha256:7279efe85c359500c95aa88347e3395dd303d7566e2bb818d80d96e0c3bb9629 https://deb.debian.org/debian/pool/main/o/openssl/openssl_3.0.20-1~deb12u2.debian.tar.xz /sources/debian.tar.xz
+#20 CACHED
+
+#21 [openssl-build-amd64 2/6] ADD --checksum=sha256:67ebca7e50d17383028045486653492195b83db95f8558709701bb47b5c1ef81 https://github.com/openssl/openssl/releases/download/openssl-3.0.22/openssl-3.0.22.tar.gz /sources/openssl.tar.gz
+#21 CACHED
+
+#22 [libblkid-build-amd64 6/7] RUN --network=none <<'OPENRIAK_LIBBLKID_PACKAGES' (set -eu...)
+#22 CACHED
+
+#23 [openssl-build-amd64 6/6] RUN --network=none <<'OPENRIAK_OPENSSL_TESTED_PACKAGES' (set -eu...)
+#23 CACHED
+
+#24 [libblkid-build-amd64 7/7] RUN --network=none <<'OPENRIAK_LIBBLKID_TESTS' (set -eu...)
+#24 0.181 dpkg-source: info: using patch list from debian/patches/series
+#24 0.181 dpkg-source: info: applying debian/man-getopt-examples.patch
+#24 0.187 dpkg-source: info: applying debian/verbose-tests.patch
+#24 0.195 dpkg-source: info: applying debian/chown-non-deprecated.patch
+#24 0.198 dpkg-source: info: applying debian/hardlink-tests-known-failed.patch
+#24 0.205 dpkg-source: info: applying debian/lsfd-usrbin.patch
+#24 0.209 dpkg-source: info: applying debian/sensible-pager.patch
+#24 0.215 dpkg-source: info: applying upstream/0001-lib-path-ul_path_cpuparse-fix-parsing-of-empty-sysfs.patch
+#24 0.220 dpkg-source: info: applying upstream/0002-libuuid-Implement-continuous-clock-handling-for-time.patch
+#24 0.235 dpkg-source: info: applying upstream/0003-uuidd-fix-random-UUIDs.patch
+#24 0.237 dpkg-source: info: applying upstream/0004-libuuid-check-clock-value-from-LIBUUID_CLOCK_FILE.patch
+#24 0.240 dpkg-source: info: applying upstream/0005-lsblk-fix-endless-loop-if-device-specified-more-than.patch
+#24 0.244 dpkg-source: info: applying upstream/0006-lib-procfs-add-function-to-parse-proc-stat.patch
+#24 0.252 dpkg-source: info: applying upstream/0007-kill-Support-mandating-the-presence-of-a-userspace-s.patch
+#24 0.261 dpkg-source: info: applying upstream/0008-fdisk-fix-output-option-parsing.patch
+#24 0.267 dpkg-source: info: applying upstream/0009-fdisk-make-it-more-obvious-that-DOS-means-MBR.patch
+#24 0.276 dpkg-source: info: applying upstream/0010-libfdisk-make-scripts-portable-between-different-sec.patch
+#24 0.283 dpkg-source: info: applying upstream/0011-sfdisk-improve-code-readability-for-coverity-scan.patch
+#24 0.288 dpkg-source: info: applying upstream/0012-libfdisk-gpt-don-t-ignore-fsync-errors.patch
+#24 0.293 dpkg-source: info: applying upstream/0013-sfdisk-inform-about-failed-fsync-coverity-scan.patch
+#24 0.297 dpkg-source: info: applying upstream/0014-lscpu-Add-Snapdragon-parts.patch
+#24 0.302 dpkg-source: info: applying upstream/0015-Add-Makalu-Makalu-ELP-A715-X3.patch
+#24 0.304 dpkg-source: info: applying upstream/0016-Adding-Apple-core-names-distinguish-by-SoC-SiP-name.patch
+#24 0.306 dpkg-source: info: applying upstream/0017-Fix-formatting.patch
+#24 0.308 dpkg-source: info: applying upstream/0018-lscpu-make-Apple-part-names-human-friendly.patch
+#24 0.311 dpkg-source: info: applying upstream/0019-lscpu-add-missing-Apple-parts.patch
+#24 0.314 dpkg-source: info: applying upstream/0020-lscpu-arm-don-t-use-space-in-names.patch
+#24 0.317 dpkg-source: info: applying upstream/0021-Remove-closing-braces-in-Apple-cores-names.patch
+#24 0.320 dpkg-source: info: applying upstream/0022-lscpu-Even-more-Arm-part-numbers.patch
+#24 0.322 dpkg-source: info: applying upstream/0023-lscpu-Add-Kryo-3XX-Gold-core.patch
+#24 0.324 dpkg-source: info: applying upstream/0024-fsck-Processes-may-kill-other-processes.patch
+#24 0.331 dpkg-source: info: applying upstream/0025-libblkid-ntfs-avoid-UB-in-signed-shift.patch
+#24 0.337 dpkg-source: info: applying upstream/0026-libblkid-iso9660-allocate-enough-space-for-UTF16-dec.patch
+#24 0.342 dpkg-source: info: applying upstream/0027-lscpu-Add-Neoverse-V2-Cortex-R82.patch
+#24 0.345 dpkg-source: info: applying upstream/0028-lscpu-Add-2023-Cortex.patch
+#24 0.348 dpkg-source: info: applying upstream/0029-lscpu-Add-Neoverse-V3-N3.patch
+#24 0.352 dpkg-source: info: applying upstream/PATCH-rfkill-man-List-options-for-supported-device-types.patch
+#24 0.357 dpkg-source: info: applying upstream/PATCH-1-2-lib-pty-Put-master-PTY-into-non-blocking-mode-a.patch
+#24 0.365 dpkg-source: info: applying upstream/PATCH-2-2-lib-pty-minor-cleanups.patch
+#24 0.369 dpkg-source: info: applying upstream/PATCH-script-abort-if-unused-arguments-are-given.patch
+#24 0.375 dpkg-source: info: applying upstream/logger-always-update-header-when-read-from-stdin.patch
+#24 0.381 dpkg-source: info: applying upstream/write-correctly-handle-wide-characters.patch
+#24 0.391 dpkg-source: info: applying upstream/wall-convert-homebrew-buffering-to-open_memstream.patch
+#24 0.396 dpkg-source: info: applying upstream/wall-use-fputs_careful.patch
+#24 0.399 dpkg-source: info: applying upstream/wall-fix-calloc-cal-Werror-calloc-transposed-args.patch
+#24 0.401 dpkg-source: info: applying upstream/wall-fix-escape-sequence-Injection-CVE-2024-28085.patch
+#24 0.404 dpkg-source: info: applying upstream/autotools-add-disable-makeinstall-tty-setgid.patch
+#24 0.413 dpkg-source: info: applying upstream/meson-add-D-tty-setgid-false-true.patch
+#24 0.421 dpkg-source: info: applying upstream/mesg-remove-ability-to-compile-with-fchmod-S_IWOTH.patch
+#24 0.433 dpkg-source: info: applying openriak-CVE-2026-13595.patch
+#24 36.30 
+#24 36.30 -------------------- util-linux regression tests --------------------
+#24 36.30 
+#24 36.30                     For development purpose only.                    
+#24 36.30                  Don't execute on production system!                 
+#24 36.30 
+#24 36.30        kernel: 6.18.33.2-microsoft-standard-WSL2    
+#24 36.30 
+#24 36.30       options: --srcdir=/build/util-linux-2.38.1 \
+#24 36.30                --builddir=/build/util-linux-2.38.1/.
+#24 36.30 
+#24 36.30               Executing the tests in parallel (4 jobs)    
+#24 36.30 
+#24 36.30 /dev/mapper/control: open failed: Operation not permitted
+#24 36.30 Failure to communicate with kernel device-mapper driver.
+#24 36.30 Check that device-mapper is available in the kernel.
+#24 36.30 Incompatible libdevmapper 1.02.185 (2022-05-18) and kernel driver (unknown version).
+#24 36.30 Command failed.
+#24 36.30         blkid: MD raid0 (whole-disks)                        ... SKIPPED (no loop-device support)
+#24 36.30 /build/util-linux-2.38.1/tests/ts/blkid/dm-err: line 47: udevadm: command not found
+#24 36.30 /dev/mapper/control: open failed: Operation not permitted
+#24 36.30 Failure to communicate with kernel device-mapper driver.
+#24 36.30 Check that device-mapper is available in the kernel.
+#24 36.30 Incompatible libdevmapper 1.02.185 (2022-05-18) and kernel driver (unknown version).
+#24 36.30 Command failed.
+#24 36.30         blkid: DM error                                      ... OK
+#24 36.30         blkid: superblocks probing: [01] adaptec-raid        ... OK
+#24 36.30         blkid: partitions probing: [01] atari-primary        ... OK
+#24 36.30         blkid: MD raid1 (last partition)                     ... SKIPPED (missing in PATH: mdadm)
+#24 36.30         blkid: superblocks probing: [02] bcache-B            ... OK
+#24 36.30         blkid: MD raid1 (whole-disks)                        ... SKIPPED (no loop-device support)
+#24 36.30         blkid: partitions probing: [02] atari-xgm            ... OK
+#24 36.30         blkid: partitions probing: [03] bsd                  ... OK
+#24 36.30         blkid: partitions probing: [04] dos+bsd              ... OK
+#24 36.30         blkid: superblocks probing: [03] bcache-C            ... OK
+#24 36.30         blkid: partitions probing: [05] gpt                  ... OK
+#24 36.30         blkid: superblocks probing: [04] befs                ... OK
+#24 36.30         blkid: superblocks probing: [05] bfs                 ... OK
+#24 36.30         blkid: partitions probing: [06] sgi                  ... OK
+#24 36.30         blkid: superblocks probing: [06] bluestore           ... OK
+#24 36.30         blkid: superblocks probing: [07] cramfs              ... OK
+#24 36.30         blkid: partitions probing: [07] sun                  ... OK
+#24 36.30         blkid: partitions probing                            ... OK (all 7 sub-tests PASSED)
+#24 36.30         blkid: superblocks probing: [08] ddf-raid            ... OK
+#24 36.30         blkid: superblocks probing: [09] drbd-v08            ... OK
+#24 36.30         blkid: superblocks probing: [10] drbd-v09            ... OK
+#24 36.30         blkid: superblocks probing: [11] drbdmanage-control-volume ... OK
+#24 36.30         blkid: superblocks probing: [12] erofs               ... OK
+#24 36.30         blkid: superblocks probing: [13] exfat               ... OK
+#24 36.30         blkid: superblocks probing: [14] ext2                ... OK
+#24 36.30         blkid: superblocks probing: [15] ext3                ... OK
+#24 36.30         blkid: superblocks probing: [16] f2fs                ... OK
+#24 36.30         blkid: superblocks probing: [17] fat                 ... OK
+#24 36.30         blkid: superblocks probing: [18] fat16_noheads       ... OK
+#24 36.30         blkid: superblocks probing: [19] fat32_cp850_O_tilde ... OK
+#24 36.30         blkid: superblocks probing: [20] fat32_label_64MB    ... OK
+#24 36.30         blkid: superblocks probing: [21] fat32_mkdosfs_label1 ... OK
+#24 36.30         blkid: superblocks probing: [22] fat32_mkdosfs_label1_dosfslabel_NO_NAME ... OK
+#24 36.30         blkid: superblocks probing: [23] fat32_mkdosfs_label1_dosfslabel_empty ... OK
+#24 36.30         blkid: superblocks probing: [24] fat32_mkdosfs_label1_dosfslabel_label2 ... OK
+#24 36.30         blkid: superblocks probing: [25] fat32_mkdosfs_label1_mlabel_NO_NAME ... OK
+#24 36.30         blkid: superblocks probing: [26] fat32_mkdosfs_label1_mlabel_erase ... OK
+#24 36.30         blkid: superblocks probing: [27] fat32_mkdosfs_label1_xp_erase ... OK
+#24 36.30         blkid: superblocks probing: [28] fat32_mkdosfs_label1_xp_label2 ... OK
+#24 36.30         blkid: superblocks probing: [29] fat32_mkdosfs_none  ... OK
+#24 36.30         blkid: superblocks probing: [30] fat32_mkdosfs_none_dosfslabel_NO_NAME ... OK
+#24 36.30         blkid: superblocks probing: [31] fat32_mkdosfs_none_dosfslabel_label1 ... OK
+#24 36.30         blkid: superblocks probing: [32] fat32_mkdosfs_none_dosfslabel_label1_xp_label2 ... OK
+#24 36.30         blkid: superblocks probing: [33] fat32_mkdosfs_none_xp_label1 ... OK
+#24 36.30         blkid: superblocks probing: [34] fat32_mkdosfs_none_xp_label1_dosfslabel_label2 ... OK
+#24 36.30         blkid: superblocks probing: [35] fat32_xp_label1     ... OK
+#24 36.30         blkid: superblocks probing: [36] fat32_xp_none       ... OK
+#24 36.30         blkid: superblocks probing: [37] fat32_xp_none_dosfslabel_label1 ... OK
+#24 36.30         blkid: superblocks probing: [38] fat32_xp_none_mlabel_label1 ... OK
+#24 36.30         blkid: superblocks probing: [39] gfs2                ... OK
+#24 36.30         blkid: superblocks probing: [40] hfs                 ... OK
+#24 36.30         blkid: superblocks probing: [41] hfsplus             ... OK
+#24 36.30         blkid: superblocks probing: [42] hpfs                ... OK
+#24 36.30         blkid: superblocks probing: [43] hpt37x-raid         ... OK
+#24 36.30         blkid: superblocks probing: [44] hpt45x-raid         ... OK
+#24 36.30         blkid: superblocks probing: [45] iso-different-iso-joliet-label ... OK
+#24 36.30         blkid: superblocks probing: [46] iso-joliet          ... OK
+#24 36.30         blkid: superblocks probing: [47] iso-multi-genisoimage-0 ... OK
+#24 36.30         blkid: superblocks probing: [48] iso-multi-genisoimage-174 ... OK
+#24 36.30         blkid: superblocks probing: [49] iso-multi-genisoimage-348 ... OK
+#24 36.30         blkid: superblocks probing: [50] iso-rr-joliet       ... OK
+#24 36.30         blkid: superblocks probing: [51] iso-unicode-long-label ... OK
+#24 36.30         blkid: superblocks probing: [52] iso                 ... OK
+#24 36.30         blkid: superblocks probing: [53] isw-raid            ... OK
+#24 36.30         blkid: superblocks probing: [54] jbd                 ... OK
+#24 36.30         blkid: superblocks probing: [55] jfs                 ... OK
+#24 36.30         blkid: superblocks probing: [56] jmicron-raid        ... OK
+#24 36.30         blkid: superblocks probing: [57] lsi-raid            ... OK
+#24 36.30         blkid: superblocks probing: [58] luks1               ... OK
+#24 36.30         blkid: superblocks probing: [59] luks2               ... OK
+#24 36.30         blkid: superblocks probing: [60] lvm2                ... OK
+#24 36.30         blkid: superblocks probing: [61] mdraid              ... OK
+#24 36.30         blkid: superblocks probing: [62] minix-BE            ... OK
+#24 36.30         blkid: superblocks probing: [63] minix-LE            ... OK
+#24 36.30         blkid: superblocks probing: [64] mpool               ... OK
+#24 36.30         blkid: superblocks probing: [65] netware             ... OK
+#24 36.30         blkid: superblocks probing: [66] nilfs2              ... OK
+#24 36.30         blkid: superblocks probing: [67] ntfs                ... OK
+#24 36.30         blkid: superblocks probing: [68] nvidia-raid         ... OK
+#24 36.30         blkid: superblocks probing: [69] ocfs2               ... OK
+#24 36.30         blkid: superblocks probing: [70] promise-raid        ... OK
+#24 36.30         blkid: superblocks probing: [71] reiser3             ... OK
+#24 36.30         blkid: superblocks probing: [72] reiser4             ... OK
+#24 36.30         blkid: superblocks probing: [73] romfs               ... OK
+#24 36.30         blkid: superblocks probing: [74] silicon-raid        ... OK
+#24 36.30         blkid: superblocks probing: [75] small-fat32         ... OK
+#24 36.30         blkid: superblocks probing: [76] swap0               ... OK
+#24 36.30         blkid: superblocks probing: [77] swap1               ... OK
+#24 36.30         blkid: superblocks probing: [78] tuxonice            ... OK
+#24 36.30         blkid: superblocks probing: [79] ubi                 ... OK
+#24 36.30         blkid: superblocks probing: [80] ubifs               ... OK
+#24 36.30         blkid: superblocks probing: [81] udf-bdr-2.60-nero   ... OK
+#24 36.30         blkid: superblocks probing: [82] udf-cd-mkudfiso-20100208 ... OK
+#24 36.30         blkid: superblocks probing: [83] udf-cd-nero-6       ... OK
+#24 36.30         blkid: superblocks probing: [84] udf-hdd-macosx-2.60-4096 ... OK
+#24 36.30         blkid: superblocks probing: [85] udf-hdd-mkudffs-1.0.0-1 ... OK
+#24 36.30         blkid: superblocks probing: [86] udf-hdd-mkudffs-1.0.0-2 ... OK
+#24 36.30         blkid: superblocks probing: [87] udf-hdd-mkudffs-1.3-1 ... OK
+#24 36.30         blkid: superblocks probing: [88] udf-hdd-mkudffs-1.3-2 ... OK
+#24 36.30         blkid: superblocks probing: [89] udf-hdd-mkudffs-1.3-3 ... OK
+#24 36.30         blkid: superblocks probing: [90] udf-hdd-mkudffs-1.3-4 ... OK
+#24 36.30         blkid: superblocks probing: [91] udf-hdd-mkudffs-1.3-5 ... OK
+#24 36.30         blkid: superblocks probing: [92] udf-hdd-mkudffs-1.3-6 ... OK
+#24 36.30         blkid: superblocks probing: [93] udf-hdd-mkudffs-1.3-7 ... OK
+#24 36.30         blkid: superblocks probing: [94] udf-hdd-mkudffs-1.3-8 ... OK
+#24 36.30         blkid: superblocks probing: [95] udf-hdd-mkudffs-2.2 ... OK
+#24 36.30         blkid: superblocks probing: [96] udf-hdd-udfclient-0.7.5 ... OK
+#24 36.30         blkid: superblocks probing: [97] udf-hdd-udfclient-0.7.7 ... OK
+#24 36.30         blkid: superblocks probing: [98] udf-hdd-win7        ... OK
+#24 36.30         blkid: superblocks probing: [99] udf-multi-mkudffs-0 ... OK
+#24 36.30         blkid: superblocks probing: [100] udf-multi-mkudffs-320 ... OK
+#24 36.30         blkid: superblocks probing: [101] udf-multi-mkudffs-640 ... OK
+#24 36.30         blkid: superblocks probing: [102] udf-multi-genisoimage-0 ... OK
+#24 36.30         blkid: superblocks probing: [103] udf-multi-genisoimage-417 ... OK
+#24 36.30         blkid: superblocks probing: [104] udf-multi-genisoimage-834 ... OK
+#24 36.30         blkid: superblocks probing: [105] udf                ... OK
+#24 36.30         blkid: superblocks probing: [106] ufs                ... OK
+#24 36.30         blkid: superblocks probing: [107] vdo                ... OK
+#24 36.30         blkid: superblocks probing: [108] via-raid           ... OK
+#24 36.30         blkid: superblocks probing: [109] vmfs               ... OK
+#24 36.30         blkid: superblocks probing: [110] vmfs_volume        ... OK
+#24 36.30         blkid: superblocks probing: [111] xfs-log            ... OK
+#24 36.30         blkid: superblocks probing: [112] xfs-v5             ... OK
+#24 36.30         blkid: superblocks probing: [113] xfs                ... OK
+#24 36.30         blkid: superblocks probing: [114] zfs                ... OK
+#24 36.30         blkid: superblocks probing: [115] zonefs             ... OK
+#24 36.30         blkid: superblocks probing                           ... OK (all 115 sub-tests PASSED)
+#24 36.30 
+#24 36.30 ---------------------------------------------------------------------
+#24 36.30   All 6 tests PASSED
+#24 36.30 ---------------------------------------------------------------------
+#24 36.32 In file included from ./libblkid/src/blkidP.h:30,
+#24 36.32                  from libblkid/src/partitions/partitions.h:4,
+#24 36.32                  from libblkid/src/partitions/partitions.c:23,
+#24 36.32                  from openriak-partition-test.c:2:
+#24 36.32 include/c.h: In function 'xusleep':
+#24 36.32 include/c.h:402:3: error: #error "System with usleep() or nanosleep() required!"
+#24 36.32   402 | # error "System with usleep() or nanosleep() required!"
+#24 36.32       |   ^~~~~
+#24 36.33 libblkid/src/partitions/partitions.c: In function 'blkid_partitions_probe_partition':
+#24 36.33 libblkid/src/partitions/partitions.c:805:33: warning: implicit declaration of function 'major' [-Wimplicit-function-declaration]
+#24 36.33   805 |                                 major(disk), minor(disk));
+#24 36.33       |                                 ^~~~~
+#24 36.33 libblkid/src/partitions/partitions.c:805:46: warning: implicit declaration of function 'minor' [-Wimplicit-function-declaration]
+#24 36.33   805 |                                 major(disk), minor(disk));
+#24 36.33       |                                              ^~~~~
+#24 ERROR: process "/bin/sh -c set -eu\ncd /build/util-linux-2.38.1\ndpkg-source --before-build .\nbuild=.\nif ! make -C \"$build\" -j4 check-programs > /build/libblkid-check-programs.log 2>&1\nthen\n    tail -100 /build/libblkid-check-programs.log\n    exit 1\nfi\nif ! tests/run.sh --srcdir=\"$PWD\" --builddir=\"$PWD/$build\" --parallel=4 blkid > /build/libblkid-tests.log 2>&1\nthen\n    cat /build/libblkid-tests.log\n    exit 1\nfi\ncat /build/libblkid-tests.log\ncat > openriak-partition-test.c <<'OPENRIAK_PARTITION_TEST'\n\n#include \"libblkid/src/partitions/partitions.c\"\n#include <assert.h>\nint main(void)\n{\n    blkid_partlist ls = calloc(1, sizeof(*ls));\n    assert(ls);\n    INIT_LIST_HEAD(&ls->l_tabs);\n    for (int round = 0; round < 3; round++) {\n        blkid_parttable table = blkid_partlist_new_parttable(ls, \"dos\", 0);\n        assert(table);\n        blkid_partition parent = blkid_partlist_add_partition(ls, table, 2048, 65536);\n        assert(parent);\n        ls->next_parent = parent;\n        blkid_parttable child = blkid_partlist_new_parttable(ls, \"bsd\", 2048);\n        assert(child);\n        for (int i = 0; i < 4096; i++) {\n            assert(blkid_partlist_add_partition(ls, child, 2048 + i, 1));\n            assert(blkid_partlist_get_partition(ls, 0) == parent);\n            assert(child->parent == parent);\n            assert(blkid_partition_get_start(parent) == 2048);\n        }\n        reset_partlist(ls);\n        assert(ls->nparts == 0);\n    }\n    partitions_free_data(NULL, ls);\n    puts(\"CVE-2026-13595: nested partition pointers and reset passed\");\n    return 0;\n}\nOPENRIAK_PARTITION_TEST\ncc -g -O1 -DHAVE_CONFIG_H -I\"$build\" -I\"$build/libblkid/src\" -I. -Iinclude -Ilibblkid/src openriak-partition-test.c \"$build/.libs/libblkid.a\" \"$build/.libs/libcommon.a\" -o /build/partition-test\nvalgrind --error-exitcode=99 --leak-check=full --errors-for-leak-kinds=all /build/partition-test > /build/libblkid-regression.log 2>&1\ncat /build/libblkid-regression.log\n# Verify the regression rejects the unpatched implementation as well.\ncp libblkid/src/partitions/partitions.c /build/partitions.patched.c\npatch --reverse --fuzz=0 -p1 < debian/patches/openriak-CVE-2026-13595.patch\ncc -g -O1 -DHAVE_CONFIG_H -I\"$build\" -I\"$build/libblkid/src\" -I. -Iinclude -Ilibblkid/src openriak-partition-test.c \"$build/.libs/libblkid.a\" \"$build/.libs/libcommon.a\" -o /build/partition-unpatched\nif valgrind --error-exitcode=99 /build/partition-unpatched > /build/libblkid-negative-control.log 2>&1\nthen\n    echo 'ERROR: regression did not reject vulnerable source' >&2\n    exit 1\nfi\ncp /build/partitions.patched.c libblkid/src/partitions/partitions.c\nmkdir /packages\ncp /build/libblkid1_2.38.1-5+deb12u3+openriak1_*.deb /packages/\ncp /build/libblkid-*.log /packages/\nsha256sum /packages/*.deb > /packages/SHA256SUMS\n" did not complete successfully: exit code: 1
+------
+ > [libblkid-build-amd64 7/7] RUN --network=none <<'OPENRIAK_LIBBLKID_TESTS' (set -eu...):
+36.32 include/c.h:402:3: error: #error "System with usleep() or nanosleep() required!"
+36.32   402 | # error "System with usleep() or nanosleep() required!"
+36.32       |   ^~~~~
+36.33 libblkid/src/partitions/partitions.c: In function 'blkid_partitions_probe_partition':
+36.33 libblkid/src/partitions/partitions.c:805:33: warning: implicit declaration of function 'major' [-Wimplicit-function-declaration]
+36.33   805 |                                 major(disk), minor(disk));
+36.33       |                                 ^~~~~
+36.33 libblkid/src/partitions/partitions.c:805:46: warning: implicit declaration of function 'minor' [-Wimplicit-function-declaration]
+36.33   805 |                                 major(disk), minor(disk));
+36.33       |                                              ^~~~~
+------
+ERROR: failed to build: failed to solve: process "/bin/sh -c set -eu\ncd /build/util-linux-2.38.1\ndpkg-source --before-build .\nbuild=.\nif ! make -C \"$build\" -j4 check-programs > /build/libblkid-check-programs.log 2>&1\nthen\n    tail -100 /build/libblkid-check-programs.log\n    exit 1\nfi\nif ! tests/run.sh --srcdir=\"$PWD\" --builddir=\"$PWD/$build\" --parallel=4 blkid > /build/libblkid-tests.log 2>&1\nthen\n    cat /build/libblkid-tests.log\n    exit 1\nfi\ncat /build/libblkid-tests.log\ncat > openriak-partition-test.c <<'OPENRIAK_PARTITION_TEST'\n\n#include \"libblkid/src/partitions/partitions.c\"\n#include <assert.h>\nint main(void)\n{\n    blkid_partlist ls = calloc(1, sizeof(*ls));\n    assert(ls);\n    INIT_LIST_HEAD(&ls->l_tabs);\n    for (int round = 0; round < 3; round++) {\n        blkid_parttable table = blkid_partlist_new_parttable(ls, \"dos\", 0);\n        assert(table);\n        blkid_partition parent = blkid_partlist_add_partition(ls, table, 2048, 65536);\n        assert(parent);\n        ls->next_parent = parent;\n        blkid_parttable child = blkid_partlist_new_parttable(ls, \"bsd\", 2048);\n        assert(child);\n        for (int i = 0; i < 4096; i++) {\n            assert(blkid_partlist_add_partition(ls, child, 2048 + i, 1));\n            assert(blkid_partlist_get_partition(ls, 0) == parent);\n            assert(child->parent == parent);\n            assert(blkid_partition_get_start(parent) == 2048);\n        }\n        reset_partlist(ls);\n        assert(ls->nparts == 0);\n    }\n    partitions_free_data(NULL, ls);\n    puts(\"CVE-2026-13595: nested partition pointers and reset passed\");\n    return 0;\n}\nOPENRIAK_PARTITION_TEST\ncc -g -O1 -DHAVE_CONFIG_H -I\"$build\" -I\"$build/libblkid/src\" -I. -Iinclude -Ilibblkid/src openriak-partition-test.c \"$build/.libs/libblkid.a\" \"$build/.libs/libcommon.a\" -o /build/partition-test\nvalgrind --error-exitcode=99 --leak-check=full --errors-for-leak-kinds=all /build/partition-test > /build/libblkid-regression.log 2>&1\ncat /build/libblkid-regression.log\n# Verify the regression rejects the unpatched implementation as well.\ncp libblkid/src/partitions/partitions.c /build/partitions.patched.c\npatch --reverse --fuzz=0 -p1 < debian/patches/openriak-CVE-2026-13595.patch\ncc -g -O1 -DHAVE_CONFIG_H -I\"$build\" -I\"$build/libblkid/src\" -I. -Iinclude -Ilibblkid/src openriak-partition-test.c \"$build/.libs/libblkid.a\" \"$build/.libs/libcommon.a\" -o /build/partition-unpatched\nif valgrind --error-exitcode=99 /build/partition-unpatched > /build/libblkid-negative-control.log 2>&1\nthen\n    echo 'ERROR: regression did not reject vulnerable source' >&2\n    exit 1\nfi\ncp /build/partitions.patched.c libblkid/src/partitions/partitions.c\nmkdir /packages\ncp /build/libblkid1_2.38.1-5+deb12u3+openriak1_*.deb /packages/\ncp /build/libblkid-*.log /packages/\nsha256sum /packages/*.deb > /packages/SHA256SUMS\n" did not complete successfully: exit code: 1

@@ -62,7 +62,7 @@ class MultiarchTests(unittest.TestCase):
             tool.render_multiarch_dockerfile(self.alpine, {t.platform: {"pinned": "alpine:3.21"} for t in self.alpine}, "cookie", [])
         subprocess.run(["sh", "-n"], input=tool.ENTRYPOINT_SCRIPT, text=True, check=True, capture_output=True)
 
-    def test_packages_are_only_added_to_scratch_and_removed_in_install_layer(self):
+    def test_package_downloads_stay_out_of_runtime_layers(self):
         for group in self.groups:
             bases = {t.platform: {"pinned": "example:1@sha256:" + "a" * 64} for t in group}
             sources = [tool.render_multiarch_dockerfile(group, bases, "cookie", [])]
@@ -70,12 +70,21 @@ class MultiarchTests(unittest.TestCase):
             for source in sources:
                 with self.subTest(image=group[0].image, multiarch="AS final" in source):
                     current_base = None
+                    current_stage = None
                     for line in source.splitlines():
                         if line.startswith("FROM "):
-                            current_base = line.split()[1]
+                            parts = [part for part in line.split() if not part.startswith("--")]
+                            current_base = parts[1]
+                            current_stage = parts[-1]
                         if line.startswith("ADD "):
-                            self.assertEqual(current_base, "scratch")
                             self.assertIn("--checksum=sha256:", line)
+                            if current_stage.startswith("openssl-build-"):
+                                # OpenSSL source archives stay in a discarded compiler stage.
+                                self.assertIn(line.rsplit(" ", 1)[-1],
+                                              ("/sources/openssl.tar.gz", "/sources/debian.tar.xz"))
+                                self.assertFalse(any(t.package["url"] in line for t in group))
+                            else:
+                                self.assertEqual(current_base, "scratch")
                     installs = source.split("RUN --mount=")[1:]
                     self.assertTrue(installs)
                     for install in installs:
@@ -83,10 +92,16 @@ class MultiarchTests(unittest.TestCase):
                         self.assertIn("type=bind,from=download", install)
                         self.assertIn("target=/opt/openriak-package,ro", install)
                         body = install.split("set -eu\n", 1)[1]
-                        copy = next(line for line in body.splitlines() if line.startswith("cp /opt/openriak-package/"))
-                        destination = copy.split()[-1]
-                        self.assertIn(f"rm -f {destination}", body)
-                        self.assertLess(body.index(copy), body.index(f"rm -f {destination}"))
+                        copies = [line for line in body.splitlines() if line.startswith("cp /opt/openriak-package/")]
+                        if copies:
+                            destination = copies[0].split()[-1]
+                            self.assertIn(f"rm -f {destination}", body)
+                            self.assertLess(body.index(copies[0]), body.index(f"rm -f {destination}"))
+                        else:
+                            # Minimal installers consume the read-only package mount directly.
+                            self.assertIn("rpm --root /openriak-rootfs -Uvh", body)
+                            self.assertIn("--nodeps /opt/openriak-package/", body)
+                            self.assertNotIn("cp /opt/openriak-package/", body)
                         subprocess.run(["sh", "-n"], input=body, text=True, check=True, capture_output=True)
 
     def test_package_caches_are_cleaned_inside_install_layer(self):
@@ -98,9 +113,11 @@ class MultiarchTests(unittest.TestCase):
                 family = group[0].operating_system["package_family"]
                 with self.subTest(image=group[0].image, family=family):
                     if family == "rpm":
-                        cleanup = "rm -rf /var/cache/dnf /var/cache/yum /var/cache/zypp"
+                        root = "/openriak-rootfs" if "rpm --root /openriak-rootfs" in body else ""
+                        cleanup = f"rm -rf {root}/var/cache/dnf {root}/var/cache/yum"
                         self.assertIn(cleanup, body)
-                        self.assertLess(body.index("rpm -Uvh"), body.index(cleanup))
+                        package_install = "rpm --root /openriak-rootfs -Uvh" if root else "rpm -Uvh"
+                        self.assertLess(body.index(package_install), body.index(cleanup))
                         self.assertNotIn("rm -rf /var/lib/rpm", body)
                     elif family == "deb":
                         self.assertLess(body.index("apt-get install"), body.index("apt-get clean"))

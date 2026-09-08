@@ -1,0 +1,545 @@
+$ /usr/bin/docker buildx build --builder openriak-kv-multiarch --pull=false --platform linux/amd64 --load --tag tiotjp/debian:test-20260908t110031.819660z-amd64 /home/peter/GitHub/TI-Tokyo/openriak-docs/tools/cache/openriak-docker-base-validation/20260908-libblkid-tar-03/tiotjp/debian/bookworm-slim-for-openriak/runs/20260908T110031.819660Z
+started: 2026-09-08T11:00:36Z
+exit_code: 0
+#0 building with "openriak-kv-multiarch" instance using docker-container driver
+
+#1 [internal] load build definition from Dockerfile
+#1 DONE 0.0s
+
+#1 [internal] load build definition from Dockerfile
+#1 transferring dockerfile: 15.84kB done
+#1 DONE 0.0s
+
+#2 resolve image config for docker-image://docker.io/docker/dockerfile:1.7
+#2 ...
+
+#3 [auth] docker/dockerfile:pull token for registry-1.docker.io
+#3 DONE 0.0s
+
+#2 resolve image config for docker-image://docker.io/docker/dockerfile:1.7
+#2 DONE 1.2s
+
+#4 docker-image://docker.io/docker/dockerfile:1.7@sha256:a57df69d0ea827fb7266491f2813635de6f17269be881f696fbfdf2d83dda33e
+#4 resolve docker.io/docker/dockerfile:1.7@sha256:a57df69d0ea827fb7266491f2813635de6f17269be881f696fbfdf2d83dda33e 0.0s done
+#4 CACHED
+
+#5 [internal] load metadata for docker.io/library/debian:bookworm-slim@sha256:88200866dfff7ea7f5cbcb6ec7c8a701889efe6fe859fe64d6990e4b07ea4171
+#5 ...
+
+#6 [auth] library/debian:pull token for registry-1.docker.io
+#6 DONE 0.0s
+
+#5 [internal] load metadata for docker.io/library/debian:bookworm-slim@sha256:88200866dfff7ea7f5cbcb6ec7c8a701889efe6fe859fe64d6990e4b07ea4171
+#5 DONE 0.6s
+
+#7 [internal] load .dockerignore
+#7 transferring context: 42B done
+#7 DONE 0.0s
+
+#8 [libblkid-build-amd64 2/7] ADD --checksum=sha256:60492a19b44e6cf9a3ddff68325b333b8b52b6c59ce3ebd6a0ecaa4c5117e84f https://deb.debian.org/debian/pool/main/u/util-linux/util-linux_2.38.1.orig.tar.xz /sources/util-linux.tar.xz
+#8 DONE 0.0s
+
+#9 [openssl-build-amd64 3/6] ADD --checksum=sha256:7279efe85c359500c95aa88347e3395dd303d7566e2bb818d80d96e0c3bb9629 https://deb.debian.org/debian/pool/main/o/openssl/openssl_3.0.20-1~deb12u2.debian.tar.xz /sources/debian.tar.xz
+#9 DONE 0.0s
+
+#10 [libblkid-build-amd64 4/7] ADD --checksum=sha256:935ae9372061b9988c58297d1d5b12aa04cbc01e538e8606d0103b401f68de1c https://github.com/util-linux/util-linux/commit/132d9c8aa15a8efd0a23d8ca7ed8b98f365e84fa.patch /sources/upstream.patch
+#10 DONE 0.0s
+
+#11 [openssl-build-amd64 2/6] ADD --checksum=sha256:67ebca7e50d17383028045486653492195b83db95f8558709701bb47b5c1ef81 https://github.com/openssl/openssl/releases/download/openssl-3.0.22/openssl-3.0.22.tar.gz /sources/openssl.tar.gz
+#11 DONE 0.0s
+
+#12 [libblkid-build-amd64 3/7] ADD --checksum=sha256:d46b85313f536fc4831a69ba3fa2c8160450b5b26c7c5dfafce4f078fe4f205c https://deb.debian.org/debian/pool/main/u/util-linux/util-linux_2.38.1-5+deb12u3.debian.tar.xz /sources/debian.tar.xz
+#12 DONE 0.0s
+
+#13 [libblkid-build-amd64 1/7] FROM docker.io/library/debian:bookworm-slim@sha256:88200866dfff7ea7f5cbcb6ec7c8a701889efe6fe859fe64d6990e4b07ea4171
+#13 resolve docker.io/library/debian:bookworm-slim@sha256:88200866dfff7ea7f5cbcb6ec7c8a701889efe6fe859fe64d6990e4b07ea4171 0.0s done
+#13 CACHED
+
+#14 [openssl-build-amd64 2/6] ADD --checksum=sha256:67ebca7e50d17383028045486653492195b83db95f8558709701bb47b5c1ef81 https://github.com/openssl/openssl/releases/download/openssl-3.0.22/openssl-3.0.22.tar.gz /sources/openssl.tar.gz
+#14 CACHED
+
+#15 [openssl-build-amd64 3/6] ADD --checksum=sha256:7279efe85c359500c95aa88347e3395dd303d7566e2bb818d80d96e0c3bb9629 https://deb.debian.org/debian/pool/main/o/openssl/openssl_3.0.20-1~deb12u2.debian.tar.xz /sources/debian.tar.xz
+#15 CACHED
+
+#16 [openssl-build-amd64 4/6] RUN <<'OPENRIAK_OPENSSL_BUILD' (set -eu...)
+#16 CACHED
+
+#17 [openssl-build-amd64 5/6] RUN --network=none <<'OPENRIAK_OPENSSL_PACKAGES' (set -eu...)
+#17 CACHED
+
+#18 [openssl-build-amd64 6/6] RUN --network=none <<'OPENRIAK_OPENSSL_TESTED_PACKAGES' (set -eu...)
+#18 CACHED
+
+#19 [libblkid-build-amd64 2/7] ADD --checksum=sha256:60492a19b44e6cf9a3ddff68325b333b8b52b6c59ce3ebd6a0ecaa4c5117e84f https://deb.debian.org/debian/pool/main/u/util-linux/util-linux_2.38.1.orig.tar.xz /sources/util-linux.tar.xz
+#19 CACHED
+
+#20 [libblkid-build-amd64 4/7] ADD --checksum=sha256:935ae9372061b9988c58297d1d5b12aa04cbc01e538e8606d0103b401f68de1c https://github.com/util-linux/util-linux/commit/132d9c8aa15a8efd0a23d8ca7ed8b98f365e84fa.patch /sources/upstream.patch
+#20 CACHED
+
+#21 [libblkid-build-amd64 5/7] RUN <<'OPENRIAK_LIBBLKID_SOURCE' (set -eu...)
+#21 CACHED
+
+#22 [libblkid-build-amd64 3/7] ADD --checksum=sha256:d46b85313f536fc4831a69ba3fa2c8160450b5b26c7c5dfafce4f078fe4f205c https://deb.debian.org/debian/pool/main/u/util-linux/util-linux_2.38.1-5+deb12u3.debian.tar.xz /sources/debian.tar.xz
+#22 CACHED
+
+#23 [libblkid-build-amd64 6/7] RUN --network=none <<'OPENRIAK_LIBBLKID_PACKAGES' (set -eu...)
+#23 CACHED
+
+#24 [libblkid-build-amd64 7/7] RUN --network=none <<'OPENRIAK_LIBBLKID_TESTS' (set -eu...)
+#24 0.173 dpkg-source: info: using patch list from debian/patches/series
+#24 0.173 dpkg-source: info: applying debian/man-getopt-examples.patch
+#24 0.180 dpkg-source: info: applying debian/verbose-tests.patch
+#24 0.188 dpkg-source: info: applying debian/chown-non-deprecated.patch
+#24 0.192 dpkg-source: info: applying debian/hardlink-tests-known-failed.patch
+#24 0.197 dpkg-source: info: applying debian/lsfd-usrbin.patch
+#24 0.203 dpkg-source: info: applying debian/sensible-pager.patch
+#24 0.208 dpkg-source: info: applying upstream/0001-lib-path-ul_path_cpuparse-fix-parsing-of-empty-sysfs.patch
+#24 0.214 dpkg-source: info: applying upstream/0002-libuuid-Implement-continuous-clock-handling-for-time.patch
+#24 0.230 dpkg-source: info: applying upstream/0003-uuidd-fix-random-UUIDs.patch
+#24 0.233 dpkg-source: info: applying upstream/0004-libuuid-check-clock-value-from-LIBUUID_CLOCK_FILE.patch
+#24 0.235 dpkg-source: info: applying upstream/0005-lsblk-fix-endless-loop-if-device-specified-more-than.patch
+#24 0.240 dpkg-source: info: applying upstream/0006-lib-procfs-add-function-to-parse-proc-stat.patch
+#24 0.248 dpkg-source: info: applying upstream/0007-kill-Support-mandating-the-presence-of-a-userspace-s.patch
+#24 0.257 dpkg-source: info: applying upstream/0008-fdisk-fix-output-option-parsing.patch
+#24 0.262 dpkg-source: info: applying upstream/0009-fdisk-make-it-more-obvious-that-DOS-means-MBR.patch
+#24 0.271 dpkg-source: info: applying upstream/0010-libfdisk-make-scripts-portable-between-different-sec.patch
+#24 0.277 dpkg-source: info: applying upstream/0011-sfdisk-improve-code-readability-for-coverity-scan.patch
+#24 0.283 dpkg-source: info: applying upstream/0012-libfdisk-gpt-don-t-ignore-fsync-errors.patch
+#24 0.289 dpkg-source: info: applying upstream/0013-sfdisk-inform-about-failed-fsync-coverity-scan.patch
+#24 0.293 dpkg-source: info: applying upstream/0014-lscpu-Add-Snapdragon-parts.patch
+#24 0.298 dpkg-source: info: applying upstream/0015-Add-Makalu-Makalu-ELP-A715-X3.patch
+#24 0.300 dpkg-source: info: applying upstream/0016-Adding-Apple-core-names-distinguish-by-SoC-SiP-name.patch
+#24 0.302 dpkg-source: info: applying upstream/0017-Fix-formatting.patch
+#24 0.305 dpkg-source: info: applying upstream/0018-lscpu-make-Apple-part-names-human-friendly.patch
+#24 0.307 dpkg-source: info: applying upstream/0019-lscpu-add-missing-Apple-parts.patch
+#24 0.310 dpkg-source: info: applying upstream/0020-lscpu-arm-don-t-use-space-in-names.patch
+#24 0.312 dpkg-source: info: applying upstream/0021-Remove-closing-braces-in-Apple-cores-names.patch
+#24 0.315 dpkg-source: info: applying upstream/0022-lscpu-Even-more-Arm-part-numbers.patch
+#24 0.318 dpkg-source: info: applying upstream/0023-lscpu-Add-Kryo-3XX-Gold-core.patch
+#24 0.321 dpkg-source: info: applying upstream/0024-fsck-Processes-may-kill-other-processes.patch
+#24 0.326 dpkg-source: info: applying upstream/0025-libblkid-ntfs-avoid-UB-in-signed-shift.patch
+#24 0.332 dpkg-source: info: applying upstream/0026-libblkid-iso9660-allocate-enough-space-for-UTF16-dec.patch
+#24 0.337 dpkg-source: info: applying upstream/0027-lscpu-Add-Neoverse-V2-Cortex-R82.patch
+#24 0.340 dpkg-source: info: applying upstream/0028-lscpu-Add-2023-Cortex.patch
+#24 0.343 dpkg-source: info: applying upstream/0029-lscpu-Add-Neoverse-V3-N3.patch
+#24 0.346 dpkg-source: info: applying upstream/PATCH-rfkill-man-List-options-for-supported-device-types.patch
+#24 0.351 dpkg-source: info: applying upstream/PATCH-1-2-lib-pty-Put-master-PTY-into-non-blocking-mode-a.patch
+#24 0.360 dpkg-source: info: applying upstream/PATCH-2-2-lib-pty-minor-cleanups.patch
+#24 0.363 dpkg-source: info: applying upstream/PATCH-script-abort-if-unused-arguments-are-given.patch
+#24 0.371 dpkg-source: info: applying upstream/logger-always-update-header-when-read-from-stdin.patch
+#24 0.378 dpkg-source: info: applying upstream/write-correctly-handle-wide-characters.patch
+#24 0.391 dpkg-source: info: applying upstream/wall-convert-homebrew-buffering-to-open_memstream.patch
+#24 0.398 dpkg-source: info: applying upstream/wall-use-fputs_careful.patch
+#24 0.402 dpkg-source: info: applying upstream/wall-fix-calloc-cal-Werror-calloc-transposed-args.patch
+#24 0.405 dpkg-source: info: applying upstream/wall-fix-escape-sequence-Injection-CVE-2024-28085.patch
+#24 0.410 dpkg-source: info: applying upstream/autotools-add-disable-makeinstall-tty-setgid.patch
+#24 0.419 dpkg-source: info: applying upstream/meson-add-D-tty-setgid-false-true.patch
+#24 0.429 dpkg-source: info: applying upstream/mesg-remove-ability-to-compile-with-fchmod-S_IWOTH.patch
+#24 0.441 dpkg-source: info: applying openriak-CVE-2026-13595.patch
+#24 37.77 
+#24 37.77 -------------------- util-linux regression tests --------------------
+#24 37.77 
+#24 37.77                     For development purpose only.                    
+#24 37.77                  Don't execute on production system!                 
+#24 37.77 
+#24 37.77        kernel: 6.18.33.2-microsoft-standard-WSL2    
+#24 37.77 
+#24 37.77       options: --srcdir=/build/util-linux-2.38.1 \
+#24 37.77                --builddir=/build/util-linux-2.38.1/.
+#24 37.77 
+#24 37.77               Executing the tests in parallel (4 jobs)    
+#24 37.77 
+#24 37.77 /dev/mapper/control: open failed: Operation not permitted
+#24 37.77 Failure to communicate with kernel device-mapper driver.
+#24 37.77 Check that device-mapper is available in the kernel.
+#24 37.77 Incompatible libdevmapper 1.02.185 (2022-05-18) and kernel driver (unknown version).
+#24 37.77 Command failed.
+#24 37.77         blkid: MD raid0 (whole-disks)                        ... SKIPPED (no loop-device support)
+#24 37.77 /build/util-linux-2.38.1/tests/ts/blkid/dm-err: line 47: udevadm: command not found
+#24 37.77 /dev/mapper/control: open failed: Operation not permitted
+#24 37.77 Failure to communicate with kernel device-mapper driver.
+#24 37.77 Check that device-mapper is available in the kernel.
+#24 37.77 Incompatible libdevmapper 1.02.185 (2022-05-18) and kernel driver (unknown version).
+#24 37.77 Command failed.
+#24 37.77         blkid: DM error                                      ... OK
+#24 37.77         blkid: superblocks probing: [01] adaptec-raid        ... OK
+#24 37.77         blkid: partitions probing: [01] atari-primary        ... OK
+#24 37.77         blkid: MD raid1 (last partition)                     ... SKIPPED (missing in PATH: mdadm)
+#24 37.77         blkid: superblocks probing: [02] bcache-B            ... OK
+#24 37.77         blkid: MD raid1 (whole-disks)                        ... SKIPPED (no loop-device support)
+#24 37.77         blkid: partitions probing: [02] atari-xgm            ... OK
+#24 37.77         blkid: partitions probing: [03] bsd                  ... OK
+#24 37.77         blkid: partitions probing: [04] dos+bsd              ... OK
+#24 37.77         blkid: superblocks probing: [03] bcache-C            ... OK
+#24 37.77         blkid: partitions probing: [05] gpt                  ... OK
+#24 37.77         blkid: superblocks probing: [04] befs                ... OK
+#24 37.77         blkid: superblocks probing: [05] bfs                 ... OK
+#24 37.77         blkid: partitions probing: [06] sgi                  ... OK
+#24 37.77         blkid: superblocks probing: [06] bluestore           ... OK
+#24 37.77         blkid: superblocks probing: [07] cramfs              ... OK
+#24 37.77         blkid: partitions probing: [07] sun                  ... OK
+#24 37.77         blkid: partitions probing                            ... OK (all 7 sub-tests PASSED)
+#24 37.77         blkid: superblocks probing: [08] ddf-raid            ... OK
+#24 37.77         blkid: superblocks probing: [09] drbd-v08            ... OK
+#24 37.77         blkid: superblocks probing: [10] drbd-v09            ... OK
+#24 37.77         blkid: superblocks probing: [11] drbdmanage-control-volume ... OK
+#24 37.77         blkid: superblocks probing: [12] erofs               ... OK
+#24 37.77         blkid: superblocks probing: [13] exfat               ... OK
+#24 37.77         blkid: superblocks probing: [14] ext2                ... OK
+#24 37.77         blkid: superblocks probing: [15] ext3                ... OK
+#24 37.77         blkid: superblocks probing: [16] f2fs                ... OK
+#24 37.77         blkid: superblocks probing: [17] fat                 ... OK
+#24 37.77         blkid: superblocks probing: [18] fat16_noheads       ... OK
+#24 37.77         blkid: superblocks probing: [19] fat32_cp850_O_tilde ... OK
+#24 37.77         blkid: superblocks probing: [20] fat32_label_64MB    ... OK
+#24 37.77         blkid: superblocks probing: [21] fat32_mkdosfs_label1 ... OK
+#24 37.77         blkid: superblocks probing: [22] fat32_mkdosfs_label1_dosfslabel_NO_NAME ... OK
+#24 37.77         blkid: superblocks probing: [23] fat32_mkdosfs_label1_dosfslabel_empty ... OK
+#24 37.77         blkid: superblocks probing: [24] fat32_mkdosfs_label1_dosfslabel_label2 ... OK
+#24 37.77         blkid: superblocks probing: [25] fat32_mkdosfs_label1_mlabel_NO_NAME ... OK
+#24 37.77         blkid: superblocks probing: [26] fat32_mkdosfs_label1_mlabel_erase ... OK
+#24 37.77         blkid: superblocks probing: [27] fat32_mkdosfs_label1_xp_erase ... OK
+#24 37.77         blkid: superblocks probing: [28] fat32_mkdosfs_label1_xp_label2 ... OK
+#24 37.77         blkid: superblocks probing: [29] fat32_mkdosfs_none  ... OK
+#24 37.77         blkid: superblocks probing: [30] fat32_mkdosfs_none_dosfslabel_NO_NAME ... OK
+#24 37.77         blkid: superblocks probing: [31] fat32_mkdosfs_none_dosfslabel_label1 ... OK
+#24 37.77         blkid: superblocks probing: [32] fat32_mkdosfs_none_dosfslabel_label1_xp_label2 ... OK
+#24 37.77         blkid: superblocks probing: [33] fat32_mkdosfs_none_xp_label1 ... OK
+#24 37.77         blkid: superblocks probing: [34] fat32_mkdosfs_none_xp_label1_dosfslabel_label2 ... OK
+#24 37.77         blkid: superblocks probing: [35] fat32_xp_label1     ... OK
+#24 37.77         blkid: superblocks probing: [36] fat32_xp_none       ... OK
+#24 37.77         blkid: superblocks probing: [37] fat32_xp_none_dosfslabel_label1 ... OK
+#24 37.77         blkid: superblocks probing: [38] fat32_xp_none_mlabel_label1 ... OK
+#24 37.77         blkid: superblocks probing: [39] gfs2                ... OK
+#24 37.77         blkid: superblocks probing: [40] hfs                 ... OK
+#24 37.77         blkid: superblocks probing: [41] hfsplus             ... OK
+#24 37.77         blkid: superblocks probing: [42] hpfs                ... OK
+#24 37.77         blkid: superblocks probing: [43] hpt37x-raid         ... OK
+#24 37.77         blkid: superblocks probing: [44] hpt45x-raid         ... OK
+#24 37.77         blkid: superblocks probing: [45] iso-different-iso-joliet-label ... OK
+#24 37.77         blkid: superblocks probing: [46] iso-joliet          ... OK
+#24 37.77         blkid: superblocks probing: [47] iso-multi-genisoimage-0 ... OK
+#24 37.77         blkid: superblocks probing: [48] iso-multi-genisoimage-174 ... OK
+#24 37.77         blkid: superblocks probing: [49] iso-multi-genisoimage-348 ... OK
+#24 37.77         blkid: superblocks probing: [50] iso-rr-joliet       ... OK
+#24 37.77         blkid: superblocks probing: [51] iso-unicode-long-label ... OK
+#24 37.77         blkid: superblocks probing: [52] iso                 ... OK
+#24 37.77         blkid: superblocks probing: [53] isw-raid            ... OK
+#24 37.77         blkid: superblocks probing: [54] jbd                 ... OK
+#24 37.77         blkid: superblocks probing: [55] jfs                 ... OK
+#24 37.77         blkid: superblocks probing: [56] jmicron-raid        ... OK
+#24 37.77         blkid: superblocks probing: [57] lsi-raid            ... OK
+#24 37.77         blkid: superblocks probing: [58] luks1               ... OK
+#24 37.77         blkid: superblocks probing: [59] luks2               ... OK
+#24 37.77         blkid: superblocks probing: [60] lvm2                ... OK
+#24 37.77         blkid: superblocks probing: [61] mdraid              ... OK
+#24 37.77         blkid: superblocks probing: [62] minix-BE            ... OK
+#24 37.77         blkid: superblocks probing: [63] minix-LE            ... OK
+#24 37.77         blkid: superblocks probing: [64] mpool               ... OK
+#24 37.77         blkid: superblocks probing: [65] netware             ... OK
+#24 37.77         blkid: superblocks probing: [66] nilfs2              ... OK
+#24 37.77         blkid: superblocks probing: [67] ntfs                ... OK
+#24 37.77         blkid: superblocks probing: [68] nvidia-raid         ... OK
+#24 37.77         blkid: superblocks probing: [69] ocfs2               ... OK
+#24 37.77         blkid: superblocks probing: [70] promise-raid        ... OK
+#24 37.77         blkid: superblocks probing: [71] reiser3             ... OK
+#24 37.77         blkid: superblocks probing: [72] reiser4             ... OK
+#24 37.77         blkid: superblocks probing: [73] romfs               ... OK
+#24 37.77         blkid: superblocks probing: [74] silicon-raid        ... OK
+#24 37.77         blkid: superblocks probing: [75] small-fat32         ... OK
+#24 37.77         blkid: superblocks probing: [76] swap0               ... OK
+#24 37.77         blkid: superblocks probing: [77] swap1               ... OK
+#24 37.77         blkid: superblocks probing: [78] tuxonice            ... OK
+#24 37.77         blkid: superblocks probing: [79] ubi                 ... OK
+#24 37.77         blkid: superblocks probing: [80] ubifs               ... OK
+#24 37.77         blkid: superblocks probing: [81] udf-bdr-2.60-nero   ... OK
+#24 37.77         blkid: superblocks probing: [82] udf-cd-mkudfiso-20100208 ... OK
+#24 37.77         blkid: superblocks probing: [83] udf-cd-nero-6       ... OK
+#24 37.77         blkid: superblocks probing: [84] udf-hdd-macosx-2.60-4096 ... OK
+#24 37.77         blkid: superblocks probing: [85] udf-hdd-mkudffs-1.0.0-1 ... OK
+#24 37.77         blkid: superblocks probing: [86] udf-hdd-mkudffs-1.0.0-2 ... OK
+#24 37.77         blkid: superblocks probing: [87] udf-hdd-mkudffs-1.3-1 ... OK
+#24 37.77         blkid: superblocks probing: [88] udf-hdd-mkudffs-1.3-2 ... OK
+#24 37.77         blkid: superblocks probing: [89] udf-hdd-mkudffs-1.3-3 ... OK
+#24 37.77         blkid: superblocks probing: [90] udf-hdd-mkudffs-1.3-4 ... OK
+#24 37.77         blkid: superblocks probing: [91] udf-hdd-mkudffs-1.3-5 ... OK
+#24 37.77         blkid: superblocks probing: [92] udf-hdd-mkudffs-1.3-6 ... OK
+#24 37.77         blkid: superblocks probing: [93] udf-hdd-mkudffs-1.3-7 ... OK
+#24 37.77         blkid: superblocks probing: [94] udf-hdd-mkudffs-1.3-8 ... OK
+#24 37.77         blkid: superblocks probing: [95] udf-hdd-mkudffs-2.2 ... OK
+#24 37.77         blkid: superblocks probing: [96] udf-hdd-udfclient-0.7.5 ... OK
+#24 37.77         blkid: superblocks probing: [97] udf-hdd-udfclient-0.7.7 ... OK
+#24 37.77         blkid: superblocks probing: [98] udf-hdd-win7        ... OK
+#24 37.77         blkid: superblocks probing: [99] udf-multi-mkudffs-0 ... OK
+#24 37.77         blkid: superblocks probing: [100] udf-multi-mkudffs-320 ... OK
+#24 37.77         blkid: superblocks probing: [101] udf-multi-mkudffs-640 ... OK
+#24 37.77         blkid: superblocks probing: [102] udf-multi-genisoimage-0 ... OK
+#24 37.77         blkid: superblocks probing: [103] udf-multi-genisoimage-417 ... OK
+#24 37.77         blkid: superblocks probing: [104] udf-multi-genisoimage-834 ... OK
+#24 37.77         blkid: superblocks probing: [105] udf                ... OK
+#24 37.77         blkid: superblocks probing: [106] ufs                ... OK
+#24 37.77         blkid: superblocks probing: [107] vdo                ... OK
+#24 37.77         blkid: superblocks probing: [108] via-raid           ... OK
+#24 37.77         blkid: superblocks probing: [109] vmfs               ... OK
+#24 37.77         blkid: superblocks probing: [110] vmfs_volume        ... OK
+#24 37.77         blkid: superblocks probing: [111] xfs-log            ... OK
+#24 37.77         blkid: superblocks probing: [112] xfs-v5             ... OK
+#24 37.77         blkid: superblocks probing: [113] xfs                ... OK
+#24 37.77         blkid: superblocks probing: [114] zfs                ... OK
+#24 37.77         blkid: superblocks probing: [115] zonefs             ... OK
+#24 37.77         blkid: superblocks probing                           ... OK (all 115 sub-tests PASSED)
+#24 37.77 
+#24 37.77 ---------------------------------------------------------------------
+#24 37.77   All 6 tests PASSED
+#24 37.77 ---------------------------------------------------------------------
+#24 38.59 ==20580== Memcheck, a memory error detector
+#24 38.59 ==20580== Copyright (C) 2002-2022, and GNU GPL'd, by Julian Seward et al.
+#24 38.59 ==20580== Using Valgrind-3.19.0 and LibVEX; rerun with -h for copyright info
+#24 38.59 ==20580== Command: /build/partition-test
+#24 38.59 ==20580== 
+#24 38.59 CVE-2026-13595: nested partition pointers and reset passed
+#24 38.59 ==20580== 
+#24 38.59 ==20580== HEAP SUMMARY:
+#24 38.59 ==20580==     in use at exit: 0 bytes in 0 blocks
+#24 38.59 ==20580==   total heap usage: 12,428 allocs, 12,428 frees, 5,297,728 bytes allocated
+#24 38.59 ==20580== 
+#24 38.59 ==20580== All heap blocks were freed -- no leaks are possible
+#24 38.59 ==20580== 
+#24 38.59 ==20580== For lists of detected and suppressed errors, rerun with: -s
+#24 38.59 ==20580== ERROR SUMMARY: 0 errors from 0 contexts (suppressed: 0 from 0)
+#24 38.59 patching file libblkid/src/partitions/partitions.c
+#24 38.59 Hunk #1 succeeded at 197 (offset -1 lines).
+#24 38.59 Hunk #2 succeeded at 351 (offset -6 lines).
+#24 38.59 Hunk #3 succeeded at 392 (offset -6 lines).
+#24 38.59 Hunk #4 succeeded at 399 (offset -6 lines).
+#24 38.59 Hunk #5 succeeded at 432 (offset -6 lines).
+#24 38.59 Hunk #6 succeeded at 843 (offset -8 lines).
+#24 38.59 Hunk #7 succeeded at 855 (offset -8 lines).
+#24 38.59 Hunk #8 succeeded at 954 (offset -8 lines).
+#24 38.59 Hunk #9 succeeded at 1066 (offset -8 lines).
+#24 38.59 Hunk #10 succeeded at 1082 (offset -8 lines).
+#24 DONE 40.4s
+
+#25 [patched-install-amd64 2/2] RUN --mount=type=bind,from=openssl-build-amd64,source=/packages,target=/opt/openssl-packages,ro --mount=type=bind,from=libblkid-build-amd64,source=/packages,target=/opt/libblkid-packages,ro <<'OPENRIAK_PATCHED_BASE' (set -eu...)
+#25 0.699 Get:1 http://deb.debian.org/debian bookworm InRelease [151 kB]
+#25 0.716 Get:2 http://deb.debian.org/debian bookworm-updates InRelease [55.4 kB]
+#25 0.727 Get:3 http://deb.debian.org/debian-security bookworm-security InRelease [34.8 kB]
+#25 0.786 Get:4 http://deb.debian.org/debian bookworm/main amd64 Packages [8790 kB]
+#25 1.209 Get:5 http://deb.debian.org/debian bookworm-updates/main amd64 Packages [6924 B]
+#25 1.211 Get:6 http://deb.debian.org/debian-security bookworm-security/main amd64 Packages [337 kB]
+#25 2.222 Fetched 9376 kB in 2s (4405 kB/s)
+#25 2.222 Reading package lists...
+#25 2.852 Reading package lists...
+#25 3.513 Building dependency tree...
+#25 3.644 Reading state information...
+#25 3.675 Calculating upgrade...
+#25 3.847 The following packages will be upgraded:
+#25 3.847   libpcre2-8-0
+#25 3.883 1 upgraded, 0 newly installed, 0 to remove and 0 not upgraded.
+#25 3.883 Need to get 261 kB of archives.
+#25 3.883 After this operation, 0 B of additional disk space will be used.
+#25 3.883 Get:1 http://deb.debian.org/debian-security bookworm-security/main amd64 libpcre2-8-0 amd64 10.42-1+deb12u1 [261 kB]
+#25 4.013 debconf: delaying package configuration, since apt-utils is not installed
+#25 4.034 Fetched 261 kB in 0s (6154 kB/s)
+#25 4.053 (Reading database ... 
+(Reading database ... 5%
+(Reading database ... 10%
+(Reading database ... 15%
+(Reading database ... 20%
+(Reading database ... 25%
+(Reading database ... 30%
+(Reading database ... 35%
+(Reading database ... 40%
+(Reading database ... 45%
+(Reading database ... 50%
+(Reading database ... 55%
+(Reading database ... 60%
+(Reading database ... 65%
+(Reading database ... 70%
+(Reading database ... 75%
+(Reading database ... 80%
+(Reading database ... 85%
+(Reading database ... 90%
+(Reading database ... 95%
+(Reading database ... 100%
+(Reading database ... 6096 files and directories currently installed.)
+#25 4.058 Preparing to unpack .../libpcre2-8-0_10.42-1+deb12u1_amd64.deb ...
+#25 4.077 Unpacking libpcre2-8-0:amd64 (10.42-1+deb12u1) over (10.42-1) ...
+#25 4.143 Setting up libpcre2-8-0:amd64 (10.42-1+deb12u1) ...
+#25 4.167 Processing triggers for libc-bin (2.36-9+deb12u14) ...
+#25 4.206 Reading package lists...
+#25 4.769 Building dependency tree...
+#25 4.918 Reading state information...
+#25 5.071 Suggested packages:
+#25 5.071   ca-certificates
+#25 5.092 The following NEW packages will be installed:
+#25 5.092   libssl3 openssl
+#25 5.113 0 upgraded, 2 newly installed, 0 to remove and 0 not upgraded.
+#25 5.113 Need to get 0 B/3483 kB of archives.
+#25 5.113 After this operation, 8556 kB of additional disk space will be used.
+#25 5.113 Get:1 /opt/openssl-packages/libssl3_3.0.22-0openriak1~deb12u1_amd64.deb libssl3 amd64 3.0.22-0openriak1~deb12u1 [2040 kB]
+#25 5.122 Get:2 /opt/openssl-packages/openssl_3.0.22-0openriak1~deb12u1_amd64.deb openssl amd64 3.0.22-0openriak1~deb12u1 [1442 kB]
+#25 5.216 debconf: delaying package configuration, since apt-utils is not installed
+#25 5.268 Selecting previously unselected package libssl3:amd64.
+#25 5.268 (Reading database ... 
+(Reading database ... 5%
+(Reading database ... 10%
+(Reading database ... 15%
+(Reading database ... 20%
+(Reading database ... 25%
+(Reading database ... 30%
+(Reading database ... 35%
+(Reading database ... 40%
+(Reading database ... 45%
+(Reading database ... 50%
+(Reading database ... 55%
+(Reading database ... 60%
+(Reading database ... 65%
+(Reading database ... 70%
+(Reading database ... 75%
+(Reading database ... 80%
+(Reading database ... 85%
+(Reading database ... 90%
+(Reading database ... 95%
+(Reading database ... 100%
+(Reading database ... 6096 files and directories currently installed.)
+#25 5.273 Preparing to unpack .../libssl3_3.0.22-0openriak1~deb12u1_amd64.deb ...
+#25 5.283 Unpacking libssl3:amd64 (3.0.22-0openriak1~deb12u1) ...
+#25 5.465 Selecting previously unselected package openssl.
+#25 5.465 Preparing to unpack .../openssl_3.0.22-0openriak1~deb12u1_amd64.deb ...
+#25 5.470 Unpacking openssl (3.0.22-0openriak1~deb12u1) ...
+#25 5.601 Setting up libssl3:amd64 (3.0.22-0openriak1~deb12u1) ...
+#25 5.615 Setting up openssl (3.0.22-0openriak1~deb12u1) ...
+#25 5.635 Processing triggers for libc-bin (2.36-9+deb12u14) ...
+#25 5.669 Reading package lists...
+#25 6.225 Building dependency tree...
+#25 6.363 Reading state information...
+#25 6.518 The following NEW packages will be installed:
+#25 6.518   ca-certificates
+#25 6.552 0 upgraded, 1 newly installed, 0 to remove and 0 not upgraded.
+#25 6.552 Need to get 162 kB of archives.
+#25 6.552 After this operation, 399 kB of additional disk space will be used.
+#25 6.552 Get:1 http://deb.debian.org/debian-security bookworm-security/main amd64 ca-certificates all 20250419~deb12u1 [162 kB]
+#25 6.668 debconf: delaying package configuration, since apt-utils is not installed
+#25 6.691 Fetched 162 kB in 0s (3937 kB/s)
+#25 6.715 Selecting previously unselected package ca-certificates.
+#25 6.715 (Reading database ... 
+(Reading database ... 5%
+(Reading database ... 10%
+(Reading database ... 15%
+(Reading database ... 20%
+(Reading database ... 25%
+(Reading database ... 30%
+(Reading database ... 35%
+(Reading database ... 40%
+(Reading database ... 45%
+(Reading database ... 50%
+(Reading database ... 55%
+(Reading database ... 60%
+(Reading database ... 65%
+(Reading database ... 70%
+(Reading database ... 75%
+(Reading database ... 80%
+(Reading database ... 85%
+(Reading database ... 90%
+(Reading database ... 95%
+(Reading database ... 100%
+(Reading database ... 6416 files and directories currently installed.)
+#25 6.719 Preparing to unpack .../ca-certificates_20250419~deb12u1_all.deb ...
+#25 6.724 Unpacking ca-certificates (20250419~deb12u1) ...
+#25 6.788 Setting up ca-certificates (20250419~deb12u1) ...
+#25 7.184 Updating certificates in /etc/ssl/certs...
+#25 7.728 150 added, 0 removed; done.
+#25 7.759 Processing triggers for ca-certificates (20250419~deb12u1) ...
+#25 7.768 Updating certificates in /etc/ssl/certs...
+#25 8.166 0 added, 0 removed; done.
+#25 8.166 Running hooks in /etc/ca-certificates/update.d...
+#25 8.168 done.
+#25 8.200 Reading package lists...
+#25 8.837 Building dependency tree...
+#25 8.977 Reading state information...
+#25 9.149 The following packages will be upgraded:
+#25 9.149   libblkid1
+#25 9.161 1 upgraded, 0 newly installed, 0 to remove and 0 not upgraded.
+#25 9.161 Need to get 0 B/148 kB of archives.
+#25 9.161 After this operation, 0 B of additional disk space will be used.
+#25 9.161 Get:1 /opt/libblkid-packages/libblkid1_2.38.1-5+deb12u3+openriak1_amd64.deb libblkid1 amd64 2.38.1-5+deb12u3+openriak1 [148 kB]
+#25 9.251 debconf: delaying package configuration, since apt-utils is not installed
+#25 9.295 (Reading database ... 
+(Reading database ... 5%
+(Reading database ... 10%
+(Reading database ... 15%
+(Reading database ... 20%
+(Reading database ... 25%
+(Reading database ... 30%
+(Reading database ... 35%
+(Reading database ... 40%
+(Reading database ... 45%
+(Reading database ... 50%
+(Reading database ... 55%
+(Reading database ... 60%
+(Reading database ... 65%
+(Reading database ... 70%
+(Reading database ... 75%
+(Reading database ... 80%
+(Reading database ... 85%
+(Reading database ... 90%
+(Reading database ... 95%
+(Reading database ... 100%
+(Reading database ... 6593 files and directories currently installed.)
+#25 9.299 Preparing to unpack .../libblkid1_2.38.1-5+deb12u3+openriak1_amd64.deb ...
+#25 9.316 Unpacking libblkid1:amd64 (2.38.1-5+deb12u3+openriak1) over (2.38.1-5+deb12u3) ...
+#25 9.374 Setting up libblkid1:amd64 (2.38.1-5+deb12u3+openriak1) ...
+#25 9.400 Processing triggers for libc-bin (2.36-9+deb12u14) ...
+#25 9.457 dpkg: warning: overriding problem because --force enabled:
+#25 9.457 dpkg: warning: this is an essential package; it should not be removed
+#25 9.463 dpkg: warning: overriding problem because --force enabled:
+#25 9.463 dpkg: warning: this is an essential package; it should not be removed
+#25 9.468 dpkg: warning: overriding problem because --force enabled:
+#25 9.468 dpkg: warning: this is an essential package; it should not be removed
+#25 9.473 dpkg: warning: overriding problem because --force enabled:
+#25 9.473 dpkg: warning: this is an essential package; it should not be removed
+#25 9.481 dpkg: warning: overriding problem because --force enabled:
+#25 9.481 dpkg: warning: this is an essential package; it should not be removed
+#25 9.487 dpkg: warning: overriding problem because --force enabled:
+#25 9.487 dpkg: warning: this is an essential package; it should not be removed
+#25 9.492 dpkg: warning: overriding problem because --force enabled:
+#25 9.492 dpkg: warning: this is an essential package; it should not be removed
+#25 9.496 dpkg: warning: overriding problem because --force enabled:
+#25 9.496 dpkg: warning: this is an essential package; it should not be removed
+#25 9.501 dpkg: warning: overriding problem because --force enabled:
+#25 9.501 dpkg: warning: this is an essential package; it should not be removed
+#25 9.506 dpkg: warning: overriding problem because --force enabled:
+#25 9.506 dpkg: warning: this is an essential package; it should not be removed
+#25 9.511 dpkg: warning: overriding problem because --force enabled:
+#25 9.511 dpkg: warning: this is an essential package; it should not be removed
+#25 9.515 dpkg: warning: overriding problem because --force enabled:
+#25 9.515 dpkg: warning: this is an essential package; it should not be removed
+#25 9.520 dpkg: warning: overriding problem because --force enabled:
+#25 9.520 dpkg: warning: this is an essential package; it should not be removed
+#25 9.524 dpkg: warning: overriding problem because --force enabled:
+#25 9.524 dpkg: warning: this is an essential package; it should not be removed
+#25 9.529 dpkg: warning: overriding problem because --force enabled:
+#25 9.529 dpkg: warning: this is an essential package; it should not be removed
+#25 9.529 dpkg: tar: dependency problems, but removing anyway as you requested:
+#25 9.529  dpkg depends on tar (>= 1.28-1).
+#25 9.529 
+#25 9.536 (Reading database ... 6593 files and directories currently installed.)
+#25 9.536 Removing tar (1.34+dfsg-1.2+deb12u1) ...
+#25 DONE 9.6s
+
+#26 [patched-amd64 1/1] COPY --from=patched-install-amd64 / /
+#26 DONE 0.4s
+
+#27 exporting to docker image format
+#27 exporting layers
+#27 exporting layers 3.4s done
+#27 exporting manifest sha256:857fff6b7d9698aeb6d04777dc4d7b33ab4254c0a33b0887a78cb88c8ef0376b 0.0s done
+#27 exporting config sha256:fb7974ba837e471f5fe0c2c71b3ca5266b9d3c5716e33944be2b13859543b8ad 0.0s done
+#27 sending tarball
+#27 sending tarball 2.6s done
+#27 DONE 5.9s
+
+#28 importing to docker
+#28 loading layer a1b6d012cede 31.95MB / 31.95MB 2.1s done
+#28 DONE 2.1s

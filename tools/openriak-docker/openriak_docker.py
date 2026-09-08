@@ -27,6 +27,7 @@ import urllib.parse
 from typing import Any, Callable, Iterable
 
 from openriak_defaults import DEFAULT_TIMEOUT_SECONDS
+import openriak_minimal as minimal
 
 
 SCHEMA_VERSION = 3
@@ -341,7 +342,10 @@ def discover_targets(
     return targets
 
 
-def base_image_for(target: Target) -> str:
+def base_image_for(target: Target, *, upstream: bool = False) -> str:
+    mode = minimal.configuration(target)
+    if not upstream and mode and mode.get("base_image"):
+        return f"{target.identity.namespace}/{mode['base_image']}"
     try:
         config = read_json(BASE_IMAGES_PATH)
         if config.get("schema_version") != 1:
@@ -1713,13 +1717,15 @@ def render_dockerfile(
     target: Target,
     pinned_base_image: str,
     distributed_cookie: str | None = None,
+    *,
+    _minimal: bool = True,
 ) -> str:
     distributed_cookie = distributed_cookie or generate_distributed_cookie()
     checksum = target.package["checksum"]["value"]
     filename = target.package["filename"]
     package_url = target.package["url"]
     runtime_defaults = "\n".join(f"ENV {name}={json.dumps(default)}" for name, (default, _) in RUNTIME_OPTIONS.items())
-    return annotate_artifact(f"""# syntax=docker/dockerfile:1.7
+    source = annotate_artifact(f"""# syntax=docker/dockerfile:1.7
 # Generated and tested by tools/openriak-docker/openriak-docker. Do not edit by hand.
 # Download and verify in a separate stage; its layers are not in the final image.
 FROM scratch AS download
@@ -1796,6 +1802,19 @@ HEALTHCHECK --interval={target.lifecycle_options.healthcheck_interval}s --timeou
 STOPSIGNAL SIGTERM
 ENTRYPOINT ["/usr/local/bin/openriak-entrypoint"]
 """, "Dockerfile", target.image)
+
+
+    if _minimal:
+        stage = minimal.package_stage(target, pinned_base_image, "runtime", "download", package_install_script(target))
+        if stage:
+            start = source.index("FROM --platform=")
+            end = source.index("LABEL ", start)
+            source = source[:start] + stage + "\nFROM package-runtime AS final\n\n" + source[end:]
+            # Installation already happened in the isolated installer stage.
+            start = source.index("RUN --mount=", source.index("FROM package-runtime AS final"))
+            end = source.index("RUN <<'OPENRIAK_IMAGE_SETUP'", start)
+            source = source[:start] + source[end:]
+    return source
 
 
 def render_single_compose(
@@ -2051,6 +2070,11 @@ def verify_runtime_options(container: str, target: Target, timeout_seconds: int,
         raise DockerToolError(f"Docker log rotation is not configured for {container}")
     result = {"status": "passed", "timezone": "Asia/Tokyo", "uid": 19001, "gid": 19002,
               "labels": labels, "docker_logging": logging}
+    minimal_check = minimal.runtime_check(target)
+    if minimal_check:
+        run_logged([docker, "exec", container, "sh", "-ec", minimal_check],
+                   log_path, timeout_seconds=timeout_seconds)
+        result["runtime_filesystem"] = {"status": "passed", **minimal.configuration(target)}
     if target.family in {"suse", "sles"}:
         run_logged([docker, "exec", container, "sh", "-ec", """test ! -e /usr/bin/container-suseconnect
 if rpm -q container-suseconnect >/dev/null 2>&1
@@ -2112,9 +2136,10 @@ def resolve_base_image(
     target: Target,
     logs: pathlib.Path,
     timeout_seconds: int = DEFAULT_TIMEOUT_SECONDS,
+    *, upstream: bool = False,
 ) -> tuple[str, str]:
     docker = docker_command()
-    base = base_image_for(target)
+    base = base_image_for(target, upstream=upstream)
     pull_result = run_logged(
         [docker, "pull", "--platform", target.platform, base],
         logs / "base-image-pull.log",
@@ -3521,6 +3546,10 @@ def render_multiarch_dockerfile(
         if not re.search(r"@sha256:[0-9a-f]{64}$", pinned):
             raise DockerToolError(f"Unpinned base image for {target.platform}")
         checksum = target.package["checksum"]["value"]
+        isolated_stage = minimal.package_stage(target, pinned, stage, f"download-{stage}", package_install_script(target))
+        if isolated_stage:
+            stages.append(f"FROM scratch AS download-{stage}\nADD --checksum=sha256:{checksum} {target.package['url']} /{target.package['filename']}\n\n" + isolated_stage)
+            continue
         stages.append(f'''# {target.platform}: official package and immutable OS release base.
 # Download layers stay outside the final image; the install only mounts them.
 FROM scratch AS download-{stage}
@@ -3534,7 +3563,7 @@ cp /opt/openriak-package/{target.package['filename']} /tmp/{target.package['file
 {package_install_script(target)}
 OPENRIAK_PACKAGE_INSTALL
 ''')
-    reference = render_dockerfile(targets[0], base_images[targets[0].platform]["pinned"], cookie)
+    reference = render_dockerfile(targets[0], base_images[targets[0].platform]["pinned"], cookie, _minimal=False)
     defaults = reference[reference.index("# -----------------------------------------------------------------------------"):reference.index("RUN --mount=")]
     runtime = reference[reference.index("RUN <<'OPENRIAK_IMAGE_SETUP'"):]
     header = annotate_artifact("# syntax=docker/dockerfile:1.7\n", "Dockerfile", targets[0].image)
@@ -3604,6 +3633,8 @@ def group_input(targets: list[Target], cluster_nodes: int, tags: list[str]) -> d
         "tags": tags,
         "packages": {t.platform: {"url": t.package["url"], "checksum": t.package["checksum"], "base": base_image_for(t)} for t in targets},
         "runtime_sha256": hashlib.sha256((ENTRYPOINT_SCRIPT + HEALTHCHECK_SCRIPT).encode()).hexdigest(),
+        "runtime_filesystem": minimal.configuration(targets[0]),
+        "runtime_renderer_sha256": sha256_file(pathlib.Path(minimal.__file__)),
         "renderer_sha256": hashlib.sha256("\n".join(inspect.getsource(fn) for fn in (
             render_multiarch_dockerfile, render_dockerfile, render_single_compose,
             render_cluster_compose, render_cluster_service, render_environment_example,
@@ -4165,6 +4196,8 @@ def parser() -> argparse.ArgumentParser:
     subcommands.add_parser("sync-static", help="Republish previously passed cache entries without retesting")
     import openriak_push
     openriak_push.configure_parser(subcommands.add_parser("push", help="Push approved OCI images and save detailed Scout CVE reports"))
+    import openriak_base
+    openriak_base.configure_parser(subcommands.add_parser("base", help="Generate, build/test, or push the reusable patched Debian base"), sys.modules[__name__])
     import openriak_cleanup
     openriak_cleanup.configure_parser(subcommands.add_parser("cleanup", help="Preview or remove generator resources older than a supplied cutoff"))
     return result
@@ -4173,6 +4206,9 @@ def parser() -> argparse.ArgumentParser:
 def main(arguments: list[str] | None = None) -> int:
     options = parser().parse_args(arguments)
     try:
+        if options.command == "base":
+            import openriak_base
+            return openriak_base.main(options, sys.modules[__name__], sys.argv[1:] if arguments is None else arguments)
         if options.command == "push":
             import openriak_push
             return openriak_push.main(options, sys.modules[__name__])
@@ -4258,7 +4294,7 @@ def main(arguments: list[str] | None = None) -> int:
                             passed = rebuild_approved_group(group, options, builder_lifecycle)
                         else:
                             passed = refresh_group(group, options, all_targets, builder_lifecycle)
-                    except (DockerToolError, OSError, json.JSONDecodeError) as error:
+                    except (DockerToolError, minimal.ConfigurationError, OSError, json.JSONDecodeError) as error:
                         print(f"{log_timestamp()} FAILED {group[0].image}: {error}", flush=True)
                         passed = False
                     failures += int(not passed)
@@ -4278,7 +4314,7 @@ def main(arguments: list[str] | None = None) -> int:
                    else "Refresh stopped by operator; current test cleanup completed.")
         print(message, file=sys.stderr)
         return 130
-    except (DockerToolError, OSError, json.JSONDecodeError) as error:
+    except (DockerToolError, minimal.ConfigurationError, OSError, json.JSONDecodeError) as error:
         print(f"error: {error}", file=sys.stderr)
         return 2
 

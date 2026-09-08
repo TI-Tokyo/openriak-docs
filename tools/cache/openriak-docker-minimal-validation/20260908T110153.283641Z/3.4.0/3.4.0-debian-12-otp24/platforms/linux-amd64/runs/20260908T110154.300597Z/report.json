@@ -1,0 +1,105 @@
+{
+  "artifacts": {},
+  "base_image": {
+    "pinned": "openriak-minimal-validation/debian:bookworm-slim-for-openriak@sha256:857fff6b7d9698aeb6d04777dc4d7b33ab4254c0a33b0887a78cb88c8ef0376b",
+    "requested": "openriak-minimal-validation/debian:bookworm-slim-for-openriak",
+    "resolved_at": "2026-09-08T11:01:54Z"
+  },
+  "cleanup_errors": [
+    "Cleanup command failed: /usr/bin/docker image rm openriak-minimal-validation/openriak-kv:test-3.4.0-debian-12-otp24-linux-amd64-20260908t110154.300597z; see /home/peter/GitHub/TI-Tokyo/openriak-docs/tools/cache/openriak-docker-minimal-validation/20260908T110153.283641Z/3.4.0/3.4.0-debian-12-otp24/platforms/linux-amd64/runs/20260908T110154.300597Z/logs/remove-test-image.log"
+  ],
+  "error": {
+    "message": "Command failed with exit code 1: /usr/bin/docker buildx build --builder openriak-kv-multiarch --load --platform linux/amd64 --pull=false --tag openriak-minimal-validation/openriak-kv:test-3.4.0-debian-12-otp24-linux-amd64-20260908t110154.300597z --file /home/peter/GitHub/TI-Tokyo/openriak-docs/tools/cache/openriak-docker-minimal-validation/20260908T110153.283641Z/3.4.0/3.4.0-debian-12-otp24/platforms/linux-amd64/runs/20260908T110154.300597Z/Dockerfile --build-context openriak-minimal-validation/debian:bookworm-slim-for-openriak@sha256:857fff6b7d9698aeb6d04777dc4d7b33ab4254c0a33b0887a78cb88c8ef0376b=oci-layout:///home/peter/GitHub/TI-Tokyo/openriak-docs/tools/cache/openriak-docker-minimal-validation/20260908T110153.283641Z/base-layout@sha256:857fff6b7d9698aeb6d04777dc4d7b33ab4254c0a33b0887a78cb88c8ef0376b /home/peter/GitHub/TI-Tokyo/openriak-docs/tools/cache/openriak-docker-minimal-validation/20260908T110153.283641Z/3.4.0/3.4.0-debian-12-otp24/platforms/linux-amd64/runs/20260908T110154.300597Z (see /home/peter/GitHub/TI-Tokyo/openriak-docs/tools/cache/openriak-docker-minimal-validation/20260908T110153.283641Z/3.4.0/3.4.0-debian-12-otp24/platforms/linux-amd64/runs/20260908T110154.300597Z/logs/image-build.log): ERROR: failed to build: failed to solve: process \"/bin/sh -c set -eu\\n# The reusable runtime base omits tar. Borrow it only for package installation.\\napt-get update\\nDEBIAN_FRONTEND=noninteractive apt-get install -y --no-install-recommends tar\\n\\ncp /opt/openriak-package/riak_3.4.0-OTP24_amd64.deb /tmp/riak_3.4.0-OTP24_amd64.deb\\n# Update installed OS packages from this release's configured repositories.\\napt-get update\\nDEBIAN_FRONTEND=noninteractive apt-get dist-upgrade -y --no-install-recommends\\nDEBIAN_FRONTEND=noninteractive apt-get install -y --no-install-recommends ca-certificates passwd procps tzdata /tmp/riak_3.4.0-OTP24_amd64.deb\\napt-get clean\\nrm -rf /var/lib/apt/lists/*\\nrm -f /tmp/riak_3.4.0-OTP24_amd64.deb\\n# Require the tested patched base; fail rather than build with older libraries.\\ndpkg --compare-versions \\\"$(dpkg-query -W -f='${Version}' libssl3)\\\" ge '3.0.22-0openriak1~deb12u1'\\ntest -s /usr/share/openriak-build/openssl-packages.txt\\n# The runtime does not execute Perl; remove it and dependent tools explicitly.\\n# This is a final runtime filesystem, not a general-purpose administration image.\\napt-get update\\nDEBIAN_FRONTEND=noninteractive apt-get purge -y --allow-remove-essential perl-base\\napt-get clean\\nrm -rf /var/lib/apt/lists/*\\ndpkg --compare-versions \\\"$(dpkg-query -W -f='${Version}' libblkid1)\\\" eq '2.38.1-5+deb12u3+openriak1'\\n# dpkg requires tar for installation. It is deliberately absent at runtime.\\n# Child builds supply a pinned build-only tar and reinstall it before using apt.\\ndpkg --purge --force-remove-essential --force-depends tar\\ntest ! -e /bin/tar\\ntest ! -e /usr/bin/tar\\n\" did not complete successfully: exit code: 100",
+    "type": "DockerToolError"
+  },
+  "finished_at": "2026-09-08T11:02:02Z",
+  "generation": {
+    "cluster_nodes": 5,
+    "distributed_cookie": "openriak-9e6491fc9ff0b63ba8e111241b8b3ec0"
+  },
+  "identity": {
+    "namespace": "openriak-minimal-validation",
+    "source": "https://github.com/OpenRiak/openriak-docs",
+    "url": "https://openriak.org",
+    "vendor": "OpenRiak"
+  },
+  "image": "openriak-minimal-validation/openriak-kv:3.4.0-debian-12-otp24",
+  "metadata_sources": [
+    "content/openriak-kv/metadata/3.4.0/supported-os.json",
+    "content/openriak-kv/metadata/3.4.0/downloads.json"
+  ],
+  "network": {
+    "address_assignment": "docker",
+    "node_host": "node-01.cluster-a.openriak",
+    "riak_node_name": "openriak-kv@node-01.cluster-a.openriak"
+  },
+  "node": "openriak-kv-3.4.0-debian-12-otp24-node",
+  "package": {
+    "checksum": {
+      "algorithm": "sha256",
+      "value": "7563dd2574285d2fece2d36baa1222ef006db9dd4ae78d372ce974bfb6e116c3"
+    },
+    "filename": "riak_3.4.0-OTP24_amd64.deb",
+    "format": "deb",
+    "url": "https://files.tiot.jp/riak/kv/3.4/3.4.0/debian/12/riak_3.4.0-OTP24_amd64.deb"
+  },
+  "ports": {
+    "http": 8098,
+    "protobuf": 8087
+  },
+  "product": "openriak-kv",
+  "run_id": "20260908T110154.300597Z",
+  "schema_version": 4,
+  "started_at": "2026-09-08T11:01:54Z",
+  "status": "failed",
+  "steps": [
+    {
+      "duration_seconds": 0.003,
+      "finished_at": "2026-09-08T11:01:54Z",
+      "name": "generate_artifacts",
+      "started_at": "2026-09-08T11:01:54Z",
+      "status": "passed"
+    },
+    {
+      "duration_seconds": 0.2,
+      "finished_at": "2026-09-08T11:01:54Z",
+      "name": "validate_compose_artifacts",
+      "started_at": "2026-09-08T11:01:54Z",
+      "status": "passed"
+    },
+    {
+      "duration_seconds": 7.708,
+      "error": "Command failed with exit code 1: /usr/bin/docker buildx build --builder openriak-kv-multiarch --load --platform linux/amd64 --pull=false --tag openriak-minimal-validation/openriak-kv:test-3.4.0-debian-12-otp24-linux-amd64-20260908t110154.300597z --file /home/peter/GitHub/TI-Tokyo/openriak-docs/tools/cache/openriak-docker-minimal-validation/20260908T110153.283641Z/3.4.0/3.4.0-debian-12-otp24/platforms/linux-amd64/runs/20260908T110154.300597Z/Dockerfile --build-context openriak-minimal-validation/debian:bookworm-slim-for-openriak@sha256:857fff6b7d9698aeb6d04777dc4d7b33ab4254c0a33b0887a78cb88c8ef0376b=oci-layout:///home/peter/GitHub/TI-Tokyo/openriak-docs/tools/cache/openriak-docker-minimal-validation/20260908T110153.283641Z/base-layout@sha256:857fff6b7d9698aeb6d04777dc4d7b33ab4254c0a33b0887a78cb88c8ef0376b /home/peter/GitHub/TI-Tokyo/openriak-docs/tools/cache/openriak-docker-minimal-validation/20260908T110153.283641Z/3.4.0/3.4.0-debian-12-otp24/platforms/linux-amd64/runs/20260908T110154.300597Z (see /home/peter/GitHub/TI-Tokyo/openriak-docs/tools/cache/openriak-docker-minimal-validation/20260908T110153.283641Z/3.4.0/3.4.0-debian-12-otp24/platforms/linux-amd64/runs/20260908T110154.300597Z/logs/image-build.log): ERROR: failed to build: failed to solve: process \"/bin/sh -c set -eu\\n# The reusable runtime base omits tar. Borrow it only for package installation.\\napt-get update\\nDEBIAN_FRONTEND=noninteractive apt-get install -y --no-install-recommends tar\\n\\ncp /opt/openriak-package/riak_3.4.0-OTP24_amd64.deb /tmp/riak_3.4.0-OTP24_amd64.deb\\n# Update installed OS packages from this release's configured repositories.\\napt-get update\\nDEBIAN_FRONTEND=noninteractive apt-get dist-upgrade -y --no-install-recommends\\nDEBIAN_FRONTEND=noninteractive apt-get install -y --no-install-recommends ca-certificates passwd procps tzdata /tmp/riak_3.4.0-OTP24_amd64.deb\\napt-get clean\\nrm -rf /var/lib/apt/lists/*\\nrm -f /tmp/riak_3.4.0-OTP24_amd64.deb\\n# Require the tested patched base; fail rather than build with older libraries.\\ndpkg --compare-versions \\\"$(dpkg-query -W -f='${Version}' libssl3)\\\" ge '3.0.22-0openriak1~deb12u1'\\ntest -s /usr/share/openriak-build/openssl-packages.txt\\n# The runtime does not execute Perl; remove it and dependent tools explicitly.\\n# This is a final runtime filesystem, not a general-purpose administration image.\\napt-get update\\nDEBIAN_FRONTEND=noninteractive apt-get purge -y --allow-remove-essential perl-base\\napt-get clean\\nrm -rf /var/lib/apt/lists/*\\ndpkg --compare-versions \\\"$(dpkg-query -W -f='${Version}' libblkid1)\\\" eq '2.38.1-5+deb12u3+openriak1'\\n# dpkg requires tar for installation. It is deliberately absent at runtime.\\n# Child builds supply a pinned build-only tar and reinstall it before using apt.\\ndpkg --purge --force-remove-essential --force-depends tar\\ntest ! -e /bin/tar\\ntest ! -e /usr/bin/tar\\n\" did not complete successfully: exit code: 100",
+      "finished_at": "2026-09-08T11:02:02Z",
+      "name": "build_image",
+      "started_at": "2026-09-08T11:01:54Z",
+      "status": "failed"
+    }
+  ],
+  "target": {
+    "architecture": "amd64",
+    "docker_platform": "linux/amd64",
+    "download_id": "otp24-amd64",
+    "os_family": "debian",
+    "os_id": "debian-12-amd64",
+    "os_name": "Debian 12",
+    "os_release": "12",
+    "otp": "24",
+    "version": "3.4.0"
+  },
+  "tests": {},
+  "volumes": {
+    "config": {
+      "container": "/etc/riak",
+      "default": "./openriak-kv-3.4.0-debian-12-otp24-node/config"
+    },
+    "data": {
+      "container": "/var/lib/riak",
+      "default": "./openriak-kv-3.4.0-debian-12-otp24-node/data"
+    },
+    "logs": {
+      "container": "/var/log/riak",
+      "default": "./openriak-kv-3.4.0-debian-12-otp24-node/logs"
+    }
+  }
+}

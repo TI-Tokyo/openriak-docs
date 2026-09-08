@@ -7,22 +7,49 @@
 # BuildKit supplies TARGETARCH from --platform in the global scope.
 # Do not redeclare ARG TARGETARCH here: that clears its automatic value.
 
-# linux/amd64: official package and immutable OS release base.
-# Download layers stay outside the final image; the install only mounts them.
 FROM scratch AS download-amd64
 ADD --checksum=sha256:d186f029af2e639edeb786f6a221bb823588e9484bd93682a1f95c96a88590ce https://files.tiot.jp/riak/kv/3.4/3.4.1/debian/12/riak_3.4.1-OTP26_amd64.deb /riak_3.4.1-OTP26_amd64.deb
 
-FROM --platform=linux/amd64 debian:bookworm-slim@sha256:88200866dfff7ea7f5cbcb6ec7c8a701889efe6fe859fe64d6990e4b07ea4171 AS package-amd64
-RUN --mount=type=bind,from=download-amd64,target=/opt/openriak-package,ro <<'OPENRIAK_PACKAGE_INSTALL'
+FROM --platform=linux/amd64 debian:bookworm-slim@sha256:88200866dfff7ea7f5cbcb6ec7c8a701889efe6fe859fe64d6990e4b07ea4171 AS package-tools-amd64
+FROM --platform=linux/amd64 tiotjp/debian:bookworm-slim-for-openriak@sha256:857fff6b7d9698aeb6d04777dc4d7b33ab4254c0a33b0887a78cb88c8ef0376b AS install-amd64
+RUN --mount=type=bind,from=download-amd64,target=/opt/openriak-package,ro --mount=type=bind,from=package-tools-amd64,source=/usr/bin/tar,target=/usr/local/bin/tar,ro <<'OPENRIAK_PACKAGE_INSTALL'
 set -eu
-# Copy, install, and remove in this one layer; only the installed files persist.
-cp /opt/openriak-package/riak_3.4.1-OTP26_amd64.deb /tmp/riak_3.4.1-OTP26_amd64.deb
+# The reusable runtime base omits tar. Borrow it only for package installation.
+# dpkg checks /bin/tar even when the mount is available in /usr/local/bin.
+cp /usr/local/bin/tar /bin/tar
 apt-get update
-DEBIAN_FRONTEND=noninteractive apt-get install -y --no-install-recommends ca-certificates curl passwd procps tzdata /tmp/riak_3.4.1-OTP26_amd64.deb
+DEBIAN_FRONTEND=noninteractive apt-get install -y --no-install-recommends tar
+
+cp /opt/openriak-package/riak_3.4.1-OTP26_amd64.deb /tmp/riak_3.4.1-OTP26_amd64.deb
+# Update installed OS packages from this release's configured repositories.
+apt-get update
+DEBIAN_FRONTEND=noninteractive apt-get dist-upgrade -y --no-install-recommends
+DEBIAN_FRONTEND=noninteractive apt-get install -y --no-install-recommends ca-certificates passwd procps tzdata /tmp/riak_3.4.1-OTP26_amd64.deb
 apt-get clean
 rm -rf /var/lib/apt/lists/*
 rm -f /tmp/riak_3.4.1-OTP26_amd64.deb
+# Require the tested patched base; fail rather than build with older libraries.
+dpkg --compare-versions "$(dpkg-query -W -f='${Version}' libssl3)" ge '3.0.22-0openriak1~deb12u1'
+test -s /usr/share/openriak-build/openssl-packages.txt
+# The runtime does not execute Perl; remove it and dependent tools explicitly.
+# This is a final runtime filesystem, not a general-purpose administration image.
+apt-get update
+DEBIAN_FRONTEND=noninteractive apt-get purge -y --allow-remove-essential perl-base
+apt-get clean
+rm -rf /var/lib/apt/lists/*
+dpkg --compare-versions "$(dpkg-query -W -f='${Version}' libblkid1)" eq '2.38.1-5+deb12u3+openriak1'
+# dpkg requires tar for installation. It is deliberately absent at runtime.
+# Child builds supply a pinned build-only tar and reinstall it before using apt.
+dpkg --purge --force-remove-essential --force-depends tar
+test ! -e /bin/tar
+test ! -e /usr/bin/tar
 OPENRIAK_PACKAGE_INSTALL
+
+# Export the cleaned filesystem; removed base-image files cannot remain in layers.
+FROM scratch AS package-amd64
+COPY --from=install-amd64 / /
+# Shell command search path for OpenRiak KV lifecycle scripts.
+ENV PATH="/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin"
 
 FROM package-${TARGETARCH} AS final
 
@@ -57,7 +84,7 @@ ENV RIAK_NODE_HOST=""
 # Explicit nodename; empty derives openriak-kv@<hostname>.
 ENV RIAK_NODE_NAME=""
 # Initial cookie; existing riak.conf wins and new followers adopt the coordinator cookie.
-ENV RIAK_DISTRIBUTED_COOKIE="openriak-0f6bfb68e53a1b0b4d4d133019435a97"
+ENV RIAK_DISTRIBUTED_COOKIE="openriak-f19714e4478de2e2d498a7c06fcf23ac"
 # Partition count for a new ring; do not change on an existing cluster.
 ENV RIAK_RING_SIZE="8"
 # Storage backend used by OpenRiak KV.

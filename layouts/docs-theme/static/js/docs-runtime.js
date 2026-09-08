@@ -495,6 +495,10 @@
       wrap.append(table);
       list.append(wrap);
     });
+    // Reveal headings and panels together only after the initial OS is resolved.
+    document.querySelectorAll('[data-selected-download-panels]').forEach((section) => {
+      section.hidden = false;
+    });
   };
 
   const setupDownloadControls = () => {

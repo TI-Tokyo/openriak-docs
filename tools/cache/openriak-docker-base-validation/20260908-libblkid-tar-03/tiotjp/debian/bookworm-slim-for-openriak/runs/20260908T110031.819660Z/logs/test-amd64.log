@@ -1,0 +1,39 @@
+$ /usr/bin/docker run --rm --name openriak-base-test-20260908t110031-819660z-amd64 --platform linux/amd64 --network none --entrypoint sh sha256:fb7974ba837e471f5fe0c2c71b3ca5266b9d3c5716e33944be2b13859543b8ad -ec set -eu
+. /etc/os-release
+test "$ID" = debian
+test "$VERSION_ID" = 12
+test ! -d /usr/lib/riak
+test ! -d /build
+test ! -d /sources
+test ! -e /usr/bin/gcc
+test ! -e /opt/openssl-packages
+test ! -e /opt/libblkid-packages
+test ! -e /bin/tar
+test ! -e /usr/bin/tar
+test -s /usr/share/openriak-build/libblkid-regression.log
+dpkg --compare-versions "$(dpkg-query -W -f='${Version}' libblkid1)" eq '2.38.1-5+deb12u3+openriak1'
+test -s /usr/share/openriak-build/openssl-packages.txt
+dpkg --compare-versions "$(dpkg-query -W -f='${Version}' libssl3)" ge '3.0.22-0openriak1~deb12u1'
+openssl version -a
+printf abc > /tmp/digest-input
+openssl dgst -sha256 /tmp/digest-input > /tmp/digest-result
+grep -q ba7816bf8f01cfea414140de5dae2223b00361a396177a9cb410ff61f20015ad /tmp/digest-result
+openssl req -x509 -newkey rsa:2048 -nodes -days 1 -subj /CN=base-test -keyout /tmp/key.pem -out /tmp/cert.pem
+openssl verify -CAfile /tmp/cert.pem /tmp/cert.pem
+
+started: 2026-09-08T11:01:36Z
+exit_code: 0
+OpenSSL 3.0.22 25 Aug 2026 (Library: OpenSSL 3.0.22 25 Aug 2026)
+built on: Tue Sep  8 00:00:00 2026 UTC
+platform: debian-amd64
+options:  bn(64,64)
+compiler: gcc -fPIC -pthread -m64 -Wa,--noexecstack -Wall -fzero-call-used-regs=used-gpr -DOPENSSL_TLS_SECURITY_LEVEL=2 -Wa,--noexecstack -g -O2 -ffile-prefix-map=/build/openssl-3.0.22=. -fstack-protector-strong -Wformat -Werror=format-security -DOPENSSL_USE_NODELETE -DL_ENDIAN -DOPENSSL_PIC -DOPENSSL_BUILDING_OPENSSL -DNDEBUG -Wdate-time -D_FORTIFY_SOURCE=2
+OPENSSLDIR: "/usr/lib/ssl"
+ENGINESDIR: "/usr/lib/x86_64-linux-gnu/engines-3"
+MODULESDIR: "/usr/lib/x86_64-linux-gnu/ossl-modules"
+Seeding source: os-specific
+CPUINFO: OPENSSL_ia32cap=0xfffa32235f8bffff:0x184007a4219c27ab
+....+..+.........+.........................+........+...............+.+..+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++*.....+..+.+...+..............+.+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++*.........+........+.+.....+...+...+..........+.....+.......+...+..+.+...........+......+.............+.........+..+...+.......+..............+.......+..+......+.+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+..+.............+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++*.....+.+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++*......................................+..............+......+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+-----
+/tmp/cert.pem: OK

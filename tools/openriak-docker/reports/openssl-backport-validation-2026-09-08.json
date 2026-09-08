@@ -1,0 +1,171 @@
+{
+  "status": "passed",
+  "product": "openriak-kv",
+  "reviewed_at": "2026-09-08T08:22:55Z",
+  "scope": {
+    "family": "debian",
+    "release": "12",
+    "versions": [
+      "3.4.0",
+      "3.4.1"
+    ],
+    "integration_platforms": [
+      "linux/amd64"
+    ]
+  },
+  "openssl_version": "3.0.22",
+  "package_version": "3.0.22-0openriak1~deb12u1",
+  "source_sha256": "67ebca7e50d17383028045486653492195b83db95f8558709701bb47b5c1ef81",
+  "debian_packaging_sha256": "7279efe85c359500c95aa88347e3395dd303d7566e2bb818d80d96e0c3bb9629",
+  "upstream_advisory": "https://openssl-library.org/news/secadv/20260825.txt",
+  "fixed_cves": [
+    "CVE-2026-75803",
+    "CVE-2026-54874",
+    "CVE-2026-63072",
+    "CVE-2026-63076"
+  ],
+  "generator_configuration": "tools/openriak-docker/runtime-images.json",
+  "unit_tests": {
+    "count": 183,
+    "status": "passed"
+  },
+  "upstream_tests": {
+    "static": {
+      "recipes": 259,
+      "tests": 2980,
+      "status": "passed"
+    },
+    "shared": {
+      "recipes": 259,
+      "tests": 3415,
+      "status": "passed"
+    },
+    "unmodified_test_evidence": "tools/cache/openriak-docker-minimal-validation/20260908T072303.367342Z/openssl-upstream",
+    "packaged_build_test_evidence": "tools/cache/openriak-docker-minimal-validation/20260908T080013.454733Z/openssl-upstream",
+    "packaging_abi_evidence": "tools/cache/openriak-docker-minimal-validation/20260908T074710.902344Z/openssl-packaging"
+  },
+  "baseline": {
+    "local_image_id": "sha256:c8e39b2739c11eb67dfcce13b39261676d73d8de1bea8f5744cb5b94d42f20da",
+    "size_bytes": 129119814,
+    "openssl_version": "3.0.20",
+    "crypto_tls": "passed",
+    "evidence": "tools/cache/openriak-docker-minimal-validation/20260908T074710.902344Z/openssl-baseline",
+    "unchanged_binaries": {
+      "crypto.so": "4ae2bf802fcafaed245294a1d8ab0867453a391218c1cf560769011c9007d231",
+      "beam.smp": "fca05e8b4975b53bef9b51d0e8a8c7b64bd2d50d10882b72930458441d9c7f30"
+    }
+  },
+  "images": [
+    {
+      "image_tag": "3.4.0-debian-12-otp24",
+      "platform": "linux/amd64",
+      "status": "passed",
+      "image": "openriak-minimal-validation/openriak-kv:3.4.0-debian-12-otp24-20260908t080013.454733z",
+      "local_image_id": "sha256:40cca009b97cab1735c9cf30d76bb3018087719327693965c22baef78e7ce2a1",
+      "size_bytes": 129131292,
+      "packages": {
+        "libssl3": "3.0.22-0openriak1~deb12u1",
+        "openssl": "3.0.22-0openriak1~deb12u1"
+      },
+      "validation_report": "tools/cache/openriak-docker-minimal-validation/20260908T080013.454733Z/3.4.0/3.4.0-debian-12-otp24/validation.json",
+      "validation_report_sha256": "580a3d6b1bca280bbf3a685262252cd6095f58693a0ed2f3146619ce8dfdb9e7",
+      "integration_report": "tools/cache/openriak-docker-minimal-validation/20260908T080013.454733Z/3.4.0/3.4.0-debian-12-otp24/platforms/linux-amd64/report.json",
+      "dockerfile_sha256": "70a81f8f62d3b5ee580a730c707b848334ea402467763703562e04971e55a777",
+      "production_renderer_matches_tested": true,
+      "single_node_admin_test": "passed",
+      "cluster_nodes": 5,
+      "cluster_admin_tests": "passed",
+      "preserved_cookie": "passed",
+      "coordinator_cookie_adoption": "passed",
+      "crypto_tls": "passed",
+      "scout_counts": {
+        "CRITICAL": 1,
+        "HIGH": 8,
+        "MEDIUM": 3,
+        "LOW": 34,
+        "UNSPECIFIED": 0
+      },
+      "openssl_cves_still_reported": [
+        "CVE-2026-75803",
+        "CVE-2026-54874",
+        "CVE-2026-63072",
+        "CVE-2026-63076"
+      ]
+    },
+    {
+      "image_tag": "3.4.0-debian-12-otp26",
+      "platform": "linux/amd64",
+      "status": "passed",
+      "image": "openriak-minimal-validation/openriak-kv:3.4.0-debian-12-otp26-20260908t081203.498501z",
+      "local_image_id": "sha256:8bd077f52092ab2137e1d1e9a800724cefb4194c58d499129d38b04b62740748",
+      "size_bytes": 130819050,
+      "packages": {
+        "libssl3": "3.0.22-0openriak1~deb12u1",
+        "openssl": "3.0.22-0openriak1~deb12u1"
+      },
+      "validation_report": "tools/cache/openriak-docker-minimal-validation/20260908T081203.498501Z/3.4.0/3.4.0-debian-12-otp26/validation.json",
+      "validation_report_sha256": "d4c03ccc77cdc36988662e31f27abe015faddbbd544d6b364da69a0c01d76a40",
+      "integration_report": "tools/cache/openriak-docker-minimal-validation/20260908T081203.498501Z/3.4.0/3.4.0-debian-12-otp26/platforms/linux-amd64/report.json",
+      "dockerfile_sha256": "945767fcc2eaebe8f2bae434600e58fd4ff61a0ac9325dc3e54a8d82cb44d608",
+      "production_renderer_matches_tested": true,
+      "single_node_admin_test": "passed",
+      "cluster_nodes": 5,
+      "cluster_admin_tests": "passed",
+      "preserved_cookie": "passed",
+      "coordinator_cookie_adoption": "passed",
+      "crypto_tls": "passed",
+      "scout_counts": {
+        "CRITICAL": 1,
+        "HIGH": 8,
+        "MEDIUM": 3,
+        "LOW": 34,
+        "UNSPECIFIED": 0
+      },
+      "openssl_cves_still_reported": [
+        "CVE-2026-75803",
+        "CVE-2026-54874",
+        "CVE-2026-63072",
+        "CVE-2026-63076"
+      ]
+    },
+    {
+      "image_tag": "3.4.1-debian-12-otp26",
+      "platform": "linux/amd64",
+      "status": "passed",
+      "image": "openriak-minimal-validation/openriak-kv:3.4.1-debian-12-otp26-20260908t081203.498501z",
+      "local_image_id": "sha256:42bab79039d0eab1bf70b07036dea4f9e6da8fd62c19eea3beb2f5e7790ccb48",
+      "size_bytes": 130900012,
+      "packages": {
+        "libssl3": "3.0.22-0openriak1~deb12u1",
+        "openssl": "3.0.22-0openriak1~deb12u1"
+      },
+      "validation_report": "tools/cache/openriak-docker-minimal-validation/20260908T081203.498501Z/3.4.1/3.4.1-debian-12-otp26/validation.json",
+      "validation_report_sha256": "aa0c419f071e8936a08819307af8139aa9af6a4c0c13c861cf1cd64860edb145",
+      "integration_report": "tools/cache/openriak-docker-minimal-validation/20260908T081203.498501Z/3.4.1/3.4.1-debian-12-otp26/platforms/linux-amd64/report.json",
+      "dockerfile_sha256": "40bfba791f2f84f5b2595078ced09aa9d904f2c977e583bebe0c0f00db78c405",
+      "production_renderer_matches_tested": true,
+      "single_node_admin_test": "passed",
+      "cluster_nodes": 5,
+      "cluster_admin_tests": "passed",
+      "preserved_cookie": "passed",
+      "coordinator_cookie_adoption": "passed",
+      "crypto_tls": "passed",
+      "scout_counts": {
+        "CRITICAL": 1,
+        "HIGH": 8,
+        "MEDIUM": 3,
+        "LOW": 34,
+        "UNSPECIFIED": 0
+      },
+      "openssl_cves_still_reported": [
+        "CVE-2026-75803",
+        "CVE-2026-54874",
+        "CVE-2026-63072",
+        "CVE-2026-63076"
+      ]
+    }
+  ],
+  "published": false,
+  "scanner_note": "Scout identifies the installed backport version, but Debian advisories still match affected_version >0 with fixed_version 'not fixed'. Raw findings are retained.",
+  "maintenance_note": "OpenRiak-maintained OpenSSL 3.0 backport. Public upstream support ended 2026-09-07; revisit when Debian supplies equivalent fixes."
+}

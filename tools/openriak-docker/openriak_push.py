@@ -26,16 +26,21 @@ from openriak_defaults import DEFAULT_TIMEOUT_SECONDS
 from openriak_cve_storage import write_report
 
 
-def configure_parser(parser):
-    selection = parser.add_mutually_exclusive_group(required=True)
-    selection.add_argument('--version', action='append', dest='versions')
-    selection.add_argument('--all', action='store_true')
-    parser.add_argument('--yes', action='store_true', help='Required with --all, except --whatif')
-    parser.add_argument('--os-id', help='Select an OS group, including all its architectures')
-    parser.add_argument('--otp')
-    parser.add_argument('--namespace', help='Filter approvals by their recorded primary namespace')
+def configure_parser(parser, *, selection=True):
+    if selection:
+        selected = parser.add_mutually_exclusive_group(required=True)
+        selected.add_argument('--version', action='append', dest='versions')
+        selected.add_argument('--all', action='store_true')
+        parser.add_argument('--yes', action='store_true', help='Required with --all, except --whatif')
+        parser.add_argument('--os-id', help='Select an OS group, including all its architectures')
+        parser.add_argument('--otp')
+    else:
+        parser.set_defaults(all=False, versions=None, yes=False, os_id=None, otp=None)
+    parser.add_argument('--namespace', help='Filter approvals by their recorded primary namespace' if selection
+                        else 'Primary namespace (default: openriak)')
     parser.add_argument('--extra-namespace', action='append', default=[], help='Add every approved alias under this namespace (repeatable)')
-    parser.add_argument('--cache-root', type=Path, help='Existing cache/output directory (default: tools/cache/openriak-docker-multiarch)')
+    parser.add_argument('--cache-root', *([] if selection else ['--output']), type=Path, help='Cache/output parent (default: tools/cache/' +
+                        ('openriak-docker-multiarch)' if selection else 'openriak-docker-bases)'))
     parser.add_argument('--reports-dir', type=Path, help='Report parent directory (default: CACHE_ROOT/pushes)')
     parser.add_argument('--wait-seconds', type=float, default=5, help='Wait once after all uploads before scanning (default: 5)')
     parser.add_argument('--scan-retries', type=int, default=3, help='Additional attempts after a failed Scout command (default: 3)')
@@ -379,7 +384,7 @@ def scan_image(plan, report, options, tool, save):
     save()
 
 
-def main(options, tool):
+def main(options, tool, *, plan_loader=None):
     if options.all and not options.yes and not options.whatif:
         raise tool.DockerToolError('push --all requires --yes')
     if options.timeout <= 0 or options.scan_retries < 0 or any(not math.isfinite(n) or n < 0 for n in (options.wait_seconds, options.scan_retry_delay)):
@@ -389,7 +394,7 @@ def main(options, tool):
             tool.extra_namespace(namespace)
         except argparse.ArgumentTypeError as error:
             raise tool.DockerToolError(str(error)) from error
-    root, plans, skipped, blocked = make_plan(options, tool)
+    root, plans, skipped, blocked = (plan_loader or make_plan)(options, tool)
     for item in skipped:
         print(f"{tool.log_timestamp()} SKIPPED {item['image']}: {item['reason']}", flush=True)
     for item in blocked:
@@ -420,7 +425,7 @@ def main(options, tool):
                                   'Nothing was pushed.')
     directory = (options.reports_dir or root / 'pushes').expanduser().resolve() / tool.run_id()
     directory.mkdir(parents=True, exist_ok=False)
-    summary = {'schema_version': 1, 'operation': 'push_and_scan', 'product': 'openriak-kv',
+    summary = {'schema_version': 1, 'operation': 'push_and_scan', 'product': getattr(options, 'product', 'openriak-kv'),
                'started_at': tool.isoformat(), 'finished_at': None, 'pid': os.getpid(), 'status': 'running',
                'settings': {'wait_seconds': options.wait_seconds, 'scan_retries': options.scan_retries,
                             'scan_retry_delay': options.scan_retry_delay, 'timeout': options.timeout},
@@ -428,7 +433,7 @@ def main(options, tool):
     jobs = []
     for plan in plans:
         path = directory / plan['version'] / plan['image_tag'] / 'cve-report.json'
-        report = {'schema_version': 1, 'operation': 'push_and_scan', 'product': 'openriak-kv',
+        report = {'schema_version': 1, 'operation': 'push_and_scan', 'product': getattr(options, 'product', 'openriak-kv'),
                   'started_at': tool.isoformat(), 'finished_at': None, 'status': 'pending',
                   'source': plan, 'tools': versions, 'settings': summary['settings'],
                   'pushes': [], 'scans': {}, 'scan_status': 'pending', 'error': None}

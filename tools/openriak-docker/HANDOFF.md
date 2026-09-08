@@ -395,7 +395,7 @@ nohup sudo -n tools/openriak-docker/openriak-docker refresh \
 Follow it with:
 
 ```sh
-tail -f tools/cache/openriak-docker/refresh-3.4.0-3.4.1.log
+tail -n 100 -f tools/cache/openriak-docker/refresh-3.4.0-3.4.1.log
 ```
 
 To stop only the matrix worker cleanly:

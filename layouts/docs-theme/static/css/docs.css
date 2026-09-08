@@ -428,14 +428,18 @@ button, select, input { border: 1px solid var(--line); border-radius: 3px; backg
 .download-cve-toggle:hover, .download-cve-toggle[aria-expanded="true"] { background: var(--panel-cool); border-radius: 3px; }
 .download-cve-toggle:focus-visible, .download-cve-details:focus-visible { outline: 2px solid var(--orange); outline-offset: 3px; }
 .download-cve-row[hidden] { display: none; }
-.download-cve-panel { padding: .65rem .75rem; border: 1px solid var(--line); border-radius: 3px; background: var(--panel-cool); }
+.download-cve-panel { padding: .65rem .75rem; border: 1px solid var(--line); border-radius: 3px; background: var(--panel-cool); white-space: normal; overflow-wrap: anywhere; }
 .download-cve-panel p { margin: 0 0 .5rem; font-size: .85rem; }
 .download-cve-heading { display: flex; flex-wrap: wrap; gap: .5rem; align-items: baseline; }
 .download-cve-heading time, .download-cve-table small { color: var(--muted); font-size: .75rem; }
 .docker-downloads-table .download-cve-table { width: 100%; min-width: 29rem; border-collapse: collapse; }
 .docker-downloads-table .download-cve-table th, .docker-downloads-table .download-cve-table td { width: auto; padding: .45rem .5rem; white-space: normal; }
+.docker-downloads-table .download-cve-table th:nth-child(2), .docker-downloads-table .download-cve-table td:nth-child(2) { min-width: 5.5rem; white-space: nowrap; }
 .docker-downloads-table .download-cve-table td:nth-child(3) { min-width: 9rem; }
 .download-cve-id { display: flex; align-items: center; gap: .25rem; }
+.download-cve-excluded s, .download-cve-excluded .download-cve-severity { text-decoration: line-through; text-decoration-thickness: 2px; }
+.download-cve-excluded .download-cve-severity { background: var(--panel-cool); color: var(--muted); }
+.download-cve-assessment { margin-top: .2rem; font-size: .8rem; line-height: 1.4; }
 .docker-downloads-table .download-cve-id code { white-space: nowrap; }
 .download-cve-severity { display: inline-block; padding: .15rem .4rem; border-radius: 3px; background: #e5e7eb; color: #24292f; white-space: nowrap; font-weight: 700; font-size: .8rem; font-variant-numeric: tabular-nums; }
 .severity-critical { background: #7f1d1d; color: #fff; }

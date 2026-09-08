@@ -1,0 +1,55 @@
+{
+  "schema_version": 1,
+  "description": "Validated runtime filesystem strategies. OS/package targets still come exclusively from documentation metadata.",
+  "releases": {
+    "rhel": {
+      "9": {
+        "strategy": "rpm-root",
+        "release_package": "redhat-release"
+      },
+      "8": {
+        "strategy": "rpm-root",
+        "release_package": "redhat-release"
+      }
+    },
+    "centos": {
+      "8": {
+        "strategy": "rpm-root",
+        "release_package": "centos-stream-release"
+      },
+      "9": {
+        "strategy": "rpm-root",
+        "release_package": "centos-stream-release"
+      }
+    },
+    "debian": {
+      "12": {
+        "strategy": "clean-root",
+        "openssl_backport": "3.0.22",
+        "base_image": "debian:bookworm-slim-for-openriak",
+        "libblkid_backport": "2.38.1-5+deb12u3+openriak1",
+        "package_tools_image": "debian:bookworm-slim@sha256:88200866dfff7ea7f5cbcb6ec7c8a701889efe6fe859fe64d6990e4b07ea4171"
+      }
+    },
+    "fedora": {
+      "29": {
+        "strategy": "rpm-root",
+        "release_package": "fedora-release"
+      }
+    },
+    "rocky": {
+      "8": {
+        "strategy": "rpm-root",
+        "release_package": "rocky-release"
+      }
+    },
+    "suse": {
+      "15-sp4": {
+        "strategy": "clean-root"
+      },
+      "16.0": {
+        "strategy": "clean-root"
+      }
+    }
+  }
+}

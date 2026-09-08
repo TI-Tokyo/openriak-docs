@@ -1,0 +1,105 @@
+{
+  "artifacts": {},
+  "base_image": {
+    "pinned": "debian:bookworm-slim@sha256:88200866dfff7ea7f5cbcb6ec7c8a701889efe6fe859fe64d6990e4b07ea4171",
+    "requested": "debian:bookworm-slim",
+    "resolved_at": "2026-09-08T06:48:59Z"
+  },
+  "cleanup_errors": [
+    "Cleanup command failed: /usr/bin/docker image rm openriak-minimal-validation/openriak-kv:test-3.4.0-debian-12-otp24-linux-amd64-20260908t064859.112815z; see /home/peter/GitHub/TI-Tokyo/openriak-docs/tools/cache/openriak-docker-minimal-validation/20260908T064854.842882Z/3.4.0/3.4.0-debian-12-otp24/platforms/linux-amd64/runs/20260908T064859.112815Z/logs/remove-test-image.log"
+  ],
+  "error": {
+    "message": "Command failed with exit code 1: /usr/bin/docker buildx build --builder openriak-kv-multiarch --load --platform linux/amd64 --pull=false --tag openriak-minimal-validation/openriak-kv:test-3.4.0-debian-12-otp24-linux-amd64-20260908t064859.112815z --file /home/peter/GitHub/TI-Tokyo/openriak-docs/tools/cache/openriak-docker-minimal-validation/20260908T064854.842882Z/3.4.0/3.4.0-debian-12-otp24/platforms/linux-amd64/runs/20260908T064859.112815Z/Dockerfile /home/peter/GitHub/TI-Tokyo/openriak-docs/tools/cache/openriak-docker-minimal-validation/20260908T064854.842882Z/3.4.0/3.4.0-debian-12-otp24/platforms/linux-amd64/runs/20260908T064859.112815Z (see /home/peter/GitHub/TI-Tokyo/openriak-docs/tools/cache/openriak-docker-minimal-validation/20260908T064854.842882Z/3.4.0/3.4.0-debian-12-otp24/platforms/linux-amd64/runs/20260908T064859.112815Z/logs/image-build.log): ERROR: failed to build: failed to solve: process \"/bin/sh -c set -eu\\napt-get update\\nDEBIAN_FRONTEND=noninteractive apt-get dist-upgrade -y --no-install-recommends\\nDEBIAN_FRONTEND=noninteractive apt-get install -y --no-install-recommends build-essential debhelper m4 bc dpkg-dev ca-certificates\\nmkdir /build\\ntar -xzf /sources/openssl.tar.gz -C /build\\ncd /build/openssl-3.0.22\\ntar -xJf /sources/debian.tar.xz\\n# Retain Debian configuration/ABI/build patches. The subsequent security patches\\n# in the 3.0.20 packaging are already included in upstream 3.0.22.\\ncat > debian/patches/series <<'OPENRIAK_DEBIAN_PATCHES'\\ndebian-targets.patch\\nman-section.patch\\nno-symbolic.patch\\npic.patch\\nc_rehash-compat.patch\\nConfigure-allow-to-enable-ktls-if-target-does-not-start-w.patch\\nRemove-the-provider-section.patch\\nconf-Serialize-allocation-free-of-ssl_names.patch\\nFix-tests-for-new-default-security-level.patch\\nOPENRIAK_DEBIAN_PATCHES\\nmv debian/changelog debian/changelog.distribution\\ncat > debian/changelog <<'OPENRIAK_OPENSSL_CHANGELOG'\\nopenssl (3.0.22-0openriak1~deb12u1) bookworm; urgency=high\\n\\n  * OpenRiak-maintained backport of upstream OpenSSL 3.0.22 security fixes.\\n  * Preserve Bookworm library names, symbol checks, configuration and packaging.\\n  * Retain Debian distribution patches; omit security patches merged upstream.\\n\\n -- OpenRiak <packages@openriak.org>  Tue, 08 Sep 2026 00:00:00 +0000\\n\\nOPENRIAK_OPENSSL_CHANGELOG\\ncat debian/changelog.distribution >> debian/changelog\\n# Debian's static and shared OpenSSL test suites and ABI symbol checks must pass.\\n# Limit build parallelism to avoid exhausting memory on multi-image workers.\\nDEB_BUILD_OPTIONS='parallel=4 terse' dpkg-buildpackage -b -us -uc -Pnoudeb -j4\\nmkdir /packages\\ncp /build/libssl3_3.0.22-0openriak1~deb12u1_*.deb /packages/\\ncp /build/openssl_3.0.22-0openriak1~deb12u1_*.deb /packages/\\nsha256sum /packages/*.deb > /packages/SHA256SUMS\\n\" did not complete successfully: exit code: 2",
+    "type": "DockerToolError"
+  },
+  "finished_at": "2026-09-08T07:02:34Z",
+  "generation": {
+    "cluster_nodes": 5,
+    "distributed_cookie": "openriak-78fcbfd3a313d336efddd70cbc6b3b6b"
+  },
+  "identity": {
+    "namespace": "openriak-minimal-validation",
+    "source": "https://github.com/OpenRiak/openriak-docs",
+    "url": "https://openriak.org",
+    "vendor": "OpenRiak"
+  },
+  "image": "openriak-minimal-validation/openriak-kv:3.4.0-debian-12-otp24",
+  "metadata_sources": [
+    "content/openriak-kv/metadata/3.4.0/supported-os.json",
+    "content/openriak-kv/metadata/3.4.0/downloads.json"
+  ],
+  "network": {
+    "address_assignment": "docker",
+    "node_host": "node-01.cluster-a.openriak",
+    "riak_node_name": "openriak-kv@node-01.cluster-a.openriak"
+  },
+  "node": "openriak-kv-3.4.0-debian-12-otp24-node",
+  "package": {
+    "checksum": {
+      "algorithm": "sha256",
+      "value": "7563dd2574285d2fece2d36baa1222ef006db9dd4ae78d372ce974bfb6e116c3"
+    },
+    "filename": "riak_3.4.0-OTP24_amd64.deb",
+    "format": "deb",
+    "url": "https://files.tiot.jp/riak/kv/3.4/3.4.0/debian/12/riak_3.4.0-OTP24_amd64.deb"
+  },
+  "ports": {
+    "http": 8098,
+    "protobuf": 8087
+  },
+  "product": "openriak-kv",
+  "run_id": "20260908T064859.112815Z",
+  "schema_version": 4,
+  "started_at": "2026-09-08T06:48:59Z",
+  "status": "failed",
+  "steps": [
+    {
+      "duration_seconds": 0.0,
+      "finished_at": "2026-09-08T06:48:59Z",
+      "name": "generate_artifacts",
+      "started_at": "2026-09-08T06:48:59Z",
+      "status": "passed"
+    },
+    {
+      "duration_seconds": 0.249,
+      "finished_at": "2026-09-08T06:48:59Z",
+      "name": "validate_compose_artifacts",
+      "started_at": "2026-09-08T06:48:59Z",
+      "status": "passed"
+    },
+    {
+      "duration_seconds": 779.589,
+      "error": "Command failed with exit code 1: /usr/bin/docker buildx build --builder openriak-kv-multiarch --load --platform linux/amd64 --pull=false --tag openriak-minimal-validation/openriak-kv:test-3.4.0-debian-12-otp24-linux-amd64-20260908t064859.112815z --file /home/peter/GitHub/TI-Tokyo/openriak-docs/tools/cache/openriak-docker-minimal-validation/20260908T064854.842882Z/3.4.0/3.4.0-debian-12-otp24/platforms/linux-amd64/runs/20260908T064859.112815Z/Dockerfile /home/peter/GitHub/TI-Tokyo/openriak-docs/tools/cache/openriak-docker-minimal-validation/20260908T064854.842882Z/3.4.0/3.4.0-debian-12-otp24/platforms/linux-amd64/runs/20260908T064859.112815Z (see /home/peter/GitHub/TI-Tokyo/openriak-docs/tools/cache/openriak-docker-minimal-validation/20260908T064854.842882Z/3.4.0/3.4.0-debian-12-otp24/platforms/linux-amd64/runs/20260908T064859.112815Z/logs/image-build.log): ERROR: failed to build: failed to solve: process \"/bin/sh -c set -eu\\napt-get update\\nDEBIAN_FRONTEND=noninteractive apt-get dist-upgrade -y --no-install-recommends\\nDEBIAN_FRONTEND=noninteractive apt-get install -y --no-install-recommends build-essential debhelper m4 bc dpkg-dev ca-certificates\\nmkdir /build\\ntar -xzf /sources/openssl.tar.gz -C /build\\ncd /build/openssl-3.0.22\\ntar -xJf /sources/debian.tar.xz\\n# Retain Debian configuration/ABI/build patches. The subsequent security patches\\n# in the 3.0.20 packaging are already included in upstream 3.0.22.\\ncat > debian/patches/series <<'OPENRIAK_DEBIAN_PATCHES'\\ndebian-targets.patch\\nman-section.patch\\nno-symbolic.patch\\npic.patch\\nc_rehash-compat.patch\\nConfigure-allow-to-enable-ktls-if-target-does-not-start-w.patch\\nRemove-the-provider-section.patch\\nconf-Serialize-allocation-free-of-ssl_names.patch\\nFix-tests-for-new-default-security-level.patch\\nOPENRIAK_DEBIAN_PATCHES\\nmv debian/changelog debian/changelog.distribution\\ncat > debian/changelog <<'OPENRIAK_OPENSSL_CHANGELOG'\\nopenssl (3.0.22-0openriak1~deb12u1) bookworm; urgency=high\\n\\n  * OpenRiak-maintained backport of upstream OpenSSL 3.0.22 security fixes.\\n  * Preserve Bookworm library names, symbol checks, configuration and packaging.\\n  * Retain Debian distribution patches; omit security patches merged upstream.\\n\\n -- OpenRiak <packages@openriak.org>  Tue, 08 Sep 2026 00:00:00 +0000\\n\\nOPENRIAK_OPENSSL_CHANGELOG\\ncat debian/changelog.distribution >> debian/changelog\\n# Debian's static and shared OpenSSL test suites and ABI symbol checks must pass.\\n# Limit build parallelism to avoid exhausting memory on multi-image workers.\\nDEB_BUILD_OPTIONS='parallel=4 terse' dpkg-buildpackage -b -us -uc -Pnoudeb -j4\\nmkdir /packages\\ncp /build/libssl3_3.0.22-0openriak1~deb12u1_*.deb /packages/\\ncp /build/openssl_3.0.22-0openriak1~deb12u1_*.deb /packages/\\nsha256sum /packages/*.deb > /packages/SHA256SUMS\\n\" did not complete successfully: exit code: 2",
+      "finished_at": "2026-09-08T07:02:34Z",
+      "name": "build_image",
+      "started_at": "2026-09-08T06:48:59Z",
+      "status": "failed"
+    }
+  ],
+  "target": {
+    "architecture": "amd64",
+    "docker_platform": "linux/amd64",
+    "download_id": "otp24-amd64",
+    "os_family": "debian",
+    "os_id": "debian-12-amd64",
+    "os_name": "Debian 12",
+    "os_release": "12",
+    "otp": "24",
+    "version": "3.4.0"
+  },
+  "tests": {},
+  "volumes": {
+    "config": {
+      "container": "/etc/riak",
+      "default": "./openriak-kv-3.4.0-debian-12-otp24-node/config"
+    },
+    "data": {
+      "container": "/var/lib/riak",
+      "default": "./openriak-kv-3.4.0-debian-12-otp24-node/data"
+    },
+    "logs": {
+      "container": "/var/log/riak",
+      "default": "./openriak-kv-3.4.0-debian-12-otp24-node/logs"
+    }
+  }
+}

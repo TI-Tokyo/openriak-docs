@@ -31,13 +31,16 @@ Other OS bases or package dependencies may already include curl/libcurl; these
 are not forcibly removed. Existing cached images require regeneration and
 retesting to adopt the dependency change.
 
-Every generated OS installation stage updates existing OS packages before
+The standard OS installation stages update existing OS packages before
 installing OpenRiak KV: Alpine uses `apk upgrade`, Debian/Ubuntu use
 `apt-get update` and `apt-get dist-upgrade`, and RPM images use the available
 `dnf`, `microdnf`, `yum`, or `zypper` update command with refreshed repository
 metadata. Updates stay within the base image's configured release repositories;
 they do not switch OS releases. Archived releases can only receive updates
 available in their archives. Update failures fail the build.
+For releases using the validated `rpm-root` strategy described below, DNF instead
+installs current runtime packages into an empty filesystem. The full base image
+supplies installer tools, and its layers do not become part of the runtime.
 
 Amazon Linux 2023 uses `dnf --releasever=latest` for upgrades and dependency
 installation so an older base image's repository snapshot cannot hold back
@@ -52,9 +55,13 @@ review. RPM dependency checks remain enabled during removal. Derived images
 needing SUSE host-entitlement integration must reinstall the helper; ordinary
 OpenRiak KV startup does not require it. OS package databases and runtime
 dependencies remain present. Alpine continues to retain coreutils.
-Removal is verified in the running container and RPM database. Scout can still
-report the helper from the inherited SUSE base layer (observed on 15 SP4 and 16.0 during
-validation); this is not a guarantee that the published Scout count becomes zero.
+Removal is verified in the running container and RPM database. Validated SUSE
+releases also use the `clean-root` strategy below, so the removed helper cannot
+remain in inherited image layers. The amd64 prototypes produced zero Scout
+findings. Older approved images can still report the deleted helper from their
+base layer; adopting the new layout requires regeneration, rebuilding and a new
+scan. Full results and limitations are in the
+[minimal-runtime validation report](reports/minimal-runtime-validation-2026-09-08.md).
 
 Package updates address fixes available from the selected repositories. They do
 not fix unsupported OS releases, vendor-deferred vulnerabilities, or every
@@ -68,9 +75,10 @@ are retained until explicitly refreshed. An immutable base digest pins the base
 image, but repository package updates can change between fresh builds.
 
 Package downloads are checksum-verified in separate `FROM scratch` stages.
-The installation stage uses a temporary read-only BuildKit bind mount, then
-copies, installs, and removes the package within one `RUN`. The final image
-inherits the OS and installed files, without the downloaded package layer.
+The installation stage uses a temporary read-only BuildKit bind mount. Standard
+installers copy, install, and remove the package within one `RUN`; `rpm-root`
+installers consume the mounted package directly. The final image contains the
+OS runtime and installed files, without the downloaded package layer.
 RPM installation also removes `/var/cache/dnf`, `/var/cache/yum`, and
 `/var/cache/zypp` before the installation layer is saved, including caches left
 by the switch from `microdnf` to `dnf`. Debian/Ubuntu run `apt-get clean` and
@@ -93,7 +101,7 @@ tools/openriak-docker/openriak-docker refresh \
 ```
 
 `--nohup` starts a detached worker and returns immediately. It prints the worker
-PID, the absolute log path, a `tail -f` command, and a `kill -TERM` command for
+PID, the absolute log path, a `tail -n 100 -f` command, and a `kill -TERM` command for
 graceful shutdown. Do not add shell redirection or `&`; the tool handles both.
 Standard output and errors go to the same log with unbuffered Python output.
 The worker survives terminal hangups and runs in its own session.
@@ -352,7 +360,7 @@ refresh. A passed group skipped by a normal refresh remains skipped; use
 `--do-not-test` to rebuild it and add the extra namespace. Additional tags are
 recorded in the build report, not added to the original test approval.
 
-To follow a background run, use the exact `tail -f` command printed by
+To follow a background run, use the exact `tail -n 100 -f` command printed by
 `--nohup`. Ctrl-C stops the log viewer. To stop the worker gracefully, use the
 printed `kill -TERM PID` command.
 
@@ -409,6 +417,156 @@ as SUSE service packs, and `alias` reuses another family's mapping. Every image
 must have an explicit release tag; `latest` is rejected. The selected base tag
 is part of the cache inputs, so changed mappings require an affected target to
 be regenerated and retested. Editing this file does not add package targets.
+
+Runtime filesystem construction is configured separately in
+[`runtime-images.json`](runtime-images.json). Only releases that have passed
+the prototype integration tests are enabled. Target discovery and base-image
+selection still come from the existing metadata and base-image configuration.
+
+- `rpm-root` installs release identity, runtime dependencies and the official
+  OpenRiak KV RPM into an empty filesystem, then copies it into `FROM scratch`.
+  It retains the RPM database and `/usr/share/openriak-build/runtime-packages.txt`.
+  Python, Perl, pip, setuptools and package-manager executables are excluded;
+  unused libstdc++ Python debugger helpers are removed. Update these runtime
+  images by rebuilding, since they do not contain DNF or RPM executables.
+- `clean-root` installs into the selected OS image and exports its cleaned
+  filesystem into `FROM scratch`. This prevents deleted base-image files from
+  remaining in lower layers. Debian's runtime removes `perl-base` and dependent
+  administration tools through apt, including its explicit essential-package
+  removal flag. This is a runtime image, not a general-purpose Debian system.
+  SUSE removes its unused registration helper through RPM as described above.
+
+Debian 12 uses the reusable base image
+`{namespace}/debian:bookworm-slim-for-openriak`, selected by the `base_image` and
+`openssl_backport` settings in `runtime-images.json`. Its Dockerfile builds
+OpenSSL 3.0.22 from checksum-pinned upstream source using checksum-pinned
+Bookworm packaging. Debian configuration, shared-library names, symbol checks,
+and both upstream test suites are retained. Both suites must pass before the
+packages can reach the patched base; compiler and source files stay in discarded
+build stages. The base contains no OpenRiak KV package, Erlang cookie or node
+configuration. It retains Debian's package-management tools for reuse.
+
+OpenRiak KV Dockerfiles use that base by immutable digest, with the namespace
+selected for the KV image. They install the official OpenRiak KV package and
+bundled OTP without compiling OpenSSL themselves. Existing runtime cleanup,
+including Perl removal and export of the cleaned filesystem, remains in place.
+All metadata-backed Debian 12 KV/OTP variants use the same rule. The cleaned
+KV filesystem is still flattened, so removed files from the reusable base do
+not remain in lower KV image layers.
+
+A test-only patch checks actual loopback connectivity before running host-dependent
+IPv6 tests: some builders allow binding an IPv6 socket but block its traffic.
+The library keeps IPv6 enabled. For this backport, the upstream suites also
+passed without that test-only patch in a separate container. The compatibility
+probe exercises the packaged OTP over IPv4 and IPv6.
+
+The package version is `3.0.22-0openriak1~deb12u1`, identifying an OpenRiak-maintained
+backport, not an official Debian security update. A newer installed Debian package
+is retained. Revisit this override when Bookworm provides equivalent fixes; the
+upstream 3.0 public-support lifecycle ended on 7 September 2026. This update fixes
+known issues but does not provide ongoing upstream support. Source hashes and the
+retained Debian patches are recorded in `openriak_minimal.py` and the base Dockerfile.
+See the [Debian 12 OpenSSL compatibility results](reports/openssl-backport-validation-2026-09-08.md)
+for the three validated amd64 variants, crypto/TLS coverage and Scout caveat.
+
+### Reusable patched Debian base
+
+The [shared-base validation report](reports/patched-base-validation-2026-09-08.md)
+records the approved base and successful tests of all three Debian 12 amd64 KV variants.
+
+Build and publish the base **before** refreshing dependent Debian 12 KV images:
+
+```sh
+tools/openriak-docker/openriak-docker base refresh --namespace tiotjp
+tools/openriak-docker/openriak-docker base push --namespace tiotjp --whatif
+tools/openriak-docker/openriak-docker base push --namespace tiotjp
+```
+
+Then run the normal KV `refresh --force` with the same `--namespace`, followed
+by the normal KV `push`. The base is an independent image: `push --all` selects
+KV approvals only. Base publication is explicit through `base push`.
+
+`base refresh` pulls and pins `debian:bookworm-slim`, generates its Dockerfile,
+builds and checks every selected platform, saves an approved OCI archive, and
+applies the tags locally for the host platform. It preserves a matching passed
+cache. `base refresh --force` pulls the upstream release again and builds without
+cached layers, including package upgrades and the OpenSSL tests. Changed files,
+identity, platform selection or rendered content require `--force`.
+
+The base also backports the upstream CVE-2026-13595 partition-pointer fix into
+Bookworm's `libblkid1`, with version `2.38.1-5+deb12u3+openriak1`. Source,
+Debian packaging and upstream patch downloads are checksum-pinned. Debian's
+symbol checks, upstream blkid tests and a Valgrind regression run before export;
+the regression must also reject the unpatched source. Other util-linux packages
+retain Debian's versions: this backport does not claim to fix unrelated CVEs.
+
+GNU tar is removed from the final base and final Debian 12 KV filesystems.
+**This makes the base a runtime image, not a general-purpose Debian administration
+image:** dpkg's tar dependency is intentionally absent, and ordinary apt/dpkg
+installation needs tar bootstrapping first. The KV generator handles this by
+temporarily mounting `/usr/bin/tar` from the immutable `package_tools_image`
+configured for Debian 12 in `runtime-images.json`, installing tar for the package
+installation phase, and purging it again before flattening the runtime. The tools
+stage and mounted binary do not become runtime layers. Custom child Dockerfiles
+must follow the same pattern; do not use a mutable tools-image tag.
+
+Maintain the libblkid backport alongside the OpenSSL backport: review new Debian
+updates, rebase on newer Bookworm packaging when appropriate, update pinned source
+hashes and the tools-image digest deliberately, and rerun base and KV integration
+tests. A new base digest requires `refresh --force` for otherwise unchanged,
+already-passed KV images. Publication still requires explicit base and KV pushes.
+
+`base push` validates the saved Dockerfile, archive, and tested platform image
+IDs, then uses the same digest-preserving Skopeo upload and Docker Scout reporting
+as KV pushes. Failed, interrupted, generated-only or modified bases cannot be
+pushed. `base push --whatif` is read-only and does not contact Docker Hub.
+
+To generate files for review without building or publishing:
+
+```sh
+tools/openriak-docker/openriak-docker base generate \
+  --namespace tiotjp --vendor "TI Tokyo" \
+  --source "https://github.com/TI-Tokyo/openriak-docs" \
+  --url "https://www.tiot.jp/openriak-docs/" \
+  --output "$HOME/openriak-patched-bases"
+```
+
+Use `base refresh --force` with the same options to replace generated-only
+output with a built/tested approval. No base action updates documentation
+metadata or published KV downloads. Base reports are separate from the KV
+matrix, under `tools/cache/openriak-docker-bases/{namespace}/debian/bookworm-slim-for-openriak/`.
+Each run retains a report, Dockerfile and OCI archive; detailed logs and archive
+bytes are local diagnostics. Both refresh and push retain historical evidence.
+
+| Option | Applies to | Meaning |
+| --- | --- | --- |
+| `--namespace NAME` | All base actions | Primary namespace; default `openriak`. |
+| `--extra-namespace NAME` | All base actions | Additional namespaces for the same base tag; repeatable. |
+| `--vendor`, `--source`, `--url` | Generate/refresh | Same label defaults as KV images. Push uses the approved labels. |
+| `--platform PLATFORM` | Generate/refresh | Select a platform; repeatable. Defaults to the distinct Debian 12 platforms found in OpenRiak KV metadata. |
+| `--cache-root PATH`, `--output PATH` | All base actions | Alternate cache/output parent; namespace/repository/tag subdirectories are added. |
+| `--force` | Generate/refresh | Regenerate existing output; refresh also rebuilds/retests without cached layers. |
+| `--whatif` | All base actions | Inspect cache decisions or push preflight without network calls or writes. |
+| `--nohup` | All base actions | Run detached, printing the worker PID and timestamped log path. Ignored with `--whatif`. |
+| `--timeout SECONDS` | All base actions | Per-command timeout; default `1800`. |
+| `--wait-seconds SECONDS` | Push | Wait after uploads before Scout scans; default `5`. |
+| `--scan-retries N`, `--scan-retry-delay SECONDS` | Push | Retry failed Scout calls; defaults `3` retries and `5` seconds. |
+| `--reports-dir PATH` | Push | Alternate parent for timestamped push/CVE reports. |
+
+Later base updates do not change already pinned KV Dockerfiles. Publish the new
+base, then explicitly refresh/retest and push the dependent KV images. The
+OpenSSL maintenance and CVE-status caveats above still apply.
+
+Changes to the runtime strategy or renderer invalidate cached generation inputs.
+Existing approvals and downloads remain intact until an explicit refresh. The
+[prototype harness](experiments/README.md) tests only amd64, runs both the
+single-node and five-node suites, and saves full compressed Scout evidence
+without publishing images or replacing approved caches. These tests establish
+runtime compatibility; they do not prove that every reported CVE is exploitable
+or fixed. Vendor backports and absent affected components are assessed separately
+in [`cve-statuses.json`](cve-statuses.json), with evidence under `reports/`.
+
+### KV image aliases
 
 Image tag aliases are selected from the entire metadata set, independent of
 build order. For example:
@@ -810,26 +968,76 @@ severity and score and listing the affected architectures. The information icon
 opens Docker Scout's CVE page (the destination used by Docker Hub's CVE details);
 the external-link icon opens the affected image digest on Docker Hub.
 
-Edit `tools/openriak-docker/cve-statuses.json` to maintain our assessment:
+Edit `tools/openriak-docker/cve-statuses.json` to maintain our assessment. Entries
+can contain multiple boolean `flags`, a required explanation in `details`, and
+optional evidence conditions in `appliesTo`. For example:
 
 ```json
 {
+  "schemaVersion": 2,
   "defaultStatus": "Under investigation",
-  "cves": {
-    "CVE-2025-60876": "Waiting for an upstream package update"
-  },
+  "cves": {},
   "images": {
-    "tiotjp/openriak-kv:3.4.1-alpine-3.21-otp26": {
-      "CVE-2025-60876": "Reviewing impact on this image"
+    "tiotjp/openriak-kv:3.4.0-debian-12-otp24": {
+      "CVE-2026-75803": {
+        "flags": {
+          "mitigated": false,
+          "fixedByBackporting": true,
+          "notRelevant": false,
+          "falsePositive": true,
+          "unfixable": false
+        },
+        "details": "OpenSSL 3.0.22 contains the upstream fix. Our Debian backport retains it; Scout still matches all Bookworm versions. Older 3.0.20 packages remain affected.",
+        "appliesTo": {
+          "packageVersions": {
+            "openssl": [
+              "3.0.22-0openriak1~deb12u1"
+            ],
+            "libssl3": [
+              "3.0.22-0openriak1~deb12u1"
+            ]
+          }
+        }
+      }
     }
   }
 }
 ```
 
-These are example assessments, not findings of a completed review. Image keys
-are the full primary image tag; image-specific text takes precedence over the
-shared CVE text. Missing entries default to `Under investigation`. Status text
-is displayed as plain text, and status edits do not modify Scout evidence.
+| Flag | Displayed status | Included in the overall image rating? |
+| --- | --- | --- |
+| `mitigated` | Mitigated | Yes; reduced exposure is not proof that the CVE no longer applies. |
+| `fixedByBackporting` | Fixed by backporting | No, when the evidence conditions match. |
+| `notRelevant` | Not relevant | No, when the evidence conditions match. |
+| `falsePositive` | False positive | No, when the evidence conditions match. |
+| `unfixable` | Unfixable | Yes; lack of a fix does not remove the vulnerability. |
+
+Use `details` to explain the affected component, why the assessment applies,
+and the package version, advisory or runtime evidence supporting it. Do not mark
+an issue unfixable merely because no vendor fix is available yet. If no flags
+are true, `status` may supply a short label; otherwise it defaults to
+`Under investigation`. Unfixable takes precedence over exclusion flags.
+
+Image keys are full primary image tags. Image-specific entries override shared
+entries under `cves`. Legacy string entries remain supported but never exclude
+a finding. Missing entries use `defaultStatus`. All labels and details are
+rendered as plain text, not HTML.
+
+`appliesTo.packageVersions` maps Scout package names to exact reviewed versions.
+Every reported package and architecture for that CVE must match. This prevents
+a newer amd64 package from hiding an older arm64 package. No version comparison
+or automatic acceptance of later versions is performed. For assessments about
+files absent from a particular image, use `appliesTo.imageDigests`, a list of
+reviewed OCI image/index SHA-256 digests. If both conditions are present, both
+must match. Unmatched or missing evidence displays `Needs review` and retains
+the Scout rating. An entry without `appliesTo` is an explicit assessment for
+all reports covered by that image or shared CVE key.
+
+The panel always retains Scout's original severity and score. Excluded findings
+have their rating crossed out and do not contribute to the image badge. A
+complete scan with only excluded findings displays `None`; a partial scan still
+displays `Incomplete` or marks its remaining rating with an asterisk. Editing
+assessments never modifies the saved Scout evidence.
 
 Only reports matching the current passed image's approval run and artifact
 checksums are used. Each platform's scan digest must match the archive from a
@@ -1015,6 +1223,7 @@ All commands apply exclusively to **OpenRiak KV 3.4.0 and newer**.
 | `sync-static` | Republish existing passed caches and update Docker download metadata. No pulling, building or testing. |
 | `cleanup` | Preview or remove older generator artifacts and, optionally, associated Docker resources. |
 | `push` | Push passed OCI exports and all recorded aliases to Docker Hub, then save Scout CVE reports for every platform. |
+| `base generate`, `base refresh`, `base push` | Manage the reusable patched Debian base independently; see [base commands and options](#reusable-patched-debian-base). |
 
 `-h` or `--help` works globally and after every command:
 

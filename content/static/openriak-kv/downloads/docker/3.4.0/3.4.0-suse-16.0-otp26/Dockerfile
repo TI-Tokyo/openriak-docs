@@ -17,34 +17,29 @@ RUN --mount=type=bind,from=download-amd64,target=/opt/openriak-package,ro <<'OPE
 set -eu
 # Copy, install, and remove in this one layer; only the installed files persist.
 cp /opt/openriak-package/riak-3.4.0.OTP26-1.el9.x86_64.rpm /tmp/riak-3.4.0.OTP26-1.el9.x86_64.rpm
+# Update installed OS packages before installing the OpenRiak KV package.
 if command -v dnf >/dev/null 2>&1
 then
+    dnf upgrade --refresh -y
     dnf install -y bash ca-certificates glibc hostname libgcc libstdc++ ncurses-libs openssl-libs pam procps-ng shadow-utils sudo util-linux zlib tzdata
-    if ! command -v curl >/dev/null 2>&1
-    then
-        dnf install -y curl
-    fi
     dnf clean all
 elif command -v microdnf >/dev/null 2>&1
 then
+    microdnf upgrade --refresh -y
     microdnf install -y dnf
     dnf install -y bash ca-certificates glibc hostname libgcc libstdc++ ncurses-libs openssl-libs pam procps-ng shadow-utils sudo util-linux zlib tzdata
-    if ! command -v curl >/dev/null 2>&1
-    then
-        dnf install -y curl
-    fi
     dnf clean all
 elif command -v yum >/dev/null 2>&1
 then
+    yum clean expire-cache
+    yum update -y
     yum install -y bash ca-certificates glibc hostname libgcc libstdc++ ncurses-libs openssl-libs pam procps-ng shadow-utils sudo util-linux zlib tzdata
-    if ! command -v curl >/dev/null 2>&1
-    then
-        yum install -y curl
-    fi
     yum clean all
 elif command -v zypper >/dev/null 2>&1
 then
-    zypper --non-interactive install --no-recommends bash ca-certificates curl gawk glibc hostname libgcc_s1 libstdc++6 libncurses6 libopenssl3 pam procps shadow sudo util-linux libz1 timezone
+    zypper --non-interactive refresh
+    zypper --non-interactive update --no-recommends
+    zypper --non-interactive install --no-recommends bash ca-certificates gawk glibc hostname libgcc_s1 libstdc++6 libncurses6 libopenssl3 pam procps shadow sudo util-linux libz1 timezone
     zypper clean --all
 else
     echo 'No supported RPM package manager found' >&2
@@ -75,6 +70,14 @@ do
         break
     fi
 done
+# Repository registration is only needed during installation, not by OpenRiak KV.
+# Remove the helper and its embedded Go runtime after all repository operations.
+# Keep RPM dependency checks: fail rather than remove any dependent package.
+if rpm -q container-suseconnect >/dev/null 2>&1
+then
+    rpm -e container-suseconnect
+fi
+test ! -e /usr/bin/container-suseconnect
 # Clear caches from every package manager used in this installation layer.
 # In particular, dnf clean all does not clear microdnf's /var/cache/yum.
 rm -rf /var/cache/dnf /var/cache/yum /var/cache/zypp
@@ -114,7 +117,7 @@ ENV RIAK_NODE_HOST=""
 # Explicit nodename; empty derives openriak-kv@<hostname>.
 ENV RIAK_NODE_NAME=""
 # Initial cookie; existing riak.conf wins and new followers adopt the coordinator cookie.
-ENV RIAK_DISTRIBUTED_COOKIE="openriak-6aa2ac583f3462bd55efe9e93a8e5ea8"
+ENV RIAK_DISTRIBUTED_COOKIE="openriak-d6f2e02673d8d6c1489f91c568c30f20"
 # Partition count for a new ring; do not change on an existing cluster.
 ENV RIAK_RING_SIZE="8"
 # Storage backend used by OpenRiak KV.

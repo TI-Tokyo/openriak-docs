@@ -1,0 +1,1548 @@
+{
+  "reviewed_at": "2026-09-08",
+  "scope": "Metadata-backed OpenRiak KV images with Critical/High findings; amd64 only.",
+  "counts_note": "Distinct CVE IDs per image, using Scout severity. Raw counts are not reduced by manual status assessments.",
+  "size_note": "Docker image inspect Size, compared using baseline config digests from approved OCI archives. Bytes are uncompressed image-store sizes, not registry transfer sizes.",
+  "publication": "Isolated local validation only. Production approved files, cached reports and registry images were not replaced.",
+  "images": [
+    {
+      "image_tag": "3.4.0-centos-9-otp26",
+      "platform": "linux/amd64",
+      "strategy": {
+        "strategy": "rpm-root",
+        "release_package": "centos-stream-release"
+      },
+      "integration_status": "passed",
+      "baseline_report": "tools/cache/openriak-docker-multiarch/pushes/20260907T232344.134367Z/3.4.0/3.4.0-centos-9-otp26/cve-report.json",
+      "prototype_report": "tools/cache/openriak-docker-minimal-validation/20260908T011123.437241Z/3.4.0/3.4.0-centos-9-otp26/validation.json",
+      "prototype_image": "openriak-minimal-validation/openriak-kv:3.4.0-centos-9-otp26-20260908t011123.437241z",
+      "prototype_config_digest": "sha256:40af6ad61ff49a53ce6d78e06df047efa16556a805102cc32fed0d7a0a65bd3c",
+      "base_images": {
+        "linux/amd64": {
+          "requested": "quay.io/centos/centos:stream9",
+          "pinned": "quay.io/centos/centos:stream9@sha256:d323b7623e947245a8eb506fbb0ad0e55eb2ae2d2407b66741a15f372caf9bdc",
+          "resolved_at": "2026-09-08T01:11:27Z"
+        }
+      },
+      "before": {
+        "UNSPECIFIED": 4,
+        "LOW": 23,
+        "MEDIUM": 39,
+        "HIGH": 31,
+        "CRITICAL": 1
+      },
+      "after": {
+        "CRITICAL": 0,
+        "HIGH": 8,
+        "MEDIUM": 18,
+        "LOW": 14,
+        "UNSPECIFIED": 0
+      },
+      "baseline_image": {
+        "config_digest": "sha256:86b20871976d574c3d8904d67694fd3baa7c2c0c84e4521f1f03806f2c248348",
+        "size_bytes": 311242056
+      },
+      "prototype_size_bytes": 179651927,
+      "removed_cves": {
+        "CVE-2021-46059": "UNSPECIFIED",
+        "CVE-2023-2222": "UNSPECIFIED",
+        "CVE-2023-24593": "UNSPECIFIED",
+        "CVE-2023-25180": "UNSPECIFIED",
+        "CVE-2026-9530": "LOW",
+        "CVE-2025-7039": "LOW",
+        "CVE-2024-41965": "LOW",
+        "CVE-2021-3572": "LOW",
+        "CVE-2024-41957": "LOW",
+        "CVE-2022-1674": "LOW",
+        "CVE-2022-47007": "LOW",
+        "CVE-2022-47010": "LOW",
+        "CVE-2022-47011": "LOW",
+        "CVE-2026-5121": "MEDIUM",
+        "CVE-2023-45803": "MEDIUM",
+        "CVE-2024-29040": "MEDIUM",
+        "CVE-2025-11082": "MEDIUM",
+        "CVE-2025-11083": "MEDIUM",
+        "CVE-2025-14831": "MEDIUM",
+        "CVE-2025-9086": "MEDIUM",
+        "CVE-2025-45582": "MEDIUM",
+        "CVE-2026-3833": "MEDIUM",
+        "CVE-2026-44604": "MEDIUM",
+        "CVE-2026-78367": "MEDIUM",
+        "CVE-2026-84233": "MEDIUM",
+        "CVE-2025-15366": "MEDIUM",
+        "CVE-2025-15367": "MEDIUM",
+        "CVE-2026-26960": "MEDIUM",
+        "CVE-2025-12084": "MEDIUM",
+        "CVE-2026-51298": "MEDIUM",
+        "CVE-2025-13601": "MEDIUM",
+        "CVE-2026-26269": "MEDIUM",
+        "CVE-2026-48864": "MEDIUM",
+        "CVE-2026-84837": "MEDIUM",
+        "CVE-2026-4519": "HIGH",
+        "CVE-2026-33412": "HIGH",
+        "CVE-2026-4786": "HIGH",
+        "CVE-2026-15308": "HIGH",
+        "CVE-2026-27135": "HIGH",
+        "CVE-2026-33845": "HIGH",
+        "CVE-2026-33846": "HIGH",
+        "CVE-2026-4424": "HIGH",
+        "CVE-2026-59873": "HIGH",
+        "CVE-2026-59874": "HIGH",
+        "CVE-2026-73566": "HIGH",
+        "CVE-2025-68973": "HIGH",
+        "CVE-2026-43961": "HIGH",
+        "CVE-2026-24881": "HIGH",
+        "CVE-2026-6100": "HIGH",
+        "CVE-2026-34982": "HIGH",
+        "CVE-2026-51296": "HIGH",
+        "CVE-2026-24882": "HIGH",
+        "CVE-2026-34714": "HIGH",
+        "CVE-2026-23950": "HIGH",
+        "CVE-2026-51297": "HIGH",
+        "CVE-2026-51303": "HIGH",
+        "CVE-2026-51304": "HIGH",
+        "CVE-2026-51302": "CRITICAL"
+      },
+      "newly_reported_cves": {},
+      "remaining_critical_high": {
+        "CVE-2026-40356": {
+          "severity": "HIGH",
+          "status": "Fixed in installed krb5-libs 1.21.1-10.el9; verified against CentOS package sources. Scout still reports this version (reviewed 2026-09-08)."
+        },
+        "CVE-2026-54369": {
+          "severity": "HIGH",
+          "status": "Fixed in installed libacl 2.4.0-2.el9; verified against CentOS package sources. Scout still reports this version (reviewed 2026-09-08)."
+        },
+        "CVE-2026-54371": {
+          "severity": "HIGH",
+          "status": "Fixed in installed libattr 2.6.0-2.el9; verified against CentOS package sources. Scout still reports this version (reviewed 2026-09-08)."
+        },
+        "CVE-2026-4046": {
+          "severity": "HIGH",
+          "status": "Fixed in installed glibc 2.34-277.el9; verified against CentOS package sources. Scout still reports this version (reviewed 2026-09-08)."
+        },
+        "CVE-2026-45447": {
+          "severity": "HIGH",
+          "status": "Fixed in installed openssl-libs 1:3.5.8-1.el9; verified against CentOS package sources and OpenSSL 3.5.7 advisory. Scout still reports this version (reviewed 2026-09-08)."
+        },
+        "CVE-2026-22184": {
+          "severity": "HIGH",
+          "status": "Not affected: the vulnerable untgz example utility is absent; this finding does not affect the zlib shared library (reviewed 2026-09-08)."
+        },
+        "CVE-2022-1271": {
+          "severity": "HIGH",
+          "status": "Fixed in installed xz-libs 5.2.5-8.el9; verified against CentOS package sources. Scout still reports this version (reviewed 2026-09-08)."
+        },
+        "CVE-2026-0861": {
+          "severity": "HIGH",
+          "status": "Fixed in installed glibc 2.34-277.el9; verified against CentOS package sources. Scout still reports this version (reviewed 2026-09-08)."
+        }
+      }
+    },
+    {
+      "image_tag": "3.4.0-debian-12-otp24",
+      "platform": "linux/amd64",
+      "strategy": {
+        "strategy": "clean-root"
+      },
+      "integration_status": "passed",
+      "baseline_report": "tools/cache/openriak-docker-multiarch/pushes/20260907T232344.134367Z/3.4.0/3.4.0-debian-12-otp24/cve-report.json",
+      "prototype_report": "tools/cache/openriak-docker-minimal-validation/20260908T011123.437241Z/3.4.0/3.4.0-debian-12-otp24/validation.json",
+      "prototype_image": "openriak-minimal-validation/openriak-kv:3.4.0-debian-12-otp24-20260908t011123.437241z",
+      "prototype_config_digest": "sha256:bf5a022c71487d36d95cbad24fb3863eb04d474fef9b45cd4f18d370eaf1c852",
+      "base_images": {
+        "linux/amd64": {
+          "requested": "debian:bookworm-slim",
+          "pinned": "debian:bookworm-slim@sha256:88200866dfff7ea7f5cbcb6ec7c8a701889efe6fe859fe64d6990e4b07ea4171",
+          "resolved_at": "2026-09-08T01:11:27Z"
+        }
+      },
+      "before": {
+        "UNSPECIFIED": 5,
+        "LOW": 35,
+        "MEDIUM": 7,
+        "HIGH": 10,
+        "CRITICAL": 3
+      },
+      "after": {
+        "CRITICAL": 1,
+        "HIGH": 8,
+        "MEDIUM": 3,
+        "LOW": 34,
+        "UNSPECIFIED": 0
+      },
+      "baseline_image": {
+        "config_digest": "sha256:bb96cbff1b3a6c82bae2e239b7350a7d638d429b196c095aeb4252114a6203e2",
+        "size_bytes": 138863317
+      },
+      "prototype_size_bytes": 129119814,
+      "removed_cves": {
+        "CVE-2026-57432": "UNSPECIFIED",
+        "CVE-2026-57433": "UNSPECIFIED",
+        "CVE-2026-7017": "UNSPECIFIED",
+        "CVE-2011-4116": "LOW",
+        "CVE-2023-31486": "LOW",
+        "CVE-2026-48961": "LOW",
+        "CVE-2026-19487": "MEDIUM",
+        "CVE-2025-15649": "MEDIUM",
+        "CVE-2026-15534": "MEDIUM",
+        "CVE-2026-7010": "MEDIUM",
+        "CVE-2026-48962": "HIGH",
+        "CVE-2026-48959": "HIGH",
+        "CVE-2026-12087": "CRITICAL",
+        "CVE-2026-13221": "CRITICAL"
+      },
+      "newly_reported_cves": {},
+      "remaining_critical_high": {
+        "CVE-2026-78409": {
+          "severity": "HIGH",
+          "status": "Not affected: installed util-linux/libmount 2.38.1 predates the vulnerable detached-tree path. Upstream lists affected versions from 2.42; Scout still reports it (reviewed 2026-09-08)."
+        },
+        "CVE-2026-54874": {
+          "severity": "HIGH",
+          "status": "Not yet investigated"
+        },
+        "CVE-2026-63072": {
+          "severity": "HIGH",
+          "status": "Not yet investigated"
+        },
+        "CVE-2026-63076": {
+          "severity": "HIGH",
+          "status": "Not yet investigated"
+        },
+        "CVE-2026-78410": {
+          "severity": "HIGH",
+          "status": "Not yet investigated"
+        },
+        "CVE-2026-78408": {
+          "severity": "HIGH",
+          "status": "Not affected: installed util-linux 2.38.1 predates nsenter --join-cgroup (introduced in 2.40). Upstream explicitly excludes Debian 12; Scout/ Debian tracker still flag it (reviewed 2026-09-08)."
+        },
+        "CVE-2026-85091": {
+          "severity": "HIGH",
+          "status": "Under investigation: the report describes zlib 1.3.1.2\u20131.3.2 and gz_vacate, absent from installed 1.2.13 sources; Debian still flags this release. Awaiting applicability clarification (2026-09-08)."
+        },
+        "CVE-2026-76642": {
+          "severity": "HIGH",
+          "status": "Not yet investigated"
+        },
+        "CVE-2026-75803": {
+          "severity": "CRITICAL",
+          "status": "Not yet investigated"
+        }
+      }
+    },
+    {
+      "image_tag": "3.4.0-debian-12-otp26",
+      "platform": "linux/amd64",
+      "strategy": {
+        "strategy": "clean-root"
+      },
+      "integration_status": "passed",
+      "baseline_report": "tools/cache/openriak-docker-multiarch/pushes/20260907T232344.134367Z/3.4.0/3.4.0-debian-12-otp26/cve-report.json",
+      "prototype_report": "tools/cache/openriak-docker-minimal-validation/20260908T011123.437241Z/3.4.0/3.4.0-debian-12-otp26/validation.json",
+      "prototype_image": "openriak-minimal-validation/openriak-kv:3.4.0-debian-12-otp26-20260908t011123.437241z",
+      "prototype_config_digest": "sha256:4de22452f3e0d5e9b04deff06db1aa1e2a5ef12a39a7543cc63fe6f1f09b8742",
+      "base_images": {
+        "linux/amd64": {
+          "requested": "debian:bookworm-slim",
+          "pinned": "debian:bookworm-slim@sha256:88200866dfff7ea7f5cbcb6ec7c8a701889efe6fe859fe64d6990e4b07ea4171",
+          "resolved_at": "2026-09-08T01:18:04Z"
+        }
+      },
+      "before": {
+        "UNSPECIFIED": 5,
+        "LOW": 35,
+        "MEDIUM": 7,
+        "HIGH": 10,
+        "CRITICAL": 3
+      },
+      "after": {
+        "CRITICAL": 1,
+        "HIGH": 8,
+        "MEDIUM": 3,
+        "LOW": 34,
+        "UNSPECIFIED": 0
+      },
+      "baseline_image": {
+        "config_digest": "sha256:716414ee0df72705edbf50d2a58a7f0a3430515f80b6568bafd0eca820a2786c",
+        "size_bytes": 140551075
+      },
+      "prototype_size_bytes": 130807572,
+      "removed_cves": {
+        "CVE-2026-57432": "UNSPECIFIED",
+        "CVE-2026-57433": "UNSPECIFIED",
+        "CVE-2026-7017": "UNSPECIFIED",
+        "CVE-2011-4116": "LOW",
+        "CVE-2023-31486": "LOW",
+        "CVE-2026-48961": "LOW",
+        "CVE-2026-19487": "MEDIUM",
+        "CVE-2025-15649": "MEDIUM",
+        "CVE-2026-15534": "MEDIUM",
+        "CVE-2026-7010": "MEDIUM",
+        "CVE-2026-48962": "HIGH",
+        "CVE-2026-48959": "HIGH",
+        "CVE-2026-12087": "CRITICAL",
+        "CVE-2026-13221": "CRITICAL"
+      },
+      "newly_reported_cves": {},
+      "remaining_critical_high": {
+        "CVE-2026-78409": {
+          "severity": "HIGH",
+          "status": "Not affected: installed util-linux/libmount 2.38.1 predates the vulnerable detached-tree path. Upstream lists affected versions from 2.42; Scout still reports it (reviewed 2026-09-08)."
+        },
+        "CVE-2026-54874": {
+          "severity": "HIGH",
+          "status": "Not yet investigated"
+        },
+        "CVE-2026-63072": {
+          "severity": "HIGH",
+          "status": "Not yet investigated"
+        },
+        "CVE-2026-63076": {
+          "severity": "HIGH",
+          "status": "Not yet investigated"
+        },
+        "CVE-2026-78410": {
+          "severity": "HIGH",
+          "status": "Not yet investigated"
+        },
+        "CVE-2026-78408": {
+          "severity": "HIGH",
+          "status": "Not affected: installed util-linux 2.38.1 predates nsenter --join-cgroup (introduced in 2.40). Upstream explicitly excludes Debian 12; Scout/ Debian tracker still flag it (reviewed 2026-09-08)."
+        },
+        "CVE-2026-85091": {
+          "severity": "HIGH",
+          "status": "Under investigation: the report describes zlib 1.3.1.2\u20131.3.2 and gz_vacate, absent from installed 1.2.13 sources; Debian still flags this release. Awaiting applicability clarification (2026-09-08)."
+        },
+        "CVE-2026-76642": {
+          "severity": "HIGH",
+          "status": "Not yet investigated"
+        },
+        "CVE-2026-75803": {
+          "severity": "CRITICAL",
+          "status": "Not yet investigated"
+        }
+      }
+    },
+    {
+      "image_tag": "3.4.0-rhel-9-otp26",
+      "platform": "linux/amd64",
+      "strategy": {
+        "strategy": "rpm-root",
+        "release_package": "redhat-release"
+      },
+      "integration_status": "passed",
+      "baseline_report": "tools/cache/openriak-docker-multiarch/pushes/20260907T232344.134367Z/3.4.0/3.4.0-rhel-9-otp26/cve-report.json",
+      "prototype_report": "tools/cache/openriak-docker-minimal-validation/20260908T011123.437241Z/3.4.0/3.4.0-rhel-9-otp26/validation.json",
+      "prototype_image": "openriak-minimal-validation/openriak-kv:3.4.0-rhel-9-otp26-20260908t011123.437241z",
+      "prototype_config_digest": "sha256:21bd2dc328f1f1e2cd2a68a654627911d17d85c5f358a05533022e8577fd9e3d",
+      "base_images": {
+        "linux/amd64": {
+          "requested": "registry.access.redhat.com/ubi9/ubi:9.8",
+          "pinned": "registry.access.redhat.com/ubi9/ubi:9.8@sha256:25a147defd01e19674714f55d17538c8dbe55d8c305fa157ecc3f9c8977b05b6",
+          "resolved_at": "2026-09-08T01:18:55Z"
+        }
+      },
+      "before": {
+        "UNSPECIFIED": 1,
+        "LOW": 21,
+        "MEDIUM": 48,
+        "HIGH": 38,
+        "CRITICAL": 1
+      },
+      "after": {
+        "CRITICAL": 0,
+        "HIGH": 7,
+        "MEDIUM": 18,
+        "LOW": 12,
+        "UNSPECIFIED": 0
+      },
+      "baseline_image": {
+        "config_digest": "sha256:26ce737cec3f7cf8ab28c5bb382802d9538f0182c4744bee16c84fc3b27580bb",
+        "size_bytes": 287637288
+      },
+      "prototype_size_bytes": 146331686,
+      "removed_cves": {
+        "CVE-2023-2222": "UNSPECIFIED",
+        "CVE-2026-9530": "LOW",
+        "CVE-2025-7039": "LOW",
+        "CVE-2024-41965": "LOW",
+        "CVE-2021-3572": "LOW",
+        "CVE-2024-41957": "LOW",
+        "CVE-2022-1674": "LOW",
+        "CVE-2022-47007": "LOW",
+        "CVE-2022-47010": "LOW",
+        "CVE-2022-47011": "LOW",
+        "CVE-2026-5121": "MEDIUM",
+        "CVE-2023-45803": "MEDIUM",
+        "CVE-2024-29040": "MEDIUM",
+        "CVE-2024-37891": "MEDIUM",
+        "CVE-2026-25645": "MEDIUM",
+        "CVE-2024-47081": "MEDIUM",
+        "CVE-2025-11082": "MEDIUM",
+        "CVE-2025-11083": "MEDIUM",
+        "CVE-2025-14831": "MEDIUM",
+        "CVE-2025-50181": "MEDIUM",
+        "CVE-2025-9086": "MEDIUM",
+        "CVE-2024-35195": "MEDIUM",
+        "CVE-2025-45582": "MEDIUM",
+        "CVE-2023-32681": "MEDIUM",
+        "CVE-2026-59890": "MEDIUM",
+        "CVE-2026-3833": "MEDIUM",
+        "CVE-2024-3651": "MEDIUM",
+        "CVE-2026-45409": "MEDIUM",
+        "CVE-2026-44604": "MEDIUM",
+        "CVE-2026-78367": "MEDIUM",
+        "CVE-2026-84233": "MEDIUM",
+        "CVE-2025-15366": "MEDIUM",
+        "CVE-2025-15367": "MEDIUM",
+        "CVE-2026-26960": "MEDIUM",
+        "CVE-2025-12084": "MEDIUM",
+        "CVE-2026-51298": "MEDIUM",
+        "CVE-2025-13601": "MEDIUM",
+        "CVE-2026-26269": "MEDIUM",
+        "CVE-2026-48864": "MEDIUM",
+        "CVE-2026-84837": "MEDIUM",
+        "CVE-2026-4519": "HIGH",
+        "CVE-2026-33412": "HIGH",
+        "CVE-2026-4786": "HIGH",
+        "CVE-2023-43804": "HIGH",
+        "CVE-2024-6345": "HIGH",
+        "CVE-2026-15308": "HIGH",
+        "CVE-2026-27135": "HIGH",
+        "CVE-2026-33845": "HIGH",
+        "CVE-2026-33846": "HIGH",
+        "CVE-2026-4424": "HIGH",
+        "CVE-2026-59873": "HIGH",
+        "CVE-2026-59874": "HIGH",
+        "CVE-2026-73566": "HIGH",
+        "CVE-2025-47273": "HIGH",
+        "CVE-2025-68973": "HIGH",
+        "CVE-2026-43961": "HIGH",
+        "CVE-2026-24881": "HIGH",
+        "CVE-2026-6100": "HIGH",
+        "CVE-2026-34982": "HIGH",
+        "CVE-2026-44431": "HIGH",
+        "CVE-2026-51296": "HIGH",
+        "CVE-2026-24882": "HIGH",
+        "CVE-2026-34714": "HIGH",
+        "CVE-2022-40897": "HIGH",
+        "CVE-2026-23950": "HIGH",
+        "CVE-2025-66418": "HIGH",
+        "CVE-2025-66471": "HIGH",
+        "CVE-2026-21441": "HIGH",
+        "CVE-2026-51297": "HIGH",
+        "CVE-2026-51303": "HIGH",
+        "CVE-2026-51304": "HIGH",
+        "CVE-2026-51302": "CRITICAL"
+      },
+      "newly_reported_cves": {},
+      "remaining_critical_high": {
+        "CVE-2026-40356": {
+          "severity": "HIGH",
+          "status": "Fixed by vendor package: krb5-libs 1.21.1-10.el9_8 (RHSA-2026:19357)."
+        },
+        "CVE-2026-54369": {
+          "severity": "HIGH",
+          "status": "Fixed by vendor package: libacl 2.4.0-1.el9_8 (RHSA-2026:42736)."
+        },
+        "CVE-2026-54371": {
+          "severity": "HIGH",
+          "status": "Fixed by vendor package: libattr 2.6.0-1.el9_8 (RHSA-2026:60226)."
+        },
+        "CVE-2026-4046": {
+          "severity": "HIGH",
+          "status": "Fixed by vendor package: glibc 2.34-275.el9_8 supersedes RHSA-2026:20597."
+        },
+        "CVE-2026-45447": {
+          "severity": "HIGH",
+          "status": "Fixed by vendor package: openssl-libs 3.5.5-6.el9_8 supersedes RHSA-2026:25239."
+        },
+        "CVE-2026-22184": {
+          "severity": "HIGH",
+          "status": "Not affected: vulnerable untgz utility is absent; runtime zlib library is retained."
+        },
+        "CVE-2026-0861": {
+          "severity": "HIGH",
+          "status": "Fixed by vendor package: glibc 2.34-275.el9_8 supersedes RHSA-2026:2786."
+        }
+      }
+    },
+    {
+      "image_tag": "3.4.0-suse-16.0-otp26",
+      "platform": "linux/amd64",
+      "strategy": {
+        "strategy": "clean-root"
+      },
+      "integration_status": "passed",
+      "baseline_report": "tools/cache/openriak-docker-multiarch/pushes/20260907T232344.134367Z/3.4.0/3.4.0-suse-16.0-otp26/cve-report.json",
+      "prototype_report": "tools/cache/openriak-docker-minimal-validation/20260908T011123.437241Z/3.4.0/3.4.0-suse-16.0-otp26/validation.json",
+      "prototype_image": "openriak-minimal-validation/openriak-kv:3.4.0-suse-16.0-otp26-20260908t011123.437241z",
+      "prototype_config_digest": "sha256:643bd5de7665a4e5f957e0377ad3b18e06d35749bf7ebc60bddce57733662c19",
+      "base_images": {
+        "linux/amd64": {
+          "requested": "registry.suse.com/bci/bci-base:16.0",
+          "pinned": "registry.suse.com/bci/bci-base:16.0@sha256:5f69fcd8a54664891bb58f1f7767ac4884a67d7ab2617fa9da5fb624e13debf0",
+          "resolved_at": "2026-09-08T01:25:29Z"
+        }
+      },
+      "before": {
+        "MEDIUM": 2,
+        "HIGH": 4,
+        "CRITICAL": 1
+      },
+      "after": {
+        "CRITICAL": 0,
+        "HIGH": 0,
+        "MEDIUM": 0,
+        "LOW": 0,
+        "UNSPECIFIED": 0
+      },
+      "baseline_image": {
+        "config_digest": "sha256:8d6f4dfc8b59ac2a641c97a9c78155f9d9137655da5eea81f69a80ab7dfd01ec",
+        "size_bytes": 183434623
+      },
+      "prototype_size_bytes": 166239642,
+      "removed_cves": {
+        "CVE-2026-56860": "MEDIUM",
+        "CVE-2026-56858": "MEDIUM",
+        "CVE-2026-33818": "HIGH",
+        "CVE-2026-56853": "HIGH",
+        "CVE-2026-56859": "HIGH",
+        "CVE-2026-56862": "HIGH",
+        "CVE-2026-39821": "CRITICAL"
+      },
+      "newly_reported_cves": {},
+      "remaining_critical_high": {}
+    },
+    {
+      "image_tag": "3.4.1-centos-8-otp26",
+      "platform": "linux/amd64",
+      "strategy": {
+        "strategy": "rpm-root",
+        "release_package": "centos-stream-release"
+      },
+      "integration_status": "passed",
+      "baseline_report": "tools/cache/openriak-docker-multiarch/pushes/20260907T232344.134367Z/3.4.1/3.4.1-centos-8-otp26/cve-report.json",
+      "prototype_report": "tools/cache/openriak-docker-minimal-validation/20260908T011123.437241Z/3.4.1/3.4.1-centos-8-otp26/validation.json",
+      "prototype_image": "openriak-minimal-validation/openriak-kv:3.4.1-centos-8-otp26-20260908t011123.437241z",
+      "prototype_config_digest": "sha256:da6c075926e046ae37ae46b3c3c6ea4418ce1a13ae355425c6cf26b9ee855b40",
+      "base_images": {
+        "linux/amd64": {
+          "requested": "quay.io/centos/centos:stream8",
+          "pinned": "quay.io/centos/centos:stream8@sha256:20da069d4f8126c4517ee563e6e723d4cbe79ff62f6c4597f753478af91a09a3",
+          "resolved_at": "2026-09-08T01:26:36Z"
+        }
+      },
+      "before": {
+        "UNSPECIFIED": 1,
+        "LOW": 24,
+        "MEDIUM": 108,
+        "HIGH": 53,
+        "CRITICAL": 1
+      },
+      "after": {
+        "CRITICAL": 0,
+        "HIGH": 18,
+        "MEDIUM": 44,
+        "LOW": 16,
+        "UNSPECIFIED": 0
+      },
+      "baseline_image": {
+        "config_digest": "sha256:5b0fdf3cd00071112611863db952bb9018aaa69f4d892557558a95f37f016316",
+        "size_bytes": 286014953
+      },
+      "prototype_size_bytes": 142038395,
+      "removed_cves": {
+        "CVE-2023-2222": "UNSPECIFIED",
+        "CVE-2018-12699": "LOW",
+        "CVE-2022-38126": "LOW",
+        "CVE-2024-6501": "LOW",
+        "CVE-2024-4032": "LOW",
+        "CVE-2025-7039": "LOW",
+        "CVE-2023-29499": "LOW",
+        "CVE-2023-32611": "LOW",
+        "CVE-2023-32665": "LOW",
+        "CVE-2026-5121": "MEDIUM",
+        "CVE-2024-11168": "MEDIUM",
+        "CVE-2024-34397": "MEDIUM",
+        "CVE-2023-45803": "MEDIUM",
+        "CVE-2013-0340": "MEDIUM",
+        "CVE-2025-4373": "MEDIUM",
+        "CVE-2026-71227": "MEDIUM",
+        "CVE-2024-12243": "MEDIUM",
+        "CVE-2024-28182": "MEDIUM",
+        "CVE-2024-28834": "MEDIUM",
+        "CVE-2025-11083": "MEDIUM",
+        "CVE-2025-14831": "MEDIUM",
+        "CVE-2025-7546": "MEDIUM",
+        "CVE-2025-9086": "MEDIUM",
+        "CVE-2025-32414": "MEDIUM",
+        "CVE-2025-45582": "MEDIUM",
+        "CVE-2022-34903": "MEDIUM",
+        "CVE-2022-49043": "MEDIUM",
+        "CVE-2023-5981": "MEDIUM",
+        "CVE-2024-50602": "MEDIUM",
+        "CVE-2026-59890": "MEDIUM",
+        "CVE-2024-0450": "MEDIUM",
+        "CVE-2024-45492": "MEDIUM",
+        "CVE-2025-9714": "MEDIUM",
+        "CVE-2024-9287": "MEDIUM",
+        "CVE-2021-3445": "MEDIUM",
+        "CVE-2022-23990": "MEDIUM",
+        "CVE-2023-39615": "MEDIUM",
+        "CVE-2025-32988": "MEDIUM",
+        "CVE-2025-32990": "MEDIUM",
+        "CVE-2025-6395": "MEDIUM",
+        "CVE-2026-3833": "MEDIUM",
+        "CVE-2026-71225": "MEDIUM",
+        "CVE-2024-6923": "MEDIUM",
+        "CVE-2022-48624": "MEDIUM",
+        "CVE-2024-52533": "MEDIUM",
+        "CVE-2026-44604": "MEDIUM",
+        "CVE-2026-78367": "MEDIUM",
+        "CVE-2026-84233": "MEDIUM",
+        "CVE-2025-15366": "MEDIUM",
+        "CVE-2025-15367": "MEDIUM",
+        "CVE-2025-47273": "MEDIUM",
+        "CVE-2026-26960": "MEDIUM",
+        "CVE-2023-7104": "MEDIUM",
+        "CVE-2025-4330": "MEDIUM",
+        "CVE-2026-71226": "MEDIUM",
+        "CVE-2024-0553": "MEDIUM",
+        "CVE-2024-2398": "MEDIUM",
+        "CVE-2024-25062": "MEDIUM",
+        "CVE-2024-28757": "MEDIUM",
+        "CVE-2024-45490": "MEDIUM",
+        "CVE-2024-45491": "MEDIUM",
+        "CVE-2024-6232": "MEDIUM",
+        "CVE-2024-8176": "MEDIUM",
+        "CVE-2025-12084": "MEDIUM",
+        "CVE-2025-32415": "MEDIUM",
+        "CVE-2025-4435": "MEDIUM",
+        "CVE-2025-6021": "MEDIUM",
+        "CVE-2025-8194": "MEDIUM",
+        "CVE-2026-51298": "MEDIUM",
+        "CVE-2024-3661": "MEDIUM",
+        "CVE-2025-13601": "MEDIUM",
+        "CVE-2026-48864": "MEDIUM",
+        "CVE-2026-84837": "MEDIUM",
+        "CVE-2025-59375": "HIGH",
+        "CVE-2026-4519": "HIGH",
+        "CVE-2025-5914": "HIGH",
+        "CVE-2026-4786": "HIGH",
+        "CVE-2024-6345": "HIGH",
+        "CVE-2025-4138": "HIGH",
+        "CVE-2026-15308": "HIGH",
+        "CVE-2026-16445": "HIGH",
+        "CVE-2026-27135": "HIGH",
+        "CVE-2026-33845": "HIGH",
+        "CVE-2026-33846": "HIGH",
+        "CVE-2026-4424": "HIGH",
+        "CVE-2024-12718": "HIGH",
+        "CVE-2025-4517": "HIGH",
+        "CVE-2025-6965": "HIGH",
+        "CVE-2023-6597": "HIGH",
+        "CVE-2025-24928": "HIGH",
+        "CVE-2025-68973": "HIGH",
+        "CVE-2025-7425": "HIGH",
+        "CVE-2024-5564": "HIGH",
+        "CVE-2024-56171": "HIGH",
+        "CVE-2026-24881": "HIGH",
+        "CVE-2026-6100": "HIGH",
+        "CVE-2026-51296": "HIGH",
+        "CVE-2026-24882": "HIGH",
+        "CVE-2022-47629": "HIGH",
+        "CVE-2024-32487": "HIGH",
+        "CVE-2022-40897": "HIGH",
+        "CVE-2026-23950": "HIGH",
+        "CVE-2026-6893": "HIGH",
+        "CVE-2025-49794": "HIGH",
+        "CVE-2025-49796": "HIGH",
+        "CVE-2026-51297": "HIGH",
+        "CVE-2026-51303": "HIGH",
+        "CVE-2026-51304": "HIGH",
+        "CVE-2026-51302": "CRITICAL"
+      },
+      "newly_reported_cves": {},
+      "remaining_critical_high": {
+        "CVE-2025-32462": {
+          "severity": "HIGH",
+          "status": "Not yet investigated"
+        },
+        "CVE-2026-54369": {
+          "severity": "HIGH",
+          "status": "Not yet investigated"
+        },
+        "CVE-2026-54371": {
+          "severity": "HIGH",
+          "status": "Not affected: vulnerable getfattr/setfattr utilities are absent; only the libattr runtime library is installed. (reviewed 2026-09-08)"
+        },
+        "CVE-2026-33412": {
+          "severity": "HIGH",
+          "status": "Not yet investigated"
+        },
+        "CVE-2024-10963": {
+          "severity": "HIGH",
+          "status": "Not yet investigated"
+        },
+        "CVE-2026-35535": {
+          "severity": "HIGH",
+          "status": "Not yet investigated"
+        },
+        "CVE-2026-4046": {
+          "severity": "HIGH",
+          "status": "Not affected in this runtime: the vulnerable IBM1390/IBM1399 gconv modules are absent. This does not claim the old glibc source package is patched. (reviewed 2026-09-08)"
+        },
+        "CVE-2024-33599": {
+          "severity": "HIGH",
+          "status": "Fixed in installed glibc 2.28-251.el8.2; the CentOS RPM changelog confirms the fix (RHEL-34264). Scout compares against a different el8_10 suffix. (reviewed 2026-09-08)"
+        },
+        "CVE-2025-6020": {
+          "severity": "HIGH",
+          "status": "Not yet investigated"
+        },
+        "CVE-2025-8941": {
+          "severity": "HIGH",
+          "status": "Not yet investigated"
+        },
+        "CVE-2026-43961": {
+          "severity": "HIGH",
+          "status": "Not affected: the vulnerable netrw plugin is not shipped by vim-minimal and is absent from this runtime. (reviewed 2026-09-08)"
+        },
+        "CVE-2026-45447": {
+          "severity": "HIGH",
+          "status": "Not yet investigated"
+        },
+        "CVE-2026-34982": {
+          "severity": "HIGH",
+          "status": "Not yet investigated"
+        },
+        "CVE-2026-22184": {
+          "severity": "HIGH",
+          "status": "Not affected: the vulnerable untgz example utility is absent; the zlib shared library is not affected by this issue. (reviewed 2026-09-08)"
+        },
+        "CVE-2026-34714": {
+          "severity": "HIGH",
+          "status": "Not affected: this Vim 8.0 build predates the vulnerable tabpanel feature introduced in Vim 9.1.1391, as confirmed by Red Hat. (reviewed 2026-09-08)"
+        },
+        "CVE-2022-1271": {
+          "severity": "HIGH",
+          "status": "Fixed in installed gzip 1.9-13.el8 and xz-libs 5.2.4-4.el8; both vendor RPM changelogs confirm the fix. Scout compares against separate RHEL update suffixes. (reviewed 2026-09-08)"
+        },
+        "CVE-2024-2961": {
+          "severity": "HIGH",
+          "status": "Fixed in installed glibc 2.28-251.el8.2; the CentOS RPM changelog records the fix in release 251.1 (RHEL-31804). (reviewed 2026-09-08)"
+        },
+        "CVE-2024-3596": {
+          "severity": "HIGH",
+          "status": "Not yet investigated"
+        }
+      }
+    },
+    {
+      "image_tag": "3.4.1-centos-9-otp26",
+      "platform": "linux/amd64",
+      "strategy": {
+        "strategy": "rpm-root",
+        "release_package": "centos-stream-release"
+      },
+      "integration_status": "passed",
+      "baseline_report": "tools/cache/openriak-docker-multiarch/pushes/20260907T232344.134367Z/3.4.1/3.4.1-centos-9-otp26/cve-report.json",
+      "prototype_report": "tools/cache/openriak-docker-minimal-validation/20260908T011123.437241Z/3.4.1/3.4.1-centos-9-otp26/validation.json",
+      "prototype_image": "openriak-minimal-validation/openriak-kv:3.4.1-centos-9-otp26-20260908t011123.437241z",
+      "prototype_config_digest": "sha256:09995e8cd100d9c954563702f0122283caaeef97c79ddfd7d528e073b254ed63",
+      "base_images": {
+        "linux/amd64": {
+          "requested": "quay.io/centos/centos:stream9",
+          "pinned": "quay.io/centos/centos:stream9@sha256:d323b7623e947245a8eb506fbb0ad0e55eb2ae2d2407b66741a15f372caf9bdc",
+          "resolved_at": "2026-09-08T01:32:55Z"
+        }
+      },
+      "before": {
+        "UNSPECIFIED": 4,
+        "LOW": 23,
+        "MEDIUM": 39,
+        "HIGH": 31,
+        "CRITICAL": 1
+      },
+      "after": {
+        "CRITICAL": 0,
+        "HIGH": 8,
+        "MEDIUM": 18,
+        "LOW": 14,
+        "UNSPECIFIED": 0
+      },
+      "baseline_image": {
+        "config_digest": "sha256:594c57c8ce384906c2295c173d5dcebbad57d92305fa6ddae06a538fb8059401",
+        "size_bytes": 311350584
+      },
+      "prototype_size_bytes": 179760467,
+      "removed_cves": {
+        "CVE-2021-46059": "UNSPECIFIED",
+        "CVE-2023-2222": "UNSPECIFIED",
+        "CVE-2023-24593": "UNSPECIFIED",
+        "CVE-2023-25180": "UNSPECIFIED",
+        "CVE-2026-9530": "LOW",
+        "CVE-2025-7039": "LOW",
+        "CVE-2024-41965": "LOW",
+        "CVE-2021-3572": "LOW",
+        "CVE-2024-41957": "LOW",
+        "CVE-2022-1674": "LOW",
+        "CVE-2022-47007": "LOW",
+        "CVE-2022-47010": "LOW",
+        "CVE-2022-47011": "LOW",
+        "CVE-2026-5121": "MEDIUM",
+        "CVE-2023-45803": "MEDIUM",
+        "CVE-2024-29040": "MEDIUM",
+        "CVE-2025-11082": "MEDIUM",
+        "CVE-2025-11083": "MEDIUM",
+        "CVE-2025-14831": "MEDIUM",
+        "CVE-2025-9086": "MEDIUM",
+        "CVE-2025-45582": "MEDIUM",
+        "CVE-2026-3833": "MEDIUM",
+        "CVE-2026-44604": "MEDIUM",
+        "CVE-2026-78367": "MEDIUM",
+        "CVE-2026-84233": "MEDIUM",
+        "CVE-2025-15366": "MEDIUM",
+        "CVE-2025-15367": "MEDIUM",
+        "CVE-2026-26960": "MEDIUM",
+        "CVE-2025-12084": "MEDIUM",
+        "CVE-2026-51298": "MEDIUM",
+        "CVE-2025-13601": "MEDIUM",
+        "CVE-2026-26269": "MEDIUM",
+        "CVE-2026-48864": "MEDIUM",
+        "CVE-2026-84837": "MEDIUM",
+        "CVE-2026-4519": "HIGH",
+        "CVE-2026-33412": "HIGH",
+        "CVE-2026-4786": "HIGH",
+        "CVE-2026-15308": "HIGH",
+        "CVE-2026-27135": "HIGH",
+        "CVE-2026-33845": "HIGH",
+        "CVE-2026-33846": "HIGH",
+        "CVE-2026-4424": "HIGH",
+        "CVE-2026-59873": "HIGH",
+        "CVE-2026-59874": "HIGH",
+        "CVE-2026-73566": "HIGH",
+        "CVE-2025-68973": "HIGH",
+        "CVE-2026-43961": "HIGH",
+        "CVE-2026-24881": "HIGH",
+        "CVE-2026-6100": "HIGH",
+        "CVE-2026-34982": "HIGH",
+        "CVE-2026-51296": "HIGH",
+        "CVE-2026-24882": "HIGH",
+        "CVE-2026-34714": "HIGH",
+        "CVE-2026-23950": "HIGH",
+        "CVE-2026-51297": "HIGH",
+        "CVE-2026-51303": "HIGH",
+        "CVE-2026-51304": "HIGH",
+        "CVE-2026-51302": "CRITICAL"
+      },
+      "newly_reported_cves": {},
+      "remaining_critical_high": {
+        "CVE-2026-40356": {
+          "severity": "HIGH",
+          "status": "Fixed in installed krb5-libs 1.21.1-10.el9; verified against CentOS package sources. Scout still reports this version (reviewed 2026-09-08)."
+        },
+        "CVE-2026-54369": {
+          "severity": "HIGH",
+          "status": "Fixed in installed libacl 2.4.0-2.el9; verified against CentOS package sources. Scout still reports this version (reviewed 2026-09-08)."
+        },
+        "CVE-2026-54371": {
+          "severity": "HIGH",
+          "status": "Fixed in installed libattr 2.6.0-2.el9; verified against CentOS package sources. Scout still reports this version (reviewed 2026-09-08)."
+        },
+        "CVE-2026-4046": {
+          "severity": "HIGH",
+          "status": "Fixed in installed glibc 2.34-277.el9; verified against CentOS package sources. Scout still reports this version (reviewed 2026-09-08)."
+        },
+        "CVE-2026-45447": {
+          "severity": "HIGH",
+          "status": "Fixed in installed openssl-libs 1:3.5.8-1.el9; verified against CentOS package sources and OpenSSL 3.5.7 advisory. Scout still reports this version (reviewed 2026-09-08)."
+        },
+        "CVE-2026-22184": {
+          "severity": "HIGH",
+          "status": "Not affected: the vulnerable untgz example utility is absent; this finding does not affect the zlib shared library (reviewed 2026-09-08)."
+        },
+        "CVE-2022-1271": {
+          "severity": "HIGH",
+          "status": "Fixed in installed xz-libs 5.2.5-8.el9; verified against CentOS package sources. Scout still reports this version (reviewed 2026-09-08)."
+        },
+        "CVE-2026-0861": {
+          "severity": "HIGH",
+          "status": "Fixed in installed glibc 2.34-277.el9; verified against CentOS package sources. Scout still reports this version (reviewed 2026-09-08)."
+        }
+      }
+    },
+    {
+      "image_tag": "3.4.1-debian-12-otp26",
+      "platform": "linux/amd64",
+      "strategy": {
+        "strategy": "clean-root"
+      },
+      "integration_status": "passed",
+      "baseline_report": "tools/cache/openriak-docker-multiarch/pushes/20260907T232344.134367Z/3.4.1/3.4.1-debian-12-otp26/cve-report.json",
+      "prototype_report": "tools/cache/openriak-docker-minimal-validation/20260908T011123.437241Z/3.4.1/3.4.1-debian-12-otp26/validation.json",
+      "prototype_image": "openriak-minimal-validation/openriak-kv:3.4.1-debian-12-otp26-20260908t011123.437241z",
+      "prototype_config_digest": "sha256:bdf088a5d37f3f42f7390892c3e502a227f8af73ba96a85ee098233abec11d81",
+      "base_images": {
+        "linux/amd64": {
+          "requested": "debian:bookworm-slim",
+          "pinned": "debian:bookworm-slim@sha256:88200866dfff7ea7f5cbcb6ec7c8a701889efe6fe859fe64d6990e4b07ea4171",
+          "resolved_at": "2026-09-08T01:34:53Z"
+        }
+      },
+      "before": {
+        "UNSPECIFIED": 5,
+        "LOW": 35,
+        "MEDIUM": 7,
+        "HIGH": 10,
+        "CRITICAL": 3
+      },
+      "after": {
+        "CRITICAL": 1,
+        "HIGH": 8,
+        "MEDIUM": 3,
+        "LOW": 34,
+        "UNSPECIFIED": 0
+      },
+      "baseline_image": {
+        "config_digest": "sha256:621513019565e72560336eab293fcb8b097ae25ffd4f2cde35cea0135b20d20b",
+        "size_bytes": 140632037
+      },
+      "prototype_size_bytes": 130888534,
+      "removed_cves": {
+        "CVE-2026-57432": "UNSPECIFIED",
+        "CVE-2026-57433": "UNSPECIFIED",
+        "CVE-2026-7017": "UNSPECIFIED",
+        "CVE-2011-4116": "LOW",
+        "CVE-2023-31486": "LOW",
+        "CVE-2026-48961": "LOW",
+        "CVE-2026-19487": "MEDIUM",
+        "CVE-2025-15649": "MEDIUM",
+        "CVE-2026-15534": "MEDIUM",
+        "CVE-2026-7010": "MEDIUM",
+        "CVE-2026-48962": "HIGH",
+        "CVE-2026-48959": "HIGH",
+        "CVE-2026-12087": "CRITICAL",
+        "CVE-2026-13221": "CRITICAL"
+      },
+      "newly_reported_cves": {},
+      "remaining_critical_high": {
+        "CVE-2026-78409": {
+          "severity": "HIGH",
+          "status": "Not affected: installed util-linux/libmount 2.38.1 predates the vulnerable detached-tree path. Upstream lists affected versions from 2.42; Scout still reports it (reviewed 2026-09-08)."
+        },
+        "CVE-2026-54874": {
+          "severity": "HIGH",
+          "status": "Not yet investigated"
+        },
+        "CVE-2026-63072": {
+          "severity": "HIGH",
+          "status": "Not yet investigated"
+        },
+        "CVE-2026-63076": {
+          "severity": "HIGH",
+          "status": "Not yet investigated"
+        },
+        "CVE-2026-78410": {
+          "severity": "HIGH",
+          "status": "Not yet investigated"
+        },
+        "CVE-2026-78408": {
+          "severity": "HIGH",
+          "status": "Not affected: installed util-linux 2.38.1 predates nsenter --join-cgroup (introduced in 2.40). Upstream explicitly excludes Debian 12; Scout/ Debian tracker still flag it (reviewed 2026-09-08)."
+        },
+        "CVE-2026-85091": {
+          "severity": "HIGH",
+          "status": "Under investigation: the report describes zlib 1.3.1.2\u20131.3.2 and gz_vacate, absent from installed 1.2.13 sources; Debian still flags this release. Awaiting applicability clarification (2026-09-08)."
+        },
+        "CVE-2026-76642": {
+          "severity": "HIGH",
+          "status": "Not yet investigated"
+        },
+        "CVE-2026-75803": {
+          "severity": "CRITICAL",
+          "status": "Not yet investigated"
+        }
+      }
+    },
+    {
+      "image_tag": "3.4.1-fedora-29-otp26",
+      "platform": "linux/amd64",
+      "strategy": {
+        "strategy": "rpm-root",
+        "release_package": "fedora-release"
+      },
+      "integration_status": "passed",
+      "baseline_report": "tools/cache/openriak-docker-multiarch/pushes/20260907T232344.134367Z/3.4.1/3.4.1-fedora-29-otp26/cve-report.json",
+      "prototype_report": "tools/cache/openriak-docker-minimal-validation/20260908T011123.437241Z/3.4.1/3.4.1-fedora-29-otp26/validation.json",
+      "prototype_image": "openriak-minimal-validation/openriak-kv:3.4.1-fedora-29-otp26-20260908t011123.437241z",
+      "prototype_config_digest": "sha256:31355e92e1939fda9a794c6bd4703b46a26b3291c38a95238d57cc33ce923dff",
+      "base_images": {
+        "linux/amd64": {
+          "requested": "fedora:29",
+          "pinned": "fedora:29@sha256:2c20e5bb324735427f8a659e36f4fe14d6955c74c7baa25067418dddbb71d67a",
+          "resolved_at": "2026-09-08T01:41:42Z"
+        }
+      },
+      "before": {
+        "LOW": 1,
+        "MEDIUM": 7,
+        "HIGH": 5
+      },
+      "after": {
+        "CRITICAL": 0,
+        "HIGH": 0,
+        "MEDIUM": 0,
+        "LOW": 0,
+        "UNSPECIFIED": 0
+      },
+      "baseline_image": {
+        "config_digest": "sha256:2b5c2a5894fcbbecd82d2b471067efe768d5ff691b859f308af49f001ffd8568",
+        "size_bytes": 528109727
+      },
+      "prototype_size_bytes": 133872812,
+      "removed_cves": {
+        "CVE-2026-1703": "LOW",
+        "CVE-2026-8643": "MEDIUM",
+        "CVE-2026-3219": "MEDIUM",
+        "CVE-2026-6357": "MEDIUM",
+        "CVE-2026-13346": "MEDIUM",
+        "CVE-2025-8869": "MEDIUM",
+        "CVE-2026-59890": "MEDIUM",
+        "CVE-2023-5752": "MEDIUM",
+        "CVE-2021-3572": "HIGH",
+        "CVE-2024-6345": "HIGH",
+        "CVE-2025-47273": "HIGH",
+        "CVE-2019-20916": "HIGH",
+        "CVE-2022-40897": "HIGH"
+      },
+      "newly_reported_cves": {},
+      "remaining_critical_high": {}
+    },
+    {
+      "image_tag": "3.4.1-rhel-8-otp26",
+      "platform": "linux/amd64",
+      "strategy": {
+        "strategy": "rpm-root",
+        "release_package": "redhat-release"
+      },
+      "integration_status": "passed",
+      "baseline_report": "tools/cache/openriak-docker-multiarch/pushes/20260907T232344.134367Z/3.4.1/3.4.1-rhel-8-otp26/cve-report.json",
+      "prototype_report": "tools/cache/openriak-docker-minimal-validation/20260908T011123.437241Z/3.4.1/3.4.1-rhel-8-otp26/validation.json",
+      "prototype_image": "openriak-minimal-validation/openriak-kv:3.4.1-rhel-8-otp26-20260908t011123.437241z",
+      "prototype_config_digest": "sha256:5eb05ec2fa63087f958a5d07b93ad2175db9ab4a389a10bd8af99621ddc7b170",
+      "base_images": {
+        "linux/amd64": {
+          "requested": "registry.access.redhat.com/ubi8/ubi:8.10",
+          "pinned": "registry.access.redhat.com/ubi8/ubi:8.10@sha256:2dcfc23b79d88fdaeefc6ed0cfb144e41dca600bfa73c38ab5d8dca5b05d1b7f",
+          "resolved_at": "2026-09-08T01:42:27Z"
+        }
+      },
+      "before": {
+        "UNSPECIFIED": 1,
+        "LOW": 10,
+        "MEDIUM": 45,
+        "HIGH": 35,
+        "CRITICAL": 1
+      },
+      "after": {
+        "CRITICAL": 0,
+        "HIGH": 10,
+        "MEDIUM": 16,
+        "LOW": 3,
+        "UNSPECIFIED": 0
+      },
+      "baseline_image": {
+        "config_digest": "sha256:37d4d49d82f1d8465aa07ba5a70ecb89a5ac4654d6e9b4adc7b00df69c04359c",
+        "size_bytes": 293638849
+      },
+      "prototype_size_bytes": 142133932,
+      "removed_cves": {
+        "CVE-2023-2222": "UNSPECIFIED",
+        "CVE-2025-7039": "LOW",
+        "CVE-2022-47007": "LOW",
+        "CVE-2022-47010": "LOW",
+        "CVE-2022-47011": "LOW",
+        "CVE-2023-29499": "LOW",
+        "CVE-2023-32611": "LOW",
+        "CVE-2023-32665": "LOW",
+        "CVE-2026-5121": "MEDIUM",
+        "CVE-2023-45803": "MEDIUM",
+        "CVE-2024-37891": "MEDIUM",
+        "CVE-2026-25645": "MEDIUM",
+        "CVE-2019-11236": "MEDIUM",
+        "CVE-2024-47081": "MEDIUM",
+        "CVE-2025-14831": "MEDIUM",
+        "CVE-2025-50181": "MEDIUM",
+        "CVE-2024-35195": "MEDIUM",
+        "CVE-2025-45582": "MEDIUM",
+        "CVE-2023-32681": "MEDIUM",
+        "CVE-2026-59890": "MEDIUM",
+        "CVE-2025-9714": "MEDIUM",
+        "CVE-2021-3445": "MEDIUM",
+        "CVE-2026-3833": "MEDIUM",
+        "CVE-2020-26137": "MEDIUM",
+        "CVE-2024-3651": "MEDIUM",
+        "CVE-2026-45409": "MEDIUM",
+        "CVE-2026-44604": "MEDIUM",
+        "CVE-2026-78367": "MEDIUM",
+        "CVE-2026-84233": "MEDIUM",
+        "CVE-2025-15366": "MEDIUM",
+        "CVE-2025-15367": "MEDIUM",
+        "CVE-2026-26960": "MEDIUM",
+        "CVE-2025-12084": "MEDIUM",
+        "CVE-2026-51298": "MEDIUM",
+        "CVE-2025-13601": "MEDIUM",
+        "CVE-2026-48864": "MEDIUM",
+        "CVE-2026-84837": "MEDIUM",
+        "CVE-2026-4519": "HIGH",
+        "CVE-2026-4786": "HIGH",
+        "CVE-2023-43804": "HIGH",
+        "CVE-2024-6345": "HIGH",
+        "CVE-2025-6176": "HIGH",
+        "CVE-2026-15308": "HIGH",
+        "CVE-2026-27135": "HIGH",
+        "CVE-2026-33845": "HIGH",
+        "CVE-2026-33846": "HIGH",
+        "CVE-2026-4424": "HIGH",
+        "CVE-2025-47273": "HIGH",
+        "CVE-2025-68973": "HIGH",
+        "CVE-2026-24881": "HIGH",
+        "CVE-2026-6100": "HIGH",
+        "CVE-2026-44431": "HIGH",
+        "CVE-2026-51296": "HIGH",
+        "CVE-2026-24882": "HIGH",
+        "CVE-2022-40897": "HIGH",
+        "CVE-2026-23950": "HIGH",
+        "CVE-2025-66418": "HIGH",
+        "CVE-2025-66471": "HIGH",
+        "CVE-2026-21441": "HIGH",
+        "CVE-2026-51297": "HIGH",
+        "CVE-2026-51303": "HIGH",
+        "CVE-2026-51304": "HIGH",
+        "CVE-2026-51302": "CRITICAL"
+      },
+      "newly_reported_cves": {},
+      "remaining_critical_high": {
+        "CVE-2026-54369": {
+          "severity": "HIGH",
+          "status": "Fixed by vendor package: libacl 2.4.0-1.el8_10 meets or supersedes RHSA-2026:43420."
+        },
+        "CVE-2026-54371": {
+          "severity": "HIGH",
+          "status": "Fixed by vendor package: libattr 2.6.0-1.el8_10 meets or supersedes RHSA-2026:56133."
+        },
+        "CVE-2026-33412": {
+          "severity": "HIGH",
+          "status": "Fixed in installed vim-minimal 8.0.1763-31.el8_10; vendor RPM changelog records the backport in release 22.1 (RHEL-159620). Scout still reports it (reviewed 2026-09-08)."
+        },
+        "CVE-2026-35535": {
+          "severity": "HIGH",
+          "status": "Fixed by vendor package: sudo 1.9.5p2-1.el8_10.5 meets or supersedes RHSA-2026:11521."
+        },
+        "CVE-2026-4046": {
+          "severity": "HIGH",
+          "status": "Fixed by vendor package: glibc 2.28-251.el8_10.40 meets or supersedes RHSA-2026:20587."
+        },
+        "CVE-2026-43961": {
+          "severity": "HIGH",
+          "status": "Not affected: the vulnerable netrw plugin is not shipped by vim-minimal and is absent from this runtime (reviewed 2026-09-08)."
+        },
+        "CVE-2026-45447": {
+          "severity": "HIGH",
+          "status": "Fixed by vendor package: openssl-libs 1:1.1.1k-17.el8_6 meets or supersedes RHSA-2026:26275."
+        },
+        "CVE-2026-34982": {
+          "severity": "HIGH",
+          "status": "Fixed by vendor package: vim-minimal 2:8.0.1763-31.el8_10 meets or supersedes RHSA-2026:11509."
+        },
+        "CVE-2026-22184": {
+          "severity": "HIGH",
+          "status": "Not affected: vulnerable untgz utility is absent; runtime zlib library is retained."
+        },
+        "CVE-2026-34714": {
+          "severity": "HIGH",
+          "status": "Not affected: RHEL 8 Vim predates the vulnerable tabpanel feature (Red Hat assessment)."
+        }
+      }
+    },
+    {
+      "image_tag": "3.4.1-rhel-9-otp26",
+      "platform": "linux/amd64",
+      "strategy": {
+        "strategy": "rpm-root",
+        "release_package": "redhat-release"
+      },
+      "integration_status": "passed",
+      "baseline_report": "tools/cache/openriak-docker-multiarch/pushes/20260907T232344.134367Z/3.4.1/3.4.1-rhel-9-otp26/cve-report.json",
+      "prototype_report": "tools/cache/openriak-docker-minimal-validation/20260908T011123.437241Z/3.4.1/3.4.1-rhel-9-otp26/validation.json",
+      "prototype_image": "openriak-minimal-validation/openriak-kv:3.4.1-rhel-9-otp26-20260908t011123.437241z",
+      "prototype_config_digest": "sha256:8e4c5903e38f5feebc052341bb0236e37ac575c8db2f9da01f36285411297058",
+      "base_images": {
+        "linux/amd64": {
+          "requested": "registry.access.redhat.com/ubi9/ubi:9.8",
+          "pinned": "registry.access.redhat.com/ubi9/ubi:9.8@sha256:25a147defd01e19674714f55d17538c8dbe55d8c305fa157ecc3f9c8977b05b6",
+          "resolved_at": "2026-09-08T01:50:03Z"
+        }
+      },
+      "before": {
+        "UNSPECIFIED": 1,
+        "LOW": 21,
+        "MEDIUM": 48,
+        "HIGH": 38,
+        "CRITICAL": 1
+      },
+      "after": {
+        "CRITICAL": 0,
+        "HIGH": 7,
+        "MEDIUM": 18,
+        "LOW": 12,
+        "UNSPECIFIED": 0
+      },
+      "baseline_image": {
+        "config_digest": "sha256:0cece4b0e10ea02329a613b5e6a836047697378b001b65fb91e5cab9801e62c0",
+        "size_bytes": 287741835
+      },
+      "prototype_size_bytes": 146440226,
+      "removed_cves": {
+        "CVE-2023-2222": "UNSPECIFIED",
+        "CVE-2026-9530": "LOW",
+        "CVE-2025-7039": "LOW",
+        "CVE-2024-41965": "LOW",
+        "CVE-2021-3572": "LOW",
+        "CVE-2024-41957": "LOW",
+        "CVE-2022-1674": "LOW",
+        "CVE-2022-47007": "LOW",
+        "CVE-2022-47010": "LOW",
+        "CVE-2022-47011": "LOW",
+        "CVE-2026-5121": "MEDIUM",
+        "CVE-2023-45803": "MEDIUM",
+        "CVE-2024-29040": "MEDIUM",
+        "CVE-2024-37891": "MEDIUM",
+        "CVE-2026-25645": "MEDIUM",
+        "CVE-2024-47081": "MEDIUM",
+        "CVE-2025-11082": "MEDIUM",
+        "CVE-2025-11083": "MEDIUM",
+        "CVE-2025-14831": "MEDIUM",
+        "CVE-2025-50181": "MEDIUM",
+        "CVE-2025-9086": "MEDIUM",
+        "CVE-2024-35195": "MEDIUM",
+        "CVE-2025-45582": "MEDIUM",
+        "CVE-2023-32681": "MEDIUM",
+        "CVE-2026-59890": "MEDIUM",
+        "CVE-2026-3833": "MEDIUM",
+        "CVE-2024-3651": "MEDIUM",
+        "CVE-2026-45409": "MEDIUM",
+        "CVE-2026-44604": "MEDIUM",
+        "CVE-2026-78367": "MEDIUM",
+        "CVE-2026-84233": "MEDIUM",
+        "CVE-2025-15366": "MEDIUM",
+        "CVE-2025-15367": "MEDIUM",
+        "CVE-2026-26960": "MEDIUM",
+        "CVE-2025-12084": "MEDIUM",
+        "CVE-2026-51298": "MEDIUM",
+        "CVE-2025-13601": "MEDIUM",
+        "CVE-2026-26269": "MEDIUM",
+        "CVE-2026-48864": "MEDIUM",
+        "CVE-2026-84837": "MEDIUM",
+        "CVE-2026-4519": "HIGH",
+        "CVE-2026-33412": "HIGH",
+        "CVE-2026-4786": "HIGH",
+        "CVE-2023-43804": "HIGH",
+        "CVE-2024-6345": "HIGH",
+        "CVE-2026-15308": "HIGH",
+        "CVE-2026-27135": "HIGH",
+        "CVE-2026-33845": "HIGH",
+        "CVE-2026-33846": "HIGH",
+        "CVE-2026-4424": "HIGH",
+        "CVE-2026-59873": "HIGH",
+        "CVE-2026-59874": "HIGH",
+        "CVE-2026-73566": "HIGH",
+        "CVE-2025-47273": "HIGH",
+        "CVE-2025-68973": "HIGH",
+        "CVE-2026-43961": "HIGH",
+        "CVE-2026-24881": "HIGH",
+        "CVE-2026-6100": "HIGH",
+        "CVE-2026-34982": "HIGH",
+        "CVE-2026-44431": "HIGH",
+        "CVE-2026-51296": "HIGH",
+        "CVE-2026-24882": "HIGH",
+        "CVE-2026-34714": "HIGH",
+        "CVE-2022-40897": "HIGH",
+        "CVE-2026-23950": "HIGH",
+        "CVE-2025-66418": "HIGH",
+        "CVE-2025-66471": "HIGH",
+        "CVE-2026-21441": "HIGH",
+        "CVE-2026-51297": "HIGH",
+        "CVE-2026-51303": "HIGH",
+        "CVE-2026-51304": "HIGH",
+        "CVE-2026-51302": "CRITICAL"
+      },
+      "newly_reported_cves": {},
+      "remaining_critical_high": {
+        "CVE-2026-40356": {
+          "severity": "HIGH",
+          "status": "Fixed by vendor package: krb5-libs 1.21.1-10.el9_8 (RHSA-2026:19357)."
+        },
+        "CVE-2026-54369": {
+          "severity": "HIGH",
+          "status": "Fixed by vendor package: libacl 2.4.0-1.el9_8 (RHSA-2026:42736)."
+        },
+        "CVE-2026-54371": {
+          "severity": "HIGH",
+          "status": "Fixed by vendor package: libattr 2.6.0-1.el9_8 (RHSA-2026:60226)."
+        },
+        "CVE-2026-4046": {
+          "severity": "HIGH",
+          "status": "Fixed by vendor package: glibc 2.34-275.el9_8 supersedes RHSA-2026:20597."
+        },
+        "CVE-2026-45447": {
+          "severity": "HIGH",
+          "status": "Fixed by vendor package: openssl-libs 3.5.5-6.el9_8 supersedes RHSA-2026:25239."
+        },
+        "CVE-2026-22184": {
+          "severity": "HIGH",
+          "status": "Not affected: vulnerable untgz utility is absent; runtime zlib library is retained."
+        },
+        "CVE-2026-0861": {
+          "severity": "HIGH",
+          "status": "Fixed by vendor package: glibc 2.34-275.el9_8 supersedes RHSA-2026:2786."
+        }
+      }
+    },
+    {
+      "image_tag": "3.4.1-rocky-8-otp26",
+      "platform": "linux/amd64",
+      "strategy": {
+        "strategy": "rpm-root",
+        "release_package": "rocky-release"
+      },
+      "integration_status": "passed",
+      "baseline_report": "tools/cache/openriak-docker-multiarch/pushes/20260907T232344.134367Z/3.4.1/3.4.1-rocky-8-otp26/cve-report.json",
+      "prototype_report": "tools/cache/openriak-docker-minimal-validation/20260908T011123.437241Z/3.4.1/3.4.1-rocky-8-otp26/validation.json",
+      "prototype_image": "openriak-minimal-validation/openriak-kv:3.4.1-rocky-8-otp26-20260908t011123.437241z",
+      "prototype_config_digest": "sha256:af688e048d786896ca66509564fbc7946f53296aab98d18c38a074d4b13fb52e",
+      "base_images": {
+        "linux/amd64": {
+          "requested": "rockylinux:8",
+          "pinned": "rockylinux:8@sha256:9794037624aaa6212aeada1d28861ef5e0a935adaf93e4ef79837119f2a2d04c",
+          "resolved_at": "2026-09-08T01:50:15Z"
+        }
+      },
+      "before": {
+        "LOW": 1,
+        "MEDIUM": 7,
+        "HIGH": 5
+      },
+      "after": {
+        "CRITICAL": 0,
+        "HIGH": 0,
+        "MEDIUM": 0,
+        "LOW": 0,
+        "UNSPECIFIED": 0
+      },
+      "baseline_image": {
+        "config_digest": "sha256:44d2c612a4ba61002eda59bff6b012b522065b5a255855eef9cb0324dee323e2",
+        "size_bytes": 464972828
+      },
+      "prototype_size_bytes": 142101102,
+      "removed_cves": {
+        "CVE-2026-1703": "LOW",
+        "CVE-2026-8643": "MEDIUM",
+        "CVE-2026-3219": "MEDIUM",
+        "CVE-2026-6357": "MEDIUM",
+        "CVE-2026-13346": "MEDIUM",
+        "CVE-2025-8869": "MEDIUM",
+        "CVE-2026-59890": "MEDIUM",
+        "CVE-2023-5752": "MEDIUM",
+        "CVE-2021-3572": "HIGH",
+        "CVE-2024-6345": "HIGH",
+        "CVE-2025-47273": "HIGH",
+        "CVE-2019-20916": "HIGH",
+        "CVE-2022-40897": "HIGH"
+      },
+      "newly_reported_cves": {},
+      "remaining_critical_high": {}
+    },
+    {
+      "image_tag": "3.4.1-suse-15-sp4-otp26",
+      "platform": "linux/amd64",
+      "strategy": {
+        "strategy": "clean-root"
+      },
+      "integration_status": "passed",
+      "baseline_report": "tools/cache/openriak-docker-multiarch/pushes/20260907T232344.134367Z/3.4.1/3.4.1-suse-15-sp4-otp26/cve-report.json",
+      "prototype_report": "tools/cache/openriak-docker-minimal-validation/20260908T011123.437241Z/3.4.1/3.4.1-suse-15-sp4-otp26/validation.json",
+      "prototype_image": "openriak-minimal-validation/openriak-kv:3.4.1-suse-15-sp4-otp26-20260908t011123.437241z",
+      "prototype_config_digest": "sha256:31270a4a06b2eb7c516c72cbcc2a10047350eeb264aeb0c644ad3543cd718d13",
+      "base_images": {
+        "linux/amd64": {
+          "requested": "registry.suse.com/suse/sle15:15.4",
+          "pinned": "registry.suse.com/suse/sle15:15.4@sha256:5f0d026bbf4f1e90b563f69327aea6a3d8744a31c346008bf0556f732ed6236c",
+          "resolved_at": "2026-09-08T01:57:39Z"
+        }
+      },
+      "before": {
+        "UNSPECIFIED": 2,
+        "LOW": 2,
+        "MEDIUM": 33,
+        "HIGH": 26,
+        "CRITICAL": 4
+      },
+      "after": {
+        "CRITICAL": 0,
+        "HIGH": 0,
+        "MEDIUM": 0,
+        "LOW": 0,
+        "UNSPECIFIED": 0
+      },
+      "baseline_image": {
+        "config_digest": "sha256:f28322f0a91d0df3c5ec7a588e98d5d6a715f97b5528be56451783e10e06f788",
+        "size_bytes": 190354731
+      },
+      "prototype_size_bytes": 175476949,
+      "removed_cves": {
+        "CVE-2026-39822": "UNSPECIFIED",
+        "CVE-2026-42505": "UNSPECIFIED",
+        "CVE-2026-27139": "LOW",
+        "CVE-2025-22873": "LOW",
+        "CVE-2025-22866": "MEDIUM",
+        "CVE-2023-45289": "MEDIUM",
+        "CVE-2024-34155": "MEDIUM",
+        "CVE-2025-58183": "MEDIUM",
+        "CVE-2025-22870": "MEDIUM",
+        "CVE-2025-47912": "MEDIUM",
+        "CVE-2025-58185": "MEDIUM",
+        "CVE-2025-58186": "MEDIUM",
+        "CVE-2025-58189": "MEDIUM",
+        "CVE-2025-61724": "MEDIUM",
+        "CVE-2025-61730": "MEDIUM",
+        "CVE-2026-39825": "MEDIUM",
+        "CVE-2026-42507": "MEDIUM",
+        "CVE-2024-24785": "MEDIUM",
+        "CVE-2024-24789": "MEDIUM",
+        "CVE-2025-0913": "MEDIUM",
+        "CVE-2026-32288": "MEDIUM",
+        "CVE-2024-24783": "MEDIUM",
+        "CVE-2026-56860": "MEDIUM",
+        "CVE-2024-45336": "MEDIUM",
+        "CVE-2024-45341": "MEDIUM",
+        "CVE-2026-27142": "MEDIUM",
+        "CVE-2026-32289": "MEDIUM",
+        "CVE-2026-39823": "MEDIUM",
+        "CVE-2026-39826": "MEDIUM",
+        "CVE-2026-56858": "MEDIUM",
+        "CVE-2026-32282": "MEDIUM",
+        "CVE-2023-45290": "MEDIUM",
+        "CVE-2025-47906": "MEDIUM",
+        "CVE-2025-61727": "MEDIUM",
+        "CVE-2025-61728": "MEDIUM",
+        "CVE-2026-27145": "MEDIUM",
+        "CVE-2025-4673": "MEDIUM",
+        "CVE-2022-30635": "HIGH",
+        "CVE-2023-45288": "HIGH",
+        "CVE-2024-24784": "HIGH",
+        "CVE-2024-24791": "HIGH",
+        "CVE-2024-34156": "HIGH",
+        "CVE-2024-34158": "HIGH",
+        "CVE-2025-58187": "HIGH",
+        "CVE-2025-58188": "HIGH",
+        "CVE-2025-61723": "HIGH",
+        "CVE-2025-61725": "HIGH",
+        "CVE-2025-61726": "HIGH",
+        "CVE-2025-61729": "HIGH",
+        "CVE-2026-25679": "HIGH",
+        "CVE-2026-32280": "HIGH",
+        "CVE-2026-32281": "HIGH",
+        "CVE-2026-32283": "HIGH",
+        "CVE-2026-33811": "HIGH",
+        "CVE-2026-33814": "HIGH",
+        "CVE-2026-33818": "HIGH",
+        "CVE-2026-39820": "HIGH",
+        "CVE-2026-39836": "HIGH",
+        "CVE-2026-42499": "HIGH",
+        "CVE-2026-42504": "HIGH",
+        "CVE-2026-56853": "HIGH",
+        "CVE-2026-56859": "HIGH",
+        "CVE-2026-56862": "HIGH",
+        "CVE-2025-22871": "CRITICAL",
+        "CVE-2026-39821": "CRITICAL",
+        "CVE-2024-24790": "CRITICAL",
+        "CVE-2025-68121": "CRITICAL"
+      },
+      "newly_reported_cves": {},
+      "remaining_critical_high": {}
+    },
+    {
+      "image_tag": "3.4.1-suse-16.0-otp26",
+      "platform": "linux/amd64",
+      "strategy": {
+        "strategy": "clean-root"
+      },
+      "integration_status": "passed",
+      "baseline_report": "tools/cache/openriak-docker-multiarch/pushes/20260907T232344.134367Z/3.4.1/3.4.1-suse-16.0-otp26/cve-report.json",
+      "prototype_report": "tools/cache/openriak-docker-minimal-validation/20260908T011123.437241Z/3.4.1/3.4.1-suse-16.0-otp26/validation.json",
+      "prototype_image": "openriak-minimal-validation/openriak-kv:3.4.1-suse-16.0-otp26-20260908t011123.437241z",
+      "prototype_config_digest": "sha256:3d92c7d1b8cc6b7b6c174f65ec60ab7f6e743fa5b12e8b6eb8ed8a049f17adee",
+      "base_images": {
+        "linux/amd64": {
+          "requested": "registry.suse.com/bci/bci-base:16.0",
+          "pinned": "registry.suse.com/bci/bci-base:16.0@sha256:5f69fcd8a54664891bb58f1f7767ac4884a67d7ab2617fa9da5fb624e13debf0",
+          "resolved_at": "2026-09-08T01:59:49Z"
+        }
+      },
+      "before": {
+        "MEDIUM": 2,
+        "HIGH": 4,
+        "CRITICAL": 1
+      },
+      "after": {
+        "CRITICAL": 0,
+        "HIGH": 0,
+        "MEDIUM": 0,
+        "LOW": 0,
+        "UNSPECIFIED": 0
+      },
+      "baseline_image": {
+        "config_digest": "sha256:7c85cac04142373a9a0015c464b5e58c385120008a69ae13c5e27c3bab3c1e9b",
+        "size_bytes": 183543659
+      },
+      "prototype_size_bytes": 166348678,
+      "removed_cves": {
+        "CVE-2026-56860": "MEDIUM",
+        "CVE-2026-56858": "MEDIUM",
+        "CVE-2026-33818": "HIGH",
+        "CVE-2026-56853": "HIGH",
+        "CVE-2026-56859": "HIGH",
+        "CVE-2026-56862": "HIGH",
+        "CVE-2026-39821": "CRITICAL"
+      },
+      "newly_reported_cves": {},
+      "remaining_critical_high": {}
+    }
+  ],
+  "verification": {
+    "production_dockerfiles_matched": 14,
+    "current_runtime_assertions_passed": 11,
+    "python_unit_tests": {
+      "passed": 179,
+      "failed": 0
+    },
+    "cve_metadata_tests": {
+      "passed": 1,
+      "failed": 0
+    },
+    "metadata_refresh": {
+      "3.4.0": 17,
+      "3.4.1": 18,
+      "changed_image_fields": [
+        "cves"
+      ],
+      "non_docker_metadata_unchanged": true
+    },
+    "cleanup": "Prototype containers removed; dedicated builder stopped by its lifecycle manager."
+  }
+}
