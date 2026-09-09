@@ -12,7 +12,7 @@
 FROM scratch AS download-amd64
 ADD --checksum=sha256:f4021267568bc2cc7853a2f462d55504730dba62f6491d33bf0dce5f6c7b4ed6 https://files.tiot.jp/riak/kv/3.4/3.4.1/oracle/9/riak-3.4.1.OTP26-1.el9.x86_64.rpm /riak-3.4.1.OTP26-1.el9.x86_64.rpm
 
-FROM --platform=linux/amd64 oraclelinux:9-slim@sha256:33bcb689f7c8e6bd15bcee9a253538bc0b7cafeadb8b1a9d6ac90669c4497ce3 AS package-amd64
+FROM --platform=linux/amd64 oraclelinux:9-slim@sha256:6e9fec9dc3fcbd08df4c175fba0104bcbab93778e817ba9b60bd990683978258 AS package-amd64
 RUN --mount=type=bind,from=download-amd64,target=/opt/openriak-package,ro <<'OPENRIAK_PACKAGE_INSTALL'
 set -eu
 # Copy, install, and remove in this one layer; only the installed files persist.
@@ -109,7 +109,7 @@ ENV RIAK_NODE_HOST=""
 # Explicit nodename; empty derives openriak-kv@<hostname>.
 ENV RIAK_NODE_NAME=""
 # Initial cookie; existing riak.conf wins and new followers adopt the coordinator cookie.
-ENV RIAK_DISTRIBUTED_COOKIE="openriak-dd7da793aea3512113e2fc22f249bdd6"
+ENV RIAK_DISTRIBUTED_COOKIE="openriak-194b87cda8a0d7ae1d64a9a9938bc5d9"
 # Partition count for a new ring; do not change on an existing cluster.
 ENV RIAK_RING_SIZE="8"
 # Storage backend used by OpenRiak KV.

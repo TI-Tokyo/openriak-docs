@@ -7,15 +7,13 @@
 # BuildKit supplies TARGETARCH from --platform in the global scope.
 # Do not redeclare ARG TARGETARCH here: that clears its automatic value.
 
-# linux/amd64: official package and immutable OS release base.
-# Download layers stay outside the final image; the install only mounts them.
 FROM scratch AS download-amd64
 ADD --checksum=sha256:952f04a57622b160ef01d7aa15d3871924221766f1cd08dc74bf5ecd3ffbe9ea https://files.tiot.jp/riak/kv/3.4/3.4.1/rhel/9/riak-3.4.1.OTP26-1.el9.x86_64.rpm /riak-3.4.1.OTP26-1.el9.x86_64.rpm
 
-FROM --platform=linux/amd64 registry.suse.com/bci/bci-base:16.0@sha256:5f69fcd8a54664891bb58f1f7767ac4884a67d7ab2617fa9da5fb624e13debf0 AS package-amd64
+FROM --platform=linux/amd64 registry.suse.com/bci/bci-base:16.0@sha256:5f69fcd8a54664891bb58f1f7767ac4884a67d7ab2617fa9da5fb624e13debf0 AS install-amd64
 RUN --mount=type=bind,from=download-amd64,target=/opt/openriak-package,ro <<'OPENRIAK_PACKAGE_INSTALL'
 set -eu
-# Copy, install, and remove in this one layer; only the installed files persist.
+
 cp /opt/openriak-package/riak-3.4.1.OTP26-1.el9.x86_64.rpm /tmp/riak-3.4.1.OTP26-1.el9.x86_64.rpm
 # Update installed OS packages before installing the OpenRiak KV package.
 if command -v dnf >/dev/null 2>&1
@@ -84,6 +82,12 @@ rm -rf /var/cache/dnf /var/cache/yum /var/cache/zypp
 rm -f /tmp/riak-3.4.1.OTP26-1.el9.x86_64.rpm
 OPENRIAK_PACKAGE_INSTALL
 
+# Export the cleaned filesystem; removed base-image files cannot remain in layers.
+FROM scratch AS package-amd64
+COPY --from=install-amd64 / /
+# Shell command search path for OpenRiak KV lifecycle scripts.
+ENV PATH="/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin"
+
 FROM package-${TARGETARCH} AS final
 
 LABEL org.opencontainers.image.title="OpenRiak KV"
@@ -117,7 +121,7 @@ ENV RIAK_NODE_HOST=""
 # Explicit nodename; empty derives openriak-kv@<hostname>.
 ENV RIAK_NODE_NAME=""
 # Initial cookie; existing riak.conf wins and new followers adopt the coordinator cookie.
-ENV RIAK_DISTRIBUTED_COOKIE="openriak-ac2d1ff7ff0289832b0fbfc0d9f902fd"
+ENV RIAK_DISTRIBUTED_COOKIE="openriak-6bd3d5609a1a24b2b32cf6a42502c970"
 # Partition count for a new ring; do not change on an existing cluster.
 ENV RIAK_RING_SIZE="8"
 # Storage backend used by OpenRiak KV.
