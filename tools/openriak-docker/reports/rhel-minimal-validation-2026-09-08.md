@@ -130,5 +130,5 @@ report does not establish Red Hat support or certification for the custom image.
 The subsequent [14-image amd64 validation](minimal-runtime-validation-2026-09-08.md)
 passed and the validated layouts were integrated into the production generator.
 The seven assessments above are now recorded per image in
-[cve-statuses.json](../cve-statuses.json). Existing approved downloads and registry
+[Markdown CVE assessments](../../../content/openriak-kv/docker/README.md). Existing approved downloads and registry
 images still require an explicit refresh and push to adopt the new layouts.

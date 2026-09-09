@@ -564,7 +564,7 @@ single-node and five-node suites, and saves full compressed Scout evidence
 without publishing images or replacing approved caches. These tests establish
 runtime compatibility; they do not prove that every reported CVE is exploitable
 or fixed. Vendor backports and absent affected components are assessed separately
-in [`cve-statuses.json`](cve-statuses.json), with evidence under `reports/`.
+in [the Markdown CVE assessments](../../content/openriak-kv/docker/README.md), with evidence under `reports/`.
 
 ### KV image aliases
 
@@ -968,40 +968,29 @@ severity and score and listing the affected architectures. The information icon
 opens Docker Scout's CVE page (the destination used by Docker Hub's CVE details);
 the external-link icon opens the affected image digest on Docker Hub.
 
-Edit `tools/openriak-docker/cve-statuses.json` to maintain our assessment. Entries
-can contain multiple boolean `flags`, a required explanation in `details`, and
-optional evidence conditions in `appliesTo`. For example:
+Edit the Markdown assessments under
+`content/openriak-kv/docker/{version}/{docker-tag}/cve-{year}-{number}.md`.
+See [the assessment editing guide](../../content/openriak-kv/docker/README.md).
+The image field omits the namespace, so the same assessment applies to all
+registries and namespaces for that image tag. YAML frontmatter holds flags,
+an optional status, and evidence conditions; the Markdown body explains them.
 
-```json
-{
-  "schemaVersion": 2,
-  "defaultStatus": "Under investigation",
-  "cves": {},
-  "images": {
-    "tiotjp/openriak-kv:3.4.0-debian-12-otp24": {
-      "CVE-2026-75803": {
-        "flags": {
-          "mitigated": false,
-          "fixedByBackporting": true,
-          "notRelevant": false,
-          "falsePositive": true,
-          "unfixable": false
-        },
-        "details": "OpenSSL 3.0.22 contains the upstream fix. Our Debian backport retains it; Scout still matches all Bookworm versions. Older 3.0.20 packages remain affected.",
-        "appliesTo": {
-          "packageVersions": {
-            "openssl": [
-              "3.0.22-0openriak1~deb12u1"
-            ],
-            "libssl3": [
-              "3.0.22-0openriak1~deb12u1"
-            ]
-          }
-        }
-      }
-    }
-  }
-}
+For example, `3.4.1/3.4.1-rhel-9-otp26/cve-2026-40356.md`:
+
+```markdown
+---
+cve-id: CVE-2026-40356
+image: openriak-kv:3.4.1-rhel-9-otp26
+flags:
+  falsePositive: true
+appliesTo:
+  packageVersions:
+    krb5:
+      - "1.21.1-10.el9_8"
+---
+
+Fixed in vendor package `krb5-libs 1.21.1-10.el9_8`.
+See [RHSA-2026:19357](https://access.redhat.com/errata/RHSA-2026:19357).
 ```
 
 | Flag | Displayed status | Included in the overall image rating? |
@@ -1012,16 +1001,18 @@ optional evidence conditions in `appliesTo`. For example:
 | `falsePositive` | False positive | No, when the evidence conditions match. |
 | `unfixable` | Unfixable | Yes; lack of a fix does not remove the vulnerability. |
 
-Use `details` to explain the affected component, why the assessment applies,
+Use the Markdown body to explain the affected component, why the assessment applies,
 and the package version, advisory or runtime evidence supporting it. Do not mark
 an issue unfixable merely because no vendor fix is available yet. If no flags
 are true, `status` may supply a short label; otherwise it defaults to
 `Under investigation`. Unfixable takes precedence over exclusion flags.
 
-Image keys are full primary image tags. Image-specific entries override shared
-entries under `cves`. Legacy string entries remain supported but never exclude
-a finding. Missing entries use `defaultStatus`. All labels and details are
-rendered as plain text, not HTML.
+Omitted flags default to false. Missing assessments display `Under investigation`.
+Explanations render as Markdown, including links, lists and inline code. These
+files enrich the shared generated metadata; they do not become documentation
+pages or search entries. The preview watcher detects added, changed and deleted
+assessment files without another build, push or scan. Malformed assessments
+produce an error; they are never silently used to suppress findings.
 
 `appliesTo.packageVersions` maps Scout package names to exact reviewed versions.
 Every reported package and architecture for that CVE must match. This prevents
@@ -1031,7 +1022,8 @@ files absent from a particular image, use `appliesTo.imageDigests`, a list of
 reviewed OCI image/index SHA-256 digests. If both conditions are present, both
 must match. Unmatched or missing evidence displays `Needs review` and retains
 the Scout rating. An entry without `appliesTo` is an explicit assessment for
-all reports covered by that image or shared CVE key.
+all reports for that namespace-independent image tag. Use a scope whenever the
+assessment depends on particular package versions or image contents.
 
 The panel always retains Scout's original severity and score. Excluded findings
 have their rating crossed out and do not contribute to the image badge. A

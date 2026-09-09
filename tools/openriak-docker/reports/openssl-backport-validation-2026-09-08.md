@@ -119,7 +119,7 @@ upstream advisory and installed source version; the raw scanner evidence is
 retained unchanged. Findings in util-linux and zlib are outside this update.
 
 The backport is enabled in [`runtime-images.json`](../runtime-images.json).
-[`cve-statuses.json`](../cve-statuses.json) records the fixed package version
+[Markdown CVE assessments](../../../content/openriak-kv/docker/README.md) records the fixed package version
 for the existing OpenRiak/TI Tokyo Debian 12 image entries, with an explicit
 condition: older 3.0.20 images still require rebuild and repush. These statuses
 do not claim that the currently published images already contain the fix.

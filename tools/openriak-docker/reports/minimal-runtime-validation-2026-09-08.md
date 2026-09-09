@@ -34,7 +34,7 @@ Counts are distinct CVE IDs per image, retaining Scout severity. Manual assessme
 
 ## Remaining reports and assessments
 
-Image-specific assessments are in [cve-statuses.json](../cve-statuses.json). [The evidence JSON](minimal-runtime-cve-assessments-2026-09-08.json) records exact package versions, vendor advisories, source references, binary checksums and runtime inspections. Existing baseline versions were checked before applying assessments to published image tags. Entries are dated and version-specific; they are not global CVE suppressions.
+Image-specific assessments are in [Markdown CVE assessments](../../../content/openriak-kv/docker/README.md). [The evidence JSON](minimal-runtime-cve-assessments-2026-09-08.json) records exact package versions, vendor advisories, source references, binary checksums and runtime inspections. Existing baseline versions were checked before applying assessments to published image tags. Entries are dated and version-specific; they are not global CVE suppressions.
 
 - **RHEL 9:** all seven remaining High reports have verified vendor fixes or an absent affected utility. See the [original RHEL 9 review](rhel-minimal-validation-2026-09-08.md).
 - **RHEL 8:** all ten remaining High reports have verified vendor fixes, an unaffected Vim version, or an absent affected component. Vendor RPM changelogs establish the Vim backport that Scout missed.
