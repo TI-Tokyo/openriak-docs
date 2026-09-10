@@ -21,6 +21,8 @@ def main():
     parser.add_argument('--review', type=Path, default=Path(__file__).resolve().parents[1] / 'reports/cve-review-2026-09-08.json')
     parser.add_argument('--family', action='append')
     parser.add_argument('--image-tag', action='append')
+    parser.add_argument('--severity', action='append', choices=['CRITICAL', 'HIGH', 'MEDIUM', 'LOW', 'UNSPECIFIED'],
+                        help='Saved finding severities to select; repeatable (default: CRITICAL and HIGH)')
     parser.add_argument('--jobs', type=int, default=2)
     parser.add_argument('--timeout', type=int, default=tool.DEFAULT_TIMEOUT_SECONDS)
     parser.add_argument('--openssl-backport', action='store_true',
@@ -32,9 +34,15 @@ def main():
         args.openssl_backport = True
     if args.timeout < 1 or args.jobs not in (1, 2):
         parser.error('Positive timeout and one or two jobs required')
-    review = json.loads(args.review.read_text())
-    affected = {row['image'].split(':')[1] for row in review['images']
-                if row['counts'].get('CRITICAL', 0) or row['counts'].get('HIGH', 0)}
+    severities = args.severity or ['CRITICAL', 'HIGH']
+    if args.image_tag:
+        # Explicit tags also validate siblings with no findings in an older review.
+        # Discovery still requires a real metadata-backed package and amd64 target.
+        affected = set(args.image_tag)
+    else:
+        review = json.loads(args.review.read_text())
+        affected = {row['image'].split(':')[1] for row in review['images']
+                    if any(row['counts'].get(severity, 0) for severity in severities)}
     versions = sorted({tag.split('-')[0] for tag in affected})
     groups = tool.grouped_targets(tool.discover_targets(versions))
     selected = [next(t for t in group if t.platform == 'linux/amd64') for group in groups
@@ -164,7 +172,7 @@ cat /usr/share/openriak-build/runtime-packages.txt
                     state['openssl_compatibility'] = verify_openssl(
                         state['image'], target.group_directory, timeout=args.timeout)
                 progress('PASSED amd64 integration; scanning runtime and package inventory')
-                expected = {'riak', 'libc6' if target.family == 'debian' else 'glibc'}
+                expected = {'riak', 'libc6' if target.operating_system['package_family'] == 'deb' else 'glibc'}
                 state['scout'] = scan_image(state['image'], target.platform, args.timeout, summary,
                     expected_packages=expected, reject_interpreters=state['strategy']['strategy'] == 'rpm-root')
                 progress('Scout: ' + json.dumps(state['scout']['counts']))

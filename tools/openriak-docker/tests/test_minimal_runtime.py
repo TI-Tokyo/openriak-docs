@@ -1,4 +1,6 @@
 import json
+import os
+import shutil
 import subprocess
 import tempfile
 import unittest
@@ -56,6 +58,101 @@ rpm() { echo UNEXPECTED_RPM_INSTALL; return 92; }
         target = next(g[0] for g in self.groups if not tool.minimal.configuration(g[0]))
         source = tool.render_dockerfile(target, 'example:1@sha256:' + 'a' * 64, 'cookie')
         self.assertNotIn('COPY --from=install-', source)
+
+    def test_optional_rpm_removal_keeps_dependency_failures_fatal(self):
+        script = tool.minimal.remove_rpm_packages({'remove_packages': ['sudo', 'vim-minimal']})
+        # Both optional packages exist, but a remaining dependency rejects erase.
+        result = subprocess.run(['sh', '-c', '''set -eu
+rpm() {
+    case "$1" in
+        -q) return 0 ;;
+        -e) echo dependency-still-required; return 42 ;;
+        *) return 99 ;;
+    esac
+}
+''' + script + '\necho UNEXPECTED_SUCCESS'], text=True, capture_output=True, timeout=5)
+        self.assertEqual(result.returncode, 42)
+        self.assertNotIn('UNEXPECTED_SUCCESS', result.stdout)
+        self.assertNotIn('--nodeps', script)
+
+    def test_launcher_without_sudo_preserves_arguments_and_exit_status(self):
+        with tempfile.TemporaryDirectory() as directory:
+            commands = Path(directory) / 'usr/sbin'
+            commands.mkdir(parents=True)
+            runuser = commands / 'runuser'
+            runuser.write_text('#!/bin/sh\nprintf "%s\\n" "$@"\nexit 37\n')
+            runuser.chmod(0o755)
+            launcher = commands / 'riak'
+            launcher.write_text('#!/bin/sh\nsudo -H -E -u riak -- "$@"\n')
+            launcher.chmod(0o755)
+            subprocess.run(['sh', '-ec', tool.minimal.launcher_without_sudo(
+                {'remove_packages': ['sudo']}, directory)], check=True, timeout=5)
+            result = subprocess.run([str(launcher), 'admin', 'argument with spaces', '$(literal)'],
+                env={**os.environ, 'PATH': str(commands) + os.pathsep + os.environ['PATH']},
+                capture_output=True, text=True, timeout=5)
+            self.assertEqual(result.returncode, 37)
+            self.assertEqual(result.stdout.splitlines(),
+                             ['-u', 'riak', '--', 'admin', 'argument with spaces', '$(literal)'])
+
+    @unittest.skipUnless(shutil.which('dpkg'), 'dpkg is needed for Debian version comparison')
+    def test_minimum_security_package_rejects_stale_mirror_and_accepts_newer_fix(self):
+        check = tool.minimal.minimum_package_check({'minimum_packages': {'libc6': '2.35-0ubuntu3.15'}})
+        for version, expected in [('2.35-0ubuntu3.14', False), ('2.35-0ubuntu3.15', True),
+                                  ('2.35-0ubuntu3.16', True)]:
+            with self.subTest(version=version), tempfile.TemporaryDirectory() as directory:
+                query = Path(directory) / 'dpkg-query'
+                query.write_text("#!/bin/sh\necho '" + version + "'\n")
+                query.chmod(0o755)
+                result = subprocess.run(['sh', '-c', 'set -eu\n' + check],
+                    env={**os.environ, 'PATH': directory + os.pathsep + os.environ['PATH']},
+                    capture_output=True, text=True, timeout=5)
+                self.assertEqual(result.returncode == 0, expected)
+
+    def test_cleanup_configuration_rejects_invalid_packages_and_versions(self):
+        targets = [g[0] for g in self.groups]
+        for target, settings in [
+                (next(t for t in targets if t.family == 'ubuntu'), {'minimum_packages': {'libc6': '1; false'}}),
+                (next(t for t in targets if t.family == 'ubuntu'), {'remove_tar': 'true'}),
+                (next(t for t in targets if t.family == 'rhel'), {'remove_packages': ['sudo; false']}),
+                (next(t for t in targets if t.family == 'ubuntu'), {'remove_packages': ['sudo']})]:
+            with tempfile.TemporaryDirectory() as directory:
+                path = Path(directory) / 'runtime-images.json'
+                path.write_text(json.dumps({'schema_version': 1, 'releases': {target.family: {
+                    target.release: {'strategy': 'clean-root', **settings}}}}))
+                with mock.patch.object(tool.minimal, 'CONFIG_PATH', path):
+                    with self.assertRaises(tool.minimal.ConfigurationError):
+                        tool.minimal.configuration(target)
+
+    def test_rpm_security_floor_failure_stops_installation(self):
+        check = tool.minimal.minimum_package_check(
+            {'minimum_packages': {'gzip': '1.9-15.el8_10'}}, 'rpm', '/openriak-rootfs')
+        result = subprocess.run(['sh', '-c', '''set -eu
+rpm() { printf '%s\\n' "$@"; return 17; }
+''' + check.replace(' >/dev/null', '') + 'echo UNEXPECTED_SUCCESS'],
+            text=True, capture_output=True, timeout=5)
+        self.assertEqual(result.returncode, 17)
+        self.assertEqual(result.stdout.splitlines(),
+                         ['--root', '/openriak-rootfs', '-q', '--whatprovides', 'gzip >= 1.9-15.el8_10'])
+        self.assertNotIn('UNEXPECTED_SUCCESS', result.stdout)
+
+    def test_security_floors_apply_to_every_version_otp_and_architecture(self):
+        expected = {('ubuntu', 'noble'): {'libc6': '2.39-0ubuntu8.9'},
+                    ('rocky', '8'): {'gzip': '1.9-15.el8_10'},
+                    ('rocky', '9'): {'glib2': '2.68.4-19.el9_8.10',
+                                     'expat': '2.5.0-6.el9_8.3', 'pam': '1.5.1-28.el9_8.1'}}
+        covered = set()
+        for group in self.groups:
+            for target in group:
+                key = (target.family, target.release)
+                if key not in expected:
+                    continue
+                covered.add(key)
+                mode = tool.minimal.configuration(target)
+                self.assertEqual(mode['minimum_packages'], expected[key])
+                source = tool.render_dockerfile(target, 'example:1@sha256:' + 'a' * 64)
+                for version in expected[key].values():
+                    self.assertIn(version, source)
+        self.assertEqual(covered, set(expected))
 
     def test_invalid_release_package_stops_generation(self):
         target = next(g[0] for g in self.groups if g[0].family == 'rhel')

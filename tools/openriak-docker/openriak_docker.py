@@ -7,6 +7,7 @@ import argparse
 import contextlib
 import dataclasses
 import datetime as dt
+import fnmatch
 import hashlib
 import inspect
 import http.client
@@ -327,14 +328,16 @@ def targets_for_version(version: str) -> list[Target]:
 
 def discover_targets(
     versions: Iterable[str] | None = None,
-    os_id: str | None = None,
+    os_id: str | Iterable[str] | None = None,
     otp: str | None = None,
     download_id: str | None = None,
 ) -> list[Target]:
     selected_versions = list(versions) if versions is not None else metadata_versions()
     targets = [target for version in selected_versions for target in targets_for_version(version)]
     if os_id:
-        targets = [target for target in targets if target.os_id == os_id]
+        patterns = [os_id] if isinstance(os_id, str) else list(os_id)
+        targets = [target for target in targets
+                   if any(fnmatch.fnmatchcase(target.os_id, pattern) for pattern in patterns)]
     if otp:
         targets = [target for target in targets if target.otp == str(otp)]
     if download_id:
@@ -2309,6 +2312,21 @@ def wait_for_node(
                 check=False,
             )
             last_cli = cli.stdout.strip()
+            if cli.returncode:
+                state = run_before_deadline(
+                    [docker, "container", "inspect", "--format",
+                     "{{.State.Running}} {{.State.ExitCode}}", container_name],
+                    deadline=deadline, text=True, stdout=subprocess.PIPE,
+                    stderr=subprocess.STDOUT, encoding="utf-8", errors="replace", check=False,
+                )
+                state_parts = state.stdout.strip().split()
+                if state.returncode == 0 and state_parts and state_parts[0] == "false":
+                    exit_code = state_parts[1] if len(state_parts) > 1 else "unknown"
+                    log.write(f"{isoformat()} exited={exit_code} cli={last_cli!r}\n")
+                    raise DockerToolError(
+                        f"Container {container_name!r} exited with code {exit_code} "
+                        f"before CLI/HTTP readiness; CLI={last_cli!r}"
+                    )
             http_exit, last_http, http_status = container_http_ping(container_name, remaining_timeout(deadline))
             http_ok = http_exit == 0 and http_status == 200 and last_http == "OK"
             log.write(
@@ -2814,6 +2832,9 @@ def refresh_target(
                     "--platform",
                     target.platform,
                     "--pull=false",
+                    # An explicit refresh must rerun package updates even when
+                    # the OS tag still resolves to the same base-image digest.
+                    "--no-cache",
                     "--tag",
                     build_image_tag,
                     "--file",
@@ -3938,7 +3959,8 @@ def print_refresh_header(
     started_at: dt.datetime | None = None,
 ) -> None:
     versions = "all" if options.all else ", ".join(dict.fromkeys(t.version for t in targets))
-    os_selection = options.os_id or "all"
+    os_patterns = [options.os_id] if isinstance(options.os_id, str) else options.os_id or []
+    os_selection = ", ".join(os_patterns) or "all"
     if options.os_id or options.download_id:
         architectures = ", ".join(dict.fromkeys(t.architecture for t in targets))
     else:
@@ -4123,7 +4145,7 @@ def parser() -> argparse.ArgumentParser:
 
     matrix = subcommands.add_parser("matrix", help="List metadata-derived Docker targets without changing files")
     matrix.add_argument("--version", action="append", dest="versions")
-    matrix.add_argument("--os-id")
+    matrix.add_argument("--os-id", action="append", metavar="PATTERN", help="Match metadata OS IDs with case-sensitive wildcard patterns; repeat to match any pattern and quote patterns such as 'oracle*'")
     matrix.add_argument("--otp")
     matrix.add_argument("--download-id")
     matrix.add_argument("--json", action="store_true")
@@ -4134,7 +4156,7 @@ def parser() -> argparse.ArgumentParser:
     selection = refresh.add_mutually_exclusive_group(required=True)
     selection.add_argument("--version", action="append", dest="versions")
     selection.add_argument("--all", action="store_true")
-    refresh.add_argument("--os-id")
+    refresh.add_argument("--os-id", action="append", metavar="PATTERN", help="Match metadata OS IDs with case-sensitive wildcard patterns; repeat to match any pattern and quote patterns such as 'oracle*'")
     refresh.add_argument("--otp")
     refresh.add_argument("--download-id")
     refresh.add_argument("--timeout", type=int, default=DEFAULT_TIMEOUT_SECONDS, help="Seconds per operation or wait (default: 1800)")
@@ -4170,7 +4192,7 @@ def parser() -> argparse.ArgumentParser:
     generation_selection = generate.add_mutually_exclusive_group(required=True)
     generation_selection.add_argument("--version", action="append", dest="versions")
     generation_selection.add_argument("--all", action="store_true")
-    generate.add_argument("--os-id")
+    generate.add_argument("--os-id", action="append", metavar="PATTERN", help="Match metadata OS IDs with case-sensitive wildcard patterns; repeat to match any pattern and quote patterns such as 'oracle*'")
     generate.add_argument("--otp")
     generate.add_argument("--download-id")
     generate.add_argument("--timeout", type=int, default=DEFAULT_TIMEOUT_SECONDS, help="Seconds per operation or wait (default: 1800)")

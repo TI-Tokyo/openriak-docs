@@ -1,0 +1,794 @@
+{
+  "artifacts": {
+    "compose_cluster": {
+      "filename": "compose.cluster.yaml",
+      "sha256": "a6879f628485bdd481ea49dad1a8cd29a4a20e6ffda54b0cae43f9a8cca3d00d",
+      "url": "./compose.cluster.yaml"
+    },
+    "compose_single": {
+      "filename": "compose.single.yaml",
+      "sha256": "84fc6a3493132e7f52090c5e621a4f3a26ad2f814089055f871ec9410be2d2b8",
+      "url": "./compose.single.yaml"
+    },
+    "dockerfile": {
+      "filename": "Dockerfile",
+      "sha256": "0297b7fe4dbd565d1b9cab26a4ed600402a3af4b8eb7b06932aa7c8058539976",
+      "url": "./Dockerfile"
+    },
+    "environment_example": {
+      "filename": "example.env",
+      "sha256": "d3f8b8dcd01748c4d97be9523237895fd7b3a08c504df693da3940a2bc0b9808",
+      "url": "./example.env"
+    }
+  },
+  "base_image": {
+    "pinned": "oraclelinux:9-slim@sha256:6e9fec9dc3fcbd08df4c175fba0104bcbab93778e817ba9b60bd990683978258",
+    "requested": "oraclelinux:9-slim",
+    "resolved_at": "2026-09-09T23:49:49Z"
+  },
+  "error": null,
+  "finished_at": "2026-09-09T23:57:23Z",
+  "generation": {
+    "cluster_nodes": 5,
+    "distributed_cookie": "openriak-5bf0b5afea97d533ca34062520ce8d39"
+  },
+  "identity": {
+    "namespace": "openriak-minimal-validation",
+    "source": "https://github.com/OpenRiak/openriak-docs",
+    "url": "https://openriak.org",
+    "vendor": "OpenRiak"
+  },
+  "image": "openriak-minimal-validation/openriak-kv:3.4.0-oracle-linux-9-otp24",
+  "metadata_sources": [
+    "content/openriak-kv/metadata/3.4.0/supported-os.json",
+    "content/openriak-kv/metadata/3.4.0/downloads.json"
+  ],
+  "network": {
+    "address_assignment": "docker",
+    "node_host": "node-01.cluster-a.openriak",
+    "riak_node_name": "openriak-kv@node-01.cluster-a.openriak"
+  },
+  "node": "openriak-kv-3.4.0-oracle-linux-9-otp24-node",
+  "package": {
+    "checksum": {
+      "algorithm": "sha256",
+      "value": "6990e90b3caa3a76de1ba94d3477e4825db4402e180934a5f32bd2ce0da8233d"
+    },
+    "filename": "riak-3.4.0.OTP24-1.el9.x86_64.rpm",
+    "format": "rpm",
+    "url": "https://files.tiot.jp/riak/kv/3.4/3.4.0/oracle/9/riak-3.4.0.OTP24-1.el9.x86_64.rpm"
+  },
+  "ports": {
+    "http": 8098,
+    "protobuf": 8087
+  },
+  "product": "openriak-kv",
+  "run_id": "20260909T234949.102258Z",
+  "schema_version": 4,
+  "started_at": "2026-09-09T23:49:49Z",
+  "status": "passed",
+  "steps": [
+    {
+      "duration_seconds": 0.0,
+      "finished_at": "2026-09-09T23:49:49Z",
+      "name": "generate_artifacts",
+      "started_at": "2026-09-09T23:49:49Z",
+      "status": "passed"
+    },
+    {
+      "duration_seconds": 0.11,
+      "finished_at": "2026-09-09T23:49:49Z",
+      "name": "validate_compose_artifacts",
+      "started_at": "2026-09-09T23:49:49Z",
+      "status": "passed"
+    },
+    {
+      "duration_seconds": 156.883,
+      "finished_at": "2026-09-09T23:52:42Z",
+      "name": "build_image",
+      "started_at": "2026-09-09T23:49:49Z",
+      "status": "passed"
+    },
+    {
+      "duration_seconds": 1.342,
+      "finished_at": "2026-09-09T23:52:43Z",
+      "name": "initialize_volumes",
+      "started_at": "2026-09-09T23:52:42Z",
+      "status": "passed"
+    },
+    {
+      "duration_seconds": 0.76,
+      "finished_at": "2026-09-09T23:52:44Z",
+      "name": "make_test_config_writable",
+      "started_at": "2026-09-09T23:52:43Z",
+      "status": "passed"
+    },
+    {
+      "duration_seconds": 0.005,
+      "finished_at": "2026-09-09T23:52:44Z",
+      "name": "configure_node",
+      "started_at": "2026-09-09T23:52:44Z",
+      "status": "passed"
+    },
+    {
+      "duration_seconds": 0.523,
+      "finished_at": "2026-09-09T23:52:45Z",
+      "name": "start_compose_node",
+      "started_at": "2026-09-09T23:52:44Z",
+      "status": "passed"
+    },
+    {
+      "duration_seconds": 21.117,
+      "finished_at": "2026-09-09T23:53:04Z",
+      "name": "wait_for_entrypoint_readiness",
+      "started_at": "2026-09-09T23:52:45Z",
+      "status": "passed"
+    },
+    {
+      "duration_seconds": 1.214,
+      "finished_at": "2026-09-09T23:53:10Z",
+      "name": "wait_for_cli_and_http",
+      "started_at": "2026-09-09T23:53:04Z",
+      "status": "passed"
+    },
+    {
+      "duration_seconds": 0.797,
+      "finished_at": "2026-09-09T23:53:11Z",
+      "name": "verify_runtime_options",
+      "started_at": "2026-09-09T23:53:10Z",
+      "status": "passed"
+    },
+    {
+      "duration_seconds": 1.643,
+      "finished_at": "2026-09-09T23:53:12Z",
+      "name": "single_node_admin_test",
+      "started_at": "2026-09-09T23:53:11Z",
+      "status": "passed"
+    },
+    {
+      "duration_seconds": 0.053,
+      "finished_at": "2026-09-09T23:53:12Z",
+      "name": "wait_for_healthcheck",
+      "started_at": "2026-09-09T23:53:12Z",
+      "status": "passed"
+    },
+    {
+      "duration_seconds": 4.884,
+      "finished_at": "2026-09-09T23:53:17Z",
+      "name": "graceful_stop",
+      "started_at": "2026-09-09T23:53:12Z",
+      "status": "passed"
+    },
+    {
+      "duration_seconds": 0.042,
+      "finished_at": "2026-09-09T23:53:17Z",
+      "name": "verify_graceful_shutdown_logging",
+      "started_at": "2026-09-09T23:53:17Z",
+      "status": "passed"
+    },
+    {
+      "duration_seconds": 0.403,
+      "finished_at": "2026-09-09T23:53:18Z",
+      "name": "remove_single_node_test",
+      "started_at": "2026-09-09T23:53:17Z",
+      "status": "passed"
+    },
+    {
+      "duration_seconds": 1.039,
+      "finished_at": "2026-09-09T23:53:19Z",
+      "name": "start_compose_cluster",
+      "started_at": "2026-09-09T23:53:18Z",
+      "status": "passed"
+    },
+    {
+      "duration_seconds": 200.782,
+      "finished_at": "2026-09-09T23:56:59Z",
+      "name": "wait_for_cluster",
+      "started_at": "2026-09-09T23:53:19Z",
+      "status": "passed"
+    },
+    {
+      "duration_seconds": 2.101,
+      "finished_at": "2026-09-09T23:57:01Z",
+      "name": "cluster_node_1_admin_test",
+      "started_at": "2026-09-09T23:56:59Z",
+      "status": "passed"
+    },
+    {
+      "duration_seconds": 1.059,
+      "finished_at": "2026-09-09T23:57:02Z",
+      "name": "cluster_node_1_runtime_options",
+      "started_at": "2026-09-09T23:57:01Z",
+      "status": "passed"
+    },
+    {
+      "duration_seconds": 2.027,
+      "finished_at": "2026-09-09T23:57:04Z",
+      "name": "cluster_node_2_admin_test",
+      "started_at": "2026-09-09T23:57:02Z",
+      "status": "passed"
+    },
+    {
+      "duration_seconds": 0.941,
+      "finished_at": "2026-09-09T23:57:05Z",
+      "name": "cluster_node_2_runtime_options",
+      "started_at": "2026-09-09T23:57:04Z",
+      "status": "passed"
+    },
+    {
+      "duration_seconds": 1.991,
+      "finished_at": "2026-09-09T23:57:08Z",
+      "name": "cluster_node_3_admin_test",
+      "started_at": "2026-09-09T23:57:06Z",
+      "status": "passed"
+    },
+    {
+      "duration_seconds": 0.966,
+      "finished_at": "2026-09-09T23:57:08Z",
+      "name": "cluster_node_3_runtime_options",
+      "started_at": "2026-09-09T23:57:08Z",
+      "status": "passed"
+    },
+    {
+      "duration_seconds": 2.17,
+      "finished_at": "2026-09-09T23:57:11Z",
+      "name": "cluster_node_4_admin_test",
+      "started_at": "2026-09-09T23:57:09Z",
+      "status": "passed"
+    },
+    {
+      "duration_seconds": 0.865,
+      "finished_at": "2026-09-09T23:57:12Z",
+      "name": "cluster_node_4_runtime_options",
+      "started_at": "2026-09-09T23:57:11Z",
+      "status": "passed"
+    },
+    {
+      "duration_seconds": 2.185,
+      "finished_at": "2026-09-09T23:57:14Z",
+      "name": "cluster_node_5_admin_test",
+      "started_at": "2026-09-09T23:57:12Z",
+      "status": "passed"
+    },
+    {
+      "duration_seconds": 0.858,
+      "finished_at": "2026-09-09T23:57:15Z",
+      "name": "cluster_node_5_runtime_options",
+      "started_at": "2026-09-09T23:57:14Z",
+      "status": "passed"
+    },
+    {
+      "duration_seconds": 6.65,
+      "finished_at": "2026-09-09T23:57:22Z",
+      "name": "graceful_stop_cluster",
+      "started_at": "2026-09-09T23:57:16Z",
+      "status": "passed"
+    },
+    {
+      "duration_seconds": 0.638,
+      "finished_at": "2026-09-09T23:57:23Z",
+      "name": "remove_cluster_test",
+      "started_at": "2026-09-09T23:57:22Z",
+      "status": "passed"
+    }
+  ],
+  "target": {
+    "architecture": "x86_64",
+    "docker_platform": "linux/amd64",
+    "download_id": "otp24-x86_64-1",
+    "os_family": "oracle-linux",
+    "os_id": "oracle-linux-9-x86_64",
+    "os_name": "Oracle Linux 9",
+    "os_release": "9",
+    "otp": "24",
+    "version": "3.4.0"
+  },
+  "tests": {
+    "admin_test": {
+      "command": "riak admin test",
+      "response": "Successfully completed 1 read/write cycle to 'openriak-kv@node-01.cluster-a.openriak'",
+      "status": "passed"
+    },
+    "cli_ping": {
+      "command": "riak ping",
+      "response": "pong",
+      "status": "passed"
+    },
+    "cluster": {
+      "checks": [
+        "same member set",
+        "ring ready",
+        "transfers complete",
+        "riak ping == pong",
+        "HTTP 200/OK",
+        "riak admin test read/write cycle",
+        "Docker healthcheck healthy",
+        "config/data/log volumes populated"
+      ],
+      "coordinator_cookie_adoption": "passed",
+      "members": [
+        "openriak-kv@node-01.cluster-a.openriak",
+        "openriak-kv@node-02.cluster-a.openriak",
+        "openriak-kv@node-03.cluster-a.openriak",
+        "openriak-kv@node-04.cluster-a.openriak",
+        "openriak-kv@node-05.cluster-a.openriak"
+      ],
+      "node_count": 5,
+      "roles": {
+        "openriak-kv-3.4.0-oracle-linux-9-otp24-node-1-t-102258z": "Coordinator",
+        "openriak-kv-3.4.0-oracle-linux-9-otp24-node-2-t-102258z": "Follower",
+        "openriak-kv-3.4.0-oracle-linux-9-otp24-node-3-t-102258z": "Follower",
+        "openriak-kv-3.4.0-oracle-linux-9-otp24-node-4-t-102258z": "Follower",
+        "openriak-kv-3.4.0-oracle-linux-9-otp24-node-5-t-102258z": "Follower"
+      },
+      "state": {
+        "openriak-kv-3.4.0-oracle-linux-9-otp24-node-1-t-102258z": {
+          "http": "OK",
+          "members": "================================= Membership ==================================\nStatus     Ring    Pending    Node\n-------------------------------------------------------------------------------\nvalid      25.0%      --      openriak-kv@node-01.cluster-a.openriak\nvalid      25.0%      --      openriak-kv@node-02.cluster-a.openriak\nvalid      25.0%      --      openriak-kv@node-03.cluster-a.openriak\nvalid      12.5%      --      openriak-kv@node-04.cluster-a.openriak\nvalid      12.5%      --      openriak-kv@node-05.cluster-a.openriak\n-------------------------------------------------------------------------------\nValid:5 / Leaving:0 / Exiting:0 / Joining:0 / Down:0\nok",
+          "ping": "pong",
+          "ready": true,
+          "ring": "TRUE All nodes agree on the ring ['openriak-kv@node-01.cluster-a.openriak',\n                                  'openriak-kv@node-02.cluster-a.openriak',\n                                  'openriak-kv@node-03.cluster-a.openriak',\n                                  'openriak-kv@node-04.cluster-a.openriak',\n                                  'openriak-kv@node-05.cluster-a.openriak']\nok",
+          "transfers": "No transfers active\n\nActive Transfers:\n\n\nok"
+        },
+        "openriak-kv-3.4.0-oracle-linux-9-otp24-node-2-t-102258z": {
+          "http": "OK",
+          "members": "================================= Membership ==================================\nStatus     Ring    Pending    Node\n-------------------------------------------------------------------------------\nvalid      25.0%      --      openriak-kv@node-01.cluster-a.openriak\nvalid      25.0%      --      openriak-kv@node-02.cluster-a.openriak\nvalid      25.0%      --      openriak-kv@node-03.cluster-a.openriak\nvalid      12.5%      --      openriak-kv@node-04.cluster-a.openriak\nvalid      12.5%      --      openriak-kv@node-05.cluster-a.openriak\n-------------------------------------------------------------------------------\nValid:5 / Leaving:0 / Exiting:0 / Joining:0 / Down:0\nok",
+          "ping": "pong",
+          "ready": true,
+          "ring": "TRUE All nodes agree on the ring ['openriak-kv@node-01.cluster-a.openriak',\n                                  'openriak-kv@node-02.cluster-a.openriak',\n                                  'openriak-kv@node-03.cluster-a.openriak',\n                                  'openriak-kv@node-04.cluster-a.openriak',\n                                  'openriak-kv@node-05.cluster-a.openriak']\nok",
+          "transfers": "No transfers active\n\nActive Transfers:\n\n\nok"
+        },
+        "openriak-kv-3.4.0-oracle-linux-9-otp24-node-3-t-102258z": {
+          "http": "OK",
+          "members": "================================= Membership ==================================\nStatus     Ring    Pending    Node\n-------------------------------------------------------------------------------\nvalid      25.0%      --      openriak-kv@node-01.cluster-a.openriak\nvalid      25.0%      --      openriak-kv@node-02.cluster-a.openriak\nvalid      25.0%      --      openriak-kv@node-03.cluster-a.openriak\nvalid      12.5%      --      openriak-kv@node-04.cluster-a.openriak\nvalid      12.5%      --      openriak-kv@node-05.cluster-a.openriak\n-------------------------------------------------------------------------------\nValid:5 / Leaving:0 / Exiting:0 / Joining:0 / Down:0\nok",
+          "ping": "pong",
+          "ready": true,
+          "ring": "TRUE All nodes agree on the ring ['openriak-kv@node-01.cluster-a.openriak',\n                                  'openriak-kv@node-02.cluster-a.openriak',\n                                  'openriak-kv@node-03.cluster-a.openriak',\n                                  'openriak-kv@node-04.cluster-a.openriak',\n                                  'openriak-kv@node-05.cluster-a.openriak']\nok",
+          "transfers": "No transfers active\n\nActive Transfers:\n\n\nok"
+        },
+        "openriak-kv-3.4.0-oracle-linux-9-otp24-node-4-t-102258z": {
+          "http": "OK",
+          "members": "================================= Membership ==================================\nStatus     Ring    Pending    Node\n-------------------------------------------------------------------------------\nvalid      25.0%      --      openriak-kv@node-01.cluster-a.openriak\nvalid      25.0%      --      openriak-kv@node-02.cluster-a.openriak\nvalid      25.0%      --      openriak-kv@node-03.cluster-a.openriak\nvalid      12.5%      --      openriak-kv@node-04.cluster-a.openriak\nvalid      12.5%      --      openriak-kv@node-05.cluster-a.openriak\n-------------------------------------------------------------------------------\nValid:5 / Leaving:0 / Exiting:0 / Joining:0 / Down:0\nok",
+          "ping": "pong",
+          "ready": true,
+          "ring": "TRUE All nodes agree on the ring ['openriak-kv@node-01.cluster-a.openriak',\n                                  'openriak-kv@node-02.cluster-a.openriak',\n                                  'openriak-kv@node-03.cluster-a.openriak',\n                                  'openriak-kv@node-04.cluster-a.openriak',\n                                  'openriak-kv@node-05.cluster-a.openriak']\nok",
+          "transfers": "No transfers active\n\nActive Transfers:\n\n\nok"
+        },
+        "openriak-kv-3.4.0-oracle-linux-9-otp24-node-5-t-102258z": {
+          "http": "OK",
+          "members": "================================= Membership ==================================\nStatus     Ring    Pending    Node\n-------------------------------------------------------------------------------\nvalid      25.0%      --      openriak-kv@node-01.cluster-a.openriak\nvalid      25.0%      --      openriak-kv@node-02.cluster-a.openriak\nvalid      25.0%      --      openriak-kv@node-03.cluster-a.openriak\nvalid      12.5%      --      openriak-kv@node-04.cluster-a.openriak\nvalid      12.5%      --      openriak-kv@node-05.cluster-a.openriak\n-------------------------------------------------------------------------------\nValid:5 / Leaving:0 / Exiting:0 / Joining:0 / Down:0\nok",
+          "ping": "pong",
+          "ready": true,
+          "ring": "TRUE All nodes agree on the ring ['openriak-kv@node-01.cluster-a.openriak',\n                                  'openriak-kv@node-02.cluster-a.openriak',\n                                  'openriak-kv@node-03.cluster-a.openriak',\n                                  'openriak-kv@node-04.cluster-a.openriak',\n                                  'openriak-kv@node-05.cluster-a.openriak']\nok",
+          "transfers": "No transfers active\n\nActive Transfers:\n\n\nok"
+        }
+      },
+      "status": "passed"
+    },
+    "cluster_admin_test": {
+      "openriak-kv-3.4.0-oracle-linux-9-otp24-node-1-t-102258z": {
+        "command": "riak admin test",
+        "response": "Successfully completed 1 read/write cycle to 'openriak-kv@node-01.cluster-a.openriak'",
+        "status": "passed"
+      },
+      "openriak-kv-3.4.0-oracle-linux-9-otp24-node-2-t-102258z": {
+        "command": "riak admin test",
+        "response": "Successfully completed 1 read/write cycle to 'openriak-kv@node-02.cluster-a.openriak'",
+        "status": "passed"
+      },
+      "openriak-kv-3.4.0-oracle-linux-9-otp24-node-3-t-102258z": {
+        "command": "riak admin test",
+        "response": "Successfully completed 1 read/write cycle to 'openriak-kv@node-03.cluster-a.openriak'",
+        "status": "passed"
+      },
+      "openriak-kv-3.4.0-oracle-linux-9-otp24-node-4-t-102258z": {
+        "command": "riak admin test",
+        "response": "Successfully completed 1 read/write cycle to 'openriak-kv@node-04.cluster-a.openriak'",
+        "status": "passed"
+      },
+      "openriak-kv-3.4.0-oracle-linux-9-otp24-node-5-t-102258z": {
+        "command": "riak admin test",
+        "response": "Successfully completed 1 read/write cycle to 'openriak-kv@node-05.cluster-a.openriak'",
+        "status": "passed"
+      }
+    },
+    "cluster_runtime_options": {
+      "openriak-kv-3.4.0-oracle-linux-9-otp24-node-1-t-102258z": {
+        "docker_logging": {
+          "Config": {
+            "max-file": "3",
+            "max-size": "10m"
+          },
+          "Type": "json-file"
+        },
+        "gid": 19002,
+        "labels": {
+          "com.docker.compose.config-hash": "9b3e3c51d216b7c4c1c846a0f0f06d6b81d82a8404dace952acff4e7bf4b8323",
+          "com.docker.compose.container-number": "1",
+          "com.docker.compose.depends_on": "",
+          "com.docker.compose.image": "sha256:4e0cce355e1eb435aa259764bf3fdbb6268b8f9d2d4b370d831c861ffd29b89c",
+          "com.docker.compose.oneoff": "False",
+          "com.docker.compose.project": "openriak-kv-340-oracle-linux-9-otp24-node-cluster",
+          "com.docker.compose.project.config_files": "/tmp/openriak-docker-3.4.0-oracle-linux-9-otp24-m68r69x7/compose.cluster.test.yaml",
+          "com.docker.compose.project.environment_file": "/tmp/openriak-docker-3.4.0-oracle-linux-9-otp24-m68r69x7/.env.cluster",
+          "com.docker.compose.project.working_dir": "/tmp/openriak-docker-3.4.0-oracle-linux-9-otp24-m68r69x7",
+          "com.docker.compose.service": "node1",
+          "com.docker.compose.version": "5.4.0",
+          "desktop.docker.io/wsl-distro": "Ubuntu",
+          "org.opencontainers.image.description": "Package-backed OpenRiak KV with single-node and cluster startup support",
+          "org.opencontainers.image.source": "https://github.com/OpenRiak/openriak-docs",
+          "org.opencontainers.image.title": "OpenRiak KV",
+          "org.opencontainers.image.url": "https://openriak.org",
+          "org.opencontainers.image.vendor": "OpenRiak",
+          "org.opencontainers.image.version": "3.4.0",
+          "org.openriak.image.tag": "openriak-minimal-validation/openriak-kv:3.4.0-oracle-linux-9-otp24",
+          "org.openriak.os.name": "oracle-linux",
+          "org.openriak.os.release": "9",
+          "org.openriak.os.version": "9",
+          "org.openriak.otp.version": "24"
+        },
+        "minimal_runtime": "No Python, Perl, pip, setuptools or package managers",
+        "runtime_filesystem": {
+          "release_package": "oraclelinux-release",
+          "remove_packages": [
+            "libssh",
+            "libssh-config"
+          ],
+          "status": "passed",
+          "strategy": "rpm-root"
+        },
+        "status": "passed",
+        "timezone": "Asia/Tokyo",
+        "uid": 19001
+      },
+      "openriak-kv-3.4.0-oracle-linux-9-otp24-node-2-t-102258z": {
+        "docker_logging": {
+          "Config": {
+            "max-file": "3",
+            "max-size": "10m"
+          },
+          "Type": "json-file"
+        },
+        "gid": 19002,
+        "labels": {
+          "com.docker.compose.config-hash": "c9158e6799442dcd09e28747c3486900d7b6c90e0645013774c05cfced3fc6af",
+          "com.docker.compose.container-number": "1",
+          "com.docker.compose.depends_on": "",
+          "com.docker.compose.image": "sha256:4e0cce355e1eb435aa259764bf3fdbb6268b8f9d2d4b370d831c861ffd29b89c",
+          "com.docker.compose.oneoff": "False",
+          "com.docker.compose.project": "openriak-kv-340-oracle-linux-9-otp24-node-cluster",
+          "com.docker.compose.project.config_files": "/tmp/openriak-docker-3.4.0-oracle-linux-9-otp24-m68r69x7/compose.cluster.test.yaml",
+          "com.docker.compose.project.environment_file": "/tmp/openriak-docker-3.4.0-oracle-linux-9-otp24-m68r69x7/.env.cluster",
+          "com.docker.compose.project.working_dir": "/tmp/openriak-docker-3.4.0-oracle-linux-9-otp24-m68r69x7",
+          "com.docker.compose.service": "node2",
+          "com.docker.compose.version": "5.4.0",
+          "desktop.docker.io/wsl-distro": "Ubuntu",
+          "org.opencontainers.image.description": "Package-backed OpenRiak KV with single-node and cluster startup support",
+          "org.opencontainers.image.source": "https://github.com/OpenRiak/openriak-docs",
+          "org.opencontainers.image.title": "OpenRiak KV",
+          "org.opencontainers.image.url": "https://openriak.org",
+          "org.opencontainers.image.vendor": "OpenRiak",
+          "org.opencontainers.image.version": "3.4.0",
+          "org.openriak.image.tag": "openriak-minimal-validation/openriak-kv:3.4.0-oracle-linux-9-otp24",
+          "org.openriak.os.name": "oracle-linux",
+          "org.openriak.os.release": "9",
+          "org.openriak.os.version": "9",
+          "org.openriak.otp.version": "24"
+        },
+        "minimal_runtime": "No Python, Perl, pip, setuptools or package managers",
+        "runtime_filesystem": {
+          "release_package": "oraclelinux-release",
+          "remove_packages": [
+            "libssh",
+            "libssh-config"
+          ],
+          "status": "passed",
+          "strategy": "rpm-root"
+        },
+        "status": "passed",
+        "timezone": "Asia/Tokyo",
+        "uid": 19001
+      },
+      "openriak-kv-3.4.0-oracle-linux-9-otp24-node-3-t-102258z": {
+        "docker_logging": {
+          "Config": {
+            "max-file": "3",
+            "max-size": "10m"
+          },
+          "Type": "json-file"
+        },
+        "gid": 19002,
+        "labels": {
+          "com.docker.compose.config-hash": "9c017e47f27320283582370fda3a18e8319dba3aa77c7e9ea2cf4141c1008650",
+          "com.docker.compose.container-number": "1",
+          "com.docker.compose.depends_on": "",
+          "com.docker.compose.image": "sha256:4e0cce355e1eb435aa259764bf3fdbb6268b8f9d2d4b370d831c861ffd29b89c",
+          "com.docker.compose.oneoff": "False",
+          "com.docker.compose.project": "openriak-kv-340-oracle-linux-9-otp24-node-cluster",
+          "com.docker.compose.project.config_files": "/tmp/openriak-docker-3.4.0-oracle-linux-9-otp24-m68r69x7/compose.cluster.test.yaml",
+          "com.docker.compose.project.environment_file": "/tmp/openriak-docker-3.4.0-oracle-linux-9-otp24-m68r69x7/.env.cluster",
+          "com.docker.compose.project.working_dir": "/tmp/openriak-docker-3.4.0-oracle-linux-9-otp24-m68r69x7",
+          "com.docker.compose.service": "node3",
+          "com.docker.compose.version": "5.4.0",
+          "desktop.docker.io/wsl-distro": "Ubuntu",
+          "org.opencontainers.image.description": "Package-backed OpenRiak KV with single-node and cluster startup support",
+          "org.opencontainers.image.source": "https://github.com/OpenRiak/openriak-docs",
+          "org.opencontainers.image.title": "OpenRiak KV",
+          "org.opencontainers.image.url": "https://openriak.org",
+          "org.opencontainers.image.vendor": "OpenRiak",
+          "org.opencontainers.image.version": "3.4.0",
+          "org.openriak.image.tag": "openriak-minimal-validation/openriak-kv:3.4.0-oracle-linux-9-otp24",
+          "org.openriak.os.name": "oracle-linux",
+          "org.openriak.os.release": "9",
+          "org.openriak.os.version": "9",
+          "org.openriak.otp.version": "24"
+        },
+        "minimal_runtime": "No Python, Perl, pip, setuptools or package managers",
+        "runtime_filesystem": {
+          "release_package": "oraclelinux-release",
+          "remove_packages": [
+            "libssh",
+            "libssh-config"
+          ],
+          "status": "passed",
+          "strategy": "rpm-root"
+        },
+        "status": "passed",
+        "timezone": "Asia/Tokyo",
+        "uid": 19001
+      },
+      "openriak-kv-3.4.0-oracle-linux-9-otp24-node-4-t-102258z": {
+        "docker_logging": {
+          "Config": {
+            "max-file": "3",
+            "max-size": "10m"
+          },
+          "Type": "json-file"
+        },
+        "gid": 19002,
+        "labels": {
+          "com.docker.compose.config-hash": "f92c42bfae360805bef0eebc4347eeb08257065c385e61eed55aca76bff8dc91",
+          "com.docker.compose.container-number": "1",
+          "com.docker.compose.depends_on": "",
+          "com.docker.compose.image": "sha256:4e0cce355e1eb435aa259764bf3fdbb6268b8f9d2d4b370d831c861ffd29b89c",
+          "com.docker.compose.oneoff": "False",
+          "com.docker.compose.project": "openriak-kv-340-oracle-linux-9-otp24-node-cluster",
+          "com.docker.compose.project.config_files": "/tmp/openriak-docker-3.4.0-oracle-linux-9-otp24-m68r69x7/compose.cluster.test.yaml",
+          "com.docker.compose.project.environment_file": "/tmp/openriak-docker-3.4.0-oracle-linux-9-otp24-m68r69x7/.env.cluster",
+          "com.docker.compose.project.working_dir": "/tmp/openriak-docker-3.4.0-oracle-linux-9-otp24-m68r69x7",
+          "com.docker.compose.service": "node4",
+          "com.docker.compose.version": "5.4.0",
+          "desktop.docker.io/wsl-distro": "Ubuntu",
+          "org.opencontainers.image.description": "Package-backed OpenRiak KV with single-node and cluster startup support",
+          "org.opencontainers.image.source": "https://github.com/OpenRiak/openriak-docs",
+          "org.opencontainers.image.title": "OpenRiak KV",
+          "org.opencontainers.image.url": "https://openriak.org",
+          "org.opencontainers.image.vendor": "OpenRiak",
+          "org.opencontainers.image.version": "3.4.0",
+          "org.openriak.image.tag": "openriak-minimal-validation/openriak-kv:3.4.0-oracle-linux-9-otp24",
+          "org.openriak.os.name": "oracle-linux",
+          "org.openriak.os.release": "9",
+          "org.openriak.os.version": "9",
+          "org.openriak.otp.version": "24"
+        },
+        "minimal_runtime": "No Python, Perl, pip, setuptools or package managers",
+        "runtime_filesystem": {
+          "release_package": "oraclelinux-release",
+          "remove_packages": [
+            "libssh",
+            "libssh-config"
+          ],
+          "status": "passed",
+          "strategy": "rpm-root"
+        },
+        "status": "passed",
+        "timezone": "Asia/Tokyo",
+        "uid": 19001
+      },
+      "openriak-kv-3.4.0-oracle-linux-9-otp24-node-5-t-102258z": {
+        "docker_logging": {
+          "Config": {
+            "max-file": "3",
+            "max-size": "10m"
+          },
+          "Type": "json-file"
+        },
+        "gid": 19002,
+        "labels": {
+          "com.docker.compose.config-hash": "fdd83c75147f0d3d1ce5c77ed70d068e67522022a47a5a5e3e6133d96d08f827",
+          "com.docker.compose.container-number": "1",
+          "com.docker.compose.depends_on": "",
+          "com.docker.compose.image": "sha256:4e0cce355e1eb435aa259764bf3fdbb6268b8f9d2d4b370d831c861ffd29b89c",
+          "com.docker.compose.oneoff": "False",
+          "com.docker.compose.project": "openriak-kv-340-oracle-linux-9-otp24-node-cluster",
+          "com.docker.compose.project.config_files": "/tmp/openriak-docker-3.4.0-oracle-linux-9-otp24-m68r69x7/compose.cluster.test.yaml",
+          "com.docker.compose.project.environment_file": "/tmp/openriak-docker-3.4.0-oracle-linux-9-otp24-m68r69x7/.env.cluster",
+          "com.docker.compose.project.working_dir": "/tmp/openriak-docker-3.4.0-oracle-linux-9-otp24-m68r69x7",
+          "com.docker.compose.service": "node5",
+          "com.docker.compose.version": "5.4.0",
+          "desktop.docker.io/wsl-distro": "Ubuntu",
+          "org.opencontainers.image.description": "Package-backed OpenRiak KV with single-node and cluster startup support",
+          "org.opencontainers.image.source": "https://github.com/OpenRiak/openriak-docs",
+          "org.opencontainers.image.title": "OpenRiak KV",
+          "org.opencontainers.image.url": "https://openriak.org",
+          "org.opencontainers.image.vendor": "OpenRiak",
+          "org.opencontainers.image.version": "3.4.0",
+          "org.openriak.image.tag": "openriak-minimal-validation/openriak-kv:3.4.0-oracle-linux-9-otp24",
+          "org.openriak.os.name": "oracle-linux",
+          "org.openriak.os.release": "9",
+          "org.openriak.os.version": "9",
+          "org.openriak.otp.version": "24"
+        },
+        "minimal_runtime": "No Python, Perl, pip, setuptools or package managers",
+        "runtime_filesystem": {
+          "release_package": "oraclelinux-release",
+          "remove_packages": [
+            "libssh",
+            "libssh-config"
+          ],
+          "status": "passed",
+          "strategy": "rpm-root"
+        },
+        "status": "passed",
+        "timezone": "Asia/Tokyo",
+        "uid": 19001
+      }
+    },
+    "configuration": {
+      "settings": {
+        "anti_entropy": "passive",
+        "listener.http.internal": "0.0.0.0:8098",
+        "listener.protobuf.internal": "0.0.0.0:8087",
+        "logger.max_file_size": "2MB",
+        "logger.max_files": "7",
+        "nodename": "openriak-kv@node-01.cluster-a.openriak",
+        "ring_size": "8",
+        "storage_backend": "leveled",
+        "tictacaae_active": "active",
+        "tictacaae_storeheads": "enabled"
+      },
+      "status": "passed"
+    },
+    "entrypoint_startup": {
+      "required_log_messages": [
+        "startup: starting OpenRiak as a daemon",
+        "startup: BEAM is running and riak ping returned pong",
+        "startup: riak_kv service is up",
+        "startup: transfers complete",
+        "startup: OpenRiak is ready",
+        "monitor: BEAM is running"
+      ],
+      "status": "passed"
+    },
+    "graceful_shutdown": {
+      "required_log_messages": [
+        "shutdown: received SIGTERM",
+        "shutdown: requesting OpenRiak stop",
+        "shutdown: BEAM stopped; container is exiting"
+      ],
+      "signal": "SIGTERM",
+      "status": "passed"
+    },
+    "healthcheck": {
+      "checks": [
+        "beam.smp",
+        "riak ping == pong"
+      ],
+      "docker_status": "healthy",
+      "status": "passed"
+    },
+    "http_ping": {
+      "request": "GET /ping",
+      "response": "OK",
+      "status": "passed",
+      "status_code": 200
+    },
+    "populated_volumes": {
+      "config": [
+        "advanced.config",
+        "riak.conf"
+      ],
+      "data": [
+        "cluster_meta",
+        "generated.conf",
+        "kv_eraser",
+        "kv_reader",
+        "kv_reaper",
+        "kv_replrtqsrc",
+        "kv_vnode",
+        "leveled",
+        "riak_repl",
+        "ring",
+        "setup",
+        "sys.config",
+        "tictac_aae",
+        "vm.args"
+      ],
+      "logs": [
+        "console.log",
+        "erlang.log.1",
+        "run_erl.log"
+      ],
+      "status": "passed"
+    },
+    "preserved_configuration": {
+      "sha256": "aaac82733bdc31ad0432963704bf2922ff4b0eb44400019a855a6d3e25d0bf44",
+      "status": "passed"
+    },
+    "preserved_cookie": {
+      "configuration_cookie": "openriak-91f5e16a72fc1f94678f2603508b6fd5",
+      "status": "passed"
+    },
+    "riak_start": {
+      "status": "passed"
+    },
+    "runtime_options": {
+      "docker_logging": {
+        "Config": {
+          "max-file": "3",
+          "max-size": "10m"
+        },
+        "Type": "json-file"
+      },
+      "gid": 19002,
+      "labels": {
+        "com.docker.compose.config-hash": "9698375f2314a646f04ba74081ef4807bad4d3448e229ce9eb081b1c09a9023e",
+        "com.docker.compose.container-number": "1",
+        "com.docker.compose.depends_on": "",
+        "com.docker.compose.image": "sha256:4e0cce355e1eb435aa259764bf3fdbb6268b8f9d2d4b370d831c861ffd29b89c",
+        "com.docker.compose.oneoff": "False",
+        "com.docker.compose.project": "openriak-kv-340-oracle-linux-9-otp24-node",
+        "com.docker.compose.project.config_files": "/tmp/openriak-docker-3.4.0-oracle-linux-9-otp24-m68r69x7/compose.single.test.yaml",
+        "com.docker.compose.project.environment_file": "/tmp/openriak-docker-3.4.0-oracle-linux-9-otp24-m68r69x7/.env.single",
+        "com.docker.compose.project.working_dir": "/tmp/openriak-docker-3.4.0-oracle-linux-9-otp24-m68r69x7",
+        "com.docker.compose.service": "node",
+        "com.docker.compose.version": "5.4.0",
+        "desktop.docker.io/wsl-distro": "Ubuntu",
+        "org.opencontainers.image.description": "Package-backed OpenRiak KV with single-node and cluster startup support",
+        "org.opencontainers.image.source": "https://github.com/OpenRiak/openriak-docs",
+        "org.opencontainers.image.title": "OpenRiak KV",
+        "org.opencontainers.image.url": "https://openriak.org",
+        "org.opencontainers.image.vendor": "OpenRiak",
+        "org.opencontainers.image.version": "3.4.0",
+        "org.openriak.image.tag": "openriak-minimal-validation/openriak-kv:3.4.0-oracle-linux-9-otp24",
+        "org.openriak.os.name": "oracle-linux",
+        "org.openriak.os.release": "9",
+        "org.openriak.os.version": "9",
+        "org.openriak.otp.version": "24"
+      },
+      "minimal_runtime": "No Python, Perl, pip, setuptools or package managers",
+      "runtime_filesystem": {
+        "release_package": "oraclelinux-release",
+        "remove_packages": [
+          "libssh",
+          "libssh-config"
+        ],
+        "status": "passed",
+        "strategy": "rpm-root"
+      },
+      "status": "passed",
+      "timezone": "Asia/Tokyo",
+      "uid": 19001
+    },
+    "volume_initialization": {
+      "config_populated": true,
+      "data_directory_created": true,
+      "logs_directory_created": true,
+      "status": "passed"
+    }
+  },
+  "volumes": {
+    "config": {
+      "container": "/etc/riak",
+      "default": "./openriak-kv-3.4.0-oracle-linux-9-otp24-node/config"
+    },
+    "data": {
+      "container": "/var/lib/riak",
+      "default": "./openriak-kv-3.4.0-oracle-linux-9-otp24-node/data"
+    },
+    "logs": {
+      "container": "/var/log/riak",
+      "default": "./openriak-kv-3.4.0-oracle-linux-9-otp24-node/logs"
+    }
+  }
+}

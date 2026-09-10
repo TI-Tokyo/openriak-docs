@@ -74,6 +74,11 @@ images with this change. Existing approved Dockerfiles and published downloads
 are retained until explicitly refreshed. An immutable base digest pins the base
 image, but repository package updates can change between fresh builds.
 
+An explicit refresh builds with `--no-cache`, so package upgrades run even when
+the pulled OS release tag resolves to the same digest. This applies to every OS
+family. Complete compatible passed targets still use the normal approval cache
+unless `--force` requests regeneration. OCI export then reuses the tested layers.
+
 Package downloads are checksum-verified in separate `FROM scratch` stages.
 The installation stage uses a temporary read-only BuildKit bind mount. Standard
 installers copy, install, and remove the package within one `RUN`; `rpm-root`
@@ -435,6 +440,38 @@ selection still come from the existing metadata and base-image configuration.
   administration tools through apt, including its explicit essential-package
   removal flag. This is a runtime image, not a general-purpose Debian system.
   SUSE removes its unused registration helper through RPM as described above.
+
+The release settings also support these reviewed cleanup options:
+
+- `remove_packages` lists exact optional RPM names. Removal preserves dependency
+  checks and fails if a retained package still requires one. CentOS 8 and RHEL 8
+  omit Vim and sudo; the official OpenRiak KV launcher uses the retained
+  `runuser` command instead of sudo. Oracle Linux 9 uses `rpm-root` to exclude
+  libssh and its package-manager dependencies from the final filesystem.
+- `minimum_packages` requires installed Debian or RPM packages to meet minimum
+  security versions. Ubuntu Jammy requires `libc6 >= 2.35-0ubuntu3.15`, and Noble
+  requires `libc6 >= 2.39-0ubuntu8.9`. Rocky 8 requires the gzip security update;
+  Rocky 9 requires the reviewed glib2, expat and PAM updates. Exact floors are in
+  `runtime-images.json`, shared across all KV versions, OTPs and architectures.
+  Newer vendor updates are accepted; stale mirrors fail the build. Debian uses
+  dpkg version comparisons; RPM uses its native versioned-provider checks before
+  exporting the runtime filesystem. Rocky 9 exports a cleaned filesystem so
+  superseded base-layer packages are not retained in the downloadable image.
+- `remove_tar` removes tar after all package installation. Ubuntu Jammy and
+  Noble export a filesystem without Perl or tar. Jammy uses
+  `perl_removal: "dpkg"` to remove only Perl while retaining PAM/login; Noble uses apt to
+  remove Perl and dependent administration tools. Jammy's final package database
+  deliberately retains installation-tool dependencies on the removed Perl,
+  just as dpkg depends on the removed tar. These images must be maintained by
+  rebuilding; restore the missing installation tools before using apt in a
+  derived image.
+
+These settings apply to every metadata-backed KV version, OTP and architecture
+for the configured OS release. See the [Medium CVE validation results](reports/medium-fixes-validation-2026-09-10.md)
+for the amd64 tests and remaining findings. Updating the generator does not
+replace existing approved downloads or registry images: use `refresh` to
+regenerate and test changed inputs, then `push` for publication and fresh scans.
+`--do-not-test` reuses approved Dockerfiles and cannot adopt these changes.
 
 Debian 12 uses the reusable base image
 `{namespace}/debian:bookworm-slim-for-openriak`, selected by the `base_image` and
@@ -1230,7 +1267,7 @@ tools/openriak-docker/openriak-docker refresh --help
 | `--version VERSION` | `matrix`, `refresh`, `generate`, `push` | Select a version. Repeat to select several. |
 | `--all` | `refresh`, `generate`, `push` | Select every eligible version in metadata. Mutually exclusive with `--version`. |
 | `--yes` | `refresh`, `generate`, `push` | Required with `--all`, except with `--whatif`. |
-| `--os-id ID` | `matrix`, `refresh`, `generate`, `push` | Filter by metadata OS ID. |
+| `--os-id PATTERN` | `matrix`, `refresh`, `generate`, `push` | Filter by exact metadata OS ID or a case-sensitive wildcard pattern such as `'oracle*'`. Repeat to select matches from any pattern. |
 | `--otp VERSION` | `matrix`, `refresh`, `generate`, `push` | Filter by OTP version. |
 | `--download-id ID` | `matrix`, `refresh`, `generate` | Filter by package download ID. |
 | `--json` | `matrix` | Output structured JSON. |
@@ -1239,6 +1276,30 @@ Without `--version`, `matrix` lists all eligible versions. `refresh`, `generate`
 require either `--version` or `--all`. For generation/builds, an
 architecture-specific selection includes the other architectures belonging to
 the same shared OS-release/OTP image.
+
+OS patterns support `*` (any sequence), `?` (one character), and character sets
+such as `[89]`. Quote patterns to prevent expansion by your shell. A selection
+that matches no metadata targets is an error. Other filters and cache rules
+still apply; selecting an OS does not force a passed cache to rebuild.
+
+Preview all Oracle images, then force regeneration, building and testing of them:
+
+```sh
+tools/openriak-docker/openriak-docker matrix --os-id 'oracle*'
+tools/openriak-docker/openriak-docker refresh --all --yes --os-id 'oracle*' --force
+```
+
+Use `--version` instead of `--all --yes` to restrict the versions, and include
+your usual namespace/vendor options when rebuilding branded images.
+
+Repeat `--os-id` to select multiple OS families in one run. Matches are combined
+without duplicating targets, even when patterns overlap:
+
+```sh
+tools/openriak-docker/openriak-docker matrix --os-id 'fedora*' --os-id 'oracle*'
+tools/openriak-docker/openriak-docker refresh --all --yes \
+  --os-id 'fedora*' --os-id 'oracle*' --force
+```
 
 ### Shared refresh and generate options
 

@@ -16,6 +16,7 @@ update `../runtime-images.json` only after the relevant tests pass.
 | `--review FILE` | Saved review defining affected images; defaults to `../reports/cve-review-2026-09-08.json`. |
 | `--family FAMILY` | Limit candidates to an OS family; repeatable. |
 | `--image-tag TAG` | Limit to an exact image tag without repository; repeatable. |
+| `--severity LEVEL` | Select saved findings of this severity; repeatable. Defaults to `CRITICAL` and `HIGH`; use `MEDIUM` for Medium findings. |
 | `--jobs 1\|2` | Concurrent image tests; default `2`. |
 | `--timeout SECONDS` | Timeout per expensive phase; default `1800`. |
 | `--openssl-backport` | Test the Debian 12 OpenSSL 3.0.22 candidate, including packaged-OTP crypto/TLS compatibility. |
@@ -29,6 +30,25 @@ are retained in a new timestamped directory under
 all results, including failures. Failed attempts are preserved for diagnosis.
 The builder has one shared lifecycle across concurrent jobs and returns to its
 original running/stopped state after all jobs finish.
+
+Explicit `--image-tag` selections do not require a finding in the review file.
+They still require a metadata-backed amd64 package. This lets a fix be validated
+across sibling OpenRiak KV versions even when only one version has a finding.
+
+For example, test the runtime cleanup candidate on one Ubuntu image:
+
+```sh
+python3 tools/openriak-docker/experiments/minimal_matrix.py \
+  --image-tag 3.4.0-ubuntu-jammy-otp24 --jobs 1 --timeout 1800
+```
+
+Candidate configuration supports exact RPM `remove_packages` lists (dependency
+checks stay enabled), Debian `minimum_packages` version checks, `remove_tar`,
+and a `perl_removal` method. `perl_removal: "dpkg"` is reserved for a final
+runtime whose Essential installation helpers prevent apt's dependency solver
+from removing Perl. Installation must finish first; PAM/login are retained,
+and package maintenance must happen in a build stage. These options affect the
+generated files and therefore invalidate previous cache inputs when enabled.
 
 ## Original RHEL proof of concept
 

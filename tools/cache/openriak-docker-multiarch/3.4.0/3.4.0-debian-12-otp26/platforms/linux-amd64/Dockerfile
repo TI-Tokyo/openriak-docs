@@ -31,10 +31,12 @@ rm -f /tmp/riak_3.4.0-OTP26_amd64.deb
 # Require the tested patched base; fail rather than build with older libraries.
 dpkg --compare-versions "$(dpkg-query -W -f='${Version}' libssl3)" ge '3.0.22-0openriak1~deb12u1'
 test -s /usr/share/openriak-build/openssl-packages.txt
+# Require the reviewed security updates; reject stale mirrors.
 # The runtime does not execute Perl; remove it and dependent tools explicitly.
 # This is a final runtime filesystem, not a general-purpose administration image.
 apt-get update
 DEBIAN_FRONTEND=noninteractive apt-get purge -y --allow-remove-essential perl-base
+
 apt-get clean
 rm -rf /var/lib/apt/lists/*
 dpkg --compare-versions "$(dpkg-query -W -f='${Version}' libblkid1)" eq '2.38.1-5+deb12u3+openriak1'
@@ -84,7 +86,7 @@ ENV RIAK_NODE_HOST=""
 # Explicit nodename; empty derives openriak-kv@<hostname>.
 ENV RIAK_NODE_NAME=""
 # Initial cookie; existing riak.conf wins and new followers adopt the coordinator cookie.
-ENV RIAK_DISTRIBUTED_COOKIE="openriak-926b38f9737bca07382d1715f02d00e0"
+ENV RIAK_DISTRIBUTED_COOKIE="openriak-4c1629acb7b642aea64b90554549e4b8"
 # Partition count for a new ring; do not change on an existing cluster.
 ENV RIAK_RING_SIZE="8"
 # Storage backend used by OpenRiak KV.

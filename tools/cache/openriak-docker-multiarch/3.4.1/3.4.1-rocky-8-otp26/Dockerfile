@@ -15,6 +15,11 @@ FROM --platform=linux/amd64 rockylinux:8@sha256:9794037624aaa6212aeada1d28861ef5
 RUN --mount=type=bind,from=download-amd64,target=/opt/openriak-package,ro <<'OPENRIAK_PACKAGE_INSTALL'
 set -eu
 # Resolve runtime packages from this OS release, without weak dependencies.
+# Slim installers may provide only microdnf. Full dnf is build-only.
+if ! command -v dnf >/dev/null 2>&1
+then
+    microdnf install -y dnf
+fi
 mkdir -p /openriak-rootfs
 dnf install -y --refresh --installroot=/openriak-rootfs --releasever=8 --setopt=install_weak_deps=False --setopt=tsflags=nodocs rocky-release bash coreutils findutils gawk grep sed ca-certificates glibc glibc-minimal-langpack hostname libgcc libstdc++ ncurses-libs openssl-libs pam procps-ng shadow-utils sudo util-linux zlib tzdata
 # Install the verified official package; its OTP runtime is bundled in the RPM.
@@ -83,7 +88,7 @@ ENV RIAK_NODE_HOST=""
 # Explicit nodename; empty derives openriak-kv@<hostname>.
 ENV RIAK_NODE_NAME=""
 # Initial cookie; existing riak.conf wins and new followers adopt the coordinator cookie.
-ENV RIAK_DISTRIBUTED_COOKIE="openriak-5a9887fd41e850cad79e368e61e659f3"
+ENV RIAK_DISTRIBUTED_COOKIE="openriak-f3fadacedae451fc97135794023d15a6"
 # Partition count for a new ring; do not change on an existing cluster.
 ENV RIAK_RING_SIZE="8"
 # Storage backend used by OpenRiak KV.

@@ -15,10 +15,47 @@ FROM --platform=linux/amd64 registry.access.redhat.com/ubi8/ubi:8.10@sha256:756e
 RUN --mount=type=bind,from=download-amd64,target=/opt/openriak-package,ro <<'OPENRIAK_PACKAGE_INSTALL'
 set -eu
 # Resolve runtime packages from this OS release, without weak dependencies.
+# Slim installers may provide only microdnf. Full dnf is build-only.
+if ! command -v dnf >/dev/null 2>&1
+then
+    microdnf install -y dnf
+fi
 mkdir -p /openriak-rootfs
-dnf install -y --refresh --installroot=/openriak-rootfs --releasever=8 --setopt=install_weak_deps=False --setopt=tsflags=nodocs redhat-release bash coreutils findutils gawk grep sed ca-certificates glibc glibc-minimal-langpack hostname libgcc libstdc++ ncurses-libs openssl-libs pam procps-ng shadow-utils sudo util-linux zlib tzdata
+dnf install -y --refresh --installroot=/openriak-rootfs --releasever=8 --setopt=install_weak_deps=False --setopt=tsflags=nodocs redhat-release bash coreutils findutils gawk grep sed ca-certificates glibc glibc-minimal-langpack hostname libgcc libstdc++ ncurses-libs openssl-libs pam procps-ng shadow-utils util-linux zlib tzdata
 # Install the verified official package; its OTP runtime is bundled in the RPM.
 rpm --root /openriak-rootfs -Uvh --replacepkgs --nodeps /opt/openriak-package/riak-3.4.1.OTP26-1.el8.x86_64.rpm
+# Remove optional runtime tools only after all installation operations.
+# Keep dependency checks: an unexpected remaining dependency fails the build.
+remove_packages=
+for package in sudo vim-minimal vim-common vim-filesystem
+do
+    if rpm --root /openriak-rootfs -q "$package" >/dev/null 2>&1
+    then
+        remove_packages="$remove_packages $package"
+    fi
+done
+if [ -n "$remove_packages" ]
+then
+    rpm --root /openriak-rootfs -e $remove_packages
+fi
+for package in sudo vim-minimal vim-common vim-filesystem
+do
+    if rpm --root /openriak-rootfs -q "$package" >/dev/null 2>&1
+    then
+        echo "Unexpected runtime package: $package" >&2
+        exit 1
+    fi
+done
+# The official RPM launcher uses sudo only to run commands as riak.
+# runuser is supplied by util-linux, preserves argument boundaries, and sets HOME.
+# Keep the rest of the package launcher (including PID cleanup) unchanged.
+test -x /openriak-rootfs/usr/sbin/runuser
+sed -i 's/sudo -H -E -u riak --/runuser -u riak --/' /openriak-rootfs/usr/sbin/riak
+if grep -Eq '^[[:space:]]*sudo ' /openriak-rootfs/usr/sbin/riak
+then
+    echo 'Unsupported sudo invocation in OpenRiak KV launcher' >&2
+    exit 1
+fi
 # Preserve the RPM database and an explicit inventory for vulnerability scanners.
 mkdir -p /openriak-rootfs/usr/share/openriak-build
 rpm --root /openriak-rootfs -qa --qf '%{NAME} %{VERSION}-%{RELEASE}\n' > /openriak-rootfs/usr/share/openriak-build/runtime-packages.txt
@@ -83,7 +120,7 @@ ENV RIAK_NODE_HOST=""
 # Explicit nodename; empty derives openriak-kv@<hostname>.
 ENV RIAK_NODE_NAME=""
 # Initial cookie; existing riak.conf wins and new followers adopt the coordinator cookie.
-ENV RIAK_DISTRIBUTED_COOKIE="openriak-71f23e9b050d262971cb03f5a31e5862"
+ENV RIAK_DISTRIBUTED_COOKIE="openriak-3a70968f2631b31a6f05b8835ffa98a3"
 # Partition count for a new ring; do not change on an existing cluster.
 ENV RIAK_RING_SIZE="8"
 # Storage backend used by OpenRiak KV.

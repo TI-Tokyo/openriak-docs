@@ -11,10 +11,15 @@ FROM scratch AS download-amd64
 ADD --checksum=sha256:952f04a57622b160ef01d7aa15d3871924221766f1cd08dc74bf5ecd3ffbe9ea https://files.tiot.jp/riak/kv/3.4/3.4.1/rhel/9/riak-3.4.1.OTP26-1.el9.x86_64.rpm /riak-3.4.1.OTP26-1.el9.x86_64.rpm
 
 # The full OS image is an installer only; none of its layers reach runtime.
-FROM --platform=linux/amd64 quay.io/centos/centos:stream9@sha256:d323b7623e947245a8eb506fbb0ad0e55eb2ae2d2407b66741a15f372caf9bdc AS install-amd64
+FROM --platform=linux/amd64 quay.io/centos/centos:stream9@sha256:7d3c87ab567add60d0153a6a17bc10d0f19cd982a2d533724298ebd1ee751eab AS install-amd64
 RUN --mount=type=bind,from=download-amd64,target=/opt/openriak-package,ro <<'OPENRIAK_PACKAGE_INSTALL'
 set -eu
 # Resolve runtime packages from this OS release, without weak dependencies.
+# Slim installers may provide only microdnf. Full dnf is build-only.
+if ! command -v dnf >/dev/null 2>&1
+then
+    microdnf install -y dnf
+fi
 mkdir -p /openriak-rootfs
 dnf install -y --refresh --installroot=/openriak-rootfs --releasever=9 --setopt=install_weak_deps=False --setopt=tsflags=nodocs centos-stream-release bash coreutils findutils gawk grep sed ca-certificates glibc glibc-minimal-langpack hostname libgcc libstdc++ ncurses-libs openssl-libs pam procps-ng shadow-utils sudo util-linux zlib tzdata
 # Install the verified official package; its OTP runtime is bundled in the RPM.
@@ -83,7 +88,7 @@ ENV RIAK_NODE_HOST=""
 # Explicit nodename; empty derives openriak-kv@<hostname>.
 ENV RIAK_NODE_NAME=""
 # Initial cookie; existing riak.conf wins and new followers adopt the coordinator cookie.
-ENV RIAK_DISTRIBUTED_COOKIE="openriak-0f2e84e9e386a2ea8487f7d3fdf8daa4"
+ENV RIAK_DISTRIBUTED_COOKIE="openriak-5c5970f2a52e3abb67ce691d016c0c85"
 # Partition count for a new ring; do not change on an existing cluster.
 ENV RIAK_RING_SIZE="8"
 # Storage backend used by OpenRiak KV.

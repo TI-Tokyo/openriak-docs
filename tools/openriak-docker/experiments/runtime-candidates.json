@@ -1,17 +1,83 @@
 {
   "rhel": {
-    "8": {"strategy": "rpm-root", "release_package": "redhat-release"},
-    "9": {"strategy": "rpm-root", "release_package": "redhat-release"}
+    "8": {
+      "strategy": "rpm-root",
+      "release_package": "redhat-release",
+      "remove_packages": [
+        "sudo",
+        "vim-minimal",
+        "vim-common",
+        "vim-filesystem"
+      ]
+    },
+    "9": {
+      "strategy": "rpm-root",
+      "release_package": "redhat-release"
+    }
   },
   "centos": {
-    "8": {"strategy": "rpm-root", "release_package": "centos-stream-release"},
-    "9": {"strategy": "rpm-root", "release_package": "centos-stream-release"}
+    "8": {
+      "strategy": "rpm-root",
+      "release_package": "centos-stream-release",
+      "remove_packages": [
+        "sudo",
+        "vim-minimal",
+        "vim-common",
+        "vim-filesystem"
+      ]
+    },
+    "9": {
+      "strategy": "rpm-root",
+      "release_package": "centos-stream-release"
+    }
   },
-  "rocky": {"8": {"strategy": "rpm-root", "release_package": "rocky-release"}},
-  "fedora": {"29": {"strategy": "rpm-root", "release_package": "fedora-release"}},
+  "rocky": {
+    "8": {
+      "strategy": "rpm-root",
+      "release_package": "rocky-release"
+    }
+  },
+  "fedora": {
+    "29": {
+      "strategy": "rpm-root",
+      "release_package": "fedora-release"
+    }
+  },
   "suse": {
-    "15-sp4": {"strategy": "clean-root"},
-    "16.0": {"strategy": "clean-root"}
+    "15-sp4": {
+      "strategy": "clean-root"
+    },
+    "16.0": {
+      "strategy": "clean-root"
+    }
   },
-  "debian": {"12": {"strategy": "clean-root"}}
+  "debian": {
+    "12": {
+      "strategy": "clean-root"
+    }
+  },
+  "ubuntu": {
+    "jammy": {
+      "strategy": "clean-root",
+      "remove_tar": true,
+      "minimum_packages": {
+        "libc6": "2.35-0ubuntu3.15"
+      },
+      "perl_removal": "dpkg"
+    },
+    "noble": {
+      "strategy": "clean-root",
+      "remove_tar": true
+    }
+  },
+  "oracle-linux": {
+    "9": {
+      "strategy": "rpm-root",
+      "remove_packages": [
+        "libssh",
+        "libssh-config"
+      ],
+      "release_package": "oraclelinux-release"
+    }
+  }
 }

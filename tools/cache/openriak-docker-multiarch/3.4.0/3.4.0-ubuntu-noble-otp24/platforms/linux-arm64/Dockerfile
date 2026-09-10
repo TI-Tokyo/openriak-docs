@@ -7,15 +7,13 @@
 # BuildKit supplies TARGETARCH from --platform in the global scope.
 # Do not redeclare ARG TARGETARCH here: that clears its automatic value.
 
-# linux/amd64: official package and immutable OS release base.
-# Download layers stay outside the final image; the install only mounts them.
 FROM scratch AS download-amd64
 ADD --checksum=sha256:9cf379046b315e704f89cdefbed05c691caf00d907cf3b9b233959ef65399f5a https://files.tiot.jp/riak/kv/3.4/3.4.0/ubuntu/noble64/riak_3.4.0-OTP24_amd64.deb /riak_3.4.0-OTP24_amd64.deb
 
-FROM --platform=linux/amd64 ubuntu:noble@sha256:33ceb71981b602c1a7443a53469e4dba065f7503eab3078a2d7a57a2ab987517 AS package-amd64
+FROM --platform=linux/amd64 ubuntu:noble@sha256:224a1869083a311ef3f13648a154ba79832fbef6364d31493642ca03082da254 AS install-amd64
 RUN --mount=type=bind,from=download-amd64,target=/opt/openriak-package,ro <<'OPENRIAK_PACKAGE_INSTALL'
 set -eu
-# Copy, install, and remove in this one layer; only the installed files persist.
+
 cp /opt/openriak-package/riak_3.4.0-OTP24_amd64.deb /tmp/riak_3.4.0-OTP24_amd64.deb
 # Update installed OS packages from this release's configured repositories.
 apt-get update
@@ -24,17 +22,34 @@ DEBIAN_FRONTEND=noninteractive apt-get install -y --no-install-recommends ca-cer
 apt-get clean
 rm -rf /var/lib/apt/lists/*
 rm -f /tmp/riak_3.4.0-OTP24_amd64.deb
+# Require the reviewed security updates; reject stale mirrors.
+# The runtime does not execute Perl; remove it and dependent tools explicitly.
+# This is a final runtime filesystem, not a general-purpose administration image.
+apt-get update
+DEBIAN_FRONTEND=noninteractive apt-get purge -y --allow-remove-essential perl-base
+
+apt-get clean
+rm -rf /var/lib/apt/lists/*
+# dpkg requires tar for installation. It is deliberately absent at runtime.
+# Child builds supply a pinned build-only tar and reinstall it before using apt.
+dpkg --purge --force-remove-essential --force-depends tar
+test ! -e /bin/tar
+test ! -e /usr/bin/tar
 OPENRIAK_PACKAGE_INSTALL
 
-# linux/arm64: official package and immutable OS release base.
-# Download layers stay outside the final image; the install only mounts them.
+# Export the cleaned filesystem; removed base-image files cannot remain in layers.
+FROM scratch AS package-amd64
+COPY --from=install-amd64 / /
+# Shell command search path for OpenRiak KV lifecycle scripts.
+ENV PATH="/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin"
+
 FROM scratch AS download-arm64
 ADD --checksum=sha256:e3d548c78cb540b12bbfc64e8153693820d1a722f01c949a01aaf4bb4352c0f6 https://files.tiot.jp/riak/kv/3.4/3.4.0/ubuntu/noble64/riak_3.4.0-OTP24_arm64.deb /riak_3.4.0-OTP24_arm64.deb
 
-FROM --platform=linux/arm64 ubuntu:noble@sha256:33ceb71981b602c1a7443a53469e4dba065f7503eab3078a2d7a57a2ab987517 AS package-arm64
+FROM --platform=linux/arm64 ubuntu:noble@sha256:224a1869083a311ef3f13648a154ba79832fbef6364d31493642ca03082da254 AS install-arm64
 RUN --mount=type=bind,from=download-arm64,target=/opt/openriak-package,ro <<'OPENRIAK_PACKAGE_INSTALL'
 set -eu
-# Copy, install, and remove in this one layer; only the installed files persist.
+
 cp /opt/openriak-package/riak_3.4.0-OTP24_arm64.deb /tmp/riak_3.4.0-OTP24_arm64.deb
 # Update installed OS packages from this release's configured repositories.
 apt-get update
@@ -43,7 +58,26 @@ DEBIAN_FRONTEND=noninteractive apt-get install -y --no-install-recommends ca-cer
 apt-get clean
 rm -rf /var/lib/apt/lists/*
 rm -f /tmp/riak_3.4.0-OTP24_arm64.deb
+# Require the reviewed security updates; reject stale mirrors.
+# The runtime does not execute Perl; remove it and dependent tools explicitly.
+# This is a final runtime filesystem, not a general-purpose administration image.
+apt-get update
+DEBIAN_FRONTEND=noninteractive apt-get purge -y --allow-remove-essential perl-base
+
+apt-get clean
+rm -rf /var/lib/apt/lists/*
+# dpkg requires tar for installation. It is deliberately absent at runtime.
+# Child builds supply a pinned build-only tar and reinstall it before using apt.
+dpkg --purge --force-remove-essential --force-depends tar
+test ! -e /bin/tar
+test ! -e /usr/bin/tar
 OPENRIAK_PACKAGE_INSTALL
+
+# Export the cleaned filesystem; removed base-image files cannot remain in layers.
+FROM scratch AS package-arm64
+COPY --from=install-arm64 / /
+# Shell command search path for OpenRiak KV lifecycle scripts.
+ENV PATH="/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin"
 
 FROM package-${TARGETARCH} AS final
 
@@ -78,7 +112,7 @@ ENV RIAK_NODE_HOST=""
 # Explicit nodename; empty derives openriak-kv@<hostname>.
 ENV RIAK_NODE_NAME=""
 # Initial cookie; existing riak.conf wins and new followers adopt the coordinator cookie.
-ENV RIAK_DISTRIBUTED_COOKIE="openriak-cfe145175ebc5a6335056712e60e255f"
+ENV RIAK_DISTRIBUTED_COOKIE="openriak-3d527a2aa2a7342ad979afa556b5f884"
 # Partition count for a new ring; do not change on an existing cluster.
 ENV RIAK_RING_SIZE="8"
 # Storage backend used by OpenRiak KV.

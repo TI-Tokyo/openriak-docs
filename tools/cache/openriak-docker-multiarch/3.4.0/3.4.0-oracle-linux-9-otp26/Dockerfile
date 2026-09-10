@@ -7,74 +7,75 @@
 # BuildKit supplies TARGETARCH from --platform in the global scope.
 # Do not redeclare ARG TARGETARCH here: that clears its automatic value.
 
-# linux/amd64: official package and immutable OS release base.
-# Download layers stay outside the final image; the install only mounts them.
 FROM scratch AS download-amd64
 ADD --checksum=sha256:db0ae81c7cd0546e2b38285fd2a20f3b06ed838f41edd39d4ac537ef59882503 https://files.tiot.jp/riak/kv/3.4/3.4.0/oracle/9/riak-3.4.0.OTP26-1.el9.x86_64.rpm /riak-3.4.0.OTP26-1.el9.x86_64.rpm
 
-FROM --platform=linux/amd64 oraclelinux:9-slim@sha256:33bcb689f7c8e6bd15bcee9a253538bc0b7cafeadb8b1a9d6ac90669c4497ce3 AS package-amd64
+# The full OS image is an installer only; none of its layers reach runtime.
+FROM --platform=linux/amd64 oraclelinux:9-slim@sha256:6e9fec9dc3fcbd08df4c175fba0104bcbab93778e817ba9b60bd990683978258 AS install-amd64
 RUN --mount=type=bind,from=download-amd64,target=/opt/openriak-package,ro <<'OPENRIAK_PACKAGE_INSTALL'
 set -eu
-# Copy, install, and remove in this one layer; only the installed files persist.
-cp /opt/openriak-package/riak-3.4.0.OTP26-1.el9.x86_64.rpm /tmp/riak-3.4.0.OTP26-1.el9.x86_64.rpm
-# Update installed OS packages before installing the OpenRiak KV package.
-if command -v dnf >/dev/null 2>&1
+# Resolve runtime packages from this OS release, without weak dependencies.
+# Slim installers may provide only microdnf. Full dnf is build-only.
+if ! command -v dnf >/dev/null 2>&1
 then
-    dnf upgrade --refresh -y
-    dnf install -y bash ca-certificates glibc hostname libgcc libstdc++ ncurses-libs openssl-libs pam procps-ng shadow-utils sudo util-linux zlib tzdata
-    dnf clean all
-elif command -v microdnf >/dev/null 2>&1
-then
-    microdnf upgrade --refresh -y
     microdnf install -y dnf
-    dnf install -y bash ca-certificates glibc hostname libgcc libstdc++ ncurses-libs openssl-libs pam procps-ng shadow-utils sudo util-linux zlib tzdata
-    dnf clean all
-elif command -v yum >/dev/null 2>&1
-then
-    yum clean expire-cache
-    yum update -y
-    yum install -y bash ca-certificates glibc hostname libgcc libstdc++ ncurses-libs openssl-libs pam procps-ng shadow-utils sudo util-linux zlib tzdata
-    yum clean all
-elif command -v zypper >/dev/null 2>&1
-then
-    zypper --non-interactive refresh
-    zypper --non-interactive update --no-recommends
-    zypper --non-interactive install --no-recommends bash ca-certificates gawk glibc hostname libgcc_s1 libstdc++6 libncurses6 libopenssl1_1 pam procps shadow sudo util-linux libz1 timezone
-    zypper clean --all
-else
-    echo 'No supported RPM package manager found' >&2
-    exit 1
 fi
-# These RPMs bundle their matching OTP runtime, including escript, but their
-# generated dependency metadata requires /usr/bin/escript outside the payload.
-rpm -Uvh --replacepkgs --nodeps /tmp/riak-3.4.0.OTP26-1.el9.x86_64.rpm
-if [ ! -e /usr/bin/escript ]
-then
-    for bundled_escript in /usr/lib64/riak/erts-*/bin/escript /usr/lib/riak/erts-*/bin/escript
-    do
-        if [ -x "$bundled_escript" ]
-        then
-            ln -s "$bundled_escript" /usr/bin/escript
-            break
-        fi
-    done
-fi
-test -x /usr/bin/escript
-# Check the bundled runtime and its OpenSSL NIF before starting integration tests.
-for bundled_erl in /usr/lib64/riak/erts-*/bin/erl /usr/lib/riak/erts-*/bin/erl
+mkdir -p /openriak-rootfs
+dnf install -y --refresh --installroot=/openriak-rootfs --releasever=9 --setopt=install_weak_deps=False --setopt=tsflags=nodocs oraclelinux-release bash coreutils findutils gawk grep sed ca-certificates glibc glibc-minimal-langpack hostname libgcc libstdc++ ncurses-libs openssl-libs pam procps-ng shadow-utils sudo util-linux zlib tzdata
+# Install the verified official package; its OTP runtime is bundled in the RPM.
+rpm --root /openriak-rootfs -Uvh --replacepkgs --nodeps /opt/openriak-package/riak-3.4.0.OTP26-1.el9.x86_64.rpm
+# Remove optional runtime tools only after all installation operations.
+# Keep dependency checks: an unexpected remaining dependency fails the build.
+remove_packages=
+for package in libssh libssh-config
 do
-    if [ -x "$bundled_erl" ]
+    if rpm --root /openriak-rootfs -q "$package" >/dev/null 2>&1
     then
-        runtime_root=${bundled_erl%/erts-*}
-        "$bundled_erl" +S 2:2 -boot "$runtime_root/bin/no_dot_erlang" -pa "$runtime_root"/lib/crypto-*/ebin -noshell -eval 'crypto:strong_rand_bytes(1), halt().'
+        remove_packages="$remove_packages $package"
+    fi
+done
+if [ -n "$remove_packages" ]
+then
+    rpm --root /openriak-rootfs -e $remove_packages
+fi
+for package in libssh libssh-config
+do
+    if rpm --root /openriak-rootfs -q "$package" >/dev/null 2>&1
+    then
+        echo "Unexpected runtime package: $package" >&2
+        exit 1
+    fi
+done
+# Preserve the RPM database and an explicit inventory for vulnerability scanners.
+mkdir -p /openriak-rootfs/usr/share/openriak-build
+rpm --root /openriak-rootfs -qa --qf '%{NAME} %{VERSION}-%{RELEASE}\n' > /openriak-rootfs/usr/share/openriak-build/runtime-packages.txt
+# Install escript's compatibility link without retaining the installer tools.
+for bundled_escript in /openriak-rootfs/usr/lib64/riak/erts-*/bin/escript /openriak-rootfs/usr/lib/riak/erts-*/bin/escript
+do
+    if [ -x "$bundled_escript" ]
+    then
+        ln -sf "${bundled_escript#/openriak-rootfs}" /openriak-rootfs/usr/bin/escript
         break
     fi
 done
-# Clear caches from every package manager used in this installation layer.
-# In particular, dnf clean all does not clear microdnf's /var/cache/yum.
-rm -rf /var/cache/dnf /var/cache/yum /var/cache/zypp
-rm -f /tmp/riak-3.4.0.OTP26-1.el9.x86_64.rpm
+# These are cache files from installation, not runtime packages or inventory.
+rm -rf /openriak-rootfs/var/cache/dnf /openriak-rootfs/var/cache/yum
+rm -rf /openriak-rootfs/var/log/dnf* /openriak-rootfs/var/log/yum*
+# libstdc++ includes Python helpers for GDB, which is not in this runtime.
+# Keep libstdc++ itself; remove only these unused debugger scripts/bytecode.
+rm -rf /openriak-rootfs/usr/share/gcc-*/python /openriak-rootfs/usr/share/gdb/auto-load
+# Fail if package dependencies reintroduce interpreters or package managers.
+if grep -Ei '^(python[^ ]*|platform-python[^ ]*|perl[^ ]*|dnf[^ ]*|yum[^ ]*|microdnf|rpm) ' /openriak-rootfs/usr/share/openriak-build/runtime-packages.txt
+then
+    echo 'Unexpected runtime interpreter or package manager' >&2
+    exit 1
+fi
 OPENRIAK_PACKAGE_INSTALL
+
+FROM scratch AS package-amd64
+COPY --from=install-amd64 /openriak-rootfs/ /
+# Standard command search path for the shell-based OpenRiak KV lifecycle.
+ENV PATH="/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin"
 
 FROM package-${TARGETARCH} AS final
 
@@ -109,7 +110,7 @@ ENV RIAK_NODE_HOST=""
 # Explicit nodename; empty derives openriak-kv@<hostname>.
 ENV RIAK_NODE_NAME=""
 # Initial cookie; existing riak.conf wins and new followers adopt the coordinator cookie.
-ENV RIAK_DISTRIBUTED_COOKIE="openriak-9b982743d1bf499b49cd1e8f91825f3d"
+ENV RIAK_DISTRIBUTED_COOKIE="openriak-d30c8bdc1e0bc9a6c8db55ebae53001a"
 # Partition count for a new ring; do not change on an existing cluster.
 ENV RIAK_RING_SIZE="8"
 # Storage backend used by OpenRiak KV.

@@ -32,7 +32,7 @@ def configure_parser(parser, *, selection=True):
         selected.add_argument('--version', action='append', dest='versions')
         selected.add_argument('--all', action='store_true')
         parser.add_argument('--yes', action='store_true', help='Required with --all, except --whatif')
-        parser.add_argument('--os-id', help='Select an OS group, including all its architectures')
+        parser.add_argument('--os-id', action='append', metavar='PATTERN', help="Match metadata OS IDs with case-sensitive wildcard patterns, including all architectures of matching groups; repeat to match any pattern and quote patterns such as 'oracle*'")
         parser.add_argument('--otp')
     else:
         parser.set_defaults(all=False, versions=None, yes=False, os_id=None, otp=None)

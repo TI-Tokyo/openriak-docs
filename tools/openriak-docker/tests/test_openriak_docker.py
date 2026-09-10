@@ -442,6 +442,65 @@ listener.protobuf.internal = 127.0.0.1:8087
         self.assertIn("OPENRIAK_CONFIG_PATH=./", source)
         self.assertIn("OPENRIAK_NODE_1_CONFIG_PATH=./", source)
 
+    def test_os_wildcards_select_metadata_targets_without_changing_exact_matches(self):
+        targets = docker_tool.discover_targets()
+        oracle = [target for target in targets if target.os_id.startswith("oracle")]
+        self.assertTrue(oracle)
+        cases = {
+            "oracle*": oracle,
+            "*": targets,
+            "[ou]*": [t for t in targets if t.os_id[0] in "ou"],
+            "oracle?*": [t for t in targets if t.os_id.startswith("oracle") and len(t.os_id) > 6],
+            oracle[0].os_id: [t for t in targets if t.os_id == oracle[0].os_id],
+            "ORACLE*": [],
+            "__no_such_os__*": [],
+        }
+        for pattern, expected in cases.items():
+            with self.subTest(pattern=pattern):
+                self.assertEqual(docker_tool.discover_targets(os_id=pattern), expected)
+
+    def test_os_wildcards_intersect_other_filters(self):
+        targets = docker_tool.discover_targets(
+            [self.target.version], os_id=["alpine*", "oracle*"], otp=self.target.otp,
+            download_id=self.target.download_id,
+        )
+        self.assertEqual(targets, [self.target])
+
+    def test_multiple_os_patterns_form_a_union_without_duplicate_targets(self):
+        all_targets = docker_tool.discover_targets()
+        expected = [t for t in all_targets if t.os_id.startswith(("fedora", "oracle"))]
+        self.assertTrue(expected)
+        actual = docker_tool.discover_targets(
+            os_id=["fedora*", "oracle*", "oracle-linux*", "fedora*", "__no_such_os__*"],
+        )
+        self.assertEqual(actual, expected)
+
+    def test_os_option_is_repeatable_for_every_selecting_command(self):
+        for command in ("matrix", "refresh", "generate", "push"):
+            with self.subTest(command=command):
+                arguments = [command, "--version", self.target.version,
+                             "--os-id", "fedora*", "--os-id", "oracle*"]
+                if command == "generate":
+                    arguments += ["--output", "/tmp/openriak-selector-test-unused"]
+                options = docker_tool.parser().parse_args(arguments)
+                self.assertEqual(options.os_id, ["fedora*", "oracle*"])
+
+    def test_refresh_header_lists_multiple_os_patterns_readably(self):
+        options = docker_tool.parser().parse_args(
+            ["refresh", "--version", self.target.version,
+             "--os-id", "fedora*", "--os-id", "oracle*"],
+        )
+        targets = docker_tool.discover_targets(options.versions, os_id=options.os_id)
+        with contextlib.redirect_stdout(io.StringIO()) as output:
+            docker_tool.print_refresh_header(options, targets)
+        self.assertIn("OS:            fedora*, oracle*\n", output.getvalue())
+
+    def test_os_wildcard_without_matches_is_a_cli_error(self):
+        with contextlib.redirect_stderr(io.StringIO()) as output:
+            result = docker_tool.main(["matrix", "--os-id", "__no_such_os__*"])
+        self.assertEqual(result, 2)
+        self.assertIn("No Docker targets matched", output.getvalue())
+
     def test_complete_metadata_matrix_is_discoverable(self):
         targets = docker_tool.discover_targets()
         expected_native = set()
@@ -548,6 +607,27 @@ listener.protobuf.internal = 127.0.0.1:8087
                 report = publish.call_args.args[2]
                 self.assertEqual(report["status"], "interrupted")
                 self.assertIsNotNone(report["finished_at"])
+
+    def test_refresh_reexecutes_package_installation_with_unchanged_base_digest(self):
+        commands = []
+
+        def run(command, *args, **kwargs):
+            commands.append(command)
+            if command[1] == "build":
+                raise KeyboardInterrupt
+
+        with tempfile.TemporaryDirectory() as directory:
+            with mock.patch.object(docker_tool, "CACHE_ROOT", pathlib.Path(directory)), \
+                 mock.patch.object(docker_tool, "docker_command", return_value="docker"), \
+                 mock.patch.object(docker_tool, "resolve_base_image", return_value=(
+                     "alpine:3.21", "alpine:3.21@sha256:" + "a" * 64)), \
+                 mock.patch.object(docker_tool, "run_logged", side_effect=run), \
+                 mock.patch.object(docker_tool, "publish_current_run"):
+                with self.assertRaises(KeyboardInterrupt):
+                    docker_tool.refresh_target(self.target, 1800)
+        build, = [command for command in commands if command[1] == "build"]
+        self.assertIn("--no-cache", build)
+        self.assertIn("--pull=false", build)
 
     def test_beam_running_ignores_zombie_processes(self):
         import subprocess
@@ -790,6 +870,23 @@ listener.protobuf.internal = 127.0.0.1:8087
                     )
             self.assertEqual(run.call_count, 2)
             self.assertIn("state='false 1'", log_path.read_text(encoding="utf-8"))
+
+    def test_cli_readiness_wait_fails_immediately_when_container_exits(self):
+        results = [
+            docker_tool.subprocess.CompletedProcess([], 1, stdout="Container is not running\n"),
+            docker_tool.subprocess.CompletedProcess([], 0, stdout="false 7\n"),
+        ]
+        with tempfile.TemporaryDirectory() as directory:
+            with mock.patch.object(docker_tool, "docker_command", return_value="docker"), \
+                    mock.patch.object(docker_tool.subprocess, "run", side_effect=results) as run, \
+                    mock.patch.object(docker_tool, "container_http_ping") as http, \
+                    mock.patch.object(docker_tool.time, "sleep") as sleep:
+                with self.assertRaisesRegex(docker_tool.DockerToolError, "exited with code 7"):
+                    docker_tool.wait_for_node("failed-node", 1800, pathlib.Path(directory))
+                self.assertEqual(run.call_count, 2)
+                http.assert_not_called()
+                sleep.assert_not_called()
+            self.assertIn("exited=7", (pathlib.Path(directory) / "readiness.log").read_text())
 
     def test_cluster_wait_fails_immediately_when_a_container_exits(self):
         state_result = docker_tool.subprocess.CompletedProcess(

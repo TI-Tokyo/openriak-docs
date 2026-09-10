@@ -7,15 +7,13 @@
 # BuildKit supplies TARGETARCH from --platform in the global scope.
 # Do not redeclare ARG TARGETARCH here: that clears its automatic value.
 
-# linux/amd64: official package and immutable OS release base.
-# Download layers stay outside the final image; the install only mounts them.
 FROM scratch AS download-amd64
 ADD --checksum=sha256:0f93350a55f24f1063b37c4f7d89f8fd2f869c0d8bbbeafbfef5f0bcd256f23d https://files.tiot.jp/riak/kv/3.4/3.4.1/ubuntu/jammy64/riak_3.4.1-OTP26_amd64.deb /riak_3.4.1-OTP26_amd64.deb
 
-FROM --platform=linux/amd64 ubuntu:jammy@sha256:2edbbc5dc405e9612ba3584ce95480277e3eb374407b5505fe26f17df77c7dbc AS package-amd64
+FROM --platform=linux/amd64 ubuntu:jammy@sha256:829f6df217bcbae2b371026e81711d1a787c61b2967ad09d015063663ebafbf7 AS install-amd64
 RUN --mount=type=bind,from=download-amd64,target=/opt/openriak-package,ro <<'OPENRIAK_PACKAGE_INSTALL'
 set -eu
-# Copy, install, and remove in this one layer; only the installed files persist.
+
 cp /opt/openriak-package/riak_3.4.1-OTP26_amd64.deb /tmp/riak_3.4.1-OTP26_amd64.deb
 # Update installed OS packages from this release's configured repositories.
 apt-get update
@@ -24,7 +22,28 @@ DEBIAN_FRONTEND=noninteractive apt-get install -y --no-install-recommends ca-cer
 apt-get clean
 rm -rf /var/lib/apt/lists/*
 rm -f /tmp/riak_3.4.1-OTP26_amd64.deb
+# Require the reviewed security updates; reject stale mirrors.
+dpkg --compare-versions "$(dpkg-query -W -f='${Version}' libc6)" ge '2.35-0ubuntu3.15'
+# Essential installation helpers depend on Perl on this release.
+# Keep PAM/login and remove only Perl after every installation script has run.
+# As with runtime tar removal, package maintenance belongs in the build stage.
+dpkg --purge --force-remove-essential --force-depends perl-base
+test ! -e /usr/bin/perl
+
+apt-get clean
+rm -rf /var/lib/apt/lists/*
+# dpkg requires tar for installation. It is deliberately absent at runtime.
+# Child builds supply a pinned build-only tar and reinstall it before using apt.
+dpkg --purge --force-remove-essential --force-depends tar
+test ! -e /bin/tar
+test ! -e /usr/bin/tar
 OPENRIAK_PACKAGE_INSTALL
+
+# Export the cleaned filesystem; removed base-image files cannot remain in layers.
+FROM scratch AS package-amd64
+COPY --from=install-amd64 / /
+# Shell command search path for OpenRiak KV lifecycle scripts.
+ENV PATH="/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin"
 
 FROM package-${TARGETARCH} AS final
 
@@ -59,7 +78,7 @@ ENV RIAK_NODE_HOST=""
 # Explicit nodename; empty derives openriak-kv@<hostname>.
 ENV RIAK_NODE_NAME=""
 # Initial cookie; existing riak.conf wins and new followers adopt the coordinator cookie.
-ENV RIAK_DISTRIBUTED_COOKIE="openriak-bbae2e446e9bcf276de1c907c0200e95"
+ENV RIAK_DISTRIBUTED_COOKIE="openriak-53e2af55ea80cbb5123cdd18554bcd36"
 # Partition count for a new ring; do not change on an existing cluster.
 ENV RIAK_RING_SIZE="8"
 # Storage backend used by OpenRiak KV.

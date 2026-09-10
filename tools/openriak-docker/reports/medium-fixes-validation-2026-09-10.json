@@ -1,0 +1,1453 @@
+{
+  "reviewed_at": "2026-09-10",
+  "platform": "linux/amd64",
+  "scope": "Single-node and five-node OpenRiak KV integration, including riak admin test on every node; local Scout SARIF and SBOM. ARM was not tested. No registry pushes or production cache/download replacements.",
+  "baseline_review": "tools/openriak-docker/reports/cve-review-2026-09-09.json",
+  "reproduction_command": [
+    "python3",
+    "tools/openriak-docker/experiments/minimal_matrix.py",
+    "--image-tag",
+    "3.4.0-oracle-linux-9-otp24",
+    "--image-tag",
+    "3.4.0-oracle-linux-9-otp26",
+    "--image-tag",
+    "3.4.0-ubuntu-jammy-otp24",
+    "--image-tag",
+    "3.4.0-ubuntu-jammy-otp26",
+    "--image-tag",
+    "3.4.0-ubuntu-noble-otp24",
+    "--image-tag",
+    "3.4.0-ubuntu-noble-otp26",
+    "--image-tag",
+    "3.4.1-centos-8-otp26",
+    "--image-tag",
+    "3.4.1-oracle-linux-9-otp26",
+    "--image-tag",
+    "3.4.1-rhel-8-otp26",
+    "--image-tag",
+    "3.4.1-ubuntu-jammy-otp26",
+    "--image-tag",
+    "3.4.1-ubuntu-noble-otp26",
+    "--jobs",
+    "2",
+    "--timeout",
+    "1800"
+  ],
+  "counts": "Distinct raw Scout CVE IDs per amd64 image, before applying Markdown assessments; sources were scanned on different dates.",
+  "images": [
+    {
+      "image_tag": "3.4.0-oracle-linux-9-otp24",
+      "platform": "linux/amd64",
+      "status": "passed",
+      "baseline_image": "tiotjp/openriak-kv:3.4.0-oracle-linux-9-otp24",
+      "baseline_digest": "sha256:92d84b478ae672c6d7a4df39596f6d8e7af5c5cda50ab46e45eac9a8162983ee",
+      "baseline_cve_report": "tools/cache/openriak-docker-multiarch/pushes/20260909T001612.049466Z/3.4.0/3.4.0-oracle-linux-9-otp24/cve-report.json",
+      "baseline_counts": {
+        "MEDIUM": 7
+      },
+      "prototype_image": "openriak-minimal-validation/openriak-kv:3.4.0-oracle-linux-9-otp24-20260909t234946.428647z",
+      "image_inspection": {
+        "id": "sha256:4e0cce355e1eb435aa259764bf3fdbb6268b8f9d2d4b370d831c861ffd29b89c",
+        "size_bytes": 176365596,
+        "layers": [
+          "sha256:cb9e189f812b228bfa6003901d8fa721673f9650679c1d3fbac333f485740e8c",
+          "sha256:b0ca4f8296d6b593a762c93366132998f1528b03cda08fd7ab48e1882295a977",
+          "sha256:0baba8e0112741bf5fa5ce2801cecca53af55d64d8cb9e16ab77f48e732aa8f7",
+          "sha256:13be067c1f0504d6ebea124330be8b6b67f0ae2359af8cbea49d7d96edf80fe4",
+          "sha256:60d6cd89f654d01d94bd3fdc5bf8bd8d097327650524fa89878e01887932ba95"
+        ]
+      },
+      "strategy": {
+        "strategy": "rpm-root",
+        "remove_packages": [
+          "libssh",
+          "libssh-config"
+        ],
+        "release_package": "oraclelinux-release"
+      },
+      "base_images": {
+        "linux/amd64": {
+          "requested": "oraclelinux:9-slim",
+          "pinned": "oraclelinux:9-slim@sha256:6e9fec9dc3fcbd08df4c175fba0104bcbab93778e817ba9b60bd990683978258",
+          "resolved_at": "2026-09-09T23:49:49Z"
+        }
+      },
+      "verified_absent_packages": [
+        "libssh",
+        "libssh-config"
+      ],
+      "installed_security_packages": {
+        "glibc": "2.34-275.0.1.el9_8",
+        "openssl-libs": "1:3.5.5-6.0.1.el9_8",
+        "sudo": "1.9.17p2-3.el9_8"
+      },
+      "dockerfile_sha256": "0297b7fe4dbd565d1b9cab26a4ed600402a3af4b8eb7b06932aa7c8058539976",
+      "validation_report": "tools/cache/openriak-docker-minimal-validation/20260909T234946.428647Z/3.4.0/3.4.0-oracle-linux-9-otp24/validation.json",
+      "integration_report": "tools/cache/openriak-docker-minimal-validation/20260909T234946.428647Z/3.4.0/3.4.0-oracle-linux-9-otp24/platforms/linux-amd64/report.json",
+      "finished_at": "2026-09-09T23:57:51Z",
+      "scout_counts": {
+        "CRITICAL": 0,
+        "HIGH": 0,
+        "MEDIUM": 0,
+        "LOW": 0,
+        "UNSPECIFIED": 0
+      },
+      "removed_findings": {
+        "CVE-2026-59843": {
+          "severity": "MEDIUM",
+          "purls": [
+            "pkg:rpm/oraclelinux/libssh-config@0.10.4-18.el9?os_name=oraclelinux&os_version=9",
+            "pkg:rpm/oraclelinux/libssh@0.10.4-18.el9?os_name=oraclelinux&os_version=9"
+          ],
+          "fixed": "0:0.10.4-19.el9_8"
+        },
+        "CVE-2026-59844": {
+          "severity": "MEDIUM",
+          "purls": [
+            "pkg:rpm/oraclelinux/libssh-config@0.10.4-18.el9?os_name=oraclelinux&os_version=9",
+            "pkg:rpm/oraclelinux/libssh@0.10.4-18.el9?os_name=oraclelinux&os_version=9"
+          ],
+          "fixed": "0:0.10.4-19.el9_8"
+        },
+        "CVE-2026-59845": {
+          "severity": "MEDIUM",
+          "purls": [
+            "pkg:rpm/oraclelinux/libssh-config@0.10.4-18.el9?os_name=oraclelinux&os_version=9",
+            "pkg:rpm/oraclelinux/libssh@0.10.4-18.el9?os_name=oraclelinux&os_version=9"
+          ],
+          "fixed": "0:0.10.4-19.el9_8"
+        },
+        "CVE-2026-59846": {
+          "severity": "MEDIUM",
+          "purls": [
+            "pkg:rpm/oraclelinux/libssh-config@0.10.4-18.el9?os_name=oraclelinux&os_version=9",
+            "pkg:rpm/oraclelinux/libssh@0.10.4-18.el9?os_name=oraclelinux&os_version=9"
+          ],
+          "fixed": "0:0.10.4-19.el9_8"
+        },
+        "CVE-2026-59847": {
+          "severity": "MEDIUM",
+          "purls": [
+            "pkg:rpm/oraclelinux/libssh-config@0.10.4-18.el9?os_name=oraclelinux&os_version=9",
+            "pkg:rpm/oraclelinux/libssh@0.10.4-18.el9?os_name=oraclelinux&os_version=9"
+          ],
+          "fixed": "0:0.10.4-19.el9_8"
+        },
+        "CVE-2026-59848": {
+          "severity": "MEDIUM",
+          "purls": [
+            "pkg:rpm/oraclelinux/libssh-config@0.10.4-18.el9?os_name=oraclelinux&os_version=9",
+            "pkg:rpm/oraclelinux/libssh@0.10.4-18.el9?os_name=oraclelinux&os_version=9"
+          ],
+          "fixed": "0:0.10.4-19.el9_8"
+        },
+        "CVE-2026-59850": {
+          "severity": "MEDIUM",
+          "purls": [
+            "pkg:rpm/oraclelinux/libssh-config@0.10.4-18.el9?os_name=oraclelinux&os_version=9",
+            "pkg:rpm/oraclelinux/libssh@0.10.4-18.el9?os_name=oraclelinux&os_version=9"
+          ],
+          "fixed": "0:0.10.4-19.el9_8"
+        }
+      },
+      "new_findings": {},
+      "remaining_findings": {}
+    },
+    {
+      "image_tag": "3.4.0-oracle-linux-9-otp26",
+      "platform": "linux/amd64",
+      "status": "passed",
+      "baseline_image": "tiotjp/openriak-kv:3.4.0-oracle-linux-9-otp26",
+      "baseline_digest": "sha256:b9222b1bd8b72b1f2485d64e6579839da04f48a2b4172f0fc3759630aa9804ca",
+      "baseline_cve_report": "tools/cache/openriak-docker-multiarch/pushes/20260909T001612.049466Z/3.4.0/3.4.0-oracle-linux-9-otp26/cve-report.json",
+      "baseline_counts": {
+        "MEDIUM": 7
+      },
+      "prototype_image": "openriak-minimal-validation/openriak-kv:3.4.0-oracle-linux-9-otp26-20260909t234946.428647z",
+      "image_inspection": {
+        "id": "sha256:fa1e2a7e8e41188616db3a01d29f34bcaf2c2ebccc2d1e0246e50b7dd668413c",
+        "size_bytes": 178051608,
+        "layers": [
+          "sha256:f5fbdbcd968126214a42b9cd22f05f897c976bfbf4940b92f3ba09cdc66f3984",
+          "sha256:1bd60048285b47dbda1e6da59ff737ab9fc1fa9c81d6678e1e877b51e241531b",
+          "sha256:0baba8e0112741bf5fa5ce2801cecca53af55d64d8cb9e16ab77f48e732aa8f7",
+          "sha256:13be067c1f0504d6ebea124330be8b6b67f0ae2359af8cbea49d7d96edf80fe4",
+          "sha256:60d6cd89f654d01d94bd3fdc5bf8bd8d097327650524fa89878e01887932ba95"
+        ]
+      },
+      "strategy": {
+        "strategy": "rpm-root",
+        "remove_packages": [
+          "libssh",
+          "libssh-config"
+        ],
+        "release_package": "oraclelinux-release"
+      },
+      "base_images": {
+        "linux/amd64": {
+          "requested": "oraclelinux:9-slim",
+          "pinned": "oraclelinux:9-slim@sha256:6e9fec9dc3fcbd08df4c175fba0104bcbab93778e817ba9b60bd990683978258",
+          "resolved_at": "2026-09-09T23:49:49Z"
+        }
+      },
+      "verified_absent_packages": [
+        "libssh",
+        "libssh-config"
+      ],
+      "installed_security_packages": {
+        "glibc": "2.34-275.0.1.el9_8",
+        "openssl-libs": "1:3.5.5-6.0.1.el9_8",
+        "sudo": "1.9.17p2-3.el9_8"
+      },
+      "dockerfile_sha256": "41373822102e8876aa0d6722644e2d09c1582a937041f264a06e786e7b6c4e12",
+      "validation_report": "tools/cache/openriak-docker-minimal-validation/20260909T234946.428647Z/3.4.0/3.4.0-oracle-linux-9-otp26/validation.json",
+      "integration_report": "tools/cache/openriak-docker-minimal-validation/20260909T234946.428647Z/3.4.0/3.4.0-oracle-linux-9-otp26/platforms/linux-amd64/report.json",
+      "finished_at": "2026-09-09T23:58:10Z",
+      "scout_counts": {
+        "CRITICAL": 0,
+        "HIGH": 0,
+        "MEDIUM": 0,
+        "LOW": 0,
+        "UNSPECIFIED": 0
+      },
+      "removed_findings": {
+        "CVE-2026-59843": {
+          "severity": "MEDIUM",
+          "purls": [
+            "pkg:rpm/oraclelinux/libssh-config@0.10.4-18.el9?os_name=oraclelinux&os_version=9",
+            "pkg:rpm/oraclelinux/libssh@0.10.4-18.el9?os_name=oraclelinux&os_version=9"
+          ],
+          "fixed": "0:0.10.4-19.el9_8"
+        },
+        "CVE-2026-59844": {
+          "severity": "MEDIUM",
+          "purls": [
+            "pkg:rpm/oraclelinux/libssh-config@0.10.4-18.el9?os_name=oraclelinux&os_version=9",
+            "pkg:rpm/oraclelinux/libssh@0.10.4-18.el9?os_name=oraclelinux&os_version=9"
+          ],
+          "fixed": "0:0.10.4-19.el9_8"
+        },
+        "CVE-2026-59845": {
+          "severity": "MEDIUM",
+          "purls": [
+            "pkg:rpm/oraclelinux/libssh-config@0.10.4-18.el9?os_name=oraclelinux&os_version=9",
+            "pkg:rpm/oraclelinux/libssh@0.10.4-18.el9?os_name=oraclelinux&os_version=9"
+          ],
+          "fixed": "0:0.10.4-19.el9_8"
+        },
+        "CVE-2026-59846": {
+          "severity": "MEDIUM",
+          "purls": [
+            "pkg:rpm/oraclelinux/libssh-config@0.10.4-18.el9?os_name=oraclelinux&os_version=9",
+            "pkg:rpm/oraclelinux/libssh@0.10.4-18.el9?os_name=oraclelinux&os_version=9"
+          ],
+          "fixed": "0:0.10.4-19.el9_8"
+        },
+        "CVE-2026-59847": {
+          "severity": "MEDIUM",
+          "purls": [
+            "pkg:rpm/oraclelinux/libssh-config@0.10.4-18.el9?os_name=oraclelinux&os_version=9",
+            "pkg:rpm/oraclelinux/libssh@0.10.4-18.el9?os_name=oraclelinux&os_version=9"
+          ],
+          "fixed": "0:0.10.4-19.el9_8"
+        },
+        "CVE-2026-59848": {
+          "severity": "MEDIUM",
+          "purls": [
+            "pkg:rpm/oraclelinux/libssh-config@0.10.4-18.el9?os_name=oraclelinux&os_version=9",
+            "pkg:rpm/oraclelinux/libssh@0.10.4-18.el9?os_name=oraclelinux&os_version=9"
+          ],
+          "fixed": "0:0.10.4-19.el9_8"
+        },
+        "CVE-2026-59850": {
+          "severity": "MEDIUM",
+          "purls": [
+            "pkg:rpm/oraclelinux/libssh-config@0.10.4-18.el9?os_name=oraclelinux&os_version=9",
+            "pkg:rpm/oraclelinux/libssh@0.10.4-18.el9?os_name=oraclelinux&os_version=9"
+          ],
+          "fixed": "0:0.10.4-19.el9_8"
+        }
+      },
+      "new_findings": {},
+      "remaining_findings": {}
+    },
+    {
+      "image_tag": "3.4.0-ubuntu-jammy-otp24",
+      "platform": "linux/amd64",
+      "status": "passed",
+      "baseline_image": "tiotjp/openriak-kv:3.4.0-ubuntu-jammy-otp24",
+      "baseline_digest": "sha256:e9721f00e8060b6da201fda0438fafd086ce5cfa32ca18a5531b27ecbdb1e841",
+      "baseline_cve_report": "tools/cache/openriak-docker-multiarch/pushes/20260909T001612.049466Z/3.4.0/3.4.0-ubuntu-jammy-otp24/cve-report.json",
+      "baseline_counts": {
+        "LOW": 7,
+        "MEDIUM": 10
+      },
+      "prototype_image": "openriak-minimal-validation/openriak-kv:3.4.0-ubuntu-jammy-otp24-20260909t234946.428647z",
+      "image_inspection": {
+        "id": "sha256:ead7924d725c1a5ade1e1c1abc49ad6262eb57c15f5f7760382ecb8c88360856",
+        "size_bytes": 128206232,
+        "layers": [
+          "sha256:4aa87d475ced4b994eccdbc5ff8988d6ce2b043fba6917f49fdec2094bec56b5",
+          "sha256:6921d2b282042aed3722ba9a68bb7d9acc134798c28ca3a4092251b8f12561e0",
+          "sha256:e50fd68f64082592a2640e8042c5e0779d6f52e6231071a432cc3e202c860c6e",
+          "sha256:d6037e8d201c7ff3443ba9c83f07f5b0a13b00c6e0cdb6e916df8c0cb2a82b84",
+          "sha256:4993b6e173f8ec70494435bccb623dc351cf62b3b3aebb785e0902a162c8cb6c"
+        ]
+      },
+      "strategy": {
+        "strategy": "clean-root",
+        "remove_tar": true,
+        "minimum_packages": {
+          "libc6": "2.35-0ubuntu3.15"
+        },
+        "perl_removal": "dpkg"
+      },
+      "base_images": {
+        "linux/amd64": {
+          "requested": "ubuntu:jammy",
+          "pinned": "ubuntu:jammy@sha256:829f6df217bcbae2b371026e81711d1a787c61b2967ad09d015063663ebafbf7",
+          "resolved_at": "2026-09-09T23:57:54Z"
+        }
+      },
+      "verified_absent_packages": [
+        "tar",
+        "perl-base"
+      ],
+      "installed_security_packages": {
+        "dpkg": "1.21.1ubuntu2.6",
+        "glibc": "2.35-0ubuntu3.15",
+        "libc6": "2.35-0ubuntu3.15",
+        "libssl3": "3.0.2-0ubuntu1.29",
+        "sudo": "1.9.9-1ubuntu2.6"
+      },
+      "dockerfile_sha256": "efab9fbf1f2c5a5fa7f7f8e18b0640e73f590950dd54330342fd7da75e8ad000",
+      "validation_report": "tools/cache/openriak-docker-minimal-validation/20260909T234946.428647Z/3.4.0/3.4.0-ubuntu-jammy-otp24/validation.json",
+      "integration_report": "tools/cache/openriak-docker-minimal-validation/20260909T234946.428647Z/3.4.0/3.4.0-ubuntu-jammy-otp24/platforms/linux-amd64/report.json",
+      "finished_at": "2026-09-10T00:04:00Z",
+      "scout_counts": {
+        "CRITICAL": 0,
+        "HIGH": 0,
+        "MEDIUM": 1,
+        "LOW": 7,
+        "UNSPECIFIED": 0
+      },
+      "removed_findings": {
+        "CVE-2026-15534": {
+          "severity": "MEDIUM",
+          "purls": [
+            "pkg:deb/ubuntu/perl@5.34.0-3ubuntu1.8?os_distro=jammy&os_name=ubuntu&os_version=22.04"
+          ],
+          "fixed": "5.34.0-3ubuntu1.9"
+        },
+        "CVE-2026-18477": {
+          "severity": "MEDIUM",
+          "purls": [
+            "pkg:deb/ubuntu/tar@1.34%2Bdfsg-1ubuntu0.1.22.04.6?os_distro=jammy&os_name=ubuntu&os_version=22.04"
+          ],
+          "fixed": "not fixed"
+        },
+        "CVE-2026-18508": {
+          "severity": "MEDIUM",
+          "purls": [
+            "pkg:deb/ubuntu/tar@1.34%2Bdfsg-1ubuntu0.1.22.04.6?os_distro=jammy&os_name=ubuntu&os_version=22.04"
+          ],
+          "fixed": "not fixed"
+        },
+        "CVE-2026-19487": {
+          "severity": "MEDIUM",
+          "purls": [
+            "pkg:deb/ubuntu/perl@5.34.0-3ubuntu1.8?os_distro=jammy&os_name=ubuntu&os_version=22.04"
+          ],
+          "fixed": "5.34.0-3ubuntu1.9"
+        },
+        "CVE-2026-19542": {
+          "severity": "MEDIUM",
+          "purls": [
+            "pkg:deb/ubuntu/glibc@2.35-0ubuntu3.14?os_distro=jammy&os_name=ubuntu&os_version=22.04"
+          ],
+          "fixed": "2.35-0ubuntu3.15"
+        },
+        "CVE-2026-6368": {
+          "severity": "MEDIUM",
+          "purls": [
+            "pkg:deb/ubuntu/glibc@2.35-0ubuntu3.14?os_distro=jammy&os_name=ubuntu&os_version=22.04"
+          ],
+          "fixed": "2.35-0ubuntu3.15"
+        },
+        "CVE-2026-6791": {
+          "severity": "MEDIUM",
+          "purls": [
+            "pkg:deb/ubuntu/glibc@2.35-0ubuntu3.14?os_distro=jammy&os_name=ubuntu&os_version=22.04"
+          ],
+          "fixed": "2.35-0ubuntu3.15"
+        },
+        "CVE-2026-77117": {
+          "severity": "MEDIUM",
+          "purls": [
+            "pkg:deb/ubuntu/glibc@2.35-0ubuntu3.14?os_distro=jammy&os_name=ubuntu&os_version=22.04"
+          ],
+          "fixed": "2.35-0ubuntu3.15"
+        },
+        "CVE-2026-80489": {
+          "severity": "MEDIUM",
+          "purls": [
+            "pkg:deb/ubuntu/glibc@2.35-0ubuntu3.14?os_distro=jammy&os_name=ubuntu&os_version=22.04"
+          ],
+          "fixed": "2.35-0ubuntu3.15"
+        }
+      },
+      "new_findings": {},
+      "remaining_findings": {
+        "CVE-2024-56433": "LOW",
+        "CVE-2023-29383": "LOW",
+        "CVE-2026-40228": "LOW",
+        "CVE-2022-27943": "LOW",
+        "CVE-2023-50495": "LOW",
+        "CVE-2022-41409": "LOW",
+        "CVE-2022-4899": "LOW",
+        "CVE-2026-18374": "MEDIUM"
+      }
+    },
+    {
+      "image_tag": "3.4.0-ubuntu-jammy-otp26",
+      "platform": "linux/amd64",
+      "status": "passed",
+      "baseline_image": "tiotjp/openriak-kv:3.4.0-ubuntu-jammy-otp26",
+      "baseline_digest": "sha256:9fd5cc1a63f18505b72cf1dfcee970bdda30d3a486cb2f9769464a6646b645c7",
+      "baseline_cve_report": "tools/cache/openriak-docker-multiarch/pushes/20260909T001612.049466Z/3.4.0/3.4.0-ubuntu-jammy-otp26/cve-report.json",
+      "baseline_counts": {
+        "LOW": 7,
+        "MEDIUM": 10
+      },
+      "prototype_image": "openriak-minimal-validation/openriak-kv:3.4.0-ubuntu-jammy-otp26-20260909t234946.428647z",
+      "image_inspection": {
+        "id": "sha256:40ad41874c3626fc863d65bc4b4c9b62879cebd05327c88515fa55dfd9fbe2ee",
+        "size_bytes": 129914374,
+        "layers": [
+          "sha256:9dc97bb6e0a9aabc5f913b093ee826a01314a09c626b3f4a2b0df36b69fb3ba4",
+          "sha256:bfeda8ad0a4e22f8066e2ce9068239e821df6cbe19539aa661709abff6db6267",
+          "sha256:d65126d8bd21afde40484367e03d8bf4ce8531cc8e3a9f98b8b08f172398af38",
+          "sha256:8c976cb20c464ffb0810b9a98e76baf5f41c3252e147ba71080f6871c89da404",
+          "sha256:4a0954c0ab2b6c476a5c2c516707862a1c903b5dee4678539d907db4d3bb872f"
+        ]
+      },
+      "strategy": {
+        "strategy": "clean-root",
+        "remove_tar": true,
+        "minimum_packages": {
+          "libc6": "2.35-0ubuntu3.15"
+        },
+        "perl_removal": "dpkg"
+      },
+      "base_images": {
+        "linux/amd64": {
+          "requested": "ubuntu:jammy",
+          "pinned": "ubuntu:jammy@sha256:829f6df217bcbae2b371026e81711d1a787c61b2967ad09d015063663ebafbf7",
+          "resolved_at": "2026-09-09T23:58:11Z"
+        }
+      },
+      "verified_absent_packages": [
+        "tar",
+        "perl-base"
+      ],
+      "installed_security_packages": {
+        "dpkg": "1.21.1ubuntu2.6",
+        "glibc": "2.35-0ubuntu3.15",
+        "libc6": "2.35-0ubuntu3.15",
+        "libssl3": "3.0.2-0ubuntu1.29",
+        "sudo": "1.9.9-1ubuntu2.6"
+      },
+      "dockerfile_sha256": "9d995a208fc0d1c03b18ae7ade297f1809d33101d30ee25c296bbc7d7fbb848a",
+      "validation_report": "tools/cache/openriak-docker-minimal-validation/20260909T234946.428647Z/3.4.0/3.4.0-ubuntu-jammy-otp26/validation.json",
+      "integration_report": "tools/cache/openriak-docker-minimal-validation/20260909T234946.428647Z/3.4.0/3.4.0-ubuntu-jammy-otp26/platforms/linux-amd64/report.json",
+      "finished_at": "2026-09-10T00:04:42Z",
+      "scout_counts": {
+        "CRITICAL": 0,
+        "HIGH": 0,
+        "MEDIUM": 1,
+        "LOW": 7,
+        "UNSPECIFIED": 0
+      },
+      "removed_findings": {
+        "CVE-2026-15534": {
+          "severity": "MEDIUM",
+          "purls": [
+            "pkg:deb/ubuntu/perl@5.34.0-3ubuntu1.8?os_distro=jammy&os_name=ubuntu&os_version=22.04"
+          ],
+          "fixed": "5.34.0-3ubuntu1.9"
+        },
+        "CVE-2026-18477": {
+          "severity": "MEDIUM",
+          "purls": [
+            "pkg:deb/ubuntu/tar@1.34%2Bdfsg-1ubuntu0.1.22.04.6?os_distro=jammy&os_name=ubuntu&os_version=22.04"
+          ],
+          "fixed": "not fixed"
+        },
+        "CVE-2026-18508": {
+          "severity": "MEDIUM",
+          "purls": [
+            "pkg:deb/ubuntu/tar@1.34%2Bdfsg-1ubuntu0.1.22.04.6?os_distro=jammy&os_name=ubuntu&os_version=22.04"
+          ],
+          "fixed": "not fixed"
+        },
+        "CVE-2026-19487": {
+          "severity": "MEDIUM",
+          "purls": [
+            "pkg:deb/ubuntu/perl@5.34.0-3ubuntu1.8?os_distro=jammy&os_name=ubuntu&os_version=22.04"
+          ],
+          "fixed": "5.34.0-3ubuntu1.9"
+        },
+        "CVE-2026-19542": {
+          "severity": "MEDIUM",
+          "purls": [
+            "pkg:deb/ubuntu/glibc@2.35-0ubuntu3.14?os_distro=jammy&os_name=ubuntu&os_version=22.04"
+          ],
+          "fixed": "2.35-0ubuntu3.15"
+        },
+        "CVE-2026-6368": {
+          "severity": "MEDIUM",
+          "purls": [
+            "pkg:deb/ubuntu/glibc@2.35-0ubuntu3.14?os_distro=jammy&os_name=ubuntu&os_version=22.04"
+          ],
+          "fixed": "2.35-0ubuntu3.15"
+        },
+        "CVE-2026-6791": {
+          "severity": "MEDIUM",
+          "purls": [
+            "pkg:deb/ubuntu/glibc@2.35-0ubuntu3.14?os_distro=jammy&os_name=ubuntu&os_version=22.04"
+          ],
+          "fixed": "2.35-0ubuntu3.15"
+        },
+        "CVE-2026-77117": {
+          "severity": "MEDIUM",
+          "purls": [
+            "pkg:deb/ubuntu/glibc@2.35-0ubuntu3.14?os_distro=jammy&os_name=ubuntu&os_version=22.04"
+          ],
+          "fixed": "2.35-0ubuntu3.15"
+        },
+        "CVE-2026-80489": {
+          "severity": "MEDIUM",
+          "purls": [
+            "pkg:deb/ubuntu/glibc@2.35-0ubuntu3.14?os_distro=jammy&os_name=ubuntu&os_version=22.04"
+          ],
+          "fixed": "2.35-0ubuntu3.15"
+        }
+      },
+      "new_findings": {},
+      "remaining_findings": {
+        "CVE-2024-56433": "LOW",
+        "CVE-2023-29383": "LOW",
+        "CVE-2026-40228": "LOW",
+        "CVE-2022-27943": "LOW",
+        "CVE-2023-50495": "LOW",
+        "CVE-2022-41409": "LOW",
+        "CVE-2022-4899": "LOW",
+        "CVE-2026-18374": "MEDIUM"
+      }
+    },
+    {
+      "image_tag": "3.4.0-ubuntu-noble-otp24",
+      "platform": "linux/amd64",
+      "status": "passed",
+      "baseline_image": "tiotjp/openriak-kv:3.4.0-ubuntu-noble-otp24",
+      "baseline_digest": "sha256:e8d72409045ed2c41f6e53532ea1f7207d97b4d47c98a270ccf99d78452babd8",
+      "baseline_cve_report": "tools/cache/openriak-docker-multiarch/pushes/20260909T001612.049466Z/3.4.0/3.4.0-ubuntu-noble-otp24/cve-report.json",
+      "baseline_counts": {
+        "LOW": 2,
+        "MEDIUM": 7
+      },
+      "prototype_image": "openriak-minimal-validation/openriak-kv:3.4.0-ubuntu-noble-otp24-20260909t234946.428647z",
+      "image_inspection": {
+        "id": "sha256:ecea583bd5f47b887662d35257dd2a66801a2cd42eb15fe0f1def0bc113cf75c",
+        "size_bytes": 144259247,
+        "layers": [
+          "sha256:3322794285786b4899522363e8af70e2235ade7b0876bcd664abd036e62c6427",
+          "sha256:aeca664218bc40b2589cd5446a41f94c02f5c52c94010639d2aa4ecddde791c4",
+          "sha256:0b0d595c74c4e9e7927b8b6b0dfe8a1be6ad010f7ffd6310807570f96386c643",
+          "sha256:5b61aa1ebbe1b152945767047fa40561508e9225e8fa5403716adf972b298e64",
+          "sha256:0ec9c49543041505903888294505db70b9fd4de4d57e1d3ea62bceb505fa9bd2"
+        ]
+      },
+      "strategy": {
+        "strategy": "clean-root",
+        "remove_tar": true
+      },
+      "base_images": {
+        "linux/amd64": {
+          "requested": "ubuntu:noble",
+          "pinned": "ubuntu:noble@sha256:224a1869083a311ef3f13648a154ba79832fbef6364d31493642ca03082da254",
+          "resolved_at": "2026-09-10T00:04:05Z"
+        }
+      },
+      "verified_absent_packages": [
+        "tar",
+        "perl-base"
+      ],
+      "installed_security_packages": {
+        "dpkg": "1.22.6ubuntu6.6",
+        "glibc": "2.39-0ubuntu8.8",
+        "libc6": "2.39-0ubuntu8.8",
+        "libssl3t64": "3.0.13-0ubuntu3.15",
+        "sudo": "1.9.15p5-3ubuntu5.24.04.2"
+      },
+      "dockerfile_sha256": "92d8f736b39a0d25f584f479bad609447e4e56076c62772dee285abff7193609",
+      "validation_report": "tools/cache/openriak-docker-minimal-validation/20260909T234946.428647Z/3.4.0/3.4.0-ubuntu-noble-otp24/validation.json",
+      "integration_report": "tools/cache/openriak-docker-minimal-validation/20260909T234946.428647Z/3.4.0/3.4.0-ubuntu-noble-otp24/platforms/linux-amd64/report.json",
+      "finished_at": "2026-09-10T00:10:22Z",
+      "scout_counts": {
+        "CRITICAL": 0,
+        "HIGH": 0,
+        "MEDIUM": 3,
+        "LOW": 2,
+        "UNSPECIFIED": 0
+      },
+      "removed_findings": {
+        "CVE-2026-15534": {
+          "severity": "MEDIUM",
+          "purls": [
+            "pkg:deb/ubuntu/perl@5.38.2-3.2ubuntu0.4?os_distro=noble&os_name=ubuntu&os_version=24.04"
+          ],
+          "fixed": "not fixed"
+        },
+        "CVE-2026-18477": {
+          "severity": "MEDIUM",
+          "purls": [
+            "pkg:deb/ubuntu/tar@1.35%2Bdfsg-3ubuntu0.4?os_distro=noble&os_name=ubuntu&os_version=24.04"
+          ],
+          "fixed": "not fixed"
+        },
+        "CVE-2026-18508": {
+          "severity": "MEDIUM",
+          "purls": [
+            "pkg:deb/ubuntu/tar@1.35%2Bdfsg-3ubuntu0.4?os_distro=noble&os_name=ubuntu&os_version=24.04"
+          ],
+          "fixed": "not fixed"
+        },
+        "CVE-2026-19487": {
+          "severity": "MEDIUM",
+          "purls": [
+            "pkg:deb/ubuntu/perl@5.38.2-3.2ubuntu0.4?os_distro=noble&os_name=ubuntu&os_version=24.04"
+          ],
+          "fixed": "not fixed"
+        }
+      },
+      "new_findings": {},
+      "remaining_findings": {
+        "CVE-2024-56433": "LOW",
+        "CVE-2026-40228": "LOW",
+        "CVE-2026-18374": "MEDIUM",
+        "CVE-2026-19617": "MEDIUM",
+        "CVE-2026-2219": "MEDIUM"
+      }
+    },
+    {
+      "image_tag": "3.4.0-ubuntu-noble-otp26",
+      "platform": "linux/amd64",
+      "status": "passed",
+      "baseline_image": "tiotjp/openriak-kv:3.4.0-ubuntu-noble-otp26",
+      "baseline_digest": "sha256:e844395407762f13842a80fae7e0f8ca493ac20caf9da4ba77f2bd881bdd74b9",
+      "baseline_cve_report": "tools/cache/openriak-docker-multiarch/pushes/20260909T001612.049466Z/3.4.0/3.4.0-ubuntu-noble-otp26/cve-report.json",
+      "baseline_counts": {
+        "LOW": 2,
+        "MEDIUM": 7
+      },
+      "prototype_image": "openriak-minimal-validation/openriak-kv:3.4.0-ubuntu-noble-otp26-20260909t234946.428647z",
+      "image_inspection": {
+        "id": "sha256:1ed3a5cc447ccc7cd1577c9d81297d7fc6ff2bb1050967fb117924b0294e35aa",
+        "size_bytes": 145971497,
+        "layers": [
+          "sha256:b3a5c54134a546dd0e75287c79c5bd1c0db545e283089314f6928192084e5581",
+          "sha256:bc58d62913de4881ab90e482bb469ddf05880959c0184449e0d309947ae5ce1d",
+          "sha256:570c8b9eb13fc671c225306e0e4cfece5b0db1e507afd8b44eb169be09a1c168",
+          "sha256:4fd0dcda2abc707eecfe8d7354f3f25cfdba9d125cc87deb8d44606cc1ba6fe9",
+          "sha256:9fdc9d18cc05fd3ff558e9c44b9eb811b70b920c0d6d1a830d2c8af574e02d5c"
+        ]
+      },
+      "strategy": {
+        "strategy": "clean-root",
+        "remove_tar": true
+      },
+      "base_images": {
+        "linux/amd64": {
+          "requested": "ubuntu:noble",
+          "pinned": "ubuntu:noble@sha256:224a1869083a311ef3f13648a154ba79832fbef6364d31493642ca03082da254",
+          "resolved_at": "2026-09-10T00:04:44Z"
+        }
+      },
+      "verified_absent_packages": [
+        "tar",
+        "perl-base"
+      ],
+      "installed_security_packages": {
+        "dpkg": "1.22.6ubuntu6.6",
+        "glibc": "2.39-0ubuntu8.8",
+        "libc6": "2.39-0ubuntu8.8",
+        "libssl3t64": "3.0.13-0ubuntu3.15",
+        "sudo": "1.9.15p5-3ubuntu5.24.04.2"
+      },
+      "dockerfile_sha256": "67f04a75af2ea438a31df3470ce8b09514f1c4f1b35a2b446ae8f59ed997921c",
+      "validation_report": "tools/cache/openriak-docker-minimal-validation/20260909T234946.428647Z/3.4.0/3.4.0-ubuntu-noble-otp26/validation.json",
+      "integration_report": "tools/cache/openriak-docker-minimal-validation/20260909T234946.428647Z/3.4.0/3.4.0-ubuntu-noble-otp26/platforms/linux-amd64/report.json",
+      "finished_at": "2026-09-10T00:12:05Z",
+      "scout_counts": {
+        "CRITICAL": 0,
+        "HIGH": 0,
+        "MEDIUM": 3,
+        "LOW": 2,
+        "UNSPECIFIED": 0
+      },
+      "removed_findings": {
+        "CVE-2026-15534": {
+          "severity": "MEDIUM",
+          "purls": [
+            "pkg:deb/ubuntu/perl@5.38.2-3.2ubuntu0.4?os_distro=noble&os_name=ubuntu&os_version=24.04"
+          ],
+          "fixed": "not fixed"
+        },
+        "CVE-2026-18477": {
+          "severity": "MEDIUM",
+          "purls": [
+            "pkg:deb/ubuntu/tar@1.35%2Bdfsg-3ubuntu0.4?os_distro=noble&os_name=ubuntu&os_version=24.04"
+          ],
+          "fixed": "not fixed"
+        },
+        "CVE-2026-18508": {
+          "severity": "MEDIUM",
+          "purls": [
+            "pkg:deb/ubuntu/tar@1.35%2Bdfsg-3ubuntu0.4?os_distro=noble&os_name=ubuntu&os_version=24.04"
+          ],
+          "fixed": "not fixed"
+        },
+        "CVE-2026-19487": {
+          "severity": "MEDIUM",
+          "purls": [
+            "pkg:deb/ubuntu/perl@5.38.2-3.2ubuntu0.4?os_distro=noble&os_name=ubuntu&os_version=24.04"
+          ],
+          "fixed": "not fixed"
+        }
+      },
+      "new_findings": {},
+      "remaining_findings": {
+        "CVE-2024-56433": "LOW",
+        "CVE-2026-40228": "LOW",
+        "CVE-2026-18374": "MEDIUM",
+        "CVE-2026-19617": "MEDIUM",
+        "CVE-2026-2219": "MEDIUM"
+      }
+    },
+    {
+      "image_tag": "3.4.1-centos-8-otp26",
+      "platform": "linux/amd64",
+      "status": "passed",
+      "baseline_image": "tiotjp/openriak-kv:3.4.1-centos-8-otp26",
+      "baseline_digest": "sha256:31e5ae828aa38febe6d63ce0e2fd09b4e7d01082605f81415a7b910d8ee8a469",
+      "baseline_cve_report": "tools/cache/openriak-docker-multiarch/pushes/20260909T001612.049466Z/3.4.1/3.4.1-centos-8-otp26/cve-report.json",
+      "baseline_counts": {
+        "LOW": 16,
+        "MEDIUM": 44,
+        "HIGH": 18
+      },
+      "prototype_image": "openriak-minimal-validation/openriak-kv:3.4.1-centos-8-otp26-20260909t234946.428647z",
+      "image_inspection": {
+        "id": "sha256:6f93c3853476ba96c85a4facfdee0c236dd6085573eca78797c0337ba925250c",
+        "size_bytes": 137739621,
+        "layers": [
+          "sha256:2c93574edca2a88dc098b1cde066ba1d6640fe463dec541b2ea6105f3cf87fcc",
+          "sha256:0776e5a02ba3b1a6e058f8dd5201dc946351982d5b413c2f17698bce3dc879c7",
+          "sha256:3f49850b8bb395c84918b0e2bea12009fb6a7a9af50e9be41685c10112175a1d",
+          "sha256:0265f65a92eb42670171e50a0a98b70af02caf9224fd62e3714372fa0089c631",
+          "sha256:e0a78a34b4d9f1d119a059abe688974aa9f6bd1f4015daa0ed9b1c67f5cc1883"
+        ]
+      },
+      "strategy": {
+        "strategy": "rpm-root",
+        "release_package": "centos-stream-release",
+        "remove_packages": [
+          "sudo",
+          "vim-minimal",
+          "vim-common",
+          "vim-filesystem"
+        ]
+      },
+      "base_images": {
+        "linux/amd64": {
+          "requested": "quay.io/centos/centos:stream8",
+          "pinned": "quay.io/centos/centos:stream8@sha256:20da069d4f8126c4517ee563e6e723d4cbe79ff62f6c4597f753478af91a09a3",
+          "resolved_at": "2026-09-10T00:10:24Z"
+        }
+      },
+      "verified_absent_packages": [
+        "sudo",
+        "vim-minimal",
+        "vim-common",
+        "vim-filesystem"
+      ],
+      "installed_security_packages": {
+        "glibc": "2.28-251.el8.2",
+        "openssl-libs": "1:1.1.1k-12.el8"
+      },
+      "dockerfile_sha256": "40661e2b53db368e855b77e5d36e8b88d75aa9dc42bd9b57b6874c46db736bba",
+      "validation_report": "tools/cache/openriak-docker-minimal-validation/20260909T234946.428647Z/3.4.1/3.4.1-centos-8-otp26/validation.json",
+      "integration_report": "tools/cache/openriak-docker-minimal-validation/20260909T234946.428647Z/3.4.1/3.4.1-centos-8-otp26/platforms/linux-amd64/report.json",
+      "finished_at": "2026-09-10T00:18:06Z",
+      "scout_counts": {
+        "CRITICAL": 0,
+        "HIGH": 12,
+        "MEDIUM": 33,
+        "LOW": 12,
+        "UNSPECIFIED": 0
+      },
+      "removed_findings": {
+        "CVE-2022-1621": {
+          "severity": "MEDIUM",
+          "purls": [
+            "pkg:rpm/centos/vim@2%3A8.0.1763-19.el8.4?os_name=centos&os_version=8"
+          ],
+          "fixed": "2:8.0.1763-19.el8_6.2"
+        },
+        "CVE-2022-1629": {
+          "severity": "MEDIUM",
+          "purls": [
+            "pkg:rpm/centos/vim@2%3A8.0.1763-19.el8.4?os_name=centos&os_version=8"
+          ],
+          "fixed": "2:8.0.1763-19.el8_6.2"
+        },
+        "CVE-2022-1785": {
+          "severity": "MEDIUM",
+          "purls": [
+            "pkg:rpm/centos/vim@2%3A8.0.1763-19.el8.4?os_name=centos&os_version=8"
+          ],
+          "fixed": "2:8.0.1763-19.el8_6.4"
+        },
+        "CVE-2022-1897": {
+          "severity": "MEDIUM",
+          "purls": [
+            "pkg:rpm/centos/vim@2%3A8.0.1763-19.el8.4?os_name=centos&os_version=8"
+          ],
+          "fixed": "2:8.0.1763-19.el8_6.4"
+        },
+        "CVE-2022-1927": {
+          "severity": "MEDIUM",
+          "purls": [
+            "pkg:rpm/centos/vim@2%3A8.0.1763-19.el8.4?os_name=centos&os_version=8"
+          ],
+          "fixed": "2:8.0.1763-19.el8_6.4"
+        },
+        "CVE-2023-28486": {
+          "severity": "MEDIUM",
+          "purls": [
+            "pkg:rpm/centos/sudo@1.9.5p2-1.el8?os_name=centos&os_version=8"
+          ],
+          "fixed": "1.9.5p2-1.el8_9"
+        },
+        "CVE-2023-28487": {
+          "severity": "MEDIUM",
+          "purls": [
+            "pkg:rpm/centos/sudo@1.9.5p2-1.el8?os_name=centos&os_version=8"
+          ],
+          "fixed": "1.9.5p2-1.el8_9"
+        },
+        "CVE-2023-2953": {
+          "severity": "LOW",
+          "purls": [
+            "pkg:rpm/centos/openldap@2.4.46-18.el8?os_name=centos&os_version=8"
+          ],
+          "fixed": "2.4.46-19.el8_10"
+        },
+        "CVE-2023-42465": {
+          "severity": "MEDIUM",
+          "purls": [
+            "pkg:rpm/centos/sudo@1.9.5p2-1.el8?os_name=centos&os_version=8"
+          ],
+          "fixed": "1.9.5p2-1.el8_9"
+        },
+        "CVE-2023-4733": {
+          "severity": "LOW",
+          "purls": [
+            "pkg:rpm/centos/vim@2%3A8.0.1763-19.el8.4?os_name=centos&os_version=8"
+          ],
+          "fixed": "not fixed"
+        },
+        "CVE-2023-4750": {
+          "severity": "LOW",
+          "purls": [
+            "pkg:rpm/centos/vim@2%3A8.0.1763-19.el8.4?os_name=centos&os_version=8"
+          ],
+          "fixed": "not fixed"
+        },
+        "CVE-2025-32462": {
+          "severity": "HIGH",
+          "purls": [
+            "pkg:rpm/centos/sudo@1.9.5p2-1.el8?os_name=centos&os_version=8"
+          ],
+          "fixed": "1.9.5p2-1.el8_10.1"
+        },
+        "CVE-2025-53905": {
+          "severity": "MEDIUM",
+          "purls": [
+            "pkg:rpm/centos/vim@2%3A8.0.1763-19.el8.4?os_name=centos&os_version=8"
+          ],
+          "fixed": "2:8.0.1763-21.el8_10"
+        },
+        "CVE-2025-53906": {
+          "severity": "MEDIUM",
+          "purls": [
+            "pkg:rpm/centos/vim@2%3A8.0.1763-19.el8.4?os_name=centos&os_version=8"
+          ],
+          "fixed": "2:8.0.1763-21.el8_10"
+        },
+        "CVE-2026-26269": {
+          "severity": "MEDIUM",
+          "purls": [
+            "pkg:rpm/centos/vim@2%3A8.0.1763-19.el8.4?os_name=centos&os_version=8"
+          ],
+          "fixed": "not fixed"
+        },
+        "CVE-2026-33412": {
+          "severity": "HIGH",
+          "purls": [
+            "pkg:rpm/centos/vim@2%3A8.0.1763-19.el8.4?os_name=centos&os_version=8"
+          ],
+          "fixed": "not fixed"
+        },
+        "CVE-2026-34714": {
+          "severity": "HIGH",
+          "purls": [
+            "pkg:rpm/centos/vim@2%3A8.0.1763-19.el8.4?os_name=centos&os_version=8"
+          ],
+          "fixed": "not fixed"
+        },
+        "CVE-2026-34982": {
+          "severity": "HIGH",
+          "purls": [
+            "pkg:rpm/centos/vim@2%3A8.0.1763-19.el8.4?os_name=centos&os_version=8"
+          ],
+          "fixed": "not fixed"
+        },
+        "CVE-2026-35535": {
+          "severity": "HIGH",
+          "purls": [
+            "pkg:rpm/centos/sudo@1.9.5p2-1.el8?os_name=centos&os_version=8"
+          ],
+          "fixed": "not fixed"
+        },
+        "CVE-2026-43961": {
+          "severity": "HIGH",
+          "purls": [
+            "pkg:rpm/centos/vim@2%3A8.0.1763-19.el8.4?os_name=centos&os_version=8"
+          ],
+          "fixed": "not fixed"
+        },
+        "CVE-2026-9530": {
+          "severity": "LOW",
+          "purls": [
+            "pkg:rpm/centos/vim@2%3A8.0.1763-19.el8.4?os_name=centos&os_version=8"
+          ],
+          "fixed": "not fixed"
+        }
+      },
+      "new_findings": {},
+      "remaining_findings": {
+        "CVE-2020-35536": "LOW",
+        "CVE-2020-35537": "LOW",
+        "CVE-2023-2602": "LOW",
+        "CVE-2024-33601": "LOW",
+        "CVE-2024-33602": "LOW",
+        "CVE-2023-3446": "LOW",
+        "CVE-2023-3817": "LOW",
+        "CVE-2023-5678": "LOW",
+        "CVE-2024-26458": "LOW",
+        "CVE-2024-26461": "LOW",
+        "CVE-2024-5535": "LOW",
+        "CVE-2023-37920": "LOW",
+        "CVE-2025-8058": "MEDIUM",
+        "CVE-2026-19542": "MEDIUM",
+        "CVE-2019-12900": "MEDIUM",
+        "CVE-2024-10041": "MEDIUM",
+        "CVE-2024-12133": "MEDIUM",
+        "CVE-2024-33600": "MEDIUM",
+        "CVE-2025-0395": "MEDIUM",
+        "CVE-2025-9230": "MEDIUM",
+        "CVE-2021-40528": "MEDIUM",
+        "CVE-2021-46848": "MEDIUM",
+        "CVE-2024-2236": "MEDIUM",
+        "CVE-2024-2408": "MEDIUM",
+        "CVE-2025-13151": "MEDIUM",
+        "CVE-2025-3576": "MEDIUM",
+        "CVE-2026-77117": "MEDIUM",
+        "CVE-2026-80489": "MEDIUM",
+        "CVE-2020-11023": "MEDIUM",
+        "CVE-2025-14104": "MEDIUM",
+        "CVE-2026-54370": "MEDIUM",
+        "CVE-2024-37371": "MEDIUM",
+        "CVE-2025-24528": "MEDIUM",
+        "CVE-2026-19499": "MEDIUM",
+        "CVE-2025-4802": "MEDIUM",
+        "CVE-2025-69419": "MEDIUM",
+        "CVE-2026-34182": "MEDIUM",
+        "CVE-2022-1586": "MEDIUM",
+        "CVE-2024-37370": "MEDIUM",
+        "CVE-2026-28390": "MEDIUM",
+        "CVE-2026-34183": "MEDIUM",
+        "CVE-2026-63072": "MEDIUM",
+        "CVE-2023-2603": "MEDIUM",
+        "CVE-2026-29111": "MEDIUM",
+        "CVE-2019-17543": "MEDIUM",
+        "CVE-2026-54369": "HIGH",
+        "CVE-2026-54371": "HIGH",
+        "CVE-2024-10963": "HIGH",
+        "CVE-2026-4046": "HIGH",
+        "CVE-2024-33599": "HIGH",
+        "CVE-2025-6020": "HIGH",
+        "CVE-2025-8941": "HIGH",
+        "CVE-2026-45447": "HIGH",
+        "CVE-2026-22184": "HIGH",
+        "CVE-2022-1271": "HIGH",
+        "CVE-2024-2961": "HIGH",
+        "CVE-2024-3596": "HIGH"
+      }
+    },
+    {
+      "image_tag": "3.4.1-oracle-linux-9-otp26",
+      "platform": "linux/amd64",
+      "status": "passed",
+      "baseline_image": "tiotjp/openriak-kv:3.4.1-oracle-linux-9-otp26",
+      "baseline_digest": "sha256:4fc282c14a94ef6518dbf46a5725f2c0a90529b43c534987d7ea0b4e1b807fad",
+      "baseline_cve_report": "tools/cache/openriak-docker-multiarch/pushes/20260909T001612.049466Z/3.4.1/3.4.1-oracle-linux-9-otp26/cve-report.json",
+      "baseline_counts": {},
+      "prototype_image": "openriak-minimal-validation/openriak-kv:3.4.1-oracle-linux-9-otp26-20260909t234946.428647z",
+      "image_inspection": {
+        "id": "sha256:c196252f2c526b60c4e829a31cfd0ca9b8dbceb8b84ec118a84df6a673d413a9",
+        "size_bytes": 178170180,
+        "layers": [
+          "sha256:22fff9f54f9f593491294cd09f101dcefcebe59dae79268e2be9f48694d1f2e4",
+          "sha256:3c00c958565904909160c0aafb562412593a77a3549491c05b46b5b8bbc24a1f",
+          "sha256:c789e694680f6590696714d571f57f9018cbceb950d6567729b5feadec78aef2",
+          "sha256:c480be1677e80688cb9c93b14a4ca41ce10903c03b9e367d01c0f6718b3b542a",
+          "sha256:d25b3727c8f9b5d43718dca49e2876636e24527a2ee3fdbfac5ab057f992acc9"
+        ]
+      },
+      "strategy": {
+        "strategy": "rpm-root",
+        "remove_packages": [
+          "libssh",
+          "libssh-config"
+        ],
+        "release_package": "oraclelinux-release"
+      },
+      "base_images": {
+        "linux/amd64": {
+          "requested": "oraclelinux:9-slim",
+          "pinned": "oraclelinux:9-slim@sha256:6e9fec9dc3fcbd08df4c175fba0104bcbab93778e817ba9b60bd990683978258",
+          "resolved_at": "2026-09-10T00:12:07Z"
+        }
+      },
+      "verified_absent_packages": [
+        "libssh",
+        "libssh-config"
+      ],
+      "installed_security_packages": {
+        "glibc": "2.34-275.0.1.el9_8",
+        "openssl-libs": "1:3.5.5-6.0.1.el9_8",
+        "sudo": "1.9.17p2-3.el9_8"
+      },
+      "dockerfile_sha256": "14768532fdcacb79ae8c8bb75561f88622d249ad529fa1ff0c8a1bea3defb969",
+      "validation_report": "tools/cache/openriak-docker-minimal-validation/20260909T234946.428647Z/3.4.1/3.4.1-oracle-linux-9-otp26/validation.json",
+      "integration_report": "tools/cache/openriak-docker-minimal-validation/20260909T234946.428647Z/3.4.1/3.4.1-oracle-linux-9-otp26/platforms/linux-amd64/report.json",
+      "finished_at": "2026-09-10T00:22:58Z",
+      "scout_counts": {
+        "CRITICAL": 0,
+        "HIGH": 0,
+        "MEDIUM": 0,
+        "LOW": 0,
+        "UNSPECIFIED": 0
+      },
+      "removed_findings": {},
+      "new_findings": {},
+      "remaining_findings": {}
+    },
+    {
+      "image_tag": "3.4.1-rhel-8-otp26",
+      "platform": "linux/amd64",
+      "status": "passed",
+      "baseline_image": "tiotjp/openriak-kv:3.4.1-rhel-8-otp26",
+      "baseline_digest": "sha256:f971144301664d0abaf8bacaab8c3c66108ae0cedca6aaaef8cd4efbbe854fb6",
+      "baseline_cve_report": "tools/cache/openriak-docker-multiarch/pushes/20260909T001612.049466Z/3.4.1/3.4.1-rhel-8-otp26/cve-report.json",
+      "baseline_counts": {
+        "LOW": 3,
+        "MEDIUM": 16,
+        "HIGH": 10
+      },
+      "prototype_image": "openriak-minimal-validation/openriak-kv:3.4.1-rhel-8-otp26-20260909t234946.428647z",
+      "image_inspection": {
+        "id": "sha256:1a564d1403e0a8e8a42adeef7581433e63e6410f4e7a6c6a23ff50c4070e5f4b",
+        "size_bytes": 137826066,
+        "layers": [
+          "sha256:1cd1bb76e94790c360c3f53a1703d9eb3e1be991c1643cb41186ac88e61b64b7",
+          "sha256:8a4270e1dd215e3833b5c24c76f150d4f43bf7936c94f8dcb6fa873a2eb40f8a",
+          "sha256:09baad76b671ef20de169a75b13caae38cf8a69cb6d64deb4553b81cdf4ec0e1",
+          "sha256:fb30dc441528f750fe7706e43a7932a75b3f7767777e610417a209b79a115a99",
+          "sha256:6de2eef5cdec24510c764c9505bbe2fbb5710c46274c714f2842d2559a518559"
+        ]
+      },
+      "strategy": {
+        "strategy": "rpm-root",
+        "release_package": "redhat-release",
+        "remove_packages": [
+          "sudo",
+          "vim-minimal",
+          "vim-common",
+          "vim-filesystem"
+        ]
+      },
+      "base_images": {
+        "linux/amd64": {
+          "requested": "registry.access.redhat.com/ubi8/ubi:8.10",
+          "pinned": "registry.access.redhat.com/ubi8/ubi:8.10@sha256:756eb8436452d36c8cee968189aece8d8a53d4ec263a7aa1b2055688ae79cfcb",
+          "resolved_at": "2026-09-10T00:18:08Z"
+        }
+      },
+      "verified_absent_packages": [
+        "sudo",
+        "vim-minimal",
+        "vim-common",
+        "vim-filesystem"
+      ],
+      "installed_security_packages": {
+        "glibc": "2.28-251.el8_10.40",
+        "openssl-libs": "1:1.1.1k-17.el8_6"
+      },
+      "dockerfile_sha256": "9a5f3d181e58edbe7dfa00bf2f17ce115d7e02049af401eae308b274505a42b1",
+      "validation_report": "tools/cache/openriak-docker-minimal-validation/20260909T234946.428647Z/3.4.1/3.4.1-rhel-8-otp26/validation.json",
+      "integration_report": "tools/cache/openriak-docker-minimal-validation/20260909T234946.428647Z/3.4.1/3.4.1-rhel-8-otp26/platforms/linux-amd64/report.json",
+      "finished_at": "2026-09-10T00:25:53Z",
+      "scout_counts": {
+        "CRITICAL": 0,
+        "HIGH": 5,
+        "MEDIUM": 15,
+        "LOW": 0,
+        "UNSPECIFIED": 0
+      },
+      "removed_findings": {
+        "CVE-2023-4733": {
+          "severity": "LOW",
+          "purls": [
+            "pkg:rpm/redhat/vim@2%3A8.0.1763-31.el8_10?os_name=redhatlinux&os_version=8"
+          ],
+          "fixed": "not fixed"
+        },
+        "CVE-2023-4750": {
+          "severity": "LOW",
+          "purls": [
+            "pkg:rpm/redhat/vim@2%3A8.0.1763-31.el8_10?os_name=redhatlinux&os_version=8"
+          ],
+          "fixed": "not fixed"
+        },
+        "CVE-2026-26269": {
+          "severity": "MEDIUM",
+          "purls": [
+            "pkg:rpm/redhat/vim@2%3A8.0.1763-31.el8_10?os_name=redhatlinux&os_version=8"
+          ],
+          "fixed": "not fixed"
+        },
+        "CVE-2026-33412": {
+          "severity": "HIGH",
+          "purls": [
+            "pkg:rpm/redhat/vim@2%3A8.0.1763-31.el8_10?os_name=redhatlinux&os_version=8"
+          ],
+          "fixed": "not fixed"
+        },
+        "CVE-2026-34714": {
+          "severity": "HIGH",
+          "purls": [
+            "pkg:rpm/redhat/vim@2%3A8.0.1763-31.el8_10?os_name=redhatlinux&os_version=8"
+          ],
+          "fixed": "not fixed"
+        },
+        "CVE-2026-34982": {
+          "severity": "HIGH",
+          "purls": [
+            "pkg:rpm/redhat/vim@2%3A8.0.1763-31.el8_10?os_name=redhatlinux&os_version=8"
+          ],
+          "fixed": "not fixed"
+        },
+        "CVE-2026-35535": {
+          "severity": "HIGH",
+          "purls": [
+            "pkg:rpm/redhat/sudo@1.9.5p2-1.el8_10.5?os_name=redhatlinux&os_version=8"
+          ],
+          "fixed": "not fixed"
+        },
+        "CVE-2026-43961": {
+          "severity": "HIGH",
+          "purls": [
+            "pkg:rpm/redhat/vim@2%3A8.0.1763-31.el8_10?os_name=redhatlinux&os_version=8"
+          ],
+          "fixed": "not fixed"
+        },
+        "CVE-2026-9530": {
+          "severity": "LOW",
+          "purls": [
+            "pkg:rpm/redhat/vim@2%3A8.0.1763-31.el8_10?os_name=redhatlinux&os_version=8"
+          ],
+          "fixed": "not fixed"
+        }
+      },
+      "new_findings": {},
+      "remaining_findings": {
+        "CVE-2026-19542": "MEDIUM",
+        "CVE-2025-9230": "MEDIUM",
+        "CVE-2024-2236": "MEDIUM",
+        "CVE-2025-13151": "MEDIUM",
+        "CVE-2026-77117": "MEDIUM",
+        "CVE-2026-80489": "MEDIUM",
+        "CVE-2025-14104": "MEDIUM",
+        "CVE-2026-54370": "MEDIUM",
+        "CVE-2026-19499": "MEDIUM",
+        "CVE-2025-69419": "MEDIUM",
+        "CVE-2026-34182": "MEDIUM",
+        "CVE-2026-28390": "MEDIUM",
+        "CVE-2026-34183": "MEDIUM",
+        "CVE-2026-63072": "MEDIUM",
+        "CVE-2026-29111": "MEDIUM",
+        "CVE-2026-54369": "HIGH",
+        "CVE-2026-54371": "HIGH",
+        "CVE-2026-4046": "HIGH",
+        "CVE-2026-45447": "HIGH",
+        "CVE-2026-22184": "HIGH"
+      }
+    },
+    {
+      "image_tag": "3.4.1-ubuntu-jammy-otp26",
+      "platform": "linux/amd64",
+      "status": "passed",
+      "baseline_image": "tiotjp/openriak-kv:3.4.1-ubuntu-jammy-otp26",
+      "baseline_digest": "sha256:489841639bde86a944e75edd92087dc08e388839bf12f74b8ee2bb76cf6a9f75",
+      "baseline_cve_report": "tools/cache/openriak-docker-multiarch/pushes/20260909T001612.049466Z/3.4.1/3.4.1-ubuntu-jammy-otp26/cve-report.json",
+      "baseline_counts": {
+        "LOW": 7,
+        "MEDIUM": 10
+      },
+      "prototype_image": "openriak-minimal-validation/openriak-kv:3.4.1-ubuntu-jammy-otp26-20260909t234946.428647z",
+      "image_inspection": {
+        "id": "sha256:2026047fce39d4cad2b50d87337cb7fcf48c6afc0b89647a6a2c2e59fdff731b",
+        "size_bytes": 129970760,
+        "layers": [
+          "sha256:336536a9da5f278ad4b02b4955aaf6c17d3489142336a2feef39e4bf717f10d3",
+          "sha256:6c20e855af16f1f6c77a0b579a3a72c33c435b2f1a098b13729d7d5cd8a1264b",
+          "sha256:45b764ca99ba29a62e0ea45afa51612e9d1ecd965974ef9aeeef36fc822f5d90",
+          "sha256:1dbb5ddbaa9d59e0ffec6e6cce5f5669e82022b6341eba32d1dc21bb3bfc5b4a",
+          "sha256:407f53819a55ada74dc2624248504f063891e84b6a8883a9d0a1ad0f314fbf34"
+        ]
+      },
+      "strategy": {
+        "strategy": "clean-root",
+        "remove_tar": true,
+        "minimum_packages": {
+          "libc6": "2.35-0ubuntu3.15"
+        },
+        "perl_removal": "dpkg"
+      },
+      "base_images": {
+        "linux/amd64": {
+          "requested": "ubuntu:jammy",
+          "pinned": "ubuntu:jammy@sha256:829f6df217bcbae2b371026e81711d1a787c61b2967ad09d015063663ebafbf7",
+          "resolved_at": "2026-09-10T00:23:01Z"
+        }
+      },
+      "verified_absent_packages": [
+        "tar",
+        "perl-base"
+      ],
+      "installed_security_packages": {
+        "dpkg": "1.21.1ubuntu2.6",
+        "glibc": "2.35-0ubuntu3.15",
+        "libc6": "2.35-0ubuntu3.15",
+        "libssl3": "3.0.2-0ubuntu1.29",
+        "sudo": "1.9.9-1ubuntu2.6"
+      },
+      "dockerfile_sha256": "643219aa39185055df33130aa37460cb2c069c0bab55617c282bbbe90c8a739f",
+      "validation_report": "tools/cache/openriak-docker-minimal-validation/20260909T234946.428647Z/3.4.1/3.4.1-ubuntu-jammy-otp26/validation.json",
+      "integration_report": "tools/cache/openriak-docker-minimal-validation/20260909T234946.428647Z/3.4.1/3.4.1-ubuntu-jammy-otp26/platforms/linux-amd64/report.json",
+      "finished_at": "2026-09-10T00:31:34Z",
+      "scout_counts": {
+        "CRITICAL": 0,
+        "HIGH": 0,
+        "MEDIUM": 1,
+        "LOW": 7,
+        "UNSPECIFIED": 0
+      },
+      "removed_findings": {
+        "CVE-2026-15534": {
+          "severity": "MEDIUM",
+          "purls": [
+            "pkg:deb/ubuntu/perl@5.34.0-3ubuntu1.8?os_distro=jammy&os_name=ubuntu&os_version=22.04"
+          ],
+          "fixed": "5.34.0-3ubuntu1.9"
+        },
+        "CVE-2026-18477": {
+          "severity": "MEDIUM",
+          "purls": [
+            "pkg:deb/ubuntu/tar@1.34%2Bdfsg-1ubuntu0.1.22.04.6?os_distro=jammy&os_name=ubuntu&os_version=22.04"
+          ],
+          "fixed": "not fixed"
+        },
+        "CVE-2026-18508": {
+          "severity": "MEDIUM",
+          "purls": [
+            "pkg:deb/ubuntu/tar@1.34%2Bdfsg-1ubuntu0.1.22.04.6?os_distro=jammy&os_name=ubuntu&os_version=22.04"
+          ],
+          "fixed": "not fixed"
+        },
+        "CVE-2026-19487": {
+          "severity": "MEDIUM",
+          "purls": [
+            "pkg:deb/ubuntu/perl@5.34.0-3ubuntu1.8?os_distro=jammy&os_name=ubuntu&os_version=22.04"
+          ],
+          "fixed": "5.34.0-3ubuntu1.9"
+        },
+        "CVE-2026-19542": {
+          "severity": "MEDIUM",
+          "purls": [
+            "pkg:deb/ubuntu/glibc@2.35-0ubuntu3.14?os_distro=jammy&os_name=ubuntu&os_version=22.04"
+          ],
+          "fixed": "2.35-0ubuntu3.15"
+        },
+        "CVE-2026-6368": {
+          "severity": "MEDIUM",
+          "purls": [
+            "pkg:deb/ubuntu/glibc@2.35-0ubuntu3.14?os_distro=jammy&os_name=ubuntu&os_version=22.04"
+          ],
+          "fixed": "2.35-0ubuntu3.15"
+        },
+        "CVE-2026-6791": {
+          "severity": "MEDIUM",
+          "purls": [
+            "pkg:deb/ubuntu/glibc@2.35-0ubuntu3.14?os_distro=jammy&os_name=ubuntu&os_version=22.04"
+          ],
+          "fixed": "2.35-0ubuntu3.15"
+        },
+        "CVE-2026-77117": {
+          "severity": "MEDIUM",
+          "purls": [
+            "pkg:deb/ubuntu/glibc@2.35-0ubuntu3.14?os_distro=jammy&os_name=ubuntu&os_version=22.04"
+          ],
+          "fixed": "2.35-0ubuntu3.15"
+        },
+        "CVE-2026-80489": {
+          "severity": "MEDIUM",
+          "purls": [
+            "pkg:deb/ubuntu/glibc@2.35-0ubuntu3.14?os_distro=jammy&os_name=ubuntu&os_version=22.04"
+          ],
+          "fixed": "2.35-0ubuntu3.15"
+        }
+      },
+      "new_findings": {},
+      "remaining_findings": {
+        "CVE-2024-56433": "LOW",
+        "CVE-2023-29383": "LOW",
+        "CVE-2026-40228": "LOW",
+        "CVE-2022-27943": "LOW",
+        "CVE-2023-50495": "LOW",
+        "CVE-2022-41409": "LOW",
+        "CVE-2022-4899": "LOW",
+        "CVE-2026-18374": "MEDIUM"
+      }
+    },
+    {
+      "image_tag": "3.4.1-ubuntu-noble-otp26",
+      "platform": "linux/amd64",
+      "status": "passed",
+      "baseline_image": "tiotjp/openriak-kv:3.4.1-ubuntu-noble-otp26",
+      "baseline_digest": "sha256:48e2f2dcd139a54e9764f77be64cfe489c75825bb6f441ae6043803f45051597",
+      "baseline_cve_report": "tools/cache/openriak-docker-multiarch/pushes/20260909T001612.049466Z/3.4.1/3.4.1-ubuntu-noble-otp26/cve-report.json",
+      "baseline_counts": {
+        "LOW": 2,
+        "MEDIUM": 7
+      },
+      "prototype_image": "openriak-minimal-validation/openriak-kv:3.4.1-ubuntu-noble-otp26-20260909t234946.428647z",
+      "image_inspection": {
+        "id": "sha256:77254c9f6333c4b447366bae13169b47b3f73780b82fa2892008700212f6e22a",
+        "size_bytes": 146044347,
+        "layers": [
+          "sha256:fb1ee97374ed3f97b6086e9b0ad89f0c53b1887355daae442b7a06a2c53428cc",
+          "sha256:20981c0143774f57a548e1da14f9d7868c200f26ace3eba90ae5c6402dc603de",
+          "sha256:14ab6b91419bb23a918689223a92a6c168ea140bccdb32ebf4af9a1a40a74b4d",
+          "sha256:cc4b33c675828db7550256a138121503270bb5ab8d539757550da7af89f230d3",
+          "sha256:828d54b8f92faa0e01a63b9ae64325e3d26973fe9fd000db4da2769b23ad924a"
+        ]
+      },
+      "strategy": {
+        "strategy": "clean-root",
+        "remove_tar": true
+      },
+      "base_images": {
+        "linux/amd64": {
+          "requested": "ubuntu:noble",
+          "pinned": "ubuntu:noble@sha256:224a1869083a311ef3f13648a154ba79832fbef6364d31493642ca03082da254",
+          "resolved_at": "2026-09-10T00:25:55Z"
+        }
+      },
+      "verified_absent_packages": [
+        "tar",
+        "perl-base"
+      ],
+      "installed_security_packages": {
+        "dpkg": "1.22.6ubuntu6.6",
+        "glibc": "2.39-0ubuntu8.8",
+        "libc6": "2.39-0ubuntu8.8",
+        "libssl3t64": "3.0.13-0ubuntu3.15",
+        "sudo": "1.9.15p5-3ubuntu5.24.04.2"
+      },
+      "dockerfile_sha256": "da998c054dca85a448be659ec0599b86ee93e11e42290228550fbb87b734c043",
+      "validation_report": "tools/cache/openriak-docker-minimal-validation/20260909T234946.428647Z/3.4.1/3.4.1-ubuntu-noble-otp26/validation.json",
+      "integration_report": "tools/cache/openriak-docker-minimal-validation/20260909T234946.428647Z/3.4.1/3.4.1-ubuntu-noble-otp26/platforms/linux-amd64/report.json",
+      "finished_at": "2026-09-10T00:33:27Z",
+      "scout_counts": {
+        "CRITICAL": 0,
+        "HIGH": 0,
+        "MEDIUM": 3,
+        "LOW": 2,
+        "UNSPECIFIED": 0
+      },
+      "removed_findings": {
+        "CVE-2026-15534": {
+          "severity": "MEDIUM",
+          "purls": [
+            "pkg:deb/ubuntu/perl@5.38.2-3.2ubuntu0.4?os_distro=noble&os_name=ubuntu&os_version=24.04"
+          ],
+          "fixed": "not fixed"
+        },
+        "CVE-2026-18477": {
+          "severity": "MEDIUM",
+          "purls": [
+            "pkg:deb/ubuntu/tar@1.35%2Bdfsg-3ubuntu0.4?os_distro=noble&os_name=ubuntu&os_version=24.04"
+          ],
+          "fixed": "not fixed"
+        },
+        "CVE-2026-18508": {
+          "severity": "MEDIUM",
+          "purls": [
+            "pkg:deb/ubuntu/tar@1.35%2Bdfsg-3ubuntu0.4?os_distro=noble&os_name=ubuntu&os_version=24.04"
+          ],
+          "fixed": "not fixed"
+        },
+        "CVE-2026-19487": {
+          "severity": "MEDIUM",
+          "purls": [
+            "pkg:deb/ubuntu/perl@5.38.2-3.2ubuntu0.4?os_distro=noble&os_name=ubuntu&os_version=24.04"
+          ],
+          "fixed": "not fixed"
+        }
+      },
+      "new_findings": {},
+      "remaining_findings": {
+        "CVE-2024-56433": "LOW",
+        "CVE-2026-40228": "LOW",
+        "CVE-2026-18374": "MEDIUM",
+        "CVE-2026-19617": "MEDIUM",
+        "CVE-2026-2219": "MEDIUM"
+      }
+    }
+  ]
+}

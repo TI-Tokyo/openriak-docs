@@ -1,0 +1,216 @@
+{
+  "artifacts": {
+    "compose_cluster": {
+      "filename": "compose.cluster.yaml",
+      "sha256": "36b81f8a3f7e62ab0dda7abec6c2b79bdebd77967519e7f06c7ad97ebb11b4bb",
+      "url": "downloads/docker/3.4.1/3.4.1-fedora-43-otp26/compose.cluster.yaml"
+    },
+    "compose_single": {
+      "filename": "compose.single.yaml",
+      "sha256": "f245aebaa2f4f1d9558dc737179f108da7a0acd9a13f1cc0e2476f3c7108f465",
+      "url": "downloads/docker/3.4.1/3.4.1-fedora-43-otp26/compose.single.yaml"
+    },
+    "dockerfile": {
+      "filename": "Dockerfile",
+      "sha256": "f8ce2077f4e068dd71ce27360be28187688fbd57c8fa90b43f79adedb1574a1f",
+      "url": "downloads/docker/3.4.1/3.4.1-fedora-43-otp26/Dockerfile"
+    },
+    "environment_example": {
+      "filename": "example.env",
+      "sha256": "e647255ae0f391cc38d42f3edf5260143be2a949a17fcf2b2f3cb3b59d49cd83",
+      "url": "downloads/docker/3.4.1/3.4.1-fedora-43-otp26/example.env"
+    }
+  },
+  "base_images": {
+    "linux/amd64": {
+      "pinned": "fedora:43@sha256:a651ddf48ea28a06ed4e1e6519f51c9f47e7a5a138722ade87369b8fbb7e5b42",
+      "requested": "fedora:43",
+      "resolved_at": "2026-09-10T08:44:41Z"
+    }
+  },
+  "build_tags": [
+    "tiotjp/openriak-kv:3.4.1-fedora-43-otp26",
+    "tiotjp/openriak-kv:3.4.1-fedora-43",
+    "tiotjp/openriak-kv:3.4.1-fedora"
+  ],
+  "cluster_nodes": 5,
+  "distributed_cookie": "openriak-fdeb0933a444b3b847e50e583eb2b8ca",
+  "error": null,
+  "finished_at": "2026-09-10T08:49:33Z",
+  "generated_artifacts": {
+    "Dockerfile": "f8ce2077f4e068dd71ce27360be28187688fbd57c8fa90b43f79adedb1574a1f",
+    "compose.cluster.yaml": "36b81f8a3f7e62ab0dda7abec6c2b79bdebd77967519e7f06c7ad97ebb11b4bb",
+    "compose.single.yaml": "f245aebaa2f4f1d9558dc737179f108da7a0acd9a13f1cc0e2476f3c7108f465",
+    "example.env": "e647255ae0f391cc38d42f3edf5260143be2a949a17fcf2b2f3cb3b59d49cd83"
+  },
+  "identity": {
+    "namespace": "tiotjp",
+    "source": "https://github.com/TI-Tokyo/openriak-docs",
+    "url": "https://www.tiot.jp/",
+    "vendor": "TI Tokyo"
+  },
+  "image": "tiotjp/openriak-kv:3.4.1-fedora-43-otp26",
+  "inputs": {
+    "cluster_nodes": 5,
+    "compose_options": {
+      "OPENRIAK_CPUS": [
+        "0",
+        "CPU limit per node, for example 2.0; 0 means unrestricted."
+      ],
+      "OPENRIAK_DOCKER_LOG_MAX_FILES": [
+        "3",
+        "Maximum number of Docker JSON log files retained per node."
+      ],
+      "OPENRIAK_DOCKER_LOG_MAX_SIZE": [
+        "10m",
+        "Maximum size of each Docker JSON log file per node."
+      ],
+      "OPENRIAK_MEMORY_LIMIT": [
+        "0",
+        "Memory limit per node, for example 4g; 0 means unrestricted."
+      ]
+    },
+    "identity": {
+      "namespace": "tiotjp",
+      "source": "https://github.com/TI-Tokyo/openriak-docs",
+      "url": "https://www.tiot.jp/",
+      "vendor": "TI Tokyo"
+    },
+    "labels": {
+      "org.opencontainers.image.description": "Package-backed OpenRiak KV with single-node and cluster startup support",
+      "org.opencontainers.image.source": "https://github.com/TI-Tokyo/openriak-docs",
+      "org.opencontainers.image.title": "OpenRiak KV",
+      "org.opencontainers.image.url": "https://www.tiot.jp/",
+      "org.opencontainers.image.vendor": "TI Tokyo",
+      "org.opencontainers.image.version": "3.4.1",
+      "org.openriak.image.tag": "tiotjp/openriak-kv:3.4.1-fedora-43-otp26",
+      "org.openriak.os.name": "fedora",
+      "org.openriak.os.release": "43",
+      "org.openriak.os.version": "43",
+      "org.openriak.otp.version": "26"
+    },
+    "lifecycle_options": {
+      "healthcheck_interval": 10,
+      "healthcheck_retries": 3,
+      "healthcheck_start_period": 120,
+      "healthcheck_timeout": 60,
+      "stop_grace_period": 120
+    },
+    "packages": {
+      "linux/amd64": {
+        "base": "fedora:43",
+        "checksum": {
+          "algorithm": "sha256",
+          "value": "952f04a57622b160ef01d7aa15d3871924221766f1cd08dc74bf5ecd3ffbe9ea"
+        },
+        "url": "https://files.tiot.jp/riak/kv/3.4/3.4.1/rhel/9/riak-3.4.1.OTP26-1.el9.x86_64.rpm"
+      }
+    },
+    "renderer_sha256": "460b798a114a69af0f46dd877c99c0997e9cf47b8c4e0628a3e420e5856ed526",
+    "runtime_filesystem": null,
+    "runtime_options": {
+      "RIAK_GID": [
+        "",
+        "Optional nonzero GID for riak; empty retains the package GID. Mounted directories are chowned."
+      ],
+      "RIAK_LOG_MAX_FILES": [
+        "10",
+        "Maximum file count per OpenRiak logger handler; initializes new configurations only."
+      ],
+      "RIAK_LOG_MAX_FILE_SIZE": [
+        "1MB",
+        "Maximum size per OpenRiak logger file; initializes new configurations only."
+      ],
+      "RIAK_UID": [
+        "",
+        "Optional nonzero UID for riak; empty retains the package UID. Mounted directories are chowned."
+      ],
+      "TZ": [
+        "Etc/UTC",
+        "IANA timezone for the process and entrypoint logs, for example Asia/Tokyo."
+      ]
+    },
+    "runtime_renderer_sha256": "36065dc2d07b8fa949d9dd8f32aecdac0d25fd4792a629cf96f0ff649f380704",
+    "runtime_sha256": "b0f20a4604e8cff49f7060bf5e0cc5fa52df5829d46520d37095130f07f65656",
+    "schema_version": 4,
+    "tags": [
+      "tiotjp/openriak-kv:3.4.1-fedora-43-otp26",
+      "tiotjp/openriak-kv:3.4.1-fedora-43",
+      "tiotjp/openriak-kv:3.4.1-fedora"
+    ]
+  },
+  "local_tags_platform": "linux/amd64",
+  "node": "openriak-kv-3.4.1-fedora-43-otp26-node",
+  "oci_archive": "runs/20260910T084439.628961Z/image.oci.tar",
+  "os_family": "fedora",
+  "os_name": "Fedora 43",
+  "os_release": "43",
+  "otp": "26",
+  "platform_results": {
+    "linux/amd64": {
+      "artifacts": {
+        "compose_cluster": {
+          "filename": "compose.cluster.yaml",
+          "sha256": "36b81f8a3f7e62ab0dda7abec6c2b79bdebd77967519e7f06c7ad97ebb11b4bb",
+          "url": "downloads/docker/3.4.1/3.4.1-fedora-43-otp26/compose.cluster.yaml"
+        },
+        "compose_single": {
+          "filename": "compose.single.yaml",
+          "sha256": "f245aebaa2f4f1d9558dc737179f108da7a0acd9a13f1cc0e2476f3c7108f465",
+          "url": "downloads/docker/3.4.1/3.4.1-fedora-43-otp26/compose.single.yaml"
+        },
+        "dockerfile": {
+          "filename": "Dockerfile",
+          "sha256": "f8ce2077f4e068dd71ce27360be28187688fbd57c8fa90b43f79adedb1574a1f",
+          "url": "downloads/docker/3.4.1/3.4.1-fedora-43-otp26/Dockerfile"
+        },
+        "environment_example": {
+          "filename": "example.env",
+          "sha256": "e647255ae0f391cc38d42f3edf5260143be2a949a17fcf2b2f3cb3b59d49cd83",
+          "url": "downloads/docker/3.4.1/3.4.1-fedora-43-otp26/example.env"
+        }
+      },
+      "finished_at": "2026-09-10T08:49:25Z",
+      "report": "platforms/linux-amd64/runs/20260910T084441.740011Z/report.json",
+      "run_id": "20260910T084441.740011Z",
+      "status": "passed"
+    }
+  },
+  "platforms": [
+    "linux/amd64"
+  ],
+  "product": "openriak-kv",
+  "run_id": "20260910T084439.628961Z",
+  "schema_version": 4,
+  "started_at": "2026-09-10T08:44:39Z",
+  "status": "passed",
+  "steps": [
+    {
+      "duration_seconds": 4.55,
+      "finished_at": "2026-09-10T08:49:30Z",
+      "name": "export_oci_image",
+      "started_at": "2026-09-10T08:49:25Z",
+      "status": "passed"
+    },
+    {
+      "duration_seconds": 2.677,
+      "finished_at": "2026-09-10T08:49:33Z",
+      "name": "load_local_tags",
+      "started_at": "2026-09-10T08:49:30Z",
+      "status": "passed"
+    }
+  ],
+  "tags": [
+    "tiotjp/openriak-kv:3.4.1-fedora-43-otp26",
+    "tiotjp/openriak-kv:3.4.1-fedora-43",
+    "tiotjp/openriak-kv:3.4.1-fedora"
+  ],
+  "targets": [
+    {
+      "architecture": "x86_64",
+      "download_id": "otp26-x86_64-1",
+      "os_id": "fedora-43-x86_64"
+    }
+  ],
+  "version": "3.4.1"
+}

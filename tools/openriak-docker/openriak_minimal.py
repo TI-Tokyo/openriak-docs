@@ -349,7 +349,100 @@ def configuration(target):
         if (target.family, target.release, mode.get('openssl_backport'), mode['base_image']) != (
                 'debian', '12', OPENSSL_VERSION, 'debian:bookworm-slim-for-openriak'):
             raise ConfigurationError('Unsupported patched base image configuration')
+    if mode and 'remove_packages' in mode:
+        packages = mode['remove_packages']
+        if (target.operating_system['package_family'] != 'rpm' or not isinstance(packages, list)
+                or not packages or any(not isinstance(p, str) or not re.fullmatch(r'[a-z0-9][a-z0-9+._-]*', p) for p in packages)):
+            raise ConfigurationError('remove_packages requires a list of exact RPM package names')
+    if mode and 'minimum_packages' in mode:
+        packages = mode['minimum_packages']
+        if (target.operating_system['package_family'] not in ('deb', 'rpm') or not isinstance(packages, dict)
+                or not packages or any(not isinstance(p, str) or not re.fullmatch(r'[a-z0-9][a-z0-9+._-]*', p)
+                    or not isinstance(v, str) or not re.fullmatch(r'[A-Za-z0-9._+:~\-]+', v)
+                    for p, v in packages.items())):
+            raise ConfigurationError('minimum_packages requires Debian or RPM package names and versions')
+    if mode and 'remove_tar' in mode and (not isinstance(mode['remove_tar'], bool)
+            or target.operating_system['package_family'] != 'deb'):
+        raise ConfigurationError('remove_tar requires a boolean for a Debian-family image')
+    if mode and 'perl_removal' in mode and (mode['perl_removal'] not in ('apt', 'dpkg')
+            or target.operating_system['package_family'] != 'deb'):
+        raise ConfigurationError('perl_removal requires apt or dpkg for a Debian-family image')
     return mode
+
+
+def minimum_package_check(mode, package_family='deb', root=''):
+    if package_family == 'rpm':
+        command = f'rpm --root {root}' if root else 'rpm'
+        # RPM's own provider matching compares epoch/version/release correctly.
+        # Run before removing installer tools in rpm-root images.
+        return ''.join(f"{command} -q --whatprovides '{package} >= {version}' >/dev/null\n"
+                       for package, version in mode.get('minimum_packages', {}).items())
+    return ''.join(f"dpkg --compare-versions \"$(dpkg-query -W -f='${{Version}}' {package})\" ge '{version}'\n"
+                   for package, version in mode.get('minimum_packages', {}).items())
+
+
+def remove_rpm_packages(mode, root=''):
+    packages = ' '.join(mode.get('remove_packages', []))
+    if not packages:
+        return ''
+    command = f'rpm --root {root}' if root else 'rpm'
+    return f'''# Remove optional runtime tools only after all installation operations.
+# Keep dependency checks: an unexpected remaining dependency fails the build.
+remove_packages=
+for package in {packages}
+do
+    if {command} -q "$package" >/dev/null 2>&1
+    then
+        remove_packages="$remove_packages $package"
+    fi
+done
+if [ -n "$remove_packages" ]
+then
+    {command} -e $remove_packages
+fi
+for package in {packages}
+do
+    if {command} -q "$package" >/dev/null 2>&1
+    then
+        echo "Unexpected runtime package: $package" >&2
+        exit 1
+    fi
+done
+'''
+
+
+def removed_runtime_check(mode):
+    packages = mode.get('remove_packages', [])
+    check = ''
+    if 'sudo' in packages:
+        check += 'test ! -e /usr/bin/sudo\ntest ! -e /usr/bin/sudoreplay\n'
+        check += "! grep -Eq '^[[:space:]]*sudo ' /usr/sbin/riak\n"
+    if 'vim-minimal' in packages:
+        check += 'test ! -e /usr/bin/vi\ntest ! -e /usr/bin/vim\ntest ! -d /usr/share/vim\n'
+    if 'libssh' in packages:
+        check += '''if find /usr /lib /lib64 -name 'libssh.so*' | grep .
+then
+    echo 'Unexpected libssh runtime library' >&2
+    exit 1
+fi
+'''
+    return check
+
+
+def launcher_without_sudo(mode, root=''):
+    if 'sudo' not in mode.get('remove_packages', []):
+        return ''
+    return f'''# The official RPM launcher uses sudo only to run commands as riak.
+# runuser is supplied by util-linux, preserves argument boundaries, and sets HOME.
+# Keep the rest of the package launcher (including PID cleanup) unchanged.
+test -x {root}/usr/sbin/runuser
+sed -i 's/sudo -H -E -u riak --/runuser -u riak --/' {root}/usr/sbin/riak
+if grep -Eq '^[[:space:]]*sudo ' {root}/usr/sbin/riak
+then
+    echo 'Unsupported sudo invocation in OpenRiak KV launcher' >&2
+    exit 1
+fi
+'''
 
 
 def runtime_check(target):
@@ -357,7 +450,7 @@ def runtime_check(target):
     if not mode:
         return None
     if mode['strategy'] == 'rpm-root':
-        return r'''for name in python python3 perl pip pip3 dnf yum microdnf rpm
+        return removed_runtime_check(mode) + r'''for name in python python3 perl pip pip3 dnf yum microdnf rpm
 do
     if command -v "$name" >/dev/null 2>&1
     then
@@ -373,8 +466,11 @@ fi
 test -s /usr/share/openriak-build/runtime-packages.txt
 test -s /etc/os-release
 '''
-    if target.family == 'debian':
+    if target.operating_system['package_family'] == 'deb':
         check = 'test ! -e /usr/bin/perl\ntest ! -e /usr/bin/python3\ntest -s /var/lib/dpkg/status\n'
+        check += minimum_package_check(mode)
+        if mode.get('remove_tar'):
+            check += 'test ! -e /bin/tar\ntest ! -e /usr/bin/tar\n'
         if mode.get('libblkid_backport'):
             check += f'''test ! -e /bin/tar
 test ! -e /usr/bin/tar
@@ -390,7 +486,8 @@ dpkg --compare-versions "$(dpkg-query -W -f='${{Version}}' libssl3)" ge '{OPENSS
 openssl version
 '''
         return check
-    return None
+    return (removed_runtime_check(mode) + minimum_package_check(
+        mode, target.operating_system['package_family'])) or None
 
 
 def package_stage(target, pinned, stage, download, install_script):
@@ -434,17 +531,35 @@ dpkg --compare-versions "$(dpkg-query -W -f='${{Version}}' libssl3)" ge '{OPENSS
 test -s /usr/share/openriak-build/openssl-packages.txt
 '''
         if target.operating_system['package_family'] == 'deb':
-            extra += """# The runtime does not execute Perl; remove it and dependent tools explicitly.
+            extra += '# Require the reviewed security updates; reject stale mirrors.\n' + minimum_package_check(mode)
+            if mode.get('perl_removal') == 'dpkg':
+                extra += '''# Essential installation helpers depend on Perl on this release.
+# Keep PAM/login and remove only Perl after every installation script has run.
+# As with runtime tar removal, package maintenance belongs in the build stage.
+dpkg --purge --force-remove-essential --force-depends perl-base
+test ! -e /usr/bin/perl
+'''
+            else:
+                extra += """# The runtime does not execute Perl; remove it and dependent tools explicitly.
 # This is a final runtime filesystem, not a general-purpose administration image.
 apt-get update
 DEBIAN_FRONTEND=noninteractive apt-get purge -y --allow-remove-essential perl-base
+"""
+            extra += """
 apt-get clean
 rm -rf /var/lib/apt/lists/*
 """
+        elif mode.get('minimum_packages'):
+            extra += '# Require the reviewed security updates; reject stale mirrors.\n'
+            extra += minimum_package_check(mode, target.operating_system['package_family'])
         if mode.get('libblkid_backport'):
             extra += f'''dpkg --compare-versions "$(dpkg-query -W -f='${{Version}}' libblkid1)" eq '{LIBBLKID_DEB_VERSION}'
 '''
             extra += remove_tar_script()
+        elif mode.get('remove_tar'):
+            extra += remove_tar_script()
+        extra += remove_rpm_packages(mode)
+        extra += launcher_without_sudo(mode)
         return f'''{build_stage}FROM --platform={target.platform} {pinned} AS install-{stage}
 RUN --mount=type=bind,from={download},target=/opt/openriak-package,ro{package_mount} <<'OPENRIAK_PACKAGE_INSTALL'
 set -eu
@@ -461,7 +576,8 @@ ENV PATH="/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin"
 '''
     if mode['strategy'] != 'rpm-root':
         raise ConfigurationError(f"Unknown runtime strategy: {mode['strategy']}")
-    packages = mode['release_package'] + ' ' + RUNTIME_PACKAGES
+    packages = mode['release_package'] + ' ' + ' '.join(p for p in RUNTIME_PACKAGES.split()
+                                                       if p not in mode.get('remove_packages', []))
     repository_setup = ''
     if target.family == 'centos' and target.release == '8':
         repository_setup = install_script.split('# Update installed OS packages', 1)[0]
@@ -470,10 +586,19 @@ FROM --platform={target.platform} {pinned} AS install-{stage}
 RUN --mount=type=bind,from={download},target=/opt/openriak-package,ro <<'OPENRIAK_PACKAGE_INSTALL'
 set -eu
 # Resolve runtime packages from this OS release, without weak dependencies.
-{repository_setup}mkdir -p /openriak-rootfs
+{repository_setup}# Slim installers may provide only microdnf. Full dnf is build-only.
+if ! command -v dnf >/dev/null 2>&1
+then
+    microdnf install -y dnf
+fi
+mkdir -p /openriak-rootfs
 dnf install -y --refresh --installroot=/openriak-rootfs --releasever={target.release} --setopt=install_weak_deps=False --setopt=tsflags=nodocs {packages}
 # Install the verified official package; its OTP runtime is bundled in the RPM.
 rpm --root /openriak-rootfs -Uvh --replacepkgs --nodeps /opt/openriak-package/{filename}
+{remove_rpm_packages(mode, '/openriak-rootfs')}\
+{launcher_without_sudo(mode, '/openriak-rootfs')}\
+# Reject stale repository mirrors before exporting the runtime filesystem.
+{minimum_package_check(mode, 'rpm', '/openriak-rootfs')}\
 # Preserve the RPM database and an explicit inventory for vulnerability scanners.
 mkdir -p /openriak-rootfs/usr/share/openriak-build
 rpm --root /openriak-rootfs -qa --qf '%{{NAME}} %{{VERSION}}-%{{RELEASE}}\\n' > /openriak-rootfs/usr/share/openriak-build/runtime-packages.txt

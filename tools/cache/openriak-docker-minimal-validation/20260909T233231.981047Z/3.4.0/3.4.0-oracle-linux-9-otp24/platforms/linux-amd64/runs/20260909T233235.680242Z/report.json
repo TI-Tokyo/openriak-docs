@@ -1,0 +1,105 @@
+{
+  "artifacts": {},
+  "base_image": {
+    "pinned": "oraclelinux:9-slim@sha256:6e9fec9dc3fcbd08df4c175fba0104bcbab93778e817ba9b60bd990683978258",
+    "requested": "oraclelinux:9-slim",
+    "resolved_at": "2026-09-09T23:32:35Z"
+  },
+  "cleanup_errors": [
+    "Cleanup command failed: /usr/bin/docker image rm openriak-minimal-validation/openriak-kv:test-3.4.0-oracle-linux-9-otp24-linux-amd64-20260909t233235.680242z; see /home/peter/GitHub/TI-Tokyo/openriak-docs/tools/cache/openriak-docker-minimal-validation/20260909T233231.981047Z/3.4.0/3.4.0-oracle-linux-9-otp24/platforms/linux-amd64/runs/20260909T233235.680242Z/logs/remove-test-image.log"
+  ],
+  "error": {
+    "message": "Command failed with exit code 1: /usr/bin/docker buildx build --builder openriak-kv-multiarch --load --platform linux/amd64 --pull=false --tag openriak-minimal-validation/openriak-kv:test-3.4.0-oracle-linux-9-otp24-linux-amd64-20260909t233235.680242z --file /home/peter/GitHub/TI-Tokyo/openriak-docs/tools/cache/openriak-docker-minimal-validation/20260909T233231.981047Z/3.4.0/3.4.0-oracle-linux-9-otp24/platforms/linux-amd64/runs/20260909T233235.680242Z/Dockerfile /home/peter/GitHub/TI-Tokyo/openriak-docs/tools/cache/openriak-docker-minimal-validation/20260909T233231.981047Z/3.4.0/3.4.0-oracle-linux-9-otp24/platforms/linux-amd64/runs/20260909T233235.680242Z (see /home/peter/GitHub/TI-Tokyo/openriak-docs/tools/cache/openriak-docker-minimal-validation/20260909T233231.981047Z/3.4.0/3.4.0-oracle-linux-9-otp24/platforms/linux-amd64/runs/20260909T233235.680242Z/logs/image-build.log): ERROR: failed to build: failed to solve: process \"/bin/sh -c set -eu\\n# Resolve runtime packages from this OS release, without weak dependencies.\\nmkdir -p /openriak-rootfs\\ndnf install -y --refresh --installroot=/openriak-rootfs --releasever=9 --setopt=install_weak_deps=False --setopt=tsflags=nodocs oraclelinux-release bash coreutils findutils gawk grep sed ca-certificates glibc glibc-minimal-langpack hostname libgcc libstdc++ ncurses-libs openssl-libs pam procps-ng shadow-utils sudo util-linux zlib tzdata\\n# Install the verified official package; its OTP runtime is bundled in the RPM.\\nrpm --root /openriak-rootfs -Uvh --replacepkgs --nodeps /opt/openriak-package/riak-3.4.0.OTP24-1.el9.x86_64.rpm\\n# Remove optional runtime tools only after all installation operations.\\n# Keep dependency checks: an unexpected remaining dependency fails the build.\\nremove_packages=\\nfor package in libssh libssh-config\\ndo\\n    if rpm --root /openriak-rootfs -q \\\"$package\\\" >/dev/null 2>&1\\n    then\\n        remove_packages=\\\"$remove_packages $package\\\"\\n    fi\\ndone\\nif [ -n \\\"$remove_packages\\\" ]\\nthen\\n    rpm --root /openriak-rootfs -e $remove_packages\\nfi\\nfor package in libssh libssh-config\\ndo\\n    if rpm --root /openriak-rootfs -q \\\"$package\\\" >/dev/null 2>&1\\n    then\\n        echo \\\"Unexpected runtime package: $package\\\" >&2\\n        exit 1\\n    fi\\ndone\\n# Preserve the RPM database and an explicit inventory for vulnerability scanners.\\nmkdir -p /openriak-rootfs/usr/share/openriak-build\\nrpm --root /openriak-rootfs -qa --qf '%{NAME} %{VERSION}-%{RELEASE}\\\\n' > /openriak-rootfs/usr/share/openriak-build/runtime-packages.txt\\n# Install escript's compatibility link without retaining the installer tools.\\nfor bundled_escript in /openriak-rootfs/usr/lib64/riak/erts-*/bin/escript /openriak-rootfs/usr/lib/riak/erts-*/bin/escript\\ndo\\n    if [ -x \\\"$bundled_escript\\\" ]\\n    then\\n        ln -sf \\\"${bundled_escript#/openriak-rootfs}\\\" /openriak-rootfs/usr/bin/escript\\n        break\\n    fi\\ndone\\n# These are cache files from installation, not runtime packages or inventory.\\nrm -rf /openriak-rootfs/var/cache/dnf /openriak-rootfs/var/cache/yum\\nrm -rf /openriak-rootfs/var/log/dnf* /openriak-rootfs/var/log/yum*\\n# libstdc++ includes Python helpers for GDB, which is not in this runtime.\\n# Keep libstdc++ itself; remove only these unused debugger scripts/bytecode.\\nrm -rf /openriak-rootfs/usr/share/gcc-*/python /openriak-rootfs/usr/share/gdb/auto-load\\n# Fail if package dependencies reintroduce interpreters or package managers.\\nif grep -Ei '^(python[^ ]*|platform-python[^ ]*|perl[^ ]*|dnf[^ ]*|yum[^ ]*|microdnf|rpm) ' /openriak-rootfs/usr/share/openriak-build/runtime-packages.txt\\nthen\\n    echo 'Unexpected runtime interpreter or package manager' >&2\\n    exit 1\\nfi\\n\" did not complete successfully: exit code: 127",
+    "type": "DockerToolError"
+  },
+  "finished_at": "2026-09-09T23:32:39Z",
+  "generation": {
+    "cluster_nodes": 5,
+    "distributed_cookie": "openriak-d939d5a50a3d3b39758fc2ae0516ed45"
+  },
+  "identity": {
+    "namespace": "openriak-minimal-validation",
+    "source": "https://github.com/OpenRiak/openriak-docs",
+    "url": "https://openriak.org",
+    "vendor": "OpenRiak"
+  },
+  "image": "openriak-minimal-validation/openriak-kv:3.4.0-oracle-linux-9-otp24",
+  "metadata_sources": [
+    "content/openriak-kv/metadata/3.4.0/supported-os.json",
+    "content/openriak-kv/metadata/3.4.0/downloads.json"
+  ],
+  "network": {
+    "address_assignment": "docker",
+    "node_host": "node-01.cluster-a.openriak",
+    "riak_node_name": "openriak-kv@node-01.cluster-a.openriak"
+  },
+  "node": "openriak-kv-3.4.0-oracle-linux-9-otp24-node",
+  "package": {
+    "checksum": {
+      "algorithm": "sha256",
+      "value": "6990e90b3caa3a76de1ba94d3477e4825db4402e180934a5f32bd2ce0da8233d"
+    },
+    "filename": "riak-3.4.0.OTP24-1.el9.x86_64.rpm",
+    "format": "rpm",
+    "url": "https://files.tiot.jp/riak/kv/3.4/3.4.0/oracle/9/riak-3.4.0.OTP24-1.el9.x86_64.rpm"
+  },
+  "ports": {
+    "http": 8098,
+    "protobuf": 8087
+  },
+  "product": "openriak-kv",
+  "run_id": "20260909T233235.680242Z",
+  "schema_version": 4,
+  "started_at": "2026-09-09T23:32:35Z",
+  "status": "failed",
+  "steps": [
+    {
+      "duration_seconds": 0.0,
+      "finished_at": "2026-09-09T23:32:35Z",
+      "name": "generate_artifacts",
+      "started_at": "2026-09-09T23:32:35Z",
+      "status": "passed"
+    },
+    {
+      "duration_seconds": 0.122,
+      "finished_at": "2026-09-09T23:32:35Z",
+      "name": "validate_compose_artifacts",
+      "started_at": "2026-09-09T23:32:35Z",
+      "status": "passed"
+    },
+    {
+      "duration_seconds": 3.359,
+      "error": "Command failed with exit code 1: /usr/bin/docker buildx build --builder openriak-kv-multiarch --load --platform linux/amd64 --pull=false --tag openriak-minimal-validation/openriak-kv:test-3.4.0-oracle-linux-9-otp24-linux-amd64-20260909t233235.680242z --file /home/peter/GitHub/TI-Tokyo/openriak-docs/tools/cache/openriak-docker-minimal-validation/20260909T233231.981047Z/3.4.0/3.4.0-oracle-linux-9-otp24/platforms/linux-amd64/runs/20260909T233235.680242Z/Dockerfile /home/peter/GitHub/TI-Tokyo/openriak-docs/tools/cache/openriak-docker-minimal-validation/20260909T233231.981047Z/3.4.0/3.4.0-oracle-linux-9-otp24/platforms/linux-amd64/runs/20260909T233235.680242Z (see /home/peter/GitHub/TI-Tokyo/openriak-docs/tools/cache/openriak-docker-minimal-validation/20260909T233231.981047Z/3.4.0/3.4.0-oracle-linux-9-otp24/platforms/linux-amd64/runs/20260909T233235.680242Z/logs/image-build.log): ERROR: failed to build: failed to solve: process \"/bin/sh -c set -eu\\n# Resolve runtime packages from this OS release, without weak dependencies.\\nmkdir -p /openriak-rootfs\\ndnf install -y --refresh --installroot=/openriak-rootfs --releasever=9 --setopt=install_weak_deps=False --setopt=tsflags=nodocs oraclelinux-release bash coreutils findutils gawk grep sed ca-certificates glibc glibc-minimal-langpack hostname libgcc libstdc++ ncurses-libs openssl-libs pam procps-ng shadow-utils sudo util-linux zlib tzdata\\n# Install the verified official package; its OTP runtime is bundled in the RPM.\\nrpm --root /openriak-rootfs -Uvh --replacepkgs --nodeps /opt/openriak-package/riak-3.4.0.OTP24-1.el9.x86_64.rpm\\n# Remove optional runtime tools only after all installation operations.\\n# Keep dependency checks: an unexpected remaining dependency fails the build.\\nremove_packages=\\nfor package in libssh libssh-config\\ndo\\n    if rpm --root /openriak-rootfs -q \\\"$package\\\" >/dev/null 2>&1\\n    then\\n        remove_packages=\\\"$remove_packages $package\\\"\\n    fi\\ndone\\nif [ -n \\\"$remove_packages\\\" ]\\nthen\\n    rpm --root /openriak-rootfs -e $remove_packages\\nfi\\nfor package in libssh libssh-config\\ndo\\n    if rpm --root /openriak-rootfs -q \\\"$package\\\" >/dev/null 2>&1\\n    then\\n        echo \\\"Unexpected runtime package: $package\\\" >&2\\n        exit 1\\n    fi\\ndone\\n# Preserve the RPM database and an explicit inventory for vulnerability scanners.\\nmkdir -p /openriak-rootfs/usr/share/openriak-build\\nrpm --root /openriak-rootfs -qa --qf '%{NAME} %{VERSION}-%{RELEASE}\\\\n' > /openriak-rootfs/usr/share/openriak-build/runtime-packages.txt\\n# Install escript's compatibility link without retaining the installer tools.\\nfor bundled_escript in /openriak-rootfs/usr/lib64/riak/erts-*/bin/escript /openriak-rootfs/usr/lib/riak/erts-*/bin/escript\\ndo\\n    if [ -x \\\"$bundled_escript\\\" ]\\n    then\\n        ln -sf \\\"${bundled_escript#/openriak-rootfs}\\\" /openriak-rootfs/usr/bin/escript\\n        break\\n    fi\\ndone\\n# These are cache files from installation, not runtime packages or inventory.\\nrm -rf /openriak-rootfs/var/cache/dnf /openriak-rootfs/var/cache/yum\\nrm -rf /openriak-rootfs/var/log/dnf* /openriak-rootfs/var/log/yum*\\n# libstdc++ includes Python helpers for GDB, which is not in this runtime.\\n# Keep libstdc++ itself; remove only these unused debugger scripts/bytecode.\\nrm -rf /openriak-rootfs/usr/share/gcc-*/python /openriak-rootfs/usr/share/gdb/auto-load\\n# Fail if package dependencies reintroduce interpreters or package managers.\\nif grep -Ei '^(python[^ ]*|platform-python[^ ]*|perl[^ ]*|dnf[^ ]*|yum[^ ]*|microdnf|rpm) ' /openriak-rootfs/usr/share/openriak-build/runtime-packages.txt\\nthen\\n    echo 'Unexpected runtime interpreter or package manager' >&2\\n    exit 1\\nfi\\n\" did not complete successfully: exit code: 127",
+      "finished_at": "2026-09-09T23:32:39Z",
+      "name": "build_image",
+      "started_at": "2026-09-09T23:32:35Z",
+      "status": "failed"
+    }
+  ],
+  "target": {
+    "architecture": "x86_64",
+    "docker_platform": "linux/amd64",
+    "download_id": "otp24-x86_64-1",
+    "os_family": "oracle-linux",
+    "os_id": "oracle-linux-9-x86_64",
+    "os_name": "Oracle Linux 9",
+    "os_release": "9",
+    "otp": "24",
+    "version": "3.4.0"
+  },
+  "tests": {},
+  "volumes": {
+    "config": {
+      "container": "/etc/riak",
+      "default": "./openriak-kv-3.4.0-oracle-linux-9-otp24-node/config"
+    },
+    "data": {
+      "container": "/var/lib/riak",
+      "default": "./openriak-kv-3.4.0-oracle-linux-9-otp24-node/data"
+    },
+    "logs": {
+      "container": "/var/log/riak",
+      "default": "./openriak-kv-3.4.0-oracle-linux-9-otp24-node/logs"
+    }
+  }
+}
