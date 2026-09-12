@@ -1,0 +1,217 @@
+{
+  "artifacts": {},
+  "base_images": {
+    "linux/amd64": {
+      "pinned": "registry.access.redhat.com/ubi9/ubi:9.8@sha256:206b65b8ee0f04b992818c9a51b29081b14974630d4850bc358097d0c44ea156",
+      "requested": "registry.access.redhat.com/ubi9/ubi:9.8",
+      "resolved_at": "2026-09-12T12:09:30Z"
+    }
+  },
+  "cluster_nodes": 5,
+  "distributed_cookie": "openriak-4b0fbbbda0cdbd6de6c94a044a308869",
+  "error": "One or more architecture tests failed; shared downloads will not be published",
+  "finished_at": "2026-09-12T12:10:51Z",
+  "generated_artifacts": {
+    "Dockerfile": "5cee43d6c545d9b80732729cbb8ad8a747217a7b3c0a759c0598c798dc0cc0c1",
+    "compose.cluster.yaml": "7aaf70dcea157df220e18095e6064146f7dcd251d7bc84bdbb76205dc339860d",
+    "compose.single.yaml": "188f09476b8c1ea0be334e935290a10c049e7f0a4b5b1ed581c4a25878597636",
+    "example.env": "bc80e1d8870f0669ab2f3c210c2e8b541bfdf7e3ec94191642db77e979c2bb9b"
+  },
+  "identity": {
+    "namespace": "tiotjp",
+    "source": "https://github.com/TI-Tokyo/openriak-docs",
+    "url": "https://www.tiot.jp/",
+    "vendor": "TI Tokyo"
+  },
+  "image": "tiotjp/openriak-kv:3.4.1-rhel-9-otp26",
+  "inputs": {
+    "build_dependencies": {
+      "builders/__init__.py": "a6165345cd2fd1874ae8bf8a8a52d2fcc72554ad869632af4e002cfe401d7e21",
+      "builders/common.py": "7b67819d90258bb9b1662cd9125737ae8938dc5b17886809c4b8241a3f3e993b",
+      "builders/pcre2.py": "e08bb2b7170a75c7e406433b2a76af6b34a30bccee9d45e2610263d19357db54",
+      "builders/registry.py": "b04708978ac9584fdb0901a5cdb6bad056a25971ddcb1a11bac2eaad1d03a07b",
+      "builders/rhel/__init__.py": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "builders/rhel/common.py": "aae2b0ec0eeedbbb9d473a249b38de4ba1d1df562107c4e38c7a371806d6c57c",
+      "builders/rhel/v9/__init__.py": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "builders/rhel/v9/amd64.py": null,
+      "builders/rhel/v9/common.py": "16e1a9fc811f14633602204f03e26f8bfdef15f650eb449237afd1e55d412495",
+      "builders/rpm.py": "bf90a4b9f3e225d22979e3f8e838abce24d4160eaa0aaa2d9450297120d58f8a",
+      "openriak_minimal.py": "3078f2976ac62cdeca6bfc0571e40cc6595b434163d26e912678121170d8d4d7",
+      "openriak_render.py": "f5a7aa557d87fabf6f37533fedcc23dee8639bba9e671409cc905a050e453ee6",
+      "runtime/entrypoint.sh": "c12e08676fbb921d2a497b5586274a597ce52e5674afa05288589953fe724bd9",
+      "runtime/healthcheck.sh": "eaf2b6cb04786ada00912942ae2637b2628087cbb8841c43620a5f555a69aba1",
+      "shared:target-model-and-hostname": "c7c84080c59d92668253cfd5c76f9d2a7877af09b7065fde9fbf1394011ba7cf"
+    },
+    "cluster_nodes": 5,
+    "compose_options": {
+      "OPENRIAK_CPUS": [
+        "0",
+        "CPU limit per node, for example 2.0; 0 means unrestricted."
+      ],
+      "OPENRIAK_DOCKER_LOG_MAX_FILES": [
+        "3",
+        "Maximum number of Docker JSON log files retained per node."
+      ],
+      "OPENRIAK_DOCKER_LOG_MAX_SIZE": [
+        "10m",
+        "Maximum size of each Docker JSON log file per node."
+      ],
+      "OPENRIAK_MEMORY_LIMIT": [
+        "0",
+        "Memory limit per node, for example 4g; 0 means unrestricted."
+      ]
+    },
+    "identity": {
+      "namespace": "tiotjp",
+      "source": "https://github.com/TI-Tokyo/openriak-docs",
+      "url": "https://www.tiot.jp/",
+      "vendor": "TI Tokyo"
+    },
+    "labels": {
+      "org.opencontainers.image.description": "Package-backed OpenRiak KV with single-node and cluster startup support",
+      "org.opencontainers.image.source": "https://github.com/TI-Tokyo/openriak-docs",
+      "org.opencontainers.image.title": "OpenRiak KV",
+      "org.opencontainers.image.url": "https://www.tiot.jp/",
+      "org.opencontainers.image.vendor": "TI Tokyo",
+      "org.opencontainers.image.version": "3.4.1",
+      "org.openriak.image.tag": "tiotjp/openriak-kv:3.4.1-rhel-9-otp26",
+      "org.openriak.os.name": "rhel",
+      "org.openriak.os.release": "9",
+      "org.openriak.os.version": "9",
+      "org.openriak.otp.version": "26"
+    },
+    "lifecycle_options": {
+      "healthcheck_interval": 10,
+      "healthcheck_retries": 3,
+      "healthcheck_start_period": 120,
+      "healthcheck_timeout": 60,
+      "stop_grace_period": 120
+    },
+    "packages": {
+      "linux/amd64": {
+        "base": "registry.access.redhat.com/ubi9/ubi:9.8",
+        "checksum": {
+          "algorithm": "sha256",
+          "value": "952f04a57622b160ef01d7aa15d3871924221766f1cd08dc74bf5ecd3ffbe9ea"
+        },
+        "url": "https://files.tiot.jp/riak/kv/3.4/3.4.1/rhel/9/riak-3.4.1.OTP26-1.el9.x86_64.rpm"
+      }
+    },
+    "renderer_sha256": "a32820ba5111d281a1f0d321fec4427f05c67a3fcfd8b5b034d5f68a9d1c17c9",
+    "repository_setup": {
+      "linux/amd64": ""
+    },
+    "runtime_filesystem": {
+      "release_package": "redhat-release",
+      "strategy": "rpm-root"
+    },
+    "runtime_options": {
+      "RIAK_GID": [
+        "",
+        "Optional nonzero GID for riak; empty retains the package GID. Mounted directories are chowned."
+      ],
+      "RIAK_LOG_MAX_FILES": [
+        "10",
+        "Maximum file count per OpenRiak logger handler; initializes new configurations only."
+      ],
+      "RIAK_LOG_MAX_FILE_SIZE": [
+        "1MB",
+        "Maximum size per OpenRiak logger file; initializes new configurations only."
+      ],
+      "RIAK_UID": [
+        "",
+        "Optional nonzero UID for riak; empty retains the package UID. Mounted directories are chowned."
+      ],
+      "TZ": [
+        "Etc/UTC",
+        "IANA timezone for the process and entrypoint logs, for example Asia/Tokyo."
+      ]
+    },
+    "runtime_renderer_sha256": "15324690e8d6ce85ca9a0fb3c831eeab695ecdedc35f1d059f6dfebbf7095ad1",
+    "runtime_sha256": "b0f20a4604e8cff49f7060bf5e0cc5fa52df5829d46520d37095130f07f65656",
+    "schema_version": 4,
+    "setting_comments": {
+      "OPENRIAK_CLUSTER_CONTROL_DIR": "Container directory shared by cluster discovery participants.",
+      "OPENRIAK_CLUSTER_CONTROL_PATH": "Host directory shared by all cluster discovery participants.",
+      "OPENRIAK_CLUSTER_MODE": "Use single-node startup or shared-directory cluster discovery.",
+      "OPENRIAK_CLUSTER_POLL_SECONDS": "Seconds between cluster discovery checks.",
+      "OPENRIAK_CLUSTER_WAIT_SECONDS": "Maximum seconds to wait for cluster discovery approval.",
+      "OPENRIAK_CONFIG_PATH": "Host bind-mount directory for /etc/riak configuration.",
+      "OPENRIAK_CONTAINER_NAME": "Single-node Docker container name.",
+      "OPENRIAK_CPUS": "CPU limit per node, for example 2.0; 0 means unrestricted.",
+      "OPENRIAK_DATA_PATH": "Host bind-mount directory for /var/lib/riak data.",
+      "OPENRIAK_DOCKER_LOG_MAX_FILES": "Maximum number of Docker JSON log files retained per node.",
+      "OPENRIAK_DOCKER_LOG_MAX_SIZE": "Maximum size of each Docker JSON log file per node.",
+      "OPENRIAK_HTTP_PORT": "Host port forwarded to container HTTP port 8098.",
+      "OPENRIAK_LOGS_PATH": "Host bind-mount directory for /var/log/riak logs.",
+      "OPENRIAK_MEMORY_LIMIT": "Memory limit per node, for example 4g; 0 means unrestricted.",
+      "OPENRIAK_PB_PORT": "Host port forwarded to container Protocol Buffers port 8087.",
+      "RIAK_ANTI_ENTROPY": "Legacy active anti-entropy mode (passive disables active exchanges).",
+      "RIAK_DISTRIBUTED_COOKIE": "Initial cookie; existing riak.conf wins and new followers adopt the coordinator cookie.",
+      "RIAK_GID": "Optional nonzero GID for riak; empty retains the package GID. Mounted directories are chowned.",
+      "RIAK_HTTP_LISTENER": "Container HTTP bind address and port.",
+      "RIAK_INIT_ONLY": "Initialize configuration and directories without starting the daemon when 1.",
+      "RIAK_LOG_MAX_FILES": "Maximum file count per OpenRiak logger handler; initializes new configurations only.",
+      "RIAK_LOG_MAX_FILE_SIZE": "Maximum size per OpenRiak logger file; initializes new configurations only.",
+      "RIAK_MONITOR_INTERVAL_SECONDS": "Seconds between running-node health checks.",
+      "RIAK_NODE_HOST": "DNS hostname used to derive the OpenRiak KV nodename.",
+      "RIAK_NODE_NAME": "Explicit nodename; empty derives openriak-kv@<hostname>.",
+      "RIAK_NOFILE_LIMIT": "Requested open-file limit; bounded by container ulimits.",
+      "RIAK_PB_LISTENER": "Container Protocol Buffers bind address and port.",
+      "RIAK_RING_SIZE": "Partition count for a new ring; do not change on an existing cluster.",
+      "RIAK_SHUTDOWN_POLL_SECONDS": "Seconds between BEAM shutdown checks.",
+      "RIAK_STARTUP_POLL_SECONDS": "Seconds between daemon startup checks.",
+      "RIAK_STORAGE_BACKEND": "Storage backend used by OpenRiak KV.",
+      "RIAK_TICTACAAE_ACTIVE": "Enable TicTac active anti-entropy.",
+      "RIAK_TICTACAAE_STOREHEADS": "Store object heads in the TicTac anti-entropy store.",
+      "RIAK_UID": "Optional nonzero UID for riak; empty retains the package UID. Mounted directories are chowned.",
+      "TZ": "IANA timezone for the process and entrypoint logs, for example Asia/Tokyo.",
+      "role": "Coordinator on exactly one cluster service; empty or omitted means follower."
+    },
+    "tags": [
+      "tiotjp/openriak-kv:3.4.1-rhel-9-otp26",
+      "tiotjp/openriak-kv:3.4.1-rhel-9",
+      "tiotjp/openriak-kv:3.4.1-rhel"
+    ]
+  },
+  "node": "openriak-kv-3.4.1-rhel-9-otp26-node",
+  "os_family": "rhel",
+  "os_name": "Red Hat Enterprise Linux 9",
+  "os_release": "9",
+  "otp": "26",
+  "platform_results": {
+    "linux/amd64": {
+      "artifacts": {},
+      "finished_at": "2026-09-12T12:10:51Z",
+      "report": "platforms/linux-amd64/runs/20260912T120932.696750Z/report.json",
+      "run_id": "20260912T120932.696750Z",
+      "status": "failed"
+    }
+  },
+  "platforms": [
+    "linux/amd64"
+  ],
+  "product": "openriak-kv",
+  "run_id": "20260912T120928.696923Z",
+  "schema_version": 4,
+  "started_at": "2026-09-12T12:09:28Z",
+  "status": "failed",
+  "steps": [],
+  "tags": [
+    "tiotjp/openriak-kv:3.4.1-rhel-9-otp26",
+    "tiotjp/openriak-kv:3.4.1-rhel-9",
+    "tiotjp/openriak-kv:3.4.1-rhel"
+  ],
+  "targets": [
+    {
+      "architecture": "x86_64",
+      "download_id": "otp26-x86_64-1",
+      "os_id": "rhel-9-x86_64"
+    }
+  ],
+  "version": "3.4.1",
+  "worker": {
+    "host": "PJAC-NUC-Office",
+    "pid": 51952
+  }
+}

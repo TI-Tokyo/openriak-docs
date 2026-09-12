@@ -14,9 +14,9 @@ import unittest
 from unittest import mock
 
 from test_openriak_docker import docker_tool as tool
-import openriak_distributed as distributed
-import openriak_remote as remote
-import openriak_remote_worker as agent
+import distributed.planning as distributed
+import distributed.controller as remote
+import distributed.worker as agent
 
 
 class RemoteTests(unittest.TestCase):

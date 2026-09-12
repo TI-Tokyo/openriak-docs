@@ -1,9 +1,18 @@
 {
   "schema_version": 1,
   "support_status": "review_required",
-  "reviewed_at": null,
-  "notes": "Confirm vendor support and repository availability before changing this release.",
+  "reviewed_at": "2026-09-12",
+  "notes": "PCRE2 backport is built and tested in the reusable OS base. Refresh and publish the base before rebuilding dependent OpenRiak KV images.",
   "runtime_settings": "runtime-images.json: releases.centos",
-  "backports": [],
-  "sources": []
+  "backports": [
+    {
+      "cve": "CVE-2026-89161",
+      "implementation": "../../pcre2.py",
+      "base_image": "centos:stream9-for-openriak",
+      "package_version": "10.40-6.el9.openriak1"
+    }
+  ],
+  "sources": [
+    "https://github.com/PCRE2Project/pcre2/commit/82443294822e9d7a650b2f38dfc6144270a78420"
+  ]
 }

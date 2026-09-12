@@ -8,9 +8,9 @@ import pathlib
 import sys
 
 sys.path.insert(0, str(pathlib.Path(__file__).resolve().parents[1]))
-import openriak_docker as tool
-from openriak_cve_storage import store_output
-from openriak_push import execute
+from core.context import context as tool
+from publishing.cve_storage import store_output
+from publishing.workflow import execute
 
 RUNTIME_PACKAGES = (
     'redhat-release bash coreutils findutils gawk grep sed ca-certificates '
@@ -124,7 +124,7 @@ def main():
     targets = [t for t in tool.discover_targets([args.version]) if t.family == 'rhel' and t.release == args.release and t.platform == 'linux/amd64']
     if not targets:
         parser.error('No matching RHEL amd64 package in the documentation metadata')
-    output = (args.output or tool.REPOSITORY_ROOT / 'tools/cache/openriak-docker-minimal-validation' / tool.run_id()).resolve()
+    output = (args.output or tool.REPOSITORY_ROOT / '.work/openriak-docker/experiments/minimal-validation' / tool.run_id()).resolve()
     output.mkdir(parents=True, exist_ok=False)
     target = max(targets, key=lambda t: int(t.otp))
     target = dataclasses.replace(target, grouped=True, output_root=output,

@@ -47,8 +47,14 @@ class MinimalRuntimeTests(unittest.TestCase):
         body = stage.split('set -eu\n', 1)[1].split('OPENRIAK_PACKAGE_INSTALL\n', 1)[0]
         stubs = '''mkdir() { :; }
 sed() { :; }
+test() { :; }
 dnf() { echo dependency-resolution-failed; return 27; }
-rpm() { echo UNEXPECTED_RPM_INSTALL; return 92; }
+rpm() {
+    case "$*" in
+        *-Uvh*) echo UNEXPECTED_RPM_INSTALL; return 92 ;;
+        *) printf '0 10.40 6.el9.openriak1\n' ;;
+    esac
+}
 '''
         result = subprocess.run(['sh', '-c', 'set -eu\n' + stubs + body], text=True, capture_output=True, timeout=5)
         self.assertEqual(result.returncode, 27)
@@ -136,7 +142,8 @@ rpm() { printf '%s\\n' "$@"; return 17; }
     def test_security_floors_apply_to_every_version_otp_and_architecture(self):
         expected = {('ubuntu', 'noble'): {'libc6': '2.39-0ubuntu8.9'},
                     ('rocky', '8'): {'gzip': '1.9-15.el8_10'},
-                    ('rocky', '9'): {'glib2': '2.68.4-19.el9_8.10',
+                    ('rocky', '9'): {'coreutils-single': '8.32-41.el9_8.1',
+                                     'glib2': '2.68.4-19.el9_8.10',
                                      'expat': '2.5.0-6.el9_8.3', 'pam': '1.5.1-28.el9_8.1'}}
         covered = set()
         for group in self.groups:

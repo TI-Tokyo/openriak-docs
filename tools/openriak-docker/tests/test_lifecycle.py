@@ -1,3 +1,4 @@
+import time
 import contextlib
 import dataclasses
 import io
@@ -8,9 +9,7 @@ import unittest
 from unittest import mock
 
 from test_openriak_docker import docker_tool as tool
-import openriak_cleanup as cleanup
-
-
+import commands.cleanup as cleanup
 class BuilderLifecycleTests(unittest.TestCase):
     def test_restores_initial_state_after_multiple_groups(self):
         for initial in ('running', 'stopped', 'missing'):
@@ -135,16 +134,16 @@ class TimingAndConfigTests(unittest.TestCase):
                 self.assertEqual(tool.main(['refresh', '--version', '3.4.0', '--do-not-test', '--stop-grace-period', '3m']), 2)
 
     def test_readiness_commands_use_remaining_budget(self):
-        with mock.patch.object(tool.time, 'monotonic', return_value=95), \
-                mock.patch.object(tool.subprocess, 'run', return_value=subprocess.CompletedProcess([], 0, 'pong')) as run:
+        with mock.patch.object(time, 'monotonic', return_value=95), \
+                mock.patch.object(subprocess, 'run', return_value=subprocess.CompletedProcess([], 0, 'pong')) as run:
             tool.run_before_deadline(['docker', 'exec', 'node', 'riak', 'ping'], 100, text=True)
             self.assertEqual(run.call_args.kwargs['timeout'], 5)
-        with mock.patch.object(tool.time, 'monotonic', return_value=100), \
-                mock.patch.object(tool.subprocess, 'run') as run, self.assertRaises(tool.DockerToolError):
+        with mock.patch.object(time, 'monotonic', return_value=100), \
+                mock.patch.object(subprocess, 'run') as run, self.assertRaises(tool.DockerToolError):
             tool.run_before_deadline(['docker', 'inspect', 'node'], 100)
         run.assert_not_called()
-        with mock.patch.object(tool.time, 'monotonic', return_value=95), \
-                mock.patch.object(tool.subprocess, 'run', side_effect=subprocess.TimeoutExpired('docker', 5)), \
+        with mock.patch.object(time, 'monotonic', return_value=95), \
+                mock.patch.object(subprocess, 'run', side_effect=subprocess.TimeoutExpired('docker', 5)), \
                 self.assertRaisesRegex(tool.DockerToolError, 'exceeded the wait timeout'):
             tool.run_before_deadline(['docker', 'inspect', 'node'], 100)
 
@@ -183,7 +182,7 @@ class TimingAndConfigTests(unittest.TestCase):
             base = tool.base_image_for(target)
             with mock.patch.object(tool, 'docker_command', return_value='docker'), \
                     mock.patch.object(tool, 'resolve_base_image', return_value=(base, base + '@sha256:' + 'a' * 64)), \
-                    mock.patch.object(tool.tempfile, 'mkdtemp', return_value=str(work)), \
+                    mock.patch.object(tempfile, 'mkdtemp', return_value=str(work)), \
                     mock.patch.object(tool, 'free_tcp_port', return_value=18098), \
                     mock.patch.object(tool, 'run_logged', side_effect=run):
                 self.assertFalse(tool.refresh_target(target, 29))

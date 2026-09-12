@@ -17,10 +17,10 @@ from unittest import mock
 
 from test_openriak_docker import docker_tool as tool
 from builders import registry
-import openriak_dependencies as dependencies
-import openriak_inspect as inspection
-import openriak_locks as locks
-import openriak_state as state
+import cache.dependencies as dependencies
+import commands.inspection as inspection
+import core.locks as locks
+import core.state as state
 
 
 class RenderingCompatibilityTests(unittest.TestCase):
@@ -58,6 +58,7 @@ class RenderingCompatibilityTests(unittest.TestCase):
             ('builders/debian/bullseye/common.py',lambda g:g[0].family=='debian' and g[0].release=='11'),
             ('builders/deb.py',lambda g:g[0].operating_system['package_family']=='deb'),
             ('builders/debian/bookworm/backports.py',lambda g:g[0].family=='debian' and g[0].release=='12'),
+            ('builders/pcre2.py',lambda g:g[0].family in ('rhel','centos') and g[0].release=='9'),
             ('runtime/entrypoint.sh',lambda g:True),
         ):
             with mock.patch.object(tool,'sha256_file',side_effect=lambda p: 'changed' if str(p).endswith(filename) else original(p)):
@@ -118,7 +119,7 @@ class OperationalTests(unittest.TestCase):
     def test_atomic_report_write_keeps_previous_file_when_promotion_fails(self):
         with tempfile.TemporaryDirectory() as directory:
             p=Path(directory)/'report.json';tool.write_json(p,{'status':'passed'})
-            with mock.patch('openriak_cve_storage.os.replace',side_effect=OSError('disk error')):
+            with mock.patch('publishing.cve_storage.os.replace',side_effect=OSError('disk error')):
                 with self.assertRaises(OSError):tool.write_json(p,{'status':'running'})
             self.assertEqual(tool.read_json(p),{'status':'passed'})
             self.assertEqual(list(Path(directory).iterdir()),[p])
@@ -142,7 +143,7 @@ class OperationalTests(unittest.TestCase):
 
     def test_target_locks_are_exclusive_across_processes(self):
         with tempfile.TemporaryDirectory() as directory:
-            script="import openriak_docker as t, openriak_locks as l, sys\nwith l.lock(t,sys.argv[1]): pass"
+            script="from core.context import context as t; import core.locks as l; import sys\nwith l.lock(t,sys.argv[1]): pass"
             command=[sys.executable,'-c',script,directory]
             with locks.lock(tool,directory):
                 result=subprocess.run(command,cwd=Path(tool.__file__).parent,capture_output=True,text=True,timeout=10)

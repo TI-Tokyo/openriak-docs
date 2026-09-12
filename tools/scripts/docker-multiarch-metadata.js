@@ -3,7 +3,8 @@
 const fs = require('node:fs');
 const path = require('node:path');
 const crypto = require('node:crypto');
-const readJson = (file) => JSON.parse(fs.readFileSync(file, 'utf8'));
+const records = require('./docker-records');
+const readJson = records.read;
 const sha256 = (file) => crypto.createHash('sha256').update(fs.readFileSync(file)).digest('hex');
 const filenames = {
   dockerfile: 'Dockerfile', compose_single: 'compose.single.yaml',
@@ -20,7 +21,7 @@ const multiarchDockerImages = (version, cacheRoot, staticRoot) => {
     if (!entry.isDirectory()) continue;
     const directory = path.join(root, entry.name);
     const reportFile = path.join(directory, 'report.json');
-    if (!fs.existsSync(reportFile)) continue;
+    if (!records.exists(reportFile)) continue;
     const report = readJson(reportFile);
     if (report.status !== 'passed' || report.schema_version !== 4) continue;
     const fail = () => { throw new Error(`Invalid multi-platform Docker report: ${reportFile}`); };
@@ -35,7 +36,7 @@ const multiarchDockerImages = (version, cacheRoot, staticRoot) => {
       const artifact = report.artifacts?.[key];
       const expectedUrl = `downloads/docker/${version}/${entry.name}/${filename}`;
       if (artifact?.filename !== filename || artifact.url !== expectedUrl) fail();
-      const cached = path.join(directory, filename);
+      const cached = records.artifact(path.join(directory, filename), cacheRoot);
       const published = path.join(staticRoot, expectedUrl);
       if (!fs.existsSync(cached) || !fs.existsSync(published)
           || sha256(cached) !== artifact.sha256 || sha256(published) !== artifact.sha256) fail();
@@ -44,7 +45,7 @@ const multiarchDockerImages = (version, cacheRoot, staticRoot) => {
       const result = report.platform_results?.[platform];
       if (result?.status !== 'passed' || typeof result.report !== 'string') fail();
       const proofPath = path.resolve(directory, result.report);
-      if (!proofPath.startsWith(directory + path.sep) || !fs.existsSync(proofPath)) fail();
+      if (!proofPath.startsWith(directory + path.sep) || !records.exists(proofPath)) fail();
       const proof = readJson(proofPath);
       if (proof.status !== 'passed' || proof.schema_version !== 4 || proof.image !== report.image
           || proof.target?.docker_platform !== platform || proof.tests?.admin_test?.status !== 'passed'

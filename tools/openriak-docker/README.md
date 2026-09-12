@@ -1,5 +1,130 @@
 # OpenRiak KV Docker cache
 
+## Code and storage layout
+
+The `openriak-docker` shell wrapper starts the ten-line `openriak_docker.py`
+entry point. `cli.py` registers commands and dispatches them through the explicit
+service providers in `core/context.py` and `core/services.json`.
+
+```text
+tools/openriak-docker/
+├── cli.py, openriak_docker.py, openriak-docker
+├── core/           # Models, options, configuration, logging, processes, background launch and locks
+├── images/         # Discovery, rendering, refresh planning and OCI export
+├── bases/          # Reusable base-image orchestration
+├── builders/       # KV installation: shared → package family → OS → release → architecture
+├── builders_base/  # Base recipes using the same hierarchy
+├── config/         # Base mappings, runtime strategies and verified relocation fingerprints
+├── runtime/        # Entrypoint, healthcheck and HTTP probe sources
+├── validation/     # Runtime configuration checks, readiness waits and integration workflow
+├── cache/          # Approval validation, dependency fingerprints, OCI parsing and record storage
+├── publishing/     # Static downloads, registry publication and Scout report processing
+├── distributed/    # Plans, controller, SSH helpers, node checks and worker queues
+├── commands/       # Inspection and cleanup commands
+├── experiments/    # Explicit prototype tools; never invoked by normal docs builds
+└── tests/          # Unit tests, simulated workers and rendering baselines
+```
+
+| Location | Keep in Git | Contents |
+| --- | --- | --- |
+| `records/openriak-docker/` | Yes | Immutable report snapshots, current pointers, compact Scout evidence, distributed plans/results, reviews and migration receipts |
+| `artifacts/openriak-docker/` | Yes | Approved Dockerfile, Compose and environment sources, including approved run copies |
+| `content/openriak-kv/docker/` | Yes | Human-maintained CVE Markdown assessments |
+| `content/static/openriak-kv/downloads/docker/` | Yes | Published copies of the approved files |
+| `.work/openriak-docker/` | No | OCI archives, build contexts, logs, raw Scout payloads, source bundles and mutable execution state |
+| `~/.config/openriak-docker/nodes.json` | No | Local worker connection configuration (or `$XDG_CONFIG_HOME`) |
+
+Each record directory has a `current.json` index. Its `files` entries point to
+immutable `history/<sha256>.json` snapshots and include their checksums. Historical
+run paths remain distinguishable from current target paths. Do not edit generated
+record snapshots or pointers; edit the CVE Markdown assessments instead.
+
+Completed runs automatically retain their reports and verified source files.
+Running phase updates remain local. The docs readers verify retained record and
+artifact hashes and do not require OCI archives, raw Scout output, Docker or an
+integration rerun. A fresh checkout restores missing execution reports/source
+files when needed. Read-only commands use a temporary view and leave the checkout
+unchanged. `status` reports OCI availability separately from test approval.
+
+The Git Scout records retain every rule, severity, score, affected/fixed package
+version, package URL and the number of matching occurrences. Repeated result
+locations/messages, full SBOMs and command output remain in the original local
+payloads under Git-ignored `.work/openriak-docker/`. Cleanup retains 90 days of
+these archives by default; no external archive store is required. Compact
+reports and CVE assessments remain in Git indefinitely unless explicitly removed.
+
+Explicit `--output` / `--cache-root` directories remain standalone. They do not
+write to the repository's records, artifacts or docs. Plans created without
+`--output` now go under `records/openriak-docker/distributed/plans/`. For these
+managed plans, controller state, bundles and fetched results go under
+`.work/openriak-docker/distributed/`, using the plan filename and node name.
+Explicit plan files outside that directory retain adjacent deployment/results
+defaults. CLI options can override those locations.
+
+### Migrating another existing checkout
+
+Stop its active generator workers, then preview and apply:
+
+```sh
+tools/openriak-docker/openriak-docker migrate-storage
+tools/openriak-docker/openriak-docker migrate-storage --apply
+```
+
+Migration renames files on the same filesystem, verifies file identity and size,
+retains checksum-addressed report snapshots and verified approved files, and
+writes a receipt under `records/openriak-docker/migrations/`. It preserves the
+original deployment state before adjusting moved local paths. It does not build,
+test, upload, delete archives, or change frozen plans. Existing plans still enforce
+their saved source revision; use their saved bundle when build/test sources differ.
+
+### Cleanup boundaries
+
+`cleanup` and `cleanup --remove-all` act on local work and the selected Docker
+resources. Neither removes retained evidence or published downloads by default.
+Use `--remove-all --remove-downloads` to also remove selected published downloads
+and their metadata. Adding `--remove-records` explicitly removes the corresponding
+retained records and approved source files. `--before` keeps its existing cutoff
+semantics; every mode previews until `--delete` is supplied.
+
+Archives under `.work/openriak-docker/` have a separate **90-day retention** policy.
+This covers original push/Scout payloads, logs, OCI exports, historical build
+contexts, distributed source bundles and migration diagnostic copies. Approved
+copies in `artifacts/` are retained even when their local working copies expire. Age uses the file modification time and
+its recorded run activity. Files exactly at the cutoff are retained. An older
+`--before` can further restrict removal, but cannot shorten the 90-day retention.
+Even `--remove-all` preserves a cache directory containing retained archives.
+
+```sh
+# Preview ordinary cleanup, including archives older than 90 days.
+tools/openriak-docker/openriak-docker cleanup
+
+# Apply ordinary cleanup and the 90-day retention policy.
+tools/openriak-docker/openriak-docker cleanup --delete
+
+# Preview clearing all local archives, regardless of age or --before.
+tools/openriak-docker/openriak-docker cleanup --clear-archives
+
+# Apply that clearing. Compact reports, approved sources and downloads remain.
+tools/openriak-docker/openriak-docker cleanup --clear-archives --delete
+```
+
+Clearing archives also removes current OCI export files: republishing those
+images subsequently requires restoring or rebuilding their exports. It does not
+remove images from Docker or the registry. Active generator writes are protected
+by the cleanup activity lock. Normal age-based cleanup also retains running or
+unreadable run records. Explicit clearing overrides that persisted-state guard;
+it still cannot run concurrently with an active generator holding the lock.
+Standalone output directories outside the managed `.work` tree are not scanned.
+
+### Refactor verification
+
+Tests compare every generated file against the rendering baselines, including
+all metadata targets, both identity profiles and reusable bases. The explicit
+`config/refactor-compatibility.json` maps only verified before/after source
+fingerprints. Other input changes still invalidate the affected approvals, and
+old approvals must also reproduce the exact generated bytes before reuse.
+
+
 For all commands, options, and defaults, see the [command reference](#command-reference).
 
 This tool derives Docker targets from the authoritative release records in
@@ -61,7 +186,7 @@ remain in inherited image layers. The amd64 prototypes produced zero Scout
 findings. Older approved images can still report the deleted helper from their
 base layer; adopting the new layout requires regeneration, rebuilding and a new
 scan. Full results and limitations are in the
-[minimal-runtime validation report](reports/minimal-runtime-validation-2026-09-08.md).
+[minimal-runtime validation report](../../records/openriak-docker/reviews/minimal-runtime-validation-2026-09-08.md).
 
 Package updates address fixes available from the selected repositories. They do
 not fix unsupported OS releases, vendor-deferred vulnerabilities, or every
@@ -111,7 +236,7 @@ graceful shutdown. Do not add shell redirection or `&`; the tool handles both.
 Standard output and errors go to the same log with unbuffered Python output.
 The worker survives terminal hangups and runs in its own session.
 
-Log files are created beneath `tools/cache/openriak-docker/logs/` and named
+Log files are created beneath `.work/openriak-docker/legacy/logs/` and named
 `refresh-YYYY-MM-DD_HH-MM-SS.microseconds+offset-unique.log`, using the launch
 time and local UTC offset. Each invocation gets a new file. With standalone
 `--output PATH`, logs go beneath `PATH/logs/` instead, keeping docs untouched.
@@ -189,13 +314,12 @@ For a preview using the current time, simply run:
 tools/openriak-docker/openriak-docker cleanup
 ```
 
-Add `--delete` to apply the previewed cleanup. Normal cleanup retains all JSON
-reports, current artifacts, and runs referenced by current reports. A run is
-retained in full if its recorded activity or any file modification is at or
-after the cutoff.
+Add `--delete` to apply the previewed cleanup. Durable JSON reports and approved
+source files remain retained. Local raw push reports, diagnostics and OCI exports
+follow the 90-day archive policy above, including exports referenced by current
+approvals. Other historical working files follow `--before`.
 
-To extend the same cutoff to current caches, Docker metadata, published files,
-images, build cache, and running generator workers, add `--remove-all`:
+To extend the same cutoff to current local caches, images, build cache and running generator workers, add `--remove-all`. Durable records and published downloads remain protected:
 
 ```sh
 # Preview only; no workers are stopped and no files or Docker resources change.
@@ -208,9 +332,10 @@ tools/openriak-docker/openriak-docker cleanup \
 ```
 
 `--remove-all` still respects the cutoff; it does not mean an unconditional reset.
-It removes eligible old compact reports as well as old generated files. It
-updates only `dockerImages` in the generated version JSON files, which the
-preview metadata watcher picks up. Package download records and authoritative
+It removes eligible old working copies of reports and generated files. Durable
+records remain protected unless `--remove-records` is supplied. Only with
+`--remove-downloads` does it update `dockerImages` in the generated version JSON
+files, which the preview metadata watcher picks up. Package download records and authoritative
 OS/package metadata remain unchanged.
 
 The broader mode sends SIGTERM to this repository's generator workers started
@@ -233,7 +358,7 @@ builder remains running. Preview mode never starts or stops builders.
 See [Docker's cache filter documentation](https://docs.docker.com/reference/cli/docker/buildx/prune/#provide-filter-values---filter)
 for the `until` filter's last-use semantics.
 
-Cleanup covers the repository's legacy and multiarch cache roots and docs
+Cleanup covers the repository's legacy and multiarch local work roots; docs require explicit removal of
 downloads; standalone output directories created with `--output` are outside
 this command's scope. Docker access is required only for `--remove-all`.
 Nothing is removed unless `--delete` is supplied.
@@ -412,7 +537,7 @@ During testing, stop grace is bounded by the selected operation timeout.
 Cleanup identifies harness Compose files by their directory and file names,
 including runs created under a custom `TMPDIR` from an earlier invocation.
 
-Base-image selection is configured in [`base-images.json`](base-images.json).
+Base-image selection is configured in [`base-images.json`](config/base-images.json).
 Each family has ordered `rules` with an `image` template; optional `architectures`
 and `minimum_major` restrict a rule. Templates accept `{release}`, `{os_release}`
 (the original metadata release), `{major}`, and `{architecture}`. `release_maps`
@@ -424,7 +549,7 @@ is part of the cache inputs, so changed mappings require an affected target to
 be regenerated and retested. Editing this file does not add package targets.
 
 Runtime filesystem construction is configured separately in
-[`runtime-images.json`](runtime-images.json). Only releases that have passed
+[`runtime-images.json`](config/runtime-images.json). Only releases that have passed
 the prototype integration tests are enabled. Target discovery and base-image
 selection still come from the existing metadata and base-image configuration.
 
@@ -448,10 +573,12 @@ The release settings also support these reviewed cleanup options:
   omit Vim and sudo; the official OpenRiak KV launcher uses the retained
   `runuser` command instead of sudo. Oracle Linux 9 uses `rpm-root` to exclude
   libssh and its package-manager dependencies from the final filesystem.
+  Rocky 9 omits the optional Vim packages while retaining its existing launcher.
 - `minimum_packages` requires installed Debian or RPM packages to meet minimum
   security versions. Ubuntu Jammy requires `libc6 >= 2.35-0ubuntu3.15`, and Noble
   requires `libc6 >= 2.39-0ubuntu8.9`. Rocky 8 requires the gzip security update;
-  Rocky 9 requires the reviewed glib2, expat and PAM updates. Exact floors are in
+  Rocky 9 requires `coreutils-single >= 8.32-41.el9_8.1` and the reviewed glib2,
+  expat and PAM updates. Exact floors are in
   `runtime-images.json`, shared across all KV versions, OTPs and architectures.
   Newer vendor updates are accepted; stale mirrors fail the build. Debian uses
   dpkg version comparisons; RPM compares epoch, version and release natively before
@@ -467,7 +594,7 @@ The release settings also support these reviewed cleanup options:
   derived image.
 
 These settings apply to every metadata-backed KV version, OTP and architecture
-for the configured OS release. See the [Medium CVE validation results](reports/medium-fixes-validation-2026-09-10.md)
+for the configured OS release. See the [Medium CVE validation results](../../records/openriak-docker/reviews/medium-fixes-validation-2026-09-10.md)
 for the amd64 tests and remaining findings. Updating the generator does not
 replace existing approved downloads or registry images: use `refresh` to
 regenerate and test changed inputs, then `push` for publication and fresh scans.
@@ -502,13 +629,106 @@ backport, not an official Debian security update. A newer installed Debian packa
 is retained. Revisit this override when Bookworm provides equivalent fixes; the
 upstream 3.0 public-support lifecycle ended on 7 September 2026. This update fixes
 known issues but does not provide ongoing upstream support. Source hashes and the
-retained Debian patches are recorded in `openriak_minimal.py` and the base Dockerfile.
-See the [Debian 12 OpenSSL compatibility results](reports/openssl-backport-validation-2026-09-08.md)
+retained Debian patches are recorded in `images/minimal.py` and the base Dockerfile.
+See the [Debian 12 OpenSSL compatibility results](../../records/openriak-docker/reviews/openssl-backport-validation-2026-09-08.md)
 for the three validated amd64 variants, crypto/TLS coverage and Scout caveat.
+
+### Selecting reusable patched OS bases
+
+Every custom OS-library backport is built in a reusable, independently tested base:
+
+| `--base` | Image (prefix with your namespace) | Custom patches |
+| --- | --- | --- |
+| `debian-12` (default) | `debian:bookworm-slim-for-openriak` | OpenSSL and libblkid; tar removal |
+| `rhel-9` | `rhel:9-for-openriak` | PCRE2 CVE-2026-89161 |
+| `centos-9` | `centos:stream9-for-openriak` | PCRE2 CVE-2026-89161 |
+
+The base has no OpenRiak KV package or cookie and is shared by all KV/OTP versions
+for that OS release. Namespace, vendor, source and URL options work the same way
+for every base. Existing Debian commands continue to work without `--base`.
+Other OS fixes currently use vendor package updates/removals, with no custom
+source backports to move. New source backports should follow this base workflow.
+
+For example, build and test the two EL9 bases on amd64:
+
+```sh
+tools/openriak-docker/openriak-docker base refresh --base rhel-9 \
+  --namespace tiotjp --platform linux/amd64
+tools/openriak-docker/openriak-docker base refresh --base centos-9 \
+  --namespace tiotjp --platform linux/amd64
+```
+
+Then publish each base before building its dependent images:
+
+```sh
+tools/openriak-docker/openriak-docker base push --base rhel-9 --namespace tiotjp
+tools/openriak-docker/openriak-docker base push --base centos-9 --namespace tiotjp
+tools/openriak-docker/openriak-docker refresh \
+  --version 3.4.0 --version 3.4.1 \
+  --os-id 'rhel-9-*' --os-id 'centos-9-*' --namespace tiotjp --retry-failed
+```
+
+The changed Dockerfile causes existing approvals to require a rebuild. After a
+later base-only update, use `refresh --force` to pull and pin its newest digest.
+Use `base refresh --force` to refresh the upstream OS and rebuild its patches.
+`base generate` and `base push --whatif` also accept `--base`. Base cache paths are
+`.work/openriak-docker/bases/{namespace}/{repository}/{tag}/`.
+
+EL9 bases contain a minimal runtime filesystem with the patched library and RPM
+inventory, without compilers, source archives, Python, Perl or package managers.
+Child Dockerfiles copy this filesystem into a build-only installer from the same
+OS release, pinned by `package_tools_image` in `runtime-images.json`. They install
+the official OpenRiak KV RPM, verify the minimum patched PCRE2 version, then export
+the runtime filesystem. No PCRE2 compilation is repeated in the child build.
+The base's tests and the child's OpenRiak KV integration tests have separate
+approvals; `base refresh` alone does not rerun the single-node/five-node KV tests.
+
+### Base builder source layout
+
+`bases/workflow.py` manages command options, cache/approval validation, Docker
+execution and publication. OS-specific Dockerfile contents and runtime checks
+live under `builders_base/`, using the same optional layer order as KV builders:
+
+```text
+builders_base/
+├── registry.py                    # Layer selection, rendering and dependencies
+├── common.py                      # Optional shared overrides
+├── deb.py                         # Optional Debian-package overrides
+├── rpm.py                         # Shared RPM base formatting and labels
+├── debian/
+│   ├── common.py                  # Optional family overrides
+│   └── bookworm/
+│       ├── common.py              # Debian 12 base recipe and runtime checks
+│       └── arm64.py               # Optional architecture override
+├── enterprise_linux/v9/common.py # Shared EL9 PCRE2 base construction/checks
+├── rhel/v9/common.py              # RHEL 9 settings, inheriting EL9
+└── centos/v9/common.py            # CentOS 9 settings, inheriting EL9
+```
+
+Files marked optional need not exist. Layers are resolved in order: shared,
+package family, OS family, OS release, architecture. A layer may provide
+`configure(target, context)`, `render_header`, `render_stage`, `render_footer`,
+and/or `runtime_check`. Later layers override earlier hooks. Stage and runtime
+hooks are resolved separately for every platform; shared headers/final labels
+must agree across the platforms in one base image.
+
+`builders-base.json` lists the base selectors and the backward-compatible default.
+Image tags and runtime settings remain in `runtime-images.json`; package-backed
+platforms still come from the documentation metadata. Patch implementations shared
+with KV rendering remain in `builders/debian/bookworm/backports.py` and
+`builders/pcre2.py` and are tracked as recipe dependencies.
+
+New base approvals fingerprint only the selected layers and imported helpers,
+including paths for optional files that do not exist yet. For example, a Bookworm
+recipe or backport change does not invalidate EL9 base approvals. Changed build
+inputs require `base refresh --force`. Older approvals retain the existing
+compatibility check: substantive inputs and the complete generated Dockerfile
+must still match before reuse. A source reorganisation does not rewrite historical
+approval records or rerun Docker tests automatically.
 
 ### Reusable patched Debian base
 
-The [shared-base validation report](reports/patched-base-validation-2026-09-08.md)
+The [shared-base validation report](../../records/openriak-docker/reviews/patched-base-validation-2026-09-08.md)
 records the approved base and successful tests of all three Debian 12 amd64 KV variants.
 
 Build and publish the base **before** refreshing dependent Debian 12 KV images:
@@ -571,7 +791,7 @@ tools/openriak-docker/openriak-docker base generate \
 Use `base refresh --force` with the same options to replace generated-only
 output with a built/tested approval. No base action updates documentation
 metadata or published KV downloads. Base reports are separate from the KV
-matrix, under `tools/cache/openriak-docker-bases/{namespace}/debian/bookworm-slim-for-openriak/`.
+matrix, under `.work/openriak-docker/bases/{namespace}/debian/bookworm-slim-for-openriak/`.
 Each run retains a report, Dockerfile and OCI archive; detailed logs and archive
 bytes are local diagnostics. Both refresh and push retain historical evidence.
 
@@ -580,7 +800,8 @@ bytes are local diagnostics. Both refresh and push retain historical evidence.
 | `--namespace NAME` | All base actions | Primary namespace; default `openriak`. |
 | `--extra-namespace NAME` | All base actions | Additional namespaces for the same base tag; repeatable. |
 | `--vendor`, `--source`, `--url` | Generate/refresh | Same label defaults as KV images. Push uses the approved labels. |
-| `--platform PLATFORM` | Generate/refresh | Select a platform; repeatable. Defaults to the distinct Debian 12 platforms found in OpenRiak KV metadata. |
+| `--base RELEASE` | All base actions | Select `debian-12` (default), `rhel-9`, or `centos-9`. |
+| `--platform PLATFORM` | Generate/refresh | Select a platform; repeatable. Defaults to the distinct platforms for the selected OS release found in OpenRiak KV metadata. |
 | `--cache-root PATH`, `--output PATH` | All base actions | Alternate cache/output parent; namespace/repository/tag subdirectories are added. |
 | `--force` | Generate/refresh | Regenerate existing output; refresh also rebuilds/retests without cached layers. |
 | `--whatif` | All base actions | Inspect cache decisions or push preflight without network calls or writes. |
@@ -601,7 +822,7 @@ single-node and five-node suites, and saves full compressed Scout evidence
 without publishing images or replacing approved caches. These tests establish
 runtime compatibility; they do not prove that every reported CVE is exploitable
 or fixed. Vendor backports and absent affected components are assessed separately
-in [the Markdown CVE assessments](../../content/openriak-kv/docker/README.md), with evidence under `reports/`.
+in [the Markdown CVE assessments](../../content/openriak-kv/docker/README.md), with evidence under `records/openriak-docker/reviews/`.
 
 ### KV image aliases
 
@@ -632,7 +853,7 @@ requires a builder and an OS/OTP group supporting those platforms. See
 Shared caches use a separate schema (4) and directory:
 
 ```text
-tools/cache/openriak-docker-multiarch/{version}/{image-tag}/
+.work/openriak-docker/images/{version}/{image-tag}/
   Dockerfile
   compose.single.yaml
   compose.cluster.yaml
@@ -830,7 +1051,7 @@ tools/openriak-docker/openriak-docker refresh --all --yes
 Legacy architecture-specific runs remain under:
 
 ```text
-tools/cache/openriak-docker/{version}/{os-id}/{download-id}/runs/{UTC-run-id}/
+.work/openriak-docker/legacy/{version}/{os-id}/{download-id}/runs/{UTC-run-id}/
 ```
 
 New group and platform runs use the multiarch layout above.
@@ -1193,7 +1414,7 @@ a failed scan is never recorded as zero vulnerabilities.
 Each invocation writes a new directory, printed at startup:
 
 ```text
-tools/cache/openriak-docker-multiarch/pushes/{UTC-run-id}/
+.work/openriak-docker/images/pushes/{UTC-run-id}/
 ├── report.json
 └── {version}/{image-tag}/
     ├── cve-report.json
@@ -1231,8 +1452,8 @@ Compact existing completed, failed, or interrupted reports without Docker,
 uploads, scans, or changes to their findings:
 
 ```sh
-python3 tools/openriak-docker/openriak_cve_storage.py compact \
-  tools/cache/openriak-docker-multiarch/pushes
+python3 tools/openriak-docker/publishing/cve_storage.py compact \
+  .work/openriak-docker/images/pushes
 ```
 
 Pass one or more individual `cve-report.json` paths or report directories; add
@@ -1273,7 +1494,7 @@ All commands apply exclusively to **OpenRiak KV 3.4.0 and newer**.
 | `sync-static` | Republish existing passed caches and update Docker download metadata. No pulling, building or testing. |
 | `cleanup` | Preview or remove older generator artifacts and, optionally, associated Docker resources. |
 | `push` | Push passed OCI exports and all recorded aliases to Docker Hub, then save Scout CVE reports for every platform. |
-| `base generate`, `base refresh`, `base push` | Manage the reusable patched Debian base independently; see [base commands and options](#reusable-patched-debian-base). |
+| `base generate`, `base refresh`, `base push` | Manage reusable patched OS bases independently; see [base selection](#selecting-reusable-patched-os-bases) and [base options](#reusable-patched-debian-base). |
 
 `-h` or `--help` works globally and after every command:
 
@@ -1379,7 +1600,7 @@ because approved files must remain unchanged.
 | --- | --- | --- |
 | `--namespace NAME` | Any recorded namespace | Filter by the approved primary namespace. Does not retag. |
 | `--extra-namespace NAME` | None | Also push every approved alias under this namespace. Repeatable. |
-| `--cache-root PATH` | `tools/cache/openriak-docker-multiarch` | Read existing approvals and OCI archives from this cache/output directory. |
+| `--cache-root PATH` | `.work/openriak-docker/images` | Read existing approvals and OCI archives from this cache/output directory. |
 | `--reports-dir PATH` | `CACHE_ROOT/pushes` | Parent directory for timestamped push/CVE reports. |
 | `--wait-seconds N` | `5` | Wait once after all uploads before scanning; zero disables the wait. |
 | `--scan-retries N` | `3` | Additional attempts after a failed or malformed Scout response. |
@@ -1392,7 +1613,10 @@ because approved files must remain unchanged.
 | Option | Default | Explanation |
 | --- | --- | --- |
 | `--before DATE_OR_TIMESTAMP` | Now | Remove only eligible activity older than this cutoff. Logs the exact resolved timestamp. |
-| `--remove-all` | Off | Also include older current caches, Docker download metadata, published files, associated images and dedicated builder cache; stop eligible older workers. |
+| `--remove-all` | Off | Include older local caches, associated images and dedicated builder cache; stop eligible older workers. Protect retained evidence and downloads. |
+| `--remove-downloads` | Off | With `--remove-all`, also remove selected published files and Docker metadata. |
+| `--remove-records` | Off | With both options above, also remove the selected durable records and approved source files. |
+| `--clear-archives` | Off | Clear all managed local Scout payloads, logs, OCI exports and archived bundles regardless of age or `--before`; preserve durable evidence/downloads. |
 | `--delete` | Off | Apply the cleanup. Without it, only preview. |
 | `--timeout SECONDS` | `1800` | Timeout per Docker operation or worker-shutdown wait. |
 
@@ -1404,32 +1628,32 @@ Accepted cutoff examples:
 - `2026-09-06T06:30:00Z` — UTC.
 
 `sync-static` has no additional options beyond help. Base-image mappings are
-configured in [base-images.json](base-images.json), rather than through
+configured in [base-images.json](config/base-images.json), rather than through
 command-line switches.
 
 ## Generator architecture and compatibility
 
-`openriak_docker.py` is the public CLI and compatibility facade. It passes its
-services explicitly to focused modules, so existing callers and test doubles
-continue to work without circular imports:
+`openriak_docker.py` is the executable launcher. `cli.py` dispatches commands,
+and `core/context.py` supplies explicit services to the focused modules:
 
 | Module | Responsibility |
 | --- | --- |
-| `openriak_discovery.py` | Metadata-derived targets, base selection and tag aliases. |
-| `openriak_render.py` | Dockerfile, Compose and environment rendering. |
+| `images/discovery.py` | Metadata-derived targets, base selection and tag aliases. |
+| `images/rendering.py` | Dockerfile, Compose and environment rendering. |
 | `builders/` | Generic → package format → OS → release → optional architecture layers. |
 | `runtime/` | Entrypoint, healthcheck and integration HTTP-probe source files. |
-| `openriak_minimal.py` | Shared minimal-filesystem strategies and validation. |
+| `images/minimal.py` | Shared minimal-filesystem strategies and validation. |
 | `builders/debian/bookworm/backports.py` | Maintained OpenSSL/libblkid backports and their regressions. |
-| `openriak_execution.py` | External commands, live logs and base resolution. |
-| `openriak_testing.py` | Single-node and cluster integration harness. |
-| `openriak_cache.py` | Approvals, refresh orchestration, OCI export and publication. |
-| `openriak_dependencies.py`, `openriak_plan.py` | Scoped build fingerprints and the decision engine shared by execution and `--whatif`. |
-| `openriak_state.py`, `openriak_locks.py` | Persisted phases and cooperating-process resource locks. |
-| `openriak_distributed.py` | Portable plans, worker execution and verified collection. |
-| `openriak_remote.py` | Saved SSH nodes, SCP staging, remote launch, monitoring, logs and result retrieval. |
-| `openriak_remote_worker.py` | Standard-library remote control helper with bundle validation and PID identity checks. |
-| `openriak_inspect.py` | Diagnostics, status, failures and saved CVE comparisons. |
+| `core/processes.py` | External commands, live logs and base resolution. |
+| `validation/workflow.py` | Single-node and cluster integration harness. |
+| `images/workflow.py` | Refresh and generation orchestration. |
+| `cache/approvals.py`, `images/exports.py`, `publishing/downloads.py` | Approval validation, OCI export and static publication. |
+| `cache/dependencies.py`, `images/planning.py` | Scoped build fingerprints and the decision engine shared by execution and `--whatif`. |
+| `core/state.py`, `core/locks.py` | Persisted phases and cooperating-process resource locks. |
+| `distributed/planning.py` | Portable plans, worker execution and verified collection. |
+| `distributed/controller.py` | Saved SSH nodes, SCP staging, remote launch, monitoring, logs and result retrieval. |
+| `distributed/worker.py` | Standard-library remote control helper with bundle validation and PID identity checks. |
+| `commands/inspection.py` | Diagnostics, status, failures and saved CVE comparisons. |
 
 For example, Debian 11 amd64 uses `builders/common.py`, `builders/deb.py`,
 `builders/debian/common.py`, `builders/debian/bullseye/common.py`, and an optional
@@ -1457,9 +1681,8 @@ still rebuild and retest.
 
 Old approvals lack scoped fingerprints. They remain reusable only when the
 substantive inputs agree and all four files, rendered with the recorded cookie,
-base digests, tags and settings, match the approved files byte-for-byte. The next
-explicit refresh records this migration in the current report, retaining the
-original inputs and historical reports. `--whatif` performs the same comparison
+base digests, tags and settings, match the approved files byte-for-byte. Verified relocation mappings are recorded separately; refresh leaves the
+original approval inputs and historical reports unchanged. `--whatif` performs the same comparison
 without changing approvals. A mismatch follows normal `--retry-failed`/`--force`
 behavior. No schema bump or blanket cache invalidation is required.
 
@@ -1476,7 +1699,7 @@ python3 tools/openriak-docker/tests/run_without_docker.py
 ```
 
 The initial results and limits are recorded in
-[the refactor validation report](reports/refactor-validation-2026-09-11.md).
+[the refactor validation report](../../records/openriak-docker/reviews/refactor-validation-2026-09-11.md).
 
 Each release directory has `maintenance.json` for support status, sources,
 backport ownership/location and review notes. `review_required` means support has
@@ -1893,7 +2116,7 @@ workers themselves must be trusted to execute the tests honestly.
 
 | Command | Options |
 | --- | --- |
-| `distribute plan` | Required `--version VERSION` (repeatable) or `--all --yes`; required `--workers N`; optional `--output FILE` (default: `./openriak-docker-distribute-{UTC-timestamp}.json`), `--bundle FILE`, repeatable `--os-id PATTERN`, `--otp VERSION`, `--timeout SECONDS` (1800), `--cluster-nodes N` (5), `--force` or `--retry-failed`, identity options `--vendor`, `--source`, `--url`, `--namespace`, repeatable `--extra-namespace`, and the five healthcheck/shutdown options using the same duration syntax as `refresh` (retries are a count). Existing plan/bundle files are never overwritten. |
+| `distribute plan` | Required `--version VERSION` (repeatable) or `--all --yes`; required `--workers N`; optional `--output FILE` (default: `records/openriak-docker/distributed/plans/openriak-docker-distribute-{UTC-timestamp}.json`), `--bundle FILE`, repeatable `--os-id PATTERN`, `--otp VERSION`, `--timeout SECONDS` (1800), `--cluster-nodes N` (5), `--force` or `--retry-failed`, identity options `--vendor`, `--source`, `--url`, `--namespace`, repeatable `--extra-namespace`, and the five healthcheck/shutdown options using the same duration syntax as `refresh` (retries are a count). Existing plan/bundle files are never overwritten. |
 | `distribute run` (alias `start`) | Required `--plan FILE`; optional repeatable `--node NAME`, `--nodes-file FILE`, `--deployment FILE` (PLAN.remote.json), `--output ROOT` / `--results-dir ROOT` (PLAN.results, with node-name subdirectories), SSH connection/operation timeouts (10/1800). Stages and launches all selected workers with nohup automatically; repeating reconnects to the existing deployment. |
 | `distribute worker` | Low-level executor: required `--plan FILE`, `--worker N`, `--output PATH`; optional `--nohup` for manual use. Normally invoked automatically by `distribute run`. Generation and refresh options come from the plan. |
 | `distribute collect` | Required `--plan FILE`, repeatable `--results PATH`; optional `--output PATH`, `--whatif`. Default destination is the docs cache; `--output` disables docs publication. |
@@ -1910,3 +2133,24 @@ Distributed execution is covered by simulated SSH/SCP operations and OCI fixture
 plus a local fake worker exercising the real `nohup`/`ps` lifecycle. Validation does
 not connect to actual SSH nodes, build images or start containers; the first real
 multi-machine run remains an operational validation.
+
+### PCRE2 JIT security backport
+
+RHEL 9 and CentOS Stream 9 bases, shared by every OpenRiak KV version and OTP,
+backport CVE-2026-89161 into the native EL9 PCRE2 source package. The shared
+implementation is `builders/pcre2.py`, compiled by the reusable base for each OS release;
+changes invalidate only those releases. The pinned Rocky EL9 source RPM is
+rebuilt against the target OS, preserving its existing patches and package ABI.
+The OS base itself remains RHEL or CentOS respectively.
+
+The build runs the distribution test suite and a public-API regression for
+8-, 16- and 32-bit PCRE2 character widths. Negative controls rebuild without
+our patch and must reproduce the invalid free and leaked copied subject.
+Only runtime RPMs enter the final image. Compiler tools and source stay in the
+discarded installer stage; compact test logs remain under
+`/usr/share/openriak-build/`. Newer vendor packages take precedence and the
+installed runtime library must pass the same regression.
+
+Debian 12's `10.42-1+deb12u1` already contains this upstream fix. EL8's 10.32
+predates the affected copied-subject option. These cases are documented with
+version- and image-scoped CVE assessments rather than replacing their libraries.

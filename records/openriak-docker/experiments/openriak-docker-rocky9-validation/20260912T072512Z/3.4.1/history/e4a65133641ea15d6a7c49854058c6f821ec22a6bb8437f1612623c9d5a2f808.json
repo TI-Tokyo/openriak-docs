@@ -1,0 +1,77 @@
+{
+  "approval_run": "20260912T071907.994733Z",
+  "archive_digest": "sha256:69e500b437686b83beea9ea1ee83a322ddd636ec9db30cdb90feb484079da2dd",
+  "config_digest": "sha256:f45a3a7bdc9bcb979c50aad4939aac2e52dbfae9977e3c522a174f4bc0fd0a96",
+  "findings": [],
+  "image": "tiotjp/openriak-kv:3.4.1-rocky-9-otp26",
+  "package_check": {
+    "command": [
+      "docker",
+      "run",
+      "--rm",
+      "--pull=never",
+      "--network=none",
+      "--read-only",
+      "--cap-drop=ALL",
+      "--entrypoint",
+      "/bin/sh",
+      "sha256:f45a3a7bdc9bcb979c50aad4939aac2e52dbfae9977e3c522a174f4bc0fd0a96",
+      "-ec",
+      "rpm -q coreutils-single\nfor p in vim-minimal vim-common vim-filesystem; do if rpm -q \"$p\"; then exit 1; fi; done\ntest ! -e /usr/bin/vi\ntest ! -e /usr/bin/vim\ntest ! -d /usr/share/vim"
+    ],
+    "exit_code": 0,
+    "stderr": "",
+    "stdout": "coreutils-single-8.32-41.el9_8.1.x86_64\npackage vim-minimal is not installed\npackage vim-common is not installed\npackage vim-filesystem is not installed\n"
+  },
+  "platform": "linux/amd64",
+  "pushed": false,
+  "scans": {
+    "linux/amd64": {
+      "sarif": {
+        "command": [
+          "docker",
+          "scout",
+          "cves",
+          "--format",
+          "sarif",
+          "local://sha256:f45a3a7bdc9bcb979c50aad4939aac2e52dbfae9977e3c522a174f4bc0fd0a96"
+        ],
+        "data_file": {
+          "compression": "gzip",
+          "format": "json",
+          "path": "scout-output/e0eae9dd540d0031bfee6201b7d9ada234c46dae18b37af783a0b345acb3527c.gz",
+          "sha256": "e0eae9dd540d0031bfee6201b7d9ada234c46dae18b37af783a0b345acb3527c",
+          "size_bytes": 314
+        },
+        "exit_code": 0,
+        "finished_at": "2026-09-12T07:25:36.251376+00:00",
+        "started_at": "2026-09-12T07:25:13.495881+00:00",
+        "status": "complete",
+        "stderr": "    ...Storing image for indexing\n    \u2713 Image stored for indexing\n    ...Indexing\n    \u2713 Indexed 178 packages\n    \u2713 No vulnerable package detected\n"
+      },
+      "sbom": {
+        "command": [
+          "docker",
+          "scout",
+          "cves",
+          "--format",
+          "sbom",
+          "local://sha256:f45a3a7bdc9bcb979c50aad4939aac2e52dbfae9977e3c522a174f4bc0fd0a96"
+        ],
+        "data_file": {
+          "compression": "gzip",
+          "format": "json",
+          "path": "scout-output/3fe59a0d88ac178f9898b8b4d6395e4354b014763b7ec5b0e803383ac747789d.gz",
+          "sha256": "3fe59a0d88ac178f9898b8b4d6395e4354b014763b7ec5b0e803383ac747789d",
+          "size_bytes": 4058835
+        },
+        "exit_code": 0,
+        "finished_at": "2026-09-12T07:25:39.167725+00:00",
+        "started_at": "2026-09-12T07:25:36.262993+00:00",
+        "status": "complete",
+        "stderr": "    \u2713 SBOM of image already cached, 178 packages indexed\n    \u2713 No vulnerable package detected\n"
+      }
+    }
+  },
+  "schema_version": 2
+}

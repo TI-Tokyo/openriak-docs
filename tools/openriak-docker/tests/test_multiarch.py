@@ -228,7 +228,7 @@ alias {manager}=package_manager
             prepared = {"distributed_cookie": cookie, "base_images": bases}
             # Stop before any runtime action by simulating an existing test container.
             with mock.patch.object(tool, "docker_command", return_value="docker"), \
-                    mock.patch.object(tool.tempfile, "mkdtemp", return_value=str(workdir)), \
+                    mock.patch.object(tempfile, "mkdtemp", return_value=str(workdir)), \
                     mock.patch.object(tool, "free_tcp_port", return_value=18098), \
                     mock.patch.object(tool, "run_logged", return_value=mock.Mock(returncode=0, stdout="")) as run:
                 self.assertFalse(tool.refresh_target(target, 1800, keep_workdir=True, prepared=prepared))

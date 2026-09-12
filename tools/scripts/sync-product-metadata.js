@@ -130,7 +130,7 @@ const successfulDockerReports = (targetRoot) => {
 
 const dockerImagesForVersion = (version) => {
   const grouped = require('./docker-multiarch-metadata.js').multiarchDockerImages(
-    version, path.join(repositoryRoot, 'tools', 'cache', 'openriak-docker-multiarch'), dockerStaticRoot
+    version, path.join(repositoryRoot, 'records', 'openriak-docker', 'images'), dockerStaticRoot
   );
   const versionRoot = path.join(dockerCacheRoot, version);
   if (!fs.existsSync(versionRoot)) return grouped;

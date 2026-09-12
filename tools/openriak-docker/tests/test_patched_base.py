@@ -8,7 +8,7 @@ import unittest
 from unittest import mock
 
 from test_openriak_docker import docker_tool as tool
-import openriak_base as base
+import bases.workflow as base
 
 
 class PatchedBaseTests(unittest.TestCase):
@@ -39,14 +39,14 @@ class PatchedBaseTests(unittest.TestCase):
             self.metadata['manifests'][digest] = {'manifest': {'config': {'digest': image_id}}}
             proofs[target.platform] = {'status': 'passed', 'image_id': image_id}
         self.report = {'schema_version': 1, 'product': 'openriak-base', 'status': 'passed',
-            'image': 'tiotjp/' + base.BASE_TAG, 'tags': ['tiotjp/' + base.BASE_TAG],
+            'image': 'tiotjp/' + 'debian:bookworm-slim-for-openriak', 'tags': ['tiotjp/' + 'debian:bookworm-slim-for-openriak'],
             'identity': dataclasses.asdict(self.targets[0].identity),
             'run_id': self.history.name, 'platforms': list(proofs), 'tests': proofs,
             'base_images': self.bases, 'dockerfile_sha256': tool.sha256_file(self.root / 'Dockerfile'),
             'archive_sha256': tool.sha256_file(self.archive),
             'digest': self.metadata['digest'],
             'inputs': {'identity': dataclasses.asdict(self.targets[0].identity), 'platforms': list(proofs),
-                       'tags': ['tiotjp/' + base.BASE_TAG],
+                       'tags': ['tiotjp/' + 'debian:bookworm-slim-for-openriak'],
                        'upstreams': {t.platform: tool.base_image_for(t, upstream=True) for t in self.targets}}}
         self.save()
 
@@ -57,8 +57,8 @@ class PatchedBaseTests(unittest.TestCase):
     def test_platforms_come_from_metadata_and_tags_use_selected_namespace(self):
         expected = {t.platform for t in tool.discover_targets(None) if (t.family, t.release) == ('debian', '12')}
         self.assertEqual({t.platform for t in self.targets}, expected)
-        self.assertEqual(base.image_tags(self.targets[0].identity, ['openriak', 'tiotjp'], tool),
-                         ['tiotjp/' + base.BASE_TAG, 'openriak/' + base.BASE_TAG])
+        self.assertEqual(base.image_tags(self.targets[0].identity, ['openriak', 'tiotjp'], tool, base.base_tag(self.options, tool)),
+                         ['tiotjp/' + 'debian:bookworm-slim-for-openriak', 'openriak/' + 'debian:bookworm-slim-for-openriak'])
         self.options.platforms = ['linux/invalid']
         with self.assertRaises(tool.DockerToolError):
             base.selected_targets(self.options, tool)
@@ -77,19 +77,19 @@ class PatchedBaseTests(unittest.TestCase):
 
     def test_children_use_namespaced_base_and_do_not_compile_openssl(self):
         mode = {'strategy': 'clean-root', 'openssl_backport': tool.minimal.OPENSSL_VERSION,
-                'base_image': base.BASE_TAG}
+                'base_image': 'debian:bookworm-slim-for-openriak'}
         groups = [g for g in tool.grouped_targets(tool.discover_targets(['3.4.0', '3.4.1']))
                   if (g[0].family, g[0].release) == ('debian', '12')]
         with mock.patch.object(tool.minimal, 'configuration', return_value=mode):
             for group in groups:
                 targets = [dataclasses.replace(t, identity=self.targets[0].identity) for t in group]
                 pins = {t.platform: {'pinned': tool.base_image_for(t) + '@sha256:' + 'b' * 64} for t in targets}
-                self.assertEqual(tool.base_image_for(targets[0]), 'tiotjp/' + base.BASE_TAG)
+                self.assertEqual(tool.base_image_for(targets[0]), 'tiotjp/' + 'debian:bookworm-slim-for-openriak')
                 self.assertEqual(tool.base_image_for(targets[0], upstream=True), 'debian:bookworm-slim')
                 sources = [tool.render_multiarch_dockerfile(targets, pins, 'cookie', [])]
                 sources.extend(tool.render_dockerfile(t, pins[t.platform]['pinned'], 'cookie') for t in targets)
                 for source in sources:
-                    self.assertIn('tiotjp/' + base.BASE_TAG + '@sha256:', source)
+                    self.assertIn('tiotjp/' + 'debian:bookworm-slim-for-openriak' + '@sha256:', source)
                     self.assertNotIn('openssl-build-', source)
                     self.assertNotIn('dpkg-buildpackage', source)
                     self.assertIn('dpkg --compare-versions', source)
@@ -102,7 +102,7 @@ class PatchedBaseTests(unittest.TestCase):
         for target in targets:
             for namespace in ('openriak', 'tiotjp'):
                 selected = dataclasses.replace(target, identity=tool.ImageIdentity(namespace=namespace))
-                self.assertEqual(tool.base_image_for(selected), namespace + '/' + base.BASE_TAG)
+                self.assertEqual(tool.base_image_for(selected), namespace + '/' + 'debian:bookworm-slim-for-openriak')
                 self.assertEqual(tool.base_image_for(selected, upstream=True), 'debian:bookworm-slim')
 
     def test_libblkid_backport_is_tested_and_tar_is_removed_after_installation(self):
@@ -113,7 +113,7 @@ class PatchedBaseTests(unittest.TestCase):
         self.assertIn('valgrind --error-exitcode=99 --leak-check=full', source)
         self.assertIn('regression did not reject vulnerable source', source)
         self.assertLess(source.index('/opt/libblkid-packages/*.deb'), source.index(tool.minimal.remove_tar_script()))
-        self.assertIn('test ! -e /usr/bin/tar', base.runtime_check())
+        self.assertIn('test ! -e /usr/bin/tar', base.runtime_check(self.targets[0]))
         for target in self.targets:
             rendered = tool.render_dockerfile(target, self.bases[target.platform]['pinned'], 'test-cookie')
             self.assertIn('source=/usr/bin/tar,target=/usr/local/bin/tar,ro', rendered)
@@ -180,7 +180,7 @@ class PatchedBaseTests(unittest.TestCase):
     def test_nohup_uses_the_base_cache_log_directory(self):
         self.options.nohup = True
         arguments = ['base', 'refresh', '--namespace', 'tiotjp', '--nohup']
-        with mock.patch('openriak_background.launch', return_value=0) as launch:
+        with mock.patch('core.background.launch', return_value=0) as launch:
             self.assertEqual(base.main(self.options, tool, arguments), 0)
         forwarded_tool, options, forwarded = launch.call_args.args
         self.assertIs(forwarded_tool, tool)

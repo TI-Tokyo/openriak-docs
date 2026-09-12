@@ -1,3 +1,8 @@
+> Layout update: tool modules are now grouped by responsibility. Reports and reviews
+> live in `records/openriak-docker/`, approved source files in `artifacts/openriak-docker/`,
+> and local archives/logs in `.work/openriak-docker/`. See README.md for the migration
+> and current commands. Paths below describe the historical layout.
+
 # OpenRiak KV Docker generator and test cache — project handoff
 
 You are continuing an in-progress feature in the OpenRiak documentation repository. Read this note completely, then inspect the repository before changing anything. Preserve all existing uncommitted work and cached test evidence. Do not reset, discard, or broadly regenerate unrelated documentation.

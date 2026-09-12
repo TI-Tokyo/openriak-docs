@@ -77,6 +77,18 @@ use a scope whenever the conclusion depends on particular image contents.
 
 ## Updating the Downloads page
 
+Use the [current CVE review](../../../tools/openriak-docker/reports/cve-review-latest.md)
+for the latest verified per-image counts. Dated review reports are historical
+snapshots and can describe images that have since been replaced.
+
+When a finding disappears, put the latest scan result before a clearly labelled
+historical assessment. Preserve the earlier rationale and evidence, but do not
+present old rebuild instructions as outstanding work. Claim a vendor fix only
+after checking the installed package versions on every scanned architecture;
+scan absence alone is insufficient. `status: Fixed by vendor update` is descriptive
+and does not automatically exclude a finding. Keep such assessments scoped to
+their reviewed image digests and package versions.
+
 The development metadata watcher detects file additions, edits and deletions.
 For a manual metadata-only refresh, run from the repository root:
 

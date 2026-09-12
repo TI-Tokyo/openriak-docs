@@ -1,3 +1,6 @@
+import shutil
+import time
+import subprocess
 import contextlib
 import importlib.util
 import io
@@ -10,11 +13,7 @@ from unittest import mock
 
 MODULE_PATH = pathlib.Path(__file__).resolve().parents[1] / "openriak_docker.py"
 sys.path.insert(0, str(MODULE_PATH.parent))
-SPEC = importlib.util.spec_from_file_location("openriak_docker", MODULE_PATH)
-docker_tool = importlib.util.module_from_spec(SPEC)
-assert SPEC.loader is not None
-sys.modules[SPEC.name] = docker_tool
-SPEC.loader.exec_module(docker_tool)
+from core.context import context as docker_tool
 
 
 class OpenRiakDockerTests(unittest.TestCase):
@@ -329,7 +328,7 @@ listener.protobuf.internal = 127.0.0.1:8087
                 launcher.chmod(0o755)
                 script += f"PATH='{root}':$PATH\n"
                 script += f"data_dir='{root}'\nriak_admin_command cluster join openriak-kv@node-01.cluster-a.openriak\n"
-                result = docker_tool.subprocess.run(
+                result = subprocess.run(
                     ["/bin/sh", "-eu", "-c", script], capture_output=True, text=True,
                 )
                 if layout == "missing":
@@ -352,7 +351,7 @@ listener.protobuf.internal = 127.0.0.1:8087
             "registry.access.redhat.com/ubi8/ubi:8.10",
         )
         self.assertEqual(
-            docker_tool.base_image_for(rhel_targets["9"]),
+            docker_tool.base_image_for(rhel_targets["9"], upstream=True),
             "registry.access.redhat.com/ubi9/ubi:9.8",
         )
 
@@ -672,7 +671,7 @@ listener.protobuf.internal = 127.0.0.1:8087
             if "alias_of" not in target.operating_system:
                 continue
             with self.subTest(image=target.image):
-                result = docker_tool.subprocess.run(
+                result = subprocess.run(
                     ["/bin/sh", "-n"], input=docker_tool.package_install_script(target),
                     capture_output=True, text=True,
                 )
@@ -693,7 +692,7 @@ listener.protobuf.internal = 127.0.0.1:8087
                 (root / "sources.list.d/debian.sources").write_text("Types: deb\nURIs: http://deb.debian.org/debian\n")
                 (root / "sources.list.d/operator.list").write_text("# retained\n")
                 setup = docker_tool.debian_repository_setup(target)
-                result = docker_tool.subprocess.run(
+                result = subprocess.run(
                     ["/bin/sh", "-eu", "-c", setup.replace("/etc/apt", directory)],
                     capture_output=True, text=True,
                 )
@@ -725,7 +724,7 @@ listener.protobuf.internal = 127.0.0.1:8087
                 "gpgcheck=1\nenabled=1\n"
                 "gpgkey=file:///etc/pki/rpm-gpg/RPM-GPG-KEY-centosofficial\n"
             )
-            result = docker_tool.subprocess.run(
+            result = subprocess.run(
                 ["/bin/sh", "-eu", "-c", setup.replace("/etc/yum.repos.d", directory)],
                 capture_output=True, text=True,
             )
@@ -820,14 +819,14 @@ listener.protobuf.internal = 127.0.0.1:8087
                 self.assertFalse((self.target.static_directory / "Dockerfile").exists())
 
     def test_metadata_sync_is_docker_only_and_deduplicates_versions(self):
-        with mock.patch.object(docker_tool.shutil, "which", return_value="/usr/bin/node"), \
-             mock.patch.object(docker_tool.subprocess, "run", return_value=mock.Mock(returncode=0, stdout="")) as run:
+        with mock.patch.object(shutil, "which", return_value="/usr/bin/node"), \
+             mock.patch.object(subprocess, "run", return_value=mock.Mock(returncode=0, stdout="")) as run:
             docker_tool.sync_download_metadata(["3.4.1", "3.4.0", "3.4.1"])
         command = run.call_args.args[0]
         self.assertEqual(command[2:], ["--docker-only", "--include-version", "openriak-kv=3.4.0", "--include-version", "openriak-kv=3.4.1"])
 
     def test_refresh_target_has_timestamped_phase_progress_hooks(self):
-        source = MODULE_PATH.with_name("openriak_testing.py").read_text(encoding="utf-8")
+        source = (MODULE_PATH.parent / "validation/workflow.py").read_text(encoding="utf-8")
         self.assertIn('report_progress(f"Pulling and pinning base image (timeout ', source)
         self.assertIn(
             'report_progress("Creating Dockerfile, compose YAML files and .env for this run")',
@@ -848,18 +847,18 @@ listener.protobuf.internal = 127.0.0.1:8087
             self.assertIn('partial build output', log)
 
     def test_partial_single_compose_start_is_marked_for_cleanup(self):
-        source = MODULE_PATH.with_name("openriak_testing.py").read_text(encoding="utf-8")
+        source = (MODULE_PATH.parent / "validation/workflow.py").read_text(encoding="utf-8")
         marked = source.index("        compose_started = True\n        tool.record_step(\n            report,\n            \"start_compose_node\"")
         started = source.index('compose_command + ["up", "--detach", "--no-build"]', marked)
         self.assertLess(marked, started)
 
     def test_container_log_wait_fails_immediately_when_container_exits(self):
-        log_result = docker_tool.subprocess.CompletedProcess(
+        log_result = subprocess.CompletedProcess(
             args=["docker", "logs", "failed-node"],
             returncode=0,
             stdout="startup: configuration validation failed\n",
         )
-        state_result = docker_tool.subprocess.CompletedProcess(
+        state_result = subprocess.CompletedProcess(
             args=["docker", "container", "inspect", "failed-node"],
             returncode=0,
             stdout="false 1\n",
@@ -869,7 +868,7 @@ listener.protobuf.internal = 127.0.0.1:8087
             with mock.patch.object(
                 docker_tool, "docker_command", return_value="/usr/bin/docker"
             ), mock.patch.object(
-                docker_tool.subprocess,
+                subprocess,
                 "run",
                 side_effect=[log_result, state_result],
             ) as run:
@@ -888,14 +887,14 @@ listener.protobuf.internal = 127.0.0.1:8087
 
     def test_cli_readiness_wait_fails_immediately_when_container_exits(self):
         results = [
-            docker_tool.subprocess.CompletedProcess([], 1, stdout="Container is not running\n"),
-            docker_tool.subprocess.CompletedProcess([], 0, stdout="false 7\n"),
+            subprocess.CompletedProcess([], 1, stdout="Container is not running\n"),
+            subprocess.CompletedProcess([], 0, stdout="false 7\n"),
         ]
         with tempfile.TemporaryDirectory() as directory:
             with mock.patch.object(docker_tool, "docker_command", return_value="docker"), \
-                    mock.patch.object(docker_tool.subprocess, "run", side_effect=results) as run, \
+                    mock.patch.object(subprocess, "run", side_effect=results) as run, \
                     mock.patch.object(docker_tool, "container_http_ping") as http, \
-                    mock.patch.object(docker_tool.time, "sleep") as sleep:
+                    mock.patch.object(time, "sleep") as sleep:
                 with self.assertRaisesRegex(docker_tool.DockerToolError, "exited with code 7"):
                     docker_tool.wait_for_node("failed-node", 1800, pathlib.Path(directory))
                 self.assertEqual(run.call_count, 2)
@@ -904,7 +903,7 @@ listener.protobuf.internal = 127.0.0.1:8087
             self.assertIn("exited=7", (pathlib.Path(directory) / "readiness.log").read_text())
 
     def test_cluster_wait_fails_immediately_when_a_container_exits(self):
-        state_result = docker_tool.subprocess.CompletedProcess(
+        state_result = subprocess.CompletedProcess(
             args=["docker", "container", "inspect", "failed-node"],
             returncode=0,
             stdout="false 7\n",
@@ -914,7 +913,7 @@ listener.protobuf.internal = 127.0.0.1:8087
             with mock.patch.object(
                 docker_tool, "docker_command", return_value="/usr/bin/docker"
             ), mock.patch.object(
-                docker_tool.subprocess,
+                subprocess,
                 "run",
                 return_value=state_result,
             ) as run:

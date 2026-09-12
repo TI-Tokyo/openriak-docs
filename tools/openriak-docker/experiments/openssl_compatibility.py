@@ -6,7 +6,7 @@ from pathlib import Path
 import sys
 import uuid
 sys.path.insert(0, str(Path(__file__).resolve().parents[1]))
-import openriak_docker as tool
+from core.context import context as tool
 
 ERLANG = r'''
 {ok, _} = application:ensure_all_started(ssl),

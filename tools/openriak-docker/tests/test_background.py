@@ -12,7 +12,7 @@ import unittest
 from unittest import mock
 
 from test_openriak_docker import docker_tool as tool
-import openriak_background as background
+import core.background as background
 
 
 class BackgroundTests(unittest.TestCase):
@@ -91,7 +91,7 @@ class BackgroundTests(unittest.TestCase):
         targets = tool.discover_targets(['3.4.0'])
         options = tool.parser().parse_args(['refresh', '--version', '3.4.0'])
         with mock.patch.dict(os.environ, {'OPENRIAK_DOCKER_LOG_FILE': '/tmp/worker.log'}), \
-                mock.patch.object(tool.os, 'getpid', return_value=54321), \
+                mock.patch.object(os, 'getpid', return_value=54321), \
                 contextlib.redirect_stdout(io.StringIO()) as capture:
             tool.print_refresh_header(options, targets)
         self.assertIn('PID:           54321', capture.getvalue())

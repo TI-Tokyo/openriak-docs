@@ -1,297 +1,0 @@
-$ /usr/bin/docker buildx build --builder openriak-kv-multiarch --load --platform linux/amd64 --pull=false --no-cache --tag tiotjp/openriak-kv:test-3.4.0-ubuntu-jammy-otp24-linux-amd64-20260911t110443.203135z --file /home/peter/openriak-builds/openriak-distributed/openriak-docker-2026-09-11-b/local/20260911T084617.243958Z/results/3.4.0/3.4.0-ubuntu-jammy-otp24/platforms/linux-amd64/runs/20260911T110443.203135Z/Dockerfile /home/peter/openriak-builds/openriak-distributed/openriak-docker-2026-09-11-b/local/20260911T084617.243958Z/results/3.4.0/3.4.0-ubuntu-jammy-otp24/platforms/linux-amd64/runs/20260911T110443.203135Z
-started: 2026-09-11T11:04:43Z
-#0 building with "openriak-kv-multiarch" instance using docker-container driver
-
-#1 [internal] load build definition from Dockerfile
-#1 transferring dockerfile: 42.74kB 0.0s done
-#1 DONE 0.1s
-
-#2 resolve image config for docker-image://docker.io/docker/dockerfile:1.7
-#2 DONE 0.4s
-
-#3 docker-image://docker.io/docker/dockerfile:1.7@sha256:a57df69d0ea827fb7266491f2813635de6f17269be881f696fbfdf2d83dda33e
-#3 resolve docker.io/docker/dockerfile:1.7@sha256:a57df69d0ea827fb7266491f2813635de6f17269be881f696fbfdf2d83dda33e 0.0s done
-#3 CACHED
-
-#4 [internal] load metadata for docker.io/library/ubuntu:jammy@sha256:829f6df217bcbae2b371026e81711d1a787c61b2967ad09d015063663ebafbf7
-#4 ...
-
-#5 [auth] library/ubuntu:pull token for registry-1.docker.io
-#5 DONE 0.0s
-
-#4 [internal] load metadata for docker.io/library/ubuntu:jammy@sha256:829f6df217bcbae2b371026e81711d1a787c61b2967ad09d015063663ebafbf7
-#4 DONE 0.7s
-
-#6 [internal] load .dockerignore
-#6 transferring context: 2B done
-#6 DONE 0.1s
-
-#7 [download-amd64 1/1] ADD --checksum=sha256:21c4a240bc062a3896c6f739242bacc9ce5afafcc613e22c87bb86ae33286bb5 https://files.tiot.jp/riak/kv/3.4/3.4.0/ubuntu/jammy64/riak_3.4.0-OTP24_amd64.deb /riak_3.4.0-OTP24_amd64.deb
-#7 DONE 0.0s
-
-#8 [internal] preparing inline document
-#8 CACHED
-
-#9 [internal] preparing inline document
-#9 CACHED
-
-#7 [download-amd64 1/1] ADD --checksum=sha256:21c4a240bc062a3896c6f739242bacc9ce5afafcc613e22c87bb86ae33286bb5 https://files.tiot.jp/riak/kv/3.4/3.4.0/ubuntu/jammy64/riak_3.4.0-OTP24_amd64.deb /riak_3.4.0-OTP24_amd64.deb
-#7 CACHED
-
-#10 [install-amd64 1/2] FROM docker.io/library/ubuntu:jammy@sha256:829f6df217bcbae2b371026e81711d1a787c61b2967ad09d015063663ebafbf7
-#10 resolve docker.io/library/ubuntu:jammy@sha256:829f6df217bcbae2b371026e81711d1a787c61b2967ad09d015063663ebafbf7 0.1s done
-#10 CACHED
-
-#11 [download-amd64 1/1] ADD --checksum=sha256:21c4a240bc062a3896c6f739242bacc9ce5afafcc613e22c87bb86ae33286bb5 https://files.tiot.jp/riak/kv/3.4/3.4.0/ubuntu/jammy64/riak_3.4.0-OTP24_amd64.deb /riak_3.4.0-OTP24_amd64.deb
-#11 DONE 0.1s
-
-#12 [install-amd64 2/2] RUN --mount=type=bind,from=download-amd64,target=/opt/openriak-package,ro <<'OPENRIAK_PACKAGE_INSTALL' (set -eu...)
-#12 28.97 Get:1 http://archive.ubuntu.com/ubuntu jammy InRelease [270 kB]
-#12 29.95 Get:2 http://archive.ubuntu.com/ubuntu jammy-updates InRelease [128 kB]
-#12 30.19 Get:3 http://archive.ubuntu.com/ubuntu jammy-backports InRelease [127 kB]
-#12 30.42 Get:4 http://archive.ubuntu.com/ubuntu jammy/multiverse amd64 Packages [266 kB]
-#12 30.60 Get:5 http://archive.ubuntu.com/ubuntu jammy/main amd64 Packages [1792 kB]
-#12 31.05 Get:6 http://archive.ubuntu.com/ubuntu jammy/universe amd64 Packages [17.5 MB]
-#12 31.93 Get:7 http://archive.ubuntu.com/ubuntu jammy/restricted amd64 Packages [164 kB]
-#12 31.94 Get:8 http://archive.ubuntu.com/ubuntu jammy-updates/restricted amd64 Packages [8007 kB]
-#12 32.25 Get:9 http://archive.ubuntu.com/ubuntu jammy-updates/universe amd64 Packages [1620 kB]
-#12 32.32 Get:10 http://archive.ubuntu.com/ubuntu jammy-updates/multiverse amd64 Packages [93.2 kB]
-#12 32.32 Get:11 http://archive.ubuntu.com/ubuntu jammy-updates/main amd64 Packages [4623 kB]
-#12 32.49 Get:12 http://archive.ubuntu.com/ubuntu jammy-backports/main amd64 Packages [82.8 kB]
-#12 32.50 Get:13 http://archive.ubuntu.com/ubuntu jammy-backports/universe amd64 Packages [35.6 kB]
-#12 68.54 Ign:14 http://security.ubuntu.com/ubuntu jammy-security InRelease
-#12 138.0 Ign:14 http://security.ubuntu.com/ubuntu jammy-security InRelease
-#12 169.8 Get:14 http://security.ubuntu.com/ubuntu jammy-security InRelease [129 kB]
-#12 174.6 Get:15 http://security.ubuntu.com/ubuntu jammy-security/main amd64 Packages [4289 kB]
-#12 261.7 Get:16 http://security.ubuntu.com/ubuntu jammy-security/multiverse amd64 Packages [84.6 kB]
-#12 268.2 Get:17 http://security.ubuntu.com/ubuntu jammy-security/restricted amd64 Packages [7717 kB]
-#12 428.2 Get:18 http://security.ubuntu.com/ubuntu jammy-security/universe amd64 Packages [1317 kB]
-#12 454.1 Fetched 48.2 MB in 7min 8s (113 kB/s)
-#12 454.1 Reading package lists...
-#12 457.5 Reading package lists...
-#12 458.8 Building dependency tree...
-#12 459.0 Reading state information...
-#12 459.1 Calculating upgrade...
-#12 459.5 The following packages will be upgraded:
-#12 459.5   libc-bin libc6 perl-base
-#12 480.4 3 upgraded, 0 newly installed, 0 to remove and 0 not upgraded.
-#12 480.4 Need to get 5702 kB of archives.
-#12 480.4 After this operation, 3072 B of additional disk space will be used.
-#12 480.4 Get:1 http://archive.ubuntu.com/ubuntu jammy-updates/main amd64 perl-base amd64 5.34.0-3ubuntu1.9 [1762 kB]
-#12 482.3 Get:2 http://archive.ubuntu.com/ubuntu jammy-updates/main amd64 libc6 amd64 2.35-0ubuntu3.15 [3234 kB]
-#12 482.7 Get:3 http://archive.ubuntu.com/ubuntu jammy-updates/main amd64 libc-bin amd64 2.35-0ubuntu3.15 [706 kB]
-#12 483.0 debconf: delaying package configuration, since apt-utils is not installed
-#12 483.0 Fetched 5702 kB in 23s (245 kB/s)
-#12 483.1 (Reading database ... (Reading database ... 5%(Reading database ... 10%(Reading database ... 15%(Reading database ... 20%(Reading database ... 25%(Reading database ... 30%(Reading database ... 35%(Reading database ... 40%(Reading database ... 45%(Reading database ... 50%(Reading database ... 55%(Reading database ... 60%(Reading database ... 65%(Reading database ... 70%(Reading database ... 75%(Reading database ... 80%(Reading database ... 85%(Reading database ... 90%(Reading database ... 95%(Reading database ... 100%(Reading database ... 4393 files and directories currently installed.)
-#12 483.1 Preparing to unpack .../perl-base_5.34.0-3ubuntu1.9_amd64.deb ...
-#12 483.1 Unpacking perl-base (5.34.0-3ubuntu1.9) over (5.34.0-3ubuntu1.8) ...
-#12 486.5 Setting up perl-base (5.34.0-3ubuntu1.9) ...
-#12 487.4 (Reading database ... (Reading database ... 5%(Reading database ... 10%(Reading database ... 15%(Reading database ... 20%(Reading database ... 25%(Reading database ... 30%(Reading database ... 35%(Reading database ... 40%(Reading database ... 45%(Reading database ... 50%(Reading database ... 55%(Reading database ... 60%(Reading database ... 65%(Reading database ... 70%(Reading database ... 75%(Reading database ... 80%(Reading database ... 85%(Reading database ... 90%(Reading database ... 95%(Reading database ... 100%(Reading database ... 4393 files and directories currently installed.)
-#12 487.4 Preparing to unpack .../libc6_2.35-0ubuntu3.15_amd64.deb ...
-#12 487.5 Unpacking libc6:amd64 (2.35-0ubuntu3.15) over (2.35-0ubuntu3.14) ...
-#12 490.2 Setting up libc6:amd64 (2.35-0ubuntu3.15) ...
-#12 491.4 (Reading database ... (Reading database ... 5%(Reading database ... 10%(Reading database ... 15%(Reading database ... 20%(Reading database ... 25%(Reading database ... 30%(Reading database ... 35%(Reading database ... 40%(Reading database ... 45%(Reading database ... 50%(Reading database ... 55%(Reading database ... 60%(Reading database ... 65%(Reading database ... 70%(Reading database ... 75%(Reading database ... 80%(Reading database ... 85%(Reading database ... 90%(Reading database ... 95%(Reading database ... 100%(Reading database ... 4393 files and directories currently installed.)
-#12 491.4 Preparing to unpack .../libc-bin_2.35-0ubuntu3.15_amd64.deb ...
-#12 491.4 Unpacking libc-bin (2.35-0ubuntu3.15) over (2.35-0ubuntu3.14) ...
-#12 491.7 Setting up libc-bin (2.35-0ubuntu3.15) ...
-#12 491.9 Reading package lists...
-#12 493.1 Building dependency tree...
-#12 493.3 Reading state information...
-#12 493.6 passwd is already the newest version (1:4.8.1-2ubuntu2.2).
-#12 493.6 procps is already the newest version (2:3.3.17-6ubuntu2.1).
-#12 493.6 The following additional packages will be installed:
-#12 493.6   cron libpopt0 logrotate openssl sudo
-#12 493.6 Suggested packages:
-#12 493.6   anacron checksecurity default-mta | mail-transport-agent bsd-mailx | mailx
-#12 493.6 The following NEW packages will be installed:
-#12 493.6   ca-certificates cron libpopt0 logrotate openssl riak sudo tzdata
-#12 493.8 0 upgraded, 8 newly installed, 0 to remove and 0 not upgraded.
-#12 493.8 Need to get 2647 kB/31.3 MB of archives.
-#12 493.8 After this operation, 60.7 MB of additional disk space will be used.
-#12 493.8 Get:1 /tmp/riak_3.4.0-OTP24_amd64.deb riak amd64 3.4.0-OTP24 [28.6 MB]
-#12 513.7 Get:2 http://archive.ubuntu.com/ubuntu jammy/main amd64 cron amd64 3.0pl1-137ubuntu3 [73.7 kB]
-#12 514.5 Get:3 http://archive.ubuntu.com/ubuntu jammy-updates/main amd64 openssl amd64 3.0.2-0ubuntu1.29 [1185 kB]
-#12 515.7 Get:4 http://archive.ubuntu.com/ubuntu jammy-updates/main amd64 ca-certificates all 20260601~22.04.1 [141 kB]
-#12 515.7 Get:5 http://archive.ubuntu.com/ubuntu jammy/main amd64 libpopt0 amd64 1.18-3build1 [28.2 kB]
-#12 515.8 Get:6 http://archive.ubuntu.com/ubuntu jammy-updates/main amd64 logrotate amd64 3.19.0-1ubuntu1.1 [54.3 kB]
-#12 515.8 Get:7 http://archive.ubuntu.com/ubuntu jammy-updates/main amd64 sudo amd64 1.9.9-1ubuntu2.6 [820 kB]
-#12 515.9 Get:8 http://archive.ubuntu.com/ubuntu jammy-updates/main amd64 tzdata all 2026c-0ubuntu0.22.04.1 [346 kB]
-#12 516.1 debconf: delaying package configuration, since apt-utils is not installed
-#12 516.1 Fetched 2647 kB in 22s (119 kB/s)
-#12 516.1 Selecting previously unselected package cron.
-#12 516.1 (Reading database ... (Reading database ... 5%(Reading database ... 10%(Reading database ... 15%(Reading database ... 20%(Reading database ... 25%(Reading database ... 30%(Reading database ... 35%(Reading database ... 40%(Reading database ... 45%(Reading database ... 50%(Reading database ... 55%(Reading database ... 60%(Reading database ... 65%(Reading database ... 70%(Reading database ... 75%(Reading database ... 80%(Reading database ... 85%(Reading database ... 90%(Reading database ... 95%(Reading database ... 100%(Reading database ... 4393 files and directories currently installed.)
-#12 516.1 Preparing to unpack .../0-cron_3.0pl1-137ubuntu3_amd64.deb ...
-#12 516.2 Unpacking cron (3.0pl1-137ubuntu3) ...
-#12 516.2 Selecting previously unselected package openssl.
-#12 516.2 Preparing to unpack .../1-openssl_3.0.2-0ubuntu1.29_amd64.deb ...
-#12 516.2 Unpacking openssl (3.0.2-0ubuntu1.29) ...
-#12 516.3 Selecting previously unselected package ca-certificates.
-#12 516.3 Preparing to unpack .../2-ca-certificates_20260601~22.04.1_all.deb ...
-#12 516.3 Unpacking ca-certificates (20260601~22.04.1) ...
-#12 516.4 Selecting previously unselected package libpopt0:amd64.
-#12 516.4 Preparing to unpack .../3-libpopt0_1.18-3build1_amd64.deb ...
-#12 516.5 Unpacking libpopt0:amd64 (1.18-3build1) ...
-#12 516.5 Selecting previously unselected package logrotate.
-#12 516.5 Preparing to unpack .../4-logrotate_3.19.0-1ubuntu1.1_amd64.deb ...
-#12 516.5 Unpacking logrotate (3.19.0-1ubuntu1.1) ...
-#12 516.6 Selecting previously unselected package sudo.
-#12 516.6 Preparing to unpack .../5-sudo_1.9.9-1ubuntu2.6_amd64.deb ...
-#12 516.7 Unpacking sudo (1.9.9-1ubuntu2.6) ...
-#12 516.7 Selecting previously unselected package tzdata.
-#12 516.7 Preparing to unpack .../6-tzdata_2026c-0ubuntu0.22.04.1_all.deb ...
-#12 516.7 Unpacking tzdata (2026c-0ubuntu0.22.04.1) ...
-#12 516.9 Selecting previously unselected package riak.
-#12 516.9 Preparing to unpack .../7-riak_3.4.0-OTP24_amd64.deb ...
-#12 516.9 Unpacking riak (3.4.0-OTP24) ...
-#12 517.3 Setting up cron (3.0pl1-137ubuntu3) ...
-#12 517.5 Adding group `crontab' (GID 101) ...
-#12 517.5 Done.
-#12 517.5 invoke-rc.d: could not determine current runlevel
-#12 517.5 invoke-rc.d: policy-rc.d denied execution of start.
-#12 517.6 Setting up tzdata (2026c-0ubuntu0.22.04.1) ...
-#12 517.7 
-#12 517.7 Current default time zone: 'Etc/UTC'
-#12 517.7 Local time is now:      Fri Sep 11 11:13:23 UTC 2026.
-#12 517.7 Universal Time is now:  Fri Sep 11 11:13:23 UTC 2026.
-#12 517.7 Run 'dpkg-reconfigure tzdata' if you wish to change it.
-#12 517.7 
-#12 517.7 Setting up sudo (1.9.9-1ubuntu2.6) ...
-#12 517.9 Setting up openssl (3.0.2-0ubuntu1.29) ...
-#12 517.9 Setting up libpopt0:amd64 (1.18-3build1) ...
-#12 517.9 Setting up logrotate (3.19.0-1ubuntu1.1) ...
-#12 518.1 Setting up riak (3.4.0-OTP24) ...
-#12 518.2 Adding group `riak' (GID 102) ...
-#12 518.2 Done.
-#12 518.2 Adding system user `riak' (UID 101) ...
-#12 518.2 Adding new user `riak' (UID 101) with group `riak' ...
-#12 518.3 Not creating home directory `/var/lib/riak'.
-#12 519.2 Setting up ca-certificates (20260601~22.04.1) ...
-#12 520.5 Updating certificates in /etc/ssl/certs...
-#12 520.9 121 added, 0 removed; done.
-#12 521.0 Processing triggers for libc-bin (2.35-0ubuntu3.15) ...
-#12 521.0 Processing triggers for ca-certificates (20260601~22.04.1) ...
-#12 521.0 Updating certificates in /etc/ssl/certs...
-#12 521.3 0 added, 0 removed; done.
-#12 521.3 Running hooks in /etc/ca-certificates/update.d...
-#12 521.3 done.
-#12 521.4 dpkg: warning: overriding problem because --force enabled:
-#12 521.4 dpkg: warning: this is an essential package; it should not be removed
-#12 521.4 dpkg: warning: overriding problem because --force enabled:
-#12 521.4 dpkg: warning: this is an essential package; it should not be removed
-#12 521.4 dpkg: warning: overriding problem because --force enabled:
-#12 521.4 dpkg: warning: this is an essential package; it should not be removed
-#12 521.4 dpkg: warning: overriding problem because --force enabled:
-#12 521.4 dpkg: warning: this is an essential package; it should not be removed
-#12 521.4 dpkg: warning: overriding problem because --force enabled:
-#12 521.4 dpkg: warning: this is an essential package; it should not be removed
-#12 521.4 dpkg: warning: overriding problem because --force enabled:
-#12 521.4 dpkg: warning: this is an essential package; it should not be removed
-#12 521.4 dpkg: warning: overriding problem because --force enabled:
-#12 521.4 dpkg: warning: this is an essential package; it should not be removed
-#12 521.5 dpkg: warning: overriding problem because --force enabled:
-#12 521.5 dpkg: warning: this is an essential package; it should not be removed
-#12 521.5 dpkg: warning: overriding problem because --force enabled:
-#12 521.5 dpkg: warning: this is an essential package; it should not be removed
-#12 521.5 dpkg: warning: overriding problem because --force enabled:
-#12 521.5 dpkg: warning: this is an essential package; it should not be removed
-#12 521.5 dpkg: warning: overriding problem because --force enabled:
-#12 521.5 dpkg: warning: this is an essential package; it should not be removed
-#12 521.5 dpkg: warning: overriding problem because --force enabled:
-#12 521.5 dpkg: warning: this is an essential package; it should not be removed
-#12 521.5 dpkg: warning: overriding problem because --force enabled:
-#12 521.5 dpkg: warning: this is an essential package; it should not be removed
-#12 521.5 dpkg: warning: overriding problem because --force enabled:
-#12 521.5 dpkg: warning: this is an essential package; it should not be removed
-#12 521.5 dpkg: warning: overriding problem because --force enabled:
-#12 521.5 dpkg: warning: this is an essential package; it should not be removed
-#12 521.5 dpkg: perl-base: dependency problems, but removing anyway as you requested:
-#12 521.5  usrmerge depends on perl-base (>= 5.32.1-3).
-#12 521.5  init-system-helpers depends on perl-base (>= 5.20.1-3).
-#12 521.5  debconf depends on perl-base (>= 5.20.1-3~).
-#12 521.5 
-#12 521.5 (Reading database ... 8815 files and directories currently installed.)
-#12 521.5 Removing perl-base (5.34.0-3ubuntu1.9) ...
-#12 521.6 Purging configuration files for perl-base (5.34.0-3ubuntu1.9) ...
-#12 521.8 dpkg: warning: overriding problem because --force enabled:
-#12 521.8 dpkg: warning: this is an essential package; it should not be removed
-#12 521.8 dpkg: warning: overriding problem because --force enabled:
-#12 521.8 dpkg: warning: this is an essential package; it should not be removed
-#12 521.8 dpkg: warning: overriding problem because --force enabled:
-#12 521.8 dpkg: warning: this is an essential package; it should not be removed
-#12 521.8 dpkg: warning: overriding problem because --force enabled:
-#12 521.8 dpkg: warning: this is an essential package; it should not be removed
-#12 521.8 dpkg: warning: overriding problem because --force enabled:
-#12 521.8 dpkg: warning: this is an essential package; it should not be removed
-#12 521.8 dpkg: warning: overriding problem because --force enabled:
-#12 521.8 dpkg: warning: this is an essential package; it should not be removed
-#12 521.8 dpkg: warning: overriding problem because --force enabled:
-#12 521.8 dpkg: warning: this is an essential package; it should not be removed
-#12 521.8 dpkg: warning: overriding problem because --force enabled:
-#12 521.8 dpkg: warning: this is an essential package; it should not be removed
-#12 521.8 dpkg: warning: overriding problem because --force enabled:
-#12 521.8 dpkg: warning: this is an essential package; it should not be removed
-#12 521.8 dpkg: warning: overriding problem because --force enabled:
-#12 521.8 dpkg: warning: this is an essential package; it should not be removed
-#12 521.9 dpkg: warning: overriding problem because --force enabled:
-#12 521.9 dpkg: warning: this is an essential package; it should not be removed
-#12 521.9 dpkg: warning: overriding problem because --force enabled:
-#12 521.9 dpkg: warning: this is an essential package; it should not be removed
-#12 521.9 dpkg: warning: overriding problem because --force enabled:
-#12 521.9 dpkg: warning: this is an essential package; it should not be removed
-#12 521.9 dpkg: warning: overriding problem because --force enabled:
-#12 521.9 dpkg: warning: this is an essential package; it should not be removed
-#12 521.9 dpkg: warning: overriding problem because --force enabled:
-#12 521.9 dpkg: warning: this is an essential package; it should not be removed
-#12 521.9 dpkg: warning: overriding problem because --force enabled:
-#12 521.9 dpkg: warning: this is an essential package; it should not be removed
-#12 521.9 dpkg: tar: dependency problems, but removing anyway as you requested:
-#12 521.9  dpkg depends on tar (>= 1.28-1).
-#12 521.9 
-#12 521.9 (Reading database ... 8091 files and directories currently installed.)
-#12 521.9 Removing tar (1.34+dfsg-1ubuntu0.1.22.04.6) ...
-#12 DONE 522.1s
-
-#13 [package-amd64 1/1] COPY --from=install-amd64 / /
-#13 DONE 0.6s
-
-#14 [final 1/4] RUN <<'OPENRIAK_IMAGE_SETUP' (set -eu...)
-#14 0.140 uid=101(riak) gid=102(riak) groups=102(riak)
-#14 DONE 0.3s
-
-#15 [final 2/4] COPY <<OPENRIAK_ENTRYPOINT /usr/local/bin/openriak-entrypoint
-#15 DONE 0.1s
-
-#16 [final 3/4] COPY <<OPENRIAK_HEALTHCHECK /usr/local/bin/openriak-healthcheck
-#16 DONE 0.1s
-
-#17 [final 4/4] RUN <<'OPENRIAK_SCRIPT_SETUP' (set -eu...)
-#17 DONE 0.1s
-
-#18 exporting to docker image format
-#18 exporting layers
-#18 exporting layers 4.7s done
-#18 exporting manifest sha256:8807948711d90e674cb3571fb19ea6b5e66ecbc41426f2b951fba2b19e576242 0.0s done
-#18 exporting config sha256:4ff0ddca4bfa95bae9934182866f7dee2664ecd366dbf79393e053eb3dd1883d 0.0s done
-#18 sending tarball
-#18 ...
-
-#19 importing to docker
-#19 loading layer d7459ef5b329 557.06kB / 64.40MB
-#19 loading layer d7459ef5b329 62.95MB / 64.40MB 2.4s
-#19 loading layer 2b001c05b2b3 23.58kB / 23.58kB
-#19 loading layer fb6d69dac897 7.71kB / 7.71kB
-#19 loading layer 240c167532c7 392B / 392B
-#19 loading layer fb6d69dac897 7.71kB / 7.71kB 0.2s done
-#19 loading layer 1513d691435d 7.88kB / 7.88kB
-#19 loading layer d7459ef5b329 64.40MB / 64.40MB 3.2s done
-#19 loading layer 2b001c05b2b3 23.58kB / 23.58kB 0.2s done
-#19 loading layer 240c167532c7 392B / 392B 0.1s done
-#19 loading layer 1513d691435d 7.88kB / 7.88kB 0.1s done
-#19 DONE 3.2s
-
-#18 exporting to docker image format
-#18 sending tarball 3.9s done
-#18 DONE 8.7s
-
-timeout_seconds: 3600
-exit_code: 0

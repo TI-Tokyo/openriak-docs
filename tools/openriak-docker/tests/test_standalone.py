@@ -1,3 +1,5 @@
+import shutil
+import subprocess
 import argparse
 import contextlib
 import dataclasses
@@ -113,7 +115,7 @@ class StandaloneTests(unittest.TestCase):
         self.assertEqual(group[0].output_root, self.output)
         self.assertEqual(group[0].identity, self.identity)
         with mock.patch.object(tool, 'sync_download_metadata', side_effect=AssertionError('must not sync')), \
-                mock.patch.object(tool.shutil, 'copy2', side_effect=AssertionError('must not publish')):
+                mock.patch.object(shutil, 'copy2', side_effect=AssertionError('must not publish')):
             tool.publish_group(group, {'status': 'passed'})
 
     def test_changed_output_is_not_overwritten_without_force(self):
@@ -178,8 +180,8 @@ class StandaloneTests(unittest.TestCase):
         capture = io.StringIO()
         output = 'Synced OpenRiak KV 3.4.0: 18 tested Docker targets.\n\nSynced OpenRiak KV 3.4.1: 17 tested Docker targets.\n'
         with contextlib.redirect_stdout(tool.IndentedProgress(capture, 8)), \
-                mock.patch.object(tool.shutil, 'which', return_value='/usr/bin/node'), \
-                mock.patch.object(tool.subprocess, 'run', return_value=mock.Mock(returncode=0, stdout=output)), \
+                mock.patch.object(shutil, 'which', return_value='/usr/bin/node'), \
+                mock.patch.object(subprocess, 'run', return_value=mock.Mock(returncode=0, stdout=output)), \
                 mock.patch.object(tool, 'log_timestamp', return_value='2026-09-06 19:00:00'):
             tool.sync_download_metadata(['3.4.0', '3.4.1'])
         self.assertEqual(capture.getvalue(), ''.join(

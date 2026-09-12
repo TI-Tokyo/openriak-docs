@@ -11,8 +11,8 @@ import shutil
 import tarfile
 
 sys.path.insert(0, str(Path(__file__).resolve().parents[1]))
-import openriak_docker as tool
-import openriak_minimal as minimal
+from core.context import context as tool
+import images.minimal as minimal
 from rhel_minimal import scan_image
 
 
@@ -58,16 +58,17 @@ def main():
     if args.openssl_backport:
         candidates['debian']['12']['openssl_backport'] = minimal.OPENSSL_VERSION
     if args.base_cache:
-        import openriak_base
+        import bases.workflow as openriak_base
         base_approval, base_archive, base_metadata = openriak_base.approval(args.base_cache.resolve(), tool)
-        candidates['debian']['12']['base_image'] = openriak_base.BASE_TAG
+        approved_base_tag = base_approval['image'].split('/', 1)[1]
+        candidates['debian']['12']['base_image'] = approved_base_tag
     def candidate_configuration(target):
         current = original_configuration(target)
         candidate = candidates.get(target.family, {}).get(target.release)
         return {**(current or {}), **candidate} if candidate else current
 
     minimal.configuration = candidate_configuration
-    output = tool.REPOSITORY_ROOT / 'tools/cache/openriak-docker-minimal-validation' / tool.run_id()
+    output = tool.REPOSITORY_ROOT / '.work/openriak-docker/experiments/minimal-validation' / tool.run_id()
     output.mkdir(parents=True)
     original_resolve = tool.resolve_base_image
     original_run_logged = tool.run_logged
@@ -89,12 +90,12 @@ def main():
                 else:
                     raise ValueError('Unexpected OCI member type')
         def resolve_patched(target, logs, timeout):
-            image = f'{target.identity.namespace}/{openriak_base.BASE_TAG}'
+            image = f'{target.identity.namespace}/{approved_base_tag}'
             return image, image + '@' + base_metadata['digest']
         tool.resolve_base_image = resolve_patched
         def local_base_context(command, *arguments, **keywords):
             if list(command[1:3]) == ['buildx', 'build']:
-                reference = 'openriak-minimal-validation/' + openriak_base.BASE_TAG + '@' + base_metadata['digest']
+                reference = 'openriak-minimal-validation/' + approved_base_tag + '@' + base_metadata['digest']
                 command = [*command[:-1], '--build-context',
                            f'{reference}=oci-layout://{layout}@{base_metadata["digest"]}', command[-1]]
             return original_run_logged(command, *arguments, **keywords)

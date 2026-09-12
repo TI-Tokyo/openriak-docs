@@ -8,7 +8,7 @@ import unittest
 from unittest import mock
 
 from test_openriak_docker import docker_tool as tool
-import openriak_whatif as whatif
+import images.whatif as whatif
 
 
 class WhatifTests(unittest.TestCase):

@@ -1,0 +1,178 @@
+{
+  "reviewed_at": "2026-09-12T07:19:29.925606+00:00",
+  "operation": "local_rebuild_validation",
+  "pushed": false,
+  "images": [
+    {
+      "image": "tiotjp/openriak-kv:3.4.0-rocky-9-otp26",
+      "approval_run": "20260912T071411.522446Z",
+      "archive_digest": "sha256:606077c8b46cf84b528be8df35639cc69481452e46ff4fef4da953970a479624",
+      "config_digest": "sha256:b162c3a88e6feefea63dc0dc1c5931fbf8737b1c1b1899c074b268d7c97860a1",
+      "report": "tools/cache/openriak-docker-rocky9-validation/20260912T071929Z/3.4.0/validation.json",
+      "finding_count": 0,
+      "findings": [],
+      "package_check": {
+        "command": [
+          "docker",
+          "run",
+          "--rm",
+          "--pull=never",
+          "--network=none",
+          "--read-only",
+          "--cap-drop=ALL",
+          "--entrypoint",
+          "/bin/sh",
+          "sha256:b162c3a88e6feefea63dc0dc1c5931fbf8737b1c1b1899c074b268d7c97860a1",
+          "-ec",
+          "rpm -q coreutils-single\nfor p in vim-minimal vim-common vim-filesystem; do if rpm -q \"$p\"; then exit 1; fi; done\ntest ! -e /usr/bin/vi\ntest ! -e /usr/bin/vim\ntest ! -d /usr/share/vim"
+        ],
+        "exit_code": 0,
+        "stdout": "coreutils-single-8.32-41.el9_8.1.x86_64\npackage vim-minimal is not installed\npackage vim-common is not installed\npackage vim-filesystem is not installed\n",
+        "stderr": ""
+      },
+      "integration_report": "tools/cache/openriak-docker-multiarch/3.4.0/3.4.0-rocky-9-otp26/platforms/linux-amd64/report.json",
+      "integration_report_sha256": "839b2698e1e2da3c052c528625f1ee5b0561d1474538a9e71f5f664a44772e5c",
+      "test_status": "passed",
+      "admin_test": {
+        "command": "riak admin test",
+        "response": "Successfully completed 1 read/write cycle to 'openriak-kv@node-01.cluster-a.openriak'",
+        "status": "passed"
+      },
+      "cluster_admin_tests": {
+        "openriak-kv-3.4.0-rocky-9-otp26-node-1-t-822235z": {
+          "command": "riak admin test",
+          "response": "Successfully completed 1 read/write cycle to 'openriak-kv@node-01.cluster-a.openriak'",
+          "status": "passed"
+        },
+        "openriak-kv-3.4.0-rocky-9-otp26-node-2-t-822235z": {
+          "command": "riak admin test",
+          "response": "Successfully completed 1 read/write cycle to 'openriak-kv@node-02.cluster-a.openriak'",
+          "status": "passed"
+        },
+        "openriak-kv-3.4.0-rocky-9-otp26-node-3-t-822235z": {
+          "command": "riak admin test",
+          "response": "Successfully completed 1 read/write cycle to 'openriak-kv@node-03.cluster-a.openriak'",
+          "status": "passed"
+        },
+        "openriak-kv-3.4.0-rocky-9-otp26-node-4-t-822235z": {
+          "command": "riak admin test",
+          "response": "Successfully completed 1 read/write cycle to 'openriak-kv@node-04.cluster-a.openriak'",
+          "status": "passed"
+        },
+        "openriak-kv-3.4.0-rocky-9-otp26-node-5-t-822235z": {
+          "command": "riak admin test",
+          "response": "Successfully completed 1 read/write cycle to 'openriak-kv@node-05.cluster-a.openriak'",
+          "status": "passed"
+        }
+      },
+      "tags": [
+        "tiotjp/openriak-kv:3.4.0-rocky-9-otp26",
+        "tiotjp/openriak-kv:3.4.0-rocky-9",
+        "tiotjp/openriak-kv:3.4.0-rocky"
+      ],
+      "platforms": [
+        "linux/amd64"
+      ]
+    },
+    {
+      "image": "tiotjp/openriak-kv:3.4.1-rocky-9-otp26",
+      "approval_run": "20260912T071907.994733Z",
+      "archive_digest": "sha256:69e500b437686b83beea9ea1ee83a322ddd636ec9db30cdb90feb484079da2dd",
+      "config_digest": "sha256:f45a3a7bdc9bcb979c50aad4939aac2e52dbfae9977e3c522a174f4bc0fd0a96",
+      "report": "tools/cache/openriak-docker-rocky9-validation/20260912T072512Z/3.4.1/validation.json",
+      "finding_count": 0,
+      "findings": [],
+      "package_check": {
+        "command": [
+          "docker",
+          "run",
+          "--rm",
+          "--pull=never",
+          "--network=none",
+          "--read-only",
+          "--cap-drop=ALL",
+          "--entrypoint",
+          "/bin/sh",
+          "sha256:f45a3a7bdc9bcb979c50aad4939aac2e52dbfae9977e3c522a174f4bc0fd0a96",
+          "-ec",
+          "rpm -q coreutils-single\nfor p in vim-minimal vim-common vim-filesystem; do if rpm -q \"$p\"; then exit 1; fi; done\ntest ! -e /usr/bin/vi\ntest ! -e /usr/bin/vim\ntest ! -d /usr/share/vim"
+        ],
+        "exit_code": 0,
+        "stdout": "coreutils-single-8.32-41.el9_8.1.x86_64\npackage vim-minimal is not installed\npackage vim-common is not installed\npackage vim-filesystem is not installed\n",
+        "stderr": ""
+      },
+      "integration_report": "tools/cache/openriak-docker-multiarch/3.4.1/3.4.1-rocky-9-otp26/platforms/linux-amd64/report.json",
+      "integration_report_sha256": "54f339ea62eb75f2447d66970aee7dbdb226def4483f06e130a71c22cf3e2e1f",
+      "test_status": "passed",
+      "admin_test": {
+        "command": "riak admin test",
+        "response": "Successfully completed 1 read/write cycle to 'openriak-kv@node-01.cluster-a.openriak'",
+        "status": "passed"
+      },
+      "cluster_admin_tests": {
+        "openriak-kv-3.4.1-rocky-9-otp26-node-1-t-444322z": {
+          "command": "riak admin test",
+          "response": "Successfully completed 1 read/write cycle to 'openriak-kv@node-01.cluster-a.openriak'",
+          "status": "passed"
+        },
+        "openriak-kv-3.4.1-rocky-9-otp26-node-2-t-444322z": {
+          "command": "riak admin test",
+          "response": "Successfully completed 1 read/write cycle to 'openriak-kv@node-02.cluster-a.openriak'",
+          "status": "passed"
+        },
+        "openriak-kv-3.4.1-rocky-9-otp26-node-3-t-444322z": {
+          "command": "riak admin test",
+          "response": "Successfully completed 1 read/write cycle to 'openriak-kv@node-03.cluster-a.openriak'",
+          "status": "passed"
+        },
+        "openriak-kv-3.4.1-rocky-9-otp26-node-4-t-444322z": {
+          "command": "riak admin test",
+          "response": "Successfully completed 1 read/write cycle to 'openriak-kv@node-04.cluster-a.openriak'",
+          "status": "passed"
+        },
+        "openriak-kv-3.4.1-rocky-9-otp26-node-5-t-444322z": {
+          "command": "riak admin test",
+          "response": "Successfully completed 1 read/write cycle to 'openriak-kv@node-05.cluster-a.openriak'",
+          "status": "passed"
+        }
+      },
+      "tags": [
+        "tiotjp/openriak-kv:3.4.1-rocky-9-otp26",
+        "tiotjp/openriak-kv:3.4.1-rocky-9",
+        "tiotjp/openriak-kv:3.4.1-rocky"
+      ],
+      "platforms": [
+        "linux/amd64"
+      ]
+    }
+  ],
+  "changes": {
+    "rocky_9": {
+      "remove_packages": [
+        "vim-minimal",
+        "vim-common",
+        "vim-filesystem"
+      ],
+      "minimum_packages_added": {
+        "coreutils-single": "8.32-41.el9_8.1"
+      }
+    }
+  },
+  "validation": {
+    "unit_tests": {
+      "passed": 292,
+      "command": "python3 tools/openriak-docker/tests/run_without_docker.py"
+    },
+    "unchanged_other_os_renderings": true,
+    "rebuild_fingerprints_changed_only_for_rocky_9": true,
+    "push_preflight": "passed for both images and all aliases",
+    "published_downloads": "all eight files match approved caches",
+    "oci_archives_ignored_by_git": true,
+    "registry_push_performed": false,
+    "arm64_tests_performed": false
+  },
+  "sources": [
+    "https://download.rockylinux.org/pub/rocky/9/BaseOS/x86_64/os/Packages/c/",
+    "tools/openriak-docker/reports/cve-review-2026-09-12.json"
+  ]
+}

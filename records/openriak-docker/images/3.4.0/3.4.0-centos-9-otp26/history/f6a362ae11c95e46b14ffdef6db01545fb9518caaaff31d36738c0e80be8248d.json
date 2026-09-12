@@ -1,0 +1,289 @@
+{
+  "artifacts": {
+    "compose_cluster": {
+      "filename": "compose.cluster.yaml",
+      "sha256": "8ede1383b9dbde8958cd3f11da084c03cbdabfc7b2479b86450a2069ad1e4afc",
+      "url": "downloads/docker/3.4.0/3.4.0-centos-9-otp26/compose.cluster.yaml"
+    },
+    "compose_single": {
+      "filename": "compose.single.yaml",
+      "sha256": "2eccee8f4ba456fc5ab7d9d1a6ab882e7ff3d393657f2e560c8938fe095f3361",
+      "url": "downloads/docker/3.4.0/3.4.0-centos-9-otp26/compose.single.yaml"
+    },
+    "dockerfile": {
+      "filename": "Dockerfile",
+      "sha256": "799d5b3caeaf17a660eae435db9c55c0bf69149e1a9a5ee47c635aa947d03bf0",
+      "url": "downloads/docker/3.4.0/3.4.0-centos-9-otp26/Dockerfile"
+    },
+    "environment_example": {
+      "filename": "example.env",
+      "sha256": "2df1bd9983bebc5d2d8163dfd03fed497a048ad7524029f20bd3157c9a400246",
+      "url": "downloads/docker/3.4.0/3.4.0-centos-9-otp26/example.env"
+    }
+  },
+  "base_images": {
+    "linux/amd64": {
+      "pinned": "quay.io/centos/centos:stream9@sha256:7d3c87ab567add60d0153a6a17bc10d0f19cd982a2d533724298ebd1ee751eab",
+      "requested": "quay.io/centos/centos:stream9",
+      "resolved_at": "2026-09-12T12:33:21Z"
+    }
+  },
+  "build_tags": [
+    "tiotjp/openriak-kv:3.4.0-centos-9-otp26",
+    "tiotjp/openriak-kv:3.4.0-centos-9",
+    "tiotjp/openriak-kv:3.4.0-centos"
+  ],
+  "cluster_nodes": 5,
+  "distributed_cookie": "openriak-1d906dae2e145667348d824b14e757b9",
+  "error": null,
+  "finished_at": "2026-09-12T12:42:17Z",
+  "generated_artifacts": {
+    "Dockerfile": "799d5b3caeaf17a660eae435db9c55c0bf69149e1a9a5ee47c635aa947d03bf0",
+    "compose.cluster.yaml": "8ede1383b9dbde8958cd3f11da084c03cbdabfc7b2479b86450a2069ad1e4afc",
+    "compose.single.yaml": "2eccee8f4ba456fc5ab7d9d1a6ab882e7ff3d393657f2e560c8938fe095f3361",
+    "example.env": "2df1bd9983bebc5d2d8163dfd03fed497a048ad7524029f20bd3157c9a400246"
+  },
+  "identity": {
+    "namespace": "tiotjp",
+    "source": "https://github.com/TI-Tokyo/openriak-docs",
+    "url": "https://www.tiot.jp/",
+    "vendor": "TI Tokyo"
+  },
+  "image": "tiotjp/openriak-kv:3.4.0-centos-9-otp26",
+  "inputs": {
+    "build_dependencies": {
+      "builders/__init__.py": "a6165345cd2fd1874ae8bf8a8a52d2fcc72554ad869632af4e002cfe401d7e21",
+      "builders/centos/__init__.py": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "builders/centos/common.py": "01e3ba4be952fd7197c0a31a3f0a57f7bb6d95f29dd672d6e86fe50268bf51ad",
+      "builders/centos/v9/__init__.py": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "builders/centos/v9/amd64.py": null,
+      "builders/centos/v9/common.py": "a47102f2f374df409ca112eb5f55d0912abf78bb8705fd2a5beec536653eedb9",
+      "builders/common.py": "7b67819d90258bb9b1662cd9125737ae8938dc5b17886809c4b8241a3f3e993b",
+      "builders/pcre2.py": "d53f0828ed4c0c4a2918870e4557e10712c612f303e58e71a861b6fc393ba36a",
+      "builders/registry.py": "b04708978ac9584fdb0901a5cdb6bad056a25971ddcb1a11bac2eaad1d03a07b",
+      "builders/rpm.py": "bf90a4b9f3e225d22979e3f8e838abce24d4160eaa0aaa2d9450297120d58f8a",
+      "openriak_minimal.py": "3078f2976ac62cdeca6bfc0571e40cc6595b434163d26e912678121170d8d4d7",
+      "openriak_render.py": "f5a7aa557d87fabf6f37533fedcc23dee8639bba9e671409cc905a050e453ee6",
+      "runtime/entrypoint.sh": "c12e08676fbb921d2a497b5586274a597ce52e5674afa05288589953fe724bd9",
+      "runtime/healthcheck.sh": "eaf2b6cb04786ada00912942ae2637b2628087cbb8841c43620a5f555a69aba1",
+      "shared:target-model-and-hostname": "c7c84080c59d92668253cfd5c76f9d2a7877af09b7065fde9fbf1394011ba7cf"
+    },
+    "cluster_nodes": 5,
+    "compose_options": {
+      "OPENRIAK_CPUS": [
+        "0",
+        "CPU limit per node, for example 2.0; 0 means unrestricted."
+      ],
+      "OPENRIAK_DOCKER_LOG_MAX_FILES": [
+        "3",
+        "Maximum number of Docker JSON log files retained per node."
+      ],
+      "OPENRIAK_DOCKER_LOG_MAX_SIZE": [
+        "10m",
+        "Maximum size of each Docker JSON log file per node."
+      ],
+      "OPENRIAK_MEMORY_LIMIT": [
+        "0",
+        "Memory limit per node, for example 4g; 0 means unrestricted."
+      ]
+    },
+    "identity": {
+      "namespace": "tiotjp",
+      "source": "https://github.com/TI-Tokyo/openriak-docs",
+      "url": "https://www.tiot.jp/",
+      "vendor": "TI Tokyo"
+    },
+    "labels": {
+      "org.opencontainers.image.description": "Package-backed OpenRiak KV with single-node and cluster startup support",
+      "org.opencontainers.image.source": "https://github.com/TI-Tokyo/openriak-docs",
+      "org.opencontainers.image.title": "OpenRiak KV",
+      "org.opencontainers.image.url": "https://www.tiot.jp/",
+      "org.opencontainers.image.vendor": "TI Tokyo",
+      "org.opencontainers.image.version": "3.4.0",
+      "org.openriak.image.tag": "tiotjp/openriak-kv:3.4.0-centos-9-otp26",
+      "org.openriak.os.name": "centos",
+      "org.openriak.os.release": "9",
+      "org.openriak.os.version": "9",
+      "org.openriak.otp.version": "26"
+    },
+    "lifecycle_options": {
+      "healthcheck_interval": 10,
+      "healthcheck_retries": 3,
+      "healthcheck_start_period": 120,
+      "healthcheck_timeout": 60,
+      "stop_grace_period": 120
+    },
+    "packages": {
+      "linux/amd64": {
+        "base": "quay.io/centos/centos:stream9",
+        "checksum": {
+          "algorithm": "sha256",
+          "value": "72c02db420dc5a0cde5c27a2bd1813fc74e56b663f1167b9b7a0795fae5bfc77"
+        },
+        "url": "https://files.tiot.jp/riak/kv/3.4/3.4.0/rhel/9/riak-3.4.0.OTP26-1.el9.x86_64.rpm"
+      }
+    },
+    "renderer_sha256": "d54dd2445745961126f737648706af0367e8c3bb2cec83f8ab19251c2f18c49f",
+    "repository_setup": {
+      "linux/amd64": ""
+    },
+    "runtime_filesystem": {
+      "release_package": "centos-stream-release",
+      "strategy": "rpm-root"
+    },
+    "runtime_options": {
+      "RIAK_GID": [
+        "",
+        "Optional nonzero GID for riak; empty retains the package GID. Mounted directories are chowned."
+      ],
+      "RIAK_LOG_MAX_FILES": [
+        "10",
+        "Maximum file count per OpenRiak logger handler; initializes new configurations only."
+      ],
+      "RIAK_LOG_MAX_FILE_SIZE": [
+        "1MB",
+        "Maximum size per OpenRiak logger file; initializes new configurations only."
+      ],
+      "RIAK_UID": [
+        "",
+        "Optional nonzero UID for riak; empty retains the package UID. Mounted directories are chowned."
+      ],
+      "TZ": [
+        "Etc/UTC",
+        "IANA timezone for the process and entrypoint logs, for example Asia/Tokyo."
+      ]
+    },
+    "runtime_renderer_sha256": "15324690e8d6ce85ca9a0fb3c831eeab695ecdedc35f1d059f6dfebbf7095ad1",
+    "runtime_sha256": "b0f20a4604e8cff49f7060bf5e0cc5fa52df5829d46520d37095130f07f65656",
+    "schema_version": 4,
+    "setting_comments": {
+      "OPENRIAK_CLUSTER_CONTROL_DIR": "Container directory shared by cluster discovery participants.",
+      "OPENRIAK_CLUSTER_CONTROL_PATH": "Host directory shared by all cluster discovery participants.",
+      "OPENRIAK_CLUSTER_MODE": "Use single-node startup or shared-directory cluster discovery.",
+      "OPENRIAK_CLUSTER_POLL_SECONDS": "Seconds between cluster discovery checks.",
+      "OPENRIAK_CLUSTER_WAIT_SECONDS": "Maximum seconds to wait for cluster discovery approval.",
+      "OPENRIAK_CONFIG_PATH": "Host bind-mount directory for /etc/riak configuration.",
+      "OPENRIAK_CONTAINER_NAME": "Single-node Docker container name.",
+      "OPENRIAK_CPUS": "CPU limit per node, for example 2.0; 0 means unrestricted.",
+      "OPENRIAK_DATA_PATH": "Host bind-mount directory for /var/lib/riak data.",
+      "OPENRIAK_DOCKER_LOG_MAX_FILES": "Maximum number of Docker JSON log files retained per node.",
+      "OPENRIAK_DOCKER_LOG_MAX_SIZE": "Maximum size of each Docker JSON log file per node.",
+      "OPENRIAK_HTTP_PORT": "Host port forwarded to container HTTP port 8098.",
+      "OPENRIAK_LOGS_PATH": "Host bind-mount directory for /var/log/riak logs.",
+      "OPENRIAK_MEMORY_LIMIT": "Memory limit per node, for example 4g; 0 means unrestricted.",
+      "OPENRIAK_PB_PORT": "Host port forwarded to container Protocol Buffers port 8087.",
+      "RIAK_ANTI_ENTROPY": "Legacy active anti-entropy mode (passive disables active exchanges).",
+      "RIAK_DISTRIBUTED_COOKIE": "Initial cookie; existing riak.conf wins and new followers adopt the coordinator cookie.",
+      "RIAK_GID": "Optional nonzero GID for riak; empty retains the package GID. Mounted directories are chowned.",
+      "RIAK_HTTP_LISTENER": "Container HTTP bind address and port.",
+      "RIAK_INIT_ONLY": "Initialize configuration and directories without starting the daemon when 1.",
+      "RIAK_LOG_MAX_FILES": "Maximum file count per OpenRiak logger handler; initializes new configurations only.",
+      "RIAK_LOG_MAX_FILE_SIZE": "Maximum size per OpenRiak logger file; initializes new configurations only.",
+      "RIAK_MONITOR_INTERVAL_SECONDS": "Seconds between running-node health checks.",
+      "RIAK_NODE_HOST": "DNS hostname used to derive the OpenRiak KV nodename.",
+      "RIAK_NODE_NAME": "Explicit nodename; empty derives openriak-kv@<hostname>.",
+      "RIAK_NOFILE_LIMIT": "Requested open-file limit; bounded by container ulimits.",
+      "RIAK_PB_LISTENER": "Container Protocol Buffers bind address and port.",
+      "RIAK_RING_SIZE": "Partition count for a new ring; do not change on an existing cluster.",
+      "RIAK_SHUTDOWN_POLL_SECONDS": "Seconds between BEAM shutdown checks.",
+      "RIAK_STARTUP_POLL_SECONDS": "Seconds between daemon startup checks.",
+      "RIAK_STORAGE_BACKEND": "Storage backend used by OpenRiak KV.",
+      "RIAK_TICTACAAE_ACTIVE": "Enable TicTac active anti-entropy.",
+      "RIAK_TICTACAAE_STOREHEADS": "Store object heads in the TicTac anti-entropy store.",
+      "RIAK_UID": "Optional nonzero UID for riak; empty retains the package UID. Mounted directories are chowned.",
+      "TZ": "IANA timezone for the process and entrypoint logs, for example Asia/Tokyo.",
+      "role": "Coordinator on exactly one cluster service; empty or omitted means follower."
+    },
+    "tags": [
+      "tiotjp/openriak-kv:3.4.0-centos-9-otp26",
+      "tiotjp/openriak-kv:3.4.0-centos-9",
+      "tiotjp/openriak-kv:3.4.0-centos"
+    ]
+  },
+  "local_tags_platform": "linux/amd64",
+  "node": "openriak-kv-3.4.0-centos-9-otp26-node",
+  "oci_archive": "runs/20260912T123318.754151Z/image.oci.tar",
+  "os_family": "centos",
+  "os_name": "CentOS 9",
+  "os_release": "9",
+  "otp": "26",
+  "phases": {
+    "export": "passed"
+  },
+  "platform_results": {
+    "linux/amd64": {
+      "artifacts": {
+        "compose_cluster": {
+          "filename": "compose.cluster.yaml",
+          "sha256": "8ede1383b9dbde8958cd3f11da084c03cbdabfc7b2479b86450a2069ad1e4afc",
+          "url": "downloads/docker/3.4.0/3.4.0-centos-9-otp26/compose.cluster.yaml"
+        },
+        "compose_single": {
+          "filename": "compose.single.yaml",
+          "sha256": "2eccee8f4ba456fc5ab7d9d1a6ab882e7ff3d393657f2e560c8938fe095f3361",
+          "url": "downloads/docker/3.4.0/3.4.0-centos-9-otp26/compose.single.yaml"
+        },
+        "dockerfile": {
+          "filename": "Dockerfile",
+          "sha256": "799d5b3caeaf17a660eae435db9c55c0bf69149e1a9a5ee47c635aa947d03bf0",
+          "url": "downloads/docker/3.4.0/3.4.0-centos-9-otp26/Dockerfile"
+        },
+        "environment_example": {
+          "filename": "example.env",
+          "sha256": "2df1bd9983bebc5d2d8163dfd03fed497a048ad7524029f20bd3157c9a400246",
+          "url": "downloads/docker/3.4.0/3.4.0-centos-9-otp26/example.env"
+        }
+      },
+      "finished_at": "2026-09-12T12:42:04Z",
+      "report": "platforms/linux-amd64/runs/20260912T123323.623084Z/report.json",
+      "run_id": "20260912T123323.623084Z",
+      "status": "passed"
+    }
+  },
+  "platforms": [
+    "linux/amd64"
+  ],
+  "product": "openriak-kv",
+  "publication": {
+    "finished_at": "2026-09-12T12:42:17Z",
+    "started_at": "2026-09-12T12:42:17Z",
+    "status": "passed"
+  },
+  "run_id": "20260912T123318.754151Z",
+  "schema_version": 4,
+  "started_at": "2026-09-12T12:33:18Z",
+  "status": "passed",
+  "steps": [
+    {
+      "duration_seconds": 5.11,
+      "finished_at": "2026-09-12T12:42:09Z",
+      "name": "export_oci_image",
+      "started_at": "2026-09-12T12:42:04Z",
+      "status": "passed"
+    },
+    {
+      "duration_seconds": 7.257,
+      "finished_at": "2026-09-12T12:42:17Z",
+      "name": "load_local_tags",
+      "started_at": "2026-09-12T12:42:10Z",
+      "status": "passed"
+    }
+  ],
+  "tags": [
+    "tiotjp/openriak-kv:3.4.0-centos-9-otp26",
+    "tiotjp/openriak-kv:3.4.0-centos-9",
+    "tiotjp/openriak-kv:3.4.0-centos"
+  ],
+  "targets": [
+    {
+      "architecture": "x86_64",
+      "download_id": "otp26-x86_64-1",
+      "os_id": "centos-9-x86_64"
+    }
+  ],
+  "version": "3.4.0",
+  "worker": {
+    "host": "PJAC-NUC-Office",
+    "pid": 62114
+  }
+}

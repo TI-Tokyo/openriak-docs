@@ -12,9 +12,9 @@ from unittest import mock
 
 from test_openriak_docker import docker_tool as tool
 import test_push as push_tests
-import openriak_distributed as distributed
-import openriak_remote as remote
-from openriak_dependencies import digest
+import distributed.planning as distributed
+import distributed.controller as remote
+from cache.dependencies import digest
 
 
 class DistributedTests(unittest.TestCase):
@@ -54,7 +54,7 @@ class DistributedTests(unittest.TestCase):
         self.assertEqual(distributed.load_plan(tool,self.planfile)['id'],self.plan['id'])
 
     def test_queue_retry_overrides_force_without_changing_plan_or_approval(self):
-        import openriak_worker_queue as queue
+        import distributed.queue as queue
         self.plan['options']['force'] = True
         original_plan = json.loads(json.dumps(self.plan))
         original_report = (self.root / 'report.json').read_bytes()
@@ -137,7 +137,7 @@ class DistributedTests(unittest.TestCase):
             # changed URLs/publication state of the current destination report.
             self.assertEqual(distributed.collect(tool, self.collect_options), 0)
             self.assertEqual(distributed.collect(tool, self.collect_options), 0)
-            from openriak_push import make_plan
+            from publishing.workflow import make_plan
             _, plans, _, blocked = make_plan(self.options, tool)
             self.assertEqual(blocked, [])
             self.assertEqual(len(plans), 1)
@@ -169,7 +169,7 @@ class DistributedTests(unittest.TestCase):
         self.assertEqual(tool.read_json(self.planfile), self.plan)
 
     def test_collect_still_rejects_generator_and_test_code_drift(self):
-        for name in ('openriak_render.py', 'openriak_testing.py', 'builders/common.py'):
+        for name in ('images.rendering.py', 'validation.workflow.py', 'builders/common.py'):
             sources = dict(self.plan['sources'], **{name: 'changed-build-code'})
             with self.subTest(name=name), mock.patch.object(distributed, 'source_manifest', return_value=sources), \
                     self.assertRaisesRegex(tool.DockerToolError, 'code/configuration'):
@@ -300,7 +300,7 @@ class DistributedTests(unittest.TestCase):
             with tarfile.open(bundle) as archive:
                 self.assertTrue(all(not member.name.startswith('/') and '..' not in Path(member.name).parts for member in archive))
                 archive.extractall(directory)
-            script="import sys; sys.path.insert(0, 'tools/openriak-docker'); import openriak_docker as t; import openriak_distributed as d; p=d.load_plan(t,'plan.json'); d.plan_targets(t,p); print('bundle verified')"
+            script="import sys; sys.path.insert(0, 'tools/openriak-docker'); from core.context import context as t; import distributed.planning as d; p=d.load_plan(t,'plan.json'); d.plan_targets(t,p); print('bundle verified')"
             result=subprocess.run([sys.executable,'-c',script],cwd=directory,text=True,capture_output=True,timeout=15)
             self.assertEqual(result.returncode,0,result.stderr)
             self.assertIn('bundle verified',result.stdout)

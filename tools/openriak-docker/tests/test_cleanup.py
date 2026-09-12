@@ -11,7 +11,7 @@ import unittest
 from unittest import mock
 
 from test_openriak_docker import docker_tool as tool
-import openriak_cleanup as cleanup
+import commands.cleanup as cleanup
 
 
 class CleanupTests(unittest.TestCase):
@@ -155,10 +155,32 @@ class CleanupTests(unittest.TestCase):
                 mock.patch.object(cleanup, 'process_table', return_value={}), \
                 mock.patch.object(cleanup, 'docker_run'), \
                 mock.patch.object(cleanup, 'docker_plan', return_value=([], [], [], False)):
-            cleanup.main(self.options(remove_all=True, delete=True), tool)
+            cleanup.main(self.options(remove_all=True, remove_downloads=True, delete=True), tool)
         self.assertFalse(self.group.exists())
         self.assertFalse(published.exists())
         self.assertEqual(json.loads(version.read_text()), {'downloads': ['package.deb'], 'dockerImages': [retained]})
+
+    def test_remove_all_protects_published_files_metadata_and_raw_scout(self):
+        self.report(self.group)
+        published = tool.STATIC_ROOT / '3.4.0' / self.group.name
+        self.write(published / 'Dockerfile', 'retained download')
+        self.age(published)
+        version = tool.REPOSITORY_ROOT / 'tools/generated/openriak-kv/data/versions/3.4.0.json'
+        data = {'dockerImages': [{'image': self.image, 'testedAt': self.old}]}
+        self.write(version, data)
+        raw = tool.MULTIARCH_CACHE_ROOT / 'pushes/old-scan'
+        self.report(raw)
+        self.write(raw / 'scout-output/payload.gz', 'original evidence')
+        self.age(raw)
+        with contextlib.redirect_stdout(io.StringIO()), \
+                mock.patch.object(cleanup, 'process_table', return_value={}), \
+                mock.patch.object(cleanup, 'docker_run'), \
+                mock.patch.object(cleanup, 'docker_plan', return_value=([], [], [], False)):
+            cleanup.main(self.options(remove_all=True, delete=True), tool)
+        self.assertFalse(self.group.exists())
+        self.assertTrue(published.exists())
+        self.assertTrue((raw / 'scout-output/payload.gz').exists())
+        self.assertEqual(json.loads(version.read_text()), data)
 
     def test_recent_metadata_protects_current_cache_and_downloads(self):
         self.report(self.group)
@@ -168,7 +190,7 @@ class CleanupTests(unittest.TestCase):
         self.write(tool.REPOSITORY_ROOT / 'tools/generated/openriak-kv/data/versions/3.4.0.json', {
             'dockerImages': [{'image': self.image, 'testedAt': self.new,
                               'dockerfile': {'url': f'downloads/docker/3.4.0/{self.group.name}/Dockerfile'}}]})
-        self.assertEqual(cleanup.file_plan(tool, self.cutoff, True), ([], []))
+        self.assertEqual(cleanup.file_plan(tool, self.cutoff, True, True), ([], []))
 
     def test_symlink_in_run_prevents_deletion(self):
         run = self.group / 'runs/20260906T040000.000000Z'

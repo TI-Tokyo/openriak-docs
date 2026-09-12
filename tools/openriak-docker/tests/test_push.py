@@ -10,7 +10,7 @@ import unittest
 from unittest import mock
 
 from test_openriak_docker import docker_tool as tool
-import openriak_push as push
+import publishing.workflow as push
 import test_approved_rebuild as rebuild_tests
 
 
@@ -163,7 +163,7 @@ class PushTests(unittest.TestCase):
             return tool.main([*self.arguments, *extra])
 
     def reports(self):
-        from openriak_cve_storage import hydrate_report
+        from publishing.cve_storage import hydrate_report
         return [hydrate_report(p) for p in sorted(Path(self.temporary.name).glob('pushes/*/*/*/cve-report.json'))]
 
     def test_all_aliases_and_platforms_are_pushed_then_scanned_by_digest(self):

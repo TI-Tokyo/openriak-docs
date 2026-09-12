@@ -6,7 +6,7 @@ import unittest
 from unittest import mock
 
 from test_openriak_docker import docker_tool as tool
-import openriak_node_check as checks
+import distributed.node_check as checks
 
 
 class NodeCheckTests(unittest.TestCase):
