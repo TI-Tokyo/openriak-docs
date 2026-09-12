@@ -1,0 +1,107 @@
+{
+  "artifacts": {},
+  "base_image": {
+    "pinned": "rockylinux:9@sha256:d7be1c094cc5845ee815d4632fe377514ee6ebcf8efaed6892889657e5ddaaa6",
+    "requested": "rockylinux:9",
+    "resolved_at": "2026-09-10T16:34:58Z"
+  },
+  "cleanup_errors": [
+    "Cleanup command failed: /usr/bin/docker image rm openriak-minimal-validation/openriak-kv:test-3.4.0-rocky-9-otp26-linux-amd64-20260910t163458.765003z; see /home/peter/GitHub/TI-Tokyo/openriak-docs/tools/cache/openriak-docker-minimal-validation/20260910T163455.103663Z/3.4.0/3.4.0-rocky-9-otp26/platforms/linux-amd64/runs/20260910T163458.765003Z/logs/remove-test-image.log"
+  ],
+  "error": {
+    "message": "Command failed with exit code 1: /usr/bin/docker buildx build --builder openriak-kv-multiarch --load --platform linux/amd64 --pull=false --no-cache --tag openriak-minimal-validation/openriak-kv:test-3.4.0-rocky-9-otp26-linux-amd64-20260910t163458.765003z --file /home/peter/GitHub/TI-Tokyo/openriak-docs/tools/cache/openriak-docker-minimal-validation/20260910T163455.103663Z/3.4.0/3.4.0-rocky-9-otp26/platforms/linux-amd64/runs/20260910T163458.765003Z/Dockerfile /home/peter/GitHub/TI-Tokyo/openriak-docs/tools/cache/openriak-docker-minimal-validation/20260910T163455.103663Z/3.4.0/3.4.0-rocky-9-otp26/platforms/linux-amd64/runs/20260910T163458.765003Z (see /home/peter/GitHub/TI-Tokyo/openriak-docs/tools/cache/openriak-docker-minimal-validation/20260910T163455.103663Z/3.4.0/3.4.0-rocky-9-otp26/platforms/linux-amd64/runs/20260910T163458.765003Z/logs/image-build.log): ERROR: failed to build: failed to solve: process \"/bin/sh -c set -eu\\n\\ncp /opt/openriak-package/riak-3.4.0.OTP26-1.el9.x86_64.rpm /tmp/riak-3.4.0.OTP26-1.el9.x86_64.rpm\\n# Update installed OS packages before installing the OpenRiak KV package.\\nif command -v dnf >/dev/null 2>&1\\nthen\\n    dnf upgrade --refresh -y\\n    dnf install -y bash ca-certificates glibc hostname libgcc libstdc++ ncurses-libs openssl-libs pam procps-ng shadow-utils sudo util-linux zlib tzdata\\n    dnf clean all\\nelif command -v microdnf >/dev/null 2>&1\\nthen\\n    microdnf upgrade --refresh -y\\n    microdnf install -y dnf\\n    dnf install -y bash ca-certificates glibc hostname libgcc libstdc++ ncurses-libs openssl-libs pam procps-ng shadow-utils sudo util-linux zlib tzdata\\n    dnf clean all\\nelif command -v yum >/dev/null 2>&1\\nthen\\n    yum clean expire-cache\\n    yum update -y\\n    yum install -y bash ca-certificates glibc hostname libgcc libstdc++ ncurses-libs openssl-libs pam procps-ng shadow-utils sudo util-linux zlib tzdata\\n    yum clean all\\nelif command -v zypper >/dev/null 2>&1\\nthen\\n    zypper --non-interactive refresh\\n    zypper --non-interactive update --no-recommends\\n    zypper --non-interactive install --no-recommends bash ca-certificates gawk glibc hostname libgcc_s1 libstdc++6 libncurses6 libopenssl3 pam procps shadow sudo util-linux libz1 timezone\\n    zypper clean --all\\nelse\\n    echo 'No supported RPM package manager found' >&2\\n    exit 1\\nfi\\n# These RPMs bundle their matching OTP runtime, including escript, but their\\n# generated dependency metadata requires /usr/bin/escript outside the payload.\\nrpm -Uvh --replacepkgs --nodeps /tmp/riak-3.4.0.OTP26-1.el9.x86_64.rpm\\nif [ ! -e /usr/bin/escript ]\\nthen\\n    for bundled_escript in /usr/lib64/riak/erts-*/bin/escript /usr/lib/riak/erts-*/bin/escript\\n    do\\n        if [ -x \\\"$bundled_escript\\\" ]\\n        then\\n            ln -s \\\"$bundled_escript\\\" /usr/bin/escript\\n            break\\n        fi\\n    done\\nfi\\ntest -x /usr/bin/escript\\n# Check the bundled runtime and its OpenSSL NIF before starting integration tests.\\nfor bundled_erl in /usr/lib64/riak/erts-*/bin/erl /usr/lib/riak/erts-*/bin/erl\\ndo\\n    if [ -x \\\"$bundled_erl\\\" ]\\n    then\\n        runtime_root=${bundled_erl%/erts-*}\\n        \\\"$bundled_erl\\\" +S 2:2 -boot \\\"$runtime_root/bin/no_dot_erlang\\\" -pa \\\"$runtime_root\\\"/lib/crypto-*/ebin -noshell -eval 'crypto:strong_rand_bytes(1), halt().'\\n        break\\n    fi\\ndone\\n# Clear caches from every package manager used in this installation layer.\\n# In particular, dnf clean all does not clear microdnf's /var/cache/yum.\\nrm -rf /var/cache/dnf /var/cache/yum /var/cache/zypp\\nrm -f /tmp/riak-3.4.0.OTP26-1.el9.x86_64.rpm\\n# Require the reviewed security updates; reject stale mirrors.\\nrpm -q --whatprovides 'glib2 >= 2.68.4-19.el9_8.10' >/dev/null\\nrpm -q --whatprovides 'expat >= 2.5.0-6.el9_8.3' >/dev/null\\nrpm -q --whatprovides 'pam >= 1.5.1-28.el9_8.1' >/dev/null\\n\" did not complete successfully: exit code: 1",
+    "type": "DockerToolError"
+  },
+  "finished_at": "2026-09-10T16:35:36Z",
+  "generation": {
+    "cluster_nodes": 5,
+    "distributed_cookie": "openriak-3c778af2fa332838c35de97b20a8edfe"
+  },
+  "identity": {
+    "namespace": "openriak-minimal-validation",
+    "source": "https://github.com/OpenRiak/openriak-docs",
+    "url": "https://openriak.org",
+    "vendor": "OpenRiak"
+  },
+  "image": "openriak-minimal-validation/openriak-kv:3.4.0-rocky-9-otp26",
+  "metadata_sources": [
+    "content/openriak-kv/metadata/3.4.0/supported-os.json",
+    "content/openriak-kv/metadata/3.4.0/downloads.json",
+    "content/openriak-kv/metadata/os-aliases.json"
+  ],
+  "network": {
+    "address_assignment": "docker",
+    "node_host": "node-01.cluster-a.openriak",
+    "riak_node_name": "openriak-kv@node-01.cluster-a.openriak"
+  },
+  "node": "openriak-kv-3.4.0-rocky-9-otp26-node",
+  "package": {
+    "checksum": {
+      "algorithm": "sha256",
+      "value": "72c02db420dc5a0cde5c27a2bd1813fc74e56b663f1167b9b7a0795fae5bfc77"
+    },
+    "filename": "riak-3.4.0.OTP26-1.el9.x86_64.rpm",
+    "format": "rpm",
+    "url": "https://files.tiot.jp/riak/kv/3.4/3.4.0/rhel/9/riak-3.4.0.OTP26-1.el9.x86_64.rpm"
+  },
+  "ports": {
+    "http": 8098,
+    "protobuf": 8087
+  },
+  "product": "openriak-kv",
+  "run_id": "20260910T163458.765003Z",
+  "schema_version": 4,
+  "started_at": "2026-09-10T16:34:58Z",
+  "status": "failed",
+  "steps": [
+    {
+      "duration_seconds": 0.0,
+      "finished_at": "2026-09-10T16:34:58Z",
+      "name": "generate_artifacts",
+      "started_at": "2026-09-10T16:34:58Z",
+      "status": "passed"
+    },
+    {
+      "duration_seconds": 0.154,
+      "finished_at": "2026-09-10T16:34:58Z",
+      "name": "validate_compose_artifacts",
+      "started_at": "2026-09-10T16:34:58Z",
+      "status": "passed"
+    },
+    {
+      "duration_seconds": 34.566,
+      "error": "Command failed with exit code 1: /usr/bin/docker buildx build --builder openriak-kv-multiarch --load --platform linux/amd64 --pull=false --no-cache --tag openriak-minimal-validation/openriak-kv:test-3.4.0-rocky-9-otp26-linux-amd64-20260910t163458.765003z --file /home/peter/GitHub/TI-Tokyo/openriak-docs/tools/cache/openriak-docker-minimal-validation/20260910T163455.103663Z/3.4.0/3.4.0-rocky-9-otp26/platforms/linux-amd64/runs/20260910T163458.765003Z/Dockerfile /home/peter/GitHub/TI-Tokyo/openriak-docs/tools/cache/openriak-docker-minimal-validation/20260910T163455.103663Z/3.4.0/3.4.0-rocky-9-otp26/platforms/linux-amd64/runs/20260910T163458.765003Z (see /home/peter/GitHub/TI-Tokyo/openriak-docs/tools/cache/openriak-docker-minimal-validation/20260910T163455.103663Z/3.4.0/3.4.0-rocky-9-otp26/platforms/linux-amd64/runs/20260910T163458.765003Z/logs/image-build.log): ERROR: failed to build: failed to solve: process \"/bin/sh -c set -eu\\n\\ncp /opt/openriak-package/riak-3.4.0.OTP26-1.el9.x86_64.rpm /tmp/riak-3.4.0.OTP26-1.el9.x86_64.rpm\\n# Update installed OS packages before installing the OpenRiak KV package.\\nif command -v dnf >/dev/null 2>&1\\nthen\\n    dnf upgrade --refresh -y\\n    dnf install -y bash ca-certificates glibc hostname libgcc libstdc++ ncurses-libs openssl-libs pam procps-ng shadow-utils sudo util-linux zlib tzdata\\n    dnf clean all\\nelif command -v microdnf >/dev/null 2>&1\\nthen\\n    microdnf upgrade --refresh -y\\n    microdnf install -y dnf\\n    dnf install -y bash ca-certificates glibc hostname libgcc libstdc++ ncurses-libs openssl-libs pam procps-ng shadow-utils sudo util-linux zlib tzdata\\n    dnf clean all\\nelif command -v yum >/dev/null 2>&1\\nthen\\n    yum clean expire-cache\\n    yum update -y\\n    yum install -y bash ca-certificates glibc hostname libgcc libstdc++ ncurses-libs openssl-libs pam procps-ng shadow-utils sudo util-linux zlib tzdata\\n    yum clean all\\nelif command -v zypper >/dev/null 2>&1\\nthen\\n    zypper --non-interactive refresh\\n    zypper --non-interactive update --no-recommends\\n    zypper --non-interactive install --no-recommends bash ca-certificates gawk glibc hostname libgcc_s1 libstdc++6 libncurses6 libopenssl3 pam procps shadow sudo util-linux libz1 timezone\\n    zypper clean --all\\nelse\\n    echo 'No supported RPM package manager found' >&2\\n    exit 1\\nfi\\n# These RPMs bundle their matching OTP runtime, including escript, but their\\n# generated dependency metadata requires /usr/bin/escript outside the payload.\\nrpm -Uvh --replacepkgs --nodeps /tmp/riak-3.4.0.OTP26-1.el9.x86_64.rpm\\nif [ ! -e /usr/bin/escript ]\\nthen\\n    for bundled_escript in /usr/lib64/riak/erts-*/bin/escript /usr/lib/riak/erts-*/bin/escript\\n    do\\n        if [ -x \\\"$bundled_escript\\\" ]\\n        then\\n            ln -s \\\"$bundled_escript\\\" /usr/bin/escript\\n            break\\n        fi\\n    done\\nfi\\ntest -x /usr/bin/escript\\n# Check the bundled runtime and its OpenSSL NIF before starting integration tests.\\nfor bundled_erl in /usr/lib64/riak/erts-*/bin/erl /usr/lib/riak/erts-*/bin/erl\\ndo\\n    if [ -x \\\"$bundled_erl\\\" ]\\n    then\\n        runtime_root=${bundled_erl%/erts-*}\\n        \\\"$bundled_erl\\\" +S 2:2 -boot \\\"$runtime_root/bin/no_dot_erlang\\\" -pa \\\"$runtime_root\\\"/lib/crypto-*/ebin -noshell -eval 'crypto:strong_rand_bytes(1), halt().'\\n        break\\n    fi\\ndone\\n# Clear caches from every package manager used in this installation layer.\\n# In particular, dnf clean all does not clear microdnf's /var/cache/yum.\\nrm -rf /var/cache/dnf /var/cache/yum /var/cache/zypp\\nrm -f /tmp/riak-3.4.0.OTP26-1.el9.x86_64.rpm\\n# Require the reviewed security updates; reject stale mirrors.\\nrpm -q --whatprovides 'glib2 >= 2.68.4-19.el9_8.10' >/dev/null\\nrpm -q --whatprovides 'expat >= 2.5.0-6.el9_8.3' >/dev/null\\nrpm -q --whatprovides 'pam >= 1.5.1-28.el9_8.1' >/dev/null\\n\" did not complete successfully: exit code: 1",
+      "finished_at": "2026-09-10T16:35:36Z",
+      "name": "build_image",
+      "started_at": "2026-09-10T16:34:58Z",
+      "status": "failed"
+    }
+  ],
+  "target": {
+    "architecture": "x86_64",
+    "docker_platform": "linux/amd64",
+    "download_id": "otp26-x86_64-1",
+    "os_family": "rocky",
+    "os_id": "rocky-9-x86_64",
+    "os_name": "Rocky Linux 9",
+    "os_release": "9",
+    "otp": "26",
+    "package_os_id": "rhel-9-x86_64",
+    "version": "3.4.0"
+  },
+  "tests": {},
+  "volumes": {
+    "config": {
+      "container": "/etc/riak",
+      "default": "./openriak-kv-3.4.0-rocky-9-otp26-node/config"
+    },
+    "data": {
+      "container": "/var/lib/riak",
+      "default": "./openriak-kv-3.4.0-rocky-9-otp26-node/data"
+    },
+    "logs": {
+      "container": "/var/log/riak",
+      "default": "./openriak-kv-3.4.0-rocky-9-otp26-node/logs"
+    }
+  }
+}

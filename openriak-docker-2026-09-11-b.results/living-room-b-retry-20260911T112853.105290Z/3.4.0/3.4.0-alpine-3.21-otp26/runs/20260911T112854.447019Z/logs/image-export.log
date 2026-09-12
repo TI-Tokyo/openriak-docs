@@ -1,0 +1,97 @@
+$ /usr/bin/docker buildx build --builder openriak-kv-multiarch --platform linux/amd64,linux/arm64 --pull=false --tag tiotjp/openriak-kv:3.4.0-alpine-3.21-otp26 --tag tiotjp/openriak-kv:3.4.0-alpine-3.21 --tag tiotjp/openriak-kv:3.4.0-alpine --tag tiotjp/openriak-kv:3.4.0 --output type=oci,dest=/home/peter/openriak-builds/openriak-distributed/openriak-docker-2026-09-11-b/living-room-b/20260911T084617.243958Z/results/3.4.0/3.4.0-alpine-3.21-otp26/runs/20260911T112854.447019Z/image.oci.tar /home/peter/openriak-builds/openriak-distributed/openriak-docker-2026-09-11-b/living-room-b/20260911T084617.243958Z/results/3.4.0/3.4.0-alpine-3.21-otp26
+started: 2026-09-11T12:36:52Z
+#0 building with "openriak-kv-multiarch" instance using docker-container driver
+
+#1 [internal] load build definition from Dockerfile
+#1 transferring dockerfile: 42.88kB done
+#1 DONE 0.0s
+
+#2 resolve image config for docker-image://docker.io/docker/dockerfile:1.7
+#2 DONE 1.0s
+
+#3 docker-image://docker.io/docker/dockerfile:1.7@sha256:a57df69d0ea827fb7266491f2813635de6f17269be881f696fbfdf2d83dda33e
+#3 resolve docker.io/docker/dockerfile:1.7@sha256:a57df69d0ea827fb7266491f2813635de6f17269be881f696fbfdf2d83dda33e done
+#3 CACHED
+
+#4 [linux/arm64 internal] load metadata for docker.io/library/alpine:3.21@sha256:48b0309ca019d89d40f670aa1bc06e426dc0931948452e8491e3d65087abc07d
+#4 DONE 0.6s
+
+#5 [linux/amd64 internal] load metadata for docker.io/library/alpine:3.21@sha256:48b0309ca019d89d40f670aa1bc06e426dc0931948452e8491e3d65087abc07d
+#5 DONE 0.6s
+
+#6 [internal] load .dockerignore
+#6 transferring context: 42B done
+#6 DONE 0.0s
+
+#7 [internal] preparing inline document
+#7 DONE 0.0s
+
+#8 [linux/amd64 download-amd64 1/1] ADD --checksum=sha256:b6de9bbaf5b30f36fb2e0bc2099838ab13180e90e059dc225d627e25105f7e17 https://files.tiot.jp/alpine/v3.21/main/x86_64/riak-3.4.0.26-r1.apk /riak-3.4.0.26-r1.apk
+#8 DONE 0.0s
+
+#9 [internal] preparing inline document
+#9 DONE 0.0s
+
+#10 [linux/arm64 download-arm64 1/1] ADD --checksum=sha256:873efa96f5c61132da4cbc6620e2d7747cb6a403ab4ac86cfcb1c18a0cf3169a https://files.tiot.jp/alpine/v3.21/main/aarch64/riak-3.4.0.26-r1.apk /riak-3.4.0.26-r1.apk
+#10 DONE 0.0s
+
+#11 [linux/amd64 package-amd64 1/2] FROM docker.io/library/alpine:3.21@sha256:48b0309ca019d89d40f670aa1bc06e426dc0931948452e8491e3d65087abc07d
+#11 resolve docker.io/library/alpine:3.21@sha256:48b0309ca019d89d40f670aa1bc06e426dc0931948452e8491e3d65087abc07d done
+#11 DONE 0.0s
+
+#12 [linux/amd64 final 1/4] RUN <<'OPENRIAK_IMAGE_SETUP' (set -eu...)
+#12 CACHED
+
+#13 [linux/amd64 download-amd64 1/1] ADD --checksum=sha256:b6de9bbaf5b30f36fb2e0bc2099838ab13180e90e059dc225d627e25105f7e17 https://files.tiot.jp/alpine/v3.21/main/x86_64/riak-3.4.0.26-r1.apk /riak-3.4.0.26-r1.apk
+#13 CACHED
+
+#14 [linux/amd64 final 3/4] COPY <<OPENRIAK_HEALTHCHECK /usr/local/bin/openriak-healthcheck
+#14 CACHED
+
+#15 [linux/amd64 final 2/4] COPY <<OPENRIAK_ENTRYPOINT /usr/local/bin/openriak-entrypoint
+#15 CACHED
+
+#16 [linux/amd64 package-amd64 2/2] RUN --mount=type=bind,from=download-amd64,target=/opt/openriak-package,ro <<'OPENRIAK_PACKAGE_INSTALL' (set -eu...)
+#16 CACHED
+
+#17 [linux/amd64 final 4/4] RUN <<'OPENRIAK_SCRIPT_SETUP' (set -eu...)
+#17 CACHED
+
+#18 [linux/arm64 package-arm64 1/2] FROM docker.io/library/alpine:3.21@sha256:48b0309ca019d89d40f670aa1bc06e426dc0931948452e8491e3d65087abc07d
+#18 resolve docker.io/library/alpine:3.21@sha256:48b0309ca019d89d40f670aa1bc06e426dc0931948452e8491e3d65087abc07d done
+#18 DONE 0.0s
+
+#19 [linux/arm64 final 2/4] COPY <<OPENRIAK_ENTRYPOINT /usr/local/bin/openriak-entrypoint
+#19 CACHED
+
+#20 [linux/arm64 final 1/4] RUN <<'OPENRIAK_IMAGE_SETUP' (set -eu...)
+#20 CACHED
+
+#21 [linux/arm64 package-arm64 2/2] RUN --mount=type=bind,from=download-arm64,target=/opt/openriak-package,ro <<'OPENRIAK_PACKAGE_INSTALL' (set -eu...)
+#21 CACHED
+
+#22 [linux/arm64 download-arm64 1/1] ADD --checksum=sha256:873efa96f5c61132da4cbc6620e2d7747cb6a403ab4ac86cfcb1c18a0cf3169a https://files.tiot.jp/alpine/v3.21/main/aarch64/riak-3.4.0.26-r1.apk /riak-3.4.0.26-r1.apk
+#22 CACHED
+
+#23 [linux/arm64 final 3/4] COPY <<OPENRIAK_HEALTHCHECK /usr/local/bin/openriak-healthcheck
+#23 CACHED
+
+#24 [linux/arm64 final 4/4] RUN <<'OPENRIAK_SCRIPT_SETUP' (set -eu...)
+#24 CACHED
+
+#25 exporting to oci image format
+#25 exporting layers done
+#25 exporting manifest sha256:0d65fc1ea53dcea1cfab1f75c40cd1835846f785f56a4608cbc937a19d0ac3fd done
+#25 exporting config sha256:bfd2ec811b3fccd495f7de2b08c0560f96998628c5bb5ab3e8d3eb522810ddbc done
+#25 exporting attestation manifest sha256:3b89c8d0466e1a2bb5b5a59354c9ccbe05285270389e8a0c564cd5dc9c6e5a3c done
+#25 exporting manifest sha256:7a0f738793ae1dd7b7af44b6642ed7621f8668459a7e64f37416a9404de8c298 done
+#25 exporting config sha256:84d1e00be531ceb5797406273ae21051ec24bd6be5a1dfd66a52d7e6471b4288 done
+#25 exporting attestation manifest sha256:9ea08dabe4c4329c2950f241e21df45d5e789bd2692dedca40b28430e1eec282 done
+#25 exporting manifest list sha256:6db2efbccfba6c22a624ba7943dbc0633910cd793597e6d092c5d7a45eeed333
+#25 exporting manifest list sha256:6db2efbccfba6c22a624ba7943dbc0633910cd793597e6d092c5d7a45eeed333 done
+#25 sending tarball
+#25 sending tarball 0.6s done
+#25 DONE 0.7s
+
+timeout_seconds: 3600
+exit_code: 0

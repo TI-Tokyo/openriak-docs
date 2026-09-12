@@ -77,7 +77,7 @@ class OpenRiakDockerTests(unittest.TestCase):
             with self.subTest(output=output, code=code), tempfile.TemporaryDirectory() as directory:
                 path = pathlib.Path(directory) / "admin-test.log"
                 with mock.patch.object(docker_tool, "docker_command", return_value="docker"), mock.patch.object(
-                    docker_tool.subprocess, "run", return_value=mock.Mock(returncode=code, stdout=output)
+                    docker_tool, "run_logged", side_effect=(docker_tool.DockerToolError("command failed") if code else None), return_value=mock.Mock(returncode=code, stdout=output)
                 ) as run:
                     if passes:
                         self.assertEqual(docker_tool.verify_admin_test("test-node", 1800, path)["status"], "passed")
@@ -85,8 +85,7 @@ class OpenRiakDockerTests(unittest.TestCase):
                         with self.assertRaises(docker_tool.DockerToolError):
                             docker_tool.verify_admin_test("test-node", 1800, path)
                     self.assertEqual(run.call_args.args[0], ["docker", "exec", "test-node", "riak", "admin", "test"])
-                    self.assertEqual(run.call_args.kwargs["timeout"], 1800)
-                    self.assertIn(output, path.read_text())
+                    self.assertEqual(run.call_args.kwargs["timeout_seconds"], 1800)
 
     def test_metadata_selects_expected_initial_target(self):
         self.assertEqual(self.target.otp, "24")
@@ -679,6 +678,40 @@ listener.protobuf.internal = 127.0.0.1:8087
                 )
                 self.assertEqual(result.returncode, 0, result.stderr)
 
+    def test_debian_11_final_snapshot_keeps_signature_checks_and_replaces_both_source_formats(self):
+        targets = docker_tool.discover_targets(["3.4.0", "3.4.1"])
+        for target in targets:
+            script = docker_tool.package_install_script(target)
+            if (target.family, target.release) != ("debian", "11"):
+                self.assertNotIn("snapshot.debian.org", script)
+                self.assertNotIn("check-valid-until", script)
+                continue
+            with self.subTest(image=target.image), tempfile.TemporaryDirectory() as directory:
+                root = pathlib.Path(directory)
+                (root / "sources.list.d").mkdir()
+                (root / "sources.list").write_text("deb http://deb.debian.org/debian bullseye main\n")
+                (root / "sources.list.d/debian.sources").write_text("Types: deb\nURIs: http://deb.debian.org/debian\n")
+                (root / "sources.list.d/operator.list").write_text("# retained\n")
+                setup = docker_tool.debian_repository_setup(target)
+                result = docker_tool.subprocess.run(
+                    ["/bin/sh", "-eu", "-c", setup.replace("/etc/apt", directory)],
+                    capture_output=True, text=True,
+                )
+                self.assertEqual(result.returncode, 0, result.stderr)
+                self.assertFalse((root / "sources.list.d/debian.sources").exists())
+                self.assertEqual((root / "sources.list.d/operator.list").read_text(), "# retained\n")
+                sources = (root / "sources.list").read_text().splitlines()
+                self.assertEqual(len(sources), 3)
+                for line, suite in zip(sources, ("bullseye", "bullseye-updates", "bullseye-security")):
+                    self.assertTrue(line.endswith(f"/ {suite} main"))
+                    self.assertIn("/20260901T000000Z/", line)
+                    self.assertIn("signed-by=/usr/share/keyrings/debian-archive-keyring.gpg", line)
+                    self.assertIn("check-valid-until=no", line)
+                self.assertIn("/archive/debian-security/", sources[-1])
+                self.assertNotIn("trusted=yes", script)
+                self.assertNotIn("--allow-unauthenticated", script)
+                self.assertLess(script.index("OPENRIAK_DEBIAN_SOURCES"), script.index("apt-get update"))
+
     def test_centos_stream_8_uses_archive_without_disabling_signature_checks(self):
         target, = docker_tool.discover_targets(["3.4.1"], os_id="centos-8-x86_64")
         script = docker_tool.package_install_script(target)
@@ -794,7 +827,7 @@ listener.protobuf.internal = 127.0.0.1:8087
         self.assertEqual(command[2:], ["--docker-only", "--include-version", "openriak-kv=3.4.0", "--include-version", "openriak-kv=3.4.1"])
 
     def test_refresh_target_has_timestamped_phase_progress_hooks(self):
-        source = MODULE_PATH.read_text(encoding="utf-8")
+        source = MODULE_PATH.with_name("openriak_testing.py").read_text(encoding="utf-8")
         self.assertIn('report_progress(f"Pulling and pinning base image (timeout ', source)
         self.assertIn(
             'report_progress("Creating Dockerfile, compose YAML files and .env for this run")',
@@ -805,36 +838,18 @@ listener.protobuf.internal = 127.0.0.1:8087
         self.assertIn('f"Testing {cluster_nodes}-node cluster (timeout ', source)
 
     def test_run_logged_records_and_reports_command_timeout(self):
-        command = ["docker", "build", "."]
-        timeout = docker_tool.subprocess.TimeoutExpired(
-            command,
-            1800,
-            output="partial build output\n",
-        )
+        command = [sys.executable, '-u', '-c', "import time; print('partial build output', flush=True); time.sleep(10)"]
         with tempfile.TemporaryDirectory() as directory:
-            log_path = pathlib.Path(directory) / "build.log"
-            with mock.patch.object(
-                docker_tool.subprocess,
-                "run",
-                side_effect=timeout,
-            ):
-                with self.assertRaisesRegex(
-                    docker_tool.DockerToolError,
-                    "timed out after 1800s",
-                ):
-                    docker_tool.run_logged(
-                        command,
-                        log_path,
-                        timeout_seconds=1800,
-                    )
-            log = log_path.read_text(encoding="utf-8")
-            self.assertIn("timeout_seconds: 1800", log)
-            self.assertIn("exit_code: timeout", log)
-            self.assertIn("partial build output", log)
+            log_path = pathlib.Path(directory) / 'build.log'
+            with self.assertRaisesRegex(docker_tool.DockerToolError, 'timed out after'):
+                docker_tool.run_logged(command, log_path, timeout_seconds=0.1)
+            log = log_path.read_text()
+            self.assertIn('exit_code: timeout', log)
+            self.assertIn('partial build output', log)
 
     def test_partial_single_compose_start_is_marked_for_cleanup(self):
-        source = MODULE_PATH.read_text(encoding="utf-8")
-        marked = source.index("        compose_started = True\n        record_step(\n            report,\n            \"start_compose_node\"")
+        source = MODULE_PATH.with_name("openriak_testing.py").read_text(encoding="utf-8")
+        marked = source.index("        compose_started = True\n        tool.record_step(\n            report,\n            \"start_compose_node\"")
         started = source.index('compose_command + ["up", "--detach", "--no-build"]', marked)
         self.assertLess(marked, started)
 

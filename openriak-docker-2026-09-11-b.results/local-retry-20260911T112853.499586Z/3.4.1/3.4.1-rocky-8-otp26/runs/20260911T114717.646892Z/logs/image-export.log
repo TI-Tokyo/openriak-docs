@@ -1,0 +1,73 @@
+$ /usr/bin/docker buildx build --builder openriak-kv-multiarch --platform linux/amd64 --pull=false --tag tiotjp/openriak-kv:3.4.1-rocky-8-otp26 --tag tiotjp/openriak-kv:3.4.1-rocky-8 --output type=oci,dest=/home/peter/openriak-builds/openriak-distributed/openriak-docker-2026-09-11-b/local/20260911T084617.243958Z/results/3.4.1/3.4.1-rocky-8-otp26/runs/20260911T114717.646892Z/image.oci.tar /home/peter/openriak-builds/openriak-distributed/openriak-docker-2026-09-11-b/local/20260911T084617.243958Z/results/3.4.1/3.4.1-rocky-8-otp26
+started: 2026-09-11T11:52:43Z
+#0 building with "openriak-kv-multiarch" instance using docker-container driver
+
+#1 [internal] load build definition from Dockerfile
+#1 transferring dockerfile: 44.37kB done
+#1 DONE 0.0s
+
+#2 resolve image config for docker-image://docker.io/docker/dockerfile:1.7
+#2 ...
+
+#3 [auth] docker/dockerfile:pull token for registry-1.docker.io
+#3 DONE 0.0s
+
+#2 resolve image config for docker-image://docker.io/docker/dockerfile:1.7
+#2 DONE 2.4s
+
+#4 docker-image://docker.io/docker/dockerfile:1.7@sha256:a57df69d0ea827fb7266491f2813635de6f17269be881f696fbfdf2d83dda33e
+#4 resolve docker.io/docker/dockerfile:1.7@sha256:a57df69d0ea827fb7266491f2813635de6f17269be881f696fbfdf2d83dda33e 1.1s done
+#4 CACHED
+
+#5 [internal] load metadata for docker.io/library/rockylinux:8@sha256:9794037624aaa6212aeada1d28861ef5e0a935adaf93e4ef79837119f2a2d04c
+#5 DONE 0.0s
+
+#6 [internal] load .dockerignore
+#6 transferring context: 42B done
+#6 DONE 0.0s
+
+#7 [download-amd64 1/1] ADD --checksum=sha256:ffcc9ce4af826a508e4927a8c725d5e21dd6dcb565d8adba4ae3ca6ef3f146ea https://files.tiot.jp/riak/kv/3.4/3.4.1/rhel/8/riak-3.4.1.OTP26-1.el8.x86_64.rpm /riak-3.4.1.OTP26-1.el8.x86_64.rpm
+#7 DONE 0.0s
+
+#8 [internal] preparing inline document
+#8 DONE 0.0s
+
+#9 [internal] preparing inline document
+#9 DONE 0.0s
+
+#10 [install-amd64 1/2] FROM docker.io/library/rockylinux:8@sha256:9794037624aaa6212aeada1d28861ef5e0a935adaf93e4ef79837119f2a2d04c
+#10 resolve docker.io/library/rockylinux:8@sha256:9794037624aaa6212aeada1d28861ef5e0a935adaf93e4ef79837119f2a2d04c
+#10 resolve docker.io/library/rockylinux:8@sha256:9794037624aaa6212aeada1d28861ef5e0a935adaf93e4ef79837119f2a2d04c 0.0s done
+#10 DONE 0.0s
+
+#11 [package-amd64 1/1] COPY --from=install-amd64 /openriak-rootfs/ /
+#11 CACHED
+
+#12 [final 3/4] COPY <<OPENRIAK_HEALTHCHECK /usr/local/bin/openriak-healthcheck
+#12 CACHED
+
+#13 [download-amd64 1/1] ADD --checksum=sha256:ffcc9ce4af826a508e4927a8c725d5e21dd6dcb565d8adba4ae3ca6ef3f146ea https://files.tiot.jp/riak/kv/3.4/3.4.1/rhel/8/riak-3.4.1.OTP26-1.el8.x86_64.rpm /riak-3.4.1.OTP26-1.el8.x86_64.rpm
+#13 CACHED
+
+#14 [install-amd64 2/2] RUN --mount=type=bind,from=download-amd64,target=/opt/openriak-package,ro <<'OPENRIAK_PACKAGE_INSTALL' (set -eu...)
+#14 CACHED
+
+#15 [final 1/4] RUN <<'OPENRIAK_IMAGE_SETUP' (set -eu...)
+#15 CACHED
+
+#16 [final 2/4] COPY <<OPENRIAK_ENTRYPOINT /usr/local/bin/openriak-entrypoint
+#16 CACHED
+
+#17 [final 4/4] RUN <<'OPENRIAK_SCRIPT_SETUP' (set -eu...)
+#17 CACHED
+
+#18 exporting to oci image format
+#18 exporting layers done
+#18 exporting manifest sha256:9f77ef81f9a50c4e92055af5a91d6bb20677f6933412984130e0681d5f078716 done
+#18 exporting config sha256:b06c81699bb7dc4aa4c927b36483792b7a78bbcba7879db9bb87144dc96feab3 done
+#18 sending tarball
+#18 sending tarball 0.5s done
+#18 DONE 0.5s
+
+timeout_seconds: 3600
+exit_code: 0

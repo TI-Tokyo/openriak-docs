@@ -1,0 +1,108 @@
+$ /usr/bin/docker buildx build --builder openriak-kv-multiarch --load --platform linux/amd64 --pull=false --no-cache --tag tiotjp/openriak-kv:test-3.4.0-alpine-3.21-otp26-linux-amd64-20260911t112855.080519z --file /home/peter/openriak-builds/openriak-distributed/openriak-docker-2026-09-11-b/living-room-b/20260911T084617.243958Z/results/3.4.0/3.4.0-alpine-3.21-otp26/platforms/linux-amd64/runs/20260911T112855.080519Z/Dockerfile /home/peter/openriak-builds/openriak-distributed/openriak-docker-2026-09-11-b/living-room-b/20260911T084617.243958Z/results/3.4.0/3.4.0-alpine-3.21-otp26/platforms/linux-amd64/runs/20260911T112855.080519Z
+started: 2026-09-11T11:28:55Z
+#0 building with "openriak-kv-multiarch" instance using docker-container driver
+
+#1 [internal] load build definition from Dockerfile
+#1 transferring dockerfile: 42.88kB done
+#1 DONE 0.0s
+
+#2 resolve image config for docker-image://docker.io/docker/dockerfile:1.7
+#2 DONE 1.0s
+
+#3 docker-image://docker.io/docker/dockerfile:1.7@sha256:a57df69d0ea827fb7266491f2813635de6f17269be881f696fbfdf2d83dda33e
+#3 resolve docker.io/docker/dockerfile:1.7@sha256:a57df69d0ea827fb7266491f2813635de6f17269be881f696fbfdf2d83dda33e 0.0s done
+#3 CACHED
+
+#4 [internal] load metadata for docker.io/library/alpine:3.21@sha256:48b0309ca019d89d40f670aa1bc06e426dc0931948452e8491e3d65087abc07d
+#4 DONE 0.6s
+
+#5 [internal] load .dockerignore
+#5 transferring context: 2B done
+#5 DONE 0.0s
+
+#6 [download-amd64 1/1] ADD --checksum=sha256:b6de9bbaf5b30f36fb2e0bc2099838ab13180e90e059dc225d627e25105f7e17 https://files.tiot.jp/alpine/v3.21/main/x86_64/riak-3.4.0.26-r1.apk /riak-3.4.0.26-r1.apk
+#6 CACHED
+
+#7 [internal] preparing inline document
+#7 CACHED
+
+#8 [internal] preparing inline document
+#8 CACHED
+
+#9 [package-amd64 1/2] FROM docker.io/library/alpine:3.21@sha256:48b0309ca019d89d40f670aa1bc06e426dc0931948452e8491e3d65087abc07d
+#9 resolve docker.io/library/alpine:3.21@sha256:48b0309ca019d89d40f670aa1bc06e426dc0931948452e8491e3d65087abc07d done
+#9 CACHED
+
+#10 [download-amd64 1/1] ADD --checksum=sha256:b6de9bbaf5b30f36fb2e0bc2099838ab13180e90e059dc225d627e25105f7e17 https://files.tiot.jp/alpine/v3.21/main/x86_64/riak-3.4.0.26-r1.apk /riak-3.4.0.26-r1.apk
+#10 DONE 0.0s
+
+#11 [package-amd64 2/2] RUN --mount=type=bind,from=download-amd64,target=/opt/openriak-package,ro <<'OPENRIAK_PACKAGE_INSTALL' (set -eu...)
+#11 0.077 fetch https://dl-cdn.alpinelinux.org/alpine/v3.21/main/x86_64/APKINDEX.tar.gz
+#11 0.414 fetch https://dl-cdn.alpinelinux.org/alpine/v3.21/community/x86_64/APKINDEX.tar.gz
+#11 0.991 OK: 7 MiB in 15 packages
+#11 1.059 fetch https://dl-cdn.alpinelinux.org/alpine/v3.21/main/x86_64/APKINDEX.tar.gz
+#11 1.144 fetch https://dl-cdn.alpinelinux.org/alpine/v3.21/community/x86_64/APKINDEX.tar.gz
+#11 1.462 (1/19) Installing ncurses-terminfo-base (6.5_p20241006-r3)
+#11 1.468 (2/19) Installing libncursesw (6.5_p20241006-r3)
+#11 1.479 (3/19) Installing readline (8.2.13-r0)
+#11 1.485 (4/19) Installing bash (5.2.37-r0)
+#11 1.502 Executing bash-5.2.37-r0.post-install
+#11 1.505 (5/19) Installing ca-certificates (20260413-r0)
+#11 1.527 (6/19) Installing coreutils-env (9.5-r2)
+#11 1.533 (7/19) Installing coreutils-fmt (9.5-r2)
+#11 1.538 (8/19) Installing coreutils-sha512sum (9.5-r2)
+#11 1.542 (9/19) Installing acl-libs (2.3.2-r1)
+#11 1.546 (10/19) Installing libattr (2.5.2-r2)
+#11 1.551 (11/19) Installing skalibs-libs (2.14.3.0-r0)
+#11 1.557 (12/19) Installing utmps-libs (0.1.2.3-r2)
+#11 1.561 (13/19) Installing coreutils (9.5-r2)
+#11 1.580 (14/19) Installing libmd (1.1.0-r0)
+#11 1.583 (15/19) Installing libbsd (0.12.2-r0)
+#11 1.588 (16/19) Installing linux-pam (1.6.1-r1)
+#11 1.601 (17/19) Installing shadow (4.16.0-r1)
+#11 1.617 (18/19) Installing su-exec (0.2-r3)
+#11 1.621 (19/19) Installing tzdata (2026c-r0)
+#11 1.667 Executing busybox-1.37.0-r14.trigger
+#11 1.672 Executing ca-certificates-20260413-r0.trigger
+#11 1.708 OK: 13 MiB in 34 packages
+#11 1.786 fetch https://dl-cdn.alpinelinux.org/alpine/v3.21/main/x86_64/APKINDEX.tar.gz
+#11 1.875 fetch https://dl-cdn.alpinelinux.org/alpine/v3.21/community/x86_64/APKINDEX.tar.gz
+#11 2.197 (1/3) Installing libgcc (14.2.0-r4)
+#11 2.207 (2/3) Installing libstdc++ (14.2.0-r4)
+#11 2.234 (3/3) Installing riak (3.4.0.26-r1)
+#11 2.713 Executing busybox-1.37.0-r14.trigger
+#11 2.718 OK: 63 MiB in 37 packages
+#11 DONE 2.9s
+
+#12 [final 1/4] RUN <<'OPENRIAK_IMAGE_SETUP' (set -eu...)
+#12 0.084 uid=100(riak) gid=101(riak) groups=101(riak),101(riak)
+#12 DONE 0.1s
+
+#13 [final 2/4] COPY <<OPENRIAK_ENTRYPOINT /usr/local/bin/openriak-entrypoint
+#13 DONE 0.0s
+
+#14 [final 3/4] COPY <<OPENRIAK_HEALTHCHECK /usr/local/bin/openriak-healthcheck
+#14 DONE 0.0s
+
+#15 [final 4/4] RUN <<'OPENRIAK_SCRIPT_SETUP' (set -eu...)
+#15 DONE 0.1s
+
+#16 exporting to docker image format
+#16 exporting layers
+#16 exporting layers 2.2s done
+#16 exporting manifest sha256:0d65fc1ea53dcea1cfab1f75c40cd1835846f785f56a4608cbc937a19d0ac3fd done
+#16 exporting config sha256:bfd2ec811b3fccd495f7de2b08c0560f96998628c5bb5ab3e8d3eb522810ddbc done
+#16 sending tarball
+#16 sending tarball 1.2s done
+#16 DONE 3.4s
+
+#17 importing to docker
+#17 loading layer f408ea34967e 37.38MB / 37.38MB 0.8s done
+#17 loading layer 88245f6e896f 24.57kB / 24.57kB 0.0s done
+#17 loading layer 92a4b96f0d5d 7.71kB / 7.71kB 0.0s done
+#17 loading layer a14e0a4b0e5f 391B / 391B 0.0s done
+#17 loading layer c760abd2fd03 7.88kB / 7.88kB 0.0s done
+#17 DONE 0.8s
+
+timeout_seconds: 3600
+exit_code: 0

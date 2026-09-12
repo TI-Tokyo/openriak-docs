@@ -1,0 +1,42 @@
+[
+  {
+    "image": "rockylinux:8",
+    "package": "gzip",
+    "floor": "1.9-13.el8_5",
+    "command": "# Require gzip >= 1.9-13.el8_5; keep newer vendor updates.\ninstalled_rpm=$(rpm -q --qf '%{EPOCHNUM} %{VERSION} %{RELEASE}' gzip)\nOPENRIAK_RPM_VERSION=\"$installed_rpm\" rpm --eval '%{lua:\nlocal e, v, r = os.getenv(\"OPENRIAK_RPM_VERSION\"):match(\"^(%d+) ([^ ]+) ([^ ]+)$\")\nassert(e, \"Cannot identify installed gzip version\")\nlocal comparison = rpm.vercmp(e, \"0\")\nif comparison == 0 then comparison = rpm.vercmp(v, \"1.9\") end\nif comparison == 0 then comparison = rpm.vercmp(r, \"13.el8_5\") end\nassert(comparison >= 0, \"Installed gzip is older than 1.9-13.el8_5\")\n}' >/dev/null\n",
+    "exit_code": 0,
+    "stderr": ""
+  },
+  {
+    "image": "rockylinux:8",
+    "package": "gzip",
+    "floor": "1.9-15.el8_10",
+    "command": "# Require gzip >= 1.9-15.el8_10; keep newer vendor updates.\ninstalled_rpm=$(rpm -q --qf '%{EPOCHNUM} %{VERSION} %{RELEASE}' gzip)\nOPENRIAK_RPM_VERSION=\"$installed_rpm\" rpm --eval '%{lua:\nlocal e, v, r = os.getenv(\"OPENRIAK_RPM_VERSION\"):match(\"^(%d+) ([^ ]+) ([^ ]+)$\")\nassert(e, \"Cannot identify installed gzip version\")\nlocal comparison = rpm.vercmp(e, \"0\")\nif comparison == 0 then comparison = rpm.vercmp(v, \"1.9\") end\nif comparison == 0 then comparison = rpm.vercmp(r, \"15.el8_10\") end\nassert(comparison >= 0, \"Installed gzip is older than 1.9-15.el8_10\")\n}' >/dev/null\n",
+    "exit_code": 1,
+    "stderr": "error: lua script failed: [string \"<lua>\"]:7: Installed gzip is older than 1.9-15.el8_10\n"
+  },
+  {
+    "image": "rockylinux:9",
+    "package": "glib2",
+    "floor": "2.68.4-11.el9",
+    "command": "# Require glib2 >= 2.68.4-11.el9; keep newer vendor updates.\ninstalled_rpm=$(rpm -q --qf '%{EPOCHNUM} %{VERSION} %{RELEASE}' glib2)\nOPENRIAK_RPM_VERSION=\"$installed_rpm\" rpm --eval '%{lua:\nlocal e, v, r = os.getenv(\"OPENRIAK_RPM_VERSION\"):match(\"^(%d+) ([^ ]+) ([^ ]+)$\")\nassert(e, \"Cannot identify installed glib2 version\")\nlocal comparison = rpm.vercmp(e, \"0\")\nif comparison == 0 then comparison = rpm.vercmp(v, \"2.68.4\") end\nif comparison == 0 then comparison = rpm.vercmp(r, \"11.el9\") end\nassert(comparison >= 0, \"Installed glib2 is older than 2.68.4-11.el9\")\n}' >/dev/null\n",
+    "exit_code": 0,
+    "stderr": ""
+  },
+  {
+    "image": "rockylinux:9",
+    "package": "glib2",
+    "floor": "2.68.4-999.el9",
+    "command": "# Require glib2 >= 2.68.4-999.el9; keep newer vendor updates.\ninstalled_rpm=$(rpm -q --qf '%{EPOCHNUM} %{VERSION} %{RELEASE}' glib2)\nOPENRIAK_RPM_VERSION=\"$installed_rpm\" rpm --eval '%{lua:\nlocal e, v, r = os.getenv(\"OPENRIAK_RPM_VERSION\"):match(\"^(%d+) ([^ ]+) ([^ ]+)$\")\nassert(e, \"Cannot identify installed glib2 version\")\nlocal comparison = rpm.vercmp(e, \"0\")\nif comparison == 0 then comparison = rpm.vercmp(v, \"2.68.4\") end\nif comparison == 0 then comparison = rpm.vercmp(r, \"999.el9\") end\nassert(comparison >= 0, \"Installed glib2 is older than 2.68.4-999.el9\")\n}' >/dev/null\n",
+    "exit_code": 1,
+    "stderr": "error: lua script failed: [string \"<lua>\"]:7: Installed glib2 is older than 2.68.4-999.el9\n"
+  },
+  {
+    "image": "rockylinux:9",
+    "package": "glib2",
+    "floor": "1:1.0-1",
+    "command": "# Require glib2 >= 1:1.0-1; keep newer vendor updates.\ninstalled_rpm=$(rpm -q --qf '%{EPOCHNUM} %{VERSION} %{RELEASE}' glib2)\nOPENRIAK_RPM_VERSION=\"$installed_rpm\" rpm --eval '%{lua:\nlocal e, v, r = os.getenv(\"OPENRIAK_RPM_VERSION\"):match(\"^(%d+) ([^ ]+) ([^ ]+)$\")\nassert(e, \"Cannot identify installed glib2 version\")\nlocal comparison = rpm.vercmp(e, \"1\")\nif comparison == 0 then comparison = rpm.vercmp(v, \"1.0\") end\nif comparison == 0 then comparison = rpm.vercmp(r, \"1\") end\nassert(comparison >= 0, \"Installed glib2 is older than 1:1.0-1\")\n}' >/dev/null\n",
+    "exit_code": 1,
+    "stderr": "error: lua script failed: [string \"<lua>\"]:7: Installed glib2 is older than 1:1.0-1\n"
+  }
+]

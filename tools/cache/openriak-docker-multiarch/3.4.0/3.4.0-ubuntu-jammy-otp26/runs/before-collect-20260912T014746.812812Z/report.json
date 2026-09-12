@@ -1,0 +1,220 @@
+{
+  "artifacts": {
+    "compose_cluster": {
+      "filename": "compose.cluster.yaml",
+      "sha256": "b9e237b85ad9ad33771363a3fe6b8194c8179cf0062a14c5558bc4d32d268943",
+      "url": "downloads/docker/3.4.0/3.4.0-ubuntu-jammy-otp26/compose.cluster.yaml"
+    },
+    "compose_single": {
+      "filename": "compose.single.yaml",
+      "sha256": "2b06d461a60cde38a09339e7971d8111090744539caf5a2327d638c989e6be6f",
+      "url": "downloads/docker/3.4.0/3.4.0-ubuntu-jammy-otp26/compose.single.yaml"
+    },
+    "dockerfile": {
+      "filename": "Dockerfile",
+      "sha256": "41f9c40393afa3c2e3d5c6e57d67dfe28d2eb419e0100feb32aacf937d04dc14",
+      "url": "downloads/docker/3.4.0/3.4.0-ubuntu-jammy-otp26/Dockerfile"
+    },
+    "environment_example": {
+      "filename": "example.env",
+      "sha256": "641d5f6f7cbad4ba101fac686c6358674b5d0e02b92b606d58aa561dfa287f9b",
+      "url": "downloads/docker/3.4.0/3.4.0-ubuntu-jammy-otp26/example.env"
+    }
+  },
+  "base_images": {
+    "linux/amd64": {
+      "pinned": "ubuntu:jammy@sha256:829f6df217bcbae2b371026e81711d1a787c61b2967ad09d015063663ebafbf7",
+      "requested": "ubuntu:jammy",
+      "resolved_at": "2026-09-10T20:14:00Z"
+    }
+  },
+  "build_tags": [
+    "tiotjp/openriak-kv:3.4.0-ubuntu-jammy-otp26",
+    "tiotjp/openriak-kv:3.4.0-ubuntu-jammy"
+  ],
+  "cluster_nodes": 5,
+  "distributed_cookie": "openriak-5ee46e270897a6e576b74130a3469e35",
+  "error": null,
+  "finished_at": "2026-09-10T20:19:24Z",
+  "generated_artifacts": {
+    "Dockerfile": "41f9c40393afa3c2e3d5c6e57d67dfe28d2eb419e0100feb32aacf937d04dc14",
+    "compose.cluster.yaml": "b9e237b85ad9ad33771363a3fe6b8194c8179cf0062a14c5558bc4d32d268943",
+    "compose.single.yaml": "2b06d461a60cde38a09339e7971d8111090744539caf5a2327d638c989e6be6f",
+    "example.env": "641d5f6f7cbad4ba101fac686c6358674b5d0e02b92b606d58aa561dfa287f9b"
+  },
+  "identity": {
+    "namespace": "tiotjp",
+    "source": "https://github.com/TI-Tokyo/openriak-docs",
+    "url": "https://www.tiot.jp/",
+    "vendor": "TI Tokyo"
+  },
+  "image": "tiotjp/openriak-kv:3.4.0-ubuntu-jammy-otp26",
+  "inputs": {
+    "cluster_nodes": 5,
+    "compose_options": {
+      "OPENRIAK_CPUS": [
+        "0",
+        "CPU limit per node, for example 2.0; 0 means unrestricted."
+      ],
+      "OPENRIAK_DOCKER_LOG_MAX_FILES": [
+        "3",
+        "Maximum number of Docker JSON log files retained per node."
+      ],
+      "OPENRIAK_DOCKER_LOG_MAX_SIZE": [
+        "10m",
+        "Maximum size of each Docker JSON log file per node."
+      ],
+      "OPENRIAK_MEMORY_LIMIT": [
+        "0",
+        "Memory limit per node, for example 4g; 0 means unrestricted."
+      ]
+    },
+    "identity": {
+      "namespace": "tiotjp",
+      "source": "https://github.com/TI-Tokyo/openriak-docs",
+      "url": "https://www.tiot.jp/",
+      "vendor": "TI Tokyo"
+    },
+    "labels": {
+      "org.opencontainers.image.description": "Package-backed OpenRiak KV with single-node and cluster startup support",
+      "org.opencontainers.image.source": "https://github.com/TI-Tokyo/openriak-docs",
+      "org.opencontainers.image.title": "OpenRiak KV",
+      "org.opencontainers.image.url": "https://www.tiot.jp/",
+      "org.opencontainers.image.vendor": "TI Tokyo",
+      "org.opencontainers.image.version": "3.4.0",
+      "org.openriak.image.tag": "tiotjp/openriak-kv:3.4.0-ubuntu-jammy-otp26",
+      "org.openriak.os.name": "ubuntu",
+      "org.openriak.os.release": "jammy",
+      "org.openriak.os.version": "22.04",
+      "org.openriak.otp.version": "26"
+    },
+    "lifecycle_options": {
+      "healthcheck_interval": 10,
+      "healthcheck_retries": 3,
+      "healthcheck_start_period": 120,
+      "healthcheck_timeout": 60,
+      "stop_grace_period": 120
+    },
+    "packages": {
+      "linux/amd64": {
+        "base": "ubuntu:jammy",
+        "checksum": {
+          "algorithm": "sha256",
+          "value": "165c9ffd5133421f462c2913a5cdd5041e5a914e9fef0e1585ed0fe69f3c4700"
+        },
+        "url": "https://files.tiot.jp/riak/kv/3.4/3.4.0/ubuntu/jammy64/riak_3.4.0-OTP26_amd64.deb"
+      }
+    },
+    "renderer_sha256": "d8c8bef47418178c380a98d15100d6628542fa6b661d886a982689b91ae3b582",
+    "runtime_filesystem": {
+      "minimum_packages": {
+        "libc6": "2.35-0ubuntu3.15"
+      },
+      "perl_removal": "dpkg",
+      "remove_tar": true,
+      "strategy": "clean-root"
+    },
+    "runtime_options": {
+      "RIAK_GID": [
+        "",
+        "Optional nonzero GID for riak; empty retains the package GID. Mounted directories are chowned."
+      ],
+      "RIAK_LOG_MAX_FILES": [
+        "10",
+        "Maximum file count per OpenRiak logger handler; initializes new configurations only."
+      ],
+      "RIAK_LOG_MAX_FILE_SIZE": [
+        "1MB",
+        "Maximum size per OpenRiak logger file; initializes new configurations only."
+      ],
+      "RIAK_UID": [
+        "",
+        "Optional nonzero UID for riak; empty retains the package UID. Mounted directories are chowned."
+      ],
+      "TZ": [
+        "Etc/UTC",
+        "IANA timezone for the process and entrypoint logs, for example Asia/Tokyo."
+      ]
+    },
+    "runtime_renderer_sha256": "844f7481cc048968d65813d4e204b96e45039c3ed2c1dff12c37fcecebb4075c",
+    "runtime_sha256": "b0f20a4604e8cff49f7060bf5e0cc5fa52df5829d46520d37095130f07f65656",
+    "schema_version": 4,
+    "tags": [
+      "tiotjp/openriak-kv:3.4.0-ubuntu-jammy-otp26",
+      "tiotjp/openriak-kv:3.4.0-ubuntu-jammy"
+    ]
+  },
+  "local_tags_platform": "linux/amd64",
+  "node": "openriak-kv-3.4.0-ubuntu-jammy-otp26-node",
+  "oci_archive": "runs/20260910T201358.711963Z/image.oci.tar",
+  "os_family": "ubuntu",
+  "os_name": "Ubuntu 22.04",
+  "os_release": "jammy",
+  "otp": "26",
+  "platform_results": {
+    "linux/amd64": {
+      "artifacts": {
+        "compose_cluster": {
+          "filename": "compose.cluster.yaml",
+          "sha256": "b9e237b85ad9ad33771363a3fe6b8194c8179cf0062a14c5558bc4d32d268943",
+          "url": "downloads/docker/3.4.0/3.4.0-ubuntu-jammy-otp26/compose.cluster.yaml"
+        },
+        "compose_single": {
+          "filename": "compose.single.yaml",
+          "sha256": "2b06d461a60cde38a09339e7971d8111090744539caf5a2327d638c989e6be6f",
+          "url": "downloads/docker/3.4.0/3.4.0-ubuntu-jammy-otp26/compose.single.yaml"
+        },
+        "dockerfile": {
+          "filename": "Dockerfile",
+          "sha256": "41f9c40393afa3c2e3d5c6e57d67dfe28d2eb419e0100feb32aacf937d04dc14",
+          "url": "downloads/docker/3.4.0/3.4.0-ubuntu-jammy-otp26/Dockerfile"
+        },
+        "environment_example": {
+          "filename": "example.env",
+          "sha256": "641d5f6f7cbad4ba101fac686c6358674b5d0e02b92b606d58aa561dfa287f9b",
+          "url": "downloads/docker/3.4.0/3.4.0-ubuntu-jammy-otp26/example.env"
+        }
+      },
+      "finished_at": "2026-09-10T20:19:15Z",
+      "report": "platforms/linux-amd64/runs/20260910T201400.615455Z/report.json",
+      "run_id": "20260910T201400.615455Z",
+      "status": "passed"
+    }
+  },
+  "platforms": [
+    "linux/amd64"
+  ],
+  "product": "openriak-kv",
+  "run_id": "20260910T201358.711963Z",
+  "schema_version": 4,
+  "started_at": "2026-09-10T20:13:58Z",
+  "status": "passed",
+  "steps": [
+    {
+      "duration_seconds": 3.215,
+      "finished_at": "2026-09-10T20:19:19Z",
+      "name": "export_oci_image",
+      "started_at": "2026-09-10T20:19:15Z",
+      "status": "passed"
+    },
+    {
+      "duration_seconds": 5.312,
+      "finished_at": "2026-09-10T20:19:24Z",
+      "name": "load_local_tags",
+      "started_at": "2026-09-10T20:19:19Z",
+      "status": "passed"
+    }
+  ],
+  "tags": [
+    "tiotjp/openriak-kv:3.4.0-ubuntu-jammy-otp26",
+    "tiotjp/openriak-kv:3.4.0-ubuntu-jammy"
+  ],
+  "targets": [
+    {
+      "architecture": "amd64",
+      "download_id": "otp26-amd64",
+      "os_id": "ubuntu-jammy-amd64"
+    }
+  ],
+  "version": "3.4.0"
+}

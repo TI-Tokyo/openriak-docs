@@ -158,7 +158,11 @@ package_manager() {{
 }}
 alias {manager}=package_manager
 '''
-                    result = subprocess.run(["sh", "-c", "set -eu\n" + stubs + tool.package_install_script(target)],
+                    # Repository file setup has its own filesystem regression test;
+                    # this test isolates package updates and subsequent cleanup.
+                    with mock.patch.object(tool, "debian_repository_setup", return_value=""):
+                        script = tool.package_install_script(target)
+                    result = subprocess.run(["sh", "-c", "set -eu\n" + stubs + script],
                                             text=True, capture_output=True, timeout=5)
                     self.assertEqual(result.returncode, 19, result.stdout + result.stderr)
                     self.assertNotIn("UNEXPECTED_CLEANUP", result.stdout)

@@ -78,7 +78,7 @@ ENV RIAK_NODE_HOST=""
 # Explicit nodename; empty derives openriak-kv@<hostname>.
 ENV RIAK_NODE_NAME=""
 # Initial cookie; existing riak.conf wins and new followers adopt the coordinator cookie.
-ENV RIAK_DISTRIBUTED_COOKIE="openriak-3961453a0e55a7ca2237e8c72d8a823b"
+ENV RIAK_DISTRIBUTED_COOKIE="openriak-c2a401d5fd0d01b15acc6d872ed2f98e"
 # Partition count for a new ring; do not change on an existing cluster.
 ENV RIAK_RING_SIZE="8"
 # Storage backend used by OpenRiak KV.

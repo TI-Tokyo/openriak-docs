@@ -24,6 +24,7 @@ mkdir -p /openriak-rootfs
 dnf install -y --refresh --installroot=/openriak-rootfs --releasever=9 --setopt=install_weak_deps=False --setopt=tsflags=nodocs redhat-release bash coreutils findutils gawk grep sed ca-certificates glibc glibc-minimal-langpack hostname libgcc libstdc++ ncurses-libs openssl-libs pam procps-ng shadow-utils sudo util-linux zlib tzdata
 # Install the verified official package; its OTP runtime is bundled in the RPM.
 rpm --root /openriak-rootfs -Uvh --replacepkgs --nodeps /opt/openriak-package/riak-3.4.0.OTP26-1.el9.x86_64.rpm
+# Reject stale repository mirrors before exporting the runtime filesystem.
 # Preserve the RPM database and an explicit inventory for vulnerability scanners.
 mkdir -p /openriak-rootfs/usr/share/openriak-build
 rpm --root /openriak-rootfs -qa --qf '%{NAME} %{VERSION}-%{RELEASE}\n' > /openriak-rootfs/usr/share/openriak-build/runtime-packages.txt
@@ -88,7 +89,7 @@ ENV RIAK_NODE_HOST=""
 # Explicit nodename; empty derives openriak-kv@<hostname>.
 ENV RIAK_NODE_NAME=""
 # Initial cookie; existing riak.conf wins and new followers adopt the coordinator cookie.
-ENV RIAK_DISTRIBUTED_COOKIE="openriak-f04e9b299fd4b47905d7cd608754c607"
+ENV RIAK_DISTRIBUTED_COOKIE="openriak-07bed2e1ed01c39269062bc160a74047"
 # Partition count for a new ring; do not change on an existing cluster.
 ENV RIAK_RING_SIZE="8"
 # Storage backend used by OpenRiak KV.

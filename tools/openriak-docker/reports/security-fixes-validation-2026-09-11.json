@@ -1,0 +1,459 @@
+{
+  "reviewed_at": "2026-09-11",
+  "scope": "Known vendor package fixes across OS families; isolated amd64 single-node and five-node integration plus full Scout scans. No production cache replacement, ARM execution, or push.",
+  "baseline": "tools/openriak-docker/reports/cve-review-2026-09-11.json",
+  "repository_checks": "tools/cache/openriak-docker-security-validation/20260910T163203.535147Z",
+  "images": [
+    {
+      "image_tag": "3.4.0-rocky-9-otp26",
+      "platform": "linux/amd64",
+      "validation": "tools/cache/openriak-docker-minimal-validation/20260910T165355.104772Z/3.4.0/3.4.0-rocky-9-otp26/validation.json",
+      "integration_report": "tools/cache/openriak-docker-minimal-validation/20260910T165355.104772Z/3.4.0/3.4.0-rocky-9-otp26/platforms/linux-amd64/report.json",
+      "image": "openriak-minimal-validation/openriak-kv:3.4.0-rocky-9-otp26-20260910t165355.104772z",
+      "image_inspection": {
+        "id": "sha256:80b95f0e887ea7aee7b4ca1d572d5d2179ce13a419af27582d562284031c58ba",
+        "size_bytes": 253496127,
+        "layers": [
+          "sha256:04acdfed25802a0ae515751cb02a86618e078e3cdc0fbb15ba4be0687198c37d",
+          "sha256:5da25272e74e51e96a7a116b908f1807f42839844ea533df7e4c8ccd190a1557",
+          "sha256:bab40ac85d6501145b99234a738327591e541010c2faaa7e5a4d9debf1c7d4c7",
+          "sha256:e6eeb376cfa486f99c120415da7e24934237d4c7c81f773765d609a7015ede11",
+          "sha256:1d6b96bb8cd63368fe78c79f00c3847f4649e91a71df06ba700db834a23238a7"
+        ]
+      },
+      "dockerfile_sha256": "4e3a47dad590ec6fa7580611a76c9e5bc810bfba07aa6c27363f510fe618bc1e",
+      "runtime_strategy": {
+        "strategy": "clean-root",
+        "minimum_packages": {
+          "glib2": "2.68.4-19.el9_8.10",
+          "expat": "2.5.0-6.el9_8.3",
+          "pam": "1.5.1-28.el9_8.1"
+        }
+      },
+      "installed_packages": {
+        "expat": "2.5.0-6.el9_8.3",
+        "glib2": "2.68.4-19.el9_8.10",
+        "glibc": "2.34-275.el9_8",
+        "gzip": "1.12-2.el9_8",
+        "pam": "1.5.1-28.el9_8.1"
+      },
+      "before_counts": {
+        "LOW": 3
+      },
+      "after_counts": {
+        "CRITICAL": 0,
+        "HIGH": 0,
+        "MEDIUM": 0,
+        "LOW": 0,
+        "UNSPECIFIED": 0
+      },
+      "removed_cves": [
+        "CVE-2026-16118",
+        "CVE-2026-50219",
+        "CVE-2026-54411"
+      ],
+      "new_cves": [],
+      "remaining_cves": {},
+      "production_renderer_matches": true
+    },
+    {
+      "image_tag": "3.4.0-ubuntu-noble-otp24",
+      "platform": "linux/amd64",
+      "validation": "tools/cache/openriak-docker-minimal-validation/20260910T163455.103663Z/3.4.0/3.4.0-ubuntu-noble-otp24/validation.json",
+      "integration_report": "tools/cache/openriak-docker-minimal-validation/20260910T163455.103663Z/3.4.0/3.4.0-ubuntu-noble-otp24/platforms/linux-amd64/report.json",
+      "image": "openriak-minimal-validation/openriak-kv:3.4.0-ubuntu-noble-otp24-20260910t163455.103663z",
+      "image_inspection": {
+        "id": "sha256:f40fc286dd70a85d3660d2271cfdb9558ec93712eb87f3dc3be7cfced72a86e2",
+        "size_bytes": 144273836,
+        "layers": [
+          "sha256:3c98160f8da930752dd747e482b6996532c093e0a5931af28b28d089d8aecab9",
+          "sha256:7e6bb156d306a669d559e579ab05472313210339749fd06f3463a2f585b1efd3",
+          "sha256:e97fec5e44de8d1f0f802377ed3e199955e25f098423d19a20265d2e8ccc937b",
+          "sha256:c142c0c15701872513829499477d91897006b91ba6a9fbc40f4e10fd2db1b6af",
+          "sha256:318a48d7a1cace92e68711329d58ebb6d262ab1004b12a048a087457a9fb0781"
+        ]
+      },
+      "dockerfile_sha256": "4c60cb5e62394c90ca5be02e68eab8672a8a656a80e7c350966a70352796b005",
+      "runtime_strategy": {
+        "strategy": "clean-root",
+        "remove_tar": true,
+        "minimum_packages": {
+          "libc6": "2.39-0ubuntu8.9"
+        }
+      },
+      "installed_packages": {
+        "dpkg": "1.22.6ubuntu6.6",
+        "glibc": "2.39-0ubuntu8.9",
+        "gzip": "1.12-1ubuntu3.2",
+        "lvm2": "2.03.16-3ubuntu3.2",
+        "pam": "1.5.3-5ubuntu5.7"
+      },
+      "before_counts": {
+        "MEDIUM": 9,
+        "LOW": 2
+      },
+      "after_counts": {
+        "CRITICAL": 0,
+        "HIGH": 0,
+        "MEDIUM": 3,
+        "LOW": 2,
+        "UNSPECIFIED": 0
+      },
+      "removed_cves": [
+        "CVE-2026-19499",
+        "CVE-2026-19542",
+        "CVE-2026-6368",
+        "CVE-2026-6791",
+        "CVE-2026-77117",
+        "CVE-2026-80489"
+      ],
+      "new_cves": [],
+      "remaining_cves": {
+        "CVE-2024-56433": "LOW",
+        "CVE-2026-40228": "LOW",
+        "CVE-2026-18374": "MEDIUM",
+        "CVE-2026-19617": "MEDIUM",
+        "CVE-2026-2219": "MEDIUM"
+      },
+      "production_renderer_matches": true
+    },
+    {
+      "image_tag": "3.4.0-ubuntu-noble-otp26",
+      "platform": "linux/amd64",
+      "validation": "tools/cache/openriak-docker-minimal-validation/20260910T163455.103663Z/3.4.0/3.4.0-ubuntu-noble-otp26/validation.json",
+      "integration_report": "tools/cache/openriak-docker-minimal-validation/20260910T163455.103663Z/3.4.0/3.4.0-ubuntu-noble-otp26/platforms/linux-amd64/report.json",
+      "image": "openriak-minimal-validation/openriak-kv:3.4.0-ubuntu-noble-otp26-20260910t163455.103663z",
+      "image_inspection": {
+        "id": "sha256:e1f6f758c216569f60511172eba4f4d6a62da2d2d4e5324030bf02e33292e018",
+        "size_bytes": 145986090,
+        "layers": [
+          "sha256:920ae2442a5396c0abf74ce52854a5dbcd7dfc919c580f18499a853433b01b3c",
+          "sha256:f8c8ba492a7b3cfc590f5b8dc559c237d8516aac815fd0babc44ac02958d0920",
+          "sha256:1b982ce7d82f4c14e2a8f80c07389e6b2c680b737657469f14ee554902569e5d",
+          "sha256:1cef80d0ba1ba14bcb51c9f41d3c06476d4f177f1288f311980c564992c62a72",
+          "sha256:72c752075438aa001597d27a11d730bdac930a3f665e527c5df7531aca2473ae"
+        ]
+      },
+      "dockerfile_sha256": "de9c6577a05bc2886d3c06628a1724cec0a74a993463b9525935cc3ed81b361a",
+      "runtime_strategy": {
+        "strategy": "clean-root",
+        "remove_tar": true,
+        "minimum_packages": {
+          "libc6": "2.39-0ubuntu8.9"
+        }
+      },
+      "installed_packages": {
+        "dpkg": "1.22.6ubuntu6.6",
+        "glibc": "2.39-0ubuntu8.9",
+        "gzip": "1.12-1ubuntu3.2",
+        "lvm2": "2.03.16-3ubuntu3.2",
+        "pam": "1.5.3-5ubuntu5.7"
+      },
+      "before_counts": {
+        "MEDIUM": 9,
+        "LOW": 2
+      },
+      "after_counts": {
+        "CRITICAL": 0,
+        "HIGH": 0,
+        "MEDIUM": 3,
+        "LOW": 2,
+        "UNSPECIFIED": 0
+      },
+      "removed_cves": [
+        "CVE-2026-19499",
+        "CVE-2026-19542",
+        "CVE-2026-6368",
+        "CVE-2026-6791",
+        "CVE-2026-77117",
+        "CVE-2026-80489"
+      ],
+      "new_cves": [],
+      "remaining_cves": {
+        "CVE-2024-56433": "LOW",
+        "CVE-2026-40228": "LOW",
+        "CVE-2026-18374": "MEDIUM",
+        "CVE-2026-19617": "MEDIUM",
+        "CVE-2026-2219": "MEDIUM"
+      },
+      "production_renderer_matches": true
+    },
+    {
+      "image_tag": "3.4.1-rocky-8-otp26",
+      "platform": "linux/amd64",
+      "validation": "tools/cache/openriak-docker-minimal-validation/20260910T165355.104772Z/3.4.1/3.4.1-rocky-8-otp26/validation.json",
+      "integration_report": "tools/cache/openriak-docker-minimal-validation/20260910T165355.104772Z/3.4.1/3.4.1-rocky-8-otp26/platforms/linux-amd64/report.json",
+      "image": "openriak-minimal-validation/openriak-kv:3.4.1-rocky-8-otp26-20260910t165355.104772z",
+      "image_inspection": {
+        "id": "sha256:7033fdc0841a3bed18947484fb3a6b87470816c42174356cae25add8f56835ec",
+        "size_bytes": 142100539,
+        "layers": [
+          "sha256:9535b9f4e7ad32ad38dd666a1374f63dd2b64f65d03f272de6848662c62b612e",
+          "sha256:813a25402a3aac695608f99fa05faacabdd447975739bb08bdfac4417324ca2e",
+          "sha256:7fc6870020e7e5aa6b5c9401f76623717b41ba9b99096b4418d9846cb207510f",
+          "sha256:7523210771b481d57c12992901b707b369a9a215a66327ec3e4ba504baafda8f",
+          "sha256:768808de85b0824ae4d3e0c2a079e25981cddc114d6f1a8e1ffacd0f6622827d"
+        ]
+      },
+      "dockerfile_sha256": "c354c4d80394af202c0eca053b678780639590e9028525a66d9bfebec7da5b10",
+      "runtime_strategy": {
+        "strategy": "rpm-root",
+        "release_package": "rocky-release",
+        "minimum_packages": {
+          "gzip": "1.9-15.el8_10"
+        }
+      },
+      "installed_packages": {
+        "glibc": "2.28-251.el8_10.40",
+        "gzip": "1.9-15.el8_10",
+        "pam": "1.3.1-40.el8_10"
+      },
+      "before_counts": {
+        "LOW": 1
+      },
+      "after_counts": {
+        "CRITICAL": 0,
+        "HIGH": 0,
+        "MEDIUM": 0,
+        "LOW": 0,
+        "UNSPECIFIED": 0
+      },
+      "removed_cves": [
+        "CVE-2026-41992"
+      ],
+      "new_cves": [],
+      "remaining_cves": {},
+      "production_renderer_matches": true
+    },
+    {
+      "image_tag": "3.4.1-rocky-9-otp26",
+      "platform": "linux/amd64",
+      "validation": "tools/cache/openriak-docker-minimal-validation/20260910T165355.104772Z/3.4.1/3.4.1-rocky-9-otp26/validation.json",
+      "integration_report": "tools/cache/openriak-docker-minimal-validation/20260910T165355.104772Z/3.4.1/3.4.1-rocky-9-otp26/platforms/linux-amd64/report.json",
+      "image": "openriak-minimal-validation/openriak-kv:3.4.1-rocky-9-otp26-20260910t165355.104772z",
+      "image_inspection": {
+        "id": "sha256:7b073e8b59ca4865ee94a209525a135cc2bc04ffb988e60d616151cb7fec9449",
+        "size_bytes": 253608240,
+        "layers": [
+          "sha256:2b3f1ee000d26ef20cb26522444ef60778b53a602d4121c5bfcac76980c0d527",
+          "sha256:a0d46da94f7f93889a0d94c12f02bb34f79f621e06c2f2cde6cf6a5ec21ccc90",
+          "sha256:162fc44139abc75be489685ee03e44a349a4d38ae7db124f1782d7ffe8da6716",
+          "sha256:5426a8cc8dc76984d71ec98cbbc89d60cb95ccf9025464ee79f58c5d3f4fb420",
+          "sha256:4f200be47e416a35c2e6fce99f24071f340bf74e43adc1836326f50af5dc25e0"
+        ]
+      },
+      "dockerfile_sha256": "87cc39a004fceed1148a0411b3ed3917f794411397566ad689d413e3e5c3febb",
+      "runtime_strategy": {
+        "strategy": "clean-root",
+        "minimum_packages": {
+          "glib2": "2.68.4-19.el9_8.10",
+          "expat": "2.5.0-6.el9_8.3",
+          "pam": "1.5.1-28.el9_8.1"
+        }
+      },
+      "installed_packages": {
+        "expat": "2.5.0-6.el9_8.3",
+        "glib2": "2.68.4-19.el9_8.10",
+        "glibc": "2.34-275.el9_8",
+        "gzip": "1.12-2.el9_8",
+        "pam": "1.5.1-28.el9_8.1"
+      },
+      "before_counts": {
+        "LOW": 3
+      },
+      "after_counts": {
+        "CRITICAL": 0,
+        "HIGH": 0,
+        "MEDIUM": 0,
+        "LOW": 0,
+        "UNSPECIFIED": 0
+      },
+      "removed_cves": [
+        "CVE-2026-16118",
+        "CVE-2026-50219",
+        "CVE-2026-54411"
+      ],
+      "new_cves": [],
+      "remaining_cves": {},
+      "production_renderer_matches": true
+    },
+    {
+      "image_tag": "3.4.1-ubuntu-noble-otp26",
+      "platform": "linux/amd64",
+      "validation": "tools/cache/openriak-docker-minimal-validation/20260910T163455.103663Z/3.4.1/3.4.1-ubuntu-noble-otp26/validation.json",
+      "integration_report": "tools/cache/openriak-docker-minimal-validation/20260910T163455.103663Z/3.4.1/3.4.1-ubuntu-noble-otp26/platforms/linux-amd64/report.json",
+      "image": "openriak-minimal-validation/openriak-kv:3.4.1-ubuntu-noble-otp26-20260910t163455.103663z",
+      "image_inspection": {
+        "id": "sha256:0fe5a8375eae92d11666cb866aa2f1aff5d9f710bc00e892c1a199197c5519e9",
+        "size_bytes": 146058940,
+        "layers": [
+          "sha256:5147990899046784daecb1419caaa4a973a4d6b1b7da9579711e800095c6ecf8",
+          "sha256:14d54da16d2c3fa900ab54c41dc7077f88b99ac916fc89d3fd53a8f1962fdaf0",
+          "sha256:64086d204f222421c79974de55ea06e1f48a859dac198e5587c80bd0031ebff1",
+          "sha256:a623304c44aff6c5296014eec31e08269d6825061938cef26fbd996b5959d6d6",
+          "sha256:f78e37155e27bc25079e82dfb3178ec60744902048238da290b9bf6599c208e0"
+        ]
+      },
+      "dockerfile_sha256": "7d8ca97bcb8db5a9bb03b97cb8cb24ab4aaf122e4fde5aab6693b2facb2ef396",
+      "runtime_strategy": {
+        "strategy": "clean-root",
+        "remove_tar": true,
+        "minimum_packages": {
+          "libc6": "2.39-0ubuntu8.9"
+        }
+      },
+      "installed_packages": {
+        "dpkg": "1.22.6ubuntu6.6",
+        "glibc": "2.39-0ubuntu8.9",
+        "gzip": "1.12-1ubuntu3.2",
+        "lvm2": "2.03.16-3ubuntu3.2",
+        "pam": "1.5.3-5ubuntu5.7"
+      },
+      "before_counts": {
+        "MEDIUM": 9,
+        "LOW": 2
+      },
+      "after_counts": {
+        "CRITICAL": 0,
+        "HIGH": 0,
+        "MEDIUM": 3,
+        "LOW": 2,
+        "UNSPECIFIED": 0
+      },
+      "removed_cves": [
+        "CVE-2026-19499",
+        "CVE-2026-19542",
+        "CVE-2026-6368",
+        "CVE-2026-6791",
+        "CVE-2026-77117",
+        "CVE-2026-80489"
+      ],
+      "new_cves": [],
+      "remaining_cves": {
+        "CVE-2024-56433": "LOW",
+        "CVE-2026-40228": "LOW",
+        "CVE-2026-18374": "MEDIUM",
+        "CVE-2026-19617": "MEDIUM",
+        "CVE-2026-2219": "MEDIUM"
+      },
+      "production_renderer_matches": true
+    }
+  ],
+  "verification": [
+    "209 Python tests passed",
+    "Final production rendering matches each tested Dockerfile",
+    "Every single node and each of five cluster nodes passed riak admin test",
+    "CLI/HTTP ping, health, ring, transfers, configuration, cookie preservation/adoption, bind mounts and graceful shutdown passed",
+    "Docker CVE metadata and live watcher tests passed",
+    "Docker-only metadata refreshed all 17 + 18 approved download targets",
+    "All 35 production approval run IDs unchanged",
+    "No new exclusions applied to the currently pushed images"
+  ],
+  "remaining_limitations": [
+    "Alpine 3.21 busybox/coreutils have no newer packages in configured repositories",
+    "RHEL 8/9 and CentOS 9 checked libraries already match current configured repositories",
+    "CentOS Stream 8 vault is archived; cross-distribution Scout fixed versions cannot be installed as CentOS updates",
+    "Noble fopen CVE-2026-18374 and lvm2 CVE-2026-19617 have no verified fix applied",
+    "ARM remains to be tested in the manual production refresh"
+  ],
+  "repository_results": {
+    "alpine-3.21": {
+      "image": "alpine:3.21",
+      "command": "apk update\napk policy busybox coreutils",
+      "exit_code": 0,
+      "stdout": "fetch https://dl-cdn.alpinelinux.org/alpine/v3.21/main/x86_64/APKINDEX.tar.gz\nfetch https://dl-cdn.alpinelinux.org/alpine/v3.21/community/x86_64/APKINDEX.tar.gz\nv3.21.7-248-g703710896c4 [https://dl-cdn.alpinelinux.org/alpine/v3.21/main]\nv3.21.7-247-g46a92bd5566 [https://dl-cdn.alpinelinux.org/alpine/v3.21/community]\nOK: 25398 distinct packages available\nbusybox policy:\n  1.37.0-r14:\n    lib/apk/db/installed\n    https://dl-cdn.alpinelinux.org/alpine/v3.21/main\ncoreutils policy:\n  9.5-r2:\n    https://dl-cdn.alpinelinux.org/alpine/v3.21/main\n",
+      "stderr": "3.21: Pulling from library/alpine\nDigest: sha256:48b0309ca019d89d40f670aa1bc06e426dc0931948452e8491e3d65087abc07d\nStatus: Downloaded newer image for alpine:3.21\n"
+    },
+    "centos-8": {
+      "image": "quay.io/centos/centos:stream8",
+      "command": "# CentOS Stream 8 repositories were moved to the release archive.\nsed -i 's|^mirrorlist=|#mirrorlist=|' /etc/yum.repos.d/CentOS-Stream-*.repo\nsed -i 's|^#baseurl=http://mirror.centos.org/\\$contentdir/\\$stream/|baseurl=https://vault.centos.org/8-stream/|' /etc/yum.repos.d/CentOS-Stream-*.repo\ndnf --refresh list --showduplicates glibc krb5 pam openssl-libs libacl bzip2-libs libcap libgcrypt libtasn1 lz4-libs pcre2\n",
+      "exit_code": 0,
+      "stdout": "CentOS Stream 8 - AppStream                      13 MB/s |  29 MB     00:02    \nCentOS Stream 8 - BaseOS                         17 MB/s |  10 MB     00:00    \nCentOS Stream 8 - Extras                        145 kB/s |  18 kB     00:00    \nCentOS Stream 8 - Extras common packages         61 kB/s | 8.0 kB     00:00    \nInstalled Packages\nbzip2-libs.x86_64                     1.0.6-26.el8                       @System\nglibc.x86_64                          2.28-251.el8.2                     @System\nlibacl.x86_64                         2.2.53-3.el8                       @System\nlibcap.x86_64                         2.48-5.el8                         @System\nlibgcrypt.x86_64                      1.8.5-7.el8                        @System\nlibtasn1.x86_64                       4.13-4.el8                         @System\nlz4-libs.x86_64                       1.8.3-3.el8_4                      @System\nopenssl-libs.x86_64                   1:1.1.1k-12.el8                    @System\npam.x86_64                            1.3.1-33.el8                       @System\npcre2.x86_64                          10.32-3.el8                        @System\nAvailable Packages\nbzip2-libs.i686                       1.0.6-26.el8                       baseos \nbzip2-libs.x86_64                     1.0.6-26.el8                       baseos \nglibc.i686                            2.28-241.el8                       baseos \nglibc.x86_64                          2.28-241.el8                       baseos \nglibc.i686                            2.28-246.el8                       baseos \nglibc.x86_64                          2.28-246.el8                       baseos \nglibc.i686                            2.28-248.el8                       baseos \nglibc.x86_64                          2.28-248.el8                       baseos \nglibc.i686                            2.28-251.el8                       baseos \nglibc.x86_64                          2.28-251.el8                       baseos \nglibc.i686                            2.28-251.el8.2                     baseos \nglibc.x86_64                          2.28-251.el8.2                     baseos \nlibacl.i686                           2.2.53-1.el8                       baseos \nlibacl.x86_64                         2.2.53-1.el8                       baseos \nlibacl.i686                           2.2.53-3.el8                       baseos \nlibacl.x86_64                         2.2.53-3.el8                       baseos \nlibcap.i686                           2.26-4.el8                         baseos \nlibcap.x86_64                         2.26-4.el8                         baseos \nlibcap.i686                           2.26-5.el8                         baseos \nlibcap.x86_64                         2.26-5.el8                         baseos \nlibcap.i686                           2.48-2.el8                         baseos \nlibcap.x86_64                         2.48-2.el8                         baseos \nlibcap.i686                           2.48-4.el8                         baseos \nlibcap.x86_64                         2.48-4.el8                         baseos \nlibcap.i686                           2.48-5.el8                         baseos \nlibcap.x86_64                         2.48-5.el8                         baseos \nlibgcrypt.i686                        1.8.5-4.el8                        baseos \nlibgcrypt.x86_64                      1.8.5-4.el8                        baseos \nlibgcrypt.i686                        1.8.5-5.el8                        baseos \nlibgcrypt.x86_64                      1.8.5-5.el8                        baseos \nlibgcrypt.i686                        1.8.5-6.el8                        baseos \nlibgcrypt.x86_64                      1.8.5-6.el8                        baseos \nlibgcrypt.i686                        1.8.5-7.el8                        baseos \nlibgcrypt.x86_64                      1.8.5-7.el8                        baseos \nlibtasn1.i686                         4.13-3.el8                         baseos \nlibtasn1.x86_64                       4.13-3.el8                         baseos \nlibtasn1.i686                         4.13-4.el8                         baseos \nlibtasn1.x86_64                       4.13-4.el8                         baseos \nlz4-libs.i686                         1.8.3-2.el8                        baseos \nlz4-libs.x86_64                       1.8.3-2.el8                        baseos \nlz4-libs.i686                         1.8.3-3.el8                        baseos \nlz4-libs.x86_64                       1.8.3-3.el8                        baseos \nlz4-libs.i686                         1.8.3-3.el8_4                      baseos \nlz4-libs.x86_64                       1.8.3-3.el8_4                      baseos \nopenssl-libs.i686                     1:1.1.1k-6.el8                     baseos \nopenssl-libs.x86_64                   1:1.1.1k-6.el8                     baseos \nopenssl-libs.i686                     1:1.1.1k-7.el8                     baseos \nopenssl-libs.x86_64                   1:1.1.1k-7.el8                     baseos \nopenssl-libs.i686                     1:1.1.1k-9.el8                     baseos \nopenssl-libs.x86_64                   1:1.1.1k-9.el8                     baseos \nopenssl-libs.i686                     1:1.1.1k-11.el8                    baseos \nopenssl-libs.x86_64                   1:1.1.1k-11.el8                    baseos \nopenssl-libs.i686                     1:1.1.1k-12.el8                    baseos \nopenssl-libs.x86_64                   1:1.1.1k-12.el8                    baseos \npam.i686                              1.3.1-27.el8                       baseos \npam.x86_64                            1.3.1-27.el8                       baseos \npam.i686                              1.3.1-30.el8                       baseos \npam.x86_64                            1.3.1-30.el8                       baseos \npam.i686                              1.3.1-31.el8                       baseos \npam.x86_64                            1.3.1-31.el8                       baseos \npam.i686                              1.3.1-32.el8                       baseos \npam.x86_64                            1.3.1-32.el8                       baseos \npam.i686                              1.3.1-33.el8                       baseos \npam.x86_64                            1.3.1-33.el8                       baseos \npcre2.i686                            10.32-2.el8                        baseos \npcre2.x86_64                          10.32-2.el8                        baseos \npcre2.i686                            10.32-3.el8                        baseos \npcre2.x86_64                          10.32-3.el8                        baseos \n",
+      "stderr": "stream8: Pulling from centos/centos\nDigest: sha256:20da069d4f8126c4517ee563e6e723d4cbe79ff62f6c4597f753478af91a09a3\nStatus: Image is up to date for quay.io/centos/centos:stream8\n"
+    },
+    "ubuntu-noble": {
+      "image": "ubuntu:noble",
+      "command": "apt-get update -qq\napt-cache policy libc6 libdevmapper1.02.1",
+      "exit_code": 0,
+      "stdout": "libc6:\n  Installed: 2.39-0ubuntu8.8\n  Candidate: 2.39-0ubuntu8.9\n  Version table:\n     2.39-0ubuntu8.9 500\n        500 http://archive.ubuntu.com/ubuntu noble-updates/main amd64 Packages\n        500 http://security.ubuntu.com/ubuntu noble-security/main amd64 Packages\n *** 2.39-0ubuntu8.8 100\n        100 /var/lib/dpkg/status\n     2.39-0ubuntu8 500\n        500 http://archive.ubuntu.com/ubuntu noble/main amd64 Packages\nlibdevmapper1.02.1:\n  Installed: (none)\n  Candidate: 2:1.02.185-3ubuntu3.2\n  Version table:\n     2:1.02.185-3ubuntu3.2 500\n        500 http://archive.ubuntu.com/ubuntu noble-updates/main amd64 Packages\n     2:1.02.185-3ubuntu3 500\n        500 http://archive.ubuntu.com/ubuntu noble/main amd64 Packages\n",
+      "stderr": "noble: Pulling from library/ubuntu\nDigest: sha256:224a1869083a311ef3f13648a154ba79832fbef6364d31493642ca03082da254\nStatus: Downloaded newer image for ubuntu:noble\n"
+    },
+    "rpm-version-checks": [
+      {
+        "image": "rockylinux:8",
+        "package": "gzip",
+        "floor": "1.9-13.el8_5",
+        "command": "# Require gzip >= 1.9-13.el8_5; keep newer vendor updates.\ninstalled_rpm=$(rpm -q --qf '%{EPOCHNUM} %{VERSION} %{RELEASE}' gzip)\nOPENRIAK_RPM_VERSION=\"$installed_rpm\" rpm --eval '%{lua:\nlocal e, v, r = os.getenv(\"OPENRIAK_RPM_VERSION\"):match(\"^(%d+) ([^ ]+) ([^ ]+)$\")\nassert(e, \"Cannot identify installed gzip version\")\nlocal comparison = rpm.vercmp(e, \"0\")\nif comparison == 0 then comparison = rpm.vercmp(v, \"1.9\") end\nif comparison == 0 then comparison = rpm.vercmp(r, \"13.el8_5\") end\nassert(comparison >= 0, \"Installed gzip is older than 1.9-13.el8_5\")\n}' >/dev/null\n",
+        "exit_code": 0,
+        "stderr": ""
+      },
+      {
+        "image": "rockylinux:8",
+        "package": "gzip",
+        "floor": "1.9-15.el8_10",
+        "command": "# Require gzip >= 1.9-15.el8_10; keep newer vendor updates.\ninstalled_rpm=$(rpm -q --qf '%{EPOCHNUM} %{VERSION} %{RELEASE}' gzip)\nOPENRIAK_RPM_VERSION=\"$installed_rpm\" rpm --eval '%{lua:\nlocal e, v, r = os.getenv(\"OPENRIAK_RPM_VERSION\"):match(\"^(%d+) ([^ ]+) ([^ ]+)$\")\nassert(e, \"Cannot identify installed gzip version\")\nlocal comparison = rpm.vercmp(e, \"0\")\nif comparison == 0 then comparison = rpm.vercmp(v, \"1.9\") end\nif comparison == 0 then comparison = rpm.vercmp(r, \"15.el8_10\") end\nassert(comparison >= 0, \"Installed gzip is older than 1.9-15.el8_10\")\n}' >/dev/null\n",
+        "exit_code": 1,
+        "stderr": "error: lua script failed: [string \"<lua>\"]:7: Installed gzip is older than 1.9-15.el8_10\n"
+      },
+      {
+        "image": "rockylinux:9",
+        "package": "glib2",
+        "floor": "2.68.4-11.el9",
+        "command": "# Require glib2 >= 2.68.4-11.el9; keep newer vendor updates.\ninstalled_rpm=$(rpm -q --qf '%{EPOCHNUM} %{VERSION} %{RELEASE}' glib2)\nOPENRIAK_RPM_VERSION=\"$installed_rpm\" rpm --eval '%{lua:\nlocal e, v, r = os.getenv(\"OPENRIAK_RPM_VERSION\"):match(\"^(%d+) ([^ ]+) ([^ ]+)$\")\nassert(e, \"Cannot identify installed glib2 version\")\nlocal comparison = rpm.vercmp(e, \"0\")\nif comparison == 0 then comparison = rpm.vercmp(v, \"2.68.4\") end\nif comparison == 0 then comparison = rpm.vercmp(r, \"11.el9\") end\nassert(comparison >= 0, \"Installed glib2 is older than 2.68.4-11.el9\")\n}' >/dev/null\n",
+        "exit_code": 0,
+        "stderr": ""
+      },
+      {
+        "image": "rockylinux:9",
+        "package": "glib2",
+        "floor": "2.68.4-999.el9",
+        "command": "# Require glib2 >= 2.68.4-999.el9; keep newer vendor updates.\ninstalled_rpm=$(rpm -q --qf '%{EPOCHNUM} %{VERSION} %{RELEASE}' glib2)\nOPENRIAK_RPM_VERSION=\"$installed_rpm\" rpm --eval '%{lua:\nlocal e, v, r = os.getenv(\"OPENRIAK_RPM_VERSION\"):match(\"^(%d+) ([^ ]+) ([^ ]+)$\")\nassert(e, \"Cannot identify installed glib2 version\")\nlocal comparison = rpm.vercmp(e, \"0\")\nif comparison == 0 then comparison = rpm.vercmp(v, \"2.68.4\") end\nif comparison == 0 then comparison = rpm.vercmp(r, \"999.el9\") end\nassert(comparison >= 0, \"Installed glib2 is older than 2.68.4-999.el9\")\n}' >/dev/null\n",
+        "exit_code": 1,
+        "stderr": "error: lua script failed: [string \"<lua>\"]:7: Installed glib2 is older than 2.68.4-999.el9\n"
+      },
+      {
+        "image": "rockylinux:9",
+        "package": "glib2",
+        "floor": "1:1.0-1",
+        "command": "# Require glib2 >= 1:1.0-1; keep newer vendor updates.\ninstalled_rpm=$(rpm -q --qf '%{EPOCHNUM} %{VERSION} %{RELEASE}' glib2)\nOPENRIAK_RPM_VERSION=\"$installed_rpm\" rpm --eval '%{lua:\nlocal e, v, r = os.getenv(\"OPENRIAK_RPM_VERSION\"):match(\"^(%d+) ([^ ]+) ([^ ]+)$\")\nassert(e, \"Cannot identify installed glib2 version\")\nlocal comparison = rpm.vercmp(e, \"1\")\nif comparison == 0 then comparison = rpm.vercmp(v, \"1.0\") end\nif comparison == 0 then comparison = rpm.vercmp(r, \"1\") end\nassert(comparison >= 0, \"Installed glib2 is older than 1:1.0-1\")\n}' >/dev/null\n",
+        "exit_code": 1,
+        "stderr": "error: lua script failed: [string \"<lua>\"]:7: Installed glib2 is older than 1:1.0-1\n"
+      }
+    ],
+    "rhel-8": {
+      "image": "registry.access.redhat.com/ubi8/ubi:8.10",
+      "command": "dnf --refresh list --showduplicates openssl-libs glibc libgcrypt systemd-libs",
+      "exit_code": 0,
+      "stdout": "Updating Subscription Management repositories.\nUnable to read consumer identity\n\nThis system is not registered with an entitlement server. You can use subscription-manager to register.\n\nRed Hat Universal Base Image 8 (RPMs) - BaseOS  6.6 MB/s | 734 kB     00:00    \nRed Hat Universal Base Image 8 (RPMs) - AppStre  17 MB/s | 3.7 MB     00:00    \nRed Hat Universal Base Image 8 (RPMs) - CodeRea 2.1 MB/s | 188 kB     00:00    \nInstalled Packages\nglibc.x86_64             2.28-251.el8_10.40       @rhel-8-for-x86_64-baseos-rpms\nlibgcrypt.x86_64         1.8.5-8.el8_10           @rhel-8-for-x86_64-baseos-rpms\nopenssl-libs.x86_64      1:1.1.1k-17.el8_6        @rhel-8-for-x86_64-baseos-rpms\nsystemd-libs.x86_64      239-82.el8_10.19         @rhel-8-for-x86_64-baseos-rpms\nAvailable Packages\nglibc.i686               2.28-251.el8_10.40       ubi-8-baseos-rpms             \nglibc.x86_64             2.28-251.el8_10.40       ubi-8-baseos-rpms             \nlibgcrypt.i686           1.8.5-8.el8_10           ubi-8-baseos-rpms             \nlibgcrypt.x86_64         1.8.5-8.el8_10           ubi-8-baseos-rpms             \nopenssl-libs.i686        1:1.1.1k-17.el8_6        ubi-8-baseos-rpms             \nopenssl-libs.x86_64      1:1.1.1k-17.el8_6        ubi-8-baseos-rpms             \nsystemd-libs.i686        239-82.el8_10.19         ubi-8-baseos-rpms             \nsystemd-libs.x86_64      239-82.el8_10.19         ubi-8-baseos-rpms             \n",
+      "stderr": "8.10: Pulling from ubi8/ubi\nefdc9ca7aa1a: Pulling fs layer\nefdc9ca7aa1a: Verifying Checksum\nefdc9ca7aa1a: Download complete\nefdc9ca7aa1a: Pull complete\nDigest: sha256:ed721ca811f29fa0fd8a4666aec2fb6771f3defbecc708a973d0b711d6f09293\nStatus: Downloaded newer image for registry.access.redhat.com/ubi8/ubi:8.10\n"
+    },
+    "rocky-8": {
+      "image": "rockylinux:8",
+      "command": "dnf --refresh list --showduplicates gzip",
+      "exit_code": 0,
+      "stdout": "Rocky Linux 8 - AppStream                       8.9 MB/s |  33 MB     00:03    \nRocky Linux 8 - BaseOS                           28 MB/s |  79 MB     00:02    \nRocky Linux 8 - Extras                           15 kB/s |  15 kB     00:01    \nInstalled Packages\ngzip.x86_64                        1.9-13.el8_5                          @System\nAvailable Packages\ngzip.x86_64                        1.9-13.el8_5                          baseos \ngzip.x86_64                        1.9-15.el8_10                         baseos \n",
+      "stderr": "8: Pulling from library/rockylinux\nDigest: sha256:9794037624aaa6212aeada1d28861ef5e0a935adaf93e4ef79837119f2a2d04c\nStatus: Image is up to date for rockylinux:8\n"
+    },
+    "centos-9": {
+      "image": "quay.io/centos/centos:stream9",
+      "command": "dnf --refresh list --showduplicates glibc systemd-libs",
+      "exit_code": 0,
+      "stdout": "CentOS Stream 9 - BaseOS                        5.0 MB/s | 8.9 MB     00:01    \nCentOS Stream 9 - AppStream                      20 MB/s |  28 MB     00:01    \nCentOS Stream 9 - Extras packages               7.1 kB/s |  22 kB     00:03    \nInstalled Packages\nglibc.x86_64                            2.34-277.el9                     @System\nsystemd-libs.x86_64                     252-78.el9                       @System\nAvailable Packages\nglibc.i686                              2.34-273.el9                     baseos \nglibc.x86_64                            2.34-273.el9                     baseos \nglibc.i686                              2.34-274.el9                     baseos \nglibc.x86_64                            2.34-274.el9                     baseos \nglibc.i686                              2.34-275.el9                     baseos \nglibc.x86_64                            2.34-275.el9                     baseos \nglibc.i686                              2.34-276.el9                     baseos \nglibc.x86_64                            2.34-276.el9                     baseos \nglibc.i686                              2.34-277.el9                     baseos \nglibc.x86_64                            2.34-277.el9                     baseos \nsystemd-libs.i686                       252-70.el9                       baseos \nsystemd-libs.x86_64                     252-70.el9                       baseos \nsystemd-libs.i686                       252-71.el9                       baseos \nsystemd-libs.x86_64                     252-71.el9                       baseos \nsystemd-libs.i686                       252-73.el9                       baseos \nsystemd-libs.x86_64                     252-73.el9                       baseos \nsystemd-libs.i686                       252-76.el9                       baseos \nsystemd-libs.x86_64                     252-76.el9                       baseos \nsystemd-libs.i686                       252-78.el9                       baseos \nsystemd-libs.x86_64                     252-78.el9                       baseos \n",
+      "stderr": "stream9: Pulling from centos/centos\nDigest: sha256:7d3c87ab567add60d0153a6a17bc10d0f19cd982a2d533724298ebd1ee751eab\nStatus: Image is up to date for quay.io/centos/centos:stream9\n"
+    },
+    "rocky-9": {
+      "image": "rockylinux:9",
+      "command": "dnf --refresh list --showduplicates glib2 expat pam",
+      "exit_code": 0,
+      "stdout": "Rocky Linux 9 - BaseOS                           17 MB/s |  26 MB     00:01    \nRocky Linux 9 - AppStream                        14 MB/s |  22 MB     00:01    \nRocky Linux 9 - Extras                           15 kB/s |  17 kB     00:01    \nInstalled Packages\nexpat.x86_64                     2.5.0-1.el9                             @System\nglib2.x86_64                     2.68.4-11.el9                           @System\npam.x86_64                       1.5.1-15.el9                            @System\nAvailable Packages\nexpat.i686                       2.5.0-6.el9                             baseos \nexpat.x86_64                     2.5.0-6.el9                             baseos \nexpat.i686                       2.5.0-6.el9_8.1                         baseos \nexpat.x86_64                     2.5.0-6.el9_8.1                         baseos \nexpat.i686                       2.5.0-6.el9_8.3                         baseos \nexpat.x86_64                     2.5.0-6.el9_8.3                         baseos \nglib2.i686                       2.68.4-19.el9_8.1                       baseos \nglib2.x86_64                     2.68.4-19.el9_8.1                       baseos \nglib2.i686                       2.68.4-19.el9_8.2                       baseos \nglib2.x86_64                     2.68.4-19.el9_8.2                       baseos \nglib2.i686                       2.68.4-19.el9_8.9                       baseos \nglib2.x86_64                     2.68.4-19.el9_8.9                       baseos \nglib2.i686                       2.68.4-19.el9_8.10                      baseos \nglib2.x86_64                     2.68.4-19.el9_8.10                      baseos \npam.i686                         1.5.1-28.el9                            baseos \npam.x86_64                       1.5.1-28.el9                            baseos \npam.i686                         1.5.1-28.el9_8.1                        baseos \npam.x86_64                       1.5.1-28.el9_8.1                        baseos \n",
+      "stderr": "9: Pulling from library/rockylinux\nDigest: sha256:d7be1c094cc5845ee815d4632fe377514ee6ebcf8efaed6892889657e5ddaaa6\nStatus: Image is up to date for rockylinux:9\n"
+    },
+    "rhel-9": {
+      "image": "registry.access.redhat.com/ubi9/ubi:9.8",
+      "command": "dnf --refresh list --showduplicates openssl-libs glibc systemd-libs",
+      "exit_code": 0,
+      "stdout": "Updating Subscription Management repositories.\nUnable to read consumer identity\n\nThis system is not registered with an entitlement server. You can use subscription-manager to register.\n\nRed Hat Universal Base Image 9 (RPMs) - BaseOS  458 kB/s | 535 kB     00:01    \nRed Hat Universal Base Image 9 (RPMs) - AppStre 9.1 MB/s | 2.9 MB     00:00    \nRed Hat Universal Base Image 9 (RPMs) - CodeRea 3.6 MB/s | 471 kB     00:00    \nInstalled Packages\nglibc.x86_64               2.34-275.el9_8         @rhel-9-for-x86_64-baseos-rpms\nopenssl-libs.x86_64        1:3.5.5-6.el9_8        @rhel-9-for-x86_64-baseos-rpms\nsystemd-libs.x86_64        252-67.el9_8.4         @rhel-9-for-x86_64-baseos-rpms\nAvailable Packages\nglibc.i686                 2.34-275.el9_8         ubi-9-baseos-rpms             \nglibc.x86_64               2.34-275.el9_8         ubi-9-baseos-rpms             \nopenssl-libs.i686          1:3.5.5-6.el9_8        ubi-9-baseos-rpms             \nopenssl-libs.x86_64        1:3.5.5-6.el9_8        ubi-9-baseos-rpms             \nsystemd-libs.i686          252-67.el9_8.4         ubi-9-baseos-rpms             \nsystemd-libs.x86_64        252-67.el9_8.4         ubi-9-baseos-rpms             \n",
+      "stderr": "9.8: Pulling from ubi9/ubi\nDigest: sha256:206b65b8ee0f04b992818c9a51b29081b14974630d4850bc358097d0c44ea156\nStatus: Image is up to date for registry.access.redhat.com/ubi9/ubi:9.8\n"
+    }
+  }
+}

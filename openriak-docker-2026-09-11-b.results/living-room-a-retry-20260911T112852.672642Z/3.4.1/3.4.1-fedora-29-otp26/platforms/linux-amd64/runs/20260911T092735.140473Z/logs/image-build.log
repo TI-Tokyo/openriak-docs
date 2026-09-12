@@ -1,0 +1,607 @@
+$ /usr/bin/docker buildx build --builder openriak-kv-multiarch --load --platform linux/amd64 --pull=false --no-cache --tag tiotjp/openriak-kv:test-3.4.1-fedora-29-otp26-linux-amd64-20260911t092735.140473z --file /home/peter/openriak-builds/openriak-distributed/openriak-docker-2026-09-11-b/living-room-a/20260911T084617.243958Z/results/3.4.1/3.4.1-fedora-29-otp26/platforms/linux-amd64/runs/20260911T092735.140473Z/Dockerfile /home/peter/openriak-builds/openriak-distributed/openriak-docker-2026-09-11-b/living-room-a/20260911T084617.243958Z/results/3.4.1/3.4.1-fedora-29-otp26/platforms/linux-amd64/runs/20260911T092735.140473Z
+started: 2026-09-11T09:27:35Z
+#0 building with "openriak-kv-multiarch" instance using docker-container driver
+
+#1 [internal] load build definition from Dockerfile
+#1 transferring dockerfile: 43.79kB done
+#1 DONE 0.0s
+
+#2 resolve image config for docker-image://docker.io/docker/dockerfile:1.7
+#2 DONE 0.2s
+
+#3 docker-image://docker.io/docker/dockerfile:1.7@sha256:a57df69d0ea827fb7266491f2813635de6f17269be881f696fbfdf2d83dda33e
+#3 resolve docker.io/docker/dockerfile:1.7@sha256:a57df69d0ea827fb7266491f2813635de6f17269be881f696fbfdf2d83dda33e 0.0s done
+#3 CACHED
+
+#4 [internal] load metadata for docker.io/library/fedora:29@sha256:2c20e5bb324735427f8a659e36f4fe14d6955c74c7baa25067418dddbb71d67a
+#4 DONE 1.3s
+
+#5 [internal] load .dockerignore
+#5 transferring context: 2B done
+#5 DONE 0.0s
+
+#6 [internal] preparing inline document
+#6 CACHED
+
+#7 [internal] preparing inline document
+#7 CACHED
+
+#8 [install-amd64 1/2] FROM docker.io/library/fedora:29@sha256:2c20e5bb324735427f8a659e36f4fe14d6955c74c7baa25067418dddbb71d67a
+#8 resolve docker.io/library/fedora:29@sha256:2c20e5bb324735427f8a659e36f4fe14d6955c74c7baa25067418dddbb71d67a done
+#8 sha256:01eb078129a0d03c93822037082860a3fefdc15b0313f07c6e1c2168aef5401b 0B / 89.98MB 0.2s
+#8 ...
+
+#9 [download-amd64 1/1] ADD --checksum=sha256:ffcc9ce4af826a508e4927a8c725d5e21dd6dcb565d8adba4ae3ca6ef3f146ea https://files.tiot.jp/riak/kv/3.4/3.4.1/rhel/8/riak-3.4.1.OTP26-1.el8.x86_64.rpm /riak-3.4.1.OTP26-1.el8.x86_64.rpm
+#9 DONE 0.4s
+
+#10 [download-amd64 1/1] ADD --checksum=sha256:ffcc9ce4af826a508e4927a8c725d5e21dd6dcb565d8adba4ae3ca6ef3f146ea https://files.tiot.jp/riak/kv/3.4/3.4.1/rhel/8/riak-3.4.1.OTP26-1.el8.x86_64.rpm /riak-3.4.1.OTP26-1.el8.x86_64.rpm
+#10 DONE 0.0s
+
+#8 [install-amd64 1/2] FROM docker.io/library/fedora:29@sha256:2c20e5bb324735427f8a659e36f4fe14d6955c74c7baa25067418dddbb71d67a
+#8 sha256:01eb078129a0d03c93822037082860a3fefdc15b0313f07c6e1c2168aef5401b 12.58MB / 89.98MB 0.8s
+#8 sha256:01eb078129a0d03c93822037082860a3fefdc15b0313f07c6e1c2168aef5401b 30.41MB / 89.98MB 0.9s
+#8 sha256:01eb078129a0d03c93822037082860a3fefdc15b0313f07c6e1c2168aef5401b 47.19MB / 89.98MB 1.1s
+#8 sha256:01eb078129a0d03c93822037082860a3fefdc15b0313f07c6e1c2168aef5401b 65.01MB / 89.98MB 1.2s
+#8 sha256:01eb078129a0d03c93822037082860a3fefdc15b0313f07c6e1c2168aef5401b 82.84MB / 89.98MB 1.4s
+#8 sha256:01eb078129a0d03c93822037082860a3fefdc15b0313f07c6e1c2168aef5401b 89.98MB / 89.98MB 1.5s done
+#8 extracting sha256:01eb078129a0d03c93822037082860a3fefdc15b0313f07c6e1c2168aef5401b
+#8 extracting sha256:01eb078129a0d03c93822037082860a3fefdc15b0313f07c6e1c2168aef5401b 2.4s done
+#8 DONE 3.9s
+
+#11 [install-amd64 2/2] RUN --mount=type=bind,from=download-amd64,target=/opt/openriak-package,ro <<'OPENRIAK_PACKAGE_INSTALL' (set -eu...)
+#11 3.688 Fedora Modular 29 - x86_64                      440 kB/s | 1.5 MB     00:03    
+#11 7.454 Fedora Modular 29 - x86_64 - Updates            609 kB/s | 2.1 MB     00:03    
+#11 11.84 Fedora 29 - x86_64 - Updates                    7.4 MB/s |  30 MB     00:04    
+#11 23.13 Fedora 29 - x86_64                               13 MB/s |  62 MB     00:04    
+#11 39.70 Last metadata expiration check: 0:00:01 ago on Fri Sep 11 09:28:03 2026.
+#11 40.13 Detection of Platform Module failed: Cannot open file: /openriak-rootfs/etc/os-release
+#11 42.71 Modular dependency problems:
+#11 42.71 
+#11 42.71  Problem 1: conflicting requests
+#11 42.71   - nothing provides module(platform:f29) needed by module stratis:1:20180927214347:7a127764-0.x86_64
+#11 42.71  Problem 2: conflicting requests
+#11 42.71   - nothing provides module(platform:f29) needed by module dwm:6.1:20180813122714:6c81f848-0.x86_64
+#11 42.71  Problem 3: conflicting requests
+#11 42.71   - nothing provides module(platform:f29) needed by module afterburn:rolling:2920191015163839:c5ebb199-0.x86_64
+#11 42.71  Problem 4: conflicting requests
+#11 42.71   - nothing provides module(platform:f29) needed by module askalono-cli:rolling:2920190721090701:c5ebb199-0.x86_64
+#11 42.71  Problem 5: conflicting requests
+#11 42.71   - nothing provides module(platform:f29) needed by module avocado:52lts:2920190514181108:6c81f848-0.x86_64
+#11 42.71  Problem 6: conflicting requests
+#11 42.71   - nothing provides module(platform:f29) needed by module bat:latest:2920190714171319:c5ebb199-0.x86_64
+#11 42.71  Problem 7: conflicting requests
+#11 42.71   - nothing provides module(platform:f29) needed by module cbindgen:rolling:2920190515070043:b8a06959-0.x86_64
+#11 42.71  Problem 8: conflicting requests
+#11 42.71   - nothing provides module(platform:f29) needed by module dutree:rolling:2920190926112243:c5ebb199-0.x86_64
+#11 42.71  Problem 9: conflicting requests
+#11 42.71   - nothing provides module(platform:f29) needed by module fd-find:rolling:2920190722174030:c5ebb199-0.x86_64
+#11 42.71  Problem 10: conflicting requests
+#11 42.71   - nothing provides module(platform:f29) needed by module ffsend:latest:2920190630105436:c5ebb199-0.x86_64
+#11 42.71  Problem 11: conflicting requests
+#11 42.71   - nothing provides module(platform:f29) needed by module heatseeker:latest:2920190921124230:c5ebb199-0.x86_64
+#11 42.71  Problem 12: conflicting requests
+#11 42.71   - nothing provides module(platform:f29) needed by module hyperfine:latest:2920190721071357:c5ebb199-0.x86_64
+#11 42.71  Problem 13: conflicting requests
+#11 42.71   - nothing provides module(platform:f29) needed by module lsd:rolling:2920190803124134:c5ebb199-0.x86_64
+#11 42.71  Problem 14: conflicting requests
+#11 42.71   - nothing provides module(platform:f29) needed by module pretty-git-prompt:rolling:2920190714104357:c5ebb199-0.x86_64
+#11 42.71  Problem 15: conflicting requests
+#11 42.71   - nothing provides module(platform:f29) needed by module sd:rolling:2920190921120742:c5ebb199-0.x86_64
+#11 42.71  Problem 16: conflicting requests
+#11 42.71   - nothing provides module(platform:f29) needed by module silver:rolling:2920190912064049:c5ebb199-0.x86_64
+#11 42.71  Problem 17: conflicting requests
+#11 42.71   - nothing provides module(platform:f29) needed by module skim:rolling:2920190921123929:c5ebb199-0.x86_64
+#11 42.71  Problem 18: conflicting requests
+#11 42.71   - nothing provides module(platform:f29) needed by module stratis:1:2920190907214611:c5ebb199-0.x86_64
+#11 42.71  Problem 19: conflicting requests
+#11 42.71   - nothing provides module(platform:f29) needed by module tokei:rolling:2920190921122652:c5ebb199-0.x86_64
+#11 42.71  Problem 20: conflicting requests
+#11 42.71   - nothing provides module(platform:f29) needed by module zola:rolling:2920190922161148:c5ebb199-0.x86_64
+#11 42.80 Dependencies resolved.
+#11 42.81 ================================================================================
+#11 42.81  Package                Arch   Version                            Repo     Size
+#11 42.81 ================================================================================
+#11 42.81 Installing:
+#11 42.81  bash                   x86_64 4.4.23-6.fc29                      updates 1.5 M
+#11 42.81  coreutils              x86_64 8.30-7.fc29                        updates 992 k
+#11 42.81  fedora-release         noarch 29-11                              updates  32 k
+#11 42.81  findutils              x86_64 1:4.6.0-21.fc29                    updates 504 k
+#11 42.81  glibc                  x86_64 2.28-39.fc29                       updates 3.8 M
+#11 42.81  glibc-minimal-langpack x86_64 2.28-39.fc29                       updates  43 k
+#11 42.81  hostname               x86_64 3.20-7.fc29                        updates  27 k
+#11 42.81  libgcc                 x86_64 8.3.1-2.fc29                       updates 100 k
+#11 42.81  libstdc++              x86_64 8.3.1-2.fc29                       updates 460 k
+#11 42.81  openssl-libs           x86_64 1:1.1.1d-2.fc29                    updates 1.4 M
+#11 42.81  pam                    x86_64 1.3.1-15.fc29                      updates 633 k
+#11 42.81  shadow-utils           x86_64 2:4.6-4.fc29                       updates 1.1 M
+#11 42.81  sudo                   x86_64 1.8.28-1.fc29                      updates 891 k
+#11 42.81  tzdata                 noarch 2019c-1.fc29                       updates 430 k
+#11 42.81  zlib                   x86_64 1.2.11-18.fc29                     updates  91 k
+#11 42.81  ca-certificates        noarch 2018.2.26-2.fc29                   fedora  385 k
+#11 42.81  gawk                   x86_64 4.2.1-3.fc29                       fedora  1.1 M
+#11 42.81  grep                   x86_64 3.1-8.fc29                         fedora  249 k
+#11 42.81  procps-ng              x86_64 3.3.15-4.fc29                      fedora  321 k
+#11 42.81  sed                    x86_64 4.5-2.fc29                         fedora  288 k
+#11 42.81  util-linux             x86_64 2.32.1-1.fc29                      fedora  2.4 M
+#11 42.81 Installing dependencies:
+#11 42.81  audit-libs             x86_64 3.0-0.9.20190507gitf58ec40.fc29    updates 105 k
+#11 42.81  coreutils-common       x86_64 8.30-7.fc29                        updates 1.9 M
+#11 42.81  crypto-policies        noarch 20190527-1.git0b3add8.fc29         updates  51 k
+#11 42.81  fedora-gpg-keys        noarch 29-6                               updates 104 k
+#11 42.81  fedora-repos           noarch 29-6                               updates  10 k
+#11 42.81  glibc-common           x86_64 2.28-39.fc29                       updates 802 k
+#11 42.81  gmp                    x86_64 1:6.1.2-9.fc29                     updates 266 k
+#11 42.81  gzip                   x86_64 1.9-9.fc29                         updates 151 k
+#11 42.81  krb5-libs              x86_64 1.16.1-26.fc29                     updates 732 k
+#11 42.81  libcap-ng              x86_64 0.7.9-5.fc29                       updates  26 k
+#11 42.81  libcom_err             x86_64 1.44.6-1.fc29                      updates  26 k
+#11 42.81  libgcrypt              x86_64 1.8.5-1.fc29                       updates 437 k
+#11 42.81  libgpg-error           x86_64 1.33-1.fc29                        updates 238 k
+#11 42.81  libselinux             x86_64 2.8-6.fc29                         updates  78 k
+#11 42.81  libsemanage            x86_64 2.8-8.fc29                         updates 109 k
+#11 42.81  libsepol               x86_64 2.8-3.fc29                         updates 280 k
+#11 42.81  libtasn1               x86_64 4.13-5.fc29                        updates  67 k
+#11 42.81  libtirpc               x86_64 1.1.4-2.rc2.fc29                   updates  96 k
+#11 42.81  libxcrypt              x86_64 4.4.10-1.fc29                      updates 123 k
+#11 42.81  lz4-libs               x86_64 1.9.1-1.fc29                       updates  62 k
+#11 42.81  openldap               x86_64 2.4.46-10.fc29                     updates 281 k
+#11 42.81  p11-kit                x86_64 0.23.16.1-1.fc29                   updates 239 k
+#11 42.81  p11-kit-trust          x86_64 0.23.16.1-1.fc29                   updates 124 k
+#11 42.81  pcre                   x86_64 8.43-2.fc29                        updates 185 k
+#11 42.81  pcre2                  x86_64 10.33-15.fc29                      updates 252 k
+#11 42.81  setup                  noarch 2.12.1-2.fc29                      updates 148 k
+#11 42.81  systemd-libs           x86_64 239-14.git33ccd62.fc29             updates 442 k
+#11 42.81  basesystem             noarch 11-6.fc29                          fedora  6.9 k
+#11 42.81  bzip2-libs             x86_64 1.0.6-28.fc29                      fedora   39 k
+#11 42.81  chkconfig              x86_64 1.10-6.fc29                        fedora  170 k
+#11 42.81  cracklib               x86_64 2.9.6-15.fc29                      fedora   76 k
+#11 42.81  cyrus-sasl-lib         x86_64 2.1.27-0.3rc7.fc29                 fedora   99 k
+#11 42.81  filesystem             x86_64 3.9-2.fc29                         fedora  1.1 M
+#11 42.81  info                   x86_64 6.5-11.fc29                        fedora  175 k
+#11 42.81  keyutils-libs          x86_64 1.5.10-8.fc29                      fedora   26 k
+#11 42.81  libacl                 x86_64 2.2.53-2.fc29                      fedora   25 k
+#11 42.81  libattr                x86_64 2.4.48-3.fc29                      fedora   18 k
+#11 42.81  libblkid               x86_64 2.32.1-1.fc29                      fedora  149 k
+#11 42.81  libcap                 x86_64 2.25-12.fc29                       fedora   49 k
+#11 42.81  libdb                  x86_64 5.3.28-33.fc29                     fedora  752 k
+#11 42.81  libfdisk               x86_64 2.32.1-1.fc29                      fedora  197 k
+#11 42.81  libffi                 x86_64 3.1-18.fc29                        fedora   32 k
+#11 42.81  libmount               x86_64 2.32.1-1.fc29                      fedora  168 k
+#11 42.81  libnsl2                x86_64 1.2.0-3.20180605git4a062cf.fc29    fedora   57 k
+#11 42.81  libpwquality           x86_64 1.4.0-10.fc29                      fedora   96 k
+#11 42.81  libsigsegv             x86_64 2.11-6.fc29                        fedora   26 k
+#11 42.81  libsmartcols           x86_64 2.32.1-1.fc29                      fedora  109 k
+#11 42.81  libutempter            x86_64 1.1.6-15.fc29                      fedora   25 k
+#11 42.81  libuuid                x86_64 2.32.1-1.fc29                      fedora   28 k
+#11 42.81  libverto               x86_64 0.3.0-6.fc29                       fedora   21 k
+#11 42.81  mpfr                   x86_64 3.1.6-2.fc29                       fedora  216 k
+#11 42.81  ncurses                x86_64 6.1-8.20180923.fc29                fedora  359 k
+#11 42.81  ncurses-base           noarch 6.1-8.20180923.fc29                fedora   58 k
+#11 42.81  ncurses-libs           x86_64 6.1-8.20180923.fc29                fedora  287 k
+#11 42.81  popt                   x86_64 1.16-15.fc29                       fedora   56 k
+#11 42.81  readline               x86_64 7.0-12.fc29                        fedora  189 k
+#11 42.81  xz-libs                x86_64 5.2.4-3.fc29                       fedora   87 k
+#11 42.81 
+#11 42.81 Transaction Summary
+#11 42.81 ================================================================================
+#11 42.81 Install  78 Packages
+#11 42.81 
+#11 42.82 Total download size: 29 M
+#11 42.82 Installed size: 105 M
+#11 42.82 Downloading Packages:
+#11 46.60 (1/78): audit-libs-3.0-0.9.20190507gitf58ec40.f 102 kB/s | 105 kB     00:01    
+#11 46.64 (2/78): bash-4.4.23-6.fc29.x86_64.rpm           1.4 MB/s | 1.5 MB     00:01    
+#11 46.64 (3/78): coreutils-8.30-7.fc29.x86_64.rpm        922 kB/s | 992 kB     00:01    
+#11 46.65 (4/78): crypto-policies-20190527-1.git0b3add8.f 6.4 MB/s |  51 kB     00:00    
+#11 46.65 (5/78): fedora-gpg-keys-29-6.noarch.rpm          17 MB/s | 104 kB     00:00    
+#11 46.66 (6/78): fedora-repos-29-6.noarch.rpm            1.8 MB/s |  10 kB     00:00    
+#11 46.66 (7/78): fedora-release-29-11.noarch.rpm         2.3 MB/s |  32 kB     00:00    
+#11 46.67 (8/78): findutils-4.6.0-21.fc29.x86_64.rpm       37 MB/s | 504 kB     00:00    
+#11 46.69 (9/78): glibc-common-2.28-39.fc29.x86_64.rpm     38 MB/s | 802 kB     00:00    
+#11 46.70 (10/78): glibc-minimal-langpack-2.28-39.fc29.x8 7.1 MB/s |  43 kB     00:00    
+#11 46.71 (11/78): gmp-6.1.2-9.fc29.x86_64.rpm             28 MB/s | 266 kB     00:00    
+#11 46.72 (12/78): gzip-1.9-9.fc29.x86_64.rpm             9.1 MB/s | 151 kB     00:00    
+#11 46.75 (13/78): hostname-3.20-7.fc29.x86_64.rpm        1.3 MB/s |  27 kB     00:00    
+#11 46.75 (14/78): coreutils-common-8.30-7.fc29.x86_64.rp  13 MB/s | 1.9 MB     00:00    
+#11 46.76 (15/78): libcap-ng-0.7.9-5.fc29.x86_64.rpm      3.9 MB/s |  26 kB     00:00    
+#11 46.77 (16/78): libcom_err-1.44.6-1.fc29.x86_64.rpm    6.3 MB/s |  26 kB     00:00    
+#11 46.77 (17/78): krb5-libs-1.16.1-26.fc29.x86_64.rpm     31 MB/s | 732 kB     00:00    
+#11 46.78 (18/78): libgcc-8.3.1-2.fc29.x86_64.rpm         9.5 MB/s | 100 kB     00:00    
+#11 46.78 (19/78): libgcrypt-1.8.5-1.fc29.x86_64.rpm       37 MB/s | 437 kB     00:00    
+#11 46.80 (20/78): glibc-2.28-39.fc29.x86_64.rpm           28 MB/s | 3.8 MB     00:00    
+#11 46.80 (21/78): libselinux-2.8-6.fc29.x86_64.rpm       3.8 MB/s |  78 kB     00:00    
+#11 46.80 (22/78): libsemanage-2.8-8.fc29.x86_64.rpm       16 MB/s | 109 kB     00:00    
+#11 46.81 (23/78): libgpg-error-1.33-1.fc29.x86_64.rpm    7.1 MB/s | 238 kB     00:00    
+#11 46.81 (24/78): libsepol-2.8-3.fc29.x86_64.rpm          24 MB/s | 280 kB     00:00    
+#11 46.82 (25/78): libtasn1-4.13-5.fc29.x86_64.rpm        8.9 MB/s |  67 kB     00:00    
+#11 46.82 (26/78): libtirpc-1.1.4-2.rc2.fc29.x86_64.rpm    18 MB/s |  96 kB     00:00    
+#11 46.82 (27/78): libstdc++-8.3.1-2.fc29.x86_64.rpm       26 MB/s | 460 kB     00:00    
+#11 46.83 (28/78): lz4-libs-1.9.1-1.fc29.x86_64.rpm        10 MB/s |  62 kB     00:00    
+#11 46.83 (29/78): libxcrypt-4.4.10-1.fc29.x86_64.rpm      10 MB/s | 123 kB     00:00    
+#11 46.83 (30/78): openldap-2.4.46-10.fc29.x86_64.rpm      23 MB/s | 281 kB     00:00    
+#11 46.84 (31/78): p11-kit-trust-0.23.16.1-1.fc29.x86_64.  17 MB/s | 124 kB     00:00    
+#11 46.85 (32/78): p11-kit-0.23.16.1-1.fc29.x86_64.rpm    9.8 MB/s | 239 kB     00:00    
+#11 46.86 (33/78): openssl-libs-1.1.1d-2.fc29.x86_64.rpm   41 MB/s | 1.4 MB     00:00    
+#11 46.87 (34/78): pam-1.3.1-15.fc29.x86_64.rpm            25 MB/s | 633 kB     00:00    
+#11 46.87 (35/78): pcre-8.43-2.fc29.x86_64.rpm             11 MB/s | 185 kB     00:00    
+#11 46.87 (36/78): pcre2-10.33-15.fc29.x86_64.rpm          20 MB/s | 252 kB     00:00    
+#11 46.89 (37/78): setup-2.12.1-2.fc29.noarch.rpm         7.6 MB/s | 148 kB     00:00    
+#11 46.91 (38/78): systemd-libs-239-14.git33ccd62.fc29.x8  23 MB/s | 442 kB     00:00    
+#11 46.92 (39/78): sudo-1.8.28-1.fc29.x86_64.rpm           19 MB/s | 891 kB     00:00    
+#11 46.92 (40/78): tzdata-2019c-1.fc29.noarch.rpm          24 MB/s | 430 kB     00:00    
+#11 46.93 (41/78): basesystem-11-6.fc29.noarch.rpm        1.1 MB/s | 6.9 kB     00:00    
+#11 46.94 (42/78): zlib-1.2.11-18.fc29.x86_64.rpm         5.3 MB/s |  91 kB     00:00    
+#11 46.95 (43/78): bzip2-libs-1.0.6-28.fc29.x86_64.rpm    1.7 MB/s |  39 kB     00:00    
+#11 46.96 (44/78): chkconfig-1.10-6.fc29.x86_64.rpm        21 MB/s | 170 kB     00:00    
+#11 46.97 (45/78): shadow-utils-4.6-4.fc29.x86_64.rpm      12 MB/s | 1.1 MB     00:00    
+#11 46.98 (46/78): cracklib-2.9.6-15.fc29.x86_64.rpm      3.9 MB/s |  76 kB     00:00    
+#11 46.98 (47/78): cyrus-sasl-lib-2.1.27-0.3rc7.fc29.x86_ 6.2 MB/s |  99 kB     00:00    
+#11 46.99 (48/78): ca-certificates-2018.2.26-2.fc29.noarc 7.5 MB/s | 385 kB     00:00    
+#11 47.00 (49/78): grep-3.1-8.fc29.x86_64.rpm              25 MB/s | 249 kB     00:00    
+#11 47.03 (50/78): info-6.5-11.fc29.x86_64.rpm            4.7 MB/s | 175 kB     00:00    
+#11 47.05 (51/78): filesystem-3.9-2.fc29.x86_64.rpm        16 MB/s | 1.1 MB     00:00    
+#11 47.06 (52/78): gawk-4.2.1-3.fc29.x86_64.rpm            14 MB/s | 1.1 MB     00:00    
+#11 47.06 (53/78): keyutils-libs-1.5.10-8.fc29.x86_64.rpm 1.0 MB/s |  26 kB     00:00    
+#11 47.07 (54/78): libacl-2.2.53-2.fc29.x86_64.rpm        897 kB/s |  25 kB     00:00    
+#11 47.08 (55/78): libattr-2.4.48-3.fc29.x86_64.rpm       1.1 MB/s |  18 kB     00:00    
+#11 47.08 (56/78): libblkid-2.32.1-1.fc29.x86_64.rpm      7.2 MB/s | 149 kB     00:00    
+#11 47.10 (57/78): libcap-2.25-12.fc29.x86_64.rpm         2.1 MB/s |  49 kB     00:00    
+#11 47.10 (58/78): libfdisk-2.32.1-1.fc29.x86_64.rpm       11 MB/s | 197 kB     00:00    
+#11 47.12 (59/78): libdb-5.3.28-33.fc29.x86_64.rpm         17 MB/s | 752 kB     00:00    
+#11 47.12 (60/78): libffi-3.1-18.fc29.x86_64.rpm          1.2 MB/s |  32 kB     00:00    
+#11 47.13 (61/78): libnsl2-1.2.0-3.20180605git4a062cf.fc2 4.8 MB/s |  57 kB     00:00    
+#11 47.14 (62/78): libmount-2.32.1-1.fc29.x86_64.rpm      4.7 MB/s | 168 kB     00:00    
+#11 47.14 (63/78): libpwquality-1.4.0-10.fc29.x86_64.rpm  4.6 MB/s |  96 kB     00:00    
+#11 47.15 (64/78): libsigsegv-2.11-6.fc29.x86_64.rpm      1.5 MB/s |  26 kB     00:00    
+#11 47.16 (65/78): libsmartcols-2.32.1-1.fc29.x86_64.rpm  4.9 MB/s | 109 kB     00:00    
+#11 47.17 (66/78): libutempter-1.1.6-15.fc29.x86_64.rpm   1.0 MB/s |  25 kB     00:00    
+#11 47.17 (67/78): libuuid-2.32.1-1.fc29.x86_64.rpm       1.3 MB/s |  28 kB     00:00    
+#11 47.18 (68/78): libverto-0.3.0-6.fc29.x86_64.rpm       815 kB/s |  21 kB     00:00    
+#11 47.19 (69/78): mpfr-3.1.6-2.fc29.x86_64.rpm           9.0 MB/s | 216 kB     00:00    
+#11 47.20 (70/78): ncurses-6.1-8.20180923.fc29.x86_64.rpm  12 MB/s | 359 kB     00:00    
+#11 47.20 (71/78): ncurses-base-6.1-8.20180923.fc29.noarc 3.1 MB/s |  58 kB     00:00    
+#11 47.21 (72/78): ncurses-libs-6.1-8.20180923.fc29.x86_6  13 MB/s | 287 kB     00:00    
+#11 47.22 (73/78): popt-1.16-15.fc29.x86_64.rpm           3.6 MB/s |  56 kB     00:00    
+#11 47.23 (74/78): procps-ng-3.3.15-4.fc29.x86_64.rpm      13 MB/s | 321 kB     00:00    
+#11 47.24 (75/78): readline-7.0-12.fc29.x86_64.rpm        9.4 MB/s | 189 kB     00:00    
+#11 47.24 (76/78): xz-libs-5.2.4-3.fc29.x86_64.rpm         11 MB/s |  87 kB     00:00    
+#11 47.26 (77/78): sed-4.5-2.fc29.x86_64.rpm              7.5 MB/s | 288 kB     00:00    
+#11 47.29 (78/78): util-linux-2.32.1-1.fc29.x86_64.rpm     42 MB/s | 2.4 MB     00:00    
+#11 47.29 --------------------------------------------------------------------------------
+#11 47.29 Total                                           6.4 MB/s |  29 MB     00:04     
+#11 47.29 warning: /openriak-rootfs/var/cache/dnf/updates-0b4cc238d1aa4ffe/packages/audit-libs-3.0-0.9.20190507gitf58ec40.fc29.x86_64.rpm: Header V3 RSA/SHA256 Signature, key ID 429476b4: NOKEY
+#11 47.29 Fedora 29 - x86_64 - Updates                    1.6 MB/s | 1.6 kB     00:00    
+#11 47.39 Importing GPG key 0x429476B4:
+#11 47.39  Userid     : "Fedora 29 (29) <fedora-29@fedoraproject.org>"
+#11 47.39  Fingerprint: 5A03 B4DD 8254 ECA0 2FDA 1637 A20A A56B 4294 76B4
+#11 47.39  From       : /etc/pki/rpm-gpg/RPM-GPG-KEY-fedora-29-x86_64
+#11 47.39 Key imported successfully
+#11 47.47 Running transaction check
+#11 47.51 Transaction check succeeded.
+#11 47.51 Running transaction test
+#11 48.03 Transaction test succeeded.
+#11 48.03 Running transaction
+#11 48.36   Running scriptlet: filesystem-3.9-2.fc29.x86_64                           1/1 
+#11 48.65   Preparing        :                                                        1/1 
+#11 48.66   Installing       : libgcc-8.3.1-2.fc29.x86_64                            1/78 
+#11 48.73   Running scriptlet: libgcc-8.3.1-2.fc29.x86_64                            1/78 
+#11 48.77   Installing       : ncurses-base-6.1-8.20180923.fc29.noarch               2/78 
+#11 49.08   Installing       : tzdata-2019c-1.fc29.noarch                            3/78 
+#11 49.24   Installing       : fedora-gpg-keys-29-6.noarch                           4/78 
+#11 49.36   Installing       : fedora-release-29-11.noarch                           5/78 
+#11 49.42   Running scriptlet: fedora-release-29-11.noarch                           5/78 
+#11 49.43   Installing       : fedora-repos-29-6.noarch                              6/78 
+#11 49.56   Installing       : setup-2.12.1-2.fc29.noarch                            7/78 
+#11 49.62   Running scriptlet: setup-2.12.1-2.fc29.noarch                            7/78 
+#11 49.69   Installing       : filesystem-3.9-2.fc29.x86_64                          8/78 
+#11 49.87   Installing       : basesystem-11-6.fc29.noarch                           9/78 
+#11 49.99   Installing       : pcre2-10.33-15.fc29.x86_64                           10/78 
+#11 50.06   Installing       : libselinux-2.8-6.fc29.x86_64                         11/78 
+#11 50.19   Installing       : ncurses-libs-6.1-8.20180923.fc29.x86_64              12/78 
+#11 50.27   Installing       : glibc-minimal-langpack-2.28-39.fc29.x86_64           13/78 
+#11 50.44   Installing       : glibc-common-2.28-39.fc29.x86_64                     14/78 
+#11 50.51   Running scriptlet: glibc-2.28-39.fc29.x86_64                            15/78 
+#11 50.97   Installing       : glibc-2.28-39.fc29.x86_64                            15/78 
+#11 51.10   Running scriptlet: glibc-2.28-39.fc29.x86_64                            15/78 
+#11 51.95   Installing       : bash-4.4.23-6.fc29.x86_64                            16/78 
+#11 52.00   Running scriptlet: bash-4.4.23-6.fc29.x86_64                            16/78 
+#11 52.03   Installing       : libsepol-2.8-3.fc29.x86_64                           17/78 
+#11 52.09   Running scriptlet: libsepol-2.8-3.fc29.x86_64                           17/78 
+#11 52.76   Installing       : zlib-1.2.11-18.fc29.x86_64                           18/78 
+#11 52.90   Installing       : libxcrypt-4.4.10-1.fc29.x86_64                       19/78 
+#11 53.00   Installing       : libuuid-2.32.1-1.fc29.x86_64                         20/78 
+#11 53.08   Running scriptlet: libuuid-2.32.1-1.fc29.x86_64                         20/78 
+#11 53.81   Installing       : gmp-1:6.1.2-9.fc29.x86_64                            21/78 
+#11 53.88   Running scriptlet: gmp-1:6.1.2-9.fc29.x86_64                            21/78 
+#11 54.59   Installing       : libcom_err-1.44.6-1.fc29.x86_64                      22/78 
+#11 54.66   Installing       : libattr-2.4.48-3.fc29.x86_64                         23/78 
+#11 54.74   Installing       : libacl-2.2.53-2.fc29.x86_64                          24/78 
+#11 54.88   Installing       : sed-4.5-2.fc29.x86_64                                25/78 
+#11 55.03   Installing       : info-6.5-11.fc29.x86_64                              26/78 
+#11 55.14   Installing       : libcap-ng-0.7.9-5.fc29.x86_64                        27/78 
+#11 55.26   Installing       : audit-libs-3.0-0.9.20190507gitf58ec40.fc29.x86_64    28/78 
+#11 55.34   Installing       : libcap-2.25-12.fc29.x86_64                           29/78 
+#11 55.52   Installing       : libdb-5.3.28-33.fc29.x86_64                          30/78 
+#11 55.60   Running scriptlet: libdb-5.3.28-33.fc29.x86_64                          30/78 
+#11 56.28   Installing       : libffi-3.1-18.fc29.x86_64                            31/78 
+#11 56.43   Installing       : p11-kit-0.23.16.1-1.fc29.x86_64                      32/78 
+#11 56.49   Running scriptlet: p11-kit-0.23.16.1-1.fc29.x86_64                      32/78 
+#11 57.35   Installing       : coreutils-common-8.30-7.fc29.x86_64                  33/78 
+#11 57.45   Running scriptlet: coreutils-common-8.30-7.fc29.x86_64                  33/78 
+#11 58.14   Installing       : mpfr-3.1.6-2.fc29.x86_64                             34/78 
+#11 58.21   Running scriptlet: mpfr-3.1.6-2.fc29.x86_64                             34/78 
+#11 58.93   Installing       : libgpg-error-1.33-1.fc29.x86_64                      35/78 
+#11 59.04   Installing       : libgcrypt-1.8.5-1.fc29.x86_64                        36/78 
+#11 59.15   Installing       : libtasn1-4.13-5.fc29.x86_64                          37/78 
+#11 59.21   Running scriptlet: libtasn1-4.13-5.fc29.x86_64                          37/78 
+#11 59.92   Installing       : lz4-libs-1.9.1-1.fc29.x86_64                         38/78 
+#11 60.03   Installing       : pcre-8.43-2.fc29.x86_64                              39/78 
+#11 60.13   Installing       : grep-3.1-8.fc29.x86_64                               40/78 
+#11 60.21   Installing       : bzip2-libs-1.0.6-28.fc29.x86_64                      41/78 
+#11 60.30   Installing       : libsemanage-2.8-8.fc29.x86_64                        42/78 
+#11 60.37   Installing       : keyutils-libs-1.5.10-8.fc29.x86_64                   43/78 
+#11 60.45   Installing       : libsigsegv-2.11-6.fc29.x86_64                        44/78 
+#11 60.58   Installing       : libsmartcols-2.32.1-1.fc29.x86_64                    45/78 
+#11 60.64   Running scriptlet: libsmartcols-2.32.1-1.fc29.x86_64                    45/78 
+#11 61.35   Installing       : libverto-0.3.0-6.fc29.x86_64                         46/78 
+#11 61.46   Installing       : ncurses-6.1-8.20180923.fc29.x86_64                   47/78 
+#11 61.52   Installing       : popt-1.16-15.fc29.x86_64                             48/78 
+#11 61.64   Installing       : chkconfig-1.10-6.fc29.x86_64                         49/78 
+#11 61.76   Installing       : p11-kit-trust-0.23.16.1-1.fc29.x86_64                50/78 
+#11 61.81   Running scriptlet: p11-kit-trust-0.23.16.1-1.fc29.x86_64                50/78 
+#11 62.59   Installing       : openssl-libs-1:1.1.1d-2.fc29.x86_64                  51/78 
+#11 62.84   Installing       : coreutils-8.30-7.fc29.x86_64                         52/78 
+#11 62.97   Installing       : crypto-policies-20190527-1.git0b3add8.fc29.noarch    53/78 
+#11 63.03   Running scriptlet: crypto-policies-20190527-1.git0b3add8.fc29.noarch    53/78 
+#11 63.78   Running scriptlet: ca-certificates-2018.2.26-2.fc29.noarch              54/78 
+#11 64.45   Installing       : ca-certificates-2018.2.26-2.fc29.noarch              54/78 
+#11 64.52   Running scriptlet: ca-certificates-2018.2.26-2.fc29.noarch              54/78 
+#11 65.53   Installing       : libblkid-2.32.1-1.fc29.x86_64                        55/78 
+#11 65.60   Running scriptlet: libblkid-2.32.1-1.fc29.x86_64                        55/78 
+#11 66.30   Installing       : libmount-2.32.1-1.fc29.x86_64                        56/78 
+#11 66.39   Running scriptlet: libmount-2.32.1-1.fc29.x86_64                        56/78 
+#11 67.09   Installing       : libfdisk-2.32.1-1.fc29.x86_64                        57/78 
+#11 67.17   Running scriptlet: libfdisk-2.32.1-1.fc29.x86_64                        57/78 
+#11 67.88   Installing       : gzip-1.9-9.fc29.x86_64                               58/78 
+#11 68.04   Installing       : cracklib-2.9.6-15.fc29.x86_64                        59/78 
+#11 68.29   Installing       : shadow-utils-2:4.6-4.fc29.x86_64                     60/78 
+#11 68.39   Running scriptlet: libutempter-1.1.6-15.fc29.x86_64                     61/78 
+#11 69.29   Installing       : libutempter-1.1.6-15.fc29.x86_64                     61/78 
+#11 69.40   Installing       : readline-7.0-12.fc29.x86_64                          62/78 
+#11 69.55   Installing       : gawk-4.2.1-3.fc29.x86_64                             63/78 
+#11 69.72   Installing       : krb5-libs-1.16.1-26.fc29.x86_64                      64/78 
+#11 69.83   Installing       : libtirpc-1.1.4-2.rc2.fc29.x86_64                     65/78 
+#11 69.89   Installing       : libnsl2-1.2.0-3.20180605git4a062cf.fc29.x86_64       66/78 
+#11 69.97   Running scriptlet: libnsl2-1.2.0-3.20180605git4a062cf.fc29.x86_64       66/78 
+#11 70.67   Installing       : libpwquality-1.4.0-10.fc29.x86_64                    67/78 
+#11 70.90   Installing       : pam-1.3.1-15.fc29.x86_64                             68/78 
+#11 71.07   Installing       : cyrus-sasl-lib-2.1.27-0.3rc7.fc29.x86_64             69/78 
+#11 71.13   Running scriptlet: cyrus-sasl-lib-2.1.27-0.3rc7.fc29.x86_64             69/78 
+#11 71.85   Installing       : openldap-2.4.46-10.fc29.x86_64                       70/78 
+#11 71.97   Installing       : xz-libs-5.2.4-3.fc29.x86_64                          71/78 
+#11 72.12   Installing       : systemd-libs-239-14.git33ccd62.fc29.x86_64           72/78 
+#11 72.19   Running scriptlet: systemd-libs-239-14.git33ccd62.fc29.x86_64           72/78 
+#11 72.90   Installing       : procps-ng-3.3.15-4.fc29.x86_64                       73/78 
+#11 73.30   Installing       : util-linux-2.32.1-1.fc29.x86_64                      74/78 
+#11 73.37   Running scriptlet: util-linux-2.32.1-1.fc29.x86_64                      74/78 
+#11 74.11   Installing       : sudo-1.8.28-1.fc29.x86_64                            75/78 
+#11 74.19   Running scriptlet: sudo-1.8.28-1.fc29.x86_64                            75/78 
+#11 74.91   Installing       : findutils-1:4.6.0-21.fc29.x86_64                     76/78 
+#11 74.99   Running scriptlet: findutils-1:4.6.0-21.fc29.x86_64                     76/78 
+#11 75.67   Installing       : hostname-3.20-7.fc29.x86_64                          77/78 
+#11 75.72   Running scriptlet: hostname-3.20-7.fc29.x86_64                          77/78 
+#11 76.43   Installing       : libstdc++-8.3.1-2.fc29.x86_64                        78/78 
+#11 76.51   Running scriptlet: libstdc++-8.3.1-2.fc29.x86_64                        78/78 
+#11 77.25   Running scriptlet: fedora-release-29-11.noarch                          78/78 
+#11 77.26   Running scriptlet: filesystem-3.9-2.fc29.x86_64                         78/78 
+#11 77.92   Running scriptlet: glibc-common-2.28-39.fc29.x86_64                     78/78 
+#11 78.60   Running scriptlet: info-6.5-11.fc29.x86_64                              78/78 
+#11 79.28   Verifying        : audit-libs-3.0-0.9.20190507gitf58ec40.fc29.x86_64     1/78 
+#11 79.28   Verifying        : bash-4.4.23-6.fc29.x86_64                             2/78 
+#11 79.28   Verifying        : coreutils-8.30-7.fc29.x86_64                          3/78 
+#11 79.28   Verifying        : coreutils-common-8.30-7.fc29.x86_64                   4/78 
+#11 79.28   Verifying        : crypto-policies-20190527-1.git0b3add8.fc29.noarch     5/78 
+#11 79.28   Verifying        : fedora-gpg-keys-29-6.noarch                           6/78 
+#11 79.28   Verifying        : fedora-release-29-11.noarch                           7/78 
+#11 79.28   Verifying        : fedora-repos-29-6.noarch                              8/78 
+#11 79.28   Verifying        : findutils-1:4.6.0-21.fc29.x86_64                      9/78 
+#11 79.28   Verifying        : glibc-2.28-39.fc29.x86_64                            10/78 
+#11 79.28   Verifying        : glibc-common-2.28-39.fc29.x86_64                     11/78 
+#11 79.28   Verifying        : glibc-minimal-langpack-2.28-39.fc29.x86_64           12/78 
+#11 79.28   Verifying        : gmp-1:6.1.2-9.fc29.x86_64                            13/78 
+#11 79.28   Verifying        : gzip-1.9-9.fc29.x86_64                               14/78 
+#11 79.28   Verifying        : hostname-3.20-7.fc29.x86_64                          15/78 
+#11 79.28   Verifying        : krb5-libs-1.16.1-26.fc29.x86_64                      16/78 
+#11 79.28   Verifying        : libcap-ng-0.7.9-5.fc29.x86_64                        17/78 
+#11 79.28   Verifying        : libcom_err-1.44.6-1.fc29.x86_64                      18/78 
+#11 79.28   Verifying        : libgcc-8.3.1-2.fc29.x86_64                           19/78 
+#11 79.28   Verifying        : libgcrypt-1.8.5-1.fc29.x86_64                        20/78 
+#11 79.28   Verifying        : libgpg-error-1.33-1.fc29.x86_64                      21/78 
+#11 79.28   Verifying        : libselinux-2.8-6.fc29.x86_64                         22/78 
+#11 79.28   Verifying        : libsemanage-2.8-8.fc29.x86_64                        23/78 
+#11 79.28   Verifying        : libsepol-2.8-3.fc29.x86_64                           24/78 
+#11 79.28   Verifying        : libstdc++-8.3.1-2.fc29.x86_64                        25/78 
+#11 79.28   Verifying        : libtasn1-4.13-5.fc29.x86_64                          26/78 
+#11 79.28   Verifying        : libtirpc-1.1.4-2.rc2.fc29.x86_64                     27/78 
+#11 79.28   Verifying        : libxcrypt-4.4.10-1.fc29.x86_64                       28/78 
+#11 79.28   Verifying        : lz4-libs-1.9.1-1.fc29.x86_64                         29/78 
+#11 79.28   Verifying        : openldap-2.4.46-10.fc29.x86_64                       30/78 
+#11 79.28   Verifying        : openssl-libs-1:1.1.1d-2.fc29.x86_64                  31/78 
+#11 79.28   Verifying        : p11-kit-0.23.16.1-1.fc29.x86_64                      32/78 
+#11 79.28   Verifying        : p11-kit-trust-0.23.16.1-1.fc29.x86_64                33/78 
+#11 79.28   Verifying        : pam-1.3.1-15.fc29.x86_64                             34/78 
+#11 79.28   Verifying        : pcre-8.43-2.fc29.x86_64                              35/78 
+#11 79.28   Verifying        : pcre2-10.33-15.fc29.x86_64                           36/78 
+#11 79.28   Verifying        : setup-2.12.1-2.fc29.noarch                           37/78 
+#11 79.28   Verifying        : shadow-utils-2:4.6-4.fc29.x86_64                     38/78 
+#11 79.28   Verifying        : sudo-1.8.28-1.fc29.x86_64                            39/78 
+#11 79.28   Verifying        : systemd-libs-239-14.git33ccd62.fc29.x86_64           40/78 
+#11 79.28   Verifying        : tzdata-2019c-1.fc29.noarch                           41/78 
+#11 79.28   Verifying        : zlib-1.2.11-18.fc29.x86_64                           42/78 
+#11 79.28   Verifying        : basesystem-11-6.fc29.noarch                          43/78 
+#11 79.29   Verifying        : bzip2-libs-1.0.6-28.fc29.x86_64                      44/78 
+#11 79.29   Verifying        : ca-certificates-2018.2.26-2.fc29.noarch              45/78 
+#11 79.29   Verifying        : chkconfig-1.10-6.fc29.x86_64                         46/78 
+#11 79.29   Verifying        : cracklib-2.9.6-15.fc29.x86_64                        47/78 
+#11 79.29   Verifying        : cyrus-sasl-lib-2.1.27-0.3rc7.fc29.x86_64             48/78 
+#11 79.29   Verifying        : filesystem-3.9-2.fc29.x86_64                         49/78 
+#11 79.29   Verifying        : gawk-4.2.1-3.fc29.x86_64                             50/78 
+#11 79.29   Verifying        : grep-3.1-8.fc29.x86_64                               51/78 
+#11 79.29   Verifying        : info-6.5-11.fc29.x86_64                              52/78 
+#11 79.29   Verifying        : keyutils-libs-1.5.10-8.fc29.x86_64                   53/78 
+#11 79.29   Verifying        : libacl-2.2.53-2.fc29.x86_64                          54/78 
+#11 79.29   Verifying        : libattr-2.4.48-3.fc29.x86_64                         55/78 
+#11 79.29   Verifying        : libblkid-2.32.1-1.fc29.x86_64                        56/78 
+#11 79.29   Verifying        : libcap-2.25-12.fc29.x86_64                           57/78 
+#11 79.29   Verifying        : libdb-5.3.28-33.fc29.x86_64                          58/78 
+#11 79.29   Verifying        : libfdisk-2.32.1-1.fc29.x86_64                        59/78 
+#11 79.29   Verifying        : libffi-3.1-18.fc29.x86_64                            60/78 
+#11 79.29   Verifying        : libmount-2.32.1-1.fc29.x86_64                        61/78 
+#11 79.29   Verifying        : libnsl2-1.2.0-3.20180605git4a062cf.fc29.x86_64       62/78 
+#11 79.29   Verifying        : libpwquality-1.4.0-10.fc29.x86_64                    63/78 
+#11 79.29   Verifying        : libsigsegv-2.11-6.fc29.x86_64                        64/78 
+#11 79.29   Verifying        : libsmartcols-2.32.1-1.fc29.x86_64                    65/78 
+#11 79.29   Verifying        : libutempter-1.1.6-15.fc29.x86_64                     66/78 
+#11 79.29   Verifying        : libuuid-2.32.1-1.fc29.x86_64                         67/78 
+#11 79.29   Verifying        : libverto-0.3.0-6.fc29.x86_64                         68/78 
+#11 79.29   Verifying        : mpfr-3.1.6-2.fc29.x86_64                             69/78 
+#11 79.29   Verifying        : ncurses-6.1-8.20180923.fc29.x86_64                   70/78 
+#11 79.29   Verifying        : ncurses-base-6.1-8.20180923.fc29.noarch              71/78 
+#11 79.29   Verifying        : ncurses-libs-6.1-8.20180923.fc29.x86_64              72/78 
+#11 79.29   Verifying        : popt-1.16-15.fc29.x86_64                             73/78 
+#11 79.29   Verifying        : procps-ng-3.3.15-4.fc29.x86_64                       74/78 
+#11 79.29   Verifying        : readline-7.0-12.fc29.x86_64                          75/78 
+#11 79.29   Verifying        : sed-4.5-2.fc29.x86_64                                76/78 
+#11 79.29   Verifying        : util-linux-2.32.1-1.fc29.x86_64                      77/78 
+#11 79.29   Verifying        : xz-libs-5.2.4-3.fc29.x86_64                          78/78 
+#11 80.17 
+#11 80.17 Installed:
+#11 80.17   bash-4.4.23-6.fc29.x86_64                                                     
+#11 80.17   coreutils-8.30-7.fc29.x86_64                                                  
+#11 80.17   fedora-release-29-11.noarch                                                   
+#11 80.17   findutils-1:4.6.0-21.fc29.x86_64                                              
+#11 80.17   glibc-2.28-39.fc29.x86_64                                                     
+#11 80.17   glibc-minimal-langpack-2.28-39.fc29.x86_64                                    
+#11 80.17   hostname-3.20-7.fc29.x86_64                                                   
+#11 80.17   libgcc-8.3.1-2.fc29.x86_64                                                    
+#11 80.17   libstdc++-8.3.1-2.fc29.x86_64                                                 
+#11 80.17   openssl-libs-1:1.1.1d-2.fc29.x86_64                                           
+#11 80.17   pam-1.3.1-15.fc29.x86_64                                                      
+#11 80.17   shadow-utils-2:4.6-4.fc29.x86_64                                              
+#11 80.17   sudo-1.8.28-1.fc29.x86_64                                                     
+#11 80.17   tzdata-2019c-1.fc29.noarch                                                    
+#11 80.17   zlib-1.2.11-18.fc29.x86_64                                                    
+#11 80.17   ca-certificates-2018.2.26-2.fc29.noarch                                       
+#11 80.17   gawk-4.2.1-3.fc29.x86_64                                                      
+#11 80.17   grep-3.1-8.fc29.x86_64                                                        
+#11 80.17   procps-ng-3.3.15-4.fc29.x86_64                                                
+#11 80.17   sed-4.5-2.fc29.x86_64                                                         
+#11 80.17   util-linux-2.32.1-1.fc29.x86_64                                               
+#11 80.17   audit-libs-3.0-0.9.20190507gitf58ec40.fc29.x86_64                             
+#11 80.17   coreutils-common-8.30-7.fc29.x86_64                                           
+#11 80.17   crypto-policies-20190527-1.git0b3add8.fc29.noarch                             
+#11 80.17   fedora-gpg-keys-29-6.noarch                                                   
+#11 80.17   fedora-repos-29-6.noarch                                                      
+#11 80.17   glibc-common-2.28-39.fc29.x86_64                                              
+#11 80.17   gmp-1:6.1.2-9.fc29.x86_64                                                     
+#11 80.17   gzip-1.9-9.fc29.x86_64                                                        
+#11 80.17   krb5-libs-1.16.1-26.fc29.x86_64                                               
+#11 80.17   libcap-ng-0.7.9-5.fc29.x86_64                                                 
+#11 80.17   libcom_err-1.44.6-1.fc29.x86_64                                               
+#11 80.17   libgcrypt-1.8.5-1.fc29.x86_64                                                 
+#11 80.17   libgpg-error-1.33-1.fc29.x86_64                                               
+#11 80.17   libselinux-2.8-6.fc29.x86_64                                                  
+#11 80.17   libsemanage-2.8-8.fc29.x86_64                                                 
+#11 80.17   libsepol-2.8-3.fc29.x86_64                                                    
+#11 80.17   libtasn1-4.13-5.fc29.x86_64                                                   
+#11 80.17   libtirpc-1.1.4-2.rc2.fc29.x86_64                                              
+#11 80.17   libxcrypt-4.4.10-1.fc29.x86_64                                                
+#11 80.17   lz4-libs-1.9.1-1.fc29.x86_64                                                  
+#11 80.17   openldap-2.4.46-10.fc29.x86_64                                                
+#11 80.17   p11-kit-0.23.16.1-1.fc29.x86_64                                               
+#11 80.17   p11-kit-trust-0.23.16.1-1.fc29.x86_64                                         
+#11 80.17   pcre-8.43-2.fc29.x86_64                                                       
+#11 80.17   pcre2-10.33-15.fc29.x86_64                                                    
+#11 80.17   setup-2.12.1-2.fc29.noarch                                                    
+#11 80.17   systemd-libs-239-14.git33ccd62.fc29.x86_64                                    
+#11 80.17   basesystem-11-6.fc29.noarch                                                   
+#11 80.17   bzip2-libs-1.0.6-28.fc29.x86_64                                               
+#11 80.17   chkconfig-1.10-6.fc29.x86_64                                                  
+#11 80.17   cracklib-2.9.6-15.fc29.x86_64                                                 
+#11 80.17   cyrus-sasl-lib-2.1.27-0.3rc7.fc29.x86_64                                      
+#11 80.17   filesystem-3.9-2.fc29.x86_64                                                  
+#11 80.17   info-6.5-11.fc29.x86_64                                                       
+#11 80.17   keyutils-libs-1.5.10-8.fc29.x86_64                                            
+#11 80.17   libacl-2.2.53-2.fc29.x86_64                                                   
+#11 80.17   libattr-2.4.48-3.fc29.x86_64                                                  
+#11 80.17   libblkid-2.32.1-1.fc29.x86_64                                                 
+#11 80.17   libcap-2.25-12.fc29.x86_64                                                    
+#11 80.17   libdb-5.3.28-33.fc29.x86_64                                                   
+#11 80.17   libfdisk-2.32.1-1.fc29.x86_64                                                 
+#11 80.17   libffi-3.1-18.fc29.x86_64                                                     
+#11 80.17   libmount-2.32.1-1.fc29.x86_64                                                 
+#11 80.17   libnsl2-1.2.0-3.20180605git4a062cf.fc29.x86_64                                
+#11 80.17   libpwquality-1.4.0-10.fc29.x86_64                                             
+#11 80.17   libsigsegv-2.11-6.fc29.x86_64                                                 
+#11 80.17   libsmartcols-2.32.1-1.fc29.x86_64                                             
+#11 80.17   libutempter-1.1.6-15.fc29.x86_64                                              
+#11 80.17   libuuid-2.32.1-1.fc29.x86_64                                                  
+#11 80.17   libverto-0.3.0-6.fc29.x86_64                                                  
+#11 80.17   mpfr-3.1.6-2.fc29.x86_64                                                      
+#11 80.17   ncurses-6.1-8.20180923.fc29.x86_64                                            
+#11 80.17   ncurses-base-6.1-8.20180923.fc29.noarch                                       
+#11 80.17   ncurses-libs-6.1-8.20180923.fc29.x86_64                                       
+#11 80.17   popt-1.16-15.fc29.x86_64                                                      
+#11 80.17   readline-7.0-12.fc29.x86_64                                                   
+#11 80.17   xz-libs-5.2.4-3.fc29.x86_64                                                   
+#11 80.17 
+#11 80.17 Complete!
+#11 80.28 Verifying...                          ########################################
+#11 80.39 Preparing...                          ########################################
+#11 81.20 Updating / installing...
+#11 81.20 riak-3.4.1.OTP26-1.el8                ########################################
+#11 DONE 87.0s
+
+#12 [package-amd64 1/1] COPY --from=install-amd64 /openriak-rootfs/ /
+#12 DONE 0.8s
+
+#13 [final 1/4] RUN <<'OPENRIAK_IMAGE_SETUP' (set -eu...)
+#13 0.362 uid=999(riak) gid=999(riak) groups=999(riak)
+#13 DONE 2.7s
+
+#14 [final 2/4] COPY <<OPENRIAK_ENTRYPOINT /usr/local/bin/openriak-entrypoint
+#14 DONE 0.2s
+
+#15 [final 3/4] COPY <<OPENRIAK_HEALTHCHECK /usr/local/bin/openriak-healthcheck
+#15 DONE 0.3s
+
+#16 [final 4/4] RUN <<'OPENRIAK_SCRIPT_SETUP' (set -eu...)
+#16 DONE 0.3s
+
+#17 exporting to docker image format
+#17 exporting layers
+#17 exporting layers 6.5s done
+#17 exporting manifest sha256:e66c6af207145633f6117f75b39bb422c36acdfb8d012ca81027e27bb4bdb32e 0.1s done
+#17 exporting config sha256:bd501d822d2f0f9b3cdc3a350ea23e2c81442bb0a405e046076daca74f923ab1 0.1s done
+#17 sending tarball
+#17 ...
+
+#18 importing to docker
+#18 loading layer b6613e780078 557.06kB / 63.63MB
+#18 loading layer ebd9b73d12b6 23.62kB / 23.62kB
+#18 loading layer 443ad4bfda19 7.69kB / 7.69kB
+#18 loading layer 094af1e73f0c 384B / 384B
+#18 loading layer b6613e780078 557.06kB / 63.63MB 2.2s done
+#18 loading layer 4fcf0e003b8b 7.86kB / 7.86kB
+#18 loading layer ebd9b73d12b6 23.62kB / 23.62kB 0.4s done
+#18 loading layer 443ad4bfda19 7.69kB / 7.69kB 0.3s done
+#18 loading layer 094af1e73f0c 384B / 384B 0.2s done
+#18 loading layer 4fcf0e003b8b 7.86kB / 7.86kB 0.1s done
+#18 DONE 2.2s
+
+#17 exporting to docker image format
+#17 sending tarball 2.9s done
+#17 DONE 9.5s
+
+timeout_seconds: 3600
+exit_code: 0

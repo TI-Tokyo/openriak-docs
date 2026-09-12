@@ -1,0 +1,378 @@
+$ /usr/bin/docker exec openriak-kv-3.4.0-amazon-linux-2023-otp26-node-4-t-871905z sh -c 'date +%z
+id -u riak
+id -g riak
+stat -c '"'"'%u:%g'"'"' /etc/riak /var/lib/riak /var/log/riak'
+started: 2026-09-11T08:56:31Z
++0900
+19001
+19002
+19001:19002
+19001:19002
+19001:19002
+
+timeout_seconds: 3600
+exit_code: 0
+$ /usr/bin/docker container inspect openriak-kv-3.4.0-amazon-linux-2023-otp26-node-4-t-871905z
+started: 2026-09-11T08:56:31Z
+[
+    {
+        "Id": "d5cb2b44f02f698e5ed583777cecde9b539336aabc1039e418b30bfd480a657e",
+        "Created": "2026-09-11T08:52:21.500548715Z",
+        "Path": "/usr/local/bin/openriak-entrypoint",
+        "Args": [],
+        "State": {
+            "Status": "running",
+            "Running": true,
+            "Paused": false,
+            "Restarting": false,
+            "OOMKilled": false,
+            "Dead": false,
+            "Pid": 3426033,
+            "ExitCode": 0,
+            "Error": "",
+            "StartedAt": "2026-09-11T08:52:21.601558084Z",
+            "FinishedAt": "0001-01-01T00:00:00Z",
+            "Health": {
+                "Status": "healthy",
+                "FailingStreak": 0,
+                "Log": [
+                    {
+                        "Start": "2026-09-11T08:55:41.678760639Z",
+                        "End": "2026-09-11T08:55:42.771146971Z",
+                        "ExitCode": 0,
+                        "Output": "OpenRiak healthcheck passed: BEAM is running and riak ping returned pong\n"
+                    },
+                    {
+                        "Start": "2026-09-11T08:55:52.77260406Z",
+                        "End": "2026-09-11T08:55:53.696415945Z",
+                        "ExitCode": 0,
+                        "Output": "OpenRiak healthcheck passed: BEAM is running and riak ping returned pong\n"
+                    },
+                    {
+                        "Start": "2026-09-11T08:56:03.697722444Z",
+                        "End": "2026-09-11T08:56:04.621605384Z",
+                        "ExitCode": 0,
+                        "Output": "OpenRiak healthcheck passed: BEAM is running and riak ping returned pong\n"
+                    },
+                    {
+                        "Start": "2026-09-11T08:56:14.623030267Z",
+                        "End": "2026-09-11T08:56:15.362000698Z",
+                        "ExitCode": 0,
+                        "Output": "OpenRiak healthcheck passed: BEAM is running and riak ping returned pong\n"
+                    },
+                    {
+                        "Start": "2026-09-11T08:56:25.363270936Z",
+                        "End": "2026-09-11T08:56:26.009112823Z",
+                        "ExitCode": 0,
+                        "Output": "OpenRiak healthcheck passed: BEAM is running and riak ping returned pong\n"
+                    }
+                ]
+            }
+        },
+        "Image": "sha256:ca8a29e5dac7899c90a854a2cc826db818d7b4656f732c90b5104ebb330c72da",
+        "ResolvConfPath": "/var/lib/docker/containers/d5cb2b44f02f698e5ed583777cecde9b539336aabc1039e418b30bfd480a657e/resolv.conf",
+        "HostnamePath": "/var/lib/docker/containers/d5cb2b44f02f698e5ed583777cecde9b539336aabc1039e418b30bfd480a657e/hostname",
+        "HostsPath": "/var/lib/docker/containers/d5cb2b44f02f698e5ed583777cecde9b539336aabc1039e418b30bfd480a657e/hosts",
+        "LogPath": "/var/lib/docker/containers/d5cb2b44f02f698e5ed583777cecde9b539336aabc1039e418b30bfd480a657e/d5cb2b44f02f698e5ed583777cecde9b539336aabc1039e418b30bfd480a657e-json.log",
+        "Name": "/openriak-kv-3.4.0-amazon-linux-2023-otp26-node-4-t-871905z",
+        "RestartCount": 0,
+        "Driver": "overlay2",
+        "Platform": "linux",
+        "MountLabel": "",
+        "ProcessLabel": "",
+        "AppArmorProfile": "docker-default",
+        "ExecIDs": null,
+        "HostConfig": {
+            "Binds": [
+                "/tmp/openriak-docker-3.4.0-amazon-linux-2023-otp26-sq0xqufy/openriak-kv-3.4.0-amazon-linux-2023-otp26-node-4/config:/etc/riak:rw",
+                "/tmp/openriak-docker-3.4.0-amazon-linux-2023-otp26-sq0xqufy/openriak-kv-3.4.0-amazon-linux-2023-otp26-node-4/data:/var/lib/riak:rw",
+                "/tmp/openriak-docker-3.4.0-amazon-linux-2023-otp26-sq0xqufy/openriak-kv-3.4.0-amazon-linux-2023-otp26-node-4/logs:/var/log/riak:rw",
+                "/tmp/openriak-docker-3.4.0-amazon-linux-2023-otp26-sq0xqufy/openriak-kv-3.4.0-amazon-linux-2023-otp26-node-cluster-control:/var/lib/openriak-cluster-control:rw"
+            ],
+            "ContainerIDFile": "",
+            "LogConfig": {
+                "Type": "json-file",
+                "Config": {
+                    "max-file": "3",
+                    "max-size": "10m"
+                }
+            },
+            "NetworkMode": "openriak-kv-340-amazon-linux-2023-otp26-node-cluster_openriak",
+            "PortBindings": {},
+            "RestartPolicy": {
+                "Name": "no",
+                "MaximumRetryCount": 0
+            },
+            "AutoRemove": false,
+            "VolumeDriver": "",
+            "VolumesFrom": null,
+            "ConsoleSize": [
+                0,
+                0
+            ],
+            "CapAdd": null,
+            "CapDrop": null,
+            "CgroupnsMode": "private",
+            "Dns": null,
+            "DnsOptions": null,
+            "DnsSearch": null,
+            "ExtraHosts": [],
+            "GroupAdd": null,
+            "IpcMode": "private",
+            "Cgroup": "",
+            "Links": null,
+            "OomScoreAdj": 0,
+            "PidMode": "",
+            "Privileged": false,
+            "PublishAllPorts": false,
+            "ReadonlyRootfs": false,
+            "SecurityOpt": null,
+            "UTSMode": "",
+            "UsernsMode": "",
+            "ShmSize": 67108864,
+            "Runtime": "runc",
+            "Isolation": "",
+            "CpuShares": 0,
+            "Memory": 0,
+            "NanoCpus": 0,
+            "CgroupParent": "",
+            "BlkioWeight": 0,
+            "BlkioWeightDevice": null,
+            "BlkioDeviceReadBps": null,
+            "BlkioDeviceWriteBps": null,
+            "BlkioDeviceReadIOps": null,
+            "BlkioDeviceWriteIOps": null,
+            "CpuPeriod": 0,
+            "CpuQuota": 0,
+            "CpuRealtimePeriod": 0,
+            "CpuRealtimeRuntime": 0,
+            "CpusetCpus": "",
+            "CpusetMems": "",
+            "Devices": null,
+            "DeviceCgroupRules": null,
+            "DeviceRequests": null,
+            "MemoryReservation": 0,
+            "MemorySwap": 0,
+            "MemorySwappiness": null,
+            "OomKillDisable": null,
+            "PidsLimit": null,
+            "Ulimits": [
+                {
+                    "Name": "nofile",
+                    "Hard": 100000,
+                    "Soft": 100000
+                }
+            ],
+            "CpuCount": 0,
+            "CpuPercent": 0,
+            "IOMaximumIOps": 0,
+            "IOMaximumBandwidth": 0,
+            "MaskedPaths": [
+                "/proc/asound",
+                "/proc/acpi",
+                "/proc/kcore",
+                "/proc/keys",
+                "/proc/latency_stats",
+                "/proc/timer_list",
+                "/proc/timer_stats",
+                "/proc/sched_debug",
+                "/proc/scsi",
+                "/sys/firmware",
+                "/sys/devices/virtual/powercap"
+            ],
+            "ReadonlyPaths": [
+                "/proc/bus",
+                "/proc/fs",
+                "/proc/irq",
+                "/proc/sys",
+                "/proc/sysrq-trigger"
+            ]
+        },
+        "GraphDriver": {
+            "Data": {
+                "LowerDir": "/var/lib/docker/overlay2/84a6c37f9acb7f585b9f7b5e3e3c150c050809b6c9205888331f3b523cf99231-init/diff:/var/lib/docker/overlay2/20cf6efdf9ed3f3332bbacbeb62b01885656cde5322e9261fbab9a966a7af144/diff:/var/lib/docker/overlay2/f1eb3a714538c619e521a4106c0b44ac1b9e9685b60dbeb7ab8bf1b54b5214bd/diff:/var/lib/docker/overlay2/06685d606a6996e3b027ebfa7a395e5384f8fbf3a75fb3140be3687619e27cfe/diff:/var/lib/docker/overlay2/5786e8a1b06a5228ac44af3208a570a40933f7a27f011bd05e00a494af240dd6/diff:/var/lib/docker/overlay2/1a2d7024187a1e0e27568c35c99d7aa6cff8ac393765d58c51d70b642c71c152/diff:/var/lib/docker/overlay2/572e4084b1e5af4e4474ec7177fcdcc6661ca6453f86c66de0cfff59c232b89a/diff",
+                "MergedDir": "/var/lib/docker/overlay2/84a6c37f9acb7f585b9f7b5e3e3c150c050809b6c9205888331f3b523cf99231/merged",
+                "UpperDir": "/var/lib/docker/overlay2/84a6c37f9acb7f585b9f7b5e3e3c150c050809b6c9205888331f3b523cf99231/diff",
+                "WorkDir": "/var/lib/docker/overlay2/84a6c37f9acb7f585b9f7b5e3e3c150c050809b6c9205888331f3b523cf99231/work"
+            },
+            "Name": "overlay2"
+        },
+        "Mounts": [
+            {
+                "Type": "bind",
+                "Source": "/tmp/openriak-docker-3.4.0-amazon-linux-2023-otp26-sq0xqufy/openriak-kv-3.4.0-amazon-linux-2023-otp26-node-4/config",
+                "Destination": "/etc/riak",
+                "Mode": "rw",
+                "RW": true,
+                "Propagation": "rprivate"
+            },
+            {
+                "Type": "bind",
+                "Source": "/tmp/openriak-docker-3.4.0-amazon-linux-2023-otp26-sq0xqufy/openriak-kv-3.4.0-amazon-linux-2023-otp26-node-4/data",
+                "Destination": "/var/lib/riak",
+                "Mode": "rw",
+                "RW": true,
+                "Propagation": "rprivate"
+            },
+            {
+                "Type": "bind",
+                "Source": "/tmp/openriak-docker-3.4.0-amazon-linux-2023-otp26-sq0xqufy/openriak-kv-3.4.0-amazon-linux-2023-otp26-node-4/logs",
+                "Destination": "/var/log/riak",
+                "Mode": "rw",
+                "RW": true,
+                "Propagation": "rprivate"
+            },
+            {
+                "Type": "bind",
+                "Source": "/tmp/openriak-docker-3.4.0-amazon-linux-2023-otp26-sq0xqufy/openriak-kv-3.4.0-amazon-linux-2023-otp26-node-cluster-control",
+                "Destination": "/var/lib/openriak-cluster-control",
+                "Mode": "rw",
+                "RW": true,
+                "Propagation": "rprivate"
+            }
+        ],
+        "Config": {
+            "Hostname": "node-04.cluster-a.openriak",
+            "Domainname": "",
+            "User": "",
+            "AttachStdin": false,
+            "AttachStdout": true,
+            "AttachStderr": true,
+            "ExposedPorts": {
+                "8087/tcp": {},
+                "8098/tcp": {}
+            },
+            "Tty": false,
+            "OpenStdin": false,
+            "StdinOnce": false,
+            "Env": [
+                "RIAK_DISTRIBUTED_COOKIE=openriak-ace41f4b1d793c7527f9ddd72d2608c1",
+                "TZ=Asia/Tokyo",
+                "OPENRIAK_CLUSTER_MODE=cluster",
+                "RIAK_MONITOR_INTERVAL_SECONDS=1",
+                "RIAK_NODE_HOST=node-04.cluster-a.openriak",
+                "RIAK_UID=19001",
+                "OPENRIAK_CLUSTER_WAIT_SECONDS=3600",
+                "RIAK_GID=19002",
+                "OPENRIAK_CLUSTER_POLL_SECONDS=1",
+                "RIAK_LOG_MAX_FILE_SIZE=2MB",
+                "RIAK_LOG_MAX_FILES=4",
+                "PATH=/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin",
+                "RIAK_NODE_NAME=",
+                "RIAK_RING_SIZE=8",
+                "RIAK_STORAGE_BACKEND=leveled",
+                "RIAK_ANTI_ENTROPY=passive",
+                "RIAK_TICTACAAE_ACTIVE=active",
+                "RIAK_TICTACAAE_STOREHEADS=enabled",
+                "RIAK_HTTP_LISTENER=0.0.0.0:8098",
+                "RIAK_PB_LISTENER=0.0.0.0:8087",
+                "RIAK_NOFILE_LIMIT=100000",
+                "RIAK_INIT_ONLY=0",
+                "RIAK_STARTUP_POLL_SECONDS=1",
+                "RIAK_SHUTDOWN_POLL_SECONDS=1",
+                "OPENRIAK_CLUSTER_CONTROL_DIR=/var/lib/openriak-cluster-control",
+                "role="
+            ],
+            "Cmd": null,
+            "Healthcheck": {
+                "Test": [
+                    "CMD",
+                    "/usr/local/bin/openriak-healthcheck"
+                ],
+                "Interval": 10000000000,
+                "Timeout": 60000000000,
+                "StartPeriod": 120000000000,
+                "Retries": 3
+            },
+            "Image": "tiotjp/openriak-kv:test-3.4.0-amazon-linux-2023-otp26-linux-amd64-20260911t085118.871905z",
+            "Volumes": {
+                "/etc/riak": {},
+                "/var/lib/riak": {},
+                "/var/log/riak": {}
+            },
+            "WorkingDir": "/",
+            "Entrypoint": [
+                "/usr/local/bin/openriak-entrypoint"
+            ],
+            "OnBuild": null,
+            "Labels": {
+                "com.docker.compose.config-hash": "c8d7cfdbc96386e52bdf279edaed7c74334f9348d62dfe67eceea1c0cdb0caad",
+                "com.docker.compose.container-number": "1",
+                "com.docker.compose.depends_on": "",
+                "com.docker.compose.image": "sha256:ca8a29e5dac7899c90a854a2cc826db818d7b4656f732c90b5104ebb330c72da",
+                "com.docker.compose.oneoff": "False",
+                "com.docker.compose.project": "openriak-kv-340-amazon-linux-2023-otp26-node-cluster",
+                "com.docker.compose.project.config_files": "/tmp/openriak-docker-3.4.0-amazon-linux-2023-otp26-sq0xqufy/compose.cluster.test.yaml",
+                "com.docker.compose.project.environment_file": "/tmp/openriak-docker-3.4.0-amazon-linux-2023-otp26-sq0xqufy/.env.cluster",
+                "com.docker.compose.project.working_dir": "/tmp/openriak-docker-3.4.0-amazon-linux-2023-otp26-sq0xqufy",
+                "com.docker.compose.service": "node4",
+                "com.docker.compose.version": "2.29.1",
+                "org.opencontainers.image.description": "Package-backed OpenRiak KV with single-node and cluster startup support",
+                "org.opencontainers.image.source": "https://github.com/TI-Tokyo/openriak-docs",
+                "org.opencontainers.image.title": "OpenRiak KV",
+                "org.opencontainers.image.url": "https://www.tiot.jp/",
+                "org.opencontainers.image.vendor": "TI Tokyo",
+                "org.opencontainers.image.version": "3.4.0",
+                "org.openriak.image.tag": "tiotjp/openriak-kv:3.4.0-amazon-linux-2023-otp26",
+                "org.openriak.os.name": "amazon-linux",
+                "org.openriak.os.release": "2023",
+                "org.openriak.os.version": "2023",
+                "org.openriak.otp.version": "26"
+            },
+            "StopSignal": "SIGTERM",
+            "StopTimeout": 120
+        },
+        "NetworkSettings": {
+            "Bridge": "",
+            "SandboxID": "95dbb1154cbdc95dfa960b71fa772856bd5398eafc9d8eb6e4d3c4a60d524250",
+            "SandboxKey": "/var/run/docker/netns/95dbb1154cbd",
+            "Ports": {
+                "8087/tcp": null,
+                "8098/tcp": null
+            },
+            "HairpinMode": false,
+            "LinkLocalIPv6Address": "",
+            "LinkLocalIPv6PrefixLen": 0,
+            "SecondaryIPAddresses": null,
+            "SecondaryIPv6Addresses": null,
+            "EndpointID": "",
+            "Gateway": "",
+            "GlobalIPv6Address": "",
+            "GlobalIPv6PrefixLen": 0,
+            "IPAddress": "",
+            "IPPrefixLen": 0,
+            "IPv6Gateway": "",
+            "MacAddress": "",
+            "Networks": {
+                "openriak-kv-340-amazon-linux-2023-otp26-node-cluster_openriak": {
+                    "IPAMConfig": {},
+                    "Links": null,
+                    "Aliases": [
+                        "openriak-kv-3.4.0-amazon-linux-2023-otp26-node-4-t-871905z",
+                        "node4",
+                        "node-04.cluster-a.openriak"
+                    ],
+                    "MacAddress": "02:42:ac:13:00:03",
+                    "DriverOpts": null,
+                    "NetworkID": "83bb36b39c24838c5eae748a9bbf4df2c6a4d6b74887e798e3332c9383637511",
+                    "EndpointID": "b678b3e9c4573197e8b0e96edbfc15c83a4ba0e93366d71571a5ad1e5c20504b",
+                    "Gateway": "172.19.0.1",
+                    "IPAddress": "172.19.0.3",
+                    "IPPrefixLen": 16,
+                    "IPv6Gateway": "",
+                    "GlobalIPv6Address": "",
+                    "GlobalIPv6PrefixLen": 0,
+                    "DNSNames": [
+                        "openriak-kv-3.4.0-amazon-linux-2023-otp26-node-4-t-871905z",
+                        "node4",
+                        "node-04.cluster-a.openriak",
+                        "d5cb2b44f02f"
+                    ]
+                }
+            }
+        }
+    }
+]
+
+timeout_seconds: 3600
+exit_code: 0

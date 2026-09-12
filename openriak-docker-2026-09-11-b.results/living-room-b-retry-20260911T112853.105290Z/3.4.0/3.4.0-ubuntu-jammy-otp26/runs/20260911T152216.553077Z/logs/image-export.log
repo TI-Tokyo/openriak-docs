@@ -1,0 +1,66 @@
+$ /usr/bin/docker buildx build --builder openriak-kv-multiarch --platform linux/amd64 --pull=false --tag tiotjp/openriak-kv:3.4.0-ubuntu-jammy-otp26 --tag tiotjp/openriak-kv:3.4.0-ubuntu-jammy --output type=oci,dest=/home/peter/openriak-builds/openriak-distributed/openriak-docker-2026-09-11-b/living-room-b/20260911T084617.243958Z/results/3.4.0/3.4.0-ubuntu-jammy-otp26/runs/20260911T152216.553077Z/image.oci.tar /home/peter/openriak-builds/openriak-distributed/openriak-docker-2026-09-11-b/living-room-b/20260911T084617.243958Z/results/3.4.0/3.4.0-ubuntu-jammy-otp26
+started: 2026-09-11T15:26:48Z
+#0 building with "openriak-kv-multiarch" instance using docker-container driver
+
+#1 [internal] load build definition from Dockerfile
+#1 transferring dockerfile: 42.78kB done
+#1 DONE 0.0s
+
+#2 resolve image config for docker-image://docker.io/docker/dockerfile:1.7
+#2 DONE 0.8s
+
+#3 docker-image://docker.io/docker/dockerfile:1.7@sha256:a57df69d0ea827fb7266491f2813635de6f17269be881f696fbfdf2d83dda33e
+#3 resolve docker.io/docker/dockerfile:1.7@sha256:a57df69d0ea827fb7266491f2813635de6f17269be881f696fbfdf2d83dda33e done
+#3 CACHED
+
+#4 [internal] load metadata for docker.io/library/ubuntu:jammy@sha256:829f6df217bcbae2b371026e81711d1a787c61b2967ad09d015063663ebafbf7
+#4 DONE 0.0s
+
+#5 [internal] load .dockerignore
+#5 transferring context: 42B done
+#5 DONE 0.0s
+
+#6 [download-amd64 1/1] ADD --checksum=sha256:165c9ffd5133421f462c2913a5cdd5041e5a914e9fef0e1585ed0fe69f3c4700 https://files.tiot.jp/riak/kv/3.4/3.4.0/ubuntu/jammy64/riak_3.4.0-OTP26_amd64.deb /riak_3.4.0-OTP26_amd64.deb
+#6 DONE 0.0s
+
+#7 [internal] preparing inline document
+#7 DONE 0.0s
+
+#8 [internal] preparing inline document
+#8 DONE 0.0s
+
+#9 [install-amd64 1/2] FROM docker.io/library/ubuntu:jammy@sha256:829f6df217bcbae2b371026e81711d1a787c61b2967ad09d015063663ebafbf7
+#9 resolve docker.io/library/ubuntu:jammy@sha256:829f6df217bcbae2b371026e81711d1a787c61b2967ad09d015063663ebafbf7 done
+#9 DONE 0.0s
+
+#10 [download-amd64 1/1] ADD --checksum=sha256:165c9ffd5133421f462c2913a5cdd5041e5a914e9fef0e1585ed0fe69f3c4700 https://files.tiot.jp/riak/kv/3.4/3.4.0/ubuntu/jammy64/riak_3.4.0-OTP26_amd64.deb /riak_3.4.0-OTP26_amd64.deb
+#10 CACHED
+
+#11 [package-amd64 1/1] COPY --from=install-amd64 / /
+#11 CACHED
+
+#12 [final 1/4] RUN <<'OPENRIAK_IMAGE_SETUP' (set -eu...)
+#12 CACHED
+
+#13 [final 3/4] COPY <<OPENRIAK_HEALTHCHECK /usr/local/bin/openriak-healthcheck
+#13 CACHED
+
+#14 [final 2/4] COPY <<OPENRIAK_ENTRYPOINT /usr/local/bin/openriak-entrypoint
+#14 CACHED
+
+#15 [install-amd64 2/2] RUN --mount=type=bind,from=download-amd64,target=/opt/openriak-package,ro <<'OPENRIAK_PACKAGE_INSTALL' (set -eu...)
+#15 CACHED
+
+#16 [final 4/4] RUN <<'OPENRIAK_SCRIPT_SETUP' (set -eu...)
+#16 CACHED
+
+#17 exporting to oci image format
+#17 exporting layers done
+#17 exporting manifest sha256:b571c777ca84ecc9e31ce6dad289b6f1fe7148ff174f0b05e1e1998e5a47a67e done
+#17 exporting config sha256:6e0cf14c50c040a9ffcba1a70f008034b9ccb34f65cce7231f060916b798d00e done
+#17 sending tarball
+#17 sending tarball 0.5s done
+#17 DONE 0.5s
+
+timeout_seconds: 3600
+exit_code: 0

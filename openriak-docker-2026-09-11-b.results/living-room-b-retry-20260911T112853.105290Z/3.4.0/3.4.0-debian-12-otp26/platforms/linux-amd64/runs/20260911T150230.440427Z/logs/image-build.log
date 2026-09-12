@@ -1,0 +1,271 @@
+$ /usr/bin/docker buildx build --builder openriak-kv-multiarch --load --platform linux/amd64 --pull=false --no-cache --tag tiotjp/openriak-kv:test-3.4.0-debian-12-otp26-linux-amd64-20260911t150230.440427z --file /home/peter/openriak-builds/openriak-distributed/openriak-docker-2026-09-11-b/living-room-b/20260911T084617.243958Z/results/3.4.0/3.4.0-debian-12-otp26/platforms/linux-amd64/runs/20260911T150230.440427Z/Dockerfile /home/peter/openriak-builds/openriak-distributed/openriak-docker-2026-09-11-b/living-room-b/20260911T084617.243958Z/results/3.4.0/3.4.0-debian-12-otp26/platforms/linux-amd64/runs/20260911T150230.440427Z
+started: 2026-09-11T15:02:30Z
+#0 building with "openriak-kv-multiarch" instance using docker-container driver
+
+#1 [internal] load build definition from Dockerfile
+#1 transferring dockerfile: 43.53kB done
+#1 DONE 0.0s
+
+#2 resolve image config for docker-image://docker.io/docker/dockerfile:1.7
+#2 DONE 0.2s
+
+#3 docker-image://docker.io/docker/dockerfile:1.7@sha256:a57df69d0ea827fb7266491f2813635de6f17269be881f696fbfdf2d83dda33e
+#3 resolve docker.io/docker/dockerfile:1.7@sha256:a57df69d0ea827fb7266491f2813635de6f17269be881f696fbfdf2d83dda33e 0.0s done
+#3 CACHED
+
+#4 [internal] load metadata for docker.io/tiotjp/debian:bookworm-slim-for-openriak@sha256:857fff6b7d9698aeb6d04777dc4d7b33ab4254c0a33b0887a78cb88c8ef0376b
+#4 DONE 0.7s
+
+#5 [internal] load metadata for docker.io/library/debian:bookworm-slim@sha256:88200866dfff7ea7f5cbcb6ec7c8a701889efe6fe859fe64d6990e4b07ea4171
+#5 DONE 0.7s
+
+#6 [internal] load .dockerignore
+#6 transferring context: 2B done
+#6 DONE 0.0s
+
+#7 [download-amd64 1/1] ADD --checksum=sha256:66d646145b2b1923c9d483ce2b989c46ec65c9e6aa3b43d79f20dcbd4ecfe722 https://files.tiot.jp/riak/kv/3.4/3.4.0/debian/12/riak_3.4.0-OTP26_amd64.deb /riak_3.4.0-OTP26_amd64.deb
+#7 CACHED
+
+#8 [internal] preparing inline document
+#8 CACHED
+
+#9 [internal] preparing inline document
+#9 CACHED
+
+#10 [install-amd64 1/2] FROM docker.io/tiotjp/debian:bookworm-slim-for-openriak@sha256:857fff6b7d9698aeb6d04777dc4d7b33ab4254c0a33b0887a78cb88c8ef0376b
+#10 resolve docker.io/tiotjp/debian:bookworm-slim-for-openriak@sha256:857fff6b7d9698aeb6d04777dc4d7b33ab4254c0a33b0887a78cb88c8ef0376b done
+#10 CACHED
+
+#11 [package-tools-amd64 1/1] FROM docker.io/library/debian:bookworm-slim@sha256:88200866dfff7ea7f5cbcb6ec7c8a701889efe6fe859fe64d6990e4b07ea4171
+#11 resolve docker.io/library/debian:bookworm-slim@sha256:88200866dfff7ea7f5cbcb6ec7c8a701889efe6fe859fe64d6990e4b07ea4171 0.0s done
+#11 CACHED
+
+#12 [download-amd64 1/1] ADD --checksum=sha256:66d646145b2b1923c9d483ce2b989c46ec65c9e6aa3b43d79f20dcbd4ecfe722 https://files.tiot.jp/riak/kv/3.4/3.4.0/debian/12/riak_3.4.0-OTP26_amd64.deb /riak_3.4.0-OTP26_amd64.deb
+#12 DONE 0.0s
+
+#13 [install-amd64 2/2] RUN --mount=type=bind,from=download-amd64,target=/opt/openriak-package,ro --mount=type=bind,from=package-tools-amd64,source=/usr/bin/tar,target=/usr/local/bin/tar,ro <<'OPENRIAK_PACKAGE_INSTALL' (set -eu...)
+#13 0.084 Get:1 http://deb.debian.org/debian bookworm InRelease [151 kB]
+#13 0.095 Get:2 http://deb.debian.org/debian bookworm-updates InRelease [55.4 kB]
+#13 0.095 Get:3 http://deb.debian.org/debian-security bookworm-security InRelease [34.8 kB]
+#13 0.157 Get:4 http://deb.debian.org/debian bookworm/main amd64 Packages [8790 kB]
+#13 0.244 Get:5 http://deb.debian.org/debian bookworm-updates/main amd64 Packages [6924 B]
+#13 0.265 Get:6 http://deb.debian.org/debian-security bookworm-security/main amd64 Packages [338 kB]
+#13 1.217 Fetched 9376 kB in 1s (8207 kB/s)
+#13 1.217 Reading package lists...
+#13 1.755 Reading package lists...
+#13 2.278 Building dependency tree...
+#13 2.397 Reading state information...
+#13 2.584 Suggested packages:
+#13 2.584   bzip2 ncompress xz-utils tar-scripts tar-doc
+#13 2.625 The following NEW packages will be installed:
+#13 2.625   tar
+#13 2.654 0 upgraded, 1 newly installed, 0 to remove and 0 not upgraded.
+#13 2.654 Need to get 836 kB of archives.
+#13 2.654 After this operation, 3219 kB of additional disk space will be used.
+#13 2.654 Get:1 http://deb.debian.org/debian bookworm/main amd64 tar amd64 1.34+dfsg-1.2+deb12u1 [836 kB]
+#13 2.767 debconf: delaying package configuration, since apt-utils is not installed
+#13 2.791 Fetched 836 kB in 0s (28.5 MB/s)
+#13 2.805 Selecting previously unselected package tar.
+#13 2.805 (Reading database ... (Reading database ... 5%(Reading database ... 10%(Reading database ... 15%(Reading database ... 20%(Reading database ... 25%(Reading database ... 30%(Reading database ... 35%(Reading database ... 40%(Reading database ... 45%(Reading database ... 50%(Reading database ... 55%(Reading database ... 60%(Reading database ... 65%(Reading database ... 70%(Reading database ... 75%(Reading database ... 80%(Reading database ... 85%(Reading database ... 90%(Reading database ... 95%(Reading database ... 100%(Reading database ... 6538 files and directories currently installed.)
+#13 2.811 Preparing to unpack .../tar_1.34+dfsg-1.2+deb12u1_amd64.deb ...
+#13 2.812 Unpacking tar (1.34+dfsg-1.2+deb12u1) ...
+#13 2.886 Setting up tar (1.34+dfsg-1.2+deb12u1) ...
+#13 2.890 update-alternatives: using /usr/sbin/rmt-tar to provide /usr/sbin/rmt (rmt) in auto mode
+#13 2.890 update-alternatives: warning: skip creation of /usr/share/man/man8/rmt.8.gz because associated file /usr/share/man/man8/rmt-tar.8.gz (of link group rmt) doesn't exist
+#13 2.956 Hit:1 http://deb.debian.org/debian bookworm InRelease
+#13 2.956 Hit:2 http://deb.debian.org/debian bookworm-updates InRelease
+#13 2.956 Hit:3 http://deb.debian.org/debian-security bookworm-security InRelease
+#13 3.112 Reading package lists...
+#13 3.635 Reading package lists...
+#13 4.156 Building dependency tree...
+#13 4.284 Reading state information...
+#13 4.321 Calculating upgrade...
+#13 4.526 0 upgraded, 0 newly installed, 0 to remove and 0 not upgraded.
+#13 4.532 Reading package lists...
+#13 5.053 Building dependency tree...
+#13 5.172 Reading state information...
+#13 5.356 ca-certificates is already the newest version (20250419~deb12u1).
+#13 5.356 passwd is already the newest version (1:4.13+dfsg1-1+deb12u2).
+#13 5.356 passwd set to manually installed.
+#13 5.356 tzdata is already the newest version (2026b-0+deb12u1).
+#13 5.356 tzdata set to manually installed.
+#13 5.356 The following additional packages will be installed:
+#13 5.357   cron cron-daemon-common libncursesw6 libpopt0 libproc2-0 logrotate
+#13 5.357   sensible-utils sudo
+#13 5.359 Suggested packages:
+#13 5.359   anacron checksecurity bsd-mailx | mailx
+#13 5.359 Recommended packages:
+#13 5.359   default-mta | mail-transport-agent libgpm2 psmisc
+#13 5.453 The following NEW packages will be installed:
+#13 5.454   cron cron-daemon-common libncursesw6 libpopt0 libproc2-0 logrotate procps
+#13 5.454   riak sensible-utils sudo
+#13 5.484 0 upgraded, 10 newly installed, 0 to remove and 0 not upgraded.
+#13 5.484 Need to get 3006 kB/31.6 MB of archives.
+#13 5.484 After this operation, 62.2 MB of additional disk space will be used.
+#13 5.484 Get:1 http://deb.debian.org/debian bookworm/main amd64 cron-daemon-common all 3.0pl1-162 [12.7 kB]
+#13 5.488 Get:2 http://deb.debian.org/debian bookworm/main amd64 sensible-utils all 0.0.17+nmu1 [19.0 kB]
+#13 5.490 Get:3 http://deb.debian.org/debian bookworm/main amd64 cron amd64 3.0pl1-162 [73.1 kB]
+#13 5.495 Get:4 http://deb.debian.org/debian bookworm/main amd64 sudo amd64 1.9.13p3-1+deb12u4 [1890 kB]
+#13 5.513 Get:5 http://deb.debian.org/debian bookworm/main amd64 libpopt0 amd64 1.19+dfsg-1 [43.3 kB]
+#13 5.514 Get:6 http://deb.debian.org/debian bookworm/main amd64 logrotate amd64 3.21.0-1 [62.1 kB]
+#13 5.515 Get:7 http://deb.debian.org/debian bookworm/main amd64 libncursesw6 amd64 6.4-4 [134 kB]
+#13 5.515 Get:8 http://deb.debian.org/debian bookworm/main amd64 libproc2-0 amd64 2:4.0.2-3 [62.8 kB]
+#13 5.518 Get:9 http://deb.debian.org/debian bookworm/main amd64 procps amd64 2:4.0.2-3 [709 kB]
+#13 5.682 Get:10 /tmp/riak_3.4.0-OTP26_amd64.deb riak amd64 3.4.0-OTP26 [28.6 MB]
+#13 5.779 debconf: delaying package configuration, since apt-utils is not installed
+#13 5.801 Fetched 3006 kB in 0s (13.7 MB/s)
+#13 5.813 Selecting previously unselected package cron-daemon-common.
+#13 5.813 (Reading database ... (Reading database ... 5%(Reading database ... 10%(Reading database ... 15%(Reading database ... 20%(Reading database ... 25%(Reading database ... 30%(Reading database ... 35%(Reading database ... 40%(Reading database ... 45%(Reading database ... 50%(Reading database ... 55%(Reading database ... 60%(Reading database ... 65%(Reading database ... 70%(Reading database ... 75%(Reading database ... 80%(Reading database ... 85%(Reading database ... 90%(Reading database ... 95%(Reading database ... 100%(Reading database ... 6593 files and directories currently installed.)
+#13 5.818 Preparing to unpack .../cron-daemon-common_3.0pl1-162_all.deb ...
+#13 5.819 Unpacking cron-daemon-common (3.0pl1-162) ...
+#13 5.835 Selecting previously unselected package sensible-utils.
+#13 5.836 Preparing to unpack .../sensible-utils_0.0.17+nmu1_all.deb ...
+#13 5.837 Unpacking sensible-utils (0.0.17+nmu1) ...
+#13 5.854 Setting up cron-daemon-common (3.0pl1-162) ...
+#13 5.891 Adding group `crontab' (GID 101) ...
+#13 5.899 Done.
+#13 5.919 Selecting previously unselected package cron.
+#13 5.919 (Reading database ... (Reading database ... 5%(Reading database ... 10%(Reading database ... 15%(Reading database ... 20%(Reading database ... 25%(Reading database ... 30%(Reading database ... 35%(Reading database ... 40%(Reading database ... 45%(Reading database ... 50%(Reading database ... 55%(Reading database ... 60%(Reading database ... 65%(Reading database ... 70%(Reading database ... 75%(Reading database ... 80%(Reading database ... 85%(Reading database ... 90%(Reading database ... 95%(Reading database ... 100%(Reading database ... 6638 files and directories currently installed.)
+#13 5.926 Preparing to unpack .../0-cron_3.0pl1-162_amd64.deb ...
+#13 5.928 Unpacking cron (3.0pl1-162) ...
+#13 5.950 Selecting previously unselected package sudo.
+#13 5.951 Preparing to unpack .../1-sudo_1.9.13p3-1+deb12u4_amd64.deb ...
+#13 5.954 Unpacking sudo (1.9.13p3-1+deb12u4) ...
+#13 6.071 Selecting previously unselected package libpopt0:amd64.
+#13 6.073 Preparing to unpack .../2-libpopt0_1.19+dfsg-1_amd64.deb ...
+#13 6.074 Unpacking libpopt0:amd64 (1.19+dfsg-1) ...
+#13 6.095 Selecting previously unselected package logrotate.
+#13 6.096 Preparing to unpack .../3-logrotate_3.21.0-1_amd64.deb ...
+#13 6.097 Unpacking logrotate (3.21.0-1) ...
+#13 6.117 Selecting previously unselected package libncursesw6:amd64.
+#13 6.118 Preparing to unpack .../4-libncursesw6_6.4-4_amd64.deb ...
+#13 6.119 Unpacking libncursesw6:amd64 (6.4-4) ...
+#13 6.143 Selecting previously unselected package libproc2-0:amd64.
+#13 6.144 Preparing to unpack .../5-libproc2-0_2%3a4.0.2-3_amd64.deb ...
+#13 6.145 Unpacking libproc2-0:amd64 (2:4.0.2-3) ...
+#13 6.166 Selecting previously unselected package procps.
+#13 6.167 Preparing to unpack .../6-procps_2%3a4.0.2-3_amd64.deb ...
+#13 6.175 Unpacking procps (2:4.0.2-3) ...
+#13 6.242 Selecting previously unselected package riak.
+#13 6.243 Preparing to unpack .../7-riak_3.4.0-OTP26_amd64.deb ...
+#13 6.246 Unpacking riak (3.4.0-OTP26) ...
+#13 7.417 Setting up libproc2-0:amd64 (2:4.0.2-3) ...
+#13 7.420 Setting up sudo (1.9.13p3-1+deb12u4) ...
+#13 7.442 invoke-rc.d: could not determine current runlevel
+#13 7.446 invoke-rc.d: policy-rc.d denied execution of start.
+#13 7.447 Setting up libncursesw6:amd64 (6.4-4) ...
+#13 7.450 Setting up sensible-utils (0.0.17+nmu1) ...
+#13 7.452 Setting up procps (2:4.0.2-3) ...
+#13 7.475 Setting up libpopt0:amd64 (1.19+dfsg-1) ...
+#13 7.477 Setting up cron (3.0pl1-162) ...
+#13 7.496 invoke-rc.d: could not determine current runlevel
+#13 7.499 invoke-rc.d: policy-rc.d denied execution of start.
+#13 7.608 Setting up logrotate (3.21.0-1) ...
+#13 7.717 Setting up riak (3.4.0-OTP26) ...
+#13 7.749 Adding group `riak' (GID 102) ...
+#13 7.755 Done.
+#13 7.784 Adding system user `riak' (UID 100) ...
+#13 7.784 Adding new user `riak' (UID 100) with group `riak' ...
+#13 7.800 Not creating home directory `/var/lib/riak'.
+#13 7.805 Processing triggers for libc-bin (2.36-9+deb12u14) ...
+#13 7.870 Get:1 http://deb.debian.org/debian bookworm InRelease [151 kB]
+#13 7.881 Get:2 http://deb.debian.org/debian bookworm-updates InRelease [55.4 kB]
+#13 7.881 Get:3 http://deb.debian.org/debian-security bookworm-security InRelease [34.8 kB]
+#13 7.941 Get:4 http://deb.debian.org/debian bookworm/main amd64 Packages [8790 kB]
+#13 8.029 Get:5 http://deb.debian.org/debian bookworm-updates/main amd64 Packages [6924 B]
+#13 8.042 Get:6 http://deb.debian.org/debian-security bookworm-security/main amd64 Packages [338 kB]
+#13 9.002 Fetched 9376 kB in 1s (8205 kB/s)
+#13 9.002 Reading package lists...
+#13 9.526 Reading package lists...
+#13 10.05 Building dependency tree...
+#13 10.17 Reading state information...
+#13 10.37 The following packages will be REMOVED:
+#13 10.37   perl-base*
+#13 10.37 WARNING: The following essential packages will be removed.
+#13 10.37 This should NOT be done unless you know exactly what you are doing!
+#13 10.37   perl-base
+#13 10.51 0 upgraded, 0 newly installed, 1 to remove and 0 not upgraded.
+#13 10.51 After this operation, 7822 kB disk space will be freed.
+#13 10.52 dpkg: warning: overriding problem because --force enabled:
+#13 10.52 dpkg: warning: this is an essential package; it should not be removed
+#13 10.52 (Reading database ... (Reading database ... 5%(Reading database ... 10%(Reading database ... 15%(Reading database ... 20%(Reading database ... 25%(Reading database ... 30%(Reading database ... 35%(Reading database ... 40%(Reading database ... 45%(Reading database ... 50%(Reading database ... 55%(Reading database ... 60%(Reading database ... 65%(Reading database ... 70%(Reading database ... 75%(Reading database ... 80%(Reading database ... 85%(Reading database ... 90%(Reading database ... 95%(Reading database ... 100%(Reading database ... 9022 files and directories currently installed.)
+#13 10.52 Removing perl-base (5.36.0-7+deb12u3) ...
+#13 10.66 (Reading database ... (Reading database ... 5%(Reading database ... 10%(Reading database ... 15%(Reading database ... 20%(Reading database ... 25%(Reading database ... 30%(Reading database ... 35%(Reading database ... 40%(Reading database ... 45%(Reading database ... 50%(Reading database ... 55%(Reading database ... 60%(Reading database ... 65%(Reading database ... 70%(Reading database ... 75%(Reading database ... 80%(Reading database ... 85%(Reading database ... 90%(Reading database ... 95%(Reading database ... 100%(Reading database ... 8294 files and directories currently installed.)
+#13 10.66 Purging configuration files for perl-base (5.36.0-7+deb12u3) ...
+#13 10.71 dpkg: warning: overriding problem because --force enabled:
+#13 10.71 dpkg: warning: this is an essential package; it should not be removed
+#13 10.71 dpkg: warning: overriding problem because --force enabled:
+#13 10.71 dpkg: warning: this is an essential package; it should not be removed
+#13 10.71 dpkg: warning: overriding problem because --force enabled:
+#13 10.71 dpkg: warning: this is an essential package; it should not be removed
+#13 10.71 dpkg: warning: overriding problem because --force enabled:
+#13 10.71 dpkg: warning: this is an essential package; it should not be removed
+#13 10.71 dpkg: warning: overriding problem because --force enabled:
+#13 10.71 dpkg: warning: this is an essential package; it should not be removed
+#13 10.71 dpkg: warning: overriding problem because --force enabled:
+#13 10.71 dpkg: warning: this is an essential package; it should not be removed
+#13 10.71 dpkg: warning: overriding problem because --force enabled:
+#13 10.71 dpkg: warning: this is an essential package; it should not be removed
+#13 10.72 dpkg: warning: overriding problem because --force enabled:
+#13 10.72 dpkg: warning: this is an essential package; it should not be removed
+#13 10.72 dpkg: warning: overriding problem because --force enabled:
+#13 10.72 dpkg: warning: this is an essential package; it should not be removed
+#13 10.72 dpkg: warning: overriding problem because --force enabled:
+#13 10.72 dpkg: warning: this is an essential package; it should not be removed
+#13 10.72 dpkg: warning: overriding problem because --force enabled:
+#13 10.72 dpkg: warning: this is an essential package; it should not be removed
+#13 10.72 dpkg: warning: overriding problem because --force enabled:
+#13 10.72 dpkg: warning: this is an essential package; it should not be removed
+#13 10.72 dpkg: warning: overriding problem because --force enabled:
+#13 10.72 dpkg: warning: this is an essential package; it should not be removed
+#13 10.72 dpkg: warning: overriding problem because --force enabled:
+#13 10.72 dpkg: warning: this is an essential package; it should not be removed
+#13 10.72 dpkg: warning: overriding problem because --force enabled:
+#13 10.72 dpkg: warning: this is an essential package; it should not be removed
+#13 10.72 dpkg: tar: dependency problems, but removing anyway as you requested:
+#13 10.72  dpkg depends on tar (>= 1.28-1).
+#13 10.72 
+#13 10.73 (Reading database ... 8294 files and directories currently installed.)
+#13 10.73 Removing tar (1.34+dfsg-1.2+deb12u1) ...
+#13 DONE 10.8s
+
+#14 [package-amd64 1/1] COPY --from=install-amd64 / /
+#14 DONE 0.5s
+
+#15 [final 1/4] RUN <<'OPENRIAK_IMAGE_SETUP' (set -eu...)
+#15 0.115 uid=100(riak) gid=102(riak) groups=102(riak)
+#15 DONE 0.4s
+
+#16 [final 2/4] COPY <<OPENRIAK_ENTRYPOINT /usr/local/bin/openriak-entrypoint
+#16 DONE 0.0s
+
+#17 [final 3/4] COPY <<OPENRIAK_HEALTHCHECK /usr/local/bin/openriak-healthcheck
+#17 DONE 0.0s
+
+#18 [final 4/4] RUN <<'OPENRIAK_SCRIPT_SETUP' (set -eu...)
+#18 DONE 0.1s
+
+#19 exporting to docker image format
+#19 exporting layers
+#19 exporting layers 5.0s done
+#19 exporting manifest sha256:1d76b84f250fddd22ada18288bd0263f61ac31896e00777c0e155073338678f1 done
+#19 exporting config sha256:983c394cd935ce0a7ecb2cf5c00e1686288d9398209a6219a7acfba606f5aeb7 done
+#19 sending tarball
+#19 ...
+
+#20 importing to docker
+#20 loading layer 38a277a3ef8b 557.06kB / 65.95MB
+#20 loading layer 06bf5965f9f9 23.58kB / 23.58kB
+#20 loading layer 38a277a3ef8b 65.95MB / 65.95MB 1.6s done
+#20 loading layer 06bf5965f9f9 23.58kB / 23.58kB 0.0s done
+#20 loading layer 58e2bbf8f646 7.70kB / 7.70kB 0.0s done
+#20 loading layer 3ecdf7ca7801 389B / 389B 0.0s done
+#20 loading layer bda85a5e596c 7.88kB / 7.88kB 0.0s done
+#20 DONE 1.6s
+
+#19 exporting to docker image format
+#19 sending tarball 2.2s done
+#19 DONE 7.2s
+
+timeout_seconds: 3600
+exit_code: 0

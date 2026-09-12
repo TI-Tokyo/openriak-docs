@@ -243,6 +243,54 @@ class PushTests(unittest.TestCase):
             self.assertEqual(tool.main([*self.arguments, '--whatif']), 0)
         self.assertEqual(set(Path(self.temporary.name).rglob('*')), files)
 
+    def test_push_accepts_published_portable_approval_without_rewriting_history(self):
+        saved = json.loads(json.dumps(self.report))
+        for artifact in saved['artifacts'].values():
+            artifact['url'] = './' + artifact['filename']
+        tool.write_json(self.history / 'report.json', saved)
+        historical = (self.history / 'report.json').read_bytes()
+        for status in ('running', 'passed', 'failed'):
+            current = dict(self.report, publication={'status': status, 'finished_at': '2026-09-12T00:00:00Z'})
+            tool.write_json(self.root / 'report.json', current)
+            with self.subTest(status=status), \
+                    mock.patch.object(push, 'execute', side_effect=AssertionError('no external command')), \
+                    mock.patch.object(push, 'docker_auth', side_effect=AssertionError('no credentials')), \
+                    contextlib.redirect_stdout(io.StringIO()):
+                self.assertEqual(tool.main([*self.arguments, '--whatif']), 0)
+            self.assertEqual((self.history / 'report.json').read_bytes(), historical)
+            self.assertEqual(tool.read_json(self.root / 'report.json'), current)
+
+    def test_publication_equivalence_keeps_all_test_and_build_evidence_strict(self):
+        saved = json.loads(json.dumps(self.report))
+        for artifact in saved['artifacts'].values():
+            artifact['url'] = './' + artifact['filename']
+        tool.write_json(self.history / 'report.json', saved)
+        for field, value in [('finished_at', 'changed'), ('inputs', {'changed': True}),
+                             ('tags', [self.target.image, 'openriak/openriak-kv:unapproved']),
+                             ('worker', {'host': 'different'}), ('steps', []),
+                             ('platform_results', {})]:
+            current = dict(self.report, publication={'status': 'passed'}, **{field: value})
+            tool.write_json(self.root / 'report.json', current)
+            with self.subTest(field=field), contextlib.redirect_stdout(io.StringIO()):
+                _, plans, _, blocked = push.make_plan(self.options, tool)
+            self.assertEqual(plans, [])
+            self.assertEqual(len(blocked), 1)
+
+    def test_publication_equivalence_does_not_ignore_unknown_urls_or_artifact_fields(self):
+        for location in ('current', 'history'):
+            for field, value in [('url', 'https://unexpected.example/Dockerfile'),
+                                 ('sha256', 'a' * 64), ('filename', 'different'),
+                                 ('extra', 'unapproved')]:
+                with self.subTest(location=location, field=field):
+                    self.save_approval()
+                    changed = json.loads(json.dumps(self.report))
+                    changed['artifacts']['dockerfile'][field] = value
+                    path = self.root / 'report.json' if location == 'current' else self.history / 'report.json'
+                    tool.write_json(path, changed)
+                    _, plans, _, blocked = push.make_plan(self.options, tool)
+                    self.assertEqual(plans, [])
+                    self.assertEqual(len(blocked), 1)
+
     def test_old_skopeo_is_blocked_before_upload_or_credentials(self):
         original = self.fake_execute
         def old_skopeo(command, timeout):

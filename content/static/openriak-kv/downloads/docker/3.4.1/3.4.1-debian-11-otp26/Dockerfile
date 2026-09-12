@@ -17,6 +17,16 @@ RUN --mount=type=bind,from=download-amd64,target=/opt/openriak-package,ro <<'OPE
 set -eu
 # Copy, install, and remove in this one layer; only the installed files persist.
 cp /opt/openriak-package/riak_3.4.1-OTP26_amd64.deb /tmp/riak_3.4.1-OTP26_amd64.deb
+# Debian 11 public security support has ended; retain its final signed updates.
+# Only these dated snapshots may have expired Release metadata. Signatures and
+# package hashes are still verified using the Debian archive keyring.
+# HTTP bootstraps the slim image before ca-certificates is installed.
+rm -f /etc/apt/sources.list.d/debian.sources
+cat > /etc/apt/sources.list <<'OPENRIAK_DEBIAN_SOURCES'
+deb [check-valid-until=no signed-by=/usr/share/keyrings/debian-archive-keyring.gpg] http://snapshot.debian.org/archive/debian/20260901T000000Z/ bullseye main
+deb [check-valid-until=no signed-by=/usr/share/keyrings/debian-archive-keyring.gpg] http://snapshot.debian.org/archive/debian/20260901T000000Z/ bullseye-updates main
+deb [check-valid-until=no signed-by=/usr/share/keyrings/debian-archive-keyring.gpg] http://snapshot.debian.org/archive/debian-security/20260901T000000Z/ bullseye-security main
+OPENRIAK_DEBIAN_SOURCES
 # Update installed OS packages from this release's configured repositories.
 apt-get update
 DEBIAN_FRONTEND=noninteractive apt-get dist-upgrade -y --no-install-recommends
@@ -59,7 +69,7 @@ ENV RIAK_NODE_HOST=""
 # Explicit nodename; empty derives openriak-kv@<hostname>.
 ENV RIAK_NODE_NAME=""
 # Initial cookie; existing riak.conf wins and new followers adopt the coordinator cookie.
-ENV RIAK_DISTRIBUTED_COOKIE="openriak-a4acc938afa228da396ffba91430b507"
+ENV RIAK_DISTRIBUTED_COOKIE="openriak-7cefdbcbcc10d0e1e2eb8126cf6dfe71"
 # Partition count for a new ring; do not change on an existing cluster.
 ENV RIAK_RING_SIZE="8"
 # Storage backend used by OpenRiak KV.

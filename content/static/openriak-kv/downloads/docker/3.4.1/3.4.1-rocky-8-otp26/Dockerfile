@@ -24,6 +24,17 @@ mkdir -p /openriak-rootfs
 dnf install -y --refresh --installroot=/openriak-rootfs --releasever=8 --setopt=install_weak_deps=False --setopt=tsflags=nodocs rocky-release bash coreutils findutils gawk grep sed ca-certificates glibc glibc-minimal-langpack hostname libgcc libstdc++ ncurses-libs openssl-libs pam procps-ng shadow-utils sudo util-linux zlib tzdata
 # Install the verified official package; its OTP runtime is bundled in the RPM.
 rpm --root /openriak-rootfs -Uvh --replacepkgs --nodeps /opt/openriak-package/riak-3.4.1.OTP26-1.el8.x86_64.rpm
+# Reject stale repository mirrors before exporting the runtime filesystem.
+# Require gzip >= 1.9-15.el8_10; keep newer vendor updates.
+installed_rpm=$(rpm --root /openriak-rootfs -q --qf '%{EPOCHNUM} %{VERSION} %{RELEASE}' gzip)
+OPENRIAK_RPM_VERSION="$installed_rpm" rpm --eval '%{lua:
+local e, v, r = os.getenv("OPENRIAK_RPM_VERSION"):match("^(%d+) ([^ ]+) ([^ ]+)$")
+assert(e, "Cannot identify installed gzip version")
+local comparison = rpm.vercmp(e, "0")
+if comparison == 0 then comparison = rpm.vercmp(v, "1.9") end
+if comparison == 0 then comparison = rpm.vercmp(r, "15.el8_10") end
+assert(comparison >= 0, "Installed gzip is older than 1.9-15.el8_10")
+}' >/dev/null
 # Preserve the RPM database and an explicit inventory for vulnerability scanners.
 mkdir -p /openriak-rootfs/usr/share/openriak-build
 rpm --root /openriak-rootfs -qa --qf '%{NAME} %{VERSION}-%{RELEASE}\n' > /openriak-rootfs/usr/share/openriak-build/runtime-packages.txt
@@ -88,7 +99,7 @@ ENV RIAK_NODE_HOST=""
 # Explicit nodename; empty derives openriak-kv@<hostname>.
 ENV RIAK_NODE_NAME=""
 # Initial cookie; existing riak.conf wins and new followers adopt the coordinator cookie.
-ENV RIAK_DISTRIBUTED_COOKIE="openriak-f3fadacedae451fc97135794023d15a6"
+ENV RIAK_DISTRIBUTED_COOKIE="openriak-d749bb085c8793632ac571e97fb68b96"
 # Partition count for a new ring; do not change on an existing cluster.
 ENV RIAK_RING_SIZE="8"
 # Storage backend used by OpenRiak KV.

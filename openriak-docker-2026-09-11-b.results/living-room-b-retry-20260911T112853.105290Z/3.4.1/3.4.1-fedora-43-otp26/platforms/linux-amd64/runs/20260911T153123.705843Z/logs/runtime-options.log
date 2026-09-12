@@ -1,0 +1,347 @@
+$ /usr/bin/docker exec openriak-kv-3.4.1-fedora-43-otp26-node-t-705843z sh -c 'date +%z
+id -u riak
+id -g riak
+stat -c '"'"'%u:%g'"'"' /etc/riak /var/lib/riak /var/log/riak'
+started: 2026-09-11T15:32:12Z
++0900
+19001
+19002
+19001:19002
+19001:19002
+19001:19002
+
+timeout_seconds: 3600
+exit_code: 0
+$ /usr/bin/docker container inspect openriak-kv-3.4.1-fedora-43-otp26-node-t-705843z
+started: 2026-09-11T15:32:12Z
+[
+    {
+        "Id": "fb62ed1f527b2de611a9687155c25c2c10e3c5607da24a5904231f02e6aaf3cb",
+        "Created": "2026-09-11T15:31:53.518702722Z",
+        "Path": "/usr/local/bin/openriak-entrypoint",
+        "Args": [],
+        "State": {
+            "Status": "running",
+            "Running": true,
+            "Paused": false,
+            "Restarting": false,
+            "OOMKilled": false,
+            "Dead": false,
+            "Pid": 1233074,
+            "ExitCode": 0,
+            "Error": "",
+            "StartedAt": "2026-09-11T15:31:53.541621366Z",
+            "FinishedAt": "0001-01-01T00:00:00Z",
+            "Health": {
+                "Status": "healthy",
+                "FailingStreak": 0,
+                "Log": [
+                    {
+                        "Start": "2026-09-11T15:31:58.788588238Z",
+                        "End": "2026-09-11T15:31:59.289908348Z",
+                        "ExitCode": 0,
+                        "Output": "OpenRiak healthcheck passed: BEAM is running and riak ping returned pong\n"
+                    },
+                    {
+                        "Start": "2026-09-11T15:32:09.291372061Z",
+                        "End": "2026-09-11T15:32:09.717378053Z",
+                        "ExitCode": 0,
+                        "Output": "OpenRiak healthcheck passed: BEAM is running and riak ping returned pong\n"
+                    }
+                ]
+            }
+        },
+        "Image": "sha256:08c6eb805004ac736ccc281856a2168949df77544e08d6552ae63124eb22ae40",
+        "ResolvConfPath": "/var/snap/docker/common/var-lib-docker/containers/fb62ed1f527b2de611a9687155c25c2c10e3c5607da24a5904231f02e6aaf3cb/resolv.conf",
+        "HostnamePath": "/var/snap/docker/common/var-lib-docker/containers/fb62ed1f527b2de611a9687155c25c2c10e3c5607da24a5904231f02e6aaf3cb/hostname",
+        "HostsPath": "/var/snap/docker/common/var-lib-docker/containers/fb62ed1f527b2de611a9687155c25c2c10e3c5607da24a5904231f02e6aaf3cb/hosts",
+        "LogPath": "/var/snap/docker/common/var-lib-docker/containers/fb62ed1f527b2de611a9687155c25c2c10e3c5607da24a5904231f02e6aaf3cb/fb62ed1f527b2de611a9687155c25c2c10e3c5607da24a5904231f02e6aaf3cb-json.log",
+        "Name": "/openriak-kv-3.4.1-fedora-43-otp26-node-t-705843z",
+        "RestartCount": 0,
+        "Driver": "overlay2",
+        "Platform": "linux",
+        "MountLabel": "",
+        "ProcessLabel": "",
+        "AppArmorProfile": "docker-default",
+        "ExecIDs": null,
+        "HostConfig": {
+            "Binds": [
+                "/home/peter/openriak-builds/tmp/openriak-docker-3.4.1-fedora-43-otp26-oui0hrq5/openriak-kv-3.4.1-fedora-43-otp26-node/logs:/var/log/riak:rw",
+                "/home/peter/openriak-builds/tmp/openriak-docker-3.4.1-fedora-43-otp26-oui0hrq5/openriak-kv-3.4.1-fedora-43-otp26-node/config:/etc/riak:rw",
+                "/home/peter/openriak-builds/tmp/openriak-docker-3.4.1-fedora-43-otp26-oui0hrq5/openriak-kv-3.4.1-fedora-43-otp26-node/data:/var/lib/riak:rw"
+            ],
+            "ContainerIDFile": "",
+            "LogConfig": {
+                "Type": "json-file",
+                "Config": {
+                    "max-file": "3",
+                    "max-size": "10m"
+                }
+            },
+            "NetworkMode": "openriak-kv-341-fedora-43-otp26-node_openriak",
+            "PortBindings": {},
+            "RestartPolicy": {
+                "Name": "no",
+                "MaximumRetryCount": 0
+            },
+            "AutoRemove": false,
+            "VolumeDriver": "",
+            "VolumesFrom": null,
+            "ConsoleSize": [
+                0,
+                0
+            ],
+            "CapAdd": null,
+            "CapDrop": null,
+            "CgroupnsMode": "private",
+            "Dns": null,
+            "DnsOptions": null,
+            "DnsSearch": null,
+            "ExtraHosts": [],
+            "GroupAdd": null,
+            "IpcMode": "private",
+            "Cgroup": "",
+            "Links": null,
+            "OomScoreAdj": 0,
+            "PidMode": "",
+            "Privileged": false,
+            "PublishAllPorts": false,
+            "ReadonlyRootfs": false,
+            "SecurityOpt": null,
+            "UTSMode": "",
+            "UsernsMode": "",
+            "ShmSize": 67108864,
+            "Runtime": "runc",
+            "Isolation": "",
+            "CpuShares": 0,
+            "Memory": 0,
+            "NanoCpus": 0,
+            "CgroupParent": "",
+            "BlkioWeight": 0,
+            "BlkioWeightDevice": null,
+            "BlkioDeviceReadBps": null,
+            "BlkioDeviceWriteBps": null,
+            "BlkioDeviceReadIOps": null,
+            "BlkioDeviceWriteIOps": null,
+            "CpuPeriod": 0,
+            "CpuQuota": 0,
+            "CpuRealtimePeriod": 0,
+            "CpuRealtimeRuntime": 0,
+            "CpusetCpus": "",
+            "CpusetMems": "",
+            "Devices": null,
+            "DeviceCgroupRules": null,
+            "DeviceRequests": null,
+            "MemoryReservation": 0,
+            "MemorySwap": 0,
+            "MemorySwappiness": null,
+            "OomKillDisable": null,
+            "PidsLimit": null,
+            "Ulimits": [
+                {
+                    "Name": "nofile",
+                    "Hard": 100000,
+                    "Soft": 100000
+                }
+            ],
+            "CpuCount": 0,
+            "CpuPercent": 0,
+            "IOMaximumIOps": 0,
+            "IOMaximumBandwidth": 0,
+            "MaskedPaths": [
+                "/proc/acpi",
+                "/proc/asound",
+                "/proc/interrupts",
+                "/proc/kcore",
+                "/proc/keys",
+                "/proc/latency_stats",
+                "/proc/sched_debug",
+                "/proc/scsi",
+                "/proc/timer_list",
+                "/proc/timer_stats",
+                "/sys/devices/virtual/powercap",
+                "/sys/firmware",
+                "/sys/devices/system/cpu/cpu0/thermal_throttle",
+                "/sys/devices/system/cpu/cpu1/thermal_throttle",
+                "/sys/devices/system/cpu/cpu2/thermal_throttle",
+                "/sys/devices/system/cpu/cpu3/thermal_throttle"
+            ],
+            "ReadonlyPaths": [
+                "/proc/bus",
+                "/proc/fs",
+                "/proc/irq",
+                "/proc/sys",
+                "/proc/sysrq-trigger"
+            ]
+        },
+        "GraphDriver": {
+            "Data": {
+                "ID": "fb62ed1f527b2de611a9687155c25c2c10e3c5607da24a5904231f02e6aaf3cb",
+                "LowerDir": "/var/snap/docker/common/var-lib-docker/overlay2/03130c6f307611534ccde2d162f1c5e0c7783015bc103b4e7257acd99f07e296-init/diff:/var/snap/docker/common/var-lib-docker/overlay2/8dce6dd5c4e726fae4dde3a34e8690acdf064f4d23bee65d74af0077895a2168/diff:/var/snap/docker/common/var-lib-docker/overlay2/e00c43dc6c446937afd9d39d610a2dfc432d49f1d83dcdb77e602db09b4d735c/diff:/var/snap/docker/common/var-lib-docker/overlay2/63ab126b791f9873b0ec8087400701d0af62766bbb0602b13bffcfdf416e08e4/diff:/var/snap/docker/common/var-lib-docker/overlay2/6249e8ff306245d8d95203cd3f56b111e70a844a61cda478e89a55a97df7dc65/diff:/var/snap/docker/common/var-lib-docker/overlay2/e0dc35a42b70ca357df29e3f14883612536971e6eaefe6e26914694bd0b0d5c2/diff:/var/snap/docker/common/var-lib-docker/overlay2/b373ad4090f15316b357e7beeec23ea7f44856383612111f92c6bf835d91cc7e/diff",
+                "MergedDir": "/var/snap/docker/common/var-lib-docker/overlay2/03130c6f307611534ccde2d162f1c5e0c7783015bc103b4e7257acd99f07e296/merged",
+                "UpperDir": "/var/snap/docker/common/var-lib-docker/overlay2/03130c6f307611534ccde2d162f1c5e0c7783015bc103b4e7257acd99f07e296/diff",
+                "WorkDir": "/var/snap/docker/common/var-lib-docker/overlay2/03130c6f307611534ccde2d162f1c5e0c7783015bc103b4e7257acd99f07e296/work"
+            },
+            "Name": "overlay2"
+        },
+        "Mounts": [
+            {
+                "Type": "bind",
+                "Source": "/home/peter/openriak-builds/tmp/openriak-docker-3.4.1-fedora-43-otp26-oui0hrq5/openriak-kv-3.4.1-fedora-43-otp26-node/logs",
+                "Destination": "/var/log/riak",
+                "Mode": "rw",
+                "RW": true,
+                "Propagation": "rprivate"
+            },
+            {
+                "Type": "bind",
+                "Source": "/home/peter/openriak-builds/tmp/openriak-docker-3.4.1-fedora-43-otp26-oui0hrq5/openriak-kv-3.4.1-fedora-43-otp26-node/config",
+                "Destination": "/etc/riak",
+                "Mode": "rw",
+                "RW": true,
+                "Propagation": "rprivate"
+            },
+            {
+                "Type": "bind",
+                "Source": "/home/peter/openriak-builds/tmp/openriak-docker-3.4.1-fedora-43-otp26-oui0hrq5/openriak-kv-3.4.1-fedora-43-otp26-node/data",
+                "Destination": "/var/lib/riak",
+                "Mode": "rw",
+                "RW": true,
+                "Propagation": "rprivate"
+            }
+        ],
+        "Config": {
+            "Hostname": "node-01.cluster-a.openriak",
+            "Domainname": "",
+            "User": "",
+            "AttachStdin": false,
+            "AttachStdout": true,
+            "AttachStderr": true,
+            "ExposedPorts": {
+                "8087/tcp": {},
+                "8098/tcp": {}
+            },
+            "Tty": false,
+            "OpenStdin": false,
+            "StdinOnce": false,
+            "Env": [
+                "RIAK_LOG_MAX_FILES=4",
+                "RIAK_NODE_HOST=node-01.cluster-a.openriak",
+                "RIAK_DISTRIBUTED_COOKIE=openriak-091072188f92cf9af2511ba5d47f1ff1",
+                "RIAK_MONITOR_INTERVAL_SECONDS=1",
+                "TZ=Asia/Tokyo",
+                "RIAK_UID=19001",
+                "RIAK_GID=19002",
+                "RIAK_LOG_MAX_FILE_SIZE=2MB",
+                "PATH=/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin",
+                "DISTTAG=f43container",
+                "FGC=f43",
+                "FBR=f43",
+                "RIAK_NODE_NAME=",
+                "RIAK_RING_SIZE=8",
+                "RIAK_STORAGE_BACKEND=leveled",
+                "RIAK_ANTI_ENTROPY=passive",
+                "RIAK_TICTACAAE_ACTIVE=active",
+                "RIAK_TICTACAAE_STOREHEADS=enabled",
+                "RIAK_HTTP_LISTENER=0.0.0.0:8098",
+                "RIAK_PB_LISTENER=0.0.0.0:8087",
+                "RIAK_NOFILE_LIMIT=100000",
+                "RIAK_INIT_ONLY=0",
+                "RIAK_STARTUP_POLL_SECONDS=1",
+                "RIAK_SHUTDOWN_POLL_SECONDS=1",
+                "OPENRIAK_CLUSTER_MODE=single",
+                "OPENRIAK_CLUSTER_CONTROL_DIR=/var/lib/openriak-cluster-control",
+                "OPENRIAK_CLUSTER_POLL_SECONDS=1",
+                "OPENRIAK_CLUSTER_WAIT_SECONDS=300",
+                "role="
+            ],
+            "Cmd": null,
+            "Healthcheck": {
+                "Test": [
+                    "CMD",
+                    "/usr/local/bin/openriak-healthcheck"
+                ],
+                "Interval": 10000000000,
+                "Timeout": 60000000000,
+                "StartPeriod": 120000000000,
+                "Retries": 3
+            },
+            "Image": "tiotjp/openriak-kv:test-3.4.1-fedora-43-otp26-linux-amd64-20260911t153123.705843z",
+            "Volumes": {
+                "/etc/riak": {},
+                "/var/lib/riak": {},
+                "/var/log/riak": {}
+            },
+            "WorkingDir": "/",
+            "Entrypoint": [
+                "/usr/local/bin/openriak-entrypoint"
+            ],
+            "Labels": {
+                "com.docker.compose.config-hash": "1e8d77c4865661b5a8ff77ebfc22e23f9c33b553307e0919e28be0a8e00330b3",
+                "com.docker.compose.container-number": "1",
+                "com.docker.compose.depends_on": "",
+                "com.docker.compose.image": "sha256:08c6eb805004ac736ccc281856a2168949df77544e08d6552ae63124eb22ae40",
+                "com.docker.compose.oneoff": "False",
+                "com.docker.compose.project": "openriak-kv-341-fedora-43-otp26-node",
+                "com.docker.compose.project.config_files": "/home/peter/openriak-builds/tmp/openriak-docker-3.4.1-fedora-43-otp26-oui0hrq5/compose.single.test.yaml",
+                "com.docker.compose.project.environment_file": "/home/peter/openriak-builds/tmp/openriak-docker-3.4.1-fedora-43-otp26-oui0hrq5/.env.single",
+                "com.docker.compose.project.working_dir": "/home/peter/openriak-builds/tmp/openriak-docker-3.4.1-fedora-43-otp26-oui0hrq5",
+                "com.docker.compose.service": "node",
+                "com.docker.compose.version": "2.32.4",
+                "maintainer": "Clement Verna <cverna@fedoraproject.org>",
+                "org.opencontainers.image.description": "Package-backed OpenRiak KV with single-node and cluster startup support",
+                "org.opencontainers.image.source": "https://github.com/TI-Tokyo/openriak-docs",
+                "org.opencontainers.image.title": "OpenRiak KV",
+                "org.opencontainers.image.url": "https://www.tiot.jp/",
+                "org.opencontainers.image.vendor": "TI Tokyo",
+                "org.opencontainers.image.version": "3.4.1",
+                "org.openriak.image.tag": "tiotjp/openriak-kv:3.4.1-fedora-43-otp26",
+                "org.openriak.os.name": "fedora",
+                "org.openriak.os.release": "43",
+                "org.openriak.os.version": "43",
+                "org.openriak.otp.version": "26"
+            },
+            "StopSignal": "SIGTERM",
+            "StopTimeout": 120
+        },
+        "NetworkSettings": {
+            "SandboxID": "eea6c7b45fd05a3477078c7e283d66b2e629a10cfe38838b377091b6c50f7042",
+            "SandboxKey": "/run/snap.docker/netns/eea6c7b45fd0",
+            "Ports": {
+                "8087/tcp": null,
+                "8098/tcp": null
+            },
+            "Networks": {
+                "openriak-kv-341-fedora-43-otp26-node_openriak": {
+                    "IPAMConfig": {},
+                    "Links": null,
+                    "Aliases": [
+                        "openriak-kv-3.4.1-fedora-43-otp26-node-t-705843z",
+                        "node",
+                        "node-01.cluster-a.openriak"
+                    ],
+                    "DriverOpts": null,
+                    "GwPriority": 0,
+                    "NetworkID": "a7be49945e80e1fbe45cd071ab87aecc5e6921f503d6915d9bed2d5dc9af3057",
+                    "EndpointID": "5712c9b4dede3a94a914208f565922951eb1dabe5fe0b6d0d9dcf0924d467cb2",
+                    "Gateway": "172.29.0.1",
+                    "IPAddress": "172.29.0.2",
+                    "MacAddress": "ce:0e:1b:46:8d:4a",
+                    "IPPrefixLen": 16,
+                    "IPv6Gateway": "",
+                    "GlobalIPv6Address": "",
+                    "GlobalIPv6PrefixLen": 0,
+                    "DNSNames": [
+                        "openriak-kv-3.4.1-fedora-43-otp26-node-t-705843z",
+                        "node",
+                        "node-01.cluster-a.openriak",
+                        "fb62ed1f527b"
+                    ]
+                }
+            }
+        }
+    }
+]
+
+timeout_seconds: 3600
+exit_code: 0

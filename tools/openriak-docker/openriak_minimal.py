@@ -1,5 +1,8 @@
 """Runtime filesystem strategies, enabled per OS release only after validation."""
 from __future__ import annotations
+from builders.debian.bookworm import backports
+from builders.debian.bookworm.backports import OPENSSL_VERSION, OPENSSL_DEB_VERSION, OPENSSL_SOURCE_SHA256, OPENSSL_PACKAGING_SHA256, LIBBLKID_DEB_VERSION, LIBBLKID_SOURCE_SHA256, LIBBLKID_PACKAGING_SHA256, LIBBLKID_PATCH_SHA256, LIBBLKID_REGRESSION, OPENSSL_TEST_PATCH
+import sys
 import json
 import re
 from pathlib import Path
@@ -11,134 +14,12 @@ RUNTIME_PACKAGES = (
     'openssl-libs pam procps-ng shadow-utils sudo util-linux zlib tzdata'
 )
 
-# Upstream release and Debian Bookworm packaging, both pinned to reviewed bytes.
-OPENSSL_VERSION = '3.0.22'
-OPENSSL_DEB_VERSION = '3.0.22-0openriak1~deb12u1'
-OPENSSL_SOURCE_SHA256 = '67ebca7e50d17383028045486653492195b83db95f8558709701bb47b5c1ef81'
-OPENSSL_PACKAGING_SHA256 = '7279efe85c359500c95aa88347e3395dd303d7566e2bb818d80d96e0c3bb9629'
 
-LIBBLKID_DEB_VERSION = '2.38.1-5+deb12u3+openriak1'
-LIBBLKID_SOURCE_SHA256 = '60492a19b44e6cf9a3ddff68325b333b8b52b6c59ce3ebd6a0ecaa4c5117e84f'
-LIBBLKID_PACKAGING_SHA256 = 'd46b85313f536fc4831a69ba3fa2c8160450b5b26c7c5dfafce4f078fe4f205c'
-LIBBLKID_PATCH_SHA256 = '935ae9372061b9988c58297d1d5b12aa04cbc01e538e8606d0103b401f68de1c'
 
-# Exercise the pointer lifetime directly, including nested tables and reuse.
-# Included into partitions.c so the test can reach internal allocation routines.
-LIBBLKID_REGRESSION = r'''
-#include "libblkid/src/partitions/partitions.c"
-#include <assert.h>
-int main(void)
-{
-    blkid_partlist ls = calloc(1, sizeof(*ls));
-    assert(ls);
-    INIT_LIST_HEAD(&ls->l_tabs);
-    for (int round = 0; round < 3; round++) {
-        blkid_parttable table = blkid_partlist_new_parttable(ls, "dos", 0);
-        assert(table);
-        blkid_partition parent = blkid_partlist_add_partition(ls, table, 2048, 65536);
-        assert(parent);
-        ls->next_parent = parent;
-        blkid_parttable child = blkid_partlist_new_parttable(ls, "bsd", 2048);
-        assert(child);
-        for (int i = 0; i < 4096; i++) {
-            assert(blkid_partlist_add_partition(ls, child, 2048 + i, 1));
-            assert(blkid_partlist_get_partition(ls, 0) == parent);
-            assert(child->parent == parent);
-            assert(blkid_partition_get_start(parent) == 2048);
-        }
-        reset_partlist(ls);
-        assert(ls->nparts == 0);
-    }
-    partitions_free_data(NULL, ls);
-    puts("CVE-2026-13595: nested partition pointers and reset passed");
-    return 0;
-}
-'''
 
 
 def libblkid_build_stage(target, pinned, stage):
-    """Backport only the partition lifetime fix, keeping Bookworm ABI/packaging."""
-    return f'''# CVE-2026-13595: stable partition pointers in Bookworm libblkid.
-# Sources, compiler, regression binaries and test dependencies remain build-only.
-FROM --platform={target.platform} {pinned} AS libblkid-build-{stage}
-ADD --checksum=sha256:{LIBBLKID_SOURCE_SHA256} https://deb.debian.org/debian/pool/main/u/util-linux/util-linux_2.38.1.orig.tar.xz /sources/util-linux.tar.xz
-ADD --checksum=sha256:{LIBBLKID_PACKAGING_SHA256} https://deb.debian.org/debian/pool/main/u/util-linux/util-linux_2.38.1-5+deb12u3.debian.tar.xz /sources/debian.tar.xz
-ADD --checksum=sha256:{LIBBLKID_PATCH_SHA256} https://github.com/util-linux/util-linux/commit/132d9c8aa15a8efd0a23d8ca7ed8b98f365e84fa.patch /sources/upstream.patch
-RUN <<'OPENRIAK_LIBBLKID_SOURCE'
-set -eu
-apt-get update
-DEBIAN_FRONTEND=noninteractive apt-get install -y --no-install-recommends build-essential debhelper dh-exec gettext bison libtool pkg-config po-debconf asciidoctor bc socat netbase libaudit-dev libcap-ng-dev libcrypt-dev libcryptsetup-dev libncurses-dev libpam0g-dev libreadline-dev libselinux1-dev libsystemd-dev libudev-dev systemd zlib1g-dev valgrind
-mkdir /build
-tar -xJf /sources/util-linux.tar.xz -C /build
-cd /build/util-linux-2.38.1
-tar -xJf /sources/debian.tar.xz
-# Adapt only the context: Bookworm uses realloc instead of reallocarray here.
-sed -e 's/reallocarray(ls->parts, ls->nparts_max + 32,/realloc(ls->parts, (ls->nparts_max + 32) */' -e 's/	 sizeof/	sizeof/' /sources/upstream.patch > debian/patches/openriak-CVE-2026-13595.patch
-printf '\\nopenriak-CVE-2026-13595.patch\\n' >> debian/patches/series
-mv debian/changelog debian/changelog.distribution
-cat > debian/changelog <<'OPENRIAK_LIBBLKID_CHANGELOG'
-util-linux ({LIBBLKID_DEB_VERSION}) bookworm; urgency=high
-
-  * Backport upstream CVE-2026-13595 partition pointer lifetime fix.
-  * Preserve Debian 12 configuration, symbols and package metadata.
-
- -- OpenRiak <packages@openriak.org>  Tue, 08 Sep 2026 00:00:00 +0000
-
-OPENRIAK_LIBBLKID_CHANGELOG
-cat debian/changelog.distribution >> debian/changelog
-OPENRIAK_LIBBLKID_SOURCE
-
-RUN --network=none <<'OPENRIAK_LIBBLKID_PACKAGES'
-set -eu
-cd /build/util-linux-2.38.1
-# Defer tests to the mandatory following step, preserving Debian symbol checks.
-if DEB_BUILD_OPTIONS='parallel=4 terse nocheck' dpkg-buildpackage -b -us -uc -Pnoudeb -j4 > /build/libblkid-build.log 2>&1
-then
-    grep -E 'dpkg-gensymbols|dpkg-deb: building package' /build/libblkid-build.log
-else
-    tail -150 /build/libblkid-build.log
-    exit 1
-fi
-OPENRIAK_LIBBLKID_PACKAGES
-
-RUN --network=none <<'OPENRIAK_LIBBLKID_TESTS'
-set -eu
-cd /build/util-linux-2.38.1
-dpkg-source --before-build .
-build=.
-if ! make -C "$build" -j4 check-programs > /build/libblkid-check-programs.log 2>&1
-then
-    tail -100 /build/libblkid-check-programs.log
-    exit 1
-fi
-if ! tests/run.sh --srcdir="$PWD" --builddir="$PWD/$build" --parallel=4 blkid > /build/libblkid-tests.log 2>&1
-then
-    cat /build/libblkid-tests.log
-    exit 1
-fi
-cat /build/libblkid-tests.log
-cat > openriak-partition-test.c <<'OPENRIAK_PARTITION_TEST'
-{LIBBLKID_REGRESSION}OPENRIAK_PARTITION_TEST
-cc -g -O1 -include config.h -I"$build" -I"$build/libblkid/src" -I. -Iinclude -Ilibblkid/src openriak-partition-test.c "$build/.libs/libblkid.a" "$build/.libs/libcommon.a" -o /build/partition-test
-valgrind --error-exitcode=99 --leak-check=full --errors-for-leak-kinds=all /build/partition-test > /build/libblkid-regression.log 2>&1
-cat /build/libblkid-regression.log
-# Verify the regression rejects the unpatched implementation as well.
-cp libblkid/src/partitions/partitions.c /build/partitions.patched.c
-patch --reverse --fuzz=0 -p1 < debian/patches/openriak-CVE-2026-13595.patch
-cc -g -O1 -include config.h -I"$build" -I"$build/libblkid/src" -I. -Iinclude -Ilibblkid/src openriak-partition-test.c "$build/.libs/libblkid.a" "$build/.libs/libcommon.a" -o /build/partition-unpatched
-if valgrind --error-exitcode=99 /build/partition-unpatched > /build/libblkid-negative-control.log 2>&1
-then
-    echo 'ERROR: regression did not reject vulnerable source' >&2
-    exit 1
-fi
-cp /build/partitions.patched.c libblkid/src/partitions/partitions.c
-mkdir /packages
-cp /build/libblkid1_{LIBBLKID_DEB_VERSION}_*.deb /packages/
-cp /build/libblkid-*.log /packages/
-sha256sum /packages/*.deb > /packages/SHA256SUMS
-OPENRIAK_LIBBLKID_TESTS
-
-'''
+    return backports.libblkid_build_stage(target, pinned, stage)
 
 
 def remove_tar_script():
@@ -151,174 +32,9 @@ test ! -e /usr/bin/tar
 
 
 # Test-only platform detection; no OpenSSL library code or IPv6 feature is disabled.
-OPENSSL_TEST_PATCH = r'''
---- a/util/perl/OpenSSL/Test/Utils.pm
-+++ b/util/perl/OpenSSL/Test/Utils.pm
-@@ -180,6 +180,11 @@
-             Listen=>1,
-             );
-         $s or die "\n";
-+        # Binding alone is insufficient in containers with filtered IPv6.
-+        my $peer = $s->new(PeerAddr => $listenaddress,
-+                          PeerPort => $s->sockport(), Timeout => 1);
-+        $peer or die "\n";
-+        $peer->close();
-         $s->close();
-     };
-     if ($@ eq "") {
-@@ -194,6 +199,11 @@
-             Listen=>1,
-             );
-         $s or die "\n";
-+        # Binding alone is insufficient in containers with filtered IPv6.
-+        my $peer = $s->new(PeerAddr => $listenaddress,
-+                          PeerPort => $s->sockport(), Timeout => 1);
-+        $peer or die "\n";
-+        $peer->close();
-         $s->close();
-     };
-     if ($@ eq "") {
-@@ -208,6 +218,11 @@
-             Listen=>1,
-             );
-         $s or die "\n";
-+        # Binding alone is insufficient in containers with filtered IPv6.
-+        my $peer = $s->new(PeerAddr => $listenaddress,
-+                          PeerPort => $s->sockport(), Timeout => 1);
-+        $peer or die "\n";
-+        $peer->close();
-         $s->close();
-     };
-     if ($@ eq "") {
---- a/test/recipes/80-test_cmp_http.t
-+++ b/test/recipes/80-test_cmp_http.t
-@@ -216,6 +216,12 @@
-   LOOP:
-     while (my $line = <$data>) {
-         chomp $line;
-+        # These two CSV cases explicitly depend on host IP configuration.
-+        # Preserve the library's IPv6 support; skip only unusable host paths.
-+        if (!have_IPv6() && $line =~ /disabled as not supported by some host IP configurations: server (?:IPv6 address|domain name)/) {
-+            note "Skipping CMP hostname/IPv6 case: IPv6 loopback connection unavailable";
-+            next LOOP;
-+        }
-         $line =~ s{\r\n}{\n}g; # adjust line endings
-         $line =~ s{_CA_DN}{$ca_dn}g;
-         $line =~ s{_SERVER_DN}{$server_dn}g;
---- a/util/perl/TLSProxy/Proxy.pm
-+++ b/util/perl/TLSProxy/Proxy.pm
-@@ -43,6 +43,10 @@
-             Listen=>1,
-             );
-         $s or die "\n";
-+        my $peer = $s->new(PeerAddr => "::1",
-+                          PeerPort => $s->sockport(), Timeout => 1);
-+        $peer or die "\n";
-+        $peer->close();
-         $s->close();
-     };
-     if ($@ eq "") {
-@@ -57,6 +61,10 @@
-                 Listen=>1,
-                 );
-             $s or die "\n";
-+            my $peer = $s->new(PeerAddr => "::1",
-+                              PeerPort => $s->sockport(), Timeout => 1);
-+            $peer or die "\n";
-+            $peer->close();
-             $s->close();
-         };
-         if ($@ eq "") {
-'''
 
 def openssl_build_stage(target, pinned, stage):
-    """Build real Bookworm packages; never replace libraries behind dpkg's back."""
-    return f'''# OpenSSL security backport: official 3.0.22 source with Bookworm packaging.
-# This compiles OpenSSL only; OpenRiak KV and its bundled OTP remain official binaries.
-# Compiler, Perl, source, headers, and static libraries stay in this build stage.
-FROM --platform={target.platform} {pinned} AS openssl-build-{stage}
-ADD --checksum=sha256:{OPENSSL_SOURCE_SHA256} https://github.com/openssl/openssl/releases/download/openssl-{OPENSSL_VERSION}/openssl-{OPENSSL_VERSION}.tar.gz /sources/openssl.tar.gz
-ADD --checksum=sha256:{OPENSSL_PACKAGING_SHA256} https://deb.debian.org/debian/pool/main/o/openssl/openssl_3.0.20-1~deb12u2.debian.tar.xz /sources/debian.tar.xz
-RUN <<'OPENRIAK_OPENSSL_BUILD'
-set -eu
-apt-get update
-DEBIAN_FRONTEND=noninteractive apt-get dist-upgrade -y --no-install-recommends
-DEBIAN_FRONTEND=noninteractive apt-get install -y --no-install-recommends build-essential debhelper m4 bc dpkg-dev ca-certificates netbase libio-socket-inet6-perl
-mkdir /build
-tar -xzf /sources/openssl.tar.gz -C /build
-cd /build/openssl-{OPENSSL_VERSION}
-tar -xJf /sources/debian.tar.xz
-# Retain Debian configuration/ABI/build patches. The subsequent security patches
-# in the 3.0.20 packaging are already included in upstream 3.0.22.
-cat > debian/patches/series <<'OPENRIAK_DEBIAN_PATCHES'
-debian-targets.patch
-man-section.patch
-no-symbolic.patch
-pic.patch
-c_rehash-compat.patch
-Configure-allow-to-enable-ktls-if-target-does-not-start-w.patch
-Remove-the-provider-section.patch
-conf-Serialize-allocation-free-of-ssl_names.patch
-Fix-tests-for-new-default-security-level.patch
-OPENRIAK_DEBIAN_PATCHES
-mv debian/changelog debian/changelog.distribution
-cat > debian/changelog <<'OPENRIAK_OPENSSL_CHANGELOG'
-openssl ({OPENSSL_DEB_VERSION}) bookworm; urgency=high
-
-  * OpenRiak-maintained backport of upstream OpenSSL 3.0.22 security fixes.
-  * Preserve Bookworm library names, symbol checks, configuration and packaging.
-  * Retain Debian distribution patches; omit security patches merged upstream.
-
- -- OpenRiak <packages@openriak.org>  Tue, 08 Sep 2026 00:00:00 +0000
-
-OPENRIAK_OPENSSL_CHANGELOG
-cat debian/changelog.distribution >> debian/changelog
-OPENRIAK_OPENSSL_BUILD
-
-# Cache compilation separately from tests, retaining Debian's ABI symbol checks.
-# nocheck defers the upstream suites to the mandatory next step, not a skip.
-RUN --network=none <<'OPENRIAK_OPENSSL_PACKAGES'
-set -eu
-cd /build/openssl-{OPENSSL_VERSION}
-# Limit build parallelism to avoid exhausting memory on multi-image workers.
-if DEB_BUILD_OPTIONS='parallel=4 terse nocheck' dpkg-buildpackage -b -us -uc -Pnoudeb -j4 > /build/openssl-package-build.log 2>&1
-then
-    grep -E 'Files=|Result:|dpkg-gensymbols|dpkg-deb: building package' /build/openssl-package-build.log
-else
-    tail -200 /build/openssl-package-build.log
-    exit 1
-fi
-OPENRIAK_OPENSSL_PACKAGES
-
-# These test-only changes detect hosts that can bind IPv6 but cannot connect.
-# OpenSSL's library retains IPv6 support. Both suites must pass before export.
-RUN --network=none <<'OPENRIAK_OPENSSL_TESTED_PACKAGES'
-set -eu
-cd /build/openssl-{OPENSSL_VERSION}
-# dpkg-source removes its patches after packaging; restore the tested source view.
-dpkg-source --before-build .
-cat > /build/openriak-test-loopback.patch <<'OPENRIAK_OPENSSL_TEST_PATCH'
-{OPENSSL_TEST_PATCH}OPENRIAK_OPENSSL_TEST_PATCH
-patch -p1 < /build/openriak-test-loopback.patch
-for build in build_static build_shared
-do
-    # Run against the exact packaged binaries without reconfiguring/recompiling.
-    if HARNESS_JOBS=4 make -C "$build" -o Makefile -o configdata.pm link-utils run_tests > "/build/openssl-$build-tests.log" 2>&1
-    then
-        grep -E 'Files=|Result:' "/build/openssl-$build-tests.log"
-    else
-        tail -200 "/build/openssl-$build-tests.log"
-        exit 1
-    fi
-done
-mkdir /packages
-cp /build/libssl3_{OPENSSL_DEB_VERSION}_*.deb /packages/
-cp /build/openssl_{OPENSSL_DEB_VERSION}_*.deb /packages/
-sha256sum /packages/*.deb > /packages/SHA256SUMS
-cp /build/openssl-package-build.log /build/openssl-build_*-tests.log /packages/
-OPENRIAK_OPENSSL_TESTED_PACKAGES
-
-'''
+    return backports.openssl_build_stage(target, pinned, stage)
 
 
 class ConfigurationError(RuntimeError):
@@ -373,10 +89,24 @@ def configuration(target):
 def minimum_package_check(mode, package_family='deb', root=''):
     if package_family == 'rpm':
         command = f'rpm --root {root}' if root else 'rpm'
-        # RPM's own provider matching compares epoch/version/release correctly.
-        # Run before removing installer tools in rpm-root images.
-        return ''.join(f"{command} -q --whatprovides '{package} >= {version}' >/dev/null\n"
-                       for package, version in mode.get('minimum_packages', {}).items())
+        checks = ''
+        for package, version in mode.get('minimum_packages', {}).items():
+            epoch, evr = version.split(':', 1) if ':' in version else ('0', version)
+            upstream, release = evr.rsplit('-', 1) if '-' in evr else (evr, '')
+            # Native RPM comparison, including epochs, tilde and release numbers.
+            # The installed value enters Lua through the environment, never as code.
+            checks += f'''# Require {package} >= {version}; keep newer vendor updates.
+installed_rpm=$({command} -q --qf '%{{EPOCHNUM}} %{{VERSION}} %{{RELEASE}}' {package})
+OPENRIAK_RPM_VERSION="$installed_rpm" rpm --eval '%{{lua:
+local e, v, r = os.getenv("OPENRIAK_RPM_VERSION"):match("^(%d+) ([^ ]+) ([^ ]+)$")
+assert(e, "Cannot identify installed {package} version")
+local comparison = rpm.vercmp(e, "{epoch}")
+if comparison == 0 then comparison = rpm.vercmp(v, "{upstream}") end
+if comparison == 0 then comparison = rpm.vercmp(r, "{release}") end
+assert(comparison >= 0, "Installed {package} is older than {version}")
+}}' >/dev/null
+'''
+        return checks
     return ''.join(f"dpkg --compare-versions \"$(dpkg-query -W -f='${{Version}}' {package})\" ge '{version}'\n"
                    for package, version in mode.get('minimum_packages', {}).items())
 
@@ -496,40 +226,8 @@ def package_stage(target, pinned, stage, download, install_script):
         return None
     filename = target.package['filename']
     if mode['strategy'] == 'clean-root':
-        extra = ''
-        build_stage = ''
-        package_mount = ''
-        bootstrap = ''
-        if mode.get('libblkid_backport'):
-            tools_image = mode.get('package_tools_image', '')
-            if not re.fullmatch(r'debian:bookworm-slim@sha256:[0-9a-f]{64}', tools_image):
-                raise ConfigurationError('Debian tar bootstrap requires a pinned Bookworm tools image')
-            build_stage += f'FROM --platform={target.platform} {tools_image} AS package-tools-{stage}\n'
-            package_mount += f' --mount=type=bind,from=package-tools-{stage},source=/usr/bin/tar,target=/usr/local/bin/tar,ro'
-            bootstrap = '''# The reusable runtime base omits tar. Borrow it only for package installation.
-# dpkg checks /bin/tar even when the mount is available in /usr/local/bin.
-cp /usr/local/bin/tar /bin/tar
-apt-get update
-DEBIAN_FRONTEND=noninteractive apt-get install -y --no-install-recommends tar
-'''
-        if mode.get('openssl_backport') and not mode.get('base_image'):
-            build_stage = openssl_build_stage(target, pinned, stage)
-            package_mount = f' --mount=type=bind,from=openssl-build-{stage},source=/packages,target=/opt/openssl-packages,ro'
-            extra = f'''# Upgrade both libraries and CLI with dpkg-tracked packages; retain newer vendor fixes.
-installed_openssl=$(dpkg-query -W -f='${{Version}}' libssl3)
-if dpkg --compare-versions "$installed_openssl" lt '{OPENSSL_DEB_VERSION}'
-then
-    DEBIAN_FRONTEND=noninteractive apt-get install -y --no-install-recommends /opt/openssl-packages/*.deb
-fi
-ldconfig
-mkdir -p /usr/share/openriak-build
-dpkg-query -W libssl3 openssl > /usr/share/openriak-build/openssl-packages.txt
-'''
-        elif mode.get('base_image'):
-            extra = f'''# Require the tested patched base; fail rather than build with older libraries.
-dpkg --compare-versions "$(dpkg-query -W -f='${{Version}}' libssl3)" ge '{OPENSSL_DEB_VERSION}'
-test -s /usr/share/openriak-build/openssl-packages.txt
-'''
+        from builders.registry import minimal_setup
+        build_stage, package_mount, bootstrap, extra = minimal_setup(sys.modules[__name__], target, pinned, stage, mode)
         if target.operating_system['package_family'] == 'deb':
             extra += '# Require the reviewed security updates; reject stale mirrors.\n' + minimum_package_check(mode)
             if mode.get('perl_removal') == 'dpkg':
@@ -578,9 +276,8 @@ ENV PATH="/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin"
         raise ConfigurationError(f"Unknown runtime strategy: {mode['strategy']}")
     packages = mode['release_package'] + ' ' + ' '.join(p for p in RUNTIME_PACKAGES.split()
                                                        if p not in mode.get('remove_packages', []))
-    repository_setup = ''
-    if target.family == 'centos' and target.release == '8':
-        repository_setup = install_script.split('# Update installed OS packages', 1)[0]
+    from builders.registry import minimal_repositories
+    repository_setup = minimal_repositories(target, install_script)
     return f'''# The full OS image is an installer only; none of its layers reach runtime.
 FROM --platform={target.platform} {pinned} AS install-{stage}
 RUN --mount=type=bind,from={download},target=/opt/openriak-package,ro <<'OPENRIAK_PACKAGE_INSTALL'

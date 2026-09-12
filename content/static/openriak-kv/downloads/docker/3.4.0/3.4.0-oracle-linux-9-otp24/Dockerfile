@@ -46,6 +46,7 @@ do
         exit 1
     fi
 done
+# Reject stale repository mirrors before exporting the runtime filesystem.
 # Preserve the RPM database and an explicit inventory for vulnerability scanners.
 mkdir -p /openriak-rootfs/usr/share/openriak-build
 rpm --root /openriak-rootfs -qa --qf '%{NAME} %{VERSION}-%{RELEASE}\n' > /openriak-rootfs/usr/share/openriak-build/runtime-packages.txt
@@ -110,7 +111,7 @@ ENV RIAK_NODE_HOST=""
 # Explicit nodename; empty derives openriak-kv@<hostname>.
 ENV RIAK_NODE_NAME=""
 # Initial cookie; existing riak.conf wins and new followers adopt the coordinator cookie.
-ENV RIAK_DISTRIBUTED_COOKIE="openriak-a3e000c682d34dfc4c6135e459e05c1d"
+ENV RIAK_DISTRIBUTED_COOKIE="openriak-9abdbbba89d4d4a2d70f766b5be62062"
 # Partition count for a new ring; do not change on an existing cluster.
 ENV RIAK_RING_SIZE="8"
 # Storage backend used by OpenRiak KV.

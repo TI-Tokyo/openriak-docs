@@ -1,0 +1,71 @@
+$ /usr/bin/docker buildx build --builder openriak-kv-multiarch --platform linux/amd64 --pull=false --load --tag tiotjp/openriak-kv:3.4.0-fedora-43-otp26 --tag tiotjp/openriak-kv:3.4.0-fedora-43 --tag tiotjp/openriak-kv:3.4.0-fedora /home/peter/openriak-builds/openriak-distributed/openriak-docker-2026-09-11-b/local/20260911T084617.243958Z/results/3.4.0/3.4.0-fedora-43-otp26
+started: 2026-09-11T10:51:10Z
+#0 building with "openriak-kv-multiarch" instance using docker-container driver
+
+#1 [internal] load build definition from Dockerfile
+#1 transferring dockerfile: 44.08kB 0.0s done
+#1 DONE 0.0s
+
+#2 resolve image config for docker-image://docker.io/docker/dockerfile:1.7
+#2 DONE 0.4s
+
+#3 docker-image://docker.io/docker/dockerfile:1.7@sha256:a57df69d0ea827fb7266491f2813635de6f17269be881f696fbfdf2d83dda33e
+#3 resolve docker.io/docker/dockerfile:1.7@sha256:a57df69d0ea827fb7266491f2813635de6f17269be881f696fbfdf2d83dda33e 0.0s done
+#3 CACHED
+
+#4 [internal] load metadata for docker.io/library/fedora:43@sha256:a651ddf48ea28a06ed4e1e6519f51c9f47e7a5a138722ade87369b8fbb7e5b42
+#4 DONE 0.0s
+
+#5 [internal] load .dockerignore
+#5 transferring context: 42B done
+#5 DONE 0.0s
+
+#6 [download-amd64 1/1] ADD --checksum=sha256:72c02db420dc5a0cde5c27a2bd1813fc74e56b663f1167b9b7a0795fae5bfc77 https://files.tiot.jp/riak/kv/3.4/3.4.0/rhel/9/riak-3.4.0.OTP26-1.el9.x86_64.rpm /riak-3.4.0.OTP26-1.el9.x86_64.rpm
+#6 DONE 0.0s
+
+#7 [internal] preparing inline document
+#7 DONE 0.0s
+
+#8 [internal] preparing inline document
+#8 DONE 0.0s
+
+#9 [package-amd64 1/2] FROM docker.io/library/fedora:43@sha256:a651ddf48ea28a06ed4e1e6519f51c9f47e7a5a138722ade87369b8fbb7e5b42
+#9 resolve docker.io/library/fedora:43@sha256:a651ddf48ea28a06ed4e1e6519f51c9f47e7a5a138722ade87369b8fbb7e5b42 0.0s done
+#9 DONE 0.0s
+
+#10 [final 2/4] COPY <<OPENRIAK_ENTRYPOINT /usr/local/bin/openriak-entrypoint
+#10 CACHED
+
+#11 [package-amd64 2/2] RUN --mount=type=bind,from=download-amd64,target=/opt/openriak-package,ro <<'OPENRIAK_PACKAGE_INSTALL' (set -eu...)
+#11 CACHED
+
+#12 [final 1/4] RUN <<'OPENRIAK_IMAGE_SETUP' (set -eu...)
+#12 CACHED
+
+#13 [final 3/4] COPY <<OPENRIAK_HEALTHCHECK /usr/local/bin/openriak-healthcheck
+#13 CACHED
+
+#14 [download-amd64 1/1] ADD --checksum=sha256:72c02db420dc5a0cde5c27a2bd1813fc74e56b663f1167b9b7a0795fae5bfc77 https://files.tiot.jp/riak/kv/3.4/3.4.0/rhel/9/riak-3.4.0.OTP26-1.el9.x86_64.rpm /riak-3.4.0.OTP26-1.el9.x86_64.rpm
+#14 CACHED
+
+#15 [final 4/4] RUN <<'OPENRIAK_SCRIPT_SETUP' (set -eu...)
+#15 CACHED
+
+#16 exporting to docker image format
+#16 exporting layers done
+#16 exporting manifest sha256:d98ccf7a9d0b57cbf0c4bf48957bd91f3db12d6c24c0d4d579664860b879d111 done
+#16 exporting config sha256:901ffdf7a03498f20c726b4a6109920ec4a30e458b5c4d5d4e257b3730f09278 done
+#16 sending tarball
+#16 sending tarball 3.8s done
+#16 DONE 3.8s
+
+#17 importing to docker
+#17 loading layer 49d530d0b261 47.75MB / 47.75MB 2.3s done
+#17 loading layer e8532b5ed87d 23.57kB / 23.57kB 0.3s done
+#17 loading layer 861cc02df711 7.70kB / 7.70kB 0.2s done
+#17 loading layer ba4f2edb4d99 390B / 390B 0.2s done
+#17 loading layer 83d90e7d38be 7.88kB / 7.88kB 0.1s done
+#17 DONE 2.3s
+
+timeout_seconds: 3600
+exit_code: 0

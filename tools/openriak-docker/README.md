@@ -454,7 +454,7 @@ The release settings also support these reviewed cleanup options:
   Rocky 9 requires the reviewed glib2, expat and PAM updates. Exact floors are in
   `runtime-images.json`, shared across all KV versions, OTPs and architectures.
   Newer vendor updates are accepted; stale mirrors fail the build. Debian uses
-  dpkg version comparisons; RPM uses its native versioned-provider checks before
+  dpkg version comparisons; RPM compares epoch, version and release natively before
   exporting the runtime filesystem. Rocky 9 exports a cleaned filesystem so
   superseded base-layer packages are not retained in the downloadable image.
 - `remove_tar` removes tar after all package installation. Ubuntu Jammy and
@@ -964,6 +964,18 @@ interrupted report. Passed caches remain reusable.
 SUSE installs `gawk` explicitly. CentOS Stream 8 uses its release archive at
 `https://vault.centos.org/8-stream/` with RPM signature checking retained.
 
+Debian 11 public LTS [ended on 31 August 2026](https://www.debian.org/News/2026/20260831).
+Its security repository's final Release metadata expired on 7 September, making
+fresh builds fail during `apt-get update`. Debian 11 builds use the final public
+packages from Debian's `20260901T000000Z` snapshots (main, updates, and security).
+The snapshot date is maintained in `base-images.json` under
+`families.debian.apt_snapshots`. Only these dated sources disable Release expiry
+checking, as described in [Debian's snapshot instructions](https://snapshot.debian.org/#usage);
+Debian signature verification and package hash verification remain enabled.
+HTTP permits bootstrapping before `ca-certificates` is installed. These snapshots
+provide the last public updates, not ongoing security support. Debian 12 and
+Ubuntu continue using their configured live repositories.
+
 If integration tests pass but static publishing fails on permissions, the
 passed reports and current cache files are retained. Correct ownership of the
 reported static download directory, then use `sync-static` and the
@@ -1072,6 +1084,9 @@ Only reports matching the current passed image's approval run and artifact
 checksums are used. Each platform's scan digest must match the archive from a
 verified registry upload. Missing, pending, and partial scans are labelled;
 only a complete scan with no findings says that no CVEs were reported.
+If a retry is explicitly interrupted before any scans begin, the earlier report
+for the same approved archive digest remains usable. This does not hide a newer
+partial or damaged scan, or reuse findings from a different image digest.
 
 Normal metadata generation reads the saved reports without running Docker or
 Scout. The development preview watcher also notices new reports and status
@@ -1151,6 +1166,10 @@ Before uploading anything, the command checks every selected passed approval,
 the four approved artifact hashes, each platform's test evidence, the saved run
 report, and OCI blob hashes/platforms. Missing, changed, or conflicting approved
 assets block the invocation. Failed/running/missing approvals are skipped.
+Current and saved run reports must contain identical test and export evidence.
+Publication bookkeeping and the canonical conversion from portable `./file`
+download URLs to docs download URLs are allowed to differ; this does not rewrite
+historical reports or relax checks on filenames, hashes, inputs, tests or tags.
 The archive must belong to that passed refresh run: untested `rebuilds/` exports
 are excluded. If cleanup removed an archive, regenerate it with `refresh` and
 tests before publishing. Generator changes do not modify historical approvals;
@@ -1247,6 +1266,8 @@ All commands apply exclusively to **OpenRiak KV 3.4.0 and newer**.
 | Command | Purpose |
 | --- | --- |
 | `matrix` | List metadata-derived targets, platforms, tags and cache status. Makes no changes. |
+| `doctor`, `status`, `failures`, `cve-diff` | [Read-only diagnostics and saved report inspection](#diagnostics-and-saved-report-commands). |
+| `distribute plan`, `distribute run`, `distribute collect` | [Distribute complete image groups across machines](#distributing-builds-across-machines). |
 | `refresh` | Generate files, build images, test, cache results and publish passed downloads to the docs. |
 | `generate` | Generate standalone files without building, testing or updating the docs. May pull base images to resolve digests. |
 | `sync-static` | Republish existing passed caches and update Docker download metadata. No pulling, building or testing. |
@@ -1385,3 +1406,507 @@ Accepted cutoff examples:
 `sync-static` has no additional options beyond help. Base-image mappings are
 configured in [base-images.json](base-images.json), rather than through
 command-line switches.
+
+## Generator architecture and compatibility
+
+`openriak_docker.py` is the public CLI and compatibility facade. It passes its
+services explicitly to focused modules, so existing callers and test doubles
+continue to work without circular imports:
+
+| Module | Responsibility |
+| --- | --- |
+| `openriak_discovery.py` | Metadata-derived targets, base selection and tag aliases. |
+| `openriak_render.py` | Dockerfile, Compose and environment rendering. |
+| `builders/` | Generic → package format → OS → release → optional architecture layers. |
+| `runtime/` | Entrypoint, healthcheck and integration HTTP-probe source files. |
+| `openriak_minimal.py` | Shared minimal-filesystem strategies and validation. |
+| `builders/debian/bookworm/backports.py` | Maintained OpenSSL/libblkid backports and their regressions. |
+| `openriak_execution.py` | External commands, live logs and base resolution. |
+| `openriak_testing.py` | Single-node and cluster integration harness. |
+| `openriak_cache.py` | Approvals, refresh orchestration, OCI export and publication. |
+| `openriak_dependencies.py`, `openriak_plan.py` | Scoped build fingerprints and the decision engine shared by execution and `--whatif`. |
+| `openriak_state.py`, `openriak_locks.py` | Persisted phases and cooperating-process resource locks. |
+| `openriak_distributed.py` | Portable plans, worker execution and verified collection. |
+| `openriak_remote.py` | Saved SSH nodes, SCP staging, remote launch, monitoring, logs and result retrieval. |
+| `openriak_remote_worker.py` | Standard-library remote control helper with bundle validation and PID identity checks. |
+| `openriak_inspect.py` | Diagnostics, status, failures and saved CVE comparisons. |
+
+For example, Debian 11 amd64 uses `builders/common.py`, `builders/deb.py`,
+`builders/debian/common.py`, `builders/debian/bullseye/common.py`, and an optional
+`builders/debian/bullseye/amd64.py`. Architecture names use Docker conventions
+(`amd64`, `arm64`). Numeric release directories have a `v` prefix; Debian uses
+`bullseye` and `bookworm`. Target discovery still comes exclusively from metadata.
+Empty architecture modules are unnecessary.
+
+Layers may implement `configure(tool, target, context)`, `install(tool, target,
+context)`, or `repositories(tool, target)`. More specific layers override inherited
+values. Minimal-image hooks are `prepare_minimal(minimal, target, pinned, stage,
+mode)` and `minimal_repositories(target, install_script)`. Hooks render text; they
+must not contact Docker, update metadata, or mutate caches. Keep release fixes in
+the release layer and shared behavior in the nearest common layer.
+
+Fingerprints include the selected layer files, their package initializers,
+statically imported builder helpers, relevant configuration values, shared
+rendering/runtime sources, and package metadata. Dynamic helpers must be declared
+in the layer's `BUILD_DEPENDENCIES` tuple, using relative paths within this tool.
+Absent optional layers are recorded too: adding an architecture override changes
+its image group's fingerprint. File content changes, including comments in a
+selected build layer, invalidate that group. Logging-only changes in execution
+code do not invalidate images. All architectures of a changed shared image group
+still rebuild and retest.
+
+Old approvals lack scoped fingerprints. They remain reusable only when the
+substantive inputs agree and all four files, rendered with the recorded cookie,
+base digests, tags and settings, match the approved files byte-for-byte. The next
+explicit refresh records this migration in the current report, retaining the
+original inputs and historical reports. `--whatif` performs the same comparison
+without changing approvals. A mismatch follows normal `--retry-failed`/`--force`
+behavior. No schema bump or blanket cache invalidation is required.
+
+`tests/rendering-baseline.json` records pre-refactor artifact hashes for every
+metadata target and image group using default and customised settings. The
+regression test compares every generated file against those hashes. When metadata
+adds targets or an intentional image change alters bytes, review the differences
+before updating this fixture; do not blindly regenerate it to make tests pass.
+
+To run the unit suite with direct Docker/Skopeo/SSH/SCP calls prohibited:
+
+```sh
+python3 tools/openriak-docker/tests/run_without_docker.py
+```
+
+The initial results and limits are recorded in
+[the refactor validation report](reports/refactor-validation-2026-09-11.md).
+
+Each release directory has `maintenance.json` for support status, sources,
+backport ownership/location and review notes. `review_required` means support has
+not been established by that record. Operational settings remain authoritative in
+`base-images.json` and `runtime-images.json`; maintenance notes do not automatically
+change builds or suppress CVEs.
+
+### Live logs, phases and locks
+
+Command output is written directly into its log while the command runs, with exit
+status appended afterward. Timeouts and interruptions terminate the command's
+process group. Reports checkpoint running/completed/failed steps and summarise
+resolve, generate, build, test, export and cleanup phases. Publication has its own
+status: a docs error does not revoke successful image tests.
+
+Target locks prevent concurrent refreshes of the same cache. Builder ownership is
+exclusive for the invocation that uses it, so another cooperating command cannot
+stop it. Separate refreshes using the same named builder on one machine are
+serialized by refusal with an owner message; different machines have independent
+builders. Cleanup coordinates with active operations, respects its cutoff, and
+rechecks selection under its lock before deletion. Locks use the local temporary
+directory (respecting `TMPDIR`) and release automatically on process exit. Lock
+files remain as diagnostics; do not delete a lock file to bypass an active lock.
+Use the same user and `TMPDIR` for cooperating commands on one machine. These locks
+do not coordinate arbitrary manual Docker commands or older tool versions.
+
+## Diagnostics and saved report commands
+
+```sh
+tools/openriak-docker/openriak-docker doctor --for refresh
+tools/openriak-docker/openriak-docker status --version 3.4.1
+tools/openriak-docker/openriak-docker failures --os-id 'debian*'
+tools/openriak-docker/openriak-docker cve-diff --before /path/to/old/push --after /path/to/new/push --json
+```
+
+| Command | Options |
+| --- | --- |
+| `doctor` | `--for refresh\|generate\|push\|collect` (default `refresh`), `--output PATH`, `--timeout SECONDS` (default 30), `--json`. Checks local tools/access, writable locations and free space; never starts/stops builders or pulls images. |
+| `status`, `failures` | `--cache-root PATH`, repeatable `--version VERSION`, repeatable `--os-id PATTERN`, `--json`. Show reports, elapsed time, platform phases and log paths. `failures` includes publication failures. |
+| `cve-diff` | Required `--before PATH` and `--after PATH`, optional `--json`, `--timeout SECONDS` (default 1800). Paths can be individual reports or push directories. Requires Node.js and the documentation's existing Node dependencies. |
+
+CVE comparisons read saved Scout payloads, validate their hashes and verified image
+digests, and use the same Markdown assessment logic as the Downloads page. Both
+snapshots are evaluated against the **current** assessment files. Results list
+new, resolved, changed and unchanged CVEs, retaining Scout severity and our scoped
+status/exclusion fields. Incomplete scans, or an image missing from either snapshot,
+are errors rather than evidence that vulnerabilities disappeared. No Scout or
+registry request is made.
+
+## Distributing builds across machines
+
+The workflow uses a fixed plan. The SSH controller can stage, launch, monitor and
+retrieve workers, or you can transport the same portable bundle manually. Each
+worker needs Python 3.10+, Docker, Buildx, Compose, enough storage and any required
+registry access. SSH-managed workers also need an SSH server, `nohup`, `ps`, and
+SCP/SFTP support. The controller needs the OpenSSH `ssh` and `scp` commands.
+Workers building ARM packages on x86 need the same emulation setup as the original
+machine. The reusable patched Debian base must be accessible under the planned
+namespace. Run `doctor --for refresh --output PATH` on each machine before starting.
+Workers process complete OS/release/OTP groups, including all package-backed
+architectures. A simple weighting gives emulated groups more weight when assigning
+work. Tags and aliases are computed centrally from the complete metadata catalogue.
+
+### Managed local and SSH workers
+
+The controller machine can participate directly, including WSL2 without an SSH
+server. Register it as a local worker:
+
+```sh
+tools/openriak-docker/openriak-docker distribute add-node local --local \
+  --workdir "$HOME/openriak-builds"
+tools/openriak-docker/openriak-docker distribute check-nodes --node local
+```
+
+No hostname, SSH key or SSH server is needed for `--local`. If you previously
+registered `local` as an SSH node, repeat registration with `--replace`. Local
+working paths may contain spaces. `check-nodes` checks Python, `nohup`, `ps`, `cp`,
+`tail`, working directory permissions, Docker access, Buildx and Compose on both
+local and SSH nodes. It also runs ARM64 and temporary bind-mount probes as described
+below. Existing SSH registrations remain compatible.
+
+A local worker uses direct file copies, a local `nohup` process, local `ps` and
+`tail`, and the same result verification as SSH workers. Monitoring/fetching works
+the same way for both types. Select at most one local worker in a deployment, and
+count it in the plan's `--workers` total. Docker access and any required emulation
+must already work inside WSL. Keep the WSL distribution running while its worker
+is active; `nohup` does not survive shutting down WSL or Windows.
+
+For a plan with three workers, select the local worker and your two remote nodes:
+
+```sh
+tools/openriak-docker/openriak-docker distribute run \
+  --plan "$HOME/openriak-plan-ssh.json" \
+  --node local --node worker-2 --node worker-3
+```
+
+Use a new deployment when changing assignments: replacing a saved node does not
+alter connection settings already recorded in an existing deployment.
+
+Register each machine once. The node name is a local label, followed by its SSH
+destination, working folder and the **local path** of its SSH private key:
+
+```sh
+tools/openriak-docker/openriak-docker distribute add-node worker-1 peter@192.0.2.11 \
+  --workdir '~/openriak-builds' --ssh-key "$HOME/.ssh/id_ed25519"
+tools/openriak-docker/openriak-docker distribute add-node worker-2 peter@worker-2.example.com \
+  --workdir '~/openriak-builds' --ssh-key "$HOME/.ssh/id_ed25519"
+tools/openriak-docker/openriak-docker distribute add-node worker-3 peter@192.0.2.13 \
+  --workdir '~/openriak-builds' --ssh-key "$HOME/.ssh/id_ed25519"
+
+tools/openriak-docker/openriak-docker distribute list-nodes
+tools/openriak-docker/openriak-docker distribute check-nodes
+```
+
+Replace those example hosts with your machines. Quote `~/...` to use the remote
+user's home; an unquoted `$HOME` would refer to the controller's home. Remote
+working paths accept letters, digits, dots, underscores, hyphens and slashes, and
+must be absolute or start with `~/`. Spaces and shell expressions are rejected
+for consistent SCP behavior. SSH destinations currently accept IPv4 or hostnames.
+Add `--port PORT` when SSH uses a different port.
+
+Settings default to `$XDG_CONFIG_HOME/openriak-docker/nodes.json`, or
+`~/.config/openriak-docker/nodes.json` when XDG_CONFIG_HOME is unset. Override with
+`--nodes-file PATH`. The file has mode 0600 and stores the key path, never its
+contents. Use `add-node ... --replace` to change an existing node. An active
+deployment keeps its original connection settings.
+
+Connections use batch mode and strict host-key checking. Establish trusted host
+keys with your normal SSH setup first; encrypted keys must be unlocked through
+`ssh-agent`. The tool never prompts for passwords or silently accepts new host
+keys.
+
+`check-nodes` runs a small `linux/arm64` container and requires `uname -m` to
+report `aarch64`. It also creates a temporary folder using the same TMPDIR as a
+worker, bind-mounts it into a native-platform container, and verifies files in
+both directions: host to container and container to host. This catches Snap
+Docker's private `/tmp` namespace. Probe containers and scratch folders are
+removed after the check, including after failures. The probe image may be pulled
+if it is not already available; checks do not rebuild OpenRiak KV images.
+
+When a repairable check fails, the command explains the repair and prompts
+`Apply this repair to NODE? [y/N]`. ARM64 registration uses a privileged
+`tonistiigi/binfmt:qemu-v10.2.3` container with `--install arm64`. The temporary
+directory repair creates `~/openriak-builds/tmp` on the worker, verifies the bind
+again, then saves a `tmpdir` setting in that node's configuration. Future
+deployments pass this as `TMPDIR` to the worker process; shell startup files and
+existing deployments are unchanged. A repair is successful only after its probe
+passes again. Docker permission, registry or SSH failures are reported without
+attempting unrelated system changes.
+
+```sh
+# Check selected nodes; ask before each proposed repair.
+tools/openriak-docker/openriak-docker distribute check-nodes \
+  --node worker-1 --node worker-2
+
+# Check only: never prompt for or apply repairs.
+tools/openriak-docker/openriak-docker distribute check-nodes --no-fix
+
+# Explicitly approve the offered ARM64 and TMPDIR repairs.
+tools/openriak-docker/openriak-docker distribute check-nodes --yes
+```
+
+Without an interactive terminal, repairs require `--yes`; otherwise failed checks
+return a nonzero exit status. `--check-image` overrides the probe image (default
+`alpine:3.21`), and `--binfmt-image` overrides the installer. `--timeout` defaults
+to 1800 seconds per probe or repair, including image downloads. Registration may
+need repeating after a host reboot, so recheck nodes before a new deployment.
+
+Create a fresh plan using the current tool sources:
+
+`--output` is optional. By default, the plan is saved in the current directory as
+`openriak-docker-distribute-{timestamp}.json`, using a UTC timestamp with
+microseconds, for example `openriak-docker-distribute-20260911T034500.123456Z.json`.
+The command prints the complete path. Specify `--output FILE` to choose another
+filename; existing files are never overwritten.
+
+```sh
+tools/openriak-docker/openriak-docker distribute plan \
+  --version 3.4.0 --version 3.4.1 --workers 3 --retry-failed \
+  --vendor 'TI Tokyo' --source 'https://github.com/TI-Tokyo/openriak-docs' \
+  --url 'https://www.tiot.jp/' --namespace tiotjp \
+  --output "$HOME/openriak-plan-ssh.json"
+```
+
+Run the plan on every saved node, with each worker detached using `nohup`:
+
+```sh
+tools/openriak-docker/openriak-docker distribute run --plan "$HOME/openriak-plan-ssh.json"
+```
+
+No `--worker`, `--output` or `--nohup` argument is needed. Local workers use local
+file copies and processes; remote workers use SCP and SSH. For explicit node
+selection or custom paths:
+
+```sh
+tools/openriak-docker/openriak-docker distribute run \
+  --plan "$HOME/openriak-plan-ssh.json" \
+  --node worker-1 --node worker-2 --node worker-3 \
+  --deployment "$HOME/openriak-ssh.json" \
+  --output "$HOME/openriak-results"
+```
+
+For a plan named `/home/peter/nightly.json`, the defaults are:
+
+| Purpose | Default path |
+| --- | --- |
+| Controller state | `/home/peter/nightly.remote.json` |
+| Retrieved local-node results | `/home/peter/nightly.results/local/` |
+| Retrieved worker-2 results | `/home/peter/nightly.results/worker-2/` |
+| Files on each worker | `{workdir}/openriak-distributed/nightly/{node-name}/{deployment-id}/` |
+
+Each worker folder contains `source/`, `results/` and `worker.log`. Unusual
+characters in the plan filename are replaced with underscores for worker-side
+folders so the paths are SCP-compatible. `--output ROOT` overrides the retrieved
+results root; `--results-dir ROOT` is an equivalent spelling. Node subdirectories
+are still added automatically. `--deployment FILE` overrides the controller state
+file. Existing deployments retain their original saved directories.
+
+The order of `--node` arguments assigns worker numbers 1, 2, 3. Without `--node`,
+all saved nodes are used in sorted name order. The node count must equal the plan's
+worker count. Use one worker per machine because the named Docker builder is
+exclusive. Every deployment uses an isolated folder beneath each node's workdir:
+`openriak-distributed/{plan-stem}/{node-name}/{deployment-id}/`. Existing source folders, results
+and other projects are not overwritten. Existing local approvals are not staged;
+fresh worker directories build their assigned groups.
+
+`run` prints each worker PID, log path and output paths and returns after launch. It saves
+controller state in the deployment JSON and the exact bundle alongside it.
+`start` remains an alias for `run`. Repeat the same `run` command after a partial failure: it reconnects to saved
+assignments and stages only workers that have not launched. It does not restart a
+completed/failed task or create a second task after a lost launch response. If
+launch intent exists but no PID was saved, it reports `unknown` and requires
+inspection of that node rather than guessing whether another build is safe.
+
+Monitor in the foreground, polling with SSH `ps` and automatically copying each
+stopped worker's results back with SCP:
+
+```sh
+tools/openriak-docker/openriak-docker distribute monitor \
+  --deployment "$HOME/openriak-ssh.json" --watch
+```
+
+Add `--nohup` to keep the **local monitor** running after logout; it prints its own
+PID and log path. `--poll-interval` defaults to 15 seconds. Watch mode prints each
+worker's initial status, then only changes to its task counts, status, PID, error or recorded
+finish time. Stopped workers explicitly say `finished (successful)`,
+`finished (failed)` or `finished (interrupted)` and `no tasks running`;
+failed work requires an explicit retry. Counts distinguish passed and failed image
+groups from groups not attempted when a worker stops early. When every group has
+a result, the monitor says `all assigned tasks finished`.
+Finished workers show their recorded finish time (when available),
+not the time of the latest poll; active status timestamps are labelled as checks.
+Repeated identical errors are also suppressed; polling and retrieval continue.
+Without `--watch`,
+monitor performs one pass and retrieves any finished workers. Builds continue
+if the controller disconnects or is stopped; rerun monitor to reconnect. Automatic
+retrieval requires the monitor to be running. A network failure is reported as a
+connection error, never interpreted as a completed build.
+
+The monitor checks both `ps` and the Linux process start identity, so reusing a
+PID cannot make an unrelated process look like the build. It waits for the worker
+process to exit before copying, even when its final receipt is already written.
+Failed/interrupted workers are downloaded too, preserving their diagnostic logs.
+Partial transfers remain separate from completed local results; receipts, passed
+artifact hashes and OCI archive hashes are checked before promotion. Remote
+results are retained. SCP retries restart an incomplete transfer rather than
+resuming individual file offsets.
+
+Follow one node's log or retrieve stopped workers explicitly:
+
+```sh
+tools/openriak-docker/openriak-docker distribute logs \
+  --deployment "$HOME/openriak-ssh.json" --node worker-2
+
+tools/openriak-docker/openriak-docker distribute fetch \
+  --deployment "$HOME/openriak-ssh.json"
+```
+
+To stop only selected worker queues gracefully, send SIGTERM to their verified
+process identities. Unselected workers continue; stopped workers receive no signal:
+
+```sh
+tools/openriak-docker/openriak-docker distribute stop \
+  --deployment my-plan.remote.json --node worker-1 --node worker-2
+```
+
+Use the monitor to wait until their cleanup has finished. Then restart those
+queues, retaining their existing cache and original plan:
+
+```sh
+tools/openriak-docker/openriak-docker distribute restart \
+  --deployment my-plan.remote.json --node worker-1 --node worker-2
+```
+
+`restart` refuses a still-running worker. It runs with the equivalent of
+`--retry-failed`, even if the original plan used `--force`: compatible passed
+groups are skipped, and failed/interrupted groups are retried. It uses the
+original frozen build sources, metadata, image settings and assignments, so host
+repairs and controller updates do not require a new plan. To change the actual
+build instructions, create a new plan instead.
+
+The current node registry's repaired `tmpdir` setting is applied on restart;
+use `--nodes-file` if the registry is elsewhere. Connection and working-directory
+changes are rejected. Old worker receipts and launch records are saved in
+`attempts/RESTART-ID/`, group run history remains intact, and `worker.log` is
+appended. Retrieved retry results use a new `NODE-retry-RESTART-ID` directory,
+preserving earlier retrieved results. The deployment continues tracking all
+workers, including unselected workers and their results. Repeating a restart
+after a lost SSH reply reconnects to that retry without starting another process.
+
+`logs` uses SSH `tail -n 100 -f`. Ctrl-C stops the viewer and leaves builds running.
+Use `--lines N` to change the initial lines or `--no-follow` to print and exit.
+The local results include `remote-worker.log` alongside `worker.json`.
+
+SSH commands default to a 10-second connection timeout. Control operations and
+each SCP transfer default to 1800 seconds, as do node probes and repairs; override
+with `--connect-timeout` and `--timeout`. Continuous log streaming has no overall
+timeout. These settings do not change the build/test timeout recorded in the plan.
+
+After successful retrieval, the monitor prints the exact `distribute collect`
+preview command. Run it with `--whatif`, then remove that flag to publish the
+verified downloads and metadata. Fetching alone does not update docs or push
+images. Collection still requires all assigned workers to pass. If a worker
+fails, inspect its downloaded reports/logs; a new deployment starts with fresh
+worker output, while the low-level `distribute worker` command can retry an existing
+worker directory using the same plan's `--retry-failed` setting. A manual restart
+changes the worker PID; the original SSH deployment then reports `unknown` and
+refuses automatic fetching. Use the manual transfer/collection workflow for that
+retry, or use a new SSH deployment for a fully managed run.
+
+### Manual worker transport
+
+Create a plan and a portable copy of the exact code and metadata:
+
+```sh
+tools/openriak-docker/openriak-docker distribute plan \
+  --version 3.4.0 --version 3.4.1 --workers 3 --retry-failed \
+  --vendor 'TI Tokyo' --source 'https://github.com/TI-Tokyo/openriak-docs' \
+  --url 'https://www.tiot.jp/' --namespace tiotjp \
+  --output "$HOME/openriak-plan.json" \
+  --bundle "$HOME/openriak-workers.tar.gz"
+```
+
+Copy the bundle to each machine and extract it into a new working directory. For
+example, on worker 2:
+
+```sh
+mkdir -p "$HOME/openriak-worker-source"
+tar -xzf "$HOME/openriak-workers.tar.gz" -C "$HOME/openriak-worker-source"
+cd "$HOME/openriak-worker-source"
+tools/openriak-docker/openriak-docker distribute worker \
+  --plan plan.json --worker 2 --output "$HOME/openriak-worker-2" --nohup
+```
+
+Use worker numbers 1, 2 and 3 with different output directories. The bundle contains
+tool sources and metadata, not Docker credentials, existing caches, or published
+downloads. A matching checkout can also be used, but a matching Git branch alone is
+insufficient when the source tree has uncommitted changes: code/configuration and
+metadata hashes must match the plan. Do not edit worker source files mid-run.
+
+Workers build/test/export images and apply all planned local tags, including
+`--extra-namespace` tags. They never publish docs or push images. `--nohup` prints
+the PID and log path. `worker.json` records machine, PID, assignment, per-group
+results, approval hashes and OCI archive hashes. Rerunning the same assignment in
+the same output directory preserves compatible passed results; with the plan's
+`--retry-failed` setting, failures are retried. A different plan or worker number
+cannot reuse that output directory accidentally. `--force` plans deliberately
+rebuild every assigned group on each invocation.
+
+After workers finish, copy each entire output directory, including OCI archives,
+to the collecting machine. For example, transfer worker 2 using:
+
+```sh
+rsync -a worker-2:~/openriak-worker-2/ "$HOME/openriak-results/worker-2/"
+```
+
+Preview and then collect the results:
+
+```sh
+tools/openriak-docker/openriak-docker distribute collect \
+  --plan "$HOME/openriak-plan.json" \
+  --results "$HOME/openriak-results/worker-1" \
+  --results "$HOME/openriak-results/worker-2" \
+  --results "$HOME/openriak-results/worker-3" --whatif
+```
+
+Run that command again without `--whatif` to import the verified cache entries and
+publish their downloads/metadata. Add `--output PATH` to collect a standalone set
+instead, with no docs changes. Collection does not build, test, load local Docker
+tags, or push images. OCI archives retain the aliases; the existing `push` command
+can push the collected approvals afterward.
+
+Workers use portable `./Dockerfile`-style download URLs. When importing into the
+docs cache, collection translates the current report's download URLs to the docs
+paths before synchronizing metadata. Received worker reports, historical reports
+and artifact hashes remain unchanged. Standalone collection retains portable URLs.
+
+Collection requires every assigned worker to have completed successfully.
+Controller-only updates (including monitoring, queue retries and node checks) do
+not require rebuilding successful images or rewriting the saved plan. Collection
+accepts changes only in the explicitly recognised controller modules, while
+checking every planned build input and re-rendering the four download files for
+byte-for-byte comparison. Starting workers still requires the original matching
+sources. Changes to OS builders, renderers, runtime or test implementations remain
+blocked; use the original matching source bundle to collect those results.
+Collection rejects mismatched plans, changed build/test code or metadata, duplicate workers, changed
+artifacts, missing platform approvals, corrupt OCI blobs, and conflicting
+historical evidence. Copies are staged and revalidated before current approvals
+are promoted. Existing historical runs remain, and replaced current files are
+saved under `runs/before-collect-*`. Hash checks detect transfer corruption; the
+workers themselves must be trusted to execute the tests honestly.
+
+### Distributed command options
+
+| Command | Options |
+| --- | --- |
+| `distribute plan` | Required `--version VERSION` (repeatable) or `--all --yes`; required `--workers N`; optional `--output FILE` (default: `./openriak-docker-distribute-{UTC-timestamp}.json`), `--bundle FILE`, repeatable `--os-id PATTERN`, `--otp VERSION`, `--timeout SECONDS` (1800), `--cluster-nodes N` (5), `--force` or `--retry-failed`, identity options `--vendor`, `--source`, `--url`, `--namespace`, repeatable `--extra-namespace`, and the five healthcheck/shutdown options using the same duration syntax as `refresh` (retries are a count). Existing plan/bundle files are never overwritten. |
+| `distribute run` (alias `start`) | Required `--plan FILE`; optional repeatable `--node NAME`, `--nodes-file FILE`, `--deployment FILE` (PLAN.remote.json), `--output ROOT` / `--results-dir ROOT` (PLAN.results, with node-name subdirectories), SSH connection/operation timeouts (10/1800). Stages and launches all selected workers with nohup automatically; repeating reconnects to the existing deployment. |
+| `distribute worker` | Low-level executor: required `--plan FILE`, `--worker N`, `--output PATH`; optional `--nohup` for manual use. Normally invoked automatically by `distribute run`. Generation and refresh options come from the plan. |
+| `distribute collect` | Required `--plan FILE`, repeatable `--results PATH`; optional `--output PATH`, `--whatif`. Default destination is the docs cache; `--output` disables docs publication. |
+| `distribute add-node` | SSH: `NAME user@HOST --workdir PATH --ssh-key PATH`; local: `NAME --local --workdir PATH`. Optional `--port PORT` (SSH only, default 22), `--nodes-file FILE`, `--replace`. Saves node settings. |
+| `distribute list-nodes` | Optional `--nodes-file FILE`. Lists node connection settings. |
+| `distribute check-nodes` | Optional repeatable `--node NAME`, `--nodes-file FILE`, `--connect-timeout SECONDS` (10), `--timeout SECONDS` (1800), `--check-image` (`alpine:3.21`), `--binfmt-image` (`tonistiigi/binfmt:qemu-v10.2.3`), `--yes` or `--no-fix`. Checks Docker, ARM64 execution and temporary bind mounts; prompts before repairs and verifies them. |
+| `distribute monitor` | Required `--deployment FILE`; optional `--watch`, `--poll-interval SECONDS` (15), `--nohup` (requires `--watch`), SSH connection/operation timeouts (10/1800). Checks processes and fetches stopped workers. |
+| `distribute stop` | Required `--deployment FILE` and repeatable `--node NAME`. Sends SIGTERM only to the selected verified worker processes; use monitor to wait for cleanup. Connection/operation timeouts default to 10/1800 seconds. |
+| `distribute restart` | Required `--deployment FILE` and repeatable `--node NAME`; optional `--nodes-file`. Restarts stopped queues with their original build sources and compatible passed caches; applies repaired TMPDIR settings. Connection/operation timeouts default to 10/1800 seconds. |
+| `distribute logs` | Required `--deployment FILE --node NAME`; optional `--lines N` (100), `--no-follow`, SSH connection/operation timeouts (10/1800; continuous following is unlimited). |
+| `distribute fetch` | Required `--deployment FILE`; optional SSH connection/operation timeouts (10/1800). Retrieves stopped workers without waiting for running ones. |
+
+Distributed execution is covered by simulated SSH/SCP operations and OCI fixtures,
+plus a local fake worker exercising the real `nohup`/`ps` lifecycle. Validation does
+not connect to actual SSH nodes, build images or start containers; the first real
+multi-machine run remains an operational validation.

@@ -7,15 +7,13 @@
 # BuildKit supplies TARGETARCH from --platform in the global scope.
 # Do not redeclare ARG TARGETARCH here: that clears its automatic value.
 
-# linux/amd64: official package and immutable OS release base.
-# Download layers stay outside the final image; the install only mounts them.
 FROM scratch AS download-amd64
 ADD --checksum=sha256:72c02db420dc5a0cde5c27a2bd1813fc74e56b663f1167b9b7a0795fae5bfc77 https://files.tiot.jp/riak/kv/3.4/3.4.0/rhel/9/riak-3.4.0.OTP26-1.el9.x86_64.rpm /riak-3.4.0.OTP26-1.el9.x86_64.rpm
 
-FROM --platform=linux/amd64 rockylinux:9@sha256:d7be1c094cc5845ee815d4632fe377514ee6ebcf8efaed6892889657e5ddaaa6 AS package-amd64
+FROM --platform=linux/amd64 rockylinux:9@sha256:d7be1c094cc5845ee815d4632fe377514ee6ebcf8efaed6892889657e5ddaaa6 AS install-amd64
 RUN --mount=type=bind,from=download-amd64,target=/opt/openriak-package,ro <<'OPENRIAK_PACKAGE_INSTALL'
 set -eu
-# Copy, install, and remove in this one layer; only the installed files persist.
+
 cp /opt/openriak-package/riak-3.4.0.OTP26-1.el9.x86_64.rpm /tmp/riak-3.4.0.OTP26-1.el9.x86_64.rpm
 # Update installed OS packages before installing the OpenRiak KV package.
 if command -v dnf >/dev/null 2>&1
@@ -74,7 +72,44 @@ done
 # In particular, dnf clean all does not clear microdnf's /var/cache/yum.
 rm -rf /var/cache/dnf /var/cache/yum /var/cache/zypp
 rm -f /tmp/riak-3.4.0.OTP26-1.el9.x86_64.rpm
+# Require the reviewed security updates; reject stale mirrors.
+# Require glib2 >= 2.68.4-19.el9_8.10; keep newer vendor updates.
+installed_rpm=$(rpm -q --qf '%{EPOCHNUM} %{VERSION} %{RELEASE}' glib2)
+OPENRIAK_RPM_VERSION="$installed_rpm" rpm --eval '%{lua:
+local e, v, r = os.getenv("OPENRIAK_RPM_VERSION"):match("^(%d+) ([^ ]+) ([^ ]+)$")
+assert(e, "Cannot identify installed glib2 version")
+local comparison = rpm.vercmp(e, "0")
+if comparison == 0 then comparison = rpm.vercmp(v, "2.68.4") end
+if comparison == 0 then comparison = rpm.vercmp(r, "19.el9_8.10") end
+assert(comparison >= 0, "Installed glib2 is older than 2.68.4-19.el9_8.10")
+}' >/dev/null
+# Require expat >= 2.5.0-6.el9_8.3; keep newer vendor updates.
+installed_rpm=$(rpm -q --qf '%{EPOCHNUM} %{VERSION} %{RELEASE}' expat)
+OPENRIAK_RPM_VERSION="$installed_rpm" rpm --eval '%{lua:
+local e, v, r = os.getenv("OPENRIAK_RPM_VERSION"):match("^(%d+) ([^ ]+) ([^ ]+)$")
+assert(e, "Cannot identify installed expat version")
+local comparison = rpm.vercmp(e, "0")
+if comparison == 0 then comparison = rpm.vercmp(v, "2.5.0") end
+if comparison == 0 then comparison = rpm.vercmp(r, "6.el9_8.3") end
+assert(comparison >= 0, "Installed expat is older than 2.5.0-6.el9_8.3")
+}' >/dev/null
+# Require pam >= 1.5.1-28.el9_8.1; keep newer vendor updates.
+installed_rpm=$(rpm -q --qf '%{EPOCHNUM} %{VERSION} %{RELEASE}' pam)
+OPENRIAK_RPM_VERSION="$installed_rpm" rpm --eval '%{lua:
+local e, v, r = os.getenv("OPENRIAK_RPM_VERSION"):match("^(%d+) ([^ ]+) ([^ ]+)$")
+assert(e, "Cannot identify installed pam version")
+local comparison = rpm.vercmp(e, "0")
+if comparison == 0 then comparison = rpm.vercmp(v, "1.5.1") end
+if comparison == 0 then comparison = rpm.vercmp(r, "28.el9_8.1") end
+assert(comparison >= 0, "Installed pam is older than 1.5.1-28.el9_8.1")
+}' >/dev/null
 OPENRIAK_PACKAGE_INSTALL
+
+# Export the cleaned filesystem; removed base-image files cannot remain in layers.
+FROM scratch AS package-amd64
+COPY --from=install-amd64 / /
+# Shell command search path for OpenRiak KV lifecycle scripts.
+ENV PATH="/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin"
 
 FROM package-${TARGETARCH} AS final
 
@@ -109,7 +144,7 @@ ENV RIAK_NODE_HOST=""
 # Explicit nodename; empty derives openriak-kv@<hostname>.
 ENV RIAK_NODE_NAME=""
 # Initial cookie; existing riak.conf wins and new followers adopt the coordinator cookie.
-ENV RIAK_DISTRIBUTED_COOKIE="openriak-c25ea2c898bb6e99362187fcf08d5417"
+ENV RIAK_DISTRIBUTED_COOKIE="openriak-93739d796e89f140f240a2359dd7d126"
 # Partition count for a new ring; do not change on an existing cluster.
 ENV RIAK_RING_SIZE="8"
 # Storage backend used by OpenRiak KV.

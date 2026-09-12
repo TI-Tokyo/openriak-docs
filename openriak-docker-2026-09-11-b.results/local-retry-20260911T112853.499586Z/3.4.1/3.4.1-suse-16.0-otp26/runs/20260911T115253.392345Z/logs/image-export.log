@@ -1,0 +1,69 @@
+$ /usr/bin/docker buildx build --builder openriak-kv-multiarch --platform linux/amd64 --pull=false --tag tiotjp/openriak-kv:3.4.1-suse-16.0-otp26 --tag tiotjp/openriak-kv:3.4.1-suse-16.0 --tag tiotjp/openriak-kv:3.4.1-suse --output type=oci,dest=/home/peter/openriak-builds/openriak-distributed/openriak-docker-2026-09-11-b/local/20260911T084617.243958Z/results/3.4.1/3.4.1-suse-16.0-otp26/runs/20260911T115253.392345Z/image.oci.tar /home/peter/openriak-builds/openriak-distributed/openriak-docker-2026-09-11-b/local/20260911T084617.243958Z/results/3.4.1/3.4.1-suse-16.0-otp26
+started: 2026-09-11T11:57:57Z
+#0 building with "openriak-kv-multiarch" instance using docker-container driver
+
+#1 [internal] load build definition from Dockerfile
+#1 transferring dockerfile: 44.53kB 0.0s done
+#1 DONE 0.0s
+
+#2 [auth] docker/dockerfile:pull token for registry-1.docker.io
+#2 DONE 0.0s
+
+#3 resolve image config for docker-image://docker.io/docker/dockerfile:1.7
+#3 DONE 1.2s
+
+#4 docker-image://docker.io/docker/dockerfile:1.7@sha256:a57df69d0ea827fb7266491f2813635de6f17269be881f696fbfdf2d83dda33e
+#4 resolve docker.io/docker/dockerfile:1.7@sha256:a57df69d0ea827fb7266491f2813635de6f17269be881f696fbfdf2d83dda33e 0.0s done
+#4 CACHED
+
+#5 [internal] load metadata for registry.suse.com/bci/bci-base:16.0@sha256:6406613b1003eb42d1f718d8873e3b4d203aee6d81ef7bf786a7274693476500
+#5 DONE 0.0s
+
+#6 [internal] load .dockerignore
+#6 transferring context: 42B done
+#6 DONE 0.0s
+
+#7 [download-amd64 1/1] ADD --checksum=sha256:952f04a57622b160ef01d7aa15d3871924221766f1cd08dc74bf5ecd3ffbe9ea https://files.tiot.jp/riak/kv/3.4/3.4.1/rhel/9/riak-3.4.1.OTP26-1.el9.x86_64.rpm /riak-3.4.1.OTP26-1.el9.x86_64.rpm
+#7 DONE 0.0s
+
+#8 [internal] preparing inline document
+#8 DONE 0.0s
+
+#9 [internal] preparing inline document
+#9 DONE 0.0s
+
+#10 [install-amd64 1/2] FROM registry.suse.com/bci/bci-base:16.0@sha256:6406613b1003eb42d1f718d8873e3b4d203aee6d81ef7bf786a7274693476500
+#10 resolve registry.suse.com/bci/bci-base:16.0@sha256:6406613b1003eb42d1f718d8873e3b4d203aee6d81ef7bf786a7274693476500 0.0s done
+#10 DONE 0.0s
+
+#11 [final 2/4] COPY <<OPENRIAK_ENTRYPOINT /usr/local/bin/openriak-entrypoint
+#11 CACHED
+
+#12 [download-amd64 1/1] ADD --checksum=sha256:952f04a57622b160ef01d7aa15d3871924221766f1cd08dc74bf5ecd3ffbe9ea https://files.tiot.jp/riak/kv/3.4/3.4.1/rhel/9/riak-3.4.1.OTP26-1.el9.x86_64.rpm /riak-3.4.1.OTP26-1.el9.x86_64.rpm
+#12 CACHED
+
+#13 [package-amd64 1/1] COPY --from=install-amd64 / /
+#13 CACHED
+
+#14 [install-amd64 2/2] RUN --mount=type=bind,from=download-amd64,target=/opt/openriak-package,ro <<'OPENRIAK_PACKAGE_INSTALL' (set -eu...)
+#14 CACHED
+
+#15 [final 1/4] RUN <<'OPENRIAK_IMAGE_SETUP' (set -eu...)
+#15 CACHED
+
+#16 [final 3/4] COPY <<OPENRIAK_HEALTHCHECK /usr/local/bin/openriak-healthcheck
+#16 CACHED
+
+#17 [final 4/4] RUN <<'OPENRIAK_SCRIPT_SETUP' (set -eu...)
+#17 CACHED
+
+#18 exporting to oci image format
+#18 exporting layers done
+#18 exporting manifest sha256:a2c6309656c9414b08208157ffdcfd528c236e85b647b433d0f6d8dcbf0eccbb done
+#18 exporting config sha256:b76cca7e1bb9eece73a2a4e726d2d194c4923978def9bb37affb79adb81e27f4 done
+#18 sending tarball
+#18 sending tarball 0.9s done
+#18 DONE 0.9s
+
+timeout_seconds: 3600
+exit_code: 0

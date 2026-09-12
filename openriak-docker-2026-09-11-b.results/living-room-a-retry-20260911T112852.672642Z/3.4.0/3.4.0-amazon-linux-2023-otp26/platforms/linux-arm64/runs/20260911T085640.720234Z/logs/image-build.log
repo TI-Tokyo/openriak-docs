@@ -1,0 +1,305 @@
+$ /usr/bin/docker buildx build --builder openriak-kv-multiarch --load --platform linux/arm64 --pull=false --no-cache --tag tiotjp/openriak-kv:test-3.4.0-amazon-linux-2023-otp26-linux-arm64-20260911t085640.720234z --file /home/peter/openriak-builds/openriak-distributed/openriak-docker-2026-09-11-b/living-room-a/20260911T084617.243958Z/results/3.4.0/3.4.0-amazon-linux-2023-otp26/platforms/linux-arm64/runs/20260911T085640.720234Z/Dockerfile /home/peter/openriak-builds/openriak-distributed/openriak-docker-2026-09-11-b/living-room-a/20260911T084617.243958Z/results/3.4.0/3.4.0-amazon-linux-2023-otp26/platforms/linux-arm64/runs/20260911T085640.720234Z
+started: 2026-09-11T08:56:40Z
+#0 building with "openriak-kv-multiarch" instance using docker-container driver
+
+#1 [internal] load build definition from Dockerfile
+#1 transferring dockerfile: 47.80kB done
+#1 DONE 0.0s
+
+#2 resolve image config for docker-image://docker.io/docker/dockerfile:1.7
+#2 DONE 0.8s
+
+#3 docker-image://docker.io/docker/dockerfile:1.7@sha256:a57df69d0ea827fb7266491f2813635de6f17269be881f696fbfdf2d83dda33e
+#3 resolve docker.io/docker/dockerfile:1.7@sha256:a57df69d0ea827fb7266491f2813635de6f17269be881f696fbfdf2d83dda33e done
+#3 CACHED
+
+#4 [internal] load metadata for docker.io/library/amazonlinux:2023@sha256:181f98c48832fe926f8ca3b6ffeafcce128e96e77b93d08fbe9a9bc9403ce284
+#4 DONE 0.7s
+
+#5 [internal] load .dockerignore
+#5 transferring context: 2B done
+#5 DONE 0.0s
+
+#6 [internal] preparing inline document
+#6 CACHED
+
+#7 [internal] preparing inline document
+#7 CACHED
+
+#8 [package-arm64 1/2] FROM docker.io/library/amazonlinux:2023@sha256:181f98c48832fe926f8ca3b6ffeafcce128e96e77b93d08fbe9a9bc9403ce284
+#8 resolve docker.io/library/amazonlinux:2023@sha256:181f98c48832fe926f8ca3b6ffeafcce128e96e77b93d08fbe9a9bc9403ce284 done
+#8 sha256:108a276670f119053938f97626b5d9916306b34861b9c0cdd8d64a50bf504ad8 0B / 53.45MB 0.2s
+#8 sha256:108a276670f119053938f97626b5d9916306b34861b9c0cdd8d64a50bf504ad8 6.29MB / 53.45MB 0.3s
+#8 sha256:108a276670f119053938f97626b5d9916306b34861b9c0cdd8d64a50bf504ad8 14.68MB / 53.45MB 0.5s
+#8 ...
+
+#9 [download-arm64 1/1] ADD --checksum=sha256:2b0213b22ca399b731e110540efac4d7be7dc0f3ed79ce2aa0b798af46fa2d0b https://files.tiot.jp/riak/kv/3.4/3.4.0/amazon/2023%20(graviton3)/riak-3.4.0.OTP26-1.amzn2023.aarch64.rpm /riak-3.4.0.OTP26-1.amzn2023.aarch64.rpm
+#9 DONE 0.5s
+
+#10 [download-arm64 1/1] ADD --checksum=sha256:2b0213b22ca399b731e110540efac4d7be7dc0f3ed79ce2aa0b798af46fa2d0b https://files.tiot.jp/riak/kv/3.4/3.4.0/amazon/2023%20(graviton3)/riak-3.4.0.OTP26-1.amzn2023.aarch64.rpm /riak-3.4.0.OTP26-1.amzn2023.aarch64.rpm
+#10 DONE 0.0s
+
+#8 [package-arm64 1/2] FROM docker.io/library/amazonlinux:2023@sha256:181f98c48832fe926f8ca3b6ffeafcce128e96e77b93d08fbe9a9bc9403ce284
+#8 sha256:108a276670f119053938f97626b5d9916306b34861b9c0cdd8d64a50bf504ad8 45.09MB / 53.45MB 0.8s
+#8 sha256:108a276670f119053938f97626b5d9916306b34861b9c0cdd8d64a50bf504ad8 53.45MB / 53.45MB 0.9s done
+#8 extracting sha256:108a276670f119053938f97626b5d9916306b34861b9c0cdd8d64a50bf504ad8
+#8 extracting sha256:108a276670f119053938f97626b5d9916306b34861b9c0cdd8d64a50bf504ad8 1.6s done
+#8 DONE 2.5s
+
+#11 [package-arm64 2/2] RUN --mount=type=bind,from=download-arm64,target=/opt/openriak-package,ro <<'OPENRIAK_PACKAGE_INSTALL' (set -eu...)
+#11 7.180 Amazon Linux 2023 repository                     16 MB/s |  77 MB     00:04    
+#11 215.4 Last metadata expiration check: 0:03:31 ago on Fri Sep 11 08:56:49 2026.
+#11 225.7 Dependencies resolved.
+#11 226.3 =======================================================================================
+#11 226.3  Package                        Arch     Version                     Repository    Size
+#11 226.3 =======================================================================================
+#11 226.3 Upgrading:
+#11 226.3  amazon-linux-repo-cdn          noarch   2023.12.20260909-0.amzn2023 amazonlinux   13 k
+#11 226.3  openssl-fips-provider-latest   aarch64  1:3.5.7-2.amzn2023.0.2      amazonlinux  744 k
+#11 226.3  openssl-libs                   aarch64  1:3.5.7-2.amzn2023.0.2      amazonlinux  2.2 M
+#11 226.3  python3-pip-wheel              noarch   21.3.1-2.amzn2023.0.21      amazonlinux  1.1 M
+#11 226.3  system-release                 noarch   2023.12.20260909-0.amzn2023 amazonlinux   24 k
+#11 226.3 
+#11 226.3 Transaction Summary
+#11 226.3 =======================================================================================
+#11 226.3 Upgrade  5 Packages
+#11 226.3 
+#11 226.3 Total download size: 4.1 M
+#11 226.3 Downloading Packages:
+#11 226.9 (1/5): amazon-linux-repo-cdn-2023.12.20260909-0  56 kB/s |  13 kB     00:00    
+#11 227.0 (2/5): openssl-fips-provider-latest-3.5.7-2.amz 2.3 MB/s | 744 kB     00:00    
+#11 227.0 (3/5): python3-pip-wheel-21.3.1-2.amzn2023.0.21 8.1 MB/s | 1.1 MB     00:00    
+#11 227.0 (4/5): system-release-2023.12.20260909-0.amzn20 467 kB/s |  24 kB     00:00    
+#11 227.1 (5/5): openssl-libs-3.5.7-2.amzn2023.0.2.aarch6 4.9 MB/s | 2.2 MB     00:00    
+#11 227.1 --------------------------------------------------------------------------------
+#11 227.1 Total                                           4.8 MB/s | 4.1 MB     00:00     
+#11 228.7 Running transaction check
+#11 228.9 Transaction check succeeded.
+#11 228.9 Running transaction test
+#11 229.3 Transaction test succeeded.
+#11 229.3 Running transaction
+#11 229.5   Preparing        :                                                        1/1 
+#11 230.0   Upgrading        : openssl-libs-1:3.5.7-2.amzn2023.0.2.aarch64           1/10 
+#11 230.0   Upgrading        : openssl-fips-provider-latest-1:3.5.7-2.amzn2023.0.    2/10 
+#11 230.1   Upgrading        : system-release-2023.12.20260909-0.amzn2023.noarch     3/10 
+#11 230.1   Upgrading        : amazon-linux-repo-cdn-2023.12.20260909-0.amzn2023.    4/10 
+#11 230.1   Upgrading        : python3-pip-wheel-21.3.1-2.amzn2023.0.21.noarch       5/10 
+#11 230.2   Cleanup          : amazon-linux-repo-cdn-2023.12.20260817-0.amzn2023.    6/10 
+#11 230.2   Cleanup          : openssl-fips-provider-latest-1:3.5.7-2.amzn2023.0.    7/10 
+#11 230.2   Cleanup          : system-release-2023.12.20260817-0.amzn2023.noarch     8/10 
+#11 230.2   Cleanup          : python3-pip-wheel-21.3.1-2.amzn2023.0.20.noarch       9/10 
+#11 230.2   Cleanup          : openssl-libs-1:3.5.7-2.amzn2023.0.1.aarch64          10/10 
+#11 230.3   Running scriptlet: openssl-libs-1:3.5.7-2.amzn2023.0.1.aarch64          10/10 
+#11 230.6   Verifying        : amazon-linux-repo-cdn-2023.12.20260909-0.amzn2023.    1/10 
+#11 230.6   Verifying        : amazon-linux-repo-cdn-2023.12.20260817-0.amzn2023.    2/10 
+#11 230.6   Verifying        : openssl-fips-provider-latest-1:3.5.7-2.amzn2023.0.    3/10 
+#11 230.6   Verifying        : openssl-fips-provider-latest-1:3.5.7-2.amzn2023.0.    4/10 
+#11 230.6   Verifying        : openssl-libs-1:3.5.7-2.amzn2023.0.2.aarch64           5/10 
+#11 230.6   Verifying        : openssl-libs-1:3.5.7-2.amzn2023.0.1.aarch64           6/10 
+#11 230.6   Verifying        : python3-pip-wheel-21.3.1-2.amzn2023.0.21.noarch       7/10 
+#11 230.6   Verifying        : python3-pip-wheel-21.3.1-2.amzn2023.0.20.noarch       8/10 
+#11 230.6   Verifying        : system-release-2023.12.20260909-0.amzn2023.noarch     9/10 
+#11 230.6   Verifying        : system-release-2023.12.20260817-0.amzn2023.noarch    10/10 
+#11 231.7 
+#11 231.7 Upgraded:
+#11 231.7   amazon-linux-repo-cdn-2023.12.20260909-0.amzn2023.noarch                      
+#11 231.7   openssl-fips-provider-latest-1:3.5.7-2.amzn2023.0.2.aarch64                   
+#11 231.7   openssl-libs-1:3.5.7-2.amzn2023.0.2.aarch64                                   
+#11 231.7   python3-pip-wheel-21.3.1-2.amzn2023.0.21.noarch                               
+#11 231.7   system-release-2023.12.20260909-0.amzn2023.noarch                             
+#11 231.7 
+#11 231.7 Complete!
+#11 235.8 Last metadata expiration check: 0:03:52 ago on Fri Sep 11 08:56:49 2026.
+#11 236.1 Package bash-5.2.15-1.amzn2023.0.2.aarch64 is already installed.
+#11 236.1 Package ca-certificates-2025.2.76-1.0.amzn2023.0.3.noarch is already installed.
+#11 236.1 Package glibc-2.34-231.amzn2023.0.5.aarch64 is already installed.
+#11 236.1 Package libgcc-14.2.1-7.amzn2023.0.2.aarch64 is already installed.
+#11 236.2 Package libstdc++-14.2.1-7.amzn2023.0.2.aarch64 is already installed.
+#11 236.2 Package ncurses-libs-6.6-1.amzn2023.0.1.aarch64 is already installed.
+#11 236.2 Package openssl-libs-1:3.5.7-2.amzn2023.0.2.aarch64 is already installed.
+#11 236.2 Package zlib-1.2.11-33.amzn2023.0.6.aarch64 is already installed.
+#11 236.2 Package tzdata-2026c-1.amzn2023.0.1.noarch is already installed.
+#11 237.4 Dependencies resolved.
+#11 237.9 ================================================================================
+#11 237.9  Package               Arch      Version                    Repository     Size
+#11 237.9 ================================================================================
+#11 237.9 Installing:
+#11 237.9  hostname              aarch64   3.23-4.amzn2023.0.3        amazonlinux    29 k
+#11 237.9  pam                   aarch64   1.5.1-8.amzn2023.0.8       amazonlinux   561 k
+#11 237.9  procps-ng             aarch64   3.3.17-1.amzn2023.0.2      amazonlinux   336 k
+#11 237.9  shadow-utils          aarch64   2:4.9-12.amzn2023.0.4      amazonlinux   1.1 M
+#11 237.9  sudo                  aarch64   1.9.15-1.p5.amzn2023.0.3   amazonlinux   1.2 M
+#11 237.9  util-linux            aarch64   2.37.4-1.amzn2023.0.6      amazonlinux   2.2 M
+#11 237.9 Installing dependencies:
+#11 237.9  cracklib              aarch64   2.9.6-27.amzn2023.0.2      amazonlinux    83 k
+#11 237.9  cyrus-sasl-lib        aarch64   2.1.27-18.amzn2023.0.3     amazonlinux   776 k
+#11 237.9  gzip                  aarch64   1.12-1.amzn2023.0.1        amazonlinux   158 k
+#11 237.9  libdb                 aarch64   5.3.28-49.amzn2023.0.2     amazonlinux   731 k
+#11 237.9  libeconf              aarch64   0.7.9-1.amzn2023.0.1       amazonlinux    36 k
+#11 237.9  libfdisk              aarch64   2.37.4-1.amzn2023.0.6      amazonlinux   148 k
+#11 237.9  libpwquality          aarch64   1.4.4-6.amzn2023.0.2       amazonlinux   106 k
+#11 237.9  libsemanage           aarch64   3.4-5.amzn2023.0.2         amazonlinux   119 k
+#11 237.9  libutempter           aarch64   1.2.1-4.amzn2023.0.2       amazonlinux    27 k
+#11 237.9  nano                  aarch64   8.3-1.amzn2023             amazonlinux   706 k
+#11 237.9  openldap              aarch64   2.4.57-6.amzn2023.0.7      amazonlinux   253 k
+#11 237.9  systemd-libs          aarch64   252.23-12.amzn2023         amazonlinux   586 k
+#11 237.9  util-linux-core       aarch64   2.37.4-1.amzn2023.0.6      amazonlinux   441 k
+#11 237.9 Installing weak dependencies:
+#11 237.9  nano-default-editor   noarch    8.3-1.amzn2023             amazonlinux    10 k
+#11 237.9  sudo-python-plugin    aarch64   1.9.15-1.p5.amzn2023.0.3   amazonlinux    54 k
+#11 237.9 
+#11 237.9 Transaction Summary
+#11 237.9 ================================================================================
+#11 237.9 Install  21 Packages
+#11 237.9 
+#11 237.9 Total download size: 9.6 M
+#11 238.0 Installed size: 73 M
+#11 238.0 Downloading Packages:
+#11 239.0 (1/21): cracklib-2.9.6-27.amzn2023.0.2.aarch64. 338 kB/s |  83 kB     00:00    
+#11 239.0 (2/21): gzip-1.12-1.amzn2023.0.1.aarch64.rpm    634 kB/s | 158 kB     00:00    
+#11 239.1 (3/21): hostname-3.23-4.amzn2023.0.3.aarch64.rp 1.6 MB/s |  29 kB     00:00    
+#11 239.1 (4/21): libdb-5.3.28-49.amzn2023.0.2.aarch64.rp  11 MB/s | 731 kB     00:00    
+#11 239.1 (5/21): libeconf-0.7.9-1.amzn2023.0.1.aarch64.r 625 kB/s |  36 kB     00:00    
+#11 239.1 (6/21): libfdisk-2.37.4-1.amzn2023.0.6.aarch64. 6.0 MB/s | 148 kB     00:00    
+#11 239.2 (7/21): libpwquality-1.4.4-6.amzn2023.0.2.aarch 3.5 MB/s | 106 kB     00:00    
+#11 239.2 (8/21): cyrus-sasl-lib-2.1.27-18.amzn2023.0.3.a 2.0 MB/s | 776 kB     00:00    
+#11 239.2 (9/21): libsemanage-3.4-5.amzn2023.0.2.aarch64. 2.8 MB/s | 119 kB     00:00    
+#11 239.2 (10/21): libutempter-1.2.1-4.amzn2023.0.2.aarch 871 kB/s |  27 kB     00:00    
+#11 239.2 (11/21): nano-8.3-1.amzn2023.aarch64.rpm         12 MB/s | 706 kB     00:00    
+#11 239.2 (12/21): nano-default-editor-8.3-1.amzn2023.noa 241 kB/s |  10 kB     00:00    
+#11 239.3 (13/21): openldap-2.4.57-6.amzn2023.0.7.aarch64 3.9 MB/s | 253 kB     00:00    
+#11 239.3 (14/21): pam-1.5.1-8.amzn2023.0.8.aarch64.rpm    10 MB/s | 561 kB     00:00    
+#11 239.3 (15/21): procps-ng-3.3.17-1.amzn2023.0.2.aarch6 4.6 MB/s | 336 kB     00:00    
+#11 239.4 (16/21): shadow-utils-4.9-12.amzn2023.0.4.aarch 9.8 MB/s | 1.1 MB     00:00    
+#11 239.4 (17/21): sudo-1.9.15-1.p5.amzn2023.0.3.aarch64. 8.5 MB/s | 1.2 MB     00:00    
+#11 239.4 (18/21): sudo-python-plugin-1.9.15-1.p5.amzn202 428 kB/s |  54 kB     00:00    
+#11 239.5 (19/21): systemd-libs-252.23-12.amzn2023.aarch6 5.6 MB/s | 586 kB     00:00    
+#11 239.6 (20/21): util-linux-2.37.4-1.amzn2023.0.6.aarch  15 MB/s | 2.2 MB     00:00    
+#11 239.6 (21/21): util-linux-core-2.37.4-1.amzn2023.0.6. 2.6 MB/s | 441 kB     00:00    
+#11 239.6 --------------------------------------------------------------------------------
+#11 239.6 Total                                           5.7 MB/s | 9.6 MB     00:01     
+#11 245.9 Running transaction check
+#11 246.2 Transaction check succeeded.
+#11 246.2 Running transaction test
+#11 247.0 Transaction test succeeded.
+#11 247.0 Running transaction
+#11 247.8   Preparing        :                                                        1/1 
+#11 248.0   Installing       : systemd-libs-252.23-12.amzn2023.aarch64               1/21 
+#11 248.2   Installing       : util-linux-core-2.37.4-1.amzn2023.0.6.aarch64         2/21 
+#11 248.3   Running scriptlet: util-linux-core-2.37.4-1.amzn2023.0.6.aarch64         2/21 
+#11 248.6   Installing       : nano-8.3-1.amzn2023.aarch64                           3/21 
+#11 248.6   Installing       : nano-default-editor-8.3-1.amzn2023.noarch             4/21 
+#11 248.7   Installing       : libsemanage-3.4-5.amzn2023.0.2.aarch64                5/21 
+#11 249.0   Installing       : shadow-utils-2:4.9-12.amzn2023.0.4.aarch64            6/21 
+#11 249.1   Running scriptlet: libutempter-1.2.1-4.amzn2023.0.2.aarch64              7/21 
+#11 249.4   Installing       : libutempter-1.2.1-4.amzn2023.0.2.aarch64              7/21 
+#11 249.4   Installing       : libfdisk-2.37.4-1.amzn2023.0.6.aarch64                8/21 
+#11 249.5   Installing       : libeconf-0.7.9-1.amzn2023.0.1.aarch64                 9/21 
+#11 249.5   Installing       : libdb-5.3.28-49.amzn2023.0.2.aarch64                 10/21 
+#11 249.6   Installing       : gzip-1.12-1.amzn2023.0.1.aarch64                     11/21 
+#11 249.7   Installing       : cracklib-2.9.6-27.amzn2023.0.2.aarch64               12/21 
+#11 250.1   Installing       : pam-1.5.1-8.amzn2023.0.8.aarch64                     13/21 
+#11 250.2   Installing       : libpwquality-1.4.4-6.amzn2023.0.2.aarch64            14/21 
+#11 250.4   Installing       : cyrus-sasl-lib-2.1.27-18.amzn2023.0.3.aarch64        15/21 
+#11 250.4   Installing       : openldap-2.4.57-6.amzn2023.0.7.aarch64               16/21 
+#11 250.4   Installing       : sudo-python-plugin-1.9.15-1.p5.amzn2023.0.3.aarch6   17/21 
+#11 250.7   Installing       : sudo-1.9.15-1.p5.amzn2023.0.3.aarch64                18/21 
+#11 251.5   Installing       : util-linux-2.37.4-1.amzn2023.0.6.aarch64             19/21 
+#11 251.5 warning: /etc/adjtime created as /etc/adjtime.rpmnew
+#11 251.5 
+#11 251.6   Running scriptlet: util-linux-2.37.4-1.amzn2023.0.6.aarch64             19/21 
+#11 252.0   Installing       : procps-ng-3.3.17-1.amzn2023.0.2.aarch64              20/21 
+#11 252.0   Installing       : hostname-3.23-4.amzn2023.0.3.aarch64                 21/21 
+#11 252.0   Running scriptlet: hostname-3.23-4.amzn2023.0.3.aarch64                 21/21 
+#11 252.1   Running scriptlet: pam-1.5.1-8.amzn2023.0.8.aarch64                     21/21 
+#11 252.4   Running scriptlet: hostname-3.23-4.amzn2023.0.3.aarch64                 21/21 
+#11 252.8   Verifying        : cracklib-2.9.6-27.amzn2023.0.2.aarch64                1/21 
+#11 252.8   Verifying        : cyrus-sasl-lib-2.1.27-18.amzn2023.0.3.aarch64         2/21 
+#11 252.8   Verifying        : gzip-1.12-1.amzn2023.0.1.aarch64                      3/21 
+#11 252.8   Verifying        : hostname-3.23-4.amzn2023.0.3.aarch64                  4/21 
+#11 252.8   Verifying        : libdb-5.3.28-49.amzn2023.0.2.aarch64                  5/21 
+#11 252.8   Verifying        : libeconf-0.7.9-1.amzn2023.0.1.aarch64                 6/21 
+#11 252.8   Verifying        : libfdisk-2.37.4-1.amzn2023.0.6.aarch64                7/21 
+#11 252.8   Verifying        : libpwquality-1.4.4-6.amzn2023.0.2.aarch64             8/21 
+#11 252.8   Verifying        : libsemanage-3.4-5.amzn2023.0.2.aarch64                9/21 
+#11 252.8   Verifying        : libutempter-1.2.1-4.amzn2023.0.2.aarch64             10/21 
+#11 252.8   Verifying        : nano-8.3-1.amzn2023.aarch64                          11/21 
+#11 252.8   Verifying        : nano-default-editor-8.3-1.amzn2023.noarch            12/21 
+#11 252.8   Verifying        : openldap-2.4.57-6.amzn2023.0.7.aarch64               13/21 
+#11 252.8   Verifying        : pam-1.5.1-8.amzn2023.0.8.aarch64                     14/21 
+#11 252.8   Verifying        : procps-ng-3.3.17-1.amzn2023.0.2.aarch64              15/21 
+#11 252.8   Verifying        : shadow-utils-2:4.9-12.amzn2023.0.4.aarch64           16/21 
+#11 252.8   Verifying        : sudo-1.9.15-1.p5.amzn2023.0.3.aarch64                17/21 
+#11 252.8   Verifying        : sudo-python-plugin-1.9.15-1.p5.amzn2023.0.3.aarch6   18/21 
+#11 252.8   Verifying        : systemd-libs-252.23-12.amzn2023.aarch64              19/21 
+#11 252.8   Verifying        : util-linux-2.37.4-1.amzn2023.0.6.aarch64             20/21 
+#11 252.8   Verifying        : util-linux-core-2.37.4-1.amzn2023.0.6.aarch64        21/21 
+#11 253.8 
+#11 253.8 Installed:
+#11 253.8   cracklib-2.9.6-27.amzn2023.0.2.aarch64                                        
+#11 253.8   cyrus-sasl-lib-2.1.27-18.amzn2023.0.3.aarch64                                 
+#11 253.8   gzip-1.12-1.amzn2023.0.1.aarch64                                              
+#11 253.8   hostname-3.23-4.amzn2023.0.3.aarch64                                          
+#11 253.8   libdb-5.3.28-49.amzn2023.0.2.aarch64                                          
+#11 253.8   libeconf-0.7.9-1.amzn2023.0.1.aarch64                                         
+#11 253.8   libfdisk-2.37.4-1.amzn2023.0.6.aarch64                                        
+#11 253.8   libpwquality-1.4.4-6.amzn2023.0.2.aarch64                                     
+#11 253.8   libsemanage-3.4-5.amzn2023.0.2.aarch64                                        
+#11 253.8   libutempter-1.2.1-4.amzn2023.0.2.aarch64                                      
+#11 253.8   nano-8.3-1.amzn2023.aarch64                                                   
+#11 253.8   nano-default-editor-8.3-1.amzn2023.noarch                                     
+#11 253.8   openldap-2.4.57-6.amzn2023.0.7.aarch64                                        
+#11 253.8   pam-1.5.1-8.amzn2023.0.8.aarch64                                              
+#11 253.8   procps-ng-3.3.17-1.amzn2023.0.2.aarch64                                       
+#11 253.8   shadow-utils-2:4.9-12.amzn2023.0.4.aarch64                                    
+#11 253.8   sudo-1.9.15-1.p5.amzn2023.0.3.aarch64                                         
+#11 253.8   sudo-python-plugin-1.9.15-1.p5.amzn2023.0.3.aarch64                           
+#11 253.8   systemd-libs-252.23-12.amzn2023.aarch64                                       
+#11 253.8   util-linux-2.37.4-1.amzn2023.0.6.aarch64                                      
+#11 253.8   util-linux-core-2.37.4-1.amzn2023.0.6.aarch64                                 
+#11 253.8 
+#11 253.8 Complete!
+#11 256.2 9 files removed
+#11 256.7 Verifying...                          ########################################
+#11 257.5 Preparing...                          ########################################
+#11 258.2 Updating / installing...
+#11 258.2 riak-3.4.0.OTP26-1.amzn2023           ########################################
+#11 DONE 263.1s
+
+#12 [final 1/4] RUN <<'OPENRIAK_IMAGE_SETUP' (set -eu...)
+#12 0.303 uid=999(riak) gid=999(riak) groups=999(riak)
+#12 DONE 0.5s
+
+#13 [final 2/4] COPY <<OPENRIAK_ENTRYPOINT /usr/local/bin/openriak-entrypoint
+#13 DONE 0.0s
+
+#14 [final 3/4] COPY <<OPENRIAK_HEALTHCHECK /usr/local/bin/openriak-healthcheck
+#14 DONE 0.0s
+
+#15 [final 4/4] RUN <<'OPENRIAK_SCRIPT_SETUP' (set -eu...)
+#15 DONE 0.2s
+
+#16 exporting to docker image format
+#16 exporting layers
+#16 exporting layers 4.0s done
+#16 exporting manifest sha256:c8e23fc207fb1ae51b3345f397515e29c3bc3182ec790029870a5ef358bc4d33 done
+#16 exporting config sha256:1f8eeabe8a19594d27385f8984f98894356df227281c461c1bd8210aa4ae61a1 done
+#16 sending tarball
+#16 ...
+
+#17 importing to docker
+#17 loading layer c2b85d287779 557.06kB / 55.34MB
+#17 loading layer 30038100fa5c 23.58kB / 23.58kB
+#17 loading layer c2b85d287779 557.06kB / 55.34MB 1.4s done
+#17 loading layer 30038100fa5c 23.58kB / 23.58kB 0.0s done
+#17 loading layer 359a77a9c70d 7.70kB / 7.70kB 0.0s done
+#17 loading layer be482cfc4cfa 389B / 389B 0.0s done
+#17 loading layer fd1a25ce3692 7.87kB / 7.87kB 0.0s done
+#17 DONE 1.4s
+
+#16 exporting to docker image format
+#16 sending tarball 2.4s done
+#16 DONE 6.4s
+
+timeout_seconds: 3600
+exit_code: 0

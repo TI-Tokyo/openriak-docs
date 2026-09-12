@@ -154,6 +154,27 @@ def archive_metadata(path, expected_platforms):
             'platforms': platforms, 'manifests': manifests}
 
 
+def approval_evidence(report):
+    """Compare test/export evidence independently of its publication location.
+
+    Only publication bookkeeping and the two canonical artifact URL forms may
+    differ. Filenames, hashes, inputs, test results, tags and all other fields
+    remain part of the exact comparison with the immutable run report.
+    """
+    evidence = dict(report)
+    evidence.pop('publication', None)
+    tag = report['image'].split(':', 1)[1]
+    artifacts = {}
+    for key, artifact in report['artifacts'].items():
+        filename = artifact['filename']
+        allowed = {f'./{filename}', f'downloads/docker/{report["version"]}/{tag}/{filename}'}
+        if artifact.get('url') not in allowed:
+            raise ValueError(f'Unexpected approved artifact URL: {key}')
+        artifacts[key] = {k: v for k, v in artifact.items() if k != 'url'}
+    evidence['artifacts'] = artifacts
+    return evidence
+
+
 def make_plan(options, tool):
     root = (options.cache_root or tool.MULTIARCH_CACHE_ROOT).expanduser().resolve()
     selected = tool.discover_targets(options.versions, os_id=options.os_id, otp=options.otp)
@@ -183,7 +204,7 @@ def make_plan(options, tool):
             history = root_group / 'runs' / approval['run_id']
             if not history.resolve().is_relative_to(root_group):
                 raise ValueError('Approval run path escapes cache')
-            if tool.read_json(history / 'report.json') != approval:
+            if approval_evidence(tool.read_json(history / 'report.json')) != approval_evidence(approval):
                 raise ValueError('Current report differs from its saved run report')
             if not any(s.get('name') == 'export_oci_image' and s.get('status') == 'passed' for s in approval.get('steps', [])):
                 raise ValueError('Approval has no successful OCI export')

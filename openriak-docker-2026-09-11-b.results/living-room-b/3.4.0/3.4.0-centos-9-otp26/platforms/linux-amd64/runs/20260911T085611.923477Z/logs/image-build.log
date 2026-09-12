@@ -1,0 +1,572 @@
+$ /usr/bin/docker buildx build --builder openriak-kv-multiarch --load --platform linux/amd64 --pull=false --no-cache --tag tiotjp/openriak-kv:test-3.4.0-centos-9-otp26-linux-amd64-20260911t085611.923477z --file /home/peter/openriak-builds/openriak-distributed/openriak-docker-2026-09-11-b/living-room-b/20260911T084617.243958Z/results/3.4.0/3.4.0-centos-9-otp26/platforms/linux-amd64/runs/20260911T085611.923477Z/Dockerfile /home/peter/openriak-builds/openriak-distributed/openriak-docker-2026-09-11-b/living-room-b/20260911T084617.243958Z/results/3.4.0/3.4.0-centos-9-otp26/platforms/linux-amd64/runs/20260911T085611.923477Z
+started: 2026-09-11T08:56:12Z
+#0 building with "openriak-kv-multiarch" instance using docker-container driver
+
+#1 [internal] load build definition from Dockerfile
+#1 transferring dockerfile: 43.84kB 0.0s done
+#1 DONE 0.1s
+
+#2 resolve image config for docker-image://docker.io/docker/dockerfile:1.7
+#2 DONE 0.3s
+
+#3 docker-image://docker.io/docker/dockerfile:1.7@sha256:a57df69d0ea827fb7266491f2813635de6f17269be881f696fbfdf2d83dda33e
+#3 resolve docker.io/docker/dockerfile:1.7@sha256:a57df69d0ea827fb7266491f2813635de6f17269be881f696fbfdf2d83dda33e 0.1s done
+#3 CACHED
+
+#4 [internal] load metadata for quay.io/centos/centos:stream9@sha256:7d3c87ab567add60d0153a6a17bc10d0f19cd982a2d533724298ebd1ee751eab
+#4 DONE 1.8s
+
+#5 [internal] load .dockerignore
+#5 transferring context:
+#5 transferring context: 2B done
+#5 DONE 0.2s
+
+#6 [internal] preparing inline document
+#6 CACHED
+
+#7 [internal] preparing inline document
+#7 CACHED
+
+#8 [install-amd64 1/2] FROM quay.io/centos/centos:stream9@sha256:7d3c87ab567add60d0153a6a17bc10d0f19cd982a2d533724298ebd1ee751eab
+#8 resolve quay.io/centos/centos:stream9@sha256:7d3c87ab567add60d0153a6a17bc10d0f19cd982a2d533724298ebd1ee751eab 0.1s done
+#8 DONE 0.4s
+
+#9 [download-amd64 1/1] ADD --checksum=sha256:72c02db420dc5a0cde5c27a2bd1813fc74e56b663f1167b9b7a0795fae5bfc77 https://files.tiot.jp/riak/kv/3.4/3.4.0/rhel/9/riak-3.4.0.OTP26-1.el9.x86_64.rpm /riak-3.4.0.OTP26-1.el9.x86_64.rpm
+#9 DONE 0.4s
+
+#10 [download-amd64 1/1] ADD --checksum=sha256:72c02db420dc5a0cde5c27a2bd1813fc74e56b663f1167b9b7a0795fae5bfc77 https://files.tiot.jp/riak/kv/3.4/3.4.0/rhel/9/riak-3.4.0.OTP26-1.el9.x86_64.rpm /riak-3.4.0.OTP26-1.el9.x86_64.rpm
+#10 DONE 0.2s
+
+#8 [install-amd64 1/2] FROM quay.io/centos/centos:stream9@sha256:7d3c87ab567add60d0153a6a17bc10d0f19cd982a2d533724298ebd1ee751eab
+#8 sha256:bd9ddc54bea929a22b334e73e026d4136e5b73f5cc29942896c72e4ece69b13d 34B / 34B 0.2s done
+#8 sha256:9e5a0b848a1809b6157ce2eb5785ce64af89ac64351c3bb2352ee788b33b56a0 0B / 66.49MB 0.3s
+#8 sha256:9e5a0b848a1809b6157ce2eb5785ce64af89ac64351c3bb2352ee788b33b56a0 6.29MB / 66.49MB 0.5s
+#8 sha256:9e5a0b848a1809b6157ce2eb5785ce64af89ac64351c3bb2352ee788b33b56a0 23.07MB / 66.49MB 0.6s
+#8 sha256:9e5a0b848a1809b6157ce2eb5785ce64af89ac64351c3bb2352ee788b33b56a0 39.85MB / 66.49MB 0.8s
+#8 sha256:9e5a0b848a1809b6157ce2eb5785ce64af89ac64351c3bb2352ee788b33b56a0 55.57MB / 66.49MB 0.9s
+#8 sha256:9e5a0b848a1809b6157ce2eb5785ce64af89ac64351c3bb2352ee788b33b56a0 66.49MB / 66.49MB 1.1s
+#8 sha256:9e5a0b848a1809b6157ce2eb5785ce64af89ac64351c3bb2352ee788b33b56a0 66.49MB / 66.49MB 1.9s done
+#8 extracting sha256:9e5a0b848a1809b6157ce2eb5785ce64af89ac64351c3bb2352ee788b33b56a0
+#8 extracting sha256:9e5a0b848a1809b6157ce2eb5785ce64af89ac64351c3bb2352ee788b33b56a0 1.8s done
+#8 DONE 4.2s
+
+#8 [install-amd64 1/2] FROM quay.io/centos/centos:stream9@sha256:7d3c87ab567add60d0153a6a17bc10d0f19cd982a2d533724298ebd1ee751eab
+#8 extracting sha256:bd9ddc54bea929a22b334e73e026d4136e5b73f5cc29942896c72e4ece69b13d 0.1s done
+#8 DONE 4.3s
+
+#11 [install-amd64 2/2] RUN --mount=type=bind,from=download-amd64,target=/opt/openriak-package,ro <<'OPENRIAK_PACKAGE_INSTALL' (set -eu...)
+#11 1.090 CentOS Stream 9 - BaseOS                         15 MB/s | 8.9 MB     00:00    
+#11 5.709 CentOS Stream 9 - AppStream                     8.6 MB/s |  28 MB     00:03    
+#11 12.09 CentOS Stream 9 - Extras packages                35 kB/s |  22 kB     00:00    
+#11 13.46 Dependencies resolved.
+#11 13.47 ================================================================================
+#11 13.47  Package                  Arch     Version                       Repo      Size
+#11 13.47 ================================================================================
+#11 13.47 Installing:
+#11 13.47  bash                     x86_64   5.1.8-9.el9                   baseos   1.7 M
+#11 13.47  ca-certificates          noarch   2026.2.90_v9.0.316-90.0.el9   baseos   1.0 M
+#11 13.47  centos-stream-release    noarch   9.0-38.el9                    baseos    24 k
+#11 13.47  coreutils                x86_64   8.32-43.el9                   baseos   1.2 M
+#11 13.47  findutils                x86_64   1:4.8.0-7.el9                 baseos   547 k
+#11 13.47  gawk                     x86_64   5.1.0-7.el9                   baseos   1.0 M
+#11 13.47  glibc                    x86_64   2.34-277.el9                  baseos   2.0 M
+#11 13.47  glibc-minimal-langpack   x86_64   2.34-277.el9                  baseos    23 k
+#11 13.47  grep                     x86_64   3.6-5.el9                     baseos   269 k
+#11 13.47  hostname                 x86_64   3.23-6.el9                    baseos    29 k
+#11 13.47  libgcc                   x86_64   11.5.0-15.el9                 baseos    84 k
+#11 13.47  libstdc++                x86_64   11.5.0-15.el9                 baseos   744 k
+#11 13.47  ncurses-libs             x86_64   6.2-12.20210508.el9           baseos   328 k
+#11 13.47  openssl-libs             x86_64   1:3.5.8-1.el9                 baseos   2.3 M
+#11 13.47  pam                      x86_64   1.5.1-30.el9                  baseos   624 k
+#11 13.47  procps-ng                x86_64   3.3.17-15.el9                 baseos   345 k
+#11 13.47  sed                      x86_64   4.8-10.el9                    baseos   303 k
+#11 13.47  shadow-utils             x86_64   2:4.9-17.el9                  baseos   1.2 M
+#11 13.47  sudo                     x86_64   1.9.17p2-4.el9                baseos   1.3 M
+#11 13.47  tzdata                   noarch   2026c-1.el9                   baseos   905 k
+#11 13.47  util-linux               x86_64   2.37.4-27.el9                 baseos   2.3 M
+#11 13.47  zlib                     x86_64   1.2.11-41.el9                 baseos    91 k
+#11 13.47 Installing dependencies:
+#11 13.47  alternatives             x86_64   1.24-2.el9                    baseos    39 k
+#11 13.47  audit-libs               x86_64   3.1.5-9.el9                   baseos   120 k
+#11 13.47  basesystem               noarch   11-13.el9                     baseos   3.9 k
+#11 13.47  bzip2-libs               x86_64   1.0.8-11.el9                  baseos    39 k
+#11 13.47  centos-gpg-keys          noarch   9.0-38.el9                    baseos    24 k
+#11 13.47  centos-stream-repos      noarch   9.0-38.el9                    baseos   8.9 k
+#11 13.47  coreutils-common         x86_64   8.32-43.el9                   baseos   2.0 M
+#11 13.47  cracklib                 x86_64   2.9.6-28.el9                  baseos    93 k
+#11 13.47  cracklib-dicts           x86_64   2.9.6-28.el9                  baseos   3.6 M
+#11 13.47  crypto-policies          noarch   20260714-1.git65b74f7.el9     baseos    89 k
+#11 13.47  cyrus-sasl-lib           x86_64   2.1.27-21.el9                 baseos   769 k
+#11 13.47  filesystem               x86_64   3.16-5.el9                    baseos   4.8 M
+#11 13.47  gdbm-libs                x86_64   1:1.23-1.el9                  baseos    56 k
+#11 13.47  glibc-common             x86_64   2.34-277.el9                  baseos   307 k
+#11 13.47  gmp                      x86_64   1:6.2.0-13.el9                baseos   315 k
+#11 13.47  gzip                     x86_64   1.12-2.el9                    baseos   161 k
+#11 13.47  keyutils-libs            x86_64   1.6.3-1.el9                   baseos    32 k
+#11 13.47  krb5-libs                x86_64   1.21.1-10.el9                 baseos   765 k
+#11 13.47  libacl                   x86_64   2.4.0-2.el9                   baseos    24 k
+#11 13.47  libattr                  x86_64   2.6.0-2.el9                   baseos    17 k
+#11 13.47  libblkid                 x86_64   2.37.4-27.el9                 baseos   105 k
+#11 13.47  libcap                   x86_64   2.48-10.el9                   baseos    70 k
+#11 13.47  libcap-ng                x86_64   0.8.2-7.el9                   baseos    33 k
+#11 13.47  libcom_err               x86_64   1.46.5-8.el9                  baseos    26 k
+#11 13.47  libdb                    x86_64   5.3.28-57.el9                 baseos   735 k
+#11 13.47  libeconf                 x86_64   0.4.1-7.el9                   baseos    26 k
+#11 13.47  libevent                 x86_64   2.1.12-8.el9                  baseos   262 k
+#11 13.47  libfdisk                 x86_64   2.37.4-27.el9                 baseos   151 k
+#11 13.47  libffi                   x86_64   3.4.2-8.el9                   baseos    38 k
+#11 13.47  libgcrypt                x86_64   1.10.0-13.el9                 baseos   505 k
+#11 13.47  libgpg-error             x86_64   1.42-5.el9                    baseos   216 k
+#11 13.47  libmount                 x86_64   2.37.4-27.el9                 baseos   132 k
+#11 13.47  libpwquality             x86_64   1.4.4-8.el9                   baseos   119 k
+#11 13.47  libselinux               x86_64   3.6-4.el9                     baseos    84 k
+#11 13.47  libsemanage              x86_64   3.6-5.el9                     baseos   118 k
+#11 13.47  libsepol                 x86_64   3.6-3.el9                     baseos   329 k
+#11 13.47  libsigsegv               x86_64   2.13-4.el9                    baseos    27 k
+#11 13.47  libsmartcols             x86_64   2.37.4-27.el9                 baseos    60 k
+#11 13.47  libtasn1                 x86_64   4.16.0-10.el9                 baseos    73 k
+#11 13.47  libtool-ltdl             x86_64   2.4.6-46.el9                  baseos    36 k
+#11 13.47  libutempter              x86_64   1.2.1-6.el9                   baseos    27 k
+#11 13.47  libuuid                  x86_64   2.37.4-27.el9                 baseos    25 k
+#11 13.47  libverto                 x86_64   0.3.2-3.el9                   baseos    22 k
+#11 13.47  libxcrypt                x86_64   4.4.18-3.el9                  baseos   116 k
+#11 13.47  libzstd                  x86_64   1.5.5-1.el9                   baseos   295 k
+#11 13.47  lz4-libs                 x86_64   1.9.3-5.el9                   baseos    68 k
+#11 13.47  mpfr                     x86_64   4.1.0-10.el9                  baseos   324 k
+#11 13.47  ncurses-base             noarch   6.2-12.20210508.el9           baseos    95 k
+#11 13.47  openldap                 x86_64   2.6.13-1.el9                  baseos   285 k
+#11 13.47  openssl                  x86_64   1:3.5.8-1.el9                 baseos   1.5 M
+#11 13.47  openssl-fips-provider    x86_64   1:3.5.8-1.el9                 baseos   812 k
+#11 13.47  p11-kit                  x86_64   0.26.4-1.el9                  baseos   609 k
+#11 13.47  p11-kit-trust            x86_64   0.26.4-1.el9                  baseos   156 k
+#11 13.47  pcre                     x86_64   8.44-4.el9                    baseos   197 k
+#11 13.47  pcre2                    x86_64   10.40-6.el9                   baseos   234 k
+#11 13.47  pcre2-syntax             noarch   10.40-6.el9                   baseos   141 k
+#11 13.47  readline                 x86_64   8.1-4.el9                     baseos   212 k
+#11 13.47  setup                    noarch   2.13.7-10.el9                 baseos   146 k
+#11 13.47  systemd-libs             x86_64   252-78.el9                    baseos   642 k
+#11 13.47  util-linux-core          x86_64   2.37.4-27.el9                 baseos   456 k
+#11 13.47  xz-libs                  x86_64   5.2.5-8.el9                   baseos    93 k
+#11 13.47 
+#11 13.47 Transaction Summary
+#11 13.47 ================================================================================
+#11 13.47 Install  83 Packages
+#11 13.47 
+#11 13.48 Total download size: 41 M
+#11 13.48 Installed size: 115 M
+#11 13.48 Downloading Packages:
+#11 13.79 (1/83): basesystem-11-13.el9.noarch.rpm          79 kB/s | 3.9 kB     00:00    
+#11 13.79 (2/83): alternatives-1.24-2.el9.x86_64.rpm      725 kB/s |  39 kB     00:00    
+#11 13.81 (3/83): audit-libs-3.1.5-9.el9.x86_64.rpm       1.7 MB/s | 120 kB     00:00    
+#11 13.82 (4/83): bzip2-libs-1.0.8-11.el9.x86_64.rpm      1.3 MB/s |  39 kB     00:00    
+#11 13.84 (5/83): centos-gpg-keys-9.0-38.el9.noarch.rpm   1.4 MB/s |  24 kB     00:00    
+#11 13.87 (6/83): centos-stream-release-9.0-38.el9.noarch 861 kB/s |  24 kB     00:00    
+#11 13.87 (7/83): centos-stream-repos-9.0-38.el9.noarch.r 1.7 MB/s | 8.9 kB     00:00    
+#11 13.90 (8/83): ca-certificates-2026.2.90_v9.0.316-90.0  10 MB/s | 1.0 MB     00:00    
+#11 13.94 (9/83): bash-5.1.8-9.el9.x86_64.rpm              11 MB/s | 1.7 MB     00:00    
+#11 13.98 (10/83): coreutils-8.32-43.el9.x86_64.rpm        11 MB/s | 1.2 MB     00:00    
+#11 13.99 (11/83): cracklib-2.9.6-28.el9.x86_64.rpm       2.1 MB/s |  93 kB     00:00    
+#11 14.02 (12/83): crypto-policies-20260714-1.git65b74f7. 2.7 MB/s |  89 kB     00:00    
+#11 14.07 (13/83): coreutils-common-8.32-43.el9.x86_64.rp  13 MB/s | 2.0 MB     00:00    
+#11 14.09 (14/83): cyrus-sasl-lib-2.1.27-21.el9.x86_64.rp  11 MB/s | 769 kB     00:00    
+#11 14.19 (15/83): cracklib-dicts-2.9.6-28.el9.x86_64.rpm  18 MB/s | 3.6 MB     00:00    
+#11 14.22 (16/83): findutils-4.8.0-7.el9.x86_64.rpm       4.2 MB/s | 547 kB     00:00    
+#11 14.24 (17/83): gdbm-libs-1.23-1.el9.x86_64.rpm        3.6 MB/s |  56 kB     00:00    
+#11 14.28 (18/83): gawk-5.1.0-7.el9.x86_64.rpm             11 MB/s | 1.0 MB     00:00    
+#11 14.32 (19/83): glibc-common-2.34-277.el9.x86_64.rpm   9.0 MB/s | 307 kB     00:00    
+#11 14.35 (20/83): glibc-minimal-langpack-2.34-277.el9.x8 871 kB/s |  23 kB     00:00    
+#11 14.38 (21/83): gmp-6.2.0-13.el9.x86_64.rpm            8.3 MB/s | 315 kB     00:00    
+#11 14.49 (22/83): filesystem-3.16-5.el9.x86_64.rpm        11 MB/s | 4.8 MB     00:00    
+#11 14.57 (23/83): glibc-2.34-277.el9.x86_64.rpm          6.0 MB/s | 2.0 MB     00:00    
+#11 14.58 (24/83): gzip-1.12-2.el9.x86_64.rpm             1.7 MB/s | 161 kB     00:00    
+#11 14.62 (25/83): grep-3.6-5.el9.x86_64.rpm              1.1 MB/s | 269 kB     00:00    
+#11 14.62 (26/83): hostname-3.23-6.el9.x86_64.rpm         511 kB/s |  29 kB     00:00    
+#11 14.64 (27/83): keyutils-libs-1.6.3-1.el9.x86_64.rpm   629 kB/s |  32 kB     00:00    
+#11 14.64 (28/83): libacl-2.4.0-2.el9.x86_64.rpm          1.7 MB/s |  24 kB     00:00    
+#11 14.66 (29/83): libattr-2.6.0-2.el9.x86_64.rpm         752 kB/s |  17 kB     00:00    
+#11 14.68 (30/83): libblkid-2.37.4-27.el9.x86_64.rpm      2.8 MB/s | 105 kB     00:00    
+#11 14.71 (31/83): libcap-2.48-10.el9.x86_64.rpm          1.4 MB/s |  70 kB     00:00    
+#11 14.72 (32/83): libcap-ng-0.8.2-7.el9.x86_64.rpm       833 kB/s |  33 kB     00:00    
+#11 14.74 (33/83): libcom_err-1.46.5-8.el9.x86_64.rpm     1.0 MB/s |  26 kB     00:00    
+#11 14.76 (34/83): libeconf-0.4.1-7.el9.x86_64.rpm        1.4 MB/s |  26 kB     00:00    
+#11 14.81 (35/83): krb5-libs-1.21.1-10.el9.x86_64.rpm     4.1 MB/s | 765 kB     00:00    
+#11 14.84 (36/83): libevent-2.1.12-8.el9.x86_64.rpm       3.4 MB/s | 262 kB     00:00    
+#11 14.86 (37/83): libfdisk-2.37.4-27.el9.x86_64.rpm      2.9 MB/s | 151 kB     00:00    
+#11 14.87 (38/83): libffi-3.4.2-8.el9.x86_64.rpm          1.2 MB/s |  38 kB     00:00    
+#11 14.89 (39/83): libgcc-11.5.0-15.el9.x86_64.rpm        2.6 MB/s |  84 kB     00:00    
+#11 14.92 (40/83): libdb-5.3.28-57.el9.x86_64.rpm         3.6 MB/s | 735 kB     00:00    
+#11 14.96 (41/83): libgpg-error-1.42-5.el9.x86_64.rpm     3.3 MB/s | 216 kB     00:00    
+#11 14.98 (42/83): libmount-2.37.4-27.el9.x86_64.rpm      2.4 MB/s | 132 kB     00:00    
+#11 15.00 (43/83): libpwquality-1.4.4-8.el9.x86_64.rpm    2.8 MB/s | 119 kB     00:00    
+#11 15.02 (44/83): libselinux-3.6-4.el9.x86_64.rpm        2.4 MB/s |  84 kB     00:00    
+#11 15.05 (45/83): libgcrypt-1.10.0-13.el9.x86_64.rpm     2.8 MB/s | 505 kB     00:00    
+#11 15.07 (46/83): libsemanage-3.6-5.el9.x86_64.rpm       1.8 MB/s | 118 kB     00:00    
+#11 15.07 (47/83): libsigsegv-2.13-4.el9.x86_64.rpm       1.0 MB/s |  27 kB     00:00    
+#11 15.10 (48/83): libsmartcols-2.37.4-27.el9.x86_64.rpm  2.4 MB/s |  60 kB     00:00    
+#11 15.13 (49/83): libtasn1-4.16.0-10.el9.x86_64.rpm      2.5 MB/s |  73 kB     00:00    
+#11 15.14 (50/83): libsepol-3.6-3.el9.x86_64.rpm          2.6 MB/s | 329 kB     00:00    
+#11 15.16 (51/83): libtool-ltdl-2.4.6-46.el9.x86_64.rpm   1.1 MB/s |  36 kB     00:00    
+#11 15.17 (52/83): libutempter-1.2.1-6.el9.x86_64.rpm     937 kB/s |  27 kB     00:00    
+#11 15.18 (53/83): libuuid-2.37.4-27.el9.x86_64.rpm       1.4 MB/s |  25 kB     00:00    
+#11 15.20 (54/83): libverto-0.3.2-3.el9.x86_64.rpm        802 kB/s |  22 kB     00:00    
+#11 15.22 (55/83): libxcrypt-4.4.18-3.el9.x86_64.rpm      2.9 MB/s | 116 kB     00:00    
+#11 15.24 (56/83): lz4-libs-1.9.3-5.el9.x86_64.rpm        3.2 MB/s |  68 kB     00:00    
+#11 15.27 (57/83): libzstd-1.5.5-1.el9.x86_64.rpm         4.6 MB/s | 295 kB     00:00    
+#11 15.30 (58/83): libstdc++-11.5.0-15.el9.x86_64.rpm     3.2 MB/s | 744 kB     00:00    
+#11 15.32 (59/83): ncurses-base-6.2-12.20210508.el9.noarc 1.8 MB/s |  95 kB     00:00    
+#11 15.34 (60/83): mpfr-4.1.0-10.el9.x86_64.rpm           3.3 MB/s | 324 kB     00:00    
+#11 15.37 (61/83): ncurses-libs-6.2-12.20210508.el9.x86_6 5.0 MB/s | 328 kB     00:00    
+#11 15.40 (62/83): openldap-2.6.13-1.el9.x86_64.rpm       3.7 MB/s | 285 kB     00:00    
+#11 15.45 (63/83): openssl-fips-provider-3.5.8-1.el9.x86_  10 MB/s | 812 kB     00:00    
+#11 15.50 (64/83): openssl-3.5.8-1.el9.x86_64.rpm         9.5 MB/s | 1.5 MB     00:00    
+#11 15.53 (65/83): p11-kit-0.26.4-1.el9.x86_64.rpm        7.8 MB/s | 609 kB     00:00    
+#11 15.54 (66/83): p11-kit-trust-0.26.4-1.el9.x86_64.rpm  3.8 MB/s | 156 kB     00:00    
+#11 15.56 (67/83): pcre-8.44-4.el9.x86_64.rpm              10 MB/s | 197 kB     00:00    
+#11 15.60 (68/83): pam-1.5.1-30.el9.x86_64.rpm            8.8 MB/s | 624 kB     00:00    
+#11 15.61 (69/83): pcre2-10.40-6.el9.x86_64.rpm           4.9 MB/s | 234 kB     00:00    
+#11 15.66 (70/83): openssl-libs-3.5.8-1.el9.x86_64.rpm    8.8 MB/s | 2.3 MB     00:00    
+#11 15.67 (71/83): pcre2-syntax-10.40-6.el9.noarch.rpm    1.9 MB/s | 141 kB     00:00    
+#11 15.70 (72/83): readline-8.1-4.el9.x86_64.rpm          5.9 MB/s | 212 kB     00:00    
+#11 15.72 (73/83): procps-ng-3.3.17-15.el9.x86_64.rpm     3.1 MB/s | 345 kB     00:00    
+#11 15.74 (74/83): setup-2.13.7-10.el9.noarch.rpm         3.2 MB/s | 146 kB     00:00    
+#11 15.76 (75/83): sed-4.8-10.el9.x86_64.rpm              3.6 MB/s | 303 kB     00:00    
+#11 15.80 (76/83): systemd-libs-252-78.el9.x86_64.rpm      14 MB/s | 642 kB     00:00    
+#11 15.84 (77/83): shadow-utils-4.9-17.el9.x86_64.rpm      10 MB/s | 1.2 MB     00:00    
+#11 15.88 (78/83): sudo-1.9.17p2-4.el9.x86_64.rpm         9.9 MB/s | 1.3 MB     00:00    
+#11 15.92 (79/83): util-linux-core-2.37.4-27.el9.x86_64.r  12 MB/s | 456 kB     00:00    
+#11 15.95 (80/83): tzdata-2026c-1.el9.noarch.rpm          6.1 MB/s | 905 kB     00:00    
+#11 15.97 (81/83): xz-libs-5.2.5-8.el9.x86_64.rpm         1.9 MB/s |  93 kB     00:00    
+#11 15.98 (82/83): zlib-1.2.11-41.el9.x86_64.rpm          2.6 MB/s |  91 kB     00:00    
+#11 16.06 (83/83): util-linux-2.37.4-27.el9.x86_64.rpm     10 MB/s | 2.3 MB     00:00    
+#11 16.06 --------------------------------------------------------------------------------
+#11 16.06 Total                                            16 MB/s |  41 MB     00:02     
+#11 16.10 CentOS Stream 9 - BaseOS                        1.6 MB/s | 1.6 kB     00:00    
+#11 16.20 Importing GPG key 0x8483C65D:
+#11 16.20  Userid     : "CentOS (CentOS Official Signing Key) <security@centos.org>"
+#11 16.20  Fingerprint: 99DB 70FA E1D7 CE22 7FB6 4882 05B5 55B3 8483 C65D
+#11 16.20  From       : /etc/pki/rpm-gpg/RPM-GPG-KEY-centosofficial
+#11 16.23 Key imported successfully
+#11 17.37 Running transaction check
+#11 17.43 Transaction check succeeded.
+#11 17.43 Running transaction test
+#11 18.31 Transaction test succeeded.
+#11 18.31 Running transaction
+#11 21.55   Running scriptlet: filesystem-3.16-5.el9.x86_64                           1/1 
+#11 21.93   Preparing        :                                                        1/1 
+#11 22.09   Installing       : tzdata-2026c-1.el9.noarch                             1/83 
+#11 22.16   Installing       : pcre2-syntax-10.40-6.el9.noarch                       2/83 
+#11 22.22   Installing       : ncurses-base-6.2-12.20210508.el9.noarch               3/83 
+#11 22.25   Installing       : coreutils-common-8.32-43.el9.x86_64                   4/83 
+#11 22.28   Installing       : centos-gpg-keys-9.0-38.el9.noarch                     5/83 
+#11 22.32   Installing       : centos-stream-repos-9.0-38.el9.noarch                 6/83 
+#11 22.33   Installing       : centos-stream-release-9.0-38.el9.noarch               7/83 
+#11 22.36   Installing       : setup-2.13.7-10.el9.noarch                            8/83 
+#11 22.38   Running scriptlet: setup-2.13.7-10.el9.noarch                            8/83 
+#11 22.44   Installing       : filesystem-3.16-5.el9.x86_64                          9/83 
+#11 22.61   Installing       : basesystem-11-13.el9.noarch                          10/83 
+#11 22.67   Installing       : ncurses-libs-6.2-12.20210508.el9.x86_64              11/83 
+#11 22.71   Installing       : bash-5.1.8-9.el9.x86_64                              12/83 
+#11 22.73   Running scriptlet: bash-5.1.8-9.el9.x86_64                              12/83 
+#11 22.74   Installing       : libgcc-11.5.0-15.el9.x86_64                          13/83 
+#11 22.75   Running scriptlet: libgcc-11.5.0-15.el9.x86_64                          13/83 
+#11 22.75   Installing       : glibc-minimal-langpack-2.34-277.el9.x86_64           14/83 
+#11 22.78   Installing       : glibc-common-2.34-277.el9.x86_64                     15/83 
+#11 22.80   Running scriptlet: glibc-2.34-277.el9.x86_64                            16/83 
+#11 22.85   Installing       : glibc-2.34-277.el9.x86_64                            16/83 
+#11 22.87   Running scriptlet: glibc-2.34-277.el9.x86_64                            16/83 
+#11 23.52   Installing       : libuuid-2.37.4-27.el9.x86_64                         17/83 
+#11 23.54   Installing       : libxcrypt-4.4.18-3.el9.x86_64                        18/83 
+#11 23.57   Installing       : zlib-1.2.11-41.el9.x86_64                            19/83 
+#11 23.58   Installing       : gmp-1:6.2.0-13.el9.x86_64                            20/83 
+#11 23.61   Installing       : libacl-2.4.0-2.el9.x86_64                            21/83 
+#11 23.62   Installing       : libattr-2.6.0-2.el9.x86_64                           22/83 
+#11 23.66   Installing       : libcap-2.48-10.el9.x86_64                            23/83 
+#11 23.69   Installing       : libcap-ng-0.8.2-7.el9.x86_64                         24/83 
+#11 23.72   Installing       : audit-libs-3.1.5-9.el9.x86_64                        25/83 
+#11 23.74   Installing       : libcom_err-1.46.5-8.el9.x86_64                       26/83 
+#11 23.77   Installing       : libffi-3.4.2-8.el9.x86_64                            27/83 
+#11 23.80   Installing       : libsepol-3.6-3.el9.x86_64                            28/83 
+#11 23.83   Installing       : libsigsegv-2.13-4.el9.x86_64                         29/83 
+#11 23.85   Installing       : libsmartcols-2.37.4-27.el9.x86_64                    30/83 
+#11 23.88   Installing       : libtasn1-4.16.0-10.el9.x86_64                        31/83 
+#11 23.94   Installing       : p11-kit-0.26.4-1.el9.x86_64                          32/83 
+#11 23.96   Installing       : readline-8.1-4.el9.x86_64                            33/83 
+#11 23.99   Installing       : crypto-policies-20260714-1.git65b74f7.el9.noarch     34/83 
+#11 24.01   Running scriptlet: crypto-policies-20260714-1.git65b74f7.el9.noarch     34/83 
+#11 24.02   Installing       : mpfr-4.1.0-10.el9.x86_64                             35/83 
+#11 24.05   Installing       : gawk-5.1.0-7.el9.x86_64                              36/83 
+#11 24.07   Installing       : alternatives-1.24-2.el9.x86_64                       37/83 
+#11 24.10   Installing       : p11-kit-trust-0.26.4-1.el9.x86_64                    38/83 
+#11 24.12   Running scriptlet: p11-kit-trust-0.26.4-1.el9.x86_64                    38/83 
+#11 24.47   Installing       : bzip2-libs-1.0.8-11.el9.x86_64                       39/83 
+#11 24.49   Installing       : gdbm-libs-1:1.23-1.el9.x86_64                        40/83 
+#11 24.50   Installing       : keyutils-libs-1.6.3-1.el9.x86_64                     41/83 
+#11 24.54   Installing       : libdb-5.3.28-57.el9.x86_64                           42/83 
+#11 24.56   Installing       : libeconf-0.4.1-7.el9.x86_64                          43/83 
+#11 24.58   Installing       : libgpg-error-1.42-5.el9.x86_64                       44/83 
+#11 24.60   Installing       : libgcrypt-1.10.0-13.el9.x86_64                       45/83 
+#11 24.63   Installing       : libtool-ltdl-2.4.6-46.el9.x86_64                     46/83 
+#11 24.65   Installing       : libverto-0.3.2-3.el9.x86_64                          47/83 
+#11 24.67   Installing       : libzstd-1.5.5-1.el9.x86_64                           48/83 
+#11 24.69   Installing       : lz4-libs-1.9.3-5.el9.x86_64                          49/83 
+#11 24.71   Installing       : pcre-8.44-4.el9.x86_64                               50/83 
+#11 24.72   Installing       : grep-3.6-5.el9.x86_64                                51/83 
+#11 24.73   Installing       : pcre2-10.40-6.el9.x86_64                             52/83 
+#11 24.73   Installing       : libselinux-3.6-4.el9.x86_64                          53/83 
+#11 24.74   Installing       : sed-4.8-10.el9.x86_64                                54/83 
+#11 24.75   Installing       : findutils-1:4.8.0-7.el9.x86_64                       55/83 
+#11 24.76   Installing       : openssl-fips-provider-1:3.5.8-1.el9.x86_64           56/83 
+#11 24.81   Installing       : openssl-libs-1:3.5.8-1.el9.x86_64                    57/83 
+#11 24.86   Installing       : coreutils-8.32-43.el9.x86_64                         58/83 
+#11 24.87   Running scriptlet: ca-certificates-2026.2.90_v9.0.316-90.0.el9.noarch   59/83 
+#11 25.20   Installing       : ca-certificates-2026.2.90_v9.0.316-90.0.el9.noarch   59/83 
+#11 25.21   Running scriptlet: ca-certificates-2026.2.90_v9.0.316-90.0.el9.noarch   59/83 
+#11 26.59   Installing       : libblkid-2.37.4-27.el9.x86_64                        60/83 
+#11 26.59   Running scriptlet: libblkid-2.37.4-27.el9.x86_64                        60/83 
+#11 26.92   Installing       : libmount-2.37.4-27.el9.x86_64                        61/83 
+#11 27.04   Installing       : libfdisk-2.37.4-27.el9.x86_64                        62/83 
+#11 27.06   Installing       : gzip-1.12-2.el9.x86_64                               63/83 
+#11 27.07   Installing       : cracklib-2.9.6-28.el9.x86_64                         64/83 
+#11 27.14   Installing       : cracklib-dicts-2.9.6-28.el9.x86_64                   65/83 
+#11 27.16   Installing       : krb5-libs-1.21.1-10.el9.x86_64                       66/83 
+#11 27.17   Installing       : cyrus-sasl-lib-2.1.27-21.el9.x86_64                  67/83 
+#11 27.19   Installing       : openssl-1:3.5.8-1.el9.x86_64                         68/83 
+#11 27.20   Installing       : libpwquality-1.4.4-8.el9.x86_64                      69/83 
+#11 27.23   Installing       : pam-1.5.1-30.el9.x86_64                              70/83 
+#11 27.24   Installing       : libevent-2.1.12-8.el9.x86_64                         71/83 
+#11 27.24   Installing       : libsemanage-3.6-5.el9.x86_64                         72/83 
+#11 27.27   Installing       : shadow-utils-2:4.9-17.el9.x86_64                     73/83 
+#11 27.27   Running scriptlet: libutempter-1.2.1-6.el9.x86_64                       74/83 
+#11 27.61   Installing       : libutempter-1.2.1-6.el9.x86_64                       74/83 
+#11 27.62   Installing       : openldap-2.6.13-1.el9.x86_64                         75/83 
+#11 27.63   Installing       : xz-libs-5.2.5-8.el9.x86_64                           76/83 
+#11 27.64   Installing       : systemd-libs-252-78.el9.x86_64                       77/83 
+#11 27.64   Running scriptlet: systemd-libs-252-78.el9.x86_64                       77/83 
+#11 27.99   Installing       : util-linux-core-2.37.4-27.el9.x86_64                 78/83 
+#11 27.99   Running scriptlet: util-linux-core-2.37.4-27.el9.x86_64                 78/83 
+#11 28.37   Installing       : util-linux-2.37.4-27.el9.x86_64                      79/83 
+#11 28.38   Installing       : procps-ng-3.3.17-15.el9.x86_64                       80/83 
+#11 28.41   Installing       : sudo-1.9.17p2-4.el9.x86_64                           81/83 
+#11 28.41   Running scriptlet: sudo-1.9.17p2-4.el9.x86_64                           81/83 
+#11 28.73   Installing       : hostname-3.23-6.el9.x86_64                           82/83 
+#11 28.73   Running scriptlet: hostname-3.23-6.el9.x86_64                           82/83 
+#11 29.07   Installing       : libstdc++-11.5.0-15.el9.x86_64                       83/83 
+#11 29.12   Running scriptlet: filesystem-3.16-5.el9.x86_64                         83/83 
+#11 29.45   Running scriptlet: ca-certificates-2026.2.90_v9.0.316-90.0.el9.noarch   83/83 
+#11 30.85   Running scriptlet: libstdc++-11.5.0-15.el9.x86_64                       83/83 
+#11 31.31   Verifying        : alternatives-1.24-2.el9.x86_64                        1/83 
+#11 31.31   Verifying        : audit-libs-3.1.5-9.el9.x86_64                         2/83 
+#11 31.31   Verifying        : basesystem-11-13.el9.noarch                           3/83 
+#11 31.31   Verifying        : bash-5.1.8-9.el9.x86_64                               4/83 
+#11 31.31   Verifying        : bzip2-libs-1.0.8-11.el9.x86_64                        5/83 
+#11 31.31   Verifying        : ca-certificates-2026.2.90_v9.0.316-90.0.el9.noarch    6/83 
+#11 31.31   Verifying        : centos-gpg-keys-9.0-38.el9.noarch                     7/83 
+#11 31.31   Verifying        : centos-stream-release-9.0-38.el9.noarch               8/83 
+#11 31.31   Verifying        : centos-stream-repos-9.0-38.el9.noarch                 9/83 
+#11 31.31   Verifying        : coreutils-8.32-43.el9.x86_64                         10/83 
+#11 31.31   Verifying        : coreutils-common-8.32-43.el9.x86_64                  11/83 
+#11 31.32   Verifying        : cracklib-2.9.6-28.el9.x86_64                         12/83 
+#11 31.32   Verifying        : cracklib-dicts-2.9.6-28.el9.x86_64                   13/83 
+#11 31.32   Verifying        : crypto-policies-20260714-1.git65b74f7.el9.noarch     14/83 
+#11 31.32   Verifying        : cyrus-sasl-lib-2.1.27-21.el9.x86_64                  15/83 
+#11 31.32   Verifying        : filesystem-3.16-5.el9.x86_64                         16/83 
+#11 31.32   Verifying        : findutils-1:4.8.0-7.el9.x86_64                       17/83 
+#11 31.32   Verifying        : gawk-5.1.0-7.el9.x86_64                              18/83 
+#11 31.32   Verifying        : gdbm-libs-1:1.23-1.el9.x86_64                        19/83 
+#11 31.32   Verifying        : glibc-2.34-277.el9.x86_64                            20/83 
+#11 31.32   Verifying        : glibc-common-2.34-277.el9.x86_64                     21/83 
+#11 31.32   Verifying        : glibc-minimal-langpack-2.34-277.el9.x86_64           22/83 
+#11 31.32   Verifying        : gmp-1:6.2.0-13.el9.x86_64                            23/83 
+#11 31.32   Verifying        : grep-3.6-5.el9.x86_64                                24/83 
+#11 31.32   Verifying        : gzip-1.12-2.el9.x86_64                               25/83 
+#11 31.32   Verifying        : hostname-3.23-6.el9.x86_64                           26/83 
+#11 31.32   Verifying        : keyutils-libs-1.6.3-1.el9.x86_64                     27/83 
+#11 31.32   Verifying        : krb5-libs-1.21.1-10.el9.x86_64                       28/83 
+#11 31.32   Verifying        : libacl-2.4.0-2.el9.x86_64                            29/83 
+#11 31.32   Verifying        : libattr-2.6.0-2.el9.x86_64                           30/83 
+#11 31.32   Verifying        : libblkid-2.37.4-27.el9.x86_64                        31/83 
+#11 31.32   Verifying        : libcap-2.48-10.el9.x86_64                            32/83 
+#11 31.32   Verifying        : libcap-ng-0.8.2-7.el9.x86_64                         33/83 
+#11 31.32   Verifying        : libcom_err-1.46.5-8.el9.x86_64                       34/83 
+#11 31.32   Verifying        : libdb-5.3.28-57.el9.x86_64                           35/83 
+#11 31.32   Verifying        : libeconf-0.4.1-7.el9.x86_64                          36/83 
+#11 31.32   Verifying        : libevent-2.1.12-8.el9.x86_64                         37/83 
+#11 31.32   Verifying        : libfdisk-2.37.4-27.el9.x86_64                        38/83 
+#11 31.32   Verifying        : libffi-3.4.2-8.el9.x86_64                            39/83 
+#11 31.32   Verifying        : libgcc-11.5.0-15.el9.x86_64                          40/83 
+#11 31.32   Verifying        : libgcrypt-1.10.0-13.el9.x86_64                       41/83 
+#11 31.32   Verifying        : libgpg-error-1.42-5.el9.x86_64                       42/83 
+#11 31.32   Verifying        : libmount-2.37.4-27.el9.x86_64                        43/83 
+#11 31.32   Verifying        : libpwquality-1.4.4-8.el9.x86_64                      44/83 
+#11 31.32   Verifying        : libselinux-3.6-4.el9.x86_64                          45/83 
+#11 31.32   Verifying        : libsemanage-3.6-5.el9.x86_64                         46/83 
+#11 31.32   Verifying        : libsepol-3.6-3.el9.x86_64                            47/83 
+#11 31.32   Verifying        : libsigsegv-2.13-4.el9.x86_64                         48/83 
+#11 31.32   Verifying        : libsmartcols-2.37.4-27.el9.x86_64                    49/83 
+#11 31.32   Verifying        : libstdc++-11.5.0-15.el9.x86_64                       50/83 
+#11 31.32   Verifying        : libtasn1-4.16.0-10.el9.x86_64                        51/83 
+#11 31.32   Verifying        : libtool-ltdl-2.4.6-46.el9.x86_64                     52/83 
+#11 31.32   Verifying        : libutempter-1.2.1-6.el9.x86_64                       53/83 
+#11 31.32   Verifying        : libuuid-2.37.4-27.el9.x86_64                         54/83 
+#11 31.32   Verifying        : libverto-0.3.2-3.el9.x86_64                          55/83 
+#11 31.32   Verifying        : libxcrypt-4.4.18-3.el9.x86_64                        56/83 
+#11 31.32   Verifying        : libzstd-1.5.5-1.el9.x86_64                           57/83 
+#11 31.32   Verifying        : lz4-libs-1.9.3-5.el9.x86_64                          58/83 
+#11 31.32   Verifying        : mpfr-4.1.0-10.el9.x86_64                             59/83 
+#11 31.32   Verifying        : ncurses-base-6.2-12.20210508.el9.noarch              60/83 
+#11 31.32   Verifying        : ncurses-libs-6.2-12.20210508.el9.x86_64              61/83 
+#11 31.32   Verifying        : openldap-2.6.13-1.el9.x86_64                         62/83 
+#11 31.32   Verifying        : openssl-1:3.5.8-1.el9.x86_64                         63/83 
+#11 31.32   Verifying        : openssl-fips-provider-1:3.5.8-1.el9.x86_64           64/83 
+#11 31.32   Verifying        : openssl-libs-1:3.5.8-1.el9.x86_64                    65/83 
+#11 31.32   Verifying        : p11-kit-0.26.4-1.el9.x86_64                          66/83 
+#11 31.32   Verifying        : p11-kit-trust-0.26.4-1.el9.x86_64                    67/83 
+#11 31.32   Verifying        : pam-1.5.1-30.el9.x86_64                              68/83 
+#11 31.32   Verifying        : pcre-8.44-4.el9.x86_64                               69/83 
+#11 31.32   Verifying        : pcre2-10.40-6.el9.x86_64                             70/83 
+#11 31.32   Verifying        : pcre2-syntax-10.40-6.el9.noarch                      71/83 
+#11 31.32   Verifying        : procps-ng-3.3.17-15.el9.x86_64                       72/83 
+#11 31.32   Verifying        : readline-8.1-4.el9.x86_64                            73/83 
+#11 31.32   Verifying        : sed-4.8-10.el9.x86_64                                74/83 
+#11 31.32   Verifying        : setup-2.13.7-10.el9.noarch                           75/83 
+#11 31.32   Verifying        : shadow-utils-2:4.9-17.el9.x86_64                     76/83 
+#11 31.32   Verifying        : sudo-1.9.17p2-4.el9.x86_64                           77/83 
+#11 31.32   Verifying        : systemd-libs-252-78.el9.x86_64                       78/83 
+#11 31.32   Verifying        : tzdata-2026c-1.el9.noarch                            79/83 
+#11 31.32   Verifying        : util-linux-2.37.4-27.el9.x86_64                      80/83 
+#11 31.32   Verifying        : util-linux-core-2.37.4-27.el9.x86_64                 81/83 
+#11 31.32   Verifying        : xz-libs-5.2.5-8.el9.x86_64                           82/83 
+#11 31.32   Verifying        : zlib-1.2.11-41.el9.x86_64                            83/83 
+#11 31.40 
+#11 31.40 Installed:
+#11 31.40   alternatives-1.24-2.el9.x86_64                                                
+#11 31.40   audit-libs-3.1.5-9.el9.x86_64                                                 
+#11 31.40   basesystem-11-13.el9.noarch                                                   
+#11 31.40   bash-5.1.8-9.el9.x86_64                                                       
+#11 31.40   bzip2-libs-1.0.8-11.el9.x86_64                                                
+#11 31.40   ca-certificates-2026.2.90_v9.0.316-90.0.el9.noarch                            
+#11 31.40   centos-gpg-keys-9.0-38.el9.noarch                                             
+#11 31.40   centos-stream-release-9.0-38.el9.noarch                                       
+#11 31.40   centos-stream-repos-9.0-38.el9.noarch                                         
+#11 31.40   coreutils-8.32-43.el9.x86_64                                                  
+#11 31.40   coreutils-common-8.32-43.el9.x86_64                                           
+#11 31.40   cracklib-2.9.6-28.el9.x86_64                                                  
+#11 31.40   cracklib-dicts-2.9.6-28.el9.x86_64                                            
+#11 31.40   crypto-policies-20260714-1.git65b74f7.el9.noarch                              
+#11 31.40   cyrus-sasl-lib-2.1.27-21.el9.x86_64                                           
+#11 31.40   filesystem-3.16-5.el9.x86_64                                                  
+#11 31.40   findutils-1:4.8.0-7.el9.x86_64                                                
+#11 31.40   gawk-5.1.0-7.el9.x86_64                                                       
+#11 31.40   gdbm-libs-1:1.23-1.el9.x86_64                                                 
+#11 31.40   glibc-2.34-277.el9.x86_64                                                     
+#11 31.40   glibc-common-2.34-277.el9.x86_64                                              
+#11 31.40   glibc-minimal-langpack-2.34-277.el9.x86_64                                    
+#11 31.40   gmp-1:6.2.0-13.el9.x86_64                                                     
+#11 31.40   grep-3.6-5.el9.x86_64                                                         
+#11 31.40   gzip-1.12-2.el9.x86_64                                                        
+#11 31.40   hostname-3.23-6.el9.x86_64                                                    
+#11 31.40   keyutils-libs-1.6.3-1.el9.x86_64                                              
+#11 31.40   krb5-libs-1.21.1-10.el9.x86_64                                                
+#11 31.40   libacl-2.4.0-2.el9.x86_64                                                     
+#11 31.40   libattr-2.6.0-2.el9.x86_64                                                    
+#11 31.40   libblkid-2.37.4-27.el9.x86_64                                                 
+#11 31.40   libcap-2.48-10.el9.x86_64                                                     
+#11 31.40   libcap-ng-0.8.2-7.el9.x86_64                                                  
+#11 31.40   libcom_err-1.46.5-8.el9.x86_64                                                
+#11 31.40   libdb-5.3.28-57.el9.x86_64                                                    
+#11 31.40   libeconf-0.4.1-7.el9.x86_64                                                   
+#11 31.40   libevent-2.1.12-8.el9.x86_64                                                  
+#11 31.40   libfdisk-2.37.4-27.el9.x86_64                                                 
+#11 31.40   libffi-3.4.2-8.el9.x86_64                                                     
+#11 31.40   libgcc-11.5.0-15.el9.x86_64                                                   
+#11 31.40   libgcrypt-1.10.0-13.el9.x86_64                                                
+#11 31.40   libgpg-error-1.42-5.el9.x86_64                                                
+#11 31.40   libmount-2.37.4-27.el9.x86_64                                                 
+#11 31.40   libpwquality-1.4.4-8.el9.x86_64                                               
+#11 31.40   libselinux-3.6-4.el9.x86_64                                                   
+#11 31.40   libsemanage-3.6-5.el9.x86_64                                                  
+#11 31.40   libsepol-3.6-3.el9.x86_64                                                     
+#11 31.40   libsigsegv-2.13-4.el9.x86_64                                                  
+#11 31.40   libsmartcols-2.37.4-27.el9.x86_64                                             
+#11 31.40   libstdc++-11.5.0-15.el9.x86_64                                                
+#11 31.40   libtasn1-4.16.0-10.el9.x86_64                                                 
+#11 31.40   libtool-ltdl-2.4.6-46.el9.x86_64                                              
+#11 31.40   libutempter-1.2.1-6.el9.x86_64                                                
+#11 31.40   libuuid-2.37.4-27.el9.x86_64                                                  
+#11 31.40   libverto-0.3.2-3.el9.x86_64                                                   
+#11 31.40   libxcrypt-4.4.18-3.el9.x86_64                                                 
+#11 31.40   libzstd-1.5.5-1.el9.x86_64                                                    
+#11 31.40   lz4-libs-1.9.3-5.el9.x86_64                                                   
+#11 31.40   mpfr-4.1.0-10.el9.x86_64                                                      
+#11 31.40   ncurses-base-6.2-12.20210508.el9.noarch                                       
+#11 31.40   ncurses-libs-6.2-12.20210508.el9.x86_64                                       
+#11 31.40   openldap-2.6.13-1.el9.x86_64                                                  
+#11 31.40   openssl-1:3.5.8-1.el9.x86_64                                                  
+#11 31.40   openssl-fips-provider-1:3.5.8-1.el9.x86_64                                    
+#11 31.40   openssl-libs-1:3.5.8-1.el9.x86_64                                             
+#11 31.40   p11-kit-0.26.4-1.el9.x86_64                                                   
+#11 31.40   p11-kit-trust-0.26.4-1.el9.x86_64                                             
+#11 31.40   pam-1.5.1-30.el9.x86_64                                                       
+#11 31.40   pcre-8.44-4.el9.x86_64                                                        
+#11 31.40   pcre2-10.40-6.el9.x86_64                                                      
+#11 31.40   pcre2-syntax-10.40-6.el9.noarch                                               
+#11 31.40   procps-ng-3.3.17-15.el9.x86_64                                                
+#11 31.40   readline-8.1-4.el9.x86_64                                                     
+#11 31.40   sed-4.8-10.el9.x86_64                                                         
+#11 31.40   setup-2.13.7-10.el9.noarch                                                    
+#11 31.40   shadow-utils-2:4.9-17.el9.x86_64                                              
+#11 31.40   sudo-1.9.17p2-4.el9.x86_64                                                    
+#11 31.40   systemd-libs-252-78.el9.x86_64                                                
+#11 31.40   tzdata-2026c-1.el9.noarch                                                     
+#11 31.40   util-linux-2.37.4-27.el9.x86_64                                               
+#11 31.40   util-linux-core-2.37.4-27.el9.x86_64                                          
+#11 31.40   xz-libs-5.2.5-8.el9.x86_64                                                    
+#11 31.40   zlib-1.2.11-41.el9.x86_64                                                     
+#11 31.40 
+#11 31.40 Complete!
+#11 31.49 Verifying...                          ########################################
+#11 31.79 Preparing...                          ########################################
+#11 32.17 Updating / installing...
+#11 32.17 riak-3.4.0.OTP26-1.el9                ########################################
+#11 DONE 33.3s
+
+#12 [package-amd64 1/1] COPY --from=install-amd64 /openriak-rootfs/ /
+#12 DONE 0.6s
+
+#13 [final 1/4] RUN <<'OPENRIAK_IMAGE_SETUP' (set -eu...)
+#13 0.106 uid=999(riak) gid=999(riak) groups=999(riak)
+#13 DONE 0.2s
+
+#14 [final 2/4] COPY <<OPENRIAK_ENTRYPOINT /usr/local/bin/openriak-entrypoint
+#14 DONE 0.0s
+
+#15 [final 3/4] COPY <<OPENRIAK_HEALTHCHECK /usr/local/bin/openriak-healthcheck
+#15 DONE 0.0s
+
+#16 [final 4/4] RUN <<'OPENRIAK_SCRIPT_SETUP' (set -eu...)
+#16 DONE 0.1s
+
+#17 exporting to docker image format
+#17 exporting layers
+#17 exporting layers 5.8s done
+#17 exporting manifest sha256:90fe8ade72f855098b5f5570525d217f424235d0d93ccea913ff79562bd47e5e done
+#17 exporting config sha256:f5b8463ebfe90e5ccf5610084817c1b4ad448888b13ff343d2fe641779b9d5d3 done
+#17 sending tarball
+#17 ...
+
+#18 importing to docker
+#18 loading layer 7806aa1243be 557.06kB / 70.37MB
+#18 loading layer 5a07d8d12d30 23.58kB / 23.58kB
+#18 loading layer 7806aa1243be 70.37MB / 70.37MB 1.8s done
+#18 loading layer 5a07d8d12d30 23.58kB / 23.58kB 0.0s done
+#18 loading layer cd7d4d20933f 7.69kB / 7.69kB 0.0s done
+#18 loading layer b9232f1b0965 383B / 383B 0.0s done
+#18 loading layer 071a4c524ec2 7.87kB / 7.87kB 0.0s done
+#18 DONE 1.8s
+
+#17 exporting to docker image format
+#17 sending tarball 2.4s done
+#17 DONE 8.2s
+
+timeout_seconds: 3600
+exit_code: 0

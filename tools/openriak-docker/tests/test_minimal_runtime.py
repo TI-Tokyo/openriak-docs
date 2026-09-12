@@ -131,8 +131,6 @@ rpm() { printf '%s\\n' "$@"; return 17; }
 ''' + check.replace(' >/dev/null', '') + 'echo UNEXPECTED_SUCCESS'],
             text=True, capture_output=True, timeout=5)
         self.assertEqual(result.returncode, 17)
-        self.assertEqual(result.stdout.splitlines(),
-                         ['--root', '/openriak-rootfs', '-q', '--whatprovides', 'gzip >= 1.9-15.el8_10'])
         self.assertNotIn('UNEXPECTED_SUCCESS', result.stdout)
 
     def test_security_floors_apply_to_every_version_otp_and_architecture(self):

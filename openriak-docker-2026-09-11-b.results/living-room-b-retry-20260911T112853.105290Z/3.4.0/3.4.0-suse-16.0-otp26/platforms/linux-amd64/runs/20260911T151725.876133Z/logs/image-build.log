@@ -1,0 +1,289 @@
+$ /usr/bin/docker buildx build --builder openriak-kv-multiarch --load --platform linux/amd64 --pull=false --no-cache --tag tiotjp/openriak-kv:test-3.4.0-suse-16.0-otp26-linux-amd64-20260911t151725.876133z --file /home/peter/openriak-builds/openriak-distributed/openriak-docker-2026-09-11-b/living-room-b/20260911T084617.243958Z/results/3.4.0/3.4.0-suse-16.0-otp26/platforms/linux-amd64/runs/20260911T151725.876133Z/Dockerfile /home/peter/openriak-builds/openriak-distributed/openriak-docker-2026-09-11-b/living-room-b/20260911T084617.243958Z/results/3.4.0/3.4.0-suse-16.0-otp26/platforms/linux-amd64/runs/20260911T151725.876133Z
+started: 2026-09-11T15:17:26Z
+#0 building with "openriak-kv-multiarch" instance using docker-container driver
+
+#1 [internal] load build definition from Dockerfile
+#1 transferring dockerfile: 44.53kB done
+#1 DONE 0.0s
+
+#2 resolve image config for docker-image://docker.io/docker/dockerfile:1.7
+#2 DONE 0.2s
+
+#3 docker-image://docker.io/docker/dockerfile:1.7@sha256:a57df69d0ea827fb7266491f2813635de6f17269be881f696fbfdf2d83dda33e
+#3 resolve docker.io/docker/dockerfile:1.7@sha256:a57df69d0ea827fb7266491f2813635de6f17269be881f696fbfdf2d83dda33e 0.0s done
+#3 CACHED
+
+#4 [internal] load metadata for registry.suse.com/bci/bci-base:16.0@sha256:6406613b1003eb42d1f718d8873e3b4d203aee6d81ef7bf786a7274693476500
+#4 DONE 1.8s
+
+#5 [internal] load .dockerignore
+#5 transferring context: 2B done
+#5 DONE 0.0s
+
+#6 [internal] preparing inline document
+#6 CACHED
+
+#7 [download-amd64 1/1] ADD --checksum=sha256:72c02db420dc5a0cde5c27a2bd1813fc74e56b663f1167b9b7a0795fae5bfc77 https://files.tiot.jp/riak/kv/3.4/3.4.0/rhel/9/riak-3.4.0.OTP26-1.el9.x86_64.rpm /riak-3.4.0.OTP26-1.el9.x86_64.rpm
+#7 CACHED
+
+#8 [internal] preparing inline document
+#8 CACHED
+
+#9 [install-amd64 1/2] FROM registry.suse.com/bci/bci-base:16.0@sha256:6406613b1003eb42d1f718d8873e3b4d203aee6d81ef7bf786a7274693476500
+#9 resolve registry.suse.com/bci/bci-base:16.0@sha256:6406613b1003eb42d1f718d8873e3b4d203aee6d81ef7bf786a7274693476500 done
+#9 CACHED
+
+#10 [download-amd64 1/1] ADD --checksum=sha256:72c02db420dc5a0cde5c27a2bd1813fc74e56b663f1167b9b7a0795fae5bfc77 https://files.tiot.jp/riak/kv/3.4/3.4.0/rhel/9/riak-3.4.0.OTP26-1.el9.x86_64.rpm /riak-3.4.0.OTP26-1.el9.x86_64.rpm
+#10 DONE 0.0s
+
+#11 [install-amd64 2/2] RUN --mount=type=bind,from=download-amd64,target=/opt/openriak-package,ro <<'OPENRIAK_PACKAGE_INSTALL' (set -eu...)
+#11 0.166 Refreshing service 'container-suseconnect-zypp'.
+#11 0.177 Retrieving repository 'SLE_BCI' metadata [...
+#11 2.415 Looking for gpg keys in repository SLE_BCI.
+#11 2.415   gpgkey=file:/usr/lib/rpm/gnupg/keys/gpg-pubkey-3fa1d6ce-67c856ee.asc
+#11 3.575 ...done]
+#11 3.709 Building repository 'SLE_BCI' cache [....done]
+#11 4.150 All repositories have been refreshed.
+#11 4.228 Refreshing service 'container-suseconnect-zypp'.
+#11 4.240 Loading repository data...
+#11 4.260 Reading installed packages...
+#11 4.342 
+#11 4.342 The following 12 NEW packages are going to be installed:
+#11 4.342   krb5 libbrotlicommon1 libbrotlidec1 libcom_err2 libcurl4 libkeyutils1 libldap-2 libldap-data libsasl2-3 libssh-config libssh4 libverto1
+#11 4.342 
+#11 4.342 The following package is going to be REMOVED:
+#11 4.342   libcurl-mini4
+#11 4.342 
+#11 4.342 The following 12 packages are not supported by their vendor:
+#11 4.342   krb5 libbrotlicommon1 libbrotlidec1 libcom_err2 libcurl4 libkeyutils1 libldap-2 libldap-data libsasl2-3 libssh-config libssh4 libverto1
+#11 4.342 
+#11 4.342 12 new packages to install, 1 to remove.
+#11 4.342 
+#11 4.342 Package download size:     2.1 MiB
+#11 4.342 
+#11 4.342 Package install size change:
+#11 4.342               |       4.5 MiB  required by packages that will be installed
+#11 4.342      3.9 MiB  |  -  621.4 KiB  released by packages that will be removed
+#11 4.342 
+#11 4.342 Backend:  classic_rpmtrans
+#11 4.342 Continue? [y/n/v/...? shows all options] (y): y
+#11 4.351 Preloading Packages [..
+#11 4.449 Preloading: libkeyutils1-1.6.3-160000.3.2.x86_64.rpm [done]
+#11 4.449 .
+#11 4.470 Preloading: libbrotlicommon1-1.1.0-160000.2.2.x86_64.rpm [done]
+#11 4.470 .
+#11 4.471 Preloading: libcom_err2-1.47.0-160000.3.2.x86_64.rpm [done]
+#11 4.471 .
+#11 4.474 Preloading: libssh-config-0.11.5-160000.1.1.noarch.rpm [done]
+#11 4.474 .
+#11 4.483 Preloading: libsasl2-3-2.1.28-160000.3.1.x86_64.rpm [done]
+#11 4.483 .
+#11 4.487 Preloading: libldap-data-2.6.10+10-160000.3.1.noarch.rpm [done]
+#11 4.487 .
+#11 4.505 Preloading: libbrotlidec1-1.1.0-160000.2.2.x86_64.rpm [done]
+#11 4.505 .
+#11 4.506 Preloading: libverto1-0.3.2-160000.2.2.x86_64.rpm [done]
+#11 4.506 .
+#11 4.511 Preloading: libldap-2-2.6.10+10-160000.3.1.x86_64.rpm [done]
+#11 4.511 .
+#11 4.540 Preloading: krb5-1.21.3-160000.4.1.x86_64.rpm [done]
+#11 4.540 .
+#11 4.570 Preloading: libcurl4-8.14.1-160000.8.1.x86_64.rpm [done]
+#11 4.570 ...
+#11 8.094 Preloading: libssh4-0.11.5-160000.1.1.x86_64.rpm [done]
+#11 8.094 .done]
+#11 8.098 Retrieving: libbrotlicommon1-1.1.0-160000.2.2.x86_64 (SLE_BCI) (1/12),  69.6 KiB    
+#11 8.100 Retrieving: libcom_err2-1.47.0-160000.3.2.x86_64 (SLE_BCI) (2/12),  87.1 KiB    
+#11 8.102 Retrieving: libkeyutils1-1.6.3-160000.3.2.x86_64 (SLE_BCI) (3/12),  29.8 KiB    
+#11 8.103 Retrieving: libldap-data-2.6.10+10-160000.3.1.noarch (SLE_BCI) (4/12),  14.0 KiB    
+#11 8.105 Retrieving: libsasl2-3-2.1.28-160000.3.1.x86_64 (SLE_BCI) (5/12),  76.3 KiB    
+#11 8.107 Retrieving: libssh-config-0.11.5-160000.1.1.noarch (SLE_BCI) (6/12),  42.3 KiB    
+#11 8.108 Retrieving: libverto1-0.3.2-160000.2.2.x86_64 (SLE_BCI) (7/12),  19.3 KiB    
+#11 8.110 Retrieving: libbrotlidec1-1.1.0-160000.2.2.x86_64 (SLE_BCI) (8/12),  32.9 KiB    
+#11 8.111 Retrieving: libldap-2-2.6.10+10-160000.3.1.x86_64 (SLE_BCI) (9/12), 179.0 KiB    
+#11 8.113 Retrieving: krb5-1.21.3-160000.4.1.x86_64 (SLE_BCI) (10/12), 749.8 KiB    
+#11 8.117 Retrieving: libssh4-0.11.5-160000.1.1.x86_64 (SLE_BCI) (11/12), 249.8 KiB    
+#11 8.120 Retrieving: libcurl4-8.14.1-160000.8.1.x86_64 (SLE_BCI) (12/12), 651.3 KiB    
+#11 8.123 
+#11 8.123 Checking for file conflicts: [..done]
+#11 8.137 ( 1/12) Installing: libbrotlicommon1-1.1.0-160000.2.2.x86_64 [..done]
+#11 8.214 ( 2/12) Installing: libcom_err2-1.47.0-160000.3.2.x86_64 [..done]
+#11 8.235 ( 3/12) Installing: libkeyutils1-1.6.3-160000.3.2.x86_64 [..done]
+#11 8.255 ( 4/12) Installing: libldap-data-2.6.10+10-160000.3.1.noarch [..done]
+#11 8.268 ( 5/12) Installing: libsasl2-3-2.1.28-160000.3.1.x86_64 [..done]
+#11 8.290 ( 6/12) Installing: libssh-config-0.11.5-160000.1.1.noarch [..done]
+#11 8.307 ( 7/12) Installing: libverto1-0.3.2-160000.2.2.x86_64 [..done]
+#11 8.331 ( 8/12) Installing: libbrotlidec1-1.1.0-160000.2.2.x86_64 [..done]
+#11 8.349 ( 9/12) Installing: libldap-2-2.6.10+10-160000.3.1.x86_64 [..done]
+#11 8.372 (10/12) Installing: krb5-1.21.3-160000.4.1.x86_64 [..done]
+#11 8.422 (11/12) Installing: libssh4-0.11.5-160000.1.1.x86_64 [..done]
+#11 8.451 (12/12) Installing: libcurl4-8.14.1-160000.8.1.x86_64 [..done]
+#11 8.501 Running post-transaction scripts [...done]
+#11 8.537  
+#11 8.617 Refreshing service 'container-suseconnect-zypp'.
+#11 8.628 Loading repository data...
+#11 8.648 Reading installed packages...
+#11 8.679 'glibc' is already installed.
+#11 8.679 No update candidate for 'glibc-2.40-160000.6.1.x86_64'. The highest available version is already installed.
+#11 8.679 'bash' is already installed.
+#11 8.679 No update candidate for 'bash-5.2.37-160000.2.2.x86_64'. The highest available version is already installed.
+#11 8.679 'shadow' is already installed.
+#11 8.679 No update candidate for 'shadow-4.17.2-160000.2.2.x86_64'. The highest available version is already installed.
+#11 8.679 'timezone' is already installed.
+#11 8.679 No update candidate for 'timezone-2026b-160000.1.1.x86_64'. The highest available version is already installed.
+#11 8.679 'ca-certificates' is already installed.
+#11 8.679 No update candidate for 'ca-certificates-2+git20240805.fd24d50-160000.2.2.noarch'. The highest available version is already installed.
+#11 8.679 'pam' is already installed.
+#11 8.679 No update candidate for 'pam-1.7.1-160000.5.1.x86_64'. The highest available version is already installed.
+#11 8.679 'libopenssl3' is already installed.
+#11 8.679 No update candidate for 'libopenssl3-3.5.0-160000.9.1.x86_64'. The highest available version is already installed.
+#11 8.679 'libstdc++6' is already installed.
+#11 8.679 No update candidate for 'libstdc++6-15.3.0+git11272-160000.1.1.x86_64'. The highest available version is already installed.
+#11 8.679 'libgcc_s1' is already installed.
+#11 8.679 No update candidate for 'libgcc_s1-15.3.0+git11272-160000.1.1.x86_64'. The highest available version is already installed.
+#11 8.679 'libz1' is already installed.
+#11 8.679 No update candidate for 'libz1-1.2.13-160000.3.1.x86_64'. The highest available version is already installed.
+#11 8.679 'libncurses6' is already installed.
+#11 8.679 No update candidate for 'libncurses6-6.5.20250531-160000.3.1.x86_64'. The highest available version is already installed.
+#11 8.679 Resolving package dependencies...
+#11 8.730 
+#11 8.730 The following 16 NEW packages are going to be installed:
+#11 8.730   gawk hostname libblkid1 libcap-ng0 libfdisk1 libmount1 libmpfr6 libproc2-1 libsmartcols1 libsystemd0 libuuid1 permissions permissions-config procps sudo util-linux
+#11 8.730 
+#11 8.730 The following 16 packages are not supported by their vendor:
+#11 8.730   gawk hostname libblkid1 libcap-ng0 libfdisk1 libmount1 libmpfr6 libproc2-1 libsmartcols1 libsystemd0 libuuid1 permissions permissions-config procps sudo util-linux
+#11 8.730 
+#11 8.730 16 new packages to install.
+#11 8.730 
+#11 8.730 Package download size:     8.4 MiB
+#11 8.730 
+#11 8.730 Package install size change:
+#11 8.730               |      21.2 MiB  required by packages that will be installed
+#11 8.730     21.2 MiB  |  -      0 B    released by packages that will be removed
+#11 8.730 
+#11 8.730 Backend:  classic_rpmtrans
+#11 8.730 Continue? [y/n/v/...? shows all options] (y): y
+#11 8.737 Preloading Packages [..
+#11 8.828 Preloading: libcap-ng0-0.8.5-160000.3.2.x86_64.rpm [done]
+#11 8.828 .
+#11 8.838 Preloading: hostname-3.23-160000.2.2.x86_64.rpm [done]
+#11 8.838 .
+#11 8.840 Preloading: libblkid1-2.41.1-160000.4.1.x86_64.rpm [done]
+#11 8.840 .
+#11 8.844 Preloading: libmpfr6-4.2.1-160000.2.2.x86_64.rpm [done]
+#11 8.844 .
+#11 8.847 Preloading: libsmartcols1-2.41.1-160000.4.1.x86_64.rpm [done]
+#11 8.847 .
+#11 8.880 Preloading: permissions-config-1699_20250120-160000.2.2.noarch.rpm [done]
+#11 8.880 .
+#11 8.942 Preloading: libsystemd0-257.13-160000.3.1.x86_64.rpm [done]
+#11 8.942 .
+#11 8.943 Preloading: libmount1-2.41.1-160000.4.1.x86_64.rpm [done]
+#11 8.943 .
+#11 8.947 Preloading: libuuid1-2.41.1-160000.4.1.x86_64.rpm [done]
+#11 8.947 .
+#11 8.950 Preloading: gawk-5.3.2-160000.3.1.x86_64.rpm [done]
+#11 8.950 .
+#11 8.965 Preloading: libproc2-1-4.0.5-160000.2.2.x86_64.rpm [done]
+#11 8.965 .
+#11 8.987 Preloading: permissions-1699_20250120-160000.2.2.x86_64.rpm [done]
+#11 8.987 .
+#11 8.998 Preloading: libfdisk1-2.41.1-160000.4.1.x86_64.rpm [done]
+#11 8.998 .
+#11 9.049 Preloading: procps-4.0.5-160000.2.2.x86_64.rpm [done]
+#11 9.049 .
+#11 9.082 Preloading: sudo-1.9.17p1-160000.3.1.x86_64.rpm [done]
+#11 9.082 ....
+#11 13.01 Preloading: util-linux-2.41.1-160000.4.1.x86_64.rpm [done]
+#11 13.01 .done]
+#11 13.01 Retrieving: hostname-3.23-160000.2.2.x86_64 (SLE_BCI) (1/16),  25.6 KiB    
+#11 13.02 Retrieving: libblkid1-2.41.1-160000.4.1.x86_64 (SLE_BCI) (2/16), 270.0 KiB    
+#11 13.03 Retrieving: libcap-ng0-0.8.5-160000.3.2.x86_64 (SLE_BCI) (3/16),  32.5 KiB    
+#11 13.04 Retrieving: libmpfr6-4.2.1-160000.2.2.x86_64 (SLE_BCI) (4/16), 346.3 KiB    
+#11 13.04 Retrieving: libsmartcols1-2.41.1-160000.4.1.x86_64 (SLE_BCI) (5/16), 229.8 KiB    
+#11 13.05 Retrieving: libsystemd0-257.13-160000.3.1.x86_64 (SLE_BCI) (6/16), 899.6 KiB    
+#11 13.05 Retrieving: libuuid1-2.41.1-160000.4.1.x86_64 (SLE_BCI) (7/16), 183.3 KiB    
+#11 13.06 Retrieving: permissions-config-1699_20250120-160000.2.2.noarch (SLE_BCI) (8/16),  67.7 KiB    
+#11 13.06 Retrieving: libmount1-2.41.1-160000.4.1.x86_64 (SLE_BCI) (9/16), 304.8 KiB    
+#11 13.06 Retrieving: gawk-5.3.2-160000.3.1.x86_64 (SLE_BCI) (10/16),   1.7 MiB    
+#11 13.07 Retrieving: libproc2-1-4.0.5-160000.2.2.x86_64 (SLE_BCI) (11/16), 125.6 KiB    
+#11 13.07 Retrieving: libfdisk1-2.41.1-160000.4.1.x86_64 (SLE_BCI) (12/16), 306.5 KiB    
+#11 13.07 Retrieving: permissions-1699_20250120-160000.2.2.x86_64 (SLE_BCI) (13/16),  54.9 KiB    
+#11 13.07 Retrieving: procps-4.0.5-160000.2.2.x86_64 (SLE_BCI) (14/16), 363.2 KiB    
+#11 13.08 Retrieving: util-linux-2.41.1-160000.4.1.x86_64 (SLE_BCI) (15/16),   1.5 MiB    
+#11 13.08 Retrieving: sudo-1.9.17p1-160000.3.1.x86_64 (SLE_BCI) (16/16),   2.1 MiB    
+#11 13.09 
+#11 13.09 Checking for file conflicts: [..done]
+#11 13.13 ( 1/16) Installing: hostname-3.23-160000.2.2.x86_64 [..done]
+#11 13.16 ( 2/16) Installing: libblkid1-2.41.1-160000.4.1.x86_64 [..done]
+#11 13.19 ( 3/16) Installing: libcap-ng0-0.8.5-160000.3.2.x86_64 [..done]
+#11 13.21 ( 4/16) Installing: libmpfr6-4.2.1-160000.2.2.x86_64 [..done]
+#11 13.24 ( 5/16) Installing: libsmartcols1-2.41.1-160000.4.1.x86_64 [..done]
+#11 13.27 ( 6/16) Installing: libsystemd0-257.13-160000.3.1.x86_64 [..done]
+#11 13.31 ( 7/16) Installing: libuuid1-2.41.1-160000.4.1.x86_64 [..done]
+#11 13.34 ( 8/16) Installing: permissions-config-1699_20250120-160000.2.2.noarch [..
+#11 13.35 Updating /etc/sysconfig/security ...
+#11 13.36 Checking permissions and ownerships - using the permissions files
+#11 13.37 	/usr/share/permissions/permissions
+#11 13.37 	/usr/share/permissions/permissions.easy
+#11 13.37 	/etc/permissions.local
+#11 13.37 done]
+#11 13.37 ( 9/16) Installing: libmount1-2.41.1-160000.4.1.x86_64 [..done]
+#11 13.40 (10/16) Installing: gawk-5.3.2-160000.3.1.x86_64 [..done]
+#11 13.49 (11/16) Installing: libproc2-1-4.0.5-160000.2.2.x86_64 [..done]
+#11 13.51 (12/16) Installing: libfdisk1-2.41.1-160000.4.1.x86_64 [..done]
+#11 13.54 (13/16) Installing: permissions-1699_20250120-160000.2.2.x86_64 [...done]
+#11 13.67 (14/16) Installing: procps-4.0.5-160000.2.2.x86_64 [..done]
+#11 13.74 (15/16) Installing: util-linux-2.41.1-160000.4.1.x86_64 [..done]
+#11 13.84 (16/16) Installing: sudo-1.9.17p1-160000.3.1.x86_64 [..done]
+#11 13.95 Running post-transaction scripts [...done]
+#11 14.08 All repositories have been cleaned up.
+#11 14.09 Verifying...                          ########################################
+#11 14.29 Preparing...                          ########################################
+#11 14.32 Updating / installing...
+#11 14.32 riak-3.4.0.OTP26-1.el9                ########################################
+#11 DONE 15.0s
+
+#12 [package-amd64 1/1] COPY --from=install-amd64 / /
+#12 DONE 0.7s
+
+#13 [final 1/4] RUN <<'OPENRIAK_IMAGE_SETUP' (set -eu...)
+#13 0.462 uid=499(riak) gid=499(riak) groups=499(riak)
+#13 DONE 2.9s
+
+#14 [final 2/4] COPY <<OPENRIAK_ENTRYPOINT /usr/local/bin/openriak-entrypoint
+#14 DONE 0.2s
+
+#15 [final 3/4] COPY <<OPENRIAK_HEALTHCHECK /usr/local/bin/openriak-healthcheck
+#15 DONE 0.2s
+
+#16 [final 4/4] RUN <<'OPENRIAK_SCRIPT_SETUP' (set -eu...)
+#16 DONE 0.4s
+
+#17 exporting to docker image format
+#17 exporting layers
+#17 exporting layers 8.3s done
+#17 exporting manifest sha256:11a365b257a44c61f4d3da52ee3ece355f1ff896a55e5bab4a5905b03037f67e 0.1s done
+#17 exporting config sha256:506c5f241905a492a1676401bf3c44972c2b144f05dda9a82debbc4d8c827a08 0.0s done
+#17 sending tarball
+#17 ...
+
+#18 importing to docker
+#18 loading layer b547b66b32e3 557.06kB / 79.11MB
+#18 loading layer 8ebd0054f374 23.58kB / 23.58kB
+#18 loading layer 00baf43ffcc9 7.70kB / 7.70kB
+#18 loading layer 24e50f49be1f 390B / 390B
+#18 loading layer b547b66b32e3 79.11MB / 79.11MB 2.4s done
+#18 loading layer f355b1c9c6ae 7.88kB / 7.88kB
+#18 loading layer 8ebd0054f374 23.58kB / 23.58kB 0.3s done
+#18 loading layer 00baf43ffcc9 7.70kB / 7.70kB 0.2s done
+#18 loading layer 24e50f49be1f 390B / 390B 0.2s done
+#18 loading layer f355b1c9c6ae 7.88kB / 7.88kB 0.1s done
+#18 DONE 2.4s
+
+#17 exporting to docker image format
+#17 sending tarball 3.2s done
+#17 DONE 11.6s
+
+timeout_seconds: 3600
+exit_code: 0

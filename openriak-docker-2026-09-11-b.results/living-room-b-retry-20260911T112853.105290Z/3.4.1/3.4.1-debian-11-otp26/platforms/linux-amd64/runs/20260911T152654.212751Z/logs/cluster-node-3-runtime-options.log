@@ -1,0 +1,370 @@
+$ /usr/bin/docker exec openriak-kv-3.4.1-debian-11-otp26-node-3-t-212751z sh -c 'date +%z
+id -u riak
+id -g riak
+stat -c '"'"'%u:%g'"'"' /etc/riak /var/lib/riak /var/log/riak'
+started: 2026-09-11T15:31:08Z
++0900
+19001
+19002
+19001:19002
+19001:19002
+19001:19002
+
+timeout_seconds: 3600
+exit_code: 0
+$ /usr/bin/docker container inspect openriak-kv-3.4.1-debian-11-otp26-node-3-t-212751z
+started: 2026-09-11T15:31:08Z
+[
+    {
+        "Id": "ebcbc367bf0223522cc16ca1bef76df2bc5e3b2049576cf14f88b28dda1f3c81",
+        "Created": "2026-09-11T15:27:36.588954682Z",
+        "Path": "/usr/local/bin/openriak-entrypoint",
+        "Args": [],
+        "State": {
+            "Status": "running",
+            "Running": true,
+            "Paused": false,
+            "Restarting": false,
+            "OOMKilled": false,
+            "Dead": false,
+            "Pid": 1119575,
+            "ExitCode": 0,
+            "Error": "",
+            "StartedAt": "2026-09-11T15:27:36.628409505Z",
+            "FinishedAt": "0001-01-01T00:00:00Z",
+            "Health": {
+                "Status": "healthy",
+                "FailingStreak": 0,
+                "Log": [
+                    {
+                        "Start": "2026-09-11T15:30:17.213061247Z",
+                        "End": "2026-09-11T15:30:17.756718831Z",
+                        "ExitCode": 0,
+                        "Output": "OpenRiak healthcheck passed: BEAM is running and riak ping returned pong\n"
+                    },
+                    {
+                        "Start": "2026-09-11T15:30:27.758086783Z",
+                        "End": "2026-09-11T15:30:28.411358015Z",
+                        "ExitCode": 0,
+                        "Output": "OpenRiak healthcheck passed: BEAM is running and riak ping returned pong\n"
+                    },
+                    {
+                        "Start": "2026-09-11T15:30:38.412879832Z",
+                        "End": "2026-09-11T15:30:39.054840667Z",
+                        "ExitCode": 0,
+                        "Output": "OpenRiak healthcheck passed: BEAM is running and riak ping returned pong\n"
+                    },
+                    {
+                        "Start": "2026-09-11T15:30:49.055976764Z",
+                        "End": "2026-09-11T15:30:49.416089062Z",
+                        "ExitCode": 0,
+                        "Output": "OpenRiak healthcheck passed: BEAM is running and riak ping returned pong\n"
+                    },
+                    {
+                        "Start": "2026-09-11T15:30:59.416919059Z",
+                        "End": "2026-09-11T15:31:00.10248999Z",
+                        "ExitCode": 0,
+                        "Output": "OpenRiak healthcheck passed: BEAM is running and riak ping returned pong\n"
+                    }
+                ]
+            }
+        },
+        "Image": "sha256:57bc547eefa48362ac4f91bb1c9aead60e3cd3ddab107ba1477a0f6d5b0796df",
+        "ResolvConfPath": "/var/snap/docker/common/var-lib-docker/containers/ebcbc367bf0223522cc16ca1bef76df2bc5e3b2049576cf14f88b28dda1f3c81/resolv.conf",
+        "HostnamePath": "/var/snap/docker/common/var-lib-docker/containers/ebcbc367bf0223522cc16ca1bef76df2bc5e3b2049576cf14f88b28dda1f3c81/hostname",
+        "HostsPath": "/var/snap/docker/common/var-lib-docker/containers/ebcbc367bf0223522cc16ca1bef76df2bc5e3b2049576cf14f88b28dda1f3c81/hosts",
+        "LogPath": "/var/snap/docker/common/var-lib-docker/containers/ebcbc367bf0223522cc16ca1bef76df2bc5e3b2049576cf14f88b28dda1f3c81/ebcbc367bf0223522cc16ca1bef76df2bc5e3b2049576cf14f88b28dda1f3c81-json.log",
+        "Name": "/openriak-kv-3.4.1-debian-11-otp26-node-3-t-212751z",
+        "RestartCount": 0,
+        "Driver": "overlay2",
+        "Platform": "linux",
+        "MountLabel": "",
+        "ProcessLabel": "",
+        "AppArmorProfile": "docker-default",
+        "ExecIDs": null,
+        "HostConfig": {
+            "Binds": [
+                "/home/peter/openriak-builds/tmp/openriak-docker-3.4.1-debian-11-otp26-xaahywz7/openriak-kv-3.4.1-debian-11-otp26-node-3/config:/etc/riak:rw",
+                "/home/peter/openriak-builds/tmp/openriak-docker-3.4.1-debian-11-otp26-xaahywz7/openriak-kv-3.4.1-debian-11-otp26-node-3/data:/var/lib/riak:rw",
+                "/home/peter/openriak-builds/tmp/openriak-docker-3.4.1-debian-11-otp26-xaahywz7/openriak-kv-3.4.1-debian-11-otp26-node-3/logs:/var/log/riak:rw",
+                "/home/peter/openriak-builds/tmp/openriak-docker-3.4.1-debian-11-otp26-xaahywz7/openriak-kv-3.4.1-debian-11-otp26-node-cluster-control:/var/lib/openriak-cluster-control:rw"
+            ],
+            "ContainerIDFile": "",
+            "LogConfig": {
+                "Type": "json-file",
+                "Config": {
+                    "max-file": "3",
+                    "max-size": "10m"
+                }
+            },
+            "NetworkMode": "openriak-kv-341-debian-11-otp26-node-cluster_openriak",
+            "PortBindings": {},
+            "RestartPolicy": {
+                "Name": "no",
+                "MaximumRetryCount": 0
+            },
+            "AutoRemove": false,
+            "VolumeDriver": "",
+            "VolumesFrom": null,
+            "ConsoleSize": [
+                0,
+                0
+            ],
+            "CapAdd": null,
+            "CapDrop": null,
+            "CgroupnsMode": "private",
+            "Dns": null,
+            "DnsOptions": null,
+            "DnsSearch": null,
+            "ExtraHosts": [],
+            "GroupAdd": null,
+            "IpcMode": "private",
+            "Cgroup": "",
+            "Links": null,
+            "OomScoreAdj": 0,
+            "PidMode": "",
+            "Privileged": false,
+            "PublishAllPorts": false,
+            "ReadonlyRootfs": false,
+            "SecurityOpt": null,
+            "UTSMode": "",
+            "UsernsMode": "",
+            "ShmSize": 67108864,
+            "Runtime": "runc",
+            "Isolation": "",
+            "CpuShares": 0,
+            "Memory": 0,
+            "NanoCpus": 0,
+            "CgroupParent": "",
+            "BlkioWeight": 0,
+            "BlkioWeightDevice": null,
+            "BlkioDeviceReadBps": null,
+            "BlkioDeviceWriteBps": null,
+            "BlkioDeviceReadIOps": null,
+            "BlkioDeviceWriteIOps": null,
+            "CpuPeriod": 0,
+            "CpuQuota": 0,
+            "CpuRealtimePeriod": 0,
+            "CpuRealtimeRuntime": 0,
+            "CpusetCpus": "",
+            "CpusetMems": "",
+            "Devices": null,
+            "DeviceCgroupRules": null,
+            "DeviceRequests": null,
+            "MemoryReservation": 0,
+            "MemorySwap": 0,
+            "MemorySwappiness": null,
+            "OomKillDisable": null,
+            "PidsLimit": null,
+            "Ulimits": [
+                {
+                    "Name": "nofile",
+                    "Hard": 100000,
+                    "Soft": 100000
+                }
+            ],
+            "CpuCount": 0,
+            "CpuPercent": 0,
+            "IOMaximumIOps": 0,
+            "IOMaximumBandwidth": 0,
+            "MaskedPaths": [
+                "/proc/acpi",
+                "/proc/asound",
+                "/proc/interrupts",
+                "/proc/kcore",
+                "/proc/keys",
+                "/proc/latency_stats",
+                "/proc/sched_debug",
+                "/proc/scsi",
+                "/proc/timer_list",
+                "/proc/timer_stats",
+                "/sys/devices/virtual/powercap",
+                "/sys/firmware",
+                "/sys/devices/system/cpu/cpu0/thermal_throttle",
+                "/sys/devices/system/cpu/cpu1/thermal_throttle",
+                "/sys/devices/system/cpu/cpu2/thermal_throttle",
+                "/sys/devices/system/cpu/cpu3/thermal_throttle"
+            ],
+            "ReadonlyPaths": [
+                "/proc/bus",
+                "/proc/fs",
+                "/proc/irq",
+                "/proc/sys",
+                "/proc/sysrq-trigger"
+            ]
+        },
+        "GraphDriver": {
+            "Data": {
+                "ID": "ebcbc367bf0223522cc16ca1bef76df2bc5e3b2049576cf14f88b28dda1f3c81",
+                "LowerDir": "/var/snap/docker/common/var-lib-docker/overlay2/f691f3a8f8eb673882eec1c611012a5c4faea1c7f3fbdb515401828bc2bc3f45-init/diff:/var/snap/docker/common/var-lib-docker/overlay2/ebdff56b65b3dfba5a396db8afe33893f3d458d6a97134226781df10e642f123/diff:/var/snap/docker/common/var-lib-docker/overlay2/6be6f5b2c7f18f72f721e13c55394aaa71ea10b46ca2e302ab05285d40df0f56/diff:/var/snap/docker/common/var-lib-docker/overlay2/f0afc6062d3a95cac36a852ab2b88c779b5e1f56a16b45cfde0ea715ff3ccd5a/diff:/var/snap/docker/common/var-lib-docker/overlay2/bd40ee376c881b6f55b9d6026afda9441be5f887a3d45c028733d9c261b626d2/diff:/var/snap/docker/common/var-lib-docker/overlay2/9875e0c93fe01a43d013c06b61694923cd5e0ba31c52f71cb595af65a1fcfbc3/diff:/var/snap/docker/common/var-lib-docker/overlay2/406936d1af1161484f567adc4bf43226b56e0d3a7101bdb272c253e626767a3a/diff",
+                "MergedDir": "/var/snap/docker/common/var-lib-docker/overlay2/f691f3a8f8eb673882eec1c611012a5c4faea1c7f3fbdb515401828bc2bc3f45/merged",
+                "UpperDir": "/var/snap/docker/common/var-lib-docker/overlay2/f691f3a8f8eb673882eec1c611012a5c4faea1c7f3fbdb515401828bc2bc3f45/diff",
+                "WorkDir": "/var/snap/docker/common/var-lib-docker/overlay2/f691f3a8f8eb673882eec1c611012a5c4faea1c7f3fbdb515401828bc2bc3f45/work"
+            },
+            "Name": "overlay2"
+        },
+        "Mounts": [
+            {
+                "Type": "bind",
+                "Source": "/home/peter/openriak-builds/tmp/openriak-docker-3.4.1-debian-11-otp26-xaahywz7/openriak-kv-3.4.1-debian-11-otp26-node-cluster-control",
+                "Destination": "/var/lib/openriak-cluster-control",
+                "Mode": "rw",
+                "RW": true,
+                "Propagation": "rprivate"
+            },
+            {
+                "Type": "bind",
+                "Source": "/home/peter/openriak-builds/tmp/openriak-docker-3.4.1-debian-11-otp26-xaahywz7/openriak-kv-3.4.1-debian-11-otp26-node-3/config",
+                "Destination": "/etc/riak",
+                "Mode": "rw",
+                "RW": true,
+                "Propagation": "rprivate"
+            },
+            {
+                "Type": "bind",
+                "Source": "/home/peter/openriak-builds/tmp/openriak-docker-3.4.1-debian-11-otp26-xaahywz7/openriak-kv-3.4.1-debian-11-otp26-node-3/data",
+                "Destination": "/var/lib/riak",
+                "Mode": "rw",
+                "RW": true,
+                "Propagation": "rprivate"
+            },
+            {
+                "Type": "bind",
+                "Source": "/home/peter/openriak-builds/tmp/openriak-docker-3.4.1-debian-11-otp26-xaahywz7/openriak-kv-3.4.1-debian-11-otp26-node-3/logs",
+                "Destination": "/var/log/riak",
+                "Mode": "rw",
+                "RW": true,
+                "Propagation": "rprivate"
+            }
+        ],
+        "Config": {
+            "Hostname": "node-03.cluster-a.openriak",
+            "Domainname": "",
+            "User": "",
+            "AttachStdin": false,
+            "AttachStdout": true,
+            "AttachStderr": true,
+            "ExposedPorts": {
+                "8087/tcp": {},
+                "8098/tcp": {}
+            },
+            "Tty": false,
+            "OpenStdin": false,
+            "StdinOnce": false,
+            "Env": [
+                "RIAK_UID=19001",
+                "OPENRIAK_CLUSTER_POLL_SECONDS=1",
+                "TZ=Asia/Tokyo",
+                "OPENRIAK_CLUSTER_MODE=cluster",
+                "RIAK_LOG_MAX_FILE_SIZE=2MB",
+                "RIAK_GID=19002",
+                "OPENRIAK_CLUSTER_WAIT_SECONDS=3600",
+                "RIAK_DISTRIBUTED_COOKIE=openriak-54fb79f7d541c4d494e3ea67e63b9c62",
+                "RIAK_LOG_MAX_FILES=4",
+                "RIAK_NODE_HOST=node-03.cluster-a.openriak",
+                "RIAK_MONITOR_INTERVAL_SECONDS=1",
+                "PATH=/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin",
+                "RIAK_NODE_NAME=",
+                "RIAK_RING_SIZE=8",
+                "RIAK_STORAGE_BACKEND=leveled",
+                "RIAK_ANTI_ENTROPY=passive",
+                "RIAK_TICTACAAE_ACTIVE=active",
+                "RIAK_TICTACAAE_STOREHEADS=enabled",
+                "RIAK_HTTP_LISTENER=0.0.0.0:8098",
+                "RIAK_PB_LISTENER=0.0.0.0:8087",
+                "RIAK_NOFILE_LIMIT=100000",
+                "RIAK_INIT_ONLY=0",
+                "RIAK_STARTUP_POLL_SECONDS=1",
+                "RIAK_SHUTDOWN_POLL_SECONDS=1",
+                "OPENRIAK_CLUSTER_CONTROL_DIR=/var/lib/openriak-cluster-control",
+                "role="
+            ],
+            "Cmd": null,
+            "Healthcheck": {
+                "Test": [
+                    "CMD",
+                    "/usr/local/bin/openriak-healthcheck"
+                ],
+                "Interval": 10000000000,
+                "Timeout": 60000000000,
+                "StartPeriod": 120000000000,
+                "Retries": 3
+            },
+            "Image": "tiotjp/openriak-kv:test-3.4.1-debian-11-otp26-linux-amd64-20260911t152654.212751z",
+            "Volumes": {
+                "/etc/riak": {},
+                "/var/lib/riak": {},
+                "/var/log/riak": {}
+            },
+            "WorkingDir": "",
+            "Entrypoint": [
+                "/usr/local/bin/openriak-entrypoint"
+            ],
+            "Labels": {
+                "com.docker.compose.config-hash": "62888e6928b7b28db3b2a5363bb58c8bb3168a80ea2840c5ff8798e65d41a815",
+                "com.docker.compose.container-number": "1",
+                "com.docker.compose.depends_on": "",
+                "com.docker.compose.image": "sha256:57bc547eefa48362ac4f91bb1c9aead60e3cd3ddab107ba1477a0f6d5b0796df",
+                "com.docker.compose.oneoff": "False",
+                "com.docker.compose.project": "openriak-kv-341-debian-11-otp26-node-cluster",
+                "com.docker.compose.project.config_files": "/home/peter/openriak-builds/tmp/openriak-docker-3.4.1-debian-11-otp26-xaahywz7/compose.cluster.test.yaml",
+                "com.docker.compose.project.environment_file": "/home/peter/openriak-builds/tmp/openriak-docker-3.4.1-debian-11-otp26-xaahywz7/.env.cluster",
+                "com.docker.compose.project.working_dir": "/home/peter/openriak-builds/tmp/openriak-docker-3.4.1-debian-11-otp26-xaahywz7",
+                "com.docker.compose.service": "node3",
+                "com.docker.compose.version": "2.32.4",
+                "org.opencontainers.image.description": "Package-backed OpenRiak KV with single-node and cluster startup support",
+                "org.opencontainers.image.source": "https://github.com/TI-Tokyo/openriak-docs",
+                "org.opencontainers.image.title": "OpenRiak KV",
+                "org.opencontainers.image.url": "https://www.tiot.jp/",
+                "org.opencontainers.image.vendor": "TI Tokyo",
+                "org.opencontainers.image.version": "3.4.1",
+                "org.openriak.image.tag": "tiotjp/openriak-kv:3.4.1-debian-11-otp26",
+                "org.openriak.os.name": "debian",
+                "org.openriak.os.release": "11",
+                "org.openriak.os.version": "11",
+                "org.openriak.otp.version": "26"
+            },
+            "StopSignal": "SIGTERM",
+            "StopTimeout": 120
+        },
+        "NetworkSettings": {
+            "SandboxID": "ce0fff3572b4b78d5f098181cee82b69fd0deb9a819aa89b4d6b4f64cb3e13f5",
+            "SandboxKey": "/run/snap.docker/netns/ce0fff3572b4",
+            "Ports": {
+                "8087/tcp": null,
+                "8098/tcp": null
+            },
+            "Networks": {
+                "openriak-kv-341-debian-11-otp26-node-cluster_openriak": {
+                    "IPAMConfig": {},
+                    "Links": null,
+                    "Aliases": [
+                        "openriak-kv-3.4.1-debian-11-otp26-node-3-t-212751z",
+                        "node3",
+                        "node-03.cluster-a.openriak"
+                    ],
+                    "DriverOpts": null,
+                    "GwPriority": 0,
+                    "NetworkID": "3945abaf2465157ddd1c12e87372217ef5c8a688a1b2467da83ab960feadcd5d",
+                    "EndpointID": "10294c6a01b203331338f2bb6d8121a8e196d28d302e3644e8679f09456fc544",
+                    "Gateway": "172.19.0.1",
+                    "IPAddress": "172.19.0.3",
+                    "MacAddress": "36:3b:ea:4a:5a:58",
+                    "IPPrefixLen": 16,
+                    "IPv6Gateway": "",
+                    "GlobalIPv6Address": "",
+                    "GlobalIPv6PrefixLen": 0,
+                    "DNSNames": [
+                        "openriak-kv-3.4.1-debian-11-otp26-node-3-t-212751z",
+                        "node3",
+                        "node-03.cluster-a.openriak",
+                        "ebcbc367bf02"
+                    ]
+                }
+            }
+        }
+    }
+]
+
+timeout_seconds: 3600
+exit_code: 0

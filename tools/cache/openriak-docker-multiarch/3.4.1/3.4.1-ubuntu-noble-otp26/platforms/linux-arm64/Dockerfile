@@ -23,6 +23,7 @@ apt-get clean
 rm -rf /var/lib/apt/lists/*
 rm -f /tmp/riak_3.4.1-OTP26_amd64.deb
 # Require the reviewed security updates; reject stale mirrors.
+dpkg --compare-versions "$(dpkg-query -W -f='${Version}' libc6)" ge '2.39-0ubuntu8.9'
 # The runtime does not execute Perl; remove it and dependent tools explicitly.
 # This is a final runtime filesystem, not a general-purpose administration image.
 apt-get update
@@ -59,6 +60,7 @@ apt-get clean
 rm -rf /var/lib/apt/lists/*
 rm -f /tmp/riak_3.4.1-OTP26_arm64.deb
 # Require the reviewed security updates; reject stale mirrors.
+dpkg --compare-versions "$(dpkg-query -W -f='${Version}' libc6)" ge '2.39-0ubuntu8.9'
 # The runtime does not execute Perl; remove it and dependent tools explicitly.
 # This is a final runtime filesystem, not a general-purpose administration image.
 apt-get update
@@ -112,7 +114,7 @@ ENV RIAK_NODE_HOST=""
 # Explicit nodename; empty derives openriak-kv@<hostname>.
 ENV RIAK_NODE_NAME=""
 # Initial cookie; existing riak.conf wins and new followers adopt the coordinator cookie.
-ENV RIAK_DISTRIBUTED_COOKIE="openriak-2c32f72a3e4e99cc6ac0cfb8ee13f859"
+ENV RIAK_DISTRIBUTED_COOKIE="openriak-282334c3a281c86aa2bd34da8284a52e"
 # Partition count for a new ring; do not change on an existing cluster.
 ENV RIAK_RING_SIZE="8"
 # Storage backend used by OpenRiak KV.

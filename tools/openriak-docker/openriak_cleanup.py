@@ -1,6 +1,8 @@
 """Cutoff-based cleanup for this repository's OpenRiak KV Docker generator."""
 from __future__ import annotations
 
+import openriak_locks
+import contextlib
 import argparse
 import datetime as dt
 import json
@@ -217,7 +219,10 @@ def generator_workers(tool, processes, proc=Path('/proc')):
         if pid == os.getpid():
             continue
         for index, argument in enumerate(info['args'][:-1]):
-            if Path(argument).name != script.name or info['args'][index + 1] not in ('refresh', 'generate', 'sync-static'):
+            command = info['args'][index + 1]
+            subcommand = info['args'][index + 2] if len(info['args']) > index + 2 else ''
+            mutating = command in ('refresh', 'generate', 'sync-static', 'push', 'base') or (command == 'distribute' and subcommand in ('run', 'worker', 'collect'))
+            if Path(argument).name != script.name or not mutating:
                 continue
             candidate = Path(argument)
             if not candidate.is_absolute():
@@ -323,6 +328,11 @@ def docker_plan(tool, cutoff, timeout=DEFAULT_TIMEOUT_SECONDS):
 
 
 def prune_builder_cache(tool, cutoff, timeout=DEFAULT_TIMEOUT_SECONDS):
+    with openriak_locks.lock(tool, f'builder:{tool.MULTIARCH_BUILDER}'):
+        return _prune_builder_cache(tool, cutoff, timeout)
+
+
+def _prune_builder_cache(tool, cutoff, timeout=DEFAULT_TIMEOUT_SECONDS):
     builder = tool.MULTIARCH_BUILDER
     inspection = docker_run(tool, 'buildx', 'inspect', builder, timeout=timeout).stdout
     states = re.findall(r'^Status:\s*(\S+)\s*$', inspection, re.MULTILINE)
@@ -406,24 +416,31 @@ def main(options, tool):
     if not options.delete:
         print('Preview only; nothing stopped or deleted. Add --delete to apply.')
         return 0
-    for container in containers:
-        if container.get('State', {}).get('Running'):
-            docker_run(tool, 'stop', '--time', str(options.timeout), container['Id'], timeout=options.timeout)
-        docker_run(tool, 'container', 'rm', container['Id'], timeout=options.timeout)
-    for network in networks:
-        docker_run(tool, 'network', 'rm', network, timeout=options.timeout)
-    # Never force image deletion: other containers/repositories may share layers.
-    for image in images:
-        docker_run(tool, 'image', 'rm', image, timeout=options.timeout)
-    if builder:
-        prune_builder_cache(tool, cutoff, timeout=options.timeout)
-    for path in files:
-        path.unlink()
-    for path in trees:
-        remove_tree(path)
-    for path, data, count in changes:
-        temporary = path.with_name(f'{path.name}.{os.getpid()}.cleanup.tmp')
-        temporary.write_text(json.dumps(data, indent=2) + '\n')
-        temporary.replace(path)
-    print('Cleanup complete.')
-    return 0
+    with openriak_locks.activity(tool, shared=False), (openriak_locks.lock(tool, f'builder:{tool.MULTIARCH_BUILDER}') if options.remove_all else contextlib.nullcontext()):
+        fresh_trees, fresh_files = file_plan(tool, cutoff, options.remove_all)
+        if fresh_trees != trees or fresh_files != files:
+            raise tool.DockerToolError('Cleanup selection changed while acquiring its lock; rerun cleanup')
+        changes = metadata_plan(tool, trees) if options.remove_all else []
+        if options.remove_all:
+            containers, images, networks, builder = docker_plan(tool, cutoff, timeout=options.timeout)
+        for container in containers:
+            if container.get('State', {}).get('Running'):
+                docker_run(tool, 'stop', '--time', str(options.timeout), container['Id'], timeout=options.timeout)
+            docker_run(tool, 'container', 'rm', container['Id'], timeout=options.timeout)
+        for network in networks:
+            docker_run(tool, 'network', 'rm', network, timeout=options.timeout)
+        # Never force image deletion: other containers/repositories may share layers.
+        for image in images:
+            docker_run(tool, 'image', 'rm', image, timeout=options.timeout)
+        if builder:
+            _prune_builder_cache(tool, cutoff, timeout=options.timeout)
+        for path in files:
+            path.unlink()
+        for path in trees:
+            remove_tree(path)
+        for path, data, count in changes:
+            temporary = path.with_name(f'{path.name}.{os.getpid()}.cleanup.tmp')
+            temporary.write_text(json.dumps(data, indent=2) + '\n')
+            temporary.replace(path)
+        print('Cleanup complete.')
+        return 0

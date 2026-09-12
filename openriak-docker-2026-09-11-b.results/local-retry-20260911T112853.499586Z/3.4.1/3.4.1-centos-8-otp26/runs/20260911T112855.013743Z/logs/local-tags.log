@@ -1,0 +1,75 @@
+$ /usr/bin/docker buildx build --builder openriak-kv-multiarch --platform linux/amd64 --pull=false --load --tag tiotjp/openriak-kv:3.4.1-centos-8-otp26 --tag tiotjp/openriak-kv:3.4.1-centos-8 /home/peter/openriak-builds/openriak-distributed/openriak-docker-2026-09-11-b/local/20260911T084617.243958Z/results/3.4.1/3.4.1-centos-8-otp26
+started: 2026-09-11T11:33:51Z
+#0 building with "openriak-kv-multiarch" instance using docker-container driver
+
+#1 [internal] load build definition from Dockerfile
+#1 transferring dockerfile: 45.27kB done
+#1 DONE 0.0s
+
+#2 resolve image config for docker-image://docker.io/docker/dockerfile:1.7
+#2 DONE 0.4s
+
+#3 docker-image://docker.io/docker/dockerfile:1.7@sha256:a57df69d0ea827fb7266491f2813635de6f17269be881f696fbfdf2d83dda33e
+#3 resolve docker.io/docker/dockerfile:1.7@sha256:a57df69d0ea827fb7266491f2813635de6f17269be881f696fbfdf2d83dda33e 0.0s done
+#3 CACHED
+
+#4 [internal] load metadata for quay.io/centos/centos:stream8@sha256:20da069d4f8126c4517ee563e6e723d4cbe79ff62f6c4597f753478af91a09a3
+#4 DONE 0.1s
+
+#5 [internal] load .dockerignore
+#5 transferring context: 42B done
+#5 DONE 0.2s
+
+#6 [download-amd64 1/1] ADD --checksum=sha256:ffcc9ce4af826a508e4927a8c725d5e21dd6dcb565d8adba4ae3ca6ef3f146ea https://files.tiot.jp/riak/kv/3.4/3.4.1/rhel/8/riak-3.4.1.OTP26-1.el8.x86_64.rpm /riak-3.4.1.OTP26-1.el8.x86_64.rpm
+#6 DONE 0.0s
+
+#7 [internal] preparing inline document
+#7 DONE 0.0s
+
+#8 [internal] preparing inline document
+#8 DONE 0.0s
+
+#9 [install-amd64 1/2] FROM quay.io/centos/centos:stream8@sha256:20da069d4f8126c4517ee563e6e723d4cbe79ff62f6c4597f753478af91a09a3
+#9 resolve quay.io/centos/centos:stream8@sha256:20da069d4f8126c4517ee563e6e723d4cbe79ff62f6c4597f753478af91a09a3
+#9 resolve quay.io/centos/centos:stream8@sha256:20da069d4f8126c4517ee563e6e723d4cbe79ff62f6c4597f753478af91a09a3 0.4s done
+#9 DONE 0.4s
+
+#10 [download-amd64 1/1] ADD --checksum=sha256:ffcc9ce4af826a508e4927a8c725d5e21dd6dcb565d8adba4ae3ca6ef3f146ea https://files.tiot.jp/riak/kv/3.4/3.4.1/rhel/8/riak-3.4.1.OTP26-1.el8.x86_64.rpm /riak-3.4.1.OTP26-1.el8.x86_64.rpm
+#10 CACHED
+
+#11 [install-amd64 2/2] RUN --mount=type=bind,from=download-amd64,target=/opt/openriak-package,ro <<'OPENRIAK_PACKAGE_INSTALL' (set -eu...)
+#11 CACHED
+
+#12 [final 1/4] RUN <<'OPENRIAK_IMAGE_SETUP' (set -eu...)
+#12 CACHED
+
+#13 [package-amd64 1/1] COPY --from=install-amd64 /openriak-rootfs/ /
+#13 CACHED
+
+#14 [final 2/4] COPY <<OPENRIAK_ENTRYPOINT /usr/local/bin/openriak-entrypoint
+#14 CACHED
+
+#15 [final 3/4] COPY <<OPENRIAK_HEALTHCHECK /usr/local/bin/openriak-healthcheck
+#15 CACHED
+
+#16 [final 4/4] RUN <<'OPENRIAK_SCRIPT_SETUP' (set -eu...)
+#16 CACHED
+
+#17 exporting to docker image format
+#17 exporting layers done
+#17 exporting manifest sha256:ff65216080b50521cdc4a445a1f36214bed33f411bc4255acaef0ae0b8b8322d 0.1s done
+#17 exporting config sha256:a113c574d584bcd29fe5b44fca6b8a957e29f5e35a51f718854395c18f9bf270 0.1s done
+#17 sending tarball
+#17 sending tarball 6.2s done
+#17 DONE 6.4s
+
+#18 importing to docker
+#18 loading layer 52d382224b74 69.79MB / 69.79MB 5.6s done
+#18 loading layer 750d38fbe292 23.61kB / 23.61kB 2.3s done
+#18 loading layer 6c3a212d3460 7.70kB / 7.70kB 1.8s done
+#18 loading layer 9370a2d4c9bb 386B / 386B 1.3s done
+#18 loading layer 0c8ec45b6c05 7.88kB / 7.88kB 0.7s done
+#18 DONE 5.6s
+
+timeout_seconds: 3600
+exit_code: 0

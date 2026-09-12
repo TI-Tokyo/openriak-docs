@@ -1,0 +1,389 @@
+$ /usr/bin/docker buildx build --builder openriak-kv-multiarch --load --platform linux/arm64 --pull=false --no-cache --tag tiotjp/openriak-kv:test-3.4.0-ubuntu-noble-otp24-linux-arm64-20260911t085200.834736z --file /home/peter/openriak-builds/openriak-distributed/openriak-docker-2026-09-11-b/living-room-b/20260911T084617.243958Z/results/3.4.0/3.4.0-ubuntu-noble-otp24/platforms/linux-arm64/runs/20260911T085200.834736Z/Dockerfile /home/peter/openriak-builds/openriak-distributed/openriak-docker-2026-09-11-b/living-room-b/20260911T084617.243958Z/results/3.4.0/3.4.0-ubuntu-noble-otp24/platforms/linux-arm64/runs/20260911T085200.834736Z
+started: 2026-09-11T08:52:01Z
+#0 building with "openriak-kv-multiarch" instance using docker-container driver
+
+#1 [internal] load build definition from Dockerfile
+#1 transferring dockerfile: 44.66kB done
+#1 DONE 0.0s
+
+#2 resolve image config for docker-image://docker.io/docker/dockerfile:1.7
+#2 DONE 0.8s
+
+#3 docker-image://docker.io/docker/dockerfile:1.7@sha256:a57df69d0ea827fb7266491f2813635de6f17269be881f696fbfdf2d83dda33e
+#3 resolve docker.io/docker/dockerfile:1.7@sha256:a57df69d0ea827fb7266491f2813635de6f17269be881f696fbfdf2d83dda33e done
+#3 CACHED
+
+#4 [internal] load metadata for docker.io/library/ubuntu:noble@sha256:224a1869083a311ef3f13648a154ba79832fbef6364d31493642ca03082da254
+#4 DONE 0.7s
+
+#5 [internal] load .dockerignore
+#5 transferring context: 2B done
+#5 DONE 0.0s
+
+#6 [internal] preparing inline document
+#6 CACHED
+
+#7 [internal] preparing inline document
+#7 CACHED
+
+#8 [install-arm64 1/2] FROM docker.io/library/ubuntu:noble@sha256:224a1869083a311ef3f13648a154ba79832fbef6364d31493642ca03082da254
+#8 resolve docker.io/library/ubuntu:noble@sha256:224a1869083a311ef3f13648a154ba79832fbef6364d31493642ca03082da254 done
+#8 sha256:9332cde1e07015fd0f14e769fc74ea901a957e3f62a76de66638f99854867dd2 0B / 28.94MB 0.2s
+#8 sha256:9332cde1e07015fd0f14e769fc74ea901a957e3f62a76de66638f99854867dd2 7.34MB / 28.94MB 0.3s
+#8 sha256:9332cde1e07015fd0f14e769fc74ea901a957e3f62a76de66638f99854867dd2 17.83MB / 28.94MB 0.5s
+#8 sha256:9332cde1e07015fd0f14e769fc74ea901a957e3f62a76de66638f99854867dd2 28.31MB / 28.94MB 0.6s
+#8 ...
+
+#9 [download-arm64 1/1] ADD --checksum=sha256:e3d548c78cb540b12bbfc64e8153693820d1a722f01c949a01aaf4bb4352c0f6 https://files.tiot.jp/riak/kv/3.4/3.4.0/ubuntu/noble64/riak_3.4.0-OTP24_arm64.deb /riak_3.4.0-OTP24_arm64.deb
+#9 DONE 0.7s
+
+#8 [install-arm64 1/2] FROM docker.io/library/ubuntu:noble@sha256:224a1869083a311ef3f13648a154ba79832fbef6364d31493642ca03082da254
+#8 sha256:9332cde1e07015fd0f14e769fc74ea901a957e3f62a76de66638f99854867dd2 28.94MB / 28.94MB 0.6s done
+#8 extracting sha256:9332cde1e07015fd0f14e769fc74ea901a957e3f62a76de66638f99854867dd2
+#8 ...
+
+#10 [download-arm64 1/1] ADD --checksum=sha256:e3d548c78cb540b12bbfc64e8153693820d1a722f01c949a01aaf4bb4352c0f6 https://files.tiot.jp/riak/kv/3.4/3.4.0/ubuntu/noble64/riak_3.4.0-OTP24_arm64.deb /riak_3.4.0-OTP24_arm64.deb
+#10 DONE 0.0s
+
+#8 [install-arm64 1/2] FROM docker.io/library/ubuntu:noble@sha256:224a1869083a311ef3f13648a154ba79832fbef6364d31493642ca03082da254
+#8 extracting sha256:9332cde1e07015fd0f14e769fc74ea901a957e3f62a76de66638f99854867dd2 0.8s done
+#8 DONE 1.5s
+
+#11 [install-arm64 2/2] RUN --mount=type=bind,from=download-arm64,target=/opt/openriak-package,ro <<'OPENRIAK_PACKAGE_INSTALL' (set -eu...)
+#11 1.064 Get:1 http://ports.ubuntu.com/ubuntu-ports noble InRelease [256 kB]
+#11 2.474 Get:2 http://ports.ubuntu.com/ubuntu-ports noble-updates InRelease [126 kB]
+#11 2.817 Get:3 http://ports.ubuntu.com/ubuntu-ports noble-backports InRelease [126 kB]
+#11 3.160 Get:4 http://ports.ubuntu.com/ubuntu-ports noble-security InRelease [126 kB]
+#11 3.890 Get:5 http://ports.ubuntu.com/ubuntu-ports noble/multiverse arm64 Packages [274 kB]
+#11 4.448 Get:6 http://ports.ubuntu.com/ubuntu-ports noble/main arm64 Packages [1776 kB]
+#11 5.147 Get:7 http://ports.ubuntu.com/ubuntu-ports noble/restricted arm64 Packages [113 kB]
+#11 5.170 Get:8 http://ports.ubuntu.com/ubuntu-ports noble/universe arm64 Packages [19.0 MB]
+#11 6.426 Get:9 http://ports.ubuntu.com/ubuntu-ports noble-updates/universe arm64 Packages [2195 kB]
+#11 6.558 Get:10 http://ports.ubuntu.com/ubuntu-ports noble-updates/main arm64 Packages [1627 kB]
+#11 6.656 Get:11 http://ports.ubuntu.com/ubuntu-ports noble-updates/restricted arm64 Packages [2831 kB]
+#11 6.822 Get:12 http://ports.ubuntu.com/ubuntu-ports noble-updates/multiverse arm64 Packages [92.2 kB]
+#11 6.830 Get:13 http://ports.ubuntu.com/ubuntu-ports noble-backports/multiverse arm64 Packages [671 B]
+#11 6.831 Get:14 http://ports.ubuntu.com/ubuntu-ports noble-backports/universe arm64 Packages [36.3 kB]
+#11 6.834 Get:15 http://ports.ubuntu.com/ubuntu-ports noble-backports/main arm64 Packages [48.9 kB]
+#11 7.816 Get:16 http://ports.ubuntu.com/ubuntu-ports noble-security/main arm64 Packages [1312 kB]
+#11 8.142 Get:17 http://ports.ubuntu.com/ubuntu-ports noble-security/universe arm64 Packages [1616 kB]
+#11 8.391 Get:18 http://ports.ubuntu.com/ubuntu-ports noble-security/restricted arm64 Packages [2707 kB]
+#11 8.542 Get:19 http://ports.ubuntu.com/ubuntu-ports noble-security/multiverse arm64 Packages [87.7 kB]
+#11 12.90 Fetched 34.4 MB in 12s (2765 kB/s)
+#11 12.90 Reading package lists...
+#11 25.68 Reading package lists...
+#11 38.55 Building dependency tree...
+#11 40.59 Reading state information...
+#11 41.01 Calculating upgrade...
+#11 43.74 The following packages will be upgraded:
+#11 43.74   base-files libc-bin libc6
+#11 44.39 3 upgraded, 0 newly installed, 0 to remove and 0 not upgraded.
+#11 44.39 Need to get 3441 kB of archives.
+#11 44.39 After this operation, 0 B of additional disk space will be used.
+#11 44.39 Get:1 http://ports.ubuntu.com/ubuntu-ports noble-updates/main arm64 libc6 arm64 2.39-0ubuntu8.9 [2776 kB]
+#11 45.98 Get:2 http://ports.ubuntu.com/ubuntu-ports noble-updates/main arm64 base-files arm64 13ubuntu10.5 [73.4 kB]
+#11 46.00 Get:3 http://ports.ubuntu.com/ubuntu-ports noble-updates/main arm64 libc-bin arm64 2.39-0ubuntu8.9 [591 kB]
+#11 47.39 debconf: delaying package configuration, since apt-utils is not installed
+#11 47.63 Fetched 3441 kB in 2s (1559 kB/s)
+#11 47.84 (Reading database ... (Reading database ... 5%(Reading database ... 10%(Reading database ... 15%(Reading database ... 20%(Reading database ... 25%(Reading database ... 30%(Reading database ... 35%(Reading database ... 40%(Reading database ... 45%(Reading database ... 50%(Reading database ... 55%(Reading database ... 60%(Reading database ... 65%(Reading database ... 70%(Reading database ... 75%(Reading database ... 80%(Reading database ... 85%(Reading database ... 90%(Reading database ... 95%(Reading database ... 100%(Reading database ... 4376 files and directories currently installed.)
+#11 47.86 Preparing to unpack .../libc6_2.39-0ubuntu8.9_arm64.deb ...
+#11 49.60 Unpacking libc6:arm64 (2.39-0ubuntu8.9) over (2.39-0ubuntu8.8) ...
+#11 50.36 Setting up libc6:arm64 (2.39-0ubuntu8.9) ...
+#11 52.95 (Reading database ... (Reading database ... 5%(Reading database ... 10%(Reading database ... 15%(Reading database ... 20%(Reading database ... 25%(Reading database ... 30%(Reading database ... 35%(Reading database ... 40%(Reading database ... 45%(Reading database ... 50%(Reading database ... 55%(Reading database ... 60%(Reading database ... 65%(Reading database ... 70%(Reading database ... 75%(Reading database ... 80%(Reading database ... 85%(Reading database ... 90%(Reading database ... 95%(Reading database ... 100%(Reading database ... 4376 files and directories currently installed.)
+#11 52.97 Preparing to unpack .../base-files_13ubuntu10.5_arm64.deb ...
+#11 53.69 Unpacking base-files (13ubuntu10.5) over (13ubuntu10.4) ...
+#11 54.10 Setting up base-files (13ubuntu10.5) ...
+#11 54.12 Installing new version of config file /etc/issue ...
+#11 54.12 Installing new version of config file /etc/issue.net ...
+#11 54.12 Installing new version of config file /etc/lsb-release ...
+#11 56.84 (Reading database ... (Reading database ... 5%(Reading database ... 10%(Reading database ... 15%(Reading database ... 20%(Reading database ... 25%(Reading database ... 30%(Reading database ... 35%(Reading database ... 40%(Reading database ... 45%(Reading database ... 50%(Reading database ... 55%(Reading database ... 60%(Reading database ... 65%(Reading database ... 70%(Reading database ... 75%(Reading database ... 80%(Reading database ... 85%(Reading database ... 90%(Reading database ... 95%(Reading database ... 100%(Reading database ... 4376 files and directories currently installed.)
+#11 56.87 Preparing to unpack .../libc-bin_2.39-0ubuntu8.9_arm64.deb ...
+#11 56.88 Unpacking libc-bin (2.39-0ubuntu8.9) over (2.39-0ubuntu8.8) ...
+#11 57.14 Setting up libc-bin (2.39-0ubuntu8.9) ...
+#11 57.67 Reading package lists...
+#11 70.60 Building dependency tree...
+#11 72.67 Reading state information...
+#11 74.41 passwd is already the newest version (1:4.13+dfsg1-4ubuntu3.2).
+#11 74.41 procps is already the newest version (2:4.0.4-4ubuntu3.3).
+#11 74.41 The following additional packages will be installed:
+#11 74.41   adduser cron cron-daemon-common libapparmor1 libargon2-1 libcryptsetup12
+#11 74.41   libdevmapper1.02.1 libfdisk1 libjson-c5 libkmod2 libpopt0 libsystemd-shared
+#11 74.42   logrotate openssl sudo systemd systemd-dev
+#11 74.42 Suggested packages:
+#11 74.42   liblocale-gettext-perl perl quota ecryptfs-utils anacron checksecurity
+#11 74.42   supercat default-mta | mail-transport-agent bsd-mailx | mailx
+#11 74.42   systemd-container systemd-homed systemd-userdbd systemd-boot libfido2-1
+#11 74.42   libip4tc2 libqrencode4 libtss2-esys-3.0.2-0 libtss2-mu-4.0.1-0 libtss2-rc0
+#11 74.42   libtss2-tcti-device0 polkitd
+#11 74.42 Recommended packages:
+#11 74.42   dmsetup default-dbus-system-bus | dbus-system-bus networkd-dispatcher
+#11 74.42   systemd-timesyncd | time-daemon systemd-resolved
+#11 74.85 The following NEW packages will be installed:
+#11 74.85   adduser ca-certificates cron cron-daemon-common libapparmor1 libargon2-1
+#11 74.85   libcryptsetup12 libdevmapper1.02.1 libfdisk1 libjson-c5 libkmod2 libpopt0
+#11 74.85   libsystemd-shared logrotate openssl riak sudo systemd systemd-dev tzdata
+#11 75.70 0 upgraded, 20 newly installed, 0 to remove and 0 not upgraded.
+#11 75.70 Need to get 8839 kB/36.8 MB of archives.
+#11 75.70 After this operation, 86.0 MB of additional disk space will be used.
+#11 75.70 Get:1 http://ports.ubuntu.com/ubuntu-ports noble-updates/main arm64 libapparmor1 arm64 4.0.1really4.0.1-0ubuntu0.24.04.7 [51.8 kB]
+#11 76.02 Get:2 /tmp/riak_3.4.0-OTP24_arm64.deb riak arm64 3.4.0-OTP24 [28.0 MB]
+#11 76.54 Get:3 http://ports.ubuntu.com/ubuntu-ports noble/main arm64 libargon2-1 arm64 0~20190702+dfsg-4build1 [20.5 kB]
+#11 76.60 Get:4 http://ports.ubuntu.com/ubuntu-ports noble-updates/main arm64 libdevmapper1.02.1 arm64 2:1.02.185-3ubuntu3.2 [128 kB]
+#11 77.04 Get:5 http://ports.ubuntu.com/ubuntu-ports noble/main arm64 libjson-c5 arm64 0.17-1build1 [36.4 kB]
+#11 77.11 Get:6 http://ports.ubuntu.com/ubuntu-ports noble-updates/main arm64 libcryptsetup12 arm64 2:2.7.0-1ubuntu4.2 [261 kB]
+#11 77.43 Get:7 http://ports.ubuntu.com/ubuntu-ports noble-updates/main arm64 libfdisk1 arm64 2.39.3-9ubuntu6.6 [142 kB]
+#11 77.52 Get:8 http://ports.ubuntu.com/ubuntu-ports noble-security/main arm64 libkmod2 arm64 31+20240202-2ubuntu7.2 [52.0 kB]
+#11 77.55 Get:9 http://ports.ubuntu.com/ubuntu-ports noble-updates/main arm64 libsystemd-shared arm64 255.4-1ubuntu8.17 [2021 kB]
+#11 78.08 Get:10 http://ports.ubuntu.com/ubuntu-ports noble-updates/main arm64 systemd-dev all 255.4-1ubuntu8.17 [107 kB]
+#11 78.10 Get:11 http://ports.ubuntu.com/ubuntu-ports noble-updates/main arm64 systemd arm64 255.4-1ubuntu8.17 [3407 kB]
+#11 78.40 Get:12 http://ports.ubuntu.com/ubuntu-ports noble/main arm64 adduser all 3.137ubuntu1 [101 kB]
+#11 78.41 Get:13 http://ports.ubuntu.com/ubuntu-ports noble/main arm64 cron-daemon-common all 3.0pl1-184ubuntu2 [13.6 kB]
+#11 78.41 Get:14 http://ports.ubuntu.com/ubuntu-ports noble/main arm64 cron arm64 3.0pl1-184ubuntu2 [84.0 kB]
+#11 78.41 Get:15 http://ports.ubuntu.com/ubuntu-ports noble-updates/main arm64 openssl arm64 3.0.13-0ubuntu3.15 [985 kB]
+#11 78.46 Get:16 http://ports.ubuntu.com/ubuntu-ports noble-updates/main arm64 ca-certificates all 20260601~24.04.1 [139 kB]
+#11 78.47 Get:17 http://ports.ubuntu.com/ubuntu-ports noble/main arm64 libpopt0 arm64 1.19+dfsg-1build1 [28.4 kB]
+#11 78.48 Get:18 http://ports.ubuntu.com/ubuntu-ports noble/main arm64 logrotate arm64 3.21.0-2build1 [50.9 kB]
+#11 78.48 Get:19 http://ports.ubuntu.com/ubuntu-ports noble-updates/main arm64 sudo arm64 1.9.15p5-3ubuntu5.24.04.2 [929 kB]
+#11 78.62 Get:20 http://ports.ubuntu.com/ubuntu-ports noble-updates/main arm64 tzdata all 2026c-0ubuntu0.24.04.1 [280 kB]
+#11 79.94 debconf: delaying package configuration, since apt-utils is not installed
+#11 80.18 Fetched 8839 kB in 4s (2395 kB/s)
+#11 80.38 Selecting previously unselected package libapparmor1:arm64.
+#11 80.38 (Reading database ... (Reading database ... 5%(Reading database ... 10%(Reading database ... 15%(Reading database ... 20%(Reading database ... 25%(Reading database ... 30%(Reading database ... 35%(Reading database ... 40%(Reading database ... 45%(Reading database ... 50%(Reading database ... 55%(Reading database ... 60%(Reading database ... 65%(Reading database ... 70%(Reading database ... 75%(Reading database ... 80%(Reading database ... 85%(Reading database ... 90%(Reading database ... 95%(Reading database ... 100%(Reading database ... 4376 files and directories currently installed.)
+#11 80.41 Preparing to unpack .../00-libapparmor1_4.0.1really4.0.1-0ubuntu0.24.04.7_arm64.deb ...
+#11 80.42 Unpacking libapparmor1:arm64 (4.0.1really4.0.1-0ubuntu0.24.04.7) ...
+#11 80.65 Selecting previously unselected package libargon2-1:arm64.
+#11 80.66 Preparing to unpack .../01-libargon2-1_0~20190702+dfsg-4build1_arm64.deb ...
+#11 80.66 Unpacking libargon2-1:arm64 (0~20190702+dfsg-4build1) ...
+#11 80.88 Selecting previously unselected package libdevmapper1.02.1:arm64.
+#11 80.89 Preparing to unpack .../02-libdevmapper1.02.1_2%3a1.02.185-3ubuntu3.2_arm64.deb ...
+#11 80.89 Unpacking libdevmapper1.02.1:arm64 (2:1.02.185-3ubuntu3.2) ...
+#11 81.12 Selecting previously unselected package libjson-c5:arm64.
+#11 81.12 Preparing to unpack .../03-libjson-c5_0.17-1build1_arm64.deb ...
+#11 81.12 Unpacking libjson-c5:arm64 (0.17-1build1) ...
+#11 81.35 Selecting previously unselected package libcryptsetup12:arm64.
+#11 81.35 Preparing to unpack .../04-libcryptsetup12_2%3a2.7.0-1ubuntu4.2_arm64.deb ...
+#11 81.35 Unpacking libcryptsetup12:arm64 (2:2.7.0-1ubuntu4.2) ...
+#11 81.59 Selecting previously unselected package libfdisk1:arm64.
+#11 81.59 Preparing to unpack .../05-libfdisk1_2.39.3-9ubuntu6.6_arm64.deb ...
+#11 81.59 Unpacking libfdisk1:arm64 (2.39.3-9ubuntu6.6) ...
+#11 81.83 Selecting previously unselected package libkmod2:arm64.
+#11 81.83 Preparing to unpack .../06-libkmod2_31+20240202-2ubuntu7.2_arm64.deb ...
+#11 81.83 Unpacking libkmod2:arm64 (31+20240202-2ubuntu7.2) ...
+#11 82.06 Selecting previously unselected package libsystemd-shared:arm64.
+#11 82.06 Preparing to unpack .../07-libsystemd-shared_255.4-1ubuntu8.17_arm64.deb ...
+#11 82.06 Unpacking libsystemd-shared:arm64 (255.4-1ubuntu8.17) ...
+#11 82.39 Selecting previously unselected package systemd-dev.
+#11 82.40 Preparing to unpack .../08-systemd-dev_255.4-1ubuntu8.17_all.deb ...
+#11 82.40 Unpacking systemd-dev (255.4-1ubuntu8.17) ...
+#11 82.64 Selecting previously unselected package systemd.
+#11 82.64 Preparing to unpack .../09-systemd_255.4-1ubuntu8.17_arm64.deb ...
+#11 82.90 Unpacking systemd (255.4-1ubuntu8.17) ...
+#11 83.51 Selecting previously unselected package adduser.
+#11 83.52 Preparing to unpack .../10-adduser_3.137ubuntu1_all.deb ...
+#11 83.56 Unpacking adduser (3.137ubuntu1) ...
+#11 83.75 Setting up adduser (3.137ubuntu1) ...
+#11 83.97 Selecting previously unselected package cron-daemon-common.
+#11 83.98 (Reading database ... (Reading database ... 5%(Reading database ... 10%(Reading database ... 15%(Reading database ... 20%(Reading database ... 25%(Reading database ... 30%(Reading database ... 35%(Reading database ... 40%(Reading database ... 45%(Reading database ... 50%(Reading database ... 55%(Reading database ... 60%(Reading database ... 65%(Reading database ... 70%(Reading database ... 75%(Reading database ... 80%(Reading database ... 85%(Reading database ... 90%(Reading database ... 95%(Reading database ... 100%(Reading database ... 5454 files and directories currently installed.)
+#11 84.00 Preparing to unpack .../cron-daemon-common_3.0pl1-184ubuntu2_all.deb ...
+#11 84.01 Unpacking cron-daemon-common (3.0pl1-184ubuntu2) ...
+#11 84.20 Setting up libapparmor1:arm64 (4.0.1really4.0.1-0ubuntu0.24.04.7) ...
+#11 84.21 Setting up libargon2-1:arm64 (0~20190702+dfsg-4build1) ...
+#11 84.22 Setting up libdevmapper1.02.1:arm64 (2:1.02.185-3ubuntu3.2) ...
+#11 84.22 Setting up libjson-c5:arm64 (0.17-1build1) ...
+#11 84.22 Setting up libcryptsetup12:arm64 (2:2.7.0-1ubuntu4.2) ...
+#11 84.23 Setting up libfdisk1:arm64 (2.39.3-9ubuntu6.6) ...
+#11 84.23 Setting up libkmod2:arm64 (31+20240202-2ubuntu7.2) ...
+#11 84.24 Setting up libsystemd-shared:arm64 (255.4-1ubuntu8.17) ...
+#11 84.24 Setting up systemd-dev (255.4-1ubuntu8.17) ...
+#11 84.24 Setting up systemd (255.4-1ubuntu8.17) ...
+#11 84.36 Created symlink /etc/systemd/system/getty.target.wants/getty@tty1.service → /usr/lib/systemd/system/getty@.service.
+#11 84.43 Created symlink /etc/systemd/system/multi-user.target.wants/remote-fs.target → /usr/lib/systemd/system/remote-fs.target.
+#11 84.49 Created symlink /etc/systemd/system/sysinit.target.wants/systemd-pstore.service → /usr/lib/systemd/system/systemd-pstore.service.
+#11 84.54 Initializing machine ID from random generator.
+#11 84.90 /usr/lib/tmpfiles.d/cron-daemon-common.conf:1: Failed to resolve group 'crontab': No such process
+#11 84.91 /usr/lib/tmpfiles.d/systemd-network.conf:10: Failed to resolve user 'systemd-network': No such process
+#11 84.91 /usr/lib/tmpfiles.d/systemd-network.conf:11: Failed to resolve user 'systemd-network': No such process
+#11 84.91 /usr/lib/tmpfiles.d/systemd-network.conf:12: Failed to resolve user 'systemd-network': No such process
+#11 84.91 /usr/lib/tmpfiles.d/systemd-network.conf:13: Failed to resolve user 'systemd-network': No such process
+#11 84.91 /usr/lib/tmpfiles.d/systemd.conf:22: Failed to resolve group 'systemd-journal': No such process
+#11 84.91 /usr/lib/tmpfiles.d/systemd.conf:23: Failed to resolve group 'systemd-journal': No such process
+#11 84.92 /usr/lib/tmpfiles.d/systemd.conf:28: Failed to resolve group 'systemd-journal': No such process
+#11 84.92 /usr/lib/tmpfiles.d/systemd.conf:29: Failed to resolve group 'systemd-journal': No such process
+#11 84.92 /usr/lib/tmpfiles.d/systemd.conf:30: Failed to resolve group 'systemd-journal': No such process
+#11 85.03 Creating group 'systemd-journal' with GID 999.
+#11 85.03 Creating group 'systemd-network' with GID 998.
+#11 85.03 Creating user 'systemd-network' (systemd Network Management) with UID 998 and GID 998.
+#11 85.31 Setting up cron-daemon-common (3.0pl1-184ubuntu2) ...
+#11 85.42 Creating group 'crontab' with GID 997.
+#11 85.85 Selecting previously unselected package cron.
+#11 85.85 (Reading database ... (Reading database ... 5%(Reading database ... 10%(Reading database ... 15%(Reading database ... 20%(Reading database ... 25%(Reading database ... 30%(Reading database ... 35%(Reading database ... 40%(Reading database ... 45%(Reading database ... 50%(Reading database ... 55%(Reading database ... 60%(Reading database ... 65%(Reading database ... 70%(Reading database ... 75%(Reading database ... 80%(Reading database ... 85%(Reading database ... 90%(Reading database ... 95%(Reading database ... 100%(Reading database ... 5473 files and directories currently installed.)
+#11 85.87 Preparing to unpack .../0-cron_3.0pl1-184ubuntu2_arm64.deb ...
+#11 85.92 Unpacking cron (3.0pl1-184ubuntu2) ...
+#11 86.18 Selecting previously unselected package openssl.
+#11 86.18 Preparing to unpack .../1-openssl_3.0.13-0ubuntu3.15_arm64.deb ...
+#11 86.19 Unpacking openssl (3.0.13-0ubuntu3.15) ...
+#11 86.47 Selecting previously unselected package ca-certificates.
+#11 86.47 Preparing to unpack .../2-ca-certificates_20260601~24.04.1_all.deb ...
+#11 86.47 Unpacking ca-certificates (20260601~24.04.1) ...
+#11 86.74 Selecting previously unselected package libpopt0:arm64.
+#11 86.74 Preparing to unpack .../3-libpopt0_1.19+dfsg-1build1_arm64.deb ...
+#11 86.74 Unpacking libpopt0:arm64 (1.19+dfsg-1build1) ...
+#11 86.99 Selecting previously unselected package logrotate.
+#11 86.99 Preparing to unpack .../4-logrotate_3.21.0-2build1_arm64.deb ...
+#11 86.99 Unpacking logrotate (3.21.0-2build1) ...
+#11 87.22 Selecting previously unselected package sudo.
+#11 87.23 Preparing to unpack .../5-sudo_1.9.15p5-3ubuntu5.24.04.2_arm64.deb ...
+#11 87.26 Unpacking sudo (1.9.15p5-3ubuntu5.24.04.2) ...
+#11 87.54 Selecting previously unselected package tzdata.
+#11 87.55 Preparing to unpack .../6-tzdata_2026c-0ubuntu0.24.04.1_all.deb ...
+#11 87.55 Unpacking tzdata (2026c-0ubuntu0.24.04.1) ...
+#11 87.91 Selecting previously unselected package riak.
+#11 87.91 Preparing to unpack .../7-riak_3.4.0-OTP24_arm64.deb ...
+#11 87.95 Unpacking riak (3.4.0-OTP24) ...
+#11 89.11 Setting up cron (3.0pl1-184ubuntu2) ...
+#11 89.59 invoke-rc.d: could not determine current runlevel
+#11 89.70 invoke-rc.d: policy-rc.d denied execution of start.
+#11 91.66 Created symlink /etc/systemd/system/multi-user.target.wants/cron.service → /usr/lib/systemd/system/cron.service.
+#11 91.70 Setting up tzdata (2026c-0ubuntu0.24.04.1) ...
+#11 93.23 
+#11 93.23 Current default time zone: 'Etc/UTC'
+#11 93.30 Local time is now:      Fri Sep 11 08:53:37 UTC 2026.
+#11 93.30 Universal Time is now:  Fri Sep 11 08:53:37 UTC 2026.
+#11 93.30 Run 'dpkg-reconfigure tzdata' if you wish to change it.
+#11 93.30 
+#11 93.40 Setting up sudo (1.9.15p5-3ubuntu5.24.04.2) ...
+#11 93.62 Setting up openssl (3.0.13-0ubuntu3.15) ...
+#11 93.65 Setting up libpopt0:arm64 (1.19+dfsg-1build1) ...
+#11 93.66 Setting up logrotate (3.21.0-2build1) ...
+#11 95.65 Created symlink /etc/systemd/system/timers.target.wants/logrotate.timer → /usr/lib/systemd/system/logrotate.timer.
+#11 95.69 Setting up riak (3.4.0-OTP24) ...
+#11 96.34 info: Selecting GID from range 100 to 999 ...
+#11 96.39 info: Adding group `riak' (GID 101) ...
+#11 97.18 info: Selecting UID from range 100 to 999 ...
+#11 97.18 
+#11 97.23 info: Adding system user `riak' (UID 100) ...
+#11 97.27 info: Adding new user `riak' (UID 100) with group `riak' ...
+#11 97.51 info: Not creating home directory `/var/lib/riak'.
+#11 97.69 Setting up ca-certificates (20260601~24.04.1) ...
+#11 109.5 Updating certificates in /etc/ssl/certs...
+#11 127.4 121 added, 0 removed; done.
+#11 127.6 Processing triggers for libc-bin (2.39-0ubuntu8.9) ...
+#11 127.7 Processing triggers for ca-certificates (20260601~24.04.1) ...
+#11 127.8 Updating certificates in /etc/ssl/certs...
+#11 141.7 0 added, 0 removed; done.
+#11 141.7 Running hooks in /etc/ca-certificates/update.d...
+#11 141.7 done.
+#11 143.1 Get:1 http://ports.ubuntu.com/ubuntu-ports noble InRelease [256 kB]
+#11 144.5 Get:2 http://ports.ubuntu.com/ubuntu-ports noble-updates InRelease [126 kB]
+#11 145.3 Get:3 http://ports.ubuntu.com/ubuntu-ports noble-backports InRelease [126 kB]
+#11 145.6 Get:4 http://ports.ubuntu.com/ubuntu-ports noble-security InRelease [126 kB]
+#11 145.9 Get:5 http://ports.ubuntu.com/ubuntu-ports noble/main arm64 Packages [1776 kB]
+#11 146.7 Get:6 http://ports.ubuntu.com/ubuntu-ports noble/restricted arm64 Packages [113 kB]
+#11 146.9 Get:7 http://ports.ubuntu.com/ubuntu-ports noble/universe arm64 Packages [19.0 MB]
+#11 148.0 Get:8 http://ports.ubuntu.com/ubuntu-ports noble/multiverse arm64 Packages [274 kB]
+#11 148.2 Get:9 http://ports.ubuntu.com/ubuntu-ports noble-updates/main arm64 Packages [1627 kB]
+#11 148.5 Get:10 http://ports.ubuntu.com/ubuntu-ports noble-updates/restricted arm64 Packages [2831 kB]
+#11 148.8 Get:11 http://ports.ubuntu.com/ubuntu-ports noble-updates/multiverse arm64 Packages [92.2 kB]
+#11 149.0 Get:12 http://ports.ubuntu.com/ubuntu-ports noble-updates/universe arm64 Packages [2195 kB]
+#11 149.3 Get:13 http://ports.ubuntu.com/ubuntu-ports noble-backports/universe arm64 Packages [36.3 kB]
+#11 149.5 Get:14 http://ports.ubuntu.com/ubuntu-ports noble-backports/multiverse arm64 Packages [671 B]
+#11 149.6 Get:15 http://ports.ubuntu.com/ubuntu-ports noble-backports/main arm64 Packages [48.9 kB]
+#11 149.8 Get:16 http://ports.ubuntu.com/ubuntu-ports noble-security/multiverse arm64 Packages [87.7 kB]
+#11 150.0 Get:17 http://ports.ubuntu.com/ubuntu-ports noble-security/restricted arm64 Packages [2707 kB]
+#11 150.5 Get:18 http://ports.ubuntu.com/ubuntu-ports noble-security/universe arm64 Packages [1616 kB]
+#11 150.7 Get:19 http://ports.ubuntu.com/ubuntu-ports noble-security/main arm64 Packages [1312 kB]
+#11 154.6 Fetched 34.4 MB in 12s (2849 kB/s)
+#11 154.6 Reading package lists...
+#11 167.4 Reading package lists...
+#11 180.2 Building dependency tree...
+#11 182.3 Reading state information...
+#11 184.1 The following packages will be REMOVED:
+#11 184.1   perl-base*
+#11 184.1 WARNING: The following essential packages will be removed.
+#11 184.1 This should NOT be done unless you know exactly what you are doing!
+#11 184.1   perl-base
+#11 185.9 0 upgraded, 0 newly installed, 1 to remove and 0 not upgraded.
+#11 185.9 After this operation, 8322 kB disk space will be freed.
+#11 185.9 dpkg: warning: overriding problem because --force enabled:
+#11 185.9 dpkg: warning: this is an essential package; it should not be removed
+#11 185.9 (Reading database ... (Reading database ... 5%(Reading database ... 10%(Reading database ... 15%(Reading database ... 20%(Reading database ... 25%(Reading database ... 30%(Reading database ... 35%(Reading database ... 40%(Reading database ... 45%(Reading database ... 50%(Reading database ... 55%(Reading database ... 60%(Reading database ... 65%(Reading database ... 70%(Reading database ... 75%(Reading database ... 80%(Reading database ... 85%(Reading database ... 90%(Reading database ... 95%(Reading database ... 100%(Reading database ... 8536 files and directories currently installed.)
+#11 186.0 Removing perl-base (5.38.2-3.2ubuntu0.4) ...
+#11 186.7 (Reading database ... (Reading database ... 5%(Reading database ... 10%(Reading database ... 15%(Reading database ... 20%(Reading database ... 25%(Reading database ... 30%(Reading database ... 35%(Reading database ... 40%(Reading database ... 45%(Reading database ... 50%(Reading database ... 55%(Reading database ... 60%(Reading database ... 65%(Reading database ... 70%(Reading database ... 75%(Reading database ... 80%(Reading database ... 85%(Reading database ... 90%(Reading database ... 95%(Reading database ... 100%(Reading database ... 7805 files and directories currently installed.)
+#11 186.7 Purging configuration files for perl-base (5.38.2-3.2ubuntu0.4) ...
+#11 187.3 dpkg: warning: overriding problem because --force enabled:
+#11 187.3 dpkg: warning: this is an essential package; it should not be removed
+#11 187.3 dpkg: warning: overriding problem because --force enabled:
+#11 187.3 dpkg: warning: this is an essential package; it should not be removed
+#11 187.3 dpkg: warning: overriding problem because --force enabled:
+#11 187.3 dpkg: warning: this is an essential package; it should not be removed
+#11 187.3 dpkg: warning: overriding problem because --force enabled:
+#11 187.3 dpkg: warning: this is an essential package; it should not be removed
+#11 187.3 dpkg: warning: overriding problem because --force enabled:
+#11 187.3 dpkg: warning: this is an essential package; it should not be removed
+#11 187.3 dpkg: warning: overriding problem because --force enabled:
+#11 187.3 dpkg: warning: this is an essential package; it should not be removed
+#11 187.3 dpkg: warning: overriding problem because --force enabled:
+#11 187.3 dpkg: warning: this is an essential package; it should not be removed
+#11 187.3 dpkg: warning: overriding problem because --force enabled:
+#11 187.3 dpkg: warning: this is an essential package; it should not be removed
+#11 187.3 dpkg: warning: overriding problem because --force enabled:
+#11 187.3 dpkg: warning: this is an essential package; it should not be removed
+#11 187.3 dpkg: warning: overriding problem because --force enabled:
+#11 187.3 dpkg: warning: this is an essential package; it should not be removed
+#11 187.3 dpkg: warning: overriding problem because --force enabled:
+#11 187.3 dpkg: warning: this is an essential package; it should not be removed
+#11 187.3 dpkg: warning: overriding problem because --force enabled:
+#11 187.3 dpkg: warning: this is an essential package; it should not be removed
+#11 187.3 dpkg: warning: overriding problem because --force enabled:
+#11 187.3 dpkg: warning: this is an essential package; it should not be removed
+#11 187.3 dpkg: warning: overriding problem because --force enabled:
+#11 187.3 dpkg: warning: this is an essential package; it should not be removed
+#11 187.3 dpkg: warning: overriding problem because --force enabled:
+#11 187.3 dpkg: warning: this is an essential package; it should not be removed
+#11 187.3 dpkg: tar: dependency problems, but removing anyway as you requested:
+#11 187.3  dpkg depends on tar (>= 1.28-1).
+#11 187.3 
+#11 187.4 (Reading database ... 7805 files and directories currently installed.)
+#11 187.4 Removing tar (1.35+dfsg-3ubuntu0.4) ...
+#11 DONE 187.5s
+
+#12 [package-arm64 1/1] COPY --from=install-arm64 / /
+#12 DONE 0.6s
+
+#13 [final 1/4] RUN <<'OPENRIAK_IMAGE_SETUP' (set -eu...)
+#13 0.253 uid=100(riak) gid=101(riak) groups=101(riak)
+#13 DONE 0.5s
+
+#14 [final 2/4] COPY <<OPENRIAK_ENTRYPOINT /usr/local/bin/openriak-entrypoint
+#14 DONE 0.0s
+
+#15 [final 3/4] COPY <<OPENRIAK_HEALTHCHECK /usr/local/bin/openriak-healthcheck
+#15 DONE 0.0s
+
+#16 [final 4/4] RUN <<'OPENRIAK_SCRIPT_SETUP' (set -eu...)
+#16 DONE 0.2s
+
+#17 exporting to docker image format
+#17 exporting layers
+#17 exporting layers 5.1s done
+#17 exporting manifest sha256:56fd55f9f5c4ed39e50e98e4d0c614af7e941e4a1b519cdbcd6801db45482ffa done
+#17 exporting config sha256:5cd960ecc7806a6963f460a7ac5eaa360fc88b8421899a2caa5882edc7ff7195 done
+#17 sending tarball
+#17 ...
+
+#18 importing to docker
+#18 loading layer 8c4984e75513 557.06kB / 69.39MB
+#18 loading layer 446462871a64 23.58kB / 23.58kB
+#18 loading layer 8c4984e75513 69.39MB / 69.39MB 1.8s done
+#18 loading layer 446462871a64 23.58kB / 23.58kB 0.0s done
+#18 loading layer 50eca3b59bae 7.70kB / 7.70kB 0.0s done
+#18 loading layer fa9e814eaed5 389B / 389B 0.0s done
+#18 loading layer 19aefea0c841 7.88kB / 7.88kB 0.0s done
+#18 DONE 1.8s
+
+#17 exporting to docker image format
+#17 sending tarball 2.5s done
+#17 DONE 7.6s
+
+timeout_seconds: 3600
+exit_code: 0

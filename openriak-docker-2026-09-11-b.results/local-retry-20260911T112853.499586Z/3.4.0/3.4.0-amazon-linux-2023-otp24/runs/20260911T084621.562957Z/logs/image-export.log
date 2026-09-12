@@ -1,0 +1,116 @@
+$ /usr/bin/docker buildx build --builder openriak-kv-multiarch --platform linux/amd64,linux/arm64 --pull=false --tag tiotjp/openriak-kv:3.4.0-amazon-linux-2023-otp24 --output type=oci,dest=/home/peter/openriak-builds/openriak-distributed/openriak-docker-2026-09-11-b/local/20260911T084617.243958Z/results/3.4.0/3.4.0-amazon-linux-2023-otp24/runs/20260911T084621.562957Z/image.oci.tar /home/peter/openriak-builds/openriak-distributed/openriak-docker-2026-09-11-b/local/20260911T084617.243958Z/results/3.4.0/3.4.0-amazon-linux-2023-otp24
+started: 2026-09-11T09:18:13Z
+#0 building with "openriak-kv-multiarch" instance using docker-container driver
+
+#1 [internal] load build definition from Dockerfile
+#1 DONE 0.0s
+
+#1 [internal] load build definition from Dockerfile
+#1 transferring dockerfile: 47.72kB done
+#1 DONE 0.0s
+
+#2 resolve image config for docker-image://docker.io/docker/dockerfile:1.7
+#2 ...
+
+#3 [auth] docker/dockerfile:pull token for registry-1.docker.io
+#3 DONE 0.0s
+
+#2 resolve image config for docker-image://docker.io/docker/dockerfile:1.7
+#2 DONE 1.5s
+
+#4 docker-image://docker.io/docker/dockerfile:1.7@sha256:a57df69d0ea827fb7266491f2813635de6f17269be881f696fbfdf2d83dda33e
+#4 resolve docker.io/docker/dockerfile:1.7@sha256:a57df69d0ea827fb7266491f2813635de6f17269be881f696fbfdf2d83dda33e 0.0s done
+#4 CACHED
+
+#5 [linux/arm64 internal] load metadata for docker.io/library/amazonlinux:2023@sha256:181f98c48832fe926f8ca3b6ffeafcce128e96e77b93d08fbe9a9bc9403ce284
+#5 ...
+
+#6 [auth] library/amazonlinux:pull token for registry-1.docker.io
+#6 DONE 0.0s
+
+#7 [linux/amd64 internal] load metadata for docker.io/library/amazonlinux:2023@sha256:181f98c48832fe926f8ca3b6ffeafcce128e96e77b93d08fbe9a9bc9403ce284
+#7 ...
+
+#5 [linux/arm64 internal] load metadata for docker.io/library/amazonlinux:2023@sha256:181f98c48832fe926f8ca3b6ffeafcce128e96e77b93d08fbe9a9bc9403ce284
+#5 DONE 0.9s
+
+#7 [linux/amd64 internal] load metadata for docker.io/library/amazonlinux:2023@sha256:181f98c48832fe926f8ca3b6ffeafcce128e96e77b93d08fbe9a9bc9403ce284
+#7 DONE 0.9s
+
+#8 [internal] load .dockerignore
+#8 transferring context: 42B done
+#8 DONE 0.0s
+
+#9 [linux/amd64 download-amd64 1/1] ADD --checksum=sha256:0c72e50b4a3bbe1631b440860120f966174d998512ca67587e21908d45ea0be8 https://files.tiot.jp/riak/kv/3.4/3.4.0/amazon/2023%20(x86_64)/riak-3.4.0.OTP24-1.amzn2023.x86_64.rpm /riak-3.4.0.OTP24-1.amzn2023.x86_64.rpm
+#9 DONE 0.0s
+
+#10 [linux/arm64 download-arm64 1/1] ADD --checksum=sha256:80b56fc4973fd6b3fcce39d787c2ab1295c51f81c492719acf577129e1e6b3dd https://files.tiot.jp/riak/kv/3.4/3.4.0/amazon/2023%20(graviton3)/riak-3.4.0.OTP24-1.amzn2023.aarch64.rpm /riak-3.4.0.OTP24-1.amzn2023.aarch64.rpm
+#10 DONE 0.0s
+
+#11 [internal] preparing inline document
+#11 DONE 0.0s
+
+#12 [internal] preparing inline document
+#12 DONE 0.0s
+
+#13 [linux/arm64 package-arm64 1/2] FROM docker.io/library/amazonlinux:2023@sha256:181f98c48832fe926f8ca3b6ffeafcce128e96e77b93d08fbe9a9bc9403ce284
+#13 resolve docker.io/library/amazonlinux:2023@sha256:181f98c48832fe926f8ca3b6ffeafcce128e96e77b93d08fbe9a9bc9403ce284 0.0s done
+#13 DONE 0.1s
+
+#14 [linux/arm64 download-arm64 1/1] ADD --checksum=sha256:80b56fc4973fd6b3fcce39d787c2ab1295c51f81c492719acf577129e1e6b3dd https://files.tiot.jp/riak/kv/3.4/3.4.0/amazon/2023%20(graviton3)/riak-3.4.0.OTP24-1.amzn2023.aarch64.rpm /riak-3.4.0.OTP24-1.amzn2023.aarch64.rpm
+#14 CACHED
+
+#15 [linux/arm64 package-arm64 2/2] RUN --mount=type=bind,from=download-arm64,target=/opt/openriak-package,ro <<'OPENRIAK_PACKAGE_INSTALL' (set -eu...)
+#15 CACHED
+
+#16 [linux/arm64 final 1/4] RUN <<'OPENRIAK_IMAGE_SETUP' (set -eu...)
+#16 CACHED
+
+#17 [linux/arm64 final 3/4] COPY <<OPENRIAK_HEALTHCHECK /usr/local/bin/openriak-healthcheck
+#17 CACHED
+
+#18 [linux/arm64 final 2/4] COPY <<OPENRIAK_ENTRYPOINT /usr/local/bin/openriak-entrypoint
+#18 CACHED
+
+#19 [linux/arm64 final 4/4] RUN <<'OPENRIAK_SCRIPT_SETUP' (set -eu...)
+#19 CACHED
+
+#20 [linux/amd64 package-amd64 1/2] FROM docker.io/library/amazonlinux:2023@sha256:181f98c48832fe926f8ca3b6ffeafcce128e96e77b93d08fbe9a9bc9403ce284
+#20 resolve docker.io/library/amazonlinux:2023@sha256:181f98c48832fe926f8ca3b6ffeafcce128e96e77b93d08fbe9a9bc9403ce284 0.1s done
+#20 DONE 0.1s
+
+#21 [linux/amd64 download-amd64 1/1] ADD --checksum=sha256:0c72e50b4a3bbe1631b440860120f966174d998512ca67587e21908d45ea0be8 https://files.tiot.jp/riak/kv/3.4/3.4.0/amazon/2023%20(x86_64)/riak-3.4.0.OTP24-1.amzn2023.x86_64.rpm /riak-3.4.0.OTP24-1.amzn2023.x86_64.rpm
+#21 CACHED
+
+#22 [linux/amd64 final 1/4] RUN <<'OPENRIAK_IMAGE_SETUP' (set -eu...)
+#22 CACHED
+
+#23 [linux/amd64 final 3/4] COPY <<OPENRIAK_HEALTHCHECK /usr/local/bin/openriak-healthcheck
+#23 CACHED
+
+#24 [linux/amd64 final 2/4] COPY <<OPENRIAK_ENTRYPOINT /usr/local/bin/openriak-entrypoint
+#24 CACHED
+
+#25 [linux/amd64 package-amd64 2/2] RUN --mount=type=bind,from=download-amd64,target=/opt/openriak-package,ro <<'OPENRIAK_PACKAGE_INSTALL' (set -eu...)
+#25 CACHED
+
+#26 [linux/amd64 final 4/4] RUN <<'OPENRIAK_SCRIPT_SETUP' (set -eu...)
+#26 CACHED
+
+#27 exporting to oci image format
+#27 exporting layers done
+#27 exporting manifest sha256:e75b8c92ac81e560b7217da436b2a97d0aab70372ac6300920e393209e66be02 done
+#27 exporting config sha256:592e5909d8d16863dd2f058b5d124e9cb4e57c6346642525d97ae484de3049c9 done
+#27 exporting attestation manifest sha256:39308abe5b52d61987b968801b4c9389c9ce9386ca57541b4999faf8d30621ec
+#27 exporting attestation manifest sha256:39308abe5b52d61987b968801b4c9389c9ce9386ca57541b4999faf8d30621ec 0.0s done
+#27 exporting manifest sha256:cfef70667b2363d01404c50edf544451733df14d892addff5d52593d9d2b8542 done
+#27 exporting config sha256:e3da089972c7700af1f0b0b25d65e277a91840e80e62484f4fad96d411a07f9f done
+#27 exporting attestation manifest sha256:2b7a4a7b04b26a331523135c9015de767f1297da0b9e850f353ce593982338ab 0.0s done
+#27 exporting manifest list sha256:98773cea1e6c3d0c1c7178cd5bf041f38a461f1c2bbf2be5e0d4b8f0f925c69e
+#27 exporting manifest list sha256:98773cea1e6c3d0c1c7178cd5bf041f38a461f1c2bbf2be5e0d4b8f0f925c69e 0.0s done
+#27 sending tarball
+#27 sending tarball 2.4s done
+#27 DONE 2.6s
+
+timeout_seconds: 3600
+exit_code: 0

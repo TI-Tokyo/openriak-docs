@@ -1,0 +1,114 @@
+$ /usr/bin/docker buildx build --builder openriak-kv-multiarch --platform linux/amd64,linux/arm64 --pull=false --tag tiotjp/openriak-kv:3.4.0-ubuntu-noble-otp26 --tag tiotjp/openriak-kv:3.4.0-ubuntu-noble --tag tiotjp/openriak-kv:3.4.0-ubuntu --output type=oci,dest=/home/peter/openriak-builds/openriak-distributed/openriak-docker-2026-09-11-b/local/20260911T084617.243958Z/results/3.4.0/3.4.0-ubuntu-noble-otp26/runs/20260911T091825.782488Z/image.oci.tar /home/peter/openriak-builds/openriak-distributed/openriak-docker-2026-09-11-b/local/20260911T084617.243958Z/results/3.4.0/3.4.0-ubuntu-noble-otp26
+started: 2026-09-11T10:04:42Z
+#0 building with "openriak-kv-multiarch" instance using docker-container driver
+
+#1 [internal] load build definition from Dockerfile
+#1 transferring dockerfile: 44.73kB done
+#1 DONE 0.0s
+
+#2 resolve image config for docker-image://docker.io/docker/dockerfile:1.7
+#2 ...
+
+#3 [auth] docker/dockerfile:pull token for registry-1.docker.io
+#3 DONE 0.0s
+
+#2 resolve image config for docker-image://docker.io/docker/dockerfile:1.7
+#2 DONE 1.5s
+
+#4 docker-image://docker.io/docker/dockerfile:1.7@sha256:a57df69d0ea827fb7266491f2813635de6f17269be881f696fbfdf2d83dda33e
+#4 resolve docker.io/docker/dockerfile:1.7@sha256:a57df69d0ea827fb7266491f2813635de6f17269be881f696fbfdf2d83dda33e 0.0s done
+#4 CACHED
+
+#5 [linux/amd64 internal] load metadata for docker.io/library/ubuntu:noble@sha256:224a1869083a311ef3f13648a154ba79832fbef6364d31493642ca03082da254
+#5 ...
+
+#6 [auth] library/ubuntu:pull token for registry-1.docker.io
+#6 DONE 0.0s
+
+#7 [linux/arm64 internal] load metadata for docker.io/library/ubuntu:noble@sha256:224a1869083a311ef3f13648a154ba79832fbef6364d31493642ca03082da254
+#7 DONE 0.7s
+
+#5 [linux/amd64 internal] load metadata for docker.io/library/ubuntu:noble@sha256:224a1869083a311ef3f13648a154ba79832fbef6364d31493642ca03082da254
+#5 DONE 0.7s
+
+#8 [internal] load .dockerignore
+#8 transferring context: 42B done
+#8 DONE 0.0s
+
+#9 [internal] preparing inline document
+#9 DONE 0.0s
+
+#10 [internal] preparing inline document
+#10 DONE 0.0s
+
+#11 [linux/amd64 download-amd64 1/1] ADD --checksum=sha256:bae2bce6890ada075d58e3d2f494c1201bc50ba3c7fb91c3f81513f541592678 https://files.tiot.jp/riak/kv/3.4/3.4.0/ubuntu/noble64/riak_3.4.0-OTP26_amd64.deb /riak_3.4.0-OTP26_amd64.deb
+#11 DONE 0.0s
+
+#12 [linux/arm64 download-arm64 1/1] ADD --checksum=sha256:0a1c0781cbf36bdd497dbf5580cea239233be1325b1ae28a6d1b1d0da16bec5f https://files.tiot.jp/riak/kv/3.4/3.4.0/ubuntu/noble64/riak_3.4.0-OTP26_arm64.deb /riak_3.4.0-OTP26_arm64.deb
+#12 DONE 0.0s
+
+#13 [linux/amd64 install-amd64 1/2] FROM docker.io/library/ubuntu:noble@sha256:224a1869083a311ef3f13648a154ba79832fbef6364d31493642ca03082da254
+#13 resolve docker.io/library/ubuntu:noble@sha256:224a1869083a311ef3f13648a154ba79832fbef6364d31493642ca03082da254 0.1s done
+#13 DONE 0.1s
+
+#14 [final 1/4] RUN <<'OPENRIAK_IMAGE_SETUP' (set -eu...)
+#14 CACHED
+
+#15 [linux/amd64 final 3/4] COPY <<OPENRIAK_HEALTHCHECK /usr/local/bin/openriak-healthcheck
+#15 CACHED
+
+#16 [linux/amd64 install-amd64 2/2] RUN --mount=type=bind,from=download-amd64,target=/opt/openriak-package,ro <<'OPENRIAK_PACKAGE_INSTALL' (set -eu...)
+#16 CACHED
+
+#17 [linux/amd64 final 2/4] COPY <<OPENRIAK_ENTRYPOINT /usr/local/bin/openriak-entrypoint
+#17 CACHED
+
+#18 [linux/amd64 download-amd64 1/1] ADD --checksum=sha256:bae2bce6890ada075d58e3d2f494c1201bc50ba3c7fb91c3f81513f541592678 https://files.tiot.jp/riak/kv/3.4/3.4.0/ubuntu/noble64/riak_3.4.0-OTP26_amd64.deb /riak_3.4.0-OTP26_amd64.deb
+#18 CACHED
+
+#19 [linux/amd64 package-amd64 1/1] COPY --from=install-amd64 / /
+#19 CACHED
+
+#20 [final 4/4] RUN <<'OPENRIAK_SCRIPT_SETUP' (set -eu...)
+#20 CACHED
+
+#21 [linux/arm64 install-arm64 1/2] FROM docker.io/library/ubuntu:noble@sha256:224a1869083a311ef3f13648a154ba79832fbef6364d31493642ca03082da254
+#21 resolve docker.io/library/ubuntu:noble@sha256:224a1869083a311ef3f13648a154ba79832fbef6364d31493642ca03082da254 0.1s done
+#21 DONE 0.1s
+
+#22 [linux/arm64 install-arm64 2/2] RUN --mount=type=bind,from=download-arm64,target=/opt/openriak-package,ro <<'OPENRIAK_PACKAGE_INSTALL' (set -eu...)
+#22 CACHED
+
+#23 [final 1/4] RUN <<'OPENRIAK_IMAGE_SETUP' (set -eu...)
+#23 CACHED
+
+#24 [linux/arm64 final 2/4] COPY <<OPENRIAK_ENTRYPOINT /usr/local/bin/openriak-entrypoint
+#24 CACHED
+
+#25 [linux/arm64 final 3/4] COPY <<OPENRIAK_HEALTHCHECK /usr/local/bin/openriak-healthcheck
+#25 CACHED
+
+#26 [linux/arm64 download-arm64 1/1] ADD --checksum=sha256:0a1c0781cbf36bdd497dbf5580cea239233be1325b1ae28a6d1b1d0da16bec5f https://files.tiot.jp/riak/kv/3.4/3.4.0/ubuntu/noble64/riak_3.4.0-OTP26_arm64.deb /riak_3.4.0-OTP26_arm64.deb
+#26 CACHED
+
+#27 [linux/arm64 package-arm64 1/1] COPY --from=install-arm64 / /
+#27 CACHED
+
+#28 [final 4/4] RUN <<'OPENRIAK_SCRIPT_SETUP' (set -eu...)
+#28 CACHED
+
+#29 exporting to oci image format
+#29 exporting layers done
+#29 exporting manifest sha256:d36425e721b4fe70dc4f50f713739ce7773fe2aca136afe2386304583d2ce316 done
+#29 exporting config sha256:d89f1d914d6d0ec1ae0a560f69d65f14c45fc9a090b2d508f1b2620c64f5daa8 done
+#29 exporting attestation manifest sha256:1f7e879da20540438ea45a820dffe97490c9587138e2b889377d5167a04bd3a2 0.0s done
+#29 exporting manifest sha256:ae269d125c4bdef2f049dddfd64cc88b177618acfbda481e856fb309d0eeaf00 done
+#29 exporting config sha256:a997939bd42f76dae378ce0b185c2cc0524659bf18cc952dc409a114fd66805b done
+#29 exporting attestation manifest sha256:084c7c2a9b4af5bcd2d03b4283329466307e93f25447bed7c7a8e237a675b571 0.0s done
+#29 exporting manifest list sha256:a7568e9a4b3e9a02bb147ec650ce8ec652632fc5bc43a81faec723283b74e221 0.0s done
+#29 sending tarball
+#29 sending tarball 1.0s done
+#29 DONE 1.2s
+
+timeout_seconds: 3600
+exit_code: 0

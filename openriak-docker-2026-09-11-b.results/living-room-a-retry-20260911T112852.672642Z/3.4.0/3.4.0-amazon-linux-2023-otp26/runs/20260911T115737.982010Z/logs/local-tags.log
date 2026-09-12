@@ -1,0 +1,72 @@
+$ /usr/bin/docker buildx build --builder openriak-kv-multiarch --platform linux/amd64 --pull=false --load --tag tiotjp/openriak-kv:3.4.0-amazon-linux-2023-otp26 --tag tiotjp/openriak-kv:3.4.0-amazon-linux-2023 --tag tiotjp/openriak-kv:3.4.0-amazon-linux /home/peter/openriak-builds/openriak-distributed/openriak-docker-2026-09-11-b/living-room-a/20260911T084617.243958Z/results/3.4.0/3.4.0-amazon-linux-2023-otp26
+started: 2026-09-11T12:44:51Z
+#0 building with "openriak-kv-multiarch" instance using docker-container driver
+
+#1 [internal] load build definition from Dockerfile
+#1 transferring dockerfile: 47.80kB done
+#1 DONE 0.0s
+
+#2 resolve image config for docker-image://docker.io/docker/dockerfile:1.7
+#2 DONE 0.3s
+
+#3 docker-image://docker.io/docker/dockerfile:1.7@sha256:a57df69d0ea827fb7266491f2813635de6f17269be881f696fbfdf2d83dda33e
+#3 resolve docker.io/docker/dockerfile:1.7@sha256:a57df69d0ea827fb7266491f2813635de6f17269be881f696fbfdf2d83dda33e 0.1s done
+#3 CACHED
+
+#4 [internal] load metadata for docker.io/library/amazonlinux:2023@sha256:181f98c48832fe926f8ca3b6ffeafcce128e96e77b93d08fbe9a9bc9403ce284
+#4 DONE 0.1s
+
+#5 [internal] load .dockerignore
+#5 transferring context: 42B 0.0s done
+#5 DONE 0.1s
+
+#6 [download-amd64 1/1] ADD --checksum=sha256:f13ba5fcebf67938fe8ab1563c895f734187cb9159c90d43624b56877b95e47b https://files.tiot.jp/riak/kv/3.4/3.4.0/amazon/2023%20(x86_64)/riak-3.4.0.OTP26-1.amzn2023.x86_64.rpm /riak-3.4.0.OTP26-1.amzn2023.x86_64.rpm
+#6 DONE 0.0s
+
+#7 [internal] preparing inline document
+#7 DONE 0.0s
+
+#8 [internal] preparing inline document
+#8 DONE 0.0s
+
+#9 [package-amd64 1/2] FROM docker.io/library/amazonlinux:2023@sha256:181f98c48832fe926f8ca3b6ffeafcce128e96e77b93d08fbe9a9bc9403ce284
+#9 resolve docker.io/library/amazonlinux:2023@sha256:181f98c48832fe926f8ca3b6ffeafcce128e96e77b93d08fbe9a9bc9403ce284
+#9 resolve docker.io/library/amazonlinux:2023@sha256:181f98c48832fe926f8ca3b6ffeafcce128e96e77b93d08fbe9a9bc9403ce284 0.2s done
+#9 DONE 0.2s
+
+#10 [download-amd64 1/1] ADD --checksum=sha256:f13ba5fcebf67938fe8ab1563c895f734187cb9159c90d43624b56877b95e47b https://files.tiot.jp/riak/kv/3.4/3.4.0/amazon/2023%20(x86_64)/riak-3.4.0.OTP26-1.amzn2023.x86_64.rpm /riak-3.4.0.OTP26-1.amzn2023.x86_64.rpm
+#10 CACHED
+
+#11 [package-amd64 2/2] RUN --mount=type=bind,from=download-amd64,target=/opt/openriak-package,ro <<'OPENRIAK_PACKAGE_INSTALL' (set -eu...)
+#11 CACHED
+
+#12 [final 1/4] RUN <<'OPENRIAK_IMAGE_SETUP' (set -eu...)
+#12 CACHED
+
+#13 [final 2/4] COPY <<OPENRIAK_ENTRYPOINT /usr/local/bin/openriak-entrypoint
+#13 CACHED
+
+#14 [final 3/4] COPY <<OPENRIAK_HEALTHCHECK /usr/local/bin/openriak-healthcheck
+#14 CACHED
+
+#15 [final 4/4] RUN <<'OPENRIAK_SCRIPT_SETUP' (set -eu...)
+#15 CACHED
+
+#16 exporting to docker image format
+#16 exporting layers done
+#16 exporting manifest sha256:b0f6782c22790984f4a360a97f511948ec2cf28aa9884d43aac8cc88a3976f8d 0.0s done
+#16 exporting config sha256:ca8a29e5dac7899c90a854a2cc826db818d7b4656f732c90b5104ebb330c72da done
+#16 sending tarball
+#16 sending tarball 3.0s done
+#16 DONE 3.1s
+
+#17 importing to docker
+#17 loading layer 802d4c821d92 557.06kB / 55.65MB 2.0s done
+#17 loading layer 1983652429c6 23.58kB / 23.58kB 0.5s done
+#17 loading layer d66d31d575e8 7.70kB / 7.70kB 0.4s done
+#17 loading layer 33b54c7e8016 389B / 389B 0.3s done
+#17 loading layer 28a1ee575c54 7.87kB / 7.87kB 0.2s done
+#17 DONE 2.0s
+
+timeout_seconds: 3600
+exit_code: 0

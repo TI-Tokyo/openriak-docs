@@ -1,0 +1,150 @@
+{
+  "artifacts": {},
+  "base_images": {
+    "linux/amd64": {
+      "pinned": "debian:bullseye-slim@sha256:e5b6442dd2e9684cf5e87d8338b5968f3b348636fc0be6d7850a381e3731a2bd",
+      "requested": "debian:bullseye-slim",
+      "resolved_at": "2026-09-10T23:24:09Z"
+    }
+  },
+  "cluster_nodes": 5,
+  "distributed_cookie": "openriak-14e9eadf0fda732d40fef411b45b4ad5",
+  "error": "One or more architecture tests failed; shared downloads will not be published",
+  "finished_at": "2026-09-10T23:24:16Z",
+  "generated_artifacts": {
+    "Dockerfile": "f3b77feae15abc7b1a33a4673e40bd3883abb7e277fe38002eed318e0757cca9",
+    "compose.cluster.yaml": "fd39bc65c44123da87354218eca13705eaeb71183a4bfec08d52452a24263a63",
+    "compose.single.yaml": "6a364c9296e5beed13647d05dfcecdb0811d3e0e31e18e97326f36ba2c12e8e5",
+    "example.env": "8688ae58867cad55d00e7b86e0fc8c3c0e1fec697f7585ee2abfcbf186153e45"
+  },
+  "identity": {
+    "namespace": "tiotjp",
+    "source": "https://github.com/TI-Tokyo/openriak-docs",
+    "url": "https://www.tiot.jp/",
+    "vendor": "TI Tokyo"
+  },
+  "image": "tiotjp/openriak-kv:3.4.1-debian-11-otp26",
+  "inputs": {
+    "cluster_nodes": 5,
+    "compose_options": {
+      "OPENRIAK_CPUS": [
+        "0",
+        "CPU limit per node, for example 2.0; 0 means unrestricted."
+      ],
+      "OPENRIAK_DOCKER_LOG_MAX_FILES": [
+        "3",
+        "Maximum number of Docker JSON log files retained per node."
+      ],
+      "OPENRIAK_DOCKER_LOG_MAX_SIZE": [
+        "10m",
+        "Maximum size of each Docker JSON log file per node."
+      ],
+      "OPENRIAK_MEMORY_LIMIT": [
+        "0",
+        "Memory limit per node, for example 4g; 0 means unrestricted."
+      ]
+    },
+    "identity": {
+      "namespace": "tiotjp",
+      "source": "https://github.com/TI-Tokyo/openriak-docs",
+      "url": "https://www.tiot.jp/",
+      "vendor": "TI Tokyo"
+    },
+    "labels": {
+      "org.opencontainers.image.description": "Package-backed OpenRiak KV with single-node and cluster startup support",
+      "org.opencontainers.image.source": "https://github.com/TI-Tokyo/openriak-docs",
+      "org.opencontainers.image.title": "OpenRiak KV",
+      "org.opencontainers.image.url": "https://www.tiot.jp/",
+      "org.opencontainers.image.vendor": "TI Tokyo",
+      "org.opencontainers.image.version": "3.4.1",
+      "org.openriak.image.tag": "tiotjp/openriak-kv:3.4.1-debian-11-otp26",
+      "org.openriak.os.name": "debian",
+      "org.openriak.os.release": "11",
+      "org.openriak.os.version": "11",
+      "org.openriak.otp.version": "26"
+    },
+    "lifecycle_options": {
+      "healthcheck_interval": 10,
+      "healthcheck_retries": 3,
+      "healthcheck_start_period": 120,
+      "healthcheck_timeout": 60,
+      "stop_grace_period": 120
+    },
+    "packages": {
+      "linux/amd64": {
+        "base": "debian:bullseye-slim",
+        "checksum": {
+          "algorithm": "sha256",
+          "value": "6b92ee289c559c3387aae703a770abd15ce34ae240366afd721279ad08af7c30"
+        },
+        "url": "https://files.tiot.jp/riak/kv/3.4/3.4.1/debian/11/riak_3.4.1-OTP26_amd64.deb"
+      }
+    },
+    "renderer_sha256": "d8c8bef47418178c380a98d15100d6628542fa6b661d886a982689b91ae3b582",
+    "runtime_filesystem": null,
+    "runtime_options": {
+      "RIAK_GID": [
+        "",
+        "Optional nonzero GID for riak; empty retains the package GID. Mounted directories are chowned."
+      ],
+      "RIAK_LOG_MAX_FILES": [
+        "10",
+        "Maximum file count per OpenRiak logger handler; initializes new configurations only."
+      ],
+      "RIAK_LOG_MAX_FILE_SIZE": [
+        "1MB",
+        "Maximum size per OpenRiak logger file; initializes new configurations only."
+      ],
+      "RIAK_UID": [
+        "",
+        "Optional nonzero UID for riak; empty retains the package UID. Mounted directories are chowned."
+      ],
+      "TZ": [
+        "Etc/UTC",
+        "IANA timezone for the process and entrypoint logs, for example Asia/Tokyo."
+      ]
+    },
+    "runtime_renderer_sha256": "844f7481cc048968d65813d4e204b96e45039c3ed2c1dff12c37fcecebb4075c",
+    "runtime_sha256": "b0f20a4604e8cff49f7060bf5e0cc5fa52df5829d46520d37095130f07f65656",
+    "schema_version": 4,
+    "tags": [
+      "tiotjp/openriak-kv:3.4.1-debian-11-otp26",
+      "tiotjp/openriak-kv:3.4.1-debian-11"
+    ]
+  },
+  "node": "openriak-kv-3.4.1-debian-11-otp26-node",
+  "os_family": "debian",
+  "os_name": "Debian 11",
+  "os_release": "11",
+  "otp": "26",
+  "platform_results": {
+    "linux/amd64": {
+      "artifacts": {},
+      "finished_at": "2026-09-10T23:24:16Z",
+      "report": "platforms/linux-amd64/runs/20260910T232410.123664Z/report.json",
+      "run_id": "20260910T232410.123664Z",
+      "status": "failed"
+    }
+  },
+  "platforms": [
+    "linux/amd64"
+  ],
+  "product": "openriak-kv",
+  "run_id": "20260910T232408.181235Z",
+  "schema_version": 4,
+  "started_at": "2026-09-10T23:24:08Z",
+  "status": "failed",
+  "steps": [],
+  "tags": [
+    "tiotjp/openriak-kv:3.4.1-debian-11-otp26",
+    "tiotjp/openriak-kv:3.4.1-debian-11"
+  ],
+  "targets": [
+    {
+      "architecture": "amd64",
+      "download_id": "otp26-amd64",
+      "os_id": "debian-11-amd64"
+    }
+  ],
+  "version": "3.4.1"
+}

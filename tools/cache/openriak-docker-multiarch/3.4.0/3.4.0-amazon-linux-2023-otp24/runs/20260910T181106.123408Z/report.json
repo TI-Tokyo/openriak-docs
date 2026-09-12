@@ -1,0 +1,257 @@
+{
+  "artifacts": {
+    "compose_cluster": {
+      "filename": "compose.cluster.yaml",
+      "sha256": "d08c9d4f0b9d56501ca209d9b1174e360bd27d0ba50fc3747395e2452f167b2b",
+      "url": "downloads/docker/3.4.0/3.4.0-amazon-linux-2023-otp24/compose.cluster.yaml"
+    },
+    "compose_single": {
+      "filename": "compose.single.yaml",
+      "sha256": "052be900b5f9263bf947ca84f40914d8d6c4a8a5fa9d617f138614f8f13718cf",
+      "url": "downloads/docker/3.4.0/3.4.0-amazon-linux-2023-otp24/compose.single.yaml"
+    },
+    "dockerfile": {
+      "filename": "Dockerfile",
+      "sha256": "63ea828ed47d90b3fa5a22fc7bb26e6dc1303709593152158cc4c90b62a97137",
+      "url": "downloads/docker/3.4.0/3.4.0-amazon-linux-2023-otp24/Dockerfile"
+    },
+    "environment_example": {
+      "filename": "example.env",
+      "sha256": "6d1d1d20c270d77d1d2426bbd1722d06545f383836853dd75a4bf3ccbb409d81",
+      "url": "downloads/docker/3.4.0/3.4.0-amazon-linux-2023-otp24/example.env"
+    }
+  },
+  "base_images": {
+    "linux/amd64": {
+      "pinned": "amazonlinux:2023@sha256:181f98c48832fe926f8ca3b6ffeafcce128e96e77b93d08fbe9a9bc9403ce284",
+      "requested": "amazonlinux:2023",
+      "resolved_at": "2026-09-10T18:11:07Z"
+    },
+    "linux/arm64": {
+      "pinned": "amazonlinux:2023@sha256:181f98c48832fe926f8ca3b6ffeafcce128e96e77b93d08fbe9a9bc9403ce284",
+      "requested": "amazonlinux:2023",
+      "resolved_at": "2026-09-10T18:11:09Z"
+    }
+  },
+  "build_tags": [
+    "tiotjp/openriak-kv:3.4.0-amazon-linux-2023-otp24"
+  ],
+  "cluster_nodes": 5,
+  "distributed_cookie": "openriak-74050f615cc99ebe229b3a7f36411523",
+  "error": null,
+  "finished_at": "2026-09-10T18:42:56Z",
+  "generated_artifacts": {
+    "Dockerfile": "63ea828ed47d90b3fa5a22fc7bb26e6dc1303709593152158cc4c90b62a97137",
+    "compose.cluster.yaml": "d08c9d4f0b9d56501ca209d9b1174e360bd27d0ba50fc3747395e2452f167b2b",
+    "compose.single.yaml": "052be900b5f9263bf947ca84f40914d8d6c4a8a5fa9d617f138614f8f13718cf",
+    "example.env": "6d1d1d20c270d77d1d2426bbd1722d06545f383836853dd75a4bf3ccbb409d81"
+  },
+  "identity": {
+    "namespace": "tiotjp",
+    "source": "https://github.com/TI-Tokyo/openriak-docs",
+    "url": "https://www.tiot.jp/",
+    "vendor": "TI Tokyo"
+  },
+  "image": "tiotjp/openriak-kv:3.4.0-amazon-linux-2023-otp24",
+  "inputs": {
+    "cluster_nodes": 5,
+    "compose_options": {
+      "OPENRIAK_CPUS": [
+        "0",
+        "CPU limit per node, for example 2.0; 0 means unrestricted."
+      ],
+      "OPENRIAK_DOCKER_LOG_MAX_FILES": [
+        "3",
+        "Maximum number of Docker JSON log files retained per node."
+      ],
+      "OPENRIAK_DOCKER_LOG_MAX_SIZE": [
+        "10m",
+        "Maximum size of each Docker JSON log file per node."
+      ],
+      "OPENRIAK_MEMORY_LIMIT": [
+        "0",
+        "Memory limit per node, for example 4g; 0 means unrestricted."
+      ]
+    },
+    "identity": {
+      "namespace": "tiotjp",
+      "source": "https://github.com/TI-Tokyo/openriak-docs",
+      "url": "https://www.tiot.jp/",
+      "vendor": "TI Tokyo"
+    },
+    "labels": {
+      "org.opencontainers.image.description": "Package-backed OpenRiak KV with single-node and cluster startup support",
+      "org.opencontainers.image.source": "https://github.com/TI-Tokyo/openriak-docs",
+      "org.opencontainers.image.title": "OpenRiak KV",
+      "org.opencontainers.image.url": "https://www.tiot.jp/",
+      "org.opencontainers.image.vendor": "TI Tokyo",
+      "org.opencontainers.image.version": "3.4.0",
+      "org.openriak.image.tag": "tiotjp/openriak-kv:3.4.0-amazon-linux-2023-otp24",
+      "org.openriak.os.name": "amazon-linux",
+      "org.openriak.os.release": "2023",
+      "org.openriak.os.version": "2023",
+      "org.openriak.otp.version": "24"
+    },
+    "lifecycle_options": {
+      "healthcheck_interval": 10,
+      "healthcheck_retries": 3,
+      "healthcheck_start_period": 120,
+      "healthcheck_timeout": 60,
+      "stop_grace_period": 120
+    },
+    "packages": {
+      "linux/amd64": {
+        "base": "amazonlinux:2023",
+        "checksum": {
+          "algorithm": "sha256",
+          "value": "0c72e50b4a3bbe1631b440860120f966174d998512ca67587e21908d45ea0be8"
+        },
+        "url": "https://files.tiot.jp/riak/kv/3.4/3.4.0/amazon/2023%20(x86_64)/riak-3.4.0.OTP24-1.amzn2023.x86_64.rpm"
+      },
+      "linux/arm64": {
+        "base": "amazonlinux:2023",
+        "checksum": {
+          "algorithm": "sha256",
+          "value": "80b56fc4973fd6b3fcce39d787c2ab1295c51f81c492719acf577129e1e6b3dd"
+        },
+        "url": "https://files.tiot.jp/riak/kv/3.4/3.4.0/amazon/2023%20(graviton3)/riak-3.4.0.OTP24-1.amzn2023.aarch64.rpm"
+      }
+    },
+    "renderer_sha256": "d8c8bef47418178c380a98d15100d6628542fa6b661d886a982689b91ae3b582",
+    "runtime_filesystem": null,
+    "runtime_options": {
+      "RIAK_GID": [
+        "",
+        "Optional nonzero GID for riak; empty retains the package GID. Mounted directories are chowned."
+      ],
+      "RIAK_LOG_MAX_FILES": [
+        "10",
+        "Maximum file count per OpenRiak logger handler; initializes new configurations only."
+      ],
+      "RIAK_LOG_MAX_FILE_SIZE": [
+        "1MB",
+        "Maximum size per OpenRiak logger file; initializes new configurations only."
+      ],
+      "RIAK_UID": [
+        "",
+        "Optional nonzero UID for riak; empty retains the package UID. Mounted directories are chowned."
+      ],
+      "TZ": [
+        "Etc/UTC",
+        "IANA timezone for the process and entrypoint logs, for example Asia/Tokyo."
+      ]
+    },
+    "runtime_renderer_sha256": "844f7481cc048968d65813d4e204b96e45039c3ed2c1dff12c37fcecebb4075c",
+    "runtime_sha256": "b0f20a4604e8cff49f7060bf5e0cc5fa52df5829d46520d37095130f07f65656",
+    "schema_version": 4,
+    "tags": [
+      "tiotjp/openriak-kv:3.4.0-amazon-linux-2023-otp24"
+    ]
+  },
+  "local_tags_platform": "linux/amd64",
+  "node": "openriak-kv-3.4.0-amazon-linux-2023-otp24-node",
+  "oci_archive": "runs/20260910T181106.123408Z/image.oci.tar",
+  "os_family": "amazon-linux",
+  "os_name": "Amazon Linux 2023",
+  "os_release": "2023",
+  "otp": "24",
+  "platform_results": {
+    "linux/amd64": {
+      "artifacts": {
+        "compose_cluster": {
+          "filename": "compose.cluster.yaml",
+          "sha256": "d08c9d4f0b9d56501ca209d9b1174e360bd27d0ba50fc3747395e2452f167b2b",
+          "url": "downloads/docker/3.4.0/3.4.0-amazon-linux-2023-otp24/compose.cluster.yaml"
+        },
+        "compose_single": {
+          "filename": "compose.single.yaml",
+          "sha256": "052be900b5f9263bf947ca84f40914d8d6c4a8a5fa9d617f138614f8f13718cf",
+          "url": "downloads/docker/3.4.0/3.4.0-amazon-linux-2023-otp24/compose.single.yaml"
+        },
+        "dockerfile": {
+          "filename": "Dockerfile",
+          "sha256": "63ea828ed47d90b3fa5a22fc7bb26e6dc1303709593152158cc4c90b62a97137",
+          "url": "downloads/docker/3.4.0/3.4.0-amazon-linux-2023-otp24/Dockerfile"
+        },
+        "environment_example": {
+          "filename": "example.env",
+          "sha256": "6d1d1d20c270d77d1d2426bbd1722d06545f383836853dd75a4bf3ccbb409d81",
+          "url": "downloads/docker/3.4.0/3.4.0-amazon-linux-2023-otp24/example.env"
+        }
+      },
+      "finished_at": "2026-09-10T18:16:05Z",
+      "report": "platforms/linux-amd64/runs/20260910T181109.434583Z/report.json",
+      "run_id": "20260910T181109.434583Z",
+      "status": "passed"
+    },
+    "linux/arm64": {
+      "artifacts": {
+        "compose_cluster": {
+          "filename": "compose.cluster.yaml",
+          "sha256": "d08c9d4f0b9d56501ca209d9b1174e360bd27d0ba50fc3747395e2452f167b2b",
+          "url": "downloads/docker/3.4.0/3.4.0-amazon-linux-2023-otp24/compose.cluster.yaml"
+        },
+        "compose_single": {
+          "filename": "compose.single.yaml",
+          "sha256": "052be900b5f9263bf947ca84f40914d8d6c4a8a5fa9d617f138614f8f13718cf",
+          "url": "downloads/docker/3.4.0/3.4.0-amazon-linux-2023-otp24/compose.single.yaml"
+        },
+        "dockerfile": {
+          "filename": "Dockerfile",
+          "sha256": "63ea828ed47d90b3fa5a22fc7bb26e6dc1303709593152158cc4c90b62a97137",
+          "url": "downloads/docker/3.4.0/3.4.0-amazon-linux-2023-otp24/Dockerfile"
+        },
+        "environment_example": {
+          "filename": "example.env",
+          "sha256": "6d1d1d20c270d77d1d2426bbd1722d06545f383836853dd75a4bf3ccbb409d81",
+          "url": "downloads/docker/3.4.0/3.4.0-amazon-linux-2023-otp24/example.env"
+        }
+      },
+      "finished_at": "2026-09-10T18:42:46Z",
+      "report": "platforms/linux-arm64/runs/20260910T181605.056543Z/report.json",
+      "run_id": "20260910T181605.056543Z",
+      "status": "passed"
+    }
+  },
+  "platforms": [
+    "linux/amd64",
+    "linux/arm64"
+  ],
+  "product": "openriak-kv",
+  "run_id": "20260910T181106.123408Z",
+  "schema_version": 4,
+  "started_at": "2026-09-10T18:11:06Z",
+  "status": "passed",
+  "steps": [
+    {
+      "duration_seconds": 5.308,
+      "finished_at": "2026-09-10T18:42:51Z",
+      "name": "export_oci_image",
+      "started_at": "2026-09-10T18:42:46Z",
+      "status": "passed"
+    },
+    {
+      "duration_seconds": 4.721,
+      "finished_at": "2026-09-10T18:42:56Z",
+      "name": "load_local_tags",
+      "started_at": "2026-09-10T18:42:51Z",
+      "status": "passed"
+    }
+  ],
+  "tags": [
+    "tiotjp/openriak-kv:3.4.0-amazon-linux-2023-otp24"
+  ],
+  "targets": [
+    {
+      "architecture": "x86_64",
+      "download_id": "otp24-x86_64-1",
+      "os_id": "amazon-linux-2023-x86_64"
+    },
+    {
+      "architecture": "aarch64",
+      "download_id": "otp24-aarch64-graviton-3-1",
+      "os_id": "amazon-linux-2023-aarch64"
+    }
+  ],
+  "version": "3.4.0"
+}

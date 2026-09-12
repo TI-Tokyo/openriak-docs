@@ -1,0 +1,20 @@
+{
+  "schema_version": 1,
+  "support_status": "review_required",
+  "reviewed_at": "2026-09-11",
+  "notes": "Reusable patched base preserves Bookworm ABI. Review maintained backports when vendor packages or Scout findings change.",
+  "runtime_settings": "runtime-images.json: releases.debian",
+  "backports": [
+    {
+      "component": "OpenSSL",
+      "implementation": "backports.py",
+      "version_setting": "OPENSSL_DEB_VERSION"
+    },
+    {
+      "component": "libblkid",
+      "implementation": "backports.py",
+      "version_setting": "LIBBLKID_DEB_VERSION"
+    }
+  ],
+  "sources": []
+}

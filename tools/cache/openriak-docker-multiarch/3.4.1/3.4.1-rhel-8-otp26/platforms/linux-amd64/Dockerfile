@@ -11,7 +11,7 @@ FROM scratch AS download-amd64
 ADD --checksum=sha256:ffcc9ce4af826a508e4927a8c725d5e21dd6dcb565d8adba4ae3ca6ef3f146ea https://files.tiot.jp/riak/kv/3.4/3.4.1/rhel/8/riak-3.4.1.OTP26-1.el8.x86_64.rpm /riak-3.4.1.OTP26-1.el8.x86_64.rpm
 
 # The full OS image is an installer only; none of its layers reach runtime.
-FROM --platform=linux/amd64 registry.access.redhat.com/ubi8/ubi:8.10@sha256:756eb8436452d36c8cee968189aece8d8a53d4ec263a7aa1b2055688ae79cfcb AS install-amd64
+FROM --platform=linux/amd64 registry.access.redhat.com/ubi8/ubi:8.10@sha256:ed721ca811f29fa0fd8a4666aec2fb6771f3defbecc708a973d0b711d6f09293 AS install-amd64
 RUN --mount=type=bind,from=download-amd64,target=/opt/openriak-package,ro <<'OPENRIAK_PACKAGE_INSTALL'
 set -eu
 # Resolve runtime packages from this OS release, without weak dependencies.
@@ -56,6 +56,7 @@ then
     echo 'Unsupported sudo invocation in OpenRiak KV launcher' >&2
     exit 1
 fi
+# Reject stale repository mirrors before exporting the runtime filesystem.
 # Preserve the RPM database and an explicit inventory for vulnerability scanners.
 mkdir -p /openriak-rootfs/usr/share/openriak-build
 rpm --root /openriak-rootfs -qa --qf '%{NAME} %{VERSION}-%{RELEASE}\n' > /openriak-rootfs/usr/share/openriak-build/runtime-packages.txt
@@ -120,7 +121,7 @@ ENV RIAK_NODE_HOST=""
 # Explicit nodename; empty derives openriak-kv@<hostname>.
 ENV RIAK_NODE_NAME=""
 # Initial cookie; existing riak.conf wins and new followers adopt the coordinator cookie.
-ENV RIAK_DISTRIBUTED_COOKIE="openriak-3a70968f2631b31a6f05b8835ffa98a3"
+ENV RIAK_DISTRIBUTED_COOKIE="openriak-ca6019e3eacd07c2601d97012b64e3a9"
 # Partition count for a new ring; do not change on an existing cluster.
 ENV RIAK_RING_SIZE="8"
 # Storage backend used by OpenRiak KV.

@@ -1,0 +1,115 @@
+{
+  "artifacts": {},
+  "base_image": {
+    "pinned": "registry.suse.com/bci/bci-base:16.0@sha256:6406613b1003eb42d1f718d8873e3b4d203aee6d81ef7bf786a7274693476500",
+    "requested": "registry.suse.com/bci/bci-base:16.0",
+    "resolved_at": "2026-09-11T09:00:56Z"
+  },
+  "error": {
+    "message": "Compose initialization did not create config, data, and logs directories",
+    "type": "DockerToolError"
+  },
+  "finished_at": "2026-09-11T09:01:45Z",
+  "generation": {
+    "cluster_nodes": 5,
+    "distributed_cookie": "openriak-f21c7391df856cf4283a158eabcc8446"
+  },
+  "identity": {
+    "namespace": "tiotjp",
+    "source": "https://github.com/TI-Tokyo/openriak-docs",
+    "url": "https://www.tiot.jp/",
+    "vendor": "TI Tokyo"
+  },
+  "image": "tiotjp/openriak-kv:3.4.0-suse-16.0-otp26",
+  "metadata_sources": [
+    "content/openriak-kv/metadata/3.4.0/supported-os.json",
+    "content/openriak-kv/metadata/3.4.0/downloads.json",
+    "content/openriak-kv/metadata/os-aliases.json"
+  ],
+  "network": {
+    "address_assignment": "docker",
+    "node_host": "node-01.cluster-a.openriak",
+    "riak_node_name": "openriak-kv@node-01.cluster-a.openriak"
+  },
+  "node": "openriak-kv-3.4.0-suse-16.0-otp26-node",
+  "package": {
+    "checksum": {
+      "algorithm": "sha256",
+      "value": "72c02db420dc5a0cde5c27a2bd1813fc74e56b663f1167b9b7a0795fae5bfc77"
+    },
+    "filename": "riak-3.4.0.OTP26-1.el9.x86_64.rpm",
+    "format": "rpm",
+    "url": "https://files.tiot.jp/riak/kv/3.4/3.4.0/rhel/9/riak-3.4.0.OTP26-1.el9.x86_64.rpm"
+  },
+  "phases": {
+    "build": "passed",
+    "generate": "passed",
+    "test": "passed"
+  },
+  "ports": {
+    "http": 8098,
+    "protobuf": 8087
+  },
+  "product": "openriak-kv",
+  "run_id": "20260911T090056.552776Z",
+  "schema_version": 4,
+  "started_at": "2026-09-11T09:00:56Z",
+  "status": "failed",
+  "steps": [
+    {
+      "duration_seconds": 0.005,
+      "finished_at": "2026-09-11T09:00:56Z",
+      "name": "generate_artifacts",
+      "started_at": "2026-09-11T09:00:56Z",
+      "status": "passed"
+    },
+    {
+      "duration_seconds": 0.335,
+      "finished_at": "2026-09-11T09:00:56Z",
+      "name": "validate_compose_artifacts",
+      "started_at": "2026-09-11T09:00:56Z",
+      "status": "passed"
+    },
+    {
+      "duration_seconds": 43.633,
+      "finished_at": "2026-09-11T09:01:40Z",
+      "name": "build_image",
+      "started_at": "2026-09-11T09:00:56Z",
+      "status": "passed"
+    },
+    {
+      "duration_seconds": 4.352,
+      "finished_at": "2026-09-11T09:01:44Z",
+      "name": "initialize_volumes",
+      "started_at": "2026-09-11T09:01:40Z",
+      "status": "passed"
+    }
+  ],
+  "target": {
+    "architecture": "x86_64",
+    "docker_platform": "linux/amd64",
+    "download_id": "otp26-x86_64-1",
+    "os_family": "suse",
+    "os_id": "suse-16.0-x86_64",
+    "os_name": "SUSE Linux Enterprise Server 16.0",
+    "os_release": "16.0",
+    "otp": "26",
+    "package_os_id": "rhel-9-x86_64",
+    "version": "3.4.0"
+  },
+  "tests": {},
+  "volumes": {
+    "config": {
+      "container": "/etc/riak",
+      "default": "./openriak-kv-3.4.0-suse-16.0-otp26-node/config"
+    },
+    "data": {
+      "container": "/var/lib/riak",
+      "default": "./openriak-kv-3.4.0-suse-16.0-otp26-node/data"
+    },
+    "logs": {
+      "container": "/var/log/riak",
+      "default": "./openriak-kv-3.4.0-suse-16.0-otp26-node/logs"
+    }
+  }
+}

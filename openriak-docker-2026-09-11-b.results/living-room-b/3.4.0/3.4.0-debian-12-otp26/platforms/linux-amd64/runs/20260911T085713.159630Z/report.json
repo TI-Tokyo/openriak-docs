@@ -1,0 +1,113 @@
+{
+  "artifacts": {},
+  "base_image": {
+    "pinned": "tiotjp/debian:bookworm-slim-for-openriak@sha256:857fff6b7d9698aeb6d04777dc4d7b33ab4254c0a33b0887a78cb88c8ef0376b",
+    "requested": "tiotjp/debian:bookworm-slim-for-openriak",
+    "resolved_at": "2026-09-11T08:57:12Z"
+  },
+  "error": {
+    "message": "Compose initialization did not create config, data, and logs directories",
+    "type": "DockerToolError"
+  },
+  "finished_at": "2026-09-11T08:57:38Z",
+  "generation": {
+    "cluster_nodes": 5,
+    "distributed_cookie": "openriak-15338f337f4333dc656b612ec787a725"
+  },
+  "identity": {
+    "namespace": "tiotjp",
+    "source": "https://github.com/TI-Tokyo/openriak-docs",
+    "url": "https://www.tiot.jp/",
+    "vendor": "TI Tokyo"
+  },
+  "image": "tiotjp/openriak-kv:3.4.0-debian-12-otp26",
+  "metadata_sources": [
+    "content/openriak-kv/metadata/3.4.0/supported-os.json",
+    "content/openriak-kv/metadata/3.4.0/downloads.json"
+  ],
+  "network": {
+    "address_assignment": "docker",
+    "node_host": "node-01.cluster-a.openriak",
+    "riak_node_name": "openriak-kv@node-01.cluster-a.openriak"
+  },
+  "node": "openriak-kv-3.4.0-debian-12-otp26-node",
+  "package": {
+    "checksum": {
+      "algorithm": "sha256",
+      "value": "66d646145b2b1923c9d483ce2b989c46ec65c9e6aa3b43d79f20dcbd4ecfe722"
+    },
+    "filename": "riak_3.4.0-OTP26_amd64.deb",
+    "format": "deb",
+    "url": "https://files.tiot.jp/riak/kv/3.4/3.4.0/debian/12/riak_3.4.0-OTP26_amd64.deb"
+  },
+  "phases": {
+    "build": "passed",
+    "generate": "passed",
+    "test": "passed"
+  },
+  "ports": {
+    "http": 8098,
+    "protobuf": 8087
+  },
+  "product": "openriak-kv",
+  "run_id": "20260911T085713.159630Z",
+  "schema_version": 4,
+  "started_at": "2026-09-11T08:57:13Z",
+  "status": "failed",
+  "steps": [
+    {
+      "duration_seconds": 0.002,
+      "finished_at": "2026-09-11T08:57:13Z",
+      "name": "generate_artifacts",
+      "started_at": "2026-09-11T08:57:13Z",
+      "status": "passed"
+    },
+    {
+      "duration_seconds": 0.231,
+      "finished_at": "2026-09-11T08:57:13Z",
+      "name": "validate_compose_artifacts",
+      "started_at": "2026-09-11T08:57:13Z",
+      "status": "passed"
+    },
+    {
+      "duration_seconds": 24.179,
+      "finished_at": "2026-09-11T08:57:37Z",
+      "name": "build_image",
+      "started_at": "2026-09-11T08:57:13Z",
+      "status": "passed"
+    },
+    {
+      "duration_seconds": 1.018,
+      "finished_at": "2026-09-11T08:57:38Z",
+      "name": "initialize_volumes",
+      "started_at": "2026-09-11T08:57:37Z",
+      "status": "passed"
+    }
+  ],
+  "target": {
+    "architecture": "amd64",
+    "docker_platform": "linux/amd64",
+    "download_id": "otp26-amd64",
+    "os_family": "debian",
+    "os_id": "debian-12-amd64",
+    "os_name": "Debian 12",
+    "os_release": "12",
+    "otp": "26",
+    "version": "3.4.0"
+  },
+  "tests": {},
+  "volumes": {
+    "config": {
+      "container": "/etc/riak",
+      "default": "./openriak-kv-3.4.0-debian-12-otp26-node/config"
+    },
+    "data": {
+      "container": "/var/lib/riak",
+      "default": "./openriak-kv-3.4.0-debian-12-otp26-node/data"
+    },
+    "logs": {
+      "container": "/var/log/riak",
+      "default": "./openriak-kv-3.4.0-debian-12-otp26-node/logs"
+    }
+  }
+}
