@@ -2,7 +2,7 @@
 
 - `scripts/` — split production builds, assembly, architecture checks, metadata synchronization, and link validation.
 - `openriak-metadata/` — Python release-metadata package, CLI, and tests.
-- `openriak-docker/` — manually refreshed Docker generation, runtime testing, and cache publication.
+- `openriak-docker/` — compatibility launchers for the separate runtime-image tool repository.
 - `cache/openriak-docker/` — retained Dockerfiles, Compose files, JSON reports, and per-run test logs.
 - `generated/` — generated Hugo data adapters; safe for build tools to rewrite.
 
@@ -37,7 +37,8 @@ missing.
 Docker configurations are generated from the authoritative KV operating-system
 and package metadata, then built and tested only when an operator explicitly
 runs `openriak-docker refresh`. Documentation builds consume passed cached
-results and never pull base images or run containers. See
+results and never pull base images or run containers. The separate tool updates
+this checkout only through `openriak-docker publish --docs-root PATH`. See
 `openriak-docker/README.md` for target selection, cache layout, test coverage,
 and publication details.
 

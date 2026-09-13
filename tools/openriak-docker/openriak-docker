@@ -1,3 +1,9 @@
 #!/bin/sh
 set -eu
-exec python3 "$(dirname "$0")/openriak_docker.py" "$@"
+OPENRIAK_LEGACY_ROOT=$(CDPATH= cd -- "$(dirname -- "$0")" && pwd)
+OPENRIAK_RUNTIME_ROOT=${OPENRIAK_DOCKER_ROOT:-"$OPENRIAK_LEGACY_ROOT/../../../openriak-docker"}
+if [ ! -x "$OPENRIAK_RUNTIME_ROOT/openriak-docker" ]; then
+    echo "openriak-docker moved to its own repository. Set OPENRIAK_DOCKER_ROOT or clone it beside openriak-docs." >&2
+    exit 2
+fi
+exec "$OPENRIAK_RUNTIME_ROOT/openriak-docker" "$@"
