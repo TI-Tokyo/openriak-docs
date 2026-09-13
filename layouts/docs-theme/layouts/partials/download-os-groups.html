@@ -1,0 +1,12 @@
+{{- /* Keep releases distinct, but combine their architecture variants. */ -}}
+{{- $groups := slice -}}
+{{- $seen := newScratch -}}
+{{- range $os := . -}}
+  {{- $key := printf "%s/%v" $os.family $os.version -}}
+  {{- if not ($seen.Get $key) -}}
+    {{- $seen.Set $key true -}}
+    {{- $members := where (where $ "family" $os.family) "version" $os.version -}}
+    {{- $groups = $groups | append (dict "os" $os "members" $members) -}}
+  {{- end -}}
+{{- end -}}
+{{- return $groups -}}
