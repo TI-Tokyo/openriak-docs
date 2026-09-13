@@ -61,6 +61,11 @@ through the bind-mounted `docker-wip/` staging directory; after the container
 exits, the host script moves that tree to `public/`. Rsync `public/` to the
 server directory corresponding to the path in `HUGO_BASEURL`.
 
+The metadata stage includes the tracked Docker validation and CVE records from
+`records/openriak-docker/images`. It checks the published Dockerfiles and Compose
+files against those records using `content/static/openriak-kv/downloads/docker`,
+so Docker download listings do not depend on a local `artifacts/` cache.
+
 `./docker/build.static.sh development` exports core with one selected Riak KV
 release. `./docker/build.static.sh beta-test` exports core with all releases.
 Those artifacts deliberately omit the archives and are not deployment builds.

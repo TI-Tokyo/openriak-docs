@@ -18,6 +18,10 @@ COPY content/openriak-kv ./content/openriak-kv
 COPY content/openriak-cs ./content/openriak-cs
 COPY content/openriak-ts ./content/openriak-ts
 COPY content/static ./content/static
+# Docker listings require the durable validation and CVE records. Reuse the
+# tracked downloads for checksum validation so clean checkouts need no local cache.
+COPY records/openriak-docker/images ./records/openriak-docker/images
+COPY content/static/openriak-kv/downloads/docker ./artifacts/openriak-docker/images
 COPY layouts/homepage ./layouts/homepage
 COPY layouts/docs-theme ./layouts/docs-theme
 COPY layouts/common-docs ./layouts/common-docs
@@ -77,7 +81,7 @@ RUN drafts=''; if [ "$INCLUDE_DRAFTS" = true ]; then drafts=--buildDrafts; fi; \
       --destination=/project/public --baseURL="$HUGO_BASEURL" --gc --minify \
       --panicOnWarning --noBuildLock --cleanDestinationDir $drafts
 
-FROM alpine:3.22 AS assembled
+FROM alpine:3.24 AS assembled
 WORKDIR /project
 COPY tools/scripts/assemble-site.sh /usr/local/bin/assemble-site
 COPY --from=core-build /project/public /project/core
@@ -89,7 +93,7 @@ FROM scratch AS static
 COPY --from=assembled /project/public/ /
 
 # The runtime image retains the existing /docs/ deployment prefix.
-FROM alpine:3.22 AS deploy
+FROM alpine:3.24 AS deploy
 ARG HUGO_BASEURL=https://www.openriak.org/docs/
 WORKDIR /project
 COPY --from=assembled /project/public /project/public
