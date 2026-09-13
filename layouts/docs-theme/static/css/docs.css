@@ -131,7 +131,7 @@ button, select, input { border: 1px solid var(--line); border-radius: 3px; backg
   :root.sidebar-collapsed .docs-sidebar .sidebar-rail { display: grid; justify-items: center; gap: .55rem; }
 }
 
-.docs-main { min-width: 0; padding: clamp(1.25rem, 4vw, 3.25rem); }
+.docs-main { min-width: 0; padding: clamp(1.25rem, 4vw, 3.25rem); padding-top: .75rem; }
 .doc-article { width: var(--docs-content-width); max-width: none; margin: 0 auto; }
 .doc-article h1 { margin-top: .2rem; color: var(--slate); font-size: clamp(2rem, 4vw, 3.1rem); line-height: 1.1; letter-spacing: -.035em; }
 :root[data-theme="dark"] .doc-article h1 { color: #dce4eb; }
@@ -265,6 +265,8 @@ button, select, input { border: 1px solid var(--line); border-radius: 3px; backg
 .download-table-checksum-cell .download-checksum-panel { display: grid; width: 100%; margin: 0 0 .35rem; }
 .legacy-downloads-install { color: var(--muted); }
 .download-os-index { margin: 1rem 0 1.75rem; }
+.docker-inline-icon { display: inline-block; width: 1.5em; height: auto; vertical-align: -.2em; }
+:root[data-theme="dark"] .docker-inline-icon { filter: brightness(0) invert(1); }
 .download-os-index h2 { margin: 0 0 .65rem; font-size: 1rem; }
 .download-os-index ul { display: flex; flex-wrap: wrap; gap: .45rem .6rem; margin: 0; padding: 0; list-style: none; }
 .download-os-index button { display: block; padding: .35rem .55rem; border: 1px solid var(--line); border-radius: 0; background: var(--panel); color: var(--link); font: inherit; font-size: .88rem; cursor: pointer; }
@@ -448,3 +450,14 @@ button, select, input { border: 1px solid var(--line); border-radius: 3px; backg
 .severity-high { background: #b42318; color: #fff; }
 .severity-medium { background: #fde68a; color: #713f12; }
 .severity-low { background: #dbeafe; color: #1e40af; }
+.severity-none { background: #86efac; color: #14532d; }
+/* Custom Docker admonition, using the vendored module's per-type styling. */
+.admonition.docker {
+  --adm-type-color: #2496ed;
+  --adm-type-header: var(--adm-type-color);
+  border-left: 4px solid var(--adm-type-color);
+  background-color: rgba(36, 150, 237, var(--adm-header-bg-opacity));
+}
+:root[data-theme="dark"] .admonition.docker {
+  --adm-type-color: #90caf9;
+}

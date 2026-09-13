@@ -76,9 +76,11 @@ module:
     - {source: '../layouts/docs-theme/layouts/_markup/render-heading.html', target: 'layouts/_markup/render-heading.html'}
     - {source: '../layouts/docs-theme/layouts/_markup/render-codeblock.html', target: 'layouts/_markup/render-codeblock.html'}
 
-    # Vendored GitHub-style admonitions. Explicit mounts are required because
+    # Local GitHub-style admonition hook with vendored icons, styles, and translations.
+    # Custom icons are included by the docs-theme partials mount above.
+    # Explicit mounts are required because
     # this project assembles its component roots rather than loading a theme.
-    - {source: '../layouts/_vendor/github.com/KKKZOZ/hugo-admonitions/layouts/_default/_markup/render-blockquote-alert.html', target: 'layouts/_markup/render-blockquote-alert.html'}
+    - {source: '../layouts/docs-theme/layouts/_markup/render-blockquote-alert.html', target: 'layouts/_markup/render-blockquote-alert.html'}
     - {source: '../layouts/_vendor/github.com/KKKZOZ/hugo-admonitions/layouts/partials/admonitions', target: 'layouts/partials/admonitions'}
     - {source: '../layouts/_vendor/github.com/KKKZOZ/hugo-admonitions/assets/css/vendors', target: 'assets/css/vendors'}
     - {source: '../layouts/_vendor/github.com/KKKZOZ/hugo-admonitions/i18n', target: 'i18n'}

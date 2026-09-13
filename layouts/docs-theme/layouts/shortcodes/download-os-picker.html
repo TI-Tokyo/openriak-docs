@@ -1,9 +1,16 @@
 {{- $context := partial "product-context.html" .Page -}}
 {{- $versionData := index $context.versions $context.version -}}
 <nav class="download-os-index" aria-label="Download operating systems">
+  <h2>Operating System</h2>
   <ul>
-    {{ range $versionData.operatingSystems }}
-    <li><button type="button" data-download-os-select="{{ .id }}" aria-pressed="false">{{ .displayName }} — {{ .architecture }}</button></li>
+    {{ range partial "download-os-groups.html" $versionData.operatingSystems }}
+    <li><button type="button" data-download-os-select="{{ .os.id }}" data-download-os-ids="{{ apply .members "index" "." "id" | jsonify }}" aria-pressed="false">{{ .os.displayName }}</button></li>
     {{ end }}
   </ul>
 </nav>
+{{ if ne (.Get "group-by") "release" }}
+<nav class="download-os-index" aria-label="Download architectures" data-download-architecture-picker hidden>
+  <h2>Architecture</h2>
+  <ul data-download-architecture-options></ul>
+</nav>
+{{ end }}

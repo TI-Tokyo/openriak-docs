@@ -62,6 +62,26 @@
     return supported.find((os) => os.id === targetVersion.defaultOs) || supported[0] || null;
   };
 
+  const osReleaseKey = os => `${os.family}/${os.version}`;
+  const architectureKey = architecture => ({ amd64: 'x86_64', arm64: 'aarch64' }[architecture] || architecture);
+  const groupOsReleases = systems => {
+    const groups = new Map();
+    systems.forEach(os => {
+      const key = osReleaseKey(os);
+      if (!groups.has(key)) groups.set(key, []);
+      groups.get(key).push(os);
+    });
+    return [...groups.values()];
+  };
+  const resolveReleaseArchitecture = (members, preferences, currentArchitecture, defaultId) => {
+    if (!members.length) return null;
+    const preferred = preferences[osReleaseKey(members[0])];
+    const forArchitecture = architecture => architecture && members.find(os =>
+      architectureKey(os.architecture) === architectureKey(architecture));
+    return forArchitecture(preferred) || forArchitecture(currentArchitecture)
+      || members.find(os => os.id === defaultId) || forArchitecture('x86_64') || members[0];
+  };
+
   const resolveValue = (versionData, osId, key) => {
     const os = versionData.operatingSystems?.find(candidate => candidate.id === osId);
     const osValues = versionData.values?.[os?.defaultsKey || osId] || {};
@@ -219,7 +239,7 @@
     return new RegExp(pattern, flags);
   };
 
-  const api = { parseSemVer, compareSemVer, resolveBrand, resolveOs, resolveValue, buildVersionCandidates, resolveAssetUrl, configurationDefaultForOs, configurationSearchPattern, configurationSearchExpression };
+  const api = { parseSemVer, compareSemVer, resolveBrand, resolveOs, resolveValue, buildVersionCandidates, resolveAssetUrl, configurationDefaultForOs, configurationSearchPattern, configurationSearchExpression, osReleaseKey, groupOsReleases, resolveReleaseArchitecture };
   if (typeof module !== 'undefined' && module.exports) module.exports = api;
   if (typeof window !== 'undefined') window.OpenRiakDocs = api;
   if (typeof document === 'undefined') return;
@@ -261,16 +281,28 @@
   const versions = [...context.versions].sort((a, b) => compareSemVer(b.version, a.version));
   const currentVersion = versionData || versions.find((item) => item.version === context.currentVersion) || versions[0];
   const storageKey = `openriak-docs-os:${context.product.id}`;
+  const architectureStorageKey = `openriak-docs-architectures:${context.product.id}`;
+  let architecturePreferences = {};
+  try {
+    const saved = JSON.parse(window.localStorage.getItem(architectureStorageKey) || '{}');
+    if (saved && typeof saved === 'object' && !Array.isArray(saved)) {
+      architecturePreferences = Object.fromEntries(Object.entries(saved).filter(([, value]) => typeof value === 'string'));
+    }
+  } catch { /* Ignore an invalid saved preference map. */ }
   let selectedOs;
 
   const osById = (versionData, id) => versionData.operatingSystems.find((os) => os.id === id);
+  const selectRelease = os => resolveReleaseArchitecture(
+    currentVersion.operatingSystems.filter(candidate => osReleaseKey(candidate) === osReleaseKey(os)),
+    architecturePreferences, selectedOs?.architecture || os.architecture, currentVersion.defaultOs);
   const initialOs = () => {
     const params = new URLSearchParams(window.location.search);
     const explicit = params.get('os');
     if (explicit && osById(currentVersion, explicit)) return osById(currentVersion, explicit);
     const remembered = window.localStorage.getItem(storageKey);
-    if (remembered && osById(currentVersion, remembered)) return osById(currentVersion, remembered);
-    return osById(currentVersion, currentVersion.defaultOs) || currentVersion.operatingSystems[0];
+    const os = osById(currentVersion, remembered) || osById(currentVersion, currentVersion.defaultOs)
+      || currentVersion.operatingSystems[0];
+    return os ? selectRelease(os) : null;
   };
 
   const applyValues = () => {
@@ -446,6 +478,10 @@
     group.querySelectorAll('[data-download-image-field]').forEach(cell => { cell.rowSpan = rows; });
   };
 
+  const downloadOsIds = (element) => element.dataset.downloadOsIds
+    ? JSON.parse(element.dataset.downloadOsIds)
+    : [element.dataset.downloadPanelOs || element.dataset.downloadOsSelect];
+
   const renderDownloads = () => {
     document.querySelectorAll('[data-download-cve-row]').forEach((panel, index) => {
       panel.id = `download-cves-${index}`;
@@ -455,12 +491,33 @@
       });
     });
     document.querySelectorAll('[data-download-panel-os]').forEach((panel) => {
-      panel.hidden = panel.dataset.downloadPanelOs !== selectedOs.id;
+      panel.hidden = !downloadOsIds(panel).includes(selectedOs.id);
     });
     document.querySelectorAll('[data-download-os-select]').forEach((button) => {
-      const isSelected = button.dataset.downloadOsSelect === selectedOs.id;
+      const isSelected = downloadOsIds(button).includes(selectedOs.id);
       button.setAttribute('aria-pressed', String(isSelected));
       button.classList.toggle('is-active', isSelected);
+    });
+    document.querySelectorAll('[data-download-architecture-options]').forEach(list => {
+      list.replaceChildren();
+      currentVersion.operatingSystems.filter(os => osReleaseKey(os) === osReleaseKey(selectedOs)).forEach(os => {
+        const item = document.createElement('li');
+        const button = document.createElement('button');
+        button.type = 'button';
+        button.dataset.downloadArchitectureSelect = os.id;
+        button.textContent = os.architecture;
+        const active = os.id === selectedOs.id;
+        button.setAttribute('aria-pressed', String(active));
+        button.classList.toggle('is-active', active);
+        button.addEventListener('click', () => {
+          setOs(os, true);
+          // Rendering replaces the buttons; retain keyboard focus on the choice.
+          list.querySelector(`[data-download-architecture-select="${CSS.escape(os.id)}"]`)?.focus();
+        });
+        item.append(button);
+        list.append(item);
+      });
+      list.closest('[data-download-architecture-picker]').hidden = false;
     });
     document.querySelectorAll('[data-selected-download-os]').forEach((label) => {
       label.textContent = osLabel(selectedOs);
@@ -574,7 +631,7 @@
     document.querySelectorAll('[data-download-os-select]').forEach((button) => {
       button.addEventListener('click', () => {
         const os = osById(currentVersion, button.dataset.downloadOsSelect);
-        if (os) setOs(os);
+        if (os) setOs(selectRelease(os));
       });
     });
     const allDownloads = document.querySelector('[data-all-downloads]');
@@ -584,14 +641,7 @@
     if (window.location.hash === '#all-downloads' && allDownloads) allDownloads.open = true;
   };
 
-  const osDetails = (os) => {
-    const details = [];
-    if (os.codename) details.push(os.codename);
-    if (os.architecture && !String(os.codename || '').toLowerCase().includes(os.architecture.toLowerCase())) details.push(os.architecture);
-    return details;
-  };
-
-  const osLabel = (os) => `${os.name} ${os.version}${osDetails(os).length ? ` — ${osDetails(os).join(' · ')}` : ''}`;
+  const osLabel = os => os.displayName || `${os.name} ${os.version}`;
   const osAssetUrl = (logo) => resolveAssetUrl(logo, context.assetBase, window.location.origin);
   let closeOsPicker = () => {};
 
@@ -606,7 +656,7 @@
     logo.src = osAssetUrl(selectedOs.logo);
     panel.replaceChildren();
     const families = new Map();
-    currentVersion.operatingSystems.forEach((os) => {
+    groupOsReleases(currentVersion.operatingSystems).forEach(([os]) => {
       if (!families.has(os.family)) families.set(os.family, []);
       families.get(os.family).push(os);
     });
@@ -622,8 +672,9 @@
         option.className = 'os-option';
         option.dataset.osId = os.id;
         option.setAttribute('role', 'option');
-        option.setAttribute('aria-selected', String(os.id === selectedOs.id));
-        if (os.id === selectedOs.id) option.classList.add('is-active');
+        const active = osReleaseKey(os) === osReleaseKey(selectedOs);
+        option.setAttribute('aria-selected', String(active));
+        if (active) option.classList.add('is-active');
         const optionLogo = document.createElement('img');
         optionLogo.className = 'os-option-logo';
         optionLogo.src = osAssetUrl(os.logo);
@@ -631,14 +682,11 @@
         const copy = document.createElement('span');
         copy.className = 'os-option-copy';
         const name = document.createElement('strong');
-        name.textContent = `${os.name} ${os.version}`;
-        const details = document.createElement('span');
-        details.textContent = osDetails(os).join(' · ');
+        name.textContent = osLabel(os);
         copy.append(name);
-        if (details.textContent) copy.append(details);
         option.append(optionLogo, copy);
         option.addEventListener('click', () => {
-          setOs(os);
+          setOs(selectRelease(os));
           closeOsPicker(true);
         });
         section.append(option);
@@ -693,9 +741,14 @@
     return 0;
   };
 
-  const setOs = (os) => {
+  const setOs = (os, rememberArchitecture = false) => {
     selectedOs = os;
     window.localStorage.setItem(storageKey, os.id);
+    const release = osReleaseKey(os);
+    if (rememberArchitecture || !Object.hasOwn(architecturePreferences, release)) {
+      architecturePreferences[release] = os.architecture;
+      window.localStorage.setItem(architectureStorageKey, JSON.stringify(architecturePreferences));
+    }
     document.documentElement.dataset.selectedOs = os.id;
     const url = new URL(window.location.href);
     if (url.searchParams.has('os')) {
@@ -930,7 +983,7 @@
   selectedOs = initialOs();
   renderVersionPicker();
   setupVersionWarning();
-  if (selectedOs) setOs(selectedOs);
+  if (selectedOs) setOs(selectedOs, new URLSearchParams(window.location.search).has('os'));
   setupDownloadControls();
   setupSearch();
 })().catch(error => console.error('Documentation controls could not be initialized', error));

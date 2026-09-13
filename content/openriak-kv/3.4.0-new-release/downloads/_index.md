@@ -29,7 +29,8 @@ review_scope: 'editorial-and-site-integration'
 
 Pick the OS release you intend to run OpenRiak KV {{< current-version >}} on. The documentation will also update to show any configuration values specific to that OS release.
 
-For Docker images and Compose files, see [For Docker](for-docker/).
+> [!Docker] Docker
+> For Docker images and Compose files, see [Downloads For Docker](for-docker/).
 
 {{< download-os-picker >}}
 {{< package-downloads >}}

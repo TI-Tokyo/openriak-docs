@@ -19,6 +19,12 @@ both Hugo projects and in every build profile:
 > Tagged releases contain a `rebar.lock` file.
 ```
 
+Product docs also support `> [!DOCKER] Docker`. The local render hook at
+`layouts/docs-theme/layouts/_markup/render-blockquote-alert.html` is explicitly
+mounted in `content/hugo.yaml`; it adds the Docker type to the vendored module.
+Its icon lives in `layouts/docs-theme/layouts/partials/admonitions/icons/docker.svg`,
+and its colors are defined by `.admonition.docker` in `layouts/docs-theme/static/css/docs.css`.
+
 Product documentation can insert the version being browsed with the text-only
 `{{</* current-version */>}}` shortcode. It can be used as ordinary text, inside
 inline code, or inside a fenced code block. Use

@@ -272,7 +272,7 @@ assert.match(pageSummarySource, /Params\.hide_provenance[\s\S]*not/, 'individual
 assert.match(whatsChangedShortcodeSource, /versionHome\.Pages\.ByWeight[\s\S]*ne \$candidate\.Kind "section"[\s\S]*ne \$candidate\.File\.ContentBaseName "whats-changed"[\s\S]*page-version-status\.html[\s\S]*slice "new" "updated"[\s\S]*<h2>General<\/h2>[\s\S]*versionHome\.Sections\.ByWeight/, "What's Changed must exclude the version root, itself, inherited pages, and group General before menu-ordered root sections");
 assert.match(whatsChangedShortcodeSource, /partial "whats-changed-section\.html"/, "What's Changed must render a separate group for each changed container path");
 assert.match(whatsChangedSectionSource, /section\.Pages\.ByWeight[\s\S]*ne \$child\.Kind "section"[\s\S]*delimit \$pathTitles " \/ "[\s\S]*whats-changed-table\.html[\s\S]*section\.Sections\.ByWeight[\s\S]*partial "whats-changed-section\.html"/, "What's Changed container groups must include direct changed pages and recurse through container paths in menu order");
-assert.match(whatsChangedTableSource, /<th scope="col">Page<\/th>[\s\S]*<th scope="col">Type<\/th>[\s\S]*<th scope="col">Update Summary<\/th>[\s\S]*index \.page\.Params "update-summary"[\s\S]*Updated content[\s\S]*doc-version-status--\{\{ \.status \}\}/, "What's Changed tables must link pages and render styled change types with update-summary fallbacks");
+assert.match(whatsChangedTableSource, /<th scope="col">Page<\/th>[\s\S]*<th scope="col">Type<\/th>[\s\S]*<th scope="col">Update Summary<\/th>[\s\S]*index \.page\.Params "update-summary"[\s\S]*doc-version-status--\{\{ \.status \}\}[\s\S]*Updated content/, "What's Changed tables must link pages and render styled change types with update-summary fallbacks");
 for (const source of [whatsChanged340Source, whatsChanged341Source]) {
   assert.match(source, /^weight: -15$/m, "What's Changed must appear between Release Notes and Downloads");
   assert.match(source, /^hide_provenance: true$/m, "What's Changed must not show page provenance");
@@ -284,7 +284,7 @@ assert.match(pageSummarySource, /Params\.related[\s\S]*related-documentation-hea
 assert.doesNotMatch(pageSummarySource, /<details[^>]+open/, 'the top table of contents must not initially be expanded');
 assert.match(pageVersionStatusSource, /index hugo\.Data\.page_provenance \$context\.id \$context\.version[\s\S]*hugo\.IsServer[\s\S]*\$entry = dict "status" "new"[\s\S]*missing page provenance/, 'local servers must render newly added pages while static builds still fail on missing provenance');
 assert.match(pageVersionStatusSource, /\$versionRoot := printf "%s\/%s"[\s\S]*ne \$contentPath \$context\.id[\s\S]*ne \$contentPath \$versionRoot[\s\S]*\$pageKey = strings\.TrimPrefix/, 'product and version landing pages must resolve the generated empty provenance key');
-assert.match(pageVersionStatusSource, /eq \$pageKey "downloads"[\s\S]*\$entry = dict "status" "updated" "since" \$context\.version/, 'dynamically generated Downloads pages must always be updated in their current product version');
+assert.match(pageVersionStatusSource, /if in \(slice "downloads" "downloads\/for-docker"\) \$pageKey[\s\S]*\$status := cond \(eq \$entry\.status "inherited"\) "updated" "new"[\s\S]*\$entry = dict "status" \$status "since" \$context\.version/, 'package and Docker Downloads pages must mark inherited Markdown updated and changed Markdown new in their current product version');
 assert.match(versionMountGeneratorSource, /key === 'whats-changed'\) continue/, "What's Changed must be excluded from generated page provenance");
 assert.match(downloadsTemplateSource, /<h1>\{\{ \.Title \}\}<\/h1>[\s\S]*partial "page-summary\.html" \.[\s\S]*related-documentation\.html[\s\S]*page-footer\.html/, 'Downloads pages must render their version provenance summary, related links, feedback, and reporting tools');
 assert.match(relatedDocumentationSource, /index \. "page"[\s\S]*printf "\/%s\/%s\/%s" \$context\.id \$context\.version \$reference[\s\S]*site\.GetPage[\s\S]*related page/, 'related documentation must resolve version-independent front matter references in the current product release');
@@ -297,7 +297,7 @@ assert.match(pageToolsSource, /endpoint\.searchParams\.set\('vote'[\s\S]*endpoin
 assert.ok(pageToolsSource.includes("if (/\\/issues\\/?$/.test(url.pathname))"), 'a configured GitHub issues page must resolve to its new-issue form');
 assert.match(pageToolsSource, /Documentation problem[\s\S]*Operating system:[\s\S]*What is missing or incorrect\?/, 'problem reports must include the suggested page context');
 assert.match(pageFooterSource, /\.RawContent[\s\S]*data-page-markdown-source/, 'copying a page as Markdown must use its authored Markdown source');
-assert.match(pageToolsSource, /data-copy-page-markdown[\s\S]*writeClipboard\(markdownSource\)/, 'the page tools runtime must copy the embedded Markdown source');
+assert.match(pageToolsSource, /data-copy-page-markdown[\s\S]*data-page-markdown-source[\s\S]*await writeClipboard\(await window\.OpenRiakMetadata\.read\(markdownSource\)\)/, 'the page tools runtime must load the Markdown source through the metadata loader before copying it');
 assert.match(headingRenderHookSource, /id="\{\{ \.Anchor[\s\S]*class="heading-permalink"[\s\S]*href="#\{\{ \.Anchor[\s\S]*aria-label="Copy link to this section"/, 'rendered headings must expose accessible copy-link controls');
 assert.match(pageToolsSource, /heading-permalink[\s\S]*preventDefault\(\)[\s\S]*writeClipboard\(new URL\(link\.getAttribute\('href'\), window\.location\.href\)\.href\)/, 'heading permalink activation must copy the absolute section URL without navigating');
 assert.match(codeRenderHookSource, /data-code-lines[\s\S]*data-code-wrap[\s\S]*data-code-shell-wrap[\s\S]*data-code-download[\s\S]*data-code-copy[\s\S]*transform\.Highlight[\s\S]*data-code-source/, 'code blocks must provide copy, line-number, ordinary-wrap, shell-split, download, highlighting, and raw-source controls');
@@ -307,7 +307,10 @@ assert.match(codeRenderHookSource, /filename[\s\S]*partialname[\s\S]*extension[\
 assert.match(codeRenderHookSource, /\$declaredLanguage := \.Type[\s\S]*\$attributeExtension := index \.Attributes "extension"[\s\S]*\$legacyFilenameFence := and[\s\S]*findRE `\[\/\\\\\]` \$declaredLanguage[\s\S]*\$language := cond \$legacyFilenameFence "text"[\s\S]*not \$legacyFilenameFence/, 'path-like legacy filename fences must render as text without being mistaken for explicit extension overrides');
 assert.match(codeRenderHookSource, /"advancedconfig" "advanced\.config"[\s\S]*\$highlightLanguage := cond \(eq \(lower \$language\) "advancedconfig"\) "erlang"[\s\S]*transform\.Highlight \.Inner \$highlightLanguage "noClasses=false"/, 'advancedconfig must use Erlang highlighting and the .advanced.config extension');
 assert.match(codeRenderHookSource, /data-code-product="\{\{ \$productName \}\}"[\s\S]*data-code-version="\{\{ \$productVersion \}\}"[\s\S]*data-code-page="\{\{ \$pageName \}\}"[\s\S]*data-code-extension="\{\{ \$extension \}\}"/, 'code blocks must expose sanitised page context and the inferred or explicit extension for downloads');
-assert.match(pageToolsSource, /data-code-block[\s\S]*activeCodeSource[\s\S]*writeClipboard\(activeCodeSource\(\)\)[\s\S]*applyOption[\s\S]*has-line-numbers[\s\S]*is-wrapped[\s\S]*is-shell-wrapped/, 'code controls must independently apply line numbers, text wrapping, and shell splitting while copying the active source');
+assert.match(pageToolsSource, /data-code-block[\s\S]*activeCodeSource[\s\S]*writeClipboard\(activeCodeSource\(\)\)/, 'code controls must copy the active original or shell-split source');
+for (const className of ['has-line-numbers', 'is-wrapped', 'is-shell-wrapped']) {
+  assert.ok(pageToolsSource.includes(`block.classList.toggle('${className}', enabled)`), `code controls must independently toggle ${className}`);
+}
 assert.match(pageToolsSource, /openriak-docs-code-options-v1[\s\S]*codeControllersByLanguage[\s\S]*syncCodeOption[\s\S]*localStorage\.setItem/, 'code display options must be shared by language and persisted across pages');
 assert.match(pageToolsSource, /preserveCodeBlockPosition[\s\S]*getBoundingClientRect\(\)\.top[\s\S]*scrollBy/, 'changing a shared code option must keep the initiating block anchored in the viewport');
 assert.match(pageToolsSource, /pagehide[\s\S]*openriak-docs-code-anchor-v1|openriak-docs-code-anchor-v1[\s\S]*pagehide[\s\S]*pageshow/, 'code-block viewport anchoring must survive page refreshes');
@@ -379,7 +382,7 @@ assert.match(baseSource, /js\/docs-shell\.js[^"\n]+\?v=20260903-search-hotkey/, 
 assert.match(sharedSearchSource, /aria-busy[\s\S]*Searching…/, 'shared search must expose its loading state');
 assert.match(sharedSearchSource, /search result\$\{pages\.length === 1 \? '' : 's'\} found/, 'shared search must announce result counts');
 assert.match(downloadTableSource, /<caption class="sr-only">[\s\S]*<th scope="col">OTP<\/th>/, 'download tables must have an accessible caption and scoped column headers');
-assert.match(configurationReferenceShortcodeSource, /<caption class="sr-only">[\s\S]*<th scope="col">Config name<\/th>/, 'configuration tables must have an accessible caption and scoped column headers');
+assert.match(configurationReferenceShortcodeSource, /<caption class="sr-only">[^<]+<\/caption>[\s\S]*<th scope="col"[^>]*aria-sort="ascending"[^>]*>\s*<button[^>]*data-configuration-sort[^>]*aria-label="Sort config name descending"[^>]*>\s*<span>Config name<\/span>/, 'configuration tables must have an accessible caption and a scoped, sortable configuration-name header');
 assert.match(siteSectionBaseSource, /<main id="main-content"[^>]*tabindex="-1"/, 'site-section skip-link targets must be programmatically focusable');
 assert.match(blogBaseSource, /<main id="main"[^>]*tabindex="-1"/, 'technical-blog skip-link targets must be programmatically focusable');
 assert.match(mailingListBaseSource, /<main id="main"[^>]*tabindex="-1"/, 'mailing-list skip-link targets must be programmatically focusable');
@@ -410,7 +413,7 @@ assert.match(docsCssSource, /@media \(max-width: 760px\)[\s\S]*\.picker-panel \{
 assert.match(docsCssSource, /@media \(max-width: 760px\)[\s\S]*\.docs-sidebar \{[^}]*align-self: stretch[^}]*height: auto/, 'mobile sidebar must stretch between its fixed insets so overflowing navigation can scroll');
 assert.match(runtimeSource, /className = 'os-option-logo'/, 'OS picker options must render their logos');
 assert.match(runtimeSource, /option\.append\(optionLogo, copy\)/, 'OS picker options must include their logos');
-assert.match(runtimeSource, /data-download-os-select[\s\S]*setOs\(os\)/, 'the operating-system list must update the selected download state');
+assert.match(runtimeSource, /data-download-os-select[\s\S]*button\.addEventListener\('click'[\s\S]*osById\(currentVersion, button\.dataset\.downloadOsSelect\)[\s\S]*if \(os\) setOs\(selectRelease\(os\)\)/, 'the operating-system list must select the release while preserving its saved architecture');
 assert.match(runtimeSource, /data-all-downloads-link[\s\S]*allDownloads\.open = true/, 'the selected download box must expand All downloads before following its anchor');
 assert.match(runtimeSource, /data-selected-download-os[\s\S]*data-selected-download-logo[\s\S]*data-doc-downloads[\s\S]*sourceGroups[\s\S]*downloads-table/, 'changing OS must update the selected download subtitle, logo, and package table');
 assert.match(downloadsTemplateSource, /if \$isModern[\s\S]*\{\{ \.Content \}\}/, 'modern Downloads composition must be controlled by page shortcodes');
@@ -610,8 +613,9 @@ assert.match(archiveHugoConfig, /target: 'content\/archived-technical-blog'/, 't
 assert.match(archiveHugoConfig, /target: 'content\/archived-mailing-list'/, 'the mailing list must be mounted into the archive project');
 assert.match(archiveHugoConfig, /archive-technical-blog\/by-year\.html', target: 'layouts\/blog\/by-year\.html'/, 'the blog year index template must be mounted into the archive project');
 assert.doesNotMatch(archiveHugoConfig, /source: '(homepage|community|openriak-kv|riak-kv)\//, 'active content must not be mounted into the archive project');
+assert.match(coreHugoConfig, /docs-theme\/layouts\/_markup\/render-blockquote-alert\.html', target: 'layouts\/_markup\/render-blockquote-alert\.html'/, 'core Hugo project must mount the local admonition render hook');
+assert.match(archiveHugoConfig, /hugo-admonitions\/layouts\/_default\/_markup\/render-blockquote-alert\.html', target: 'layouts\/_markup\/render-blockquote-alert\.html'/, 'archive Hugo project must mount the vendored admonition render hook');
 for (const [name, config] of [['core', coreHugoConfig], ['archive', archiveHugoConfig]]) {
-  assert.match(config, /hugo-admonitions\/layouts\/_default\/_markup\/render-blockquote-alert\.html', target: 'layouts\/_markup\/render-blockquote-alert\.html'/, `${name} Hugo project must mount the admonition render hook`);
   assert.match(config, /hugo-admonitions\/layouts\/partials\/admonitions', target: 'layouts\/partials\/admonitions'/, `${name} Hugo project must mount the admonition icons where the module's templates.Exists check can find them`);
   assert.match(config, /hugo-admonitions\/assets\/css\/vendors', target: 'assets\/css\/vendors'/, `${name} Hugo project must mount the admonition styles`);
   assert.match(config, /hugo-admonitions\/i18n', target: 'i18n'/, `${name} Hugo project must mount the admonition translations`);

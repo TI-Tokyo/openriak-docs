@@ -54,7 +54,8 @@ class StandaloneTests(unittest.TestCase):
         self.assertEqual(report['tests'], {'status': 'not_run'})
         self.assertEqual(report['identity'], dataclasses.asdict(self.identity))
         self.assertEqual(report['base_images'], self.bases)
-        self.assertIn('tiotjp/openriak-kv:latest', report['tags'])
+        self.assertEqual(report['tags'], ['tiotjp/openriak-kv:3.4.1-alpine-3.21-otp26',
+                                         'tiotjp/openriak-kv:3.4.1-alpine-3.21'])
         self.assertTrue(all(tag.startswith('tiotjp/openriak-kv:') for tag in report['tags']))
         source = (root / 'Dockerfile').read_text()
         for name, value in [('vendor', self.identity.vendor), ('source', self.identity.source), ('url', self.identity.url)]:
@@ -81,8 +82,13 @@ class StandaloneTests(unittest.TestCase):
             group = [dataclasses.replace(t, identity=identity) for t in self.group]
             self.assertNotEqual(tool.group_input(group, 5, tool.image_aliases(group[0], self.targets)), baseline)
         changed = [dataclasses.replace(t, identity=self.identity) for t in self.group]
-        self.assertIn('tiotjp/openriak-kv:latest', tool.image_aliases(changed[0], self.targets))
-        self.assertIn('mirror/openriak-kv:latest', tool.namespaced_tags(tool.image_aliases(changed[0], self.targets), ['mirror']))
+        self.assertNotIn('tiotjp/openriak-kv:latest', tool.image_aliases(changed[0], self.targets))
+        latest_alpine = max((t for t in self.targets if t.family == 'alpine' and t.otp == '26'),
+                            key=tool.release_key)
+        latest_alpine = dataclasses.replace(latest_alpine, identity=self.identity)
+        aliases = tool.image_aliases(latest_alpine, self.targets)
+        self.assertIn('tiotjp/openriak-kv:latest', aliases)
+        self.assertIn('mirror/openriak-kv:latest', tool.namespaced_tags(aliases, ['mirror']))
 
     def test_output_guards_keep_standalone_results_out_of_docs(self):
         for path in [tool.REPOSITORY_ROOT, tool.REPOSITORY_ROOT / 'content/company',

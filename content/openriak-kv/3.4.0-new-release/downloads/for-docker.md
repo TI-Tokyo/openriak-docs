@@ -25,12 +25,27 @@ last_reviewed: '2026-09-01'
 review_scope: 'editorial-and-site-integration'
 ---
 
+[DockerHub OpenRiak KV]: https://hub.docker.com/r/tiotjp/openriak-kv
+
 ## Recommended Downloads
 
-Pick the OS release you intend to run OpenRiak KV {{< current-version >}} on. The documentation will also update to show any configuration values specific to that OS release.
+Docker images are available from [Docker Hub][DockerHub OpenRiak KV] for OpenRiak KV {{< current-version >}}.
 
-{{< download-os-picker >}}
+Please choose your Operating System from the below options for a matching set of Docker files.
+
+{{< download-os-picker group-by="release" >}}
 {{< docker-downloads >}}
+
+{{< collapsable-section title="Notes and Tips" level="2" id="notes-and-tips" >}}
+> [!Info] Architectures
+> All images are multi-architecture (when available).
+
+> [!Tip] Compose files
+> We recommend that you download the Docker Compose and Environment example files below to understand the available options and how to orchestrate a simple cluster.
+
+> [!Tip] Custom builds
+> If you want to customise a Docker image, then the Dockerfile for each OS is also available for download and editing.
+{{< /collapsable-section >}}
 
 {{< collapsable-section title="All Docker Files" level="2" id="all-docker-files" >}}
 OpenRiak KV {{< current-version >}} can run in Docker for testing and development purposes.

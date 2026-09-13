@@ -14,6 +14,6 @@ audience:
 tags: ['kv', 'reference', 'release-notes']
 ---
 
-This page lists documentation that is new or updated in OpenRiak KV 3.4.1.
+This page lists documentation that is new or updated in OpenRiak KV {{< current-version>}}.
 
 {{< whats-changed >}}

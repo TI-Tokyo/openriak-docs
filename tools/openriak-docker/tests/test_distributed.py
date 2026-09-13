@@ -24,7 +24,8 @@ class DistributedTests(unittest.TestCase):
     def setUp(self):
         push_tests.PushTests.setUp(self)
         self.planfile=Path(self.temporary.name)/'plan.json'
-        args=['distribute','plan','--version','3.4.1','--os-id','alpine*','--otp','26','--workers','1','--output',str(self.planfile)]
+        # The approved fixture contains only Alpine 3.21, on both architectures.
+        args=['distribute','plan','--version','3.4.1','--os-id','alpine-3.21-*','--otp','26','--workers','1','--output',str(self.planfile)]
         with contextlib.redirect_stdout(io.StringIO()),mock.patch.object(tool,'docker_command',side_effect=AssertionError('no Docker')):
             self.assertEqual(tool.main(args),0)
         self.plan=tool.read_json(self.planfile)

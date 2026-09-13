@@ -60,3 +60,61 @@ The `area` parameter limits matches to settings defined by the `riak_repl` repos
 # single item detail
 
 {{< configuration-reference-item config-name="mdc.fullsync_interval.$cluster_name" >}}
+
+## Tests
+
+Use these examples to check code downloads, inferred file extensions, and the shell command controls.
+
+### Explicit filename
+
+Download this text block to check how an explicit filename containing an extension is handled.
+
+```text {filename="riak.conf"}
+storage_backend = bitcask
+```
+
+### Filename with an inferred extension
+
+Download this configuration block to check the extension inferred from `conf`.
+
+```conf {filename="riak"}
+ring_size = 64
+```
+
+### Partial filename
+
+Download this Erlang block to check that `ring-size` is included in the generated filename and the inferred extension is `.erl`.
+
+```erlang {partialname="ring-size"}
+application:set_env(riak_core, ring_creation_size, 64).
+```
+
+### Advanced configuration
+
+Check Erlang highlighting and the inferred `.advanced.config` extension.
+
+```advancedconfig {partialname="advanced-ring-size"}
+[{riak_core, [{ring_creation_size, 64}]}].
+```
+
+### Shell command splitting
+
+Toggle **Split command**, then check that quoted arguments and blank lines are preserved when copying or downloading the commands. The inferred extension is `.sh`.
+
+```bash {partialname="start-riak"}
+riak start
+
+curl --request GET --header "Accept: text/plain" --url http://127.0.0.1:8098/ping
+
+riak ping
+```
+
+### Extension override
+
+Download this YAML block to check that the explicit `.yml` extension overrides the language's default extension.
+
+```yaml {partialname="listener-example" extension="yml"}
+listener:
+  host: 127.0.0.1
+  port: 8098
+```

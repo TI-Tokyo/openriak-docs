@@ -1,14 +1,14 @@
 {{- $images := slice -}}
 {{- $ids := slice -}}
 {{- range .operatingSystems }}{{ $ids = $ids | append .id }}{{ end -}}
-{{- range .versionData.dockerImages }}{{ if or (in $ids .osId) (gt (len (intersect $ids (.osIds | default (slice)))) 0) }}{{ $images = $images | append . }}{{ end }}{{ end -}}
+{{- range .versionData.dockerImages }}{{ if or (in $ids .osId) (gt (len (intersect $ids (.osIds | default (slice)))) 0) }}{{ $images = $images | append (merge . (dict "otp" (int .otp))) }}{{ end }}{{ end -}}
 {{ if $images }}
 <div class="downloads-table-wrap">
   <table class="downloads-table docker-downloads-table">
     <caption class="sr-only">Tested Docker files by operating system</caption>
     <colgroup><col class="docker-column-otp"><col class="docker-column-architecture"><col class="docker-column-tested"><col class="docker-column-image"><col class="docker-column-cve"><col><col class="docker-column-actions"></colgroup>
     <thead><tr><th scope="col">OTP</th><th scope="col">Architecture</th><th scope="col">Tested</th><th scope="col">Image tag</th><th scope="col">CVE</th><th scope="col">Downloads</th><th scope="col" class="download-table-actions">Actions</th></tr></thead>
-    {{ range $image := $images }}
+    {{ range $image := sort $images "otp" "desc" }}
       {{ $files := slice (dict "label" "Dockerfile" "file" .dockerfile) (dict "label" "Single Node Compose File" "file" .composeSingle) (dict "label" (printf "%v-node Cluster Compose File" .clusterNodes) "file" .composeCluster) (dict "label" "Example Environment File" "file" .environmentExample "filename" "example.env") }}
       {{ $rows := 0 }}
       {{ range $files }}{{ with .file }}{{ $rows = add $rows 1 }}{{ with .sha256 }}{{ $rows = add $rows 1 }}{{ end }}{{ end }}{{ end }}

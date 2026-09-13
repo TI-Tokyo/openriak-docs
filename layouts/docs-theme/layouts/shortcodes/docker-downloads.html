@@ -2,10 +2,10 @@
 {{- $versionData := index $context.versions $context.version -}}
 <section class="modern-downloads-selected" data-selected-download-panels hidden>
   <h2>Download Docker Files</h2>
-  {{ range $os := $versionData.operatingSystems }}
-  <div data-download-panel-os="{{ $os.id }}" hidden>
-    <h3 class="modern-downloads-selected-os"><img src="{{ $os.logo | relURL }}" alt="">{{ $os.displayName }} — {{ $os.architecture }}</h3>
-    {{ partial "docker-download-table.html" (dict "versionData" $versionData "operatingSystems" (slice $os)) }}
+  {{ range partial "download-os-groups.html" $versionData.operatingSystems }}
+  <div data-download-panel-os="{{ .os.id }}" data-download-os-ids="{{ apply .members "index" "." "id" | jsonify }}" hidden>
+    <h3 class="modern-downloads-selected-os"><img src="{{ .os.logo | relURL }}" alt="">{{ .os.displayName }}</h3>
+    {{ partial "docker-download-table.html" (dict "versionData" $versionData "operatingSystems" .members) }}
   </div>
   {{ end }}
 </section>
