@@ -83,6 +83,20 @@ KV defaults are extracted from the exact `riak-VERSION` tag and its recursive
 locked Erlang dependencies. CS and TS currently generate package metadata plus
 a `defaults.json` document whose status is `not_implemented`.
 
+KV `defaults.json` uses schema version 2 with `defaults_scope: "os"`.
+`effective_defaults` is keyed by OS name (`alpine`, `ubuntu`, `rhel`, etc.),
+with one entry per OS for each OpenRiak KV version. All releases and architectures
+of that OS share the entry. For example, adding Alpine 3.24 packages to a version
+that already has Alpine defaults only requires `packages --refresh --update-repo`;
+it does not require extracting defaults again. Adding a previously absent OS does
+require generating its defaults.
+
+The docs adapter also reads schema version 1 defaults, consolidating identical
+release/architecture entries and rejecting conflicting values. Generated website
+metadata stores defaults once per OS. Each OS selector entry has a `defaultsKey`
+that identifies its shared defaults; package aliases inherit their source OS's
+defaults unless their own OS defaults are available.
+
 Run the offline fixture suite with:
 
 ```sh

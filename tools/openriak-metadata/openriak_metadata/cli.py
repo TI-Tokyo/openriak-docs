@@ -20,15 +20,30 @@ REPOSITORY_ROOT = Path(__file__).resolve().parents[3]
 
 
 def build_parser() -> argparse.ArgumentParser:
-    result = argparse.ArgumentParser(prog="openriak-metadata", description="Generate OpenRiak release metadata")
+    result = argparse.ArgumentParser(
+        prog="openriak-metadata", description="Generate OpenRiak release metadata",
+        formatter_class=argparse.RawDescriptionHelpFormatter,
+        epilog=(
+            "Refresh package metadata in this checkout:\n"
+            "  openriak-metadata packages --product kv --version 3.4.0 --version 3.4.1"
+            " --refresh --update-repo\n\n"
+            "--update-repo [PATH] is available on packages only; use --output DIR for standalone files.\n"
+            "Run openriak-metadata COMMAND --help for all options for that command."
+        ),
+    )
     subcommands = result.add_subparsers(dest="command", required=True)
-    for name in ("generate", "packages", "defaults"):
-        command = subcommands.add_parser(name)
+    for name, description in (
+        ("generate", "Generate package and configuration-default metadata"),
+        ("packages", "Generate package metadata or install it with --update-repo"),
+        ("defaults", "Generate configuration-default metadata"),
+    ):
+        command = subcommands.add_parser(name, help=description, description=description)
         command.add_argument("--product", choices=sorted(PRODUCTS), required=True)
         command.add_argument("--version", action="append", dest="versions", required=True, metavar="VERSION",
                              help="Exact release version (repeatable)")
         destination = command.add_mutually_exclusive_group(required=True)
-        destination.add_argument("--output", type=Path)
+        destination.add_argument("--output", type=Path, metavar="DIR",
+                                 help="Write standalone metadata beneath DIR/PRODUCT/VERSION")
         if name == "packages":
             destination.add_argument("--update-repo", nargs="?", const=REPOSITORY_ROOT, type=Path,
                                      metavar="PATH", help="Stage and validate every version, then update repository package metadata (default: this checkout)")

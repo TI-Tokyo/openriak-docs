@@ -2,10 +2,37 @@ import tempfile
 import unittest
 from pathlib import Path
 
-from openriak_metadata.defaults import calculate_default, parse_rpm_vars, parse_vars
+from openriak_metadata.defaults import calculate_default, extract_defaults, parse_rpm_vars, parse_vars
+from openriak_metadata.registry import PRODUCTS
+from openriak_metadata.source import Repository
 
 
 class DefaultsTests(unittest.TestCase):
+    def test_defaults_shared_across_os_releases_and_architectures(self):
+        with tempfile.TemporaryDirectory() as temporary:
+            root = Path(temporary)
+            (root / 'rebar.config').write_text('[] .')
+            (root / 'priv').mkdir()
+            (root / 'priv/test.schema').write_text(
+                '{mapping, "ring_size", "riak_core.ring_creation_size", [{default, 64}]}.'
+            )
+            repository = Repository('riak', 'OpenRiak/riak', 'test-commit', 0, root)
+            targets = [
+                {'id': f'alpine-{release}-{arch}', 'family': 'alpine', 'package_family': 'apk'}
+                for release in ('3.21', '3.24') for arch in ('x86_64', 'aarch64')
+            ]
+            targets.append({'id': 'ubuntu-noble-amd64', 'family': 'ubuntu', 'package_family': 'deb'})
+            document = extract_defaults(PRODUCTS['kv'], '3.4.1', targets, repository, [repository], [])
+            self.assertEqual(document['schema_version'], 2)
+            self.assertEqual(document['defaults_scope'], 'os')
+            self.assertEqual(set(document['effective_defaults']), {'alpine', 'ubuntu'})
+            self.assertEqual(document['effective_defaults']['alpine']['ring_size']['value'], 64)
+            self.assertEqual(document['effective_defaults']['ubuntu']['ring_size']['value'], 64)
+            self.assertEqual(document['status'], 'complete')
+            targets.append({'id': 'ubuntu-conflict', 'family': 'ubuntu', 'package_family': 'rpm'})
+            with self.assertRaisesRegex(ValueError, 'Conflicting package families for OS ubuntu'):
+                extract_defaults(PRODUCTS['kv'], '3.4.1', targets, repository, [repository], [])
+
     def setting(self, default="A"):
         return {"has_default": True, "default": default, "new_conf_value": None,
                 "definitions": [{"repository": "riak", "path": "priv/riak.schema", "line": 1}]}

@@ -9,6 +9,7 @@ const contentRoot = path.join(repositoryRoot, 'content');
 const dockerCacheRoot = path.join(repositoryRoot, 'tools', 'cache', 'openriak-docker');
 const dockerStaticRoot = path.join(contentRoot, 'static', 'openriak-kv');
 const { compareSemver, discoverVersions, productSources } = require('./generate-version-mounts.js');
+const { defaultsByOs } = require('./defaults-by-os');
 
 const products = [
   { productId: 'openriak-kv', metadataProduct: 'kv', pickerSource: 'openriak-kv' },
@@ -345,15 +346,15 @@ const configurationReference = (product, version, defaults, operatingSystems) =>
     .map(([name, setting]) => {
       const defaultsByOs = {};
       for (const os of operatingSystems) {
-        const effective = defaults.effective_defaults?.[os.aliasOf || os.id]?.[name];
+        const effective = defaults.effective_defaults?.[os.defaultsKey]?.[name];
         if (!effective?.has_default) {
-          defaultsByOs[os.id] = { hasDefault: false, value: '' };
+          defaultsByOs[os.defaultsKey] = { hasDefault: false, value: '' };
           continue;
         }
         const value = effective.resolved_value ?? effective.value;
-        defaultsByOs[os.id] = { hasDefault: true, value: configurationValueText(value) };
+        defaultsByOs[os.defaultsKey] = { hasDefault: true, value: configurationValueText(value) };
       }
-      const globalDefault = defaultsByOs[globalDefaultOperatingSystem?.id] || { hasDefault: false, value: '' };
+      const globalDefault = defaultsByOs[globalDefaultOperatingSystem?.defaultsKey] || { hasDefault: false, value: '' };
       for (const osDefault of Object.values(defaultsByOs)) {
         osDefault.osSpecific = osDefault.hasDefault !== globalDefault.hasDefault
           || (osDefault.hasDefault && osDefault.value !== globalDefault.value);
@@ -497,28 +498,35 @@ if (options.dockerOnly) {
       || left.architecture.localeCompare(right.architecture)
     ));
 
+    const osDefaults = defaults ? defaultsByOs(defaults, supported.operating_systems) : {};
+    for (const os of defaults ? operatingSystems : []) {
+      const source = operatingSystems.find(candidate => candidate.id === os.aliasOf);
+      os.defaultsKey = Object.hasOwn(osDefaults, os.family) ? os.family : (source?.family || os.family);
+    }
     const values = {};
     if (defaults) {
       for (const os of operatingSystems) {
-        const effective = defaults.effective_defaults[os.aliasOf || os.id] || {};
-        values[os.id] = {};
+        const effective = osDefaults[os.defaultsKey] || {};
+        if (Object.hasOwn(values, os.defaultsKey)) continue;
+        values[os.defaultsKey] = {};
         for (const key of requestedKeys) {
           const setting = effective[key];
           if (!setting || !setting.has_default) continue;
           const value = setting.resolved_value ?? setting.value;
-          if (value !== null && value !== undefined) values[os.id][key] = value;
+          if (value !== null && value !== undefined) values[os.defaultsKey][key] = value;
         }
       }
       for (const os of operatingSystems) {
         for (const key of requiredValueKeys) {
-          if (!(key in values[os.id])) throw new Error(`Missing required default ${key} for ${product.metadataProduct}/${version}/${os.id}`);
+          if (!(key in values[os.defaultsKey])) throw new Error(`Missing required default ${key} for ${product.metadataProduct}/${version}/${os.id}`);
         }
       }
     }
 
     if (product.metadataProduct === 'kv' && compareSemver(version, '3.4.0') >= 0) {
       if (!defaults) throw new Error(`Configuration reference requires defaults metadata for ${product.metadataProduct}/${version}`);
-      writeConfigurationReferenceData(version, configurationReference(product, version, defaults, operatingSystems));
+      writeConfigurationReferenceData(version, configurationReference(product, version,
+        { ...defaults, effective_defaults: osDefaults }, operatingSystems));
     }
 
     const normalizedDownloads = {};

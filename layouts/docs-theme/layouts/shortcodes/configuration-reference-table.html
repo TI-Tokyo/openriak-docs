@@ -68,7 +68,7 @@
       <tbody>
         {{- range $setting := sort $matches "name" "asc" -}}
           {{- $clientDefaults = merge $clientDefaults (dict $setting.name $setting.defaults) -}}
-          {{- $default := index $setting.defaults $defaultOs | default dict -}}
+          {{- $default := index $setting.defaults ($selectedOperatingSystem.defaultsKey | default $defaultOs) | default dict -}}
           <tr data-configuration-key="{{ $setting.name }}">
             <td class="configuration-reference-name">
               <div class="configuration-copyable">

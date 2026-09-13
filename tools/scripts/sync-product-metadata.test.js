@@ -111,7 +111,11 @@ for (const product of productCases) {
         assert.equal(os.logo, alias.logo);
         assert.doesNotMatch(`${os.name} ${os.displayName}`, /Red Hat|RHEL/i);
         assert.deepEqual(adapter.downloads[os.id], adapter.downloads[rhel.id]);
-        if (modernKv) assert.deepEqual(adapter.values[os.id], adapter.values[rhel.id]);
+        if (modernKv) {
+          assert.equal(os.defaultsKey, rhel.defaultsKey);
+          assert.ok(adapter.values[os.defaultsKey]);
+          assert.deepEqual(adapter.values[os.defaultsKey], adapter.values[rhel.defaultsKey]);
+        }
         if (modernKv && alias.family === 'fedora') {
           const release = { 8: '29', 9: '43' }[rhel.version];
           assert.ok(release);

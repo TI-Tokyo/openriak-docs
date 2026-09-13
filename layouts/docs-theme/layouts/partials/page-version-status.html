@@ -7,17 +7,17 @@
 {{- if and (ne $contentPath $context.id) (ne $contentPath $versionRoot) -}}
   {{- $pageKey = strings.TrimPrefix $prefix $contentPath -}}
 {{- end -}}
-{{- $entry := dict -}}
-{{- if eq $pageKey "downloads" -}}
-  {{- $entry = dict "status" "updated" "since" $context.version -}}
-{{- else -}}
-  {{- $entry = index $versionData $pageKey -}}
-  {{- if not $entry -}}
-    {{- if hugo.IsServer -}}
-      {{- $entry = dict "status" "new" "since" $context.version -}}
-    {{- else -}}
-      {{- errorf "missing page provenance for product=%s version=%s page=%s" $context.id $context.version $pageKey -}}
-    {{- end -}}
+{{- $entry := index $versionData $pageKey -}}
+{{- if not $entry -}}
+  {{- if hugo.IsServer -}}
+    {{- $entry = dict "status" "new" "since" $context.version -}}
+  {{- else -}}
+    {{- errorf "missing page provenance for product=%s version=%s page=%s" $context.id $context.version $pageKey -}}
   {{- end -}}
+{{- end -}}
+{{- if in (slice "downloads" "downloads/for-docker") $pageKey -}}
+  {{/* Changed Markdown is new; unchanged Markdown still lists downloads updated for this release. */}}
+  {{- $status := cond (eq $entry.status "inherited") "updated" "new" -}}
+  {{- $entry = dict "status" $status "since" $context.version -}}
 {{- end -}}
 {{- return $entry -}}

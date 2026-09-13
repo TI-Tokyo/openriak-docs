@@ -39,8 +39,14 @@ def extract_defaults(product: dict, version: str, targets: list[dict], root: Rep
     release_vars, release_sources = discover_release_vars(root.path)
     package_vars, package_sources = discover_package_vars(root.path, warnings)
     effective_defaults: dict[str, dict] = {}
+    os_packages: dict[str, str] = {}
     for target in targets:
         package_family = _package_family(target)
+        family = target["family"]
+        if family in os_packages and os_packages[family] != package_family:
+            raise ValueError(f"Conflicting package families for OS {family}")
+        os_packages[family] = package_family
+    for family, package_family in sorted(os_packages.items()):
         context = dict(release_vars)
         context.update(package_vars.get(package_family, {}))
         target_defaults = {}
@@ -48,7 +54,7 @@ def extract_defaults(product: dict, version: str, targets: list[dict], root: Rep
             target_defaults[key] = calculate_default(key, setting, context, release_vars,
                                                      package_vars.get(package_family, {}),
                                                      release_sources, package_sources.get(package_family, []), settings)
-        effective_defaults[target["id"]] = target_defaults
+        effective_defaults[family] = target_defaults
     status = "partial" if warnings or not ordered_schemas else "complete"
     if not ordered_schemas:
         warnings.append("No Cuttlefish schemas were found in the resolved Erlang repositories.")
@@ -57,7 +63,7 @@ def extract_defaults(product: dict, version: str, targets: list[dict], root: Rep
         setting.pop("raw_default", None)
         setting.pop("has_default", None)
     return {
-        "schema_version": 1, "product": "kv", "product_name": product["display_name"], "version": version,
+        "schema_version": 2, "defaults_scope": "os", "product": "kv", "product_name": product["display_name"], "version": version,
         "status": status,
         "source": {"repository": product["source_repository"], "ref": product["tag_template"].format(version=version),
                    "commit": root.commit},

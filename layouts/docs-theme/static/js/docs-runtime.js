@@ -63,7 +63,8 @@
   };
 
   const resolveValue = (versionData, osId, key) => {
-    const osValues = versionData.values?.[osId] || {};
+    const os = versionData.operatingSystems?.find(candidate => candidate.id === osId);
+    const osValues = versionData.values?.[os?.defaultsKey || osId] || {};
     if (Object.prototype.hasOwnProperty.call(osValues, key)) return osValues[key];
     const commonValues = versionData.values?.common || {};
     if (Object.prototype.hasOwnProperty.call(commonValues, key)) return commonValues[key];
@@ -299,7 +300,7 @@
       if (!reference.configurationDefaults) return;
       reference.querySelectorAll('[data-configuration-key]').forEach((row) => {
         const defaults = reference.configurationDefaults[row.dataset.configurationKey] || {};
-        const selectedDefault = configurationDefaultForOs(defaults, selectedOs.id);
+        const selectedDefault = configurationDefaultForOs(defaults, selectedOs.defaultsKey || selectedOs.id);
         const value = row.querySelector('[data-configuration-default-value]');
         const empty = row.querySelector('[data-configuration-default-empty]');
         const copy = row.querySelector('[data-configuration-default-copy]');

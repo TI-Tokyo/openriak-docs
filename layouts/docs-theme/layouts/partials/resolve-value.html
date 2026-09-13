@@ -12,13 +12,14 @@
 {{- end -}}
 {{- $os := .os | default $config.defaultOs -}}
 {{- $validOs := false -}}
-{{- range $config.operatingSystems }}{{ if eq .id $os }}{{ $validOs = true }}{{ end }}{{ end -}}
+{{- $defaultsKey := $os -}}
+{{- range $config.operatingSystems }}{{ if eq .id $os }}{{ $validOs = true }}{{ $defaultsKey = .defaultsKey | default .id }}{{ end }}{{ end -}}
 {{- if not $validOs -}}
   {{- errorf "load-value has invalid OS: product=%s version=%s os=%s page=%s" $product $version $os $page.File.Path -}}
 {{- end -}}
 {{- $value := "" -}}
 {{- $found := false -}}
-{{- with index $config.values $os -}}
+{{- with index $config.values $defaultsKey -}}
   {{- if isset . $key }}{{ $value = index . $key }}{{ $found = true }}{{ end -}}
 {{- end -}}
 {{- if and (not $found) $config.values.common -}}

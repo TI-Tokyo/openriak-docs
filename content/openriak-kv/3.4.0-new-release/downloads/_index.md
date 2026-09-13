@@ -4,6 +4,7 @@ linkTitle: 'Downloads'
 description: 'List supported OpenRiak KV packages, checksums, repositories, and source archives by platform and version.'
 weight: -10
 layout: 'downloads'
+hide_reading_time: true
 diataxis: 'reference'
 product: 'OpenRiak KV'
 product_version: '3.4.0'
@@ -28,9 +29,10 @@ review_scope: 'editorial-and-site-integration'
 
 Pick the OS release you intend to run OpenRiak KV {{< current-version >}} on. The documentation will also update to show any configuration values specific to that OS release.
 
+For Docker images and Compose files, see [For Docker](for-docker/).
+
 {{< download-os-picker >}}
 {{< package-downloads >}}
-{{< docker-downloads >}}
 
 {{< collapsable-section title="Source code" level="2">}}
 
@@ -48,15 +50,4 @@ Each major release has an associated branch which represents current development
 {{< collapsable-section title="All Packages" level="2" id="all-downloads" >}}
 Download the package to install OpenRiak KV {{< current-version >}} on any supported OS.
 {{< all-package-downloads >}}
-{{< /collapsable-section >}}
-
-{{< collapsable-section title="All Docker Files" level="2" id="all-docker-files" >}}
-OpenRiak KV {{< current-version >}} can run in Docker for testing and development purposes.
-
-For each supported OS, you can download:
-- A Dockerfile to build the base image. This can be customised for your own custom images.
-- A Docker Compose file to run a single-node cluster. This is great for local development and testing.
-- A Docker Compose file to run a 5-node cluster, which is useful for integration and failover tests.
-- An example .env file showing what settings can be changed easily.
-{{< all-docker-downloads >}}
 {{< /collapsable-section >}}

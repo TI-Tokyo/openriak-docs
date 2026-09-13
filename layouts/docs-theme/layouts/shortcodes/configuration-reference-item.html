@@ -19,7 +19,7 @@
 {{- $defaultOs := $versionData.defaultOs -}}
 {{- $selectedOperatingSystems := where $versionData.operatingSystems "id" $defaultOs -}}
 {{- $selectedOperatingSystem := index $selectedOperatingSystems 0 -}}
-{{- $default := index $setting.defaults $defaultOs | default dict -}}
+{{- $default := index $setting.defaults ($selectedOperatingSystem.defaultsKey | default $defaultOs) | default dict -}}
 {{- $applicationName := $setting.internalName | default $setting.name -}}
 <div class="configuration-reference-item-wrap" data-configuration-reference>
   <div class="configuration-reference-item-scroll">
