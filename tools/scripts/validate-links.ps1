@@ -1,8 +1,28 @@
+<#
+.SYNOPSIS
+Validate local links in a generated documentation site.
+.DESCRIPTION
+Checks HTML href/src targets against published files, excluding external URLs and fragments. Reports missing targets and exits nonzero on failure.
+.PARAMETER BuildDirectory
+Built site directory, relative to the repository unless absolute (default: public).
+.PARAMETER ReportPath
+Optional path for the missing-link JSON report; relative to the current directory (default: no JSON report).
+.PARAMETER BasePath
+Published URL prefix removed before resolving local targets (default: /docs/).
+.PARAMETER Help
+Show complete usage and exit before checking dependencies or changing files. Aliases: -h and --help.
+.EXAMPLE
+./validate-links.ps1 -Help
+#>
 param(
+    [Alias('h', '-help')]
+    [switch] $Help,
     [string] $BuildDirectory = 'public',
     [string] $ReportPath = '',
     [string] $BasePath = '/docs/'
 )
+
+if ($Help) { Get-Help $PSCommandPath -Detailed; return }
 
 $ErrorActionPreference = 'Stop'
 $siteRoot = Split-Path -Parent (Split-Path -Parent $PSScriptRoot)

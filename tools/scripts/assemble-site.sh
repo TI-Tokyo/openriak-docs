@@ -1,6 +1,28 @@
 #!/usr/bin/env sh
 set -eu
 
+for argument in "$@"; do
+  case "$argument" in -h|--help)
+    cat <<'OPENRIAK_HELP'
+Validate and merge the core and archive Hugo outputs into one static site.
+Archives may own only archived-technical-blog/ and archived-mailing-list/;
+paths must not overlap with core. Replaces DESTINATION after validation.
+
+Usage: assemble-site.sh CORE_OUTPUT ARCHIVE_OUTPUT DESTINATION
+
+Arguments:
+  CORE_OUTPUT       Existing core build directory (required).
+  ARCHIVE_OUTPUT    Existing archive build directory (required).
+  DESTINATION       Directory to replace with the assembled site (required).
+  -h, --help        Show help and exit without validating or changing files.
+
+Relative paths use the current directory.
+OPENRIAK_HELP
+    exit 0
+    ;;
+  esac
+done
+
 core=${1:-}
 archives=${2:-}
 destination=${3:-}

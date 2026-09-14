@@ -547,8 +547,8 @@ def main():
     project = Path(__file__).resolve().parents[2]
     default_source = project.parent / "riak-docs-fork" / "external-data" / "mailing-list" / "riak-users@lists.basho.com"
     parser = argparse.ArgumentParser(description=__doc__)
-    parser.add_argument("--source", type=Path, default=default_source)
-    parser.add_argument("--destination", type=Path, default=project / "content" / "archive-mailing-list")
+    parser.add_argument("--source", type=Path, default=default_source, help="Directory containing scraped mailing-list threads (default: %(default)s)")
+    parser.add_argument("--destination", type=Path, default=project / "content" / "archive-mailing-list", help="Hugo archive content directory to regenerate (default: %(default)s)")
     args = parser.parse_args()
     if not args.source.is_dir():
         parser.error(f"source directory does not exist: {args.source}")

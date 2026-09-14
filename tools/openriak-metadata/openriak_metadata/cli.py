@@ -38,7 +38,7 @@ def build_parser() -> argparse.ArgumentParser:
         ("defaults", "Generate configuration-default metadata"),
     ):
         command = subcommands.add_parser(name, help=description, description=description)
-        command.add_argument("--product", choices=sorted(PRODUCTS), required=True)
+        command.add_argument("--product", choices=sorted(PRODUCTS), required=True, help="Product whose release metadata to generate: kv, cs or ts")
         command.add_argument("--version", action="append", dest="versions", required=True, metavar="VERSION",
                              help="Exact release version (repeatable)")
         destination = command.add_mutually_exclusive_group(required=True)
@@ -47,13 +47,13 @@ def build_parser() -> argparse.ArgumentParser:
         if name == "packages":
             destination.add_argument("--update-repo", nargs="?", const=REPOSITORY_ROOT, type=Path,
                                      metavar="PATH", help="Stage and validate every version, then update repository package metadata (default: this checkout)")
-        command.add_argument("--cache-dir", type=Path)
-        command.add_argument("--refresh", action="store_true")
+        command.add_argument("--cache-dir", type=Path, help="HTTP and source cache directory (default: $XDG_CACHE_HOME/openriak-metadata or ~/.cache/openriak-metadata)")
+        command.add_argument("--refresh", action="store_true", help="Refresh cached HTTP responses and source repositories before generation")
         command.add_argument("--checksum-workers", type=int, default=4,
                              help="number of package downloads hashed concurrently (default: 4)")
-        command.add_argument("--strict", action="store_true")
-        command.add_argument("--keep-workdir", action="store_true")
-        command.add_argument("--log-level", choices=("debug", "info", "warning", "error"), default="info")
+        command.add_argument("--strict", action="store_true", help="Exit nonzero if release metadata is incomplete; always enabled by --update-repo")
+        command.add_argument("--keep-workdir", action="store_true", help="Retain temporary source working directories for inspection after defaults extraction")
+        command.add_argument("--log-level", choices=("debug", "info", "warning", "error"), default="info", help="Diagnostic verbosity (default: %(default)s)")
         if name == "generate":
             command.add_argument(
                 "--skip-defaults",

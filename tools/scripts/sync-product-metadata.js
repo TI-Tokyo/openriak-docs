@@ -1,5 +1,25 @@
 'use strict';
 
+if (require.main === module && process.argv.slice(2).some((arg) => arg === '-h' || arg === '--help')) {
+  console.log(`Generate Hugo product data and synchronize validated Docker download metadata.
+Reads release metadata and local Docker records, then updates generated files.
+
+Usage: node sync-product-metadata.js [OPTIONS]
+
+Options:
+  --docker-only                Update Docker image data without regenerating other product data.
+  --output-root PATH           Generated product-data root (default: tools/generated/).
+  --include-version SOURCE=VERSION
+                               Restrict a source to exact versions; repeatable.
+  --include-latest SOURCE      Restrict a source to its latest release; repeatable.
+                               Sources are content directory names, e.g. riak-kv.
+                               Unselected sources retain all discovered versions.
+  -h, --help                  Show help and exit without synchronizing files.
+
+Default paths are relative to the repository; explicit paths use the current directory.`);
+  process.exit(0);
+}
+
 const crypto = require('node:crypto');
 const fs = require('node:fs');
 const path = require('node:path');

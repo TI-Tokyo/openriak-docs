@@ -1,5 +1,21 @@
 'use strict';
 
+if (require.main === module && process.argv.slice(2).some((arg) => arg === '-h' || arg === '--help')) {
+  console.log(`Keep a preview's Docker downloads and CVE metadata synchronized with generated data.
+Synchronizes immediately, then polls every second until interrupted. Updates only
+Docker entries in the preview's existing version JSON files.
+
+Usage: node watch-docker-metadata.js PREVIEW_VERSION_DIRECTORY
+
+Arguments:
+  PREVIEW_VERSION_DIRECTORY   Existing preview directory containing version JSON files.
+                             Relative paths use the current directory.
+  -h, --help                 Show help and exit without synchronizing or watching.
+
+Source: repository tools/generated/openriak-kv/data/versions/.`);
+  process.exit(0);
+}
+
 const fs = require('node:fs');
 const path = require('node:path');
 const { cveStamp, enrichImages } = require('./docker-cve-metadata');

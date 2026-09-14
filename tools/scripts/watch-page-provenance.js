@@ -1,5 +1,21 @@
 'use strict';
 
+if (require.main === module && process.argv.slice(2).some((arg) => arg === '-h' || arg === '--help')) {
+  console.log(`Watch Markdown content and regenerate page provenance after changes.
+Runs continuously until interrupted; writes generated provenance when content changes.
+
+Usage: node watch-page-provenance.js [OPTIONS]
+
+Options:
+  --content-root PATH          Tree to watch (default: repository content/).
+  --page-provenance-root PATH  Output directory (default: tools/generated/page-provenance/).
+  --debounce-ms NUMBER         Non-negative delay to combine changes (default: 180 milliseconds).
+  -h, --help                  Show help and exit without starting a watcher.
+
+Default paths are relative to the repository; explicit paths use the current directory.`);
+  process.exit(0);
+}
+
 const fs = require('node:fs');
 const path = require('node:path');
 const { generatePageProvenance, productSources } = require('./generate-version-mounts.js');

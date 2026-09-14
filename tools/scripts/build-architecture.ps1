@@ -1,3 +1,20 @@
+<#
+.SYNOPSIS
+Build and validate the split core/archive site architecture.
+.DESCRIPTION
+Generates metadata, builds Hugo with Docker, checks archive assembly and deliberate failure fixtures, then runs architecture tests. Uses build/.architecture-validation for temporary output and removes it after successful validation. Requires Node.js and Docker.
+.PARAMETER Help
+Show complete usage and exit before checking dependencies or changing files. Aliases: -h and --help.
+.EXAMPLE
+./build-architecture.ps1 -Help
+#>
+param(
+    [Alias('h', '-help')]
+    [switch] $Help
+)
+
+if ($Help) { Get-Help $PSCommandPath -Detailed; return }
+
 $ErrorActionPreference = 'Stop'
 $repositoryRoot = Split-Path -Parent (Split-Path -Parent $PSScriptRoot)
 $image = 'ghcr.io/gohugoio/hugo:v0.165.0'

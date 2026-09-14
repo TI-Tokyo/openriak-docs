@@ -1,4 +1,26 @@
+<#
+.SYNOPSIS
+Build and assemble the OpenRiak documentation site.
+.DESCRIPTION
+Generates product metadata, builds Hugo, and replaces the destination. Release includes archives; development limits historical versions; beta-test builds all core versions without archives.
+.PARAMETER Profile
+development, beta-test or release (default: release).
+.PARAMETER IncludeDrafts
+Include draft pages (default: $true).
+.PARAMETER Destination
+Assembled output, relative to the repository unless absolute (default: public). Existing output is replaced.
+.PARAMETER BaseURL
+Published base URL (default: https://www.openriak.org/docs/).
+.PARAMETER RiakKVVersion
+Riak KV release included in development builds (default: 3.2.5).
+.PARAMETER Help
+Show complete usage and exit before checking dependencies or changing files. Aliases: -h and --help.
+.EXAMPLE
+./build.ps1 -Help
+#>
 param(
+    [Alias('h', '-help')]
+    [switch] $Help,
     [ValidateSet('development', 'beta-test', 'release')]
     [string] $Profile = 'release',
     [bool] $IncludeDrafts = $true,
@@ -6,6 +28,8 @@ param(
     [string] $BaseURL = 'https://www.openriak.org/docs/',
     [string] $RiakKVVersion = '3.2.5'
 )
+
+if ($Help) { Get-Help $PSCommandPath -Detailed; return }
 
 $ErrorActionPreference = 'Stop'
 $siteRoot = Split-Path -Parent (Split-Path -Parent $PSScriptRoot)

@@ -1,6 +1,37 @@
 #!/usr/bin/env sh
 set -eu
 
+for argument in "$@"; do
+  case "$argument" in -h|--help)
+    cat <<'OPENRIAK_HELP'
+Build one Hugo project, regenerating core metadata when building core.
+The destination is cleaned as part of the Hugo build.
+
+Usage: build-project.sh core|archives DESTINATION
+
+Arguments:
+  core|archives                 Project to build (required).
+  DESTINATION                   Build output directory (required).
+  -h, --help                    Show help and exit without checking tools or building.
+
+Environment:
+  OPENRIAK_DOCS_BUILD_PROFILE   development, beta-test or release (default: release).
+  OPENRIAK_DOCS_RIAK_KV_VERSION Development Riak KV version (default: 3.2.5).
+  HUGO_BASEURL                  Published URL (default: https://www.openriak.org/docs/).
+  INCLUDE_DRAFTS                Include draft pages when true (default: true).
+  HUGO_GENERATED_CONFIG         Generated core config (default: tools/generated/hugo.yaml;
+                                development: build/generated-development/hugo.yaml).
+  OPENRIAK_DOCS_DEVELOPMENT_DATA_ROOT
+                                Development metadata root (default: build/generated-development/).
+
+Requires the Hugo version in .hugo-version; core also requires Node.js.
+Default paths are relative to the repository.
+OPENRIAK_HELP
+    exit 0
+    ;;
+  esac
+done
+
 site_root=$(CDPATH= cd -- "$(dirname -- "$0")/../.." && pwd)
 required_version=$(tr -d '\r\n' < "$site_root/.hugo-version")
 

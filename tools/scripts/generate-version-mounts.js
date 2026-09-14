@@ -1,5 +1,32 @@
 'use strict';
 
+if (require.main === module && process.argv.slice(2).some((arg) => arg === '-h' || arg === '--help')) {
+  console.log(`Generate Hugo version mounts, latest-version redirects and page provenance.
+Writes generated files from the product release directories in the content tree.
+
+Usage: node generate-version-mounts.js [OPTIONS]
+
+Options:
+  --output PATH                 Generated Hugo config (default: tools/generated/hugo.yaml).
+  --base-config PATH            Template config (default: content/hugo.yaml).
+  --content-root PATH           Product content tree (default: content/).
+  --latest-redirect-root PATH    Redirect output (default: tools/generated/latest-redirects/).
+  --page-provenance-root PATH    Provenance output (default: tools/generated/page-provenance/).
+  --version-data-root PRODUCT=PATH
+                                Override a product's generated version-data mount; repeatable.
+                                PRODUCT is openriak-kv, openriak-cs or openriak-ts.
+                                A bare PATH overrides openriak-kv only.
+  --include-version SOURCE=VERSION
+                                Restrict a source to exact versions; repeatable.
+  --include-latest SOURCE       Restrict a source to its latest release; repeatable.
+                                Sources are content directory names, e.g. riak-kv.
+                                Unselected sources retain all discovered versions.
+  -h, --help                   Show help and exit without generating files.
+
+Default paths are relative to the repository; explicit paths use the current directory.`);
+  process.exit(0);
+}
+
 const fs = require('node:fs');
 const path = require('node:path');
 

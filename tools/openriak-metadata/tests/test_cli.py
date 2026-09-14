@@ -1,3 +1,5 @@
+import argparse
+import io
 import tempfile
 import unittest
 from pathlib import Path
@@ -7,6 +9,25 @@ from openriak_metadata.cli import build_parser, main
 
 
 class CliTests(unittest.TestCase):
+    def test_help_describes_all_options_and_exits_before_generation(self):
+        root = build_parser()
+        commands = next(a for a in root._actions if isinstance(a, argparse._SubParsersAction))
+        pages = [((), root), *(( (name,), parser) for name, parser in commands.choices.items())]
+        with patch('openriak_metadata.cli.generate_version', side_effect=AssertionError('generation started')), \
+             patch('openriak_metadata.cli.install_packages', side_effect=AssertionError('repository changed')):
+            for path, parser in pages:
+                with self.subTest(command=path), patch('sys.stdout', new=io.StringIO()) as output:
+                    self.assertTrue(parser.description)
+                    for action in parser._actions:
+                        if not isinstance(action, argparse._SubParsersAction):
+                            self.assertTrue(action.help, action.dest)
+                    with self.assertRaises(SystemExit) as exited:
+                        main([*path, '--help'])
+                    self.assertEqual(exited.exception.code, 0)
+                    for action in parser._actions:
+                        for option in action.option_strings:
+                            self.assertIn(option, output.getvalue())
+
     def test_exact_version_is_validated_by_main_contract(self):
         args = build_parser().parse_args(["generate", "--product", "kv", "--version", "1.10.0", "--output", "out"])
         self.assertEqual(args.versions, ["1.10.0"])
