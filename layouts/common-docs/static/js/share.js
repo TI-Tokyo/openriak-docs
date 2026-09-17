@@ -96,6 +96,7 @@
     }
   });
   panel.addEventListener('keydown', (event) => {
+    if (event.ctrlKey || event.metaKey || event.altKey) return;
     const items = menuItems();
     const current = items.indexOf(document.activeElement);
     let next = current;

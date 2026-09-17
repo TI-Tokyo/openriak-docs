@@ -1,0 +1,15 @@
+{{- $section := .section -}}
+{{- $pathTitles := .pathTitles | append ($section.LinkTitle | default $section.Title) -}}
+{{- $pages := slice $section -}}
+{{- range $child := $section.Pages.ByWeight -}}
+  {{- if and (ne $child.Kind "section") (ne $child.Path $.excludePath) -}}
+    {{- $pages = $pages | append $child -}}
+  {{- end -}}
+{{- end }}
+<section data-review-group>
+<h2>{{ delimit $pathTitles " / " }}</h2>
+{{ partial "for-review-table.html" $pages }}
+</section>
+{{- range $childSection := $section.Sections.ByWeight -}}
+  {{- partial "for-review-section.html" (dict "section" $childSection "pathTitles" $pathTitles "excludePath" $.excludePath) -}}
+{{- end -}}

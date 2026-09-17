@@ -525,6 +525,7 @@ window.OpenRiakPageToolsReady = (async () => {
       block.tabIndex = 0;
       button.addEventListener('click', () => chooseLanguage(group, language));
       button.addEventListener('keydown', (event) => {
+        if (event.ctrlKey || event.metaKey || event.altKey) return;
         let target;
         if (event.key === 'ArrowRight') target = (index + 1) % blocks.length;
         else if (event.key === 'ArrowLeft') target = (index + blocks.length - 1) % blocks.length;

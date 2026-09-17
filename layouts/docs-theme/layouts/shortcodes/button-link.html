@@ -1,0 +1,30 @@
+{{- $label := .Inner | strings.TrimSpace -}}
+{{- if not $label -}}
+  {{- errorf "button-link requires link text between its opening and closing tags at %s" .Position -}}
+{{- end -}}
+{{- $link := .Get "link" | default "" | strings.TrimSpace -}}
+{{- $markdown := $label -}}
+{{- with $link -}}
+  {{- if and (strings.HasPrefix . "[") (strings.HasSuffix . "]") -}}
+    {{- $markdown = printf "[%s]%s" $label . -}}
+  {{- else -}}
+    {{- $markdown = printf "[%s](%s)" $label . -}}
+  {{- end -}}
+{{- end -}}
+{{- $indent := .Get "indent" | default "0" | printf "%v" | strings.TrimSpace -}}
+{{- $padding := .Get "padding" | default "large" | printf "%v" | strings.TrimSpace -}}
+{{- $lengthPattern := `^(0|([0-9]+(\.[0-9]+)?|\.[0-9]+)(px|em|rem|ex|ch|vw|vh|vmin|vmax|cm|mm|in|pt|pc|%))$` -}}
+{{- if not (findRE $lengthPattern $indent) -}}
+  {{- errorf "button-link indent must be a non-negative CSS length (for example 1em) at %s" .Position -}}
+{{- end -}}
+{{- $sizes := dict "small" ".2rem .45rem" "medium" ".35rem .65rem" "large" ".55rem .9rem" -}}
+{{- if isset $sizes $padding -}}
+  {{- $padding = index $sizes $padding -}}
+{{- else if not (findRE $lengthPattern $padding) -}}
+  {{- errorf "button-link padding must be small, medium, large, or a non-negative CSS length (for example 3em) at %s" .Position -}}
+{{- end -}}
+<div class="page-link-container" style="{{ printf "--page-link-indent: %s; --page-link-padding: %s;" $indent $padding | safeCSS }}">
+
+{{ $markdown }}
+
+</div>

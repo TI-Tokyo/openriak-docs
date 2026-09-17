@@ -25,72 +25,59 @@ editorial_review: 'complete'
 technical_review: 'required'
 last_reviewed: '2026-08-28'
 review_scope: 'editorial-and-site-integration'
+layout: single
 ---
-
-Orient readers to OpenRiak KV and route them to learning, task, lookup, or conceptual documentation.
+[Downloads]: {{< product-version-root >}}downloads/
+[QuickStart]: {{< product-version-root >}}how-tos/quick-start/
+[QuickDocs]: https://openriak.github.io/riak/
+[SectionReference]: {{< product-version-root >}}refernce/
+[SectionTutorials]: {{< product-version-root >}}tutorials/
+[SectionHowTos]: {{< product-version-root >}}how-tos/
+[SectionFoundations]: {{< product-version-root >}}foundations/
 
 ## Overview
 
-### OpenRiak KV 3.2.5
+OpenRiak KV {{< current-version >}} is a distributed NoSQL database designed to deliver maximum data availability by distributing data across multiple servers. As long as your OpenRiak KV client can reach one Riak server, it should be able to write data.
 
-[aboutenterprise]: https://www.tiot.jp/en/about-us/contact-us/
-[config index]: {{< product-version-root >}}how-to/configure/
-[downloads]: {{< product-version-root >}}downloads/
-[install index]: {{< product-version-root >}}how-to/install/
-[plan index]: {{< product-version-root >}}how-to/plan/
-[perf open files]: {{< product-version-root >}}how-to/tune/set-open-files-limit/
-[install debian & ubuntu]: {{< product-version-root >}}how-to/install/debian-ubuntu/
-[getting started]: {{< product-version-root >}}tutorials/first-application/
-[dev client libraries]: {{< product-version-root >}}reference/client-libraries/
+### Supported Operating Systems
 
-OpenRiak KV is a distributed NoSQL database designed to deliver maximum data availability by distributing data across multiple servers. As long as your OpenRiak KV client can reach one Riak server, it should be able to write data.
+{{< download-os-picker >}}
 
-This release is tested with OTP 20, OTP 21 and OTP 22; but optimal performance is likely to be achieved when using OTP 22.
+{{% button-link link="[Downloads]" %}}Go to Downloads{{% /button-link %}}
 
-#### Supported Operating Systems
+## Quick Start
 
-- Alpine Linux 3.21
-- Amazon Linux 2023
-- CentOS 8
-- CentOS 9
-- Debian 10.0 ("Buster")
-- Debian 11.0 ("Bullseye")
-- Debian 12.0 ("Bookworm")
-- Oracle Linux 9
-- Red Hat Enterprise Linux 8
-- Red Hat Enterprise Linux 9
-- Raspbian Bullseye
-- Ubuntu 20.04.4 ("Focal Fossa")
-- Ubuntu 22.04 ("Jammy Jellyfish")
-- Ubuntu 24.04 ("Noble Numbat")
+If you're new to OpenRiak KV, start with our [Quick Start guides][QuickStart] to create your first OpenRiak KV node and cluster.
 
-#### Getting Started
+## How to use the documentation
 
-Are you brand new to OpenRiak KV? Start by [downloading][downloads] OpenRiak KV, and then follow the below pages to get started:
+The site is split into four sections:
 
-1. [Install OpenRiak KV][install index]
-2. [Plan your OpenRiak KV setup][plan index]
-3. [Configure OpenRiak KV for your needs][config index]
+### **Reference**
 
-**Developing with OpenRiak KV**
-If you are looking to integrate OpenRiak KV with your existing tools, check out the [Developing with OpenRiak KV]({{< product-version-root >}}how-to/develop/) docs. They provide instructions and examples for languages such as: Java, Ruby, Python, Go, Haskell, NodeJS, Erlang, and more.
+This contains authoritative details of the configuration options, the CLI commands, APIs, clients, and compatibility across versions. Great for finding a specific piece of information.
 
-#### Popular Docs
+{{% button-link link="[SectionReference]" padding="small" %}}Go to Reference{{% /button-link %}}
 
-1. [Open Files Limit][perf open files]
-2. [Installing on Debian-Ubuntu][install debian & ubuntu]
-3. [Developing with OpenRiak KV: Getting Started][getting started]
-4. [Developing with OpenRiak KV: Client Libraries][dev client libraries]
+### **Tutorials**
 
-### [OpenRiak QuickDocs 3.4](https://openriak.github.io/riak/)
+Guided explanations of how to install, configure, manage and maintain OpenRiak KV. Contains detailed guides for using different features of OpenRiak.
 
-#### OpenRiak QuickDocs 3.4
+{{% button-link link="[SectionTutorials]" padding="small" %}}Go to Tutorials{{% /button-link %}}
 
-This site provides overview documentation for the OpenRiak community release of Riak.
+### **How-Tos**
 
-## In this section
+Go here for in depth guides for a specific task. Great for quickly solving a problem.
 
-- [Explanation]({{< product-version-root >}}foundations/) — Route readers to concepts, architecture, rationale, trade-offs, and operational mental models.
-- [How-to guides]({{< product-version-root >}}how-to/) — Route practitioners to focused procedures for installing, configuring, operating, securing, and troubleshooting OpenRiak.
-- [Reference]({{< product-version-root >}}reference/) — Route readers to authoritative configuration, command, API, data, client, and compatibility facts.
-- [Tutorials]({{< product-version-root >}}tutorials/) — Introduce the guided learning paths and state what readers will build in each one.
+{{% button-link link="[SectionHowTos]" padding="small" %}}Go to How-Tos{{% /button-link %}}
+
+### **Foundations**
+
+Explains the concepts, architecture, rationale, and trade-offs of OpenRiak. Superb for in-depth understanding.
+
+{{% button-link link="[SectionFoundations]" padding="small" %}}Go to Foundations{{% /button-link %}}
+
+## Other Documentation
+
+- [OpenRiak QuickDocs][QuickDocs]
+

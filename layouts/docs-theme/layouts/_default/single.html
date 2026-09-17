@@ -1,6 +1,6 @@
 {{ define "main" }}
   {{ partial "breadcrumbs.html" . }}
-  <article class="doc-article">
+  <article class="doc-article{{ if .Params.recommendations }} doc-recommendations{{ end }}">
     <h1>{{ .Title }}</h1>
     {{ partial "page-summary.html" . }}
     {{ .Content }}

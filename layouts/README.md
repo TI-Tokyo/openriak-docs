@@ -8,6 +8,46 @@
 
 ## Product page features
 
+Use `button-link` for a button-shaped link to another site page:
+
+```markdown
+{{% button-link link="[Downloads]" %}}Go to Downloads{{% /button-link %}}
+
+[Downloads]: {{< product-version-root >}}downloads/
+```
+
+Use the `%` delimiters so Hugo renders the enclosed Markdown together with the
+page. The `link` parameter accepts a reference alias in brackets or a URL.
+Alternatively, omit `link` and put a complete Markdown link inside the shortcode.
+Standard inline links, full reference aliases (`[Label][Alias]`), collapsed
+references (`[Downloads][]`), and shortcut references (`[Downloads]`) all work.
+Alias definitions may appear anywhere on the page and can include shortcodes
+such as `product-version-root`. Wrap one link per shortcode. Destinations follow
+normal Markdown link rules; this shortcode does not validate target pages.
+
+The control is a normal same-tab link with a button border, a decorative
+right arrow, and a visible keyboard focus ring. It supports the light and dark
+themes and needs no JavaScript.
+
+Set `indent` to move the link in from the left, and `padding` to control the space
+inside its border. Both are optional; the defaults preserve the original appearance.
+
+```markdown
+{{% button-link link="[Downloads]" indent="1em" padding="small" %}}Go to Downloads{{% /button-link %}}
+{{% button-link link="[Downloads]" padding="3em" %}}Go to Downloads{{% /button-link %}}
+```
+
+| Option | Value | Effect |
+| --- | --- | --- |
+| `indent` | `0` (default), or a CSS length such as `1em` | Left margin around the link container. |
+| `padding` | `small` | `.2rem` vertically, `.45rem` horizontally. |
+| `padding` | `medium` | `.35rem` vertically, `.65rem` horizontally. |
+| `padding` | `large` (default) | Original `.55rem` vertically, `.9rem` horizontally. |
+| `padding` | A CSS length such as `3em` | The same padding on all four sides. |
+
+Custom values must be non-negative lengths (for example `px`, `em`, `rem`, `%`,
+or viewport units), or `0`. The link height follows its text and selected padding.
+
 Related pages use version-independent paths in front matter. Paths are resolved
 within the current product and version, and a missing target stops the build:
 
@@ -113,3 +153,29 @@ product-version landing page and **What's Changed** itself are excluded. A
 missing or blank value is displayed as “Updated content”. Set
 `hide_provenance: true` only on pages, such as **What's Changed**, that must not
 display their own provenance.
+
+The draft-only **To Do** section is the first item in the version sidebar. It
+contains **For Review** first, recommendations for the four documentation areas,
+and a **Tests** subsection. These pages live in the 3.4.0 release baseline and
+are inherited by later versions.
+
+The **To Do → For Review** page uses `{{< for-review >}}` to list all pages in
+the current product version, including section landing pages, grouped in the same
+navigation order as **What's Changed**. Its columns are **Page**, **Last Reviewed**,
+and **Status**. Status lists `draft`, `status`, `review_scope`, `editorial_review`,
+`technical_review`, and `review-by`, one property per line with human-readable labels and
+unchanged values. List values are comma-separated; missing metadata is labelled
+`Not set`, except that missing or blank `review-by` values default to `Unassigned`.
+Set `review-by: 'Name'` in a page's front matter to assign a reviewer; lists of
+reviewers also work and can be filtered individually. The report excludes itself. It is inherited by
+later versions and appears only when Hugo builds drafts (`--buildDrafts`).
+Dropdown filters match individual property values, including individual items in
+list-valued review scopes. Active filters are combined with AND. Selections are
+remembered in the browser per product, including across version changes; an
+unavailable saved value falls back to All. Empty groups are hidden, a count shows
+the matching pages, and **Reset filters** restores All. Without JavaScript, the
+complete report remains visible.
+With the draft preview running and Playwright installed, run
+`node tools/scripts/for-review.browser.test.cjs` to check filtering and persistence.
+`OPENRIAK_REVIEW_TEST_URL` and `OPENRIAK_BROWSER_EXECUTABLE` can override the
+report URL and Chromium binary.

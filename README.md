@@ -50,6 +50,12 @@ With Playwright installed and the preview running, verify this with
 `OPENRIAK_BROWSER_EXECUTABLE` and `OPENRIAK_SEARCH_TEST_BASE` select the browser
 binary and the URL of the OpenRiak KV 3.4.0 documentation root.
 
+Run `node tools/scripts/os-history.browser.test.cjs` with Playwright installed to
+verify that browser Back and Forward refresh the saved OS and architecture,
+including download panels and OS-specific values. This test starts its own local
+fixture server and enables the browser's back/forward cache. Set
+`OPENRIAK_BROWSER_EXECUTABLE` to use a specific Chromium binary.
+
 Consecutive fenced code blocks with different language labels become language
 tabs in product documentation. Text between blocks, unlabelled blocks, and
 repeated languages end a tab group. The selected language is remembered in the

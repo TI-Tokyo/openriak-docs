@@ -1,0 +1,34 @@
+{{- $context := partial "product-context.html" .Page -}}
+{{- $home := $context.versionHome -}}
+{{- $general := slice $home -}}
+{{- range $candidate := $home.Pages.ByWeight -}}
+  {{- if and (ne $candidate.Kind "section") (ne $candidate.Path $.Page.Path) -}}
+    {{- $general = $general | append $candidate -}}
+  {{- end -}}
+{{- end }}
+<div data-for-review data-review-product="{{ $context.id }}">
+  <fieldset class="for-review-filters" data-review-filters hidden>
+    <legend>Filter pages</legend>
+    <div class="for-review-filter-controls">
+      {{- range slice
+        (dict "key" "draft" "label" "Draft")
+        (dict "key" "status" "label" "Status")
+        (dict "key" "review_scope" "label" "Review scope")
+        (dict "key" "editorial_review" "label" "Editorial review")
+        (dict "key" "technical_review" "label" "Technical review")
+        (dict "key" "review-by" "label" "Review by") }}
+        <label>{{ .label }}<select data-review-filter="{{ .key }}"><option value="">All</option></select></label>
+      {{- end }}
+      <button type="button" data-review-reset>Reset filters</button>
+    </div>
+    <p class="for-review-count" data-review-count role="status" aria-live="polite"></p>
+  </fieldset>
+  <p data-review-empty hidden>No pages match these filters.</p>
+<section data-review-group>
+<h2>General</h2>
+{{ partial "for-review-table.html" $general }}
+</section>
+{{- range $section := $home.Sections.ByWeight -}}
+  {{- partial "for-review-section.html" (dict "section" $section "pathTitles" (slice) "excludePath" $.Page.Path) -}}
+{{- end -}}
+</div>

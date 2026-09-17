@@ -4,7 +4,7 @@ description: 'Shows all configuration options.'
 weight: 1000
 diataxis: 'reference'
 product: 'OpenRiak KV'
-product_version: '3.4.1'
+product_version: '3.4.0'
 status: 'test-page'
 draft: true
 audience:
@@ -27,6 +27,5 @@ related:
 ## All config values
 
 {{< configuration-reference-table />}}
-
 
 

@@ -283,12 +283,15 @@
   const storageKey = `openriak-docs-os:${context.product.id}`;
   const architectureStorageKey = `openriak-docs-architectures:${context.product.id}`;
   let architecturePreferences = {};
-  try {
-    const saved = JSON.parse(window.localStorage.getItem(architectureStorageKey) || '{}');
-    if (saved && typeof saved === 'object' && !Array.isArray(saved)) {
-      architecturePreferences = Object.fromEntries(Object.entries(saved).filter(([, value]) => typeof value === 'string'));
-    }
-  } catch { /* Ignore an invalid saved preference map. */ }
+  const readArchitecturePreferences = () => {
+    architecturePreferences = {};
+    try {
+      const saved = JSON.parse(window.localStorage.getItem(architectureStorageKey) || '{}');
+      if (saved && typeof saved === 'object' && !Array.isArray(saved)) {
+        architecturePreferences = Object.fromEntries(Object.entries(saved).filter(([, value]) => typeof value === 'string'));
+      }
+    } catch { /* Ignore an invalid saved preference map. */ }
+  };
   let selectedOs;
 
   const osById = (versionData, id) => versionData.operatingSystems.find((os) => os.id === id);
@@ -717,6 +720,7 @@
       panel.querySelector('.os-option.is-active, .os-option')?.focus();
     });
     panel.addEventListener('keydown', (event) => {
+      if (event.ctrlKey || event.metaKey || event.altKey) return;
       const options = [...panel.querySelectorAll('.os-option')];
       const current = options.indexOf(document.activeElement);
       let next = current;
@@ -980,10 +984,18 @@
 
   setupOsPicker();
   setupConfigurationReferenceTables();
+  readArchitecturePreferences();
   selectedOs = initialOs();
   renderVersionPicker();
   setupVersionWarning();
   if (selectedOs) setOs(selectedOs, new URLSearchParams(window.location.search).has('os'));
   setupDownloadControls();
   setupSearch();
+  window.addEventListener('pageshow', (event) => {
+    // Back/forward cache restores the DOM and closures without rerunning initialization.
+    if (!event.persisted) return;
+    readArchitecturePreferences();
+    const os = initialOs();
+    if (os) setOs(os);
+  });
 })().catch(error => console.error('Documentation controls could not be initialized', error));

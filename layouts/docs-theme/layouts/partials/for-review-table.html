@@ -1,0 +1,49 @@
+<div class="whats-changed-scroll">
+  <table class="whats-changed-table for-review-table">
+    <thead><tr><th scope="col">Page</th><th scope="col">Last Reviewed</th><th scope="col">Status</th></tr></thead>
+    <tbody>
+      {{- range $page := . }}
+        {{- $filters := dict "draft" (slice (printf "%t" .Draft)) -}}
+        {{- range $key := slice "status" "review_scope" "editorial_review" "technical_review" "review-by" -}}
+          {{- $values := slice -}}
+          {{- if isset $page.Params $key -}}
+            {{- $raw := index $page.Params $key -}}
+            {{- $items := slice $raw -}}
+            {{- if reflect.IsSlice $raw }}{{ $items = $raw }}{{ end -}}
+            {{- range $items -}}
+              {{- if or (ne $key "review-by") (and . (strings.TrimSpace (printf "%v" .))) -}}
+                {{- $values = $values | append (printf "%v" .) -}}
+              {{- end -}}
+            {{- end -}}
+          {{- end -}}
+          {{- if and (eq $key "review-by") (not $values) }}{{ $values = slice "Unassigned" }}{{ end -}}
+          {{- $filters = merge $filters (dict $key $values) -}}
+        {{- end -}}
+        <tr data-review-values="{{ $filters | jsonify }}">
+          <td class="whats-changed-page">
+            <a href="{{ .RelPermalink }}">{{ .LinkTitle | default .Title }}</a>
+          </td>
+          <td class="for-review-date">
+            {{- with .Params.last_reviewed }}<time datetime="{{ time.Format "2006-01-02" . }}">{{ time.Format "2006-01-02" . }}</time>
+            {{- else }}Not set{{ end -}}
+          </td>
+          <td><dl class="for-review-status">
+            <div><dt>Draft:</dt> <dd>{{ .Draft }}</dd></div>
+            {{- range $field := slice
+              (dict "key" "status" "label" "Status")
+              (dict "key" "review_scope" "label" "Review scope")
+              (dict "key" "editorial_review" "label" "Editorial review")
+              (dict "key" "technical_review" "label" "Technical review")
+              (dict "key" "review-by" "label" "Review by") -}}
+              {{- $value := "Not set" -}}
+              {{- if isset $page.Params $field.key }}{{ $value = index $page.Params $field.key }}{{ end -}}
+              {{- if eq $field.key "review-by" }}{{ $value = index $filters "review-by" }}{{ end -}}
+              {{- if reflect.IsSlice $value }}{{ $value = delimit $value ", " }}{{ end }}
+              <div><dt>{{ $field.label }}:</dt> <dd>{{ $value }}</dd></div>
+            {{- end }}
+          </dl></td>
+        </tr>
+      {{- end }}
+    </tbody>
+  </table>
+</div>

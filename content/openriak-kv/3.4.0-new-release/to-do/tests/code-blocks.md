@@ -4,7 +4,7 @@ description: 'Test how code blocks get displayed.'
 weight: 998
 diataxis: 'reference'
 product: 'OpenRiak KV'
-product_version: '3.4.1'
+product_version: '3.4.0'
 status: 'test-page'
 draft: true
 audience:

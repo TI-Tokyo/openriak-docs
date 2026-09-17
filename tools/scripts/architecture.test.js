@@ -55,7 +55,7 @@ const whatsChangedTableSource = fs.readFileSync(path.join(themeRoot, 'layouts', 
 const whatsChangedSectionSource = fs.readFileSync(path.join(themeRoot, 'layouts', 'partials', 'whats-changed-section.html'), 'utf8');
 const whatsChanged340Source = fs.readFileSync(path.join(repositoryRoot, 'content', 'openriak-kv', '3.4.0-new-release', 'whats-changed.md'), 'utf8');
 const whatsChanged341Source = fs.readFileSync(path.join(repositoryRoot, 'content', 'openriak-kv', '3.4.1', 'whats-changed.md'), 'utf8');
-const configurationReferenceTestPageSource = fs.readFileSync(path.join(repositoryRoot, 'content', 'openriak-kv', '3.4.1', 'configuration-reference-table-test.md'), 'utf8');
+const configurationReferenceTestPageSource = fs.readFileSync(path.join(repositoryRoot, 'content', 'openriak-kv', '3.4.0-new-release', 'to-do', 'tests', 'configuration-reference-table-test.md'), 'utf8');
 const previousVersionPartialSource = fs.readFileSync(path.join(themeRoot, 'layouts', 'partials', 'previous-version.html'), 'utf8');
 const docsSidebarTreeSource = fs.readFileSync(path.join(themeRoot, 'layouts', 'partials', 'docs-sidebar-tree.html'), 'utf8');
 const menuNavTreeSource = fs.readFileSync(path.join(themeRoot, 'layouts', 'partials', 'menu-nav-tree.html'), 'utf8');
@@ -143,7 +143,7 @@ assert.match(previousVersionPartialSource, /index hugo\.Data\.versions \$product
 assert.match(previousVersionPartialSource, /previous-version has no previous release: product=%s version=%s page=%s/, 'previous-version must stop the build when no earlier release exists');
 assert.match(baseSource, /js\/theme\.js[^"\n]+\?v=/, 'theme picker script must be cache-busted');
 assert.match(baseSource, /js\/metadata\.js[\s\S]*js\/docs-runtime\.js[^"\n]+\?v=20260907-shared-metadata/, 'shared metadata must load before the documentation runtime with its current cache key');
-assert.match(headSource, /css\/docs\.css[^"\n]+\?v=20260907-cve-column/, 'documentation styling must use its current cache key');
+assert.match(headSource, /css\/docs\.css[^"\n]+\?v=20260917-recommendations/, 'documentation styling must use its current cache key');
 assert.match(configurationReferenceShortcodeSource, /strings\.Split \.Inner "\\n"/, 'configuration reference filters must be one regex per body line so commas remain part of the regex');
 assert.match(configurationReferenceShortcodeSource, /\.Get "area"[\s\S]*in \$setting\.areas \$area/, 'configuration references must support repository-area filtering');
 assert.match(configurationReferenceShortcodeSource, /data-configuration-default-copy[\s\S]*data-configuration-os-icon/, 'configuration references must render copyable defaults and OS-specific indicators');
@@ -378,7 +378,7 @@ assert.match(sidebarSearchPartialSource, /aria-keyshortcuts="\/ Control\+K Meta\
 assert.match(mailingListSearchPartialSource, /aria-keyshortcuts="\/ Control\+K Meta\+K"[\s\S]*<kbd class="search-shortcut" aria-hidden="true">\/<\/kbd>/, 'mailing-list search must use the shared keyboard shortcut presentation');
 assert.match(shellSource, /isTyping[\s\S]*slashShortcut[\s\S]*commandShortcut[\s\S]*setNav\(true\)[\s\S]*setSidebarCollapsed\(false\)[\s\S]*searchInput\.focus\(\)/, 'slash and Ctrl/Cmd+K must reveal and focus Search without intercepting text entry');
 assert.match(sharedSidebarCss, /\.search-shortcut \{[^}]*pointer-events: none/, 'the visible search shortcut hint must not obstruct the input');
-assert.match(baseSource, /js\/docs-shell\.js[^"\n]+\?v=20260903-search-hotkey/, 'documentation pages must load the cache-busted search shortcut runtime');
+assert.match(baseSource, /js\/docs-shell\.js[^"\n]+\?v=20260917-page-home-end/, 'documentation pages must load the cache-busted search and page navigation runtime');
 assert.match(sharedSearchSource, /aria-busy[\s\S]*Searching…/, 'shared search must expose its loading state');
 assert.match(sharedSearchSource, /search result\$\{pages\.length === 1 \? '' : 's'\} found/, 'shared search must announce result counts');
 assert.match(downloadTableSource, /<caption class="sr-only">[\s\S]*<th scope="col">OTP<\/th>/, 'download tables must have an accessible caption and scoped column headers');

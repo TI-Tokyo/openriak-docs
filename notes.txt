@@ -1,0 +1,83 @@
+OpenRiak KV Version 3.4.0 root at /docs/kv/3.4.0/
+
+- About                     # Key features of this version, supported OSs, short explanation of OpenRiak
+  - Release Notes           # Detailed list of changes from this version to previous version, links to earlier release notes
+- Quick Start               # Get a dev node up as quickly as possible
+  - AWS                     # Dev node on AWS
+  - Azure                   # Dev node on Azure
+  - Docker                  # Dev node using Docker
+  - Ubuntu                  # Dev node on Ubuntu
+  - Rocky Linux             # Dev node on Rocky Linux
+  - Vagrant                 # Dev node on Vagrant
+  - Windows HyperV          # Dev node on Windows HyperVisor
+- Setup                     # Create a new cluster intended for actual use
+  - Production Checklist    # Checklist with links to each item's page
+  - Plan                    # What decisions to make and how to make them
+  - Install                 # Links to specific guides for each supported OS
+    - Ubuntu                # Download and run commands to install on Ubuntu latest at time of publishing
+    - ...etc
+  - Verify                  # How to verify that OpenRiak is installed and your config is syntactically correct
+- Configure                 # Before starting Riak - Overview of configuration options and where they are set
+  - Reference               # Master table of all reference options with descriptions from schema files and links to relevant guides with inline search
+  - ------
+  - Basic                   # Node name, ring size, default bucket properties, tuning, etc...
+  - Networking              # Listeners, TCP/IP options, SSL, load balancers
+  - Backends                # Backend options and how to choose one (pointing at Leveled for most cases)
+    - Bitcask               # Guide to configure Bitcask, including a reference at top of configuration options for this backend
+    - LevelDB               # Guide to configure LevelDB, including a reference at top of configuration options for this backend
+    - Leveled               # Guide to configure Leveled, including a reference at top of configuration options for this backend
+    - Memory                # Guide to configure Memory, including a reference at top of configuration options for this backend
+    - MultiBackend          # Guide to configure MultiBackend, including a reference at top of configuration options for this backend
+  - Replication             # Explanation of TicTac AAE replication
+    - Queues                # What queues are, how to configure them, how to check them
+    - Real-time             # How to setup each node as a Real-time source
+    - FullSync              # How to setup each node as a FullSync source in either uni- or bi-directional modes
+    - Sink                  # How to setup each sink node to fetch objects in the queues on source nodes
+  - Logging                 # Setup logging options
+- Secure                    # Provides a checklist of areas to secure an OpenRiak node and cluster
+  - Basics                  # Things you should always do with links to each relevant configuration options
+  - Networking              # Things you should do for specific network environments with links to each relevant configuration options
+  - Users                   # Things you need to do to use OpenRiak users with links to each relevant admin command
+  - Groups                  # Things you need to do to use OpenRiak Groups with links to each relevant admin command
+  - Security Sources        # Managing Security Sources
+- Admin                     # After starting Riak - How to administrate a cluster - all CLI and console commands
+  - Reference               # Refernce table of all CLI and console commands as table with inline search
+  - ------
+  - Node control            # Commands related to controlling and inspecting the current node
+  - Ring changes            # Add, remove or replace nodes, reip, status, handoffs
+  - Buckets and Types       # Create/activate bucket type, add or update properties, list buckets
+  - 2i                      # Repair 2i, change format, etc
+  - Logging                 # Control logging levels and locations
+  - Monitoring              # How to gather metrics and what they mean, link to "riak admin status"
+  - ------
+  - Backup a node           # Backup data showing backend locations (from ref) and if hot-backups work, plus what needs to be backed up (ring, data, config)
+  - Recovery                # Fix a node or cluster that has failed
+    - Recover from crash    # Recover a node which still works but has stopped for some reason (remove from coverage/lb, has data, no data, no data but backup, repair partition for speed)
+    - Replace a node        # Replace a node which has failed (remove from coverage/lb, no data, data from backup, repair partition for speed)
+    - Recover mutiple nodes # Overall process but point to recover/replace as above
+    - Replace a cluster     # All nodes lost, recover from bacups - first node do reip, start, other nodes use force-replace (JOM/PJAC test this to make sure no reip needed)
+  - ------
+  - Upgrade                 # How to upgrade from earlier versions to this version with upgrade-specifc checklist
+  - Downgrade               # How to downgrade from this version to earlier versions with downgrade-specifc checklist
+- APIs and Clients
+  - Protocol Buffers        # Developer documentation on using the Protocol Buffer API directly, light guidance on writing own clients
+  - HTTP/S                  # Developer documentation on using the HTTP/S API directly, light guidance on writing own clients
+  - Java                    # Developer documentation on using the Java client
+  - GoLang                  # Developer documentation on using the GoLang client
+  - Rust                    # Developer documentation on using the Rust client
+  - ...etc
+- Troubleshoot              # Where are the log files, what are the useful commands, search?
+  - API errors              # For unexpected API responses
+  - Client errors           # For unexpected Client responses
+  - Corruption              # For when Riak replies with incorrect/old/corrupt objects
+  - Crashes                 # For when Riak stops working after a while
+  - Performance             # A node or the cluster is performing slowly
+  - Replication             # For when you're not replicating properly
+  - Startup                 # For when Riak doesn't start or crashes very quickly
+
+Reference configuration: {{ reference/config "ring_size" }}
+Reference CLI:           {{ reference/cli "riak admin cluster join" params=true }}
+
+Source: JSON from schema files for config options
+Source: JSON from all `clique:register_usage` commands and then check commends on functions
+Source: FAQs with category and subcategory and slug as pages, then add shortcode for content pages to import Notes from FAQs

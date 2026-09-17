@@ -1,5 +1,18 @@
 (() => {
   'use strict';
+  const skipLink = document.querySelector('.skip-link');
+  document.addEventListener('keydown', (event) => {
+    if (!['Home', 'End'].includes(event.key) || !(event.ctrlKey || event.metaKey) || event.altKey || event.shiftKey) return;
+    const target = event.target;
+    if (target instanceof HTMLElement
+      && (target.matches('input, textarea') || target.isContentEditable)) return;
+    // Scroll the document, even when a nested scroll area or the skip link has focus.
+    event.preventDefault();
+    if (document.activeElement === skipLink) skipLink.blur();
+    const top = event.key === 'Home' ? 0 : document.scrollingElement.scrollHeight;
+    window.scrollTo({ top, left: window.scrollX, behavior: 'instant' });
+  });
+
   const siteSection = document.querySelector('[data-site-section-picker]');
   const siteSectionTrigger = siteSection?.querySelector('.site-section-trigger');
   const siteSectionPanel = siteSection?.querySelector('[data-site-section-panel]');

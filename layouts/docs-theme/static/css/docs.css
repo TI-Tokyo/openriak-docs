@@ -43,6 +43,12 @@
 html { background: var(--surface); }
 body { margin: 0; color: var(--ink); background: var(--surface); line-height: 1.6; }
 a { color: var(--link); }
+.page-link-container { margin-left: var(--page-link-indent, 0); }
+/* Indent H3 bodies in this section, stopping at the next H1 or H2. */
+.doc-article > #how-to-use-the-documentation ~ h3 ~ :not(h1, h2, h3):not(#how-to-use-the-documentation ~ :is(h1, h2) ~ *) { margin-left: 2em; }
+.page-link-container > p > a { display: inline-block; max-width: 100%; padding: var(--page-link-padding, .55rem .9rem); border: 1px solid currentColor; border-radius: 4px; background: var(--panel); color: var(--link); font-weight: 700; overflow-wrap: anywhere; text-decoration: none; }
+.page-link-container > p > a::after { content: "\2192" / ""; display: inline-block; margin-left: .65rem; text-decoration: none; }
+.page-link-container > p > a:hover, .page-link-container > p > a:focus-visible { background: var(--panel-cool); color: var(--orange); }
 button, input, select { font: inherit; }
 button, select, input { border: 1px solid var(--line); border-radius: 3px; background: var(--surface); color: var(--ink); }
 :focus-visible { outline: 3px solid var(--focus-ring); outline-offset: 2px; }
@@ -136,6 +142,10 @@ button, select, input { border: 1px solid var(--line); border-radius: 3px; backg
 .doc-article h1 { margin-top: .2rem; color: var(--slate); font-size: clamp(2rem, 4vw, 3.1rem); line-height: 1.1; letter-spacing: -.035em; }
 :root[data-theme="dark"] .doc-article h1 { color: #dce4eb; }
 .doc-article h2 { margin-top: 2.2rem; line-height: 1.25; }
+.doc-recommendations > table { display: block; width: 100%; overflow-x: auto; border-collapse: collapse; }
+.doc-recommendations > table th, .doc-recommendations > table td { padding: .7rem .75rem; border-bottom: 1px solid var(--line); text-align: left; vertical-align: top; }
+.doc-recommendations > table th { color: var(--muted); font-size: .9rem; }
+@media (max-width: 760px) { .doc-recommendations > table th:last-child, .doc-recommendations > table td:last-child { min-width: 18rem; } }
 .doc-article code { padding: .12em .3em; border-radius: 2px; background: var(--panel-cool); }
 .doc-article pre { overflow: auto; padding: 1rem; border: 1px solid var(--line); border-radius: 3px; background: var(--panel-cool); color: var(--ink); }
 .doc-article pre code { padding: 0; border-radius: 0; background: transparent; color: inherit; }
@@ -380,12 +390,26 @@ button, select, input { border: 1px solid var(--line); border-radius: 3px; backg
 .whats-changed-scroll { width: 100%; margin: .75rem 0 1.75rem; overflow-x: auto; }
 .whats-changed-table { width: 100%; min-width: 42rem; border-collapse: collapse; }
 .whats-changed-table th, .whats-changed-table td { padding: .7rem .75rem; border-bottom: 1px solid var(--line); text-align: left; vertical-align: top; }
-.whats-changed-table th { color: var(--muted); font-size: .75rem; letter-spacing: .04em; text-transform: uppercase; }
+.whats-changed-table th { color: var(--muted); font-size: .85rem; letter-spacing: .04em; text-transform: uppercase; }
 .whats-changed-page, .whats-changed-type { width: 1%; white-space: nowrap; }
 .whats-changed-summary { width: 100%; overflow-wrap: anywhere; }
 .whats-changed-summary > :first-child { margin-top: 0; }
 .whats-changed-summary > :last-child { margin-bottom: 0; }
 .whats-changed-type .doc-version-status { display: inline-block; }
+.for-review-table th { white-space: nowrap; }
+.for-review-table .whats-changed-page { width: 35%; white-space: normal; }
+.for-review-date { width: 1%; white-space: nowrap; }
+.for-review-status { display: grid; grid-template-columns: max-content minmax(0, 1fr); gap: .25rem .75rem; margin: 0; text-align: left; }
+.for-review-status > div { display: contents; }
+.for-review-status dt { font-weight: 600; }
+.for-review-status dd { min-width: 0; margin: 0; overflow-wrap: anywhere; }
+.for-review-filters { min-width: 0; margin: 1.5rem 0; padding: 1rem; border: 1px solid var(--line); border-radius: 4px; }
+.for-review-filters legend { padding: 0 .35rem; font-weight: 700; }
+.for-review-filter-controls { display: flex; flex-wrap: wrap; align-items: end; gap: .75rem; }
+.for-review-filter-controls label { display: grid; flex: 1 1 12rem; min-width: 0; gap: .25rem; font-size: .85rem; }
+.for-review-filter-controls select { width: 100%; min-width: 0; min-height: 40px; padding: .35rem; }
+.for-review-filter-controls button { min-height: 40px; padding: .35rem .65rem; cursor: pointer; }
+.for-review-count { margin: .75rem 0 0; color: var(--muted); font-size: .85rem; }
 
 @media (max-width: 760px) {
   .configuration-reference-item-scroll { overflow-x: visible; }

@@ -6,7 +6,7 @@ weight: -15
 diataxis: 'reference'
 product: 'OpenRiak KV'
 product_version: '3.4.0'
-status: 'ready-for-external-review'
+status: 'finished'
 draft: false
 hide_provenance: true
 audience:
