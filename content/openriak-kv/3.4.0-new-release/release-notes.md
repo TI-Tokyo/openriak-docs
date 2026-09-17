@@ -18,7 +18,8 @@ source_material:
 migration_source_root: '\\wsl.localhost\Ubuntu\home\peter\GitHub\TI-Tokyo\openriak-docs\content\kv'
 migration_sources:
   - '\\wsl.localhost\Ubuntu\home\peter\GitHub\TI-Tokyo\openriak-docs\content\kv\about\release-notes.md'
-migration_review:
+migration_review:
+
   - 'Internal links still refer to the earlier documentation hierarchy and must be retargeted to the Diátaxis paths.'
   - 'Earlier release notes are retained as historical source material and must not be read as the OpenRiak KV 3.4 release contract.'
   - 'Legacy version text or MDX syntax remains and requires editorial review.'
@@ -29,9 +30,15 @@ last_reviewed: '2026-08-28'
 review_scope: 'editorial-and-site-integration'
 ---
 
+[WhatsChanged]: ../whats-changed
+
 Summarize the features, operational improvements, supported Erlang releases, and deprecations in OpenRiak KV {{< current-version >}}.
 
 ## Details
 
 > [!WARNING]
 > Migration review required: Internal links still refer to the earlier documentation hierarchy and must be retargeted to the Diátaxis paths.
+
+## What's Changed in the Documentation
+
+Please see [What's Changed][WhatsChanged].

@@ -17,7 +17,7 @@ if ($Help) { Get-Help $PSCommandPath -Detailed; return }
 
 $ErrorActionPreference = 'Stop'
 $repositoryRoot = Split-Path -Parent (Split-Path -Parent $PSScriptRoot)
-$image = 'ghcr.io/gohugoio/hugo:v0.165.0'
+$image = 'ghcr.io/gohugoio/hugo:v0.166.0'
 $validationRoot = Join-Path $repositoryRoot 'build/.architecture-validation'
 
 node (Join-Path $PSScriptRoot 'generate-version-mounts.js')

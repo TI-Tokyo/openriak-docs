@@ -1,5 +1,5 @@
 ARG NODE_VERSION=24
-ARG HUGO_VERSION=0.165.0
+ARG HUGO_VERSION=0.166.0
 
 # Product changes invalidate this stage, but do not invalidate archive-build.
 FROM node:${NODE_VERSION}-alpine AS core-metadata

@@ -1,7 +1,7 @@
 # OpenRiak documentation site
 
 This repository produces one static OpenRiak website from two independently
-cacheable Hugo 0.165.0 projects.
+cacheable Hugo 0.166.0 projects.
 
 - The **core** project contains the homepage, Community, and versioned product documentation.
 - The **archives** project contains the immutable Archived Technical Blog and Archived Mailing List.
@@ -122,7 +122,7 @@ This writes the complete assembled site to `public/`. Product-only changes reuse
 the archive image layer. A change to shared or archive templates correctly
 invalidates the archive layer.
 
-With local Hugo 0.165.0 and Node.js installed, the equivalent uncached build is:
+With local Hugo 0.166.0 and Node.js installed, the equivalent uncached build is:
 
 ```sh
 HUGO_BASEURL=https://www.openriak.org/docs/ INCLUDE_DRAFTS=true ./tools/scripts/build.sh release
