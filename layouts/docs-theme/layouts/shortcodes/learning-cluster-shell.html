@@ -1,0 +1,19 @@
+{{- $context := partial "product-context.html" .Page -}}
+{{- $configuration := index (index (index hugo.Data "configuration-reference") $context.id) $context.version -}}
+{{- $binSetting := index (where $configuration.settings "name" "platform_bin_dir") 0 -}}
+{{- $dataSetting := index (where $configuration.settings "name" "platform_data_dir") 0 -}}
+{{- $bin := (index $binSetting.defaults "alpine").value -}}
+{{- $data := (index $dataSetting.defaults "alpine").value -}}
+{{- $script := printf `export RIAK_HTTP=http://127.0.0.1:18098
+kv() {
+  local service="$1"
+  shift
+  docker compose exec -T "$service" sh -c '
+    export VMARGS_PATH="$(ls -1 %s/generated.conf/vm.*.args | tail -n 1)"
+    test -n "$VMARGS_PATH" || exit 1
+    export PATH="%s:$PATH"
+    exec "$@"
+  ' sh "$@"
+}` $data $bin -}}
+{{- $interactive := replace (replace (replace $script "kv()" "kvi()") "exec -T" "exec") "export RIAK_HTTP=http://127.0.0.1:18098\n" "" -}}
+{{ .Page.RenderString (printf "```bash\n%s\n%s\n```" $script $interactive) }}

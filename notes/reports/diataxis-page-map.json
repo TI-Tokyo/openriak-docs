@@ -1,0 +1,3215 @@
+{
+  "foundations": [
+    {
+      "section": "Overview",
+      "title": "What OpenRiak KV is",
+      "scope": "Introduce the system's major components and the responsibilities shared between the database and the application.",
+      "path": "foundations/overview/what-openriak-kv-is.md",
+      "sources": [
+        "foundations/foundations/new-to-nosql.md"
+      ]
+    },
+    {
+      "section": "Overview",
+      "title": "Where OpenRiak fits",
+      "scope": "Explain suitable workloads, strengths, and trade-offs that make other workloads a poor fit. Consolidate “Why OpenRiak” and “Use cases”.",
+      "path": "foundations/overview/where-openriak-fits.md",
+      "sources": [
+        "foundations/foundations/why-openriak.md",
+        "foundations/foundations/use-cases.md"
+      ]
+    },
+    {
+      "section": "Overview",
+      "title": "From Dynamo and Riak to OpenRiak",
+      "scope": "Explain the design's origins and evolution. Replace the lengthy reproduction of the Dynamo paper with an OpenRiak-focused explanation and links to the source material.",
+      "path": "foundations/overview/from-dynamo-and-riak-to-openriak.md",
+      "sources": [
+        "foundations/foundations/history.md",
+        "foundations/foundations/dynamo-model.md"
+      ]
+    },
+    {
+      "section": "Cluster architecture",
+      "title": "Rings, partitions, and virtual nodes",
+      "scope": "Explain data distribution and the distinction between logical partitions and physical nodes. Combine the overlapping ring and vnode explanations.",
+      "path": "foundations/cluster-architecture/rings-partitions-and-virtual-nodes.md",
+      "sources": [
+        "foundations/foundations/clusters-rings-and-partitions.md",
+        "foundations/foundations/virtual-nodes.md"
+      ]
+    },
+    {
+      "section": "Cluster architecture",
+      "title": "The lifecycle of a read and a write",
+      "scope": "Trace a request through the client, coordinator, replicas, storage, and response to establish a common mental model.",
+      "path": "foundations/cluster-architecture/the-lifecycle-of-a-read-and-a-write.md",
+      "sources": []
+    },
+    {
+      "section": "Cluster architecture",
+      "title": "Replica placement and failure domains",
+      "scope": "Explain preference lists, primary and fallback replicas, placement constraints, and resilience to node or location failures.",
+      "path": "foundations/cluster-architecture/replica-placement-and-failure-domains.md",
+      "sources": [
+        "foundations/foundations/intra-cluster-resilience.md"
+      ]
+    },
+    {
+      "section": "Cluster architecture",
+      "title": "Membership, gossip, and handoff",
+      "scope": "Explain how nodes learn about membership and how ownership and data move when a cluster changes.",
+      "path": "foundations/cluster-architecture/membership-gossip-and-handoff.md",
+      "sources": [
+        "foundations/operations/ring-changes-and-handoffs.md"
+      ]
+    },
+    {
+      "section": "Data and consistency",
+      "title": "Objects, keys, and buckets",
+      "scope": "Explain the data model, object boundaries, metadata, and the consequences for application modelling.",
+      "path": "foundations/data-and-consistency/objects-keys-and-buckets.md",
+      "sources": [
+        "foundations/data-model/keys-objects-and-buckets.md"
+      ]
+    },
+    {
+      "section": "Data and consistency",
+      "title": "Bucket types and data policies",
+      "scope": "Explain namespaces, shared behaviour, and how bucket properties express data policies.",
+      "path": "foundations/data-and-consistency/bucket-types-and-data-policies.md",
+      "sources": [
+        "foundations/data-model/bucket-types.md"
+      ]
+    },
+    {
+      "section": "Data and consistency",
+      "title": "Eventual consistency and convergence",
+      "scope": "Describe the promises, observable behaviour, and conditions required for convergence.",
+      "path": "foundations/data-and-consistency/eventual-consistency-and-convergence.md",
+      "sources": [
+        "foundations/consistency/eventual-consistency.md"
+      ]
+    },
+    {
+      "section": "Data and consistency",
+      "title": "Quorums, availability, and durability",
+      "scope": "Explain replication counts, read and write acknowledgements, primary requirements, and durable writes. Avoid implying that quorum settings alone provide strong consistency.",
+      "path": "foundations/data-and-consistency/quorums-availability-and-durability.md",
+      "sources": [
+        "foundations/consistency/read-write-quorums.md",
+        "foundations/foundations/availability-and-failure-tolerance.md"
+      ]
+    },
+    {
+      "section": "Data and consistency",
+      "title": "Causality, version vectors, and siblings",
+      "scope": "Consolidate causal-context and vector explanations. Explain how the system distinguishes later changes from concurrent changes.",
+      "path": "foundations/data-and-consistency/causality-version-vectors-and-siblings.md",
+      "sources": [
+        "foundations/data-model/causal-context.md",
+        "foundations/data-model/version-vectors-and-siblings.md"
+      ]
+    },
+    {
+      "section": "Data and consistency",
+      "title": "Resolving concurrent updates",
+      "scope": "Explain application merging, last-write-wins policies, siblings, and information preservation. Consolidate the conflict-resolution and merge-strategy material.",
+      "path": "foundations/data-and-consistency/resolving-concurrent-updates.md",
+      "sources": [
+        "foundations/data-model/conflict-resolution.md",
+        "foundations/data-model/merge-strategies.md"
+      ]
+    },
+    {
+      "section": "Data and consistency",
+      "title": "Conflict-free replicated data types",
+      "scope": "Explain convergence, supported operations, and the constraints on application semantics.",
+      "path": "foundations/data-and-consistency/conflict-free-replicated-data-types.md",
+      "sources": [
+        "foundations/data-model/distributed-data-types.md"
+      ]
+    },
+    {
+      "section": "Data and consistency",
+      "title": "Conditional updates and latch objects",
+      "scope": "Explain how these mechanisms reduce conflicts, their failure boundaries, and the limits of latch-based coordination.",
+      "path": "foundations/data-and-consistency/conditional-updates-and-latch-objects.md",
+      "sources": [
+        "foundations/consistency/conditional-requests.md",
+        "foundations/data-model/latch-objects.md"
+      ]
+    },
+    {
+      "section": "Data and consistency",
+      "title": "Deletion, tombstones, and expiration",
+      "scope": "Connect logical deletion, retention, reaping, expiration, and the risk of deleted data reappearing. Consolidate the two deletion explanations.",
+      "path": "foundations/data-and-consistency/deletion-tombstones-and-expiration.md",
+      "sources": [
+        "foundations/data-model/deletion-policies.md",
+        "foundations/operations/object-deletion-and-tombstones.md"
+      ]
+    },
+    {
+      "section": "Indexes and querying",
+      "title": "Secondary indexes and projected attributes",
+      "scope": "Explain index terms, application representations, projections, and the storage and write costs of indexing.",
+      "path": "foundations/indexes-and-querying/secondary-indexes-and-projected-attributes.md",
+      "sources": [
+        "foundations/data-model/secondary-indexes.md"
+      ]
+    },
+    {
+      "section": "Indexes and querying",
+      "title": "How distributed queries execute",
+      "scope": "Explain how scans, filters, combined queries, accumulation, and collation operate across virtual nodes.",
+      "path": "foundations/indexes-and-querying/how-distributed-queries-execute.md",
+      "sources": [
+        "foundations/data-model/query-api.md"
+      ]
+    },
+    {
+      "section": "Indexes and querying",
+      "title": "Query consistency and snapshots",
+      "scope": "Explain index visibility, vnode snapshots, and the boundaries of consistency across a distributed query.",
+      "path": "foundations/indexes-and-querying/query-consistency-and-snapshots.md",
+      "sources": []
+    },
+    {
+      "section": "Indexes and querying",
+      "title": "Query cost and result delivery",
+      "scope": "Explain selectivity, fan-out, buffering, pagination, and synchronous or asynchronous delivery. Consolidate query-performance material here.",
+      "path": "foundations/indexes-and-querying/query-cost-and-result-delivery.md",
+      "sources": [
+        "foundations/performance/query-execution.md"
+      ]
+    },
+    {
+      "section": "Replication and repair",
+      "title": "Read repair and TicTac anti-entropy",
+      "scope": "Explain divergence and the relationship between reactive and background repair. Maintain one current explanation of active anti-entropy.",
+      "path": "foundations/replication-and-repair/read-repair-and-tictac-anti-entropy.md",
+      "sources": [
+        "foundations/replication/tictac-aae.md",
+        "foundations/replication/active-anti-entropy.md"
+      ]
+    },
+    {
+      "section": "Replication and repair",
+      "title": "Replication sources, queues, and sinks",
+      "scope": "Explain the pipeline, object references, triggers, priorities, consumers, and backpressure. Consolidate the small component pages.",
+      "path": "foundations/replication-and-repair/replication-sources-queues-and-sinks.md",
+      "sources": [
+        "foundations/replication/next-generation-replication.md",
+        "foundations/replication/queues.md",
+        "foundations/replication/sink-nodes.md"
+      ]
+    },
+    {
+      "section": "Replication and repair",
+      "title": "Real-time replication and fullsync",
+      "scope": "Explain how the two mechanisms complement one another, including discovery, transport, and catching up after interruptions.",
+      "path": "foundations/replication-and-repair/real-time-replication-and-fullsync.md",
+      "sources": [
+        "foundations/replication/real-time-and-fullsync.md"
+      ]
+    },
+    {
+      "section": "Replication and repair",
+      "title": "Multi-cluster topologies and behaviour",
+      "scope": "Explain directional, active-active, and cascading arrangements, replication lag, concurrency, and metadata that remains local.",
+      "path": "foundations/replication-and-repair/multi-cluster-topologies-and-behaviour.md",
+      "sources": [
+        "foundations/replication/multi-datacenter-architecture.md",
+        "foundations/replication/cascading-writes.md",
+        "foundations/performance/multi-datacenter-performance.md"
+      ]
+    },
+    {
+      "section": "Replication and repair",
+      "title": "Targeted reconciliation and AAE folds",
+      "scope": "Explain work bounded by bucket, key range, or time, and how it differs from full reconciliation.",
+      "path": "foundations/replication-and-repair/targeted-reconciliation-and-aae-folds.md",
+      "sources": [
+        "foundations/operations/repair-granularity.md",
+        "foundations/replication/reconciliation-scope.md"
+      ]
+    },
+    {
+      "section": "Replication and repair",
+      "title": "Replication generations and compatibility",
+      "scope": "Explain the architectural and migration differences between next-generation replication and legacy riak_repl v2/v3.",
+      "path": "foundations/replication-and-repair/replication-generations-and-compatibility.md",
+      "sources": [
+        "foundations/replication/v2-and-v3-replication.md",
+        "foundations/replication/legacy-aae.md"
+      ]
+    },
+    {
+      "section": "Storage and performance",
+      "title": "Storage backend trade-offs",
+      "scope": "Provide a version-specific comparison of backend choices, distinguishing current recommendations from legacy behaviour.",
+      "path": "foundations/storage-and-performance/storage-backend-trade-offs.md",
+      "sources": [
+        "foundations/storage/choosing-backend.md"
+      ]
+    },
+    {
+      "section": "Storage and performance",
+      "title": "How Bitcask stores data",
+      "scope": "Explain append-only storage, the in-memory key directory, reads, merges, and resource implications. Link to separate configuration and maintenance procedures.",
+      "path": "foundations/storage-and-performance/how-bitcask-stores-data.md",
+      "sources": [
+        "foundations/storage/bitcask.md"
+      ]
+    },
+    {
+      "section": "Storage and performance",
+      "title": "How Leveled stores data",
+      "scope": "Explain the journal, ledger, caches, snapshots, and compaction, connecting them to read, write, and index behaviour.",
+      "path": "foundations/storage-and-performance/how-leveled-stores-data.md",
+      "sources": [
+        "foundations/storage/leveled.md"
+      ]
+    },
+    {
+      "section": "Storage and performance",
+      "title": "Multiple backends and prefix routing",
+      "scope": "Explain why data is routed to different backends and the implications of changing routing policies.",
+      "path": "foundations/storage-and-performance/multiple-backends-and-prefix-routing.md",
+      "sources": [
+        "foundations/storage/multi-backend.md",
+        "foundations/storage/prefix-multi.md"
+      ]
+    },
+    {
+      "section": "Storage and performance",
+      "title": "Persistence, filesystems, and space reclamation",
+      "scope": "Explain buffering, persistence, filesystem behaviour, merges, and compaction. Distinguish storage reclamation from Erlang garbage collection.",
+      "path": "foundations/storage-and-performance/persistence-filesystems-and-space-reclamation.md",
+      "sources": [
+        "foundations/performance/storage-and-filesystem-effects.md",
+        "foundations/operations/garbage-collection.md"
+      ]
+    },
+    {
+      "section": "Storage and performance",
+      "title": "Latency, queues, and resource contention",
+      "scope": "Explain how vnode queues, Erlang scheduling, network and disk contention affect tail latency, overload, and recovery.",
+      "path": "foundations/storage-and-performance/latency-queues-and-resource-contention.md",
+      "sources": [
+        "foundations/performance/latency-throughput-and-capacity.md",
+        "foundations/performance/erlang-runtime.md"
+      ]
+    },
+    {
+      "section": "Storage and performance",
+      "title": "Capacity and growth",
+      "scope": "Connect replicas, keys, values, indexes, caches, and recovery headroom to resource needs. Put sizing procedures in How-to.",
+      "path": "foundations/storage-and-performance/capacity-and-growth.md",
+      "sources": [
+        "foundations/storage/capacity-planning.md"
+      ]
+    },
+    {
+      "section": "Cluster lifecycle",
+      "title": "Failure and recovery",
+      "scope": "Explain transient failures, failed nodes, lost storage, and the assumptions behind repair, replacement, and recovery.",
+      "path": "foundations/cluster-lifecycle/failure-and-recovery.md",
+      "sources": [
+        "foundations/operations/node-failure-and-recovery.md"
+      ]
+    },
+    {
+      "section": "Cluster lifecycle",
+      "title": "Backups, restores, and disaster recovery",
+      "scope": "Explain what a distributed backup captures, its consistency limits, and the differences between backup, replication, and recovery.",
+      "path": "foundations/cluster-lifecycle/backups-restores-and-disaster-recovery.md",
+      "sources": [
+        "foundations/operations/backups-and-restores.md"
+      ]
+    },
+    {
+      "section": "Cluster lifecycle",
+      "title": "Rolling maintenance and recovery headroom",
+      "scope": "Explain how taking nodes out of service affects availability, background work, and capacity.",
+      "path": "foundations/cluster-lifecycle/rolling-maintenance-and-recovery-headroom.md",
+      "sources": [
+        "foundations/operations/rolling-maintenance.md"
+      ]
+    },
+    {
+      "section": "Cluster lifecycle",
+      "title": "Mixed versions, capabilities, and upgrade boundaries",
+      "scope": "Connect capability negotiation, mixed-version operation, activation, upgrade and downgrade boundaries, and rollback limits.",
+      "path": "foundations/cluster-lifecycle/mixed-versions-capabilities-and-upgrade-boundaries.md",
+      "sources": [
+        "foundations/operations/upgrade-and-downgrade.md",
+        "foundations/foundations/capability-negotiation.md"
+      ]
+    },
+    {
+      "section": "Security",
+      "title": "Security boundaries and trust",
+      "scope": "Identify clients, administrators, nodes, and remote clusters, and explain which mechanisms protect each boundary.",
+      "path": "foundations/security/security-boundaries-and-trust.md",
+      "sources": [
+        "foundations/security/security-model.md"
+      ]
+    },
+    {
+      "section": "Security",
+      "title": "Identities, authentication, and permissions",
+      "scope": "Explain how users, groups, authentication sources, and permissions combine to make access decisions.",
+      "path": "foundations/security/identities-authentication-and-permissions.md",
+      "sources": [
+        "foundations/security/authentication-sources.md",
+        "foundations/security/users-groups-and-permissions.md"
+      ]
+    },
+    {
+      "section": "Security",
+      "title": "TLS and certificate trust",
+      "scope": "Explain encryption, identity validation, and certificate trust relationships.",
+      "path": "foundations/security/tls-and-certificate-trust.md",
+      "sources": [
+        "foundations/security/tls-model.md"
+      ]
+    }
+  ],
+  "how-to": [
+    {
+      "section": "Quick Start",
+      "title": "Start a local node with Docker",
+      "scope": "Reach a working node, perform a first write and read, and stop the environment using the shortest verified path.",
+      "path": "how-to/quick-start/start-a-local-node-with-docker.md",
+      "sources": []
+    },
+    {
+      "section": "Quick Start",
+      "title": "Start a local cluster with Docker",
+      "scope": "Start the supplied development cluster, verify membership and a client request, and identify the cleanup command.",
+      "path": "how-to/quick-start/start-a-local-cluster-with-docker.md",
+      "sources": []
+    },
+    {
+      "section": "Quick Start",
+      "title": "Start a node from an installed package",
+      "scope": "Take an installed native package through minimal configuration, service startup, and a verified request; link to platform installation prerequisites.",
+      "path": "how-to/quick-start/start-a-node-from-an-installed-package.md",
+      "sources": []
+    },
+    {
+      "section": "Planning a deployment",
+      "title": "Map application data to objects and buckets",
+      "scope": "Choose keys, object boundaries, bucket types, and access patterns for a concrete workload; record how updates and object discovery will work.",
+      "path": "how-to/planning-a-deployment/map-application-data-to-objects-and-buckets.md",
+      "sources": [
+        "how-to/plan/map-data-to-objects.md"
+      ]
+    },
+    {
+      "section": "Planning a deployment",
+      "title": "Size a cluster and reserve recovery headroom",
+      "scope": "Estimate storage, memory, CPU, and network needs from the workload, replication, indexes, growth, and recovery requirements.",
+      "path": "how-to/planning-a-deployment/size-a-cluster-and-reserve-recovery-headroom.md",
+      "sources": [
+        "how-to/plan/size-cluster.md"
+      ]
+    },
+    {
+      "section": "Planning a deployment",
+      "title": "Choose a ring size",
+      "scope": "Use expected cluster size and workload to select the initial ring size and identify the migration required to change it later.",
+      "path": "how-to/planning-a-deployment/choose-a-ring-size.md",
+      "sources": [
+        "how-to/plan/choose-ring-size.md"
+      ]
+    },
+    {
+      "section": "Planning a deployment",
+      "title": "Choose a storage backend",
+      "scope": "Select a backend against persistence, indexing, memory, and workload requirements, using the release-specific capability reference.",
+      "path": "how-to/planning-a-deployment/choose-a-storage-backend.md",
+      "sources": [
+        "how-to/plan/choose-storage-backend.md"
+      ]
+    },
+    {
+      "section": "Planning a deployment",
+      "title": "Choose replication and acknowledgement policies",
+      "scope": "Translate availability and durability requirements into replica placement, read/write acknowledgements, primary requirements, and persistence choices.",
+      "path": "how-to/planning-a-deployment/choose-replication-and-acknowledgement-policies.md",
+      "sources": [
+        "how-to/plan/choose-intra-cluster-resilience.md"
+      ]
+    },
+    {
+      "section": "Planning a deployment",
+      "title": "Choose a multi-cluster topology",
+      "scope": "Select replication directions, failure boundaries, and recovery objectives for the deployment, then identify the required connections and validation checks.",
+      "path": "how-to/planning-a-deployment/choose-a-multi-cluster-topology.md",
+      "sources": [
+        "how-to/plan/choose-multi-cluster-topology.md"
+      ]
+    },
+    {
+      "section": "Planning a deployment",
+      "title": "Choose a deletion and retention policy",
+      "scope": "Match tombstone retention, expiry, reaping, and repair schedules to the application's data lifecycle and recovery requirements.",
+      "path": "how-to/planning-a-deployment/choose-a-deletion-and-retention-policy.md",
+      "sources": [
+        "how-to/plan/choose-deletion-policy.md"
+      ]
+    },
+    {
+      "section": "Planning a deployment",
+      "title": "Check production readiness",
+      "scope": "Verify deployment, capacity, security, monitoring, backup, restore, and failure-handling readiness before admitting production traffic.",
+      "path": "how-to/planning-a-deployment/check-production-readiness.md",
+      "sources": [
+        "how-to/plan/production-readiness-checklist.md"
+      ]
+    },
+    {
+      "section": "Installation",
+      "title": "Install on Debian or Ubuntu",
+      "scope": "Install a release-matched package and dependencies, configure the service, and verify startup on the selected supported distribution.",
+      "path": "how-to/installation/install-on-debian-or-ubuntu.md",
+      "sources": [
+        "how-to/install/debian-ubuntu.md"
+      ]
+    },
+    {
+      "section": "Installation",
+      "title": "Install on RHEL, Rocky Linux, or Oracle Linux",
+      "scope": "Cover the RPM installation paths actually provided for this release, with distribution-specific prerequisites and service verification.",
+      "path": "how-to/installation/install-on-rhel-rocky-linux-or-oracle-linux.md",
+      "sources": [
+        "how-to/install/rhel-rocky.md"
+      ]
+    },
+    {
+      "section": "Installation",
+      "title": "Install on Amazon Linux",
+      "scope": "Install the appropriate package for the chosen architecture and verify service and network access; keep cloud sizing in the deployment guides.",
+      "path": "how-to/installation/install-on-amazon-linux.md",
+      "sources": [
+        "how-to/install/amazon-linux.md"
+      ]
+    },
+    {
+      "section": "Installation",
+      "title": "Install on Alpine Linux",
+      "scope": "Document the release's Alpine package, dependencies, service integration, and installation checks once that platform path is verified.",
+      "path": "how-to/installation/install-on-alpine-linux.md",
+      "sources": [
+        "how-to/install/alpine-linux.md"
+      ]
+    },
+    {
+      "section": "Installation",
+      "title": "Install on Raspberry Pi OS",
+      "scope": "Specify the verified operating-system and architecture combination, installation method, resource prerequisites, and startup checks.",
+      "path": "how-to/installation/install-on-raspberry-pi-os.md",
+      "sources": [
+        "how-to/install/raspbian.md"
+      ]
+    },
+    {
+      "section": "Installation",
+      "title": "Run OpenRiak with persistent Docker storage",
+      "scope": "Configure persistent volumes, networking, settings, and container lifecycle for an existing container-based workflow; link to image downloads.",
+      "path": "how-to/installation/run-openriak-with-persistent-docker-storage.md",
+      "sources": [
+        "how-to/install/docker.md"
+      ]
+    },
+    {
+      "section": "Installation",
+      "title": "Build and install from source",
+      "scope": "Select the release and compatible Erlang/OTP toolchain, build a release, install it, and verify the resulting executable and service.",
+      "path": "how-to/installation/build-and-install-from-source.md",
+      "sources": [
+        "how-to/install/source.md"
+      ]
+    },
+    {
+      "section": "Installation",
+      "title": "Verify an installation",
+      "scope": "Check configuration, startup, node identity, listeners, diagnostics, and a write/read round trip before joining a cluster.",
+      "path": "how-to/installation/verify-an-installation.md",
+      "sources": [
+        "how-to/install/verify-installation.md"
+      ]
+    },
+    {
+      "section": "Node configuration",
+      "title": "Configure node identity, directories, and the initial ring",
+      "scope": "Set the essential node settings before cluster formation and verify paths, identity, and ring compatibility.",
+      "path": "how-to/node-configuration/configure-node-identity-directories-and-the-initial-ring.md",
+      "sources": [
+        "how-to/configure/basic-node-settings.md"
+      ]
+    },
+    {
+      "section": "Node configuration",
+      "title": "Configure HTTP and Protocol Buffers listeners",
+      "scope": "Bind the required interfaces and ports, apply access restrictions, and verify reachability using the intended client protocol.",
+      "path": "how-to/node-configuration/configure-http-and-protocol-buffers-listeners.md",
+      "sources": [
+        "how-to/configure/api-listeners.md"
+      ]
+    },
+    {
+      "section": "Node configuration",
+      "title": "Add advanced configuration",
+      "scope": "Add settings that require advanced.config, check precedence and syntax, and confirm the effective values after startup.",
+      "path": "how-to/node-configuration/add-advanced-configuration.md",
+      "sources": [
+        "how-to/configure/advanced-configuration.md"
+      ]
+    },
+    {
+      "section": "Node configuration",
+      "title": "Set runtime environment variables",
+      "scope": "Supply supported variables through the deployment's service or container mechanism and verify what the process receives.",
+      "path": "how-to/node-configuration/set-runtime-environment-variables.md",
+      "sources": [
+        "how-to/configure/runtime-environment-variables.md"
+      ]
+    },
+    {
+      "section": "Node configuration",
+      "title": "Inspect and manage effective configuration",
+      "scope": "Locate the active configuration, inspect resolved settings, compare nodes, and apply a controlled configuration change.",
+      "path": "how-to/node-configuration/inspect-and-manage-effective-configuration.md",
+      "sources": [
+        "how-to/configure/manage-configuration.md"
+      ]
+    },
+    {
+      "section": "Node configuration",
+      "title": "Validate configuration before startup",
+      "scope": "Run configuration checks, interpret validation failures, and confirm the node can start with the intended settings.",
+      "path": "how-to/node-configuration/validate-configuration-before-startup.md",
+      "sources": [
+        "how-to/configure/verify-configuration.md"
+      ]
+    },
+    {
+      "section": "Node configuration",
+      "title": "Configure a load-balancing proxy",
+      "scope": "Configure listener routing, health checks, timeouts, and maintenance draining for a verified proxy deployment.",
+      "path": "how-to/node-configuration/configure-a-load-balancing-proxy.md",
+      "sources": [
+        "how-to/configure/load-balancing-proxy.md"
+      ]
+    },
+    {
+      "section": "Node configuration",
+      "title": "Configure logging and change runtime log levels",
+      "scope": "Choose destinations and levels, temporarily increase diagnostic detail, verify the output, and restore the intended logging level.",
+      "path": "how-to/node-configuration/configure-logging-and-change-runtime-log-levels.md",
+      "sources": [
+        "how-to/configure/logging.md",
+        "how-to/operate/change-log-level.md"
+      ]
+    },
+    {
+      "section": "Node configuration",
+      "title": "Configure split and JSON log handlers",
+      "scope": "Route log categories to the intended handlers, enable structured output, and verify parsing and rotation with sample events.",
+      "path": "how-to/node-configuration/configure-split-and-json-log-handlers.md",
+      "sources": [
+        "how-to/configure/logging-json-handlers.md"
+      ]
+    },
+    {
+      "section": "Node configuration",
+      "title": "Configure object expiration",
+      "scope": "Apply retention and expiry settings to the intended scope, verify the resulting object lifecycle, and describe how to change or disable expiry.",
+      "path": "how-to/node-configuration/configure-object-expiration.md",
+      "sources": [
+        "how-to/configure/global-object-expiration.md"
+      ]
+    },
+    {
+      "section": "Storage maintenance",
+      "title": "Configure Bitcask",
+      "scope": "Set the storage location and workload-specific Bitcask options, start the node, and verify persistence and backend health.",
+      "path": "how-to/storage-maintenance/configure-bitcask.md",
+      "sources": [
+        "how-to/configure/backends/bitcask.md"
+      ]
+    },
+    {
+      "section": "Storage maintenance",
+      "title": "Configure Leveled",
+      "scope": "Configure Leveled storage and relevant resource settings, then verify backend startup, reads, writes, and indexing.",
+      "path": "how-to/storage-maintenance/configure-leveled.md",
+      "sources": [
+        "how-to/configure/backends/leveled.md"
+      ]
+    },
+    {
+      "section": "Storage maintenance",
+      "title": "Schedule Bitcask merges",
+      "scope": "Choose a merge window, observe merge progress, and confirm space reclamation without unacceptable workload interference.",
+      "path": "how-to/storage-maintenance/schedule-bitcask-merges.md",
+      "sources": [
+        "how-to/configure/backends/bitcask-merge-window.md"
+      ]
+    },
+    {
+      "section": "Storage maintenance",
+      "title": "Schedule Leveled compaction",
+      "scope": "Set an appropriate compaction window and verify its effect on disk work, space consumption, and foreground traffic.",
+      "path": "how-to/storage-maintenance/schedule-leveled-compaction.md",
+      "sources": [
+        "how-to/configure/backends/leveled-compaction-window.md"
+      ]
+    },
+    {
+      "section": "Storage maintenance",
+      "title": "Migrate to another storage backend",
+      "scope": "Move existing data through a verified migration or replacement procedure, with backup, data validation, and a recovery plan.",
+      "path": "how-to/storage-maintenance/migrate-to-another-storage-backend.md",
+      "sources": [
+        "how-to/configure/backends/change-backend.md"
+      ]
+    },
+    {
+      "section": "Storage maintenance",
+      "title": "Remove obsolete Leveled backup files",
+      "scope": "Identify eligible orphaned backup files, check the required preconditions, reclaim their space, and verify store health.",
+      "path": "how-to/storage-maintenance/remove-obsolete-leveled-backup-files.md",
+      "sources": [
+        "how-to/operate/remove-leveled-backup-files.md"
+      ]
+    },
+    {
+      "section": "Storage maintenance",
+      "title": "Repair a Leveled store",
+      "scope": "Diagnose the affected store, preserve recovery evidence, perform the documented rebuild, and verify recovered data and indexes.",
+      "path": "how-to/storage-maintenance/repair-a-leveled-store.md",
+      "sources": [
+        "how-to/operate/repair-leveled-store.md"
+      ]
+    },
+    {
+      "section": "Application data",
+      "title": "Create and activate bucket types",
+      "scope": "Create a type with deliberate properties, validate it, activate it, and verify its behaviour before applications use it.",
+      "path": "how-to/application-data/create-and-activate-bucket-types.md",
+      "sources": [
+        "how-to/operate/manage-bucket-types.md"
+      ]
+    },
+    {
+      "section": "Application data",
+      "title": "Use bucket types in an application",
+      "scope": "Address typed buckets correctly in client requests and confirm the intended namespace and inherited properties.",
+      "path": "how-to/application-data/use-bucket-types-in-an-application.md",
+      "sources": [
+        "how-to/develop/use-bucket-types.md"
+      ]
+    },
+    {
+      "section": "Application data",
+      "title": "Create and store an object",
+      "scope": "Store a value with an explicit or generated key and verify the returned identity, metadata, and persisted content.",
+      "path": "how-to/application-data/create-and-store-an-object.md",
+      "sources": [
+        "how-to/develop/create-object.md"
+      ]
+    },
+    {
+      "section": "Application data",
+      "title": "Read an object and handle missing values",
+      "scope": "Fetch the value and causal context, distinguish absent objects from failures, and handle responses that contain siblings.",
+      "path": "how-to/application-data/read-an-object-and-handle-missing-values.md",
+      "sources": [
+        "how-to/develop/read-object.md"
+      ]
+    },
+    {
+      "section": "Application data",
+      "title": "Update an object with causal context",
+      "scope": "Fetch an object, preserve its context, apply a change, and verify the update without unintentionally discarding concurrent work.",
+      "path": "how-to/application-data/update-an-object-with-causal-context.md",
+      "sources": [
+        "how-to/develop/update-object.md"
+      ]
+    },
+    {
+      "section": "Application data",
+      "title": "Delete an object",
+      "scope": "Delete a selected object with the relevant context and options, then check the observable result and expected deletion lifecycle.",
+      "path": "how-to/application-data/delete-an-object.md",
+      "sources": [
+        "how-to/develop/delete-object.md"
+      ]
+    },
+    {
+      "section": "Application data",
+      "title": "Store and retrieve different content types",
+      "scope": "Set media types and encodings for structured or binary values and verify that clients preserve the intended representation.",
+      "path": "how-to/application-data/store-and-retrieve-different-content-types.md",
+      "sources": [
+        "how-to/develop/use-content-types.md"
+      ]
+    },
+    {
+      "section": "Application data",
+      "title": "Resolve concurrent object updates",
+      "scope": "Retrieve siblings, apply an application-specific merge, write the resolved value with context, and verify the outcome under another concurrent update.",
+      "path": "how-to/application-data/resolve-concurrent-object-updates.md",
+      "sources": [
+        "how-to/develop/resolve-conflicts.md"
+      ]
+    },
+    {
+      "section": "Application data",
+      "title": "Make conditional reads and writes",
+      "scope": "Use the supported validators, handle failed preconditions, and verify the application's retry or conflict response.",
+      "path": "how-to/application-data/make-conditional-reads-and-writes.md",
+      "sources": [
+        "how-to/develop/send-conditional-object-request.md"
+      ]
+    },
+    {
+      "section": "Application data",
+      "title": "Coordinate an update with a latch object",
+      "scope": "Apply the supported latch pattern to a specific coordination task, handling contention, interruption, and the limits of the mechanism.",
+      "path": "how-to/application-data/coordinate-an-update-with-a-latch-object.md",
+      "sources": []
+    },
+    {
+      "section": "Application data",
+      "title": "Update distributed counters",
+      "scope": "Create a correctly configured counter, increment or decrement it, and verify results using the supported client and data-type API.",
+      "path": "how-to/application-data/update-distributed-counters.md",
+      "sources": [
+        "how-to/develop/use-counters.md"
+      ]
+    },
+    {
+      "section": "Application data",
+      "title": "Add and remove members of distributed sets",
+      "scope": "Apply additions and context-dependent removals, preserve the required context, and verify the resulting set.",
+      "path": "how-to/application-data/add-and-remove-members-of-distributed-sets.md",
+      "sources": [
+        "how-to/develop/use-sets.md"
+      ]
+    },
+    {
+      "section": "Application data",
+      "title": "Add members to grow-only sets",
+      "scope": "Configure the data type, add members, and verify set membership while respecting the absence of a removal operation.",
+      "path": "how-to/application-data/add-members-to-grow-only-sets.md",
+      "sources": [
+        "how-to/develop/use-gsets.md"
+      ]
+    },
+    {
+      "section": "Application data",
+      "title": "Update distributed maps",
+      "scope": "Create and update typed map fields, preserve causal context, and verify nested updates and removals.",
+      "path": "how-to/application-data/update-distributed-maps.md",
+      "sources": [
+        "how-to/develop/use-maps.md"
+      ]
+    },
+    {
+      "section": "Application data",
+      "title": "Estimate distinct values with HyperLogLog",
+      "scope": "Configure the data type, add observations, retrieve the estimate, and interpret it as an estimate rather than an exact count.",
+      "path": "how-to/application-data/estimate-distinct-values-with-hyperloglog.md",
+      "sources": [
+        "how-to/develop/use-hyperloglogs.md"
+      ]
+    },
+    {
+      "section": "Application data",
+      "title": "Store immutable data through the write-once path",
+      "scope": "Configure the required bucket policy, perform immutable writes, and verify behaviour when an application tries to reuse a key.",
+      "path": "how-to/application-data/store-immutable-data-through-the-write-once-path.md",
+      "sources": [
+        "how-to/develop/use-write-once-path.md"
+      ]
+    },
+    {
+      "section": "Application data",
+      "title": "Install and use a commit hook",
+      "scope": "Implement a supported hook, deploy it consistently, attach it to a bucket policy, and verify success and failure behaviour.",
+      "path": "how-to/application-data/install-and-use-a-commit-hook.md",
+      "sources": [
+        "how-to/develop/write-commit-hook.md"
+      ]
+    },
+    {
+      "section": "Indexes and queries",
+      "title": "Add and query secondary indexes",
+      "scope": "Add index entries to objects, run exact and range lookups, and retrieve or page through the matching results.",
+      "path": "how-to/indexes-and-queries/add-and-query-secondary-indexes.md",
+      "sources": [
+        "how-to/develop/query-secondary-indexes.md"
+      ]
+    },
+    {
+      "section": "Indexes and queries",
+      "title": "Run exact and range queries with the Query API",
+      "scope": "Construct a minimal query over an existing index, submit it, and verify the returned keys or terms.",
+      "path": "how-to/indexes-and-queries/run-exact-and-range-queries-with-the-query-api.md",
+      "sources": [
+        "how-to/develop/query-with-query-api.md"
+      ]
+    },
+    {
+      "section": "Indexes and queries",
+      "title": "Filter queries using projected attributes",
+      "scope": "Encode the required attributes in index terms, write evaluation and filter expressions, and verify matches against known data.",
+      "path": "how-to/indexes-and-queries/filter-queries-using-projected-attributes.md",
+      "sources": []
+    },
+    {
+      "section": "Indexes and queries",
+      "title": "Combine queries and accumulate results",
+      "scope": "Combine index scans and select the required key, term, or count accumulation mode, including deliberate duplicate handling.",
+      "path": "how-to/indexes-and-queries/combine-queries-and-accumulate-results.md",
+      "sources": []
+    },
+    {
+      "section": "Indexes and queries",
+      "title": "Retrieve paginated or asynchronous query results",
+      "scope": "Follow the supported result-delivery mechanism, preserve continuations, and handle timeouts and incomplete responses correctly.",
+      "path": "how-to/indexes-and-queries/retrieve-paginated-or-asynchronous-query-results.md",
+      "sources": [
+        "how-to/develop/consume-queued-query-results.md"
+      ]
+    },
+    {
+      "section": "Replication and reconciliation",
+      "title": "Enable TicTac anti-entropy",
+      "scope": "Configure the prerequisites and local reconciliation settings, verify tree creation and exchanges, and check repair progress.",
+      "path": "how-to/replication-and-reconciliation/enable-tictac-anti-entropy.md",
+      "sources": [
+        "how-to/configure/replication/enable-tictac-aae.md"
+      ]
+    },
+    {
+      "section": "Replication and reconciliation",
+      "title": "Connect clusters with next-generation replication",
+      "scope": "Configure a complete source-to-sink connection with matching queue and endpoint settings, then verify data movement end to end.",
+      "path": "how-to/replication-and-reconciliation/connect-clusters-with-next-generation-replication.md",
+      "sources": [
+        "how-to/configure/replication/configure-next-generation-replication.md"
+      ]
+    },
+    {
+      "section": "Replication and reconciliation",
+      "title": "Enable real-time replication",
+      "scope": "Enable replication for the intended data, verify the source and sink path, and check delivery of a new write and deletion.",
+      "path": "how-to/replication-and-reconciliation/enable-real-time-replication.md",
+      "sources": [
+        "how-to/configure/replication/configure-real-time-replication.md"
+      ]
+    },
+    {
+      "section": "Replication and reconciliation",
+      "title": "Configure replication queues and filters",
+      "scope": "Define queues, filters, capacity, and compression for the workload, then verify which objects enter each queue.",
+      "path": "how-to/replication-and-reconciliation/configure-replication-queues-and-filters.md",
+      "sources": [
+        "how-to/configure/replication/configure-replication-queues.md"
+      ]
+    },
+    {
+      "section": "Replication and reconciliation",
+      "title": "Configure sink nodes and consumers",
+      "scope": "Connect the intended consumers to source queues, configure their concurrency, and verify fetching and applying replicated objects.",
+      "path": "how-to/replication-and-reconciliation/configure-sink-nodes-and-consumers.md",
+      "sources": [
+        "how-to/configure/replication/configure-sink-nodes.md"
+      ]
+    },
+    {
+      "section": "Replication and reconciliation",
+      "title": "Configure and schedule fullsync",
+      "scope": "Configure current-generation fullsync, schedule exchanges, verify convergence, and inspect the results of an interrupted or incomplete run.",
+      "path": "how-to/replication-and-reconciliation/configure-and-schedule-fullsync.md",
+      "sources": [
+        "how-to/configure/replication/configure-fullsync.md"
+      ]
+    },
+    {
+      "section": "Replication and reconciliation",
+      "title": "Reconcile selected buckets",
+      "scope": "Configure bucket-scoped reconciliation and verify that the intended data converges without expanding the scope unnecessarily.",
+      "path": "how-to/replication-and-reconciliation/reconcile-selected-buckets.md",
+      "sources": [
+        "how-to/configure/replication/per-bucket-reconciliation.md",
+        "how-to/operate/resync-bucket.md"
+      ]
+    },
+    {
+      "section": "Replication and reconciliation",
+      "title": "Exclude temporary data from cached AAE trees",
+      "scope": "Apply the exclusion to a suitable bucket policy and check its effect on repair and replication requirements.",
+      "path": "how-to/replication-and-reconciliation/exclude-temporary-data-from-cached-aae-trees.md",
+      "sources": [
+        "how-to/configure/replication/exclude-bucket-from-aae.md"
+      ]
+    },
+    {
+      "section": "Replication and reconciliation",
+      "title": "Re-replicate a key range or time window",
+      "scope": "Select the affected data, enqueue it for the intended destination, and verify delivery and convergence.",
+      "path": "how-to/replication-and-reconciliation/re-replicate-a-key-range-or-time-window.md",
+      "sources": [
+        "how-to/operate/rereplicate-time-window.md"
+      ]
+    },
+    {
+      "section": "Replication and reconciliation",
+      "title": "Migrate to another cluster using replication",
+      "scope": "Seed and catch up a destination cluster, validate data, switch application traffic, and retain a documented recovery path.",
+      "path": "how-to/replication-and-reconciliation/migrate-to-another-cluster-using-replication.md",
+      "sources": [
+        "how-to/configure/replication/migrate-cluster.md"
+      ]
+    },
+    {
+      "section": "Replication and reconciliation",
+      "title": "Secure next-generation replication connections",
+      "scope": "Apply the current replication transport's authentication and TLS controls and verify trusted, rejected, and interrupted connections.",
+      "path": "how-to/replication-and-reconciliation/secure-next-generation-replication-connections.md",
+      "sources": []
+    },
+    {
+      "section": "Cluster lifecycle",
+      "title": "Start, stop, or restart a node",
+      "scope": "Use the deployment's service mechanism, account for ongoing traffic and background work, and verify the resulting service state.",
+      "path": "how-to/cluster-lifecycle/start-stop-or-restart-a-node.md",
+      "sources": [
+        "how-to/operate/start-stop-restart-node.md"
+      ]
+    },
+    {
+      "section": "Cluster lifecycle",
+      "title": "Plan and commit a membership change",
+      "scope": "Stage a change, inspect the plan and placement consequences, commit it, and monitor the transition to completion.",
+      "path": "how-to/cluster-lifecycle/plan-and-commit-a-membership-change.md",
+      "sources": [
+        "how-to/operate/plan-and-commit-cluster-change.md"
+      ]
+    },
+    {
+      "section": "Cluster lifecycle",
+      "title": "Add nodes to a cluster",
+      "scope": "Prepare compatible nodes, join them, inspect the membership plan, and verify ownership and handoff completion.",
+      "path": "how-to/cluster-lifecycle/add-nodes-to-a-cluster.md",
+      "sources": [
+        "how-to/operate/add-node.md"
+      ]
+    },
+    {
+      "section": "Cluster lifecycle",
+      "title": "Remove a node from a cluster",
+      "scope": "Check capacity and replica placement, plan the departure, drain ownership, and verify the remaining cluster.",
+      "path": "how-to/cluster-lifecycle/remove-a-node-from-a-cluster.md",
+      "sources": [
+        "how-to/operate/remove-node.md"
+      ]
+    },
+    {
+      "section": "Cluster lifecycle",
+      "title": "Replace a failed node",
+      "scope": "Decide whether replacement is appropriate, apply the required replacement procedure, and validate data recovery and membership.",
+      "path": "how-to/cluster-lifecycle/replace-a-failed-node.md",
+      "sources": [
+        "how-to/operate/replace-node.md"
+      ]
+    },
+    {
+      "section": "Cluster lifecycle",
+      "title": "Replace nodes without stopping the cluster",
+      "scope": "Perform controlled replacements one at a time, using health and recovery checkpoints before proceeding to the next node.",
+      "path": "how-to/cluster-lifecycle/replace-nodes-without-stopping-the-cluster.md",
+      "sources": [
+        "how-to/operate/rolling-replacement.md"
+      ]
+    },
+    {
+      "section": "Cluster lifecycle",
+      "title": "Perform a rolling restart",
+      "scope": "Drain and restart nodes in an appropriate order, waiting for cluster and background-work recovery between nodes.",
+      "path": "how-to/cluster-lifecycle/perform-a-rolling-restart.md",
+      "sources": [
+        "how-to/operate/rolling-restart.md"
+      ]
+    },
+    {
+      "section": "Cluster lifecycle",
+      "title": "Monitor and control handoffs",
+      "scope": "Inspect transfers, change the relevant controls when necessary, and confirm that paused or throttled transfers eventually complete.",
+      "path": "how-to/cluster-lifecycle/monitor-and-control-handoffs.md",
+      "sources": [
+        "how-to/operate/manage-handoffs.md"
+      ]
+    },
+    {
+      "section": "Cluster lifecycle",
+      "title": "Change node names, addresses, or cluster identity",
+      "scope": "Follow the applicable identity-change procedure, update dependent configuration, and verify membership and replication connectivity.",
+      "path": "how-to/cluster-lifecycle/change-node-names-addresses-or-cluster-identity.md",
+      "sources": [
+        "how-to/operate/change-cluster-information.md"
+      ]
+    },
+    {
+      "section": "Cluster lifecycle",
+      "title": "Upgrade an OpenRiak KV cluster",
+      "scope": "Verify the source-version path and prerequisites, upgrade in stages, and check application, storage, and replication compatibility.",
+      "path": "how-to/cluster-lifecycle/upgrade-a-cluster.md",
+      "sources": [
+        "how-to/operate/upgrade-cluster.md"
+      ]
+    },
+    {
+      "section": "Cluster lifecycle",
+      "title": "Roll back a compatible cluster upgrade",
+      "scope": "Determine whether rollback remains supported for the actual data and activated features, then follow the version-specific downgrade procedure.",
+      "path": "how-to/cluster-lifecycle/roll-back-a-compatible-cluster-upgrade.md",
+      "sources": [
+        "how-to/operate/downgrade-cluster.md"
+      ]
+    },
+    {
+      "section": "Cluster lifecycle",
+      "title": "Back up node data and cluster metadata",
+      "scope": "Choose a supported backend-specific backup procedure, capture the required metadata, and verify that the backup can be restored.",
+      "path": "how-to/cluster-lifecycle/back-up-node-data-and-cluster-metadata.md",
+      "sources": [
+        "how-to/operate/back-up-node.md"
+      ]
+    },
+    {
+      "section": "Cluster lifecycle",
+      "title": "Restore node data from a backup",
+      "scope": "Restore the appropriate backend and metadata into the intended recovery environment and verify data before returning traffic.",
+      "path": "how-to/cluster-lifecycle/restore-node-data-from-a-backup.md",
+      "sources": [
+        "how-to/operate/restore-node.md"
+      ]
+    },
+    {
+      "section": "Cluster lifecycle",
+      "title": "Recover a cluster after a widespread failure",
+      "scope": "Assess surviving data and backups, choose a recovery sequence, restore service, and validate the recovered dataset and application behaviour.",
+      "path": "how-to/cluster-lifecycle/recover-a-cluster-after-a-widespread-failure.md",
+      "sources": [
+        "how-to/troubleshoot/recover-cluster-failure.md"
+      ]
+    },
+    {
+      "section": "Monitoring and diagnostics",
+      "title": "Perform routine cluster health checks",
+      "scope": "Check availability, capacity, repairs, replication, backups, and errors against an agreed operational baseline.",
+      "path": "how-to/monitoring-and-diagnostics/perform-routine-cluster-health-checks.md",
+      "sources": [
+        "how-to/operate/routine-operations-checklist.md"
+      ]
+    },
+    {
+      "section": "Monitoring and diagnostics",
+      "title": "Inspect node and cluster health",
+      "scope": "Use status commands and metrics to identify unhealthy nodes, membership disagreement, resource pressure, and stalled background work.",
+      "path": "how-to/monitoring-and-diagnostics/inspect-node-and-cluster-health.md",
+      "sources": [
+        "how-to/operate/inspect-node-and-cluster.md"
+      ]
+    },
+    {
+      "section": "Monitoring and diagnostics",
+      "title": "Inspect vnode and backend status",
+      "scope": "Locate affected partitions and stores, interpret the relevant status fields, and identify evidence needed for further diagnosis.",
+      "path": "how-to/monitoring-and-diagnostics/inspect-vnode-and-backend-status.md",
+      "sources": [
+        "how-to/operate/check-vnode-status.md"
+      ]
+    },
+    {
+      "section": "Monitoring and diagnostics",
+      "title": "Monitor anti-entropy progress",
+      "scope": "Check trees, exchanges, backlogs, and failures for the configured anti-entropy implementation and identify incomplete convergence.",
+      "path": "how-to/monitoring-and-diagnostics/monitor-anti-entropy-progress.md",
+      "sources": [
+        "how-to/operate/monitor-active-anti-entropy.md"
+      ]
+    },
+    {
+      "section": "Monitoring and diagnostics",
+      "title": "Investigate read-repair activity",
+      "scope": "Measure read repairs, relate them to workload and recent failures, and identify patterns that require investigation.",
+      "path": "how-to/monitoring-and-diagnostics/investigate-read-repair-activity.md",
+      "sources": [
+        "how-to/operate/monitor-read-repairs.md"
+      ]
+    },
+    {
+      "section": "Monitoring and diagnostics",
+      "title": "Monitor replication and inter-cluster reconciliation",
+      "scope": "Observe queue growth, delivery, exchange results, and lag to distinguish healthy catch-up from a stalled replication path.",
+      "path": "how-to/monitoring-and-diagnostics/monitor-replication-and-inter-cluster-reconciliation.md",
+      "sources": [
+        "how-to/operate/monitor-reconciliation.md"
+      ]
+    },
+    {
+      "section": "Monitoring and diagnostics",
+      "title": "Inspect worker queues and saturation",
+      "scope": "Compare queue length, wait times, and worker activity to identify constrained background or foreground work.",
+      "path": "how-to/monitoring-and-diagnostics/inspect-worker-queues-and-saturation.md",
+      "sources": [
+        "how-to/operate/monitor-worker-pools.md"
+      ]
+    },
+    {
+      "section": "Monitoring and diagnostics",
+      "title": "Collect diagnostic evidence",
+      "scope": "Gather the relevant status, logs, metrics, and configuration into a reproducible incident record without exposing credentials.",
+      "path": "how-to/monitoring-and-diagnostics/collect-diagnostic-evidence.md",
+      "sources": [
+        "how-to/operate/collect-debug-information.md"
+      ]
+    },
+    {
+      "section": "Monitoring and diagnostics",
+      "title": "Inspect a node through the remote console",
+      "scope": "Attach to the intended node, perform a bounded diagnostic operation, and exit without unintentionally changing node state.",
+      "path": "how-to/monitoring-and-diagnostics/inspect-a-node-through-the-remote-console.md",
+      "sources": [
+        "how-to/operate/use-remote-console.md"
+      ]
+    },
+    {
+      "section": "Monitoring and diagnostics",
+      "title": "Inspect stored objects and metadata",
+      "scope": "Examine object representations, causal context, and backend state using the supported diagnostic interfaces.",
+      "path": "how-to/monitoring-and-diagnostics/inspect-stored-objects-and-metadata.md",
+      "sources": [
+        "how-to/operate/inspect-data.md"
+      ]
+    },
+    {
+      "section": "Data inspection and repair",
+      "title": "Run and retrieve a long-running AAE fold",
+      "scope": "Start the selected fold through the CLI or remote console, track completion, and retrieve its output after a timeout or disconnect.",
+      "path": "how-to/data-inspection-and-repair/run-and-retrieve-a-long-running-aae-fold.md",
+      "sources": [
+        "how-to/operate/aae-fold/run-from-command-line.md"
+      ]
+    },
+    {
+      "section": "Data inspection and repair",
+      "title": "Inventory buckets using AAE folds",
+      "scope": "List the buckets in the intended scope and use the result to plan inspection or maintenance work.",
+      "path": "how-to/data-inspection-and-repair/inventory-buckets-using-aae-folds.md",
+      "sources": [
+        "how-to/operate/aae-fold/list-buckets.md"
+      ]
+    },
+    {
+      "section": "Data inspection and repair",
+      "title": "Find oversized objects or excessive siblings",
+      "scope": "Select key ranges and object-size or sibling filters, retrieve the matching objects, and verify the findings before corrective action.",
+      "path": "how-to/data-inspection-and-repair/find-oversized-objects-or-excessive-siblings.md",
+      "sources": [
+        "how-to/operate/aae-fold/find-keys.md"
+      ]
+    },
+    {
+      "section": "Data inspection and repair",
+      "title": "Count objects in a selected scope",
+      "scope": "Use the documented count mode and filters to obtain the count required for a migration, audit, or maintenance check.",
+      "path": "how-to/data-inspection-and-repair/count-objects-in-a-selected-scope.md",
+      "sources": [
+        "how-to/operate/aae-fold/count-keys.md"
+      ]
+    },
+    {
+      "section": "Data inspection and repair",
+      "title": "Measure object sizes and sibling distributions",
+      "scope": "Collect aggregate object statistics over a bounded scope and interpret the result for capacity or conflict investigation.",
+      "path": "how-to/data-inspection-and-repair/measure-object-sizes-and-sibling-distributions.md",
+      "sources": [
+        "how-to/operate/aae-fold/object-statistics.md"
+      ]
+    },
+    {
+      "section": "Data inspection and repair",
+      "title": "Locate tombstones",
+      "scope": "Find deletion markers in the intended bucket, key range, or time window before investigating retention or reclamation.",
+      "path": "how-to/data-inspection-and-repair/locate-tombstones.md",
+      "sources": [
+        "how-to/operate/aae-fold/find-tombstones.md"
+      ]
+    },
+    {
+      "section": "Data inspection and repair",
+      "title": "Count retained tombstones",
+      "scope": "Use the documented count mode to measure deletion markers and compare retention or reaping outcomes.",
+      "path": "how-to/data-inspection-and-repair/count-retained-tombstones.md",
+      "sources": [
+        "how-to/operate/aae-fold/count-tombstones.md"
+      ]
+    },
+    {
+      "section": "Data inspection and repair",
+      "title": "Repair a selected key range",
+      "scope": "Select the damaged or divergent scope, trigger the documented repair, and verify recovery without repairing unrelated data.",
+      "path": "how-to/data-inspection-and-repair/repair-a-selected-key-range.md",
+      "sources": [
+        "how-to/operate/aae-fold/repair-key-range.md"
+      ]
+    },
+    {
+      "section": "Data inspection and repair",
+      "title": "Erase a selected set of keys",
+      "scope": "Verify the filter and candidate set before erasure, execute the bounded operation, and check the resulting deletion state.",
+      "path": "how-to/data-inspection-and-repair/erase-a-selected-set-of-keys.md",
+      "sources": [
+        "how-to/operate/aae-fold/erase-keys.md"
+      ]
+    },
+    {
+      "section": "Data inspection and repair",
+      "title": "Reap eligible tombstones",
+      "scope": "Check the retention and replication prerequisites, identify eligible markers, perform reaping, and verify the result.",
+      "path": "how-to/data-inspection-and-repair/reap-eligible-tombstones.md",
+      "sources": [
+        "how-to/operate/aae-fold/reap-tombstones.md"
+      ]
+    },
+    {
+      "section": "Data inspection and repair",
+      "title": "Schedule erasure and tombstone reaping",
+      "scope": "Configure recurring reclamation work with an appropriate scope, rate, and observation of its effect on the workload.",
+      "path": "how-to/data-inspection-and-repair/schedule-erasure-and-tombstone-reaping.md",
+      "sources": [
+        "how-to/operate/schedule-object-reaping.md"
+      ]
+    },
+    {
+      "section": "Data inspection and repair",
+      "title": "Rebuild AAE trees",
+      "scope": "Select the affected trees, request a rebuild, monitor completion, and verify that subsequent exchanges operate correctly.",
+      "path": "how-to/data-inspection-and-repair/rebuild-aae-trees.md",
+      "sources": [
+        "how-to/operate/rebuild-aae-trees.md"
+      ]
+    },
+    {
+      "section": "Data inspection and repair",
+      "title": "Repair a vnode or node from surviving replicas",
+      "scope": "Identify the affected ownership, trigger the applicable repair, monitor progress, and verify the reconstructed data.",
+      "path": "how-to/data-inspection-and-repair/repair-a-vnode-or-node-from-surviving-replicas.md",
+      "sources": [
+        "how-to/operate/repair-vnode.md"
+      ]
+    },
+    {
+      "section": "Data inspection and repair",
+      "title": "Control repair impact during application traffic",
+      "scope": "Set and observe repair concurrency and resource use so that recovery proceeds within the application's service requirements.",
+      "path": "how-to/data-inspection-and-repair/control-repair-impact-during-application-traffic.md",
+      "sources": [
+        "how-to/operate/repair-under-load.md"
+      ]
+    },
+    {
+      "section": "Data inspection and repair",
+      "title": "Repair inconsistent secondary indexes",
+      "scope": "Identify a supported index-repair path, run and monitor the repair, and verify queries against known object data.",
+      "path": "how-to/data-inspection-and-repair/repair-inconsistent-secondary-indexes.md",
+      "sources": [
+        "how-to/troubleshoot/repair-secondary-indexes.md"
+      ]
+    },
+    {
+      "section": "Security",
+      "title": "Enable authentication and authorization",
+      "scope": "Prepare administrative access, enable the controls, and verify both allowed and rejected operations before opening application access.",
+      "path": "how-to/security/enable-authentication-and-authorization.md",
+      "sources": [
+        "how-to/secure/enable-security.md"
+      ]
+    },
+    {
+      "section": "Security",
+      "title": "Create, update, and remove users",
+      "scope": "Manage user identities and credentials, verify authentication, and revoke access when an identity is no longer needed.",
+      "path": "how-to/security/create-update-and-remove-users.md",
+      "sources": [
+        "how-to/secure/manage-users.md"
+      ]
+    },
+    {
+      "section": "Security",
+      "title": "Manage groups and membership",
+      "scope": "Create groups, assign users, change membership, and verify the resulting effective permissions.",
+      "path": "how-to/security/manage-groups-and-membership.md",
+      "sources": [
+        "how-to/secure/manage-groups.md"
+      ]
+    },
+    {
+      "section": "Security",
+      "title": "Configure authentication sources",
+      "scope": "Match connections to the intended authentication methods and verify source precedence and rejected connections.",
+      "path": "how-to/security/configure-authentication-sources.md",
+      "sources": [
+        "how-to/secure/manage-sources.md"
+      ]
+    },
+    {
+      "section": "Security",
+      "title": "Grant and revoke permissions",
+      "scope": "Apply permissions to the intended users, groups, and bucket scopes, then test permitted and denied actions.",
+      "path": "how-to/security/grant-and-revoke-permissions.md",
+      "sources": [
+        "how-to/secure/manage-permissions.md"
+      ]
+    },
+    {
+      "section": "Security",
+      "title": "Configure and rotate TLS certificates",
+      "scope": "Install a verified trust chain and listener configuration, validate peers, and rotate certificates while preserving required access.",
+      "path": "how-to/security/configure-and-rotate-tls-certificates.md",
+      "sources": [
+        "how-to/secure/configure-tls.md"
+      ]
+    },
+    {
+      "section": "Security",
+      "title": "Restrict client, node, and administrative network access",
+      "scope": "Apply interface and network restrictions appropriate to each connection type and verify allowed and blocked paths.",
+      "path": "how-to/security/restrict-client-node-and-administrative-network-access.md",
+      "sources": [
+        "how-to/secure/secure-networking.md"
+      ]
+    },
+    {
+      "section": "Security",
+      "title": "Authenticate an application client",
+      "scope": "Configure credentials and trust material in a verified client, connect to the intended endpoint, and handle authentication failures.",
+      "path": "how-to/security/authenticate-an-application-client.md",
+      "sources": [
+        "how-to/develop/authenticate-client.md"
+      ]
+    },
+    {
+      "section": "Security",
+      "title": "Audit deployment security",
+      "scope": "Check identities, permissions, exposed interfaces, certificates, secrets, and logging against the deployment's security requirements.",
+      "path": "how-to/security/audit-deployment-security.md",
+      "sources": [
+        "how-to/secure/best-practices.md"
+      ]
+    },
+    {
+      "section": "Performance",
+      "title": "Benchmark a representative workload",
+      "scope": "Define data, access patterns, concurrency, and success metrics, run repeatable measurements, and retain the environment and results.",
+      "path": "how-to/performance/benchmark-a-representative-workload.md",
+      "sources": [
+        "how-to/tune/benchmark-cluster.md"
+      ]
+    },
+    {
+      "section": "Performance",
+      "title": "Reduce request latency",
+      "scope": "Identify the dominant source of delay, make one relevant change, and compare tail latency and throughput against the baseline.",
+      "path": "how-to/performance/reduce-request-latency.md",
+      "sources": [
+        "how-to/tune/reduce-latency.md"
+      ]
+    },
+    {
+      "section": "Performance",
+      "title": "Set and verify file-descriptor limits",
+      "scope": "Apply limits through the actual service or container environment and verify the running process receives them.",
+      "path": "how-to/performance/set-and-verify-file-descriptor-limits.md",
+      "sources": [
+        "how-to/tune/set-open-files-limit.md"
+      ]
+    },
+    {
+      "section": "Performance",
+      "title": "Tune the Erlang VM for a measured bottleneck",
+      "scope": "Use evidence to select applicable scheduler, process, port, or distribution settings and verify the effect under representative load.",
+      "path": "how-to/performance/tune-the-erlang-vm-for-a-measured-bottleneck.md",
+      "sources": [
+        "how-to/tune/tune-erlang-vm.md",
+        "how-to/operate/monitor-vm-statistics.md"
+      ]
+    },
+    {
+      "section": "Performance",
+      "title": "Tune a deployment on AWS",
+      "scope": "Measure storage, instance, network, and operating-system constraints, then validate workload-specific infrastructure changes.",
+      "path": "how-to/performance/tune-a-deployment-on-aws.md",
+      "sources": [
+        "how-to/tune/tune-aws-deployment.md"
+      ]
+    },
+    {
+      "section": "Performance",
+      "title": "Tune replication throughput and lag",
+      "scope": "Measure the configured replication generation's bottlenecks, adjust its relevant controls, and verify delivery and application impact.",
+      "path": "how-to/performance/tune-replication-throughput-and-lag.md",
+      "sources": [
+        "how-to/tune/tune-multi-datacenter.md"
+      ]
+    },
+    {
+      "section": "Performance",
+      "title": "Tune filesystems, memory, and network settings",
+      "scope": "Apply supported operating-system changes to a measured deployment and verify their effect; extract actionable steps from the existing performance landing page.",
+      "path": "how-to/performance/tune-filesystems-memory-and-network-settings.md",
+      "sources": [
+        "how-to/tune/_index.md"
+      ]
+    },
+    {
+      "section": "Performance",
+      "title": "Reduce Query API cost",
+      "scope": "Measure scan size, selectivity, projections, accumulation, and result delivery, then compare query changes against correctness and latency targets.",
+      "path": "how-to/performance/reduce-query-api-cost.md",
+      "sources": []
+    },
+    {
+      "section": "Troubleshooting",
+      "title": "Diagnose a node that will not start",
+      "scope": "Work through configuration, permissions, identity, ports, and storage evidence to identify and correct the startup failure.",
+      "path": "how-to/troubleshooting/diagnose-a-node-that-will-not-start.md",
+      "sources": [
+        "how-to/troubleshoot/startup-failures.md"
+      ]
+    },
+    {
+      "section": "Troubleshooting",
+      "title": "Diagnose node crashes",
+      "scope": "Preserve logs and crash evidence, distinguish runtime, resource, and storage failures, and verify the selected recovery action.",
+      "path": "how-to/troubleshooting/diagnose-node-crashes.md",
+      "sources": [
+        "how-to/troubleshoot/node-crashes.md"
+      ]
+    },
+    {
+      "section": "Troubleshooting",
+      "title": "Diagnose a slow or overloaded cluster",
+      "scope": "Correlate client latency with queues, resource usage, background work, and recent changes before applying a targeted remedy.",
+      "path": "how-to/troubleshooting/diagnose-a-slow-or-overloaded-cluster.md",
+      "sources": [
+        "how-to/troubleshoot/slow-cluster.md"
+      ]
+    },
+    {
+      "section": "Troubleshooting",
+      "title": "Diagnose client connection and request failures",
+      "scope": "Separate connectivity, protocol, authentication, timeout, and client-library problems with minimal reproducible checks.",
+      "path": "how-to/troubleshooting/diagnose-client-connection-and-request-failures.md",
+      "sources": [
+        "how-to/troubleshoot/client-errors.md"
+      ]
+    },
+    {
+      "section": "Troubleshooting",
+      "title": "Diagnose unexpected API responses",
+      "scope": "Interpret status codes and error payloads, including unexpected HTTP 204 responses, and verify the request and object state.",
+      "path": "how-to/troubleshooting/diagnose-unexpected-api-responses.md",
+      "sources": [
+        "how-to/troubleshoot/api-errors.md",
+        "how-to/troubleshoot/http-204.md"
+      ]
+    },
+    {
+      "section": "Troubleshooting",
+      "title": "Diagnose missing, stale, or conflicting data",
+      "scope": "Check namespace, causal context, consistency options, replicas, deletion, and replication state against the observed application result.",
+      "path": "how-to/troubleshooting/diagnose-missing-stale-or-conflicting-data.md",
+      "sources": [
+        "how-to/troubleshoot/unexpected-or-stale-data.md"
+      ]
+    },
+    {
+      "section": "Troubleshooting",
+      "title": "Diagnose stalled or incomplete replication",
+      "scope": "Check connectivity, queues, sinks, exchange results, and generation-specific controls to locate the failed part of the pipeline.",
+      "path": "how-to/troubleshooting/diagnose-stalled-or-incomplete-replication.md",
+      "sources": [
+        "how-to/troubleshoot/replication-failures.md"
+      ]
+    },
+    {
+      "section": "Troubleshooting",
+      "title": "Recover a failed node or choose replacement",
+      "scope": "Determine whether the original node can rejoin safely or needs repair or replacement, then verify the chosen recovery path.",
+      "path": "how-to/troubleshooting/recover-a-failed-node-or-choose-replacement.md",
+      "sources": [
+        "how-to/troubleshoot/recover-failed-node.md"
+      ]
+    },
+    {
+      "section": "Troubleshooting",
+      "title": "Investigate a running node with Erlang diagnostics",
+      "scope": "Use bounded process, scheduler, profiling, or tracing checks to answer a specific incident question and remove diagnostic overhead afterward.",
+      "path": "how-to/troubleshooting/investigate-a-running-node-with-erlang-diagnostics.md",
+      "sources": [
+        "how-to/troubleshoot/erlang-vm.md"
+      ]
+    },
+    {
+      "section": "Legacy and specialist workflows",
+      "title": "Maintain a legacy LevelDB deployment",
+      "scope": "Document configuration and maintenance needed by existing installations, with explicit version applicability and a link to backend migration.",
+      "path": "how-to/legacy-and-specialist-workflows/maintain-a-legacy-leveldb-deployment.md",
+      "sources": [
+        "how-to/configure/backends/leveldb.md"
+      ]
+    },
+    {
+      "section": "Legacy and specialist workflows",
+      "title": "Maintain an in-memory backend deployment",
+      "scope": "State the data-loss and lifecycle constraints, configure a verified use case, and identify the applicable release limitations.",
+      "path": "how-to/legacy-and-specialist-workflows/maintain-an-in-memory-backend-deployment.md",
+      "sources": [
+        "how-to/configure/backends/memory.md"
+      ]
+    },
+    {
+      "section": "Legacy and specialist workflows",
+      "title": "Maintain multi-backend and prefix routing",
+      "scope": "Configure supported routing for existing deployments and document the prerequisites and consequences of changing a route.",
+      "path": "how-to/legacy-and-specialist-workflows/maintain-multi-backend-and-prefix-routing.md",
+      "sources": [
+        "how-to/configure/backends/multi.md",
+        "how-to/configure/backends/prefix-multi.md"
+      ]
+    },
+    {
+      "section": "Legacy and specialist workflows",
+      "title": "Maintain legacy active anti-entropy",
+      "scope": "Configure and monitor an existing legacy AAE installation and connect the procedure to the current repair and migration guidance.",
+      "path": "how-to/legacy-and-specialist-workflows/maintain-legacy-active-anti-entropy.md",
+      "sources": [
+        "how-to/configure/replication/configure-legacy-aae.md"
+      ]
+    },
+    {
+      "section": "Legacy and specialist workflows",
+      "title": "Maintain legacy v2 replication",
+      "scope": "Keep a clearly scoped procedure for existing v2 deployments, with verified commands, compatibility boundaries, and migration links.",
+      "path": "how-to/legacy-and-specialist-workflows/maintain-legacy-v2-replication.md",
+      "sources": [
+        "how-to/configure/replication/configure-v2-multi-datacenter.md"
+      ]
+    },
+    {
+      "section": "Legacy and specialist workflows",
+      "title": "Maintain legacy v3 replication",
+      "scope": "Document v3 riak_repl setup and maintenance without presenting it as the current next-generation replication architecture.",
+      "path": "how-to/legacy-and-specialist-workflows/maintain-legacy-v3-replication.md",
+      "sources": [
+        "how-to/configure/replication/configure-v3-multi-datacenter.md"
+      ]
+    },
+    {
+      "section": "Legacy and specialist workflows",
+      "title": "Configure legacy replication through NAT",
+      "scope": "Preserve the generation-specific address and listener procedure for deployments that require it, and verify both connection directions.",
+      "path": "how-to/legacy-and-specialist-workflows/configure-legacy-replication-through-nat.md",
+      "sources": [
+        "how-to/configure/replication/configure-replication-through-nat.md"
+      ]
+    },
+    {
+      "section": "Legacy and specialist workflows",
+      "title": "Secure legacy replication connections",
+      "scope": "Separate the v2 and v3 trust and configuration paths, verify peer validation, and remove unrelated placeholder material.",
+      "path": "how-to/legacy-and-specialist-workflows/secure-legacy-replication-connections.md",
+      "sources": [
+        "how-to/configure/replication/secure-replication.md"
+      ]
+    },
+    {
+      "section": "Legacy and specialist workflows",
+      "title": "Implement a legacy replication hook",
+      "scope": "Define the intended filtering or transformation, deploy the hook for the applicable replication generation, and test send and receive behaviour.",
+      "path": "how-to/legacy-and-specialist-workflows/implement-a-legacy-replication-hook.md",
+      "sources": [
+        "how-to/develop/write-replication-hook.md"
+      ]
+    },
+    {
+      "section": "Legacy and specialist workflows",
+      "title": "Configure and run a MapReduce job",
+      "scope": "Prepare the required execution environment, submit a bounded job, and verify results while identifying release-specific restrictions.",
+      "path": "how-to/legacy-and-specialist-workflows/configure-and-run-a-mapreduce-job.md",
+      "sources": [
+        "how-to/configure/mapreduce.md",
+        "how-to/develop/run-mapreduce.md"
+      ]
+    },
+    {
+      "section": "Legacy and specialist workflows",
+      "title": "Evaluate experimental strong consistency",
+      "scope": "Provide a disposable evaluation procedure with its documented compatibility and failure boundaries; keep it outside the normal production setup path.",
+      "path": "how-to/legacy-and-specialist-workflows/evaluate-experimental-strong-consistency.md",
+      "sources": [
+        "how-to/configure/strong-consistency.md"
+      ]
+    },
+    {
+      "section": "Legacy and specialist workflows",
+      "title": "Set up a compatible Redis add-on deployment",
+      "scope": "Specify the verified component versions, configure the add-on and backing buckets, and check its connection and cache behaviour.",
+      "path": "how-to/legacy-and-specialist-workflows/set-up-a-compatible-redis-add-on-deployment.md",
+      "sources": [
+        "how-to/redis-add-on/set-up.md"
+      ]
+    },
+    {
+      "section": "Legacy and specialist workflows",
+      "title": "Use and monitor the Redis add-on",
+      "scope": "Perform the supported cache workflow, verify read-through and write behaviour, and inspect its operational metrics.",
+      "path": "how-to/legacy-and-specialist-workflows/use-and-monitor-the-redis-add-on.md",
+      "sources": [
+        "how-to/redis-add-on/use.md"
+      ]
+    },
+    {
+      "section": "Legacy and specialist workflows",
+      "title": "Develop an application using the Redis add-on",
+      "scope": "Apply the add-on's object and cache semantics to an application, including configuration, conflicting values, and deletion behaviour.",
+      "path": "how-to/legacy-and-specialist-workflows/develop-an-application-using-the-redis-add-on.md",
+      "sources": [
+        "how-to/redis-add-on/develop.md"
+      ]
+    }
+  ],
+  "reference": [
+    {
+      "section": "Orientation and compatibility",
+      "title": "Glossary",
+      "scope": "Define the terminology used across the documentation and link each substantial concept to its Foundations explanation.",
+      "path": "reference/orientation-and-compatibility/glossary.md",
+      "sources": [
+        "foundations/foundations/glossary.md"
+      ]
+    },
+    {
+      "section": "Orientation and compatibility",
+      "title": "Platforms, architectures, and Erlang/OTP compatibility",
+      "scope": "Record the verified platform, package, architecture, and runtime combinations for this release, including applicable lifecycle information.",
+      "path": "reference/orientation-and-compatibility/platforms-architectures-and-erlang-otp-compatibility.md",
+      "sources": [
+        "reference/releases/supported-platforms.md"
+      ]
+    },
+    {
+      "section": "Orientation and compatibility",
+      "title": "Cluster, client, and replication compatibility",
+      "scope": "State supported mixed-version combinations, protocol and client constraints, and upgrade or downgrade boundaries.",
+      "path": "reference/orientation-and-compatibility/cluster-client-and-replication-compatibility.md",
+      "sources": [
+        "reference/releases/version-compatibility.md"
+      ]
+    },
+    {
+      "section": "Orientation and compatibility",
+      "title": "Feature status and deprecations",
+      "scope": "Identify current, legacy, experimental, deprecated, and removed features with release applicability and links to alternatives.",
+      "path": "reference/orientation-and-compatibility/feature-status-and-deprecations.md",
+      "sources": [
+        "reference/releases/deprecations.md"
+      ]
+    },
+    {
+      "section": "Orientation and compatibility",
+      "title": "Replication-generation compatibility",
+      "scope": "Compare next-generation replication and legacy v2/v3 capabilities, wire compatibility, topology constraints, and migration boundaries.",
+      "path": "reference/orientation-and-compatibility/replication-generation-compatibility.md",
+      "sources": [
+        "reference/operations/multi-datacenter-comparison.md"
+      ]
+    },
+    {
+      "section": "Orientation and compatibility",
+      "title": "Backend capability matrix",
+      "scope": "Record each backend's persistence, indexing, data-type, expiry, and operational capabilities for the documented release.",
+      "path": "reference/orientation-and-compatibility/backend-capability-matrix.md",
+      "sources": []
+    },
+    {
+      "section": "Configuration",
+      "title": "All configuration settings and defaults",
+      "scope": "Provide the searchable generated defaults table as the complete setting index, with names, descriptions, types, constraints, and platform-specific defaults.",
+      "path": "reference/configuration/all-configuration-settings-and-defaults.md",
+      "sources": []
+    },
+    {
+      "section": "Configuration",
+      "title": "Configuration files, syntax, and precedence",
+      "scope": "Define riak.conf and advanced.config syntax, supported value forms, precedence, validation, and restart requirements.",
+      "path": "reference/configuration/configuration-files-syntax-and-precedence.md",
+      "sources": []
+    },
+    {
+      "section": "Configuration",
+      "title": "Node identity, directories, and ring settings",
+      "scope": "Describe node names, cookies, paths, ring creation, and related node settings using filtered generated configuration metadata.",
+      "path": "reference/configuration/node-identity-directories-and-ring-settings.md",
+      "sources": [
+        "reference/configuration/node.md"
+      ]
+    },
+    {
+      "section": "Configuration",
+      "title": "Listeners and networking settings",
+      "scope": "Define client and inter-node listeners, addresses, ports, socket controls, and applicable network limits.",
+      "path": "reference/configuration/listeners-and-networking-settings.md",
+      "sources": [
+        "reference/configuration/networking.md"
+      ]
+    },
+    {
+      "section": "Configuration",
+      "title": "Erlang VM and runtime settings",
+      "scope": "List supported scheduler, process, port, memory, distribution, and shutdown settings with their types, units, and applicability.",
+      "path": "reference/configuration/erlang-vm-and-runtime-settings.md",
+      "sources": []
+    },
+    {
+      "section": "Configuration",
+      "title": "Runtime environment variables",
+      "scope": "Catalogue supported variables, their meanings, resolution rules, and interactions with configuration files and service startup.",
+      "path": "reference/configuration/runtime-environment-variables.md",
+      "sources": []
+    },
+    {
+      "section": "Configuration",
+      "title": "Bucket properties and defaults",
+      "scope": "Define every supported bucket and bucket-type property, inheritance rules, allowed combinations, and effective defaults.",
+      "path": "reference/configuration/bucket-properties-and-defaults.md",
+      "sources": [
+        "reference/configuration/bucket-properties.md"
+      ]
+    },
+    {
+      "section": "Configuration",
+      "title": "Bitcask settings",
+      "scope": "Provide generated definitions for storage, I/O, key-directory, merge, expiry, and other Bitcask settings available in this release.",
+      "path": "reference/configuration/bitcask-settings.md",
+      "sources": [
+        "reference/configuration/bitcask.md"
+      ]
+    },
+    {
+      "section": "Configuration",
+      "title": "Leveled settings",
+      "scope": "Provide generated definitions for journal, ledger, caches, compaction, snapshots, and other supported Leveled settings.",
+      "path": "reference/configuration/leveled-settings.md",
+      "sources": [
+        "reference/configuration/leveled.md"
+      ]
+    },
+    {
+      "section": "Configuration",
+      "title": "TicTac anti-entropy settings",
+      "scope": "Define current tree, exchange, scheduling, and repair controls; distinguish legacy settings through explicit links and applicability.",
+      "path": "reference/configuration/tictac-anti-entropy-settings.md",
+      "sources": [
+        "reference/configuration/active-anti-entropy.md"
+      ]
+    },
+    {
+      "section": "Configuration",
+      "title": "Next-generation replication settings",
+      "scope": "Define source queues, real-time replication, fullsync, sink consumers, and transport settings from the release metadata.",
+      "path": "reference/configuration/next-generation-replication-settings.md",
+      "sources": [
+        "reference/configuration/replication.md"
+      ]
+    },
+    {
+      "section": "Configuration",
+      "title": "Repair and handoff settings",
+      "scope": "Specify repair, transfer, concurrency, throttling, and background-work controls and their interaction constraints.",
+      "path": "reference/configuration/repair-and-handoff-settings.md",
+      "sources": [
+        "reference/configuration/repair.md"
+      ]
+    },
+    {
+      "section": "Configuration",
+      "title": "Authentication, authorization, and TLS settings",
+      "scope": "Define supported security settings, value formats, trust configuration, and applicability to each interface.",
+      "path": "reference/configuration/authentication-authorization-and-tls-settings.md",
+      "sources": [
+        "reference/configuration/security.md"
+      ]
+    },
+    {
+      "section": "Configuration",
+      "title": "Logging and handler settings",
+      "scope": "Define log destinations, levels, rotation, category routing, and structured handler configuration using generated values.",
+      "path": "reference/configuration/logging-and-handler-settings.md",
+      "sources": [
+        "reference/configuration/logging.md"
+      ]
+    },
+    {
+      "section": "Configuration",
+      "title": "Object expiration and reclamation settings",
+      "scope": "Catalogue expiration, tombstone retention, erasure, and reaping controls, distinguishing their scopes and units.",
+      "path": "reference/configuration/object-expiration-and-reclamation-settings.md",
+      "sources": []
+    },
+    {
+      "section": "Configuration",
+      "title": "Query execution settings",
+      "scope": "Define configurable query timeouts, buffers, worker limits, and other supported query controls, linking request-specific fields to the API reference.",
+      "path": "reference/configuration/query-execution-settings.md",
+      "sources": []
+    },
+    {
+      "section": "Commands",
+      "title": "riak command",
+      "scope": "Define service, console, configuration, version, and process commands with syntax, options, exit behaviour, and concise output examples.",
+      "path": "reference/commands/riak/_index.md",
+      "sources": [
+        "reference/commands/riak/_index.md"
+      ]
+    },
+    {
+      "section": "Commands",
+      "title": "riak admin command index",
+      "scope": "Provide the complete administrative command index and shared invocation conventions, routing command families to their detailed pages.",
+      "path": "reference/commands/riak/admin/_index.md",
+      "sources": [
+        "reference/commands/riak/admin/_index.md"
+      ]
+    },
+    {
+      "section": "Commands",
+      "title": "Cluster membership commands",
+      "scope": "Define join, leave, replace, forced operations, plan, commit, clear, and membership-status commands and their arguments and states.",
+      "path": "reference/commands/riak/admin/cluster/_index.md",
+      "sources": [
+        "reference/commands/riak/admin/cluster/_index.md"
+      ]
+    },
+    {
+      "section": "Commands",
+      "title": "Bucket-type commands",
+      "scope": "Define type creation, activation, update, listing, and status commands, including validation failures and lifecycle constraints.",
+      "path": "reference/commands/riak/admin/bucket-type/_index.md",
+      "sources": [
+        "reference/commands/riak/admin/bucket-type/_index.md"
+      ]
+    },
+    {
+      "section": "Commands",
+      "title": "Security commands",
+      "scope": "Define user, group, source, permission, and security-status commands and their exact argument forms.",
+      "path": "reference/commands/riak/admin/security/_index.md",
+      "sources": [
+        "reference/commands/riak/admin/security/_index.md"
+      ]
+    },
+    {
+      "section": "Commands",
+      "title": "Handoff commands",
+      "scope": "Define transfer inspection and control commands, concurrency options, and the fields returned by status and detail output.",
+      "path": "reference/commands/riak/admin/handoff/_index.md",
+      "sources": [
+        "reference/commands/riak/admin/handoff/_index.md"
+      ]
+    },
+    {
+      "section": "Commands",
+      "title": "AAE commands",
+      "scope": "Define fold invocation, tree rebuild, status, completion, and output-file options available through the command line.",
+      "path": "reference/commands/aae.md",
+      "sources": [
+        "reference/commands/aae.md"
+      ]
+    },
+    {
+      "section": "Commands",
+      "title": "Vnode and backend status commands",
+      "scope": "Define vnode-status invocation, filters, fields, and backend-specific output without embedding an incident procedure.",
+      "path": "reference/commands/vnode-status.md",
+      "sources": [
+        "reference/commands/vnode-status.md"
+      ]
+    },
+    {
+      "section": "Commands",
+      "title": "Repair and recovery commands",
+      "scope": "Define supported node, vnode, index, backup, restore, and object-conversion commands with their applicability and return states.",
+      "path": "reference/commands/repair-and-recovery-commands.md",
+      "sources": []
+    },
+    {
+      "section": "Commands",
+      "title": "Diagnostic commands",
+      "scope": "Define stat, status, diag, cluster-info, service checks, and other diagnostic command outputs and exit conditions.",
+      "path": "reference/commands/diagnostic-commands.md",
+      "sources": []
+    },
+    {
+      "section": "Data model contracts",
+      "title": "Keys and object representations",
+      "scope": "Define identifiers, namespaces, encodings, payload representation, size constraints, and transport-independent object fields.",
+      "path": "reference/data-model-contracts/keys-and-object-representations.md",
+      "sources": [
+        "reference/data/keys-and-objects.md"
+      ]
+    },
+    {
+      "section": "Data model contracts",
+      "title": "Buckets and bucket types",
+      "scope": "Define naming, addressing, lifecycle states, property inheritance, and type restrictions; link procedural administration to How-to.",
+      "path": "reference/data-model-contracts/buckets-and-bucket-types.md",
+      "sources": [
+        "reference/data/buckets-and-bucket-types.md"
+      ]
+    },
+    {
+      "section": "Data model contracts",
+      "title": "Media types and content encodings",
+      "scope": "Specify supported content-type and encoding metadata, serialization expectations, and protocol representations.",
+      "path": "reference/data-model-contracts/media-types-and-content-encodings.md",
+      "sources": [
+        "reference/data/content-types.md"
+      ]
+    },
+    {
+      "section": "Data model contracts",
+      "title": "Object metadata",
+      "scope": "Define user metadata, system metadata, index entries, timestamps, validators, and their scope and mutability.",
+      "path": "reference/data-model-contracts/object-metadata.md",
+      "sources": [
+        "reference/data/object-metadata.md"
+      ]
+    },
+    {
+      "section": "Data model contracts",
+      "title": "Causal-context and version-vector representations",
+      "scope": "Define how context is represented and transported, when it must be preserved, and how absent or invalid context is handled.",
+      "path": "reference/data-model-contracts/causal-context-and-version-vector-representations.md",
+      "sources": [
+        "reference/data/version-vectors.md"
+      ]
+    },
+    {
+      "section": "Data model contracts",
+      "title": "Distributed data-type contracts",
+      "scope": "Catalogue each type, its operations, context requirements, nested-type rules, and backend or bucket prerequisites.",
+      "path": "reference/data-model-contracts/distributed-data-type-contracts.md",
+      "sources": [
+        "reference/data/distributed-data-types.md"
+      ]
+    },
+    {
+      "section": "Data model contracts",
+      "title": "Secondary-index terms and projected attributes",
+      "scope": "Define index names, term encodings, ordering, multi-valued entries, and projected-attribute representation.",
+      "path": "reference/data-model-contracts/secondary-index-terms-and-projected-attributes.md",
+      "sources": [
+        "reference/data/secondary-indexes.md"
+      ]
+    },
+    {
+      "section": "Data model contracts",
+      "title": "Deletion, tombstone, and expiration states",
+      "scope": "Define observable deletion states, retained metadata, expiry scope, and the interfaces that report or act on those states.",
+      "path": "reference/data-model-contracts/deletion-tombstone-and-expiration-states.md",
+      "sources": [
+        "reference/operations/object-deletion.md"
+      ]
+    },
+    {
+      "section": "HTTP API",
+      "title": "HTTP conventions, authentication, and errors",
+      "scope": "Define URL structure, typed namespaces, authentication, headers, media types, status conventions, streaming, and shared error representations.",
+      "path": "reference/http-api/http-conventions-authentication-and-errors.md",
+      "sources": [
+        "reference/http-api/_index.md"
+      ]
+    },
+    {
+      "section": "HTTP API",
+      "title": "Fetch object",
+      "scope": "Specify GET and HEAD requests, conditional retrieval, context and sibling responses, not-found handling, and request options.",
+      "path": "reference/http-api/fetch-object.md",
+      "sources": [
+        "reference/http-api/fetch-object.md"
+      ]
+    },
+    {
+      "section": "HTTP API",
+      "title": "Store object",
+      "scope": "Specify PUT and POST forms, generated keys, request metadata, returned representations, write options, and failures.",
+      "path": "reference/http-api/store-object.md",
+      "sources": [
+        "reference/http-api/store-object.md"
+      ]
+    },
+    {
+      "section": "HTTP API",
+      "title": "Delete object",
+      "scope": "Specify the deletion request, context and acknowledgement options, response statuses, and repeated-deletion behaviour.",
+      "path": "reference/http-api/delete-object.md",
+      "sources": [
+        "reference/http-api/delete-object.md"
+      ]
+    },
+    {
+      "section": "HTTP API",
+      "title": "Conditional requests and latch objects",
+      "scope": "Define supported validators and preconditions, latch-related request forms, success and failure responses, and consistency boundaries.",
+      "path": "reference/http-api/conditional-requests-and-latch-objects.md",
+      "sources": [
+        "reference/http-api/conditional-requests.md"
+      ]
+    },
+    {
+      "section": "HTTP API",
+      "title": "Object request options",
+      "scope": "Catalogue read and write parameters, accepted values, per-request overrides, defaults, and relationships to bucket policies.",
+      "path": "reference/http-api/object-request-options.md",
+      "sources": [
+        "reference/http-api/object-request-options.md"
+      ]
+    },
+    {
+      "section": "HTTP API",
+      "title": "Bucket property operations",
+      "scope": "Specify property retrieval, modification, and reset requests, including typed-bucket paths, response fields, and validation errors.",
+      "path": "reference/http-api/bucket-property-operations.md",
+      "sources": [
+        "reference/http-api/get-bucket-properties.md",
+        "reference/http-api/set-bucket-properties.md",
+        "reference/http-api/reset-bucket-properties.md"
+      ]
+    },
+    {
+      "section": "HTTP API",
+      "title": "Bucket-type operations",
+      "scope": "Document the HTTP operations actually exposed for bucket types, their request forms, and the operations requiring administrative commands instead.",
+      "path": "reference/http-api/bucket-type-operations.md",
+      "sources": []
+    },
+    {
+      "section": "HTTP API",
+      "title": "Distributed data-type operations",
+      "scope": "Specify HTTP fetch and update representations for the supported data types, including operations, context, responses, and errors.",
+      "path": "reference/http-api/distributed-data-type-operations.md",
+      "sources": [
+        "reference/specialized-apis/data-type-api.md"
+      ]
+    },
+    {
+      "section": "HTTP API",
+      "title": "Secondary-index queries",
+      "scope": "Define exact and range requests, returned terms, continuation, streaming, request options, and error responses.",
+      "path": "reference/http-api/secondary-index-queries.md",
+      "sources": [
+        "reference/http-api/secondary-indexes.md"
+      ]
+    },
+    {
+      "section": "HTTP API",
+      "title": "Ping",
+      "scope": "Define the health-check request and response and the limits of what a successful ping establishes.",
+      "path": "reference/http-api/ping.md",
+      "sources": [
+        "reference/http-api/ping.md"
+      ]
+    },
+    {
+      "section": "HTTP API",
+      "title": "Status and statistics",
+      "scope": "Define the status endpoint, response representation, collection controls, and links to metric definitions.",
+      "path": "reference/http-api/status-and-statistics.md",
+      "sources": [
+        "reference/http-api/status.md"
+      ]
+    },
+    {
+      "section": "HTTP API",
+      "title": "Resource discovery",
+      "scope": "Define resource-list requests, representations, content negotiation, and advertised links.",
+      "path": "reference/http-api/resource-discovery.md",
+      "sources": [
+        "reference/http-api/list-resources.md"
+      ]
+    },
+    {
+      "section": "HTTP API",
+      "title": "Legacy bucket and key listing",
+      "scope": "Preserve the list endpoints, streaming and pagination details, restrictions, and links to the current AAE fold alternatives.",
+      "path": "reference/http-api/legacy-bucket-and-key-listing.md",
+      "sources": [
+        "reference/http-api/list-buckets.md",
+        "reference/http-api/list-keys.md"
+      ]
+    },
+    {
+      "section": "HTTP API",
+      "title": "Legacy HTTP counters",
+      "scope": "Define the older counter endpoint separately from the typed data API and state its compatibility and migration context.",
+      "path": "reference/http-api/legacy-http-counters.md",
+      "sources": [
+        "reference/http-api/counters.md"
+      ]
+    },
+    {
+      "section": "HTTP API",
+      "title": "Legacy HTTP link walking",
+      "scope": "Define link-walking syntax, representations, result handling, and release applicability for existing integrations.",
+      "path": "reference/http-api/legacy-http-link-walking.md",
+      "sources": [
+        "reference/http-api/link-walking.md"
+      ]
+    },
+    {
+      "section": "HTTP API",
+      "title": "HTTP MapReduce transport",
+      "scope": "Define job submission, content negotiation, streaming results, error responses, and links to the MapReduce job specification.",
+      "path": "reference/http-api/http-mapreduce-transport.md",
+      "sources": [
+        "reference/http-api/mapreduce.md"
+      ]
+    },
+    {
+      "section": "Protocol Buffers API",
+      "title": "Protocol framing, message codes, and errors",
+      "scope": "Define connection framing, message identifiers, serialization, streaming completion, and the shared error message contract.",
+      "path": "reference/protocol-buffers-api/protocol-framing-message-codes-and-errors.md",
+      "sources": [
+        "reference/protocol-buffers/_index.md"
+      ]
+    },
+    {
+      "section": "Protocol Buffers API",
+      "title": "Authentication messages",
+      "scope": "Define authentication and transport prerequisites, request fields, successful completion, and authentication failure responses.",
+      "path": "reference/protocol-buffers-api/authentication-messages.md",
+      "sources": [
+        "reference/protocol-buffers/authentication.md"
+      ]
+    },
+    {
+      "section": "Protocol Buffers API",
+      "title": "Fetch object messages",
+      "scope": "Define request fields, read options, content and sibling responses, context, and not-found semantics.",
+      "path": "reference/protocol-buffers-api/fetch-object-messages.md",
+      "sources": [
+        "reference/protocol-buffers/fetch-object.md"
+      ]
+    },
+    {
+      "section": "Protocol Buffers API",
+      "title": "Store object messages",
+      "scope": "Define content, key generation, write options, context handling, returned bodies, and response fields.",
+      "path": "reference/protocol-buffers-api/store-object-messages.md",
+      "sources": [
+        "reference/protocol-buffers/store-object.md"
+      ]
+    },
+    {
+      "section": "Protocol Buffers API",
+      "title": "Delete object messages",
+      "scope": "Define bucket and key addressing, context, acknowledgement options, completion, and errors.",
+      "path": "reference/protocol-buffers-api/delete-object-messages.md",
+      "sources": [
+        "reference/protocol-buffers/delete-object.md"
+      ]
+    },
+    {
+      "section": "Protocol Buffers API",
+      "title": "Bucket property messages",
+      "scope": "Define retrieval, update, and reset messages, property encodings, responses, and validation constraints.",
+      "path": "reference/protocol-buffers-api/bucket-property-messages.md",
+      "sources": [
+        "reference/protocol-buffers/get-bucket-properties.md",
+        "reference/protocol-buffers/set-bucket-properties.md",
+        "reference/protocol-buffers/reset-bucket-properties.md"
+      ]
+    },
+    {
+      "section": "Protocol Buffers API",
+      "title": "Bucket-type messages",
+      "scope": "Define type-property lookup and update messages and their constraints relative to type creation and activation.",
+      "path": "reference/protocol-buffers-api/bucket-type-messages.md",
+      "sources": [
+        "reference/protocol-buffers/get-bucket-type.md",
+        "reference/protocol-buffers/set-bucket-type.md"
+      ]
+    },
+    {
+      "section": "Protocol Buffers API",
+      "title": "Fetch data-type messages",
+      "scope": "Define the type-aware fetch request, context and value fields, options, and errors.",
+      "path": "reference/protocol-buffers-api/fetch-data-type-messages.md",
+      "sources": [
+        "reference/protocol-buffers/fetch-data-type.md"
+      ]
+    },
+    {
+      "section": "Protocol Buffers API",
+      "title": "Update data-type messages",
+      "scope": "Define the common data-type update envelope, operation encoding, context, return options, and response.",
+      "path": "reference/protocol-buffers-api/update-data-type-messages.md",
+      "sources": [
+        "reference/protocol-buffers/store-data-type.md"
+      ]
+    },
+    {
+      "section": "Protocol Buffers API",
+      "title": "Counter operations",
+      "scope": "Define counter operation fields and their use within the common data-type update message.",
+      "path": "reference/protocol-buffers-api/counter-operations.md",
+      "sources": [
+        "reference/protocol-buffers/update-counter.md"
+      ]
+    },
+    {
+      "section": "Protocol Buffers API",
+      "title": "Set operations",
+      "scope": "Define additions, removals, context requirements, and set operation encoding.",
+      "path": "reference/protocol-buffers-api/set-operations.md",
+      "sources": [
+        "reference/protocol-buffers/update-set.md"
+      ]
+    },
+    {
+      "section": "Protocol Buffers API",
+      "title": "Map operations",
+      "scope": "Define typed field identifiers, nested operations, removals, and context requirements for map updates.",
+      "path": "reference/protocol-buffers-api/map-operations.md",
+      "sources": [
+        "reference/protocol-buffers/update-map.md"
+      ]
+    },
+    {
+      "section": "Protocol Buffers API",
+      "title": "Grow-only and union operations",
+      "scope": "Define the documented union message and its type-specific fields, supported uses, and version applicability.",
+      "path": "reference/protocol-buffers-api/grow-only-and-union-operations.md",
+      "sources": [
+        "reference/protocol-buffers/union-data-type.md"
+      ]
+    },
+    {
+      "section": "Protocol Buffers API",
+      "title": "Secondary-index query messages",
+      "scope": "Define exact and range terms, returned keys or terms, streaming completion, continuation, and options.",
+      "path": "reference/protocol-buffers-api/secondary-index-query-messages.md",
+      "sources": [
+        "reference/protocol-buffers/secondary-indexes.md"
+      ]
+    },
+    {
+      "section": "Protocol Buffers API",
+      "title": "Coverage-plan messages",
+      "scope": "Define coverage requests, plan entries, continuation or replacement details, and validity constraints.",
+      "path": "reference/protocol-buffers-api/coverage-plan-messages.md",
+      "sources": [
+        "reference/protocol-buffers/coverage-queries.md"
+      ]
+    },
+    {
+      "section": "Protocol Buffers API",
+      "title": "Ping and server information messages",
+      "scope": "Define health and server-information requests, responses, and the fields identifying the responding server.",
+      "path": "reference/protocol-buffers-api/ping-and-server-information-messages.md",
+      "sources": [
+        "reference/protocol-buffers/ping.md",
+        "reference/protocol-buffers/server-information.md"
+      ]
+    },
+    {
+      "section": "Protocol Buffers API",
+      "title": "Legacy listing messages",
+      "scope": "Define bucket and key listing requests, streaming response completion, applicability, and links to current alternatives.",
+      "path": "reference/protocol-buffers-api/legacy-listing-messages.md",
+      "sources": [
+        "reference/protocol-buffers/list-buckets.md",
+        "reference/protocol-buffers/list-keys.md"
+      ]
+    },
+    {
+      "section": "Protocol Buffers API",
+      "title": "Legacy client identifier messages",
+      "scope": "Define get and set client-ID messages and explain their protocol applicability without promoting them as current causality controls.",
+      "path": "reference/protocol-buffers-api/legacy-client-identifier-messages.md",
+      "sources": [
+        "reference/protocol-buffers/client-id.md"
+      ]
+    },
+    {
+      "section": "Protocol Buffers API",
+      "title": "MapReduce messages",
+      "scope": "Define job request encoding, phases, streamed results, completion, and errors for the Protocol Buffers transport.",
+      "path": "reference/protocol-buffers-api/mapreduce-messages.md",
+      "sources": [
+        "reference/protocol-buffers/mapreduce.md"
+      ]
+    },
+    {
+      "section": "Query API",
+      "title": "Endpoints and request schema",
+      "scope": "Define paths, JSON fields, required and optional values, substitutions, timeouts, validation, and default values.",
+      "path": "reference/query-api/endpoints-and-request-schema.md",
+      "sources": [
+        "reference/query-api/request.md"
+      ]
+    },
+    {
+      "section": "Query API",
+      "title": "Expression grammar and operators",
+      "scope": "Specify evaluation, filtering, aggregation, composition, supported operators, and Unicode rules with small syntax examples.",
+      "path": "reference/query-api/expression-grammar-and-operators.md",
+      "sources": [
+        "reference/query-api/expressions.md"
+      ]
+    },
+    {
+      "section": "Query API",
+      "title": "Accumulation modes",
+      "scope": "Define keys, terms, counts, grouped counts, raw variants, duplicate treatment, and the shape associated with each mode.",
+      "path": "reference/query-api/accumulation-modes.md",
+      "sources": [
+        "reference/query-api/accumulation-options.md"
+      ]
+    },
+    {
+      "section": "Query API",
+      "title": "Responses and errors",
+      "scope": "Define response fields, ordering, result shapes, errors, and completion conditions for each supported delivery mode.",
+      "path": "reference/query-api/responses-and-errors.md",
+      "sources": [
+        "reference/query-api/responses.md"
+      ]
+    },
+    {
+      "section": "Query API",
+      "title": "Continuations and result delivery",
+      "scope": "Specify continuation handling, pagination boundaries, asynchronous delivery where supported, and timeout or partial-result contracts.",
+      "path": "reference/query-api/continuations-and-result-delivery.md",
+      "sources": [
+        "reference/query-api/queued-results.md"
+      ]
+    },
+    {
+      "section": "Query API",
+      "title": "Limits and behavioural constraints",
+      "scope": "Record actual limits, snapshot boundaries, timeout behaviour, and supported combinations; link performance rationale to Foundations.",
+      "path": "reference/query-api/limits-and-behavioural-constraints.md",
+      "sources": [
+        "reference/query-api/limits.md"
+      ]
+    },
+    {
+      "section": "AAE fold API",
+      "title": "Fold invocation and result conventions",
+      "scope": "Define supported HTTP, Protocol Buffers, CLI, and console entry points, arguments, result envelopes, and completion handling.",
+      "path": "reference/aae-fold-api/fold-invocation-and-result-conventions.md",
+      "sources": [
+        "reference/aae-fold-api/_index.md"
+      ]
+    },
+    {
+      "section": "AAE fold API",
+      "title": "Fold filters",
+      "scope": "Define bucket, key range, segment, modification time, sibling-count, and object-size filters and their combination rules.",
+      "path": "reference/aae-fold-api/fold-filters.md",
+      "sources": [
+        "reference/aae-fold-api/filters.md"
+      ]
+    },
+    {
+      "section": "AAE fold API",
+      "title": "List buckets",
+      "scope": "Define arguments and the bucket inventory result returned by the fold operation.",
+      "path": "reference/aae-fold-api/list-buckets.md",
+      "sources": [
+        "reference/aae-fold-api/list-buckets.md"
+      ]
+    },
+    {
+      "section": "AAE fold API",
+      "title": "Find keys",
+      "scope": "Define selection, object-size and sibling-count modes, result tuples, and applicable filters.",
+      "path": "reference/aae-fold-api/find-keys.md",
+      "sources": [
+        "reference/aae-fold-api/find-keys.md"
+      ]
+    },
+    {
+      "section": "AAE fold API",
+      "title": "Count keys",
+      "scope": "Define the documented counting mode, filters, and result shape without implying a separate API operation where counting is an option.",
+      "path": "reference/aae-fold-api/count-keys.md",
+      "sources": [
+        "reference/aae-fold-api/count-keys.md"
+      ]
+    },
+    {
+      "section": "AAE fold API",
+      "title": "Find tombstones",
+      "scope": "Define the tombstone-search operation, accepted filters, and the returned fields.",
+      "path": "reference/aae-fold-api/find-tombstones.md",
+      "sources": [
+        "reference/aae-fold-api/find-tombstones.md"
+      ]
+    },
+    {
+      "section": "AAE fold API",
+      "title": "Count tombstones",
+      "scope": "Define the documented count mode for tombstone operations, its filters, and the meaning of the count.",
+      "path": "reference/aae-fold-api/count-tombstones.md",
+      "sources": [
+        "reference/aae-fold-api/count-tombstones.md"
+      ]
+    },
+    {
+      "section": "AAE fold API",
+      "title": "Object statistics",
+      "scope": "Define the aggregate statistics returned by object_stats, including fields, units, filters, and empty-result behaviour.",
+      "path": "reference/aae-fold-api/object-statistics.md",
+      "sources": [
+        "reference/aae-fold-api/object-statistics.md"
+      ]
+    },
+    {
+      "section": "AAE fold API",
+      "title": "Repair keys in a range",
+      "scope": "Define the repair request, selected scope, result or job identifiers, completion, and restrictions.",
+      "path": "reference/aae-fold-api/repair-keys-in-a-range.md",
+      "sources": [
+        "reference/aae-fold-api/repair-key-range.md"
+      ]
+    },
+    {
+      "section": "AAE fold API",
+      "title": "Erase keys",
+      "scope": "Define count and execution modes, scope, output, and the exact semantics of erasure.",
+      "path": "reference/aae-fold-api/erase-keys.md",
+      "sources": [
+        "reference/aae-fold-api/erase-keys.md"
+      ]
+    },
+    {
+      "section": "AAE fold API",
+      "title": "Reap tombstones",
+      "scope": "Define count and execution modes, eligibility requirements, arguments, and completion results.",
+      "path": "reference/aae-fold-api/reap-tombstones.md",
+      "sources": [
+        "reference/aae-fold-api/reap-tombstones.md"
+      ]
+    },
+    {
+      "section": "AAE fold API",
+      "title": "Replicate keys in a range",
+      "scope": "Specify the queue, range, and time-selection parameters for repl_keys_range and its result and completion behaviour.",
+      "path": "reference/aae-fold-api/replicate-keys-in-a-range.md",
+      "sources": []
+    },
+    {
+      "section": "AAE fold API",
+      "title": "Tree and clock exchange operations",
+      "scope": "Define merge_root_nval, merge_branch_nval, fetch_clocks_nval, merge_tree_range, and fetch_clocks_range, including internal-use boundaries.",
+      "path": "reference/aae-fold-api/tree-and-clock-exchange-operations.md",
+      "sources": []
+    },
+    {
+      "section": "Replication interfaces",
+      "title": "Next-generation replication runtime controls",
+      "scope": "Define supported source, sink, queue, fullsync, and reconciliation controls separately from legacy riak_repl commands.",
+      "path": "reference/replication-interfaces/next-generation-replication-runtime-controls.md",
+      "sources": [
+        "reference/replication-api/runtime-controls.md"
+      ]
+    },
+    {
+      "section": "Replication interfaces",
+      "title": "Replication references and queue payloads",
+      "scope": "Specify queued references, object versions, trigger behaviour, payload fields, and compatibility constraints.",
+      "path": "reference/replication-interfaces/replication-references-and-queue-payloads.md",
+      "sources": [
+        "foundations/replication/references-and-triggers.md"
+      ]
+    },
+    {
+      "section": "Replication interfaces",
+      "title": "Internal fetch and membership API",
+      "scope": "Define membership discovery and queue GET/POST contracts, marking the interface's internal status and version-sensitive boundaries.",
+      "path": "reference/replication-interfaces/internal-fetch-and-membership-api.md",
+      "sources": [
+        "reference/specialized-apis/fetch-api.md"
+      ]
+    },
+    {
+      "section": "Replication interfaces",
+      "title": "Fullsync requests and results",
+      "scope": "Define current fullsync control parameters, result fields, status states, and selection or scheduling contracts.",
+      "path": "reference/replication-interfaces/fullsync-requests-and-results.md",
+      "sources": []
+    },
+    {
+      "section": "Replication interfaces",
+      "title": "Legacy riak_repl runtime controls",
+      "scope": "Preserve the legacy v2/v3 command families, arguments, states, and outputs under explicit generation labels.",
+      "path": "reference/replication-interfaces/legacy-riak-repl-runtime-controls.md",
+      "sources": []
+    },
+    {
+      "section": "Operations and observability",
+      "title": "Node and cluster metrics",
+      "scope": "Catalogue current metric names, meanings, units, counter or gauge semantics, collection scope, and reset behaviour.",
+      "path": "reference/operations-and-observability/node-and-cluster-metrics.md",
+      "sources": [
+        "reference/operations/statistics-and-monitoring.md"
+      ]
+    },
+    {
+      "section": "Operations and observability",
+      "title": "Replication metrics",
+      "scope": "Separate current and legacy replication statistics and define queue, delivery, exchange, and fullsync measurements.",
+      "path": "reference/operations-and-observability/replication-metrics.md",
+      "sources": [
+        "reference/operations/replication-statistics.md"
+      ]
+    },
+    {
+      "section": "Operations and observability",
+      "title": "AAE, repair, and worker-pool metrics",
+      "scope": "Define tree, exchange, repair, queue, wait-time, and worker measurements used by monitoring guides.",
+      "path": "reference/operations-and-observability/aae-repair-and-worker-pool-metrics.md",
+      "sources": []
+    },
+    {
+      "section": "Operations and observability",
+      "title": "Log files and event formats",
+      "scope": "Define log destinations, categories, event fields, structured representations, rotation artefacts, and timestamps.",
+      "path": "reference/operations-and-observability/log-files-and-event-formats.md",
+      "sources": [
+        "reference/operations/log-files.md"
+      ]
+    },
+    {
+      "section": "Operations and observability",
+      "title": "Error and diagnostic message catalogue",
+      "scope": "Catalogue stable errors and recognisable messages with meanings and links to the relevant troubleshooting procedure.",
+      "path": "reference/operations-and-observability/error-and-diagnostic-message-catalogue.md",
+      "sources": [
+        "reference/operations/errors-and-messages.md"
+      ]
+    },
+    {
+      "section": "Operations and observability",
+      "title": "Handoff states and transfer records",
+      "scope": "Define handoff types, ownership transitions, observable states, and status fields; keep control procedures in How-to.",
+      "path": "reference/operations-and-observability/handoff-states-and-transfer-records.md",
+      "sources": [
+        "reference/operations/handoff.md"
+      ]
+    },
+    {
+      "section": "Operations and observability",
+      "title": "Claim algorithms and placement constraints",
+      "scope": "Describe version-specific algorithm choices, inputs, supported location constraints, guarantees, and compatibility.",
+      "path": "reference/operations-and-observability/claim-algorithms-and-placement-constraints.md",
+      "sources": [
+        "reference/operations/cluster-claim-algorithms.md"
+      ]
+    },
+    {
+      "section": "Operations and observability",
+      "title": "Remote-console interfaces",
+      "scope": "Define supported diagnostic entry points, arguments, returned structures, and boundaries between supported interfaces and implementation details.",
+      "path": "reference/operations-and-observability/remote-console-interfaces.md",
+      "sources": [
+        "reference/operations/remote-console.md"
+      ]
+    },
+    {
+      "section": "Operations and observability",
+      "title": "Runtime files and backup contents",
+      "scope": "Identify data, ring, metadata, configuration, journal, ledger, and backup artefacts, their purposes, and backend-specific relationships.",
+      "path": "reference/operations-and-observability/runtime-files-and-backup-contents.md",
+      "sources": []
+    },
+    {
+      "section": "Operations and observability",
+      "title": "SNMP objects and integration contract",
+      "scope": "Define exposed objects, metric mappings, configuration references, and the applicability of the integration to this release.",
+      "path": "reference/operations-and-observability/snmp-objects-and-integration-contract.md",
+      "sources": [
+        "reference/operations/snmp.md"
+      ]
+    },
+    {
+      "section": "Operations and observability",
+      "title": "JMX attributes and integration contract",
+      "scope": "Define exported attributes, metric mappings, connection details, and applicable component versions.",
+      "path": "reference/operations-and-observability/jmx-attributes-and-integration-contract.md",
+      "sources": [
+        "reference/operations/jmx.md"
+      ]
+    },
+    {
+      "section": "Client libraries",
+      "title": "Client compatibility and capability matrix",
+      "scope": "Record verified library versions, runtimes, protocols, authentication, data types, and feature coverage; distinguish maintained and legacy clients.",
+      "path": "reference/client-libraries/client-compatibility-and-capability-matrix.md",
+      "sources": [
+        "reference/client-libraries/_index.md"
+      ]
+    },
+    {
+      "section": "Client libraries",
+      "title": "C# client",
+      "scope": "Record the tested package and runtime, connection options, API mapping, feature coverage, and upstream reference for C# integrations.",
+      "path": "reference/client-libraries/csharp-client.md",
+      "sources": [
+        "reference/client-libraries/csharp.md"
+      ]
+    },
+    {
+      "section": "Client libraries",
+      "title": "Erlang client",
+      "scope": "Record compatible client and OTP versions, connection configuration, operation mapping, and known protocol or feature constraints.",
+      "path": "reference/client-libraries/erlang-client.md",
+      "sources": [
+        "reference/client-libraries/erlang.md"
+      ]
+    },
+    {
+      "section": "Client libraries",
+      "title": "Go client",
+      "scope": "Record the tested module and Go version, connection settings, operation mapping, data-type support, and compatibility constraints.",
+      "path": "reference/client-libraries/go-client.md",
+      "sources": [
+        "reference/client-libraries/golang.md"
+      ]
+    },
+    {
+      "section": "Client libraries",
+      "title": "Java client",
+      "scope": "Record tested dependency and Java versions, cluster and connection configuration, asynchronous behaviour, and supported API features.",
+      "path": "reference/client-libraries/java-client.md",
+      "sources": [
+        "reference/client-libraries/java.md"
+      ]
+    },
+    {
+      "section": "Client libraries",
+      "title": "Node.js client",
+      "scope": "Record the verified package and runtime, connection and error conventions, API coverage, and known limitations.",
+      "path": "reference/client-libraries/node-js-client.md",
+      "sources": [
+        "reference/client-libraries/nodejs.md"
+      ]
+    },
+    {
+      "section": "Client libraries",
+      "title": "PHP client",
+      "scope": "Record verified Composer package and runtime requirements, supported transports, operation mapping, and feature limitations.",
+      "path": "reference/client-libraries/php-client.md",
+      "sources": [
+        "reference/client-libraries/php.md"
+      ]
+    },
+    {
+      "section": "Client libraries",
+      "title": "Python client",
+      "scope": "Record the verified package and Python runtime, transport and authentication requirements, API coverage, and compatibility limitations.",
+      "path": "reference/client-libraries/python-client.md",
+      "sources": [
+        "reference/client-libraries/python.md"
+      ]
+    },
+    {
+      "section": "Client libraries",
+      "title": "Ruby client",
+      "scope": "Record the verified gem and runtime, transport and data-type conventions, connection settings, and compatibility limitations.",
+      "path": "reference/client-libraries/ruby-client.md",
+      "sources": [
+        "reference/client-libraries/ruby.md"
+      ]
+    },
+    {
+      "section": "Client libraries",
+      "title": "Rust client",
+      "scope": "Identify and verify the proposed library, toolchain, protocol coverage, and limitations before describing any integration as supported.",
+      "path": "reference/client-libraries/rust-client.md",
+      "sources": [
+        "reference/client-libraries/rust.md"
+      ]
+    },
+    {
+      "section": "Extensions and specialist interfaces",
+      "title": "Backend callback interface",
+      "scope": "Define required and optional callbacks, arguments, return values, capabilities, and version dependencies for backend implementers.",
+      "path": "reference/extensions-and-specialist-interfaces/backend-callback-interface.md",
+      "sources": [
+        "reference/specialized-apis/backend-api.md"
+      ]
+    },
+    {
+      "section": "Extensions and specialist interfaces",
+      "title": "Custom code and hook interfaces",
+      "scope": "Define deployment and loading constraints plus commit-hook signatures, return contracts, ordering, and error behaviour.",
+      "path": "reference/extensions-and-specialist-interfaces/custom-code-and-hook-interfaces.md",
+      "sources": [
+        "reference/operations/custom-code.md"
+      ]
+    },
+    {
+      "section": "Extensions and specialist interfaces",
+      "title": "Cluster metadata interfaces",
+      "scope": "Define supported metadata operations, keys, values, persistence, and version or compatibility boundaries.",
+      "path": "reference/extensions-and-specialist-interfaces/cluster-metadata-interfaces.md",
+      "sources": [
+        "reference/specialized-apis/cluster-metadata.md"
+      ]
+    },
+    {
+      "section": "Extensions and specialist interfaces",
+      "title": "Write-once interface",
+      "scope": "Define required policies, request and response contracts, immutable-write behaviour, acknowledgement options, and compatibility constraints.",
+      "path": "reference/extensions-and-specialist-interfaces/write-once-interface.md",
+      "sources": [
+        "reference/specialized-apis/write-once-api.md"
+      ]
+    },
+    {
+      "section": "Extensions and specialist interfaces",
+      "title": "Replication hook interface",
+      "scope": "Define legacy send and receive callbacks, expected representations, failure handling, and applicable replication generations.",
+      "path": "reference/extensions-and-specialist-interfaces/replication-hook-interface.md",
+      "sources": []
+    },
+    {
+      "section": "Extensions and specialist interfaces",
+      "title": "Redis add-on commands and configuration",
+      "scope": "Define the verified add-on's commands, settings, cache semantics, metrics, and compatible component versions.",
+      "path": "reference/extensions-and-specialist-interfaces/redis-add-on-commands-and-configuration.md",
+      "sources": []
+    },
+    {
+      "section": "Legacy and experimental features",
+      "title": "Legacy LevelDB settings",
+      "scope": "Retain generated setting definitions needed by existing deployments, with release status and links to backend migration.",
+      "path": "reference/legacy-and-experimental-features/legacy-leveldb-settings.md",
+      "sources": [
+        "reference/configuration/leveldb.md",
+        "foundations/storage/leveldb.md"
+      ]
+    },
+    {
+      "section": "Legacy and experimental features",
+      "title": "Memory backend settings",
+      "scope": "Define available in-memory backend settings, expiry and capacity controls, and release-specific restrictions.",
+      "path": "reference/legacy-and-experimental-features/memory-backend-settings.md",
+      "sources": [
+        "reference/configuration/memory.md",
+        "foundations/storage/memory.md"
+      ]
+    },
+    {
+      "section": "Legacy and experimental features",
+      "title": "Multi-backend and prefix-routing settings",
+      "scope": "Define routing syntax, backend definitions, supported policy combinations, and the release's migration or deprecation context.",
+      "path": "reference/legacy-and-experimental-features/multi-backend-and-prefix-routing-settings.md",
+      "sources": [
+        "reference/configuration/multi.md",
+        "reference/configuration/prefix-multi.md"
+      ]
+    },
+    {
+      "section": "Legacy and experimental features",
+      "title": "Legacy AAE and riak_repl settings",
+      "scope": "Retain generated legacy repair and replication configuration definitions with explicit v2/v3 and subsystem applicability.",
+      "path": "reference/legacy-and-experimental-features/legacy-aae-and-riak-repl-settings.md",
+      "sources": []
+    },
+    {
+      "section": "Legacy and experimental features",
+      "title": "MapReduce jobs and functions",
+      "scope": "Define job JSON, input selection, phases, function forms, execution options, and result contracts shared by both transports.",
+      "path": "reference/legacy-and-experimental-features/mapreduce-jobs-and-functions.md",
+      "sources": [
+        "foundations/data-model/mapreduce.md"
+      ]
+    },
+    {
+      "section": "Legacy and experimental features",
+      "title": "Riak Control interface",
+      "scope": "Record the verified availability, interface controls, authentication requirements, and limitations of the legacy administration UI.",
+      "path": "reference/legacy-and-experimental-features/riak-control-interface.md",
+      "sources": [
+        "reference/commands/riak-control.md"
+      ]
+    },
+    {
+      "section": "Legacy and experimental features",
+      "title": "DTrace probes and settings",
+      "scope": "Catalogue probes, fields, required build capabilities, and configuration only for release and platform combinations that provide them.",
+      "path": "reference/legacy-and-experimental-features/dtrace-probes-and-settings.md",
+      "sources": [
+        "reference/configuration/dtrace.md"
+      ]
+    },
+    {
+      "section": "Legacy and experimental features",
+      "title": "Experimental strong-consistency interface",
+      "scope": "Preserve exact operation contracts, errors, prerequisites, and documented limitations without presenting the feature as production-ready.",
+      "path": "reference/legacy-and-experimental-features/experimental-strong-consistency-interface.md",
+      "sources": [
+        "reference/specialized-apis/strong-consistency-api.md",
+        "foundations/consistency/strong-consistency.md"
+      ]
+    },
+    {
+      "section": "Legacy and experimental features",
+      "title": "Legacy query interface",
+      "scope": "Define the retained legacy query contract, version applicability, and mapping to the current query interfaces.",
+      "path": "reference/legacy-and-experimental-features/legacy-query-interface.md",
+      "sources": [
+        "reference/specialized-apis/legacy-query-api.md"
+      ]
+    }
+  ],
+  "tutorials": [
+    {
+      "section": "First cluster",
+      "title": "Build and explore a Docker cluster",
+      "scope": "Create a disposable cluster, observe its membership, write and read sample data, and clean up the environment at the end.",
+      "path": "tutorials/first-cluster/build-and-explore-a-docker-cluster.md",
+      "sources": [
+        "tutorials/first-cluster/docker.md"
+      ]
+    },
+    {
+      "section": "First cluster",
+      "title": "Build and explore a cluster on Ubuntu",
+      "scope": "Follow one verified native-package path through installation, node configuration, joining, and a first request against a small learning cluster.",
+      "path": "tutorials/first-cluster/build-and-explore-a-cluster-on-ubuntu.md",
+      "sources": [
+        "tutorials/first-cluster/ubuntu.md"
+      ]
+    },
+    {
+      "section": "First cluster",
+      "title": "Build a learning cluster on AWS EC2",
+      "scope": "Use one named, tested provider and infrastructure recipe, verify connectivity and membership, and remove all chargeable resources after the exercise.",
+      "path": "tutorials/first-cluster/cloud/aws-ec2.md",
+      "sources": [
+        "tutorials/first-cluster/cloud.md"
+      ]
+    },
+    {
+      "section": "First cluster",
+      "title": "Build a learning cluster with Vagrant",
+      "scope": "Provide a reproducible VM-based alternative with pinned compatible images, membership checks, sample requests, and complete teardown.",
+      "path": "tutorials/first-cluster/build-a-learning-cluster-with-vagrant.md",
+      "sources": [
+        "tutorials/first-cluster/vagrant.md"
+      ]
+    },
+    {
+      "section": "First application",
+      "title": "Build a small application with C#",
+      "scope": "Implement the shared sample application's model, create/read/update/delete flow, and indexed lookup using a verified C# client and runtime.",
+      "path": "tutorials/first-application/build-a-small-application-with-csharp.md",
+      "sources": [
+        "tutorials/first-application/csharp.md"
+      ]
+    },
+    {
+      "section": "First application",
+      "title": "Build a small application with Erlang",
+      "scope": "Build the same sample workflow with a verified Erlang client, observing returned values, context, and a simple indexed lookup.",
+      "path": "tutorials/first-application/build-a-small-application-with-erlang.md",
+      "sources": [
+        "tutorials/first-application/erlang.md"
+      ]
+    },
+    {
+      "section": "First application",
+      "title": "Build a small application with Go",
+      "scope": "Implement the shared sample with a verified Go module and toolchain, including data modelling, updates, deletion, and a query.",
+      "path": "tutorials/first-application/build-a-small-application-with-go.md",
+      "sources": [
+        "tutorials/first-application/golang.md"
+      ]
+    },
+    {
+      "section": "First application",
+      "title": "Build a small application with Java",
+      "scope": "Use a verified Java dependency and runtime to connect, model sample data, perform object operations, and retrieve indexed results.",
+      "path": "tutorials/first-application/build-a-small-application-with-java.md",
+      "sources": [
+        "tutorials/first-application/java.md"
+      ]
+    },
+    {
+      "section": "First application",
+      "title": "Build a small application with Node.js",
+      "scope": "Use a verified Node.js client to complete the sample workflow with explicit asynchronous results, error checks, and a final query.",
+      "path": "tutorials/first-application/build-a-small-application-with-node-js.md",
+      "sources": [
+        "tutorials/first-application/nodejs.md"
+      ]
+    },
+    {
+      "section": "First application",
+      "title": "Build a small application with PHP",
+      "scope": "Use a verified Composer package and runtime to build the sample, checking request results and the selected transport throughout.",
+      "path": "tutorials/first-application/build-a-small-application-with-php.md",
+      "sources": [
+        "tutorials/first-application/php.md"
+      ]
+    },
+    {
+      "section": "First application",
+      "title": "Build a small application with Python",
+      "scope": "Complete the sample using a verified Python runtime and client, replacing obsolete setup instructions with a reproducible environment.",
+      "path": "tutorials/first-application/build-a-small-application-with-python.md",
+      "sources": [
+        "tutorials/first-application/python.md"
+      ]
+    },
+    {
+      "section": "First application",
+      "title": "Build a small application with Ruby",
+      "scope": "Use a verified gem and runtime to complete the shared object and query workflow with observable checkpoints.",
+      "path": "tutorials/first-application/build-a-small-application-with-ruby.md",
+      "sources": [
+        "tutorials/first-application/ruby.md"
+      ]
+    },
+    {
+      "section": "First application",
+      "title": "Build a small application with Rust",
+      "scope": "Create a complete sample only after verifying the client and toolchain; demonstrate the actual supported object and query operations.",
+      "path": "tutorials/first-application/build-a-small-application-with-rust.md",
+      "sources": [
+        "tutorials/first-application/rust.md"
+      ]
+    },
+    {
+      "section": "Data and concurrency",
+      "title": "Explore objects, buckets, and metadata with HTTP",
+      "scope": "Store a small dataset, inspect keys and metadata, update and delete objects, and observe responses without requiring a language client.",
+      "path": "tutorials/data-and-concurrency/explore-objects-buckets-and-metadata-with-http.md",
+      "sources": []
+    },
+    {
+      "section": "Data and concurrency",
+      "title": "Apply different policies with bucket types",
+      "scope": "Create and activate two deliberate bucket policies, write test data, and observe the resulting differences in a disposable environment.",
+      "path": "tutorials/data-and-concurrency/apply-different-policies-with-bucket-types.md",
+      "sources": []
+    },
+    {
+      "section": "Data and concurrency",
+      "title": "Create and resolve concurrent updates",
+      "scope": "Produce a controlled sibling conflict with two clients, inspect causal context, merge the values, and verify the resolved object.",
+      "path": "tutorials/data-and-concurrency/create-and-resolve-concurrent-updates.md",
+      "sources": []
+    },
+    {
+      "section": "Data and concurrency",
+      "title": "Practise conditional updates",
+      "scope": "Make a conditional request succeed, make a stale precondition fail, and implement a bounded retry or conflict response.",
+      "path": "tutorials/data-and-concurrency/practise-conditional-updates.md",
+      "sources": []
+    },
+    {
+      "section": "Data and concurrency",
+      "title": "Build a shared counter and collection",
+      "scope": "Use counters, sets, and grow-only sets in a small shared application and observe additions, removals, and context requirements.",
+      "path": "tutorials/data-and-concurrency/build-a-shared-counter-and-collection.md",
+      "sources": []
+    },
+    {
+      "section": "Data and concurrency",
+      "title": "Build a record with a distributed map",
+      "scope": "Create a map with several field types, update it from two clients, and observe nested operations and convergence.",
+      "path": "tutorials/data-and-concurrency/build-a-record-with-a-distributed-map.md",
+      "sources": []
+    },
+    {
+      "section": "Data and concurrency",
+      "title": "Estimate unique activity with HyperLogLog",
+      "scope": "Add a known set of sample observations, compare the estimated count with the known total, and explore repeated observations.",
+      "path": "tutorials/data-and-concurrency/estimate-unique-activity-with-hyperloglog.md",
+      "sources": []
+    },
+    {
+      "section": "Indexes and querying",
+      "title": "Build and query a people-search index",
+      "scope": "Load a small known dataset, create secondary-index terms, and run exact and range queries with predictable results.",
+      "path": "tutorials/indexes-and-querying/build-and-query-a-people-search-index.md",
+      "sources": [
+        "tutorials/query-api/build-search-index.md"
+      ]
+    },
+    {
+      "section": "Indexes and querying",
+      "title": "Search projected attributes",
+      "scope": "Extend the same dataset with projected attributes, apply evaluation and filtering expressions, and check each query against known matches.",
+      "path": "tutorials/indexes-and-querying/search-projected-attributes.md",
+      "sources": []
+    },
+    {
+      "section": "Indexes and querying",
+      "title": "Combine query conditions",
+      "scope": "Build several scans over the learning dataset, combine their results, and observe how the aggregation expression changes the answer.",
+      "path": "tutorials/indexes-and-querying/combine-query-conditions.md",
+      "sources": []
+    },
+    {
+      "section": "Indexes and querying",
+      "title": "Produce counts and grouped results",
+      "scope": "Use accumulation modes to build a small report and compare deduplicated and raw results with the known dataset.",
+      "path": "tutorials/indexes-and-querying/produce-counts-and-grouped-results.md",
+      "sources": []
+    },
+    {
+      "section": "Indexes and querying",
+      "title": "Retrieve a larger result set",
+      "scope": "Expand the sample data, follow the supported pagination or delivery workflow, and check that the application handles the complete result.",
+      "path": "tutorials/indexes-and-querying/retrieve-a-larger-result-set.md",
+      "sources": []
+    },
+    {
+      "section": "Cluster operations and recovery",
+      "title": "Add and remove cluster members",
+      "scope": "Add a disposable node, inspect and commit the plan, observe handoffs, then remove the node and verify the remaining cluster.",
+      "path": "tutorials/cluster-operations-and-recovery/add-and-remove-cluster-members.md",
+      "sources": [
+        "tutorials/operations/change-cluster-membership.md"
+      ]
+    },
+    {
+      "section": "Cluster operations and recovery",
+      "title": "Practise a backend migration",
+      "scope": "Move a small known dataset through a verified backend-change workflow and compare the resulting data and index behaviour.",
+      "path": "tutorials/cluster-operations-and-recovery/practise-a-backend-migration.md",
+      "sources": [
+        "tutorials/operations/change-storage-backend.md"
+      ]
+    },
+    {
+      "section": "Cluster operations and recovery",
+      "title": "Observe a node failure and recovery",
+      "scope": "Stop a node in a controlled exercise, record client behaviour, restore it, and observe recovery and repair.",
+      "path": "tutorials/cluster-operations-and-recovery/observe-a-node-failure-and-recovery.md",
+      "sources": []
+    },
+    {
+      "section": "Cluster operations and recovery",
+      "title": "Back up and restore a sample dataset",
+      "scope": "Take a backend-appropriate backup, restore it into a disposable recovery environment, and verify objects and required metadata.",
+      "path": "tutorials/cluster-operations-and-recovery/back-up-and-restore-a-sample-dataset.md",
+      "sources": []
+    },
+    {
+      "section": "Cluster operations and recovery",
+      "title": "Perform a rolling restart",
+      "scope": "Restart a learning cluster one node at a time while a small client workload runs, checking health before each next step.",
+      "path": "tutorials/cluster-operations-and-recovery/perform-a-rolling-restart.md",
+      "sources": []
+    },
+    {
+      "section": "Cluster operations and recovery",
+      "title": "Inspect and repair a bounded data range",
+      "scope": "Run AAE inspection and count operations on known data, perform a supported repair exercise, and compare before-and-after results.",
+      "path": "tutorials/cluster-operations-and-recovery/inspect-and-repair-a-bounded-data-range.md",
+      "sources": []
+    },
+    {
+      "section": "Replication and reconciliation",
+      "title": "Replicate data between two clusters",
+      "scope": "Build two disposable clusters using next-generation replication, connect a source and sink, and verify a write and deletion at the destination.",
+      "path": "tutorials/replication-and-reconciliation/replicate-data-between-two-clusters.md",
+      "sources": [
+        "tutorials/replication/two-cluster-replication.md"
+      ]
+    },
+    {
+      "section": "Replication and reconciliation",
+      "title": "Catch up after a replication interruption",
+      "scope": "Interrupt a controlled connection, make sample changes, restore connectivity, and observe delivery and fullsync reconciliation.",
+      "path": "tutorials/replication-and-reconciliation/catch-up-after-a-replication-interruption.md",
+      "sources": []
+    },
+    {
+      "section": "Replication and reconciliation",
+      "title": "Explore bidirectional replication",
+      "scope": "Connect the two learning clusters in both directions, write from each side, and inspect concurrent changes and final application results.",
+      "path": "tutorials/replication-and-reconciliation/explore-bidirectional-replication.md",
+      "sources": []
+    },
+    {
+      "section": "Replication and reconciliation",
+      "title": "Reconcile selected buckets",
+      "scope": "Configure a deliberately bounded reconciliation scope, compare included and excluded sample data, and verify the result.",
+      "path": "tutorials/replication-and-reconciliation/reconcile-selected-buckets.md",
+      "sources": []
+    },
+    {
+      "section": "Replication and reconciliation",
+      "title": "Re-replicate a selected time window",
+      "scope": "Modify a known group of objects, enqueue the selected window, and verify which objects are delivered to the second cluster.",
+      "path": "tutorials/replication-and-reconciliation/re-replicate-a-selected-time-window.md",
+      "sources": []
+    },
+    {
+      "section": "Security",
+      "title": "Make an authenticated TLS client connection",
+      "scope": "Create a disposable trust setup, configure a user and listener, make one successful request, and demonstrate a rejected untrusted connection.",
+      "path": "tutorials/security/make-an-authenticated-tls-client-connection.md",
+      "sources": [
+        "tutorials/security/secure-client-connection.md"
+      ]
+    },
+    {
+      "section": "Security",
+      "title": "Apply and test group permissions",
+      "scope": "Create two identities with different groups, grant scoped permissions, and test both allowed and denied operations.",
+      "path": "tutorials/security/apply-and-test-group-permissions.md",
+      "sources": []
+    },
+    {
+      "section": "Security",
+      "title": "Rotate a certificate in a learning environment",
+      "scope": "Replace a certificate using a controlled trust transition, verify client access during the exercise, and remove the obsolete trust material.",
+      "path": "tutorials/security/rotate-a-certificate-in-a-learning-environment.md",
+      "sources": []
+    }
+  ]
+}

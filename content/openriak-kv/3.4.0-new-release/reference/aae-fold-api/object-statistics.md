@@ -1,37 +1,47 @@
 ---
-title: 'Object statistics operation'
-description: 'Document parameters, filters, response fields, limits, and risks for the object statistics operation.'
-weight: 9
-diataxis: 'reference'
-product: 'OpenRiak KV'
-product_version: '3.4.0'
-status: 'editorially-rewritten'
+title: Object statistics
+description: Return object statistics for a bucket and optional key and modified-time bounds.
+weight: 900
+diataxis: reference
+product: OpenRiak KV
+product_version: 3.4.0
+status: editorially-rewritten
 draft: true
 audience:
-  - 'operators'
-  - 'developers'
+- operators
+- developers
 source_material:
-  - 'live-3.2.5'
-  - 'proposed-kv'
-  - 'openriak-quickdocs-3.4'
+- live-3.2.5
+- proposed-kv
+- openriak-quickdocs-3.4
 quickdocs_sources:
-  - 'https://openriak.github.io/riak/OtherAPI.html#object_stats'
-tags: ['diataxis', 'kv', 'reference']
-editorial_review: 'complete'
-technical_review: 'required'
-last_reviewed: '2026-08-28'
-review_scope: 'editorial-and-site-integration'
+- https://openriak.github.io/riak/OtherAPI.html#object_stats
+tags:
+- diataxis
+- kv
+- reference
+editorial_review: complete
+technical_review: required
+last_reviewed: '2026-09-22'
+review_scope: diataxis-content-and-navigation
+restructured_from:
+- reference/aae-fold-api/object-statistics.md
+related:
+- reference/aae-fold-api/fold-filters
+- how-to/data-inspection-and-repair/measure-object-sizes-and-sibling-distributions
+- how-to/data-inspection-and-repair/run-and-retrieve-a-long-running-aae-fold
+- how-to/data-inspection-and-repair/control-repair-impact-during-application-traffic
+- foundations/replication-and-repair/targeted-reconciliation-and-aae-folds
 ---
 
-Document parameters, filters, response fields, limits, and risks for the object statistics operation.
+Return object statistics for a bucket and optional key and modified-time bounds.
 
-## Details
+## Invocation
 
-### object_stats
+{{< cli-example key="erlang:riak_client:aae_fold:object_stats" >}}
 
-Returns a summary of stats for objects within the bucket, potentially limited by key range or modified date range.
+The linked command page supplies all arities and the complete tuple/type contract from the release metadata. Filters are described in [Fold filters]({{< product-version-root >}}reference/aae-fold-api/fold-filters/).
 
-- Returns an output like `[{total_count, 1000}, {total_size, 1000000},  {sizes, [{1, 800}, {2, 180}, {3, 20}]},  {siblings, [{1, 1000}]}]`.
-  - The sizes are the count of objects by order of magnitude in bytes (e.g. 1 is 10 -> 100 bytes, 2 is 100 -> 1000 bytes etc).
-  - The siblings are the count of objects with that count of siblings.
-- Uses the AF4 queue when running node worker pools in `dscp` mode.
+## Behaviour
+
+The result includes total count, total size, size-distribution bands, and sibling-count bands. Compare the same scope over time; concurrent writes and AAE readiness affect interpretation.

@@ -1,0 +1,7 @@
+{{- $context := partial "product-context.html" .Page -}}
+{{- $reference := index (index (index hugo.Data "cli-reference") $context.id) $context.version -}}
+{{- $key := .Get "key" -}}
+{{- $matches := where $reference.pages "key" $key -}}
+{{- if ne (len $matches) 1 }}{{ errorf "Unknown CLI metadata key %q for %s on %s" $key $context.version .Page.Path }}{{ end -}}
+{{- $command := index $matches 0 -}}
+<a href="{{ printf "%s%s/reference/commands/%s/" $context.productBase $context.version $command.route }}"><code>{{ $command.title }}</code></a>{{ if ne $command.availability "available" }} <span class="cli-status">{{ $command.availability }}</span>{{ else if $command.deprecated }} <span class="cli-status">deprecated</span>{{ end }}

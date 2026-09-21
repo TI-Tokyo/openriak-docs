@@ -1,37 +1,47 @@
 ---
-title: 'List buckets operation'
-description: 'Document parameters, filters, response fields, limits, and risks for the list buckets operation.'
-weight: 8
-diataxis: 'reference'
-product: 'OpenRiak KV'
-product_version: '3.4.0'
-status: 'editorially-rewritten'
+title: List buckets
+description: List bucket identifiers encountered by an AAE coverage plan.
+weight: 850
+diataxis: reference
+product: OpenRiak KV
+product_version: 3.4.0
+status: editorially-rewritten
 draft: true
 audience:
-  - 'operators'
-  - 'developers'
+- operators
+- developers
 source_material:
-  - 'live-3.2.5'
-  - 'proposed-kv'
-  - 'openriak-quickdocs-3.4'
+- live-3.2.5
+- proposed-kv
+- openriak-quickdocs-3.4
 quickdocs_sources:
-  - 'https://openriak.github.io/riak/OtherAPI.html#list_buckets'
-tags: ['diataxis', 'kv', 'reference']
-editorial_review: 'complete'
-technical_review: 'required'
-last_reviewed: '2026-08-28'
-review_scope: 'editorial-and-site-integration'
+- https://openriak.github.io/riak/OtherAPI.html#list_buckets
+tags:
+- diataxis
+- kv
+- reference
+editorial_review: complete
+technical_review: required
+last_reviewed: '2026-09-22'
+review_scope: diataxis-content-and-navigation
+restructured_from:
+- reference/aae-fold-api/list-buckets.md
+related:
+- reference/aae-fold-api/fold-filters
+- how-to/data-inspection-and-repair/inventory-buckets-using-aae-folds
+- how-to/data-inspection-and-repair/run-and-retrieve-a-long-running-aae-fold
+- how-to/data-inspection-and-repair/control-repair-impact-during-application-traffic
+- foundations/replication-and-repair/targeted-reconciliation-and-aae-folds
 ---
 
-Document parameters, filters, response fields, limits, and risks for the list buckets operation.
+List bucket identifiers encountered by an AAE coverage plan.
 
-## Details
+## Invocation
 
-### list_buckets
+{{< cli-example key="erlang:riak_client:aae_fold:list_buckets" >}}
 
-Returns a list of buckets, assuming the given n_val.
+The linked command page supplies all arities and the complete tuple/type contract from the release metadata. Filters are described in [Fold filters]({{< product-version-root >}}reference/aae-fold-api/fold-filters/).
 
-- The list may be incomplete if the passed n_val is greater than the configured n_val of some buckets.
-- will only return buckets that contain objects.
-- Uses a skipping cursor in both `native` and the `leveled_ko` type of parallel store, so that the fold is much more efficient than folding over all keys.
-- Uses the AF4 queue when running node worker pools in `dscp` mode.
+## Behaviour
+
+The input replica value controls coverage. Empty buckets need not appear, and buckets with a smaller replica value can be missed by an unsuitable plan. Preserve type and bucket components in the result.

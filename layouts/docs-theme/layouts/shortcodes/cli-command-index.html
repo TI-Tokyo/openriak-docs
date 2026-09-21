@@ -1,8 +1,9 @@
 {{- $context := partial "cli/context.html" .Page -}}
-{{- $prefix := .Page.Params.cli_command_prefix | default "" -}}
+{{- $prefix := .Get "prefix" | default .Page.Params.cli_command_prefix | default "" -}}
+{{- $category := .Get "category" | default "" -}}
 {{- $pages := slice -}}
 {{- range $context.reference.pages -}}
-  {{- if or (not $prefix) (eq .route $prefix) (strings.HasPrefix .route (printf "%s/" $prefix)) -}}
+  {{- if and (or (not $category) (eq .category $category)) (or (not $prefix) (eq .route $prefix) (strings.HasPrefix .route (printf "%s/" $prefix))) -}}
     {{- $pages = $pages | append . -}}
   {{- end -}}
 {{- end -}}

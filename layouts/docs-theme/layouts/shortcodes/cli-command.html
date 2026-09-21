@@ -1,7 +1,8 @@
 {{- $page := .Page -}}
 {{- $context := partial "cli/context.html" $page -}}
-{{- $matches := where $context.reference.pages "key" $page.Params.cli_command_key -}}
-{{- if ne (len $matches) 1 }}{{ errorf "Unknown CLI topic %s on %s" $page.Params.cli_command_key $page.Path }}{{ end -}}
+{{- $key := .Get "key" | default $page.Params.cli_command_key -}}
+{{- $matches := where $context.reference.pages "key" $key -}}
+{{- if ne (len $matches) 1 }}{{ errorf "Unknown CLI topic %s on %s" $key $page.Path }}{{ end -}}
 {{- $command := index $matches 0 -}}
 {{ partial "cli/legacy.html" $page }}
 <div class="cli-command-reference">

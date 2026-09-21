@@ -1,0 +1,5 @@
+{{- $file := .Get "file" -}}
+{{- if or (strings.Contains $file "..") (strings.Contains $file "/") }}{{ errorf "Invalid learning example filename %s" $file }}{{ end -}}
+{{- $source := os.ReadFile (printf "static/openriak-kv/examples/%s" $file) -}}
+<p><a href="{{ printf "openriak-kv/examples/%s" $file | relURL }}" download="{{ $file }}">Download {{ $file }}</a></p>
+{{ .Page.RenderString (printf "```%s\n%s\n```" (.Get "language" | default "text") $source) }}

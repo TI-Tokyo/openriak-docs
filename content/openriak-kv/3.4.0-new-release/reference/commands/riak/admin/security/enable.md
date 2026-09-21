@@ -11,6 +11,7 @@ status: "reference"
 technical_review: "required"
 generated_by: "cli-reference"
 cli_reference_version: "3.4.0"
+related: ["how-to/security/enable-authentication-and-authorization","reference/configuration/authentication-authorization-and-tls-settings","reference/commands"]
 cli_command_key: "shell:riak admin security enable"
 ---
 

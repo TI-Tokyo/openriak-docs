@@ -1,0 +1,8 @@
+{{- $context := partial "product-context.html" .Page -}}
+{{- $data := index hugo.Data "product-reference" $context.id $context.version "kv-reference" -}}
+{{- $contract := $data.backend_contract -}}
+{{- if not $contract }}{{ errorf "Missing backend contract for %s" $context.version }}{{ end -}}
+<p>Optional callbacks: {{ range $i, $name := $contract.optional }}{{ if $i }}, {{ end }}<code>{{ $name }}</code>{{ end }}.</p>
+{{ .Page.RenderString (printf "```erlang\n%s\n```" $contract.definition) }}
+<details><summary>Backend types</summary>{{ .Page.RenderString (printf "```erlang\n%s\n```" $contract.types) }}</details>
+<p>Source: <a href="{{ $contract.source.url }}">{{ $contract.source.label }}</a>.</p>

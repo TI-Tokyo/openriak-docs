@@ -1,0 +1,32 @@
+{{- $context := partial "product-context.html" .Page -}}
+{{- $reference := index (index (index hugo.Data "cli-reference") $context.id) $context.version -}}
+{{- $key := .Get "key" -}}
+{{- $matches := where $reference.pages "key" $key -}}
+{{- if ne (len $matches) 1 }}{{ errorf "Unknown CLI metadata key %q for %s on %s" $key $context.version .Page.Path }}{{ end -}}
+{{- $command := index $matches 0 -}}
+{{- if ne $command.availability "available" -}}
+<p class="cli-notice"><code>{{ $command.title }}</code> is {{ $command.availability }} in OpenRiak KV {{ $context.version }}. <a href="{{ printf "%s%s/reference/commands/%s/" $context.productBase $context.version $command.route }}">Check availability and alternatives</a>.</p>
+{{- else -}}
+{{- $syntax := "" -}}
+{{- if .Get "args" -}}
+  {{- if eq $command.context "erlang" -}}
+    {{- $function := index (split $command.title " — ") 0 -}}
+    {{- $syntax = printf "%s(%s)." $function (.Get "args") -}}
+  {{- else -}}
+    {{- $syntax = printf "%s %s" $command.title (.Get "args") -}}
+  {{- end -}}
+{{- else -}}
+  {{- $form := index $command.forms 0 -}}
+  {{- $syntax = index $form.syntax 0 -}}
+{{- end -}}
+{{- with .Get "release-bin" -}}
+  {{- $configuration := index (index (index hugo.Data "configuration-reference") $context.id) $context.version -}}
+  {{- $setting := index (where $configuration.settings "name" "platform_bin_dir") 0 -}}
+  {{- $directory := index $setting.defaults . -}}
+  {{- if not $directory.hasDefault }}{{ errorf "No release bin directory for %s on %s" . $.Page.Path }}{{ end -}}
+  {{- $syntax = replaceRE `^(riak(?:-admin|-repl|-debug)?)\b` (printf "%s/$1" $directory.value) $syntax -}}
+{{- end -}}
+{{- with .Get "prefix" }}{{ $syntax = printf "%s %s" . $syntax }}{{ end -}}
+{{ .Page.RenderString (printf "```%s\n%s\n```" (cond (eq $command.context "erlang") "erlang" "console") $syntax) }}
+<p class="cli-example-reference"><a href="{{ printf "%s%s/reference/commands/%s/" $context.productBase $context.version $command.route }}">Syntax, options, and help</a>{{ if .Get "args" }} · Arguments shown are example values.{{ end }}</p>
+{{- end -}}

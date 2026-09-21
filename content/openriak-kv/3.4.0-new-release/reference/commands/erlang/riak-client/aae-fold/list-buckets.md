@@ -11,6 +11,7 @@ status: "reference"
 technical_review: "required"
 generated_by: "cli-reference"
 cli_reference_version: "3.4.0"
+related: ["how-to/data-inspection-and-repair/run-and-retrieve-a-long-running-aae-fold","reference/aae-fold-api/fold-filters","reference/commands"]
 cli_command_key: "erlang:riak_client:aae_fold:list_buckets"
 ---
 

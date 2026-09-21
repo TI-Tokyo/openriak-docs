@@ -1,65 +1,43 @@
 ---
-title: 'Ping with the HTTP API'
-description: 'Document the complete HTTP contract for this operation, including parameters, representations, examples, and errors.'
-weight: 11
-diataxis: 'reference'
-product: 'OpenRiak KV'
-product_version: '3.4.0'
-status: 'editorially-rewritten'
+title: Ping
+description: '`GET /ping` checks whether the HTTP API responds.'
+weight: 510
+diataxis: reference
+product: OpenRiak KV
+product_version: 3.4.0
+status: editorially-rewritten
 draft: true
 audience:
-  - 'developers'
-source_material:
-  - 'legacy-3.2.5'
-  - 'live-3.2.5'
+- developers
+source_material:
+- legacy-3.2.5
+- live-3.2.5
 legacy_3_2_5_sources:
-  - 'C:\Users\pjacl\Downloads\riak-docs-fork\kv\3.2.5\developing\api\http\ping.md'
-tags: ['diataxis', 'kv', 'reference']
-editorial_review: 'complete'
-technical_review: 'required'
-last_reviewed: '2026-08-28'
-review_scope: 'editorial-and-site-integration'
+- C:\Users\pjacl\Downloads\riak-docs-fork\kv\3.2.5\developing\api\http\ping.md
+tags:
+- diataxis
+- kv
+- reference
+editorial_review: complete
+technical_review: required
+last_reviewed: '2026-09-22'
+review_scope: diataxis-content-and-navigation
+restructured_from:
+- reference/http-api/ping.md
+related:
+- how-to/installation/verify-an-installation
+- how-to/monitoring-and-diagnostics/perform-routine-cluster-health-checks
+- reference/protocol-buffers-api/ping-and-server-information-messages
+- foundations/data-and-consistency/objects-keys-and-buckets
+- foundations/data-and-consistency/quorums-availability-and-durability
 ---
 
-Document the complete HTTP contract for this operation, including parameters, representations, examples, and errors.
+`GET /ping` checks whether the HTTP API responds.
 
-## Details
+## Response
 
-### HTTP Ping
+A healthy endpoint returns `200 OK` with the body `OK`. Failure to connect, TLS failure, authentication policy, or a server error must be handled separately from that success body.
 
-Checks if the server is alive. This is useful for monitoring tools, load-balancers and automated scripts.
+## Limits
 
-#### Request
-
-```bash
-GET /ping
-```
-
-#### Response
-
-Normal status codes:
-
-* `200 OK`
-
-#### Example
-
-```curl
-$ curl -v http://127.0.0.1:8098/ping
-* About to connect() to 127.0.0.1 port 8098 (#0)
-*   Trying 127.0.0.1... connected
-* Connected to 127.0.0.1 (127.0.0.1) port 8098 (#0)
-> GET /ping HTTP/1.1
-> User-Agent: curl/7.19.7 (universal-apple-darwin10.0) libcurl/7.19.7 OpenSSL/0.9.8l zlib/1.2.3
-> Host: 127.0.0.1:8098
-> Accept: */*
->
-< HTTP/1.1 200 OK
-< Server: MochiWeb/1.1 WebMachine/1.9.0 (participate in the frantic)
-< Date: Fri, 30 Sep 2011 15:24:35 GMT
-< Content-Type: text/html
-< Content-Length: 2
-<
-* Connection #0 to host 127.0.0.1 left intact
-* Closing connection #0
-OK
-```
+Ping is a liveness check. It does not inspect replica completeness, membership, ownership transfers, or application latency. Use an authenticated application probe and cluster monitoring for readiness.

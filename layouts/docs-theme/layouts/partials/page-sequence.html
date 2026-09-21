@@ -1,0 +1,12 @@
+{{- if or .Params.previous_page .Params.next_page -}}
+  {{- $context := partial "product-context.html" . -}}
+  <nav class="doc-sequence" aria-label="Continue this guide">
+    {{- range $direction := slice "previous" "next" -}}
+      {{- with index $.Params (printf "%s_page" $direction) -}}
+        {{- $target := site.GetPage (printf "/%s/%s/%s" $context.id $context.version .) -}}
+        {{- if not $target }}{{ errorf "Missing %s page %s on %s" $direction . $.Path }}{{ end -}}
+        <a href="{{ $target.RelPermalink }}"><span>{{ if eq $direction "previous" }}← Previous{{ else }}Next →{{ end }}</span><strong>{{ $target.LinkTitle }}</strong></a>
+      {{- end -}}
+    {{- end -}}
+  </nav>
+{{- end -}}

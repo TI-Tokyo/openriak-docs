@@ -1,34 +1,47 @@
 ---
-title: 'Find tombstones operation'
-description: 'Document parameters, filters, response fields, limits, and risks for the find tombstones operation.'
-weight: 7
-diataxis: 'reference'
-product: 'OpenRiak KV'
-product_version: '3.4.0'
-status: 'editorially-rewritten'
+title: Find tombstones
+description: Find retained tombstones in a selected AAE scope.
+weight: 880
+diataxis: reference
+product: OpenRiak KV
+product_version: 3.4.0
+status: editorially-rewritten
 draft: true
 audience:
-  - 'operators'
-  - 'developers'
+- operators
+- developers
 source_material:
-  - 'live-3.2.5'
-  - 'proposed-kv'
-  - 'openriak-quickdocs-3.4'
+- live-3.2.5
+- proposed-kv
+- openriak-quickdocs-3.4
 quickdocs_sources:
-  - 'https://openriak.github.io/riak/OtherAPI.html#find_tombs'
-tags: ['diataxis', 'kv', 'reference']
-editorial_review: 'complete'
-technical_review: 'required'
-last_reviewed: '2026-08-28'
-review_scope: 'editorial-and-site-integration'
+- https://openriak.github.io/riak/OtherAPI.html#find_tombs
+tags:
+- diataxis
+- kv
+- reference
+editorial_review: complete
+technical_review: required
+last_reviewed: '2026-09-22'
+review_scope: diataxis-content-and-navigation
+restructured_from:
+- reference/aae-fold-api/find-tombstones.md
+related:
+- reference/aae-fold-api/fold-filters
+- how-to/data-inspection-and-repair/locate-tombstones
+- how-to/data-inspection-and-repair/run-and-retrieve-a-long-running-aae-fold
+- how-to/data-inspection-and-repair/control-repair-impact-during-application-traffic
+- foundations/replication-and-repair/targeted-reconciliation-and-aae-folds
 ---
 
-Document parameters, filters, response fields, limits, and risks for the find tombstones operation.
+Find retained tombstones in a selected AAE scope.
 
-## Details
+## Invocation
 
-### find_tombs
+{{< cli-example key="erlang:riak_client:aae_fold:find_tombs" >}}
 
-Outputs a list of tombstone keys (deleted keys where the tombstone has not been reaped) in the bucket, potentially limited by key range or modified date range.
+The linked command page supplies all arities and the complete tuple/type contract from the release metadata. Filters are described in [Fold filters]({{< product-version-root >}}reference/aae-fold-api/fold-filters/).
 
-- Uses the AF4 queue when running node worker pools in `dscp` mode.
+## Behaviour
+
+The result identifies deletion evidence still present in the store. It does not establish that every disconnected replica or remote destination has already observed deletion.

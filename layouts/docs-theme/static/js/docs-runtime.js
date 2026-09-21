@@ -466,8 +466,9 @@
         sortButton.dataset.sortDirection = direction;
         sortHeading.setAttribute('aria-sort', direction);
         const nextDirection = direction === 'ascending' ? 'descending' : 'ascending';
-        sortButton.setAttribute('aria-label', `Sort config name ${nextDirection}`);
-        sortButton.title = `Sort config name ${nextDirection}`;
+        const sortLabel = sortButton.dataset.sortLabel || 'config name';
+        sortButton.setAttribute('aria-label', `Sort ${sortLabel} ${nextDirection}`);
+        sortButton.title = `Sort ${sortLabel} ${nextDirection}`;
         refresh();
       });
       refresh();

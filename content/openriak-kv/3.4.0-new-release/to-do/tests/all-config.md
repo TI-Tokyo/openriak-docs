@@ -20,7 +20,7 @@ review_scope: 'shortcode-integration'
 related:
   - page: 'reference/configuration'
     reason: 'Understand the configuration files and their precedence.'
-  - page: 'reference/faq'
+  - page: 'reference/orientation-and-compatibility/glossary'
     title: 'Frequently asked questions'
 ---
 

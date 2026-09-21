@@ -1,36 +1,47 @@
 ---
-title: 'Reap tombstones operation'
-description: 'Document parameters, filters, response fields, limits, and risks for the reap tombstones operation.'
-weight: 10
-diataxis: 'reference'
-product: 'OpenRiak KV'
-product_version: '3.4.0'
-status: 'editorially-rewritten'
+title: Reap tombstones
+description: Count or queue reclamation of retained tombstones.
+weight: 930
+diataxis: reference
+product: OpenRiak KV
+product_version: 3.4.0
+status: editorially-rewritten
 draft: true
 audience:
-  - 'operators'
-  - 'developers'
+- operators
+- developers
 source_material:
-  - 'live-3.2.5'
-  - 'proposed-kv'
-  - 'openriak-quickdocs-3.4'
+- live-3.2.5
+- proposed-kv
+- openriak-quickdocs-3.4
 quickdocs_sources:
-  - 'https://openriak.github.io/riak/OtherAPI.html#reap_tombs'
-tags: ['diataxis', 'kv', 'reference']
-editorial_review: 'complete'
-technical_review: 'required'
-last_reviewed: '2026-08-28'
-review_scope: 'editorial-and-site-integration'
+- https://openriak.github.io/riak/OtherAPI.html#reap_tombs
+tags:
+- diataxis
+- kv
+- reference
+editorial_review: complete
+technical_review: required
+last_reviewed: '2026-09-22'
+review_scope: diataxis-content-and-navigation
+restructured_from:
+- reference/aae-fold-api/reap-tombstones.md
+related:
+- reference/aae-fold-api/fold-filters
+- how-to/data-inspection-and-repair/reap-eligible-tombstones
+- how-to/data-inspection-and-repair/run-and-retrieve-a-long-running-aae-fold
+- how-to/data-inspection-and-repair/control-repair-impact-during-application-traffic
+- foundations/replication-and-repair/targeted-reconciliation-and-aae-folds
 ---
 
-Document parameters, filters, response fields, limits, and risks for the reap tombstones operation.
+Count or queue reclamation of retained tombstones.
 
-## Details
+## Invocation
 
-### reap_tombs
+{{< cli-example key="erlang:riak_client:aae_fold:reap_tombs" >}}
 
-Prompts for a list of matching tombstones in the bucket to be erased via the `riak_kv_reaper`, potentially limited by key range or modified date range.
+The linked command page supplies all arities and the complete tuple/type contract from the release metadata. Filters are described in [Fold filters]({{< product-version-root >}}reference/aae-fold-api/fold-filters/).
 
-- Uses the `riak_kv_reaper` queue, and consumption from that queue is constrained by having a single process per node handling queued repairs, and by the configuration of the `tombstone_pause` within riak.conf.
-- The queue has a small in-memory part but a large on-disk part.  The size of the on-disk component is controlled in `riak.conf` via `reaper_overflow_limit`.
-- Uses the AF4 queue when running node worker pools in `dscp` mode.
+## Behaviour
+
+`count` is non-mutating. Reaping removes deletion evidence and requires a retention and convergence policy covering unavailable replicas and connected clusters. Avoid overlap with membership changes.

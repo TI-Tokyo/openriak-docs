@@ -142,6 +142,15 @@ button, select, input { border: 1px solid var(--line); border-radius: 3px; backg
 .doc-article h1 { margin-top: .2rem; color: var(--slate); font-size: clamp(2rem, 4vw, 3.1rem); line-height: 1.1; letter-spacing: -.035em; }
 :root[data-theme="dark"] .doc-article h1 { color: #dce4eb; }
 .doc-article h2 { margin-top: 2.2rem; line-height: 1.25; }
+/* Make the document hierarchy visible independently of bold text. */
+.doc-article > h1 { border-inline-start: .3rem solid var(--accent, #087f8c); padding-inline-start: 1rem; padding-block: .35rem; margin-bottom: 1.5rem; }
+.doc-article > h2, .cli-command-reference > h2 { font-size: 1.55rem; border-bottom: 2px solid var(--border, #ccd5dd); padding-bottom: .5rem; margin-bottom: 1rem; }
+.doc-article > h3, .cli-command-reference > h3 { font-size: 1.25rem; border-inline-start: 3px solid var(--border, #ccd5dd); padding-inline-start: .65rem; margin-top: 1.8rem; }
+.doc-article > h4 { font-size: 1.1rem; text-decoration: underline; text-underline-offset: .3em; margin-top: 1.5rem; }
+.doc-sequence { display: flex; flex-wrap: wrap; gap: 1rem; justify-content: space-between; margin-block: 2rem; padding-block: 1rem; border-block: 1px solid var(--border, #ccd5dd); }
+.doc-sequence a { flex: 1 1 14rem; display: flex; flex-direction: column; gap: .25rem; }
+.doc-sequence a:last-child { text-align: end; }
+.doc-sequence span { font-size: .8rem; color: var(--muted); }
 .doc-recommendations > table { display: block; width: 100%; overflow-x: auto; border-collapse: collapse; }
 .doc-recommendations > table th, .doc-recommendations > table td { padding: .7rem .75rem; border-bottom: 1px solid var(--line); text-align: left; vertical-align: top; }
 .doc-recommendations > table th { color: var(--muted); font-size: .9rem; }
@@ -161,8 +170,8 @@ button, select, input { border: 1px solid var(--line); border-radius: 3px; backg
 .doc-table-of-contents-body { padding: .15rem .85rem .75rem; border-top: 1px solid var(--line); }
 .doc-table-of-contents nav > ul { margin-block: .65rem 0; padding-left: 1.25rem; }
 .doc-table-of-contents li + li { margin-top: .25rem; }
-.doc-article :is(h2, h3, h4, h5, h6) { scroll-margin-top: calc(var(--site-header-height) + 1rem); }
-.heading-permalink { display: inline-block; margin-left: .4rem; color: var(--muted); font-size: .72em; font-weight: 500; text-decoration: none; opacity: 0; }
+.doc-article :is(h2, h3, h4, h5, h6) { position: relative; padding-inline-end: 1.25em; scroll-margin-top: calc(var(--site-header-height) + 1rem); }
+.heading-permalink { position: absolute; inset-inline-end: 0; top: .15em; display: inline-block; margin-left: .4rem; color: var(--muted); font-size: .72em; font-weight: 500; text-decoration: none; opacity: 0; }
 .doc-article :is(h2, h3, h4, h5, h6):hover > .heading-permalink, .heading-permalink:focus-visible { opacity: 1; }
 .heading-permalink:hover { color: var(--orange); }
 .doc-code-block { margin: 1.25rem 0; border: 1px solid var(--line); border-radius: 4px; background: var(--panel-cool); }

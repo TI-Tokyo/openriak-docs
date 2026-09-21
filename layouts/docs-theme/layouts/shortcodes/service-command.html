@@ -1,0 +1,16 @@
+{{- $context := partial "product-context.html" .Page -}}
+{{- $reference := index (index (index hugo.Data "cli-reference") $context.id) $context.version -}}
+{{- $action := .Get "action" | default "start" -}}
+{{- $os := .Get "os" -}}
+{{- $key := index (dict "start" "shell:riak daemon" "stop" "shell:riak stop" "status" "shell:riak ping") $action -}}
+{{- if not $key }}{{ errorf "Unknown service action %s" $action }}{{ end -}}
+{{- $command := index (where $reference.pages "key" $key) 0 -}}
+{{- $matches := slice -}}
+{{- range $command.variants -}}
+  {{- if and (eq .action $action) (or (not $os) (in .os_families $os)) }}{{ $matches = $matches | append . }}{{ end -}}
+{{- end -}}
+{{- if not $matches }}{{ errorf "No %s service variant for %s on %s" $action $os .Page.Path }}{{ end -}}
+{{- range $matches -}}
+<p>{{ delimit .os_families ", " }} ({{ .service_manager }}):</p>
+{{ $.Page.RenderString (printf "```sh\nsudo %s\n```" .invocation) }}
+{{- end -}}

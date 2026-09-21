@@ -116,3 +116,25 @@ ambiguous output paths, and existing destinations. Run its tests with:
 ```sh
 python3 tools/scripts/import_hugo_018_test.py
 ```
+
+## Diátaxis content checks
+
+The implemented page inventory is `notes/reports/diataxis-page-map.json`. Run
+`node --test tools/scripts/diataxis.test.js` after moving or renaming pages to
+check both versions' topic paths, related links, workflow steps, and metadata
+references. `tools/scripts/diataxis.browser.test.cjs` checks the rendered tables,
+workflow navigation, heading hierarchy, and mobile width using Playwright; set
+`OPENRIAK_DOCS_TEST_URL` to the product root (for example,
+`http://localhost:1410/docs/openriak-kv/`).
+
+`kv-reference.json` contains supplemental API contracts and lookup tables with
+release-pinned source references. Hugo mounts these files as data so changes
+refresh in the development server. They supplement the deployed settings, CLI,
+and package JSON; they do not replace those authoritative inputs. Regenerate
+protocol definitions and metric aliases from the pinned release modules when
+updating them, and review authored descriptions against that release.
+
+After a Hugo build with drafts, run
+`python3 tools/scripts/check-diataxis-links.py PATH_TO_HUGO_OUTPUT` to check
+rendered modern-version article links and anchors. It fails if no complete
+modern-version output is present.

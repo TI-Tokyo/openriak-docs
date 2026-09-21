@@ -1,0 +1,22 @@
+{{- $context := partial "product-context.html" .Page -}}
+{{- $reference := index (index (index hugo.Data "configuration-reference") $context.id) $context.version -}}
+{{- $lines := slice -}}
+{{- range split (strings.TrimSpace .Inner) "\n" -}}
+  {{- $parts := split . "=" -}}
+  {{- $name := strings.TrimSpace (index $parts 0) -}}
+  {{- $matches := where $reference.settings "name" $name -}}
+  {{- if not $matches -}}
+    {{- range $reference.settings -}}
+      {{- if strings.Contains .name "$name" -}}
+        {{- $prefix := index (split .name "$name") 0 -}}
+        {{- if and (strings.HasPrefix $name $prefix) (gt (len $name) (len $prefix)) }}{{ $matches = $matches | append . }}{{ end -}}
+      {{- end -}}
+    {{- end -}}
+  {{- end -}}
+  {{- if ne (len $matches) 1 }}{{ errorf "Unknown setting %q on %s" $name $.Page.Path }}{{ end -}}
+  {{- $setting := index $matches 0 -}}
+  {{- $value := strings.TrimSpace (delimit (after 1 $parts) "=") -}}
+  {{- $lines = $lines | append (printf "%s = %s" $name $value) -}}
+{{- end -}}
+{{ .Page.RenderString (printf "```ini\n%s\n```" (delimit $lines "\n")) }}
+<p class="configuration-example-note">These values configure this example; they are not the defaults. See the <a href="{{ printf "%s%s/reference/configuration/all-configuration-settings-and-defaults/" $context.productBase $context.version }}">settings reference</a> for descriptions, allowed values, and platform defaults.</p>

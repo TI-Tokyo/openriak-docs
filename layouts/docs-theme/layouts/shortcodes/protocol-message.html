@@ -1,0 +1,11 @@
+{{- $context := partial "product-context.html" .Page -}}
+{{- $data := index hugo.Data "product-reference" $context.id $context.version "kv-reference" -}}
+{{- $name := .Get "name" -}}
+{{- $message := index $data.messages $name -}}
+{{- if not $message }}{{ errorf "Unknown protocol message %s on %s" $name .Page.Path }}{{ end -}}
+<section class="protocol-message">
+<h3 id="{{ $name | anchorize }}">{{ $name }}</h3>
+{{ with $message.code }}<p>Message code: <code>{{ . }}</code>.</p>{{ end }}
+{{ if $message.rows }}{{ partial "reference-table.html" $message }}{{ else }}<p>This message has no Protocol Buffers body.</p>{{ end }}
+{{ with $message.definition }}<details><summary>Protocol definition</summary>{{ $.Page.RenderString (printf "```protobuf\n%s\n```" .) }}</details>{{ end }}
+</section>

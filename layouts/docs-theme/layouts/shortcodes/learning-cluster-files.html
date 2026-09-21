@@ -1,0 +1,8 @@
+{{- $context := partial "product-context.html" .Page -}}
+{{- $version := index $context.versions $context.version -}}
+{{- $images := where (where $version.dockerImages "osRelease" "3.24") "otp" "26" -}}
+{{- if not $images }}{{ errorf "No Alpine 3.24 OTP 26 learning image for %s" $context.version }}{{ end -}}
+{{- $image := index $images 0 -}}
+{{- $compose := $image.composeCluster -}}
+{{- if eq (.Get "mode") "single" }}{{ $compose = $image.composeSingle }}{{ end -}}
+<p>This exercise uses <code>{{ $image.image }}</code>. Download the matching <a href="{{ $compose.url | relURL }}" download="compose.yaml">Compose file</a> as <code>compose.yaml</code> and <a href="{{ $image.environmentExample.url | relURL }}" download=".env">environment file</a> as <code>.env</code>.</p>

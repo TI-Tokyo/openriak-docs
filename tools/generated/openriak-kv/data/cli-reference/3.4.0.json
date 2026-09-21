@@ -16,7 +16,7 @@
     "tag": "tiotjp/openriak-kv:3.4.0-alpine-3.24",
     "version_label": "3.4.0"
   },
-  "inputCount": 341,
+  "inputCount": 368,
   "excludedCount": 1,
   "pages": [
     {
@@ -5196,6 +5196,1648 @@
           "commit": "d57f7557c4e90503725bb30e4b870f99f63a9803",
           "path": "src/riak_core_vnode_manager.erl",
           "repository": "https://github.com/OpenRiak/riak_core.git"
+        }
+      ],
+      "children": []
+    },
+    {
+      "key": "erlang:riak_kv_replrtq_snk:add_snkqueue",
+      "path": [
+        "erlang",
+        "riak-kv-replrtq-snk",
+        "add-snkqueue"
+      ],
+      "route": "erlang/riak-kv-replrtq-snk/add-snkqueue",
+      "title": "riak_kv_replrtq_snk:add_snkqueue",
+      "context": "erlang",
+      "category": "Erlang shell",
+      "ids": [
+        "erlang:riak_kv_replrtq_snk:add_snkqueue/3",
+        "erlang:riak_kv_replrtq_snk:add_snkqueue/4"
+      ],
+      "availability": "available",
+      "deprecated": false,
+      "helper": false,
+      "internal": false,
+      "notice": "",
+      "aliases": [],
+      "helpInvocations": [],
+      "forms": [
+        {
+          "label": "riak_kv_replrtq_snk:add_snkqueue/3",
+          "syntax": [
+            "riak_kv_replrtq_snk:add_snkqueue(QueueName, Peers, WorkerCount)."
+          ],
+          "template": true,
+          "help": [
+            "@doc\nAdd temporarily to this process a configuration to reach a given queue via\na passed-in list of peers, using a given count of workers.\nThis added-in configuration will not be preserved between process restarts."
+          ],
+          "specifications": [
+            "-spec add_snkqueue(queue_name(), [peer_info()], pos_integer()) -> ok.\n"
+          ],
+          "arguments": [
+            {
+              "position": 1
+            },
+            {
+              "position": 2
+            },
+            {
+              "position": 3
+            }
+          ],
+          "unrestricted": false,
+          "argumentFormat": "",
+          "options": []
+        },
+        {
+          "label": "riak_kv_replrtq_snk:add_snkqueue/4",
+          "syntax": [
+            "riak_kv_replrtq_snk:add_snkqueue(QueueName, Peers, WorkerCount, PerPeerLimit)."
+          ],
+          "template": true,
+          "help": [
+            "@doc\nAdd temporarily to this process a configuration to reach a given queue via\na passed-in list of peers, using a given count of workers.\nThis added-in configuration will not be preserved between process restarts."
+          ],
+          "specifications": [
+            "-spec add_snkqueue(queue_name(),\n                   [peer_info()],\n                   pos_integer(),\n                   pos_integer()) ->\n                      ok.\n"
+          ],
+          "arguments": [
+            {
+              "position": 1
+            },
+            {
+              "position": 2
+            },
+            {
+              "position": 3
+            },
+            {
+              "position": 4
+            }
+          ],
+          "unrestricted": false,
+          "argumentFormat": "",
+          "options": []
+        }
+      ],
+      "options": [],
+      "prerequisites": [
+        "Open an Erlang shell with riak attach or riak remote_console."
+      ],
+      "types": [],
+      "variants": [],
+      "provenance": [
+        {
+          "kind": "beam",
+          "line": 205,
+          "module": "riak_kv_replrtq_snk",
+          "sha256": "bd7bb74679717a073412560563d432752e41a21967a2959da9bf520ef846a8df"
+        },
+        {
+          "commit": "f4ed77e0c17caf14fe70d12a3b3481b0181f8cc5",
+          "path": "src/riak_kv_replrtq_snk.erl",
+          "repository": "https://github.com/OpenRiak/riak_kv"
+        },
+        {
+          "kind": "beam",
+          "line": 213,
+          "module": "riak_kv_replrtq_snk",
+          "sha256": "bd7bb74679717a073412560563d432752e41a21967a2959da9bf520ef846a8df"
+        }
+      ],
+      "children": []
+    },
+    {
+      "key": "erlang:riak_kv_replrtq_snk:current_peers",
+      "path": [
+        "erlang",
+        "riak-kv-replrtq-snk",
+        "current-peers"
+      ],
+      "route": "erlang/riak-kv-replrtq-snk/current-peers",
+      "title": "riak_kv_replrtq_snk:current_peers",
+      "context": "erlang",
+      "category": "Erlang shell",
+      "ids": [
+        "erlang:riak_kv_replrtq_snk:current_peers/1"
+      ],
+      "availability": "available",
+      "deprecated": false,
+      "helper": false,
+      "internal": false,
+      "notice": "",
+      "aliases": [],
+      "helpInvocations": [],
+      "forms": [
+        {
+          "label": "riak_kv_replrtq_snk:current_peers/1",
+          "syntax": [
+            "riak_kv_replrtq_snk:current_peers(QueueName)."
+          ],
+          "template": true,
+          "help": [
+            "@doc\nReturn the current list of peers being used by this snk host, and the\nsettings currently being used for this host and he workers per peer. \nReturns undefined if there are currently no peers defined."
+          ],
+          "specifications": [
+            "-spec current_peers(queue_name()) ->\n                       [peer_info()] | suspended | disabled.\n"
+          ],
+          "arguments": [
+            {
+              "position": 1
+            }
+          ],
+          "unrestricted": false,
+          "argumentFormat": "",
+          "options": []
+        }
+      ],
+      "options": [],
+      "prerequisites": [
+        "Open an Erlang shell with riak attach or riak remote_console."
+      ],
+      "types": [],
+      "variants": [],
+      "provenance": [
+        {
+          "kind": "beam",
+          "line": 227,
+          "module": "riak_kv_replrtq_snk",
+          "sha256": "bd7bb74679717a073412560563d432752e41a21967a2959da9bf520ef846a8df"
+        },
+        {
+          "commit": "f4ed77e0c17caf14fe70d12a3b3481b0181f8cc5",
+          "path": "src/riak_kv_replrtq_snk.erl",
+          "repository": "https://github.com/OpenRiak/riak_kv"
+        }
+      ],
+      "children": []
+    },
+    {
+      "key": "erlang:riak_kv_replrtq_snk:get_worker_counts",
+      "path": [
+        "erlang",
+        "riak-kv-replrtq-snk",
+        "get-worker-counts"
+      ],
+      "route": "erlang/riak-kv-replrtq-snk/get-worker-counts",
+      "title": "riak_kv_replrtq_snk:get_worker_counts",
+      "context": "erlang",
+      "category": "Erlang shell",
+      "ids": [
+        "erlang:riak_kv_replrtq_snk:get_worker_counts/0"
+      ],
+      "availability": "available",
+      "deprecated": false,
+      "helper": false,
+      "internal": false,
+      "notice": "",
+      "aliases": [],
+      "helpInvocations": [],
+      "forms": [
+        {
+          "label": "riak_kv_replrtq_snk:get_worker_counts/0",
+          "syntax": [
+            "riak_kv_replrtq_snk:get_worker_counts()."
+          ],
+          "template": true,
+          "help": [
+            "============================================================================\nExternal functions\n============================================================================"
+          ],
+          "specifications": [],
+          "arguments": [],
+          "unrestricted": false,
+          "argumentFormat": "",
+          "options": []
+        }
+      ],
+      "options": [],
+      "prerequisites": [
+        "Open an Erlang shell with riak attach or riak remote_console."
+      ],
+      "types": [],
+      "variants": [],
+      "provenance": [
+        {
+          "kind": "beam",
+          "line": 492,
+          "module": "riak_kv_replrtq_snk",
+          "sha256": "bd7bb74679717a073412560563d432752e41a21967a2959da9bf520ef846a8df"
+        },
+        {
+          "commit": "f4ed77e0c17caf14fe70d12a3b3481b0181f8cc5",
+          "path": "src/riak_kv_replrtq_snk.erl",
+          "repository": "https://github.com/OpenRiak/riak_kv"
+        }
+      ],
+      "children": []
+    },
+    {
+      "key": "erlang:riak_kv_replrtq_snk:remove_snkqueue",
+      "path": [
+        "erlang",
+        "riak-kv-replrtq-snk",
+        "remove-snkqueue"
+      ],
+      "route": "erlang/riak-kv-replrtq-snk/remove-snkqueue",
+      "title": "riak_kv_replrtq_snk:remove_snkqueue",
+      "context": "erlang",
+      "category": "Erlang shell",
+      "ids": [
+        "erlang:riak_kv_replrtq_snk:remove_snkqueue/1"
+      ],
+      "availability": "available",
+      "deprecated": false,
+      "helper": false,
+      "internal": false,
+      "notice": "",
+      "aliases": [],
+      "helpInvocations": [],
+      "forms": [
+        {
+          "label": "riak_kv_replrtq_snk:remove_snkqueue/1",
+          "syntax": [
+            "riak_kv_replrtq_snk:remove_snkqueue(QueueName)."
+          ],
+          "template": true,
+          "help": [
+            "@doc\nRemove temporarily from this process the configuration for a given queue\nname.  If the configuration remains in riak.conf, it will be re-introduced\non restart"
+          ],
+          "specifications": [
+            "-spec remove_snkqueue(queue_name()) -> ok.\n"
+          ],
+          "arguments": [
+            {
+              "position": 1
+            }
+          ],
+          "unrestricted": false,
+          "argumentFormat": "",
+          "options": []
+        }
+      ],
+      "options": [],
+      "prerequisites": [
+        "Open an Erlang shell with riak attach or riak remote_console."
+      ],
+      "types": [],
+      "variants": [],
+      "provenance": [
+        {
+          "kind": "beam",
+          "line": 197,
+          "module": "riak_kv_replrtq_snk",
+          "sha256": "bd7bb74679717a073412560563d432752e41a21967a2959da9bf520ef846a8df"
+        },
+        {
+          "commit": "f4ed77e0c17caf14fe70d12a3b3481b0181f8cc5",
+          "path": "src/riak_kv_replrtq_snk.erl",
+          "repository": "https://github.com/OpenRiak/riak_kv"
+        }
+      ],
+      "children": []
+    },
+    {
+      "key": "erlang:riak_kv_replrtq_snk:resume_snkqueue",
+      "path": [
+        "erlang",
+        "riak-kv-replrtq-snk",
+        "resume-snkqueue"
+      ],
+      "route": "erlang/riak-kv-replrtq-snk/resume-snkqueue",
+      "title": "riak_kv_replrtq_snk:resume_snkqueue",
+      "context": "erlang",
+      "category": "Erlang shell",
+      "ids": [
+        "erlang:riak_kv_replrtq_snk:resume_snkqueue/1"
+      ],
+      "availability": "available",
+      "deprecated": false,
+      "helper": false,
+      "internal": false,
+      "notice": "",
+      "aliases": [],
+      "helpInvocations": [],
+      "forms": [
+        {
+          "label": "riak_kv_replrtq_snk:resume_snkqueue/1",
+          "syntax": [
+            "riak_kv_replrtq_snk:resume_snkqueue(QueueName)."
+          ],
+          "template": true,
+          "help": [
+            "@doc\nResume the activity asociated with a given queue (for all peers)"
+          ],
+          "specifications": [
+            "-spec resume_snkqueue(queue_name()) -> ok | not_found.\n"
+          ],
+          "arguments": [
+            {
+              "position": 1
+            }
+          ],
+          "unrestricted": false,
+          "argumentFormat": "",
+          "options": []
+        }
+      ],
+      "options": [],
+      "prerequisites": [
+        "Open an Erlang shell with riak attach or riak remote_console."
+      ],
+      "types": [],
+      "variants": [],
+      "provenance": [
+        {
+          "kind": "beam",
+          "line": 189,
+          "module": "riak_kv_replrtq_snk",
+          "sha256": "bd7bb74679717a073412560563d432752e41a21967a2959da9bf520ef846a8df"
+        },
+        {
+          "commit": "f4ed77e0c17caf14fe70d12a3b3481b0181f8cc5",
+          "path": "src/riak_kv_replrtq_snk.erl",
+          "repository": "https://github.com/OpenRiak/riak_kv"
+        }
+      ],
+      "children": []
+    },
+    {
+      "key": "erlang:riak_kv_replrtq_snk:set_worker_counts",
+      "path": [
+        "erlang",
+        "riak-kv-replrtq-snk",
+        "set-worker-counts"
+      ],
+      "route": "erlang/riak-kv-replrtq-snk/set-worker-counts",
+      "title": "riak_kv_replrtq_snk:set_worker_counts",
+      "context": "erlang",
+      "category": "Erlang shell",
+      "ids": [
+        "erlang:riak_kv_replrtq_snk:set_worker_counts/2"
+      ],
+      "availability": "available",
+      "deprecated": false,
+      "helper": false,
+      "internal": false,
+      "notice": "",
+      "aliases": [],
+      "helpInvocations": [],
+      "forms": [
+        {
+          "label": "riak_kv_replrtq_snk:set_worker_counts/2",
+          "syntax": [
+            "riak_kv_replrtq_snk:set_worker_counts(SnkWorkerCount, PerPeerLimit)."
+          ],
+          "template": true,
+          "help": [],
+          "specifications": [],
+          "arguments": [
+            {
+              "position": 1
+            },
+            {
+              "position": 2
+            }
+          ],
+          "unrestricted": false,
+          "argumentFormat": "",
+          "options": []
+        }
+      ],
+      "options": [],
+      "prerequisites": [
+        "Open an Erlang shell with riak attach or riak remote_console."
+      ],
+      "types": [],
+      "variants": [],
+      "provenance": [
+        {
+          "kind": "beam",
+          "line": 503,
+          "module": "riak_kv_replrtq_snk",
+          "sha256": "bd7bb74679717a073412560563d432752e41a21967a2959da9bf520ef846a8df"
+        },
+        {
+          "commit": "f4ed77e0c17caf14fe70d12a3b3481b0181f8cc5",
+          "path": "src/riak_kv_replrtq_snk.erl",
+          "repository": "https://github.com/OpenRiak/riak_kv"
+        }
+      ],
+      "children": []
+    },
+    {
+      "key": "erlang:riak_kv_replrtq_snk:set_workercount",
+      "path": [
+        "erlang",
+        "riak-kv-replrtq-snk",
+        "set-workercount"
+      ],
+      "route": "erlang/riak-kv-replrtq-snk/set-workercount",
+      "title": "riak_kv_replrtq_snk:set_workercount",
+      "context": "erlang",
+      "category": "Erlang shell",
+      "ids": [
+        "erlang:riak_kv_replrtq_snk:set_workercount/2",
+        "erlang:riak_kv_replrtq_snk:set_workercount/3"
+      ],
+      "availability": "available",
+      "deprecated": false,
+      "helper": false,
+      "internal": false,
+      "notice": "",
+      "aliases": [],
+      "helpInvocations": [],
+      "forms": [
+        {
+          "label": "riak_kv_replrtq_snk:set_workercount/2",
+          "syntax": [
+            "riak_kv_replrtq_snk:set_workercount(QueueName, WorkerCount)."
+          ],
+          "template": true,
+          "help": [
+            "@doc\nChange the number of concurrent workers supporting a given queue.  Changing\nthe count is equivalent to starting a new set of workers, and waiting for\nthe old set of workers to expire once they have completed any outstanding\nwork.  So for an initial period there may be more concurrent work ongoing\nuntil all in-flight work is finished."
+          ],
+          "specifications": [
+            "-spec set_workercount(queue_name(), pos_integer()) -> ok | not_found.\n"
+          ],
+          "arguments": [
+            {
+              "position": 1
+            },
+            {
+              "position": 2
+            }
+          ],
+          "unrestricted": false,
+          "argumentFormat": "",
+          "options": []
+        },
+        {
+          "label": "riak_kv_replrtq_snk:set_workercount/3",
+          "syntax": [
+            "riak_kv_replrtq_snk:set_workercount(QueueName, WorkerCount, PerPeerLimit)."
+          ],
+          "template": true,
+          "help": [
+            "@doc\nChange the number of concurrent workers supporting a given queue.  Changing\nthe count is equivalent to starting a new set of workers, and waiting for\nthe old set of workers to expire once they have completed any outstanding\nwork.  So for an initial period there may be more concurrent work ongoing\nuntil all in-flight work is finished."
+          ],
+          "specifications": [
+            "-spec set_workercount(queue_name(), pos_integer(), pos_integer()) ->\n                         ok | not_found.\n"
+          ],
+          "arguments": [
+            {
+              "position": 1
+            },
+            {
+              "position": 2
+            },
+            {
+              "position": 3
+            }
+          ],
+          "unrestricted": false,
+          "argumentFormat": "",
+          "options": []
+        }
+      ],
+      "options": [],
+      "prerequisites": [
+        "Open an Erlang shell with riak attach or riak remote_console."
+      ],
+      "types": [],
+      "variants": [],
+      "provenance": [
+        {
+          "kind": "beam",
+          "line": 238,
+          "module": "riak_kv_replrtq_snk",
+          "sha256": "bd7bb74679717a073412560563d432752e41a21967a2959da9bf520ef846a8df"
+        },
+        {
+          "commit": "f4ed77e0c17caf14fe70d12a3b3481b0181f8cc5",
+          "path": "src/riak_kv_replrtq_snk.erl",
+          "repository": "https://github.com/OpenRiak/riak_kv"
+        },
+        {
+          "kind": "beam",
+          "line": 246,
+          "module": "riak_kv_replrtq_snk",
+          "sha256": "bd7bb74679717a073412560563d432752e41a21967a2959da9bf520ef846a8df"
+        }
+      ],
+      "children": []
+    },
+    {
+      "key": "erlang:riak_kv_replrtq_snk:suspend_snkqueue",
+      "path": [
+        "erlang",
+        "riak-kv-replrtq-snk",
+        "suspend-snkqueue"
+      ],
+      "route": "erlang/riak-kv-replrtq-snk/suspend-snkqueue",
+      "title": "riak_kv_replrtq_snk:suspend_snkqueue",
+      "context": "erlang",
+      "category": "Erlang shell",
+      "ids": [
+        "erlang:riak_kv_replrtq_snk:suspend_snkqueue/1"
+      ],
+      "availability": "available",
+      "deprecated": false,
+      "helper": false,
+      "internal": false,
+      "notice": "",
+      "aliases": [],
+      "helpInvocations": [],
+      "forms": [
+        {
+          "label": "riak_kv_replrtq_snk:suspend_snkqueue/1",
+          "syntax": [
+            "riak_kv_replrtq_snk:suspend_snkqueue(QueueName)."
+          ],
+          "template": true,
+          "help": [
+            "@doc\nSuspend the activity asociated with a given queue (for all peers)"
+          ],
+          "specifications": [
+            "-spec suspend_snkqueue(queue_name()) -> ok | not_found.\n"
+          ],
+          "arguments": [
+            {
+              "position": 1
+            }
+          ],
+          "unrestricted": false,
+          "argumentFormat": "",
+          "options": []
+        }
+      ],
+      "options": [],
+      "prerequisites": [
+        "Open an Erlang shell with riak attach or riak remote_console."
+      ],
+      "types": [],
+      "variants": [],
+      "provenance": [
+        {
+          "kind": "beam",
+          "line": 183,
+          "module": "riak_kv_replrtq_snk",
+          "sha256": "bd7bb74679717a073412560563d432752e41a21967a2959da9bf520ef846a8df"
+        },
+        {
+          "commit": "f4ed77e0c17caf14fe70d12a3b3481b0181f8cc5",
+          "path": "src/riak_kv_replrtq_snk.erl",
+          "repository": "https://github.com/OpenRiak/riak_kv"
+        }
+      ],
+      "children": []
+    },
+    {
+      "key": "erlang:riak_kv_replrtq_src:clear_rtq",
+      "path": [
+        "erlang",
+        "riak-kv-replrtq-src",
+        "clear-rtq"
+      ],
+      "route": "erlang/riak-kv-replrtq-src/clear-rtq",
+      "title": "riak_kv_replrtq_src:clear_rtq",
+      "context": "erlang",
+      "category": "Erlang shell",
+      "ids": [
+        "erlang:riak_kv_replrtq_src:clear_rtq/1"
+      ],
+      "availability": "available",
+      "deprecated": false,
+      "helper": false,
+      "internal": false,
+      "notice": "",
+      "aliases": [],
+      "helpInvocations": [],
+      "forms": [
+        {
+          "label": "riak_kv_replrtq_src:clear_rtq/1",
+          "syntax": [
+            "riak_kv_replrtq_src:clear_rtq(QueueName)."
+          ],
+          "template": true,
+          "help": [
+            "@doc\nClear an existing queue and overflow queue, and start a new queue.  This\nwill also reset the size of the overflow queue to the current configuration\nbased on the riak_kv.replrtq_overflow_limit"
+          ],
+          "specifications": [
+            "-spec clear_rtq(queue_name()) -> ok.\n"
+          ],
+          "arguments": [
+            {
+              "position": 1
+            }
+          ],
+          "unrestricted": false,
+          "argumentFormat": "",
+          "options": []
+        }
+      ],
+      "options": [],
+      "prerequisites": [
+        "Open an Erlang shell with riak attach or riak remote_console."
+      ],
+      "types": [],
+      "variants": [],
+      "provenance": [
+        {
+          "kind": "beam",
+          "line": 290,
+          "module": "riak_kv_replrtq_src",
+          "sha256": "440f040c242efffc45c80d3a9b9a11a3c68736e1f163717b3c37be7e07ea6dd1"
+        },
+        {
+          "commit": "f4ed77e0c17caf14fe70d12a3b3481b0181f8cc5",
+          "path": "src/riak_kv_replrtq_src.erl",
+          "repository": "https://github.com/OpenRiak/riak_kv"
+        }
+      ],
+      "children": []
+    },
+    {
+      "key": "erlang:riak_kv_replrtq_src:delist_rtq",
+      "path": [
+        "erlang",
+        "riak-kv-replrtq-src",
+        "delist-rtq"
+      ],
+      "route": "erlang/riak-kv-replrtq-src/delist-rtq",
+      "title": "riak_kv_replrtq_src:delist_rtq",
+      "context": "erlang",
+      "category": "Erlang shell",
+      "ids": [
+        "erlang:riak_kv_replrtq_src:delist_rtq/1"
+      ],
+      "availability": "available",
+      "deprecated": false,
+      "helper": false,
+      "internal": false,
+      "notice": "",
+      "aliases": [],
+      "helpInvocations": [],
+      "forms": [
+        {
+          "label": "riak_kv_replrtq_src:delist_rtq/1",
+          "syntax": [
+            "riak_kv_replrtq_src:delist_rtq(QueueName)."
+          ],
+          "template": true,
+          "help": [
+            "@doc\nRemove the registered queue from the configuration, deleting any outstanding\nitems on the queue"
+          ],
+          "specifications": [
+            "-spec delist_rtq(queue_name()) -> ok.\n"
+          ],
+          "arguments": [
+            {
+              "position": 1
+            }
+          ],
+          "unrestricted": false,
+          "argumentFormat": "",
+          "options": []
+        }
+      ],
+      "options": [],
+      "prerequisites": [
+        "Open an Erlang shell with riak attach or riak remote_console."
+      ],
+      "types": [],
+      "variants": [],
+      "provenance": [
+        {
+          "kind": "beam",
+          "line": 260,
+          "module": "riak_kv_replrtq_src",
+          "sha256": "440f040c242efffc45c80d3a9b9a11a3c68736e1f163717b3c37be7e07ea6dd1"
+        },
+        {
+          "commit": "f4ed77e0c17caf14fe70d12a3b3481b0181f8cc5",
+          "path": "src/riak_kv_replrtq_src.erl",
+          "repository": "https://github.com/OpenRiak/riak_kv"
+        }
+      ],
+      "children": []
+    },
+    {
+      "key": "erlang:riak_kv_replrtq_src:length_rtq",
+      "path": [
+        "erlang",
+        "riak-kv-replrtq-src",
+        "length-rtq"
+      ],
+      "route": "erlang/riak-kv-replrtq-src/length-rtq",
+      "title": "riak_kv_replrtq_src:length_rtq",
+      "context": "erlang",
+      "category": "Erlang shell",
+      "ids": [
+        "erlang:riak_kv_replrtq_src:length_rtq/1"
+      ],
+      "availability": "available",
+      "deprecated": false,
+      "helper": false,
+      "internal": false,
+      "notice": "",
+      "aliases": [],
+      "helpInvocations": [],
+      "forms": [
+        {
+          "label": "riak_kv_replrtq_src:length_rtq/1",
+          "syntax": [
+            "riak_kv_replrtq_src:length_rtq(QueueName)."
+          ],
+          "template": true,
+          "help": [
+            "@doc\nReturn the {fold_length, aae_length, put_length} to show the length of the\nqueue under each priority for that queue"
+          ],
+          "specifications": [
+            "-spec length_rtq(queue_name()) -> {queue_name(), queue_length()} | false.\n"
+          ],
+          "arguments": [
+            {
+              "position": 1
+            }
+          ],
+          "unrestricted": false,
+          "argumentFormat": "",
+          "options": []
+        }
+      ],
+      "options": [],
+      "prerequisites": [
+        "Open an Erlang shell with riak attach or riak remote_console."
+      ],
+      "types": [],
+      "variants": [],
+      "provenance": [
+        {
+          "kind": "beam",
+          "line": 282,
+          "module": "riak_kv_replrtq_src",
+          "sha256": "440f040c242efffc45c80d3a9b9a11a3c68736e1f163717b3c37be7e07ea6dd1"
+        },
+        {
+          "commit": "f4ed77e0c17caf14fe70d12a3b3481b0181f8cc5",
+          "path": "src/riak_kv_replrtq_src.erl",
+          "repository": "https://github.com/OpenRiak/riak_kv"
+        }
+      ],
+      "children": []
+    },
+    {
+      "key": "erlang:riak_kv_replrtq_src:register_rtq",
+      "path": [
+        "erlang",
+        "riak-kv-replrtq-src",
+        "register-rtq"
+      ],
+      "route": "erlang/riak-kv-replrtq-src/register-rtq",
+      "title": "riak_kv_replrtq_src:register_rtq",
+      "context": "erlang",
+      "category": "Erlang shell",
+      "ids": [
+        "erlang:riak_kv_replrtq_src:register_rtq/2"
+      ],
+      "availability": "available",
+      "deprecated": false,
+      "helper": false,
+      "internal": false,
+      "notice": "",
+      "aliases": [],
+      "helpInvocations": [],
+      "forms": [
+        {
+          "label": "riak_kv_replrtq_src:register_rtq/2",
+          "syntax": [
+            "riak_kv_replrtq_src:register_rtq(QueueName, QueueFilter)."
+          ],
+          "template": true,
+          "help": [
+            "@doc\nSetup a queue with a given queuename, which will take coordput repl_entries\nthat pass the given filter."
+          ],
+          "specifications": [
+            "-spec register_rtq(queue_name(), queue_filter()) -> boolean().\n"
+          ],
+          "arguments": [
+            {
+              "position": 1
+            },
+            {
+              "position": 2
+            }
+          ],
+          "unrestricted": false,
+          "argumentFormat": "",
+          "options": []
+        }
+      ],
+      "options": [],
+      "prerequisites": [
+        "Open an Erlang shell with riak attach or riak remote_console."
+      ],
+      "types": [],
+      "variants": [],
+      "provenance": [
+        {
+          "kind": "beam",
+          "line": 253,
+          "module": "riak_kv_replrtq_src",
+          "sha256": "440f040c242efffc45c80d3a9b9a11a3c68736e1f163717b3c37be7e07ea6dd1"
+        },
+        {
+          "commit": "f4ed77e0c17caf14fe70d12a3b3481b0181f8cc5",
+          "path": "src/riak_kv_replrtq_src.erl",
+          "repository": "https://github.com/OpenRiak/riak_kv"
+        }
+      ],
+      "children": []
+    },
+    {
+      "key": "erlang:riak_kv_replrtq_src:resume_rtq",
+      "path": [
+        "erlang",
+        "riak-kv-replrtq-src",
+        "resume-rtq"
+      ],
+      "route": "erlang/riak-kv-replrtq-src/resume-rtq",
+      "title": "riak_kv_replrtq_src:resume_rtq",
+      "context": "erlang",
+      "category": "Erlang shell",
+      "ids": [
+        "erlang:riak_kv_replrtq_src:resume_rtq/1"
+      ],
+      "availability": "available",
+      "deprecated": false,
+      "helper": false,
+      "internal": false,
+      "notice": "",
+      "aliases": [],
+      "helpInvocations": [],
+      "forms": [
+        {
+          "label": "riak_kv_replrtq_src:resume_rtq/1",
+          "syntax": [
+            "riak_kv_replrtq_src:resume_rtq(QueueName)."
+          ],
+          "template": true,
+          "help": [
+            "@doc\nWhere a queue has been suspended, allow again for new updates to be added\nto the queue.  A null operation if the queue is not suspended."
+          ],
+          "specifications": [
+            "-spec resume_rtq(queue_name()) -> ok | not_found.\n"
+          ],
+          "arguments": [
+            {
+              "position": 1
+            }
+          ],
+          "unrestricted": false,
+          "argumentFormat": "",
+          "options": []
+        }
+      ],
+      "options": [],
+      "prerequisites": [
+        "Open an Erlang shell with riak attach or riak remote_console."
+      ],
+      "types": [],
+      "variants": [],
+      "provenance": [
+        {
+          "kind": "beam",
+          "line": 275,
+          "module": "riak_kv_replrtq_src",
+          "sha256": "440f040c242efffc45c80d3a9b9a11a3c68736e1f163717b3c37be7e07ea6dd1"
+        },
+        {
+          "commit": "f4ed77e0c17caf14fe70d12a3b3481b0181f8cc5",
+          "path": "src/riak_kv_replrtq_src.erl",
+          "repository": "https://github.com/OpenRiak/riak_kv"
+        }
+      ],
+      "children": []
+    },
+    {
+      "key": "erlang:riak_kv_replrtq_src:suspend_rtq",
+      "path": [
+        "erlang",
+        "riak-kv-replrtq-src",
+        "suspend-rtq"
+      ],
+      "route": "erlang/riak-kv-replrtq-src/suspend-rtq",
+      "title": "riak_kv_replrtq_src:suspend_rtq",
+      "context": "erlang",
+      "category": "Erlang shell",
+      "ids": [
+        "erlang:riak_kv_replrtq_src:suspend_rtq/1"
+      ],
+      "availability": "available",
+      "deprecated": false,
+      "helper": false,
+      "internal": false,
+      "notice": "",
+      "aliases": [],
+      "helpInvocations": [],
+      "forms": [
+        {
+          "label": "riak_kv_replrtq_src:suspend_rtq/1",
+          "syntax": [
+            "riak_kv_replrtq_src:suspend_rtq(QueueName)."
+          ],
+          "template": true,
+          "help": [
+            "@doc\nSuspend a queue form receiving further updates, all attempted updates after\nthe suspension will be discarded.  The queue will remain listed, and\nconsumption from the queue may continue"
+          ],
+          "specifications": [
+            "-spec suspend_rtq(queue_name()) -> ok | not_found.\n"
+          ],
+          "arguments": [
+            {
+              "position": 1
+            }
+          ],
+          "unrestricted": false,
+          "argumentFormat": "",
+          "options": []
+        }
+      ],
+      "options": [],
+      "prerequisites": [
+        "Open an Erlang shell with riak attach or riak remote_console."
+      ],
+      "types": [],
+      "variants": [],
+      "provenance": [
+        {
+          "kind": "beam",
+          "line": 268,
+          "module": "riak_kv_replrtq_src",
+          "sha256": "440f040c242efffc45c80d3a9b9a11a3c68736e1f163717b3c37be7e07ea6dd1"
+        },
+        {
+          "commit": "f4ed77e0c17caf14fe70d12a3b3481b0181f8cc5",
+          "path": "src/riak_kv_replrtq_src.erl",
+          "repository": "https://github.com/OpenRiak/riak_kv"
+        }
+      ],
+      "children": []
+    },
+    {
+      "key": "erlang:riak_kv_ttaaefs_manager:autocheck_suppress",
+      "path": [
+        "erlang",
+        "riak-kv-ttaaefs-manager",
+        "autocheck-suppress"
+      ],
+      "route": "erlang/riak-kv-ttaaefs-manager/autocheck-suppress",
+      "title": "riak_kv_ttaaefs_manager:autocheck_suppress",
+      "context": "erlang",
+      "category": "Erlang shell",
+      "ids": [
+        "erlang:riak_kv_ttaaefs_manager:autocheck_suppress/0",
+        "erlang:riak_kv_ttaaefs_manager:autocheck_suppress/1"
+      ],
+      "availability": "available",
+      "deprecated": false,
+      "helper": false,
+      "internal": false,
+      "notice": "",
+      "aliases": [],
+      "helpInvocations": [],
+      "forms": [
+        {
+          "label": "riak_kv_ttaaefs_manager:autocheck_suppress/0",
+          "syntax": [
+            "riak_kv_ttaaefs_manager:autocheck_suppress()."
+          ],
+          "template": true,
+          "help": [],
+          "specifications": [
+            "-spec autocheck_suppress() -> ok.\n"
+          ],
+          "arguments": [],
+          "unrestricted": false,
+          "argumentFormat": "",
+          "options": []
+        },
+        {
+          "label": "riak_kv_ttaaefs_manager:autocheck_suppress/1",
+          "syntax": [
+            "riak_kv_ttaaefs_manager:autocheck_suppress(SuppressCount)."
+          ],
+          "template": true,
+          "help": [],
+          "specifications": [
+            "-spec autocheck_suppress(non_neg_integer()) -> ok.\n"
+          ],
+          "arguments": [
+            {
+              "position": 1
+            }
+          ],
+          "unrestricted": false,
+          "argumentFormat": "",
+          "options": []
+        }
+      ],
+      "options": [],
+      "prerequisites": [
+        "Open an Erlang shell with riak attach or riak remote_console."
+      ],
+      "types": [],
+      "variants": [],
+      "provenance": [
+        {
+          "kind": "beam",
+          "line": 747,
+          "module": "riak_kv_ttaaefs_manager",
+          "sha256": "440e010b020e35471c55aa7b9d5f89cd95125d4820f3ed1d4e1343615ae1f8dd"
+        },
+        {
+          "commit": "f4ed77e0c17caf14fe70d12a3b3481b0181f8cc5",
+          "path": "src/riak_kv_ttaaefs_manager.erl",
+          "repository": "https://github.com/OpenRiak/riak_kv"
+        },
+        {
+          "kind": "beam",
+          "line": 755,
+          "module": "riak_kv_ttaaefs_manager",
+          "sha256": "440e010b020e35471c55aa7b9d5f89cd95125d4820f3ed1d4e1343615ae1f8dd"
+        }
+      ],
+      "children": []
+    },
+    {
+      "key": "erlang:riak_kv_ttaaefs_manager:clear_range",
+      "path": [
+        "erlang",
+        "riak-kv-ttaaefs-manager",
+        "clear-range"
+      ],
+      "route": "erlang/riak-kv-ttaaefs-manager/clear-range",
+      "title": "riak_kv_ttaaefs_manager:clear_range",
+      "context": "erlang",
+      "category": "Erlang shell",
+      "ids": [
+        "erlang:riak_kv_ttaaefs_manager:clear_range/0"
+      ],
+      "availability": "available",
+      "deprecated": false,
+      "helper": false,
+      "internal": false,
+      "notice": "",
+      "aliases": [],
+      "helpInvocations": [],
+      "forms": [
+        {
+          "label": "riak_kv_ttaaefs_manager:clear_range/0",
+          "syntax": [
+            "riak_kv_ttaaefs_manager:clear_range()."
+          ],
+          "template": true,
+          "help": [],
+          "specifications": [
+            "-spec clear_range() -> ok.\n"
+          ],
+          "arguments": [],
+          "unrestricted": false,
+          "argumentFormat": "",
+          "options": []
+        }
+      ],
+      "options": [],
+      "prerequisites": [
+        "Open an Erlang shell with riak attach or riak remote_console."
+      ],
+      "types": [],
+      "variants": [],
+      "provenance": [
+        {
+          "kind": "beam",
+          "line": 735,
+          "module": "riak_kv_ttaaefs_manager",
+          "sha256": "440e010b020e35471c55aa7b9d5f89cd95125d4820f3ed1d4e1343615ae1f8dd"
+        },
+        {
+          "commit": "f4ed77e0c17caf14fe70d12a3b3481b0181f8cc5",
+          "path": "src/riak_kv_ttaaefs_manager.erl",
+          "repository": "https://github.com/OpenRiak/riak_kv"
+        }
+      ],
+      "children": []
+    },
+    {
+      "key": "erlang:riak_kv_ttaaefs_manager:disable_tree_repairs",
+      "path": [
+        "erlang",
+        "riak-kv-ttaaefs-manager",
+        "disable-tree-repairs"
+      ],
+      "route": "erlang/riak-kv-ttaaefs-manager/disable-tree-repairs",
+      "title": "riak_kv_ttaaefs_manager:disable_tree_repairs",
+      "context": "erlang",
+      "category": "Erlang shell",
+      "ids": [
+        "erlang:riak_kv_ttaaefs_manager:disable_tree_repairs/0"
+      ],
+      "availability": "available",
+      "deprecated": false,
+      "helper": false,
+      "internal": false,
+      "notice": "",
+      "aliases": [],
+      "helpInvocations": [],
+      "forms": [
+        {
+          "label": "riak_kv_ttaaefs_manager:disable_tree_repairs/0",
+          "syntax": [
+            "riak_kv_ttaaefs_manager:disable_tree_repairs()."
+          ],
+          "template": true,
+          "help": [],
+          "specifications": [
+            "-spec disable_tree_repairs() -> ok.\n"
+          ],
+          "arguments": [],
+          "unrestricted": false,
+          "argumentFormat": "",
+          "options": []
+        }
+      ],
+      "options": [],
+      "prerequisites": [
+        "Open an Erlang shell with riak attach or riak remote_console."
+      ],
+      "types": [],
+      "variants": [],
+      "provenance": [
+        {
+          "kind": "beam",
+          "line": 782,
+          "module": "riak_kv_ttaaefs_manager",
+          "sha256": "440e010b020e35471c55aa7b9d5f89cd95125d4820f3ed1d4e1343615ae1f8dd"
+        },
+        {
+          "commit": "f4ed77e0c17caf14fe70d12a3b3481b0181f8cc5",
+          "path": "src/riak_kv_ttaaefs_manager.erl",
+          "repository": "https://github.com/OpenRiak/riak_kv"
+        }
+      ],
+      "children": []
+    },
+    {
+      "key": "erlang:riak_kv_ttaaefs_manager:get_range",
+      "path": [
+        "erlang",
+        "riak-kv-ttaaefs-manager",
+        "get-range"
+      ],
+      "route": "erlang/riak-kv-ttaaefs-manager/get-range",
+      "title": "riak_kv_ttaaefs_manager:get_range",
+      "context": "erlang",
+      "category": "Erlang shell",
+      "ids": [
+        "erlang:riak_kv_ttaaefs_manager:get_range/0"
+      ],
+      "availability": "available",
+      "deprecated": false,
+      "helper": false,
+      "internal": false,
+      "notice": "",
+      "aliases": [],
+      "helpInvocations": [],
+      "forms": [
+        {
+          "label": "riak_kv_ttaaefs_manager:get_range/0",
+          "syntax": [
+            "riak_kv_ttaaefs_manager:get_range()."
+          ],
+          "template": true,
+          "help": [],
+          "specifications": [
+            "-spec get_range() ->\n                   none |\n                   {riak_object:bucket() | all,\n                    {riak_object:key(), riak_object:key()} | all,\n                    pos_integer(),\n                    pos_integer()}.\n"
+          ],
+          "arguments": [],
+          "unrestricted": false,
+          "argumentFormat": "",
+          "options": []
+        }
+      ],
+      "options": [],
+      "prerequisites": [
+        "Open an Erlang shell with riak attach or riak remote_console."
+      ],
+      "types": [],
+      "variants": [],
+      "provenance": [
+        {
+          "kind": "beam",
+          "line": 742,
+          "module": "riak_kv_ttaaefs_manager",
+          "sha256": "440e010b020e35471c55aa7b9d5f89cd95125d4820f3ed1d4e1343615ae1f8dd"
+        },
+        {
+          "commit": "f4ed77e0c17caf14fe70d12a3b3481b0181f8cc5",
+          "path": "src/riak_kv_ttaaefs_manager.erl",
+          "repository": "https://github.com/OpenRiak/riak_kv"
+        }
+      ],
+      "children": []
+    },
+    {
+      "key": "erlang:riak_kv_ttaaefs_manager:pause",
+      "path": [
+        "erlang",
+        "riak-kv-ttaaefs-manager",
+        "pause"
+      ],
+      "route": "erlang/riak-kv-ttaaefs-manager/pause",
+      "title": "riak_kv_ttaaefs_manager:pause",
+      "context": "erlang",
+      "category": "Erlang shell",
+      "ids": [
+        "erlang:riak_kv_ttaaefs_manager:pause/0"
+      ],
+      "availability": "available",
+      "deprecated": false,
+      "helper": false,
+      "internal": false,
+      "notice": "",
+      "aliases": [],
+      "helpInvocations": [],
+      "forms": [
+        {
+          "label": "riak_kv_ttaaefs_manager:pause/0",
+          "syntax": [
+            "riak_kv_ttaaefs_manager:pause()."
+          ],
+          "template": true,
+          "help": [
+            "@doc\nPause the management of full-sync from this node"
+          ],
+          "specifications": [
+            "-spec pause() -> ok | {error, already_paused}.\n"
+          ],
+          "arguments": [],
+          "unrestricted": false,
+          "argumentFormat": "",
+          "options": []
+        }
+      ],
+      "options": [],
+      "prerequisites": [
+        "Open an Erlang shell with riak attach or riak remote_console."
+      ],
+      "types": [],
+      "variants": [],
+      "provenance": [
+        {
+          "kind": "beam",
+          "line": 167,
+          "module": "riak_kv_ttaaefs_manager",
+          "sha256": "440e010b020e35471c55aa7b9d5f89cd95125d4820f3ed1d4e1343615ae1f8dd"
+        },
+        {
+          "commit": "f4ed77e0c17caf14fe70d12a3b3481b0181f8cc5",
+          "path": "src/riak_kv_ttaaefs_manager.erl",
+          "repository": "https://github.com/OpenRiak/riak_kv"
+        }
+      ],
+      "children": []
+    },
+    {
+      "key": "erlang:riak_kv_ttaaefs_manager:resume",
+      "path": [
+        "erlang",
+        "riak-kv-ttaaefs-manager",
+        "resume"
+      ],
+      "route": "erlang/riak-kv-ttaaefs-manager/resume",
+      "title": "riak_kv_ttaaefs_manager:resume",
+      "context": "erlang",
+      "category": "Erlang shell",
+      "ids": [
+        "erlang:riak_kv_ttaaefs_manager:resume/0"
+      ],
+      "availability": "available",
+      "deprecated": false,
+      "helper": false,
+      "internal": false,
+      "notice": "",
+      "aliases": [],
+      "helpInvocations": [],
+      "forms": [
+        {
+          "label": "riak_kv_ttaaefs_manager:resume/0",
+          "syntax": [
+            "riak_kv_ttaaefs_manager:resume()."
+          ],
+          "template": true,
+          "help": [
+            "@doc\nResume the management of full-sync from this node"
+          ],
+          "specifications": [
+            "-spec resume() -> ok | {error, not_paused}.\n"
+          ],
+          "arguments": [],
+          "unrestricted": false,
+          "argumentFormat": "",
+          "options": []
+        }
+      ],
+      "options": [],
+      "prerequisites": [
+        "Open an Erlang shell with riak attach or riak remote_console."
+      ],
+      "types": [],
+      "variants": [],
+      "provenance": [
+        {
+          "kind": "beam",
+          "line": 173,
+          "module": "riak_kv_ttaaefs_manager",
+          "sha256": "440e010b020e35471c55aa7b9d5f89cd95125d4820f3ed1d4e1343615ae1f8dd"
+        },
+        {
+          "commit": "f4ed77e0c17caf14fe70d12a3b3481b0181f8cc5",
+          "path": "src/riak_kv_ttaaefs_manager.erl",
+          "repository": "https://github.com/OpenRiak/riak_kv"
+        }
+      ],
+      "children": []
+    },
+    {
+      "key": "erlang:riak_kv_ttaaefs_manager:set_allsync",
+      "path": [
+        "erlang",
+        "riak-kv-ttaaefs-manager",
+        "set-allsync"
+      ],
+      "route": "erlang/riak-kv-ttaaefs-manager/set-allsync",
+      "title": "riak_kv_ttaaefs_manager:set_allsync",
+      "context": "erlang",
+      "category": "Erlang shell",
+      "ids": [
+        "erlang:riak_kv_ttaaefs_manager:set_allsync/2"
+      ],
+      "availability": "available",
+      "deprecated": false,
+      "helper": false,
+      "internal": false,
+      "notice": "",
+      "aliases": [],
+      "helpInvocations": [],
+      "forms": [
+        {
+          "label": "riak_kv_ttaaefs_manager:set_allsync/2",
+          "syntax": [
+            "riak_kv_ttaaefs_manager:set_allsync(LocalNVal, RemoteNVal)."
+          ],
+          "template": true,
+          "help": [
+            "@doc\nSet the manager to do full sync (e.g. using cached trees).  This will leave\nautomated sync disabled.  To re-enable the sync use resume/1"
+          ],
+          "specifications": [
+            "-spec set_allsync(pos_integer(), pos_integer()) -> ok.\n"
+          ],
+          "arguments": [
+            {
+              "position": 1
+            },
+            {
+              "position": 2
+            }
+          ],
+          "unrestricted": false,
+          "argumentFormat": "",
+          "options": []
+        }
+      ],
+      "options": [],
+      "prerequisites": [
+        "Open an Erlang shell with riak attach or riak remote_console."
+      ],
+      "types": [],
+      "variants": [],
+      "provenance": [
+        {
+          "kind": "beam",
+          "line": 192,
+          "module": "riak_kv_ttaaefs_manager",
+          "sha256": "440e010b020e35471c55aa7b9d5f89cd95125d4820f3ed1d4e1343615ae1f8dd"
+        },
+        {
+          "commit": "f4ed77e0c17caf14fe70d12a3b3481b0181f8cc5",
+          "path": "src/riak_kv_ttaaefs_manager.erl",
+          "repository": "https://github.com/OpenRiak/riak_kv"
+        }
+      ],
+      "children": []
+    },
+    {
+      "key": "erlang:riak_kv_ttaaefs_manager:set_range",
+      "path": [
+        "erlang",
+        "riak-kv-ttaaefs-manager",
+        "set-range"
+      ],
+      "route": "erlang/riak-kv-ttaaefs-manager/set-range",
+      "title": "riak_kv_ttaaefs_manager:set_range",
+      "context": "erlang",
+      "category": "Erlang shell",
+      "ids": [
+        "erlang:riak_kv_ttaaefs_manager:set_range/4"
+      ],
+      "availability": "available",
+      "deprecated": false,
+      "helper": false,
+      "internal": false,
+      "notice": "",
+      "aliases": [],
+      "helpInvocations": [],
+      "forms": [
+        {
+          "label": "riak_kv_ttaaefs_manager:set_range/4",
+          "syntax": [
+            "riak_kv_ttaaefs_manager:set_range(Bucket, KeyRange, LowDate, HighDate)."
+          ],
+          "template": true,
+          "help": [
+            "============================================================================\nEnvironment state management functions\n============================================================================\n@doc\nSet a specific range to be the target for subsequent range_check queries"
+          ],
+          "specifications": [
+            "-spec set_range(riak_object:bucket() | all,\n                {riak_object:key(), riak_object:key()} | all,\n                calendar:datetime(),\n                calendar:datetime()) ->\n                   ok.\n"
+          ],
+          "arguments": [
+            {
+              "position": 1
+            },
+            {
+              "position": 2
+            },
+            {
+              "position": 3
+            },
+            {
+              "position": 4
+            }
+          ],
+          "unrestricted": false,
+          "argumentFormat": "",
+          "options": []
+        }
+      ],
+      "options": [],
+      "prerequisites": [
+        "Open an Erlang shell with riak attach or riak remote_console."
+      ],
+      "types": [],
+      "variants": [],
+      "provenance": [
+        {
+          "kind": "beam",
+          "line": 722,
+          "module": "riak_kv_ttaaefs_manager",
+          "sha256": "440e010b020e35471c55aa7b9d5f89cd95125d4820f3ed1d4e1343615ae1f8dd"
+        },
+        {
+          "commit": "f4ed77e0c17caf14fe70d12a3b3481b0181f8cc5",
+          "path": "src/riak_kv_ttaaefs_manager.erl",
+          "repository": "https://github.com/OpenRiak/riak_kv"
+        }
+      ],
+      "children": []
+    },
+    {
+      "key": "erlang:riak_kv_ttaaefs_manager:set_sink",
+      "path": [
+        "erlang",
+        "riak-kv-ttaaefs-manager",
+        "set-sink"
+      ],
+      "route": "erlang/riak-kv-ttaaefs-manager/set-sink",
+      "title": "riak_kv_ttaaefs_manager:set_sink",
+      "context": "erlang",
+      "category": "Erlang shell",
+      "ids": [
+        "erlang:riak_kv_ttaaefs_manager:set_sink/3"
+      ],
+      "availability": "available",
+      "deprecated": false,
+      "helper": false,
+      "internal": false,
+      "notice": "",
+      "aliases": [],
+      "helpInvocations": [],
+      "forms": [
+        {
+          "label": "riak_kv_ttaaefs_manager:set_sink/3",
+          "syntax": [
+            "riak_kv_ttaaefs_manager:set_sink(Protocol, IP, Port)."
+          ],
+          "template": true,
+          "help": [
+            "@doc\nDefine the sink port and address to be used for full-sync"
+          ],
+          "specifications": [
+            "-spec set_sink(http, string(), integer()) -> ok.\n"
+          ],
+          "arguments": [
+            {
+              "position": 1
+            },
+            {
+              "position": 2
+            },
+            {
+              "position": 3
+            }
+          ],
+          "unrestricted": false,
+          "argumentFormat": "",
+          "options": []
+        }
+      ],
+      "options": [],
+      "prerequisites": [
+        "Open an Erlang shell with riak attach or riak remote_console."
+      ],
+      "types": [],
+      "variants": [],
+      "provenance": [
+        {
+          "kind": "beam",
+          "line": 179,
+          "module": "riak_kv_ttaaefs_manager",
+          "sha256": "440e010b020e35471c55aa7b9d5f89cd95125d4820f3ed1d4e1343615ae1f8dd"
+        },
+        {
+          "commit": "f4ed77e0c17caf14fe70d12a3b3481b0181f8cc5",
+          "path": "src/riak_kv_ttaaefs_manager.erl",
+          "repository": "https://github.com/OpenRiak/riak_kv"
+        }
+      ],
+      "children": []
+    },
+    {
+      "key": "erlang:riak_kv_ttaaefs_manager:trigger_tree_repairs",
+      "path": [
+        "erlang",
+        "riak-kv-ttaaefs-manager",
+        "trigger-tree-repairs"
+      ],
+      "route": "erlang/riak-kv-ttaaefs-manager/trigger-tree-repairs",
+      "title": "riak_kv_ttaaefs_manager:trigger_tree_repairs",
+      "context": "erlang",
+      "category": "Erlang shell",
+      "ids": [
+        "erlang:riak_kv_ttaaefs_manager:trigger_tree_repairs/0"
+      ],
+      "availability": "available",
+      "deprecated": false,
+      "helper": false,
+      "internal": false,
+      "notice": "",
+      "aliases": [],
+      "helpInvocations": [],
+      "forms": [
+        {
+          "label": "riak_kv_ttaaefs_manager:trigger_tree_repairs/0",
+          "syntax": [
+            "riak_kv_ttaaefs_manager:trigger_tree_repairs()."
+          ],
+          "template": true,
+          "help": [],
+          "specifications": [
+            "-spec trigger_tree_repairs() -> ok.\n"
+          ],
+          "arguments": [],
+          "unrestricted": false,
+          "argumentFormat": "",
+          "options": []
+        }
+      ],
+      "options": [],
+      "prerequisites": [
+        "Open an Erlang shell with riak attach or riak remote_console."
+      ],
+      "types": [],
+      "variants": [],
+      "provenance": [
+        {
+          "kind": "beam",
+          "line": 769,
+          "module": "riak_kv_ttaaefs_manager",
+          "sha256": "440e010b020e35471c55aa7b9d5f89cd95125d4820f3ed1d4e1343615ae1f8dd"
+        },
+        {
+          "commit": "f4ed77e0c17caf14fe70d12a3b3481b0181f8cc5",
+          "path": "src/riak_kv_ttaaefs_manager.erl",
+          "repository": "https://github.com/OpenRiak/riak_kv"
         }
       ],
       "children": []
@@ -23210,6 +24852,18 @@
       "title": "riak core vnode manager"
     },
     {
+      "route": "erlang/riak-kv-replrtq-snk",
+      "title": "riak kv replrtq snk"
+    },
+    {
+      "route": "erlang/riak-kv-replrtq-src",
+      "title": "riak kv replrtq src"
+    },
+    {
+      "route": "erlang/riak-kv-ttaaefs-manager",
+      "title": "riak kv ttaaefs manager"
+    },
+    {
       "route": "erlang/riak",
       "title": "riak"
     }
@@ -23318,6 +24972,33 @@
     "erlang:riak_client:ttaaefs_fullsync/2": "erlang:riak_client:ttaaefs_fullsync",
     "erlang:riak_client:ttaaefs_fullsync/3": "erlang:riak_client:ttaaefs_fullsync",
     "erlang:riak_core_vnode_manager:kill_repairs/1": "erlang:riak_core_vnode_manager:kill_repairs",
+    "erlang:riak_kv_replrtq_snk:add_snkqueue/3": "erlang:riak_kv_replrtq_snk:add_snkqueue",
+    "erlang:riak_kv_replrtq_snk:add_snkqueue/4": "erlang:riak_kv_replrtq_snk:add_snkqueue",
+    "erlang:riak_kv_replrtq_snk:current_peers/1": "erlang:riak_kv_replrtq_snk:current_peers",
+    "erlang:riak_kv_replrtq_snk:get_worker_counts/0": "erlang:riak_kv_replrtq_snk:get_worker_counts",
+    "erlang:riak_kv_replrtq_snk:remove_snkqueue/1": "erlang:riak_kv_replrtq_snk:remove_snkqueue",
+    "erlang:riak_kv_replrtq_snk:resume_snkqueue/1": "erlang:riak_kv_replrtq_snk:resume_snkqueue",
+    "erlang:riak_kv_replrtq_snk:set_worker_counts/2": "erlang:riak_kv_replrtq_snk:set_worker_counts",
+    "erlang:riak_kv_replrtq_snk:set_workercount/2": "erlang:riak_kv_replrtq_snk:set_workercount",
+    "erlang:riak_kv_replrtq_snk:set_workercount/3": "erlang:riak_kv_replrtq_snk:set_workercount",
+    "erlang:riak_kv_replrtq_snk:suspend_snkqueue/1": "erlang:riak_kv_replrtq_snk:suspend_snkqueue",
+    "erlang:riak_kv_replrtq_src:clear_rtq/1": "erlang:riak_kv_replrtq_src:clear_rtq",
+    "erlang:riak_kv_replrtq_src:delist_rtq/1": "erlang:riak_kv_replrtq_src:delist_rtq",
+    "erlang:riak_kv_replrtq_src:length_rtq/1": "erlang:riak_kv_replrtq_src:length_rtq",
+    "erlang:riak_kv_replrtq_src:register_rtq/2": "erlang:riak_kv_replrtq_src:register_rtq",
+    "erlang:riak_kv_replrtq_src:resume_rtq/1": "erlang:riak_kv_replrtq_src:resume_rtq",
+    "erlang:riak_kv_replrtq_src:suspend_rtq/1": "erlang:riak_kv_replrtq_src:suspend_rtq",
+    "erlang:riak_kv_ttaaefs_manager:autocheck_suppress/0": "erlang:riak_kv_ttaaefs_manager:autocheck_suppress",
+    "erlang:riak_kv_ttaaefs_manager:autocheck_suppress/1": "erlang:riak_kv_ttaaefs_manager:autocheck_suppress",
+    "erlang:riak_kv_ttaaefs_manager:clear_range/0": "erlang:riak_kv_ttaaefs_manager:clear_range",
+    "erlang:riak_kv_ttaaefs_manager:disable_tree_repairs/0": "erlang:riak_kv_ttaaefs_manager:disable_tree_repairs",
+    "erlang:riak_kv_ttaaefs_manager:get_range/0": "erlang:riak_kv_ttaaefs_manager:get_range",
+    "erlang:riak_kv_ttaaefs_manager:pause/0": "erlang:riak_kv_ttaaefs_manager:pause",
+    "erlang:riak_kv_ttaaefs_manager:resume/0": "erlang:riak_kv_ttaaefs_manager:resume",
+    "erlang:riak_kv_ttaaefs_manager:set_allsync/2": "erlang:riak_kv_ttaaefs_manager:set_allsync",
+    "erlang:riak_kv_ttaaefs_manager:set_range/4": "erlang:riak_kv_ttaaefs_manager:set_range",
+    "erlang:riak_kv_ttaaefs_manager:set_sink/3": "erlang:riak_kv_ttaaefs_manager:set_sink",
+    "erlang:riak_kv_ttaaefs_manager:trigger_tree_repairs/0": "erlang:riak_kv_ttaaefs_manager:trigger_tree_repairs",
     "shell:cuttlefish": "shell:cuttlefish",
     "shell:cuttlefish describe": "shell:cuttlefish describe",
     "shell:cuttlefish effective": "shell:cuttlefish effective",

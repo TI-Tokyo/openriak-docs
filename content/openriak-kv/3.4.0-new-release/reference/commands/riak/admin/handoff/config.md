@@ -11,6 +11,7 @@ status: "reference"
 technical_review: "required"
 generated_by: "cli-reference"
 cli_reference_version: "3.4.0"
+related: ["how-to/cluster-lifecycle/monitor-and-control-handoffs","reference/operations-and-observability/handoff-states-and-transfer-records","reference/commands"]
 cli_command_key: "shell:riak admin handoff config"
 ---
 

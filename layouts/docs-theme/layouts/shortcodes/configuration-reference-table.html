@@ -1,4 +1,11 @@
 {{- $context := partial "product-context.html" .Page -}}
+{{- if .Get "reference" -}}
+  {{- $path := printf "%s/metadata/%s/kv-reference.json" $context.id $context.version -}}
+  {{- $data := index hugo.Data "product-reference" $context.id $context.version "kv-reference" -}}
+  {{- $table := index $data.tables (.Get "reference") -}}
+  {{- if not $table }}{{ errorf "Missing reference table %s in %s" (.Get "reference") $path }}{{ end -}}
+  {{- partial "reference-table.html" $table -}}
+{{- else -}}
 {{- $configurationData := index hugo.Data "configuration-reference" -}}
 {{- $productData := index $configurationData $context.id -}}
 {{- $reference := index $productData $context.version -}}
@@ -124,3 +131,4 @@
   </div>
   <script type="application/json" data-configuration-reference-defaults data-json-src="{{ partial "json-resource.html" $clientDefaults }}"></script>
 </div>
+{{- end -}}

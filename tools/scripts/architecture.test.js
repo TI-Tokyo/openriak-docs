@@ -142,8 +142,8 @@ assert.match(previousVersionShortcodeSource, /partial "previous-version\.html" \
 assert.match(previousVersionPartialSource, /index hugo\.Data\.versions \$productID[\s\S]*\$isEarlier[\s\S]*\$isLaterThanPrevious/, 'previous-version must select the greatest semantic version below the current release');
 assert.match(previousVersionPartialSource, /previous-version has no previous release: product=%s version=%s page=%s/, 'previous-version must stop the build when no earlier release exists');
 assert.match(baseSource, /js\/theme\.js[^"\n]+\?v=/, 'theme picker script must be cache-busted');
-assert.match(baseSource, /js\/metadata\.js[\s\S]*js\/docs-runtime\.js[^"\n]+\?v=20260907-shared-metadata/, 'shared metadata must load before the documentation runtime with its current cache key');
-assert.match(headSource, /css\/docs\.css[^"\n]+\?v=20260917-recommendations/, 'documentation styling must use its current cache key');
+assert.match(baseSource, /js\/metadata\.js[\s\S]*js\/docs-runtime\.js[^"\n]+\?v=20260922-diataxis/, 'shared metadata must load before the documentation runtime with its current cache key');
+assert.match(headSource, /css\/docs\.css[^"\n]+\?v=20260922-diataxis/, 'documentation styling must use its current cache key');
 assert.match(configurationReferenceShortcodeSource, /strings\.Split \.Inner "\\n"/, 'configuration reference filters must be one regex per body line so commas remain part of the regex');
 assert.match(configurationReferenceShortcodeSource, /\.Get "area"[\s\S]*in \$setting\.areas \$area/, 'configuration references must support repository-area filtering');
 assert.match(configurationReferenceShortcodeSource, /data-configuration-default-copy[\s\S]*data-configuration-os-icon/, 'configuration references must render copyable defaults and OS-specific indicators');
@@ -183,7 +183,7 @@ assert.match(runtimeSource, /value\.hidden = !selectedDefault\.hasDefault[\s\S]*
 assert.match(configurationReferenceTestPageSource, /^draft: true$/m, 'the configuration reference playground must remain a draft page');
 assert.match(configurationReferenceTestPageSource, /configuration-reference-table area="riak_repl"/, 'the configuration reference playground must exercise area filtering');
 assert.match(configurationReferenceTestPageSource, /\(\?:,legacy\)\?/, 'the configuration reference playground must prove commas are preserved inside a regex');
-assert.match(configurationReferenceTestPageSource, /^related:[\s\S]*page: 'reference\/configuration'[\s\S]*page: 'reference\/faq'/m, 'the configuration playground must exercise version-independent related-page references');
+assert.match(configurationReferenceTestPageSource, /^related:[\s\S]*page: 'reference\/configuration'[\s\S]*page: 'reference\/orientation-and-compatibility\/glossary'/m, 'the configuration playground must exercise version-independent related-page references');
 assert.match(configurationReferenceTestPageSource, /```text \{filename="riak\.conf"\}[\s\S]*```conf \{filename="riak"\}[\s\S]*```erlang \{partialname="ring-size"\}[\s\S]*```advancedconfig \{partialname="advanced-ring-size"\}[\s\S]*```bash \{partialname="start-riak"\}[\s\S]*extension="yml"/, 'the configuration playground must exercise exact stems, partial names, inferred extensions, advanced.config, extension overrides, and shell splitting');
 assert.match(runtimeSource, /applyConfigurationReferences\(\)/, 'OS changes must update rendered configuration defaults');
 assert.match(docsCssSource, /\.configuration-reference-table/, 'configuration reference tables must have dedicated responsive styling');
@@ -757,10 +757,10 @@ if (fs.existsSync(buildRoot)) {
     assert.ok(exists(`${version}/page-a/index.html`), `temporary picker fixture must remain available in ${version}`);
   }
   assert.ok(!exists('3.4.1/page-a/index.html'), 'proof pages must not leak into production releases');
-  assert.ok(exists('3.4.1/reference/faq/index.html'), '3.4.1 must inherit unchanged production pages from 3.4.0');
-  assert.ok(exists('3.4.0/reference/faq/index.html'));
-  assert.ok(exists('3.4.1/reference/query-api/queued-results/index.html'), '3.4.1 additions must be published');
-  assert.ok(!exists('3.4.0/reference/query-api/queued-results/index.html'), '3.4.1 additions must not leak backwards');
+  assert.ok(exists('3.4.1/reference/orientation-and-compatibility/glossary/index.html'), '3.4.1 must inherit unchanged production pages from 3.4.0');
+  assert.ok(exists('3.4.0/reference/orientation-and-compatibility/glossary/index.html'));
+  assert.ok(exists('3.4.1/reference/commands/erlang/riak-client/resync-bucket/index.html'), '3.4.1 additions must be published');
+  assert.ok(!exists('3.4.0/reference/commands/erlang/riak-client/resync-bucket/index.html'), '3.4.1 additions must not leak backwards');
   assert.ok(exists('3.2.5/setup/installing/debian-ubuntu/index.html'), 'the full historical 3.2.5 corpus must be published');
 
   const legacyDownloadsHtml = fs.readFileSync(path.join(buildRoot, '3.2.5', 'downloads', 'index.html'), 'utf8');
@@ -802,8 +802,8 @@ if (fs.existsSync(buildRoot)) {
   assert.match(html, />All Download Packages<[\s\S]*data-download-os-id=alpine-3\.21-x86_64/, 'All packages must include the initially selected OS');
   assert.match(html, /files\.tiot\.jp\/riak\/kv\/3\.4\/3\.4\.1/);
 
-  const inheritedHtml = fs.readFileSync(path.join(buildRoot, '3.4.1', 'reference', 'faq', 'index.html'), 'utf8');
-  assert.match(inheritedHtml, /href=\/docs\/openriak-kv\/3\.4\.1\/how-to\/tune\/benchmark-cluster\//, 'inherited internal links must resolve within the rendered version');
+  const inheritedHtml = fs.readFileSync(path.join(buildRoot, '3.4.1', 'reference', 'orientation-and-compatibility', 'glossary', 'index.html'), 'utf8');
+  assert.match(inheritedHtml, /href=\/docs\/openriak-kv\/3\.4\.1\/foundations\/cluster-architecture\/rings-partitions-and-virtual-nodes\//, 'inherited internal links must resolve within the rendered version');
 
   const oldVersionHtml = fs.readFileSync(path.join(buildRoot, '3.2.5', 'setup', 'installing', 'debian-ubuntu', 'index.html'), 'utf8');
   assert.match(oldVersionHtml, /data-version-warning-target=3\.4\.1/, 'old-version warning must use the shared version switcher');

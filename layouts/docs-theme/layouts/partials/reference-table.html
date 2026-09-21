@@ -1,0 +1,17 @@
+<div class="configuration-reference-wrap" data-configuration-reference>
+  <div class="configuration-reference-controls">
+    <div class="configuration-reference-search-controls">
+      <label class="configuration-reference-search"><span>Search this table</span><input type="search" data-configuration-search placeholder="Search all fields" autocomplete="off" spellcheck="false"></label>
+      <label class="configuration-reference-search-mode"><span>Match</span><select data-configuration-search-mode><option value="contains">Contains</option><option value="whole-word">Whole word</option><option value="word-prefix">Word prefix</option><option value="word-suffix">Word suffix</option><option value="regex">Regular expression</option></select></label>
+    </div>
+    <output class="configuration-reference-results" data-configuration-results aria-live="polite">{{ len .rows }} rows</output>
+  </div>
+  <div class="configuration-reference-scroll">
+    <table class="configuration-reference-table">
+      <caption class="sr-only">{{ .title }}</caption>
+      <thead><tr>{{ range $i, $column := .columns }}{{ if eq $i 0 }}<th scope="col" data-configuration-sort-heading aria-sort="none"><button class="configuration-reference-sort" type="button" data-configuration-sort data-sort-label="{{ .label }}" aria-label="Sort {{ .label }} ascending" title="Sort {{ .label }} ascending"><span>{{ .label }}</span><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M8 7l4-4 4 4M12 3v18"/></svg></button></th>{{ else }}<th scope="col">{{ .label }}</th>{{ end }}{{ end }}</tr></thead>
+      <tbody>{{ range $i, $row := .rows }}<tr data-configuration-key="{{ index $row (index $.columns 0).key }}">{{ range $.columns }}<td>{{ index $row .key | markdownify }}</td>{{ end }}</tr>{{ end }}</tbody>
+    </table>
+  </div>
+  {{ with .source }}<p class="reference-source">Source: <a href="{{ .url }}">{{ .label }}</a></p>{{ end }}
+</div>

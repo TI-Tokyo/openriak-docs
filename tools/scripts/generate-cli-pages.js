@@ -55,10 +55,26 @@ pages are preserved. Build-time data is prepared by sync-product-metadata.js.`);
     legacy.set(route, [...new Set(headings)]);
   }
   function page(route, title, body, extra = {}) {
+    const related = [];
+    if (/^3\.4\./.test(version)) {
+      const groups = [
+        ['riak/admin/cluster', 'how-to/cluster-lifecycle/plan-and-commit-a-membership-change', 'foundations/cluster-architecture/membership-gossip-and-handoff'],
+        ['riak/admin/bucket-type', 'how-to/application-data/create-and-activate-bucket-types', 'reference/configuration/bucket-properties-and-defaults'],
+        ['riak/admin/security', 'how-to/security/enable-authentication-and-authorization', 'reference/configuration/authentication-authorization-and-tls-settings'],
+        ['riak/admin/handoff', 'how-to/cluster-lifecycle/monitor-and-control-handoffs', 'reference/operations-and-observability/handoff-states-and-transfer-records'],
+        ['riak/admin/tictacaae', 'how-to/replication-and-reconciliation/enable-tictac-anti-entropy', 'reference/aae-fold-api/fold-invocation-and-result-conventions'],
+        ['riak/repl', 'how-to/legacy-and-specialist-workflows/maintain-legacy-v3-replication', 'reference/replication-interfaces/legacy-riak-repl-runtime-controls'],
+        ['erlang/riak-client/aae-fold', 'how-to/data-inspection-and-repair/run-and-retrieve-a-long-running-aae-fold', 'reference/aae-fold-api/fold-filters'],
+        ['erlang', 'how-to/monitoring-and-diagnostics/inspect-a-node-through-the-remote-console', 'reference/operations-and-observability/remote-console-interfaces'],
+      ];
+      const group = groups.find(([prefix]) => route === prefix || route.startsWith(`${prefix}/`));
+      related.push(...(group ? group.slice(1) : ['how-to/cluster-lifecycle/start-stop-or-restart-a-node', 'how-to/monitoring-and-diagnostics/perform-routine-cluster-health-checks']));
+      if (route) related.push('reference/commands');
+    }
     const frontmatter = { title, description: route ? `Syntax, options and help for ${title}.` : 'All OpenRiak KV commands, with options, help and compatibility information.',
       layout: 'single', weight: 1, diataxis: 'reference', product: 'OpenRiak KV', product_version: version,
       draft: true, status: 'reference', technical_review: 'required', generated_by: 'cli-reference',
-      cli_reference_version: version, ...extra };
+      cli_reference_version: version, ...(related.length ? { related } : {}), ...extra };
     if (legacy.get(route)?.length) frontmatter.cli_legacy_anchors = legacy.get(route);
     const text = '---\n' + Object.entries(frontmatter).map(([k, v]) => `${k}: ${JSON.stringify(v)}`).join('\n') + '\n---\n\n' + body + '\n';
     const filename = !route ? '_index.md' : branchRoutes.has(route) ? `${route}/_index.md` : `${route}.md`;
