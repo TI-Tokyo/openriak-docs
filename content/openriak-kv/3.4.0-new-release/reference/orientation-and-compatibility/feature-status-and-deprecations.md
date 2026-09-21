@@ -51,6 +51,8 @@ The current Object API, Leveled Query API, TicTac AAE, and next-generation repli
 
 The 3.4.0 release notes deprecate LevelDB, the memory backend, multi-backend arrangements other than all-Bitcask configurations, MapReduce, ensemble-backed experimental strong consistency, and DTrace. Legacy v1.4 counters and link walking were already deprecated. The write-once path and legacy replication also have deprecation constraints in their interface documentation.
 
+The List API and the legacy secondary-index HTTP query API are also deprecated from 3.4. Use [AAE folds]({{< product-version-root >}}how-to/data-inspection-and-repair/inventory-buckets-using-aae-folds/) for bucket and key inventory, and the [Query API]({{< product-version-root >}}reference/query-api/endpoints-and-request-schema/) for new binary-index queries. Secondary indexes themselves remain supported; the query-interface deprecation does not remove index metadata or integer indexes.
+
 Deprecation does not mean every interface has already been removed. It means existing users should plan a transition and should not assume continued support in later releases. Conditional token-protected PUTs are not a semantic replacement for every strongly consistent application.
 
 ## Compatibility features

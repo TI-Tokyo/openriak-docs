@@ -43,7 +43,7 @@ Compatibility must be checked for the exact source and target releases, their Er
 
 The previously documented staged family route is 2.2.3 → 2.2.5 → 2.9.x → 3.0.x → 3.2.x → 3.4.x. It is historical guidance, not a validation of every patch, runtime, compression setting, or direct skip between those families.
 
-In particular, Erlang distribution compatibility can prevent nodes built with widely separated OTP releases from participating in one rolling transition. Check the runtime listed with each package and rehearse the exact route with representative data.
+**Do not attempt a direct rolling upgrade from Riak 3.0 to OpenRiak KV 3.4.0 or 3.4.1.** Breaking Erlang distribution compatibility prevents those nodes from sharing the required mixed-version cluster. A staged route through 3.2 requires checking and rehearsing the exact releases and OTP builds at each step. For a direct migration without planned service downtime, build a new cluster and follow [Migrate to another cluster using replication]({{< product-version-root >}}how-to/replication-and-reconciliation/migrate-to-another-cluster-using-replication/), including its compatibility checks and cutover procedure. Check the runtime listed with each package and rehearse the exact route with representative data.
 
 ## Clients
 

@@ -36,6 +36,8 @@ related:
 
 The secondary-index HTTP interface returns object keys matching an exact term or an inclusive range on an index-capable backend.
 
+**Deprecated since OpenRiak KV 3.4.** This legacy HTTP query interface is retained for compatibility. Use the [Query API]({{< product-version-root >}}reference/query-api/endpoints-and-request-schema/) for new binary-index queries. Secondary indexes themselves, including stored index metadata, are not deprecated. Check the Query API contract before migrating: it is not a drop-in replacement for every legacy request, including integer-index queries.
+
 ## Endpoints
 
 `GET /types/TYPE/buckets/BUCKET/index/INDEX/TERM`

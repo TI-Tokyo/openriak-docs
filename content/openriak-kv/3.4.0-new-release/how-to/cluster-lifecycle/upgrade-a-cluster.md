@@ -52,6 +52,8 @@ Upgrade an existing cluster in a rehearsed rolling sequence, preserving data and
 
 ## Check compatibility
 
+**Do not attempt a direct rolling upgrade from Riak 3.0 to OpenRiak KV 3.4.0 or 3.4.1.** Breaking Erlang distribution compatibility prevents those nodes from sharing the required mixed-version cluster. A staged route through 3.2 requires checking and rehearsing the exact releases and OTP builds at each step. For a direct migration without planned service downtime, build a new cluster and follow [Migrate to another cluster using replication]({{< product-version-root >}}how-to/replication-and-reconciliation/migrate-to-another-cluster-using-replication/), including its compatibility checks and cutover procedure.
+
 Confirm the supported upgrade path, OTP version, backend formats, client compatibility, and replication relationships in [Cluster, client, and replication compatibility]({{< product-version-root >}}reference/orientation-and-compatibility/cluster-client-and-replication-compatibility/). Inventory deprecated features and custom Erlang modules. Keep target-only features disabled while older members remain unless compatibility is explicitly documented.
 
 Download the target packages from that version's package catalogue and verify their checksums. Save the installed package versions, effective configuration, and recovery plan. Rehearse the application workload and a pilot-node recovery before production deployment.

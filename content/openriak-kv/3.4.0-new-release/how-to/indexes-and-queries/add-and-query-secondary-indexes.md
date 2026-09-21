@@ -48,6 +48,8 @@ Use `_bin` for binary terms and `_int` for integer terms. On updates, preserve c
 
 ## Run an exact or range query
 
+The following requests use the **legacy HTTP query interface, deprecated since 3.4**, for compatibility with existing applications. For new binary-index queries, use the [Query API]({{< product-version-root >}}reference/query-api/endpoints-and-request-schema/). Writing secondary-index metadata remains supported; the deprecation applies to this query endpoint.
+
 ```sh
 curl --fail "$RIAK_HTTP/buckets/people/index/city_bin/Tokyo"
 curl --fail "$RIAK_HTTP/buckets/people/index/age_int/20/39"

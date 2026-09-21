@@ -11,7 +11,13 @@
 {{ if ne $command.availability "available" }}
   <div class="cli-notice"><strong>This command is {{ $command.availability | humanize | lower }} in this release.</strong>{{ with $command.notice }} <p>{{ . }}</p>{{ end }}<p>The entry is retained for compatibility reference.</p></div>
 {{ else if $command.deprecated }}
-  <div class="cli-notice">This command is deprecated. Consult the help below before using it in new scripts.</div>
+  <div class="cli-notice">
+  {{ with where $command.provenance "kind" "hint_deprecation" }}
+    {{ range . }}<p><strong>Deprecated since OpenRiak KV {{ .since }}.</strong> {{ .reason }} <a href="{{ .url }}">Deprecation source</a></p>{{ end }}
+  {{ else }}
+    This command is deprecated. Consult the help below before using it in new scripts.
+  {{ end }}
+  </div>
 {{ end }}
 {{ if eq $command.context "erlang" }}<p>Enter these expressions in an Erlang shell opened with <code>riak remote_console</code> or <code>riak daemon_attach</code>. Replace argument variables and any <code>...</code> placeholders with actual values.</p>{{ end }}
 {{ with $command.prerequisites }}<h2 id="requirements">Requirements</h2><ul>{{ range . }}<li>{{ . }}</li>{{ end }}</ul>{{ end }}

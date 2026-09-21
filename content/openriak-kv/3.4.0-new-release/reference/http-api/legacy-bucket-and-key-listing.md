@@ -37,6 +37,8 @@ related:
 
 Legacy bucket and key listing scans stored data and can consume substantial cluster resources. It is not a bounded query or a transactional inventory.
 
+**Deprecated since OpenRiak KV 3.4.** The List API, including streaming bucket and key listing, is retained for compatibility. Use [AAE folds]({{< product-version-root >}}how-to/data-inspection-and-repair/inventory-buckets-using-aae-folds/) for bounded inventory operations.
+
 ## Endpoints
 
 `GET /types/TYPE/buckets?buckets=true`
@@ -47,4 +49,4 @@ The untyped equivalents omit `/types/TYPE`. Streaming forms use the endpoint's s
 
 ## Limits
 
-Listings can be large, can reflect concurrent changes, and do not necessarily include empty buckets. Prefer secondary indexes for application discovery and bounded AAE inventory for operations. A listing failure is not evidence that a bucket contains no data.
+Listings can be large, can reflect concurrent changes, and do not necessarily include empty buckets. Prefer the [Query API]({{< product-version-root >}}reference/query-api/endpoints-and-request-schema/) for application discovery and bounded AAE inventory for operations. A listing failure is not evidence that a bucket contains no data.

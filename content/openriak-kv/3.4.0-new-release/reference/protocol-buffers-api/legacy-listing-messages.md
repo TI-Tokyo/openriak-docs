@@ -38,6 +38,8 @@ related:
 
 Legacy listing can scan substantial portions of the database and return large results. Streaming responses are complete only when their terminal marker arrives. Prefer bounded indexes or AAE inventory when they meet the requirement.
 
+**Deprecated since OpenRiak KV 3.4.** The List API, including streaming bucket and key listing, is retained for compatibility. Use [AAE folds]({{< product-version-root >}}how-to/data-inspection-and-repair/inventory-buckets-using-aae-folds/) for bounded inventory operations.
+
 ## Message contract
 
 {{< protocol-message name="RpbListBucketsReq" >}}

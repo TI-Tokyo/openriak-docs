@@ -647,7 +647,7 @@
       "examples": [
         {
           "expression": "riak:local_client().",
-          "line": 174,
+          "line": 197,
           "path": "kv-cli-commands.md"
         }
       ],
@@ -2276,7 +2276,7 @@
       "examples": [
         {
           "expression": "riak_client:aae_fold(Query, Client).",
-          "line": 178,
+          "line": 201,
           "path": "kv-cli-commands.md"
         }
       ],
@@ -5029,7 +5029,7 @@
       "arity": 1,
       "availability": "available",
       "context": "erlang",
-      "deprecated": false,
+      "deprecated": true,
       "examples": [],
       "function": "list_buckets",
       "help": "@spec list_buckets(riak_client()) ->\n      {ok, [Bucket :: riak_object:bucket()]} |\n      {error, timeout} |\n      {error, Err :: term()}\n@doc List buckets known to have keys.\n     Key lists are updated asynchronously, so this may be slightly\n     out of date if called immediately after any operation that\n     either adds the first key or removes the last remaining key from\n     a bucket.\n@equiv list_buckets(default_timeout())",
@@ -5066,6 +5066,14 @@
           "commit": "48285d5d7aa72c4167e338b3d28ae9ba434cfcb7",
           "path": "src/riak_client.erl",
           "repository": "https://github.com/OpenRiak/riak_kv"
+        },
+        {
+          "kind": "hint_deprecation",
+          "line": 40,
+          "path": "kv-cli-commands.md",
+          "reason": "The List API is deprecated. Use bounded AAE folds for bucket and key inventory.",
+          "since": "3.4.0",
+          "url": "https://openriak.github.io/riak/OtherAPI.html#the-list-api"
         }
       ],
       "removed": false,
@@ -5091,7 +5099,7 @@
       "arity": 2,
       "availability": "available",
       "context": "erlang",
-      "deprecated": false,
+      "deprecated": true,
       "examples": [],
       "function": "list_buckets",
       "help": "@spec list_buckets(riak_client()) ->\n      {ok, [Bucket :: riak_object:bucket()]} |\n      {error, timeout} |\n      {error, Err :: term()}\n@doc List buckets known to have keys.\n     Key lists are updated asynchronously, so this may be slightly\n     out of date if called immediately after any operation that\n     either adds the first key or removes the last remaining key from\n     a bucket.\n@equiv list_buckets(default_timeout())",
@@ -5128,6 +5136,14 @@
           "commit": "48285d5d7aa72c4167e338b3d28ae9ba434cfcb7",
           "path": "src/riak_client.erl",
           "repository": "https://github.com/OpenRiak/riak_kv"
+        },
+        {
+          "kind": "hint_deprecation",
+          "line": 40,
+          "path": "kv-cli-commands.md",
+          "reason": "The List API is deprecated. Use bounded AAE folds for bucket and key inventory.",
+          "since": "3.4.0",
+          "url": "https://openriak.github.io/riak/OtherAPI.html#the-list-api"
         }
       ],
       "removed": false,
@@ -5157,7 +5173,7 @@
       "arity": 3,
       "availability": "available",
       "context": "erlang",
-      "deprecated": false,
+      "deprecated": true,
       "examples": [],
       "function": "list_buckets",
       "help": "@spec list_buckets(riak_client()) ->\n      {ok, [Bucket :: riak_object:bucket()]} |\n      {error, timeout} |\n      {error, Err :: term()}\n@doc List buckets known to have keys.\n     Key lists are updated asynchronously, so this may be slightly\n     out of date if called immediately after any operation that\n     either adds the first key or removes the last remaining key from\n     a bucket.\n@equiv list_buckets(default_timeout())",
@@ -5194,6 +5210,14 @@
           "commit": "48285d5d7aa72c4167e338b3d28ae9ba434cfcb7",
           "path": "src/riak_client.erl",
           "repository": "https://github.com/OpenRiak/riak_kv"
+        },
+        {
+          "kind": "hint_deprecation",
+          "line": 40,
+          "path": "kv-cli-commands.md",
+          "reason": "The List API is deprecated. Use bounded AAE folds for bucket and key inventory.",
+          "since": "3.4.0",
+          "url": "https://openriak.github.io/riak/OtherAPI.html#the-list-api"
         }
       ],
       "removed": false,
@@ -5225,7 +5249,7 @@
       "arity": 4,
       "availability": "available",
       "context": "erlang",
-      "deprecated": false,
+      "deprecated": true,
       "examples": [],
       "function": "list_buckets",
       "help": "@spec list_buckets(riak_client()) ->\n      {ok, [Bucket :: riak_object:bucket()]} |\n      {error, timeout} |\n      {error, Err :: term()}\n@doc List buckets known to have keys.\n     Key lists are updated asynchronously, so this may be slightly\n     out of date if called immediately after any operation that\n     either adds the first key or removes the last remaining key from\n     a bucket.\n@equiv list_buckets(default_timeout())",
@@ -5262,6 +5286,14 @@
           "commit": "48285d5d7aa72c4167e338b3d28ae9ba434cfcb7",
           "path": "src/riak_client.erl",
           "repository": "https://github.com/OpenRiak/riak_kv"
+        },
+        {
+          "kind": "hint_deprecation",
+          "line": 40,
+          "path": "kv-cli-commands.md",
+          "reason": "The List API is deprecated. Use bounded AAE folds for bucket and key inventory.",
+          "since": "3.4.0",
+          "url": "https://openriak.github.io/riak/OtherAPI.html#the-list-api"
         }
       ],
       "removed": false,
@@ -5287,7 +5319,7 @@
       "arity": 2,
       "availability": "available",
       "context": "erlang",
-      "deprecated": false,
+      "deprecated": true,
       "examples": [],
       "function": "list_keys",
       "help": "@spec list_keys(riak_object:bucket(), riak_client()) ->\n      {ok, [Key :: riak_object:key()]} |\n      {error, timeout} |\n      {error, Err :: term()}\n@doc List the keys known to be present in Bucket.\n     Key lists are updated asynchronously, so this may be slightly\n     out of date if called immediately after a put or delete.\n@equiv list_keys(Bucket, default_timeout()*8)",
@@ -5324,6 +5356,14 @@
           "commit": "48285d5d7aa72c4167e338b3d28ae9ba434cfcb7",
           "path": "src/riak_client.erl",
           "repository": "https://github.com/OpenRiak/riak_kv"
+        },
+        {
+          "kind": "hint_deprecation",
+          "line": 40,
+          "path": "kv-cli-commands.md",
+          "reason": "The List API is deprecated. Use bounded AAE folds for bucket and key inventory.",
+          "since": "3.4.0",
+          "url": "https://openriak.github.io/riak/OtherAPI.html#the-list-api"
         }
       ],
       "removed": false,
@@ -5352,7 +5392,7 @@
       "arity": 3,
       "availability": "available",
       "context": "erlang",
-      "deprecated": false,
+      "deprecated": true,
       "examples": [],
       "function": "list_keys",
       "help": "@spec list_keys(riak_object:bucket(), riak_client()) ->\n      {ok, [Key :: riak_object:key()]} |\n      {error, timeout} |\n      {error, Err :: term()}\n@doc List the keys known to be present in Bucket.\n     Key lists are updated asynchronously, so this may be slightly\n     out of date if called immediately after a put or delete.\n@equiv list_keys(Bucket, default_timeout()*8)",
@@ -5389,6 +5429,14 @@
           "commit": "48285d5d7aa72c4167e338b3d28ae9ba434cfcb7",
           "path": "src/riak_client.erl",
           "repository": "https://github.com/OpenRiak/riak_kv"
+        },
+        {
+          "kind": "hint_deprecation",
+          "line": 40,
+          "path": "kv-cli-commands.md",
+          "reason": "The List API is deprecated. Use bounded AAE folds for bucket and key inventory.",
+          "since": "3.4.0",
+          "url": "https://openriak.github.io/riak/OtherAPI.html#the-list-api"
         }
       ],
       "removed": false,
@@ -5420,7 +5468,7 @@
       "arity": 4,
       "availability": "available",
       "context": "erlang",
-      "deprecated": false,
+      "deprecated": true,
       "examples": [],
       "function": "list_keys",
       "help": "@spec list_keys(riak_object:bucket(), riak_client()) ->\n      {ok, [Key :: riak_object:key()]} |\n      {error, timeout} |\n      {error, Err :: term()}\n@doc List the keys known to be present in Bucket.\n     Key lists are updated asynchronously, so this may be slightly\n     out of date if called immediately after a put or delete.\n@equiv list_keys(Bucket, default_timeout()*8)",
@@ -5457,6 +5505,14 @@
           "commit": "48285d5d7aa72c4167e338b3d28ae9ba434cfcb7",
           "path": "src/riak_client.erl",
           "repository": "https://github.com/OpenRiak/riak_kv"
+        },
+        {
+          "kind": "hint_deprecation",
+          "line": 40,
+          "path": "kv-cli-commands.md",
+          "reason": "The List API is deprecated. Use bounded AAE folds for bucket and key inventory.",
+          "since": "3.4.0",
+          "url": "https://openriak.github.io/riak/OtherAPI.html#the-list-api"
         }
       ],
       "removed": false,
@@ -6988,7 +7044,7 @@
       "arity": 1,
       "availability": "available",
       "context": "erlang",
-      "deprecated": false,
+      "deprecated": true,
       "examples": [],
       "function": "stream_list_buckets",
       "help": "@spec stream_list_buckets(FilterFun :: fun(),\n                          TimeoutMillisecs :: integer(),\n                          Client :: pid(),\n                          riak_client()) ->\n      {ok, [Bucket :: riak_object:bucket()]} |\n      {error, timeout} |\n      {error, Err :: term()}\n@doc List buckets known to have keys.\n     Key lists are updated asynchronously, so this may be slightly\n     out of date if called immediately after any operation that\n     either adds the first key or removes the last remaining key from\n     a bucket.",
@@ -7025,6 +7081,14 @@
           "commit": "48285d5d7aa72c4167e338b3d28ae9ba434cfcb7",
           "path": "src/riak_client.erl",
           "repository": "https://github.com/OpenRiak/riak_kv"
+        },
+        {
+          "kind": "hint_deprecation",
+          "line": 40,
+          "path": "kv-cli-commands.md",
+          "reason": "The List API is deprecated. Use bounded AAE folds for bucket and key inventory.",
+          "since": "3.4.0",
+          "url": "https://openriak.github.io/riak/OtherAPI.html#the-list-api"
         }
       ],
       "removed": false,
@@ -7050,7 +7114,7 @@
       "arity": 2,
       "availability": "available",
       "context": "erlang",
-      "deprecated": false,
+      "deprecated": true,
       "examples": [],
       "function": "stream_list_buckets",
       "help": "@spec stream_list_buckets(FilterFun :: fun(),\n                          TimeoutMillisecs :: integer(),\n                          Client :: pid(),\n                          riak_client()) ->\n      {ok, [Bucket :: riak_object:bucket()]} |\n      {error, timeout} |\n      {error, Err :: term()}\n@doc List buckets known to have keys.\n     Key lists are updated asynchronously, so this may be slightly\n     out of date if called immediately after any operation that\n     either adds the first key or removes the last remaining key from\n     a bucket.",
@@ -7087,6 +7151,14 @@
           "commit": "48285d5d7aa72c4167e338b3d28ae9ba434cfcb7",
           "path": "src/riak_client.erl",
           "repository": "https://github.com/OpenRiak/riak_kv"
+        },
+        {
+          "kind": "hint_deprecation",
+          "line": 40,
+          "path": "kv-cli-commands.md",
+          "reason": "The List API is deprecated. Use bounded AAE folds for bucket and key inventory.",
+          "since": "3.4.0",
+          "url": "https://openriak.github.io/riak/OtherAPI.html#the-list-api"
         }
       ],
       "removed": false,
@@ -7117,7 +7189,7 @@
       "arity": 3,
       "availability": "available",
       "context": "erlang",
-      "deprecated": false,
+      "deprecated": true,
       "examples": [],
       "function": "stream_list_buckets",
       "help": "@spec stream_list_buckets(FilterFun :: fun(),\n                          TimeoutMillisecs :: integer(),\n                          Client :: pid(),\n                          riak_client()) ->\n      {ok, [Bucket :: riak_object:bucket()]} |\n      {error, timeout} |\n      {error, Err :: term()}\n@doc List buckets known to have keys.\n     Key lists are updated asynchronously, so this may be slightly\n     out of date if called immediately after any operation that\n     either adds the first key or removes the last remaining key from\n     a bucket.",
@@ -7154,6 +7226,14 @@
           "commit": "48285d5d7aa72c4167e338b3d28ae9ba434cfcb7",
           "path": "src/riak_client.erl",
           "repository": "https://github.com/OpenRiak/riak_kv"
+        },
+        {
+          "kind": "hint_deprecation",
+          "line": 40,
+          "path": "kv-cli-commands.md",
+          "reason": "The List API is deprecated. Use bounded AAE folds for bucket and key inventory.",
+          "since": "3.4.0",
+          "url": "https://openriak.github.io/riak/OtherAPI.html#the-list-api"
         }
       ],
       "removed": false,
@@ -7185,7 +7265,7 @@
       "arity": 4,
       "availability": "available",
       "context": "erlang",
-      "deprecated": false,
+      "deprecated": true,
       "examples": [],
       "function": "stream_list_buckets",
       "help": "@spec stream_list_buckets(FilterFun :: fun(),\n                          TimeoutMillisecs :: integer(),\n                          Client :: pid(),\n                          riak_client()) ->\n      {ok, [Bucket :: riak_object:bucket()]} |\n      {error, timeout} |\n      {error, Err :: term()}\n@doc List buckets known to have keys.\n     Key lists are updated asynchronously, so this may be slightly\n     out of date if called immediately after any operation that\n     either adds the first key or removes the last remaining key from\n     a bucket.",
@@ -7222,6 +7302,14 @@
           "commit": "48285d5d7aa72c4167e338b3d28ae9ba434cfcb7",
           "path": "src/riak_client.erl",
           "repository": "https://github.com/OpenRiak/riak_kv"
+        },
+        {
+          "kind": "hint_deprecation",
+          "line": 40,
+          "path": "kv-cli-commands.md",
+          "reason": "The List API is deprecated. Use bounded AAE folds for bucket and key inventory.",
+          "since": "3.4.0",
+          "url": "https://openriak.github.io/riak/OtherAPI.html#the-list-api"
         }
       ],
       "removed": false,
@@ -7257,7 +7345,7 @@
       "arity": 5,
       "availability": "available",
       "context": "erlang",
-      "deprecated": false,
+      "deprecated": true,
       "examples": [],
       "function": "stream_list_buckets",
       "help": "@spec stream_list_buckets(FilterFun :: fun(),\n                          TimeoutMillisecs :: integer(),\n                          Client :: pid(),\n                          riak_client()) ->\n      {ok, [Bucket :: riak_object:bucket()]} |\n      {error, timeout} |\n      {error, Err :: term()}\n@doc List buckets known to have keys.\n     Key lists are updated asynchronously, so this may be slightly\n     out of date if called immediately after any operation that\n     either adds the first key or removes the last remaining key from\n     a bucket.",
@@ -7294,6 +7382,14 @@
           "commit": "48285d5d7aa72c4167e338b3d28ae9ba434cfcb7",
           "path": "src/riak_client.erl",
           "repository": "https://github.com/OpenRiak/riak_kv"
+        },
+        {
+          "kind": "hint_deprecation",
+          "line": 40,
+          "path": "kv-cli-commands.md",
+          "reason": "The List API is deprecated. Use bounded AAE folds for bucket and key inventory.",
+          "since": "3.4.0",
+          "url": "https://openriak.github.io/riak/OtherAPI.html#the-list-api"
         }
       ],
       "removed": false,
@@ -7319,7 +7415,7 @@
       "arity": 2,
       "availability": "available",
       "context": "erlang",
-      "deprecated": false,
+      "deprecated": true,
       "examples": [],
       "function": "stream_list_keys",
       "help": "@spec stream_list_keys(riak_object:bucket(),\n                       TimeoutMillisecs :: integer(),\n                       Client :: pid(),\n                       riak_client()) ->\n      {ok, ReqId :: term()}\n@doc List the keys known to be present in Bucket.\n     Key lists are updated asynchronously, so this may be slightly\n     out of date if called immediately after a put or delete.\n     The list will not be returned directly, but will be sent\n     to Client in a sequence of {ReqId, {keys,Keys}} messages\n     and a final {ReqId, done} message.\n     None of the Keys lists will be larger than the number of\n     keys in Bucket on any single vnode.",
@@ -7356,6 +7452,14 @@
           "commit": "48285d5d7aa72c4167e338b3d28ae9ba434cfcb7",
           "path": "src/riak_client.erl",
           "repository": "https://github.com/OpenRiak/riak_kv"
+        },
+        {
+          "kind": "hint_deprecation",
+          "line": 40,
+          "path": "kv-cli-commands.md",
+          "reason": "The List API is deprecated. Use bounded AAE folds for bucket and key inventory.",
+          "since": "3.4.0",
+          "url": "https://openriak.github.io/riak/OtherAPI.html#the-list-api"
         }
       ],
       "removed": false,
@@ -7384,7 +7488,7 @@
       "arity": 3,
       "availability": "available",
       "context": "erlang",
-      "deprecated": false,
+      "deprecated": true,
       "examples": [],
       "function": "stream_list_keys",
       "help": "@spec stream_list_keys(riak_object:bucket(),\n                       TimeoutMillisecs :: integer(),\n                       Client :: pid(),\n                       riak_client()) ->\n      {ok, ReqId :: term()}\n@doc List the keys known to be present in Bucket.\n     Key lists are updated asynchronously, so this may be slightly\n     out of date if called immediately after a put or delete.\n     The list will not be returned directly, but will be sent\n     to Client in a sequence of {ReqId, {keys,Keys}} messages\n     and a final {ReqId, done} message.\n     None of the Keys lists will be larger than the number of\n     keys in Bucket on any single vnode.",
@@ -7421,6 +7525,14 @@
           "commit": "48285d5d7aa72c4167e338b3d28ae9ba434cfcb7",
           "path": "src/riak_client.erl",
           "repository": "https://github.com/OpenRiak/riak_kv"
+        },
+        {
+          "kind": "hint_deprecation",
+          "line": 40,
+          "path": "kv-cli-commands.md",
+          "reason": "The List API is deprecated. Use bounded AAE folds for bucket and key inventory.",
+          "since": "3.4.0",
+          "url": "https://openriak.github.io/riak/OtherAPI.html#the-list-api"
         }
       ],
       "removed": false,
@@ -7453,7 +7565,7 @@
       "arity": 4,
       "availability": "available",
       "context": "erlang",
-      "deprecated": false,
+      "deprecated": true,
       "examples": [],
       "function": "stream_list_keys",
       "help": "@spec stream_list_keys(riak_object:bucket(),\n                       TimeoutMillisecs :: integer(),\n                       Client :: pid(),\n                       riak_client()) ->\n      {ok, ReqId :: term()}\n@doc List the keys known to be present in Bucket.\n     Key lists are updated asynchronously, so this may be slightly\n     out of date if called immediately after a put or delete.\n     The list will not be returned directly, but will be sent\n     to Client in a sequence of {ReqId, {keys,Keys}} messages\n     and a final {ReqId, done} message.\n     None of the Keys lists will be larger than the number of\n     keys in Bucket on any single vnode.",
@@ -7490,6 +7602,14 @@
           "commit": "48285d5d7aa72c4167e338b3d28ae9ba434cfcb7",
           "path": "src/riak_client.erl",
           "repository": "https://github.com/OpenRiak/riak_kv"
+        },
+        {
+          "kind": "hint_deprecation",
+          "line": 40,
+          "path": "kv-cli-commands.md",
+          "reason": "The List API is deprecated. Use bounded AAE folds for bucket and key inventory.",
+          "since": "3.4.0",
+          "url": "https://openriak.github.io/riak/OtherAPI.html#the-list-api"
         }
       ],
       "removed": false,
@@ -7812,7 +7932,7 @@
       "examples": [
         {
           "expression": "riak_core_vnode_manager:kill_repairs(Reason).",
-          "line": 182,
+          "line": 205,
           "path": "kv-cli-commands.md"
         }
       ],
@@ -7883,7 +8003,7 @@
       "examples": [
         {
           "expression": "riak_kv_replrtq_src:clear_rtq(Arg1).\nriak_kv_replrtq_src:delist_rtq(Arg1).\nriak_kv_replrtq_src:length_rtq(Arg1).\nriak_kv_replrtq_src:register_rtq(Arg1, Arg2).\nriak_kv_replrtq_src:resume_rtq(Arg1).\nriak_kv_replrtq_src:suspend_rtq(Arg1).\nriak_kv_replrtq_snk:add_snkqueue(Arg1, Arg2, Arg3).\nriak_kv_replrtq_snk:add_snkqueue(Arg1, Arg2, Arg3, Arg4).\nriak_kv_replrtq_snk:current_peers(Arg1).\nriak_kv_replrtq_snk:get_worker_counts().\nriak_kv_replrtq_snk:remove_snkqueue(Arg1).\nriak_kv_replrtq_snk:resume_snkqueue(Arg1).\nriak_kv_replrtq_snk:set_worker_counts(Arg1, Arg2).\nriak_kv_replrtq_snk:set_workercount(Arg1, Arg2).\nriak_kv_replrtq_snk:set_workercount(Arg1, Arg2, Arg3).\nriak_kv_replrtq_snk:suspend_snkqueue(Arg1).\nriak_kv_ttaaefs_manager:autocheck_suppress().\nriak_kv_ttaaefs_manager:autocheck_suppress(Arg1).\nriak_kv_ttaaefs_manager:clear_range().\nriak_kv_ttaaefs_manager:disable_tree_repairs().\nriak_kv_ttaaefs_manager:get_range().\nriak_kv_ttaaefs_manager:pause().\nriak_kv_ttaaefs_manager:resume().\nriak_kv_ttaaefs_manager:set_allsync(Arg1, Arg2).\nriak_kv_ttaaefs_manager:set_range(Arg1, Arg2, Arg3, Arg4).\nriak_kv_ttaaefs_manager:set_sink(Arg1, Arg2, Arg3).\nriak_kv_ttaaefs_manager:trigger_tree_repairs().",
-          "line": 208,
+          "line": 231,
           "path": "kv-cli-commands.md"
         }
       ],
@@ -7959,7 +8079,7 @@
       "examples": [
         {
           "expression": "riak_kv_replrtq_src:clear_rtq(Arg1).\nriak_kv_replrtq_src:delist_rtq(Arg1).\nriak_kv_replrtq_src:length_rtq(Arg1).\nriak_kv_replrtq_src:register_rtq(Arg1, Arg2).\nriak_kv_replrtq_src:resume_rtq(Arg1).\nriak_kv_replrtq_src:suspend_rtq(Arg1).\nriak_kv_replrtq_snk:add_snkqueue(Arg1, Arg2, Arg3).\nriak_kv_replrtq_snk:add_snkqueue(Arg1, Arg2, Arg3, Arg4).\nriak_kv_replrtq_snk:current_peers(Arg1).\nriak_kv_replrtq_snk:get_worker_counts().\nriak_kv_replrtq_snk:remove_snkqueue(Arg1).\nriak_kv_replrtq_snk:resume_snkqueue(Arg1).\nriak_kv_replrtq_snk:set_worker_counts(Arg1, Arg2).\nriak_kv_replrtq_snk:set_workercount(Arg1, Arg2).\nriak_kv_replrtq_snk:set_workercount(Arg1, Arg2, Arg3).\nriak_kv_replrtq_snk:suspend_snkqueue(Arg1).\nriak_kv_ttaaefs_manager:autocheck_suppress().\nriak_kv_ttaaefs_manager:autocheck_suppress(Arg1).\nriak_kv_ttaaefs_manager:clear_range().\nriak_kv_ttaaefs_manager:disable_tree_repairs().\nriak_kv_ttaaefs_manager:get_range().\nriak_kv_ttaaefs_manager:pause().\nriak_kv_ttaaefs_manager:resume().\nriak_kv_ttaaefs_manager:set_allsync(Arg1, Arg2).\nriak_kv_ttaaefs_manager:set_range(Arg1, Arg2, Arg3, Arg4).\nriak_kv_ttaaefs_manager:set_sink(Arg1, Arg2, Arg3).\nriak_kv_ttaaefs_manager:trigger_tree_repairs().",
-          "line": 208,
+          "line": 231,
           "path": "kv-cli-commands.md"
         }
       ],
@@ -8026,7 +8146,7 @@
       "examples": [
         {
           "expression": "riak_kv_replrtq_src:clear_rtq(Arg1).\nriak_kv_replrtq_src:delist_rtq(Arg1).\nriak_kv_replrtq_src:length_rtq(Arg1).\nriak_kv_replrtq_src:register_rtq(Arg1, Arg2).\nriak_kv_replrtq_src:resume_rtq(Arg1).\nriak_kv_replrtq_src:suspend_rtq(Arg1).\nriak_kv_replrtq_snk:add_snkqueue(Arg1, Arg2, Arg3).\nriak_kv_replrtq_snk:add_snkqueue(Arg1, Arg2, Arg3, Arg4).\nriak_kv_replrtq_snk:current_peers(Arg1).\nriak_kv_replrtq_snk:get_worker_counts().\nriak_kv_replrtq_snk:remove_snkqueue(Arg1).\nriak_kv_replrtq_snk:resume_snkqueue(Arg1).\nriak_kv_replrtq_snk:set_worker_counts(Arg1, Arg2).\nriak_kv_replrtq_snk:set_workercount(Arg1, Arg2).\nriak_kv_replrtq_snk:set_workercount(Arg1, Arg2, Arg3).\nriak_kv_replrtq_snk:suspend_snkqueue(Arg1).\nriak_kv_ttaaefs_manager:autocheck_suppress().\nriak_kv_ttaaefs_manager:autocheck_suppress(Arg1).\nriak_kv_ttaaefs_manager:clear_range().\nriak_kv_ttaaefs_manager:disable_tree_repairs().\nriak_kv_ttaaefs_manager:get_range().\nriak_kv_ttaaefs_manager:pause().\nriak_kv_ttaaefs_manager:resume().\nriak_kv_ttaaefs_manager:set_allsync(Arg1, Arg2).\nriak_kv_ttaaefs_manager:set_range(Arg1, Arg2, Arg3, Arg4).\nriak_kv_ttaaefs_manager:set_sink(Arg1, Arg2, Arg3).\nriak_kv_ttaaefs_manager:trigger_tree_repairs().",
-          "line": 208,
+          "line": 231,
           "path": "kv-cli-commands.md"
         }
       ],
@@ -8089,7 +8209,7 @@
       "examples": [
         {
           "expression": "riak_kv_replrtq_src:clear_rtq(Arg1).\nriak_kv_replrtq_src:delist_rtq(Arg1).\nriak_kv_replrtq_src:length_rtq(Arg1).\nriak_kv_replrtq_src:register_rtq(Arg1, Arg2).\nriak_kv_replrtq_src:resume_rtq(Arg1).\nriak_kv_replrtq_src:suspend_rtq(Arg1).\nriak_kv_replrtq_snk:add_snkqueue(Arg1, Arg2, Arg3).\nriak_kv_replrtq_snk:add_snkqueue(Arg1, Arg2, Arg3, Arg4).\nriak_kv_replrtq_snk:current_peers(Arg1).\nriak_kv_replrtq_snk:get_worker_counts().\nriak_kv_replrtq_snk:remove_snkqueue(Arg1).\nriak_kv_replrtq_snk:resume_snkqueue(Arg1).\nriak_kv_replrtq_snk:set_worker_counts(Arg1, Arg2).\nriak_kv_replrtq_snk:set_workercount(Arg1, Arg2).\nriak_kv_replrtq_snk:set_workercount(Arg1, Arg2, Arg3).\nriak_kv_replrtq_snk:suspend_snkqueue(Arg1).\nriak_kv_ttaaefs_manager:autocheck_suppress().\nriak_kv_ttaaefs_manager:autocheck_suppress(Arg1).\nriak_kv_ttaaefs_manager:clear_range().\nriak_kv_ttaaefs_manager:disable_tree_repairs().\nriak_kv_ttaaefs_manager:get_range().\nriak_kv_ttaaefs_manager:pause().\nriak_kv_ttaaefs_manager:resume().\nriak_kv_ttaaefs_manager:set_allsync(Arg1, Arg2).\nriak_kv_ttaaefs_manager:set_range(Arg1, Arg2, Arg3, Arg4).\nriak_kv_ttaaefs_manager:set_sink(Arg1, Arg2, Arg3).\nriak_kv_ttaaefs_manager:trigger_tree_repairs().",
-          "line": 208,
+          "line": 231,
           "path": "kv-cli-commands.md"
         }
       ],
@@ -8154,7 +8274,7 @@
       "examples": [
         {
           "expression": "riak_kv_replrtq_src:clear_rtq(Arg1).\nriak_kv_replrtq_src:delist_rtq(Arg1).\nriak_kv_replrtq_src:length_rtq(Arg1).\nriak_kv_replrtq_src:register_rtq(Arg1, Arg2).\nriak_kv_replrtq_src:resume_rtq(Arg1).\nriak_kv_replrtq_src:suspend_rtq(Arg1).\nriak_kv_replrtq_snk:add_snkqueue(Arg1, Arg2, Arg3).\nriak_kv_replrtq_snk:add_snkqueue(Arg1, Arg2, Arg3, Arg4).\nriak_kv_replrtq_snk:current_peers(Arg1).\nriak_kv_replrtq_snk:get_worker_counts().\nriak_kv_replrtq_snk:remove_snkqueue(Arg1).\nriak_kv_replrtq_snk:resume_snkqueue(Arg1).\nriak_kv_replrtq_snk:set_worker_counts(Arg1, Arg2).\nriak_kv_replrtq_snk:set_workercount(Arg1, Arg2).\nriak_kv_replrtq_snk:set_workercount(Arg1, Arg2, Arg3).\nriak_kv_replrtq_snk:suspend_snkqueue(Arg1).\nriak_kv_ttaaefs_manager:autocheck_suppress().\nriak_kv_ttaaefs_manager:autocheck_suppress(Arg1).\nriak_kv_ttaaefs_manager:clear_range().\nriak_kv_ttaaefs_manager:disable_tree_repairs().\nriak_kv_ttaaefs_manager:get_range().\nriak_kv_ttaaefs_manager:pause().\nriak_kv_ttaaefs_manager:resume().\nriak_kv_ttaaefs_manager:set_allsync(Arg1, Arg2).\nriak_kv_ttaaefs_manager:set_range(Arg1, Arg2, Arg3, Arg4).\nriak_kv_ttaaefs_manager:set_sink(Arg1, Arg2, Arg3).\nriak_kv_ttaaefs_manager:trigger_tree_repairs().",
-          "line": 208,
+          "line": 231,
           "path": "kv-cli-commands.md"
         }
       ],
@@ -8221,7 +8341,7 @@
       "examples": [
         {
           "expression": "riak_kv_replrtq_src:clear_rtq(Arg1).\nriak_kv_replrtq_src:delist_rtq(Arg1).\nriak_kv_replrtq_src:length_rtq(Arg1).\nriak_kv_replrtq_src:register_rtq(Arg1, Arg2).\nriak_kv_replrtq_src:resume_rtq(Arg1).\nriak_kv_replrtq_src:suspend_rtq(Arg1).\nriak_kv_replrtq_snk:add_snkqueue(Arg1, Arg2, Arg3).\nriak_kv_replrtq_snk:add_snkqueue(Arg1, Arg2, Arg3, Arg4).\nriak_kv_replrtq_snk:current_peers(Arg1).\nriak_kv_replrtq_snk:get_worker_counts().\nriak_kv_replrtq_snk:remove_snkqueue(Arg1).\nriak_kv_replrtq_snk:resume_snkqueue(Arg1).\nriak_kv_replrtq_snk:set_worker_counts(Arg1, Arg2).\nriak_kv_replrtq_snk:set_workercount(Arg1, Arg2).\nriak_kv_replrtq_snk:set_workercount(Arg1, Arg2, Arg3).\nriak_kv_replrtq_snk:suspend_snkqueue(Arg1).\nriak_kv_ttaaefs_manager:autocheck_suppress().\nriak_kv_ttaaefs_manager:autocheck_suppress(Arg1).\nriak_kv_ttaaefs_manager:clear_range().\nriak_kv_ttaaefs_manager:disable_tree_repairs().\nriak_kv_ttaaefs_manager:get_range().\nriak_kv_ttaaefs_manager:pause().\nriak_kv_ttaaefs_manager:resume().\nriak_kv_ttaaefs_manager:set_allsync(Arg1, Arg2).\nriak_kv_ttaaefs_manager:set_range(Arg1, Arg2, Arg3, Arg4).\nriak_kv_ttaaefs_manager:set_sink(Arg1, Arg2, Arg3).\nriak_kv_ttaaefs_manager:trigger_tree_repairs().",
-          "line": 208,
+          "line": 231,
           "path": "kv-cli-commands.md"
         }
       ],
@@ -8291,7 +8411,7 @@
       "examples": [
         {
           "expression": "riak_kv_replrtq_src:clear_rtq(Arg1).\nriak_kv_replrtq_src:delist_rtq(Arg1).\nriak_kv_replrtq_src:length_rtq(Arg1).\nriak_kv_replrtq_src:register_rtq(Arg1, Arg2).\nriak_kv_replrtq_src:resume_rtq(Arg1).\nriak_kv_replrtq_src:suspend_rtq(Arg1).\nriak_kv_replrtq_snk:add_snkqueue(Arg1, Arg2, Arg3).\nriak_kv_replrtq_snk:add_snkqueue(Arg1, Arg2, Arg3, Arg4).\nriak_kv_replrtq_snk:current_peers(Arg1).\nriak_kv_replrtq_snk:get_worker_counts().\nriak_kv_replrtq_snk:remove_snkqueue(Arg1).\nriak_kv_replrtq_snk:resume_snkqueue(Arg1).\nriak_kv_replrtq_snk:set_worker_counts(Arg1, Arg2).\nriak_kv_replrtq_snk:set_workercount(Arg1, Arg2).\nriak_kv_replrtq_snk:set_workercount(Arg1, Arg2, Arg3).\nriak_kv_replrtq_snk:suspend_snkqueue(Arg1).\nriak_kv_ttaaefs_manager:autocheck_suppress().\nriak_kv_ttaaefs_manager:autocheck_suppress(Arg1).\nriak_kv_ttaaefs_manager:clear_range().\nriak_kv_ttaaefs_manager:disable_tree_repairs().\nriak_kv_ttaaefs_manager:get_range().\nriak_kv_ttaaefs_manager:pause().\nriak_kv_ttaaefs_manager:resume().\nriak_kv_ttaaefs_manager:set_allsync(Arg1, Arg2).\nriak_kv_ttaaefs_manager:set_range(Arg1, Arg2, Arg3, Arg4).\nriak_kv_ttaaefs_manager:set_sink(Arg1, Arg2, Arg3).\nriak_kv_ttaaefs_manager:trigger_tree_repairs().",
-          "line": 208,
+          "line": 231,
           "path": "kv-cli-commands.md"
         }
       ],
@@ -8354,7 +8474,7 @@
       "examples": [
         {
           "expression": "riak_kv_replrtq_src:clear_rtq(Arg1).\nriak_kv_replrtq_src:delist_rtq(Arg1).\nriak_kv_replrtq_src:length_rtq(Arg1).\nriak_kv_replrtq_src:register_rtq(Arg1, Arg2).\nriak_kv_replrtq_src:resume_rtq(Arg1).\nriak_kv_replrtq_src:suspend_rtq(Arg1).\nriak_kv_replrtq_snk:add_snkqueue(Arg1, Arg2, Arg3).\nriak_kv_replrtq_snk:add_snkqueue(Arg1, Arg2, Arg3, Arg4).\nriak_kv_replrtq_snk:current_peers(Arg1).\nriak_kv_replrtq_snk:get_worker_counts().\nriak_kv_replrtq_snk:remove_snkqueue(Arg1).\nriak_kv_replrtq_snk:resume_snkqueue(Arg1).\nriak_kv_replrtq_snk:set_worker_counts(Arg1, Arg2).\nriak_kv_replrtq_snk:set_workercount(Arg1, Arg2).\nriak_kv_replrtq_snk:set_workercount(Arg1, Arg2, Arg3).\nriak_kv_replrtq_snk:suspend_snkqueue(Arg1).\nriak_kv_ttaaefs_manager:autocheck_suppress().\nriak_kv_ttaaefs_manager:autocheck_suppress(Arg1).\nriak_kv_ttaaefs_manager:clear_range().\nriak_kv_ttaaefs_manager:disable_tree_repairs().\nriak_kv_ttaaefs_manager:get_range().\nriak_kv_ttaaefs_manager:pause().\nriak_kv_ttaaefs_manager:resume().\nriak_kv_ttaaefs_manager:set_allsync(Arg1, Arg2).\nriak_kv_ttaaefs_manager:set_range(Arg1, Arg2, Arg3, Arg4).\nriak_kv_ttaaefs_manager:set_sink(Arg1, Arg2, Arg3).\nriak_kv_ttaaefs_manager:trigger_tree_repairs().",
-          "line": 208,
+          "line": 231,
           "path": "kv-cli-commands.md"
         }
       ],
@@ -8427,7 +8547,7 @@
       "examples": [
         {
           "expression": "riak_kv_replrtq_src:clear_rtq(Arg1).\nriak_kv_replrtq_src:delist_rtq(Arg1).\nriak_kv_replrtq_src:length_rtq(Arg1).\nriak_kv_replrtq_src:register_rtq(Arg1, Arg2).\nriak_kv_replrtq_src:resume_rtq(Arg1).\nriak_kv_replrtq_src:suspend_rtq(Arg1).\nriak_kv_replrtq_snk:add_snkqueue(Arg1, Arg2, Arg3).\nriak_kv_replrtq_snk:add_snkqueue(Arg1, Arg2, Arg3, Arg4).\nriak_kv_replrtq_snk:current_peers(Arg1).\nriak_kv_replrtq_snk:get_worker_counts().\nriak_kv_replrtq_snk:remove_snkqueue(Arg1).\nriak_kv_replrtq_snk:resume_snkqueue(Arg1).\nriak_kv_replrtq_snk:set_worker_counts(Arg1, Arg2).\nriak_kv_replrtq_snk:set_workercount(Arg1, Arg2).\nriak_kv_replrtq_snk:set_workercount(Arg1, Arg2, Arg3).\nriak_kv_replrtq_snk:suspend_snkqueue(Arg1).\nriak_kv_ttaaefs_manager:autocheck_suppress().\nriak_kv_ttaaefs_manager:autocheck_suppress(Arg1).\nriak_kv_ttaaefs_manager:clear_range().\nriak_kv_ttaaefs_manager:disable_tree_repairs().\nriak_kv_ttaaefs_manager:get_range().\nriak_kv_ttaaefs_manager:pause().\nriak_kv_ttaaefs_manager:resume().\nriak_kv_ttaaefs_manager:set_allsync(Arg1, Arg2).\nriak_kv_ttaaefs_manager:set_range(Arg1, Arg2, Arg3, Arg4).\nriak_kv_ttaaefs_manager:set_sink(Arg1, Arg2, Arg3).\nriak_kv_ttaaefs_manager:trigger_tree_repairs().",
-          "line": 208,
+          "line": 231,
           "path": "kv-cli-commands.md"
         }
       ],
@@ -8494,7 +8614,7 @@
       "examples": [
         {
           "expression": "riak_kv_replrtq_src:clear_rtq(Arg1).\nriak_kv_replrtq_src:delist_rtq(Arg1).\nriak_kv_replrtq_src:length_rtq(Arg1).\nriak_kv_replrtq_src:register_rtq(Arg1, Arg2).\nriak_kv_replrtq_src:resume_rtq(Arg1).\nriak_kv_replrtq_src:suspend_rtq(Arg1).\nriak_kv_replrtq_snk:add_snkqueue(Arg1, Arg2, Arg3).\nriak_kv_replrtq_snk:add_snkqueue(Arg1, Arg2, Arg3, Arg4).\nriak_kv_replrtq_snk:current_peers(Arg1).\nriak_kv_replrtq_snk:get_worker_counts().\nriak_kv_replrtq_snk:remove_snkqueue(Arg1).\nriak_kv_replrtq_snk:resume_snkqueue(Arg1).\nriak_kv_replrtq_snk:set_worker_counts(Arg1, Arg2).\nriak_kv_replrtq_snk:set_workercount(Arg1, Arg2).\nriak_kv_replrtq_snk:set_workercount(Arg1, Arg2, Arg3).\nriak_kv_replrtq_snk:suspend_snkqueue(Arg1).\nriak_kv_ttaaefs_manager:autocheck_suppress().\nriak_kv_ttaaefs_manager:autocheck_suppress(Arg1).\nriak_kv_ttaaefs_manager:clear_range().\nriak_kv_ttaaefs_manager:disable_tree_repairs().\nriak_kv_ttaaefs_manager:get_range().\nriak_kv_ttaaefs_manager:pause().\nriak_kv_ttaaefs_manager:resume().\nriak_kv_ttaaefs_manager:set_allsync(Arg1, Arg2).\nriak_kv_ttaaefs_manager:set_range(Arg1, Arg2, Arg3, Arg4).\nriak_kv_ttaaefs_manager:set_sink(Arg1, Arg2, Arg3).\nriak_kv_ttaaefs_manager:trigger_tree_repairs().",
-          "line": 208,
+          "line": 231,
           "path": "kv-cli-commands.md"
         }
       ],
@@ -8561,7 +8681,7 @@
       "examples": [
         {
           "expression": "riak_kv_replrtq_src:clear_rtq(Arg1).\nriak_kv_replrtq_src:delist_rtq(Arg1).\nriak_kv_replrtq_src:length_rtq(Arg1).\nriak_kv_replrtq_src:register_rtq(Arg1, Arg2).\nriak_kv_replrtq_src:resume_rtq(Arg1).\nriak_kv_replrtq_src:suspend_rtq(Arg1).\nriak_kv_replrtq_snk:add_snkqueue(Arg1, Arg2, Arg3).\nriak_kv_replrtq_snk:add_snkqueue(Arg1, Arg2, Arg3, Arg4).\nriak_kv_replrtq_snk:current_peers(Arg1).\nriak_kv_replrtq_snk:get_worker_counts().\nriak_kv_replrtq_snk:remove_snkqueue(Arg1).\nriak_kv_replrtq_snk:resume_snkqueue(Arg1).\nriak_kv_replrtq_snk:set_worker_counts(Arg1, Arg2).\nriak_kv_replrtq_snk:set_workercount(Arg1, Arg2).\nriak_kv_replrtq_snk:set_workercount(Arg1, Arg2, Arg3).\nriak_kv_replrtq_snk:suspend_snkqueue(Arg1).\nriak_kv_ttaaefs_manager:autocheck_suppress().\nriak_kv_ttaaefs_manager:autocheck_suppress(Arg1).\nriak_kv_ttaaefs_manager:clear_range().\nriak_kv_ttaaefs_manager:disable_tree_repairs().\nriak_kv_ttaaefs_manager:get_range().\nriak_kv_ttaaefs_manager:pause().\nriak_kv_ttaaefs_manager:resume().\nriak_kv_ttaaefs_manager:set_allsync(Arg1, Arg2).\nriak_kv_ttaaefs_manager:set_range(Arg1, Arg2, Arg3, Arg4).\nriak_kv_ttaaefs_manager:set_sink(Arg1, Arg2, Arg3).\nriak_kv_ttaaefs_manager:trigger_tree_repairs().",
-          "line": 208,
+          "line": 231,
           "path": "kv-cli-commands.md"
         }
       ],
@@ -8628,7 +8748,7 @@
       "examples": [
         {
           "expression": "riak_kv_replrtq_src:clear_rtq(Arg1).\nriak_kv_replrtq_src:delist_rtq(Arg1).\nriak_kv_replrtq_src:length_rtq(Arg1).\nriak_kv_replrtq_src:register_rtq(Arg1, Arg2).\nriak_kv_replrtq_src:resume_rtq(Arg1).\nriak_kv_replrtq_src:suspend_rtq(Arg1).\nriak_kv_replrtq_snk:add_snkqueue(Arg1, Arg2, Arg3).\nriak_kv_replrtq_snk:add_snkqueue(Arg1, Arg2, Arg3, Arg4).\nriak_kv_replrtq_snk:current_peers(Arg1).\nriak_kv_replrtq_snk:get_worker_counts().\nriak_kv_replrtq_snk:remove_snkqueue(Arg1).\nriak_kv_replrtq_snk:resume_snkqueue(Arg1).\nriak_kv_replrtq_snk:set_worker_counts(Arg1, Arg2).\nriak_kv_replrtq_snk:set_workercount(Arg1, Arg2).\nriak_kv_replrtq_snk:set_workercount(Arg1, Arg2, Arg3).\nriak_kv_replrtq_snk:suspend_snkqueue(Arg1).\nriak_kv_ttaaefs_manager:autocheck_suppress().\nriak_kv_ttaaefs_manager:autocheck_suppress(Arg1).\nriak_kv_ttaaefs_manager:clear_range().\nriak_kv_ttaaefs_manager:disable_tree_repairs().\nriak_kv_ttaaefs_manager:get_range().\nriak_kv_ttaaefs_manager:pause().\nriak_kv_ttaaefs_manager:resume().\nriak_kv_ttaaefs_manager:set_allsync(Arg1, Arg2).\nriak_kv_ttaaefs_manager:set_range(Arg1, Arg2, Arg3, Arg4).\nriak_kv_ttaaefs_manager:set_sink(Arg1, Arg2, Arg3).\nriak_kv_ttaaefs_manager:trigger_tree_repairs().",
-          "line": 208,
+          "line": 231,
           "path": "kv-cli-commands.md"
         }
       ],
@@ -8695,7 +8815,7 @@
       "examples": [
         {
           "expression": "riak_kv_replrtq_src:clear_rtq(Arg1).\nriak_kv_replrtq_src:delist_rtq(Arg1).\nriak_kv_replrtq_src:length_rtq(Arg1).\nriak_kv_replrtq_src:register_rtq(Arg1, Arg2).\nriak_kv_replrtq_src:resume_rtq(Arg1).\nriak_kv_replrtq_src:suspend_rtq(Arg1).\nriak_kv_replrtq_snk:add_snkqueue(Arg1, Arg2, Arg3).\nriak_kv_replrtq_snk:add_snkqueue(Arg1, Arg2, Arg3, Arg4).\nriak_kv_replrtq_snk:current_peers(Arg1).\nriak_kv_replrtq_snk:get_worker_counts().\nriak_kv_replrtq_snk:remove_snkqueue(Arg1).\nriak_kv_replrtq_snk:resume_snkqueue(Arg1).\nriak_kv_replrtq_snk:set_worker_counts(Arg1, Arg2).\nriak_kv_replrtq_snk:set_workercount(Arg1, Arg2).\nriak_kv_replrtq_snk:set_workercount(Arg1, Arg2, Arg3).\nriak_kv_replrtq_snk:suspend_snkqueue(Arg1).\nriak_kv_ttaaefs_manager:autocheck_suppress().\nriak_kv_ttaaefs_manager:autocheck_suppress(Arg1).\nriak_kv_ttaaefs_manager:clear_range().\nriak_kv_ttaaefs_manager:disable_tree_repairs().\nriak_kv_ttaaefs_manager:get_range().\nriak_kv_ttaaefs_manager:pause().\nriak_kv_ttaaefs_manager:resume().\nriak_kv_ttaaefs_manager:set_allsync(Arg1, Arg2).\nriak_kv_ttaaefs_manager:set_range(Arg1, Arg2, Arg3, Arg4).\nriak_kv_ttaaefs_manager:set_sink(Arg1, Arg2, Arg3).\nriak_kv_ttaaefs_manager:trigger_tree_repairs().",
-          "line": 208,
+          "line": 231,
           "path": "kv-cli-commands.md"
         }
       ],
@@ -8765,7 +8885,7 @@
       "examples": [
         {
           "expression": "riak_kv_replrtq_src:clear_rtq(Arg1).\nriak_kv_replrtq_src:delist_rtq(Arg1).\nriak_kv_replrtq_src:length_rtq(Arg1).\nriak_kv_replrtq_src:register_rtq(Arg1, Arg2).\nriak_kv_replrtq_src:resume_rtq(Arg1).\nriak_kv_replrtq_src:suspend_rtq(Arg1).\nriak_kv_replrtq_snk:add_snkqueue(Arg1, Arg2, Arg3).\nriak_kv_replrtq_snk:add_snkqueue(Arg1, Arg2, Arg3, Arg4).\nriak_kv_replrtq_snk:current_peers(Arg1).\nriak_kv_replrtq_snk:get_worker_counts().\nriak_kv_replrtq_snk:remove_snkqueue(Arg1).\nriak_kv_replrtq_snk:resume_snkqueue(Arg1).\nriak_kv_replrtq_snk:set_worker_counts(Arg1, Arg2).\nriak_kv_replrtq_snk:set_workercount(Arg1, Arg2).\nriak_kv_replrtq_snk:set_workercount(Arg1, Arg2, Arg3).\nriak_kv_replrtq_snk:suspend_snkqueue(Arg1).\nriak_kv_ttaaefs_manager:autocheck_suppress().\nriak_kv_ttaaefs_manager:autocheck_suppress(Arg1).\nriak_kv_ttaaefs_manager:clear_range().\nriak_kv_ttaaefs_manager:disable_tree_repairs().\nriak_kv_ttaaefs_manager:get_range().\nriak_kv_ttaaefs_manager:pause().\nriak_kv_ttaaefs_manager:resume().\nriak_kv_ttaaefs_manager:set_allsync(Arg1, Arg2).\nriak_kv_ttaaefs_manager:set_range(Arg1, Arg2, Arg3, Arg4).\nriak_kv_ttaaefs_manager:set_sink(Arg1, Arg2, Arg3).\nriak_kv_ttaaefs_manager:trigger_tree_repairs().",
-          "line": 208,
+          "line": 231,
           "path": "kv-cli-commands.md"
         }
       ],
@@ -8832,7 +8952,7 @@
       "examples": [
         {
           "expression": "riak_kv_replrtq_src:clear_rtq(Arg1).\nriak_kv_replrtq_src:delist_rtq(Arg1).\nriak_kv_replrtq_src:length_rtq(Arg1).\nriak_kv_replrtq_src:register_rtq(Arg1, Arg2).\nriak_kv_replrtq_src:resume_rtq(Arg1).\nriak_kv_replrtq_src:suspend_rtq(Arg1).\nriak_kv_replrtq_snk:add_snkqueue(Arg1, Arg2, Arg3).\nriak_kv_replrtq_snk:add_snkqueue(Arg1, Arg2, Arg3, Arg4).\nriak_kv_replrtq_snk:current_peers(Arg1).\nriak_kv_replrtq_snk:get_worker_counts().\nriak_kv_replrtq_snk:remove_snkqueue(Arg1).\nriak_kv_replrtq_snk:resume_snkqueue(Arg1).\nriak_kv_replrtq_snk:set_worker_counts(Arg1, Arg2).\nriak_kv_replrtq_snk:set_workercount(Arg1, Arg2).\nriak_kv_replrtq_snk:set_workercount(Arg1, Arg2, Arg3).\nriak_kv_replrtq_snk:suspend_snkqueue(Arg1).\nriak_kv_ttaaefs_manager:autocheck_suppress().\nriak_kv_ttaaefs_manager:autocheck_suppress(Arg1).\nriak_kv_ttaaefs_manager:clear_range().\nriak_kv_ttaaefs_manager:disable_tree_repairs().\nriak_kv_ttaaefs_manager:get_range().\nriak_kv_ttaaefs_manager:pause().\nriak_kv_ttaaefs_manager:resume().\nriak_kv_ttaaefs_manager:set_allsync(Arg1, Arg2).\nriak_kv_ttaaefs_manager:set_range(Arg1, Arg2, Arg3, Arg4).\nriak_kv_ttaaefs_manager:set_sink(Arg1, Arg2, Arg3).\nriak_kv_ttaaefs_manager:trigger_tree_repairs().",
-          "line": 208,
+          "line": 231,
           "path": "kv-cli-commands.md"
         }
       ],
@@ -8899,7 +9019,7 @@
       "examples": [
         {
           "expression": "riak_kv_replrtq_src:clear_rtq(Arg1).\nriak_kv_replrtq_src:delist_rtq(Arg1).\nriak_kv_replrtq_src:length_rtq(Arg1).\nriak_kv_replrtq_src:register_rtq(Arg1, Arg2).\nriak_kv_replrtq_src:resume_rtq(Arg1).\nriak_kv_replrtq_src:suspend_rtq(Arg1).\nriak_kv_replrtq_snk:add_snkqueue(Arg1, Arg2, Arg3).\nriak_kv_replrtq_snk:add_snkqueue(Arg1, Arg2, Arg3, Arg4).\nriak_kv_replrtq_snk:current_peers(Arg1).\nriak_kv_replrtq_snk:get_worker_counts().\nriak_kv_replrtq_snk:remove_snkqueue(Arg1).\nriak_kv_replrtq_snk:resume_snkqueue(Arg1).\nriak_kv_replrtq_snk:set_worker_counts(Arg1, Arg2).\nriak_kv_replrtq_snk:set_workercount(Arg1, Arg2).\nriak_kv_replrtq_snk:set_workercount(Arg1, Arg2, Arg3).\nriak_kv_replrtq_snk:suspend_snkqueue(Arg1).\nriak_kv_ttaaefs_manager:autocheck_suppress().\nriak_kv_ttaaefs_manager:autocheck_suppress(Arg1).\nriak_kv_ttaaefs_manager:clear_range().\nriak_kv_ttaaefs_manager:disable_tree_repairs().\nriak_kv_ttaaefs_manager:get_range().\nriak_kv_ttaaefs_manager:pause().\nriak_kv_ttaaefs_manager:resume().\nriak_kv_ttaaefs_manager:set_allsync(Arg1, Arg2).\nriak_kv_ttaaefs_manager:set_range(Arg1, Arg2, Arg3, Arg4).\nriak_kv_ttaaefs_manager:set_sink(Arg1, Arg2, Arg3).\nriak_kv_ttaaefs_manager:trigger_tree_repairs().",
-          "line": 208,
+          "line": 231,
           "path": "kv-cli-commands.md"
         }
       ],
@@ -8962,7 +9082,7 @@
       "examples": [
         {
           "expression": "riak_kv_replrtq_src:clear_rtq(Arg1).\nriak_kv_replrtq_src:delist_rtq(Arg1).\nriak_kv_replrtq_src:length_rtq(Arg1).\nriak_kv_replrtq_src:register_rtq(Arg1, Arg2).\nriak_kv_replrtq_src:resume_rtq(Arg1).\nriak_kv_replrtq_src:suspend_rtq(Arg1).\nriak_kv_replrtq_snk:add_snkqueue(Arg1, Arg2, Arg3).\nriak_kv_replrtq_snk:add_snkqueue(Arg1, Arg2, Arg3, Arg4).\nriak_kv_replrtq_snk:current_peers(Arg1).\nriak_kv_replrtq_snk:get_worker_counts().\nriak_kv_replrtq_snk:remove_snkqueue(Arg1).\nriak_kv_replrtq_snk:resume_snkqueue(Arg1).\nriak_kv_replrtq_snk:set_worker_counts(Arg1, Arg2).\nriak_kv_replrtq_snk:set_workercount(Arg1, Arg2).\nriak_kv_replrtq_snk:set_workercount(Arg1, Arg2, Arg3).\nriak_kv_replrtq_snk:suspend_snkqueue(Arg1).\nriak_kv_ttaaefs_manager:autocheck_suppress().\nriak_kv_ttaaefs_manager:autocheck_suppress(Arg1).\nriak_kv_ttaaefs_manager:clear_range().\nriak_kv_ttaaefs_manager:disable_tree_repairs().\nriak_kv_ttaaefs_manager:get_range().\nriak_kv_ttaaefs_manager:pause().\nriak_kv_ttaaefs_manager:resume().\nriak_kv_ttaaefs_manager:set_allsync(Arg1, Arg2).\nriak_kv_ttaaefs_manager:set_range(Arg1, Arg2, Arg3, Arg4).\nriak_kv_ttaaefs_manager:set_sink(Arg1, Arg2, Arg3).\nriak_kv_ttaaefs_manager:trigger_tree_repairs().",
-          "line": 208,
+          "line": 231,
           "path": "kv-cli-commands.md"
         }
       ],
@@ -9024,7 +9144,7 @@
       "examples": [
         {
           "expression": "riak_kv_replrtq_src:clear_rtq(Arg1).\nriak_kv_replrtq_src:delist_rtq(Arg1).\nriak_kv_replrtq_src:length_rtq(Arg1).\nriak_kv_replrtq_src:register_rtq(Arg1, Arg2).\nriak_kv_replrtq_src:resume_rtq(Arg1).\nriak_kv_replrtq_src:suspend_rtq(Arg1).\nriak_kv_replrtq_snk:add_snkqueue(Arg1, Arg2, Arg3).\nriak_kv_replrtq_snk:add_snkqueue(Arg1, Arg2, Arg3, Arg4).\nriak_kv_replrtq_snk:current_peers(Arg1).\nriak_kv_replrtq_snk:get_worker_counts().\nriak_kv_replrtq_snk:remove_snkqueue(Arg1).\nriak_kv_replrtq_snk:resume_snkqueue(Arg1).\nriak_kv_replrtq_snk:set_worker_counts(Arg1, Arg2).\nriak_kv_replrtq_snk:set_workercount(Arg1, Arg2).\nriak_kv_replrtq_snk:set_workercount(Arg1, Arg2, Arg3).\nriak_kv_replrtq_snk:suspend_snkqueue(Arg1).\nriak_kv_ttaaefs_manager:autocheck_suppress().\nriak_kv_ttaaefs_manager:autocheck_suppress(Arg1).\nriak_kv_ttaaefs_manager:clear_range().\nriak_kv_ttaaefs_manager:disable_tree_repairs().\nriak_kv_ttaaefs_manager:get_range().\nriak_kv_ttaaefs_manager:pause().\nriak_kv_ttaaefs_manager:resume().\nriak_kv_ttaaefs_manager:set_allsync(Arg1, Arg2).\nriak_kv_ttaaefs_manager:set_range(Arg1, Arg2, Arg3, Arg4).\nriak_kv_ttaaefs_manager:set_sink(Arg1, Arg2, Arg3).\nriak_kv_ttaaefs_manager:trigger_tree_repairs().",
-          "line": 208,
+          "line": 231,
           "path": "kv-cli-commands.md"
         }
       ],
@@ -9082,7 +9202,7 @@
       "examples": [
         {
           "expression": "riak_kv_replrtq_src:clear_rtq(Arg1).\nriak_kv_replrtq_src:delist_rtq(Arg1).\nriak_kv_replrtq_src:length_rtq(Arg1).\nriak_kv_replrtq_src:register_rtq(Arg1, Arg2).\nriak_kv_replrtq_src:resume_rtq(Arg1).\nriak_kv_replrtq_src:suspend_rtq(Arg1).\nriak_kv_replrtq_snk:add_snkqueue(Arg1, Arg2, Arg3).\nriak_kv_replrtq_snk:add_snkqueue(Arg1, Arg2, Arg3, Arg4).\nriak_kv_replrtq_snk:current_peers(Arg1).\nriak_kv_replrtq_snk:get_worker_counts().\nriak_kv_replrtq_snk:remove_snkqueue(Arg1).\nriak_kv_replrtq_snk:resume_snkqueue(Arg1).\nriak_kv_replrtq_snk:set_worker_counts(Arg1, Arg2).\nriak_kv_replrtq_snk:set_workercount(Arg1, Arg2).\nriak_kv_replrtq_snk:set_workercount(Arg1, Arg2, Arg3).\nriak_kv_replrtq_snk:suspend_snkqueue(Arg1).\nriak_kv_ttaaefs_manager:autocheck_suppress().\nriak_kv_ttaaefs_manager:autocheck_suppress(Arg1).\nriak_kv_ttaaefs_manager:clear_range().\nriak_kv_ttaaefs_manager:disable_tree_repairs().\nriak_kv_ttaaefs_manager:get_range().\nriak_kv_ttaaefs_manager:pause().\nriak_kv_ttaaefs_manager:resume().\nriak_kv_ttaaefs_manager:set_allsync(Arg1, Arg2).\nriak_kv_ttaaefs_manager:set_range(Arg1, Arg2, Arg3, Arg4).\nriak_kv_ttaaefs_manager:set_sink(Arg1, Arg2, Arg3).\nriak_kv_ttaaefs_manager:trigger_tree_repairs().",
-          "line": 208,
+          "line": 231,
           "path": "kv-cli-commands.md"
         }
       ],
@@ -9140,7 +9260,7 @@
       "examples": [
         {
           "expression": "riak_kv_replrtq_src:clear_rtq(Arg1).\nriak_kv_replrtq_src:delist_rtq(Arg1).\nriak_kv_replrtq_src:length_rtq(Arg1).\nriak_kv_replrtq_src:register_rtq(Arg1, Arg2).\nriak_kv_replrtq_src:resume_rtq(Arg1).\nriak_kv_replrtq_src:suspend_rtq(Arg1).\nriak_kv_replrtq_snk:add_snkqueue(Arg1, Arg2, Arg3).\nriak_kv_replrtq_snk:add_snkqueue(Arg1, Arg2, Arg3, Arg4).\nriak_kv_replrtq_snk:current_peers(Arg1).\nriak_kv_replrtq_snk:get_worker_counts().\nriak_kv_replrtq_snk:remove_snkqueue(Arg1).\nriak_kv_replrtq_snk:resume_snkqueue(Arg1).\nriak_kv_replrtq_snk:set_worker_counts(Arg1, Arg2).\nriak_kv_replrtq_snk:set_workercount(Arg1, Arg2).\nriak_kv_replrtq_snk:set_workercount(Arg1, Arg2, Arg3).\nriak_kv_replrtq_snk:suspend_snkqueue(Arg1).\nriak_kv_ttaaefs_manager:autocheck_suppress().\nriak_kv_ttaaefs_manager:autocheck_suppress(Arg1).\nriak_kv_ttaaefs_manager:clear_range().\nriak_kv_ttaaefs_manager:disable_tree_repairs().\nriak_kv_ttaaefs_manager:get_range().\nriak_kv_ttaaefs_manager:pause().\nriak_kv_ttaaefs_manager:resume().\nriak_kv_ttaaefs_manager:set_allsync(Arg1, Arg2).\nriak_kv_ttaaefs_manager:set_range(Arg1, Arg2, Arg3, Arg4).\nriak_kv_ttaaefs_manager:set_sink(Arg1, Arg2, Arg3).\nriak_kv_ttaaefs_manager:trigger_tree_repairs().",
-          "line": 208,
+          "line": 231,
           "path": "kv-cli-commands.md"
         }
       ],
@@ -9198,7 +9318,7 @@
       "examples": [
         {
           "expression": "riak_kv_replrtq_src:clear_rtq(Arg1).\nriak_kv_replrtq_src:delist_rtq(Arg1).\nriak_kv_replrtq_src:length_rtq(Arg1).\nriak_kv_replrtq_src:register_rtq(Arg1, Arg2).\nriak_kv_replrtq_src:resume_rtq(Arg1).\nriak_kv_replrtq_src:suspend_rtq(Arg1).\nriak_kv_replrtq_snk:add_snkqueue(Arg1, Arg2, Arg3).\nriak_kv_replrtq_snk:add_snkqueue(Arg1, Arg2, Arg3, Arg4).\nriak_kv_replrtq_snk:current_peers(Arg1).\nriak_kv_replrtq_snk:get_worker_counts().\nriak_kv_replrtq_snk:remove_snkqueue(Arg1).\nriak_kv_replrtq_snk:resume_snkqueue(Arg1).\nriak_kv_replrtq_snk:set_worker_counts(Arg1, Arg2).\nriak_kv_replrtq_snk:set_workercount(Arg1, Arg2).\nriak_kv_replrtq_snk:set_workercount(Arg1, Arg2, Arg3).\nriak_kv_replrtq_snk:suspend_snkqueue(Arg1).\nriak_kv_ttaaefs_manager:autocheck_suppress().\nriak_kv_ttaaefs_manager:autocheck_suppress(Arg1).\nriak_kv_ttaaefs_manager:clear_range().\nriak_kv_ttaaefs_manager:disable_tree_repairs().\nriak_kv_ttaaefs_manager:get_range().\nriak_kv_ttaaefs_manager:pause().\nriak_kv_ttaaefs_manager:resume().\nriak_kv_ttaaefs_manager:set_allsync(Arg1, Arg2).\nriak_kv_ttaaefs_manager:set_range(Arg1, Arg2, Arg3, Arg4).\nriak_kv_ttaaefs_manager:set_sink(Arg1, Arg2, Arg3).\nriak_kv_ttaaefs_manager:trigger_tree_repairs().",
-          "line": 208,
+          "line": 231,
           "path": "kv-cli-commands.md"
         }
       ],
@@ -9256,7 +9376,7 @@
       "examples": [
         {
           "expression": "riak_kv_replrtq_src:clear_rtq(Arg1).\nriak_kv_replrtq_src:delist_rtq(Arg1).\nriak_kv_replrtq_src:length_rtq(Arg1).\nriak_kv_replrtq_src:register_rtq(Arg1, Arg2).\nriak_kv_replrtq_src:resume_rtq(Arg1).\nriak_kv_replrtq_src:suspend_rtq(Arg1).\nriak_kv_replrtq_snk:add_snkqueue(Arg1, Arg2, Arg3).\nriak_kv_replrtq_snk:add_snkqueue(Arg1, Arg2, Arg3, Arg4).\nriak_kv_replrtq_snk:current_peers(Arg1).\nriak_kv_replrtq_snk:get_worker_counts().\nriak_kv_replrtq_snk:remove_snkqueue(Arg1).\nriak_kv_replrtq_snk:resume_snkqueue(Arg1).\nriak_kv_replrtq_snk:set_worker_counts(Arg1, Arg2).\nriak_kv_replrtq_snk:set_workercount(Arg1, Arg2).\nriak_kv_replrtq_snk:set_workercount(Arg1, Arg2, Arg3).\nriak_kv_replrtq_snk:suspend_snkqueue(Arg1).\nriak_kv_ttaaefs_manager:autocheck_suppress().\nriak_kv_ttaaefs_manager:autocheck_suppress(Arg1).\nriak_kv_ttaaefs_manager:clear_range().\nriak_kv_ttaaefs_manager:disable_tree_repairs().\nriak_kv_ttaaefs_manager:get_range().\nriak_kv_ttaaefs_manager:pause().\nriak_kv_ttaaefs_manager:resume().\nriak_kv_ttaaefs_manager:set_allsync(Arg1, Arg2).\nriak_kv_ttaaefs_manager:set_range(Arg1, Arg2, Arg3, Arg4).\nriak_kv_ttaaefs_manager:set_sink(Arg1, Arg2, Arg3).\nriak_kv_ttaaefs_manager:trigger_tree_repairs().",
-          "line": 208,
+          "line": 231,
           "path": "kv-cli-commands.md"
         }
       ],
@@ -9319,7 +9439,7 @@
       "examples": [
         {
           "expression": "riak_kv_replrtq_src:clear_rtq(Arg1).\nriak_kv_replrtq_src:delist_rtq(Arg1).\nriak_kv_replrtq_src:length_rtq(Arg1).\nriak_kv_replrtq_src:register_rtq(Arg1, Arg2).\nriak_kv_replrtq_src:resume_rtq(Arg1).\nriak_kv_replrtq_src:suspend_rtq(Arg1).\nriak_kv_replrtq_snk:add_snkqueue(Arg1, Arg2, Arg3).\nriak_kv_replrtq_snk:add_snkqueue(Arg1, Arg2, Arg3, Arg4).\nriak_kv_replrtq_snk:current_peers(Arg1).\nriak_kv_replrtq_snk:get_worker_counts().\nriak_kv_replrtq_snk:remove_snkqueue(Arg1).\nriak_kv_replrtq_snk:resume_snkqueue(Arg1).\nriak_kv_replrtq_snk:set_worker_counts(Arg1, Arg2).\nriak_kv_replrtq_snk:set_workercount(Arg1, Arg2).\nriak_kv_replrtq_snk:set_workercount(Arg1, Arg2, Arg3).\nriak_kv_replrtq_snk:suspend_snkqueue(Arg1).\nriak_kv_ttaaefs_manager:autocheck_suppress().\nriak_kv_ttaaefs_manager:autocheck_suppress(Arg1).\nriak_kv_ttaaefs_manager:clear_range().\nriak_kv_ttaaefs_manager:disable_tree_repairs().\nriak_kv_ttaaefs_manager:get_range().\nriak_kv_ttaaefs_manager:pause().\nriak_kv_ttaaefs_manager:resume().\nriak_kv_ttaaefs_manager:set_allsync(Arg1, Arg2).\nriak_kv_ttaaefs_manager:set_range(Arg1, Arg2, Arg3, Arg4).\nriak_kv_ttaaefs_manager:set_sink(Arg1, Arg2, Arg3).\nriak_kv_ttaaefs_manager:trigger_tree_repairs().",
-          "line": 208,
+          "line": 231,
           "path": "kv-cli-commands.md"
         }
       ],
@@ -9389,7 +9509,7 @@
       "examples": [
         {
           "expression": "riak_kv_replrtq_src:clear_rtq(Arg1).\nriak_kv_replrtq_src:delist_rtq(Arg1).\nriak_kv_replrtq_src:length_rtq(Arg1).\nriak_kv_replrtq_src:register_rtq(Arg1, Arg2).\nriak_kv_replrtq_src:resume_rtq(Arg1).\nriak_kv_replrtq_src:suspend_rtq(Arg1).\nriak_kv_replrtq_snk:add_snkqueue(Arg1, Arg2, Arg3).\nriak_kv_replrtq_snk:add_snkqueue(Arg1, Arg2, Arg3, Arg4).\nriak_kv_replrtq_snk:current_peers(Arg1).\nriak_kv_replrtq_snk:get_worker_counts().\nriak_kv_replrtq_snk:remove_snkqueue(Arg1).\nriak_kv_replrtq_snk:resume_snkqueue(Arg1).\nriak_kv_replrtq_snk:set_worker_counts(Arg1, Arg2).\nriak_kv_replrtq_snk:set_workercount(Arg1, Arg2).\nriak_kv_replrtq_snk:set_workercount(Arg1, Arg2, Arg3).\nriak_kv_replrtq_snk:suspend_snkqueue(Arg1).\nriak_kv_ttaaefs_manager:autocheck_suppress().\nriak_kv_ttaaefs_manager:autocheck_suppress(Arg1).\nriak_kv_ttaaefs_manager:clear_range().\nriak_kv_ttaaefs_manager:disable_tree_repairs().\nriak_kv_ttaaefs_manager:get_range().\nriak_kv_ttaaefs_manager:pause().\nriak_kv_ttaaefs_manager:resume().\nriak_kv_ttaaefs_manager:set_allsync(Arg1, Arg2).\nriak_kv_ttaaefs_manager:set_range(Arg1, Arg2, Arg3, Arg4).\nriak_kv_ttaaefs_manager:set_sink(Arg1, Arg2, Arg3).\nriak_kv_ttaaefs_manager:trigger_tree_repairs().",
-          "line": 208,
+          "line": 231,
           "path": "kv-cli-commands.md"
         }
       ],
@@ -9465,7 +9585,7 @@
       "examples": [
         {
           "expression": "riak_kv_replrtq_src:clear_rtq(Arg1).\nriak_kv_replrtq_src:delist_rtq(Arg1).\nriak_kv_replrtq_src:length_rtq(Arg1).\nriak_kv_replrtq_src:register_rtq(Arg1, Arg2).\nriak_kv_replrtq_src:resume_rtq(Arg1).\nriak_kv_replrtq_src:suspend_rtq(Arg1).\nriak_kv_replrtq_snk:add_snkqueue(Arg1, Arg2, Arg3).\nriak_kv_replrtq_snk:add_snkqueue(Arg1, Arg2, Arg3, Arg4).\nriak_kv_replrtq_snk:current_peers(Arg1).\nriak_kv_replrtq_snk:get_worker_counts().\nriak_kv_replrtq_snk:remove_snkqueue(Arg1).\nriak_kv_replrtq_snk:resume_snkqueue(Arg1).\nriak_kv_replrtq_snk:set_worker_counts(Arg1, Arg2).\nriak_kv_replrtq_snk:set_workercount(Arg1, Arg2).\nriak_kv_replrtq_snk:set_workercount(Arg1, Arg2, Arg3).\nriak_kv_replrtq_snk:suspend_snkqueue(Arg1).\nriak_kv_ttaaefs_manager:autocheck_suppress().\nriak_kv_ttaaefs_manager:autocheck_suppress(Arg1).\nriak_kv_ttaaefs_manager:clear_range().\nriak_kv_ttaaefs_manager:disable_tree_repairs().\nriak_kv_ttaaefs_manager:get_range().\nriak_kv_ttaaefs_manager:pause().\nriak_kv_ttaaefs_manager:resume().\nriak_kv_ttaaefs_manager:set_allsync(Arg1, Arg2).\nriak_kv_ttaaefs_manager:set_range(Arg1, Arg2, Arg3, Arg4).\nriak_kv_ttaaefs_manager:set_sink(Arg1, Arg2, Arg3).\nriak_kv_ttaaefs_manager:trigger_tree_repairs().",
-          "line": 208,
+          "line": 231,
           "path": "kv-cli-commands.md"
         }
       ],
@@ -9538,7 +9658,7 @@
       "examples": [
         {
           "expression": "riak_kv_replrtq_src:clear_rtq(Arg1).\nriak_kv_replrtq_src:delist_rtq(Arg1).\nriak_kv_replrtq_src:length_rtq(Arg1).\nriak_kv_replrtq_src:register_rtq(Arg1, Arg2).\nriak_kv_replrtq_src:resume_rtq(Arg1).\nriak_kv_replrtq_src:suspend_rtq(Arg1).\nriak_kv_replrtq_snk:add_snkqueue(Arg1, Arg2, Arg3).\nriak_kv_replrtq_snk:add_snkqueue(Arg1, Arg2, Arg3, Arg4).\nriak_kv_replrtq_snk:current_peers(Arg1).\nriak_kv_replrtq_snk:get_worker_counts().\nriak_kv_replrtq_snk:remove_snkqueue(Arg1).\nriak_kv_replrtq_snk:resume_snkqueue(Arg1).\nriak_kv_replrtq_snk:set_worker_counts(Arg1, Arg2).\nriak_kv_replrtq_snk:set_workercount(Arg1, Arg2).\nriak_kv_replrtq_snk:set_workercount(Arg1, Arg2, Arg3).\nriak_kv_replrtq_snk:suspend_snkqueue(Arg1).\nriak_kv_ttaaefs_manager:autocheck_suppress().\nriak_kv_ttaaefs_manager:autocheck_suppress(Arg1).\nriak_kv_ttaaefs_manager:clear_range().\nriak_kv_ttaaefs_manager:disable_tree_repairs().\nriak_kv_ttaaefs_manager:get_range().\nriak_kv_ttaaefs_manager:pause().\nriak_kv_ttaaefs_manager:resume().\nriak_kv_ttaaefs_manager:set_allsync(Arg1, Arg2).\nriak_kv_ttaaefs_manager:set_range(Arg1, Arg2, Arg3, Arg4).\nriak_kv_ttaaefs_manager:set_sink(Arg1, Arg2, Arg3).\nriak_kv_ttaaefs_manager:trigger_tree_repairs().",
-          "line": 208,
+          "line": 231,
           "path": "kv-cli-commands.md"
         }
       ],
@@ -9601,7 +9721,7 @@
       "examples": [
         {
           "expression": "riak_kv_replrtq_src:clear_rtq(Arg1).\nriak_kv_replrtq_src:delist_rtq(Arg1).\nriak_kv_replrtq_src:length_rtq(Arg1).\nriak_kv_replrtq_src:register_rtq(Arg1, Arg2).\nriak_kv_replrtq_src:resume_rtq(Arg1).\nriak_kv_replrtq_src:suspend_rtq(Arg1).\nriak_kv_replrtq_snk:add_snkqueue(Arg1, Arg2, Arg3).\nriak_kv_replrtq_snk:add_snkqueue(Arg1, Arg2, Arg3, Arg4).\nriak_kv_replrtq_snk:current_peers(Arg1).\nriak_kv_replrtq_snk:get_worker_counts().\nriak_kv_replrtq_snk:remove_snkqueue(Arg1).\nriak_kv_replrtq_snk:resume_snkqueue(Arg1).\nriak_kv_replrtq_snk:set_worker_counts(Arg1, Arg2).\nriak_kv_replrtq_snk:set_workercount(Arg1, Arg2).\nriak_kv_replrtq_snk:set_workercount(Arg1, Arg2, Arg3).\nriak_kv_replrtq_snk:suspend_snkqueue(Arg1).\nriak_kv_ttaaefs_manager:autocheck_suppress().\nriak_kv_ttaaefs_manager:autocheck_suppress(Arg1).\nriak_kv_ttaaefs_manager:clear_range().\nriak_kv_ttaaefs_manager:disable_tree_repairs().\nriak_kv_ttaaefs_manager:get_range().\nriak_kv_ttaaefs_manager:pause().\nriak_kv_ttaaefs_manager:resume().\nriak_kv_ttaaefs_manager:set_allsync(Arg1, Arg2).\nriak_kv_ttaaefs_manager:set_range(Arg1, Arg2, Arg3, Arg4).\nriak_kv_ttaaefs_manager:set_sink(Arg1, Arg2, Arg3).\nriak_kv_ttaaefs_manager:trigger_tree_repairs().",
-          "line": 208,
+          "line": 231,
           "path": "kv-cli-commands.md"
         }
       ],
@@ -10881,7 +11001,7 @@
       "hint_examples": [
         {
           "example": "riak",
-          "line": 34,
+          "line": 57,
           "path": "kv-cli-commands.md"
         }
       ],
@@ -11171,7 +11291,7 @@
       "hint_examples": [
         {
           "example": "riak admin aae-status",
-          "line": 35,
+          "line": 58,
           "path": "kv-cli-commands.md"
         }
       ],
@@ -11348,7 +11468,7 @@
       "hint_examples": [
         {
           "example": "riak admin backup",
-          "line": 36,
+          "line": 59,
           "path": "kv-cli-commands.md"
         }
       ],
@@ -11405,7 +11525,7 @@
       "hint_examples": [
         {
           "example": "riak admin bucket-type",
-          "line": 37,
+          "line": 60,
           "path": "kv-cli-commands.md"
         }
       ],
@@ -11535,7 +11655,7 @@
       "hint_examples": [
         {
           "example": "riak admin bucket-type activate",
-          "line": 38,
+          "line": 61,
           "path": "kv-cli-commands.md"
         }
       ],
@@ -11680,7 +11800,7 @@
       "hint_examples": [
         {
           "example": "riak admin bucket-type create",
-          "line": 39,
+          "line": 62,
           "path": "kv-cli-commands.md"
         }
       ],
@@ -11764,7 +11884,7 @@
       "hint_examples": [
         {
           "example": "riak admin bucket-type list",
-          "line": 40,
+          "line": 63,
           "path": "kv-cli-commands.md"
         }
       ],
@@ -11878,7 +11998,7 @@
       "hint_examples": [
         {
           "example": "riak admin bucket-type status",
-          "line": 41,
+          "line": 64,
           "path": "kv-cli-commands.md"
         }
       ],
@@ -11998,7 +12118,7 @@
       "hint_examples": [
         {
           "example": "riak admin bucket-type update",
-          "line": 42,
+          "line": 65,
           "path": "kv-cli-commands.md"
         }
       ],
@@ -12150,7 +12270,7 @@
       "hint_examples": [
         {
           "example": "riak admin cluster clear",
-          "line": 43,
+          "line": 66,
           "path": "kv-cli-commands.md"
         }
       ],
@@ -12222,7 +12342,7 @@
       "hint_examples": [
         {
           "example": "riak admin cluster commit",
-          "line": 44,
+          "line": 67,
           "path": "kv-cli-commands.md"
         }
       ],
@@ -12311,7 +12431,7 @@
       "hint_examples": [
         {
           "example": "riak admin cluster force-remove",
-          "line": 45,
+          "line": 68,
           "path": "kv-cli-commands.md"
         }
       ],
@@ -12508,7 +12628,7 @@
       "hint_examples": [
         {
           "example": "riak admin cluster join",
-          "line": 46,
+          "line": 69,
           "path": "kv-cli-commands.md"
         }
       ],
@@ -12612,7 +12732,7 @@
       "hint_examples": [
         {
           "example": "riak admin cluster leave",
-          "line": 47,
+          "line": 70,
           "path": "kv-cli-commands.md"
         }
       ],
@@ -12895,7 +13015,7 @@
       "hint_examples": [
         {
           "example": "riak admin cluster partition",
-          "line": 48,
+          "line": 71,
           "path": "kv-cli-commands.md"
         }
       ],
@@ -13010,7 +13130,7 @@
       "hint_examples": [
         {
           "example": "riak admin cluster partition-count",
-          "line": 49,
+          "line": 72,
           "path": "kv-cli-commands.md"
         }
       ],
@@ -13208,7 +13328,7 @@
       "hint_examples": [
         {
           "example": "riak admin cluster partitions",
-          "line": 50,
+          "line": 73,
           "path": "kv-cli-commands.md"
         }
       ],
@@ -13347,7 +13467,7 @@
       "hint_examples": [
         {
           "example": "riak admin cluster plan",
-          "line": 51,
+          "line": 74,
           "path": "kv-cli-commands.md"
         }
       ],
@@ -13439,7 +13559,7 @@
       "hint_examples": [
         {
           "example": "riak admin cluster replace",
-          "line": 52,
+          "line": 75,
           "path": "kv-cli-commands.md"
         }
       ],
@@ -13649,7 +13769,7 @@
       "hint_examples": [
         {
           "example": "riak admin cluster status",
-          "line": 53,
+          "line": 76,
           "path": "kv-cli-commands.md"
         }
       ],
@@ -13761,7 +13881,7 @@
       "hint_examples": [
         {
           "example": "riak admin cluster-info",
-          "line": 54,
+          "line": 77,
           "path": "kv-cli-commands.md"
         }
       ],
@@ -13857,7 +13977,7 @@
       "hint_examples": [
         {
           "example": "riak admin cluster_info",
-          "line": 55,
+          "line": 78,
           "path": "kv-cli-commands.md"
         }
       ],
@@ -13948,7 +14068,7 @@
       "hint_examples": [
         {
           "example": "riak admin describe",
-          "line": 56,
+          "line": 79,
           "path": "kv-cli-commands.md"
         }
       ],
@@ -14040,7 +14160,7 @@
       "hint_examples": [
         {
           "example": "riak admin down",
-          "line": 57,
+          "line": 80,
           "path": "kv-cli-commands.md"
         }
       ],
@@ -14164,7 +14284,7 @@
       "hint_examples": [
         {
           "example": "riak admin downgrade-objects",
-          "line": 58,
+          "line": 81,
           "path": "kv-cli-commands.md"
         }
       ],
@@ -14548,7 +14668,7 @@
       "hint_examples": [
         {
           "example": "riak admin ensemble-status",
-          "line": 59,
+          "line": 82,
           "path": "kv-cli-commands.md"
         }
       ],
@@ -14812,7 +14932,7 @@
       "hint_examples": [
         {
           "example": "riak admin erl-reload",
-          "line": 60,
+          "line": 83,
           "path": "kv-cli-commands.md"
         }
       ],
@@ -15293,7 +15413,7 @@
       "hint_examples": [
         {
           "example": "riak admin handoff details",
-          "line": 61,
+          "line": 84,
           "path": "kv-cli-commands.md"
         }
       ],
@@ -15434,7 +15554,7 @@
       "hint_examples": [
         {
           "example": "riak admin handoff disable both",
-          "line": 62,
+          "line": 85,
           "path": "kv-cli-commands.md"
         }
       ],
@@ -15689,7 +15809,7 @@
       "hint_examples": [
         {
           "example": "riak admin handoff enable",
-          "line": 63,
+          "line": 86,
           "path": "kv-cli-commands.md"
         }
       ],
@@ -15759,7 +15879,7 @@
       "hint_examples": [
         {
           "example": "riak admin handoff enable both",
-          "line": 64,
+          "line": 87,
           "path": "kv-cli-commands.md"
         }
       ],
@@ -15855,7 +15975,7 @@
       "hint_examples": [
         {
           "example": "riak admin handoff enable inbound",
-          "line": 65,
+          "line": 88,
           "path": "kv-cli-commands.md"
         }
       ],
@@ -15951,7 +16071,7 @@
       "hint_examples": [
         {
           "example": "riak admin handoff enable outbound",
-          "line": 66,
+          "line": 89,
           "path": "kv-cli-commands.md"
         }
       ],
@@ -16042,7 +16162,7 @@
       "hint_examples": [
         {
           "example": "riak admin handoff summary",
-          "line": 67,
+          "line": 90,
           "path": "kv-cli-commands.md"
         }
       ],
@@ -16141,7 +16261,7 @@
       "hint_examples": [
         {
           "example": "riak admin join",
-          "line": 68,
+          "line": 91,
           "path": "kv-cli-commands.md"
         }
       ],
@@ -16221,7 +16341,7 @@
       "hint_examples": [
         {
           "example": "riak admin leave",
-          "line": 69,
+          "line": 92,
           "path": "kv-cli-commands.md"
         }
       ],
@@ -16345,7 +16465,7 @@
       "hint_examples": [
         {
           "example": "riak admin member-status",
-          "line": 70,
+          "line": 93,
           "path": "kv-cli-commands.md"
         }
       ],
@@ -16918,7 +17038,7 @@
       "hint_examples": [
         {
           "example": "riak admin reformat-indexes",
-          "line": 71,
+          "line": 94,
           "path": "kv-cli-commands.md"
         }
       ],
@@ -17116,7 +17236,7 @@
       "hint_examples": [
         {
           "example": "riak admin reip",
-          "line": 72,
+          "line": 95,
           "path": "kv-cli-commands.md"
         }
       ],
@@ -17362,7 +17482,7 @@
       "hint_examples": [
         {
           "example": "riak admin repair-2i",
-          "line": 73,
+          "line": 96,
           "path": "kv-cli-commands.md"
         }
       ],
@@ -17422,7 +17542,7 @@
       "hint_examples": [
         {
           "example": "riak admin repair-2i kill",
-          "line": 74,
+          "line": 97,
           "path": "kv-cli-commands.md"
         }
       ],
@@ -17481,7 +17601,7 @@
       "hint_examples": [
         {
           "example": "riak admin repair-2i status",
-          "line": 75,
+          "line": 98,
           "path": "kv-cli-commands.md"
         }
       ],
@@ -17811,7 +17931,7 @@
       "hint_examples": [
         {
           "example": "riak admin restore",
-          "line": 76,
+          "line": 99,
           "path": "kv-cli-commands.md"
         }
       ],
@@ -17919,7 +18039,7 @@
       "hint_examples": [
         {
           "example": "riak admin ring-status",
-          "line": 77,
+          "line": 100,
           "path": "kv-cli-commands.md"
         }
       ],
@@ -18096,7 +18216,7 @@
       "hint_examples": [
         {
           "example": "riak admin ringready",
-          "line": 78,
+          "line": 101,
           "path": "kv-cli-commands.md"
         }
       ],
@@ -18193,7 +18313,7 @@
       "hint_examples": [
         {
           "example": "riak admin security",
-          "line": 79,
+          "line": 102,
           "path": "kv-cli-commands.md"
         }
       ],
@@ -18398,7 +18518,7 @@
       "hint_examples": [
         {
           "example": "riak admin security add-group",
-          "line": 80,
+          "line": 103,
           "path": "kv-cli-commands.md"
         }
       ],
@@ -18551,7 +18671,7 @@
       "hint_examples": [
         {
           "example": "riak admin security add-source",
-          "line": 81,
+          "line": 104,
           "path": "kv-cli-commands.md"
         }
       ],
@@ -18736,7 +18856,7 @@
       "hint_examples": [
         {
           "example": "riak admin security add-user",
-          "line": 82,
+          "line": 105,
           "path": "kv-cli-commands.md"
         }
       ],
@@ -18921,7 +19041,7 @@
       "hint_examples": [
         {
           "example": "riak admin security alter-group",
-          "line": 83,
+          "line": 106,
           "path": "kv-cli-commands.md"
         }
       ],
@@ -19106,7 +19226,7 @@
       "hint_examples": [
         {
           "example": "riak admin security alter-user",
-          "line": 84,
+          "line": 107,
           "path": "kv-cli-commands.md"
         }
       ],
@@ -19182,7 +19302,7 @@
       "hint_examples": [
         {
           "example": "riak admin security ciphers",
-          "line": 85,
+          "line": 108,
           "path": "kv-cli-commands.md"
         }
       ],
@@ -19294,7 +19414,7 @@
       "hint_examples": [
         {
           "example": "riak admin security del-group",
-          "line": 86,
+          "line": 109,
           "path": "kv-cli-commands.md"
         }
       ],
@@ -19389,7 +19509,7 @@
       "hint_examples": [
         {
           "example": "riak admin security del-source",
-          "line": 87,
+          "line": 110,
           "path": "kv-cli-commands.md"
         }
       ],
@@ -19503,7 +19623,7 @@
       "hint_examples": [
         {
           "example": "riak admin security del-user",
-          "line": 88,
+          "line": 111,
           "path": "kv-cli-commands.md"
         }
       ],
@@ -19594,7 +19714,7 @@
       "hint_examples": [
         {
           "example": "riak admin security disable",
-          "line": 89,
+          "line": 112,
           "path": "kv-cli-commands.md"
         }
       ],
@@ -19683,7 +19803,7 @@
       "hint_examples": [
         {
           "example": "riak admin security enable",
-          "line": 90,
+          "line": 113,
           "path": "kv-cli-commands.md"
         }
       ],
@@ -19829,7 +19949,7 @@
       "hint_examples": [
         {
           "example": "riak admin security grant",
-          "line": 91,
+          "line": 114,
           "path": "kv-cli-commands.md"
         }
       ],
@@ -20095,7 +20215,7 @@
       "hint_examples": [
         {
           "example": "riak admin security print-groups",
-          "line": 92,
+          "line": 115,
           "path": "kv-cli-commands.md"
         }
       ],
@@ -20162,7 +20282,7 @@
       "hint_examples": [
         {
           "example": "riak admin security print-sources",
-          "line": 93,
+          "line": 116,
           "path": "kv-cli-commands.md"
         }
       ],
@@ -20327,7 +20447,7 @@
       "hint_examples": [
         {
           "example": "riak admin security print-users",
-          "line": 94,
+          "line": 117,
           "path": "kv-cli-commands.md"
         }
       ],
@@ -20473,7 +20593,7 @@
       "hint_examples": [
         {
           "example": "riak admin security revoke",
-          "line": 95,
+          "line": 118,
           "path": "kv-cli-commands.md"
         }
       ],
@@ -20548,7 +20668,7 @@
       "hint_examples": [
         {
           "example": "riak admin security status",
-          "line": 96,
+          "line": 119,
           "path": "kv-cli-commands.md"
         }
       ],
@@ -20641,7 +20761,7 @@
       "hint_examples": [
         {
           "example": "riak admin services",
-          "line": 97,
+          "line": 120,
           "path": "kv-cli-commands.md"
         }
       ],
@@ -20727,7 +20847,7 @@
       "hint_examples": [
         {
           "example": "riak admin set",
-          "line": 98,
+          "line": 121,
           "path": "kv-cli-commands.md"
         }
       ],
@@ -20861,7 +20981,7 @@
       "hint_examples": [
         {
           "example": "riak admin show",
-          "line": 99,
+          "line": 122,
           "path": "kv-cli-commands.md"
         }
       ],
@@ -20943,7 +21063,7 @@
       "hint_examples": [
         {
           "example": "riak admin stat",
-          "line": 100,
+          "line": 123,
           "path": "kv-cli-commands.md"
         }
       ],
@@ -23189,7 +23309,7 @@
       "hint_examples": [
         {
           "example": "riak admin status",
-          "line": 101,
+          "line": 124,
           "path": "kv-cli-commands.md"
         }
       ],
@@ -23236,7 +23356,7 @@
       "hint_examples": [
         {
           "example": "riak admin test",
-          "line": 102,
+          "line": 125,
           "path": "kv-cli-commands.md"
         }
       ],
@@ -24970,7 +25090,7 @@
       "hint_examples": [
         {
           "example": "riak admin top",
-          "line": 103,
+          "line": 126,
           "path": "kv-cli-commands.md"
         }
       ],
@@ -25078,7 +25198,7 @@
       "hint_examples": [
         {
           "example": "riak admin transfer-limit",
-          "line": 104,
+          "line": 127,
           "path": "kv-cli-commands.md"
         }
       ],
@@ -25365,7 +25485,7 @@
       "hint_examples": [
         {
           "example": "riak admin transfers",
-          "line": 105,
+          "line": 128,
           "path": "kv-cli-commands.md"
         }
       ],
@@ -25455,7 +25575,7 @@
       "hint_examples": [
         {
           "example": "riak admin vnode-status",
-          "line": 106,
+          "line": 129,
           "path": "kv-cli-commands.md"
         }
       ],
@@ -25718,7 +25838,7 @@
       "hint_examples": [
         {
           "example": "riak admin wait-for-service",
-          "line": 107,
+          "line": 130,
           "path": "kv-cli-commands.md"
         }
       ],
@@ -26216,7 +26336,7 @@
       "hint_examples": [
         {
           "example": "riak attach",
-          "line": 108,
+          "line": 131,
           "path": "kv-cli-commands.md"
         }
       ],
@@ -26260,7 +26380,7 @@
       "hint_examples": [
         {
           "example": "riak chkconfig",
-          "line": 109,
+          "line": 132,
           "path": "kv-cli-commands.md"
         }
       ],
@@ -26304,7 +26424,7 @@
       "hint_examples": [
         {
           "example": "riak console",
-          "line": 110,
+          "line": 133,
           "path": "kv-cli-commands.md"
         }
       ],
@@ -26865,7 +26985,7 @@
       "hint_examples": [
         {
           "example": "riak escript",
-          "line": 111,
+          "line": 134,
           "path": "kv-cli-commands.md"
         }
       ],
@@ -27095,7 +27215,7 @@
       "hint_examples": [
         {
           "example": "riak pid",
-          "line": 112,
+          "line": 135,
           "path": "kv-cli-commands.md"
         }
       ],
@@ -27139,7 +27259,7 @@
       "hint_examples": [
         {
           "example": "riak ping",
-          "line": 113,
+          "line": 136,
           "path": "kv-cli-commands.md"
         }
       ],
@@ -27742,7 +27862,7 @@
       "hint_examples": [
         {
           "example": "riak repl add-listener",
-          "line": 114,
+          "line": 137,
           "path": "kv-cli-commands.md"
         }
       ],
@@ -27897,7 +28017,7 @@
       "hint_examples": [
         {
           "example": "riak repl add-nat-listener",
-          "line": 115,
+          "line": 138,
           "path": "kv-cli-commands.md"
         }
       ],
@@ -28014,7 +28134,7 @@
       "hint_examples": [
         {
           "example": "riak repl add-site",
-          "line": 116,
+          "line": 139,
           "path": "kv-cli-commands.md"
         }
       ],
@@ -28082,7 +28202,7 @@
       "hint_examples": [
         {
           "example": "riak repl cancel-fullsync",
-          "line": 117,
+          "line": 140,
           "path": "kv-cli-commands.md"
         }
       ],
@@ -28174,7 +28294,7 @@
       "hint_examples": [
         {
           "example": "riak repl clustername",
-          "line": 118,
+          "line": 141,
           "path": "kv-cli-commands.md"
         }
       ],
@@ -28463,7 +28583,7 @@
       "hint_examples": [
         {
           "example": "riak repl connect",
-          "line": 119,
+          "line": 142,
           "path": "kv-cli-commands.md"
         }
       ],
@@ -28690,7 +28810,7 @@
       "hint_examples": [
         {
           "example": "riak repl del-listener",
-          "line": 120,
+          "line": 143,
           "path": "kv-cli-commands.md"
         }
       ],
@@ -28789,7 +28909,7 @@
       "hint_examples": [
         {
           "example": "riak repl del-site",
-          "line": 121,
+          "line": 144,
           "path": "kv-cli-commands.md"
         }
       ],
@@ -29793,7 +29913,7 @@
       "hint_examples": [
         {
           "example": "riak repl nat-map add",
-          "line": 122,
+          "line": 145,
           "path": "kv-cli-commands.md"
         }
       ],
@@ -30040,7 +30160,7 @@
       "hint_examples": [
         {
           "example": "riak repl pause-fullsync",
-          "line": 123,
+          "line": 146,
           "path": "kv-cli-commands.md"
         }
       ],
@@ -30607,7 +30727,7 @@
       "hint_examples": [
         {
           "example": "riak repl realtime enable",
-          "line": 124,
+          "line": 147,
           "path": "kv-cli-commands.md"
         }
       ],
@@ -30702,7 +30822,7 @@
       "hint_examples": [
         {
           "example": "riak repl realtime start",
-          "line": 125,
+          "line": 148,
           "path": "kv-cli-commands.md"
         }
       ],
@@ -30856,7 +30976,7 @@
       "hint_examples": [
         {
           "example": "riak repl resume-fullsync",
-          "line": 126,
+          "line": 149,
           "path": "kv-cli-commands.md"
         }
       ],
@@ -31056,7 +31176,7 @@
       "hint_examples": [
         {
           "example": "riak repl start-fullsync",
-          "line": 127,
+          "line": 150,
           "path": "kv-cli-commands.md"
         }
       ],
@@ -31491,7 +31611,7 @@
       "hint_examples": [
         {
           "example": "riak repl status",
-          "line": 128,
+          "line": 151,
           "path": "kv-cli-commands.md"
         }
       ],
@@ -31536,7 +31656,7 @@
       "hint_examples": [
         {
           "example": "riak restart",
-          "line": 129,
+          "line": 152,
           "path": "kv-cli-commands.md"
         }
       ],
@@ -31722,7 +31842,7 @@
       "hint_examples": [
         {
           "example": "riak start",
-          "line": 130,
+          "line": 153,
           "path": "kv-cli-commands.md"
         }
       ],
@@ -31913,7 +32033,7 @@
       "hint_examples": [
         {
           "example": "riak stop",
-          "line": 131,
+          "line": 154,
           "path": "kv-cli-commands.md"
         }
       ],
@@ -32194,7 +32314,7 @@
       "hint_examples": [
         {
           "example": "riak versions",
-          "line": 132,
+          "line": 155,
           "path": "kv-cli-commands.md"
         }
       ],
@@ -33659,7 +33779,7 @@
         "riak_client"
       ],
       "file": "kv-cli-commands.md",
-      "sha256": "8df76403c6c65a5213f0ad2700ac264c939fa51df058369519eef99502f5a22d"
+      "sha256": "588a4b69e0e8f9baf611187cc0fb447b9a1cfc9b0a0c87f6eb54335070abd7f1"
     },
     "registrations": [
       {
