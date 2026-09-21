@@ -16,7 +16,7 @@ Options:
   --check            Verify generated pages match without writing anything.
   -h, --help         Show help without reading metadata or changing files.
 
-The input is content/openriak-kv/metadata/VERSION/cli-commands.json.
+The input is content/openriak-kv/metadata/VERSION/kv-cli-commands.json.
 Pages are written under the existing version directory's reference/commands/
 (or VERSION-new-release/reference/commands/ for a new release). Existing
 command overview URLs and their heading anchors are retained. Other authored
@@ -32,7 +32,7 @@ pages are preserved. Build-time data is prepared by sync-product-metadata.js.`);
   }
   if (!/^\d+\.\d+\.\d+$/.test(version || '')) throw new Error('--version must be major.minor.patch');
   const { buildReference } = require('./cli-reference');
-  const document = JSON.parse(fs.readFileSync(path.join(repo, 'content/openriak-kv/metadata', version, 'cli-commands.json')));
+  const document = JSON.parse(fs.readFileSync(path.join(repo, 'content/openriak-kv/metadata', version, 'kv-cli-commands.json')));
   if (document.version !== version) throw new Error('Metadata version does not match the requested release');
   const reference = buildReference(document);
   const productRoot = path.join(repo, 'content/openriak-kv');

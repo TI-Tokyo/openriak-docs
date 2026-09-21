@@ -69,7 +69,7 @@ available for each example; printing or disabling JavaScript shows every block.
 - `layouts/` — shared and section-specific templates.
 - `notes/` — architecture notes and retained migration or validation reports.
 - `public/` — the assembled static output.
-- `tools/` — build, validation, assembly, and release-metadata tooling.
+- `tools/` — build, validation, assembly, and metadata adapters.
 
 ## Content and metadata
 
@@ -83,6 +83,11 @@ Release metadata under `content/openriak-kv/metadata/{version}/` is authoritativ
 for supported operating systems, package downloads, and replaceable configuration
 values. Build tools generate browser/Hugo adapters under `tools/generated/` and
 never write under `content/`.
+
+Generate and deploy release metadata from the separate
+[openriak-metadata repository](https://github.com/TI-Tokyo/openriak-metadata).
+Its `deploy --docs-root ../openriak-docs` command updates the authoritative JSON;
+the docs build does not require the generator to be installed.
 
 Hugo publishes browser metadata as shared JSON helpers under
 `metadata/{content-sha256}.json`. Pages link to these files instead of embedding

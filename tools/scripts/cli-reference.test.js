@@ -77,7 +77,7 @@ test('generation is repeatable, preserves authored pages and anchors, and check 
   try {
     const metadata = path.join(repo, 'content/openriak-kv/metadata/3.4.0');
     fs.mkdirSync(metadata, { recursive: true });
-    fs.writeFileSync(path.join(metadata, 'cli-commands.json'), JSON.stringify(document([shell('riak'), shell('riak stop')])));
+    fs.writeFileSync(path.join(metadata, 'kv-cli-commands.json'), JSON.stringify(document([shell('riak'), shell('riak stop')])));
     const root = path.join(repo, 'content/openriak-kv/3.4.0-new-release/reference/commands');
     fs.mkdirSync(root, { recursive: true });
     fs.writeFileSync(path.join(root, 'riak.md'), '# Legacy\n\n## stop\nLegacy body');
@@ -94,7 +94,7 @@ test('generation is repeatable, preserves authored pages and anchors, and check 
     const patchMetadata = path.join(repo, 'content/openriak-kv/metadata/3.4.1');
     fs.mkdirSync(patchRoot);
     fs.mkdirSync(patchMetadata);
-    fs.writeFileSync(path.join(patchMetadata, 'cli-commands.json'), JSON.stringify({ ...document([shell('riak stop')]), version: '3.4.1' }));
+    fs.writeFileSync(path.join(patchMetadata, 'kv-cli-commands.json'), JSON.stringify({ ...document([shell('riak stop')]), version: '3.4.1' }));
     generate(['--repo', repo, '--version', '3.4.1']);
     assert.ok(fs.existsSync(path.join(patchRoot, 'reference/commands/riak/stop.md')));
     assert.ok(!fs.existsSync(path.join(repo, 'content/openriak-kv/3.4.1-new-release')));
@@ -102,7 +102,7 @@ test('generation is repeatable, preserves authored pages and anchors, and check 
 });
 
 test('deployed 3.4.0 inventory has one destination for every public or documented command', () => {
-  const raw = JSON.parse(fs.readFileSync(path.join(__dirname, '../../content/openriak-kv/metadata/3.4.0/cli-commands.json')));
+  const raw = JSON.parse(fs.readFileSync(path.join(__dirname, '../../content/openriak-kv/metadata/3.4.0/kv-cli-commands.json')));
   const result = buildReference(raw);
   for (const command of raw.commands) {
     if ((command.visibility === 'internal' || /@private\b/.test(command.help)) && !command.examples?.length) continue;

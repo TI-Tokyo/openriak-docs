@@ -1,11 +1,6 @@
 # Tools
 
 - `scripts/` — split production builds, assembly, architecture checks, metadata synchronization, and link validation.
-- `openriak-metadata/` — Python release-metadata CLI and tests. Run `kv-packages`,
-  `kv-settings`, `kv-cli-commands`, `list`, then `deploy` to stage and inspect results before copying
-  them into the Hugo metadata folder; see its [workflow guide](openriak-metadata/README.md).
-- `openriak-docker/` — compatibility launchers for the separate runtime-image tool repository.
-- `cache/openriak-docker/` — retained Dockerfiles, Compose files, JSON reports, and per-run test logs.
 - `generated/` — generated Hugo data adapters; safe for build tools to rewrite.
 
 The main build entry points are `tools/scripts/build.sh` and
@@ -34,6 +29,21 @@ During the short regeneration window, a previously unseen page is treated as
 new for its current version. Static builds still fail if generated provenance is
 missing.
 
+## Release metadata
+
+The generator is maintained in the separate
+[openriak-metadata repository](https://github.com/TI-Tokyo/openriak-metadata).
+Run `kv-packages`, `kv-settings`, `kv-cli-commands`, `list`, then
+`deploy --docs-root ../openriak-docs` from that checkout. Generation stages files
+there; deployment copies validated JSON into this repository's
+`content/openriak-kv/metadata/VERSION/` directory.
+
+This repository owns the deployed metadata, Hugo adapters, and page rendering.
+Docs builds consume the deployed JSON and do not require the generator checkout.
+The generator's `kv-cli-commands` uses its own bundled Markdown hints and runtime
+discovery. Only `deploy` needs a docs checkout; its default is the sibling
+`openriak-docs` repository.
+
 ## CLI reference pages
 
 After deploying complete CLI metadata, generate the version's command pages:
@@ -60,15 +70,16 @@ Run normalization and generation checks with
 site; set `OPENRIAK_CLI_TEST_URL` to the command index and, if needed,
 `OPENRIAK_BROWSER_EXECUTABLE` to a Chromium executable.
 
-## OpenRiak KV Docker cache
+## OpenRiak KV Docker metadata
 
 Docker configurations are generated from the authoritative KV operating-system
 and package metadata, then built and tested only when an operator explicitly
-runs `openriak-docker refresh`. Documentation builds consume passed cached
-results and never pull base images or run containers. The separate tool updates
-this checkout only through `openriak-docker publish --docs-root PATH`. See
-`openriak-docker/README.md` for target selection, cache layout, test coverage,
-and publication details.
+runs `openriak-docker refresh`. Documentation builds consume published records
+under `records/openriak-docker/images/` and verify their associated artifacts
+before advertising downloads. The separate tool updates this checkout through
+`openriak-docker publish --docs-root PATH`. See the
+[openriak-docker repository](https://github.com/TI-Tokyo/openriak-docker) for
+target selection, test coverage, and publication details.
 
 ## Importing Hugo 0.18 content
 

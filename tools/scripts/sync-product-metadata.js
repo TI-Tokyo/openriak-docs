@@ -20,13 +20,11 @@ Default paths are relative to the repository; explicit paths use the current dir
   process.exit(0);
 }
 
-const crypto = require('node:crypto');
 const fs = require('node:fs');
 const path = require('node:path');
 
 const repositoryRoot = path.resolve(__dirname, '..', '..');
 const contentRoot = path.join(repositoryRoot, 'content');
-const dockerCacheRoot = path.join(repositoryRoot, 'tools', 'cache', 'openriak-docker');
 const dockerStaticRoot = path.join(contentRoot, 'static', 'openriak-kv');
 const { compareSemver, discoverVersions, productSources } = require('./generate-version-mounts.js');
 const { defaultsByOs } = require('./defaults-by-os');
@@ -133,104 +131,9 @@ const preferredFamilyDefaults = {
 };
 
 const readJson = (file) => JSON.parse(fs.readFileSync(file, 'utf8'));
-const sha256File = (file) => crypto.createHash('sha256').update(fs.readFileSync(file)).digest('hex');
-
-const successfulDockerReports = (targetRoot) => {
-  const reportFiles = [path.join(targetRoot, 'report.json')];
-  const runsRoot = path.join(targetRoot, 'runs');
-  if (fs.existsSync(runsRoot)) {
-    for (const entry of fs.readdirSync(runsRoot, { withFileTypes: true })) {
-      if (entry.isDirectory()) reportFiles.push(path.join(runsRoot, entry.name, 'report.json'));
-    }
-  }
-  return reportFiles
-    .filter((file) => fs.existsSync(file))
-    .map((file) => ({ file, report: readJson(file) }))
-    .filter(({ report }) => [1, 2, 3].includes(report.schema_version) && report.status === 'passed')
-    .sort((left, right) => String(right.report.finished_at || '').localeCompare(String(left.report.finished_at || '')));
-};
-
-const dockerImagesForVersion = (version) => {
-  const grouped = require('./docker-multiarch-metadata.js').multiarchDockerImages(
-    version, path.join(repositoryRoot, 'records', 'openriak-docker', 'images'), dockerStaticRoot
-  );
-  const versionRoot = path.join(dockerCacheRoot, version);
-  if (!fs.existsSync(versionRoot)) return grouped;
-  const images = [...grouped];
-  for (const osEntry of fs.readdirSync(versionRoot, { withFileTypes: true })) {
-    if (!osEntry.isDirectory()) continue;
-    const osRoot = path.join(versionRoot, osEntry.name);
-    for (const downloadEntry of fs.readdirSync(osRoot, { withFileTypes: true })) {
-      if (!downloadEntry.isDirectory()) continue;
-      const targetRoot = path.join(osRoot, downloadEntry.name);
-      // Preserve legacy downloads until a tested shared replacement is published.
-      const replaced = grouped.some((image) => image.osIds.includes(osEntry.name)
-        && downloadEntry.name.match(/^otp([0-9.]+)/)?.[1] === String(image.otp));
-      if (replaced) continue;
-      const successfulReports = successfulDockerReports(targetRoot);
-      if (!successfulReports.length) continue;
-      const { file: reportFile, report } = successfulReports[0];
-      if (report.product !== 'openriak-kv' || report.target?.version !== version) {
-        throw new Error(`Mismatched Docker cache report: ${reportFile}`);
-      }
-      if (report.target.os_id !== osEntry.name || report.target.download_id !== downloadEntry.name) {
-        throw new Error(`Misplaced Docker cache report: ${reportFile}`);
-      }
-      const artifacts = report.artifacts || {};
-      const artifactNames = report.schema_version === 3
-        ? [['dockerfile', 'Dockerfile'], ['compose_single', 'compose.single.yaml'], ['compose_cluster', 'compose.cluster.yaml'], ['environment_example', artifacts.environment_example?.filename === 'example.env' ? 'example.env' : '.env.example']]
-        : report.schema_version === 2
-          ? [['dockerfile', 'Dockerfile'], ['compose_single', 'compose.single.yaml'], ['compose_cluster', 'compose.cluster.yaml']]
-          : [['dockerfile', 'Dockerfile'], ['compose', 'compose.yaml']];
-      for (const [name, filename] of artifactNames) {
-        const artifact = artifacts[name];
-        const expectedPrefix = `downloads/docker/${version}/`;
-        if (!artifact || artifact.filename !== filename || !artifact.url?.startsWith(expectedPrefix)
-          || !/^[0-9a-f]{64}$/.test(artifact.sha256 || '')) {
-          throw new Error(`Invalid ${name} artifact in Docker cache report: ${reportFile}`);
-        }
-        const cachedFile = path.join(path.dirname(reportFile), filename);
-        const publishedFile = path.join(dockerStaticRoot, artifact.url);
-        if (!fs.existsSync(cachedFile)) {
-          throw new Error(`Missing cached ${filename} for Docker cache report: ${reportFile}`);
-        }
-        if (!fs.existsSync(publishedFile)) {
-          throw new Error(`Missing published ${filename} for Docker cache report: ${reportFile}`);
-        }
-        if (sha256File(cachedFile) !== artifact.sha256 || sha256File(publishedFile) !== artifact.sha256) {
-          throw new Error(`Checksum mismatch for ${filename} in Docker cache report: ${reportFile}`);
-        }
-      }
-      const image = {
-        osId: report.target.os_id,
-        osName: report.target.os_name,
-        osRelease: report.target.os_release,
-        otp: report.target.otp,
-        architecture: report.target.architecture,
-        image: report.image,
-        node: report.node,
-        testedAt: report.finished_at,
-        baseImage: report.base_image?.pinned || '',
-        dockerfile: artifacts.dockerfile
-      };
-      if (report.schema_version >= 2) {
-        image.composeSingle = artifacts.compose_single;
-        image.composeCluster = artifacts.compose_cluster;
-        image.clusterNodes = report.generation?.cluster_nodes || null;
-        if (report.schema_version >= 3) image.environmentExample = artifacts.environment_example;
-      } else {
-        image.compose = artifacts.compose;
-      }
-      images.push(image);
-    }
-  }
-  return images.sort((left, right) => (
-    left.osName.localeCompare(right.osName)
-    || String(left.osRelease).localeCompare(String(right.osRelease), undefined, { numeric: true })
-    || String(left.otp).localeCompare(String(right.otp), undefined, { numeric: true })
-    || left.architecture.localeCompare(right.architecture)
-  ));
-};
+const dockerImagesForVersion = (version) => require('./docker-multiarch-metadata.js').multiarchDockerImages(
+  version, path.join(repositoryRoot, 'records', 'openriak-docker', 'images'), dockerStaticRoot
+);
 
 const referencedValueKeys = (productRoot) => {
   const keys = new Set();
@@ -435,16 +338,16 @@ if (options.dockerOnly) {
   for (const { version, sourceDirectory, source } of versionEntries) {
     const exposesOperatingSystemPicker = source === product.pickerSource;
     const metadataRoot = path.join(productRoot, 'metadata', version);
-    const cliFile = path.join(metadataRoot, 'cli-commands.json');
+    const cliFile = path.join(metadataRoot, 'kv-cli-commands.json');
     if (product.metadataProduct === 'kv' && fs.existsSync(cliFile)) {
       const target = path.join(generatedProductsRoot, product.productId, 'data', 'cli-reference', `${version}.json`);
       fs.mkdirSync(path.dirname(target), { recursive: true });
       fs.writeFileSync(target, JSON.stringify(buildReference(readJson(cliFile)), null, 2) + '\n');
     }
     const files = {
-      supported: path.join(metadataRoot, 'supported-os.json'),
-      downloads: path.join(metadataRoot, 'downloads.json'),
-      defaults: path.join(metadataRoot, 'defaults.json')
+      supported: path.join(metadataRoot, `${product.metadataProduct}-supported-os.json`),
+      downloads: path.join(metadataRoot, `${product.metadataProduct}-downloads.json`),
+      defaults: path.join(metadataRoot, `${product.metadataProduct}-settings.json`)
     };
     const hasSupported = fs.existsSync(files.supported);
     const hasDownloads = fs.existsSync(files.downloads);

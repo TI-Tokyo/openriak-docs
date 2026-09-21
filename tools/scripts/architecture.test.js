@@ -492,9 +492,9 @@ for (const version of importedKvVersions) {
   assert.ok(fs.existsSync(sourceDirectory), `missing imported Riak KV ${version} baseline`);
   assert.ok(fs.existsSync(adapterPath), `missing generated Riak KV ${version} metadata`);
   const metadataRoot = path.join(repositoryRoot, 'content', 'openriak-kv', 'metadata', version);
-  assert.ok(fs.existsSync(path.join(metadataRoot, 'supported-os.json')), `missing ${version} supported OS metadata`);
-  assert.ok(fs.existsSync(path.join(metadataRoot, 'downloads.json')), `missing ${version} download metadata`);
-  assert.ok(!fs.existsSync(path.join(metadataRoot, 'defaults.json')), `${version} must not generate unused defaults metadata`);
+  assert.ok(fs.existsSync(path.join(metadataRoot, 'kv-supported-os.json')), `missing ${version} supported OS metadata`);
+  assert.ok(fs.existsSync(path.join(metadataRoot, 'kv-downloads.json')), `missing ${version} download metadata`);
+  assert.ok(!fs.existsSync(path.join(metadataRoot, 'kv-settings.json')), `${version} must not generate unused defaults metadata`);
   const adapter = JSON.parse(fs.readFileSync(adapterPath));
   assert.equal(adapter.generatedFrom, `content/openriak-kv/metadata/${version}`);
   assert.equal(adapter.metadataStatus.defaults, 'not_generated');
@@ -511,8 +511,8 @@ for (const product of importedLegacyProducts) {
   assert.ok(!fs.existsSync(path.join(repositoryRoot, 'content', product.target, product.target === 'openriak-ts' ? '1.5.2' : '2.1.3')), `${product.target} placeholder version must be removed`);
   for (const version of product.versions) {
     assert.ok(fs.existsSync(path.join(repositoryRoot, 'content', product.source, `${version}-new-release`)), `missing imported ${product.source} ${version} baseline`);
-    assert.ok(fs.existsSync(path.join(repositoryRoot, 'content', product.target, 'metadata', version, 'supported-os.json')), `missing ${product.source} ${version} supported OS metadata`);
-    assert.ok(fs.existsSync(path.join(repositoryRoot, 'content', product.target, 'metadata', version, 'downloads.json')), `missing ${product.source} ${version} download metadata`);
+    assert.ok(fs.existsSync(path.join(repositoryRoot, 'content', product.target, 'metadata', version, `${product.target.replace('openriak-', '')}-supported-os.json`)), `missing ${product.source} ${version} supported OS metadata`);
+    assert.ok(fs.existsSync(path.join(repositoryRoot, 'content', product.target, 'metadata', version, `${product.target.replace('openriak-', '')}-downloads.json`)), `missing ${product.source} ${version} download metadata`);
     const adapter = JSON.parse(fs.readFileSync(path.join(generatedProductsRoot, product.target, 'data', 'versions', `${version}.json`)));
     assert.deepEqual(adapter.operatingSystems, [], `${product.source} ${version} must not expose an OS picker`);
     if (adapter.metadataStatus.downloads === 'unavailable') {
@@ -560,8 +560,8 @@ assert.deepEqual(
 );
 for (const [version, adapter] of [['3.4.0', v340], ['3.4.1', v341]]) {
   const metadataRoot = path.join(repositoryRoot, 'content', 'openriak-kv', 'metadata', version);
-  const supportedMetadata = JSON.parse(fs.readFileSync(path.join(metadataRoot, 'supported-os.json')));
-  const downloadMetadata = JSON.parse(fs.readFileSync(path.join(metadataRoot, 'downloads.json')));
+  const supportedMetadata = JSON.parse(fs.readFileSync(path.join(metadataRoot, 'kv-supported-os.json')));
+  const downloadMetadata = JSON.parse(fs.readFileSync(path.join(metadataRoot, 'kv-downloads.json')));
   assert.equal(adapter.operatingSystems.filter((os) => !os.aliasOf).length, supportedMetadata.operating_systems.length, 'all ' + version + ' metadata OS targets must be exposed');
   const nativeDownloadCount = adapter.downloadOperatingSystems
     .filter((os) => !os.aliasOf)
