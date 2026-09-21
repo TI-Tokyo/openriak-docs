@@ -30,6 +30,7 @@ const dockerCacheRoot = path.join(repositoryRoot, 'tools', 'cache', 'openriak-do
 const dockerStaticRoot = path.join(contentRoot, 'static', 'openriak-kv');
 const { compareSemver, discoverVersions, productSources } = require('./generate-version-mounts.js');
 const { defaultsByOs } = require('./defaults-by-os');
+const { buildReference } = require('./cli-reference');
 
 const products = [
   { productId: 'openriak-kv', metadataProduct: 'kv', pickerSource: 'openriak-kv' },
@@ -434,6 +435,12 @@ if (options.dockerOnly) {
   for (const { version, sourceDirectory, source } of versionEntries) {
     const exposesOperatingSystemPicker = source === product.pickerSource;
     const metadataRoot = path.join(productRoot, 'metadata', version);
+    const cliFile = path.join(metadataRoot, 'cli-commands.json');
+    if (product.metadataProduct === 'kv' && fs.existsSync(cliFile)) {
+      const target = path.join(generatedProductsRoot, product.productId, 'data', 'cli-reference', `${version}.json`);
+      fs.mkdirSync(path.dirname(target), { recursive: true });
+      fs.writeFileSync(target, JSON.stringify(buildReference(readJson(cliFile)), null, 2) + '\n');
+    }
     const files = {
       supported: path.join(metadataRoot, 'supported-os.json'),
       downloads: path.join(metadataRoot, 'downloads.json'),

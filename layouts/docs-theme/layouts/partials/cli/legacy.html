@@ -1,0 +1,5 @@
+{{- range .Params.cli_legacy_anchors -}}
+{{- if not (in (slice "help" "options" "syntax" "aliases" "requirements" "subcommands") .) -}}
+<span id="{{ . }}" class="cli-legacy-anchor" aria-hidden="true"></span>
+{{- end -}}
+{{- end -}}

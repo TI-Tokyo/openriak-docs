@@ -1,0 +1,6 @@
+{{- $context := partial "product-context.html" . -}}
+{{- $version := .Params.cli_reference_version | default $context.version -}}
+{{- $productData := index (index hugo.Data "cli-reference") $context.id -}}
+{{- $reference := index $productData $version -}}
+{{- if not $reference }}{{ errorf "Missing CLI reference data for %s %s on %s; deploy CLI metadata and run sync-product-metadata.js" $context.id $version .Path }}{{ end -}}
+{{- return dict "product" $context "reference" $reference "root" (printf "%s%s/reference/commands/" $context.productBase $context.version) -}}

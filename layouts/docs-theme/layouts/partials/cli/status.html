@@ -1,0 +1,4 @@
+{{- if ne .availability "available" }}<span class="cli-status cli-status--unavailable">{{ .availability | humanize }}</span>{{ end -}}
+{{- if .deprecated }}<span class="cli-status cli-status--deprecated">Deprecated</span>{{ end -}}
+{{- if .helper }}<span class="cli-status">Bundled helper</span>{{ end -}}
+{{- if .internal }}<span class="cli-status">Internal API</span>{{ end -}}

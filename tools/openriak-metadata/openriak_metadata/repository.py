@@ -1,4 +1,4 @@
-"""Install fully staged package metadata without changing other repository files."""
+"""Install a validated batch of metadata with rollback on replacement failure."""
 import os
 from pathlib import Path
 import shutil
@@ -10,32 +10,42 @@ FILENAMES = ('supported-os.json', 'downloads.json')
 
 def install_packages(stage: Path, repository: Path, product: str, versions: list[str]) -> int:
     root = repository / 'content' / f'openriak-{product}' / 'metadata'
+    files = {Path(version) / filename: stage / product / version / filename
+             for version in versions for filename in FILENAMES}
+    return install_files(files, root)
+
+
+def install_files(files: dict[Path, Path], root: Path, *, skip_identical: bool = True) -> int:
+    if root.is_symlink():
+        raise ValueError(f'Refusing to replace metadata through a symlink: {root}')
+    root.mkdir(parents=True, exist_ok=True)
     prepared = Path(tempfile.mkdtemp(prefix='.package-metadata-update-', dir=root))
     pending, changed = [], []
     retain_recovery = False
     try:
         # Prepare all replacements and backups on the destination filesystem.
         # Network work and validation have already completed for every version.
-        for version in versions:
+        for relative, source in files.items():
+            if relative.is_absolute() or len(relative.parts) != 2 or '..' in relative.parts:
+                raise ValueError(f'Invalid metadata destination: {relative}')
+            version, filename = relative.parts
             directory = root / version
             if directory.is_symlink():
                 raise ValueError(f'Refusing to replace metadata through a symlink: {directory}')
             directory.mkdir(exist_ok=True)
             if not os.access(directory, os.W_OK | os.X_OK):
                 raise PermissionError(f'Cannot update metadata directory: {directory}')
-            for filename in FILENAMES:
-                source = stage / product / version / filename
-                target = directory / filename
-                if target.is_symlink():
-                    raise ValueError(f'Refusing to replace a metadata symlink: {target}')
-                if target.is_file() and target.read_bytes() == source.read_bytes():
-                    continue
-                replacement = prepared / f'{version}-{filename}.new'
-                backup = prepared / f'{version}-{filename}.previous' if target.exists() else None
-                shutil.copy2(source, replacement)
-                if backup is not None:
-                    shutil.copy2(target, backup)
-                pending.append((target, replacement, backup))
+            target = directory / filename
+            if target.is_symlink():
+                raise ValueError(f'Refusing to replace a metadata symlink: {target}')
+            if skip_identical and target.is_file() and target.read_bytes() == source.read_bytes():
+                continue
+            replacement = prepared / f'{version}-{filename}.new'
+            backup = prepared / f'{version}-{filename}.previous' if target.exists() else None
+            shutil.copy2(source, replacement)
+            if backup is not None:
+                shutil.copy2(target, backup)
+            pending.append((target, replacement, backup))
         try:
             for target, replacement, backup in pending:
                 changed.append((target, backup))

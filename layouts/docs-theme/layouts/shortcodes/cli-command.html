@@ -1,0 +1,61 @@
+{{- $page := .Page -}}
+{{- $context := partial "cli/context.html" $page -}}
+{{- $matches := where $context.reference.pages "key" $page.Params.cli_command_key -}}
+{{- if ne (len $matches) 1 }}{{ errorf "Unknown CLI topic %s on %s" $page.Params.cli_command_key $page.Path }}{{ end -}}
+{{- $command := index $matches 0 -}}
+{{ partial "cli/legacy.html" $page }}
+<div class="cli-command-reference">
+<p><a href="{{ $context.root }}">All commands</a> · OpenRiak KV {{ $context.reference.version }} · {{ if eq $command.context "erlang" }}Erlang shell{{ else }}Terminal{{ end }}</p>
+<p>{{ partial "cli/status.html" $command }}</p>
+{{ if ne $command.availability "available" }}
+  <div class="cli-notice"><strong>This command is {{ $command.availability | humanize | lower }} in this release.</strong>{{ with $command.notice }} <p>{{ . }}</p>{{ end }}<p>The entry is retained for compatibility reference.</p></div>
+{{ else if $command.deprecated }}
+  <div class="cli-notice">This command is deprecated. Consult the help below before using it in new scripts.</div>
+{{ end }}
+{{ if eq $command.context "erlang" }}<p>Enter these expressions in an Erlang shell opened with <code>riak remote_console</code> or <code>riak daemon_attach</code>. Replace argument variables and any <code>...</code> placeholders with actual values.</p>{{ end }}
+{{ with $command.prerequisites }}<h2 id="requirements">Requirements</h2><ul>{{ range . }}<li>{{ . }}</li>{{ end }}</ul>{{ end }}
+<h2 id="syntax">Syntax and arguments</h2>
+{{ range $command.forms }}
+  {{ if gt (len $command.forms) 1 }}<h3>{{ .label }}</h3>{{ end }}
+  {{ range .syntax }}{{ $page.RenderString (printf "```%s\n%s\n```" (cond (eq $command.context "erlang") "erlang" "text") .) }}{{ end }}
+  {{ if .unrestricted }}<p>Accepts configuration assignments in <code>variable=value</code> form. Consult the help for applicable settings and flags.</p>{{ end }}
+  {{ with .arguments }}
+  <div class="cli-table-scroll"><table><thead><tr><th scope="col">Argument</th><th scope="col">Type or form</th></tr></thead><tbody>
+    {{ range . }}<tr><td><code>{{ .name | default .key | default (printf "Argument %v" .position) }}</code></td><td>{{ with .datatype }}<code>{{ . }}</code>{{ else }}{{ .format | default "See syntax and help." }}{{ end }}</td></tr>{{ end }}
+  </tbody></table></div>
+  {{ end }}
+  {{ range .specifications }}{{ $page.RenderString (printf "```erlang\n%s\n```" .) }}{{ end }}
+{{ end }}
+<h2 id="options">Options</h2>
+{{ with $command.options }}
+<div class="cli-table-scroll"><table class="cli-options"><thead><tr><th scope="col">Option</th><th scope="col">Value / type</th><th scope="col">Description</th></tr></thead><tbody>
+{{ range . }}<tr><td><code>{{ .name }}</code>{{ with .short }} / <code>{{ . }}</code>{{ end }}{{ if .hidden }} <span class="cli-status">Unadvertised</span>{{ end }}</td><td>{{ with .value }}<code>{{ . }}</code>{{ end }}{{ with .datatype }} <code>{{ . }}</code>{{ end }}</td><td>{{ .description | default "See command help below." }}</td></tr>{{ end }}
+</tbody></table></div>
+{{ else }}<p>{{ if eq $command.context "erlang" }}This operation takes Erlang arguments rather than shell flags. Argument types and accepted query forms are shown above.{{ else }}No named options were extracted for this command. Consult its syntax and help for positional arguments and forwarded arguments.{{ end }}</p>{{ end }}
+{{ with $command.variants }}
+<h2 id="service-commands">Service commands</h2>
+<p>Choose the installed operating system using the OS selector. Use the row for the service manager running on that machine. Direct invocation is also available for deployments without a service manager.</p>
+<div class="cli-table-scroll"><table><thead><tr><th scope="col">Service manager</th><th scope="col">Command</th><th scope="col">Requirements</th></tr></thead><tbody>
+{{ range . }}<tr data-cli-service-families="{{ .os_families | jsonify }}"><td>{{ .service_manager }}</td><td><code>{{ .invocation }}</code></td><td>{{ delimit .requires "; " }}</td></tr>{{ end }}
+</tbody></table></div>
+{{ end }}
+{{ with $command.aliases }}<h2 id="aliases">Aliases</h2><ul>{{ range . }}<li><code>{{ . }}</code></li>{{ end }}</ul>{{ end }}
+{{ with $command.helpInvocations }}<h2 id="help-commands">Help commands</h2><ul>{{ range . }}<li><code>{{ . }}</code></li>{{ end }}</ul>{{ end }}
+<h2 id="help">Help</h2>
+{{- $helpCount := 0 -}}
+{{ range $command.forms }}
+  {{ $form := . }}
+  {{ with .help }}
+    {{ $helpCount = add $helpCount 1 }}
+    {{ if gt (len $command.forms) 1 }}<h3>{{ $form.label }}</h3>{{ end }}
+    {{ range . }}{{ $page.RenderString (printf "```text\n%s\n```" .) }}{{ end }}
+  {{ end }}
+{{ end }}
+{{ if not $helpCount }}<p>The release does not provide help text for this entry.</p>{{ end }}
+{{ with $command.types }}<details><summary>Erlang argument type definitions</summary>{{ range . }}{{ $page.RenderString (printf "```erlang\n%s\n```" .) }}{{ end }}</details>{{ end }}
+{{ with $command.children }}<h2 id="subcommands">Subcommands</h2><ul>{{ range . }}<li><a href="{{ partial "cli/link.html" (dict "context" $context "route" .route) }}"><code>{{ .title }}</code></a>{{ if .deprecated }} — deprecated{{ end }}</li>{{ end }}</ul>{{ end }}
+<details class="cli-sources"><summary>Reference sources</summary>
+<p>Extracted from the OpenRiak KV {{ $context.reference.version }} runtime and matching release source. Help is preserved as supplied by the release, including any format placeholders.</p>
+<ul>{{ range $command.provenance }}<li>{{ if and .repository .commit .path }}<a href="{{ printf "%s/blob/%s/%s" (.repository | strings.TrimSuffix ".git" | replaceRE "^(github.com/)" "https://$1") .commit .path }}">{{ .path }}</a>{{ else }}{{ with .path }}<code>{{ . }}</code>{{ end }}{{ with .module }}<code>{{ . }}</code>{{ end }}{{ with .callback }}<code>{{ .module }}:{{ .function }}/{{ .arity }}</code>{{ end }}{{ end }}</li>{{ end }}</ul>
+</details>
+</div>

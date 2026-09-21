@@ -37,6 +37,7 @@ UBUNTU = {
     "focal": "20.04",
     "jammy": "22.04",
     "noble": "24.04",
+    "resolute": "26.04",
 }
 DEBIAN = {"stretch": "9", "buster": "10", "bullseye": "11", "bookworm": "12"}
 ARCHES = {

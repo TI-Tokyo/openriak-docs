@@ -149,14 +149,20 @@ def _numeric_release(parts: list[str]) -> str | None:
 
 
 class PackageCatalog:
-    def __init__(self, client, host: str = "https://files.tiot.jp", checksum_workers: int = 4) -> None:
+    def __init__(self, client, host: str = "https://files.tiot.jp", checksum_workers: int = 4,
+                 *, web_root: str | None = None) -> None:
         self.client, self.host = client, host.rstrip("/")
         self.checksum_workers = checksum_workers
+        self.web_root = web_root
 
     def discover(self, product: str, version: str, product_path: str, *,
                  generate_checksums: bool = True) -> tuple[list[dict], dict, list[str]]:
         major_minor = ".".join(version.split(".")[:2])
         roots = [f"{product_path.rstrip('/')}/{major_minor}/{version}/", "/alpine/"]
+        if self.web_root is not None:
+            parsed = urlparse(self.web_root)
+            self.host = f"{parsed.scheme}://{parsed.netloc}"
+            roots = [f"{parsed.path.rstrip('/')}/{product}/{major_minor}/{version}/"]
         packages: list[Package] = []
         warnings: list[str] = []
         for root in roots:

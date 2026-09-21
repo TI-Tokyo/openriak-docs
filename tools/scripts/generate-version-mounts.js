@@ -463,6 +463,11 @@ const generateConfig = ({
       const configurationRoot = `${path.posix.dirname(normalizedRoot)}/configuration-reference`;
       generated = generated.replace(configurationMount, `    - {source: '${configurationRoot}', target: 'data/configuration-reference/${product}'}`);
     }
+    const cliMount = `    - {source: '../tools/generated/${product}/data/cli-reference', target: 'data/cli-reference/${product}'}`;
+    if (generated.includes(cliMount)) {
+      const cliRoot = `${path.posix.dirname(normalizedRoot)}/cli-reference`;
+      generated = generated.replace(cliMount, `    - {source: '${cliRoot}', target: 'data/cli-reference/${product}'}`);
+    }
   }
   fs.mkdirSync(path.dirname(output), { recursive: true });
   fs.writeFileSync(output, generated, 'utf8');

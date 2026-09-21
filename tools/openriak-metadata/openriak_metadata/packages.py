@@ -16,6 +16,20 @@ _JOINED_OTP_RPM = re.compile(
     r"(?P<otp>\d+)(?:\.\d+)*-(?P<rev>[^.]+)\."
     r"(?P<target>amzn\d+|el\d+)(?P<arch>x86_64|aarch64)\.rpm$"
 )
+_BUILD_DEB = re.compile(
+    r"^openriak-(?P<product>kv|cs|ts)-(?P<version>\d+\.\d+\.\d+)-"
+    r"otp(?P<otp>\d+)(?:\.\d+)*-(?P<arch>amd64|arm64|i386|armhf)\.deb$"
+)
+_BUILD_RPM = re.compile(
+    r"^(?P<name>riak(?:-cs|-ts)?)-(?P<version>\d+\.\d+\.\d+)-"
+    r"(?P<rev>[^.]+)\.otp(?P<otp>\d+)(?:\.\d+)*\."
+    r"(?P<target>[^.]+)\.(?P<arch>[^.]+)\.rpm$"
+)
+_BUILD_APK = re.compile(
+    r"^(?P<name>riak(?:-cs|-ts)?)-(?P<version>\d+\.\d+\.\d+)\."
+    r"(?P<otp>\d+)-(?P<rev>r\d+)-otp(?P<full_otp>\d+(?:\.\d+)*)-"
+    r"(?P<arch>x86_64|aarch64|armhf|armv7|x86)\.apk$"
+)
 
 
 def parse_package(filename: str, product: str, version: str, url: str, path_parts: list[str]):
@@ -27,6 +41,25 @@ def parse_package(filename: str, product: str, version: str, url: str, path_part
         return None
     if any(marker in lower for marker in ("-openrc-", "-debug-", "-dev-", "-dialyzer-", "-reltool-")):
         return None
+    built = _BUILD_DEB.match(filename) or _BUILD_RPM.match(filename) or _BUILD_APK.match(filename)
+    if built:
+        data = built.groupdict()
+        if (data["version"] != version or data.get("product", product) != product
+                or data.get("name", _NAMES[product]) != _NAMES[product]):
+            return None
+        if data.get("full_otp", data["otp"]).split(".")[0] != data["otp"]:
+            return None
+        fmt = filename.rsplit(".", 1)[-1]
+        parts = path_parts
+        if fmt == "apk":
+            # Standalone exports use alpine/3.24 rather than alpine/v3.24/main/ARCH.
+            parts = ["v" + part if i and path_parts[i - 1] == "alpine"
+                     and re.fullmatch(r"\d+\.\d+", part) else part
+                     for i, part in enumerate(path_parts)]
+        target = normalize_target(parts, fmt, data["arch"], data.get("target"))
+        return Package(product, version, int(data["otp"]), data["arch"],
+                       _implementation._sub_architecture_from_path(path_parts), fmt, data.get("rev"),
+                       filename, url, None, target)
     joined = _JOINED_OTP_RPM.match(filename)
     if joined and joined.group("name") == _NAMES[product] and joined.group("version") == version:
         data = joined.groupdict()

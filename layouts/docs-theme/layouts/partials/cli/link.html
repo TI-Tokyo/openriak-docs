@@ -1,0 +1,4 @@
+{{- $target := printf "/%s/%s/reference/commands/%s" .context.product.id .context.product.version .route -}}
+{{- $page := site.GetPage $target -}}
+{{- if not $page }}{{ errorf "Missing CLI page %s; run generate-cli-pages.js for the reference version" $target }}{{ end -}}
+{{- return $page.RelPermalink -}}

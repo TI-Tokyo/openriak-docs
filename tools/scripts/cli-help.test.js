@@ -9,6 +9,7 @@ const test = require('node:test');
 // Copy only the executable: help must work without the repository, Hugo,
 // metadata, imported generators or any destination to mutate.
 for (const name of ['generate-version-mounts.js', 'sync-product-metadata.js',
+  'generate-cli-pages.js',
   'watch-page-provenance.js', 'watch-docker-metadata.js',
   'build.sh', 'build-project.sh', 'assemble-site.sh']) {
   test(`${name} documents its CLI and exits before work`, () => {

@@ -5,7 +5,7 @@ build-backend = "setuptools.build_meta"
 [project]
 name = "openriak-metadata"
 version = "1.0.0"
-description = "Generate OpenRiak release package and configuration metadata"
+description = "Generate OpenRiak package, configuration and CLI metadata"
 requires-python = ">=3.11"
 license = {text = "Apache-2.0"}
 dependencies = []
@@ -16,3 +16,5 @@ openriak-metadata = "openriak_metadata.cli:main"
 [tool.setuptools.packages.find]
 include = ["openriak_metadata*"]
 
+[tool.setuptools.package-data]
+openriak_metadata = ["probes/*.escript"]

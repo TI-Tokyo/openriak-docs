@@ -1,0 +1,16 @@
+{{- $context := .context -}}
+<div class="cli-table-scroll">
+<table class="cli-command-table">
+  <thead><tr><th scope="col">Command</th><th scope="col">Status</th><th scope="col">Aliases</th></tr></thead>
+  <tbody>
+  {{- range .pages }}
+    {{- $route := .route -}}
+    <tr data-cli-row data-cli-search-text="{{ printf "%s %s %s" .title (delimit .aliases " ") .category | lower }}">
+      <td><a href="{{ partial "cli/link.html" (dict "context" $context "route" .route) }}"><code>{{ .title }}</code></a></td>
+      <td>{{ partial "cli/status.html" . }}{{ if and (eq .availability "available") (not .deprecated) (not .helper) }}Available{{ end }}</td>
+      <td>{{ range $i, $alias := .aliases }}{{ if $i }}<br>{{ end }}<a href="{{ partial "cli/link.html" (dict "context" $context "route" $route) }}"><code>{{ $alias }}</code></a>{{ end }}</td>
+    </tr>
+  {{- end }}
+  </tbody>
+</table>
+</div>

@@ -14,7 +14,7 @@ class CliTests(unittest.TestCase):
         commands = next(a for a in root._actions if isinstance(a, argparse._SubParsersAction))
         pages = [((), root), *(( (name,), parser) for name, parser in commands.choices.items())]
         with patch('openriak_metadata.cli.generate_version', side_effect=AssertionError('generation started')), \
-             patch('openriak_metadata.cli.install_packages', side_effect=AssertionError('repository changed')):
+             patch('openriak_metadata.cli.install_files', side_effect=AssertionError('repository changed')):
             for path, parser in pages:
                 with self.subTest(command=path), patch('sys.stdout', new=io.StringIO()) as output:
                     self.assertTrue(parser.description)
@@ -28,39 +28,33 @@ class CliTests(unittest.TestCase):
                         for option in action.option_strings:
                             self.assertIn(option, output.getvalue())
 
-    def test_exact_version_is_validated_by_main_contract(self):
-        args = build_parser().parse_args(["generate", "--product", "kv", "--version", "1.10.0", "--output", "out"])
-        self.assertEqual(args.versions, ["1.10.0"])
+    def test_commands_imply_kv_and_share_staging_directory(self):
+        parser = build_parser()
+        package = parser.parse_args(["kv-packages", "--version", "1.10.0"])
+        self.assertEqual(package.versions, ["1.10.0"])
+        self.assertEqual(package.product, "kv")
+        self.assertEqual(package.checksum_workers, 4)
+        for command in ("kv-settings", "list", "deploy"):
+            args = parser.parse_args([command])
+            self.assertEqual(args.output, package.output)
+            self.assertEqual(args.product, "kv")
 
-    def test_generate_accepts_skip_defaults(self):
-        args = build_parser().parse_args([
-            "generate", "--product", "kv", "--version", "2.0.0",
-            "--output", "out", "--skip-defaults",
-        ])
-        self.assertTrue(args.skip_defaults)
-        self.assertEqual(args.checksum_workers, 4)
+    def test_old_commands_and_combined_deployment_are_removed(self):
+        for args in (["generate"], ["packages"], ["defaults"],
+                     ["kv-packages", "--version", "3.4.1", "--update-repo"],
+                     ["kv-packages", "--version", "3.4.1", "--product", "cs"]):
+            with self.subTest(args=args), patch("sys.stderr", new=io.StringIO()), self.assertRaises(SystemExit):
+                main(args)
 
     def test_checksum_workers_must_be_positive(self):
         with self.assertRaises(SystemExit):
-            main([
-                "packages", "--product", "kv", "--version", "3.4.1",
-                "--output", "out", "--checksum-workers", "0",
-            ])
+            main(["kv-packages", "--version", "3.4.1", "--checksum-workers", "0"])
 
-    def test_skip_defaults_writes_only_package_metadata(self):
-        with tempfile.TemporaryDirectory() as temporary, patch(
-            "openriak_metadata.cli.PackageCatalog"
-        ) as catalog:
+    def test_empty_discovery_does_not_publish_staged_files(self):
+        with tempfile.TemporaryDirectory() as temporary, patch("openriak_metadata.cli.PackageCatalog") as catalog:
             catalog.return_value.discover.return_value = ([], {}, [])
-            result = main([
-                "generate", "--product", "kv", "--version", "2.0.0",
-                "--output", temporary, "--skip-defaults",
-            ])
-            destination = Path(temporary) / "kv" / "2.0.0"
-            self.assertEqual(result, 0)
-            self.assertTrue((destination / "supported-os.json").is_file())
-            self.assertTrue((destination / "downloads.json").is_file())
-            self.assertFalse((destination / "defaults.json").exists())
+            self.assertEqual(main(["kv-packages", "--version", "2.0.0", "--output", temporary]), 2)
+            self.assertFalse((Path(temporary) / "kv/2.0.0/downloads.json").exists())
 
 
 if __name__ == "__main__":

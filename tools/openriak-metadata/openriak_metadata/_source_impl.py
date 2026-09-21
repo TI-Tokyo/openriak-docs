@@ -38,7 +38,7 @@ class SourceResolver:
         if not self.keep_workdir:
             shutil.rmtree(self.workdir, ignore_errors=True)
 
-    def resolve(self, repository: str, tag: str) -> tuple[Repository, list[Repository], list[str]]:
+    def resolve(self, repository: str, tag: str, *, recursive: bool = True) -> tuple[Repository, list[Repository], list[str]]:
         url = _repository_url(repository)
         root_path, commit = self._checkout(url, tag, "root")
         root = Repository(_repo_name(url), repository, commit, 0, root_path)
@@ -52,14 +52,19 @@ class SourceResolver:
                 dependencies = parse_rebar_config_dependencies(config.read_text("utf-8", errors="replace"))
                 warnings.append("rebar.lock was unavailable or empty; dependencies were resolved from static rebar.config declarations.")
         seen = {(url, commit)}
+        resolved_requests = {(url, tag)}
         queue = [(name, dep_url, ref, 1) for name, dep_url, ref in dependencies]
         while queue:
             name, dep_url, ref, depth = queue.pop(0)
+            request = (_repository_url(dep_url), ref)
+            if request in resolved_requests:
+                continue
             try:
                 path, sha = self._checkout(dep_url, ref, f"dep-{len(repositories):04d}-{name}")
             except Exception as exc:
                 warnings.append(f"Could not resolve dependency {name} at {ref}: {exc}")
                 continue
+            resolved_requests.add(request)
             identity = (_repository_url(dep_url), sha)
             if identity in seen:
                 shutil.rmtree(path, ignore_errors=True)
@@ -67,6 +72,10 @@ class SourceResolver:
             seen.add(identity)
             repo = Repository(name, dep_url, sha, depth, path)
             repositories.append(repo)
+            if not recursive:
+                # A release rebar.lock already describes the resolved dependency
+                # closure. Do not add each dependency's development/test graph.
+                continue
             child_lock = path / "rebar.lock"
             child_deps = parse_rebar_lock(child_lock.read_text("utf-8", errors="replace")) if child_lock.exists() else []
             if not child_deps:
@@ -84,11 +93,23 @@ class SourceResolver:
             self._git("clone", "--bare", canonical, str(bare))
         elif self.refresh:
             self._git("-C", str(bare), "fetch", "--prune", "origin")
-        # Fetching the exact ref prevents a stale cache from selecting a moving branch.
-        self._git("-C", str(bare), "fetch", "--force", "--depth", "1", "origin", ref)
-        commit = self._git("-C", str(bare), "rev-parse", "FETCH_HEAD").strip()
+        # Immutable lock-file commits can be reused locally. Tags and branches
+        # still require an exact fetch so a stale cache cannot select an old tip.
+        commit = None
+        if not self.refresh and re.fullmatch(r"[0-9a-f]{40}", ref):
+            try:
+                self._git("-C", str(bare), "cat-file", "-e", ref + "^{commit}")
+                commit = ref
+            except SourceError:
+                pass
+        if commit is None:
+            self._git("-C", str(bare), "fetch", "--force", "--depth", "1", "origin", ref)
+            commit = self._git("-C", str(bare), "rev-parse", "FETCH_HEAD").strip()
         destination = self.workdir / name
         self._git("clone", "--quiet", "--no-checkout", str(bare), str(destination))
+        # A shallow cache may hold this commit only through FETCH_HEAD, which
+        # clone does not copy. Transfer the exact commit from the local cache.
+        self._git("-C", str(destination), "fetch", "--quiet", "--depth", "1", "origin", commit)
         self._git("-C", str(destination), "checkout", "--quiet", "--detach", commit)
         return destination, commit
 

@@ -754,6 +754,10 @@
       window.localStorage.setItem(architectureStorageKey, JSON.stringify(architecturePreferences));
     }
     document.documentElement.dataset.selectedOs = os.id;
+    document.querySelectorAll('[data-cli-service-families]').forEach(row => {
+      const families = JSON.parse(row.dataset.cliServiceFamilies);
+      row.hidden = !families.includes('*') && !families.includes(os.family) && !families.includes(os.defaultsKey);
+    });
     const url = new URL(window.location.href);
     if (url.searchParams.has('os')) {
       url.searchParams.delete('os');
