@@ -28,7 +28,8 @@ const contentRoot = path.join(repositoryRoot, 'content');
 const dockerStaticRoot = path.join(contentRoot, 'static', 'openriak-kv');
 const { compareSemver, discoverVersions, productSources } = require('./generate-version-mounts.js');
 const { defaultsByOs } = require('./defaults-by-os');
-const { buildReference } = require('./cli-reference');
+const { buildAnnotatedReference } = require('./cli-annotations');
+const { reviewMarkdown } = require('./cli-syntax');
 
 const products = [
   { productId: 'openriak-kv', metadataProduct: 'kv', pickerSource: 'openriak-kv' },
@@ -342,7 +343,15 @@ if (options.dockerOnly) {
     if (product.metadataProduct === 'kv' && fs.existsSync(cliFile)) {
       const target = path.join(generatedProductsRoot, product.productId, 'data', 'cli-reference', `${version}.json`);
       fs.mkdirSync(path.dirname(target), { recursive: true });
-      fs.writeFileSync(target, JSON.stringify(buildReference(readJson(cliFile)), null, 2) + '\n');
+      const reference = buildAnnotatedReference(readJson(cliFile));
+      fs.writeFileSync(target, JSON.stringify(reference, null, 2) + '\n');
+      const report = path.join(generatedProductsRoot, product.productId, 'cli-coverage', `${version}.json`);
+      fs.mkdirSync(path.dirname(report), { recursive: true });
+      fs.writeFileSync(report, JSON.stringify(reference.annotationCoverage, null, 2) + '\n');
+      const syntaxRoot = path.join(generatedProductsRoot, product.productId, 'cli-syntax-review');
+      fs.mkdirSync(syntaxRoot, {recursive: true});
+      fs.writeFileSync(path.join(syntaxRoot, `${version}.json`), JSON.stringify(reference.syntaxReview, null, 2) + '\n');
+      fs.writeFileSync(path.join(syntaxRoot, `${version}.md`), reviewMarkdown(reference.syntaxReview));
     }
     const files = {
       supported: path.join(metadataRoot, `${product.metadataProduct}-supported-os.json`),

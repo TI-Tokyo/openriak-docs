@@ -73,6 +73,9 @@ available for each example; printing or disabling JavaScript shows every block.
 
 ## Content and metadata
 
+CLI prose overrides are maintained in [content/annotations/openriak-kv/](content/annotations/openriak-kv/README.md). They merge over verified scenario metadata from openriak-metadata. Run `node tools/scripts/watch-cli-reference.js --once` to regenerate the CLI data and its completeness/review reports.
+
+
 Production KV Markdown uses flat version directories in two source families:
 
 - `content/riak-kv/{version}/` contains historical Riak KV versions from 2.0.0 up to, but not including, 3.4.0.

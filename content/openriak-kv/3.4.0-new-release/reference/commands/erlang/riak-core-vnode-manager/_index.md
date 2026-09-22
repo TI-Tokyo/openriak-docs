@@ -1,6 +1,6 @@
 ---
-title: "riak core vnode manager"
-description: "Syntax, options and help for riak core vnode manager."
+title: "riak_core_vnode_manager"
+description: "Syntax, options and help for riak_core_vnode_manager."
 layout: "single"
 weight: 1
 diataxis: "reference"

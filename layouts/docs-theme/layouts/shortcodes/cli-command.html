@@ -5,9 +5,52 @@
 {{- if ne (len $matches) 1 }}{{ errorf "Unknown CLI topic %s on %s" $key $page.Path }}{{ end -}}
 {{- $command := index $matches 0 -}}
 {{ partial "cli/legacy.html" $page }}
+{{ with $command.reference.related_documentation }}{{ $page.Store.Set "cliRelatedDocumentation" ($page.RenderString .) }}{{ end }}
 <div class="cli-command-reference">
-<p><a href="{{ $context.root }}">All commands</a> · OpenRiak KV {{ $context.reference.version }} · {{ if eq $command.context "erlang" }}Erlang shell{{ else }}Terminal{{ end }}</p>
-<p>{{ partial "cli/status.html" $command }}</p>
+{{ with $command.reference.summary }}<div class="cli-summary">{{ $page.RenderString . }}</div>{{ else }}<p>{{ $command.summary }}</p>{{ end }}
+<h2 id="syntax">Syntax</h2>
+{{ with $command.reference.syntax }}{{ $page.RenderString . }}{{ else }}
+{{ range $index, $form := $command.syntax.forms }}
+  {{ if gt (len $command.syntax.forms) 1 }}<h3 id="syntax-{{ add $index 1 }}">{{ .label }}</h3>{{ end }}
+  <div class="cli-syntax-block">
+  <button type="button" class="download-copy cli-syntax-copy" data-copy-value="{{ .text }}" data-copy-label="Copy syntax" aria-label="Copy syntax" title="Copy syntax" aria-live="polite">{{ partial "download-icon-copy.html" . }}</button>
+  <pre class="cli-generated-syntax"><code>{{- range .tokens -}}{{- if .route -}}<a href="{{ partial "cli/link.html" (dict "context" $context "route" .route) }}">{{ .text }}</a>{{- else -}}{{ .text }}{{- end -}}{{- end -}}</code></pre>
+  </div>
+{{ end }}{{ end }}
+{{ if $command.syntax.hasSubcommands }}<p>Select a subcommand for its arguments and options.</p>{{ end }}
+{{ if eq $command.syntax.review.displayed "known_path_only" }}<p>Only the command prefix is shown. Argument and option syntax still needs review; consult the <a href="#help">help text</a> before running it.</p>{{ end }}
+{{ with $command.aliases }}<h3 id="aliases">Alternate spellings</h3><ul>{{ range . }}<li><code>{{ . }}</code></li>{{ end }}</ul>{{ end }}
+{{ with $command.variants }}
+<h3 id="service-commands">Service commands</h3>
+<p>Choose the installed operating system using the OS selector. Use the row for the service manager running on that machine.</p>
+<div class="cli-table-scroll"><table><thead><tr><th scope="col">Service manager</th><th scope="col">Command</th><th scope="col">Requirements</th></tr></thead><tbody>
+{{ range . }}<tr data-cli-service-families="{{ .os_families | jsonify }}"><td>{{ .service_manager }}</td><td><code>{{ .invocation }}</code></td><td>{{ delimit .requires "; " }}</td></tr>{{ end }}
+</tbody></table></div>
+{{ end }}
+<h2 id="arguments-and-options">Arguments and options</h2>
+{{ with $command.parameters }}
+<div class="cli-table-scroll"><table class="cli-parameters">
+<colgroup><col class="cli-parameter-name"><col class="cli-parameter-values"><col class="cli-parameter-default"><col></colgroup>
+<thead><tr><th scope="col">Name</th><th scope="col">Valid values</th><th scope="col">Default</th><th scope="col">Description</th></tr></thead><tbody>
+{{ range . }}<tr><td>
+<div class="cli-parameter-names">
+<span class="cli-parameter-copyable"><code>{{ .name }}</code><button class="download-copy" type="button" data-copy-value="{{ .name }}" data-copy-label="Copy {{ lower .kind }} name {{ .name }}" aria-label="Copy {{ lower .kind }} name {{ .name }}" title="Copy {{ lower .kind }} name {{ .name }}" aria-live="polite">{{ partial "download-icon-copy.html" . }}</button></span>
+{{ with .short }}<span>/</span><span class="cli-parameter-copyable"><code>{{ . }}</code><button class="download-copy" type="button" data-copy-value="{{ . }}" data-copy-label="Copy alias {{ . }}" aria-label="Copy alias {{ . }}" title="Copy alias {{ . }}" aria-live="polite">{{ partial "download-icon-copy.html" . }}</button></span>{{ end }}
+</div>
+<span class="cli-parameter-kind cli-parameter-kind--{{ lower .kind }}">{{ .kind }}</span>{{ if .hidden }} <span class="cli-status">Unadvertised</span>{{ end }}</td>
+<td>{{ if .allowedValues }}<ul class="cli-valid-values">{{ range .allowedValues }}<li><span class="configuration-reference-option"><code>{{ . }}</code><button class="download-copy" type="button" data-copy-value="{{ . }}" data-copy-label="Copy value {{ . }}" aria-label="Copy value {{ . }}" title="Copy value {{ . }}" aria-live="polite">{{ partial "download-icon-copy.html" . }}</button></span></li>{{ end }}</ul>
+{{ else }}{{ with .datatype }}{{ . }}{{ else }}{{ with .value }}Value placeholder: {{ . }}{{ else }}Not specified{{ end }}{{ end }}{{ end }}</td>
+<td>{{ if isset . "defaultValue" }}<code>{{ .defaultValue }}</code>{{ else }}—{{ end }}</td>
+<td>
+{{ if or (isset . "required") (isset . "repeatable") }}<div class="cli-parameter-tags">
+{{ if isset . "required" }}<span class="cli-parameter-tag{{ if .required }} cli-parameter-tag--required{{ end }}">{{ if .required }}Required{{ else }}Optional{{ end }}</span>{{ end }}
+{{ if isset . "repeatable" }}<span class="cli-parameter-tag{{ if .repeatable }} cli-parameter-tag--repeatable{{ end }}">{{ if .repeatable }}Repeatable{{ else }}Not repeatable{{ end }}</span>{{ end }}
+</div>{{ end }}
+{{ with .description }}{{ $page.RenderString (dict "display" "block") . }}{{ end }}</td></tr>{{ end }}
+</tbody></table></div>
+{{ else }}<p>This command has no individually documented arguments or options. See the syntax for available subcommands.</p>{{ end }}
+{{ if or $command.reference.description $command.description $command.children $command.reference.results $command.types (ne $command.availability "available") $command.deprecated }}
+<h2 id="description">Description</h2>
 {{ if ne $command.availability "available" }}
   <div class="cli-notice"><strong>This command is {{ $command.availability | humanize | lower }} in this release.</strong>{{ with $command.notice }} <p>{{ . }}</p>{{ end }}<p>The entry is retained for compatibility reference.</p></div>
 {{ else if $command.deprecated }}
@@ -19,49 +62,70 @@
   {{ end }}
   </div>
 {{ end }}
-{{ if eq $command.context "erlang" }}<p>Enter these expressions in an Erlang shell opened with <code>riak remote_console</code> or <code>riak daemon_attach</code>. Replace argument variables and any <code>...</code> placeholders with actual values.</p>{{ end }}
-{{ with $command.prerequisites }}<h2 id="requirements">Requirements</h2><ul>{{ range . }}<li>{{ . }}</li>{{ end }}</ul>{{ end }}
-<h2 id="syntax">Syntax and arguments</h2>
-{{ range $command.forms }}
-  {{ if gt (len $command.forms) 1 }}<h3>{{ .label }}</h3>{{ end }}
-  {{ range .syntax }}{{ $page.RenderString (printf "```%s\n%s\n```" (cond (eq $command.context "erlang") "erlang" "text") .) }}{{ end }}
-  {{ if .unrestricted }}<p>Accepts configuration assignments in <code>variable=value</code> form. Consult the help for applicable settings and flags.</p>{{ end }}
-  {{ with .arguments }}
-  <div class="cli-table-scroll"><table><thead><tr><th scope="col">Argument</th><th scope="col">Type or form</th></tr></thead><tbody>
-    {{ range . }}<tr><td><code>{{ .name | default .key | default (printf "Argument %v" .position) }}</code></td><td>{{ with .datatype }}<code>{{ . }}</code>{{ else }}{{ .format | default "See syntax and help." }}{{ end }}</td></tr>{{ end }}
-  </tbody></table></div>
-  {{ end }}
-  {{ range .specifications }}{{ $page.RenderString (printf "```erlang\n%s\n```" .) }}{{ end }}
-{{ end }}
-<h2 id="options">Options</h2>
-{{ with $command.options }}
-<div class="cli-table-scroll"><table class="cli-options"><thead><tr><th scope="col">Option</th><th scope="col">Value / type</th><th scope="col">Description</th></tr></thead><tbody>
-{{ range . }}<tr><td><code>{{ .name }}</code>{{ with .short }} / <code>{{ . }}</code>{{ end }}{{ if .hidden }} <span class="cli-status">Unadvertised</span>{{ end }}</td><td>{{ with .value }}<code>{{ . }}</code>{{ end }}{{ with .datatype }} <code>{{ . }}</code>{{ end }}</td><td>{{ .description | default "See command help below." }}</td></tr>{{ end }}
-</tbody></table></div>
-{{ else }}<p>{{ if eq $command.context "erlang" }}This operation takes Erlang arguments rather than shell flags. Argument types and accepted query forms are shown above.{{ else }}No named options were extracted for this command. Consult its syntax and help for positional arguments and forwarded arguments.{{ end }}</p>{{ end }}
-{{ with $command.variants }}
-<h2 id="service-commands">Service commands</h2>
-<p>Choose the installed operating system using the OS selector. Use the row for the service manager running on that machine. Direct invocation is also available for deployments without a service manager.</p>
-<div class="cli-table-scroll"><table><thead><tr><th scope="col">Service manager</th><th scope="col">Command</th><th scope="col">Requirements</th></tr></thead><tbody>
-{{ range . }}<tr data-cli-service-families="{{ .os_families | jsonify }}"><td>{{ .service_manager }}</td><td><code>{{ .invocation }}</code></td><td>{{ delimit .requires "; " }}</td></tr>{{ end }}
-</tbody></table></div>
-{{ end }}
-{{ with $command.aliases }}<h2 id="aliases">Aliases</h2><ul>{{ range . }}<li><code>{{ . }}</code></li>{{ end }}</ul>{{ end }}
-{{ with $command.helpInvocations }}<h2 id="help-commands">Help commands</h2><ul>{{ range . }}<li><code>{{ . }}</code></li>{{ end }}</ul>{{ end }}
-<h2 id="help">Help</h2>
-{{- $helpCount := 0 -}}
-{{ range $command.forms }}
-  {{ $form := . }}
-  {{ with .help }}
-    {{ $helpCount = add $helpCount 1 }}
-    {{ if gt (len $command.forms) 1 }}<h3>{{ $form.label }}</h3>{{ end }}
-    {{ range . }}{{ $page.RenderString (printf "```text\n%s\n```" .) }}{{ end }}
-  {{ end }}
-{{ end }}
-{{ if not $helpCount }}<p>The release does not provide help text for this entry.</p>{{ end }}
+
+{{ with $command.reference.description }}{{ $page.RenderString . }}{{ else }}{{ with $command.description }}{{ $page.RenderString . }}{{ else }}{{ with $command.reference.summary }}{{ $page.RenderString . }}{{ end }}{{ end }}{{ end }}
+{{ with $command.children }}<h3 id="subcommands">Subcommands</h3><ul>{{ range . }}<li><a href="{{ partial "cli/link.html" (dict "context" $context "route" .route) }}"><code>{{ .title }}</code></a>{{ if .deprecated }} — deprecated{{ end }}</li>{{ end }}</ul>{{ end }}
+{{ with $command.reference.results }}<h3 id="expected-results">Expected results</h3><ul>{{ range . }}<li>{{ $page.RenderString (dict "display" "block") .description }}</li>{{ end }}</ul>{{ end }}
 {{ with $command.types }}<details><summary>Erlang argument type definitions</summary>{{ range . }}{{ $page.RenderString (printf "```erlang\n%s\n```" .) }}{{ end }}</details>{{ end }}
-{{ with $command.children }}<h2 id="subcommands">Subcommands</h2><ul>{{ range . }}<li><a href="{{ partial "cli/link.html" (dict "context" $context "route" .route) }}"><code>{{ .title }}</code></a>{{ if .deprecated }} — deprecated{{ end }}</li>{{ end }}</ul>{{ end }}
+{{ end }}
+{{ range $command.forms }}{{ range .specifications }}{{ $page.RenderString (printf "```erlang\n%s\n```" .) }}{{ end }}{{ end }}
+{{ if or $command.reference.notes $command.prerequisites (eq $command.context "erlang") }}
+<h2 id="notes">Notes</h2>
+{{ if eq $command.context "erlang" }}<p>Enter these expressions in an Erlang shell opened with <code>riak remote_console</code> or <code>riak daemon_attach</code>. Replace argument variables and any <code>...</code> placeholders with actual values.</p>{{ end }}
+{{ with $command.prerequisites }}<ul>{{ range . }}<li>{{ . }}</li>{{ end }}</ul>{{ end }}
+{{ range $command.reference.notes }}{{ $page.RenderString (dict "display" "block") . }}{{ end }}
+{{ end }}
+{{ with $command.reference.examples }}
+<h2 id="examples">Examples</h2>
+{{ range $index, $example := . }}
+<section class="cli-example" data-cli-example-id="{{ .id }}" aria-labelledby="cli-example-{{ add $index 1 }}">
+  <h3 id="cli-example-{{ add $index 1 }}">Example {{ add $index 1 }}: {{ .title }}</h3>
+  {{ $page.RenderString (dict "display" "block") .description }}
+  {{ with .prerequisites }}<div class="cli-prerequisites"><strong>Before running:</strong> {{ $page.RenderString . }}</div>{{ end }}
+  {{ $page.RenderString (printf "```%s\n%s\n```" (cond (eq $command.context "erlang") "erlang" "sh") .invocation) }}
+  {{ with .expected_output }}<p>Expected output:</p>{{ $page.RenderString (printf "```text\n%s\n```" .) }}{{ end }}
+  {{ with .observed }}
+  <details class="cli-observed"><summary>Observed output · exit status {{ .exit_code }}</summary>
+  {{ with .stdout }}<p>Standard output:</p>{{ $page.RenderString (printf "```text\n%s\n```" .) }}{{ end }}
+  {{ with .stderr }}<p>Standard error:</p>{{ $page.RenderString (printf "```text\n%s\n```" .) }}{{ end }}
+  <p>Tested on OpenRiak KV {{ $context.reference.version }} on <time datetime="{{ substr .verification.tested_at 0 10 }}">{{ substr .verification.tested_at 0 10 }}</time>.</p>
+  </details>
+  {{ end }}
+</section>
+{{ end }}{{ end }}
+{{ if or $command.reference.errors $command.reference.sharedErrors }}
+<h2 id="errors">Errors</h2>
+{{ with $command.reference.errors }}
+<div class="cli-table-scroll"><table class="cli-errors"><thead><tr><th scope="col">Condition</th><th scope="col">Result</th><th scope="col">What to do</th></tr></thead><tbody>
+{{ range . }}<tr><td>{{ $page.RenderString (dict "display" "block") .condition }}</td><td>{{ $page.RenderString (dict "display" "block") .description }}</td><td>{{ $page.RenderString (dict "display" "block") .remedy }}</td></tr>{{ end }}
+</tbody></table></div>{{ end }}
+{{ with $command.reference.sharedErrors }}<p>For connection and other shared failures, see:</p><ul>{{ range . }}<li><a href="{{ partial "cli/link.html" (dict "context" $context "route" .route) }}#errors">{{ .title }} — shared errors</a></li>{{ end }}</ul>{{ end }}
+{{ end }}
+<h2 id="help">Help text</h2>
+{{ with $command.helpInvocations }}<ul>{{ range . }}<li><code>{{ . }}</code></li>{{ end }}</ul>{{ end }}
+{{- $helpCount := 0 -}}
+{{ range $index, $form := $command.forms }}{{ with .help }}
+  {{ $helpCount = add $helpCount 1 }}
+  {{ if gt (len $command.forms) 1 }}<h3 id="help-{{ add $index 1 }}">{{ $form.label }}</h3>{{ end }}
+  {{ range . }}{{ $page.RenderString (printf "```text\n%s\n```" .) }}{{ end }}
+{{ end }}{{ end }}
+{{ if not $helpCount }}<p>The release does not provide help text for this entry.</p>{{ end }}
 <details class="cli-sources"><summary>Reference sources</summary>
+{{ with $command.syntax.review }}
+{{ if eq .status "needs_review" }}
+<details class="cli-syntax-review"><summary>Syntax differences requiring manual review</summary>
+<ul>{{ range .issues }}<li>{{ . }}</li>{{ end }}</ul>
+<p>Generated candidates{{ if eq .displayed "supplied_usage" }} (the page retains the supplied usage because the structured metadata is incomplete){{ end }}:</p>
+{{ range .generated }}{{ $page.RenderString (printf "```text\n%s\n```" .) }}{{ end }}
+{{ with .supplied }}<p>Supplied syntax:</p>{{ range . }}{{ $page.RenderString (printf "```text\n%s\n```" .) }}{{ end }}{{ end }}
+</details>
+{{ end }}{{ end }}
+{{ with $command.reference.overrides }}<p>Editorial annotations: {{ delimit . ", " }}.</p>{{ end }}
+{{ with $command.reference.evidence }}
+<details><summary>Original scenario evidence</summary>
+{{ $page.RenderString (printf "```json\n%s\n```" (. | jsonify (dict "indent" "  "))) }}
+</details>
+{{ end }}
 <p>Extracted from the OpenRiak KV {{ $context.reference.version }} runtime and matching release source. Help is preserved as supplied by the release, including any format placeholders.</p>
 <ul>{{ range $command.provenance }}<li>{{ if and .repository .commit .path }}<a href="{{ printf "%s/blob/%s/%s" (.repository | strings.TrimSuffix ".git" | replaceRE "^(github.com/)" "https://$1") .commit .path }}">{{ .path }}</a>{{ else }}{{ with .path }}<code>{{ . }}</code>{{ end }}{{ with .module }}<code>{{ . }}</code>{{ end }}{{ with .callback }}<code>{{ .module }}:{{ .function }}/{{ .arity }}</code>{{ end }}{{ end }}</li>{{ end }}</ul>
 </details>

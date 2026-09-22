@@ -10,6 +10,19 @@ const shell = (invocation, fields = {}) => ({ id: `shell:${invocation}`, invocat
   context: 'shell', kind: 'shell', availability: 'available', deprecated: false, help: '', arguments: [], options: [], ...fields });
 const document = commands => ({ schema_version: 1, product: 'kv', version: '3.4.0', status: 'complete', warnings: [], commands });
 
+test('command format flags retain their own choices separately from global writers', () => {
+  const ref = buildReference(document([shell('riak admin node repair status', {
+    options: [{ name: '--format', short: '-f', datatype: 'string', allowed_values: ['table', 'json'], default: 'table' }],
+    global_options: [{ name: '--format', datatype: 'string', allowed_values: ['csv', 'human', 'json'], default: 'human' }],
+  })]));
+  const options = ref.pages[0].options;
+  assert.equal(options.length, 2);
+  assert.deepEqual(options.find(o => o.name === '-f').allowedValues, ['table', 'json']);
+  assert.equal(options.find(o => o.name === '-f').defaultValue, 'table');
+  assert.equal(options.find(o => o.name === '--format').short, '');
+  assert.equal(options.find(o => o.name === '--format').defaultValue, 'human');
+});
+
 test('aliases and their descendants share pages without losing flag declarations', () => {
   const reference = buildReference(document([
     shell('riak admin repair-2i', { aliases: [{ invocation: 'riak admin repair_2i' }], options: [{ name: '--speed', datatype: 'integer' }] }),

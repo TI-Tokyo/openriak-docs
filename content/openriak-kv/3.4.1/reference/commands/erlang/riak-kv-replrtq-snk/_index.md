@@ -1,6 +1,6 @@
 ---
-title: "riak kv replrtq snk"
-description: "Syntax, options and help for riak kv replrtq snk."
+title: "riak_kv_replrtq_snk"
+description: "Syntax, options and help for riak_kv_replrtq_snk."
 layout: "single"
 weight: 1
 diataxis: "reference"

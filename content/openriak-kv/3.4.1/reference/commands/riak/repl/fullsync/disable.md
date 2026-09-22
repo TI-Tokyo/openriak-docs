@@ -12,6 +12,7 @@ technical_review: "required"
 generated_by: "cli-reference"
 cli_reference_version: "3.4.1"
 related: ["how-to/legacy-and-specialist-workflows/maintain-legacy-v3-replication","reference/replication-interfaces/legacy-riak-repl-runtime-controls","reference/commands"]
+linkTitle: "disable"
 cli_command_key: "shell:riak repl fullsync disable"
 ---
 

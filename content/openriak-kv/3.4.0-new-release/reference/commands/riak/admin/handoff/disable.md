@@ -12,6 +12,7 @@ technical_review: "required"
 generated_by: "cli-reference"
 cli_reference_version: "3.4.0"
 related: ["how-to/cluster-lifecycle/monitor-and-control-handoffs","reference/operations-and-observability/handoff-states-and-transfer-records","reference/commands"]
+linkTitle: "disable"
 cli_command_key: "shell:riak admin handoff disable"
 ---
 

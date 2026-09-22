@@ -1,6 +1,6 @@
 ---
-title: "riak kv ttaaefs manager"
-description: "Syntax, options and help for riak kv ttaaefs manager."
+title: "riak_kv_ttaaefs_manager"
+description: "Syntax, options and help for riak_kv_ttaaefs_manager."
 layout: "single"
 weight: 1
 diataxis: "reference"

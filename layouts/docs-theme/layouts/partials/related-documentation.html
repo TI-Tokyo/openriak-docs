@@ -1,9 +1,10 @@
-{{- with .Params.related -}}
+{{- if or .Params.related (.Store.Get "cliRelatedDocumentation") -}}
   {{- $context := partial "product-context.html" $ -}}
   <aside class="related-documentation" aria-labelledby="related-documentation-heading">
     <h2 id="related-documentation-heading">Related documentation</h2>
+    {{ with .Store.Get "cliRelatedDocumentation" }}{{ . }}{{ end }}
     <ul>
-      {{- range . -}}
+      {{- range .Params.related -}}
         {{- $reference := "" -}}
         {{- $customTitle := "" -}}
         {{- $reason := "" -}}

@@ -81,12 +81,12 @@ pages are preserved. Build-time data is prepared by sync-product-metadata.js.`);
     expected.set(filename, text);
   }
   page('', 'Command reference', '{{< cli-command-index >}}');
-  for (const item of reference.pages) page(item.route, item.title, '{{< cli-command >}}', { cli_command_key: item.key });
+  for (const item of reference.pages) page(item.route, item.title, '{{< cli-command >}}', { linkTitle: item.linkTitle, cli_command_key: item.key });
   for (const section of reference.sections) {
     if (!reference.pages.some(p => p.route === section.route)) page(section.route, section.title, '{{< cli-command-index >}}', { cli_command_prefix: section.route });
   }
   // This historical URL remains a useful entry point and preserves old links.
-  page('riak-admin', 'riak admin command reference', '{{< cli-command-index >}}', { cli_command_prefix: 'riak/admin' });
+  page('riak-admin', 'riak admin command reference', '{{< cli-command-index >}}', { linkTitle: 'riak-admin', cli_command_prefix: 'riak/admin' });
   const obsolete = [];
   function walk(directory) {
     if (!fs.existsSync(directory)) return;

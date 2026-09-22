@@ -20,7 +20,7 @@
     {{- $name := . -}}
     {{- with $group }}
     <section data-cli-group>
-      <h2>{{ $name }}</h2>
+      <h2 id="{{ $name | anchorize }}">{{ $name }}</h2>
       {{ partial "cli/table.html" (dict "context" $context "pages" .) }}
     </section>
     {{- end -}}

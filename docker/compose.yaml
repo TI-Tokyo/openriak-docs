@@ -61,6 +61,8 @@ services:
         if [ "$${OPENRIAK_DOCS_BUILD_PROFILE}" = development ]; then
         node /project/tools/scripts/watch-docker-metadata.js
         /tmp/openriak-development-data/openriak-kv/data/versions &
+        node /project/tools/scripts/watch-cli-reference.js
+        --output-root /tmp/openriak-development-data &
         fi;
         node /project/tools/scripts/watch-page-provenance.js &
         exec hugo server --source=/project/content --config=/tmp/openriak-core.yaml

@@ -84,7 +84,10 @@ function buildReference(document) {
     if (routeKeys.has(page.route)) throw new Error(`CLI route collision: ${page.route}`);
     routeKeys.add(page.route);
     const items = page.records;
+    page.linkTitle = page.context === 'erlang' ? items[0].selector || items[0].function : page.path.at(-1);
     page.ids = items.map(c => c.id);
+    page.summary = page.context === 'erlang' ? `Call ${page.title} from the Erlang shell.` : `Run ${page.title} on an OpenRiak KV node.`;
+    page.description = unique(items.map(c => c.description || c.summary)).join('\n\n');
     const statuses = unique(items.map(c => c.availability || 'available'));
     page.availability = statuses.includes('available') ? 'available' : statuses.includes('unavailable') ? 'unavailable' : statuses[0];
     page.deprecated = items.some(c => c.deprecated);
@@ -108,7 +111,8 @@ function buildReference(document) {
       label: item.context === 'erlang' ? `${item.module}:${item.function}/${item.arity}${item.selector ? ' — ' + item.selector : ''}` : item.invocation.replace(/^_ /, 'riak admin '),
       syntax: item.context === 'erlang'
         ? item.selector ? [item.invocation] : (item.signatures || []).map(s => `${item.module}:${s}.`)
-        : unique((item.usage || []).length ? item.usage : [item.invocation.replace(/^_ /, 'riak admin ')]),
+        : unique(((item.usage || []).length ? item.usage : [item.invocation])
+          .map(text => text.replace(/^\s*usage\b\s*:?\s*/i, '').replace(/^_ /, 'riak admin ').replace(/^riak-admin\b/, 'riak admin'))),
       template: item.context === 'erlang' || item.wildcard_path || Boolean(item.invocation_is_template),
       help: unique([item.help, ...(item.help_sources || []).map(h => h.text)]).map(t => t.replace(/Usage: _ /g, 'Usage: riak-admin ')),
       specifications: item.specifications || [],
@@ -129,13 +133,27 @@ function buildReference(document) {
     for (const item of items) {
       for (const option of [...(item.options || []), ...(item.global_options || [])]) {
         if (!option.name) continue;
-        const name = option.name.startsWith('-') ? option.name : '--' + option.name;
-        const short = option.short ? (option.short.startsWith('-') ? option.short : '-' + option.short) : '';
+        let name = option.name.startsWith('-') ? option.name : '--' + option.name;
+        let short = option.short ? (option.short.startsWith('-') ? option.short : '-' + option.short) : '';
+        // Clique consumes global long flags before parsing command flags. A
+        // command's colliding short spelling still selects its local option.
+        if ((item.options || []).includes(option) && short &&
+            (item.global_options || []).some(global => global.name === name)) {
+          name = short; short = '';
+        }
         const row = options.get(name) || { name, short: '', datatype: '', value: '', description: '', hidden: false, appliesTo: [] };
         row.short ||= short;
         row.datatype ||= option.datatype || '';
         row.value ||= option.value_name || '';
         row.description ||= option.description || '';
+        if (option.allowed_values) row.allowedValues = option.allowed_values;
+        if (Object.hasOwn(option, 'default')) row.defaultValue = option.default;
+        for (const flag of ['required', 'repeatable']) if (Object.hasOwn(option, flag)) row[flag] = option[flag];
+        if ((item.global_options || []).includes(option)) {
+          row.required = false;
+          row.repeatable = false;
+          if (name === '--help') row.datatype ||= 'flag (no value)';
+        }
         row.hidden ||= Boolean(option.hidden);
         row.appliesTo.push(item.invocation);
         options.set(name, row);
@@ -152,6 +170,8 @@ function buildReference(document) {
     }
     page.options = [...options.values()].sort((a, b) => compare(a.name, b.name));
     page.prerequisites = unique(items.flatMap(c => c.prerequisites || []));
+    const examples = [...new Map(items.flatMap(c => c.usage_examples || []).map(e => [JSON.stringify(e), e])).values()];
+    if (examples.length) page.examples = examples;
     page.types = unique(items.flatMap(c => c.argument_types || []));
     page.variants = [...new Map(items.flatMap(c => c.variants || []).map(v => [JSON.stringify(v), v])).values()];
     page.provenance = [...new Map(items.flatMap(c => c.provenance || []).map(p => [JSON.stringify(p), p])).values()];
@@ -164,7 +184,8 @@ function buildReference(document) {
     const parts = page.route.split('/');
     for (let length = 1; length < parts.length; length++) {
       const route = parts.slice(0, length).join('/');
-      if (!routeKeys.has(route) && !sections.some(s => s.route === route)) sections.push({ route, title: parts[length - 1].replace(/-/g, ' ') });
+      if (!routeKeys.has(route) && !sections.some(s => s.route === route)) sections.push({ route,
+        title: parts[0] === 'erlang' && length === 2 ? page.key.split(':')[1] : parts[length - 1] });
     }
   }
   return { schemaVersion: 1, version: document.version, source: document.source, runtime: document.runtime,

@@ -42,7 +42,7 @@
   {{- end }}
 </div>
 {{- $toc := .TableOfContents -}}
-{{- if .HasShortcode "collapsable-section" -}}
+{{- if or (.HasShortcode "collapsable-section") (.HasShortcode "cli-command") (.HasShortcode "cli-command-index") -}}
   {{- $headings := slice -}}
   {{- range findRE `(?s)<h[1-6]\s[^>]*id="[^"]+"[^>]*>.*?</h[1-6]>` .Content -}}
     {{- $level := int (replaceRE `(?s)^<h([1-6]).*$` "$1" .) -}}
@@ -52,7 +52,7 @@
   {{- end -}}
   {{- $toc = printf `<nav id="TableOfContents">%s</nav>` (partial "heading-toc.html" $headings) -}}
 {{- end -}}
-{{- $hasRelatedDocumentation := gt (len (.Params.related | default (slice))) 0 -}}
+{{- $hasRelatedDocumentation := or (gt (len (.Params.related | default (slice))) 0) (.Store.Get "cliRelatedDocumentation") -}}
 {{- if $hasRelatedDocumentation -}}
   {{- $relatedItem := `<li><a href="#related-documentation-heading">Related documentation</a></li>` -}}
   {{- if in $toc "<li>" -}}

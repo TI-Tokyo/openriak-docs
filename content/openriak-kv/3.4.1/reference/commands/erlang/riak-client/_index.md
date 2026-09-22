@@ -1,6 +1,6 @@
 ---
-title: "riak client"
-description: "Syntax, options and help for riak client."
+title: "riak_client"
+description: "Syntax, options and help for riak_client."
 layout: "single"
 weight: 1
 diataxis: "reference"

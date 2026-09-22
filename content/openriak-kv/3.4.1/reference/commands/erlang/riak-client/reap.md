@@ -12,6 +12,7 @@ technical_review: "required"
 generated_by: "cli-reference"
 cli_reference_version: "3.4.1"
 related: ["how-to/monitoring-and-diagnostics/inspect-a-node-through-the-remote-console","reference/operations-and-observability/remote-console-interfaces","reference/commands"]
+linkTitle: "reap"
 cli_command_key: "erlang:riak_client:reap"
 ---
 

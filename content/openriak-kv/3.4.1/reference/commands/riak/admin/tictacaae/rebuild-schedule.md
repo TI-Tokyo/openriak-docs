@@ -12,6 +12,7 @@ technical_review: "required"
 generated_by: "cli-reference"
 cli_reference_version: "3.4.1"
 related: ["how-to/replication-and-reconciliation/enable-tictac-anti-entropy","reference/aae-fold-api/fold-invocation-and-result-conventions","reference/commands"]
+linkTitle: "rebuild-schedule"
 cli_command_key: "shell:riak admin tictacaae rebuild-schedule"
 ---
 
