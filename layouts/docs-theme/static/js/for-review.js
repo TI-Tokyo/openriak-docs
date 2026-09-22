@@ -3,13 +3,22 @@
   const root = document.querySelector('[data-for-review]');
   if (!root) return;
   const controls = [...root.querySelectorAll('[data-review-filter]')];
+  const sectionControl = root.querySelector('[data-review-section-filter]');
+  const includeChildren = root.querySelector('[data-review-include-children]');
   const rows = [...root.querySelectorAll('[data-review-values]')].map(element => ({
-    element, values: JSON.parse(element.dataset.reviewValues)
+    element, values: JSON.parse(element.dataset.reviewValues), section: element.closest('[data-review-group]').dataset.reviewSection
   }));
   const groups = [...root.querySelectorAll('[data-review-group]')].map(element => ({
     element, rows: [...element.querySelectorAll('[data-review-values]')]
   }));
   const storageKey = `openriak-docs-review-filters:${root.dataset.reviewProduct}`;
+
+  groups.forEach(({ element }) => {
+    const option = document.createElement('option');
+    option.value = element.dataset.reviewSection;
+    option.textContent = element.dataset.reviewSectionLabel;
+    sectionControl.append(option);
+  });
 
   controls.forEach(control => {
     const values = new Set();
@@ -27,12 +36,15 @@
   });
 
   const apply = () => {
+    const section = sectionControl.value;
+    includeChildren.disabled = !section || !groups.some(group => group.element.dataset.reviewSection.startsWith(`${section}/`));
     const filters = controls.filter(control => control.value !== '').map(control => ({
       key: control.dataset.reviewFilter, value: JSON.parse(control.value)
     }));
     let visible = 0;
     rows.forEach(row => {
-      const matches = filters.every(filter => filter.value === null
+      const inSection = !section || row.section === section || (includeChildren.checked && row.section.startsWith(`${section}/`));
+      const matches = inSection && filters.every(filter => filter.value === null
         ? row.values[filter.key].length === 0
         : row.values[filter.key].includes(filter.value));
       row.element.hidden = !matches;
@@ -52,17 +64,25 @@
       const value = saved[control.dataset.reviewFilter];
       control.value = [...control.options].some(option => option.value === value) ? value : '';
     });
+    sectionControl.value = [...sectionControl.options].some(option => option.value === saved.section) ? saved.section : '';
+    includeChildren.checked = saved.include_children !== false;
     apply();
   };
   const save = () => {
     const values = Object.fromEntries(controls.filter(control => control.value !== '')
       .map(control => [control.dataset.reviewFilter, control.value]));
+    if (sectionControl.value) values.section = sectionControl.value;
+    values.include_children = includeChildren.checked;
     try { localStorage.setItem(storageKey, JSON.stringify(values)); } catch { /* Filtering still works without storage. */ }
     apply();
   };
   controls.forEach(control => control.addEventListener('change', save));
+  sectionControl.addEventListener('change', save);
+  includeChildren.addEventListener('change', save);
   root.querySelector('[data-review-reset]').addEventListener('click', () => {
     controls.forEach(control => { control.value = ''; });
+    sectionControl.value = '';
+    includeChildren.checked = true;
     save();
   });
   window.addEventListener('pageshow', event => { if (event.persisted) restore(); });

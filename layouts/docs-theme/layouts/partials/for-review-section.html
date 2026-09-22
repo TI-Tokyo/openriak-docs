@@ -6,10 +6,10 @@
     {{- $pages = $pages | append $child -}}
   {{- end -}}
 {{- end }}
-<section data-review-group>
+<section data-review-group data-review-section="{{ strings.TrimSuffix "/" (strings.TrimPrefix .versionRoot $section.RelPermalink) }}" data-review-section-label="{{ delimit $pathTitles " / " }}">
 <h2>{{ delimit $pathTitles " / " }}</h2>
 {{ partial "for-review-table.html" $pages }}
 </section>
 {{- range $childSection := $section.Sections.ByWeight -}}
-  {{- partial "for-review-section.html" (dict "section" $childSection "pathTitles" $pathTitles "excludePath" $.excludePath) -}}
+  {{- partial "for-review-section.html" (dict "section" $childSection "pathTitles" $pathTitles "excludePath" $.excludePath "versionRoot" $.versionRoot) -}}
 {{- end -}}

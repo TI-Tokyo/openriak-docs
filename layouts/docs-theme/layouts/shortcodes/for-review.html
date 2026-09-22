@@ -10,6 +10,8 @@
   <fieldset class="for-review-filters" data-review-filters hidden>
     <legend>Filter pages</legend>
     <div class="for-review-filter-controls">
+      <label>Site section<select data-review-section-filter><option value="">All sections</option></select></label>
+      <label class="for-review-include-children"><input type="checkbox" data-review-include-children checked disabled> Include children</label>
       {{- range slice
         (dict "key" "draft" "label" "Draft")
         (dict "key" "status" "label" "Status")
@@ -24,11 +26,11 @@
     <p class="for-review-count" data-review-count role="status" aria-live="polite"></p>
   </fieldset>
   <p data-review-empty hidden>No pages match these filters.</p>
-<section data-review-group>
+<section data-review-group data-review-section="@general" data-review-section-label="General">
 <h2>General</h2>
 {{ partial "for-review-table.html" $general }}
 </section>
 {{- range $section := $home.Sections.ByWeight -}}
-  {{- partial "for-review-section.html" (dict "section" $section "pathTitles" (slice) "excludePath" $.Page.Path) -}}
+  {{- partial "for-review-section.html" (dict "section" $section "pathTitles" (slice) "excludePath" $.Page.Path "versionRoot" $home.RelPermalink) -}}
 {{- end -}}
 </div>

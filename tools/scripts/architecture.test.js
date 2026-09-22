@@ -144,7 +144,7 @@ assert.match(previousVersionPartialSource, /index hugo\.Data\.versions \$product
 assert.match(previousVersionPartialSource, /previous-version has no previous release: product=%s version=%s page=%s/, 'previous-version must stop the build when no earlier release exists');
 assert.match(baseSource, /js\/theme\.js[^"\n]+\?v=/, 'theme picker script must be cache-busted');
 assert.match(baseSource, /js\/metadata\.js[\s\S]*js\/docs-runtime\.js[^"\n]+\?v=20260922-version-redirects/, 'shared metadata must load before the documentation runtime with its current cache key');
-assert.match(headSource, /css\/docs\.css[^"\n]+\?v=20260922-diataxis/, 'documentation styling must use its current cache key');
+assert.match(headSource, /css\/docs\.css[^"\n]+\?v=20260922-review-sections/, 'documentation styling must use its current cache key');
 assert.match(configurationReferenceShortcodeSource, /strings\.Split \.Inner "\\n"/, 'configuration reference filters must be one regex per body line so commas remain part of the regex');
 assert.match(configurationReferenceShortcodeSource, /\.Get "area"[\s\S]*in \$setting\.areas \$area/, 'configuration references must support repository-area filtering');
 assert.match(configurationReferenceShortcodeSource, /data-configuration-default-copy[\s\S]*data-configuration-os-icon/, 'configuration references must render copyable defaults and OS-specific indicators');
