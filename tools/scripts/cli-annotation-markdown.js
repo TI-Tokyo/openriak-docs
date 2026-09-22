@@ -50,7 +50,7 @@ function rows(body, file) {
         row.allowed_values = lines.map(l => unquote(l.slice(2)));
       } else row[id] = ['invocation', 'expected_output'].includes(id) ? unfence(field.body) : field.body;
     }
-    for (const flag of ['required', 'repeatable']) if (flag in row) {
+    for (const flag of ['required', 'repeatable', 'omit']) if (flag in row) {
       if (!['true', 'false'].includes(row[flag])) throw new Error(`${file}: ${flag} must be true or false`);
       row[flag] = row[flag] === 'true';
     }
@@ -74,10 +74,10 @@ function parseMarkdown(text, file = 'annotation') {
       if (Object.keys(data).some(k => !['command', 'versions'].includes(k))) throw new Error(`${file}: unknown metadata field`);
       if (data.command) entry.command = data.command;
       if (data.versions) entry.versions = data.versions.split(',').map(s => s.trim());
-    } else if (['arguments', 'options', 'examples', 'errors', 'results'].includes(name)) {
+    } else if (['arguments', 'shared_arguments', 'options', 'examples', 'errors', 'results'].includes(name)) {
       const items = rows(body, file);
       if (name === 'options') entry.option_overrides = items;
-      else if (name === 'arguments') entry.arguments = Object.entries(items).map(([name, row]) => ({name, ...row, format: row.description || row.format || ''}));
+      else if (['arguments', 'shared_arguments'].includes(name)) entry[name] = Object.entries(items).map(([name, row]) => ({name, ...row, format: row.description || row.format || ''}));
       else if (name === 'results') entry.results = Object.entries(items).map(([id, row]) => ({id, ...row}));
       else if (!Object.keys(items).length) entry[name] = [];
       else entry[name === 'examples' ? 'example_overrides' : 'error_overrides'] = items;
@@ -101,7 +101,8 @@ function readMarkdownLayers(directory, version) {
     if (!inferred || parts.length < 2) throw new Error(`${file}: use cli/COMMAND or riak-attach/MODULE/FUNCTION directories`);
     const entry = parseMarkdown(fs.readFileSync(file, 'utf8'), file);
     const id = entry.command || inferred;
-    if (id !== inferred && !id.startsWith(inferred + '/')) throw new Error(`${file}: command does not match its directory`);
+    const canonical = id.startsWith('erlang:') ? id.replace(/\/\d+(?=:|$)/, '') : id.replace(/(?: \*)+$/, '');
+    if (id !== inferred && canonical !== inferred) throw new Error(`${file}: command does not match its directory`);
     delete entry.command;
     return {name: relative.join('/'), commands: {[id]: entry}};
   });

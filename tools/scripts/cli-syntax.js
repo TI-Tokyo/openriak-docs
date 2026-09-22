@@ -7,6 +7,17 @@ const plain = text => ({text});
 const form = (tokens, label) => ({label, tokens, text: tokens.map(t => t.text).join('')});
 const active = page => !['unavailable', 'help_only'].includes(page.availability);
 
+// Canonicalize only an explicitly discovered command prefix. Underscores in
+// arguments, values, flags and Erlang function names are significant.
+function canonicalSyntax(text, reference) {
+  const value = normalize(text);
+  const aliases = reference.pages.filter(p => p.context === 'shell').flatMap(p =>
+    (p.aliases || []).map(alias => ({alias: normalize(alias), title: p.title})))
+    .sort((a,b) => b.alias.length - a.alias.length);
+  const match = aliases.find(({alias}) => value === alias || value.startsWith(alias + ' '));
+  return match ? match.title + value.slice(match.alias.length) : value;
+}
+
 function prefixTokens(words) {
   return [plain(words.join(' '))];
 }
@@ -57,7 +68,7 @@ function leafCandidates(page, items, reference, issues) {
 }
 
 function suppliedForm(text, page, reference, choices) {
-  const value = normalize(text);
+  const value = canonicalSyntax(text, reference);
   if (!value.startsWith(page.title)) return form([plain(value)],page.title);
   const tokens = prefixTokens(page.path);
   // Link discovered choices even when an incomplete parent retains supplied usage.
@@ -93,6 +104,53 @@ function directSuppliedChoices(page, provided, reference) {
     return alias?.path.at(-1) || name;
   })).sort();
 }
+function tupleFields(specification) {
+  const tuple = specification.slice(specification.indexOf('::') + 2).trim().replace(/\.$/, '').trim();
+  if (!tuple.startsWith('{') || !tuple.endsWith('}')) return [];
+  const fields = []; let depth = 0, start = 1;
+  for (let i = 1; i < tuple.length - 1; i++) {
+    if ('{(['.includes(tuple[i])) depth++;
+    if ('})]'.includes(tuple[i])) depth--;
+    if (tuple[i] === ',' && depth === 0) {fields.push(tuple.slice(start, i).trim());start=i+1;}
+  }
+  fields.push(tuple.slice(start,-1).trim());
+  return fields;
+}
+function erlangCandidates(page, items, issues) {
+  if (items.some(c => c.selector)) {
+    const parameters = page.parameters.filter(p => p.name !== 'Client');
+    const forms = [];
+    for (const item of items) for (const spec of item.specifications || []) {
+      const fields = tupleFields(spec);
+      if (fields[0] !== item.selector || fields.length - 1 > parameters.length) {
+        issues.push('Selector tuple fields cannot be matched to the documented arguments.');continue;
+      }
+      const args = parameters.slice(0, fields.length - 1);
+      const changes = args.find(a => a.name === 'ChangeMethod')?.allowedValues || [null];
+      for (const change of changes) {
+        const tuple = [item.selector,...args.map(a=>a.name === 'ChangeMethod' && change ? change : a.name)].join(', ');
+        const text = `${item.module}:${item.function}({${tuple}}${item.arity === 2 ? ', Client' : ''}).`;
+        forms.push(form([plain(text)], `${item.module}:${item.function}/${item.arity}${change ? ' — '+change : ''}`));
+      }
+    }
+    if (forms.length) return [...new Map(forms.map(f=>[f.text,f])).values()];
+  }
+  const forms = page.forms.flatMap(f => f.syntax.map(s => {
+    if (page.parameters.some(p=>p.name === 'Client')) {
+      // In streaming APIs the source variable Client denotes the receiving pid;
+      // the final parameterized-module tuple is the separate Riak client handle.
+      if (page.parameters.some(p=>p.name === 'Recipient')) s=s.replace(/\bClient\b(?=\s*,)/g,'Recipient');
+      s=s.replace(/\{(?:\?MODULE|riak_client),\s*\[[^\]]*\]\}(?:\s*=\s*(?:THIS|Client))?/g,'Client')
+        .replace(/\b(?:THIS|RiakClient|_Client)\b/g,'Client');
+    }
+    if (page.parameters.some(p=>p.name === 'Bucket')) s=s.replace(/\bBucketName\b/g,'Bucket');
+    if (page.parameters.some(p=>p.name === 'Timeout')) s=s.replace(/\bTimeout0\b/g,'Timeout');
+    if (page.key.startsWith('erlang:riak:client_connect/')) s=s.replace(/ClientId\s*=\s*<<_:32>>|\bOther\b/g,'ClientId');
+    if (page.key.startsWith('erlang:riak:client_test/')) s=s.replace(/\bNodeStr\b/g,'Node');
+    return form([plain(s)],f.label);
+  }));
+  return [...new Map(forms.map(f=>[f.text,f])).values()];
+}
 function buildSyntax(reference, document) {
   const byId = new Map(document.commands.map(c => [c.id,c]));
   const reviews = [];
@@ -103,7 +161,7 @@ function buildSyntax(reference, document) {
     const choices = page.context === 'shell' ? childChoices(page, reference) : [];
     if (page.context === 'erlang') {
       // Function heads and selector expressions already come from the inspected Erlang AST.
-      candidates = page.forms.flatMap(f => f.syntax.map(s => form([plain(s)],f.label)));
+      candidates = erlangCandidates(page,items,issues);
       basis = 'erlang_ast';
       if (!candidates.length) issues.push('No Erlang signature or selector expression was discovered.');
     } else if (choices.length) {
@@ -112,7 +170,9 @@ function buildSyntax(reference, document) {
       tokens.push(plain(' }'));
       candidates = [form(tokens,page.title)]; basis = 'command_tree';
       // Usage-derived flags on a parent can belong to a child (e.g. admin top).
-      const ownOptions = items.flatMap(c => [...(c.options || []),...(c.global_options || [])]).filter(o => o.source !== 'usage');
+      const visibleOptions = new Set(page.parameters.filter(p => p.kind === 'Option').map(p => p.name));
+      const ownOptions = items.flatMap(c => [...(c.options || []),...(c.global_options || [])])
+        .filter(o => o.source !== 'usage' && visibleOptions.has(o.name));
       const usageOptions = unique(items.flatMap(c => c.options || []).filter(o => o.source === 'usage').map(o=>o.name));
       if (usageOptions.length) issues.push(`Options scraped from this parent's usage may belong to subcommands and are omitted from the parent form: ${usageOptions.join(', ')}.`);
       if (ownOptions.length || items.some(c => Array.isArray(c.arguments) && c.arguments.some(a => a.source !== 'usage_placeholder'))) {
@@ -125,13 +185,13 @@ function buildSyntax(reference, document) {
     if (page.context === 'shell' && !supplied.length) issues.push('No supplied usage is available for comparison.');
     const generated = unique(candidates.map(f => f.text));
     const expected = unique(generated.map(normalize)).sort();
-    const actual = unique(supplied.map(normalize)).sort();
+    const actual = unique(supplied.map(s => canonicalSyntax(s, reference))).sort();
     const differs = supplied.length > 0 && JSON.stringify(expected) !== JSON.stringify(actual);
     if (differs) issues.push('Generated and supplied syntax differ; review the forms below (including order, grouping and option values).');
     if (page.context === 'shell' && !choices.length && differs) {
       const words = text => normalize(text).match(/--?[\w-]+|[A-Za-z_][\w.-]*/g) || [];
       const known = new Set(generated.flatMap(words).map(w=>w.toLowerCase()));
-      const unrepresented = unique(supplied.flatMap(words).filter(w=>!known.has(w.toLowerCase())));
+      const unrepresented = unique(actual.flatMap(words).filter(w=>!known.has(w.toLowerCase())));
       if (unrepresented.length) {
         issues.push(`Supplied syntax contains terms absent from the structured form: ${unrepresented.join(', ')}. Check for missing arguments, options or constraints.`);
         incomplete = true;
@@ -145,7 +205,8 @@ function buildSyntax(reference, document) {
     if (onlyInProvided.length) issues.push(`Supplied alternatives absent from the discovered subcommands: ${onlyInProvided.join(', ')}.`);
     if (page.reference.syntax) issues.push('A docs annotation overrides the displayed syntax; review it against the generated and supplied forms.');
     const fallback = incomplete && supplied.length > 0;
-    const displayed = fallback ? supplied.map(s => suppliedForm(s,page,reference,choices)) : candidates;
+    const displayed = fallback ? unique(supplied.map(s => canonicalSyntax(s,reference)))
+      .map(s => suppliedForm(s,page,reference,choices)) : candidates;
     // Never publish incomplete candidate guesses. If no source exists, show only the known command path.
     const forms = incomplete && !supplied.length ? [form(prefixTokens(page.path),page.title)] : displayed;
     page.syntax = {forms,basis: fallback ? 'supplied_usage' : basis,hasSubcommands:choices.length > 0,

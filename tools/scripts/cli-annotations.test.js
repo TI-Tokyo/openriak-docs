@@ -15,6 +15,27 @@ function write(root, name, text, commandPath = 'cli/riak/admin/describe') {
 }
 const review = () => `\n# Reviewed against\n\n3.4.1: ${reviewFingerprint(command)}\n`;
 
+test('every released CLI topic has usable annotations and matching runtime evidence', () => {
+  for (const version of ['3.4.0', '3.4.1']) {
+    const raw = JSON.parse(fs.readFileSync(path.join(__dirname, `../../content/openriak-kv/metadata/${version}/kv-cli-commands.json`)));
+    const ref = buildAnnotatedReference(raw);
+    assert.equal(ref.annotationCoverage.complete, ref.pages.length, version);
+    assert.deepEqual(ref.annotationCoverage.issues, [], version);
+    for (const page of ref.pages) {
+      assert.ok(page.reference.summary && page.reference.description, page.key);
+      assert.ok(page.reference.overrides.length, page.key);
+      for (const parameter of page.parameters) {
+        assert.ok(parameter.description, `${page.key}: ${parameter.name}`);
+        assert.ok(parameter.datatype || parameter.allowedValues?.length, `${page.key}: ${parameter.name} values`);
+      }
+      for (const example of page.reference.examples) {
+        assert.ok(example.title && example.invocation && example.description, page.key);
+        if (example.observed) assert.equal(example.observed.verification.image_id, raw.runtime.id);
+      }
+    }
+  }
+});
+
 test('Markdown retains multiple paragraphs, lists and code headings inside long fields', () => {
  const annotation = parseMarkdown('# Options\n\n## --format\nrequired: false\nrepeatable: false\ndefault: human\n\n### Valid values\n- human\n- `json`\n\n### Description\nFirst paragraph.\n\nSecond paragraph.\n\n```sh\n# not a section\necho hi\n```\n\n# Notes\n\n- A note\n- Another note');
  assert.equal(annotation.option_overrides['--format'].required,false);
@@ -46,6 +67,44 @@ test('changing an invocation does not reuse output as verified evidence', () => 
  write(root,'common','# Examples\n## describe:ok\n### Invocation\n```sh\nriak admin describe storage_backend\n```');
  const ref = buildAnnotatedReference(document,{overrideRoot:root}).pages[0].reference;
  assert.equal(ref.examples[0].invocation,'riak admin describe storage_backend');assert.equal(ref.examples[0].observed,undefined);assert.equal(ref.evidence[0].stdout,'ring_size: documentation');
+}));
+test('visible shell examples use riak while preserving exact evidence and argument quoting', () => fixture(root => {
+ const input=structuredClone(document), example=input.commands[0].reference.examples[0];
+ const launcher='VMARGS_PATH=/var/lib/riak/vm.args /usr/lib/riak/bin/riak';
+ for(const [invocation,display] of [
+  [`${launcher} admin cluster join openriak-kv@node2.test`,'riak admin cluster join openriak-kv@node2.test'],
+  [`RELX_COOKIE=wrong ${launcher} admin member-status`,'RELX_COOKIE=wrong riak admin member-status'],
+  [`env ${launcher} admin bucket-type update orders '{"props":{"allow_mult":true}}'`, `riak admin bucket-type update orders '{"props":{"allow_mult":true}}'`],
+  [`${launcher} eval '"/usr/lib/riak/bin/riak VMARGS_PATH=/var/lib/riak/vm.args".'`, `riak eval '"/usr/lib/riak/bin/riak VMARGS_PATH=/var/lib/riak/vm.args".'`],
+  ['VMARGS_PATH=/custom/node.args /usr/lib/riak/bin/riak ping','VMARGS_PATH=/custom/node.args riak ping'],
+  ['riak admin cluster plan','riak admin cluster plan'],
+ ]) {
+  example.invocation=invocation;
+  const rendered=buildAnnotatedReference(input,{overrideRoot:root}).pages[0].reference;
+  assert.equal(rendered.examples[0].display_invocation,display);
+  assert.equal(rendered.examples[0].invocation,invocation);
+  assert.equal(rendered.examples[0].observed.invocation,invocation);
+  assert.equal(rendered.evidence[0].invocation,invocation);
+ }
+ example.description=`On the joining node:\n\n\`\`\`sh\n${launcher} admin cluster join openriak-kv@node2.test\n\`\`\`\n\n\`\`\`text\n${launcher}\n\`\`\``;
+ const rendered=buildAnnotatedReference(input,{overrideRoot:root}).pages[0].reference.examples[0];
+ assert.ok(rendered.display_description.includes('```sh\nriak admin cluster join openriak-kv@node2.test\n```'));
+ assert.ok(rendered.display_description.includes('```text\n'+launcher+'\n```'));
+ assert.equal(rendered.observed.description,example.description);
+}));
+test('per-example test details retain matching setup and checks without unrelated cases', () => fixture(root => {
+ const input=structuredClone(document), proof=input.commands[0].reference.examples[0].verification;
+ Object.assign(proof,{scenario:'describe',case:'ok',sha256:'recipe-hash'});
+ input.coverage={scenarios:{scenarios:[{id:'describe',sha256:'recipe-hash',image_id:'sha256:test',steps:[
+  {phase:'setup',argv:['prepare']},{phase:'case_setup:ok',argv:['prepare-case']},
+  {phase:'case:ok',argv:['describe']},{phase:'verify:ok',argv:['read-back']},
+  {phase:'case:other',argv:['unrelated']}
+ ]}]}};
+ const example=buildAnnotatedReference(input,{overrideRoot:root}).pages[0].reference.examples[0];
+ assert.deepEqual(example.observed.test_steps.map(s=>s.argv[0]),['prepare','prepare-case','describe','read-back']);
+ assert.equal(input.commands[0].reference.examples[0].test_steps,undefined);
+ input.coverage.scenarios.scenarios[0].sha256='different-recipe';
+ assert.equal(buildAnnotatedReference(input,{overrideRoot:root}).pages[0].reference.examples[0].observed.test_steps,undefined);
 }));
 test('new authored examples and errors require complete descriptions', () => fixture(root => {
  write(root,'common','# Examples\n## local-example\ntitle: Another setting\n### Invocation\nriak admin describe storage_backend\n### Description\nRead its schema.\n\n# Errors\n## local-error\n### Condition\nUnknown name\n### Description\nAn error is printed.\n### Remedy\nCorrect the name.');
@@ -107,4 +166,49 @@ test('preview watcher notices nested Markdown edits, additions and removals, ret
   const valid=fs.readFileSync(output,'utf8');fs.writeFileSync(common,'# Unknown\nBad');await wait();
   assert.equal(fs.readFileSync(output,'utf8'),valid);assert.ok(errors.length);
  } finally {clearInterval(timer);console.log=log;console.error=error;fs.rmSync(root,{recursive:true,force:true});}
+});
+
+test('annotations can omit spurious discovered flags without editing source evidence', () => fixture(root => {
+ write(root,'common','# Options\n## --format\nomit: true');
+ const result=buildAnnotatedReference(document,{overrideRoot:root});
+ assert.deepEqual(result.pages[0].options,[]);
+ assert.deepEqual(result.pages[0].parameters,[]);
+ assert.equal(command.global_options[0].name,'--format');
+ write(root,'3.4.1','# Options\n## --format\nomit: false');
+ assert.equal(buildAnnotatedReference(document,{overrideRoot:root}).pages[0].options[0].name,'--format');
+}));
+test('nested selector annotations resolve an arity before the selector suffix', () => fixture(root => {
+ const c={id:'erlang:riak_client:aae_fold/1:list_buckets',context:'erlang',kind:'erlang_function',
+  module:'riak_client',function:'aae_fold',arity:1,path:['riak_client','aae_fold','list_buckets'],
+  selector:'list_buckets',arguments:[],options:[],signatures:['aae_fold(Query)'],availability:'available'};
+ write(root,'common','# Metadata\ncommand: erlang:riak_client:aae_fold/1:list_buckets\n\n# Summary\nList AAE buckets.','riak-attach/riak_client/aae_fold/list_buckets');
+ const result=buildAnnotatedReference({...document,commands:[c]},{overrideRoot:root});
+ assert.equal(result.pages[0].reference.summary,'List AAE buckets.');
+}));
+test('Erlang topics link to shared attach errors', () => fixture(root => {
+ const attach={id:'shell:riak attach',invocation:'riak attach',path:['riak','attach'],context:'shell',arguments:[],options:[],help:'',availability:'available'};
+ const api={id:'erlang:riak:local_client/0',module:'riak',function:'local_client',arity:0,context:'erlang',kind:'erlang_function',path:['riak','local_client'],arguments:[],options:[],signatures:['local_client()'],availability:'available'};
+ write(root,'common','# Errors\n## undef\n### Condition\nMissing function\n### Description\nundef\n### Remedy\nCheck the arity','cli/riak/attach');
+ const result=buildAnnotatedReference({...document,commands:[attach,api]},{overrideRoot:root});
+ assert.deepEqual(result.pages.find(p=>p.context==='erlang').reference.sharedErrors,[{route:'riak/attach',title:'riak attach'}]);
+}));
+
+test('module and operation parents own shared Erlang parameter descriptions',()=>{
+ const parsed=parseMarkdown('# Shared arguments\n\n## Client\n\ndatatype: riak_client handle\n\n### Description\n\nFirst paragraph.\n\nSecond paragraph.');
+ assert.equal(parsed.shared_arguments[0].name,'Client');
+ assert.match(parsed.shared_arguments[0].description,/First paragraph\.\n\nSecond paragraph/);
+ for(const version of ['3.4.0','3.4.1']) {
+  const ref=buildAnnotatedReference(JSON.parse(fs.readFileSync(`content/openriak-kv/metadata/${version}/kv-cli-commands.json`)));
+  const parent=ref.sections.find(p=>p.route==='erlang/riak-client');
+  assert.match(parent.reference.shared_arguments.find(p=>p.name==='Bucket').description, /\{<<"cli_examples">>, <<"orders">>\}/);
+  for(const page of ref.pages.filter(p=>p.route.startsWith('erlang/riak-client/'))) {
+   const client=page.parameters.find(p=>p.name==='Client');
+   if(client) assert.deepEqual(client.shared,{route:'erlang/riak-client',title:'riak_client',anchor:'argument-client'});
+  }
+  const erase=ref.pages.find(p=>p.route.endsWith('/erase-keys'));
+  assert.equal(erase.parameters.find(p=>p.name==='ModifiedRange').shared.route,'erlang/riak-client/aae-fold');
+  assert.equal(erase.parameters.find(p=>p.name==='Client').required,false);
+  const dates=ref.pages.find(p=>p.route==='erlang/riak-client/aae-fold').reference.shared_arguments.find(p=>p.name==='ModifiedRange');
+  assert.match(dates.description,/2026-12-24T23:59:59Z/);
+ }
 });

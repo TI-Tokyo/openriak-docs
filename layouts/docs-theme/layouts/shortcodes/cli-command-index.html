@@ -8,6 +8,15 @@
   {{- end -}}
 {{- end -}}
 {{ partial "cli/legacy.html" .Page }}
+{{- $page := .Page -}}
+{{- range where $context.reference.sections "route" $prefix -}}
+  {{ with .reference }}
+    {{ with .summary }}{{ $page.RenderString . }}{{ end }}
+    {{ with .description }}{{ $page.RenderString . }}{{ end }}
+    {{ partial "cli/shared-arguments.html" (dict "page" $page "arguments" .shared_arguments) }}
+    {{ range .notes }}{{ $page.RenderString . }}{{ end }}
+  {{ end }}
+{{- end -}}
 <p>Command reference for <strong>OpenRiak KV {{ $context.reference.version }}</strong>. Select a command for its syntax, options and help. Deprecated and unavailable commands are labelled.</p>
 {{ if $prefix }}<p><a href="{{ $context.root }}">All commands</a></p>{{ else }}
 <p>Terminal commands, Erlang shell operations and bundled helpers are listed separately. Alternate spellings link to the same command page; argument values and Erlang arities are documented together.</p>

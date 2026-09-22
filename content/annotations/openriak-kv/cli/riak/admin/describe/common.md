@@ -61,5 +61,5 @@ Describe two settings in one request. Separate their names with spaces.
 
 # Reviewed against
 
-3.4.0: 2f7e6c65659f42a6ab01bc2271c0341c7abfddad8596d95112d25b3b15a83f1f
-3.4.1: 2f7e6c65659f42a6ab01bc2271c0341c7abfddad8596d95112d25b3b15a83f1f
+3.4.0: 0aa6dc9a87ef20bc2268428f8855c33f3247e05ab1437eabf2e306e23d8a9263
+3.4.1: 0aa6dc9a87ef20bc2268428f8855c33f3247e05ab1437eabf2e306e23d8a9263

@@ -1,0 +1,11 @@
+{{- $page := .page -}}
+{{- with .arguments -}}
+<h2 id="shared-arguments">Shared arguments</h2>
+<div class="cli-table-scroll"><table class="cli-parameters">
+<colgroup><col class="cli-parameter-name"><col class="cli-parameter-values"><col></colgroup>
+<thead><tr><th scope="col">Name</th><th scope="col">Valid values</th><th scope="col">Description</th></tr></thead><tbody>
+{{ range . }}<tr id="argument-{{ lower .name }}"><td><code>{{ .name }}</code></td>
+<td>{{ partial "cli/valid-values.html" (dict "datatype" .datatype "allowedValues" .allowed_values) }}</td>
+<td>{{ $page.RenderString (dict "display" "block") .description }}</td></tr>{{ end }}
+</tbody></table></div>
+{{- end -}}

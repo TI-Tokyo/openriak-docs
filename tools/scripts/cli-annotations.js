@@ -16,13 +16,30 @@ const reviewFingerprint = command => crypto.createHash('sha256').update(JSON.str
   } : null
 }))).digest('hex');
 const defaultOverrideRoot = path.resolve(__dirname, '../../content/annotations/openriak-kv');
-const arrayFields = ['arguments', 'examples', 'results', 'errors', 'notes'];
+const arrayFields = ['arguments', 'shared_arguments', 'examples', 'results', 'errors', 'notes'];
 const exampleFields = ['id', 'title', 'invocation', 'description', 'prerequisites', 'outcome', 'expected_output'];
 const fields = {
   arguments: ['name', 'format', 'description', 'datatype', 'required', 'repeatable', 'allowed_values', 'default'], examples: exampleFields,
   results: ['id', 'description'], errors: ['id', 'condition', 'description', 'remedy']
 };
+fields.shared_arguments = fields.arguments;
 function plain(value) { return value && typeof value === 'object' && !Array.isArray(value); }
+function displayShellInvocation(text) {
+  // Change only the launcher prefix, preserving argument quoting and meaningful
+  // environment overrides (for example the cookie in an authentication example).
+  const value = String.raw`(?:'[^']*'|"(?:\\.|[^"\\])*"|[^\s"'\\]+)`;
+  const assignment = String.raw`[A-Za-z_][A-Za-z0-9_]*=${value}`;
+  const prefix = new RegExp(String.raw`^([ \t]*)(?:env[ \t]+)?((?:${assignment}[ \t]+)*)/usr/lib(?:64)?/riak/bin/riak(?=[ \t]|$)`, 'gm');
+  return text.replace(prefix, (_, indent, environment) => {
+    const overrides = environment.match(new RegExp(assignment, 'g')) || [];
+    const kept = overrides.filter(v => !/^VMARGS_PATH=(?:\/var\/lib\/riak\/vm\.args|'\/var\/lib\/riak\/vm\.args'|"\/var\/lib\/riak\/vm\.args")$/.test(v));
+    return indent + (kept.length ? kept.join(' ') + ' ' : '') + 'riak';
+  });
+}
+function displayExampleDescription(text) {
+  return text.replace(/(^```(?:sh|bash|shell|console)\s*\n)([\s\S]*?)(^```[ \t]*$)/gm,
+    (_, start, commands, end) => start + displayShellInvocation(commands) + end);
+}
 function validateEntry(entry, file) {
   const allowed = ['versions', 'reviewed_against', 'summary', 'description', 'syntax', 'related_documentation', ...arrayFields, 'example_overrides', 'error_overrides', 'option_overrides'];
   if (!plain(entry) || Object.keys(entry).some(k => !allowed.includes(k))) throw new Error(`${file}: unknown annotation fields`);
@@ -32,9 +49,9 @@ function validateEntry(entry, file) {
   if ('option_overrides' in entry) {
     if (!plain(entry.option_overrides)) throw new Error(`${file}: option_overrides must map flag names to fields`);
     for (const patch of Object.values(entry.option_overrides)) {
-      if (!plain(patch) || Object.keys(patch).some(k => !['description', 'datatype', 'required', 'repeatable', 'allowed_values', 'default'].includes(k)) ||
+      if (!plain(patch) || Object.keys(patch).some(k => !['description', 'datatype', 'required', 'repeatable', 'allowed_values', 'default', 'omit'].includes(k)) ||
           (['description', 'datatype'].some(k => k in patch && typeof patch[k] !== 'string')) ||
-          (['required', 'repeatable'].some(k => k in patch && typeof patch[k] !== 'boolean')) ||
+          (['required', 'repeatable', 'omit'].some(k => k in patch && typeof patch[k] !== 'boolean')) ||
           ('allowed_values' in patch && (!Array.isArray(patch.allowed_values) || patch.allowed_values.some(v => typeof v !== 'string'))) ||
           ('default' in patch && !['string', 'number', 'boolean'].includes(typeof patch.default))) throw new Error(`${file}: invalid option override`);
     }
@@ -49,10 +66,10 @@ function validateEntry(entry, file) {
         continue;
       }
       if (!plain(item) || Object.keys(item).some(k => !fields[field].includes(k)) || Object.entries(item).some(([k,v]) => ['required', 'repeatable'].includes(k) ? typeof v !== 'boolean' : k === 'allowed_values' ? !Array.isArray(v) || v.some(x => typeof x !== 'string') : typeof v !== 'string')) throw new Error(`${file}: invalid ${field} entry`);
-      const id = item[field === 'arguments' ? 'name' : 'id'];
+      const id = item[['arguments', 'shared_arguments'].includes(field) ? 'name' : 'id'];
       if (!id || ids.has(id)) throw new Error(`${file}: missing or duplicate ${field} ID`);
       ids.add(id);
-      const required = field === 'arguments' ? ['format'] : field === 'examples' ? ['invocation', 'description'] : field === 'errors' ? ['condition', 'description', 'remedy'] : ['description'];
+      const required = ['arguments', 'shared_arguments'].includes(field) ? ['format'] : field === 'examples' ? ['invocation', 'description'] : field === 'errors' ? ['condition', 'description', 'remedy'] : ['description'];
       if (required.some(k => !item[k])) throw new Error(`${file}: incomplete ${field} entry ${id}`);
       if (item.outcome && !['success', 'error'].includes(item.outcome)) throw new Error(`${file}: invalid outcome`);
     }
@@ -74,11 +91,18 @@ function readLayers(directory, version) {
 }
 function buildAnnotatedReference(document, { overrideRoot = defaultOverrideRoot } = {}) {
   const reference = buildReference(document);
+  const scenarioReports = new Map((document.coverage?.scenarios?.scenarios || []).map(s => [s.id, s]));
   const byId = new Map(document.commands.map(c => [c.id, c]));
   const report = { version: document.version, commands: [], issues: [], overridden: [] };
   const layers = readLayers(overrideRoot, document.version);
   for (const layer of layers) for (const [id, entry] of Object.entries(layer.commands)) {
     if (entry.versions && !entry.versions.includes(document.version)) continue;
+    const section = reference.sections.find(s => s.route.startsWith('erlang/') && id === `erlang:${s.title}`);
+    if (section) {
+      section.reference = {...section.reference, ...structuredClone(entry)};
+      delete layer.commands[id];
+      continue;
+    }
     if (!byId.has(id) && reference.pages.some(p => p.key === id)) {
       const target = reference.pages.find(p => p.key === id).ids[0];
       delete layer.commands[id]; layer.commands[target] = entry;
@@ -120,7 +144,7 @@ function buildAnnotatedReference(document, { overrideRoot = defaultOverrideRoot 
         const page = reference.pages.find(p => p.ids.includes(command.id));
         const option = page?.options.find(o => o.name === name);
         if (!option) throw new Error(`${layer.name}: unknown option ${name} on ${command.id}`);
-        for (const field of ['description', 'datatype', 'required', 'repeatable']) if (field in patch) option[field] = patch[field];
+        for (const field of ['description', 'datatype', 'required', 'repeatable', 'omit']) if (field in patch) option[field] = patch[field];
         if ('allowed_values' in patch) option.allowedValues = structuredClone(patch.allowed_values);
         if ('default' in patch) option.defaultValue = patch.default;
       }
@@ -129,9 +153,20 @@ function buildAnnotatedReference(document, { overrideRoot = defaultOverrideRoot 
       report.overridden.push({ command: command.id, file: layer.name });
     }
     for (const example of content.examples) {
+      if (command.context === 'shell') {
+        example.display_invocation = displayShellInvocation(example.invocation);
+        example.display_description = displayExampleDescription(example.description);
+      }
       const observed = evidence.find(e => e.id === example.id && e.invocation === example.invocation);
       if (observed?.verification) {
-        if (observed.verification.command_fingerprint === fingerprint(command) && observed.verification.image_id === document.runtime?.id) example.observed = observed;
+        if (observed.verification.command_fingerprint === fingerprint(command) && observed.verification.image_id === document.runtime?.id) {
+          example.observed = {...observed};
+          const report = scenarioReports.get(observed.verification.scenario);
+          if (report && report.sha256 === observed.verification.sha256 && report.image_id === observed.verification.image_id) {
+            example.observed.test_steps = (report.steps || []).filter(step =>
+              ['setup', `case_setup:${observed.verification.case}`, `case:${observed.verification.case}`, `verify:${observed.verification.case}`].includes(step.phase));
+          }
+        }
         else report.issues.push({ command: command.id, example: example.id, status: 'stale_evidence' });
       }
     }
@@ -146,6 +181,7 @@ function buildAnnotatedReference(document, { overrideRoot = defaultOverrideRoot 
       syntax: sources.map(s => s.content.syntax).filter(Boolean).join('\n\n'),
       related_documentation: sources.map(s => s.content.related_documentation).filter(Boolean).join('\n\n'),
       arguments: uniqueBy(sources.flatMap(s => s.content.arguments), 'name'),
+      shared_arguments: uniqueBy(sources.flatMap(s => s.content.shared_arguments), 'name'),
       argumentsDefined: sources.some(s => s.argumentsDefined),
       examples: uniqueBy(sources.flatMap(s => s.content.examples), 'id'),
       results: uniqueBy(sources.flatMap(s => s.content.results), 'id'),
@@ -157,6 +193,7 @@ function buildAnnotatedReference(document, { overrideRoot = defaultOverrideRoot 
     for (const example of content.examples) example.title ||= example.id.replace(/^[^:]+:/, '').replace(/-/g, ' ');
     page.reference = content;
     const rawArguments = content.argumentsDefined ? content.arguments : page.forms.flatMap(f => f.arguments);
+    page.options = page.options.filter(o => !o.omit);
     page.parameters = [...uniqueBy(rawArguments.map(a => ({...a, name: a.name || a.key || `Argument ${a.position}`,
       kind: 'Argument', description: a.description || a.format || '', allowedValues: a.allowed_values,
       ...(Object.hasOwn(a, 'default') ? {defaultValue: a.default} : {})})), 'name'),
@@ -166,9 +203,21 @@ function buildAnnotatedReference(document, { overrideRoot = defaultOverrideRoot 
       tested_examples: content.examples.filter(e => e.observed).length,
       overridden: Boolean(content.overrides.length) });
   }
+  // Keep each call's requiredness and type, but describe shared meanings once
+  // at the nearest annotated ancestor. Syntax still has all parameter names.
+  for (const page of reference.pages.filter(p => p.context === 'erlang')) {
+    const ancestors = [...reference.pages, ...reference.sections]
+      .filter(p => page.route.startsWith(p.route + '/') && p.reference?.shared_arguments?.length)
+      .sort((a,b) => b.route.length - a.route.length);
+    for (const parameter of page.parameters) {
+      const parent = ancestors.find(p => p.reference.shared_arguments.some(a => a.name === parameter.name));
+      if (parent) parameter.shared = {route: parent.route, title: parent.title,
+        anchor: 'argument-' + parameter.name.toLowerCase()};
+    }
+  }
   // Shared errors are documented once on the ancestors that define them.
   for (const page of reference.pages) {
-    page.reference.sharedErrors = reference.pages.filter(parent => page.route.startsWith(parent.route + '/') && parent.reference.errors.length)
+    page.reference.sharedErrors = reference.pages.filter(parent => (page.route.startsWith(parent.route + '/') || (page.context === 'erlang' && parent.key === 'shell:riak attach')) && parent.reference.errors.length)
       .map(parent => ({route: parent.route, title: parent.title}));
     const coverage = report.commands.find(c => c.key === page.key);
     if (page.reference.sharedErrors.length) coverage.missing = coverage.missing.filter(k => k !== 'errors');

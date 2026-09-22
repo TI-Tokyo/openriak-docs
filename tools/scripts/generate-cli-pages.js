@@ -45,7 +45,7 @@ pages are preserved. Build-time data is prepared by sync-product-metadata.js.`);
   const branchRoutes = new Set(reference.sections.map(s => s.route));
   for (const page of reference.pages) if (reference.pages.some(p => p.route.startsWith(page.route + '/'))) branchRoutes.add(page.route);
   const legacy = new Map();
-  for (const [route, file] of [['', '_index.md'], ['riak', 'riak.md'], ['riak-admin', 'riak-admin.md']]) {
+  for (const [route, file] of [['', '_index.md'], ['riak', 'riak.md']]) {
     const target = path.join(root, file);
     const branch = path.join(root, route, '_index.md');
     const existing = fs.existsSync(target) ? fs.readFileSync(target, 'utf8') : fs.existsSync(branch) ? fs.readFileSync(branch, 'utf8') : '';
@@ -85,8 +85,6 @@ pages are preserved. Build-time data is prepared by sync-product-metadata.js.`);
   for (const section of reference.sections) {
     if (!reference.pages.some(p => p.route === section.route)) page(section.route, section.title, '{{< cli-command-index >}}', { cli_command_prefix: section.route });
   }
-  // This historical URL remains a useful entry point and preserves old links.
-  page('riak-admin', 'riak admin command reference', '{{< cli-command-index >}}', { linkTitle: 'riak-admin', cli_command_prefix: 'riak/admin' });
   const obsolete = [];
   function walk(directory) {
     if (!fs.existsSync(directory)) return;
@@ -101,10 +99,10 @@ pages are preserved. Build-time data is prepared by sync-product-metadata.js.`);
   const oldRiak = path.join(root, 'riak.md');
   if (expected.has('riak/_index.md') && fs.existsSync(oldRiak) && !obsolete.includes(oldRiak)) obsolete.push(oldRiak);
   const changed = [...expected].filter(([file, text]) => !fs.existsSync(path.join(root, file)) || fs.readFileSync(path.join(root, file), 'utf8') !== text);
-  // Refuse accidental overwrites outside the three overview pages being replaced.
+  // Refuse accidental overwrites outside the overview pages being replaced.
   for (const [file] of changed) {
     const target = path.join(root, file);
-    if (fs.existsSync(target) && !['_index.md', 'riak.md', 'riak-admin.md'].includes(file)
+    if (fs.existsSync(target) && !['_index.md', 'riak.md'].includes(file)
         && !fs.readFileSync(target, 'utf8').includes(marker)) throw new Error(`Refusing to replace authored page ${target}`);
   }
   if (check) {

@@ -38,17 +38,17 @@
 {{ with .short }}<span>/</span><span class="cli-parameter-copyable"><code>{{ . }}</code><button class="download-copy" type="button" data-copy-value="{{ . }}" data-copy-label="Copy alias {{ . }}" aria-label="Copy alias {{ . }}" title="Copy alias {{ . }}" aria-live="polite">{{ partial "download-icon-copy.html" . }}</button></span>{{ end }}
 </div>
 <span class="cli-parameter-kind cli-parameter-kind--{{ lower .kind }}">{{ .kind }}</span>{{ if .hidden }} <span class="cli-status">Unadvertised</span>{{ end }}</td>
-<td>{{ if .allowedValues }}<ul class="cli-valid-values">{{ range .allowedValues }}<li><span class="configuration-reference-option"><code>{{ . }}</code><button class="download-copy" type="button" data-copy-value="{{ . }}" data-copy-label="Copy value {{ . }}" aria-label="Copy value {{ . }}" title="Copy value {{ . }}" aria-live="polite">{{ partial "download-icon-copy.html" . }}</button></span></li>{{ end }}</ul>
-{{ else }}{{ with .datatype }}{{ . }}{{ else }}{{ with .value }}Value placeholder: {{ . }}{{ else }}Not specified{{ end }}{{ end }}{{ end }}</td>
+<td>{{ partial "cli/valid-values.html" . }}</td>
 <td>{{ if isset . "defaultValue" }}<code>{{ .defaultValue }}</code>{{ else }}—{{ end }}</td>
 <td>
 {{ if or (isset . "required") (isset . "repeatable") }}<div class="cli-parameter-tags">
 {{ if isset . "required" }}<span class="cli-parameter-tag{{ if .required }} cli-parameter-tag--required{{ end }}">{{ if .required }}Required{{ else }}Optional{{ end }}</span>{{ end }}
 {{ if isset . "repeatable" }}<span class="cli-parameter-tag{{ if .repeatable }} cli-parameter-tag--repeatable{{ end }}">{{ if .repeatable }}Repeatable{{ else }}Not repeatable{{ end }}</span>{{ end }}
 </div>{{ end }}
-{{ with .description }}{{ $page.RenderString (dict "display" "block") . }}{{ end }}</td></tr>{{ end }}
+{{ if .shared }}<a href="{{ partial "cli/link.html" (dict "context" $context "route" .shared.route) }}#{{ .shared.anchor }}">{{ .name }} — shared argument on {{ .shared.title }}</a>{{ else }}{{ with .description }}{{ $page.RenderString (dict "display" "block") . }}{{ end }}{{ end }}</td></tr>{{ end }}
 </tbody></table></div>
 {{ else }}<p>This command has no individually documented arguments or options. See the syntax for available subcommands.</p>{{ end }}
+{{ partial "cli/shared-arguments.html" (dict "page" $page "arguments" $command.reference.shared_arguments) }}
 {{ if or $command.reference.description $command.description $command.children $command.reference.results $command.types (ne $command.availability "available") $command.deprecated }}
 <h2 id="description">Description</h2>
 {{ if ne $command.availability "available" }}
@@ -66,9 +66,9 @@
 {{ with $command.reference.description }}{{ $page.RenderString . }}{{ else }}{{ with $command.description }}{{ $page.RenderString . }}{{ else }}{{ with $command.reference.summary }}{{ $page.RenderString . }}{{ end }}{{ end }}{{ end }}
 {{ with $command.children }}<h3 id="subcommands">Subcommands</h3><ul>{{ range . }}<li><a href="{{ partial "cli/link.html" (dict "context" $context "route" .route) }}"><code>{{ .title }}</code></a>{{ if .deprecated }} — deprecated{{ end }}</li>{{ end }}</ul>{{ end }}
 {{ with $command.reference.results }}<h3 id="expected-results">Expected results</h3><ul>{{ range . }}<li>{{ $page.RenderString (dict "display" "block") .description }}</li>{{ end }}</ul>{{ end }}
-{{ with $command.types }}<details><summary>Erlang argument type definitions</summary>{{ range . }}{{ $page.RenderString (printf "```erlang\n%s\n```" .) }}{{ end }}</details>{{ end }}
+{{ with $command.types }}<details><summary>Erlang argument type definitions</summary>{{ range . }}{{ partial "code-block.html" (dict "Page" $page "Type" "erlang" "Attributes" dict "Inner" .) }}{{ end }}</details>{{ end }}
 {{ end }}
-{{ range $command.forms }}{{ range .specifications }}{{ $page.RenderString (printf "```erlang\n%s\n```" .) }}{{ end }}{{ end }}
+{{ range $command.forms }}{{ range .specifications }}{{ partial "code-block.html" (dict "Page" $page "Type" "erlang" "Attributes" dict "Inner" .) }}{{ end }}{{ end }}
 {{ if or $command.reference.notes $command.prerequisites (eq $command.context "erlang") }}
 <h2 id="notes">Notes</h2>
 {{ if eq $command.context "erlang" }}<p>Enter these expressions in an Erlang shell opened with <code>riak remote_console</code> or <code>riak daemon_attach</code>. Replace argument variables and any <code>...</code> placeholders with actual values.</p>{{ end }}
@@ -80,15 +80,24 @@
 {{ range $index, $example := . }}
 <section class="cli-example" data-cli-example-id="{{ .id }}" aria-labelledby="cli-example-{{ add $index 1 }}">
   <h3 id="cli-example-{{ add $index 1 }}">Example {{ add $index 1 }}: {{ .title }}</h3>
-  {{ $page.RenderString (dict "display" "block") .description }}
-  {{ with .prerequisites }}<div class="cli-prerequisites"><strong>Before running:</strong> {{ $page.RenderString . }}</div>{{ end }}
-  {{ $page.RenderString (printf "```%s\n%s\n```" (cond (eq $command.context "erlang") "erlang" "sh") .invocation) }}
-  {{ with .expected_output }}<p>Expected output:</p>{{ $page.RenderString (printf "```text\n%s\n```" .) }}{{ end }}
+  {{ if and .observed .observed.known_issue }}<p class="cli-example-outcome"><strong>Known runtime limitation.</strong> This records an unsupported or broken path in this release; it is not a successful usage example.</p>{{ else if eq .outcome "error" }}<p class="cli-example-outcome"><strong>Expected error.</strong> This example demonstrates the failure described below.</p>{{ end }}
+  {{ $page.RenderString (dict "display" "block") (.display_description | default .description) }}
+  {{ if not .observed }}{{ with .prerequisites }}<div class="cli-prerequisites"><strong>Before running:</strong> {{ $page.RenderString . }}</div>{{ end }}{{ end }}
+  {{ partial "code-block.html" (dict "Page" $page "Type" (cond (eq $command.context "erlang") "erlang" "sh") "Attributes" dict "Inner" (.display_invocation | default .invocation)) }}
+  {{ with .expected_output }}<p>Expected output:</p>{{ partial "code-block.html" (dict "Page" $page "Type" "text" "Attributes" dict "Inner" .) }}{{ end }}
   {{ with .observed }}
-  <details class="cli-observed"><summary>Observed output · exit status {{ .exit_code }}</summary>
-  {{ with .stdout }}<p>Standard output:</p>{{ $page.RenderString (printf "```text\n%s\n```" .) }}{{ end }}
-  {{ with .stderr }}<p>Standard error:</p>{{ $page.RenderString (printf "```text\n%s\n```" .) }}{{ end }}
-  <p>Tested on OpenRiak KV {{ $context.reference.version }} on <time datetime="{{ substr .verification.tested_at 0 10 }}">{{ substr .verification.tested_at 0 10 }}</time>.</p>
+  <details class="cli-observed"><summary>Example output · exit status {{ .exit_code }}</summary>
+  {{ with .stdout }}<p>Standard output:</p>{{ partial "code-block.html" (dict "Page" $page "Type" "text" "Attributes" dict "Inner" .) }}{{ end }}
+  {{ with .stderr }}<p>Standard error:</p>{{ partial "code-block.html" (dict "Page" $page "Type" "text" "Attributes" dict "Inner" .) }}{{ end }}
+  </details>
+  <details class="cli-test-details"><summary>Tested on OpenRiak KV {{ $context.reference.version }} · <time datetime="{{ substr .verification.tested_at 0 10 }}">{{ substr .verification.tested_at 0 10 }}</time></summary>
+  {{ with .prerequisites }}<div class="cli-prerequisites"><strong>Test environment:</strong> {{ $page.RenderString . }}</div>{{ end }}
+  <p>Exact test invocation:</p>
+  {{ partial "code-block.html" (dict "Page" $page "Type" (cond (eq $command.context "erlang") "erlang" "sh") "Attributes" dict "Inner" .invocation) }}
+  <p>Recipe: <code>{{ .verification.file }}</code>. Scenario: <code>{{ .verification.scenario }}</code>. Case: <code>{{ .verification.case }}</code>.</p>
+  <p>Runtime image: <code>{{ .verification.image_id }}</code>.</p>
+  {{ with .verification.checks }}<p>Verified the resulting state with {{ len . }} additional {{ if eq (len .) 1 }}check{{ else }}checks{{ end }}.</p>{{ end }}
+  {{ with .test_steps }}<details><summary>Executed setup, command and verification steps</summary>{{ partial "code-block.html" (dict "Page" $page "Type" "json" "Attributes" dict "Inner" (. | jsonify (dict "indent" "  "))) }}</details>{{ end }}
   </details>
   {{ end }}
 </section>
@@ -107,7 +116,7 @@
 {{ range $index, $form := $command.forms }}{{ with .help }}
   {{ $helpCount = add $helpCount 1 }}
   {{ if gt (len $command.forms) 1 }}<h3 id="help-{{ add $index 1 }}">{{ $form.label }}</h3>{{ end }}
-  {{ range . }}{{ $page.RenderString (printf "```text\n%s\n```" .) }}{{ end }}
+  {{ range . }}{{ partial "code-block.html" (dict "Page" $page "Type" "text" "Attributes" dict "Inner" .) }}{{ end }}
 {{ end }}{{ end }}
 {{ if not $helpCount }}<p>The release does not provide help text for this entry.</p>{{ end }}
 <details class="cli-sources"><summary>Reference sources</summary>
@@ -116,14 +125,14 @@
 <details class="cli-syntax-review"><summary>Syntax differences requiring manual review</summary>
 <ul>{{ range .issues }}<li>{{ . }}</li>{{ end }}</ul>
 <p>Generated candidates{{ if eq .displayed "supplied_usage" }} (the page retains the supplied usage because the structured metadata is incomplete){{ end }}:</p>
-{{ range .generated }}{{ $page.RenderString (printf "```text\n%s\n```" .) }}{{ end }}
-{{ with .supplied }}<p>Supplied syntax:</p>{{ range . }}{{ $page.RenderString (printf "```text\n%s\n```" .) }}{{ end }}{{ end }}
+{{ range .generated }}{{ partial "code-block.html" (dict "Page" $page "Type" "text" "Attributes" dict "Inner" .) }}{{ end }}
+{{ with .supplied }}<p>Supplied syntax:</p>{{ range . }}{{ partial "code-block.html" (dict "Page" $page "Type" "text" "Attributes" dict "Inner" .) }}{{ end }}{{ end }}
 </details>
 {{ end }}{{ end }}
 {{ with $command.reference.overrides }}<p>Editorial annotations: {{ delimit . ", " }}.</p>{{ end }}
 {{ with $command.reference.evidence }}
 <details><summary>Original scenario evidence</summary>
-{{ $page.RenderString (printf "```json\n%s\n```" (. | jsonify (dict "indent" "  "))) }}
+{{ partial "code-block.html" (dict "Page" $page "Type" "json" "Attributes" dict "Inner" (. | jsonify (dict "indent" "  "))) }}
 </details>
 {{ end }}
 <p>Extracted from the OpenRiak KV {{ $context.reference.version }} runtime and matching release source. Help is preserved as supplied by the release, including any format placeholders.</p>

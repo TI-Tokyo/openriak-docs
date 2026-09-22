@@ -24,5 +24,5 @@ Inspect a healthy, one-node example cluster. It owns 100% of the ring. A multi-n
 
 # Reviewed against
 
-3.4.0: 531c48fca7a0a6fa9d6d8e9c42706ef00aefbc789cba26dab682863c8438e50e
-3.4.1: 531c48fca7a0a6fa9d6d8e9c42706ef00aefbc789cba26dab682863c8438e50e
+3.4.0: 08db67ae1eb22e141241e5e8ca9896094480e04b61ddd9e9e87b004794249e8c
+3.4.1: 08db67ae1eb22e141241e5e8ca9896094480e04b61ddd9e9e87b004794249e8c

@@ -6,13 +6,15 @@
     {
       "key": "erlang:riak_client:aae_fold",
       "route": "erlang/riak-client/aae-fold",
-      "status": "matched",
+      "status": "needs_review",
       "basis": "erlang_ast",
       "displayed": "generated",
-      "issues": [],
+      "issues": [
+        "Generated and supplied syntax differ; review the forms below (including order, grouping and option values)."
+      ],
       "generated": [
         "riak_client:aae_fold(Query).",
-        "riak_client:aae_fold(Query, {riak_client, [Node, _ClientId]})."
+        "riak_client:aae_fold(Query, Client)."
       ],
       "supplied": [
         "riak_client:aae_fold(Query).",
@@ -31,8 +33,12 @@
         "Generated and supplied syntax differ; review the forms below (including order, grouping and option values)."
       ],
       "generated": [
-        "riak_client:aae_fold({erase_keys, ...}).",
-        "riak_client:aae_fold({erase_keys, ...}, Client)."
+        "riak_client:aae_fold({erase_keys, Bucket, KeyRange, SegmentFilter, ModifiedRange, count}).",
+        "riak_client:aae_fold({erase_keys, Bucket, KeyRange, SegmentFilter, ModifiedRange, local}).",
+        "riak_client:aae_fold({erase_keys, Bucket, KeyRange, SegmentFilter, ModifiedRange, {job, JobId}}).",
+        "riak_client:aae_fold({erase_keys, Bucket, KeyRange, SegmentFilter, ModifiedRange, count}, Client).",
+        "riak_client:aae_fold({erase_keys, Bucket, KeyRange, SegmentFilter, ModifiedRange, local}, Client).",
+        "riak_client:aae_fold({erase_keys, Bucket, KeyRange, SegmentFilter, ModifiedRange, {job, JobId}}, Client)."
       ],
       "supplied": [
         "riak_client:aae_fold(Query).",
@@ -51,8 +57,10 @@
         "Generated and supplied syntax differ; review the forms below (including order, grouping and option values)."
       ],
       "generated": [
-        "riak_client:aae_fold({fetch_clocks_nval, ...}).",
-        "riak_client:aae_fold({fetch_clocks_nval, ...}, Client)."
+        "riak_client:aae_fold({fetch_clocks_nval, NVal, Segments}).",
+        "riak_client:aae_fold({fetch_clocks_nval, NVal, Segments, ModifiedRange}).",
+        "riak_client:aae_fold({fetch_clocks_nval, NVal, Segments}, Client).",
+        "riak_client:aae_fold({fetch_clocks_nval, NVal, Segments, ModifiedRange}, Client)."
       ],
       "supplied": [
         "riak_client:aae_fold(Query).",
@@ -71,8 +79,8 @@
         "Generated and supplied syntax differ; review the forms below (including order, grouping and option values)."
       ],
       "generated": [
-        "riak_client:aae_fold({fetch_clocks_range, ...}).",
-        "riak_client:aae_fold({fetch_clocks_range, ...}, Client)."
+        "riak_client:aae_fold({fetch_clocks_range, Bucket, KeyRange, SegmentFilter, ModifiedRange}).",
+        "riak_client:aae_fold({fetch_clocks_range, Bucket, KeyRange, SegmentFilter, ModifiedRange}, Client)."
       ],
       "supplied": [
         "riak_client:aae_fold(Query).",
@@ -91,8 +99,8 @@
         "Generated and supplied syntax differ; review the forms below (including order, grouping and option values)."
       ],
       "generated": [
-        "riak_client:aae_fold({find_keys, ...}).",
-        "riak_client:aae_fold({find_keys, ...}, Client)."
+        "riak_client:aae_fold({find_keys, Bucket, KeyRange, ModifiedRange, Threshold}).",
+        "riak_client:aae_fold({find_keys, Bucket, KeyRange, ModifiedRange, Threshold}, Client)."
       ],
       "supplied": [
         "riak_client:aae_fold(Query).",
@@ -111,8 +119,8 @@
         "Generated and supplied syntax differ; review the forms below (including order, grouping and option values)."
       ],
       "generated": [
-        "riak_client:aae_fold({find_tombs, ...}).",
-        "riak_client:aae_fold({find_tombs, ...}, Client)."
+        "riak_client:aae_fold({find_tombs, Bucket, KeyRange, SegmentFilter, ModifiedRange}).",
+        "riak_client:aae_fold({find_tombs, Bucket, KeyRange, SegmentFilter, ModifiedRange}, Client)."
       ],
       "supplied": [
         "riak_client:aae_fold(Query).",
@@ -131,8 +139,8 @@
         "Generated and supplied syntax differ; review the forms below (including order, grouping and option values)."
       ],
       "generated": [
-        "riak_client:aae_fold({list_buckets, ...}).",
-        "riak_client:aae_fold({list_buckets, ...}, Client)."
+        "riak_client:aae_fold({list_buckets, NVal}).",
+        "riak_client:aae_fold({list_buckets, NVal}, Client)."
       ],
       "supplied": [
         "riak_client:aae_fold(Query).",
@@ -151,8 +159,8 @@
         "Generated and supplied syntax differ; review the forms below (including order, grouping and option values)."
       ],
       "generated": [
-        "riak_client:aae_fold({merge_branch_nval, ...}).",
-        "riak_client:aae_fold({merge_branch_nval, ...}, Client)."
+        "riak_client:aae_fold({merge_branch_nval, NVal, BranchFilter}).",
+        "riak_client:aae_fold({merge_branch_nval, NVal, BranchFilter}, Client)."
       ],
       "supplied": [
         "riak_client:aae_fold(Query).",
@@ -171,8 +179,8 @@
         "Generated and supplied syntax differ; review the forms below (including order, grouping and option values)."
       ],
       "generated": [
-        "riak_client:aae_fold({merge_root_nval, ...}).",
-        "riak_client:aae_fold({merge_root_nval, ...}, Client)."
+        "riak_client:aae_fold({merge_root_nval, NVal}).",
+        "riak_client:aae_fold({merge_root_nval, NVal}, Client)."
       ],
       "supplied": [
         "riak_client:aae_fold(Query).",
@@ -191,8 +199,8 @@
         "Generated and supplied syntax differ; review the forms below (including order, grouping and option values)."
       ],
       "generated": [
-        "riak_client:aae_fold({merge_tree_range, ...}).",
-        "riak_client:aae_fold({merge_tree_range, ...}, Client)."
+        "riak_client:aae_fold({merge_tree_range, Bucket, KeyRange, TreeSize, SegmentFilter, ModifiedRange, HashMethod}).",
+        "riak_client:aae_fold({merge_tree_range, Bucket, KeyRange, TreeSize, SegmentFilter, ModifiedRange, HashMethod}, Client)."
       ],
       "supplied": [
         "riak_client:aae_fold(Query).",
@@ -211,8 +219,8 @@
         "Generated and supplied syntax differ; review the forms below (including order, grouping and option values)."
       ],
       "generated": [
-        "riak_client:aae_fold({object_stats, ...}).",
-        "riak_client:aae_fold({object_stats, ...}, Client)."
+        "riak_client:aae_fold({object_stats, Bucket, KeyRange, ModifiedRange}).",
+        "riak_client:aae_fold({object_stats, Bucket, KeyRange, ModifiedRange}, Client)."
       ],
       "supplied": [
         "riak_client:aae_fold(Query).",
@@ -231,8 +239,12 @@
         "Generated and supplied syntax differ; review the forms below (including order, grouping and option values)."
       ],
       "generated": [
-        "riak_client:aae_fold({reap_tombs, ...}).",
-        "riak_client:aae_fold({reap_tombs, ...}, Client)."
+        "riak_client:aae_fold({reap_tombs, Bucket, KeyRange, SegmentFilter, ModifiedRange, count}).",
+        "riak_client:aae_fold({reap_tombs, Bucket, KeyRange, SegmentFilter, ModifiedRange, local}).",
+        "riak_client:aae_fold({reap_tombs, Bucket, KeyRange, SegmentFilter, ModifiedRange, {job, JobId}}).",
+        "riak_client:aae_fold({reap_tombs, Bucket, KeyRange, SegmentFilter, ModifiedRange, count}, Client).",
+        "riak_client:aae_fold({reap_tombs, Bucket, KeyRange, SegmentFilter, ModifiedRange, local}, Client).",
+        "riak_client:aae_fold({reap_tombs, Bucket, KeyRange, SegmentFilter, ModifiedRange, {job, JobId}}, Client)."
       ],
       "supplied": [
         "riak_client:aae_fold(Query).",
@@ -251,8 +263,8 @@
         "Generated and supplied syntax differ; review the forms below (including order, grouping and option values)."
       ],
       "generated": [
-        "riak_client:aae_fold({repair_keys_range, ...}).",
-        "riak_client:aae_fold({repair_keys_range, ...}, Client)."
+        "riak_client:aae_fold({repair_keys_range, Bucket, KeyRange, ModifiedRange, Filter}).",
+        "riak_client:aae_fold({repair_keys_range, Bucket, KeyRange, ModifiedRange, Filter}, Client)."
       ],
       "supplied": [
         "riak_client:aae_fold(Query).",
@@ -271,8 +283,8 @@
         "Generated and supplied syntax differ; review the forms below (including order, grouping and option values)."
       ],
       "generated": [
-        "riak_client:aae_fold({repl_keys_range, ...}).",
-        "riak_client:aae_fold({repl_keys_range, ...}, Client)."
+        "riak_client:aae_fold({repl_keys_range, Bucket, KeyRange, ModifiedRange, QueueName}).",
+        "riak_client:aae_fold({repl_keys_range, Bucket, KeyRange, ModifiedRange, QueueName}, Client)."
       ],
       "supplied": [
         "riak_client:aae_fold(Query).",
@@ -284,16 +296,18 @@
     {
       "key": "erlang:riak_client:delete",
       "route": "erlang/riak-client/delete",
-      "status": "matched",
+      "status": "needs_review",
       "basis": "erlang_ast",
       "displayed": "generated",
-      "issues": [],
+      "issues": [
+        "Generated and supplied syntax differ; review the forms below (including order, grouping and option values)."
+      ],
       "generated": [
-        "riak_client:delete(Bucket, Key, {riak_client, [_Node, _ClientId]} = THIS).",
-        "riak_client:delete(Bucket, Key, Options, {riak_client, [_Node, _ClientId]} = THIS).",
-        "riak_client:delete(Bucket, Key, RW, {riak_client, [_Node, _ClientId]} = THIS).",
-        "riak_client:delete(Bucket, Key, Options, Timeout, {riak_client, [Node, _ClientId]} = THIS).",
-        "riak_client:delete(Bucket, Key, RW, Timeout, {riak_client, [_Node, _ClientId]} = THIS)."
+        "riak_client:delete(Bucket, Key, Client).",
+        "riak_client:delete(Bucket, Key, Options, Client).",
+        "riak_client:delete(Bucket, Key, RW, Client).",
+        "riak_client:delete(Bucket, Key, Options, Timeout, Client).",
+        "riak_client:delete(Bucket, Key, RW, Timeout, Client)."
       ],
       "supplied": [
         "riak_client:delete(Bucket, Key, {riak_client, [_Node, _ClientId]} = THIS).",
@@ -308,16 +322,18 @@
     {
       "key": "erlang:riak_client:delete_vclock",
       "route": "erlang/riak-client/delete-vclock",
-      "status": "matched",
+      "status": "needs_review",
       "basis": "erlang_ast",
       "displayed": "generated",
-      "issues": [],
+      "issues": [
+        "Generated and supplied syntax differ; review the forms below (including order, grouping and option values)."
+      ],
       "generated": [
-        "riak_client:delete_vclock(Bucket, Key, VClock, {riak_client, [_Node, _ClientId]} = THIS).",
-        "riak_client:delete_vclock(Bucket, Key, VClock, Options, {riak_client, [_Node, _ClientId]} = THIS).",
-        "riak_client:delete_vclock(Bucket, Key, VClock, RW, {riak_client, [_Node, _ClientId]} = THIS).",
-        "riak_client:delete_vclock(Bucket, Key, VClock, Options, Timeout, {riak_client, [Node, _ClientId]} = THIS).",
-        "riak_client:delete_vclock(Bucket, Key, VClock, RW, Timeout, {riak_client, [_Node, _ClientId]} = THIS)."
+        "riak_client:delete_vclock(Bucket, Key, VClock, Client).",
+        "riak_client:delete_vclock(Bucket, Key, VClock, Options, Client).",
+        "riak_client:delete_vclock(Bucket, Key, VClock, RW, Client).",
+        "riak_client:delete_vclock(Bucket, Key, VClock, Options, Timeout, Client).",
+        "riak_client:delete_vclock(Bucket, Key, VClock, RW, Timeout, Client)."
       ],
       "supplied": [
         "riak_client:delete_vclock(Bucket, Key, VClock, {riak_client, [_Node, _ClientId]} = THIS).",
@@ -348,12 +364,14 @@
     {
       "key": "erlang:riak_client:fetch",
       "route": "erlang/riak-client/fetch",
-      "status": "matched",
+      "status": "needs_review",
       "basis": "erlang_ast",
       "displayed": "generated",
-      "issues": [],
+      "issues": [
+        "Generated and supplied syntax differ; review the forms below (including order, grouping and option values)."
+      ],
       "generated": [
-        "riak_client:fetch(QueueName, {riak_client, [Node, _ClientId]})."
+        "riak_client:fetch(QueueName, Client)."
       ],
       "supplied": [
         "riak_client:fetch(QueueName, {riak_client, [Node, _ClientId]})."
@@ -364,12 +382,14 @@
     {
       "key": "erlang:riak_client:filter_buckets",
       "route": "erlang/riak-client/filter-buckets",
-      "status": "matched",
+      "status": "needs_review",
       "basis": "erlang_ast",
       "displayed": "generated",
-      "issues": [],
+      "issues": [
+        "Generated and supplied syntax differ; review the forms below (including order, grouping and option values)."
+      ],
       "generated": [
-        "riak_client:filter_buckets(Fun, {riak_client, [_Node, _ClientId]} = THIS)."
+        "riak_client:filter_buckets(Fun, Client)."
       ],
       "supplied": [
         "riak_client:filter_buckets(Fun, {riak_client, [_Node, _ClientId]} = THIS)."
@@ -380,13 +400,15 @@
     {
       "key": "erlang:riak_client:filter_keys",
       "route": "erlang/riak-client/filter-keys",
-      "status": "matched",
+      "status": "needs_review",
       "basis": "erlang_ast",
       "displayed": "generated",
-      "issues": [],
+      "issues": [
+        "Generated and supplied syntax differ; review the forms below (including order, grouping and option values)."
+      ],
       "generated": [
-        "riak_client:filter_keys(Bucket, Fun, {riak_client, [_Node, _ClientId]} = THIS).",
-        "riak_client:filter_keys(Bucket, Fun, Timeout, {riak_client, [_Node, _ClientId]} = THIS)."
+        "riak_client:filter_keys(Bucket, Fun, Client).",
+        "riak_client:filter_keys(Bucket, Fun, Timeout, Client)."
       ],
       "supplied": [
         "riak_client:filter_keys(Bucket, Fun, {riak_client, [_Node, _ClientId]} = THIS).",
@@ -398,15 +420,17 @@
     {
       "key": "erlang:riak_client:get",
       "route": "erlang/riak-client/get",
-      "status": "matched",
+      "status": "needs_review",
       "basis": "erlang_ast",
       "displayed": "generated",
-      "issues": [],
+      "issues": [
+        "Generated and supplied syntax differ; review the forms below (including order, grouping and option values)."
+      ],
       "generated": [
-        "riak_client:get(Bucket, Key, {riak_client, [_Node, _ClientId]} = THIS).",
-        "riak_client:get(Bucket, Key, Options, {riak_client, [Node, _ClientId]} = THIS).",
-        "riak_client:get(Bucket, Key, R, {riak_client, [_Node, _ClientId]} = THIS).",
-        "riak_client:get(Bucket, Key, R, Timeout, {riak_client, [_Node, _ClientId]} = THIS)."
+        "riak_client:get(Bucket, Key, Client).",
+        "riak_client:get(Bucket, Key, Options, Client).",
+        "riak_client:get(Bucket, Key, R, Client).",
+        "riak_client:get(Bucket, Key, R, Timeout, Client)."
       ],
       "supplied": [
         "riak_client:get(Bucket, Key, {riak_client, [_Node, _ClientId]} = THIS).",
@@ -420,12 +444,14 @@
     {
       "key": "erlang:riak_client:get_bucket",
       "route": "erlang/riak-client/get-bucket",
-      "status": "matched",
+      "status": "needs_review",
       "basis": "erlang_ast",
       "displayed": "generated",
-      "issues": [],
+      "issues": [
+        "Generated and supplied syntax differ; review the forms below (including order, grouping and option values)."
+      ],
       "generated": [
-        "riak_client:get_bucket(BucketName, {riak_client, [Node, _ClientId]})."
+        "riak_client:get_bucket(Bucket, Client)."
       ],
       "supplied": [
         "riak_client:get_bucket(BucketName, {riak_client, [Node, _ClientId]})."
@@ -436,12 +462,14 @@
     {
       "key": "erlang:riak_client:get_client_id",
       "route": "erlang/riak-client/get-client-id",
-      "status": "matched",
+      "status": "needs_review",
       "basis": "erlang_ast",
       "displayed": "generated",
-      "issues": [],
+      "issues": [
+        "Generated and supplied syntax differ; review the forms below (including order, grouping and option values)."
+      ],
       "generated": [
-        "riak_client:get_client_id({riak_client, [_Node, ClientId]})."
+        "riak_client:get_client_id(Client)."
       ],
       "supplied": [
         "riak_client:get_client_id({riak_client, [_Node, ClientId]})."
@@ -452,13 +480,15 @@
     {
       "key": "erlang:riak_client:get_index",
       "route": "erlang/riak-client/get-index",
-      "status": "matched",
+      "status": "needs_review",
       "basis": "erlang_ast",
       "displayed": "generated",
-      "issues": [],
+      "issues": [
+        "Generated and supplied syntax differ; review the forms below (including order, grouping and option values)."
+      ],
       "generated": [
-        "riak_client:get_index(Bucket, Query, {riak_client, [_Node, _ClientId]} = THIS).",
-        "riak_client:get_index(Bucket, Query, Opts, {riak_client, [Node, _ClientId]})."
+        "riak_client:get_index(Bucket, Query, Client).",
+        "riak_client:get_index(Bucket, Query, Opts, Client)."
       ],
       "supplied": [
         "riak_client:get_index(Bucket, Query, {riak_client, [_Node, _ClientId]} = THIS).",
@@ -470,13 +500,15 @@
     {
       "key": "erlang:riak_client:get_stats",
       "route": "erlang/riak-client/get-stats",
-      "status": "matched",
+      "status": "needs_review",
       "basis": "erlang_ast",
       "displayed": "generated",
-      "issues": [],
+      "issues": [
+        "Generated and supplied syntax differ; review the forms below (including order, grouping and option values)."
+      ],
       "generated": [
-        "riak_client:get_stats(local, {riak_client, [Node, _ClientId]}).",
-        "riak_client:get_stats(global, {riak_client, [Node, _ClientId]})."
+        "riak_client:get_stats(local, Client).",
+        "riak_client:get_stats(global, Client)."
       ],
       "supplied": [
         "riak_client:get_stats(local, {riak_client, [Node, _ClientId]}).",
@@ -488,12 +520,14 @@
     {
       "key": "erlang:riak_client:hotbackup",
       "route": "erlang/riak-client/hotbackup",
-      "status": "matched",
+      "status": "needs_review",
       "basis": "erlang_ast",
       "displayed": "generated",
-      "issues": [],
+      "issues": [
+        "Generated and supplied syntax differ; review the forms below (including order, grouping and option values)."
+      ],
       "generated": [
-        "riak_client:hotbackup(BackupPath, DefaultNVal, PlanNVal, {riak_client, [Node, _ClientId]})."
+        "riak_client:hotbackup(BackupPath, DefaultNVal, PlanNVal, Client)."
       ],
       "supplied": [
         "riak_client:hotbackup(BackupPath, DefaultNVal, PlanNVal, {riak_client, [Node, _ClientId]})."
@@ -504,16 +538,18 @@
     {
       "key": "erlang:riak_client:list_buckets",
       "route": "erlang/riak-client/list-buckets",
-      "status": "matched",
+      "status": "needs_review",
       "basis": "erlang_ast",
       "displayed": "generated",
-      "issues": [],
+      "issues": [
+        "Generated and supplied syntax differ; review the forms below (including order, grouping and option values)."
+      ],
       "generated": [
-        "riak_client:list_buckets({riak_client, [_Node, _ClientId]} = THIS).",
-        "riak_client:list_buckets(undefined, {riak_client, [_Node, _ClientId]} = THIS).",
-        "riak_client:list_buckets(Timeout, {riak_client, [_Node, _ClientId]} = THIS).",
-        "riak_client:list_buckets(Filter, Timeout, {riak_client, [_Node, _ClientId]} = THIS).",
-        "riak_client:list_buckets(Filter, Timeout, Type, {riak_client, [Node, _ClientId]})."
+        "riak_client:list_buckets(Client).",
+        "riak_client:list_buckets(undefined, Client).",
+        "riak_client:list_buckets(Timeout, Client).",
+        "riak_client:list_buckets(Filter, Timeout, Client).",
+        "riak_client:list_buckets(Filter, Timeout, Type, Client)."
       ],
       "supplied": [
         "riak_client:list_buckets({riak_client, [_Node, _ClientId]} = THIS).",
@@ -528,14 +564,16 @@
     {
       "key": "erlang:riak_client:list_keys",
       "route": "erlang/riak-client/list-keys",
-      "status": "matched",
+      "status": "needs_review",
       "basis": "erlang_ast",
       "displayed": "generated",
-      "issues": [],
+      "issues": [
+        "Generated and supplied syntax differ; review the forms below (including order, grouping and option values)."
+      ],
       "generated": [
-        "riak_client:list_keys(Bucket, {riak_client, [_Node, _ClientId]} = THIS).",
-        "riak_client:list_keys(Bucket, Timeout, {riak_client, [_Node, _ClientId]} = THIS).",
-        "riak_client:list_keys(Bucket, Filter, Timeout0, {riak_client, [Node, _ClientId]})."
+        "riak_client:list_keys(Bucket, Client).",
+        "riak_client:list_keys(Bucket, Timeout, Client).",
+        "riak_client:list_keys(Bucket, Filter, Timeout, Client)."
       ],
       "supplied": [
         "riak_client:list_keys(Bucket, {riak_client, [_Node, _ClientId]} = THIS).",
@@ -580,12 +618,14 @@
     {
       "key": "erlang:riak_client:push",
       "route": "erlang/riak-client/push",
-      "status": "matched",
+      "status": "needs_review",
       "basis": "erlang_ast",
       "displayed": "generated",
-      "issues": [],
+      "issues": [
+        "Generated and supplied syntax differ; review the forms below (including order, grouping and option values)."
+      ],
       "generated": [
-        "riak_client:push(RObjMaybeBin, IsDeleted, Opts, RiakClient)."
+        "riak_client:push(RObjMaybeBin, IsDeleted, Opts, Client)."
       ],
       "supplied": [
         "riak_client:push(RObjMaybeBin, IsDeleted, Opts, RiakClient)."
@@ -596,17 +636,19 @@
     {
       "key": "erlang:riak_client:put",
       "route": "erlang/riak-client/put",
-      "status": "matched",
+      "status": "needs_review",
       "basis": "erlang_ast",
       "displayed": "generated",
-      "issues": [],
+      "issues": [
+        "Generated and supplied syntax differ; review the forms below (including order, grouping and option values)."
+      ],
       "generated": [
-        "riak_client:put(RObj, {riak_client, [_Node, _ClientId]} = THIS).",
-        "riak_client:put(RObj, Options, {riak_client, [Node, _ClientId]} = THIS).",
-        "riak_client:put(RObj, W, {riak_client, [_Node, _ClientId]} = THIS).",
-        "riak_client:put(RObj, W, DW, {riak_client, [_Node, _ClientId]} = THIS).",
-        "riak_client:put(RObj, W, DW, Timeout, {riak_client, [_Node, _ClientId]} = THIS).",
-        "riak_client:put(RObj, W, DW, Timeout, Options, {riak_client, [_Node, _ClientId]} = THIS)."
+        "riak_client:put(RObj, Client).",
+        "riak_client:put(RObj, Options, Client).",
+        "riak_client:put(RObj, W, Client).",
+        "riak_client:put(RObj, W, DW, Client).",
+        "riak_client:put(RObj, W, DW, Timeout, Client).",
+        "riak_client:put(RObj, W, DW, Timeout, Options, Client)."
       ],
       "supplied": [
         "riak_client:put(RObj, {riak_client, [_Node, _ClientId]} = THIS).",
@@ -622,12 +664,14 @@
     {
       "key": "erlang:riak_client:query",
       "route": "erlang/riak-client/query",
-      "status": "matched",
+      "status": "needs_review",
       "basis": "erlang_ast",
       "displayed": "generated",
-      "issues": [],
+      "issues": [
+        "Generated and supplied syntax differ; review the forms below (including order, grouping and option values)."
+      ],
       "generated": [
-        "riak_client:query(Query, {riak_client, [Node, _ClientId]})."
+        "riak_client:query(Query, Client)."
       ],
       "supplied": [
         "riak_client:query(Query, {riak_client, [Node, _ClientId]})."
@@ -638,13 +682,15 @@
     {
       "key": "erlang:riak_client:reap",
       "route": "erlang/riak-client/reap",
-      "status": "matched",
+      "status": "needs_review",
       "basis": "erlang_ast",
       "displayed": "generated",
-      "issues": [],
+      "issues": [
+        "Generated and supplied syntax differ; review the forms below (including order, grouping and option values)."
+      ],
       "generated": [
         "riak_client:reap(Bucket, Key, Client).",
-        "riak_client:reap(Bucket, Key, TombClock, {riak_client, [Node, _ClientId]})."
+        "riak_client:reap(Bucket, Key, TombClock, Client)."
       ],
       "supplied": [
         "riak_client:reap(Bucket, Key, Client).",
@@ -656,12 +702,14 @@
     {
       "key": "erlang:riak_client:reload_all",
       "route": "erlang/riak-client/reload-all",
-      "status": "matched",
+      "status": "needs_review",
       "basis": "erlang_ast",
       "displayed": "generated",
-      "issues": [],
+      "issues": [
+        "Generated and supplied syntax differ; review the forms below (including order, grouping and option values)."
+      ],
       "generated": [
-        "riak_client:reload_all(Module, {riak_client, [Node, _ClientId]})."
+        "riak_client:reload_all(Module, Client)."
       ],
       "supplied": [
         "riak_client:reload_all(Module, {riak_client, [Node, _ClientId]})."
@@ -672,12 +720,14 @@
     {
       "key": "erlang:riak_client:remove_from_cluster",
       "route": "erlang/riak-client/remove-from-cluster",
-      "status": "matched",
+      "status": "needs_review",
       "basis": "erlang_ast",
       "displayed": "generated",
-      "issues": [],
+      "issues": [
+        "Generated and supplied syntax differ; review the forms below (including order, grouping and option values)."
+      ],
       "generated": [
-        "riak_client:remove_from_cluster(ExitingNode, {riak_client, [Node, _ClientId]})."
+        "riak_client:remove_from_cluster(ExitingNode, Client)."
       ],
       "supplied": [
         "riak_client:remove_from_cluster(ExitingNode, {riak_client, [Node, _ClientId]})."
@@ -752,12 +802,14 @@
     {
       "key": "erlang:riak_client:reset_bucket",
       "route": "erlang/riak-client/reset-bucket",
-      "status": "matched",
+      "status": "needs_review",
       "basis": "erlang_ast",
       "displayed": "generated",
-      "issues": [],
+      "issues": [
+        "Generated and supplied syntax differ; review the forms below (including order, grouping and option values)."
+      ],
       "generated": [
-        "riak_client:reset_bucket(BucketName, {riak_client, [Node, _ClientId]})."
+        "riak_client:reset_bucket(Bucket, Client)."
       ],
       "supplied": [
         "riak_client:reset_bucket(BucketName, {riak_client, [Node, _ClientId]})."
@@ -784,12 +836,14 @@
     {
       "key": "erlang:riak_client:set_bucket",
       "route": "erlang/riak-client/set-bucket",
-      "status": "matched",
+      "status": "needs_review",
       "basis": "erlang_ast",
       "displayed": "generated",
-      "issues": [],
+      "issues": [
+        "Generated and supplied syntax differ; review the forms below (including order, grouping and option values)."
+      ],
       "generated": [
-        "riak_client:set_bucket(BucketName, BucketProps, {riak_client, [Node, _ClientId]})."
+        "riak_client:set_bucket(Bucket, BucketProps, Client)."
       ],
       "supplied": [
         "riak_client:set_bucket(BucketName, BucketProps, {riak_client, [Node, _ClientId]})."
@@ -800,13 +854,15 @@
     {
       "key": "erlang:riak_client:stream_get_index",
       "route": "erlang/riak-client/stream-get-index",
-      "status": "matched",
+      "status": "needs_review",
       "basis": "erlang_ast",
       "displayed": "generated",
-      "issues": [],
+      "issues": [
+        "Generated and supplied syntax differ; review the forms below (including order, grouping and option values)."
+      ],
       "generated": [
-        "riak_client:stream_get_index(Bucket, Query, {riak_client, [_Node, _ClientId]} = THIS).",
-        "riak_client:stream_get_index(Bucket, Query, Opts, {riak_client, [Node, _ClientId]})."
+        "riak_client:stream_get_index(Bucket, Query, Client).",
+        "riak_client:stream_get_index(Bucket, Query, Opts, Client)."
       ],
       "supplied": [
         "riak_client:stream_get_index(Bucket, Query, {riak_client, [_Node, _ClientId]} = THIS).",
@@ -818,19 +874,21 @@
     {
       "key": "erlang:riak_client:stream_list_buckets",
       "route": "erlang/riak-client/stream-list-buckets",
-      "status": "matched",
+      "status": "needs_review",
       "basis": "erlang_ast",
       "displayed": "generated",
-      "issues": [],
+      "issues": [
+        "Generated and supplied syntax differ; review the forms below (including order, grouping and option values)."
+      ],
       "generated": [
-        "riak_client:stream_list_buckets({riak_client, [_Node, _ClientId]} = THIS).",
-        "riak_client:stream_list_buckets(undefined, {riak_client, [_Node, _ClientId]} = THIS).",
-        "riak_client:stream_list_buckets(Timeout, {riak_client, [_Node, _ClientId]} = THIS).",
-        "riak_client:stream_list_buckets(Filter, {riak_client, [_Node, _ClientId]} = THIS).",
-        "riak_client:stream_list_buckets(Filter, Timeout, {riak_client, [_Node, _ClientId]} = THIS).",
-        "riak_client:stream_list_buckets(Filter, Timeout, Client, {riak_client, [_Node, _ClientId]} = THIS).",
-        "riak_client:stream_list_buckets(Filter, Timeout, Type, {riak_client, [_Node, _ClientId]} = THIS).",
-        "riak_client:stream_list_buckets(Filter, Timeout, Client, Type, {riak_client, [Node, _ClientId]})."
+        "riak_client:stream_list_buckets(Client).",
+        "riak_client:stream_list_buckets(undefined, Client).",
+        "riak_client:stream_list_buckets(Timeout, Client).",
+        "riak_client:stream_list_buckets(Filter, Client).",
+        "riak_client:stream_list_buckets(Filter, Timeout, Client).",
+        "riak_client:stream_list_buckets(Filter, Timeout, Recipient, Client).",
+        "riak_client:stream_list_buckets(Filter, Timeout, Type, Client).",
+        "riak_client:stream_list_buckets(Filter, Timeout, Recipient, Type, Client)."
       ],
       "supplied": [
         "riak_client:stream_list_buckets({riak_client, [_Node, _ClientId]} = THIS).",
@@ -848,15 +906,17 @@
     {
       "key": "erlang:riak_client:stream_list_keys",
       "route": "erlang/riak-client/stream-list-keys",
-      "status": "matched",
+      "status": "needs_review",
       "basis": "erlang_ast",
       "displayed": "generated",
-      "issues": [],
+      "issues": [
+        "Generated and supplied syntax differ; review the forms below (including order, grouping and option values)."
+      ],
       "generated": [
-        "riak_client:stream_list_keys(Bucket, {riak_client, [_Node, _ClientId]} = THIS).",
-        "riak_client:stream_list_keys(Bucket, undefined, {riak_client, [_Node, _ClientId]} = THIS).",
-        "riak_client:stream_list_keys(Bucket, Timeout, {riak_client, [_Node, _ClientId]} = THIS).",
-        "riak_client:stream_list_keys(Input, Timeout, Client, {riak_client, [Node, _ClientId]})."
+        "riak_client:stream_list_keys(Bucket, Client).",
+        "riak_client:stream_list_keys(Bucket, undefined, Client).",
+        "riak_client:stream_list_keys(Bucket, Timeout, Client).",
+        "riak_client:stream_list_keys(Input, Timeout, Recipient, Client)."
       ],
       "supplied": [
         "riak_client:stream_list_keys(Bucket, {riak_client, [_Node, _ClientId]} = THIS).",
@@ -1478,48 +1538,18 @@
       "displayed": "known_path_only",
       "issues": [
         "Whether --advanced_conf_file takes a value is not recorded.",
-        "Whether --advanced_conf_file is required is not recorded.",
-        "Whether --advanced_conf_file is repeatable is not recorded.",
-        "Whether --allow_extra takes a value is not recorded.",
-        "Whether --allow_extra is required is not recorded.",
-        "Whether --allow_extra is repeatable is not recorded.",
         "Whether --conf_file takes a value is not recorded.",
-        "Whether --conf_file is required is not recorded.",
-        "Whether --conf_file is repeatable is not recorded.",
         "Whether --dest_dir takes a value is not recorded.",
-        "Whether --dest_dir is required is not recorded.",
-        "Whether --dest_dir is repeatable is not recorded.",
         "Whether --dest_file takes a value is not recorded.",
-        "Whether --dest_file is required is not recorded.",
-        "Whether --dest_file is repeatable is not recorded.",
         "Whether --etc_dir takes a value is not recorded.",
-        "Whether --etc_dir is required is not recorded.",
-        "Whether --etc_dir is repeatable is not recorded.",
-        "Whether --help takes a value is not recorded.",
-        "Whether --help is required is not recorded.",
-        "Whether --help is repeatable is not recorded.",
         "Whether --log_level takes a value is not recorded.",
-        "Whether --log_level is required is not recorded.",
-        "Whether --log_level is repeatable is not recorded.",
         "Whether --max_history takes a value is not recorded.",
-        "Whether --max_history is required is not recorded.",
-        "Whether --max_history is repeatable is not recorded.",
-        "Whether --print takes a value is not recorded.",
-        "Whether --print is required is not recorded.",
-        "Whether --print is repeatable is not recorded.",
         "Whether --schema_dir takes a value is not recorded.",
-        "Whether --schema_dir is required is not recorded.",
-        "Whether --schema_dir is repeatable is not recorded.",
         "Whether --schema_file takes a value is not recorded.",
-        "Whether --schema_file is required is not recorded.",
-        "Whether --schema_file is repeatable is not recorded.",
-        "Whether --silent takes a value is not recorded.",
-        "Whether --silent is required is not recorded.",
-        "Whether --silent is repeatable is not recorded.",
         "No supplied usage is available for comparison."
       ],
       "generated": [
-        "cuttlefish describe --advanced_conf_file|-a <value?> --allow_extra|-x <value?> --conf_file|-c <value?> --dest_dir|-d <value?> --dest_file|-f <value?> --etc_dir|-e <value?> --help|-h <value?> --log_level|-l <value?> --max_history|-m <value?> --print|-p <value?> --schema_dir|-s <value?> --schema_file|-i <value?> --silent|-t <value?>"
+        "cuttlefish describe <variable> [--advanced_conf_file|-a <value?>] [--allow_extra|-x] [--conf_file|-c <value?> ...] [--dest_dir|-d <value?>] [--dest_file|-f <value?>] [--etc_dir|-e <value?>] [--help|-h] [--log_level|-l <value?>] [--max_history|-m <value?>] [--print|-p] [--schema_dir|-s <value?>] [--schema_file|-i <value?> ...] [--silent|-t]"
       ],
       "supplied": [],
       "missingFromProvided": [],
@@ -1533,48 +1563,18 @@
       "displayed": "known_path_only",
       "issues": [
         "Whether --advanced_conf_file takes a value is not recorded.",
-        "Whether --advanced_conf_file is required is not recorded.",
-        "Whether --advanced_conf_file is repeatable is not recorded.",
-        "Whether --allow_extra takes a value is not recorded.",
-        "Whether --allow_extra is required is not recorded.",
-        "Whether --allow_extra is repeatable is not recorded.",
         "Whether --conf_file takes a value is not recorded.",
-        "Whether --conf_file is required is not recorded.",
-        "Whether --conf_file is repeatable is not recorded.",
         "Whether --dest_dir takes a value is not recorded.",
-        "Whether --dest_dir is required is not recorded.",
-        "Whether --dest_dir is repeatable is not recorded.",
         "Whether --dest_file takes a value is not recorded.",
-        "Whether --dest_file is required is not recorded.",
-        "Whether --dest_file is repeatable is not recorded.",
         "Whether --etc_dir takes a value is not recorded.",
-        "Whether --etc_dir is required is not recorded.",
-        "Whether --etc_dir is repeatable is not recorded.",
-        "Whether --help takes a value is not recorded.",
-        "Whether --help is required is not recorded.",
-        "Whether --help is repeatable is not recorded.",
         "Whether --log_level takes a value is not recorded.",
-        "Whether --log_level is required is not recorded.",
-        "Whether --log_level is repeatable is not recorded.",
         "Whether --max_history takes a value is not recorded.",
-        "Whether --max_history is required is not recorded.",
-        "Whether --max_history is repeatable is not recorded.",
-        "Whether --print takes a value is not recorded.",
-        "Whether --print is required is not recorded.",
-        "Whether --print is repeatable is not recorded.",
         "Whether --schema_dir takes a value is not recorded.",
-        "Whether --schema_dir is required is not recorded.",
-        "Whether --schema_dir is repeatable is not recorded.",
         "Whether --schema_file takes a value is not recorded.",
-        "Whether --schema_file is required is not recorded.",
-        "Whether --schema_file is repeatable is not recorded.",
-        "Whether --silent takes a value is not recorded.",
-        "Whether --silent is required is not recorded.",
-        "Whether --silent is repeatable is not recorded.",
         "No supplied usage is available for comparison."
       ],
       "generated": [
-        "cuttlefish effective --advanced_conf_file|-a <value?> --allow_extra|-x <value?> --conf_file|-c <value?> --dest_dir|-d <value?> --dest_file|-f <value?> --etc_dir|-e <value?> --help|-h <value?> --log_level|-l <value?> --max_history|-m <value?> --print|-p <value?> --schema_dir|-s <value?> --schema_file|-i <value?> --silent|-t <value?>"
+        "cuttlefish effective [--advanced_conf_file|-a <value?>] [--allow_extra|-x] [--conf_file|-c <value?> ...] [--dest_dir|-d <value?>] [--dest_file|-f <value?>] [--etc_dir|-e <value?>] [--help|-h] [--log_level|-l <value?>] [--max_history|-m <value?>] [--print|-p] [--schema_dir|-s <value?>] [--schema_file|-i <value?> ...] [--silent|-t]"
       ],
       "supplied": [],
       "missingFromProvided": [],
@@ -1588,48 +1588,18 @@
       "displayed": "known_path_only",
       "issues": [
         "Whether --advanced_conf_file takes a value is not recorded.",
-        "Whether --advanced_conf_file is required is not recorded.",
-        "Whether --advanced_conf_file is repeatable is not recorded.",
-        "Whether --allow_extra takes a value is not recorded.",
-        "Whether --allow_extra is required is not recorded.",
-        "Whether --allow_extra is repeatable is not recorded.",
         "Whether --conf_file takes a value is not recorded.",
-        "Whether --conf_file is required is not recorded.",
-        "Whether --conf_file is repeatable is not recorded.",
         "Whether --dest_dir takes a value is not recorded.",
-        "Whether --dest_dir is required is not recorded.",
-        "Whether --dest_dir is repeatable is not recorded.",
         "Whether --dest_file takes a value is not recorded.",
-        "Whether --dest_file is required is not recorded.",
-        "Whether --dest_file is repeatable is not recorded.",
         "Whether --etc_dir takes a value is not recorded.",
-        "Whether --etc_dir is required is not recorded.",
-        "Whether --etc_dir is repeatable is not recorded.",
-        "Whether --help takes a value is not recorded.",
-        "Whether --help is required is not recorded.",
-        "Whether --help is repeatable is not recorded.",
         "Whether --log_level takes a value is not recorded.",
-        "Whether --log_level is required is not recorded.",
-        "Whether --log_level is repeatable is not recorded.",
         "Whether --max_history takes a value is not recorded.",
-        "Whether --max_history is required is not recorded.",
-        "Whether --max_history is repeatable is not recorded.",
-        "Whether --print takes a value is not recorded.",
-        "Whether --print is required is not recorded.",
-        "Whether --print is repeatable is not recorded.",
         "Whether --schema_dir takes a value is not recorded.",
-        "Whether --schema_dir is required is not recorded.",
-        "Whether --schema_dir is repeatable is not recorded.",
         "Whether --schema_file takes a value is not recorded.",
-        "Whether --schema_file is required is not recorded.",
-        "Whether --schema_file is repeatable is not recorded.",
-        "Whether --silent takes a value is not recorded.",
-        "Whether --silent is required is not recorded.",
-        "Whether --silent is repeatable is not recorded.",
         "No supplied usage is available for comparison."
       ],
       "generated": [
-        "cuttlefish generate --advanced_conf_file|-a <value?> --allow_extra|-x <value?> --conf_file|-c <value?> --dest_dir|-d <value?> --dest_file|-f <value?> --etc_dir|-e <value?> --help|-h <value?> --log_level|-l <value?> --max_history|-m <value?> --print|-p <value?> --schema_dir|-s <value?> --schema_file|-i <value?> --silent|-t <value?>"
+        "cuttlefish generate [--advanced_conf_file|-a <value?>] [--allow_extra|-x] [--conf_file|-c <value?> ...] [--dest_dir|-d <value?>] [--dest_file|-f <value?>] [--etc_dir|-e <value?>] [--help|-h] [--log_level|-l <value?>] [--max_history|-m <value?>] [--print|-p] [--schema_dir|-s <value?>] [--schema_file|-i <value?> ...] [--silent|-t]"
       ],
       "supplied": [],
       "missingFromProvided": [],
@@ -1643,48 +1613,18 @@
       "displayed": "known_path_only",
       "issues": [
         "Whether --advanced_conf_file takes a value is not recorded.",
-        "Whether --advanced_conf_file is required is not recorded.",
-        "Whether --advanced_conf_file is repeatable is not recorded.",
-        "Whether --allow_extra takes a value is not recorded.",
-        "Whether --allow_extra is required is not recorded.",
-        "Whether --allow_extra is repeatable is not recorded.",
         "Whether --conf_file takes a value is not recorded.",
-        "Whether --conf_file is required is not recorded.",
-        "Whether --conf_file is repeatable is not recorded.",
         "Whether --dest_dir takes a value is not recorded.",
-        "Whether --dest_dir is required is not recorded.",
-        "Whether --dest_dir is repeatable is not recorded.",
         "Whether --dest_file takes a value is not recorded.",
-        "Whether --dest_file is required is not recorded.",
-        "Whether --dest_file is repeatable is not recorded.",
         "Whether --etc_dir takes a value is not recorded.",
-        "Whether --etc_dir is required is not recorded.",
-        "Whether --etc_dir is repeatable is not recorded.",
-        "Whether --help takes a value is not recorded.",
-        "Whether --help is required is not recorded.",
-        "Whether --help is repeatable is not recorded.",
         "Whether --log_level takes a value is not recorded.",
-        "Whether --log_level is required is not recorded.",
-        "Whether --log_level is repeatable is not recorded.",
         "Whether --max_history takes a value is not recorded.",
-        "Whether --max_history is required is not recorded.",
-        "Whether --max_history is repeatable is not recorded.",
-        "Whether --print takes a value is not recorded.",
-        "Whether --print is required is not recorded.",
-        "Whether --print is repeatable is not recorded.",
         "Whether --schema_dir takes a value is not recorded.",
-        "Whether --schema_dir is required is not recorded.",
-        "Whether --schema_dir is repeatable is not recorded.",
         "Whether --schema_file takes a value is not recorded.",
-        "Whether --schema_file is required is not recorded.",
-        "Whether --schema_file is repeatable is not recorded.",
-        "Whether --silent takes a value is not recorded.",
-        "Whether --silent is required is not recorded.",
-        "Whether --silent is repeatable is not recorded.",
         "No supplied usage is available for comparison."
       ],
       "generated": [
-        "cuttlefish help --advanced_conf_file|-a <value?> --allow_extra|-x <value?> --conf_file|-c <value?> --dest_dir|-d <value?> --dest_file|-f <value?> --etc_dir|-e <value?> --help|-h <value?> --log_level|-l <value?> --max_history|-m <value?> --print|-p <value?> --schema_dir|-s <value?> --schema_file|-i <value?> --silent|-t <value?>"
+        "cuttlefish help [--advanced_conf_file|-a <value?>] [--allow_extra|-x] [--conf_file|-c <value?> ...] [--dest_dir|-d <value?>] [--dest_file|-f <value?>] [--etc_dir|-e <value?>] [--help|-h] [--log_level|-l <value?>] [--max_history|-m <value?>] [--print|-p] [--schema_dir|-s <value?>] [--schema_file|-i <value?> ...] [--silent|-t]"
       ],
       "supplied": [],
       "missingFromProvided": [],
@@ -1712,21 +1652,12 @@
       "route": "helpers/install-upgrade.escript/downgrade",
       "status": "needs_review",
       "basis": "arguments_and_options",
-      "displayed": "known_path_only",
+      "displayed": "generated",
       "issues": [
-        "Whether Command is required is not recorded.",
-        "Whether Command is repeatable is not recorded.",
-        "Whether DistInfoStr is required is not recorded.",
-        "Whether DistInfoStr is repeatable is not recorded.",
-        "Whether Version is required is not recorded.",
-        "Whether Version is repeatable is not recorded.",
-        "Whether --no-permanent takes a value is not recorded.",
-        "Whether --no-permanent is required is not recorded.",
-        "Whether --no-permanent is repeatable is not recorded.",
         "No supplied usage is available for comparison."
       ],
       "generated": [
-        "install_upgrade.escript downgrade <Command> <DistInfoStr> <Version> --no-permanent <value?>"
+        "install_upgrade.escript downgrade <DistInfoStr> <Version> [--no-permanent]"
       ],
       "supplied": [],
       "missingFromProvided": [],
@@ -1737,21 +1668,12 @@
       "route": "helpers/install-upgrade.escript/install",
       "status": "needs_review",
       "basis": "arguments_and_options",
-      "displayed": "known_path_only",
+      "displayed": "generated",
       "issues": [
-        "Whether Command is required is not recorded.",
-        "Whether Command is repeatable is not recorded.",
-        "Whether DistInfoStr is required is not recorded.",
-        "Whether DistInfoStr is repeatable is not recorded.",
-        "Whether Version is required is not recorded.",
-        "Whether Version is repeatable is not recorded.",
-        "Whether --no-permanent takes a value is not recorded.",
-        "Whether --no-permanent is required is not recorded.",
-        "Whether --no-permanent is repeatable is not recorded.",
         "No supplied usage is available for comparison."
       ],
       "generated": [
-        "install_upgrade.escript install <Command> <DistInfoStr> <Version> --no-permanent <value?>"
+        "install_upgrade.escript install <DistInfoStr> <Version> [--no-permanent]"
       ],
       "supplied": [],
       "missingFromProvided": [],
@@ -1762,21 +1684,12 @@
       "route": "helpers/install-upgrade.escript/uninstall",
       "status": "needs_review",
       "basis": "arguments_and_options",
-      "displayed": "known_path_only",
+      "displayed": "generated",
       "issues": [
-        "Whether Command is required is not recorded.",
-        "Whether Command is repeatable is not recorded.",
-        "Whether DistInfoStr is required is not recorded.",
-        "Whether DistInfoStr is repeatable is not recorded.",
-        "Whether Version is required is not recorded.",
-        "Whether Version is repeatable is not recorded.",
-        "Whether --no-permanent takes a value is not recorded.",
-        "Whether --no-permanent is required is not recorded.",
-        "Whether --no-permanent is repeatable is not recorded.",
         "No supplied usage is available for comparison."
       ],
       "generated": [
-        "install_upgrade.escript uninstall <Command> <DistInfoStr> <Version> --no-permanent <value?>"
+        "install_upgrade.escript uninstall <DistInfoStr> <Version> [--no-permanent]"
       ],
       "supplied": [],
       "missingFromProvided": [],
@@ -1787,21 +1700,12 @@
       "route": "helpers/install-upgrade.escript/unpack",
       "status": "needs_review",
       "basis": "arguments_and_options",
-      "displayed": "known_path_only",
+      "displayed": "generated",
       "issues": [
-        "Whether Command is required is not recorded.",
-        "Whether Command is repeatable is not recorded.",
-        "Whether DistInfoStr is required is not recorded.",
-        "Whether DistInfoStr is repeatable is not recorded.",
-        "Whether Version is required is not recorded.",
-        "Whether Version is repeatable is not recorded.",
-        "Whether --no-permanent takes a value is not recorded.",
-        "Whether --no-permanent is required is not recorded.",
-        "Whether --no-permanent is repeatable is not recorded.",
         "No supplied usage is available for comparison."
       ],
       "generated": [
-        "install_upgrade.escript unpack <Command> <DistInfoStr> <Version> --no-permanent <value?>"
+        "install_upgrade.escript unpack <DistInfoStr> <Version> [--no-permanent]"
       ],
       "supplied": [],
       "missingFromProvided": [],
@@ -1812,21 +1716,12 @@
       "route": "helpers/install-upgrade.escript/upgrade",
       "status": "needs_review",
       "basis": "arguments_and_options",
-      "displayed": "known_path_only",
+      "displayed": "generated",
       "issues": [
-        "Whether Command is required is not recorded.",
-        "Whether Command is repeatable is not recorded.",
-        "Whether DistInfoStr is required is not recorded.",
-        "Whether DistInfoStr is repeatable is not recorded.",
-        "Whether Version is required is not recorded.",
-        "Whether Version is repeatable is not recorded.",
-        "Whether --no-permanent takes a value is not recorded.",
-        "Whether --no-permanent is required is not recorded.",
-        "Whether --no-permanent is repeatable is not recorded.",
         "No supplied usage is available for comparison."
       ],
       "generated": [
-        "install_upgrade.escript upgrade <Command> <DistInfoStr> <Version> --no-permanent <value?>"
+        "install_upgrade.escript upgrade <DistInfoStr> <Version> [--no-permanent]"
       ],
       "supplied": [],
       "missingFromProvided": [],
@@ -1837,21 +1732,12 @@
       "route": "helpers/install-upgrade.escript/versions",
       "status": "needs_review",
       "basis": "arguments_and_options",
-      "displayed": "known_path_only",
+      "displayed": "generated",
       "issues": [
-        "Whether Command is required is not recorded.",
-        "Whether Command is repeatable is not recorded.",
-        "Whether DistInfoStr is required is not recorded.",
-        "Whether DistInfoStr is repeatable is not recorded.",
-        "Whether Version is required is not recorded.",
-        "Whether Version is repeatable is not recorded.",
-        "Whether --no-permanent takes a value is not recorded.",
-        "Whether --no-permanent is required is not recorded.",
-        "Whether --no-permanent is repeatable is not recorded.",
         "No supplied usage is available for comparison."
       ],
       "generated": [
-        "install_upgrade.escript versions <Command> <DistInfoStr> <Version> --no-permanent <value?>"
+        "install_upgrade.escript versions <DistInfoStr> [--no-permanent]"
       ],
       "supplied": [],
       "missingFromProvided": [],
@@ -1890,19 +1776,11 @@
       "basis": "arguments_and_options",
       "displayed": "supplied_usage",
       "issues": [
-        "Whether -name is required is not recorded.",
-        "Whether -name is repeatable is not recorded.",
-        "Whether -setcookie is required is not recorded.",
-        "Whether -setcookie is repeatable is not recorded.",
-        "Whether -sname is required is not recorded.",
-        "Whether -sname is repeatable is not recorded.",
-        "Whether -start_epmd is required is not recorded.",
-        "Whether -start_epmd is repeatable is not recorded.",
         "Generated and supplied syntax differ; review the forms below (including order, grouping and option values).",
-        "Supplied syntax contains terms absent from the structured form: ping, stop, restart, reboot, rpc, rpcterms, Terms, RPC. Check for missing arguments, options or constraints."
+        "Supplied syntax contains terms absent from the structured form: ping, stop, restart, reboot, rpc, rpcterms, RPC. Check for missing arguments, options or constraints."
       ],
       "generated": [
-        "nodetool eval -name <TargetName> -setcookie <Cookie> -sname <TargetName> -start_epmd <StartEpmd>"
+        "nodetool eval <Terms> [-name <TargetName>] [-setcookie <Cookie>] [-sname <TargetName>] [-start_epmd <StartEpmd>]"
       ],
       "supplied": [
         "Usage: nodetool {ping|stop|restart|reboot|rpc|rpcterms|eval [Terms]} [RPC]"
@@ -1917,19 +1795,11 @@
       "basis": "arguments_and_options",
       "displayed": "supplied_usage",
       "issues": [
-        "Whether -name is required is not recorded.",
-        "Whether -name is repeatable is not recorded.",
-        "Whether -setcookie is required is not recorded.",
-        "Whether -setcookie is repeatable is not recorded.",
-        "Whether -sname is required is not recorded.",
-        "Whether -sname is repeatable is not recorded.",
-        "Whether -start_epmd is required is not recorded.",
-        "Whether -start_epmd is repeatable is not recorded.",
         "Generated and supplied syntax differ; review the forms below (including order, grouping and option values).",
         "Supplied syntax contains terms absent from the structured form: ping, stop, restart, reboot, rpcterms, eval, Terms. Check for missing arguments, options or constraints."
       ],
       "generated": [
-        "nodetool rpc -name <TargetName> -setcookie <Cookie> -sname <TargetName> -start_epmd <StartEpmd>"
+        "nodetool rpc <Module> <Function> [<Arguments> ...] [-name <TargetName>] [-setcookie <Cookie>] [-sname <TargetName>] [-start_epmd <StartEpmd>]"
       ],
       "supplied": [
         "Usage: nodetool {ping|stop|restart|reboot|rpc|rpcterms|eval [Terms]} [RPC]"
@@ -1942,10 +1812,9 @@
       "route": "riak",
       "status": "needs_review",
       "basis": "command_tree",
-      "displayed": "supplied_usage",
+      "displayed": "generated",
       "issues": [
         "Options scraped from this parent's usage may belong to subcommands and are omitted from the parent form: --no-permanent.",
-        "This parent also has argument or option declarations; their position relative to subcommands needs review.",
         "Generated and supplied syntax differ; review the forms below (including order, grouping and option values)."
       ],
       "generated": [
@@ -1996,13 +1865,10 @@
     {
       "key": "shell:riak admin aae-status",
       "route": "riak/admin/aae-status",
-      "status": "needs_review",
+      "status": "matched",
       "basis": "arguments_and_options",
-      "displayed": "supplied_usage",
-      "issues": [
-        "Generated and supplied syntax differ; review the forms below (including order, grouping and option values).",
-        "Supplied syntax contains terms absent from the structured form: aae_status. Check for missing arguments, options or constraints."
-      ],
+      "displayed": "generated",
+      "issues": [],
       "generated": [
         "riak admin aae-status"
       ],
@@ -2020,18 +1886,11 @@
       "basis": "arguments_and_options",
       "displayed": "supplied_usage",
       "issues": [
-        "Argument metadata was extracted as usage placeholders; positional order and grouping need review.",
-        "Whether node is required is not recorded.",
-        "Whether node is repeatable is not recorded.",
-        "Whether cookie is required is not recorded.",
-        "Whether cookie is repeatable is not recorded.",
-        "Whether filename is required is not recorded.",
-        "Whether filename is repeatable is not recorded.",
         "Generated and supplied syntax differ; review the forms below (including order, grouping and option values).",
         "Supplied syntax contains terms absent from the structured form: all. Check for missing arguments, options or constraints."
       ],
       "generated": [
-        "riak admin backup <node> <cookie> <filename>"
+        "riak admin backup <node> <cookie> <filename> <scope>"
       ],
       "supplied": [
         "Usage: riak admin backup <node> <cookie> <filename> [node|all]"
@@ -2060,14 +1919,10 @@
     {
       "key": "shell:riak admin bucket-type activate",
       "route": "riak/admin/bucket-type/activate",
-      "status": "needs_review",
+      "status": "matched",
       "basis": "arguments_and_options",
-      "displayed": "supplied_usage",
-      "issues": [
-        "Argument metadata was extracted as usage placeholders; positional order and grouping need review.",
-        "Whether type is required is not recorded.",
-        "Whether type is repeatable is not recorded."
-      ],
+      "displayed": "generated",
+      "issues": [],
       "generated": [
         "riak admin bucket-type activate <type>"
       ],
@@ -2084,14 +1939,11 @@
       "basis": "arguments_and_options",
       "displayed": "supplied_usage",
       "issues": [
-        "Argument metadata was extracted as usage placeholders; positional order and grouping need review.",
-        "Whether type is required is not recorded.",
-        "Whether type is repeatable is not recorded.",
         "Generated and supplied syntax differ; review the forms below (including order, grouping and option values).",
         "Supplied syntax contains terms absent from the structured form: props. Check for missing arguments, options or constraints."
       ],
       "generated": [
-        "riak admin bucket-type create <type>"
+        "riak admin bucket-type create <type> [<properties>]"
       ],
       "supplied": [
         "Usage: riak admin bucket-type create <type> ['{\"props\": { ... }}']"
@@ -2118,14 +1970,10 @@
     {
       "key": "shell:riak admin bucket-type status",
       "route": "riak/admin/bucket-type/status",
-      "status": "needs_review",
+      "status": "matched",
       "basis": "arguments_and_options",
-      "displayed": "supplied_usage",
-      "issues": [
-        "Argument metadata was extracted as usage placeholders; positional order and grouping need review.",
-        "Whether type is required is not recorded.",
-        "Whether type is repeatable is not recorded."
-      ],
+      "displayed": "generated",
+      "issues": [],
       "generated": [
         "riak admin bucket-type status <type>"
       ],
@@ -2142,14 +1990,11 @@
       "basis": "arguments_and_options",
       "displayed": "supplied_usage",
       "issues": [
-        "Argument metadata was extracted as usage placeholders; positional order and grouping need review.",
-        "Whether type is required is not recorded.",
-        "Whether type is repeatable is not recorded.",
         "Generated and supplied syntax differ; review the forms below (including order, grouping and option values).",
         "Supplied syntax contains terms absent from the structured form: props. Check for missing arguments, options or constraints."
       ],
       "generated": [
-        "riak admin bucket-type update <type>"
+        "riak admin bucket-type update <type> <properties>"
       ],
       "supplied": [
         "Usage: riak admin bucket-type update <type> '{\"props\": { ... }}'"
@@ -2183,16 +2028,11 @@
       "basis": "arguments_and_options",
       "displayed": "supplied_usage",
       "issues": [
-        "Argument metadata was extracted as usage placeholders; positional order and grouping need review.",
-        "Whether output_file is required is not recorded.",
-        "Whether output_file is repeatable is not recorded.",
-        "Whether node is required is not recorded.",
-        "Whether node is repeatable is not recorded.",
         "Generated and supplied syntax differ; review the forms below (including order, grouping and option values).",
-        "Supplied syntax contains terms absent from the structured form: local, cluster_info. Check for missing arguments, options or constraints."
+        "Supplied syntax contains terms absent from the structured form: local. Check for missing arguments, options or constraints."
       ],
       "generated": [
-        "riak admin cluster-info <output_file> <node>"
+        "riak admin cluster-info <output_file> [<node> ...]"
       ],
       "supplied": [
         "Usage: riak admin cluster-info <output_file> ['local' | <node> ['local' | <node>] [...]]",
@@ -2236,14 +2076,10 @@
     {
       "key": "shell:riak admin cluster force-remove",
       "route": "riak/admin/cluster/force-remove",
-      "status": "needs_review",
+      "status": "matched",
       "basis": "arguments_and_options",
-      "displayed": "supplied_usage",
-      "issues": [
-        "Argument metadata was extracted as usage placeholders; positional order and grouping need review.",
-        "Whether node is required is not recorded.",
-        "Whether node is repeatable is not recorded."
-      ],
+      "displayed": "generated",
+      "issues": [],
       "generated": [
         "riak admin cluster force-remove <node>"
       ],
@@ -2256,16 +2092,10 @@
     {
       "key": "shell:riak admin cluster force-replace",
       "route": "riak/admin/cluster/force-replace",
-      "status": "needs_review",
+      "status": "matched",
       "basis": "arguments_and_options",
-      "displayed": "supplied_usage",
-      "issues": [
-        "Argument metadata was extracted as usage placeholders; positional order and grouping need review.",
-        "Whether node1 is required is not recorded.",
-        "Whether node1 is repeatable is not recorded.",
-        "Whether node2 is required is not recorded.",
-        "Whether node2 is repeatable is not recorded."
-      ],
+      "displayed": "generated",
+      "issues": [],
       "generated": [
         "riak admin cluster force-replace <node1> <node2>"
       ],
@@ -2278,14 +2108,10 @@
     {
       "key": "shell:riak admin cluster join",
       "route": "riak/admin/cluster/join",
-      "status": "needs_review",
+      "status": "matched",
       "basis": "arguments_and_options",
-      "displayed": "supplied_usage",
-      "issues": [
-        "Argument metadata was extracted as usage placeholders; positional order and grouping need review.",
-        "Whether node is required is not recorded.",
-        "Whether node is repeatable is not recorded."
-      ],
+      "displayed": "generated",
+      "issues": [],
       "generated": [
         "riak admin cluster join <node>"
       ],
@@ -2298,17 +2124,12 @@
     {
       "key": "shell:riak admin cluster leave",
       "route": "riak/admin/cluster/leave",
-      "status": "needs_review",
+      "status": "matched",
       "basis": "arguments_and_options",
-      "displayed": "supplied_usage",
-      "issues": [
-        "Argument metadata was extracted as usage placeholders; positional order and grouping need review.",
-        "Whether node is required is not recorded.",
-        "Whether node is repeatable is not recorded.",
-        "Generated and supplied syntax differ; review the forms below (including order, grouping and option values)."
-      ],
+      "displayed": "generated",
+      "issues": [],
       "generated": [
-        "riak admin cluster leave <node>"
+        "riak admin cluster leave [<node>]"
       ],
       "supplied": [
         "Usage: riak admin cluster leave [<node>]"
@@ -2324,17 +2145,12 @@
       "displayed": "supplied_usage",
       "issues": [
         "Recorded variants have different parameter declarations; their applicability needs review.",
-        "Argument metadata was extracted as usage placeholders; positional order and grouping need review.",
-        "Whether new_location is required is not recorded.",
-        "Whether new_location is repeatable is not recorded.",
         "Whether --node takes a value is not recorded.",
-        "Whether --node is required is not recorded.",
-        "Whether --node is repeatable is not recorded.",
         "Generated and supplied syntax differ; review the forms below (including order, grouping and option values).",
         "Supplied syntax contains terms absent from the structured form: node. Check for missing arguments, options or constraints."
       ],
       "generated": [
-        "riak admin cluster location <new_location> [--format {csv|human|json}] --node|-n <value?>",
+        "riak admin cluster location <new_location> [--format {csv|human|json}] [--node|-n <value?>]",
         "riak admin cluster location {--help|-h}"
       ],
       "supplied": [
@@ -2348,16 +2164,12 @@
       "route": "riak/admin/cluster/partition",
       "status": "needs_review",
       "basis": "arguments_and_options",
-      "displayed": "supplied_usage",
+      "displayed": "generated",
       "issues": [
-        "Whether id is required is not recorded.",
-        "Whether id is repeatable is not recorded.",
-        "Whether index is required is not recorded.",
-        "Whether index is repeatable is not recorded.",
         "Generated and supplied syntax differ; review the forms below (including order, grouping and option values)."
       ],
       "generated": [
-        "riak admin cluster partition id=<id> index=<index> [--format {csv|human|json}]",
+        "riak admin cluster partition [<id>] [<index>] [--format {csv|human|json}]",
         "riak admin cluster partition {--help|-h}"
       ],
       "supplied": [
@@ -2374,15 +2186,11 @@
       "displayed": "supplied_usage",
       "issues": [
         "Recorded variants have different parameter declarations; their applicability needs review.",
-        "Argument metadata was extracted as usage placeholders; positional order and grouping need review.",
-        "Whether sub-command is required is not recorded.",
-        "Whether sub-command is repeatable is not recorded.",
-        "Whether --node is required is not recorded.",
-        "Whether --node is repeatable is not recorded.",
-        "Generated and supplied syntax differ; review the forms below (including order, grouping and option values)."
+        "Generated and supplied syntax differ; review the forms below (including order, grouping and option values).",
+        "Supplied syntax contains terms absent from the structured form: sub-command. Check for missing arguments, options or constraints."
       ],
       "generated": [
-        "riak admin cluster partition-count <sub-command> [--format {csv|human|json}] --node|-n <<node>>",
+        "riak admin cluster partition-count [--format {csv|human|json}] [--node|-n <<node>>]",
         "riak admin cluster partition-count {--help|-h}"
       ],
       "supplied": [
@@ -2397,14 +2205,12 @@
       "route": "riak/admin/cluster/partitions",
       "status": "needs_review",
       "basis": "arguments_and_options",
-      "displayed": "supplied_usage",
+      "displayed": "generated",
       "issues": [
-        "Whether --node is required is not recorded.",
-        "Whether --node is repeatable is not recorded.",
         "Generated and supplied syntax differ; review the forms below (including order, grouping and option values)."
       ],
       "generated": [
-        "riak admin cluster partitions [--format {csv|human|json}] --node|-n <<node>>",
+        "riak admin cluster partitions [--format {csv|human|json}] [--node|-n <<node>>]",
         "riak admin cluster partitions {--help|-h}"
       ],
       "supplied": [
@@ -2432,16 +2238,10 @@
     {
       "key": "shell:riak admin cluster replace",
       "route": "riak/admin/cluster/replace",
-      "status": "needs_review",
+      "status": "matched",
       "basis": "arguments_and_options",
-      "displayed": "supplied_usage",
-      "issues": [
-        "Argument metadata was extracted as usage placeholders; positional order and grouping need review.",
-        "Whether node1 is required is not recorded.",
-        "Whether node1 is repeatable is not recorded.",
-        "Whether node2 is required is not recorded.",
-        "Whether node2 is repeatable is not recorded."
-      ],
+      "displayed": "generated",
+      "issues": [],
       "generated": [
         "riak admin cluster replace <node1> <node2>"
       ],
@@ -2526,14 +2326,10 @@
     {
       "key": "shell:riak admin down",
       "route": "riak/admin/down",
-      "status": "needs_review",
+      "status": "matched",
       "basis": "arguments_and_options",
-      "displayed": "supplied_usage",
-      "issues": [
-        "Argument metadata was extracted as usage placeholders; positional order and grouping need review.",
-        "Whether node is required is not recorded.",
-        "Whether node is repeatable is not recorded."
-      ],
+      "displayed": "generated",
+      "issues": [],
       "generated": [
         "riak admin down <node>"
       ],
@@ -2551,18 +2347,12 @@
       "displayed": "supplied_usage",
       "issues": [
         "Recorded variants have different parameter declarations; their applicability needs review.",
-        "Argument metadata was extracted as usage placeholders; positional order and grouping need review.",
-        "Whether kill-handoffs is required is not recorded.",
-        "Whether kill-handoffs is repeatable is not recorded.",
-        "Whether concurrency is required is not recorded.",
-        "Whether concurrency is repeatable is not recorded.",
-        "Generated and supplied syntax differ; review the forms below (including order, grouping and option values).",
-        "Supplied syntax contains terms absent from the structured form: downgrade_objects. Check for missing arguments, options or constraints."
+        "Generated and supplied syntax differ; review the forms below (including order, grouping and option values)."
       ],
       "generated": [
-        "riak admin downgrade-objects <kill-handoffs> <concurrency>",
-        "riak admin downgrade-objects false <kill-handoffs> <concurrency>",
-        "riak admin downgrade-objects true <kill-handoffs> <concurrency>"
+        "riak admin downgrade-objects <kill-handoffs> [<concurrency>]",
+        "riak admin downgrade-objects false <kill-handoffs> [<concurrency>]",
+        "riak admin downgrade-objects true <kill-handoffs> [<concurrency>]"
       ],
       "supplied": [
         "Usage: riak admin downgrade-objects <kill-handoffs> [<concurrency>]",
@@ -2579,15 +2369,11 @@
       "displayed": "supplied_usage",
       "issues": [
         "Recorded variants have different parameter declarations; their applicability needs review.",
-        "Argument metadata was extracted as usage placeholders; positional order and grouping need review.",
-        "Whether ensemble is required is not recorded.",
-        "Whether ensemble is repeatable is not recorded.",
-        "Generated and supplied syntax differ; review the forms below (including order, grouping and option values).",
-        "Supplied syntax contains terms absent from the structured form: ensemble_status. Check for missing arguments, options or constraints."
+        "Generated and supplied syntax differ; review the forms below (including order, grouping and option values)."
       ],
       "generated": [
-        "riak admin ensemble-status <ensemble>",
-        "riak admin ensemble-status root <ensemble>"
+        "riak admin ensemble-status [<ensemble>]",
+        "riak admin ensemble-status root [<ensemble>]"
       ],
       "supplied": [
         "Usage: riak admin ensemble-status [<ensemble>]",
@@ -2617,18 +2403,12 @@
       "route": "riak/admin/force-remove",
       "status": "needs_review",
       "basis": "arguments_and_options",
-      "displayed": "supplied_usage",
+      "displayed": "generated",
       "issues": [
-        "Argument metadata was extracted as usage placeholders; positional order and grouping need review.",
-        "Whether node is required is not recorded.",
-        "Whether node is repeatable is not recorded.",
-        "Whether -f takes a value is not recorded.",
-        "Whether -f is required is not recorded.",
-        "Whether -f is repeatable is not recorded.",
         "Generated and supplied syntax differ; review the forms below (including order, grouping and option values)."
       ],
       "generated": [
-        "riak admin force-remove <node> -f <value?>"
+        "riak admin force-remove <node> [-f]"
       ],
       "supplied": [
         "Usage: riak admin force-remove -f <node>"
@@ -2661,16 +2441,11 @@
       "basis": "arguments_and_options",
       "displayed": "supplied_usage",
       "issues": [
-        "Whether --all takes a value is not recorded.",
-        "Whether --all is required is not recorded.",
-        "Whether --all is repeatable is not recorded.",
         "Whether --node takes a value is not recorded.",
-        "Whether --node is required is not recorded.",
-        "Whether --node is repeatable is not recorded.",
         "Generated and supplied syntax differ; review the forms below (including order, grouping and option values)."
       ],
       "generated": [
-        "riak admin handoff config --all|-a <value?> [--format {csv|human|json}] --node|-n <value?>",
+        "riak admin handoff config [--all|-a] [--format {csv|human|json}] [--node|-n <value?>]",
         "riak admin handoff config {--help|-h}"
       ],
       "supplied": [
@@ -2686,19 +2461,12 @@
       "basis": "arguments_and_options",
       "displayed": "supplied_usage",
       "issues": [
-        "Argument metadata was extracted as usage placeholders; positional order and grouping need review.",
-        "Whether node is required is not recorded.",
-        "Whether node is repeatable is not recorded.",
-        "Whether --all takes a value is not recorded.",
-        "Whether --all is required is not recorded.",
-        "Whether --all is repeatable is not recorded.",
         "Whether --node takes a value is not recorded.",
-        "Whether --node is required is not recorded.",
-        "Whether --node is repeatable is not recorded.",
-        "Generated and supplied syntax differ; review the forms below (including order, grouping and option values)."
+        "Generated and supplied syntax differ; review the forms below (including order, grouping and option values).",
+        "Supplied syntax contains terms absent from the structured form: node. Check for missing arguments, options or constraints."
       ],
       "generated": [
-        "riak admin handoff details <node> --all|-a <value?> [--format {csv|human|json}] --node|-n <value?>",
+        "riak admin handoff details [--all|-a] [--format {csv|human|json}] [--node|-n <value?>]",
         "riak admin handoff details {--help|-h}"
       ],
       "supplied": [
@@ -2715,23 +2483,15 @@
       "displayed": "supplied_usage",
       "issues": [
         "Recorded variants have different parameter declarations; their applicability needs review.",
-        "Argument metadata was extracted as usage placeholders; positional order and grouping need review.",
-        "Whether node is required is not recorded.",
-        "Whether node is repeatable is not recorded.",
-        "Whether --all takes a value is not recorded.",
-        "Whether --all is required is not recorded.",
-        "Whether --all is repeatable is not recorded.",
         "Whether --node takes a value is not recorded.",
-        "Whether --node is required is not recorded.",
-        "Whether --node is repeatable is not recorded.",
         "Generated and supplied syntax differ; review the forms below (including order, grouping and option values).",
-        "Supplied syntax contains terms absent from the structured form: enable. Check for missing arguments, options or constraints."
+        "Supplied syntax contains terms absent from the structured form: enable, node. Check for missing arguments, options or constraints."
       ],
       "generated": [
-        "riak admin handoff disable <node> --all|-a <value?> [--format {csv|human|json}] --node|-n <value?>",
-        "riak admin handoff disable both <node> --all|-a <value?> [--format {csv|human|json}] --node|-n <value?>",
-        "riak admin handoff disable inbound <node> --all|-a <value?> [--format {csv|human|json}] --node|-n <value?>",
-        "riak admin handoff disable outbound <node> --all|-a <value?> [--format {csv|human|json}] --node|-n <value?>",
+        "riak admin handoff disable <direction> [--all|-a] [--format {csv|human|json}] [--node|-n <value?>]",
+        "riak admin handoff disable both <direction> [--all|-a] [--format {csv|human|json}] [--node|-n <value?>]",
+        "riak admin handoff disable inbound <direction> [--all|-a] [--format {csv|human|json}] [--node|-n <value?>]",
+        "riak admin handoff disable outbound <direction> [--all|-a] [--format {csv|human|json}] [--node|-n <value?>]",
         "riak admin handoff disable {--help|-h}"
       ],
       "supplied": [
@@ -2748,23 +2508,15 @@
       "displayed": "supplied_usage",
       "issues": [
         "Recorded variants have different parameter declarations; their applicability needs review.",
-        "Argument metadata was extracted as usage placeholders; positional order and grouping need review.",
-        "Whether node is required is not recorded.",
-        "Whether node is repeatable is not recorded.",
-        "Whether --all takes a value is not recorded.",
-        "Whether --all is required is not recorded.",
-        "Whether --all is repeatable is not recorded.",
         "Whether --node takes a value is not recorded.",
-        "Whether --node is required is not recorded.",
-        "Whether --node is repeatable is not recorded.",
         "Generated and supplied syntax differ; review the forms below (including order, grouping and option values).",
-        "Supplied syntax contains terms absent from the structured form: disable. Check for missing arguments, options or constraints."
+        "Supplied syntax contains terms absent from the structured form: disable, node. Check for missing arguments, options or constraints."
       ],
       "generated": [
-        "riak admin handoff enable <node> --all|-a <value?> [--format {csv|human|json}] --node|-n <value?>",
-        "riak admin handoff enable both <node> --all|-a <value?> [--format {csv|human|json}] --node|-n <value?>",
-        "riak admin handoff enable inbound <node> --all|-a <value?> [--format {csv|human|json}] --node|-n <value?>",
-        "riak admin handoff enable outbound <node> --all|-a <value?> [--format {csv|human|json}] --node|-n <value?>",
+        "riak admin handoff enable <direction> [--all|-a] [--format {csv|human|json}] [--node|-n <value?>]",
+        "riak admin handoff enable both <direction> [--all|-a] [--format {csv|human|json}] [--node|-n <value?>]",
+        "riak admin handoff enable inbound <direction> [--all|-a] [--format {csv|human|json}] [--node|-n <value?>]",
+        "riak admin handoff enable outbound <direction> [--all|-a] [--format {csv|human|json}] [--node|-n <value?>]",
         "riak admin handoff enable {--help|-h}"
       ],
       "supplied": [
@@ -2797,18 +2549,12 @@
       "route": "riak/admin/join",
       "status": "needs_review",
       "basis": "arguments_and_options",
-      "displayed": "supplied_usage",
+      "displayed": "generated",
       "issues": [
-        "Argument metadata was extracted as usage placeholders; positional order and grouping need review.",
-        "Whether node is required is not recorded.",
-        "Whether node is repeatable is not recorded.",
-        "Whether -f takes a value is not recorded.",
-        "Whether -f is required is not recorded.",
-        "Whether -f is repeatable is not recorded.",
         "Generated and supplied syntax differ; review the forms below (including order, grouping and option values)."
       ],
       "generated": [
-        "riak admin join <node> -f <value?>"
+        "riak admin join <node> [-f]"
       ],
       "supplied": [
         "Usage: riak admin join -f <node>"
@@ -2821,15 +2567,12 @@
       "route": "riak/admin/leave",
       "status": "needs_review",
       "basis": "arguments_and_options",
-      "displayed": "supplied_usage",
+      "displayed": "generated",
       "issues": [
-        "Whether -f takes a value is not recorded.",
-        "Whether -f is required is not recorded.",
-        "Whether -f is repeatable is not recorded.",
         "Generated and supplied syntax differ; review the forms below (including order, grouping and option values)."
       ],
       "generated": [
-        "riak admin leave -f <value?>"
+        "riak admin leave [-f]"
       ],
       "supplied": [
         "Usage: riak admin leave -f"
@@ -2840,13 +2583,10 @@
     {
       "key": "shell:riak admin member-status",
       "route": "riak/admin/member-status",
-      "status": "needs_review",
+      "status": "matched",
       "basis": "arguments_and_options",
-      "displayed": "supplied_usage",
-      "issues": [
-        "Generated and supplied syntax differ; review the forms below (including order, grouping and option values).",
-        "Supplied syntax contains terms absent from the structured form: member_status. Check for missing arguments, options or constraints."
-      ],
+      "displayed": "generated",
+      "issues": [],
       "generated": [
         "riak admin member-status"
       ],
@@ -2862,16 +2602,12 @@
       "route": "riak/admin/reformat-indexes",
       "status": "needs_review",
       "basis": "arguments_and_options",
-      "displayed": "supplied_usage",
+      "displayed": "generated",
       "issues": [
-        "Whether --downgrade takes a value is not recorded.",
-        "Whether --downgrade is required is not recorded.",
-        "Whether --downgrade is repeatable is not recorded.",
-        "Generated and supplied syntax differ; review the forms below (including order, grouping and option values).",
-        "Supplied syntax contains terms absent from the structured form: reformat_indexes. Check for missing arguments, options or constraints."
+        "Generated and supplied syntax differ; review the forms below (including order, grouping and option values)."
       ],
       "generated": [
-        "riak admin reformat-indexes --downgrade <value?>"
+        "riak admin reformat-indexes [<concurrency>] [<batch size>] [--downgrade]"
       ],
       "supplied": [
         "Usage: riak admin reformat-indexes",
@@ -2888,11 +2624,6 @@
       "displayed": "supplied_usage",
       "issues": [
         "The supplied usage has multiple forms; their argument relationships need review.",
-        "Argument metadata was extracted as usage placeholders; positional order and grouping need review.",
-        "Whether old_nodename is required is not recorded.",
-        "Whether old_nodename is repeatable is not recorded.",
-        "Whether new_nodename is required is not recorded.",
-        "Whether new_nodename is repeatable is not recorded.",
         "Generated and supplied syntax differ; review the forms below (including order, grouping and option values).",
         "Supplied syntax contains terms absent from the structured form: is, not, currently, supported, in. Check for missing arguments, options or constraints."
       ],
@@ -2909,20 +2640,10 @@
     {
       "key": "shell:riak admin reip_manual",
       "route": "riak/admin/reip-manual",
-      "status": "needs_review",
+      "status": "matched",
       "basis": "arguments_and_options",
-      "displayed": "supplied_usage",
-      "issues": [
-        "Argument metadata was extracted as usage placeholders; positional order and grouping need review.",
-        "Whether old_nodename is required is not recorded.",
-        "Whether old_nodename is repeatable is not recorded.",
-        "Whether new_nodename is required is not recorded.",
-        "Whether new_nodename is repeatable is not recorded.",
-        "Whether ring_dir is required is not recorded.",
-        "Whether ring_dir is repeatable is not recorded.",
-        "Whether cluster_name is required is not recorded.",
-        "Whether cluster_name is repeatable is not recorded."
-      ],
+      "displayed": "generated",
+      "issues": [],
       "generated": [
         "riak admin reip_manual <old_nodename> <new_nodename> <ring_dir> <cluster_name>"
       ],
@@ -2975,17 +2696,11 @@
       "basis": "arguments_and_options",
       "displayed": "supplied_usage",
       "issues": [
-        "Argument metadata was extracted as usage placeholders; positional order and grouping need review.",
-        "Whether Idx is required is not recorded.",
-        "Whether Idx is repeatable is not recorded.",
-        "Whether --speed takes a value is not recorded.",
-        "Whether --speed is required is not recorded.",
-        "Whether --speed is repeatable is not recorded.",
         "Generated and supplied syntax differ; review the forms below (including order, grouping and option values).",
-        "Supplied syntax contains terms absent from the structured form: -100. Check for missing arguments, options or constraints."
+        "Supplied syntax contains terms absent from the structured form: --speed, -100, Idx. Check for missing arguments, options or constraints."
       ],
       "generated": [
-        "riak admin repair-2i kill <Idx> --speed <value?>"
+        "riak admin repair-2i kill"
       ],
       "supplied": [
         "Usage: riak-admin repair-2i [--speed [1-100]] <Idx> ..."
@@ -3000,17 +2715,11 @@
       "basis": "arguments_and_options",
       "displayed": "supplied_usage",
       "issues": [
-        "Argument metadata was extracted as usage placeholders; positional order and grouping need review.",
-        "Whether Idx is required is not recorded.",
-        "Whether Idx is repeatable is not recorded.",
-        "Whether --speed takes a value is not recorded.",
-        "Whether --speed is required is not recorded.",
-        "Whether --speed is repeatable is not recorded.",
         "Generated and supplied syntax differ; review the forms below (including order, grouping and option values).",
-        "Supplied syntax contains terms absent from the structured form: -100. Check for missing arguments, options or constraints."
+        "Supplied syntax contains terms absent from the structured form: --speed, -100, Idx. Check for missing arguments, options or constraints."
       ],
       "generated": [
-        "riak admin repair-2i status <Idx> --speed <value?>"
+        "riak admin repair-2i status"
       ],
       "supplied": [
         "Usage: riak-admin repair-2i [--speed [1-100]] <Idx> ..."
@@ -3021,18 +2730,10 @@
     {
       "key": "shell:riak admin restore",
       "route": "riak/admin/restore",
-      "status": "needs_review",
+      "status": "matched",
       "basis": "arguments_and_options",
-      "displayed": "supplied_usage",
-      "issues": [
-        "Argument metadata was extracted as usage placeholders; positional order and grouping need review.",
-        "Whether node is required is not recorded.",
-        "Whether node is repeatable is not recorded.",
-        "Whether cookie is required is not recorded.",
-        "Whether cookie is repeatable is not recorded.",
-        "Whether filename is required is not recorded.",
-        "Whether filename is repeatable is not recorded."
-      ],
+      "displayed": "generated",
+      "issues": [],
       "generated": [
         "riak admin restore <node> <cookie> <filename>"
       ],
@@ -3045,13 +2746,10 @@
     {
       "key": "shell:riak admin ring-status",
       "route": "riak/admin/ring-status",
-      "status": "needs_review",
+      "status": "matched",
       "basis": "arguments_and_options",
-      "displayed": "supplied_usage",
-      "issues": [
-        "Generated and supplied syntax differ; review the forms below (including order, grouping and option values).",
-        "Supplied syntax contains terms absent from the structured form: ring_status. Check for missing arguments, options or constraints."
-      ],
+      "displayed": "generated",
+      "issues": [],
       "generated": [
         "riak admin ring-status"
       ],
@@ -3117,19 +2815,12 @@
       "route": "riak/admin/security/add-group",
       "status": "needs_review",
       "basis": "arguments_and_options",
-      "displayed": "supplied_usage",
+      "displayed": "generated",
       "issues": [
-        "Argument metadata was extracted as usage placeholders; positional order and grouping need review.",
-        "Whether group is required is not recorded.",
-        "Whether group is repeatable is not recorded.",
-        "Whether option is required is not recorded.",
-        "Whether option is repeatable is not recorded.",
-        "Whether value is required is not recorded.",
-        "Whether value is repeatable is not recorded.",
         "Generated and supplied syntax differ; review the forms below (including order, grouping and option values)."
       ],
       "generated": [
-        "riak admin security add-group <group> <option> <value>"
+        "riak admin security add-group <group> [<option=value> ...]"
       ],
       "supplied": [
         "Usage: riak admin security add-group <group> [<option>=<value> [...]]"
@@ -3144,22 +2835,11 @@
       "basis": "arguments_and_options",
       "displayed": "supplied_usage",
       "issues": [
-        "Argument metadata was extracted as usage placeholders; positional order and grouping need review.",
-        "Whether users is required is not recorded.",
-        "Whether users is repeatable is not recorded.",
-        "Whether CIDR is required is not recorded.",
-        "Whether CIDR is repeatable is not recorded.",
-        "Whether source is required is not recorded.",
-        "Whether source is repeatable is not recorded.",
-        "Whether option is required is not recorded.",
-        "Whether option is repeatable is not recorded.",
-        "Whether value is required is not recorded.",
-        "Whether value is repeatable is not recorded.",
         "Generated and supplied syntax differ; review the forms below (including order, grouping and option values).",
         "Supplied syntax contains terms absent from the structured form: all. Check for missing arguments, options or constraints."
       ],
       "generated": [
-        "riak admin security add-source <users> <CIDR> <source> <option> <value>"
+        "riak admin security add-source <users> <CIDR> <source> [<option=value> ...]"
       ],
       "supplied": [
         "Usage: riak admin security add-source all|<users> <CIDR> <source> [<option>=<value> [...]]"
@@ -3172,19 +2852,12 @@
       "route": "riak/admin/security/add-user",
       "status": "needs_review",
       "basis": "arguments_and_options",
-      "displayed": "supplied_usage",
+      "displayed": "generated",
       "issues": [
-        "Argument metadata was extracted as usage placeholders; positional order and grouping need review.",
-        "Whether user is required is not recorded.",
-        "Whether user is repeatable is not recorded.",
-        "Whether option is required is not recorded.",
-        "Whether option is repeatable is not recorded.",
-        "Whether value is required is not recorded.",
-        "Whether value is repeatable is not recorded.",
         "Generated and supplied syntax differ; review the forms below (including order, grouping and option values)."
       ],
       "generated": [
-        "riak admin security add-user <user> <option> <value>"
+        "riak admin security add-user <user> [<option=value> ...]"
       ],
       "supplied": [
         "Usage: riak admin security add-user <user> [<option>=<value> [...]]"
@@ -3197,19 +2870,12 @@
       "route": "riak/admin/security/alter-group",
       "status": "needs_review",
       "basis": "arguments_and_options",
-      "displayed": "supplied_usage",
+      "displayed": "generated",
       "issues": [
-        "Argument metadata was extracted as usage placeholders; positional order and grouping need review.",
-        "Whether group is required is not recorded.",
-        "Whether group is repeatable is not recorded.",
-        "Whether option is required is not recorded.",
-        "Whether option is repeatable is not recorded.",
-        "Whether value is required is not recorded.",
-        "Whether value is repeatable is not recorded.",
         "Generated and supplied syntax differ; review the forms below (including order, grouping and option values)."
       ],
       "generated": [
-        "riak admin security alter-group <group> <option> <value>"
+        "riak admin security alter-group <group> [<option=value> ...]"
       ],
       "supplied": [
         "Usage: riak admin security alter-group <group> <option> [<option>=<value> [...]]"
@@ -3222,19 +2888,12 @@
       "route": "riak/admin/security/alter-user",
       "status": "needs_review",
       "basis": "arguments_and_options",
-      "displayed": "supplied_usage",
+      "displayed": "generated",
       "issues": [
-        "Argument metadata was extracted as usage placeholders; positional order and grouping need review.",
-        "Whether user is required is not recorded.",
-        "Whether user is repeatable is not recorded.",
-        "Whether option is required is not recorded.",
-        "Whether option is repeatable is not recorded.",
-        "Whether value is required is not recorded.",
-        "Whether value is repeatable is not recorded.",
         "Generated and supplied syntax differ; review the forms below (including order, grouping and option values)."
       ],
       "generated": [
-        "riak admin security alter-user <user> <option> <value>"
+        "riak admin security alter-user <user> [<option=value> ...]"
       ],
       "supplied": [
         "Usage: riak admin security alter-user <user> <option> [<option>=<value> [...]]"
@@ -3265,12 +2924,11 @@
       "basis": "arguments_and_options",
       "displayed": "supplied_usage",
       "issues": [
-        "Argument metadata was extracted as usage placeholders; positional order and grouping need review.",
-        "Whether user is required is not recorded.",
-        "Whether user is repeatable is not recorded."
+        "Generated and supplied syntax differ; review the forms below (including order, grouping and option values).",
+        "Supplied syntax contains terms absent from the structured form: user. Check for missing arguments, options or constraints."
       ],
       "generated": [
-        "riak admin security del-group <user>"
+        "riak admin security del-group <group>"
       ],
       "supplied": [
         "Usage: riak admin security del-group <user>"
@@ -3285,11 +2943,6 @@
       "basis": "arguments_and_options",
       "displayed": "supplied_usage",
       "issues": [
-        "Argument metadata was extracted as usage placeholders; positional order and grouping need review.",
-        "Whether users is required is not recorded.",
-        "Whether users is repeatable is not recorded.",
-        "Whether CIDR is required is not recorded.",
-        "Whether CIDR is repeatable is not recorded.",
         "Generated and supplied syntax differ; review the forms below (including order, grouping and option values).",
         "Supplied syntax contains terms absent from the structured form: all. Check for missing arguments, options or constraints."
       ],
@@ -3305,14 +2958,10 @@
     {
       "key": "shell:riak admin security del-user",
       "route": "riak/admin/security/del-user",
-      "status": "needs_review",
+      "status": "matched",
       "basis": "arguments_and_options",
-      "displayed": "supplied_usage",
-      "issues": [
-        "Argument metadata was extracted as usage placeholders; positional order and grouping need review.",
-        "Whether user is required is not recorded.",
-        "Whether user is repeatable is not recorded."
-      ],
+      "displayed": "generated",
+      "issues": [],
       "generated": [
         "riak admin security del-user <user>"
       ],
@@ -3362,18 +3011,11 @@
       "displayed": "supplied_usage",
       "issues": [
         "The supplied usage has multiple forms; their argument relationships need review.",
-        "Argument metadata was extracted as usage placeholders; positional order and grouping need review.",
-        "Whether permissions is required is not recorded.",
-        "Whether permissions is repeatable is not recorded.",
-        "Whether type is required is not recorded.",
-        "Whether type is repeatable is not recorded.",
-        "Whether users is required is not recorded.",
-        "Whether users is repeatable is not recorded.",
         "Generated and supplied syntax differ; review the forms below (including order, grouping and option values).",
-        "Supplied syntax contains terms absent from the structured form: on, any, bucket, to. Check for missing arguments, options or constraints."
+        "Supplied syntax contains terms absent from the structured form: on, type, bucket, any, to. Check for missing arguments, options or constraints."
       ],
       "generated": [
-        "riak admin security grant <permissions> <type> <users>"
+        "riak admin security grant <permissions> <scope> <users>"
       ],
       "supplied": [
         "Usage: riak admin security grant <permissions> on any|<type> [bucket] to <users>",
@@ -3385,14 +3027,10 @@
     {
       "key": "shell:riak admin security print-grants",
       "route": "riak/admin/security/print-grants",
-      "status": "needs_review",
+      "status": "matched",
       "basis": "arguments_and_options",
-      "displayed": "supplied_usage",
-      "issues": [
-        "Argument metadata was extracted as usage placeholders; positional order and grouping need review.",
-        "Whether user is required is not recorded.",
-        "Whether user is repeatable is not recorded."
-      ],
+      "displayed": "generated",
+      "issues": [],
       "generated": [
         "riak admin security print-grants <user>"
       ],
@@ -3405,14 +3043,10 @@
     {
       "key": "shell:riak admin security print-group",
       "route": "riak/admin/security/print-group",
-      "status": "needs_review",
+      "status": "matched",
       "basis": "arguments_and_options",
-      "displayed": "supplied_usage",
-      "issues": [
-        "Argument metadata was extracted as usage placeholders; positional order and grouping need review.",
-        "Whether group is required is not recorded.",
-        "Whether group is repeatable is not recorded."
-      ],
+      "displayed": "generated",
+      "issues": [],
       "generated": [
         "riak admin security print-group <group>"
       ],
@@ -3457,14 +3091,10 @@
     {
       "key": "shell:riak admin security print-user",
       "route": "riak/admin/security/print-user",
-      "status": "needs_review",
+      "status": "matched",
       "basis": "arguments_and_options",
-      "displayed": "supplied_usage",
-      "issues": [
-        "Argument metadata was extracted as usage placeholders; positional order and grouping need review.",
-        "Whether user is required is not recorded.",
-        "Whether user is repeatable is not recorded."
-      ],
+      "displayed": "generated",
+      "issues": [],
       "generated": [
         "riak admin security print-user <user>"
       ],
@@ -3498,18 +3128,11 @@
       "displayed": "supplied_usage",
       "issues": [
         "The supplied usage has multiple forms; their argument relationships need review.",
-        "Argument metadata was extracted as usage placeholders; positional order and grouping need review.",
-        "Whether permissions is required is not recorded.",
-        "Whether permissions is repeatable is not recorded.",
-        "Whether type is required is not recorded.",
-        "Whether type is repeatable is not recorded.",
-        "Whether users is required is not recorded.",
-        "Whether users is repeatable is not recorded.",
         "Generated and supplied syntax differ; review the forms below (including order, grouping and option values).",
-        "Supplied syntax contains terms absent from the structured form: on, any, bucket, from. Check for missing arguments, options or constraints."
+        "Supplied syntax contains terms absent from the structured form: on, type, bucket, from, any. Check for missing arguments, options or constraints."
       ],
       "generated": [
-        "riak admin security revoke <permissions> <type> <users>"
+        "riak admin security revoke <permissions> <scope> <users>"
       ],
       "supplied": [
         "Usage: riak admin security revoke <permissions> on any|<type> [bucket] from <users>",
@@ -3558,17 +3181,12 @@
       "displayed": "supplied_usage",
       "issues": [
         "The number and requiredness of unrestricted key=value arguments are not recorded.",
-        "Whether --all takes a value is not recorded.",
-        "Whether --all is required is not recorded.",
-        "Whether --all is repeatable is not recorded.",
         "Whether --node takes a value is not recorded.",
-        "Whether --node is required is not recorded.",
-        "Whether --node is repeatable is not recorded.",
         "Generated and supplied syntax differ; review the forms below (including order, grouping and option values).",
-        "Supplied syntax contains terms absent from the structured form: variable, node. Check for missing arguments, options or constraints."
+        "Supplied syntax contains terms absent from the structured form: node. Check for missing arguments, options or constraints."
       ],
       "generated": [
-        "riak admin set --all|-a <value?> [--format {csv|human|json}] --node|-n <value?>",
+        "riak admin set <variable=value> ... [--all|-a] [--format {csv|human|json}] [--node|-n <value?>]",
         "riak admin set {--help|-h}"
       ],
       "supplied": [
@@ -3584,19 +3202,12 @@
       "basis": "arguments_and_options",
       "displayed": "supplied_usage",
       "issues": [
-        "Whether variable is required is not recorded.",
-        "Whether variable is repeatable is not recorded.",
-        "Whether --all takes a value is not recorded.",
-        "Whether --all is required is not recorded.",
-        "Whether --all is repeatable is not recorded.",
         "Whether --node takes a value is not recorded.",
-        "Whether --node is required is not recorded.",
-        "Whether --node is repeatable is not recorded.",
         "Generated and supplied syntax differ; review the forms below (including order, grouping and option values).",
         "Supplied syntax contains terms absent from the structured form: node. Check for missing arguments, options or constraints."
       ],
       "generated": [
-        "riak admin show <variable> --all|-a <value?> [--format {csv|human|json}] --node|-n <value?>",
+        "riak admin show <variable> ... [--all|-a] [--format {csv|human|json}] [--node|-n <value?>]",
         "riak admin show {--help|-h}"
       ],
       "supplied": [
@@ -3631,7 +3242,7 @@
         "No supplied usage is available for comparison."
       ],
       "generated": [
-        "riak admin stat disable"
+        "riak admin stat disable <entry>"
       ],
       "supplied": [],
       "missingFromProvided": [],
@@ -3647,7 +3258,7 @@
         "No supplied usage is available for comparison."
       ],
       "generated": [
-        "riak admin stat enable"
+        "riak admin stat enable <entry>"
       ],
       "supplied": [],
       "missingFromProvided": [],
@@ -3661,40 +3272,10 @@
       "displayed": "known_path_only",
       "issues": [
         "Recorded variants have different parameter declarations; their applicability needs review.",
-        "Whether -cache takes a value is not recorded.",
-        "Whether -cache is required is not recorded.",
-        "Whether -cache is repeatable is not recorded.",
-        "Whether -datapoints takes a value is not recorded.",
-        "Whether -datapoints is required is not recorded.",
-        "Whether -datapoints is repeatable is not recorded.",
-        "Whether -module takes a value is not recorded.",
-        "Whether -module is required is not recorded.",
-        "Whether -module is repeatable is not recorded.",
-        "Whether -name takes a value is not recorded.",
-        "Whether -name is required is not recorded.",
-        "Whether -name is repeatable is not recorded.",
-        "Whether -options takes a value is not recorded.",
-        "Whether -options is required is not recorded.",
-        "Whether -options is repeatable is not recorded.",
-        "Whether -ref takes a value is not recorded.",
-        "Whether -ref is required is not recorded.",
-        "Whether -ref is repeatable is not recorded.",
-        "Whether -status takes a value is not recorded.",
-        "Whether -status is required is not recorded.",
-        "Whether -status is repeatable is not recorded.",
-        "Whether -timestamp takes a value is not recorded.",
-        "Whether -timestamp is required is not recorded.",
-        "Whether -timestamp is repeatable is not recorded.",
-        "Whether -type takes a value is not recorded.",
-        "Whether -type is required is not recorded.",
-        "Whether -type is repeatable is not recorded.",
-        "Whether -value takes a value is not recorded.",
-        "Whether -value is required is not recorded.",
-        "Whether -value is repeatable is not recorded.",
         "No supplied usage is available for comparison."
       ],
       "generated": [
-        "riak admin stat info -cache <value?> -datapoints <value?> -module <value?> -name <value?> -options <value?> -ref <value?> -status <value?> -timestamp <value?> -type <value?> -value <value?>"
+        "riak admin stat info <entry> [-cache ...] [-module ...] [-name ...] [-options ...] [-status ...] [-timestamp ...] [-type ...] [-value ...]"
       ],
       "supplied": [],
       "missingFromProvided": [],
@@ -3710,7 +3291,7 @@
         "No supplied usage is available for comparison."
       ],
       "generated": [
-        "riak admin stat reset"
+        "riak admin stat reset <entry>"
       ],
       "supplied": [],
       "missingFromProvided": [],
@@ -3724,19 +3305,11 @@
       "displayed": "supplied_usage",
       "issues": [
         "Recorded variants have different parameter declarations; their applicability needs review.",
-        "Argument metadata was extracted as usage placeholders; positional order and grouping need review.",
-        "Whether entry is required is not recorded.",
-        "Whether entry is repeatable is not recorded.",
-        "Whether type is required is not recorded.",
-        "Whether type is repeatable is not recorded.",
-        "Whether status is required is not recorded.",
-        "Whether status is repeatable is not recorded.",
-        "Whether dp is required is not recorded.",
-        "Whether dp is repeatable is not recorded.",
-        "Generated and supplied syntax differ; review the forms below (including order, grouping and option values)."
+        "Generated and supplied syntax differ; review the forms below (including order, grouping and option values).",
+        "Supplied syntax contains terms absent from the structured form: type, status, dp. Check for missing arguments, options or constraints."
       ],
       "generated": [
-        "riak admin stat show <entry> <type> <status> <dp>"
+        "riak admin stat show <entry>"
       ],
       "supplied": [
         "Usage: riak admin stat show <entry>[/type=<type>][/status=<status>][/<dp>[,<dp>]]"
@@ -3802,15 +3375,12 @@
       "displayed": "supplied_usage",
       "issues": [
         "The number and requiredness of unrestricted key=value arguments are not recorded.",
-        "The wildcard argument has no recorded name or structure.",
         "Whether --node takes a value is not recorded.",
-        "Whether --node is required is not recorded.",
-        "Whether --node is repeatable is not recorded.",
         "Generated and supplied syntax differ; review the forms below (including order, grouping and option values).",
         "Supplied syntax contains terms absent from the structured form: Set, show, env, var, VAR, on, NODE. Check for missing arguments, options or constraints."
       ],
       "generated": [
-        "riak admin tictacaae exchangetick [--format {csv|human|json}] --node|-n <value?>",
+        "riak admin tictacaae exchangetick [<VALUE>] [--format {csv|human|json}] [--node|-n <value?>]",
         "riak admin tictacaae exchangetick {--help|-h}"
       ],
       "supplied": [
@@ -3827,16 +3397,13 @@
       "displayed": "supplied_usage",
       "issues": [
         "The number and requiredness of unrestricted key=value arguments are not recorded.",
-        "The wildcard argument has no recorded name or structure.",
         "Recorded variants have different parameter declarations; their applicability needs review.",
         "Whether --outfile takes a value is not recorded.",
-        "Whether --outfile is required is not recorded.",
-        "Whether --outfile is repeatable is not recorded.",
         "Generated and supplied syntax differ; review the forms below (including order, grouping and option values).",
         "Supplied syntax contains terms absent from the structured form: AAE, operations, dumping, results, in, format, to, a, file, specified, with. Check for missing arguments, options or constraints."
       ],
       "generated": [
-        "riak admin tictacaae fold [--format {csv|human|json}] --outfile|-o <value?>",
+        "riak admin tictacaae fold <operation> [<nval>] [<bucket>] [<key_range>] [<modified_range>] [<segments>] [<sibling_count>] [<object_size>] [<change_method>] [--format {csv|human|json}] [--outfile|-o <value?>]",
         "riak admin tictacaae fold {--help|-h}"
       ],
       "supplied": [
@@ -3853,15 +3420,12 @@
       "displayed": "supplied_usage",
       "issues": [
         "The number and requiredness of unrestricted key=value arguments are not recorded.",
-        "The wildcard argument has no recorded name or structure.",
         "Whether --node takes a value is not recorded.",
-        "Whether --node is required is not recorded.",
-        "Whether --node is repeatable is not recorded.",
         "Generated and supplied syntax differ; review the forms below (including order, grouping and option values).",
         "Supplied syntax contains terms absent from the structured form: Set, show, env, var, VAR, on, NODE. Check for missing arguments, options or constraints."
       ],
       "generated": [
-        "riak admin tictacaae maxresults [--format {csv|human|json}] --node|-n <value?>",
+        "riak admin tictacaae maxresults [<VALUE>] [--format {csv|human|json}] [--node|-n <value?>]",
         "riak admin tictacaae maxresults {--help|-h}"
       ],
       "supplied": [
@@ -3878,15 +3442,12 @@
       "displayed": "supplied_usage",
       "issues": [
         "The number and requiredness of unrestricted key=value arguments are not recorded.",
-        "The wildcard argument has no recorded name or structure.",
         "Whether --node takes a value is not recorded.",
-        "Whether --node is required is not recorded.",
-        "Whether --node is repeatable is not recorded.",
         "Generated and supplied syntax differ; review the forms below (including order, grouping and option values).",
         "Supplied syntax contains terms absent from the structured form: Set, show, env, var, VAR, on, NODE. Check for missing arguments, options or constraints."
       ],
       "generated": [
-        "riak admin tictacaae rangeboost [--format {csv|human|json}] --node|-n <value?>",
+        "riak admin tictacaae rangeboost [<VALUE>] [--format {csv|human|json}] [--node|-n <value?>]",
         "riak admin tictacaae rangeboost {--help|-h}"
       ],
       "supplied": [
@@ -3903,16 +3464,12 @@
       "displayed": "supplied_usage",
       "issues": [
         "Whether --node takes a value is not recorded.",
-        "Whether --node is required is not recorded.",
-        "Whether --node is repeatable is not recorded.",
         "Whether --partition takes a value is not recorded.",
-        "Whether --partition is required is not recorded.",
-        "Whether --partition is repeatable is not recorded.",
         "Generated and supplied syntax differ; review the forms below (including order, grouping and option values).",
         "Supplied syntax contains terms absent from the structured form: Send, a, rebuild, poke, for, PARTITION, on, NODE, default, is, all, partitions. Check for missing arguments, options or constraints."
       ],
       "generated": [
-        "riak admin tictacaae rebuild-now [--format {csv|human|json}] --node|-n <value?> --partition|-p <value?>",
+        "riak admin tictacaae rebuild-now [--format {csv|human|json}] [--node|-n <value?>] [--partition|-p <value?>]",
         "riak admin tictacaae rebuild-now {--help|-h}"
       ],
       "supplied": [
@@ -3929,18 +3486,13 @@
       "displayed": "supplied_usage",
       "issues": [
         "The number and requiredness of unrestricted key=value arguments are not recorded.",
-        "The wildcard argument has no recorded name or structure.",
         "Whether --node takes a value is not recorded.",
-        "Whether --node is required is not recorded.",
-        "Whether --node is repeatable is not recorded.",
         "Whether --partition takes a value is not recorded.",
-        "Whether --partition is required is not recorded.",
-        "Whether --partition is repeatable is not recorded.",
         "Generated and supplied syntax differ; review the forms below (including order, grouping and option values).",
         "Supplied syntax contains terms absent from the structured form: Set, show, rebuild, schedule, on, an, AAE, controller, managing, PARTITION, NODE. Check for missing arguments, options or constraints."
       ],
       "generated": [
-        "riak admin tictacaae rebuild-schedule [--format {csv|human|json}] --node|-n <value?> --partition|-p <value?>",
+        "riak admin tictacaae rebuild-schedule [<RW>] [<RD>] [--format {csv|human|json}] [--node|-n <value?>] [--partition|-p <value?>]",
         "riak admin tictacaae rebuild-schedule {--help|-h}"
       ],
       "supplied": [
@@ -3957,19 +3509,14 @@
       "displayed": "supplied_usage",
       "issues": [
         "The number and requiredness of unrestricted key=value arguments are not recorded.",
-        "The wildcard argument has no recorded name or structure.",
         "Recorded variants have different parameter declarations; their applicability needs review.",
         "Whether --node takes a value is not recorded.",
-        "Whether --node is required is not recorded.",
-        "Whether --node is repeatable is not recorded.",
         "Whether --partition takes a value is not recorded.",
-        "Whether --partition is required is not recorded.",
-        "Whether --partition is repeatable is not recorded.",
         "Generated and supplied syntax differ; review the forms below (including order, grouping and option values).",
-        "Supplied syntax contains terms absent from the structured form: Set, next, rebuild, time, to, now, DELAY, sec, on, PARTITION, NODE, default, is. Check for missing arguments, options or constraints."
+        "Supplied syntax contains terms absent from the structured form: Set, next, rebuild, time, to, now, sec, on, PARTITION, NODE, default, is. Check for missing arguments, options or constraints."
       ],
       "generated": [
-        "riak admin tictacaae rebuild-soon [--format {csv|human|json}] --node|-n <value?> --partition|-p <value?>",
+        "riak admin tictacaae rebuild-soon <DELAY> [--format {csv|human|json}] [--node|-n <value?>] [--partition|-p <value?>]",
         "riak admin tictacaae rebuild-soon {--help|-h}"
       ],
       "supplied": [
@@ -3986,15 +3533,12 @@
       "displayed": "supplied_usage",
       "issues": [
         "The number and requiredness of unrestricted key=value arguments are not recorded.",
-        "The wildcard argument has no recorded name or structure.",
         "Whether --node takes a value is not recorded.",
-        "Whether --node is required is not recorded.",
-        "Whether --node is repeatable is not recorded.",
         "Generated and supplied syntax differ; review the forms below (including order, grouping and option values).",
         "Supplied syntax contains terms absent from the structured form: Set, show, env, var, VAR, on, NODE. Check for missing arguments, options or constraints."
       ],
       "generated": [
-        "riak admin tictacaae rebuildtick [--format {csv|human|json}] --node|-n <value?>",
+        "riak admin tictacaae rebuildtick [<VALUE>] [--format {csv|human|json}] [--node|-n <value?>]",
         "riak admin tictacaae rebuildtick {--help|-h}"
       ],
       "supplied": [
@@ -4011,18 +3555,13 @@
       "displayed": "supplied_usage",
       "issues": [
         "The number and requiredness of unrestricted key=value arguments are not recorded.",
-        "The wildcard argument has no recorded name or structure.",
         "Whether --node takes a value is not recorded.",
-        "Whether --node is required is not recorded.",
-        "Whether --node is repeatable is not recorded.",
         "Whether --partition takes a value is not recorded.",
-        "Whether --partition is required is not recorded.",
-        "Whether --partition is repeatable is not recorded.",
         "Generated and supplied syntax differ; review the forms below (including order, grouping and option values).",
         "Supplied syntax contains terms absent from the structured form: Set, show, flag, on, an, AAE, controller, managing, PARTITION, NODE. Check for missing arguments, options or constraints."
       ],
       "generated": [
-        "riak admin tictacaae storeheads [--format {csv|human|json}] --node|-n <value?> --partition|-p <value?>",
+        "riak admin tictacaae storeheads [<VALUE>] [--format {csv|human|json}] [--node|-n <value?>] [--partition|-p <value?>]",
         "riak admin tictacaae storeheads {--help|-h}"
       ],
       "supplied": [
@@ -4039,18 +3578,13 @@
       "displayed": "supplied_usage",
       "issues": [
         "The number and requiredness of unrestricted key=value arguments are not recorded.",
-        "The wildcard argument has no recorded name or structure.",
         "Whether --node takes a value is not recorded.",
-        "Whether --node is required is not recorded.",
-        "Whether --node is repeatable is not recorded.",
         "Whether --partition takes a value is not recorded.",
-        "Whether --partition is required is not recorded.",
-        "Whether --partition is repeatable is not recorded.",
         "Generated and supplied syntax differ; review the forms below (including order, grouping and option values).",
         "Supplied syntax contains terms absent from the structured form: Set, show, flag, on, a, vnode, managing, PARTITION, NODE. Check for missing arguments, options or constraints."
       ],
       "generated": [
-        "riak admin tictacaae tokenbucket [--format {csv|human|json}] --node|-n <value?> --partition|-p <value?>",
+        "riak admin tictacaae tokenbucket [<VALUE>] [--format {csv|human|json}] [--node|-n <value?>] [--partition|-p <value?>]",
         "riak admin tictacaae tokenbucket {--help|-h}"
       ],
       "supplied": [
@@ -4066,14 +3600,11 @@
       "basis": "arguments_and_options",
       "displayed": "supplied_usage",
       "issues": [
-        "Whether --show takes a value is not recorded.",
-        "Whether --show is required is not recorded.",
-        "Whether --show is repeatable is not recorded.",
         "Generated and supplied syntax differ; review the forms below (including order, grouping and option values).",
         "Supplied syntax contains terms absent from the structured form: Generate, the, tree, rebuild, report. Check for missing arguments, options or constraints."
       ],
       "generated": [
-        "riak admin tictacaae treestatus [--format {csv|human|json}] --show|-s <value?>",
+        "riak admin tictacaae treestatus [--format {csv|human|json}] [--show|-s {empty|partial|built|rebuilding|building|all}]",
         "riak admin tictacaae treestatus {--help|-h}"
       ],
       "supplied": [
@@ -4087,19 +3618,12 @@
       "route": "riak/admin/top",
       "status": "needs_review",
       "basis": "arguments_and_options",
-      "displayed": "known_path_only",
+      "displayed": "generated",
       "issues": [
-        "Whether -interval is required is not recorded.",
-        "Whether -interval is repeatable is not recorded.",
-        "Whether -lines is required is not recorded.",
-        "Whether -lines is repeatable is not recorded.",
-        "Whether -sort takes a value is not recorded.",
-        "Whether -sort is required is not recorded.",
-        "Whether -sort is repeatable is not recorded.",
         "No supplied usage is available for comparison."
       ],
       "generated": [
-        "riak admin top -interval <N> -lines <N> -sort <value?>"
+        "riak admin top [-interval <N>] [-lines <N>] [-sort {reductions|memory|msg_q}]"
       ],
       "supplied": [],
       "missingFromProvided": [],
@@ -4110,13 +3634,12 @@
       "route": "riak/admin/transfer-limit",
       "status": "needs_review",
       "basis": "arguments_and_options",
-      "displayed": "supplied_usage",
+      "displayed": "generated",
       "issues": [
-        "Generated and supplied syntax differ; review the forms below (including order, grouping and option values).",
-        "Supplied syntax contains terms absent from the structured form: transfer_limit. Check for missing arguments, options or constraints."
+        "Generated and supplied syntax differ; review the forms below (including order, grouping and option values)."
       ],
       "generated": [
-        "riak admin transfer-limit"
+        "riak admin transfer-limit [<node>] [<limit>]"
       ],
       "supplied": [
         "Usage: riak admin transfer-limit",
@@ -4144,13 +3667,10 @@
     {
       "key": "shell:riak admin vnode-status",
       "route": "riak/admin/vnode-status",
-      "status": "needs_review",
+      "status": "matched",
       "basis": "arguments_and_options",
-      "displayed": "supplied_usage",
-      "issues": [
-        "Generated and supplied syntax differ; review the forms below (including order, grouping and option values).",
-        "Supplied syntax contains terms absent from the structured form: vnode_status. Check for missing arguments, options or constraints."
-      ],
+      "displayed": "generated",
+      "issues": [],
       "generated": [
         "riak admin vnode-status"
       ],
@@ -4164,20 +3684,12 @@
     {
       "key": "shell:riak admin wait-for-service",
       "route": "riak/admin/wait-for-service",
-      "status": "needs_review",
+      "status": "matched",
       "basis": "arguments_and_options",
-      "displayed": "supplied_usage",
-      "issues": [
-        "Argument metadata was extracted as usage placeholders; positional order and grouping need review.",
-        "Whether service_name is required is not recorded.",
-        "Whether service_name is repeatable is not recorded.",
-        "Whether target_node is required is not recorded.",
-        "Whether target_node is repeatable is not recorded.",
-        "Generated and supplied syntax differ; review the forms below (including order, grouping and option values).",
-        "Supplied syntax contains terms absent from the structured form: wait-for_service, wait_for-service, wait_for_service. Check for missing arguments, options or constraints."
-      ],
+      "displayed": "generated",
+      "issues": [],
       "generated": [
-        "riak admin wait-for-service <service_name> <target_node>"
+        "riak admin wait-for-service <service_name> [<target_node>]"
       ],
       "supplied": [
         "Usage: riak admin wait-for-service <service_name> [<target_node>]",
@@ -4246,7 +3758,7 @@
         "No supplied usage is available for comparison."
       ],
       "generated": [
-        "riak console_boot"
+        "riak console_boot <bootfile>"
       ],
       "supplied": [],
       "missingFromProvided": [],
@@ -4310,7 +3822,7 @@
         "No supplied usage is available for comparison."
       ],
       "generated": [
-        "riak daemon_boot"
+        "riak daemon_boot <bootfile>"
       ],
       "supplied": [],
       "missingFromProvided": [],
@@ -4321,73 +3833,12 @@
       "route": "riak/debug",
       "status": "needs_review",
       "basis": "arguments_and_options",
-      "displayed": "supplied_usage",
+      "displayed": "generated",
       "issues": [
-        "Whether --cfgs takes a value is not recorded.",
-        "Whether --cfgs is required is not recorded.",
-        "Whether --cfgs is repeatable is not recorded.",
-        "Whether --extracmds takes a value is not recorded.",
-        "Whether --extracmds is required is not recorded.",
-        "Whether --extracmds is repeatable is not recorded.",
-        "Whether --help takes a value is not recorded.",
-        "Whether --help is required is not recorded.",
-        "Whether --help is repeatable is not recorded.",
-        "Whether --logs takes a value is not recorded.",
-        "Whether --logs is required is not recorded.",
-        "Whether --logs is repeatable is not recorded.",
-        "Whether --patches takes a value is not recorded.",
-        "Whether --patches is required is not recorded.",
-        "Whether --patches is repeatable is not recorded.",
-        "Whether --riakcmds takes a value is not recorded.",
-        "Whether --riakcmds is required is not recorded.",
-        "Whether --riakcmds is repeatable is not recorded.",
-        "Whether --ssl-certs takes a value is not recorded.",
-        "Whether --ssl-certs is required is not recorded.",
-        "Whether --ssl-certs is repeatable is not recorded.",
-        "Whether --syscmds takes a value is not recorded.",
-        "Whether --syscmds is required is not recorded.",
-        "Whether --syscmds is repeatable is not recorded.",
-        "Whether --verbose takes a value is not recorded.",
-        "Whether --verbose is required is not recorded.",
-        "Whether --verbose is repeatable is not recorded.",
-        "Whether --yzcmds takes a value is not recorded.",
-        "Whether --yzcmds is required is not recorded.",
-        "Whether --yzcmds is repeatable is not recorded.",
-        "Whether -c takes a value is not recorded.",
-        "Whether -c is required is not recorded.",
-        "Whether -c is repeatable is not recorded.",
-        "Whether -e takes a value is not recorded.",
-        "Whether -e is required is not recorded.",
-        "Whether -e is repeatable is not recorded.",
-        "Whether -h takes a value is not recorded.",
-        "Whether -h is required is not recorded.",
-        "Whether -h is repeatable is not recorded.",
-        "Whether -l takes a value is not recorded.",
-        "Whether -l is required is not recorded.",
-        "Whether -l is repeatable is not recorded.",
-        "Whether -name takes a value is not recorded.",
-        "Whether -name is required is not recorded.",
-        "Whether -name is repeatable is not recorded.",
-        "Whether -p takes a value is not recorded.",
-        "Whether -p is required is not recorded.",
-        "Whether -p is repeatable is not recorded.",
-        "Whether -r takes a value is not recorded.",
-        "Whether -r is required is not recorded.",
-        "Whether -r is repeatable is not recorded.",
-        "Whether -s takes a value is not recorded.",
-        "Whether -s is required is not recorded.",
-        "Whether -s is repeatable is not recorded.",
-        "Whether -v takes a value is not recorded.",
-        "Whether -v is required is not recorded.",
-        "Whether -v is repeatable is not recorded.",
-        "Whether -y takes a value is not recorded.",
-        "Whether -y is required is not recorded.",
-        "Whether -y is repeatable is not recorded.",
-        "Generated and supplied syntax differ; review the forms below (including order, grouping and option values).",
-        "Supplied syntax contains terms absent from the structured form: riak-debug, FILENAME. Check for missing arguments, options or constraints."
+        "Generated and supplied syntax differ; review the forms below (including order, grouping and option values)."
       ],
       "generated": [
-        "riak debug --cfgs <value?> --extracmds <value?> --help <value?> --logs <value?> --patches <value?> --riakcmds <value?> --ssl-certs <value?> --syscmds <value?> --verbose <value?> --yzcmds <value?> -c <value?> -e <value?> -h <value?> -l <value?> -name <value?> -p <value?> -r <value?> -s <value?> -v <value?> -y <value?>"
+        "riak debug [<FILENAME>] [--cfgs] [--extracmds] [--help] [--logs] [--patches] [--riakcmds] [--ssl-certs] [--syscmds] [--verbose] [--yzcmds] [-c] [-e] [-h] [-l] [-p] [-r] [-s] [-v] [-y]"
       ],
       "supplied": [
         "Usage: riak-debug [-c] [-l] [-r] [-s] [-e] [-v] [FILENAME | -]"
@@ -4403,14 +3854,10 @@
       "displayed": "supplied_usage",
       "issues": [
         "The supplied usage has multiple forms; their argument relationships need review.",
-        "Whether --no-permanent takes a value is not recorded.",
-        "Whether --no-permanent is required is not recorded.",
-        "Whether --no-permanent is repeatable is not recorded.",
-        "Generated and supplied syntax differ; review the forms below (including order, grouping and option values).",
-        "Supplied syntax contains terms absent from the structured form: version, VERSION. Check for missing arguments, options or constraints."
+        "Generated and supplied syntax differ; review the forms below (including order, grouping and option values)."
       ],
       "generated": [
-        "riak downgrade --no-permanent <value?>"
+        "riak downgrade <version> [--no-permanent]"
       ],
       "supplied": [
         "Usage: riak downgrade {version}",
@@ -4429,7 +3876,7 @@
         "No supplied usage is available for comparison."
       ],
       "generated": [
-        "riak escript"
+        "riak escript <script> [<arguments> ...]"
       ],
       "supplied": [],
       "missingFromProvided": [],
@@ -4440,13 +3887,12 @@
       "route": "riak/eval",
       "status": "needs_review",
       "basis": "arguments_and_options",
-      "displayed": "supplied_usage",
+      "displayed": "generated",
       "issues": [
-        "Generated and supplied syntax differ; review the forms below (including order, grouping and option values).",
-        "Supplied syntax contains terms absent from the structured form: Exprs. Check for missing arguments, options or constraints."
+        "Generated and supplied syntax differ; review the forms below (including order, grouping and option values)."
       ],
       "generated": [
-        "riak eval"
+        "riak eval <Exprs>"
       ],
       "supplied": [
         "Usage: riak eval [Exprs]"
@@ -4478,14 +3924,11 @@
       "displayed": "supplied_usage",
       "issues": [
         "The supplied usage has multiple forms; their argument relationships need review.",
-        "Whether --no-permanent takes a value is not recorded.",
-        "Whether --no-permanent is required is not recorded.",
-        "Whether --no-permanent is repeatable is not recorded.",
         "Generated and supplied syntax differ; review the forms below (including order, grouping and option values).",
-        "Supplied syntax contains terms absent from the structured form: rpc, Mod, Fun, Args, eval, Exprs, foreground, console, remote, unpack, VERSION, install, uninstall, upgrade, downgrade, status, COMMAND, ARGS. Check for missing arguments, options or constraints."
+        "Supplied syntax contains terms absent from the structured form: COMMAND, ARGS, console, downgrade, VERSION, eval, Exprs, foreground, install, remote_console, rpc, Mod, Fun, Args, status, uninstall, unpack, upgrade. Check for missing arguments, options or constraints."
       ],
       "generated": [
-        "riak help --no-permanent <value?>"
+        "riak help [<topic>]"
       ],
       "supplied": [
         "Usage: riak rpc [Mod [Fun [Args]]]]",
@@ -4512,14 +3955,10 @@
       "displayed": "supplied_usage",
       "issues": [
         "The supplied usage has multiple forms; their argument relationships need review.",
-        "Whether --no-permanent takes a value is not recorded.",
-        "Whether --no-permanent is required is not recorded.",
-        "Whether --no-permanent is repeatable is not recorded.",
-        "Generated and supplied syntax differ; review the forms below (including order, grouping and option values).",
-        "Supplied syntax contains terms absent from the structured form: version, VERSION. Check for missing arguments, options or constraints."
+        "Generated and supplied syntax differ; review the forms below (including order, grouping and option values)."
       ],
       "generated": [
-        "riak install --no-permanent <value?>"
+        "riak install <version> [--no-permanent]"
       ],
       "supplied": [
         "Usage: riak install {version}",
@@ -4579,13 +4018,10 @@
     {
       "key": "shell:riak remote_console",
       "route": "riak/remote-console",
-      "status": "needs_review",
+      "status": "matched",
       "basis": "arguments_and_options",
-      "displayed": "supplied_usage",
-      "issues": [
-        "Generated and supplied syntax differ; review the forms below (including order, grouping and option values).",
-        "Supplied syntax contains terms absent from the structured form: remote. Check for missing arguments, options or constraints."
-      ],
+      "displayed": "generated",
+      "issues": [],
       "generated": [
         "riak remote_console"
       ],
@@ -4636,10 +4072,10 @@
       "displayed": "supplied_usage",
       "issues": [
         "Generated and supplied syntax differ; review the forms below (including order, grouping and option values).",
-        "Supplied syntax contains terms absent from the structured form: show, block-provider-redirect, from-cluster, to-cluster. Check for missing arguments, options or constraints."
+        "Supplied syntax contains terms absent from the structured form: show, block-provider-redirect. Check for missing arguments, options or constraints."
       ],
       "generated": [
-        "riak repl add-block-provider-redirect"
+        "riak repl add-block-provider-redirect <from-cluster> <to-cluster>"
       ],
       "supplied": [
         "Usage: riak repl add-block-provider-redirect show |\n                       block-provider-redirect <from-cluster> <to-cluster>"
@@ -4650,18 +4086,10 @@
     {
       "key": "shell:riak repl add-listener",
       "route": "riak/repl/add-listener",
-      "status": "needs_review",
+      "status": "matched",
       "basis": "arguments_and_options",
-      "displayed": "supplied_usage",
-      "issues": [
-        "Argument metadata was extracted as usage placeholders; positional order and grouping need review.",
-        "Whether nodename is required is not recorded.",
-        "Whether nodename is repeatable is not recorded.",
-        "Whether listen_ip is required is not recorded.",
-        "Whether listen_ip is repeatable is not recorded.",
-        "Whether port is required is not recorded.",
-        "Whether port is repeatable is not recorded."
-      ],
+      "displayed": "generated",
+      "issues": [],
       "generated": [
         "riak repl add-listener <nodename> <listen_ip> <port>"
       ],
@@ -4674,22 +4102,10 @@
     {
       "key": "shell:riak repl add-nat-listener",
       "route": "riak/repl/add-nat-listener",
-      "status": "needs_review",
+      "status": "matched",
       "basis": "arguments_and_options",
-      "displayed": "supplied_usage",
-      "issues": [
-        "Argument metadata was extracted as usage placeholders; positional order and grouping need review.",
-        "Whether nodename is required is not recorded.",
-        "Whether nodename is repeatable is not recorded.",
-        "Whether listen_ip is required is not recorded.",
-        "Whether listen_ip is repeatable is not recorded.",
-        "Whether port is required is not recorded.",
-        "Whether port is repeatable is not recorded.",
-        "Whether public_ip is required is not recorded.",
-        "Whether public_ip is repeatable is not recorded.",
-        "Whether public_port is required is not recorded.",
-        "Whether public_port is repeatable is not recorded."
-      ],
+      "displayed": "generated",
+      "issues": [],
       "generated": [
         "riak repl add-nat-listener <nodename> <listen_ip> <port> <public_ip> <public_port>"
       ],
@@ -4702,18 +4118,10 @@
     {
       "key": "shell:riak repl add-site",
       "route": "riak/repl/add-site",
-      "status": "needs_review",
+      "status": "matched",
       "basis": "arguments_and_options",
-      "displayed": "supplied_usage",
-      "issues": [
-        "Argument metadata was extracted as usage placeholders; positional order and grouping need review.",
-        "Whether ipaddr is required is not recorded.",
-        "Whether ipaddr is repeatable is not recorded.",
-        "Whether portnum is required is not recorded.",
-        "Whether portnum is repeatable is not recorded.",
-        "Whether sitename is required is not recorded.",
-        "Whether sitename is repeatable is not recorded."
-      ],
+      "displayed": "generated",
+      "issues": [],
       "generated": [
         "riak repl add-site <ipaddr> <portnum> <sitename>"
       ],
@@ -4749,7 +4157,7 @@
         "Generated and supplied syntax differ; review the forms below (including order, grouping and option values)."
       ],
       "generated": [
-        "riak repl clustername"
+        "riak repl clustername [<clustername>]"
       ],
       "supplied": [
         "Usage: riak repl clustername [clustername]"
@@ -4778,15 +4186,12 @@
       "route": "riak/repl/clusterstats",
       "status": "needs_review",
       "basis": "arguments_and_options",
-      "displayed": "known_path_only",
+      "displayed": "generated",
       "issues": [
-        "Whether -port takes a value is not recorded.",
-        "Whether -port is required is not recorded.",
-        "Whether -port is repeatable is not recorded.",
         "No supplied usage is available for comparison."
       ],
       "generated": [
-        "riak repl clusterstats -port <value?>"
+        "riak repl clusterstats [<connection>]"
       ],
       "supplied": [],
       "missingFromProvided": [],
@@ -4800,14 +4205,11 @@
       "displayed": "supplied_usage",
       "issues": [
         "The supplied usage has multiple forms; their argument relationships need review.",
-        "Argument metadata was extracted as usage placeholders; positional order and grouping need review.",
-        "Whether clustername is required is not recorded.",
-        "Whether clustername is repeatable is not recorded.",
         "Generated and supplied syntax differ; review the forms below (including order, grouping and option values).",
-        "Supplied syntax contains terms absent from the structured form: host, port. Check for missing arguments, options or constraints."
+        "Supplied syntax contains terms absent from the structured form: host, port, clustername. Check for missing arguments, options or constraints."
       ],
       "generated": [
-        "riak repl connect <clustername>"
+        "riak repl connect <destination>"
       ],
       "supplied": [
         "Usage: riak repl connect  <host:port>",
@@ -4835,18 +4237,10 @@
     {
       "key": "shell:riak repl del-listener",
       "route": "riak/repl/del-listener",
-      "status": "needs_review",
+      "status": "matched",
       "basis": "arguments_and_options",
-      "displayed": "supplied_usage",
-      "issues": [
-        "Argument metadata was extracted as usage placeholders; positional order and grouping need review.",
-        "Whether nodename is required is not recorded.",
-        "Whether nodename is repeatable is not recorded.",
-        "Whether listen_ip is required is not recorded.",
-        "Whether listen_ip is repeatable is not recorded.",
-        "Whether port is required is not recorded.",
-        "Whether port is repeatable is not recorded."
-      ],
+      "displayed": "generated",
+      "issues": [],
       "generated": [
         "riak repl del-listener <nodename> <listen_ip> <port>"
       ],
@@ -4859,14 +4253,10 @@
     {
       "key": "shell:riak repl del-site",
       "route": "riak/repl/del-site",
-      "status": "needs_review",
+      "status": "matched",
       "basis": "arguments_and_options",
-      "displayed": "supplied_usage",
-      "issues": [
-        "Argument metadata was extracted as usage placeholders; positional order and grouping need review.",
-        "Whether sitename is required is not recorded.",
-        "Whether sitename is repeatable is not recorded."
-      ],
+      "displayed": "generated",
+      "issues": [],
       "generated": [
         "riak repl del-site <sitename>"
       ],
@@ -4884,10 +4274,10 @@
       "displayed": "supplied_usage",
       "issues": [
         "Generated and supplied syntax differ; review the forms below (including order, grouping and option values).",
-        "Supplied syntax contains terms absent from the structured form: show, from-cluster. Check for missing arguments, options or constraints."
+        "Supplied syntax contains terms absent from the structured form: show. Check for missing arguments, options or constraints."
       ],
       "generated": [
-        "riak repl delete-block-provider-redirect"
+        "riak repl delete-block-provider-redirect <from-cluster>"
       ],
       "supplied": [
         "Usage: riak repl delete-block-provider-redirect show |\n                       delete-block-provider-redirect <from-cluster>"
@@ -4903,14 +4293,11 @@
       "displayed": "supplied_usage",
       "issues": [
         "The supplied usage has multiple forms; their argument relationships need review.",
-        "Argument metadata was extracted as usage placeholders; positional order and grouping need review.",
-        "Whether clustername is required is not recorded.",
-        "Whether clustername is repeatable is not recorded.",
         "Generated and supplied syntax differ; review the forms below (including order, grouping and option values).",
-        "Supplied syntax contains terms absent from the structured form: host, port. Check for missing arguments, options or constraints."
+        "Supplied syntax contains terms absent from the structured form: host, port, clustername. Check for missing arguments, options or constraints."
       ],
       "generated": [
-        "riak repl disconnect <clustername>"
+        "riak repl disconnect <destination>"
       ],
       "supplied": [
         "Usage: riak repl disconnect  <host:port>",
@@ -4944,9 +4331,6 @@
       "basis": "arguments_and_options",
       "displayed": "supplied_usage",
       "issues": [
-        "Argument metadata was extracted as usage placeholders; positional order and grouping need review.",
-        "Whether clustername is required is not recorded.",
-        "Whether clustername is repeatable is not recorded.",
         "Generated and supplied syntax differ; review the forms below (including order, grouping and option values).",
         "Supplied syntax contains terms absent from the structured form: enable. Check for missing arguments, options or constraints."
       ],
@@ -4966,9 +4350,6 @@
       "basis": "arguments_and_options",
       "displayed": "supplied_usage",
       "issues": [
-        "Argument metadata was extracted as usage placeholders; positional order and grouping need review.",
-        "Whether clustername is required is not recorded.",
-        "Whether clustername is repeatable is not recorded.",
         "Generated and supplied syntax differ; review the forms below (including order, grouping and option values).",
         "Supplied syntax contains terms absent from the structured form: disable. Check for missing arguments, options or constraints."
       ],
@@ -4991,7 +4372,7 @@
         "No supplied usage is available for comparison."
       ],
       "generated": [
-        "riak repl fullsync max_fssink_node"
+        "riak repl fullsync max_fssink_node [<value>]"
       ],
       "supplied": [],
       "missingFromProvided": [],
@@ -5007,7 +4388,7 @@
         "No supplied usage is available for comparison."
       ],
       "generated": [
-        "riak repl fullsync max_fssource_cluster"
+        "riak repl fullsync max_fssource_cluster [<value>]"
       ],
       "supplied": [],
       "missingFromProvided": [],
@@ -5023,7 +4404,7 @@
         "No supplied usage is available for comparison."
       ],
       "generated": [
-        "riak repl fullsync max_fssource_node"
+        "riak repl fullsync max_fssource_node [<value>]"
       ],
       "supplied": [],
       "missingFromProvided": [],
@@ -5039,7 +4420,7 @@
         "No supplied usage is available for comparison."
       ],
       "generated": [
-        "riak repl fullsync start"
+        "riak repl fullsync start [<clustername>]"
       ],
       "supplied": [],
       "missingFromProvided": [],
@@ -5055,7 +4436,7 @@
         "No supplied usage is available for comparison."
       ],
       "generated": [
-        "riak repl fullsync stop"
+        "riak repl fullsync stop [<clustername>]"
       ],
       "supplied": [],
       "missingFromProvided": [],
@@ -5102,11 +4483,6 @@
       "basis": "arguments_and_options",
       "displayed": "supplied_usage",
       "issues": [
-        "Argument metadata was extracted as usage placeholders; positional order and grouping need review.",
-        "Whether externalip is required is not recorded.",
-        "Whether externalip is repeatable is not recorded.",
-        "Whether internalip is required is not recorded.",
-        "Whether internalip is repeatable is not recorded.",
         "Generated and supplied syntax differ; review the forms below (including order, grouping and option values).",
         "Supplied syntax contains terms absent from the structured form: port. Check for missing arguments, options or constraints."
       ],
@@ -5126,11 +4502,6 @@
       "basis": "arguments_and_options",
       "displayed": "supplied_usage",
       "issues": [
-        "Argument metadata was extracted as usage placeholders; positional order and grouping need review.",
-        "Whether externalip is required is not recorded.",
-        "Whether externalip is repeatable is not recorded.",
-        "Whether internalip is required is not recorded.",
-        "Whether internalip is repeatable is not recorded.",
         "Generated and supplied syntax differ; review the forms below (including order, grouping and option values).",
         "Supplied syntax contains terms absent from the structured form: port. Check for missing arguments, options or constraints."
       ],
@@ -5200,9 +4571,6 @@
       "basis": "arguments_and_options",
       "displayed": "supplied_usage",
       "issues": [
-        "Argument metadata was extracted as usage placeholders; positional order and grouping need review.",
-        "Whether clustername is required is not recorded.",
-        "Whether clustername is repeatable is not recorded.",
         "Generated and supplied syntax differ; review the forms below (including order, grouping and option values).",
         "Supplied syntax contains terms absent from the structured form: enable. Check for missing arguments, options or constraints."
       ],
@@ -5222,9 +4590,6 @@
       "basis": "arguments_and_options",
       "displayed": "supplied_usage",
       "issues": [
-        "Argument metadata was extracted as usage placeholders; positional order and grouping need review.",
-        "Whether clustername is required is not recorded.",
-        "Whether clustername is repeatable is not recorded.",
         "Generated and supplied syntax differ; review the forms below (including order, grouping and option values).",
         "Supplied syntax contains terms absent from the structured form: disable. Check for missing arguments, options or constraints."
       ],
@@ -5265,9 +4630,9 @@
         "No supplied usage is available for comparison."
       ],
       "generated": [
-        "riak repl realtime cascades",
-        "riak repl realtime cascades always",
-        "riak repl realtime cascades never"
+        "riak repl realtime cascades [<policy>]",
+        "riak repl realtime cascades always [<policy>]",
+        "riak repl realtime cascades never [<policy>]"
       ],
       "supplied": [],
       "missingFromProvided": [],
@@ -5280,9 +4645,6 @@
       "basis": "arguments_and_options",
       "displayed": "supplied_usage",
       "issues": [
-        "Argument metadata was extracted as usage placeholders; positional order and grouping need review.",
-        "Whether clustername is required is not recorded.",
-        "Whether clustername is repeatable is not recorded.",
         "Generated and supplied syntax differ; review the forms below (including order, grouping and option values).",
         "Supplied syntax contains terms absent from the structured form: enable. Check for missing arguments, options or constraints."
       ],
@@ -5302,9 +4664,6 @@
       "basis": "arguments_and_options",
       "displayed": "supplied_usage",
       "issues": [
-        "Argument metadata was extracted as usage placeholders; positional order and grouping need review.",
-        "Whether clustername is required is not recorded.",
-        "Whether clustername is repeatable is not recorded.",
         "Generated and supplied syntax differ; review the forms below (including order, grouping and option values).",
         "Supplied syntax contains terms absent from the structured form: disable. Check for missing arguments, options or constraints."
       ],
@@ -5327,7 +4686,7 @@
         "No supplied usage is available for comparison."
       ],
       "generated": [
-        "riak repl realtime start"
+        "riak repl realtime start [<clustername>]"
       ],
       "supplied": [],
       "missingFromProvided": [],
@@ -5343,7 +4702,7 @@
         "No supplied usage is available for comparison."
       ],
       "generated": [
-        "riak repl realtime stop"
+        "riak repl realtime stop [<clustername>]"
       ],
       "supplied": [],
       "missingFromProvided": [],
@@ -5373,10 +4732,10 @@
       "displayed": "supplied_usage",
       "issues": [
         "Generated and supplied syntax differ; review the forms below (including order, grouping and option values).",
-        "Supplied syntax contains terms absent from the structured form: show, from-cluster. Check for missing arguments, options or constraints."
+        "Supplied syntax contains terms absent from the structured form: show. Check for missing arguments, options or constraints."
       ],
       "generated": [
-        "riak repl show-block-provider-redirect"
+        "riak repl show-block-provider-redirect <from-cluster>"
       ],
       "supplied": [
         "Usage: riak repl show-block-provider-redirect show |\n                       show-block-provider-redirect <from-cluster>"
@@ -5456,13 +4815,12 @@
       "route": "riak/rpc",
       "status": "needs_review",
       "basis": "arguments_and_options",
-      "displayed": "supplied_usage",
+      "displayed": "generated",
       "issues": [
-        "Generated and supplied syntax differ; review the forms below (including order, grouping and option values).",
-        "Supplied syntax contains terms absent from the structured form: Mod, Fun, Args. Check for missing arguments, options or constraints."
+        "Generated and supplied syntax differ; review the forms below (including order, grouping and option values)."
       ],
       "generated": [
-        "riak rpc"
+        "riak rpc <Mod> <Fun> [<Args> ...]"
       ],
       "supplied": [
         "Usage: riak rpc [Mod [Fun [Args]]]]"
@@ -5526,11 +4884,10 @@
       "displayed": "supplied_usage",
       "issues": [
         "The supplied usage has multiple forms; their argument relationships need review.",
-        "Generated and supplied syntax differ; review the forms below (including order, grouping and option values).",
-        "Supplied syntax contains terms absent from the structured form: version, VERSION. Check for missing arguments, options or constraints."
+        "Generated and supplied syntax differ; review the forms below (including order, grouping and option values)."
       ],
       "generated": [
-        "riak uninstall"
+        "riak uninstall <version>"
       ],
       "supplied": [
         "Usage: riak uninstall {version}",
@@ -5547,11 +4904,10 @@
       "displayed": "supplied_usage",
       "issues": [
         "The supplied usage has multiple forms; their argument relationships need review.",
-        "Generated and supplied syntax differ; review the forms below (including order, grouping and option values).",
-        "Supplied syntax contains terms absent from the structured form: version, VERSION. Check for missing arguments, options or constraints."
+        "Generated and supplied syntax differ; review the forms below (including order, grouping and option values)."
       ],
       "generated": [
-        "riak unpack"
+        "riak unpack <version>"
       ],
       "supplied": [
         "Usage: riak unpack {version}",
@@ -5568,14 +4924,10 @@
       "displayed": "supplied_usage",
       "issues": [
         "The supplied usage has multiple forms; their argument relationships need review.",
-        "Whether --no-permanent takes a value is not recorded.",
-        "Whether --no-permanent is required is not recorded.",
-        "Whether --no-permanent is repeatable is not recorded.",
-        "Generated and supplied syntax differ; review the forms below (including order, grouping and option values).",
-        "Supplied syntax contains terms absent from the structured form: version, VERSION. Check for missing arguments, options or constraints."
+        "Generated and supplied syntax differ; review the forms below (including order, grouping and option values)."
       ],
       "generated": [
-        "riak upgrade --no-permanent <value?>"
+        "riak upgrade <version> [--no-permanent]"
       ],
       "supplied": [
         "Usage: riak upgrade {version}",

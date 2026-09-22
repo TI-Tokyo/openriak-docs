@@ -38,7 +38,8 @@ const pageVersionStatusSource = fs.readFileSync(path.join(themeRoot, 'layouts', 
 const versionMountGeneratorSource = fs.readFileSync(path.join(repositoryRoot, 'tools', 'scripts', 'generate-version-mounts.js'), 'utf8');
 const relatedDocumentationSource = fs.readFileSync(path.join(themeRoot, 'layouts', 'partials', 'related-documentation.html'), 'utf8');
 const headingRenderHookSource = fs.readFileSync(path.join(themeRoot, 'layouts', '_markup', 'render-heading.html'), 'utf8');
-const codeRenderHookSource = fs.readFileSync(path.join(themeRoot, 'layouts', '_markup', 'render-codeblock.html'), 'utf8');
+const codeRenderHookSource = fs.readFileSync(path.join(themeRoot, 'layouts', 'partials', 'code-block.html'), 'utf8');
+assert.match(fs.readFileSync(path.join(themeRoot, 'layouts', '_markup', 'render-codeblock.html'), 'utf8'), /partial "code-block\.html" \./, 'Markdown and metadata must share the literal code renderer');
 const downloadsTemplateSource = fs.readFileSync(path.join(themeRoot, 'layouts', '_default', 'downloads.html'), 'utf8');
 const downloadChecksumSource = fs.readFileSync(path.join(themeRoot, 'layouts', 'partials', 'download-checksum.html'), 'utf8');
 const downloadTableSource = fs.readFileSync(path.join(themeRoot, 'layouts', 'partials', 'download-table.html'), 'utf8');

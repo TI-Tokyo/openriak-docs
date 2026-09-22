@@ -90,15 +90,18 @@ test('generation is repeatable, preserves authored pages and anchors, and check 
   try {
     const metadata = path.join(repo, 'content/openriak-kv/metadata/3.4.0');
     fs.mkdirSync(metadata, { recursive: true });
-    fs.writeFileSync(path.join(metadata, 'kv-cli-commands.json'), JSON.stringify(document([shell('riak'), shell('riak stop')])));
+    fs.writeFileSync(path.join(metadata, 'kv-cli-commands.json'), JSON.stringify(document([shell('riak'), shell('riak stop'), shell('riak admin'), shell('riak-admin')])));
     const root = path.join(repo, 'content/openriak-kv/3.4.0-new-release/reference/commands');
     fs.mkdirSync(root, { recursive: true });
     fs.writeFileSync(path.join(root, 'riak.md'), '# Legacy\n\n## stop\nLegacy body');
     fs.writeFileSync(path.join(root, 'riak-control.md'), 'Authored control guide');
+    fs.writeFileSync(path.join(root, 'riak-admin.md'), '---\ngenerated_by: "cli-reference"\n---\nObsolete alias overview');
     generate(['--repo', repo, '--version', '3.4.0']);
     generate(['--repo', repo, '--version', '3.4.0', '--check']);
     assert.match(fs.readFileSync(path.join(root, 'riak/_index.md'), 'utf8'), /cli_legacy_anchors: \["stop"\]/);
     assert.ok(!fs.existsSync(path.join(root, 'riak.md')));
+    assert.ok(!fs.existsSync(path.join(root, 'riak-admin.md')));
+    assert.ok(fs.existsSync(path.join(root, 'riak/admin.md')));
     assert.equal(fs.readFileSync(path.join(root, 'riak-control.md'), 'utf8'), 'Authored control guide');
     fs.appendFileSync(path.join(root, 'riak/stop.md'), '\nEdited');
     assert.throws(() => generate(['--repo', repo, '--version', '3.4.0', '--check']), /regeneration/);

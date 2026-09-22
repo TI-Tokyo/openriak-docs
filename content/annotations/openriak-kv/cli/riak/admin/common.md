@@ -43,7 +43,33 @@ be reached; it does not identify a cookie mismatch by itself.
 Check that the intended node is running and reachable, then use its configured
 cookie. Do not change the node’s cookie simply to match this test example.
 
+# Options
+
+## -sort
+
+omit: true
+
+
+
+## -lines
+
+omit: true
+
+
+
+## -interval
+
+omit: true
+
+# Results
+
+## outcome
+
+### Description
+
+Dispatches the selected administrative command. Read the child command’s results and errors; an RPC connection or cookie failure prevents dispatch.
+
 # Reviewed against
 
-3.4.0: 5ea5255deef13a26dbf89fc655d56c1b43267d911b375ace3db10079ff873b0a
-3.4.1: 79aab996a841c4b5e3b6ed172db5cd5ee90268fcc28e8ea99b5bcde61cb95074
+3.4.0: eb83ddd2adac68ac523a0d4c8ab972d3f9eced34f6dc8d313ff78497bef0a32b
+3.4.1: 871340f907cb28cb28460f40be2789ff5f487f029a85f0a6532ed076891b37aa

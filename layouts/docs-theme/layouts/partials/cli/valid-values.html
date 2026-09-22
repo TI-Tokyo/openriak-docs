@@ -1,0 +1,21 @@
+{{- $values := slice -}}
+{{- range .allowedValues -}}
+  {{- $values = $values | append (dict "text" . "literal" true) -}}
+{{- end -}}
+{{- if and (not $values) (strings.HasPrefix (.datatype | default "") "all or ") -}}
+  {{- /* A range accepts the literal atom all or a value of the described type.
+        The type description is not itself a value to copy. */ -}}
+  {{- $values = slice (dict "text" "all" "literal" true)
+      (dict "text" (strings.TrimPrefix "all or " .datatype) "literal" false) -}}
+{{- end -}}
+{{- if $values -}}
+<ul class="cli-valid-values">
+{{- range $values -}}
+  <li>{{ if .literal }}<span class="configuration-reference-option"><code>{{ .text }}</code><button class="download-copy" type="button" data-copy-value="{{ .text }}" data-copy-label="Copy value {{ .text }}" aria-label="Copy value {{ .text }}" title="Copy value {{ .text }}" aria-live="polite">{{ partial "download-icon-copy.html" . }}</button></span>{{ else }}{{ .text }}{{ end }}</li>
+{{- end -}}
+</ul>
+{{- else -}}
+  {{- with .datatype -}}{{ . }}{{- else -}}
+    {{- with .value -}}Value placeholder: {{ . }}{{- else -}}Not specified{{- end -}}
+  {{- end -}}
+{{- end -}}
