@@ -109,6 +109,21 @@
 
   const resolveAssetUrl = (asset, assetBase, origin) => new URL(asset, new URL(assetBase, origin)).href;
 
+  const pageExists = async (url, versionRoot, fetchPage = fetch) => {
+    try {
+      let response = await fetchPage(url, { method: 'HEAD', credentials: 'same-origin' });
+      if (response.status === 405) response = await fetchPage(url, { credentials: 'same-origin' });
+      if (!response.ok) return false;
+      // Hosts may redirect missing pages to an unrelated site page that returns
+      // 200. Only accept destinations within the selected product and version.
+      const destination = new URL(response.url);
+      const root = new URL(versionRoot);
+      return destination.origin === root.origin && destination.pathname.startsWith(root.pathname);
+    } catch {
+      return false;
+    }
+  };
+
   const configurationDefaultForOs = (defaults, osId) => {
     const selected = defaults?.[osId];
     if (!selected) return { hasDefault: false, value: '', osSpecific: false };
@@ -239,7 +254,7 @@
     return new RegExp(pattern, flags);
   };
 
-  const api = { parseSemVer, compareSemVer, resolveBrand, resolveOs, resolveValue, buildVersionCandidates, resolveAssetUrl, configurationDefaultForOs, configurationSearchPattern, configurationSearchExpression, osReleaseKey, groupOsReleases, resolveReleaseArchitecture };
+  const api = { parseSemVer, compareSemVer, resolveBrand, resolveOs, resolveValue, buildVersionCandidates, pageExists, resolveAssetUrl, configurationDefaultForOs, configurationSearchPattern, configurationSearchExpression, osReleaseKey, groupOsReleases, resolveReleaseArchitecture };
   if (typeof module !== 'undefined' && module.exports) module.exports = api;
   if (typeof window !== 'undefined') window.OpenRiakDocs = api;
   if (typeof document === 'undefined') return;
@@ -770,16 +785,6 @@
     renderDownloads();
   };
 
-  const pageExists = async (url) => {
-    try {
-      let response = await fetch(url, { method: 'HEAD', credentials: 'same-origin' });
-      if (response.status === 405) response = await fetch(url, { credentials: 'same-origin' });
-      return response.ok;
-    } catch {
-      return false;
-    }
-  };
-
   const switchVersion = async (target) => {
     const targetOs = selectedOs
       ? resolveOs(selectedOs.id, selectedOs, target)
@@ -790,14 +795,15 @@
       currentVersion: currentVersion.version,
       targetVersion: target.version
     });
+    const versionRoot = new URL(`${target.version}/`, new URL(context.productBase, window.location.origin)).href;
     if (targetOs) window.localStorage.setItem(storageKey, targetOs.id);
     for (const candidate of candidates) {
-      if (await pageExists(candidate)) {
+      if (await pageExists(candidate, versionRoot)) {
         window.location.assign(candidate);
         return;
       }
     }
-    window.location.assign(new URL(`${target.version}/`, new URL(context.productBase, window.location.origin)).href);
+    window.location.assign(versionRoot);
   };
 
   const setupVersionWarning = () => {
