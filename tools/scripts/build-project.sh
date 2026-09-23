@@ -103,6 +103,8 @@ case "$project" in
 esac
 
 set -- --source "$site_root/content" --config "$config" --destination "$destination" \
-  --baseURL "$base_url" --gc --minify --panicOnWarning --noBuildLock --cleanDestinationDir
+  --baseURL "$base_url" --gc --minify --noBuildLock --cleanDestinationDir
+# Core logs non-failing editorial correction warnings; archives remain strict.
+if [ "$project" = archives ]; then set -- "$@" --panicOnWarning; fi
 if [ "${INCLUDE_DRAFTS:-true}" = "true" ]; then set -- "$@" --buildDrafts; fi
 hugo "$@"

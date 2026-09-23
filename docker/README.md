@@ -61,6 +61,14 @@ through the bind-mounted `docker-wip/` staging directory; after the container
 exits, the host script moves that tree to `public/`. Rsync `public/` to the
 server directory corresponding to the path in `HUGO_BASEURL`.
 
+The metadata stage copies `content/annotations` before regenerating settings and
+CLI reference data. These Markdown files are required build inputs; the adapters
+fail if their default annotation directories are missing instead of publishing
+unannotated fallback data. Annotation edits invalidate the metadata build layer.
+Core builds log editorial correction warnings without `--panicOnWarning`;
+metadata validation errors and Hugo errors still fail the build. Archive builds
+retain `--panicOnWarning`.
+
 The metadata stage includes the tracked Docker validation and CVE records from
 `records/openriak-docker/images`. It checks the published Dockerfiles and Compose
 files against those records using `content/static/openriak-kv/downloads/docker`,

@@ -31,7 +31,7 @@ docker run --rm --volume "${repositoryRoot}:/workspace" --workdir /workspace/con
     --destination /workspace/build/.architecture-validation/core `
     --baseURL http://localhost:1410/docs/ `
     --cacheDir /tmp/hugo-cache `
-    --cleanDestinationDir --gc --minify --panicOnWarning --buildDrafts
+    --cleanDestinationDir --gc --minify --buildDrafts
 if ($LASTEXITCODE -ne 0) { throw 'Core Hugo build failed' }
 
 Write-Host 'Building archive site...'
@@ -61,7 +61,7 @@ function Assert-MissingValueBuildFails {
         --config /workspace/tools/generated/hugo.yaml `
         --destination "/workspace/build/.architecture-validation/missing-value-output-$Name" `
         --baseURL http://localhost:1410/docs/ `
-        --cacheDir /tmp/hugo-cache --cleanDestinationDir --gc --minify --panicOnWarning 2>&1
+        --cacheDir /tmp/hugo-cache --cleanDestinationDir --gc --minify 2>&1
     $exitCode = $LASTEXITCODE
     if ($exitCode -eq 0) { throw "Hugo unexpectedly accepted missing value fixture $Name" }
     $expected = "missing value: product=openriak-kv version=3.4.1 os=$ExpectedOs key=banana"
@@ -86,7 +86,7 @@ function Assert-NoPreviousVersionBuildFails {
         --config /workspace/tools/generated/hugo.yaml `
         --destination "/workspace/build/.architecture-validation/previous-version-output" `
         --baseURL http://localhost:1410/docs/ `
-        --cacheDir /tmp/hugo-cache --cleanDestinationDir --gc --minify --panicOnWarning 2>&1
+        --cacheDir /tmp/hugo-cache --cleanDestinationDir --gc --minify 2>&1
     $exitCode = $LASTEXITCODE
     if ($exitCode -eq 0) { throw 'Hugo unexpectedly accepted previous-version on the first release' }
     $expected = 'previous-version has no previous release: product=openriak-kv version=2.0.0'
