@@ -43,3 +43,10 @@ Inspect repl connections and repl status, confirm the remote name, and restore t
 
 3.4.0: e486d63c3730e5e82525078334567903536eed739135ae3b5bb7aa7411e71738
 3.4.1: e486d63c3730e5e82525078334567903536eed739135ae3b5bb7aa7411e71738
+
+# Tags
+
+feature: full-sync
+repository: riak_repl
+module: riak_repl_console
+concept: replica-repair

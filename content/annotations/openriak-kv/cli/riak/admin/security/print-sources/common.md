@@ -17,3 +17,10 @@ Source rules select the authentication method by user and client network. Review
 
 3.4.0: 5c69761a817ceba3631d68d5d0c544bb836f2eab8847c60e1d6f1df7db80dd9d
 3.4.1: 5c69761a817ceba3631d68d5d0c544bb836f2eab8847c60e1d6f1df7db80dd9d
+
+# Tags
+
+feature: security
+repository: riak_core
+module: riak_core_console
+concept: authentication

@@ -17,3 +17,10 @@ Returns `{WorkerCount, PerPeerLimit}` from the current application environment.
 
 3.4.0: eed39d24e345436622a400a5d99519f40d6873a270d906f17db3ab81e6465104
 3.4.1: eed39d24e345436622a400a5d99519f40d6873a270d906f17db3ab81e6465104
+
+# Tags
+
+feature: queue-replication
+repository: riak_kv
+module: riak_kv_replrtq_snk
+concept: concurrency, cross-cluster-replication

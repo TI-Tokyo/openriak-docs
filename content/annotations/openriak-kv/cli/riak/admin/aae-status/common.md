@@ -17,3 +17,10 @@ Use the exchange and tree information to inspect anti-entropy activity. The lega
 
 3.4.0: 904f32d17fbd256c69bebfeb9d68777de8dc78d0721bbe2e4b03c32d6f407e99
 3.4.1: 904f32d17fbd256c69bebfeb9d68777de8dc78d0721bbe2e4b03c32d6f407e99
+
+# Tags
+
+feature: tictac-aae
+repository: riak_kv
+module: riak_kv_console
+concept: replica-repair

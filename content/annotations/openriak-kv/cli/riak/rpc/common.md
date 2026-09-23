@@ -47,3 +47,10 @@ Arguments as Erlang terms. Quote shell-sensitive terms. Omit for an arity-zero f
 
 3.4.0: f334c9bc5f552102ad170e5c314393049cb4064466ad28e9fcc8a3ce090bbe8d
 3.4.1: f334c9bc5f552102ad170e5c314393049cb4064466ad28e9fcc8a3ce090bbe8d
+
+# Tags
+
+feature: node-operations
+repository: riak
+module: riak
+concept: node-lifecycle

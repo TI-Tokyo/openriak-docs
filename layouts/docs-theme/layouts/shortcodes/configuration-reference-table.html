@@ -9,6 +9,7 @@
 {{- $configurationData := index hugo.Data "configuration-reference" -}}
 {{- $productData := index $configurationData $context.id -}}
 {{- $reference := index $productData $context.version -}}
+{{- partialCached "settings-annotation-warnings.html" $reference $context.id $context.version $reference.annotationCoverage.corrections -}}
 {{- if not $reference -}}
   {{- errorf "configuration-reference-table requires configuration metadata for %s %s on %s" $context.id $context.version .Page.File.Path -}}
 {{- end -}}
@@ -41,7 +42,7 @@
     <div class="configuration-reference-search-controls">
       <label class="configuration-reference-search">
         <span>Search this table</span>
-        <input type="search" data-configuration-search placeholder="Search all fields" autocomplete="off" spellcheck="false">
+        <input type="search" data-configuration-search placeholder="Search fields and tags" autocomplete="off" spellcheck="false">
       </label>
       <label class="configuration-reference-search-mode">
         <span>Match</span>
@@ -53,6 +54,16 @@
           <option value="regex">Regular expression</option>
         </select>
       </label>
+    </div>
+    <div class="configuration-tag-filters" role="group" aria-label="Filter settings by tags">
+      {{- range $category := slice "feature" "repository" "module" "concept" -}}
+        {{- $values := slice -}}
+        {{- range $matches }}{{ range index .tags $category }}{{ $values = $values | append . }}{{ end }}{{ end -}}
+        <label><span>{{ index (dict "feature" "Feature" "repository" "Source repository" "module" "Source module" "concept" "Concept") $category }}</span>
+          <select data-configuration-tag-filter="{{ $category }}"><option value="">All</option>{{ range sort (uniq $values) }}<option value="{{ . }}">{{ . }}</option>{{ end }}</select>
+        </label>
+      {{- end -}}
+      <button type="button" data-configuration-reset>Clear filters</button>
     </div>
     <output class="configuration-reference-results" data-configuration-results aria-live="polite">{{ len $matches }} rows</output>
   </div>
@@ -76,7 +87,7 @@
         {{- range $setting := sort $matches "name" "asc" -}}
           {{- $clientDefaults = merge $clientDefaults (dict $setting.name $setting.defaults) -}}
           {{- $default := index $setting.defaults ($selectedOperatingSystem.defaultsKey | default $defaultOs) | default dict -}}
-          <tr data-configuration-key="{{ $setting.name }}">
+          <tr id="{{ $setting.anchor }}" data-configuration-key="{{ $setting.name }}" data-configuration-tags="{{ $setting.tags | jsonify }}">
             <td class="configuration-reference-name">
               <div class="configuration-copyable">
                 <code>{{ $setting.name }}</code>

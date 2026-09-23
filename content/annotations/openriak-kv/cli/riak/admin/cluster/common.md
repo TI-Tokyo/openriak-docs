@@ -81,3 +81,10 @@ The selected subcommand determines the result. Invoking the group without a vali
 
 3.4.0: 6fb040aabd63bd213f86610f90b08c9ee869535ba978e4ca9f95b59193653c21
 3.4.1: 6fb040aabd63bd213f86610f90b08c9ee869535ba978e4ca9f95b59193653c21
+
+# Tags
+
+feature: cluster-management
+repository: riak
+module: riak-admin
+concept: partition-placement

@@ -108,3 +108,10 @@ Read the stored value, delete it with replica acknowledgments, then confirm the 
 
 3.4.0: 76281fe59e55b2c5ad2e172ec9e7b8c07fcadf229c68d642d53b057a25b0a443
 3.4.1: 76281fe59e55b2c5ad2e172ec9e7b8c07fcadf229c68d642d53b057a25b0a443
+
+# Tags
+
+feature: deletion
+repository: riak_kv
+module: riak_client
+concept: tombstones

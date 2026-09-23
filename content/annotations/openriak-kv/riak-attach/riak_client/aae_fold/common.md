@@ -121,3 +121,10 @@ title: Create five objects
 
 3.4.0: 46935506fe17be122d84fae0998679e483083c6c3ff46e99c3952c8d1a49fce2
 3.4.1: 46935506fe17be122d84fae0998679e483083c6c3ff46e99c3952c8d1a49fce2
+
+# Tags
+
+feature: tictac-aae
+repository: riak_kv
+module: riak_client
+concept: replica-repair

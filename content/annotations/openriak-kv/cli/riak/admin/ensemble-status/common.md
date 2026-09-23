@@ -27,3 +27,10 @@ Select a particular ensemble, for example `root`. Omit to show the overall conse
 
 3.4.0: 50962fb5fbf9f0c7df785b6817b70e293b61a3344c45541bf7976abd64d740a8
 3.4.1: 50962fb5fbf9f0c7df785b6817b70e293b61a3344c45541bf7976abd64d740a8
+
+# Tags
+
+feature: observability
+repository: riak_kv
+module: riak_kv_console
+concept: diagnostics

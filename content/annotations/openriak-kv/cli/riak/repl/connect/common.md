@@ -35,3 +35,10 @@ Submit the connection-management request. If no remote cluster is listening at t
 
 3.4.0: b184c4bee315072be42d09bc619a95c021d1ceac965148b7fbb2af8cf1ac6762
 3.4.1: b184c4bee315072be42d09bc619a95c021d1ceac965148b7fbb2af8cf1ac6762
+
+# Tags
+
+feature: legacy-replication
+repository: riak_repl
+module: riak_repl_console
+concept: cross-cluster-replication

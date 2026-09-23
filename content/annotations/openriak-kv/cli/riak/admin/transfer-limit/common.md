@@ -37,3 +37,10 @@ Maximum simultaneous transfers. Omit all arguments to read limits. For example, 
 
 3.4.0: a1b68b73f0199986f3db92d88984550538d15eb6e0bc0336956c98a20d6288fc
 3.4.1: a1b68b73f0199986f3db92d88984550538d15eb6e0bc0336956c98a20d6288fc
+
+# Tags
+
+feature: handoff
+repository: riak_core
+module: riak_core_console
+concept: partition-transfer

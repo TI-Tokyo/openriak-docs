@@ -67,3 +67,10 @@ Success changes release-handler state. Confirm the resulting state with riak ver
 
 3.4.0: 75ecb178cc21da143631befa3e1edde360bfcdee822dc35d4f81eab7c2a8f13f
 3.4.1: 75ecb178cc21da143631befa3e1edde360bfcdee822dc35d4f81eab7c2a8f13f
+
+# Tags
+
+feature: node-operations
+repository: riak
+module: riak
+concept: node-lifecycle

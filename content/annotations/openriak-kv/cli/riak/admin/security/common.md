@@ -61,3 +61,10 @@ The selected subcommand determines the result. Invoking the group without a vali
 
 3.4.0: 1107ed6dd53d22a457b8100607118fc4d6d8b2682488cc9947072b601c67c83b
 3.4.1: 1107ed6dd53d22a457b8100607118fc4d6d8b2682488cc9947072b601c67c83b
+
+# Tags
+
+feature: security
+repository: riak
+module: riak-admin
+concept: authentication

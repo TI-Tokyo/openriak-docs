@@ -17,3 +17,10 @@ Use during maintenance or repair. Existing work may continue; restore coverage e
 
 3.4.0: 7d3bd22d2fecac01de7f8e3dda799bce21862bed66f7b8897bea18e9321055b9
 3.4.1: 7d3bd22d2fecac01de7f8e3dda799bce21862bed66f7b8897bea18e9321055b9
+
+# Tags
+
+feature: secondary-indexes
+repository: riak_kv
+module: riak_client
+concept: querying

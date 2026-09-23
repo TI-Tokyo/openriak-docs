@@ -67,3 +67,10 @@ Run the operation on the named node, such as `openriak-kv@node1.test`. Use the f
 
 3.4.0: 8601f1ec3d706bb2462a395300be3ed8810d54e82a31b32f180d1b8f3af7c541
 3.4.1: 8601f1ec3d706bb2462a395300be3ed8810d54e82a31b32f180d1b8f3af7c541
+
+# Tags
+
+feature: cluster-management
+repository: riak_core
+module: riak_core_console
+concept: partition-placement

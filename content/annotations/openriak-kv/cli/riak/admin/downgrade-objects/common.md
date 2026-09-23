@@ -70,3 +70,10 @@ The conversion is a background maintenance job; monitor its completion before pr
 
 3.4.0: 8c4270541f49f90f229fc1128c1b393ec6e7ebc6318f9dff598543f9bd7b847e
 3.4.1: 8c4270541f49f90f229fc1128c1b393ec6e7ebc6318f9dff598543f9bd7b847e
+
+# Tags
+
+feature: node-operations
+repository: riak_kv
+module: riak_kv_console
+concept: node-lifecycle

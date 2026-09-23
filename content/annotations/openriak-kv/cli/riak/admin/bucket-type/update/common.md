@@ -45,3 +45,10 @@ On success, subsequent bucket-type status output reflects the changed properties
 
 3.4.0: 4b8a89ccc48f0347ea3f94fa8b77a87e9f6158ae8d96ab05585cb05b3b925aab
 3.4.1: 4b8a89ccc48f0347ea3f94fa8b77a87e9f6158ae8d96ab05585cb05b3b925aab
+
+# Tags
+
+feature: bucket-properties
+repository: riak_kv
+module: riak_kv_console
+concept: data-policy

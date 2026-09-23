@@ -432,6 +432,8 @@
       if (!input || !modeSelect || !result || !sortButton || !sortHeading || !body) return;
       modeSelect.value = rememberedSearchMode;
       const rows = () => [...body.querySelectorAll('[data-configuration-key]')];
+      const tagFilters = [...reference.querySelectorAll('[data-configuration-tag-filter]')];
+      const rowTags = new Map(rows().map(row => [row, JSON.parse(row.dataset.configurationTags || '{}')]));
       const refresh = () => {
         clearHighlights(reference);
         const mode = modeSelect.value;
@@ -452,16 +454,25 @@
         let visible = 0;
         rows().forEach((row) => {
           const nodes = searchableTextNodes(row);
-          const matches = !queryExpression || nodes.some((node) => queryExpression.test(node.nodeValue));
+          const tags = rowTags.get(row);
+          const tagsMatch = tagFilters.every(filter => !filter.value || (tags[filter.dataset.configurationTagFilter] || []).includes(filter.value));
+          const tagText = Object.entries(tags).flatMap(([category, values]) => values.map(value => `${category}: ${value}`)).join(' ');
+          const matches = tagsMatch && (!queryExpression || queryExpression.test(tagText) || nodes.some((node) => queryExpression.test(node.nodeValue)));
           row.hidden = !matches;
           if (!matches) return;
           visible += 1;
           if (query) highlightMatches(row, query, mode);
         });
         const total = rows().length;
-        result.value = query ? `${visible} of ${total} rows` : `${total} rows`;
+        result.value = query || tagFilters.some(filter => filter.value) ? `${visible} of ${total} rows` : `${total} rows`;
         result.textContent = result.value;
       };
+      tagFilters.forEach(filter => filter.addEventListener('change', refresh));
+      reference.querySelector('[data-configuration-reset]')?.addEventListener('click', () => {
+        input.value = '';
+        tagFilters.forEach(filter => { filter.value = ''; });
+        refresh();
+      });
       reference.refreshConfigurationTable = refresh;
       input.addEventListener('input', refresh);
       modeSelect.addEventListener('change', () => {

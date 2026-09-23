@@ -17,3 +17,10 @@ This reports the cluster security state. It does not list grants or source rules
 
 3.4.0: a028d2619cbbb8030ca68700cd277be840a877378103406e69fb32a68a9f3bc4
 3.4.1: a028d2619cbbb8030ca68700cd277be840a877378103406e69fb32a68a9f3bc4
+
+# Tags
+
+feature: observability
+repository: riak_core
+module: riak_core_console
+concept: diagnostics

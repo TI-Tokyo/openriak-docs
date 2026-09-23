@@ -71,3 +71,10 @@ The VM terminates. An external supervisor may restart it unless the service is s
 
 3.4.0: 44590d9bee9f1f44f88f355a962d8c100c015317fbd4048268a430329986b923
 3.4.1: 44590d9bee9f1f44f88f355a962d8c100c015317fbd4048268a430329986b923
+
+# Tags
+
+feature: node-operations
+repository: riak_kv
+module: riak
+concept: node-lifecycle

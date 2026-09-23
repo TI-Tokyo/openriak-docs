@@ -272,3 +272,10 @@ Produces the requested archive. Individual commands or files can fail collection
 
 3.4.0: 2ad7ef17f3399662cfc73c94393a943e8ce5113eaa620707ba2b81fce8530570
 3.4.1: 2ad7ef17f3399662cfc73c94393a943e8ce5113eaa620707ba2b81fce8530570
+
+# Tags
+
+feature: node-operations
+repository: riak
+module: riak-debug
+concept: node-lifecycle

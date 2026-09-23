@@ -45,3 +45,10 @@ Stage a resize of the two-node ring. Review the resulting plan before committing
 
 3.4.0: 74129a97185fb3fcefd6f6cbaa92e7f57e21ad10502bf7a62613283a2515e49e
 3.4.1: 74129a97185fb3fcefd6f6cbaa92e7f57e21ad10502bf7a62613283a2515e49e
+
+# Tags
+
+feature: cluster-management
+repository: riak_core
+module: riak_core_console
+concept: partition-placement

@@ -73,3 +73,10 @@ omit: true
 
 3.4.0: 156f685c917e0cb7e06ad4965d079e2cc091ff85d949a95bf8245ac0f54e7b27
 3.4.1: 156f685c917e0cb7e06ad4965d079e2cc091ff85d949a95bf8245ac0f54e7b27
+
+# Tags
+
+feature: legacy-replication
+repository: riak
+module: riak-repl
+concept: cross-cluster-replication

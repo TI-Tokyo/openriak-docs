@@ -103,3 +103,10 @@ Count the returned entries; the selected key range contains exactly five matches
 
 3.4.0: d37e346a7ce464b56a6f9ef0197ca06f87f36d11621287c9982bd3561a2a5a64
 3.4.1: d37e346a7ce464b56a6f9ef0197ca06f87f36d11621287c9982bd3561a2a5a64
+
+# Tags
+
+feature: tictac-aae
+repository: riak_kv
+module: riak_client
+concept: replica-repair

@@ -35,3 +35,10 @@ With no value, this prints the current concurrency limit. With an integer, it ch
 
 3.4.0: 6508ca8ccbb0afeb07c4b47679e3d9760e5d17383c73fd5076452a5379ffdfcc
 3.4.1: 6508ca8ccbb0afeb07c4b47679e3d9760e5d17383c73fd5076452a5379ffdfcc
+
+# Tags
+
+feature: full-sync
+repository: riak_repl
+module: riak_repl_console
+concept: replica-repair

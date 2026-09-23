@@ -49,3 +49,10 @@ The command can print a refusal and still exit with status `0`. Read the result 
 
 3.4.0: fe8b47ff15832f90147ba428819dd534cb57b54d7894fd117a09f32cda053943
 3.4.1: fe8b47ff15832f90147ba428819dd534cb57b54d7894fd117a09f32cda053943
+
+# Tags
+
+feature: cluster-management
+repository: riak_core
+module: riak_core_console
+concept: partition-placement

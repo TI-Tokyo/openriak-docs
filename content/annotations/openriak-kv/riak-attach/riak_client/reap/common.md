@@ -65,3 +65,10 @@ Delete the object to create one tombstone, reap it, and wait until the tombstone
 
 3.4.0: ad0feae088e750513109e872d3cb4804b8568f6457ed5ea852393f6b994b6f61
 3.4.1: ad0feae088e750513109e872d3cb4804b8568f6457ed5ea852393f6b994b6f61
+
+# Tags
+
+feature: deletion
+repository: riak_kv
+module: riak_client
+concept: tombstones

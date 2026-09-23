@@ -37,3 +37,10 @@ One or more assignments. Use `groups=cli_readers` for membership and `password=.
 
 3.4.0: bbb7dc9f79e28f223b677758acb96d4b891c67414e8119f6d883f170ae628dbf
 3.4.1: bbb7dc9f79e28f223b677758acb96d4b891c67414e8119f6d883f170ae628dbf
+
+# Tags
+
+feature: security
+repository: riak_core
+module: riak_core_console
+concept: authentication

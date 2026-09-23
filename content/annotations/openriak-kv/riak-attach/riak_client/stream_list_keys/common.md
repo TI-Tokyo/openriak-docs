@@ -87,3 +87,10 @@ Check node load and the requested range. Handle timeout messages and bound how l
 
 3.4.0: 7d7a11d2b65a207dc7c99e3d8922aee5db3469c1bd954979628c87037a2e6d72
 3.4.1: 7d7a11d2b65a207dc7c99e3d8922aee5db3469c1bd954979628c87037a2e6d72
+
+# Tags
+
+feature: query-processing
+repository: riak_kv
+module: riak_client
+concept: querying

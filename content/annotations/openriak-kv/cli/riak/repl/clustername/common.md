@@ -27,3 +27,10 @@ Human-readable name for this cluster, for example `tokyo`. Omit to read the curr
 
 3.4.0: a83857736fde18aacd26f4702247acee7de5f4402932b67b1a7caf008884a705
 3.4.1: a83857736fde18aacd26f4702247acee7de5f4402932b67b1a7caf008884a705
+
+# Tags
+
+feature: legacy-replication
+repository: riak_repl
+module: riak_repl_console
+concept: cross-cluster-replication

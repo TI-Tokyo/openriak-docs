@@ -27,3 +27,10 @@ See the shared `Node` argument on the parent module page.
 
 3.4.0: 97155a47eb62ade446f49b06687817511abe0141347961f689f52d7a4d7cd2e4
 3.4.1: 97155a47eb62ade446f49b06687817511abe0141347961f689f52d7a4d7cd2e4
+
+# Tags
+
+feature: client-operations
+repository: riak_kv
+module: riak
+concept: data-access

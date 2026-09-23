@@ -33,3 +33,10 @@ omit: true
 
 3.4.0: 65b6c86b37b61aa6d7f2da2e9492a771a43ddee258b9dabe02cb3238136d16cd
 3.4.1: 65b6c86b37b61aa6d7f2da2e9492a771a43ddee258b9dabe02cb3238136d16cd
+
+# Tags
+
+feature: legacy-replication
+repository: riak_repl
+module: riak_repl_console
+concept: cross-cluster-replication, diagnostics

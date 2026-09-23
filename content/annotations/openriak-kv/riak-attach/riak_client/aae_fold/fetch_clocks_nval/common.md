@@ -93,3 +93,10 @@ Compute the cached-tree segments for the five stored keys and verify five clocks
 
 3.4.0: ca8993333e6d1a9c9e66a9408d33dcd65ebac15c08e69861e81d6b805716cdb9
 3.4.1: ca8993333e6d1a9c9e66a9408d33dcd65ebac15c08e69861e81d6b805716cdb9
+
+# Tags
+
+feature: tictac-aae
+repository: riak_kv
+module: riak_client
+concept: replica-repair

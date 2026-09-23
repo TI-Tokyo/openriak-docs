@@ -61,3 +61,10 @@ No supported search operation is available through this entry.
 
 3.4.0: 8ca4a38a746d4851887f99494a9e38fde81b9b6c48d8d1846aa4937bfec71224
 3.4.1: 8ca4a38a746d4851887f99494a9e38fde81b9b6c48d8d1846aa4937bfec71224
+
+# Tags
+
+feature: node-operations
+repository: riak
+module: riak-admin
+concept: node-lifecycle

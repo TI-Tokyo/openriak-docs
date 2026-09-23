@@ -37,3 +37,10 @@ See the shared `Client` argument on the parent module page.
 
 3.4.0: a113b325faa462086ca7bac2df0beecf2efba8f7231643cb9d06a2d8da98f431
 3.4.1: a113b325faa462086ca7bac2df0beecf2efba8f7231643cb9d06a2d8da98f431
+
+# Tags
+
+feature: client-operations
+repository: riak_kv
+module: riak_client
+concept: data-access

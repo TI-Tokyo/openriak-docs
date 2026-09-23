@@ -1,6 +1,7 @@
 'use strict';
 const fs = require('node:fs');
 const path = require('node:path');
+const { parseTags } = require('./annotation-tags');
 
 // Only headings outside fenced code delimit structured annotation sections.
 function sections(text, level, file) {
@@ -67,6 +68,7 @@ function parseMarkdown(text, file = 'annotation') {
     if (used.has(name)) throw new Error(`${file}: duplicate section ${title}`);
     used.add(name);
     if (['summary', 'description', 'syntax', 'related_documentation'].includes(name)) entry[name] = body;
+    else if (name === 'tags') entry.tags = parseTags(body, file);
     else if (name === 'notes') entry.notes = body ? [body] : [];
     else if (name === 'reviewed_against') entry.reviewed_against = pairs(body, file);
     else if (name === 'metadata') {
@@ -93,7 +95,7 @@ function annotationFiles(directory, version) {
   }).sort((a, b) => Number(path.basename(a) !== 'common.md') - Number(path.basename(b) !== 'common.md') || a.localeCompare(b));
 }
 function readMarkdownLayers(directory, version) {
-  return annotationFiles(directory, version).map(file => {
+  return annotationFiles(directory, version).filter(file => path.relative(directory, file).split(path.sep)[0] !== 'settings').map(file => {
     const relative = path.relative(directory, file).split(path.sep);
     const parts = relative.slice(0, -1);
     const inferred = parts[0] === 'cli' ? `shell:${parts.slice(1).join(' ')}`
@@ -107,4 +109,4 @@ function readMarkdownLayers(directory, version) {
     return {name: relative.join('/'), commands: {[id]: entry}};
   });
 }
-module.exports = {parseMarkdown, readMarkdownLayers, annotationFiles};
+module.exports = {sections, pairs, parseMarkdown, readMarkdownLayers, annotationFiles};

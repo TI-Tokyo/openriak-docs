@@ -35,3 +35,10 @@ Prepare a queue with five stored objects to inspect or change pending replicatio
 
 3.4.0: 7e5955316851f8003f3de62564da382c22996d34479cd89b92f220814d48d13a
 3.4.1: 7e5955316851f8003f3de62564da382c22996d34479cd89b92f220814d48d13a
+
+# Tags
+
+feature: queue-replication
+repository: riak_kv
+module: riak_kv_replrtq_src
+concept: cross-cluster-replication

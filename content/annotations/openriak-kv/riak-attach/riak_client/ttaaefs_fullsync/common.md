@@ -75,3 +75,10 @@ Create five objects to follow the range-query examples. Wait for AAE to include 
 
 3.4.0: d115a5d7df27e3fc897d91d1832a8ec65b3c5d4e5d12f4d08d9b9dc55bd4c331
 3.4.1: d115a5d7df27e3fc897d91d1832a8ec65b3c5d4e5d12f4d08d9b9dc55bd4c331
+
+# Tags
+
+feature: full-sync
+repository: riak_kv
+module: riak_client
+concept: replica-repair

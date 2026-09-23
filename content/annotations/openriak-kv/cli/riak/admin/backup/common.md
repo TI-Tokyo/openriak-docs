@@ -90,3 +90,10 @@ A successful helper operation reports its result and returns. Verify archive int
 
 3.4.0: a51d0976bf432b812096455311f3645cbdfcd08c732c6fa300989e97c5e4b277
 3.4.1: a51d0976bf432b812096455311f3645cbdfcd08c732c6fa300989e97c5e4b277
+
+# Tags
+
+feature: node-operations
+repository: riak
+module: riak-admin
+concept: node-lifecycle

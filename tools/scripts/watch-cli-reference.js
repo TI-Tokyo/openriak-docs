@@ -20,7 +20,7 @@ function watch({outputRoot = path.join(repository, 'tools/generated'), once = fa
     for (const version of fs.readdirSync(inputRoot).filter(v => /^\d+\.\d+\.\d+$/.test(v))) {
       const file = path.join(inputRoot, version, 'kv-cli-commands.json');
       if (!fs.existsSync(file)) continue;
-      const files = [file, ...annotationFiles(overrideRoot, version)];
+      const files = [file, ...annotationFiles(overrideRoot, version).filter(file => path.relative(overrideRoot, file).split(path.sep)[0] !== 'settings')];
       const stamp = files.map(file => fs.existsSync(file) ? `${file}:${fs.statSync(file).mtimeMs}:${fs.statSync(file).size}` : file + ':missing').join('|');
       if (stamps.get(version) === stamp) continue;
       try {
@@ -41,16 +41,17 @@ function watch({outputRoot = path.join(repository, 'tools/generated'), once = fa
   tick();
   return once ? null : setInterval(tick, intervalMs);
 }
+module.exports = { watch, writeChanged };
 if (require.main === module) {
   try {
     const args = process.argv.slice(2), options = {};
     for (let i=0; i<args.length; i++) {
       if (args[i] === '--output-root' && args[i+1]) options.outputRoot = path.resolve(args[++i]);
       else if (args[i] === '--once') options.once = true;
-      else if (['-h','--help'].includes(args[i])) {console.log('Usage: node tools/scripts/watch-cli-reference.js [--output-root DIRECTORY] [--once]\nMerge deployed CLI metadata and docs annotations. Without --once, poll changes every second.');process.exit(0);}
+      else if (['-h','--help'].includes(args[i])) {console.log('Usage: node tools/scripts/watch-cli-reference.js [--output-root DIRECTORY] [--once]\nMerge deployed CLI/settings metadata and docs annotations. Without --once, poll changes every second.');process.exit(0);}
       else throw new Error('Unknown argument: ' + args[i]);
     }
     watch(options);
+    require('./watch-settings-reference').watchSettings(options);
   } catch(error) {console.error(error.message);process.exitCode=1;}
 }
-module.exports = { watch, writeChanged };

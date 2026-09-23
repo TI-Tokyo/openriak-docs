@@ -1,6 +1,7 @@
 'use strict';
 const {readMarkdownLayers, annotationFiles} = require('./cli-annotation-markdown');
 const path = require('node:path');
+const { validateTags, mergeTags } = require('./annotation-tags');
 const crypto = require('node:crypto');
 const { buildReference } = require('./cli-reference');
 const { buildSyntax } = require('./cli-syntax');
@@ -41,8 +42,9 @@ function displayExampleDescription(text) {
     (_, start, commands, end) => start + displayShellInvocation(commands) + end);
 }
 function validateEntry(entry, file) {
-  const allowed = ['versions', 'reviewed_against', 'summary', 'description', 'syntax', 'related_documentation', ...arrayFields, 'example_overrides', 'error_overrides', 'option_overrides'];
+  const allowed = ['tags', 'versions', 'reviewed_against', 'summary', 'description', 'syntax', 'related_documentation', ...arrayFields, 'example_overrides', 'error_overrides', 'option_overrides'];
   if (!plain(entry) || Object.keys(entry).some(k => !allowed.includes(k))) throw new Error(`${file}: unknown annotation fields`);
+  if (entry.tags) validateTags(entry.tags, file);
   if (entry.versions && (!Array.isArray(entry.versions) || entry.versions.some(v => !/^\d+\.\d+\.\d+$/.test(v)))) throw new Error(`${file}: invalid versions`);
   if (entry.reviewed_against && (!plain(entry.reviewed_against) || Object.entries(entry.reviewed_against).some(([v, h]) => !/^\d+\.\d+\.\d+$/.test(v) || !/^[a-f0-9]{64}$/.test(h)))) throw new Error(`${file}: invalid review fingerprints`);
   for (const field of ['summary', 'description', 'syntax', 'related_documentation']) if (field in entry && typeof entry[field] !== 'string') throw new Error(`${file}: ${field} must be text`);
@@ -124,6 +126,7 @@ function buildAnnotatedReference(document, { overrideRoot = defaultOverrideRoot 
       if (!entry || entry.versions && !entry.versions.includes(document.version)) continue;
       const expected = entry.reviewed_against?.[document.version];
       if (expected !== reviewFingerprint(command)) report.issues.push({ command: command.id, file: layer.name, status: expected ? 'stale' : 'unreviewed', fingerprint: reviewFingerprint(command) });
+      if (entry.tags) content.tags = {...content.tags, ...entry.tags};
       for (const field of ['summary', 'description', 'syntax', 'related_documentation', ...arrayFields]) if (field in entry) content[field] = structuredClone(entry[field]);
       for (const [id, patch] of Object.entries(entry.example_overrides || {})) {
         const example = content.examples.find(e => e.id === id);
@@ -176,6 +179,7 @@ function buildAnnotatedReference(document, { overrideRoot = defaultOverrideRoot 
   for (const page of reference.pages) {
     const sources = page.ids.map(id => merged.get(id));
     const content = {
+      tags: mergeTags(sources.map(s => s.content.tags)),
       summary: sources.map(s => s.content.summary).filter(Boolean).join('\n\n'),
       description: sources.map(s => s.content.description).filter(Boolean).join('\n\n'),
       syntax: sources.map(s => s.content.syntax).filter(Boolean).join('\n\n'),

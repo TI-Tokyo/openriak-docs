@@ -39,3 +39,10 @@ Inspect the repair state. When no repair is running, expect a not-running status
 
 3.4.0: be06d91c05a938b64160a8fdec3cf7357d6c1671f0690cc2773c2b2239684cc9
 3.4.1: be06d91c05a938b64160a8fdec3cf7357d6c1671f0690cc2773c2b2239684cc9
+
+# Tags
+
+feature: observability
+repository: riak_kv
+module: riak_kv_console
+concept: diagnostics

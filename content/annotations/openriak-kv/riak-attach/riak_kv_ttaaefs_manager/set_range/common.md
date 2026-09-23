@@ -61,3 +61,10 @@ End of the UTC modification interval, for example `{{2026,12,24},{23,59,59}}` fo
 
 3.4.0: 82847b50e2e2b4a64ae2c734560e7ce9a1172dd1fb9b96425fe8bf6b8c68a263
 3.4.1: 7216094212cc7333b5b4d69c54b8a48566f8b1471d0db1c384db5852084ec62c
+
+# Tags
+
+feature: full-sync
+repository: riak_kv
+module: riak_kv_ttaaefs_manager
+concept: replica-repair

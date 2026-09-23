@@ -45,3 +45,10 @@ A successful call removes the matching mapping from `nat-map show`. The fixture 
 
 3.4.0: 1c0e499903b3aabc1eb7e8196aa41696ac67e7c6430875321691323b43d5d18b
 3.4.1: 1c0e499903b3aabc1eb7e8196aa41696ac67e7c6430875321691323b43d5d18b
+
+# Tags
+
+feature: legacy-replication
+repository: riak_repl
+module: riak_repl_console
+concept: cross-cluster-replication

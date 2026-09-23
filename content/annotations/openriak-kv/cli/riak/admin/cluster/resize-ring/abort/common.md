@@ -25,3 +25,10 @@ When a resize can be cancelled, prints a staged abort confirmation. Review and c
 
 3.4.0: 87cb0fa7a11222a762337a7d15a9ef3d51441051418cbd7682cf134c8ad94a5d
 3.4.1: 87cb0fa7a11222a762337a7d15a9ef3d51441051418cbd7682cf134c8ad94a5d
+
+# Tags
+
+feature: cluster-management
+repository: riak_core
+module: riak_core_console
+concept: partition-placement

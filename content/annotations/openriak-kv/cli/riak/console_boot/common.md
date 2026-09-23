@@ -71,3 +71,10 @@ Startup logs and an Erlang prompt when the boot script succeeds.
 
 3.4.0: b67732ffb293431256a2cd850d6bdd5bc648e548c0dddd1b6fbbedadd260ef46
 3.4.1: b67732ffb293431256a2cd850d6bdd5bc648e548c0dddd1b6fbbedadd260ef46
+
+# Tags
+
+feature: node-operations
+repository: riak
+module: riak
+concept: node-lifecycle

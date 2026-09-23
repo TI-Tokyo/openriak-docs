@@ -17,3 +17,10 @@ Inspect the remote cluster name, control process and member list. A header with 
 
 3.4.0: 0743577096170bcd12ff784bf676ce86fc282af43dbcb1560b8f543c67d1fef1
 3.4.1: 0743577096170bcd12ff784bf676ce86fc282af43dbcb1560b8f543c67d1fef1
+
+# Tags
+
+feature: legacy-replication
+repository: riak_repl
+module: riak_repl_console
+concept: cross-cluster-replication

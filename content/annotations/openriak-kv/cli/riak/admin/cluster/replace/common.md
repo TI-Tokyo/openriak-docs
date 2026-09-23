@@ -61,3 +61,10 @@ On success, prints a staged-change confirmation. The membership change takes eff
 
 3.4.0: 88e87b4e681e4c9f7aec3ac0a73568b158b2c5eab24f5a84a56a4d2c5fc0971e
 3.4.1: 88e87b4e681e4c9f7aec3ac0a73568b158b2c5eab24f5a84a56a4d2c5fc0971e
+
+# Tags
+
+feature: cluster-management
+repository: riak_core
+module: riak_core_console
+concept: partition-placement

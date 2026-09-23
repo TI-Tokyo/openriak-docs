@@ -47,3 +47,10 @@ Legacy site label, for example `cli_site`.
 
 3.4.0: c01c696e90722ddf21875f1ca7adc5bd9faa4233784f790f1a5038696a0be2ff
 3.4.1: c01c696e90722ddf21875f1ca7adc5bd9faa4233784f790f1a5038696a0be2ff
+
+# Tags
+
+feature: legacy-replication
+repository: riak_repl
+module: riak_repl_console
+concept: cross-cluster-replication

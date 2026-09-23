@@ -99,3 +99,10 @@ Displays live process statistics. It is a continuous monitor rather than a one-s
 
 3.4.0: eef9c37d50a92db3fb193a9ed0573901fe8ea20967edc209cb8ce35881a02673
 3.4.1: eef9c37d50a92db3fb193a9ed0573901fe8ea20967edc209cb8ce35881a02673
+
+# Tags
+
+feature: node-operations
+repository: riak
+module: riak-admin
+concept: node-lifecycle

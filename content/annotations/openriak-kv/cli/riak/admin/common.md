@@ -73,3 +73,10 @@ Dispatches the selected administrative command. Read the child command’s resul
 
 3.4.0: eb83ddd2adac68ac523a0d4c8ab972d3f9eced34f6dc8d313ff78497bef0a32b
 3.4.1: 871340f907cb28cb28460f40be2789ff5f487f029a85f0a6532ed076891b37aa
+
+# Tags
+
+feature: node-operations
+repository: riak
+module: riak-admin
+concept: node-lifecycle

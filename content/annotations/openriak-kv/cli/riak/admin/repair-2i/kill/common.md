@@ -39,3 +39,10 @@ Inspect the result of cancelling an inactive repair. When no repair is running, 
 
 3.4.0: e66e8f7f45df6e602ac9ece64713df8350e612104ad47176f26227c9321f9179
 3.4.1: e66e8f7f45df6e602ac9ece64713df8350e612104ad47176f26227c9321f9179
+
+# Tags
+
+feature: read-repair
+repository: riak_kv
+module: riak_kv_console
+concept: replica-repair

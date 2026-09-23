@@ -87,3 +87,10 @@ Query an index value with no matching objects. Expect an empty result for a sync
 
 3.4.0: d187a907daf5b0e8ce92db2cf7cd87f4458752f74a59b635392ed183ecd514fe
 3.4.1: d187a907daf5b0e8ce92db2cf7cd87f4458752f74a59b635392ed183ecd514fe
+
+# Tags
+
+feature: secondary-indexes
+repository: riak_kv
+module: riak_client
+concept: querying

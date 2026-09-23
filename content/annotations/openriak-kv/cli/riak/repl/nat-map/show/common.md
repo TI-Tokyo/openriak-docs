@@ -17,3 +17,10 @@ An empty list means that no explicit NAT mappings are configured. These mappings
 
 3.4.0: 9888f7c1add18be8bcb2c3dc44c80cf7c7e064a0c581760273974fb598261392
 3.4.1: 9888f7c1add18be8bcb2c3dc44c80cf7c7e064a0c581760273974fb598261392
+
+# Tags
+
+feature: legacy-replication
+repository: riak_repl
+module: riak_repl_console
+concept: cross-cluster-replication

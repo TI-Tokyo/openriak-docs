@@ -46,3 +46,10 @@ Print usage without executing the command. The short spelling is `-h`.
 
 3.4.0: 05d119ad9fe01bc43b7112c8854181d73a1f9b93b843d15161ccf9c6db680732
 3.4.1: 05d119ad9fe01bc43b7112c8854181d73a1f9b93b843d15161ccf9c6db680732
+
+# Tags
+
+feature: handoff
+repository: riak
+module: riak
+concept: partition-transfer

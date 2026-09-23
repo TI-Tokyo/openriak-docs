@@ -37,3 +37,10 @@ JSON object containing a `props` object. Quote the whole JSON value in the shell
 
 3.4.0: e65ba9757d85819731aa433b2c3058733761f67bc2a8944bc74065106d649f0b
 3.4.1: e65ba9757d85819731aa433b2c3058733761f67bc2a8944bc74065106d649f0b
+
+# Tags
+
+feature: bucket-properties
+repository: riak_kv
+module: riak_kv_console
+concept: data-policy

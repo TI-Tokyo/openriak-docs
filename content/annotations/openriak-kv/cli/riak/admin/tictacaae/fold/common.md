@@ -164,3 +164,10 @@ JSON destination path on the node. It must be writable by the Riak service accou
 
 3.4.0: c2f99fd8c18d29f53aa6558ece14b5e7a9e23246186a719dd8532400b83145ca
 3.4.1: c2f99fd8c18d29f53aa6558ece14b5e7a9e23246186a719dd8532400b83145ca
+
+# Tags
+
+feature: tictac-aae
+repository: riak
+module: riak
+concept: replica-repair

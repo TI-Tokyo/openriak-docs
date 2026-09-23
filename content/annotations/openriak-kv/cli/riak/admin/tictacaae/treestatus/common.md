@@ -66,3 +66,10 @@ Comma-separated tree states, or `all`. For example, `partial,rebuilding` selects
 
 3.4.0: fdb5d86426faad9554b8db81190964022b428fbf47f5fa7dcebd6745d1065a1a
 3.4.1: fdb5d86426faad9554b8db81190964022b428fbf47f5fa7dcebd6745d1065a1a
+
+# Tags
+
+feature: tictac-aae
+repository: riak
+module: riak
+concept: replica-repair

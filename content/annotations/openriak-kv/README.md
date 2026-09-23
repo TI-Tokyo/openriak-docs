@@ -1,4 +1,4 @@
-# CLI documentation annotations
+# CLI and settings documentation annotations
 
 Edit command-specific Markdown here. The merge order is generated metadata,
 `common.md`, then `VERSION.md` in the same command directory. For example:
@@ -126,6 +126,7 @@ Supported sections:
   `## ID` and `### Description`. Rendered within Description.
 - **Related documentation:** Markdown links appended before generated related
   links. Paths resolve relative to the rendered command page, not this file.
+- **Tags:** feature, repository, module and concept lists; see Shared tags below.
 - **Reviewed against:** exact versions mapped to review fingerprints.
 
 Use separate paragraphs under a long-field heading rather than embedding `\n`
@@ -212,3 +213,111 @@ section at the bottom of the example. That section contains the runtime image,
 recipe and case identifiers, test environment, and matching setup, execution and
 verification steps. Its date uses YYYY-MM-DD. The evidence is immutable; editorial
 overrides cannot replace test output or attach evidence to a changed invocation.
+
+## Settings annotations
+
+The same docs-owned layering applies to configuration settings in both 3.4.0
+and 3.4.1. Edit `settings/SETTING/common.md`, optionally followed by
+`settings/SETTING/VERSION.md`. Use the exact public configuration key as the
+folder name, including dots and placeholders such as `$name`. Each of the 427
+settings has a description and categorized tags. These files are not Hugo pages
+and do not modify the deployed metadata or the openriak-metadata repository.
+
+For example, `settings/tictacaae_maxresults/common.md` can contain:
+
+```markdown
+# Description
+
+Maximum differing tree leaves compared in one Tictac AAE exchange.
+Smaller exchanges shorten each clock-comparison query.
+
+# Tags
+
+feature: tictac-aae
+repository: riak_kv
+module: riak_kv_vnode
+concept: replica-repair
+
+# Notes
+
+Review this together with the range multiplier and repair-loop count.
+```
+
+Supported setting sections:
+
+- **Description**, **Notes**, **Examples**, **Related documentation**: Markdown.
+  The latter three appear on setting details; Description also appears in tables.
+- **Application name**: displayed internal Erlang target.
+- **Areas**: bullet list replacing the repository-area classification used by
+  the table shortcode's `area` argument.
+- **Datatype**: displayed type label, for example `Integer`.
+- **Allowed values**, **Units**, **Constraints**: bullet lists replacing the
+  corresponding displayed datatype fields. Constraints can contain Markdown.
+- **Tags**: categorized lists, as described below.
+- **Reviewed against**: exact versions and SHA-256 review fingerprints.
+
+Omitted sections inherit; an empty section clears its inherited value. Datatype
+fields and tag categories merge independently, so a version can replace allowed
+values or concept tags while retaining the other categories. Setting names and
+OS-specific default values cannot be overridden. Unknown sections, invalid tags,
+and annotations targeting missing settings fail validation.
+
+Changes to datatype labels, allowed values, units or constraints are recorded
+with their old/new values and annotation filenames. Hugo emits non-failing
+`WARN` entries for these corrections. An override equal to the inherited value
+does not log a correction. Original metadata remains in the generated setting's
+`source` field and in the detail display's **Reference sources** disclosure.
+
+Review fingerprints cover each raw setting definition, excluding source line
+numbers so a line-only move does not invalidate a review. The coverage and
+stale-review report is written to
+`tools/generated/openriak-kv/settings-coverage/VERSION.json`. Review an actual
+contract change before updating a fingerprint. To compute the current hash:
+
+```sh
+node -e 'const {settingFingerprint} = require("./tools/scripts/settings-annotations"); const d = require("./content/openriak-kv/metadata/3.4.1/kv-settings.json"); console.log(settingFingerprint(d.settings.ring_size));'
+```
+
+The existing `node tools/scripts/watch-cli-reference.js --once` command now
+regenerates both CLI and settings annotations, after the initial product metadata
+synchronization. The Docker development preview watches both sets of files.
+Valid edits, additions and removals refresh the data; invalid edits log an error
+and preserve the last valid preview. Full synchronization uses the same merge.
+
+## Shared tags
+
+Settings, CLI commands and `riak attach` operations accept a **Tags** section:
+
+```markdown
+# Tags
+
+feature: queue-replication
+repository: riak_kv
+module: riak_kv_replrtq_src
+concept: cross-cluster-replication, queueing
+```
+
+Use these four category names, with comma-separated unique lowercase identifiers:
+
+- **feature** identifies a subsystem or capability, such as `tictac-aae`,
+  `leveled`, `cluster-management` or `queue-replication`.
+- **repository** is the source repository name, such as `riak_core`.
+- **module** is a source module confirmed by the command metadata or source
+  configuration consumer. Where no consumer is identified, use the defining
+  schema filename (for example `riak_kv.schema`); launcher-only commands can
+  use their script name. A schema tag is not a claimed Erlang module.
+- **concept** identifies shared concerns such as `replica-repair`, `memory`,
+  `quorums`, `retention` or `concurrency`.
+
+Reuse existing vocabulary when the meaning matches. Tags are editorial inputs,
+not guessed at render time. Table text searches include the tags, and one filter
+per category can be combined with the search. Filters use AND across categories;
+select **All** to remove a category restriction, or **Clear filters** to clear the
+query and every tag filter. CLI indexes support the same tag search and filters.
+
+Setting details show all categories and up to eight related settings in the same
+version. A candidate must share a feature and a concept; ranking gives each shared
+feature three points and each shared concept one point, then sorts ties by name.
+Source repository/module alone does not establish a relationship. Links target
+stable anchors in the complete settings catalogue. Tables do not show related
+settings. Names and defaults remain sourced from the unmodified release metadata.

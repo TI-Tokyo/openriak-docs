@@ -61,3 +61,10 @@ An Erlang prompt and application startup logs.
 
 3.4.0: b36fac0f272a51536a984f1b16b29981c438f95b5bf64bcbf38a78737ceedd6d
 3.4.1: b36fac0f272a51536a984f1b16b29981c438f95b5bf64bcbf38a78737ceedd6d
+
+# Tags
+
+feature: node-operations
+repository: riak
+module: riak
+concept: node-lifecycle

@@ -27,3 +27,10 @@ Replication queue name as an atom, for example `cli_reference`.
 
 3.4.0: eca6cfd96545e9c427ca29b5335443c19b628c6fd9ab9a5660b7ad748415bebc
 3.4.1: eca6cfd96545e9c427ca29b5335443c19b628c6fd9ab9a5660b7ad748415bebc
+
+# Tags
+
+feature: queue-replication
+repository: riak_kv
+module: riak_client
+concept: cross-cluster-replication

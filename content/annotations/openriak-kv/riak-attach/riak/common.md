@@ -20,3 +20,9 @@ datatype: client identifier
 
 Identifier stored in the client handle. Use `undefined` for the normal server-coordinated client path; a supplied identifier changes vector-clock handling for writes.
 
+# Tags
+
+feature: node-operations
+repository: riak_kv
+module: riak
+concept: node-lifecycle

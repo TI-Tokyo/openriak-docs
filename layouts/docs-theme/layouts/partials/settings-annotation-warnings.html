@@ -1,0 +1,3 @@
+{{- range .annotationCoverage.corrections -}}
+  {{- warnf "Settings annotation %s: %s changed %s from %s to %s (%s)" $.version .setting .field (.before | jsonify) (.after | jsonify) .file -}}
+{{- end -}}

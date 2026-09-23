@@ -57,3 +57,10 @@ Update the legacy listener configuration inside the node.
 
 3.4.0: 8cf5a303c06d665a0c823a035143c53d45630aa1f41ec49252acff5b84a67db0
 3.4.1: 8cf5a303c06d665a0c823a035143c53d45630aa1f41ec49252acff5b84a67db0
+
+# Tags
+
+feature: legacy-replication
+repository: riak_repl
+module: riak_repl_console
+concept: cross-cluster-replication

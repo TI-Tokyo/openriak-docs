@@ -61,3 +61,10 @@ A clean Erlang prompt; application startup differs from the normal release boot.
 
 3.4.0: a3a712ea28ddfe638d395600de579160c097d3e3c6c0f723522a9f37e5f13bd2
 3.4.1: a3a712ea28ddfe638d395600de579160c097d3e3c6c0f723522a9f37e5f13bd2
+
+# Tags
+
+feature: node-operations
+repository: riak
+module: riak
+concept: node-lifecycle

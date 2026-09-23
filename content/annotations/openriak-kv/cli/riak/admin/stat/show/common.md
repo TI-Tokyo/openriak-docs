@@ -51,3 +51,10 @@ Read a counter to inspect its current value. This example counter contains seven
 
 3.4.0: 2c577c11c1b3289532c4d2c7a59d32874d014fca119a2d93ebb4ded704dfa1e6
 3.4.1: 2c577c11c1b3289532c4d2c7a59d32874d014fca119a2d93ebb4ded704dfa1e6
+
+# Tags
+
+feature: observability
+repository: riak_core
+module: riak_core_console
+concept: diagnostics

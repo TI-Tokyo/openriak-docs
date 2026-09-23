@@ -132,3 +132,10 @@ Inspect the range tree to compare AAE data for five stored objects. Expect a pop
 
 3.4.0: e003112ba2d812bd8d82c74cd9f57d96143712385df4631561c4a25665a522cf
 3.4.1: e003112ba2d812bd8d82c74cd9f57d96143712385df4631561c4a25665a522cf
+
+# Tags
+
+feature: tictac-aae
+repository: riak_kv
+module: riak_client
+concept: compaction, replica-repair

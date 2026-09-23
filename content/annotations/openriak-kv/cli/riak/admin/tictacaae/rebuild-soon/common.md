@@ -78,3 +78,10 @@ Full decimal partition index, or `all`. For example, `0` selects the zero index.
 
 3.4.0: c8380f29394e50a3fe55405bdb5160c8feb826cbeffaf3382e7c4d450a8f399d
 3.4.1: c8380f29394e50a3fe55405bdb5160c8feb826cbeffaf3382e7c4d450a8f399d
+
+# Tags
+
+feature: tictac-aae
+repository: riak
+module: riak
+concept: replica-repair

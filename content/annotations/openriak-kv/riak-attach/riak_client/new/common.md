@@ -37,3 +37,10 @@ Client identifier. Use `undefined` for the normal server-managed vector-clock be
 
 3.4.0: 690f99b45b3de9c11e212f5e1fd32e903b19cd22cf48dbfd4c1aa62b20318dac
 3.4.1: 690f99b45b3de9c11e212f5e1fd32e903b19cd22cf48dbfd4c1aa62b20318dac
+
+# Tags
+
+feature: client-operations
+repository: riak_kv
+module: riak_client
+concept: data-access

@@ -53,3 +53,10 @@ Check node availability and load. Read back state before retrying a mutation, an
 
 3.4.0: 46f2bcd83787cdd570891d25ca5df6ee71920925ed13b855d41da57e8a12bbca
 3.4.1: 46f2bcd83787cdd570891d25ca5df6ee71920925ed13b855d41da57e8a12bbca
+
+# Tags
+
+feature: client-operations
+repository: riak_kv
+module: riak_client
+concept: data-access

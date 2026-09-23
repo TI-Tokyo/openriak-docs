@@ -67,3 +67,10 @@ Full Erlang node name, or `all` to select all available nodes. Omit to select th
 
 3.4.0: b1bca0fa6751237327c44db94096860972f65dfef63f0bda9d591bc1be0c44c5
 3.4.1: b1bca0fa6751237327c44db94096860972f65dfef63f0bda9d591bc1be0c44c5
+
+# Tags
+
+feature: tictac-aae
+repository: riak
+module: riak
+concept: replica-repair, scheduling

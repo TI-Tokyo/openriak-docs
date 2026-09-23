@@ -55,3 +55,10 @@ Repair legacy LevelDB secondary-index entries, then check the index results. Thi
 
 3.4.0: f016463d7c5d39a6ee34a27f8a2aacdcc6c010875dd3b59e9f3dacc0ff37f1f2
 3.4.1: f016463d7c5d39a6ee34a27f8a2aacdcc6c010875dd3b59e9f3dacc0ff37f1f2
+
+# Tags
+
+feature: read-repair
+repository: riak_kv
+module: riak_kv_console
+concept: replica-repair

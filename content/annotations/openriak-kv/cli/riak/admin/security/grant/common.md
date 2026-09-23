@@ -47,3 +47,10 @@ After `to`, give comma-separated user or group names.
 
 3.4.0: 9bd3f7323072139b9162120d40e10d4eb160f25c6112d77a00968e6cc9285559
 3.4.1: 9bd3f7323072139b9162120d40e10d4eb160f25c6112d77a00968e6cc9285559
+
+# Tags
+
+feature: security
+repository: riak_core
+module: riak_core_console
+concept: authentication

@@ -81,3 +81,10 @@ Requests redistribution of the exiting member’s partitions. The RPC response d
 
 3.4.0: cebb9deca86866a858404f7de4f1f7c5c2b645dfdacb5cea987c152d2ef40e83
 3.4.1: cebb9deca86866a858404f7de4f1f7c5c2b645dfdacb5cea987c152d2ef40e83
+
+# Tags
+
+feature: cluster-management
+repository: riak_kv
+module: riak_client
+concept: partition-placement

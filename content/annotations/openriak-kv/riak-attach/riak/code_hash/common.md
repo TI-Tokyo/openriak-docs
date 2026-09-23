@@ -25,3 +25,10 @@ A working application layout would return a hash of loaded Riak code. These runt
 
 3.4.0: 4588bcd857ae34541a2824650dea3f8d3bbaae0dcc549baefd3fa2ab2566f503
 3.4.1: 4588bcd857ae34541a2824650dea3f8d3bbaae0dcc549baefd3fa2ab2566f503
+
+# Tags
+
+feature: node-operations
+repository: riak_kv
+module: riak
+concept: node-lifecycle

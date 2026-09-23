@@ -66,3 +66,10 @@ Print usage without executing the command. The short spelling is `-h`.
 
 3.4.0: 4117def24c042d5f05e8ff33d370e85fdde1fefae0556535b0cd410103ed9775
 3.4.1: 4117def24c042d5f05e8ff33d370e85fdde1fefae0556535b0cd410103ed9775
+
+# Tags
+
+feature: cluster-management
+repository: riak_core
+module: riak_core_console
+concept: partition-placement

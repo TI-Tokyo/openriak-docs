@@ -61,3 +61,10 @@ The selected subcommand determines the result. Invoking the group without a vali
 
 3.4.0: f95a12855e39cb4a9ce637d8299995cf8d65baeb3b017b4121c8f3237168f74f
 3.4.1: f95a12855e39cb4a9ce637d8299995cf8d65baeb3b017b4121c8f3237168f74f
+
+# Tags
+
+feature: full-sync
+repository: riak
+module: riak-repl
+concept: replica-repair

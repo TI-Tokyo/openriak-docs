@@ -93,3 +93,10 @@ The helper calls the running node’s release handler. Acknowledgment is not a s
 
 3.4.0: f847f55e41016342e9d533aad3d98478a6ebe72e2df67f5a1d3209b65c5e239f
 3.4.1: f847f55e41016342e9d533aad3d98478a6ebe72e2df67f5a1d3209b65c5e239f
+
+# Tags
+
+feature: node-operations
+repository: riak
+module: install_upgrade.escript
+concept: node-lifecycle

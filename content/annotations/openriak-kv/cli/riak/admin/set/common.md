@@ -93,3 +93,10 @@ Set the transfer limit across the cluster, then verify the local value is two.
 
 3.4.0: e46102a7c3ce1549c2a9fce8aa95351b87c6f5c59729624d8b55d3e44c347e22
 3.4.1: e46102a7c3ce1549c2a9fce8aa95351b87c6f5c59729624d8b55d3e44c347e22
+
+# Tags
+
+feature: node-operations
+repository: riak_core
+module: riak_core_console
+concept: node-lifecycle

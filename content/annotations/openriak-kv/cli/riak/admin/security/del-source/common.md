@@ -45,3 +45,10 @@ A successful change removes the source rule from `security print-sources`. The f
 
 3.4.0: 2a4a6416fc6efe1ea48eeeb255b4a196d8f0903111f318acf6386bb1a9d1209c
 3.4.1: 2a4a6416fc6efe1ea48eeeb255b4a196d8f0903111f318acf6386bb1a9d1209c
+
+# Tags
+
+feature: security
+repository: riak_core
+module: riak_core_console
+concept: authentication

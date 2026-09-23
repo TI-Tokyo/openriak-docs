@@ -208,3 +208,10 @@ Successful schema translation produces effective settings or runtime files, depe
 
 3.4.0: 7aa057c43d0ef2ef657af61a9f5ae7ef5b5840402d21514194cf4fb0dd334093
 3.4.1: 7aa057c43d0ef2ef657af61a9f5ae7ef5b5840402d21514194cf4fb0dd334093
+
+# Tags
+
+feature: node-operations
+repository: cuttlefish
+module: cuttlefish_escript
+concept: node-lifecycle, retention

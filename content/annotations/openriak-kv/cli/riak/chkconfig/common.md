@@ -17,3 +17,10 @@ Runs the packaged configuration generator. A successful check validates the sche
 
 3.4.0: 775f446d31672c25238b85f3ae7699fd51da77d19baf1eec889b806e8fa2312e
 3.4.1: 775f446d31672c25238b85f3ae7699fd51da77d19baf1eec889b806e8fa2312e
+
+# Tags
+
+feature: node-operations
+repository: riak
+module: riak-chkconfig
+concept: node-lifecycle

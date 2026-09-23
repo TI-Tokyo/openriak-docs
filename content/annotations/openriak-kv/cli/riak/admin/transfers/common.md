@@ -31,3 +31,10 @@ Joining nodes can report waiting secondary partitions before commit, while Activ
 
 3.4.0: 4e349490c4f43a4dfe3b9f0d6023afb9162333638480eb35c57202f11c03ac3c
 3.4.1: 4e349490c4f43a4dfe3b9f0d6023afb9162333638480eb35c57202f11c03ac3c
+
+# Tags
+
+feature: handoff
+repository: riak_core
+module: riak_core_console
+concept: partition-transfer

@@ -17,3 +17,10 @@ Schedules vnode repair for the node’s owned partitions and returns without wai
 
 3.4.0: 9356a9ff8aef171cc9086af60271a0b657a47dbab970cf72edf1d33aa7f562ca
 3.4.1: 9356a9ff8aef171cc9086af60271a0b657a47dbab970cf72edf1d33aa7f562ca
+
+# Tags
+
+feature: read-repair
+repository: riak_kv
+module: riak_client
+concept: replica-repair

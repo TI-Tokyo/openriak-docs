@@ -67,3 +67,10 @@ Create five objects to follow the range-query examples. Wait for AAE to include 
 
 3.4.0: 036d2a93f3084ea182e22d0a303113d8c5b70a3c6fdd3a43d5e3a2ae819dabae
 3.4.1: 036d2a93f3084ea182e22d0a303113d8c5b70a3c6fdd3a43d5e3a2ae819dabae
+
+# Tags
+
+feature: tictac-aae
+repository: riak_kv
+module: riak_client
+concept: compaction, replica-repair

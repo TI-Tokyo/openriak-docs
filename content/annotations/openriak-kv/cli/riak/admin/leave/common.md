@@ -37,3 +37,10 @@ On a valid request, the ring metadata is updated or the membership operation sta
 
 3.4.0: 12565d5935f38b205e04770cd9d2fc8ca78e9bfe9519e67a498a8c9cdd77afe2
 3.4.1: 12565d5935f38b205e04770cd9d2fc8ca78e9bfe9519e67a498a8c9cdd77afe2
+
+# Tags
+
+feature: node-operations
+repository: riak_kv
+module: riak_kv_console
+concept: node-lifecycle

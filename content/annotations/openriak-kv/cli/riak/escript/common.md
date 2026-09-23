@@ -81,3 +81,10 @@ The launcher returns success when the escript succeeds; otherwise it exits nonze
 
 3.4.0: 97552f3b13fa169463b6dcd20ff18903e188ceebadec0fe51d185ac47a7a0ef5
 3.4.1: 97552f3b13fa169463b6dcd20ff18903e188ceebadec0fe51d185ac47a7a0ef5
+
+# Tags
+
+feature: node-operations
+repository: riak
+module: riak
+concept: node-lifecycle

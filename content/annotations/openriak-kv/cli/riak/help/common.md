@@ -33,3 +33,10 @@ omit: true
 
 3.4.0: 7972ab9bab8914d4f59a08c6926f02f101302f32f8b95c7be66fd71eaead2034
 3.4.1: 7972ab9bab8914d4f59a08c6926f02f101302f32f8b95c7be66fd71eaead2034
+
+# Tags
+
+feature: node-operations
+repository: riak
+module: riak
+concept: node-lifecycle

@@ -51,3 +51,10 @@ The command updates the proxy-get configuration for the named destination. Check
 
 3.4.0: 4034b13a1357608832cb7dd86d0de373e3baaab839542f1c439542c3aeeb53a5
 3.4.1: 4034b13a1357608832cb7dd86d0de373e3baaab839542f1c439542c3aeeb53a5
+
+# Tags
+
+feature: legacy-replication
+repository: riak_repl
+module: riak_repl_console
+concept: cross-cluster-replication

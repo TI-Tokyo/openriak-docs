@@ -93,3 +93,10 @@ Starts index reformatting with the selected worker and batch limits.
 
 3.4.0: bd7e6e3d2bf562925cd6bd0fc8a3755e6c9db7702b67521785a180a741c9e20d
 3.4.1: bd7e6e3d2bf562925cd6bd0fc8a3755e6c9db7702b67521785a180a741c9e20d
+
+# Tags
+
+feature: secondary-indexes
+repository: riak_kv
+module: riak_kv_console
+concept: querying

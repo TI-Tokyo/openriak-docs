@@ -60,3 +60,10 @@ The selected subcommand determines the result. Invoking the group without a vali
 # Reviewed against
 
 3.4.1: 5cb81cd2b433813eb81a71fde53652ae58d80996736a30ef1d432247d2851097
+
+# Tags
+
+feature: node-operations
+repository: riak
+module: riak-admin
+concept: node-lifecycle

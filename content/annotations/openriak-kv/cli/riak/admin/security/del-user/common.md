@@ -27,3 +27,10 @@ Security user name, for example `cli_reader`. Names are distinct from Erlang nod
 
 3.4.0: 6f964145cad8719b50ba2feb6d7e548905dd366ad273e06859caf2fa1a77cc0d
 3.4.1: 6f964145cad8719b50ba2feb6d7e548905dd366ad273e06859caf2fa1a77cc0d
+
+# Tags
+
+feature: security
+repository: riak_core
+module: riak_core_console
+concept: authentication

@@ -61,3 +61,10 @@ The selected subcommand determines the result. Invoking the group without a vali
 
 3.4.0: 42869951cedd825b0deb12da24cf21158725f937df1b6a634b00ff145eba5d19
 3.4.1: 42869951cedd825b0deb12da24cf21158725f937df1b6a634b00ff145eba5d19
+
+# Tags
+
+feature: legacy-replication
+repository: riak
+module: riak-repl
+concept: cross-cluster-replication

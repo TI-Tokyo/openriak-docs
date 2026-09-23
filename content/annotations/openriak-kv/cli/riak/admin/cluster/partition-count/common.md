@@ -56,3 +56,10 @@ Report the partition count owned by this node instead of the cluster-wide ring s
 
 3.4.0: 75f5fce0ee51292fa6f98e021604764127d538d501f39174a10a3db5c0338eea
 3.4.1: 75f5fce0ee51292fa6f98e021604764127d538d501f39174a10a3db5c0338eea
+
+# Tags
+
+feature: cluster-management
+repository: riak_core
+module: riak_core_console
+concept: partition-placement

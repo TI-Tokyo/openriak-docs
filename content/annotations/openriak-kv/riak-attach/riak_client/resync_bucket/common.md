@@ -70,3 +70,10 @@ The manager handles the requested resynchronisation; inspect replication progres
 # Reviewed against
 
 3.4.1: 038a90e2f38edaeb0a69a9c7754e6411d812916d8653f530773e7ca161d27caf
+
+# Tags
+
+feature: client-operations
+repository: riak_kv
+module: riak_client
+concept: data-access

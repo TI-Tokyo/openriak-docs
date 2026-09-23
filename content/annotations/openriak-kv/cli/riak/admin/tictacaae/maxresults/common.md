@@ -75,3 +75,10 @@ With no value, this returns the current AAE result limit. With a value, it chang
 
 3.4.0: 0f28419d1289f2e1565e23f375677716c822f5f29b2407b33a10158be3f78552
 3.4.1: 0f28419d1289f2e1565e23f375677716c822f5f29b2407b33a10158be3f78552
+
+# Tags
+
+feature: tictac-aae
+repository: riak
+module: riak
+concept: replica-repair

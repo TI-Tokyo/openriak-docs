@@ -75,3 +75,10 @@ The packaged runtime returns usage and {error,1} for both tested forms. No excha
 
 3.4.0: ca909170a170bfcdc329a48569ede1b3be30a80c14b28246c2c72fd2df8aa8d4
 3.4.1: ca909170a170bfcdc329a48569ede1b3be30a80c14b28246c2c72fd2df8aa8d4
+
+# Tags
+
+feature: tictac-aae
+repository: riak
+module: riak
+concept: replica-repair, scheduling

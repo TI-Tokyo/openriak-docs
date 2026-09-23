@@ -17,3 +17,10 @@ The identifier is generated for the cluster and differs from its human-readable 
 
 3.4.0: fd152348de4998edd3dcf8a78bac84bf0a16cecb9eaf5efe9a30bef8446721bc
 3.4.1: fd152348de4998edd3dcf8a78bac84bf0a16cecb9eaf5efe9a30bef8446721bc
+
+# Tags
+
+feature: legacy-replication
+repository: riak_repl
+module: riak_repl_console
+concept: cross-cluster-replication

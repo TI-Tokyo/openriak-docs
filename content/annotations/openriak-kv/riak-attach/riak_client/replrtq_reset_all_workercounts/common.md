@@ -37,3 +37,10 @@ Maximum workers per peer. Keep no greater than WorkerC.
 
 3.4.0: 5183e14a1834260bfa09e150477500babfcf79a7a2406c0325d0466d4cc5ce27
 3.4.1: 5183e14a1834260bfa09e150477500babfcf79a7a2406c0325d0466d4cc5ce27
+
+# Tags
+
+feature: queue-replication
+repository: riak_kv
+module: riak_client
+concept: concurrency, cross-cluster-replication

@@ -17,3 +17,10 @@ Use the PID to correlate operating-system resource measurements with the Erlang 
 
 3.4.0: 4e85035a4da496a9f05132719e0f0098ee77cb56a64b72b9498c79715157be7c
 3.4.1: 4e85035a4da496a9f05132719e0f0098ee77cb56a64b72b9498c79715157be7c
+
+# Tags
+
+feature: node-operations
+repository: riak
+module: riak
+concept: node-lifecycle

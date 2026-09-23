@@ -39,3 +39,10 @@ A rejected join never becomes part of a plan. A cookie mismatch can therefore le
 
 3.4.0: 961b3918247ac2f87369d14aa5c7da56b3feccdda2e5cb8951591e8606c112d7
 3.4.1: 961b3918247ac2f87369d14aa5c7da56b3feccdda2e5cb8951591e8606c112d7
+
+# Tags
+
+feature: cluster-management
+repository: riak_core
+module: riak_core_console
+concept: partition-placement

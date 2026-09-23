@@ -53,3 +53,10 @@ Inspect each builder result before submitting and correct the reported stage; ch
 
 3.4.0: 17afad7800669525b6b63bfa7ed5e49195bc62c22a69ff0e65e72914b9db7684
 3.4.1: 0851593cbb71b43bead1d3c99997d01026e7cbd01515096fdca9e2199ddd6369
+
+# Tags
+
+feature: client-operations
+repository: riak_kv
+module: riak_client
+concept: data-access

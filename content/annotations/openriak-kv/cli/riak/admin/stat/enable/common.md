@@ -51,3 +51,10 @@ Enable a counter so it can collect measurements. Expect an acknowledgement of th
 
 3.4.0: 4c9f24314817051c7748f2503b983e0567b92de50042aa83ab870704b2ee1b32
 3.4.1: 4c9f24314817051c7748f2503b983e0567b92de50042aa83ab870704b2ee1b32
+
+# Tags
+
+feature: observability
+repository: riak_core
+module: riak_core_console
+concept: diagnostics

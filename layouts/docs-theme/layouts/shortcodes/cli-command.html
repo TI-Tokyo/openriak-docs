@@ -8,6 +8,7 @@
 {{ with $command.reference.related_documentation }}{{ $page.Store.Set "cliRelatedDocumentation" ($page.RenderString .) }}{{ end }}
 <div class="cli-command-reference">
 {{ with $command.reference.summary }}<div class="cli-summary">{{ $page.RenderString . }}</div>{{ else }}<p>{{ $command.summary }}</p>{{ end }}
+{{ with $command.reference.tags }}{{ partial "annotation-tags.html" . }}{{ end }}
 <h2 id="syntax">Syntax</h2>
 {{ with $command.reference.syntax }}{{ $page.RenderString . }}{{ else }}
 {{ range $index, $form := $command.syntax.forms }}

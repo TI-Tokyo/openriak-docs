@@ -45,3 +45,10 @@ The VM exits; the launcher returns after shutdown checks.
 
 3.4.0: a6d971d37f326a94d8c90cfad49008042ceca6e345cbbac7f4b6ba6c5dfd4341
 3.4.1: a6d971d37f326a94d8c90cfad49008042ceca6e345cbbac7f4b6ba6c5dfd4341
+
+# Tags
+
+feature: node-operations
+repository: riak
+module: riak
+concept: node-lifecycle

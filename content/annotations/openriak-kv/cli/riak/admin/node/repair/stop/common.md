@@ -66,3 +66,10 @@ Full Erlang node name, or `all` to select all available nodes. Omit to select th
 # Reviewed against
 
 3.4.1: c9773b4038ccf3e7a6a613567882ee8d4c1648e6d96249efa1f4c32886e0d593
+
+# Tags
+
+feature: read-repair
+repository: riak
+module: riak
+concept: replica-repair

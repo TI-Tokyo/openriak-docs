@@ -27,3 +27,10 @@ Security group name, for example `cli_readers`.
 
 3.4.0: b6d7c15c701841e95b95396fc87fafc75deac418ab518b94cb26fb308314e96c
 3.4.1: b6d7c15c701841e95b95396fc87fafc75deac418ab518b94cb26fb308314e96c
+
+# Tags
+
+feature: security
+repository: riak_core
+module: riak_core_console
+concept: authentication

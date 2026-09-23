@@ -83,3 +83,10 @@ Choose branches containing the five stored keys. Verify every requested branch i
 
 3.4.0: 69d6ecbc79e923c065ef9a574168dc46b585c61ddf5538cc7ebd02c25cc6bb35
 3.4.1: 69d6ecbc79e923c065ef9a574168dc46b585c61ddf5538cc7ebd02c25cc6bb35
+
+# Tags
+
+feature: tictac-aae
+repository: riak_kv
+module: riak_client
+concept: compaction, replica-repair

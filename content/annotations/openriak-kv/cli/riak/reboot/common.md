@@ -45,3 +45,10 @@ The old VM exits and the configured restart mechanism is expected to launch its 
 
 3.4.0: 6c8c816b65a32e2aaa7abff96a34a94fa7f96a69aead0b2c474520aa6c6a760e
 3.4.1: 6c8c816b65a32e2aaa7abff96a34a94fa7f96a69aead0b2c474520aa6c6a760e
+
+# Tags
+
+feature: node-operations
+repository: riak
+module: riak
+concept: node-lifecycle

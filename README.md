@@ -73,7 +73,7 @@ available for each example; printing or disabling JavaScript shows every block.
 
 ## Content and metadata
 
-CLI prose overrides are maintained in [content/annotations/openriak-kv/](content/annotations/openriak-kv/README.md). They merge over verified scenario metadata from openriak-metadata. Run `node tools/scripts/watch-cli-reference.js --once` to regenerate the CLI data and its completeness/review reports.
+CLI and settings annotations are maintained in [content/annotations/openriak-kv/](content/annotations/openriak-kv/README.md). They add descriptions, categorized tags and version-specific corrections over the release metadata. Run `node tools/scripts/watch-cli-reference.js --once` to regenerate CLI/settings data and their completeness/review reports. Setting names and default values remain authoritative from metadata; datatype corrections produce non-failing Hugo warnings.
 
 
 Production KV Markdown uses flat version directories in two source families:

@@ -37,3 +37,10 @@ Optional full node name. Omit to wait on the local node.
 
 3.4.0: 76dac7b09e6f30cf5348e7a364ff82be12528e51fd8ef785c884565ff942ea34
 3.4.1: 76dac7b09e6f30cf5348e7a364ff82be12528e51fd8ef785c884565ff942ea34
+
+# Tags
+
+feature: node-operations
+repository: riak_core
+module: erlang, riak_core_node_watcher
+concept: node-lifecycle, scheduling

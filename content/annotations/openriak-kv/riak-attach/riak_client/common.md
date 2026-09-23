@@ -62,3 +62,10 @@ datatype: Erlang pid
 ### Description
 
 Process that receives stream messages, for example `self()` for the current Erlang shell. It is separate from the Riak client handle. Use the request ID returned by the operation to select its messages.
+
+# Tags
+
+feature: client-operations
+repository: riak_kv
+module: riak_client
+concept: data-access

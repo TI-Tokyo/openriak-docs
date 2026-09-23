@@ -37,3 +37,10 @@ Value returned when the key is absent from the application environment and start
 
 3.4.0: 73d53f71535a04667263c3e97f30f1b9ee696bf53f34d1c7b10240e13c1b48cc
 3.4.1: 73d53f71535a04667263c3e97f30f1b9ee696bf53f34d1c7b10240e13c1b48cc
+
+# Tags
+
+feature: client-operations
+repository: riak_kv
+module: riak
+concept: data-access

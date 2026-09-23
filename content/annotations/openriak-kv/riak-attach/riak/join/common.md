@@ -45,3 +45,10 @@ Join the second node and inspect the resulting ring members. This legacy API cha
 
 3.4.0: 97aadf8f1d81bffad665e0bb7bc29d715219b9a130b2788faf10182bef298830
 3.4.1: 97aadf8f1d81bffad665e0bb7bc29d715219b9a130b2788faf10182bef298830
+
+# Tags
+
+feature: node-operations
+repository: riak_kv
+module: riak
+concept: node-lifecycle

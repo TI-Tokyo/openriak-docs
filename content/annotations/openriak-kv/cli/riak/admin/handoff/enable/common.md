@@ -83,3 +83,10 @@ Run the operation on the named node, such as `openriak-kv@node1.test`. Use the f
 
 3.4.0: f442e2ecb6b566d2a16b873b401c3f52ecfd5d3ddd99a34e9f5f0ebc6f399ac6
 3.4.1: f442e2ecb6b566d2a16b873b401c3f52ecfd5d3ddd99a34e9f5f0ebc6f399ac6
+
+# Tags
+
+feature: handoff
+repository: riak
+module: riak
+concept: partition-transfer

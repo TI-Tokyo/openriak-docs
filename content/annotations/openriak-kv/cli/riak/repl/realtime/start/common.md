@@ -43,3 +43,10 @@ Inspect repl connections and repl status, confirm the remote name, and restore t
 
 3.4.0: f7a24aab84686242e455b5589bde865775273c10a4fc33c0b7bc04a8e6f9b12b
 3.4.1: f7a24aab84686242e455b5589bde865775273c10a4fc33c0b7bc04a8e6f9b12b
+
+# Tags
+
+feature: legacy-replication
+repository: riak_repl
+module: riak_repl_console
+concept: cross-cluster-replication

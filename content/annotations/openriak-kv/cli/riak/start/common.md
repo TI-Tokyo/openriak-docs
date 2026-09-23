@@ -61,3 +61,10 @@ A background node plus a deprecation notice.
 
 3.4.0: f188b7f6fb40d434cc645bab5c2994dab75a25a1d8473582098eade96c6ea0c0
 3.4.1: f188b7f6fb40d434cc645bab5c2994dab75a25a1d8473582098eade96c6ea0c0
+
+# Tags
+
+feature: node-operations
+repository: riak
+module: riak
+concept: node-lifecycle

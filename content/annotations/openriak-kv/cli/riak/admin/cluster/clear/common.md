@@ -33,3 +33,10 @@ Inspect ring-status, wait for convergence, then run cluster plan again.
 
 3.4.0: e4614a2aea7d0247e41afee3f43a511baf72b767a8ef0b42ba94ae69990b361b
 3.4.1: e4614a2aea7d0247e41afee3f43a511baf72b767a8ef0b42ba94ae69990b361b
+
+# Tags
+
+feature: cluster-management
+repository: riak_core
+module: riak_core_console
+concept: partition-placement

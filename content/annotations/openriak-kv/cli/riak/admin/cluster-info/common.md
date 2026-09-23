@@ -45,3 +45,10 @@ A successful invocation writes a diagnostic report to the requested file. The te
 
 3.4.0: 8c908ad00cb81db2ab8334e1b62eb6523e7c7e9238ee44192c7995d3eb97c29c
 3.4.1: 8c908ad00cb81db2ab8334e1b62eb6523e7c7e9238ee44192c7995d3eb97c29c
+
+# Tags
+
+feature: cluster-management
+repository: riak_kv
+module: riak_kv_console
+concept: partition-placement

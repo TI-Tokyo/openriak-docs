@@ -65,3 +65,10 @@ A successful change adds the source rule shown by `security print-sources`. The 
 
 3.4.0: b89ae14176adf94893a71b7aab8c3137730ea6028c3791f49d5262254c8a1905
 3.4.1: b89ae14176adf94893a71b7aab8c3137730ea6028c3791f49d5262254c8a1905
+
+# Tags
+
+feature: security
+repository: riak_core
+module: riak_core_console
+concept: authentication

@@ -72,3 +72,10 @@ Select the repair-status layout. Use `-f json` for JSON; the long `--format` sel
 # Reviewed against
 
 3.4.1: 2c25cf9428c9fecfa37f047eb8a694743880b605b5a9442df90bfc1cd88ee811
+
+# Tags
+
+feature: observability
+repository: riak
+module: riak
+concept: diagnostics

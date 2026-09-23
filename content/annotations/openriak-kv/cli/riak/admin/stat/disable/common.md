@@ -51,3 +51,10 @@ Disable a counter to stop collecting measurements. The example counter starts at
 
 3.4.0: 1ab9bc8a6cc98592e8dd7a6cb04ca7ef1f95a4a36cc6bc740e413b2371b5a8f5
 3.4.1: 1ab9bc8a6cc98592e8dd7a6cb04ca7ef1f95a4a36cc6bc740e413b2371b5a8f5
+
+# Tags
+
+feature: observability
+repository: riak_core
+module: riak_core_console
+concept: diagnostics

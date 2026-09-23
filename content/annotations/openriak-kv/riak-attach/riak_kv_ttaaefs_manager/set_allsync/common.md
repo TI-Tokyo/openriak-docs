@@ -41,3 +41,10 @@ Replication factor used by the destination, for example `3`.
 
 3.4.0: 54b2af46098ceae61817846d3cd1251659af08aa845776bd245180487bb76f6f
 3.4.1: 54b2af46098ceae61817846d3cd1251659af08aa845776bd245180487bb76f6f
+
+# Tags
+
+feature: full-sync
+repository: riak_kv
+module: riak_kv_ttaaefs_manager
+concept: replica-repair

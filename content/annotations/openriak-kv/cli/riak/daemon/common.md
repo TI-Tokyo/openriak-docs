@@ -61,3 +61,10 @@ The command returns after startup and hooks; use ping to confirm reachability.
 
 3.4.0: e450156f935950ed29e45d67b3dd58f37e46d5fdd9d2ceb1d758b7ca6613977d
 3.4.1: e450156f935950ed29e45d67b3dd58f37e46d5fdd9d2ceb1d758b7ca6613977d
+
+# Tags
+
+feature: node-operations
+repository: riak
+module: riak
+concept: node-lifecycle

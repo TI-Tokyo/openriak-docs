@@ -31,3 +31,10 @@ Reason recorded for the cancellation, for example `maintenance`.
 
 3.4.0: 66ed61739e299f7d3b34f4366af5570e8bb89c950e72cb3c7c3370db26087c21
 3.4.1: 66ed61739e299f7d3b34f4366af5570e8bb89c950e72cb3c7c3370db26087c21
+
+# Tags
+
+feature: read-repair
+repository: riak_core
+module: riak_core_vnode_manager
+concept: replica-repair

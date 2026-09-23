@@ -86,3 +86,10 @@ Apply a normal replicated object in the bucket.
 
 3.4.0: 007723576e33fe99631c69f55fb408d8ad22569f0cacbc120562ad804294f3ef
 3.4.1: 007723576e33fe99631c69f55fb408d8ad22569f0cacbc120562ad804294f3ef
+
+# Tags
+
+feature: client-operations
+repository: riak_kv
+module: riak_client
+concept: data-access

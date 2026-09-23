@@ -61,3 +61,10 @@ The selected subcommand determines the result. Invoking the group without a vali
 
 3.4.0: 7aba1bdfc8aaa637083ff1e5c1df19e31ba9ee42aa2756be28da4e8e2a8f4801
 3.4.1: 7aba1bdfc8aaa637083ff1e5c1df19e31ba9ee42aa2756be28da4e8e2a8f4801
+
+# Tags
+
+feature: bucket-properties
+repository: riak
+module: riak-admin
+concept: data-policy

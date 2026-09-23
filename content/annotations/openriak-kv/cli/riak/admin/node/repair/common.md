@@ -60,3 +60,10 @@ The selected subcommand determines the result. Invoking the group without a vali
 # Reviewed against
 
 3.4.1: cfff1e3aac9dd2dde752f6557baf3a16150eb97880f08581fa0ca72dc1ac96e5
+
+# Tags
+
+feature: read-repair
+repository: riak
+module: riak
+concept: replica-repair

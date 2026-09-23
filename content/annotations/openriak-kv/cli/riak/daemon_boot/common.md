@@ -71,3 +71,10 @@ A background VM using the selected boot file.
 
 3.4.0: 72e850e4ddba1e9218539feb1a41a41596d8e081f4468f5dee7f5ef006c48c90
 3.4.1: 72e850e4ddba1e9218539feb1a41a41596d8e081f4468f5dee7f5ef006c48c90
+
+# Tags
+
+feature: node-operations
+repository: riak
+module: riak
+concept: node-lifecycle

@@ -27,3 +27,10 @@ Bucket type name, for example `cli_reference_type`. Creation and activation are 
 
 3.4.0: ef9e8363dead9a86fef71a979ae6ef84bb7a8f284bae43bae0ca4afe8d54a59a
 3.4.1: ef9e8363dead9a86fef71a979ae6ef84bb7a8f284bae43bae0ca4afe8d54a59a
+
+# Tags
+
+feature: bucket-properties
+repository: riak_kv
+module: riak_kv_console
+concept: data-policy

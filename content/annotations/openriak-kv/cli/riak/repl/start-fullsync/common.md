@@ -33,3 +33,10 @@ Request start for the configured legacy listener. With no connected legacy repli
 
 3.4.0: ce6684d5e4238ac94738900c7633ac22c0ba4c9beb902835fe6d9937174dc192
 3.4.1: ce6684d5e4238ac94738900c7633ac22c0ba4c9beb902835fe6d9937174dc192
+
+# Tags
+
+feature: full-sync
+repository: riak_repl
+module: riak_repl_console
+concept: replica-repair

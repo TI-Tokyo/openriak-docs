@@ -33,3 +33,10 @@ Request pause for the configured legacy listener. With no connected legacy repli
 
 3.4.0: 8546c2ad2a9c2b437d541fba4a20b9ce9b6a52ecdca5030a77e0fff9c926c9a1
 3.4.1: 8546c2ad2a9c2b437d541fba4a20b9ce9b6a52ecdca5030a77e0fff9c926c9a1
+
+# Tags
+
+feature: full-sync
+repository: riak_repl
+module: riak_repl_console
+concept: replica-repair

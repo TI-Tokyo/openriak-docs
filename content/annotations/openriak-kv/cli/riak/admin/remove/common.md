@@ -25,3 +25,10 @@ No membership change is performed by this command.
 
 3.4.0: 45223e7b87b56602927e1e4d243a849f45d4576c7d19bcf3d51e7c6fe82894e7
 3.4.1: 45223e7b87b56602927e1e4d243a849f45d4576c7d19bcf3d51e7c6fe82894e7
+
+# Tags
+
+feature: node-operations
+repository: riak
+module: riak-admin
+concept: node-lifecycle

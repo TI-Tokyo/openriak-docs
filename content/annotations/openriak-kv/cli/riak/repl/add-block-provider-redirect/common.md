@@ -45,3 +45,10 @@ Use a block-provider mapping during recovery when the provider identifier must c
 
 3.4.0: 85de8e8a40188974cc05f6a044a33321b9667ee1b8a9c222077fa22a2c1c862d
 3.4.1: 85de8e8a40188974cc05f6a044a33321b9667ee1b8a9c222077fa22a2c1c862d
+
+# Tags
+
+feature: legacy-replication
+repository: riak_repl
+module: riak_repl_console
+concept: cross-cluster-replication

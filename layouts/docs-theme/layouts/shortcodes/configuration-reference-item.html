@@ -2,6 +2,7 @@
 {{- $configurationData := index hugo.Data "configuration-reference" -}}
 {{- $productData := index $configurationData $context.id -}}
 {{- $reference := index $productData $context.version -}}
+{{- partialCached "settings-annotation-warnings.html" $reference $context.id $context.version $reference.annotationCoverage.corrections -}}
 {{- if not $reference -}}
   {{- errorf "configuration-reference-item requires configuration metadata for %s %s on %s" $context.id $context.version .Page.File.Path -}}
 {{- end -}}
@@ -69,8 +70,18 @@
             <span class="configuration-reference-os" data-configuration-os-specific{{ if not $default.osSpecific }} hidden{{ end }}>on <img data-configuration-os-icon src="{{ $selectedOperatingSystem.logo | relURL }}" alt="{{ $selectedOperatingSystem.displayName }}" title="{{ $selectedOperatingSystem.displayName }}"></span>
           </td>
         </tr>
+        <tr><th scope="row">Tags</th><td>{{ partial "annotation-tags.html" $setting.tags }}</td></tr>
+        {{ with $setting.related }}
+        <tr><th scope="row">Related settings</th><td><ul class="configuration-related-settings">{{ range . }}<li><a href="{{ printf "%s%s/reference/configuration/all-configuration-settings-and-defaults/#%s" $context.productBase $context.version .anchor }}"><code>{{ .name }}</code></a></li>{{ end }}</ul></td></tr>
+        {{ end }}
+        {{ range $field := slice "notes" "examples" "related_documentation" }}{{ with index $setting $field }}<tr><th scope="row">{{ replace $field "_" " " | humanize }}</th><td>{{ . | markdownify }}</td></tr>{{ end }}{{ end }}
       </tbody>
     </table>
   </div>
+  <details class="configuration-sources"><summary>Reference sources</summary>
+    <p>Annotations: {{ delimit $setting.overrides ", " }}.</p>
+    {{ with $setting.source.documentation }}<div>{{ . | markdownify }}</div>{{ end }}
+    <pre><code>{{ $setting.source | jsonify (dict "indent" "  ") }}</code></pre>
+  </details>
   <script type="application/json" data-configuration-reference-defaults data-json-src="{{ partial "json-resource.html" (dict $setting.name $setting.defaults) }}"></script>
 </div>

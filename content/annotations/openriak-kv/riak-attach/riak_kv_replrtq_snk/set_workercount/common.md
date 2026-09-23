@@ -47,3 +47,10 @@ See the shared `PerPeerLimit` argument on the parent module page.
 
 3.4.0: b3ab33948232bc277d1f13c0507b0456145ad4cb809473438f35bb15ddb755f3
 3.4.1: b3ab33948232bc277d1f13c0507b0456145ad4cb809473438f35bb15ddb755f3
+
+# Tags
+
+feature: queue-replication
+repository: riak_kv
+module: riak_kv_replrtq_snk
+concept: concurrency, cross-cluster-replication

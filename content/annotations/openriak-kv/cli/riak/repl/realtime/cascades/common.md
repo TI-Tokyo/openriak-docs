@@ -32,3 +32,10 @@ Cascading policy.
 
 3.4.0: 262c64fca503ca2ebb9851835a34764ac99f4f0ed9f3aa6389eaac9e2233fb34
 3.4.1: 262c64fca503ca2ebb9851835a34764ac99f4f0ed9f3aa6389eaac9e2233fb34
+
+# Tags
+
+feature: legacy-replication
+repository: riak_repl
+module: riak_repl_console
+concept: cross-cluster-replication

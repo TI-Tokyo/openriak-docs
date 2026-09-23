@@ -61,3 +61,10 @@ Application startup logs; the command remains running until the node stops.
 
 3.4.0: 0cf2a573318ba1584399302aa50fc9de61864747d63c71a65f9968d3905bb7c2
 3.4.1: 0cf2a573318ba1584399302aa50fc9de61864747d63c71a65f9968d3905bb7c2
+
+# Tags
+
+feature: node-operations
+repository: riak
+module: riak
+concept: node-lifecycle

@@ -93,3 +93,10 @@ An interactive shell connected to the running Erlang VM. Function expressions pr
 
 3.4.0: 5575ad9cd8c1d4cf05b4ed42daeeff1c53216d2fb1c0e9e01cc31c8f9f60e58a
 3.4.1: 5575ad9cd8c1d4cf05b4ed42daeeff1c53216d2fb1c0e9e01cc31c8f9f60e58a
+
+# Tags
+
+feature: node-operations
+repository: riak
+module: riak
+concept: node-lifecycle

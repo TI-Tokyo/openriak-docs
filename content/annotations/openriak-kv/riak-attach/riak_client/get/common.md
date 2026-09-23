@@ -105,3 +105,10 @@ Read an object with a quorum, exclude notfound replies from successful responses
 
 3.4.0: 1e0cf7425b910050d191eec3d6df13447f0c21bc14bd37ae383bf0a3be1c4cb8
 3.4.1: 1e0cf7425b910050d191eec3d6df13447f0c21bc14bd37ae383bf0a3be1c4cb8
+
+# Tags
+
+feature: client-operations
+repository: riak_kv
+module: riak_client
+concept: data-access

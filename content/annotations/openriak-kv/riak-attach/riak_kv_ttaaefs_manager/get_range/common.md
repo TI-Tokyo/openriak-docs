@@ -21,3 +21,10 @@ These settings affect the current node. Runtime environment changes are not a re
 
 3.4.0: 8df48931681599e7ff9d57b34241ef2a67618e4c931afc78243a69811543d220
 3.4.1: 5f168ef21aac76d1825e11ae846d4e7b38be4a308ece9869b82d26f85568a41a
+
+# Tags
+
+feature: full-sync
+repository: riak_kv
+module: riak_kv_ttaaefs_manager
+concept: replica-repair

@@ -25,3 +25,10 @@ Change the security state on this node.
 
 3.4.0: 7c4eba010f2df357785c2b63d2ea73126cf0bf00de0b77483883faa9a1b3af1a
 3.4.1: 7c4eba010f2df357785c2b63d2ea73126cf0bf00de0b77483883faa9a1b3af1a
+
+# Tags
+
+feature: security
+repository: riak_core
+module: riak_core_console
+concept: authentication

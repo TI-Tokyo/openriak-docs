@@ -103,3 +103,10 @@ Queue the five matching objects for replication. Expect five AAE entries in the 
 
 3.4.0: 982a933dfb9bd813be2e50379f4af5395dca3ba7d496e70eb42868a806733d6c
 3.4.1: 982a933dfb9bd813be2e50379f4af5395dca3ba7d496e70eb42868a806733d6c
+
+# Tags
+
+feature: queue-replication
+repository: riak_kv
+module: riak_client
+concept: cross-cluster-replication

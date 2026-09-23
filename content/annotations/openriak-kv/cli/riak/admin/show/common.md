@@ -95,3 +95,10 @@ Read the setting on all cluster members. On a single-member cluster, expect one 
 
 3.4.0: 2895fd58ab7e9bd404c2ac661706ee44e41d954357dbab5f09d39b2526e8aef6
 3.4.1: 2895fd58ab7e9bd404c2ac661706ee44e41d954357dbab5f09d39b2526e8aef6
+
+# Tags
+
+feature: node-operations
+repository: clique, riak_core
+module: clique_config, riak_core_console
+concept: node-lifecycle

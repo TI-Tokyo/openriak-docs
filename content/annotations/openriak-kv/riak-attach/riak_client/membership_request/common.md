@@ -32,3 +32,10 @@ API listener protocol to discover.
 
 3.4.0: e8a03640663f735b038dba038b732e5b17eb02426b747bb66654e3137cccd906
 3.4.1: e8a03640663f735b038dba038b732e5b17eb02426b747bb66654e3137cccd906
+
+# Tags
+
+feature: cluster-management
+repository: riak_kv
+module: riak_client
+concept: partition-placement

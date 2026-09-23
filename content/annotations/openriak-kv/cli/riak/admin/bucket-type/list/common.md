@@ -17,3 +17,10 @@ Only active types can be used for ordinary typed-bucket operations. Newly create
 
 3.4.0: eb5d4ca65615b79511f7b08d375ce8fae239d72beb6cc3e5396ffd49920e8ec8
 3.4.1: eb5d4ca65615b79511f7b08d375ce8fae239d72beb6cc3e5396ffd49920e8ec8
+
+# Tags
+
+feature: bucket-properties
+repository: riak_kv
+module: riak_kv_console
+concept: data-policy

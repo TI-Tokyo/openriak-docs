@@ -33,3 +33,10 @@ Request resume for the configured legacy listener. With no connected legacy repl
 
 3.4.0: 1d84abfe7e3ec958305aa6e0f98c23ccefe4d970eed575a8e5ebd8c720a52f15
 3.4.1: 1d84abfe7e3ec958305aa6e0f98c23ccefe4d970eed575a8e5ebd8c720a52f15
+
+# Tags
+
+feature: full-sync
+repository: riak_repl
+module: riak_repl_console
+concept: replica-repair

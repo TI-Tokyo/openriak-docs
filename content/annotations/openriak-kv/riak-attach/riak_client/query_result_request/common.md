@@ -80,3 +80,10 @@ Returns a partial-result map describing the next batch, or an error if the buffe
 # Reviewed against
 
 3.4.1: b1679e25264b0d6205cf80047177c7dfb9f8ef234b81e1ff666db48613831a22
+
+# Tags
+
+feature: query-processing
+repository: riak_kv
+module: riak_client
+concept: querying

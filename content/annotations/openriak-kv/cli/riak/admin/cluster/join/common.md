@@ -35,3 +35,10 @@ A successful call stages a join; `cluster plan` shows the proposed membership ch
 
 3.4.0: 401ee3db5a9346f34aadc8145dda76b6e0a619695bb17e0aa467554c6f75e1a0
 3.4.1: 401ee3db5a9346f34aadc8145dda76b6e0a619695bb17e0aa467554c6f75e1a0
+
+# Tags
+
+feature: cluster-management
+repository: riak_kv
+module: riak_kv_console
+concept: partition-placement

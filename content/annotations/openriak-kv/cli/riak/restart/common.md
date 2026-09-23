@@ -45,3 +45,10 @@ The RPC is submitted; the node becomes unavailable temporarily while restarting.
 
 3.4.0: 4a72d2a01d6c11a44c75411475729348a47138e46c4acbfa8280e623e0ec5ad1
 3.4.1: 4a72d2a01d6c11a44c75411475729348a47138e46c4acbfa8280e623e0ec5ad1
+
+# Tags
+
+feature: node-operations
+repository: riak
+module: riak
+concept: node-lifecycle

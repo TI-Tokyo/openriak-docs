@@ -46,3 +46,10 @@ Print usage without executing the command. The short spelling is `-h`.
 
 3.4.0: 72b4ce51c28303b28a4dc8ec31273e451bfe651935b7772ed458c512d1afd098
 3.4.1: 72b4ce51c28303b28a4dc8ec31273e451bfe651935b7772ed458c512d1afd098
+
+# Tags
+
+feature: observability
+repository: riak_core
+module: riak_core_console
+concept: diagnostics

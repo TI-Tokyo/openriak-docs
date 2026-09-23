@@ -45,3 +45,10 @@ The manual path rewrites stored ring information; the automatic reip path does n
 
 3.4.0: 90101a5d345274bacd39633bfd49bb407e87d2ac4a68af57661c64c3eb8ab409
 3.4.1: 90101a5d345274bacd39633bfd49bb407e87d2ac4a68af57661c64c3eb8ab409
+
+# Tags
+
+feature: node-operations
+repository: riak
+module: riak-admin
+concept: node-lifecycle

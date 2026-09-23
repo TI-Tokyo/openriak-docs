@@ -107,3 +107,10 @@ Request repair for a range containing five keys. The result reports processing o
 
 3.4.0: 1a73ae3d816e2685fac5799d6f1c1b2b3dd24835d12b6f5e7a54d84e555cc4e5
 3.4.1: 1a73ae3d816e2685fac5799d6f1c1b2b3dd24835d12b6f5e7a54d84e555cc4e5
+
+# Tags
+
+feature: tictac-aae
+repository: riak_kv
+module: riak_client
+concept: replica-repair

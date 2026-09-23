@@ -17,3 +17,10 @@ The list contains remote cluster identities known to the replication subsystem. 
 
 3.4.0: 81d7da83151b859bdb3205126e6620fb0451cb3aa49c2a4c3b217999ad194cad
 3.4.1: 81d7da83151b859bdb3205126e6620fb0451cb3aa49c2a4c3b217999ad194cad
+
+# Tags
+
+feature: legacy-replication
+repository: riak_repl
+module: riak_repl_console
+concept: cross-cluster-replication

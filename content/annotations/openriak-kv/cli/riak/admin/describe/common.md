@@ -63,3 +63,10 @@ Describe two settings in one request. Separate their names with spaces.
 
 3.4.0: 0aa6dc9a87ef20bc2268428f8855c33f3247e05ab1437eabf2e306e23d8a9263
 3.4.1: 0aa6dc9a87ef20bc2268428f8855c33f3247e05ab1437eabf2e306e23d8a9263
+
+# Tags
+
+feature: node-operations
+repository: clique, riak_core
+module: clique_config, riak_core_console
+concept: node-lifecycle

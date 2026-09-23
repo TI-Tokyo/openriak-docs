@@ -25,3 +25,10 @@ Request module reload on the node.
 
 3.4.0: e40c18c0b8adb423f6a5cd4f90a7f8577be7a1722eccd02d152fab0983fddbb2
 3.4.1: e40c18c0b8adb423f6a5cd4f90a7f8577be7a1722eccd02d152fab0983fddbb2
+
+# Tags
+
+feature: node-operations
+repository: riak_kv
+module: riak_kv_console
+concept: node-lifecycle

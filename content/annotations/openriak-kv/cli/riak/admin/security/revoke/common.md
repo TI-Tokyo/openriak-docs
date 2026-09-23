@@ -47,3 +47,10 @@ After `from`, give comma-separated user or group names.
 
 3.4.0: 558f543c71976deffae8ba5a429cea82b30e8dd85eb2737b13480bff4472eb91
 3.4.1: 558f543c71976deffae8ba5a429cea82b30e8dd85eb2737b13480bff4472eb91
+
+# Tags
+
+feature: security
+repository: riak_core
+module: riak_core_console
+concept: authentication

@@ -159,3 +159,10 @@ Inspect a counter’s attributes before changing it. This example counter starts
 
 3.4.0: bb54e59c464eb6c746354d00d374c7e954128b8cc00ae67adda951df18418492
 3.4.1: bb54e59c464eb6c746354d00d374c7e954128b8cc00ae67adda951df18418492
+
+# Tags
+
+feature: observability
+repository: riak_core
+module: riak_core_console
+concept: diagnostics

@@ -27,3 +27,10 @@ See the shared `QueueName` argument on the parent module page.
 
 3.4.0: 5ceaf4968dff70a0545f63f61e01a4d3ea13636ebd59ec2f7fc6375327b81314
 3.4.1: 5ceaf4968dff70a0545f63f61e01a4d3ea13636ebd59ec2f7fc6375327b81314
+
+# Tags
+
+feature: queue-replication
+repository: riak_kv
+module: riak_kv_replrtq_snk
+concept: cross-cluster-replication, queueing

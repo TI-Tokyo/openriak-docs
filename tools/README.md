@@ -138,3 +138,13 @@ After a Hugo build with drafts, run
 `python3 tools/scripts/check-diataxis-links.py PATH_TO_HUGO_OUTPUT` to check
 rendered modern-version article links and anchors. It fails if no complete
 modern-version output is present.
+
+Settings annotations use the same Markdown layering as CLI annotations. See
+[the authoring guide](../content/annotations/openriak-kv/README.md#settings-annotations).
+`watch-cli-reference.js` refreshes both pipelines; `sync-product-metadata.js` uses
+the same merge during full builds. Run `node --test tools/scripts/settings-annotations.test.js`
+for coverage, immutable defaults, review hashes and watcher recovery. With
+Playwright installed, `node tools/scripts/settings-annotations.browser.test.cjs`
+checks tag search/filter combinations, related links and mobile layout against
+the running preview. It accepts `OPENRIAK_DOCS_TEST_URL` and
+`OPENRIAK_BROWSER_EXECUTABLE` like the other browser checks.

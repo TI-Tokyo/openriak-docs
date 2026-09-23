@@ -81,3 +81,10 @@ title: A loopback listener
 
 3.4.0: dd5fdc8f4038cab1c49fed565ec085387de22613d6b558066c719fb5045576fd
 3.4.1: dd5fdc8f4038cab1c49fed565ec085387de22613d6b558066c719fb5045576fd
+
+# Tags
+
+feature: legacy-replication
+repository: riak_repl
+module: riak_repl_console
+concept: cross-cluster-replication

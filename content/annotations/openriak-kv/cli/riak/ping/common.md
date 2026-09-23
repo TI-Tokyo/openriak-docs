@@ -17,3 +17,10 @@ A `pong` response confirms Erlang distribution connectivity to the configured no
 
 3.4.0: e948854b1ecf24fc876d523aea593f7b90a628f34d8963ee9fa72909f89594d8
 3.4.1: e948854b1ecf24fc876d523aea593f7b90a628f34d8963ee9fa72909f89594d8
+
+# Tags
+
+feature: node-operations
+repository: riak
+module: riak
+concept: node-lifecycle

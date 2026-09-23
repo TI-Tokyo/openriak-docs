@@ -21,7 +21,7 @@ Search the complete configuration catalogue for OpenRiak KV {{< current-version 
 
 ## Settings
 
-Select an operating system, then search by setting name or description. Values shown are the defaults from that release’s settings metadata; explicit configuration overrides take precedence.
+Select an operating system, then search setting names, descriptions or tags. Combine the feature, source repository, source module and concept filters to narrow the table. Values shown are the defaults from that release’s settings metadata; explicit configuration overrides take precedence.
 
 {{< configuration-reference-table >}}
 .*

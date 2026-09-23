@@ -26,3 +26,10 @@ Inspect a healthy, one-node example cluster. It owns 100% of the ring. A multi-n
 
 3.4.0: 08db67ae1eb22e141241e5e8ca9896094480e04b61ddd9e9e87b004794249e8c
 3.4.1: 08db67ae1eb22e141241e5e8ca9896094480e04b61ddd9e9e87b004794249e8c
+
+# Tags
+
+feature: observability
+repository: riak_core
+module: riak_core_console
+concept: diagnostics

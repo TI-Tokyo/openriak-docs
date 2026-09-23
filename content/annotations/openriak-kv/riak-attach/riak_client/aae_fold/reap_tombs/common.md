@@ -119,3 +119,10 @@ Delete the stored objects and wait until five tombstones are visible. Reaping re
 
 3.4.0: d47b1a12261aa01297cb31c0e6ab9a8faa9a4db6e1f5fc42f8f009b6549fdc5a
 3.4.1: d47b1a12261aa01297cb31c0e6ab9a8faa9a4db6e1f5fc42f8f009b6549fdc5a
+
+# Tags
+
+feature: tictac-aae
+repository: riak_kv
+module: riak_client
+concept: replica-repair

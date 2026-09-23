@@ -1,0 +1,7 @@
+<dl class="annotation-tags">
+{{- range $category := slice "feature" "repository" "module" "concept" -}}
+  {{- with index $ $category -}}
+    <div><dt>{{ index (dict "feature" "Feature" "repository" "Source repository" "module" "Source module" "concept" "Concept") $category }}</dt><dd>{{ range . }}<span class="annotation-tag">{{ . }}</span>{{ end }}</dd></div>
+  {{- end -}}
+{{- end -}}
+</dl>

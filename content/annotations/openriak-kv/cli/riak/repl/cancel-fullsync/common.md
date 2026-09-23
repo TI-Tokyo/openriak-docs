@@ -33,3 +33,10 @@ Request cancel for the configured legacy listener. With no connected legacy repl
 
 3.4.0: 2a54b26ad11c0f4a69e6b5d089b8643b48e65db17b2772f89caa49b67c1af637
 3.4.1: 2a54b26ad11c0f4a69e6b5d089b8643b48e65db17b2772f89caa49b67c1af637
+
+# Tags
+
+feature: full-sync
+repository: riak_repl
+module: riak_repl_console
+concept: replica-repair

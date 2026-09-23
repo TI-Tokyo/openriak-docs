@@ -13,6 +13,7 @@
   {{ with .reference }}
     {{ with .summary }}{{ $page.RenderString . }}{{ end }}
     {{ with .description }}{{ $page.RenderString . }}{{ end }}
+    {{ with .tags }}{{ partial "annotation-tags.html" . }}{{ end }}
     {{ partial "cli/shared-arguments.html" (dict "page" $page "arguments" .shared_arguments) }}
     {{ range .notes }}{{ $page.RenderString . }}{{ end }}
   {{ end }}
@@ -22,7 +23,17 @@
 <p>Terminal commands, Erlang shell operations and bundled helpers are listed separately. Alternate spellings link to the same command page; argument values and Erlang arities are documented together.</p>
 {{ end }}
 <div class="cli-index" data-cli-index>
-  <label class="cli-search">Find a command or alias <input type="search" data-cli-search placeholder="For example: cluster join" autocomplete="off"></label>
+  <label class="cli-search">Find a command, alias or tag <input type="search" data-cli-search placeholder="For example: cluster join" autocomplete="off"></label>
+  <div class="configuration-tag-filters" role="group" aria-label="Filter commands by tags">
+    {{- range $category := slice "feature" "repository" "module" "concept" -}}
+      {{- $values := slice -}}
+      {{- range $pages }}{{ range index .reference.tags $category }}{{ $values = $values | append . }}{{ end }}{{ end -}}
+      <label><span>{{ index (dict "feature" "Feature" "repository" "Source repository" "module" "Source module" "concept" "Concept") $category }}</span>
+        <select data-cli-tag-filter="{{ $category }}"><option value="">All</option>{{ range sort (uniq $values) }}<option value="{{ . }}">{{ . }}</option>{{ end }}</select>
+      </label>
+    {{- end -}}
+    <button type="button" data-cli-reset>Clear filters</button>
+  </div>
   <p><output data-cli-count aria-live="polite">{{ len $pages }} command topics</output></p>
   {{- range slice "Node and release commands" "Administration" "Cluster" "Bucket types" "Security" "Handoff" "Statistics" "TicTac AAE" "Replication" "Erlang shell" "Bundled helpers" -}}
     {{- $group := where $pages "category" . -}}

@@ -45,3 +45,10 @@ A successful call records an internal/external address mapping visible with `nat
 
 3.4.0: 972be92a92eccf1b91ab874b450d6467aa7ac341afa4ab1cef26ec31703cbf15
 3.4.1: 972be92a92eccf1b91ab874b450d6467aa7ac341afa4ab1cef26ec31703cbf15
+
+# Tags
+
+feature: legacy-replication
+repository: riak_repl
+module: riak_repl_console
+concept: cross-cluster-replication

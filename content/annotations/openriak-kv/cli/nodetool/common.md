@@ -123,3 +123,10 @@ Prints the remote result or a distribution/RPC failure.
 
 3.4.0: 628bdb2230d37edc474942cb8148838b7582d39d8a95ee2388feccd85fef8f4d
 3.4.1: 628bdb2230d37edc474942cb8148838b7582d39d8a95ee2388feccd85fef8f4d
+
+# Tags
+
+feature: node-operations
+repository: riak
+module: nodetool
+concept: node-lifecycle
