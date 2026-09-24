@@ -6,7 +6,7 @@ weight: 150
 diataxis: explanation
 product: OpenRiak KV
 product_version: 3.4.0
-status: editorially-rewritten
+status: reviewed
 draft: true
 audience:
 - architects
@@ -23,9 +23,10 @@ tags:
 - kv
 - explanation
 editorial_review: complete
-technical_review: required
-last_reviewed: '2026-09-22'
-review_scope: diataxis-content-and-navigation
+technical_review: complete
+last_reviewed: '2026-09-24'
+review-by: TI Tokyo/JOM
+review_scope: editorial & technical
 restructured_from:
 - foundations/consistency/conditional-requests.md
 - foundations/data-model/latch-objects.md

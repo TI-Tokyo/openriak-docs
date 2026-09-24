@@ -3,7 +3,7 @@ title: Deletion, tombstones, and expiration
 description: Deleting an object first changes its replicated state. Reclaiming the disk space used by old values
   and deletion markers is a separate operation.
 weight: 160
-diataxis: explanation
+diataxis: Reviewed
 product: OpenRiak KV
 product_version: 3.4.0
 status: editorially-rewritten
@@ -21,9 +21,10 @@ tags:
 - kv
 - explanation
 editorial_review: complete
-technical_review: required
+technical_review: complete
 last_reviewed: '2026-09-22'
-review_scope: diataxis-content-and-navigation
+review-by: TI Tokyo/JOM
+review_scope: editorial & technical
 restructured_from:
 - foundations/data-model/deletion-policies.md
 - foundations/operations/object-deletion-and-tombstones.md
@@ -35,7 +36,7 @@ related:
 - reference/configuration/object-expiration-and-reclamation-settings
 ---
 
-Deleting an object first changes its replicated state. Reclaiming the disk space used by old values and deletion markers is a separate operation.
+Deleting an object changes its replicated state. The reclamation of disk space used by old values and deletion markers is a separate operation.
 
 ## Tombstones preserve deletion history
 
@@ -51,4 +52,4 @@ Expiration is a policy for making data eligible to expire. Its scope and behavio
 
 A client can receive a missing-object response while deletion metadata remains stored. Conversely, reducing the number of visible objects does not immediately reduce filesystem usage. Monitoring must distinguish logical data, retained history, and physical storage.
 
-Select a lifecycle policy together with replication and restore procedures, rather than choosing a retention interval in isolation.
+The creation of a lifecycle policy should be done in tandem with replication and restore procedures, rather than in isolation where the two may conflict.

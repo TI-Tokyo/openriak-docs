@@ -6,7 +6,7 @@ weight: 100
 diataxis: explanation
 product: OpenRiak KV
 product_version: 3.4.0
-status: editorially-rewritten
+status: Reviewed
 draft: true
 audience:
 - architects
@@ -25,9 +25,10 @@ tags:
 - kv
 - explanation
 editorial_review: complete
-technical_review: required
+technical_review: complete
 last_reviewed: '2026-09-22'
-review_scope: diataxis-content-and-navigation
+review-by: TI Tokyo/JOM
+review_scope: editorial & technical
 restructured_from:
 - foundations/consistency/eventual-consistency.md
 related:
@@ -50,6 +51,3 @@ Read repair reacts to differences observed during reads. Active anti-entropy loo
 
 A write acknowledgement confirms the request's acknowledgement conditions, not that all replicas everywhere already contain the result. A read reflects the responses available under its policy. Stronger acknowledgement requirements change the trade-off between availability, latency, and surviving particular failures; they do not automatically provide serial execution.
 
-## Application behaviour
-
-Preserve causal context, make retries deliberate, and decide how to handle siblings and uncertain outcomes. A user-facing workflow may need to show pending work or retry later instead of treating a timeout as proof that an operation did nothing.

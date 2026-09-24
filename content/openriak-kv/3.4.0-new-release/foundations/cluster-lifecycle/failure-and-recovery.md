@@ -26,9 +26,10 @@ tags:
 - kv
 - explanation
 editorial_review: complete
-technical_review: required
+technical_review: complete
 last_reviewed: '2026-09-22'
-review_scope: diataxis-content-and-navigation
+review-by: TI Tokyo/JOM
+review_scope: Reviewed
 restructured_from:
 - foundations/operations/node-failure-and-recovery.md
 related:
@@ -39,15 +40,15 @@ related:
 - foundations/cluster-lifecycle/backups-restores-and-disaster-recovery
 ---
 
-A node failure changes which replicas are reachable and which work the surviving cluster must perform. Recovery is complete only when service, data, and replica placement have been checked.
+A node failure changes which replicas are reachable and which work the surviving nodes in the cluster must perform. Recovery is complete only when service, data, and replica placement have been checked.
 
 ## Temporary loss
 
-During a short interruption, eligible requests may use available primaries and fallbacks. Whether they succeed depends on their acknowledgement requirements. Restoring connectivity does not immediately establish that all copies agree; hinted handoff, read repair, and anti-entropy still have work to do.
+During a short interruption, eligible requests may use a mix of available primary and fallback nodes. Whether they succeed depends on their acknowledgement requirements. Restoring connectivity does not immediately establish that all copies agree; hinted handoff, read repair, and anti-entropy still have work to do.
 
 ## Permanent loss
 
-A failed host may require replacement and reconstruction from surviving replicas. The decision depends on the state of its disks and identity, the remaining copies, and the current membership plan. Reusing a name or clearing a data directory without understanding that state can complicate recovery.
+A failed node may require replacement and reconstruction from surviving replicas. The decision depends on the state of its disks and identity, the remaining copies, and the current membership plan. Reusing a name or clearing a data directory without understanding that state can complicate recovery and even lead to further loss of data.
 
 ## Widespread failure
 

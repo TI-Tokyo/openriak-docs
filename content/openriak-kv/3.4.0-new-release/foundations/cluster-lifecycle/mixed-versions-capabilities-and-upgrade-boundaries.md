@@ -6,7 +6,7 @@ weight: 370
 diataxis: explanation
 product: OpenRiak KV
 product_version: 3.4.0
-status: editorially-rewritten
+status: Reviewed
 draft: true
 audience:
 - operators
@@ -22,9 +22,10 @@ tags:
 - kv
 - explanation
 editorial_review: complete
-technical_review: required
+technical_review: complete
 last_reviewed: '2026-09-22'
-review_scope: diataxis-content-and-navigation
+review-by: TI Tokyo/JOM
+review_scope: editorial & technical
 restructured_from:
 - foundations/operations/upgrade-and-downgrade.md
 - foundations/foundations/capability-negotiation.md
@@ -36,7 +37,7 @@ related:
 - reference/configuration/all-configuration-settings-and-defaults
 ---
 
-A rolling upgrade creates a period in which nodes run different software. Compatibility must cover their communication, stored data, negotiated capabilities, and Erlang/OTP runtimes.
+A rolling upgrade creates a period in which some nodes in a cluster run different software. Compatibility must cover their communication, stored data, negotiated capabilities, and Erlang/OTP runtimes.
 
 ## Capability negotiation
 

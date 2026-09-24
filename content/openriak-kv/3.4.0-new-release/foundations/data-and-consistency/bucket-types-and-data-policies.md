@@ -6,7 +6,7 @@ weight: 90
 diataxis: explanation
 product: OpenRiak KV
 product_version: 3.4.0
-status: editorially-rewritten
+status: Reviewed
 draft: true
 audience:
 - architects
@@ -21,7 +21,8 @@ tags:
 editorial_review: complete
 technical_review: required
 last_reviewed: '2026-09-22'
-review_scope: diataxis-content-and-navigation
+review-by: TI Tokyo/JOM
+review_scope: editorial & technical
 restructured_from:
 - foundations/data-model/bucket-types.md
 related:
@@ -47,4 +48,4 @@ Not every property can be changed safely after activation. Some combinations are
 
 Changing how future writes are handled does not resolve existing siblings, convert stored objects into another data type, or move data to a different backend. Such changes require an explicit data migration and verification plan.
 
-Keep policy definitions under configuration management and test client behaviour against the effective properties of the intended namespace.
+You should ensure that policy definitions remain under configuration management, and verify client behaviour against the resolved effective properties of the designated namespace.

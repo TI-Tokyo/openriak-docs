@@ -22,9 +22,10 @@ tags:
 - kv
 - explanation
 editorial_review: complete
-technical_review: required
+technical_review: complete
 last_reviewed: '2026-09-22'
-review_scope: diataxis-content-and-navigation
+review-by: TI Tokyo/JOM
+review_scope: editorial & technical
 restructured_from:
 - foundations/data-model/causal-context.md
 - foundations/data-model/version-vectors-and-siblings.md
@@ -45,7 +46,7 @@ A client reads an object and receives its context. Returning that context with t
 
 Suppose two clients read the same profile and each makes a different edit. Neither write has observed the other. With sibling-preserving policy, both contents can survive as siblings. They share one object identity; they are not two independently keyed records.
 
-Resolving siblings means applying an application merge rule and writing the combined value with the context covering the versions being resolved. A fresh concurrent update can still arrive while that happens.
+Resolving siblings means applying an merge rule at the application level and writing the combined value with the context covering the versions being resolved. A fresh concurrent update can still arrive while that happens.
 
 ## Missing context
 

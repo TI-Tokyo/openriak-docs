@@ -7,7 +7,7 @@ weight: 140
 diataxis: explanation
 product: OpenRiak KV
 product_version: 3.4.0
-status: editorially-rewritten
+status: Reviewed
 draft: true
 audience:
 - architects
@@ -24,8 +24,8 @@ tags:
 - explanation
 editorial_review: complete
 technical_review: required
-last_reviewed: '2026-09-22'
-review_scope: diataxis-content-and-navigation
+review-by: TI Tokyo/JOM
+review_scope: editorial & technical'
 restructured_from:
 - foundations/data-model/distributed-data-types.md
 related:
@@ -46,7 +46,7 @@ Maps contain typed fields whose changes can be merged using the field's data-typ
 
 ## Context still matters
 
-Some operations, particularly removals, need context from a previous fetch. Preserve that context and use the matching data-type API. An ordinary object PUT is not a substitute for a data-type update.
+Some operations, particularly removals, need context from a previous fetch. You should preserve that context and use the matching data-type API. An ordinary object PUT is not a substitute for a data-type update.
 
 ## Choose the right structure
 

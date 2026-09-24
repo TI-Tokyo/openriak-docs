@@ -23,9 +23,9 @@ tags:
 - explanation
 editorial_review: complete
 technical_review: complete
-last_reviewed: '2026-09-23'
+last_reviewed: '2026-09-24'
 review-by: TI Tokyo/JOM
-review_scope: diataxis-content-and-navigation
+review_scope: Editorial & technical
 restructured_from:
 - foundations/operations/ring-changes-and-handoffs.md
 related:
@@ -48,5 +48,3 @@ Ownership handoff transfers a partition to its new permanent owner. Hinted hando
 ## Why one change affects other work
 
 Moving partitions consumes disk and network capacity and changes the set of processes serving the affected data. Overlapping maintenance can remove copies that are still needed for a previous recovery. Pausing or limiting transfers can protect client latency, but it also extends the period before placement settles.
-
-Use the membership and handoff references to distinguish a staged plan, an active transfer, and a completed change.

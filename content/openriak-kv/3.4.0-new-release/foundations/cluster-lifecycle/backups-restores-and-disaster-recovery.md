@@ -6,7 +6,7 @@ weight: 350
 diataxis: explanation
 product: OpenRiak KV
 product_version: 3.4.0
-status: editorially-rewritten
+status: Reviewed
 draft: true
 audience:
 - operators
@@ -22,9 +22,10 @@ tags:
 - kv
 - explanation
 editorial_review: complete
-technical_review: required
+technical_review: complete
 last_reviewed: '2026-09-22'
-review_scope: diataxis-content-and-navigation
+review-by: TI Tokyo/JOM
+review_scope: editorial & technical
 restructured_from:
 - foundations/operations/backups-and-restores.md
 related:
@@ -39,7 +40,7 @@ A backup preserves a recoverable state independently of the current cluster. Rep
 
 ## Match the backup to the backend
 
-Backend files, ring state, configuration, and cluster metadata have different consistency requirements. Copying a changing directory is not automatically a usable backup. The supported procedure depends on whether the node or backend can provide a consistent view for the copy.
+Backend files, ring state, configuration, and cluster metadata have different consistency requirements. Copying a changing directory is not the same as a usable backup. The supported procedure depends on whether the node or backend can provide a consistent view for the copy.
 
 ## Define the recovery target
 

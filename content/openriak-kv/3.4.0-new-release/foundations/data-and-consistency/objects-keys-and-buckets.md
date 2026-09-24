@@ -6,7 +6,7 @@ weight: 80
 diataxis: explanation
 product: OpenRiak KV
 product_version: 3.4.0
-status: editorially-rewritten
+status: Reviewed
 draft: true
 audience:
 - architects
@@ -27,9 +27,10 @@ tags:
 - kv
 - explanation
 editorial_review: complete
-technical_review: required
-last_reviewed: '2026-09-22'
-review_scope: diataxis-content-and-navigation
+technical_review: complete
+last_reviewed: '2026-09-24'
+review-by: TI Tokyo/JOM
+review_scope: editorial & technical
 restructured_from:
 - foundations/data-model/keys-objects-and-buckets.md
 related:
@@ -52,7 +53,7 @@ An object can have multiple concurrent contents, called siblings. A read is ther
 
 Buckets group keys and provide a policy scope. A typed bucket is addressed using its type as well as its bucket name. The same textual bucket name under two types identifies two namespaces; dropping the type from a request can make existing data appear missing.
 
-## A small example
+### A small example
 
 An application might store one customer profile under the example key `customer-42` in a `profiles` bucket. Orders can be separate objects with their own identifiers. That separation avoids rewriting a whole customer history for every order, but the application must coordinate any relationship between those objects.
 
