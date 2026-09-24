@@ -7,7 +7,7 @@ weight: 30
 diataxis: explanation
 product: OpenRiak KV
 product_version: 3.4.0
-status: editorially-rewritten
+status: Reviewed
 draft: true
 audience:
 - all-readers
@@ -21,9 +21,10 @@ tags:
 - explanation
 - quickdocs
 editorial_review: complete
-technical_review: required
-last_reviewed: '2026-09-22'
-review_scope: diataxis-content-and-navigation
+technical_review: complete
+last_reviewed: '2026-09-23'
+review_scope: Editorial & Technical review
+review-by: TI Tokyo/JOM
 restructured_from:
 - foundations/foundations/history.md
 - foundations/foundations/dynamo-model.md
@@ -42,7 +43,7 @@ Dynamo describes a design for a highly available distributed store. Riak applied
 
 ## OpenRiak today
 
-OpenRiak develops the Riak codebase with current storage, anti-entropy, replication, and query capabilities. Leveled and TicTac anti-entropy are central to the newer storage and repair paths. Next-generation replication uses sources, queues, and sinks; older documentation about `riak_repl` describes a different replication implementation.
+OpenRiak develops the Riak codebase with current storage, anti-entropy, replication, and query capabilities. Leveled and TicTac anti-entropy are central to the newer storage and repair paths. Next-generation replication uses sources, queues, and sinks; older documentation about `riak_repl` describes a different, older replication implementation.
 
 ## Reading older material
 

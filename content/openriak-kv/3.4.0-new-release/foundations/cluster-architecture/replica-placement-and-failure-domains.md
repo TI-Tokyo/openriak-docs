@@ -6,7 +6,7 @@ weight: 60
 diataxis: explanation
 product: OpenRiak KV
 product_version: 3.4.0
-status: editorially-rewritten
+status: Reviewed
 draft: true
 audience:
 - architects
@@ -20,9 +20,10 @@ tags:
 - kv
 - explanation
 editorial_review: complete
-technical_review: required
-last_reviewed: '2026-09-22'
-review_scope: diataxis-content-and-navigation
+technical_review: complete
+last_reviewed: '2026-09-24'
+review-by: TI Tokyo/JOM
+review_scope: editorial and technical
 restructured_from:
 - foundations/foundations/intra-cluster-resilience.md
 related:
@@ -45,6 +46,8 @@ When a primary owner is unavailable, a fallback can temporarily accept work unde
 
 Three example replicas on three machines do not protect against losing the single rack that powers all three. Similarly, replicas in one cluster do not replace off-cluster backups or a tested disaster-recovery strategy.
 
-## Recovery needs spare resources
+## Recovery and resource management
 
 After a failure, the surviving nodes must continue serving clients while accepting redistributed work and rebuilding copies. Storage capacity, network bandwidth, and backend write capacity must include that recovery load. Running every node at its steady-state limit leaves no margin for repair.
+
+It is generally recommended that nodes consume no more than 70% of their total resources for day-to-day use, allowing the remaining 30% for failure state recovery.

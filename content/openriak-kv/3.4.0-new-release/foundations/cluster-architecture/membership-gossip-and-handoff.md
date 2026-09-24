@@ -6,7 +6,7 @@ weight: 70
 diataxis: explanation
 product: OpenRiak KV
 product_version: 3.4.0
-status: editorially-rewritten
+status: reviewed
 draft: true
 audience:
 - operators
@@ -22,8 +22,9 @@ tags:
 - kv
 - explanation
 editorial_review: complete
-technical_review: required
-last_reviewed: '2026-09-22'
+technical_review: complete
+last_reviewed: '2026-09-23'
+review-by: TI Tokyo/JOM
 review_scope: diataxis-content-and-navigation
 restructured_from:
 - foundations/operations/ring-changes-and-handoffs.md
@@ -42,7 +43,7 @@ A planned join, leave, or replacement changes the intended ownership. Reviewing 
 
 ## Handoff during normal changes and failures
 
-Ownership handoff transfers a partition to its new permanent owner. Hinted handoff returns work held by a fallback after a primary recovers. Repair transfers can reconstruct data from surviving replicas. These activities share resources with application requests, even though their purposes differ.
+Ownership handoff transfers a partition to its new permanent owner. Hinted handoff returns work held by a fallback node after a primary node recovers. Repair transfers can reconstruct data from surviving replicas. These activities share resources with application requests, even though their purposes differ.
 
 ## Why one change affects other work
 

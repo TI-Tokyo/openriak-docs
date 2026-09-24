@@ -6,7 +6,7 @@ weight: 40
 diataxis: explanation
 product: OpenRiak KV
 product_version: 3.4.0
-status: editorially-rewritten
+status: Reviewed
 draft: true
 audience:
 - architects
@@ -27,9 +27,10 @@ tags:
 - kv
 - explanation
 editorial_review: complete
-technical_review: required
-last_reviewed: '2026-09-22'
-review_scope: diataxis-content-and-navigation
+technical_review: complete
+last_reviewed: '2026-09-23'
+review-by: TI Tokyo/JOM
+review_scope: editorial and technical review
 restructured_from:
 - foundations/foundations/clusters-rings-and-partitions.md
 - foundations/foundations/virtual-nodes.md
@@ -50,7 +51,7 @@ A vnode is an Erlang process with a backend store and partition-specific respons
 
 ## Ring size and node count
 
-Ring size fixes the number of partitions in the cluster. Node count determines how those partitions are shared. More partitions can allow finer placement, but also add stores, processes, trees, and maintenance work. Ring size is therefore an initial deployment decision, not a request-level performance switch.
+Ring size fixes the number of partitions in the cluster. Node count determines how those partitions are shared across the nodes. More partitions can allow finer placement, but also add stores, processes, trees, and maintenance work. Ring size is therefore an initial deployment decision, not a request-level performance switch.
 
 ## Ownership changes
 

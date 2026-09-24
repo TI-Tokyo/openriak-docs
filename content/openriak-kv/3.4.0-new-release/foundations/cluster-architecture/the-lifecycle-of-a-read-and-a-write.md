@@ -5,11 +5,12 @@ product: OpenRiak KV
 product_version: 3.4.0
 diataxis: explanation
 draft: true
-status: editorially-rewritten
+status: Reviewed
 editorial_review: complete
-technical_review: required
-last_reviewed: '2026-09-22'
-review_scope: diataxis-content-and-navigation
+technical_review: complete
+last_reviewed: '2026-09-23'
+review-by: TI Tokyo/JOM
+review_scope: editorial & technical
 description: A client can send an object request to a reachable OpenRiak node. That node coordinates work with the
   vnodes responsible for the object's replicas; it need not own the object's primary partition.
 related:
@@ -32,6 +33,6 @@ A timeout means the client did not receive the required success within the time 
 
 The coordinator requests replica responses, reconciles the versions it receives, and returns a value, siblings, a missing-object response, or an error. The result depends on the policy and the responses available for that request. Read repair can update replicas found to be stale.
 
-## Example: a slow replica
+#### Example: A slow replica
 
-If enough replicas acknowledge a write while another is slow, the client may receive success before every copy is updated. A later request can encounter the difference. Read repair and anti-entropy help replicas converge; application conflict handling deals with changes that are concurrent rather than merely late.
+If enough replicas acknowledge a write while another is slow, the client may receive success before every copy is updated. A later request can encounter the difference. Read repair and anti-entropy will help replicas converge; while application conflict handling deals with changes that are concurrent rather than merely late.

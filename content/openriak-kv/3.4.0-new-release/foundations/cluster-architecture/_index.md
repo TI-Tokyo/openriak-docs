@@ -6,8 +6,12 @@ product_version: 3.4.0
 draft: true
 description: Follow a request through physical nodes, partitions, and replicas, then examine failure domains and
   placement.
+status: Reviewed
 editorial_review: complete
-technical_review: required
+technical_review: complete
+review_scope: Content review
+review-by: TI Tokyo/JOM
+last_reviewed: '2026-09-23'
 related: []
 ---
 
