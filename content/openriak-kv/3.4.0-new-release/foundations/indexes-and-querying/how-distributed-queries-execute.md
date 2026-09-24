@@ -6,7 +6,7 @@ weight: 180
 diataxis: explanation
 product: OpenRiak KV
 product_version: 3.4.0
-status: editorially-rewritten
+status: Reviewed
 draft: true
 audience:
 - architects
@@ -25,9 +25,10 @@ tags:
 - kv
 - explanation
 editorial_review: complete
-technical_review: required
-last_reviewed: '2026-09-22'
-review_scope: diataxis-content-and-navigation
+technical_review: complete
+last_reviewed: '2026-09-24'
+review-by: TI Tokyo/JOM
+review_scope: editorial & technical
 restructured_from:
 - foundations/data-model/query-api.md
 related:
@@ -53,4 +54,4 @@ Partitions can work in parallel, but the response still depends on the participa
 
 ## Results are an interface choice
 
-Choose an accumulation that returns the information the application needs. Counting inside the query avoids transporting a large key list solely to count it at the client. Result delivery, continuation handling, and release-specific asynchronous behaviour are separate API contracts.
+Choose an accumulation method that yields exactly the information the application requires. Performing the count within the query avoids transferring a large key set solely for client‑side counting. Delivery of results, continuation semantics, and any release‑specific asynchronous behaviour are independent API responsibilities.

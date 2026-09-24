@@ -5,11 +5,12 @@ product: OpenRiak KV
 product_version: 3.4.0
 diataxis: explanation
 draft: true
-status: editorially-rewritten
+status: Reviewed
 editorial_review: complete
-technical_review: required
-last_reviewed: '2026-09-22'
-review_scope: diataxis-content-and-navigation
+technical_review: complete
+last_reviewed: '2026-09-24'
+review-by: TI Tokyo/JOM
+review_scope: editorial & technical
 description: A distributed query observes partition-local snapshots, not one transactionally consistent instant
   across the cluster. Concurrent object changes can therefore affect what the overall result represents.
 related:
@@ -25,7 +26,7 @@ A distributed query observes partition-local snapshots, not one transactionally 
 
 Combination queries use one snapshot per vnode for their constituent scans. This keeps the local set operations consistent for a potential key within that vnode's work. Other vnodes can take their snapshots at different times.
 
-## Across the cluster
+## Changes across the cluster
 
 If an application updates related objects on different partitions, a query may see one change before another. There is no cross-object transaction connecting those changes. Inter-cluster replication introduces further timing differences between the datasets queried at each destination.
 

@@ -7,7 +7,7 @@ weight: 310
 diataxis: explanation
 product: OpenRiak KV
 product_version: 3.4.0
-status: editorially-rewritten
+status: Reviewed
 draft: true
 audience:
 - performance-engineers
@@ -25,9 +25,10 @@ tags:
 - kv
 - explanation
 editorial_review: complete
-technical_review: required
-last_reviewed: '2026-09-22'
-review_scope: diataxis-content-and-navigation
+technical_review: complete
+last_reviewed: '2026-09-24'
+review_scope: content changes
+review-by: TI Tokyo/JOM
 restructured_from:
 - foundations/performance/storage-and-filesystem-effects.md
 - foundations/operations/garbage-collection.md
@@ -52,6 +53,6 @@ An update or tombstone can make older records obsolete without immediately remov
 
 ## Filesystem effects
 
-Capacity planning must include temporary files and background rewriting, not just the sum of current values. Latency spikes can reflect I/O contention or storage limits even while the application request rate is unchanged.
+Capacity planning should include temporary files and background rewriting, not just the sum of current values. Latency spikes can reflect I/O contention or storage limits even while the application request rate is unchanged.
 
 Erlang garbage collection reclaims process memory. It is not the mechanism that compacts database files or reaps replicated tombstones.

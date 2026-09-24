@@ -7,7 +7,7 @@ weight: 260
 diataxis: explanation
 product: OpenRiak KV
 product_version: 3.4.0
-status: editorially-rewritten
+status: reviewed
 draft: true
 audience:
 - architects
@@ -30,9 +30,10 @@ tags:
 - kv
 - explanation
 editorial_review: complete
-technical_review: required
-last_reviewed: '2026-09-22'
-review_scope: diataxis-content-and-navigation
+technical_review: complete
+last_reviewed: '2026-09-24'
+review_scope: content changes
+review-by: TI Tokyo/JOM
 restructured_from:
 - foundations/replication/v2-and-v3-replication.md
 - foundations/replication/legacy-aae.md
@@ -51,14 +52,10 @@ OpenRiak documentation covers more than one replication implementation. Next-gen
 
 The current source/queue/sink design uses its own queue, consumer, and reconciliation controls. Its TicTac-based comparisons do not imply that legacy replication settings or transports are interchangeable.
 
-## Legacy generations
+## Legacy Replication
 
 Legacy v2 and v3 belong to the `riak_repl` family. They have their own listeners, connection establishment, fullsync mechanisms, and compatibility requirements. A command containing the word “fullsync” is not sufficient to identify which implementation it controls.
 
 ## Migration boundaries
 
-Changing generation is a data-movement and cutover exercise. Check wire compatibility, data policies, existing filters, conflict handling, and the route used for deletions. Verify convergence before switching applications, and retain a recovery path while both systems can still be compared.
-
-## Reading older examples
-
-Use the generation labels in Reference and the legacy workflow section. Historical references to Riak Enterprise describe the origin and applicability of that material; they do not establish a current package, support policy, or next-generation configuration.
+Changing generation is a data-movement and cutover exercise. You should always check compatibility, data policies, existing filters, conflict handling, and the route used for deletions. Verify convergence before switching applications, and retain a recovery pathway while both systems can still be compared.

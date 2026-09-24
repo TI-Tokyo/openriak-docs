@@ -6,7 +6,7 @@ weight: 380
 diataxis: explanation
 product: OpenRiak KV
 product_version: 3.4.0
-status: editorially-rewritten
+status: Reviewed
 draft: true
 audience:
 - security-engineers
@@ -20,9 +20,10 @@ tags:
 - kv
 - explanation
 editorial_review: complete
-technical_review: required
-last_reviewed: '2026-09-22'
-review_scope: diataxis-content-and-navigation
+technical_review: complete
+last_reviewed: '2026-09-24'
+review_scope: content changes
+review-by: TI Tokyo/JOM
 restructured_from:
 - foundations/security/security-model.md
 related:
@@ -50,4 +51,4 @@ Bind and filter interfaces according to the intended clients and peers. A secure
 
 ## Failure behaviour
 
-Test rejected access as well as successful access. A configuration that lets the intended application connect may still admit a wider source range or permission set than intended. Administrative recovery access should be planned before changing authentication or certificates.
+You should test rejected access requests as well as successful access requests. A configuration that lets the intended application connect may still admit a wider source range or permission set than intended. Administrative recovery access should be planned before changing authentication or certificates.

@@ -6,7 +6,7 @@ weight: 330
 diataxis: explanation
 product: OpenRiak KV
 product_version: 3.4.0
-status: editorially-rewritten
+status: Reviewed
 draft: true
 audience:
 - architects
@@ -23,9 +23,10 @@ tags:
 - kv
 - explanation
 editorial_review: complete
-technical_review: required
-last_reviewed: '2026-09-22'
-review_scope: diataxis-content-and-navigation
+technical_review: complete
+last_reviewed: '2026-09-24'
+review_scope: content changes
+review-by: TI Tokyo/JOM
 restructured_from:
 - foundations/storage/capacity-planning.md
 related:
@@ -50,4 +51,4 @@ When a node fails, survivors must absorb work and help restore redundancy. Membe
 
 ## Growth over time
 
-Measure distributions as well as averages: hot keys, uneven bucket sizes, and a few large objects can concentrate work. Forecast growth to the next expansion window, then test that expansion and a representative failure while application traffic continues.
+It is recommended that you measure distributions as well as averages: hot keys, uneven bucket sizes, and a few large objects can concentrate work. This can be used to forecast growth to the next expansion window, then test that expansion and a representative failure while application traffic continues.

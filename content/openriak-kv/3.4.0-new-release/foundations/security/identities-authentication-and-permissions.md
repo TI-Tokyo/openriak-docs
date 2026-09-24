@@ -6,7 +6,7 @@ weight: 390
 diataxis: explanation
 product: OpenRiak KV
 product_version: 3.4.0
-status: editorially-rewritten
+status: Reviewed
 draft: true
 audience:
 - security-engineers
@@ -20,9 +20,10 @@ tags:
 - kv
 - explanation
 editorial_review: complete
-technical_review: required
-last_reviewed: '2026-09-22'
-review_scope: diataxis-content-and-navigation
+technical_review: complete
+last_reviewed: '2026-09-24'
+review_scope: content changes
+review-by: TI Tokyo/JOM
 restructured_from:
 - foundations/security/authentication-sources.md
 - foundations/security/users-groups-and-permissions.md
@@ -51,4 +52,4 @@ Applications need a way to rotate credentials, remove departed identities, and c
 
 ## A useful verification model
 
-For each role, test an allowed operation and a deliberately denied operation against the intended endpoint and namespace. Also test a connection from an unapproved origin. These checks distinguish successful authentication from correct authorization.
+For each role, you should test an allowed operation and a deliberately denied operation against the intended endpoint and namespace. Also test a connection from an unapproved origin. These checks distinguish successful authentication from correct authorization.

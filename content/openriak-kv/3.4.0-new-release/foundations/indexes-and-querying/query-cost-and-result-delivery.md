@@ -6,7 +6,7 @@ weight: 200
 diataxis: explanation
 product: OpenRiak KV
 product_version: 3.4.0
-status: editorially-rewritten
+status: Reviewed
 draft: true
 audience:
 - performance-engineers
@@ -29,9 +29,10 @@ tags:
 - kv
 - explanation
 editorial_review: complete
-technical_review: required
-last_reviewed: '2026-09-22'
-review_scope: diataxis-content-and-navigation
+technical_review: complete
+last_reviewed: '2026-09-24'
+review-by: TI Tokyo/JOM
+review_scope: editorial & technical
 restructured_from:
 - foundations/performance/query-execution.md
 related:
@@ -56,4 +57,4 @@ Pagination bounds the amount delivered per response; it should not be assumed to
 
 ## Shared resources
 
-Queries compete with writes, compaction, repair, and other queries. Measure tail latency and background progress as well as one isolated query's elapsed time. A useful performance experiment changes one range, projection, filter, or accumulation choice and checks that the answer remains correct.
+Queries compete with writes, compaction, repair, and other queries. It is recommended to measure tail latency and background progress as well as one isolated query's elapsed time. A useful performance experiment would change one range, projection, filter, or accumulation choice and check that the answer remains correct.

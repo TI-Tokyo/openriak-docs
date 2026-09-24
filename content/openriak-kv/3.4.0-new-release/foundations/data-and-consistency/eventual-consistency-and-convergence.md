@@ -26,7 +26,7 @@ tags:
 - explanation
 editorial_review: complete
 technical_review: complete
-last_reviewed: '2026-09-22'
+last_reviewed: '2026-09-24'
 review-by: TI Tokyo/JOM
 review_scope: editorial & technical
 restructured_from:

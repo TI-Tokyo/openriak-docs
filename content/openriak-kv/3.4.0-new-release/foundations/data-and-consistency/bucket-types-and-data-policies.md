@@ -19,8 +19,8 @@ tags:
 - kv
 - explanation
 editorial_review: complete
-technical_review: required
-last_reviewed: '2026-09-22'
+technical_review: complete
+last_reviewed: '2026-09-24'
 review-by: TI Tokyo/JOM
 review_scope: editorial & technical
 restructured_from:

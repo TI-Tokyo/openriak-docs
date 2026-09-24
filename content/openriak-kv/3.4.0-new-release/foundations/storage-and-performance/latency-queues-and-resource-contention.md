@@ -6,7 +6,7 @@ weight: 320
 diataxis: explanation
 product: OpenRiak KV
 product_version: 3.4.0
-status: editorially-rewritten
+status: reviewed
 draft: true
 audience:
 - performance-engineers
@@ -24,9 +24,10 @@ tags:
 - kv
 - explanation
 editorial_review: complete
-technical_review: required
-last_reviewed: '2026-09-22'
-review_scope: diataxis-content-and-navigation
+technical_review: complete
+last_reviewed: '2026-09-24'
+review_scope: content changes
+review-by: TI Tokyo/JOM
 restructured_from:
 - foundations/performance/latency-throughput-and-capacity.md
 - foundations/performance/erlang-runtime.md
@@ -53,6 +54,6 @@ A slow client response may reflect a backend queue, a busy worker pool, a delaye
 
 Increasing concurrency can improve utilisation when resources are idle. Beyond saturation, it adds waiting and memory pressure. Raising timeouts can hide a symptom while leaving the queue to grow; raising worker counts can move the bottleneck to storage.
 
-## A useful experiment
+## Testing throughput and resource usage
 
-Change one measured constraint at a time and keep a comparable workload. Confirm that the change improves the application's target latency or throughput while repair and maintenance continue to complete. A benchmark that pauses all background work describes a different operating condition.
+In testing it is recommended to change one measured constraint at a time and keep a comparable workload. Confirm that the change improves the application's target latency or throughput while repair and maintenance continue to complete. A benchmark that pauses all background work describes a different operating condition.

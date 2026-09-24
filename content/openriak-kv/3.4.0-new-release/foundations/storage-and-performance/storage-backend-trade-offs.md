@@ -6,7 +6,7 @@ weight: 270
 diataxis: explanation
 product: OpenRiak KV
 product_version: 3.4.0
-status: editorially-rewritten
+status: Reviewed
 draft: true
 audience:
 - architects
@@ -29,10 +29,11 @@ tags:
 - diataxis
 - kv
 - explanation
-editorial_review: complete
-technical_review: required
-last_reviewed: '2026-09-22'
-review_scope: diataxis-content-and-navigation
+editorial_review: required
+technical_review: complete
+last_reviewed: '2026-09-24'
+review_scope: content changes
+review-by: TI Tokyo/JOM
 restructured_from:
 - foundations/storage/choosing-backend.md
 related:
@@ -58,4 +59,4 @@ LevelDB, the memory backend, and multi-backend routing appear in historical and 
 
 ## A choice persists with the data
 
-Changing a backend setting does not convert existing backend files. Migration must preserve objects, metadata, indexes, and the required recovery path. Benchmark the intended workload and include startup, compaction, and replica recovery before selecting an engine.
+Changing a backend setting does not convert existing backend files. Migration must preserve objects, metadata, indexes, and the required recovery path. You should benchmark the intended workload and include startup, compaction, and replica recovery before selecting an engine.

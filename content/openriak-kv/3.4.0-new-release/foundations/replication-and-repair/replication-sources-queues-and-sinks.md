@@ -6,7 +6,7 @@ weight: 220
 diataxis: explanation
 product: OpenRiak KV
 product_version: 3.4.0
-status: editorially-rewritten
+status: Needs-further-review
 draft: true
 audience:
 - architects
@@ -26,9 +26,10 @@ tags:
 - kv
 - explanation
 editorial_review: complete
-technical_review: required
-last_reviewed: '2026-09-22'
-review_scope: diataxis-content-and-navigation
+technical_review: complete
+last_reviewed: '2026-09-24'
+review_scope: content changes
+review-by: TI Tokyo/JOM
 restructured_from:
 - foundations/replication/next-generation-replication.md
 - foundations/replication/queues.md
@@ -48,7 +49,7 @@ Next-generation replication moves objects from a source cluster through named qu
 
 A source selects eligible changes and offers them through a queue. Queue definitions and filters determine which dataset a consumer sees. The queue can carry references or object information according to the implementation and configuration; the sink must use the matching interface.
 
-Queues decouple incoming writes from downstream processing, but they are bounded resources. A destination that is unavailable or slower than the source can accumulate lag. A drained queue alone does not prove that two complete datasets agree.
+Queues decouple incoming writes from downstream processing, but they are bounded resources. A destination that is unavailable or slower than the source can accumulate lag. A empty queue alone does not prove that two complete datasets agree.
 
 ## Sink consumers
 

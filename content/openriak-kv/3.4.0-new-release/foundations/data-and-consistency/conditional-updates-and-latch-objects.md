@@ -58,4 +58,4 @@ The application therefore needs an ownership, expiry or recovery rule and must h
 
 ## Conflicts remain possible
 
-Preserve causal context, handle failed preconditions, and retain a conflict strategy. Ordinary concurrent writes, partitions, maintenance, or active/active multi-cluster traffic can invalidate assumptions made from a successful condition check.
+You should preserve the causal context, enforce precondition‑failure handling, and maintain a defined conflict‑resolution strategy. Routine concurrent writes, network partitions, operational maintenance, or active/active multi‑cluster traffic can invalidate any assumptions derived from a previously successful condition check.

@@ -6,7 +6,7 @@ weight: 170
 diataxis: explanation
 product: OpenRiak KV
 product_version: 3.4.0
-status: editorially-rewritten
+status: Reviewed
 draft: true
 audience:
 - architects
@@ -19,9 +19,10 @@ tags:
 - kv
 - explanation
 editorial_review: complete
-technical_review: required
-last_reviewed: '2026-09-22'
-review_scope: diataxis-content-and-navigation
+technical_review: complete
+last_reviewed: '2026-09-24'
+review-by: TI Tokyo/JOM
+review_scope: editorial & technical
 restructured_from:
 - foundations/data-model/secondary-indexes.md
 related:
@@ -49,4 +50,4 @@ An attribute projected into an index is not automatically kept current by a rela
 
 Index capability depends on the selected backend. Distributed queries examine partition-local state; an index result is not a cluster-wide transactional snapshot. Fetching a returned key later can observe another version or a deletion.
 
-Use direct key lookup when the key is already known. For discovery, verify the index against known records and measure the size of the range scanned, not only the number of returned matches.
+You should use direct key lookup when the key is already known. For discovery, verify the index against known records and measure the size of the range scanned, not only the number of returned matches.

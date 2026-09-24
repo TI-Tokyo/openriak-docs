@@ -21,10 +21,8 @@ tags:
 editorial_review: complete
 technical_review: complete
 last_reviewed: '2026-09-23'
-review_scope: 
-- Technical review
-- Editorial review
 review-by: TI Tokyo/JOM
+review_scope: editorial & technical
 restructured_from:
 - foundations/foundations/new-to-nosql.md
 related:

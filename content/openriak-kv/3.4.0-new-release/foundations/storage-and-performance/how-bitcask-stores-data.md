@@ -6,7 +6,7 @@ weight: 280
 diataxis: explanation
 product: OpenRiak KV
 product_version: 3.4.0
-status: editorially-rewritten
+status: Reviewed
 draft: true
 audience:
 - architects
@@ -29,9 +29,10 @@ tags:
 - kv
 - explanation
 editorial_review: complete
-technical_review: required
-last_reviewed: '2026-09-22'
-review_scope: diataxis-content-and-navigation
+technical_review: complete
+last_reviewed: '2026-09-24'
+review_scope: content changes
+review-by: TI Tokyo/JOM
 restructured_from:
 - foundations/storage/bitcask.md
 related:
@@ -55,6 +56,6 @@ The key directory has an entry for each retained key. Small values do not elimin
 
 ## Persistence and merging
 
-The write path and configured synchronisation behaviour determine when acknowledged work is resilient to process or host failure. A merge consumes I/O and temporary capacity alongside foreground traffic. Scheduling merges changes when that cost is paid; it does not make obsolete records disappear for free.
+The write path and configured synchronisation behaviours determine if acknowledged work is resilient to process or host failure. A merge consumes I/O and temporary capacity alongside foreground traffic. Scheduling merges changes when that cost is paid; it does not make obsolete records disappear for free. This does allow you to reduce the impact of these merges on regular operations however.
 
 Bitcask's key/value design should not be assumed to provide the same secondary-index capabilities as Leveled. Choose an engine from the access pattern rather than from a throughput figure measured on another workload.

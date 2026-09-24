@@ -7,7 +7,10 @@ draft: true
 description: Understand how replicas converge within a cluster and how queues and reconciliation connect separate
   clusters.
 editorial_review: complete
-technical_review: required
+technical_review: complete
+review-by: TI Tokyo/JOM
+review_scope: editorial & technical
+status: Reviewed
 related: []
 ---
 

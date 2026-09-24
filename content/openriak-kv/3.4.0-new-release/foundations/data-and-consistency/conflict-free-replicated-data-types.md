@@ -23,7 +23,7 @@ tags:
 - kv
 - explanation
 editorial_review: complete
-technical_review: required
+technical_review: complete
 review-by: TI Tokyo/JOM
 review_scope: editorial & technical'
 restructured_from:

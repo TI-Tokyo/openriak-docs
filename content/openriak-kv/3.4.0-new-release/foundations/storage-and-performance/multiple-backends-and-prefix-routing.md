@@ -6,7 +6,7 @@ weight: 300
 diataxis: explanation
 product: OpenRiak KV
 product_version: 3.4.0
-status: editorially-rewritten
+status: Reviewed
 draft: true
 audience:
 - architects
@@ -28,9 +28,10 @@ tags:
 - kv
 - explanation
 editorial_review: complete
-technical_review: required
-last_reviewed: '2026-09-22'
-review_scope: diataxis-content-and-navigation
+technical_review: complete
+last_reviewed: '2026-09-24'
+review_scope: content changes
+review-by: TI Tokyo/JOM
 restructured_from:
 - foundations/storage/multi-backend.md
 - foundations/storage/prefix-multi.md
@@ -57,4 +58,4 @@ A migration therefore needs an explicit inventory, copy or replacement procedure
 
 Multiple engines share node memory, file descriptors, storage bandwidth, and recovery time. Each also brings its own compaction, persistence, and backup behaviour. A mixed deployment must account for the total resource use and for feature restrictions in each route.
 
-Use the release's legacy and specialist reference to check the availability and limitations of the particular routing implementation.
+Use the version specific legacy and specialist reference to check the availability and limitations of the particular routing implementation.

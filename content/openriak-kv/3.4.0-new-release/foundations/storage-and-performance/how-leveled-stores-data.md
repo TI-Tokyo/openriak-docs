@@ -6,7 +6,7 @@ weight: 290
 diataxis: explanation
 product: OpenRiak KV
 product_version: 3.4.0
-status: editorially-rewritten
+status: reviewed
 draft: true
 audience:
 - architects
@@ -34,9 +34,10 @@ tags:
 - kv
 - explanation
 editorial_review: complete
-technical_review: required
-last_reviewed: '2026-09-22'
-review_scope: diataxis-content-and-navigation
+technical_review: complete
+last_reviewed: '2026-09-24'
+review_scope: content changes
+review-by: TI Tokyo/JOM
 restructured_from:
 - foundations/storage/leveled.md
 related:
@@ -52,14 +53,14 @@ Leveled separates the journal of stored values from the ledger used to locate cu
 
 ## Journal and ledger
 
-The journal records object values. Ledger structures describe keys, metadata, and indexes and are organised so that reads can locate the needed state efficiently. Caches reduce repeated work, while durable files let the store recover state across restarts.
+The journal records object values. The Ledger structures describe keys, metadata, and indexes and are organised so that reads can locate the needed state efficiently. Caches are used to reduce repeated work, while durable files let the store recover state across restarts.
 
 ## Snapshots and background work
 
-Snapshots let a query or fold examine a stable local view while other work proceeds. They are local storage views, not a transaction encompassing all vnodes. Holding old views can also delay reclamation of files still needed by readers.
+Snapshots let a query or fold examine a stable local view while other work proceeds. They are local storage views, not an all encompassing view of all vnodes. Holding old views can also delay reclamation of files still needed by readers.
 
 Compaction reorganises stored structures and removes eligible obsolete state. It consumes disk bandwidth and spare space. Increasing foreground throughput without allowing this work to keep up can transfer the cost into later latency or storage pressure.
 
 ## Recovery and maintenance
 
-Journal, ledger, and backup artefacts have different roles. Removing a file solely because it looks old can remove state needed by an active store or recovery procedure. Use backend-specific backup, cleanup, and rebuild guidance, and verify indexes as well as object reads after a recovery.
+Journal, ledger, and backup artefacts have different roles. Removing a file solely because it looks old can remove a state needed by an active store or recovery procedure. Use the backend-specific backup, cleanup, and rebuild guidance within this documentation, and verify indexes as well as object reads after a recovery to ensure a smooth recovery experience.
