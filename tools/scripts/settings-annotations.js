@@ -39,6 +39,9 @@ function parseSetting(text, file) {
   return result;
 }
 function annotateSettings(reference, document, {overrideRoot = defaultSettingsRoot} = {}) {
+  if (overrideRoot === defaultSettingsRoot && !fs.existsSync(overrideRoot)) {
+    throw new Error(`Missing settings annotation directory: ${overrideRoot}. Include content/annotations in the build inputs.`);
+  }
   reference = structuredClone(reference);
   const byName = new Map(reference.settings.map(setting => [setting.name, setting]));
   const report = { version: reference.version, total: reference.settings.length, complete: 0, issues: [], corrections: [] };

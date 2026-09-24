@@ -1,6 +1,7 @@
 'use strict';
 const {readMarkdownLayers, annotationFiles} = require('./cli-annotation-markdown');
 const path = require('node:path');
+const fs = require('node:fs');
 const { validateTags, mergeTags } = require('./annotation-tags');
 const crypto = require('node:crypto');
 const { buildReference } = require('./cli-reference');
@@ -92,6 +93,9 @@ function readLayers(directory, version) {
   return layers;
 }
 function buildAnnotatedReference(document, { overrideRoot = defaultOverrideRoot } = {}) {
+  if (overrideRoot === defaultOverrideRoot && !fs.existsSync(overrideRoot)) {
+    throw new Error(`Missing CLI annotation directory: ${overrideRoot}. Include content/annotations in the build inputs.`);
+  }
   const reference = buildReference(document);
   const scenarioReports = new Map((document.coverage?.scenarios?.scenarios || []).map(s => [s.id, s]));
   const byId = new Map(document.commands.map(c => [c.id, c]));

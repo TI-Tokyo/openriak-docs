@@ -54,7 +54,10 @@ const { chromium } = require('playwright');
    for(const href of await links.evaluateAll(links=>links.map(a=>a.href))) {
     const url=new URL(href);assert.ok(url.pathname.includes('/'+version+'/'));
     const response=await page.request.get(url.href);assert.equal(response.status(),200);
-    assert.ok((await response.text()).includes(`id="${url.hash.slice(1)}"`));
+    const html = await response.text();
+    assert.ok(await page.evaluate(({html, id}) =>
+     Boolean(new DOMParser().parseFromString(html, 'text/html').getElementById(id)),
+     {html, id: decodeURIComponent(url.hash.slice(1))}), 'Related anchor must exist in both minified and development HTML');
    }
    await links.first().click();await page.waitForLoadState('domcontentloaded');assert.ok(await page.locator('tr:target').count());
    for(const route of ['riak/admin/describe','erlang/riak-client/get']) {

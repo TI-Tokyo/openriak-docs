@@ -9,6 +9,8 @@ WORKDIR /project
 COPY .hugo-version ./
 COPY tools ./tools
 COPY content/hugo.yaml ./content/hugo.yaml
+# Annotation Markdown is required when regenerating settings and CLI metadata.
+COPY content/annotations ./content/annotations
 COPY content/homepage ./content/homepage
 COPY content/community ./content/community
 COPY content/riak-kv ./content/riak-kv
@@ -51,10 +53,11 @@ ARG INCLUDE_DRAFTS=true
 ARG HUGO_BASEURL=https://www.openriak.org/docs/
 WORKDIR /project
 COPY --from=core-metadata --chown=1000:1000 /project /project
+# Editorial corrections log warnings; errors still fail the core build.
 RUN drafts=''; if [ "$INCLUDE_DRAFTS" = true ]; then drafts=--buildDrafts; fi; \
     hugo --source=/project/content --config=/project/tools/generated/hugo.yaml \
       --destination=/project/public --baseURL="$HUGO_BASEURL" --gc --minify \
-      --panicOnWarning --noBuildLock --cleanDestinationDir $drafts
+      --noBuildLock --cleanDestinationDir $drafts
 
 # Development and beta-test artifacts contain the core project only.
 FROM scratch AS core-static

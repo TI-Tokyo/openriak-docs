@@ -76,8 +76,9 @@ if ($Profile -eq 'development') {
 & node (Join-Path $PSScriptRoot 'sync-product-metadata.js') @metadataArguments
 if ($LASTEXITCODE -ne 0) { throw 'Metadata synchronization failed' }
 
-function Invoke-HugoBuild([string] $Config, [string] $Output) {
-    $arguments = @('--source', (Join-Path $siteRoot 'content'), '--config', $Config, '--destination', $Output, '--baseURL', $BaseURL, '--gc', '--minify', '--panicOnWarning', '--noBuildLock', '--cleanDestinationDir')
+function Invoke-HugoBuild([string] $Config, [string] $Output, [bool] $PanicOnWarning = $false) {
+    $arguments = @('--source', (Join-Path $siteRoot 'content'), '--config', $Config, '--destination', $Output, '--baseURL', $BaseURL, '--gc', '--minify', '--noBuildLock', '--cleanDestinationDir')
+    if ($PanicOnWarning) { $arguments += '--panicOnWarning' }
     if ($IncludeDrafts) { $arguments += '--buildDrafts' }
     & hugo @arguments
     if ($LASTEXITCODE -ne 0) { throw "Hugo build failed for $Config" }
@@ -85,7 +86,7 @@ function Invoke-HugoBuild([string] $Config, [string] $Output) {
 
 Invoke-HugoBuild $generatedConfig $coreDestination
 if ($Profile -eq 'release') {
-    Invoke-HugoBuild (Join-Path $siteRoot 'content/hugo-archives.yaml') $archiveDestination
+    Invoke-HugoBuild (Join-Path $siteRoot 'content/hugo-archives.yaml') $archiveDestination $true
 
     $archiveFiles = @(Get-ChildItem -LiteralPath $archiveDestination -Recurse -File)
     foreach ($file in $archiveFiles) {
