@@ -32,6 +32,51 @@
   const navToggle = document.querySelector('[data-nav-toggle]');
   const scrim = document.querySelector('[data-nav-scrim]');
   const sidebar = document.querySelector('#docs-sidebar');
+  const sidebarScope = sidebar?.querySelector('[data-index-url]')?.dataset.indexUrl;
+  const sidebarPositionKey = sidebarScope ? `openriak-sidebar-position:${sidebarScope}` : null;
+  let sidebarPosition = { top: 0, branches: {} };
+  let revealCurrentPage = false;
+  let sidebarTreeReady = false;
+  const { product, version } = document.body.dataset;
+  if (product && version) {
+    try {
+      const key = `openriak-sidebar-version:${product}`;
+      const previousVersion = window.sessionStorage.getItem(key);
+      revealCurrentPage = Boolean(previousVersion && previousVersion !== version);
+      window.sessionStorage.setItem(key, version);
+    } catch (_) {}
+  }
+  try {
+    const saved = sidebarPositionKey ? JSON.parse(window.sessionStorage.getItem(sidebarPositionKey) || 'null') : null;
+    if (saved && Number.isFinite(saved.top) && saved.top >= 0
+      && saved.branches && typeof saved.branches === 'object' && !Array.isArray(saved.branches)) {
+      sidebarPosition = saved;
+    }
+  } catch (_) {}
+  const sidebarIsCollapsed = () => window.matchMedia('(min-width: 761px)').matches
+    && document.documentElement.classList.contains('sidebar-collapsed');
+  const saveSidebarPosition = () => {
+    if (!sidebar || !sidebarPositionKey || sidebarIsCollapsed()) return;
+    sidebarPosition.top = sidebar.scrollTop;
+    try { window.sessionStorage.setItem(sidebarPositionKey, JSON.stringify(sidebarPosition)); } catch (_) {}
+  };
+  const restoreSidebarPosition = () => {
+    if (!sidebar || sidebarIsCollapsed()) return;
+    sidebar.scrollTop = sidebarPosition.top;
+    if (!sidebarTreeReady || !revealCurrentPage) return;
+    const current = sidebar.querySelector('.sidebar-page-tree [aria-current="page"]');
+    if (current) {
+      const bounds = sidebar.getBoundingClientRect();
+      const item = current.getBoundingClientRect();
+      const top = bounds.top + sidebar.clientTop;
+      const bottom = top + sidebar.clientHeight;
+      // Adjust only the menu, leaving the document and its anchor unchanged.
+      if (item.top < top) sidebar.scrollTop += item.top - top;
+      else if (item.bottom > bottom) sidebar.scrollTop += item.bottom - bottom;
+    }
+    revealCurrentPage = false;
+    saveSidebarPosition();
+  };
   const mobileSidebar = window.matchMedia('(max-width: 760px)');
   const focusableSelector = 'a[href], button:not([disabled]), input:not([disabled]), select:not([disabled]), textarea:not([disabled]), [tabindex]:not([tabindex="-1"])';
   let restoreNavInert = () => {};
@@ -70,7 +115,14 @@
       sidebar.setAttribute('aria-modal', 'true');
       sidebar.setAttribute('tabindex', '-1');
       restoreNavInert = makeInert(navBackground());
-      window.requestAnimationFrame(() => (visibleFocusable(sidebar)[0] || sidebar).focus());
+      window.requestAnimationFrame(() => {
+        const bounds = sidebar.getBoundingClientRect();
+        const target = visibleFocusable(sidebar).find(element => {
+          const rect = element.getBoundingClientRect();
+          return rect.top >= bounds.top && rect.bottom <= bounds.bottom;
+        });
+        (target || sidebar).focus({ preventScroll: true });
+      });
     } else if (!open && wasOpen) {
       restoreNavInert();
       restoreNavInert = () => {};
@@ -138,11 +190,13 @@
   };
   const setSidebarCollapsed = (collapsed, persist = true) => {
     const active = Boolean(collapsed && desktopSidebar.matches);
+    if (active && persist) saveSidebarPosition();
     document.documentElement.classList.toggle('sidebar-collapsed', active);
     sidebarCollapse?.setAttribute('aria-expanded', String(!active));
     sidebarRail?.setAttribute('aria-hidden', String(!active));
     sidebarExpanded?.setAttribute('aria-hidden', String(active));
     if (active) closeSidebarFlyouts();
+    else restoreSidebarPosition();
     if (persist) {
       try { window.localStorage.setItem(sidebarStorageKey, String(Boolean(collapsed))); } catch (_) {}
     }
@@ -166,7 +220,7 @@
   });
   sidebarExpand?.addEventListener('click', () => {
     setSidebarCollapsed(false);
-    sidebarCollapse?.focus();
+    sidebarCollapse?.focus({ preventScroll: true });
   });
   sidebar?.querySelector('[data-sidebar-version]')?.addEventListener('click', () => expandFor('[data-version-picker] .picker-trigger'));
   sidebar?.querySelector('[data-sidebar-os]')?.addEventListener('click', () => expandFor('[data-os-trigger]'));
@@ -195,14 +249,32 @@
   document.querySelectorAll('[data-nav-tree-toggle]').forEach((toggle) => {
     const children = document.getElementById(toggle.getAttribute('aria-controls'));
     if (!children) return;
-    toggle.addEventListener('click', (event) => {
-      event.preventDefault();
-      event.stopPropagation();
-      const expanded = toggle.getAttribute('aria-expanded') !== 'true';
+    const setExpanded = (expanded) => {
       toggle.setAttribute('aria-expanded', String(expanded));
       const label = toggle.closest('.nav-tree-row')?.querySelector('a')?.textContent || 'section';
       toggle.setAttribute('aria-label', `${expanded ? 'Collapse' : 'Expand'} ${label}`);
       children.hidden = !expanded;
+      sidebarPosition.branches[children.id] = expanded;
+    };
+    // Keep previous branches open, and reveal the current page's ancestors.
+    setExpanded(toggle.getAttribute('aria-expanded') === 'true'
+      || sidebarPosition.branches[children.id] === true);
+    toggle.addEventListener('click', (event) => {
+      event.preventDefault();
+      event.stopPropagation();
+      const expanded = toggle.getAttribute('aria-expanded') !== 'true';
+      setExpanded(expanded);
+      saveSidebarPosition();
     });
+  });
+  sidebarTreeReady = true;
+  restoreSidebarPosition();
+  sidebar?.addEventListener('scroll', saveSidebarPosition, { passive: true });
+  // Capture the latest offset even if navigation occurs before a scroll event.
+  sidebar?.addEventListener('click', saveSidebarPosition, { capture: true });
+  window.addEventListener('pagehide', saveSidebarPosition);
+  window.addEventListener('pageshow', restoreSidebarPosition);
+  document.addEventListener('visibilitychange', () => {
+    if (document.visibilityState === 'hidden') saveSidebarPosition();
   });
 })();

@@ -1,4 +1,5 @@
 'use strict';
+const { labels, datatypeAlternatives } = require('./configuration-datatypes');
 const configurationValueText = (value) => {
   if (typeof value === 'string') return value;
   if (value === null || value === undefined) return '';
@@ -13,51 +14,26 @@ const configurationConstraintText = (value) => {
   return configurationValueText(value);
 };
 
-const complexDatatypeOptions = (type) => {
-  const options = [];
-  const add = (value) => { if (value && !options.includes(value)) options.push(value); };
-  for (const match of type.matchAll(/'\$erlang_tuple': \['atom', '([^']+)'\]/g)) add(match[1]);
-  for (const match of type.matchAll(/'\$erlang_tuple': \['integer', (\d+)\]/g)) add(match[1]);
-  for (const match of type.matchAll(/'\$erlang_tuple': \['duration', '([^']+)'\]/g)) add(`duration (${match[1]})`);
-  for (const match of type.matchAll(/'\$erlang_tuple': \['enum', \[([^\]]+)\]\]/g)) {
-    for (const value of match[1].matchAll(/'([^']+)'/g)) add(value[1]);
-  }
-  for (const match of type.matchAll(/'(integer|flag|bytesize|string|atom|float|directory|file|ip|list)'/g)) add(match[1]);
-  return options;
-};
-
 const configurationDatatype = (setting, validators) => {
   const datatype = setting.datatype || {};
   const type = String(datatype.type || 'unspecified');
-  const labels = {
-    atom: 'Atom',
-    bytesize: 'Byte size',
-    directory: 'Directory path',
-    duration: 'Duration',
-    enum: 'Enum',
-    file: 'File path',
-    flag: 'Flag',
-    float: 'Floating-point number',
-    integer: 'Integer',
-    ip: 'IP address',
-    list: 'List',
-    percent: 'Percentage',
-    string: 'String',
-    unspecified: 'Unspecified'
-  };
   const simple = Object.hasOwn(labels, type);
+  const alternatives = simple ? undefined : datatypeAlternatives(type);
   const options = type === 'enum'
     ? (datatype.values || [])
     : type === 'flag'
       ? (datatype.arguments || [])
-      : simple ? [] : complexDatatypeOptions(type);
+      : simple ? [] : alternatives.map(choice => choice.value);
   const units = type === 'duration' ? (datatype.arguments || []) : [];
   const constraints = [...new Set((setting.validators || [])
     .map((name) => validators[name]?.message || name)
     .map(configurationConstraintText))];
   return {
-    label: simple ? labels[type] : 'One of',
+    label: type === 'duration' && units.length
+      ? `Duration (${units.map(configurationValueText).join(', ')})`
+      : simple ? labels[type] : 'One of',
     options: options.map(configurationValueText),
+    ...(!simple && {alternatives}),
     units: units.map(configurationValueText),
     constraints
   };

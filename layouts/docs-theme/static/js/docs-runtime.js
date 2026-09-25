@@ -360,7 +360,7 @@
           value.hidden = !selectedDefault.hasDefault;
           value.textContent = selectedDefault.value;
         }
-        if (empty) empty.hidden = selectedDefault.hasDefault;
+        if (empty) empty.hidden = selectedDefault.hasDefault || Boolean(row.querySelector('[data-configuration-inferred-default]'));
         if (copy) {
           copy.hidden = !selectedDefault.hasDefault;
           copy.dataset.copyValue = selectedDefault.value;

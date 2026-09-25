@@ -1,0 +1,11 @@
+<ul class="configuration-reference-values">
+  {{- range . -}}
+    <li>
+      {{- if eq .kind "value" -}}
+        <span class="configuration-reference-option"><code>{{ .value }}</code><button class="download-copy" type="button" data-copy-value="{{ .value }}" data-copy-label="Copy value {{ .value }}" aria-label="Copy value {{ .value }}" title="Copy value {{ .value }}" aria-live="polite">{{ partial "download-icon-copy.html" . }}</button></span>
+      {{- else -}}
+        <span class="configuration-reference-type">{{ .value }}</span>
+      {{- end -}}
+    </li>
+  {{- end -}}
+</ul>

@@ -2,6 +2,10 @@
 
 Number of generational garbage collections allowed before a full sweep. Lower values reclaim older heap data more frequently, trading garbage-collection work for potentially lower memory use.
 
+# Constraints
+
+- Use a non-negative integer. Zero is allowed.
+
 # Tags
 
 feature: erlang-runtime

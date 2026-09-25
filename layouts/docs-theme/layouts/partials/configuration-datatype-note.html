@@ -1,0 +1,26 @@
+{{- $schema := false -}}
+{{- range .source.definitions -}}
+  {{- if strings.HasSuffix .path ".schema" }}{{ $schema = true }}{{ end -}}
+{{- end -}}
+{{- if $schema -}}
+  {{- $duration := strings.HasPrefix .datatype.label "Duration" -}}
+  {{- $bytesize := eq .datatype.label "Byte size" -}}
+  {{- $units := .datatype.units | default slice -}}
+  {{- range .datatype.alternatives -}}
+    {{- if eq .kind "type" -}}
+      {{- if strings.HasPrefix .value "Duration (" -}}
+        {{- $duration = true -}}
+        {{- $units = $units | append (strings.TrimSuffix ")" (strings.TrimPrefix "Duration (" .value)) -}}
+      {{- end -}}
+      {{- if eq .value "Byte size" }}{{ $bytesize = true }}{{ end -}}
+    {{- end -}}
+  {{- end -}}
+  {{- if $duration -}}
+    {{- $unitNames := partial "configuration-duration-unit-names.html" . -}}
+    {{- $examples := dict "ms" (dict "input" "15s" "result" "15,000 milliseconds") "s" (dict "input" "1m" "result" "60 seconds") "m" (dict "input" "1h" "result" "60 minutes") "h" (dict "input" "1d" "result" "24 hours") "d" (dict "input" "1w" "result" "7 days") "w" (dict "input" "1f" "result" "2 weeks") "f" (dict "input" "4w" "result" "2 fortnights") -}}
+    <span class="configuration-reference-constraint configuration-datatype-note">{{ with $units }}Converted to {{ range $index, $unit := . }}{{ if $index }}, {{ end }}{{ index $unitNames $unit | default $unit }}{{ end }}. {{ end }}Accepts suffixes <code>ms</code>, <code>s</code>, <code>m</code>, <code>h</code>, <code>d</code>, <code>w</code>, and <code>f</code> (fortnights), including combinations such as <code>1m30s</code>.{{ if eq (len $units) 1 }}{{ with index $examples (index $units 0) }} For example, <code>{{ .input }}</code> is {{ .result }}.{{ end }}{{ end }}</span>
+  {{- end -}}
+  {{- if $bytesize -}}
+    <span class="configuration-reference-constraint configuration-datatype-note">Measured in bytes. Accepts <code>KB</code>, <code>MB</code>, and <code>GB</code> suffixes (or <code>kb</code>, <code>mb</code>, and <code>gb</code>), using multiples of 1024. For example, <code>1MB</code> is 1,048,576 bytes.</span>
+  {{- end -}}
+{{- end -}}

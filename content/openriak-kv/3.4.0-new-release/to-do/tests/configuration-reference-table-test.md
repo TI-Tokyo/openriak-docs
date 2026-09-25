@@ -48,6 +48,20 @@ This second example exercises the per-value copy controls for an enum.
 
 {{< configuration-reference-item config-name="anti_entropy" >}}
 
+### Source-inferred default
+
+This application-environment setting has a source fallback rather than a generated OS default. Verify that its type, constraints and **Inferred from source** default remain visible when changing operating systems.
+
+{{< configuration-reference-item config-name="ibrowse.inactivity_timeout" >}}
+
+### Union-valued items
+
+Literal alternatives such as `unlimited` have copy controls. Integer and Duration (ms) are plain-text type alternatives; each alternative occupies its own bullet.
+
+{{< configuration-reference-item config-name="bitcask.fold.max_puts" >}}
+
+{{< configuration-reference-item config-name="bitcask.fold.max_age" >}}
+
 ## Repository area and filters
 
 The `area` parameter limits matches to settings defined by the `riak_repl` repository. The body expressions are still additive within that area.

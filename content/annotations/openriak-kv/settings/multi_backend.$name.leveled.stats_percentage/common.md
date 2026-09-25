@@ -2,6 +2,10 @@
 
 For the named backend `$name`: Percentage of requests sampled by Leveled statistics monitoring. Higher sampling improves coverage but adds monitor messages; the monitor has no flow control to protect it from excessive sampling traffic. Replace `$name` with the configured backend name; this entry is scoped to that backend.
 
+# Constraints
+
+- Use an integer percentage from 0 through 100 inclusive.
+
 # Tags
 
 feature: leveled

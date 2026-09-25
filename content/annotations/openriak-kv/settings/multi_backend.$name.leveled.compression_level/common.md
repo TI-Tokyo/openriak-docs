@@ -2,6 +2,10 @@
 
 For the named backend `$name`: Ledger LSM-tree level from which Leveled applies compression. This is a tree-level threshold, not a codec's compression-strength setting. Replace `$name` with the configured backend name; this entry is scoped to that backend.
 
+# Constraints
+
+- Use an integer from 0 through 7 inclusive to select the first LSM-tree level to compress.
+
 # Tags
 
 feature: leveled

@@ -24,7 +24,7 @@ function parseSetting(text, file) {
     const key = title.toLowerCase();
     if (used.has(key)) throw new Error(`${file}: duplicate section ${title}`);
     used.add(key);
-    if (['description', 'notes', 'examples', 'related documentation'].includes(key)) result[key.replace(/ /g, '_')] = body;
+    if (['description', 'notes', 'examples', 'related documentation', 'inferred default'].includes(key)) result[key.replace(/ /g, '_')] = body;
     else if (key === 'application name') result.internalName = body;
     else if (key === 'areas') result.areas = list(body, file);
     else if (key === 'tags') result.tags = parseTags(body, file);
@@ -64,6 +64,10 @@ function annotateSettings(reference, document, {overrideRoot = defaultSettingsRo
     if (datatype) for (const [field, value] of Object.entries(datatype)) {
       if (!isDeepStrictEqual(setting.datatype[field], value)) report.corrections.push({setting: name, field: `datatype.${field}`, before: setting.datatype[field], after: value, file: path.relative(overrideRoot, file)});
       setting.datatype[field] = value;
+      // An editorial Allowed values list contains literals, not type names.
+      if (field === 'options' && setting.datatype.alternatives) {
+        setting.datatype.alternatives = value.map(value => ({kind: 'value', value}));
+      }
     }
     if (tags) setting.tags = {...setting.tags, ...tags};
     setting.overrides.push(path.relative(overrideRoot, file));

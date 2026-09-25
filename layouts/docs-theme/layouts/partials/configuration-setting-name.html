@@ -1,0 +1,17 @@
+{{- $hasSchema := partial "configuration-has-schema.html" . -}}
+{{- $name := .name -}}
+{{- $copyLabel := "Copy config name" -}}
+{{- if not $hasSchema -}}
+  {{- $name = .internalName | default .name -}}
+  {{- $copyLabel = "Copy runtime setting" -}}
+{{- end -}}
+{{- if not $hasSchema }}
+<div class="configuration-runtime-setting">
+  <div class="configuration-copyable"><code class="configuration-runtime-label">runtime only</code></div>
+{{- end }}
+<div class="configuration-copyable{{ if not $hasSchema }} configuration-reference-internal{{ end }}">
+  {{- if not $hasSchema }}<span class="configuration-reference-arrow" aria-hidden="true">→</span>{{ end -}}
+  <code>{{ $name }}</code>
+  <button class="download-copy" type="button" data-copy-value="{{ $name }}" data-copy-label="{{ $copyLabel }}" aria-label="{{ $copyLabel }}" title="{{ $copyLabel }}" aria-live="polite">{{ partial "download-icon-copy.html" . }}</button>
+</div>
+{{- if not $hasSchema }}</div>{{ end -}}

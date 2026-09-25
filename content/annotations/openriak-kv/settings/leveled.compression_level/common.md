@@ -2,6 +2,10 @@
 
 Ledger LSM-tree level from which Leveled applies compression. This is a tree-level threshold, not a codec's compression-strength setting.
 
+# Constraints
+
+- Use an integer from 0 through 7 inclusive to select the first LSM-tree level to compress.
+
 # Tags
 
 feature: leveled

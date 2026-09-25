@@ -2,6 +2,10 @@
 
 Percentage of requests sampled by Leveled statistics monitoring. Higher sampling improves coverage but adds monitor messages; the monitor has no flow control to protect it from excessive sampling traffic.
 
+# Constraints
+
+- Use an integer percentage from 0 through 100 inclusive.
+
 # Tags
 
 feature: leveled

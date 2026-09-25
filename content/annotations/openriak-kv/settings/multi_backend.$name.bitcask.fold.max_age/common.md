@@ -2,6 +2,10 @@
 
 For the named backend `$name`: Maximum age of a reusable Bitcask key-directory snapshot for folds. Reuse also depends on `bitcask.fold.max_puts`; when either threshold is exceeded, a new fold waits for existing folds before taking a fresh snapshot. `unlimited` disables the age limit. Replace `$name` with the configured backend name; this entry is scoped to that backend.
 
+# Notes
+
+The [Cuttlefish mapping](https://github.com/OpenRiak/bitcask/blob/eb7c056b24c0707dd264dfc2037092e7314eeac7/priv/bitcask_multi.schema) declares a duration in milliseconds or the literal atom `unlimited`. It attaches no additional validator; `atom` is the type of the literal, not an unrestricted alternative.
+
 # Tags
 
 feature: bitcask

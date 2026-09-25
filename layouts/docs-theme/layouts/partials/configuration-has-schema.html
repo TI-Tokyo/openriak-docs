@@ -1,0 +1,5 @@
+{{- $hasSchema := false -}}
+{{- range .source.definitions -}}
+  {{- if strings.HasSuffix .path ".schema" }}{{ $hasSchema = true }}{{ end -}}
+{{- end -}}
+{{- return $hasSchema -}}

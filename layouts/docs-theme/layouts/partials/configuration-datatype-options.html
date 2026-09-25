@@ -1,0 +1,15 @@
+{{- $options := .datatype.options | default slice -}}
+{{- $choices := slice -}}
+{{- if and (not $options) (eq .datatype.label "Flag") -}}
+  {{- range .source.definitions -}}
+    {{- if strings.HasSuffix .path ".schema" -}}
+      {{- $options = slice "on" "off" -}}
+    {{- end -}}
+  {{- end -}}
+{{- end -}}
+{{- if and (eq .datatype.label "One of") (isset .datatype "alternatives") -}}
+  {{- $choices = .datatype.alternatives -}}
+{{- else -}}
+  {{- range $options }}{{ $choices = $choices | append (dict "kind" "value" "value" .) }}{{ end -}}
+{{- end -}}
+{{- return $choices -}}

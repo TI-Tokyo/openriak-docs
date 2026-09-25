@@ -369,6 +369,15 @@ button, select, input { border: 1px solid var(--line); border-radius: 3px; backg
 .configuration-copyable { display: flex; gap: .25rem; align-items: flex-start; }
 .configuration-copyable code { min-width: 0; overflow-wrap: anywhere; }
 .configuration-copyable .download-copy { flex: 0 0 auto; }
+.configuration-setting-tags { display: flex; flex-wrap: wrap; gap: .3rem; margin-bottom: .5rem; }
+.configuration-setting-tag { position: relative; display: inline-block; padding: .08rem .4rem; border: 1px solid currentColor; border-radius: .25rem; background: color-mix(in srgb, currentColor 10%, var(--surface)); font-size: .75rem; line-height: 1.5; overflow-wrap: anywhere; }
+.configuration-setting-tag[data-tag-category="metadata"] { color: var(--orange); }
+.configuration-setting-tag[data-tag-category="feature"] { color: var(--cyan); }
+.configuration-setting-tag[data-tag-category="repository"] { color: var(--link); }
+.configuration-setting-tag[data-tag-category="module"] { color: #68459a; }
+.configuration-setting-tag[data-tag-category="concept"] { color: #326547; }
+:root[data-theme="dark"] .configuration-setting-tag[data-tag-category="module"] { color: #d1b1f5; }
+:root[data-theme="dark"] .configuration-setting-tag[data-tag-category="concept"] { color: #9bd5ac; }
 .configuration-reference-datatype > small { display: block; margin-top: .55rem; color: var(--muted); font-size: .72rem; font-weight: 700; letter-spacing: .04em; text-transform: uppercase; }
 .configuration-reference-internal { align-items: center; margin-top: .3rem; color: var(--muted); }
 .configuration-reference-internal code { color: inherit; font-size: .82em; }
@@ -376,6 +385,8 @@ button, select, input { border: 1px solid var(--line); border-radius: 3px; backg
 .configuration-reference-description > :first-child, .configuration-reference-constraint > :first-child { margin-top: 0; }
 .configuration-reference-description > :last-child, .configuration-reference-constraint > :last-child { margin-bottom: 0; }
 .configuration-reference-options, .configuration-reference-constraint { display: block; margin-top: .25rem; }
+.configuration-reference-values { margin: .45rem 0 0; padding-left: 1.35rem; list-style: disc; }
+.configuration-reference-values li + li { margin-top: .2rem; }
 .configuration-reference-option { display: inline-flex; align-items: center; white-space: nowrap; }
 .configuration-reference-option .download-copy { width: 1.35rem; height: 1.35rem; margin-left: .08rem; }
 .configuration-reference-option .download-copy-icon, .configuration-reference-option .download-copy-icon svg { width: .88rem; height: .88rem; }

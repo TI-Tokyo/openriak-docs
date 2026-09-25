@@ -1,0 +1,10 @@
+{{- $units := .datatype.units | default slice -}}
+{{- if strings.HasPrefix .datatype.label "Duration" -}}
+  {{- $names := partial "configuration-duration-unit-names.html" . -}}
+  {{- $expanded := slice -}}
+  {{- range $units -}}
+    {{- $expanded = $expanded | append (index $names . | default .) -}}
+  {{- end -}}
+  {{- $units = $expanded -}}
+{{- end -}}
+{{- return $units -}}

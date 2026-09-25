@@ -2,6 +2,14 @@
 
 Percentage-based sizing of normal schedulers and their online count relative to available processors. Use workload measurements when overriding it, especially on hosts sharing CPU with other services.
 
+# Constraints
+
+- Use two integer percentages separated by a colon, such as `100:75`. Each percentage must be from 1 through 100 inclusive.
+
+# Notes
+
+The schema checks each percentage independently. Although its error message mentions an ordering between the two percentages, the validator does not enforce that ordering. The value 1 is accepted.
+
 # Tags
 
 feature: erlang-runtime

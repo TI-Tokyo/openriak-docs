@@ -1,6 +1,10 @@
 # Description
 
-Directory containing legacy AAE hash-tree data. Keep this separate from application configuration; these trees support replica comparison and are distinct from the stored objects themselves.
+Directory containing legacy AAE hash-tree data. Defaults to `$(platform_data_dir)/anti_entropy`, beneath the platform's configured data root; changing `platform_data_dir` changes this default unless `anti_entropy.data_dir` is explicitly set. These trees support replica comparison and are distinct from the stored objects themselves.
+
+# Notes
+
+The default shown in the reference is the resolved package default for the selected OS. The current metadata for both documented releases resolves `platform_data_dir` to `/var/lib/riak` on every listed OS, giving `/var/lib/riak/anti_entropy`; this is not a fixed path in the schema. The [Cuttlefish mapping](https://github.com/OpenRiak/riak_kv/blob/48285d5d7aa72c4167e338b3d28ae9ba434cfcb7/priv/riak_kv.schema#L483) derives the directory from `platform_data_dir`.
 
 # Tags
 

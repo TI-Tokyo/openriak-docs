@@ -24,7 +24,7 @@ test('all released settings have revised descriptions, categorized tags, current
   const oses=read(`tools/generated/openriak-kv/data/versions/${version}.json`).operatingSystems;
   const raw=configurationReference({productId:'openriak-kv'},version,{...document,effective_defaults:defaultsByOs(document,targets)},oses);
   const annotated=annotateSettings(raw,document);
-  assert.equal(annotated.annotationCoverage.complete,427);
+  assert.equal(annotated.annotationCoverage.complete,raw.settings.length);
   assert.deepEqual(annotated.annotationCoverage.issues,[]);
   const anchors=new Set(annotated.settings.map(s=>s.anchor));
   assert.equal(anchors.size,annotated.settings.length);
@@ -67,6 +67,69 @@ test('reject immutable fields, invalid tags, malformed lists, duplicate sections
  write('common','# Description\nText');fs.renameSync(path.join(overrideRoot,'example'),path.join(overrideRoot,'missing'));
  assert.throws(()=>annotateSettings(original,document,{overrideRoot}),/missing setting/);
 }));
+
+test('inferred defaults inherit, override and clear without changing source or OS defaults', () => fixture((overrideRoot,write) => {
+ write('common','# Inferred default\n`7` from the source fallback.');
+ let setting=annotateSettings(original,document,{overrideRoot}).settings[0];
+ assert.equal(setting.inferred_default,'`7` from the source fallback.');
+ write('3.4.1','# Inferred default\nComputed at startup.');
+ setting=annotateSettings(original,document,{overrideRoot}).settings[0];
+ assert.equal(setting.inferred_default,'Computed at startup.');
+ assert.deepEqual(setting.defaults,original.settings[0].defaults);
+ assert.deepEqual(setting.source,document.settings.example);
+ write('3.4.1','# Inferred default\n');
+ setting=annotateSettings(original,document,{overrideRoot}).settings[0];
+ assert.equal(setting.inferred_default,'');
+ assert.deepEqual(setting.defaults,original.settings[0].defaults);
+ assert.equal(original.settings[0].inferred_default,undefined);
+}));
+
+test('editorial allowed values replace or clear derived union alternatives', () => fixture((overrideRoot,write) => {
+ const union=structuredClone(original);
+ union.settings[0].datatype={label:'One of',options:['Integer','unlimited'],alternatives:[{kind:'type',value:'Integer'},{kind:'value',value:'unlimited'}],units:[],constraints:[]};
+ write('common','# Allowed values\n- integer\n- off');
+ let setting=annotateSettings(union,document,{overrideRoot}).settings[0];
+ assert.deepEqual(setting.datatype.alternatives,[{kind:'value',value:'integer'},{kind:'value',value:'off'}]);
+ write('3.4.1','# Allowed values\n');
+ setting=annotateSettings(union,document,{overrideRoot}).settings[0];
+ assert.deepEqual(setting.datatype.alternatives,[]);
+ assert.equal(union.settings[0].datatype.alternatives[0].kind,'type');
+}));
+
+test('secret settings have reviewed types, value contracts and source defaults for both releases', () => {
+ for(const version of ['3.4.0','3.4.1']) {
+  const document=read(`content/openriak-kv/metadata/${version}/kv-settings.json`);
+  const targets=read(`content/openriak-kv/metadata/${version}/kv-supported-os.json`).operating_systems;
+  const oses=read(`tools/generated/openriak-kv/data/versions/${version}.json`).operatingSystems;
+  const raw=configurationReference({productId:'openriak-kv'},version,{...document,effective_defaults:defaultsByOs(document,targets)},oses);
+  const annotated=annotateSettings(raw,document);
+  const secrets=annotated.settings.filter(s=>s.source.tags?.includes('secretSettings'));
+  assert.equal(secrets.length,214);
+  const names=new Set(secrets.map(s=>s.name));
+  assert.deepEqual(annotated.annotationCoverage.issues.filter(issue=>names.has(issue.setting)),[]);
+  for(const setting of secrets) {
+   assert.notEqual(setting.datatype.label,'Unspecified',setting.name);
+   assert.ok(setting.datatype.options.length || setting.datatype.constraints.length,setting.name);
+   assert.ok(setting.inferred_default,setting.name);
+   assert.deepEqual(setting.defaults,raw.settings.find(s=>s.name===setting.name).defaults,setting.name);
+   assert.deepEqual(setting.source,document.settings[setting.name],setting.name);
+  }
+  const byName=Object.fromEntries(secrets.map(s=>[s.name,s]));
+  assert.deepEqual(byName['hut.level'].datatype.options,['debug','info','notice','warning','error','critical','alert','emergency']);
+  assert.match(byName['riak_kv.anti_entropy_timeout'].inferred_default,/60000.*300000/);
+  assert.match(byName['riak_core.dist_recv_buf_size'].inferred_default,/786432.*app.src/);
+  assert.match(byName['riak_repl.incarnation'].inferred_default,/Generated.*phash2/);
+  const range=byName['riak_kv.ttaaefs_check_range'].datatype.constraints.join(' ');
+  if(version==='3.4.0') {
+   assert.match(byName['riak_kv.queue_raw_max_results'].inferred_default,/Not applicable/);
+   assert.match(range,/LowTimestamp, HighTimestamp/);
+  } else {
+   assert.match(byName['riak_kv.queue_raw_max_results'].inferred_default,/1000/);
+   assert.match(range,/DateRange, SegmentFilter/);
+   assert.match(byName['riak_kv.ttaaefs_reduction'].datatype.constraints.join(' '),/float.*0\.0\.\.1\.0/);
+  }
+ }
+});
 
 test('review fingerprints track contracts, ignore source line shifts, and preserve Markdown fences', () => fixture((overrideRoot,write) => {
  const source=document.settings.example;const fingerprint=settingFingerprint(source);

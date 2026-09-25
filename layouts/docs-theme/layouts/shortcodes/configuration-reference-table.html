@@ -56,10 +56,13 @@
       </label>
     </div>
     <div class="configuration-tag-filters" role="group" aria-label="Filter settings by tags">
-      {{- range $category := slice "feature" "repository" "module" "concept" -}}
+      {{- range $category := slice "metadata" "feature" "repository" "module" "concept" -}}
         {{- $values := slice -}}
-        {{- range $matches }}{{ range index .tags $category }}{{ $values = $values | append . }}{{ end }}{{ end -}}
-        <label><span>{{ index (dict "feature" "Feature" "repository" "Source repository" "module" "Source module" "concept" "Concept") $category }}</span>
+        {{- range $matches -}}
+          {{- $tags := merge .tags (dict "metadata" (.source.tags | default slice)) -}}
+          {{- range index $tags $category }}{{ $values = $values | append . }}{{ end -}}
+        {{- end -}}
+        <label><span>{{ index (dict "metadata" "Metadata tag" "feature" "Feature" "repository" "Source repository" "module" "Source module" "concept" "Concept") $category }}</span>
           <select data-configuration-tag-filter="{{ $category }}"><option value="">All</option>{{ range sort (uniq $values) }}<option value="{{ . }}">{{ . }}</option>{{ end }}</select>
         </label>
       {{- end -}}
@@ -87,13 +90,11 @@
         {{- range $setting := sort $matches "name" "asc" -}}
           {{- $clientDefaults = merge $clientDefaults (dict $setting.name $setting.defaults) -}}
           {{- $default := index $setting.defaults ($selectedOperatingSystem.defaultsKey | default $defaultOs) | default dict -}}
-          <tr id="{{ $setting.anchor }}" data-configuration-key="{{ $setting.name }}" data-configuration-tags="{{ $setting.tags | jsonify }}">
+          {{- $tags := merge $setting.tags (dict "metadata" ($setting.source.tags | default slice)) -}}
+          <tr id="{{ $setting.anchor }}" data-configuration-key="{{ $setting.name }}" data-configuration-tags="{{ $tags | jsonify }}">
             <td class="configuration-reference-name">
-              <div class="configuration-copyable">
-                <code>{{ $setting.name }}</code>
-                <button class="download-copy" type="button" data-copy-value="{{ $setting.name }}" data-copy-label="Copy config name" aria-label="Copy config name" title="Copy config name" aria-live="polite">{{ partial "download-icon-copy.html" . }}</button>
-              </div>
-              {{- if and $setting.internalName (ne $setting.internalName $setting.name) }}
+              {{ partial "configuration-setting-name.html" $setting }}
+              {{- if and (partial "configuration-has-schema.html" $setting) $setting.internalName (ne $setting.internalName $setting.name) }}
                 <div class="configuration-copyable configuration-reference-internal">
                   <span class="configuration-reference-arrow" aria-hidden="true">→</span>
                   <code>{{ $setting.internalName }}</code>
@@ -101,18 +102,16 @@
                 </div>
               {{- end }}
             </td>
-            <td class="configuration-reference-description">{{ with $setting.description }}{{ . | markdownify }}{{ else }}<span class="configuration-reference-empty">No description available.</span>{{ end }}</td>
+            <td class="configuration-reference-description">{{ partial "configuration-setting-tags.html" $setting }}{{ with $setting.description }}{{ . | markdownify }}{{ else }}<span class="configuration-reference-empty">No description available.</span>{{ end }}</td>
             <td class="configuration-reference-datatype">
               <strong>{{ $setting.datatype.label }}</strong>
-              {{- with $setting.datatype.options }}
-                {{- $copyDatatypeOptions := or (eq $setting.datatype.label "Enum") (eq $setting.datatype.label "Flag") -}}
-                <small>Values:</small>
-                <span class="configuration-reference-options">{{ range $index, $value := . }}{{ if $index }}, {{ end }}<span class="configuration-reference-option"><code>{{ $value }}</code>{{ if $copyDatatypeOptions }}<button class="download-copy" type="button" data-copy-value="{{ $value }}" data-copy-label="Copy value {{ $value }}" aria-label="Copy value {{ $value }}" title="Copy value {{ $value }}" aria-live="polite">{{ partial "download-icon-copy.html" . }}</button>{{ end }}</span>{{ end }}</span>
+              {{- with partial "configuration-datatype-options.html" $setting }}
+                {{ partial "configuration-datatype-values.html" . }}
               {{- end }}
-              {{- with $setting.datatype.units }}
-                <small>Units:</small>
-                <span class="configuration-reference-options">{{ range $index, $value := . }}{{ if $index }}, {{ end }}<code>{{ $value }}</code>{{ end }}</span>
+              {{- with partial "configuration-datatype-units.html" $setting }}
+                <span class="configuration-reference-options">Units: {{ delimit . ", " }}</span>
               {{- end }}
+              {{ partial "configuration-datatype-note.html" $setting }}
               {{- range $setting.datatype.constraints -}}
                 {{- $constraint := . -}}
                 {{- if reflect.IsMap $constraint -}}
@@ -128,12 +127,13 @@
             <td class="configuration-reference-default">
               <div class="configuration-copyable">
                 <code data-configuration-default-value{{ if not $default.hasDefault }} hidden{{ end }}>{{ $default.value }}</code>
-                <span class="configuration-reference-no-default" data-configuration-default-empty{{ if $default.hasDefault }} hidden{{ end }}>No default value.</span>
+                <span class="configuration-reference-no-default" data-configuration-default-empty{{ if or $default.hasDefault $setting.inferred_default }} hidden{{ end }}>No default value.</span>
                 <button class="download-copy" type="button" data-configuration-default-copy data-copy-value="{{ $default.value }}" data-copy-label="Copy default value" aria-label="Copy default value" title="Copy default value" aria-live="polite"{{ if not $default.hasDefault }} hidden{{ end }}>{{ partial "download-icon-copy.html" . }}</button>
               </div>
               <span class="configuration-reference-os" data-configuration-os-specific{{ if not $default.osSpecific }} hidden{{ end }}>
                 on <img data-configuration-os-icon src="{{ $selectedOperatingSystem.logo | relURL }}" alt="{{ $selectedOperatingSystem.displayName }}" title="{{ $selectedOperatingSystem.displayName }}">
               </span>
+              {{- with $setting.inferred_default }}<div data-configuration-inferred-default><small>Inferred from source:</small><div>{{ . | markdownify }}</div></div>{{ end -}}
             </td>
           </tr>
         {{- end }}

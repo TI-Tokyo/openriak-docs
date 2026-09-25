@@ -219,9 +219,17 @@ overrides cannot replace test output or attach evidence to a changed invocation.
 The same docs-owned layering applies to configuration settings in both 3.4.0
 and 3.4.1. Edit `settings/SETTING/common.md`, optionally followed by
 `settings/SETTING/VERSION.md`. Use the exact public configuration key as the
-folder name, including dots and placeholders such as `$name`. Each of the 427
+folder name, including dots and placeholders such as `$name`. Each of the 641
 settings has a description and categorized tags. These files are not Hugo pages
 and do not modify the deployed metadata or the openriak-metadata repository.
+
+The catalogue includes 214 application-environment entries tagged
+`secretSettings` in the metadata. Their annotations explain the source consumers
+and link to the reviewed dependency revisions. These entries include internal
+registries, runtime state, test fixtures and deprecated options as well as tuning
+settings; discovery does not imply a `riak.conf` mapping. Version annotations
+identify entries found only in a newer transitive dependency scanned for 3.4.0,
+and explain the release-specific full-sync range representation.
 
 For example, `settings/tictacaae_maxresults/common.md` can contain:
 
@@ -253,6 +261,10 @@ Supported setting sections:
 - **Datatype**: displayed type label, for example `Integer`.
 - **Allowed values**, **Units**, **Constraints**: bullet lists replacing the
   corresponding displayed datatype fields. Constraints can contain Markdown.
+- **Inferred default**: Markdown explaining a source fallback, application
+  startup default, runtime calculation, or the absence of a default. Displayed
+  as **Inferred from source** in the default column, separately from any generated
+  OS default. An empty section clears the inherited inference.
 - **Tags**: categorized lists, as described below.
 - **Reviewed against**: exact versions and SHA-256 review fingerprints.
 
@@ -261,6 +273,22 @@ fields and tag categories merge independently, so a version can replace allowed
 values or concept tags while retaining the other categories. Setting names and
 OS-specific default values cannot be overridden. Unknown sections, invalid tags,
 and annotations targeting missing settings fail validation.
+
+For `secretSettings`, datatype and value constraints are inferred from source
+guards, type specifications and consumers. Enumerations list literal Erlang
+values; open ranges, callback contracts and tuple shapes belong in Constraints.
+Expected ranges are not necessarily checked by the application environment read.
+For schema union datatypes, tables and details show one bullet per alternative.
+Literal atoms, enum members and fixed numbers have copy controls; unrestricted
+types such as Integer or Duration (ms) are plain text. A typed literal such as
+`{atom, unlimited}` contributes only `unlimited`, and a union's bare `flag`
+contributes `on` and `off`. An annotation's Allowed values section replaces the
+alternatives with literal values. Validator corrections belong in Constraints
+and should cite the reviewed schema implementation.
+Inferred defaults distinguish read-site fallbacks from `.app.src` defaults and
+runtime state. Source links identify the reviewed revisions; version annotations
+handle release differences. These inferences do not change the original metadata
+or its OS-specific defaults.
 
 Changes to datatype labels, allowed values, units or constraints are recorded
 with their old/new values and annotation filenames. Hugo emits non-failing
@@ -314,6 +342,10 @@ not guessed at render time. Table text searches include the tags, and one filter
 per category can be combined with the search. Filters use AND across categories;
 select **All** to remove a category restriction, or **Clear filters** to clear the
 query and every tag filter. CLI indexes support the same tag search and filters.
+
+Settings tables also provide a **Metadata tag** filter populated from the raw
+settings metadata, including `secretSettings`. These tags are searchable and
+combine with the annotation category filters in the same way.
 
 Setting details show all categories and up to eight related settings in the same
 version. A candidate must share a feature and a concept; ranking gives each shared
