@@ -6,7 +6,7 @@ weight: 390
 diataxis: how-to
 product: OpenRiak KV
 product_version: 3.4.0
-status: editorially-rewritten
+status: Reviewed
 draft: true
 audience:
 - developers
@@ -26,8 +26,9 @@ tags:
 - how-to
 editorial_review: complete
 technical_review: required
-last_reviewed: '2026-09-22'
-review_scope: diataxis-content-and-navigation
+last_reviewed: '2026-09-27'
+review_scope: content review
+review-by: TI Tokyo/JOM
 restructured_from:
 - how-to/develop/create-object.md
 related:
@@ -45,7 +46,7 @@ Create an object at an application-selected key and check the result. Set `RIAK_
 
 ## Choose the address and value
 
-Select the active bucket type, bucket, and key. This example uses the untyped `customers` bucket and the key `aiko`; use a unique test key when trying it against a shared environment.
+Select an active bucket type, bucket, and key. This example uses the untyped `customers` bucket and the key `aiko`; use a unique test key when trying it against a shared environment.
 
 ```sh
 curl --fail -i -X PUT "$RIAK_HTTP/buckets/customers/keys/aiko" -H 'Content-Type: application/json' --data-binary '{"name":"Aiko","city":"Tokyo"}'
@@ -54,6 +55,8 @@ curl --fail -i -X PUT "$RIAK_HTTP/buckets/customers/keys/aiko" -H 'Content-Type:
 A normal successful PUT without a returned body gives `204`. For a typed bucket, insert `/types/TYPE` before `/buckets`. To require creation only when no value exists, use [Make conditional reads and writes]({{< product-version-root >}}how-to/application-data/make-conditional-reads-and-writes/) instead of treating an ordinary PUT as a create-only operation.
 
 ## Verify and preserve context
+
+To verify the put:
 
 ```sh
 curl --fail -D object.headers -o object.json "$RIAK_HTTP/buckets/customers/keys/aiko"
