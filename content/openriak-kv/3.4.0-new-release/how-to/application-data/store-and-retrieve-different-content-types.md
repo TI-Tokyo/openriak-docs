@@ -6,7 +6,7 @@ weight: 430
 diataxis: how-to
 product: OpenRiak KV
 product_version: 3.4.0
-status: editorially-rewritten
+status: reviewed
 draft: true
 audience:
 - developers
@@ -21,9 +21,10 @@ tags:
 - kv
 - how-to
 editorial_review: complete
-technical_review: required
-last_reviewed: '2026-09-22'
-review_scope: diataxis-content-and-navigation
+technical_review: complete
+last_reviewed: '2026-10-05'
+review_scope: content review
+review-by: TI Tokyo/JOM
 restructured_from:
 - how-to/develop/use-content-types.md
 related:
@@ -48,8 +49,8 @@ curl --fail -D sample.headers -o retrieved.bin "$RIAK_HTTP/buckets/files/keys/sa
 cmp sample.bin retrieved.bin
 ```
 
-Use `--data-binary` so curl preserves file bytes. Use `application/json` for JSON or a more specific registered media type when appropriate. Set a content encoding only when the body actually uses that encoding.
+Use `--data-binary` so curl preserves file bytes. Use `application/json` for JSON or a more specific registered media type when appropriate. You should only set a content encoding when the body actually uses that encoding.
 
 ## Verify client behaviour
 
-Check the returned content type and byte equality. Test how the client handles unknown media types, malformed application data, and compressed values. On updates, preserve causal context and metadata as in [Update an object with causal context]({{< product-version-root >}}how-to/application-data/update-an-object-with-causal-context/). Avoid converting arbitrary binary values through a text encoding.
+Check the returned content type and byte equality. We recommend that you test how the client handles unknown media types, malformed application data, and compressed values. On updates, you should preserve causal context and metadata as in [Update an object with causal context]({{< product-version-root >}}how-to/application-data/update-an-object-with-causal-context/). Avoid converting arbitrary binary values through a text encoding.
