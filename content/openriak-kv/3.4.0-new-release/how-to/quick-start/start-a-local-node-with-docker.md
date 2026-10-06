@@ -7,9 +7,10 @@ diataxis: how-to
 draft: true
 status: editorially-rewritten
 editorial_review: complete
-technical_review: required
-last_reviewed: '2026-09-22'
-review_scope: diataxis-content-and-navigation
+technical_review: complete
+last_reviewed: '2026-10-06'
+review_scope: content review
+review-by: TI Tokyo/JOM
 description: Start one local OpenRiak node with a published Docker Compose file, then verify an HTTP write and read.
   This is a disposable development environment.
 related:
