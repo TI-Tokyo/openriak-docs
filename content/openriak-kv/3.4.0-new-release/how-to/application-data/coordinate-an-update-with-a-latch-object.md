@@ -7,7 +7,7 @@ diataxis: how-to
 draft: true
 status: Reviewed
 editorial_review: complete
-technical_review: required
+technical_review: complete
 last_reviewed: '2026-09-27'
 review_scope: content review
 review-by: TI Tokyo/JOM
