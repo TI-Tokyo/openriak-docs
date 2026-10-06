@@ -6,7 +6,7 @@ weight: 70
 diataxis: how-to
 product: OpenRiak KV
 product_version: 3.4.0
-status: editorially-rewritten
+status: reviewed
 draft: true
 audience:
 - architects
@@ -22,9 +22,10 @@ tags:
 - how-to
 - quickdocs
 editorial_review: complete
-technical_review: required
-last_reviewed: '2026-09-22'
-review_scope: diataxis-content-and-navigation
+technical_review: complete
+last_reviewed: '2026-10-06'
+review_scope: content review
+review-by: TI Tokyo/JOM
 restructured_from:
 - how-to/plan/choose-storage-backend.md
 related:
@@ -53,4 +54,4 @@ Set the selected backend on empty nodes and validate configuration before startu
 
 {{< configuration-reference-item config-name="storage_backend" >}}
 
-Write, update, delete, and query sample data through the required interfaces. Record the tested backend and filesystem in the deployment specification. For a populated deployment use [Migrate to another storage backend]({{< product-version-root >}}how-to/storage-maintenance/migrate-to-another-storage-backend/); changing a setting alone does not migrate its files.
+Write, update, delete, and query sample data through the required interfaces. Record the tested backend and filesystem in the deployment specification. For a populated deployment use [Migrate to another storage backend]({{< product-version-root >}}how-to/storage-maintenance/migrate-to-another-storage-backend/); changing a setting alone does not migrate its files, it will simply be invisible to OpenRiak until the change is reverted.

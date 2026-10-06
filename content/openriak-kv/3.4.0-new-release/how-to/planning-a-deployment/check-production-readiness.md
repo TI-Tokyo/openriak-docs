@@ -6,7 +6,7 @@ weight: 110
 diataxis: how-to
 product: OpenRiak KV
 product_version: 3.4.0
-status: editorially-rewritten
+status: reviewed
 draft: true
 audience:
 - architects
@@ -29,9 +29,10 @@ tags:
 - kv
 - how-to
 editorial_review: complete
-technical_review: required
-last_reviewed: '2026-09-22'
-review_scope: diataxis-content-and-navigation
+technical_review: complete
+last_reviewed: '2026-10-06'
+review_scope: content review
+review-by: TI Tokyo/JOM
 restructured_from:
 - how-to/plan/production-readiness-checklist.md
 related:
@@ -57,7 +58,7 @@ Check a deployment before sending production traffic. Keep the evidence with the
 
 ## Exercise the application
 
-Run representative create, read, update, delete, index, and conflict-resolution operations. Verify timeout and retry behaviour, missing-object handling, and causal-context preservation. Test with the actual authentication and TLS configuration.
+Run representative create, read, update, delete, index, and conflict-resolution operations to verify timeout and retry behaviour, missing-object handling, and causal-context preservation. Test with the actual authentication and TLS configuration.
 
 ## Prove operational recovery
 

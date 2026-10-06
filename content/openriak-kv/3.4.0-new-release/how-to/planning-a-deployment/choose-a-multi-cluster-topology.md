@@ -6,7 +6,7 @@ weight: 90
 diataxis: how-to
 product: OpenRiak KV
 product_version: 3.4.0
-status: editorially-rewritten
+status: reviewed
 draft: true
 audience:
 - architects
@@ -22,9 +22,10 @@ tags:
 - how-to
 - quickdocs
 editorial_review: complete
-technical_review: required
-last_reviewed: '2026-09-22'
-review_scope: diataxis-content-and-navigation
+technical_review: reviewed
+last_reviewed: '2026-10-06'
+review_scope: content review
+review-by: TI Tokyo/JOM
 restructured_from:
 - how-to/plan/choose-multi-cluster-topology.md
 related:
@@ -53,4 +54,4 @@ Pair real-time delivery with reconciliation. Reserve capacity for a backlog afte
 
 ## Verify the topology
 
-Write a distinct sample in each permitted source and confirm its appearance only at intended destinations. Pause a consumer, create changes, and prove catch-up and reconciliation before relying on the topology.
+You should write a distinct sample in each permitted source and confirm its appearance only at intended destinations. Pause a consumer, create changes, and prove catch-up and reconciliation before relying on the topology.
