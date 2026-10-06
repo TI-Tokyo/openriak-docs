@@ -6,7 +6,7 @@ weight: 500
 diataxis: how-to
 product: OpenRiak KV
 product_version: 3.4.0
-status: editorially-rewritten
+status: reviewed
 draft: true
 audience:
 - developers
@@ -21,9 +21,10 @@ tags:
 - kv
 - how-to
 editorial_review: complete
-technical_review: required
-last_reviewed: '2026-09-22'
-review_scope: diataxis-content-and-navigation
+technical_review: complete
+last_reviewed: '2026-10-06'
+review_scope: content review
+review-by: TI Tokyo/JOM
 restructured_from:
 - how-to/develop/use-maps.md
 related:
@@ -52,7 +53,7 @@ curl --fail -i -X POST "$RIAK_HTTP/types/maps/buckets/example/datatypes/sample" 
 curl --fail "$RIAK_HTTP/types/maps/buckets/example/datatypes/sample"
 ```
 
-Map field names carry their data-type suffix. Fetch and include context for removals and other context-dependent operations. Update only the intended fields rather than attempting to replace the whole map with ordinary object JSON.
+Map field names to carry their data-type suffix. Fetch and include context for removals and other context-dependent operations. Update only the intended fields rather than attempting to replace the whole map with ordinary object JSON.
 
 ## Verify concurrent behaviour
 

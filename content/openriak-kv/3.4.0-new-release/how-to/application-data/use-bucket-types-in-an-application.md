@@ -6,7 +6,7 @@ weight: 380
 diataxis: how-to
 product: OpenRiak KV
 product_version: 3.4.0
-status: editorially-rewritten
+status: reviewed
 draft: true
 audience:
 - developers
@@ -21,9 +21,10 @@ tags:
 - kv
 - how-to
 editorial_review: complete
-technical_review: required
-last_reviewed: '2026-09-22'
-review_scope: diataxis-content-and-navigation
+technical_review: complete
+last_reviewed: '2026-10-06'
+review_scope: content review
+review-by: TI Tokyo/JOM
 restructured_from:
 - how-to/develop/use-bucket-types.md
 related:
@@ -50,6 +51,6 @@ Use [Create and activate bucket types]({{< product-version-root >}}how-to/applic
 
 For HTTP object operations use `/types/TYPE/buckets/BUCKET/keys/KEY`. For distributed data types use `/types/TYPE/buckets/BUCKET/datatypes/KEY`. Encode each path component separately. In Protocol Buffers, populate the request's bucket-type field using a client that supports that message.
 
-## Verify isolation
+## To verify isolation
 
 Write a sample through the typed path, read it back through the same path, and confirm that an untyped read does not accidentally become the application's fallback. Keep type names with the application's deployment configuration, and provision matching definitions in receiving clusters.

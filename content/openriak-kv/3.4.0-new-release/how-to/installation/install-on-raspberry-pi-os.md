@@ -68,6 +68,9 @@ Complete [Configure node identity, directories, and the initial ring]({{< produc
 
 {{< cli-example key="shell:riak chkconfig" prefix="sudo" >}}
 {{< service-command action="start" os="raspbian" >}}
+
+Check OpenRiak is running:
+
 {{< cli-example key="shell:riak ping" prefix="sudo" >}}
 
 Expect `pong`, then complete [Verify an installation]({{< product-version-root >}}how-to/installation/verify-an-installation/) before joining the cluster or admitting traffic. Containers without a service manager should use their image entrypoint, not the host-service commands above.
