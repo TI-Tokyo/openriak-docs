@@ -50,7 +50,7 @@ After commit, use `riak admin ringready` to check ring agreement, `riak admin ri
 # Reviewed against
 
 3.4.0: fe8b47ff15832f90147ba428819dd534cb57b54d7894fd117a09f32cda053943
-3.4.1: db921aab4c6326626ac60325d184d148ab793eed3e508d4809fa76f38fa57ddc
+3.4.1: e6841cc840b8481d404a4deeb83e493ca17f53358437932dc3d04d7cf5a17c76
 
 # Tags
 

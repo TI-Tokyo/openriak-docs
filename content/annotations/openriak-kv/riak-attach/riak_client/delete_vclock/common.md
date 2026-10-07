@@ -117,7 +117,7 @@ Read the stored value, delete it with replica acknowledgments, then confirm the 
 # Reviewed against
 
 3.4.0: 4bcca26b814942707257b154d1193626904bfc684eecf3f4b881d90a57a3612f
-3.4.1: 2212ae3f987af3d61179d9757e2b71625a164f44484b1d75f73f72593dccd336
+3.4.1: 4a37ae70aaab09e9c55f1ef814b3f5967ba5e6bf8a2502bd513bc4197d0ccb83
 
 # Tags
 

@@ -38,7 +38,7 @@ A rejected join never becomes part of a plan. A cookie mismatch can therefore le
 # Reviewed against
 
 3.4.0: 961b3918247ac2f87369d14aa5c7da56b3feccdda2e5cb8951591e8606c112d7
-3.4.1: 8c1d0901fec04eb5543472f5d5f24c6413a210649e3e7f52b7d4924ea073c5fe
+3.4.1: b35b5eb0e569bb6c2fc00bc94e131e0db2c529748480d7db87e219e340d3b4b7
 
 # Tags
 

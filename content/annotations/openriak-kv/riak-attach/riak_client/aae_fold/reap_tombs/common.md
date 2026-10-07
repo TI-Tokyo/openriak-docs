@@ -118,7 +118,7 @@ Delete the stored objects and wait until five tombstones are visible. Reaping re
 # Reviewed against
 
 3.4.0: d47b1a12261aa01297cb31c0e6ab9a8faa9a4db6e1f5fc42f8f009b6549fdc5a
-3.4.1: bd3b88d1de000133bc4830bedd1fd240087c9747cfb043909706d00ac16695cf
+3.4.1: 6c2e1259d878e733900dd9d03cd66ae2143bbe8a1e9dd6d0f316b37b316a0c32
 
 # Tags
 
