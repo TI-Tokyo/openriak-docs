@@ -179,7 +179,7 @@ const outputText = card => card.locator('.cli-observed').allTextContents().then(
    else assert.ok(await page.locator('.cli-example .cli-observed').count()>0,'3.4.1 lifecycle example has captured output');
    assert.equal((await page.goto(`${root}${version}/reference/commands/erlang/riak-client/aae-fold/merge-tree-range/`)).status(),200);
    const binaryOutput=page.locator('.cli-observed').filter({hasText:'{{<'}).first();
-   await binaryOutput.locator('.cli-output-full').evaluateAll(es=>es.forEach(e=>e.open=true));
+   for (const toggle of await binaryOutput.locator('[data-code-expand]:visible').all()) await toggle.click();
    assert.ok((await binaryOutput.innerText()).includes('{{<'),'Erlang binary tuples must render literally, without shortcode parsing');
    await binaryOutput.locator('[data-code-copy]:visible').first().click();
    assert.ok((await page.evaluate(()=>navigator.clipboard.readText())).includes('{{<'),'copy retains literal Erlang output');

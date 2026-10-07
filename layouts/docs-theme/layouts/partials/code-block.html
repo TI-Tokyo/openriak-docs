@@ -1,3 +1,5 @@
+{{- $outputLimit := index .Attributes "output-limit" | default 0 -}}
+{{- if .Page.HasShortcode "cli-command" }}{{ $outputLimit = 15 }}{{ end -}}
 {{- $declaredLanguage := .Type | default "" -}}
 {{- $filename := index .Attributes "filename" | default "" -}}
 {{- $partialName := index .Attributes "partialname" | default "" -}}
@@ -23,7 +25,7 @@
 {{- $pageName := .Page.Title | default "page" | urlize -}}
 {{- $shellLanguages := slice "bash" "shell" "sh" -}}
 {{- $highlightLanguage := cond (eq (lower $language) "advancedconfig") "erlang" $language -}}
-<div class="doc-code-block" data-code-block data-code-language="{{ $language }}" data-code-product="{{ $productName }}" data-code-version="{{ $productVersion }}" data-code-page="{{ $pageName }}" data-code-extension="{{ $extension }}"{{ with $filename }} data-code-filename="{{ . }}"{{ end }}{{ with $partialName }} data-code-partial-name="{{ . }}"{{ end }}>
+<div class="doc-code-block" {{ with $outputLimit }}data-code-limit="{{ . }}"{{ end }} data-code-block data-code-language="{{ $language }}" data-code-product="{{ $productName }}" data-code-version="{{ $productVersion }}" data-code-page="{{ $pageName }}" data-code-extension="{{ $extension }}"{{ with $filename }} data-code-filename="{{ . }}"{{ end }}{{ with $partialName }} data-code-partial-name="{{ . }}"{{ end }}>
   <div class="doc-code-toolbar">
     <span class="doc-code-language">{{ $languageLabel }}</span>
     <div class="doc-code-actions">
@@ -49,11 +51,23 @@
         <svg viewBox="0 0 24 24" aria-hidden="true"><rect x="8" y="8" width="11" height="11" rx="2"/><path d="M16 8V6a2 2 0 0 0-2-2H6a2 2 0 0 0-2 2v8a2 2 0 0 0 2 2h2"/></svg>
         <span>Copy</span>
       </button>
+      {{ with $outputLimit }}
+      <button type="button" data-code-expand aria-expanded="false" aria-label="Expand output" title="Expand output" hidden>
+        <svg class="doc-code-expand-icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M8 3H3v5M3 3l7 7M16 21h5v-5M21 21l-7-7"/></svg>
+        <svg class="doc-code-contract-icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M3 8h5V3M8 8L3 3M21 16h-5v5M16 16l5 5"/></svg>
+      </button>
+      {{ end }}
     </div>
   </div>
   <div class="doc-code-content">
     <div class="doc-code-highlight" data-code-highlight>{{ transform.Highlight .Inner $highlightLanguage "noClasses=false" }}</div>
     <pre class="doc-code-shell-view chroma" data-code-shell-view hidden><code></code></pre>
   </div>
+  {{ with $outputLimit }}
+  <button type="button" class="doc-code-show-more" data-code-show-more hidden>
+    <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M8 3H3v5M3 3l7 7M16 21h5v-5M21 21l-7-7"/></svg>
+    <span>Show more</span>
+  </button>
+  {{ end }}
   <script type="application/json" data-code-source data-json-src="{{ partial "json-resource.html" .Inner }}"></script>
 </div>

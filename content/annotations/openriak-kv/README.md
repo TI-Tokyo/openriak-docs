@@ -367,7 +367,10 @@ turn that capture into evidence for another OS.
 Each scenario command, case preparation command and verification command is a
 separate numbered step, including all stdout, stderr and exit status. Global test
 setup remains in the collapsed environment section. Outputs longer than 15 lines
-have a preview and an expansion control; the complete capture is retained. Do not
+use a single code block clipped to 15 rendered lines, with a faded bottom edge
+and an expand/collapse icon in its toolbar. A compact **Show more** button at the
+bottom expands the block and then disappears. Copy and download retain the complete
+capture. The same limit applies to command-page examples and test records. Do not
 combine shell commands with `&&` or abbreviate a captured module list or table.
 Describe what each example demonstrates, what its arguments mean and what result
 to expect. Test recipe links use the recorded metadata repository commit when

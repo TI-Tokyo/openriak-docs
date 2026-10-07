@@ -358,6 +358,36 @@ window.OpenRiakPageToolsReady = (async () => {
   };
 
   const codeBlocks = [...document.querySelectorAll('[data-code-block]')];
+  codeBlocks.filter(block => block.hasAttribute('data-code-limit')).forEach((block, index) => {
+    const button = block.querySelector('[data-code-expand]');
+    const pre = block.querySelector('[data-code-highlight] pre');
+    const showMore = block.querySelector('[data-code-show-more]');
+    if (!button || !pre) return;
+    pre.id = `command-output-${index}`;
+    button.setAttribute('aria-controls', pre.id);
+    showMore?.setAttribute('aria-controls', pre.id);
+    showMore?.addEventListener('click', () => {
+      button.click();
+      button.focus({preventScroll: true});
+    });
+    const measure = () => {
+      const style = getComputedStyle(pre);
+      const limit = Number(block.dataset.codeLimit) * parseFloat(style.lineHeight) +
+        parseFloat(style.paddingTop) + parseFloat(style.paddingBottom);
+      const overflow = pre.scrollHeight > limit + 1;
+      button.hidden = !overflow;
+      if (showMore) showMore.hidden = !overflow;
+      block.classList.toggle('has-hidden-output', overflow);
+    };
+    button.addEventListener('click', () => {
+      const expanded = block.classList.toggle('is-output-expanded');
+      button.setAttribute('aria-expanded', String(expanded));
+      button.setAttribute('aria-label', expanded ? 'Collapse output' : 'Expand output');
+      button.title = expanded ? 'Collapse output' : 'Expand output';
+    });
+    new ResizeObserver(measure).observe(pre);
+    measure();
+  });
   const codeSources = new Map();
   await Promise.all(codeBlocks.map(async (block) => {
     try {

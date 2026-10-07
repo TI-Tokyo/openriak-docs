@@ -519,3 +519,48 @@ button, select, input { border: 1px solid var(--line); border-radius: 3px; backg
 .configuration-related-settings { margin: 0; padding-inline-start: 1.2rem; }
 .configuration-sources { margin-block: .75rem; }
 .configuration-reference-table tr:target { outline: 2px solid currentColor; outline-offset: -2px; scroll-margin-top: 6rem; }
+
+/* Command transcripts retain one complete source and clip only their display. */
+.doc-code-block[data-code-limit]:not(.is-output-expanded) .doc-code-highlight pre {
+  max-height: calc(15lh + 2rem);
+  overflow-y: hidden;
+}
+.doc-code-block.has-hidden-output:not(.is-output-expanded) .doc-code-highlight {
+  mask-image: linear-gradient(to bottom, black calc(100% - 2.5rem), transparent);
+}
+.doc-code-actions [data-code-expand][hidden],
+.doc-code-contract-icon,
+.is-output-expanded .doc-code-expand-icon { display: none; }
+.is-output-expanded .doc-code-contract-icon { display: inline; }
+
+.doc-code-block[data-code-limit] { position: relative; }
+.doc-code-show-more {
+  position: absolute;
+  bottom: .5rem;
+  left: 50%;
+  transform: translateX(-50%);
+  display: inline-flex;
+  align-items: center;
+  gap: .4rem;
+  width: max-content;
+  max-width: calc(100% - 1rem);
+  padding: .35rem .7rem;
+  border: 1px solid var(--line);
+  border-radius: .3rem;
+  background: var(--panel-cool);
+  color: var(--ink);
+  font: inherit;
+  font-size: .8rem;
+  cursor: pointer;
+}
+.doc-code-show-more svg {
+  width: 1rem;
+  height: 1rem;
+  fill: none;
+  stroke: currentColor;
+  stroke-width: 1.8;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+}
+.doc-code-show-more:hover { color: var(--orange); border-color: currentColor; }
+.doc-code-show-more[hidden], .is-output-expanded .doc-code-show-more { display: none; }

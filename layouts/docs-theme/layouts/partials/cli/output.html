@@ -1,11 +1,5 @@
 {{- $text := .text -}}
-{{- $lines := strings.Split (strings.TrimSuffix "\n" $text) "\n" -}}
 <div class="cli-output" data-cli-output-stream="{{ .stream }}">
 <p>{{ .stream }}:</p>
-{{ if gt (len $lines) 15 }}
-  <div class="cli-output-preview">{{ partial "code-block.html" (dict "Page" .page "Type" "text" "Attributes" dict "Inner" (delimit (first 15 $lines) "\n")) }}</div>
-  <details class="cli-output-full"><summary><span class="cli-output-expand">Show all {{ len $lines }} lines ({{ sub (len $lines) 15 }} more)</span><span class="cli-output-collapse">Show fewer lines</span></summary>
-  {{ partial "code-block.html" (dict "Page" .page "Type" "text" "Attributes" dict "Inner" $text) }}
-  </details>
-{{ else }}{{ partial "code-block.html" (dict "Page" .page "Type" "text" "Attributes" dict "Inner" $text) }}{{ end }}
+{{ partial "code-block.html" (dict "Page" .page "Type" "text" "Attributes" (dict "output-limit" 15) "Inner" $text) }}
 </div>
