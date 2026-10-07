@@ -3,6 +3,32 @@
 const quote = value => /^[a-zA-Z0-9_@%+=:,./-]+$/.test(value) ? value : "'" + value.replace(/'/g, "'\"'\"'") + "'";
 function invocation(argv) { return argv.map(quote).join(' '); }
 
+function stepInvocation(step) {
+  return step.requests ? step.requests.map(stepInvocation).join('\n') : invocation(step.argv);
+}
+
+// Keep raw evidence intact; consecutive attempts of one bounded wait form one step.
+function compactSteps(records) {
+  const groups = [];
+  for (const record of records) {
+    const previous = groups.at(-1);
+    if (record.retry && previous?.at(-1).retry && record.attempt > 1 &&
+        record.attempt === previous.at(-1).attempt + 1 &&
+        ['phase', 'node', 'argv', 'cwd', 'stdin', 'expect', 'retry', 'description'].every(key =>
+          JSON.stringify(record[key]) === JSON.stringify(previous[0][key]))) previous.push(record);
+    else groups.push([record]);
+  }
+  return groups.map(attempts => {
+    const final = attempts.at(-1);
+    if (!final.retry) return {...final};
+    const completed = Array.isArray(final.failures) && final.failures.length === 0;
+    return {...final, attempt_count: attempts.length, observations: [
+      ...(attempts.length > 1 ? [{...attempts[0], label: 'While waiting'}] : []),
+      {...final, label: completed ? 'When complete' : 'Retry limit reached — investigate before continuing'},
+    ]};
+  });
+}
+
 function prepareTranscripts(reference, document, displayShellInvocation) {
   const os = document.runtime?.os_release || '';
   reference.testEnvironment = {
@@ -19,10 +45,10 @@ function prepareTranscripts(reference, document, displayShellInvocation) {
       if (!example.observed) return;
       const observed = example.observed;
       const casePhase = `case:${observed.verification.case}`;
-      const steps = observed.test_steps || [];
+      const steps = compactSteps(observed.test_steps || []);
       example.steps = steps.filter(s => s.phase !== 'setup').map(step => ({
         ...step,
-        invocation: step.phase === casePhase ? (example.display_invocation || example.invocation) : displayShellInvocation(invocation(step.argv)),
+        invocation: step.phase === casePhase ? (example.display_invocation || example.invocation) : displayShellInvocation(stepInvocation(step)),
         language: step.phase === casePhase && page.context === 'erlang' ? 'erlang' : 'sh',
         purpose: step.phase.startsWith('case_setup:') ? 'Prepare the example' : step.phase.startsWith('verify:') ? 'Verify the result' : 'Run the command',
       }));
@@ -30,7 +56,7 @@ function prepareTranscripts(reference, document, displayShellInvocation) {
         language: page.context === 'erlang' ? 'erlang' : 'sh', purpose: 'Run the command',
         stdout: observed.stdout, stderr: observed.stderr, exit_code: observed.exit_code}];
       example.environment_steps = steps.filter(s => s.phase === 'setup').map(s => ({...s,
-        invocation: displayShellInvocation(invocation(s.argv)), language: 'sh', purpose: 'Prepare the environment'}));
+        invocation: displayShellInvocation(stepInvocation(s)), language: 'sh', purpose: 'Prepare the environment'}));
       example.recipe_url = 'https://github.com/TI-Tokyo/openriak-metadata/blob/' +
         (observed.verification.repository_commit || 'main') + '/scenarios/' +
         (observed.verification.file || '').split('/').map(encodeURIComponent).join('/');
@@ -53,4 +79,4 @@ function prepareTranscripts(reference, document, displayShellInvocation) {
   }
   return reference;
 }
-module.exports = {prepareTranscripts, invocation};
+module.exports = {prepareTranscripts, invocation, compactSteps};

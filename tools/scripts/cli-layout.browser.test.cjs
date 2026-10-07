@@ -38,9 +38,10 @@ const reference = buildAnnotatedReference(require('../../content/openriak-kv/met
           const step = steps.nth(i), expected = example.steps[i];
           assert.match(await step.locator('p strong').first().innerText(), new RegExp('^Step ' + (i+1) + ':'));
           assert.ok(!expected.invocation.includes('&&'));
+          for (const [observationIndex, observation] of (expected.observations || [expected]).entries()) {
           for (const [field, label] of [['stdout', 'Standard output'], ['stderr', 'Standard error']]) {
-            if (!expected[field]) continue;
-            const output = step.locator(`[data-cli-output-stream="${label}"]`);
+            if (!observation[field]) continue;
+            const output = step.locator('.cli-observed').nth(observationIndex).locator(`[data-cli-output-stream="${label}"]`);
             assert.equal(await output.locator('.doc-code-block').count(), 1, 'one complete code block');
             const toggle = output.locator('[data-code-expand]');
             if (await toggle.isVisible()) {
@@ -66,7 +67,8 @@ const reference = buildAnnotatedReference(require('../../content/openriak-kv/met
             }
             const source = output.locator('[data-code-source]').last();
             const captured = await (await page.request.get(new URL(await source.getAttribute('data-json-src'), page.url()).href)).json();
-            assert.equal(captured, expected[field], example.id + ': full ' + field);
+            assert.equal(captured, observation[field], example.id + ': full ' + field);
+          }
           }
         }
       }

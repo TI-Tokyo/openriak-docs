@@ -395,3 +395,16 @@ unmatched authored links under **Other**. Category order is feature, repository,
 module, concept; a document matching several tags appears in the first matching
 group. Use `annotation_tags` (a category-to-list map), or a plain `tags` list for
 ordinary documents to participate in this index.
+
+
+CLI verification steps should use the public administration commands when they
+can establish the expected result. Prefer `riak admin ringready`, `riak admin
+ring-status` and `riak admin member-status` over internal Erlang ring queries.
+The runner can retry asynchronous read-only checks with a bounded `retry` policy;
+each loop appears as one numbered step showing the first pending result and final
+result. Every attempt remains available in the raw execution evidence. A check
+that succeeds immediately only shows its successful result. Use a step
+`description` to explain what to look for in the table or readiness message.
+Use batches of curl requests for fixture data, with one request per command line
+in a shared step. Internal APIs should be reserved for fixture operations without
+a suitable public interface.

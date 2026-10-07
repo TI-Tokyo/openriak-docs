@@ -2,15 +2,20 @@
 {{ range $index, $step := .steps }}
 <li class="cli-step">
   <p><strong>Step {{ add $index 1 }}: {{ .purpose }}</strong>{{ with .node }} · node{{ . }}.test{{ end }}</p>
+  {{ with .description }}{{ $.page.RenderString (dict "display" "block") . }}{{ end }}
+  {{ with .retry }}<p>Repeat this check every {{ .interval_seconds }} seconds while it shows work in progress, until it matches the completion result below. Stop and investigate if it has not completed after {{ .attempts }} attempts; the test fails at that limit. This capture took {{ $step.attempt_count }} {{ if eq $step.attempt_count 1 }}attempt{{ else }}attempts{{ end }}.</p>{{ end }}
   {{ with .cwd }}<p>Working directory: <code>{{ . }}</code>.</p>{{ end }}
   {{ partial "code-block.html" (dict "Page" $.page "Type" .language "Attributes" dict "Inner" .invocation) }}
   {{ with .stdin }}<p>Standard input:</p>{{ partial "code-block.html" (dict "Page" $.page "Type" "text" "Attributes" dict "Inner" .) }}{{ end }}
+  {{ range (.observations | default (slice $step)) }}
   <div class="cli-observed">
+  {{ with .label }}<p><strong>{{ . }}</strong></p>{{ end }}
   {{ with .stdout }}{{ partial "cli/output.html" (dict "page" $.page "text" . "stream" "Standard output") }}{{ end }}
   {{ with .stderr }}{{ partial "cli/output.html" (dict "page" $.page "text" . "stream" "Standard error") }}{{ end }}
   {{ if not (or .stdout .stderr) }}<p>No text was written to standard output or standard error.</p>{{ end }}
   <p class="cli-exit-status">Exit status: <code>{{ .exit_code }}</code>.</p>
   </div>
+  {{ end }}
 </li>
 {{ end }}
 </ol>

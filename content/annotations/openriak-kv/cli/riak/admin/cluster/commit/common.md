@@ -29,6 +29,8 @@ The examples expand node1 into a five-node cluster. They first add node2, then a
 
 The command can print a refusal and still exit with status `0`. Read the result text; an exit status alone does not establish that any changes were committed.
 
+After commit, use `riak admin ringready` to check ring agreement, `riak admin ring-status` to watch pending ownership changes, and `riak admin member-status` to inspect each node’s status and ring share. Ring agreement alone does not mean handoffs have finished; wait for `Ring Ready: true` and `No pending changes.` in ring-status.
+
 # Results
 
 ## outcome
@@ -48,7 +50,7 @@ The command can print a refusal and still exit with status `0`. Read the result 
 # Reviewed against
 
 3.4.0: fe8b47ff15832f90147ba428819dd534cb57b54d7894fd117a09f32cda053943
-3.4.1: c80ea8a14ba94c4bd23c4673d66e444c23b26ccfcab2fc8fb71ecf5905daf2da
+3.4.1: db921aab4c6326626ac60325d184d148ab793eed3e508d4809fa76f38fa57ddc
 
 # Tags
 

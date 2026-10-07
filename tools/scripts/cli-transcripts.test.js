@@ -1,7 +1,7 @@
 'use strict';
 const {test} = require('node:test');
 const assert = require('node:assert/strict');
-const {prepareTranscripts} = require('./cli-transcripts');
+const {prepareTranscripts, compactSteps} = require('./cli-transcripts');
 
 function fixture() {
   const long = Array.from({length: 80}, (_, i) => `module_${i} 3.4.1`).join('\n') + '\n';
@@ -79,4 +79,43 @@ test('every 3.4.1 command has a verified outcome, every displayed error an examp
     assert.ok(page.reference.examples.every(e => e.observed && e.steps.length), `${page.key}: output`);
     assert.ok(page.reference.errors.every(e => e.example), `${page.key}: error examples`);
   }
+});
+
+
+test('CLI polling shows the first pending and final complete observations, preserving raw evidence', () => {
+  const reference = fixture(), example = reference.pages[0].reference.examples[1];
+  const retry = {attempts:60, interval_seconds:3};
+  const records = Array.from({length:20}, (_, i) => ({phase:'verify:ok', node:1,
+    argv:['riak','admin','ringready'], stdout:i === 19 ? 'TRUE ready\n' : `FALSE waiting ${i}\n`,
+    stderr:i === 0 ? 'warning\n' : '', exit_code:0, failures:i === 19 ? [] : ['not ready'],
+    retry, attempt:i+1, description:'Wait for ring agreement.'}));
+  example.observed.test_steps = records;
+  prepareTranscripts(reference, document, x => x);
+  assert.equal(example.steps.length, 1);
+  assert.equal(example.steps[0].invocation, 'riak admin ringready');
+  assert.deepEqual(example.steps[0].observations.map(o => o.label), ['While waiting', 'When complete']);
+  assert.equal(example.steps[0].observations[0].stderr, 'warning\n');
+  assert.equal(example.steps[0].observations[1].stdout, 'TRUE ready\n');
+  assert.equal(example.steps[0].attempt_count, 20);
+  assert.equal(example.observed.test_steps, records);
+  assert.equal(records.length, 20);
+});
+
+test('waits never combine nodes, independent loops, or phases, and never invent a pending result', () => {
+  const base = {phase:'verify:ok', node:1, argv:['check'], retry:{attempts:3, interval_seconds:1}, failures:[], attempt:1};
+  assert.equal(compactSteps([base, base]).length, 2);
+  assert.equal(compactSteps([base, {...base, node:2, attempt:2}]).length, 2);
+  assert.equal(compactSteps([base, {...base, phase:'setup', attempt:2}]).length, 2);
+  assert.deepEqual(compactSteps([base])[0].observations.map(o => o.label), ['When complete']);
+  assert.match(compactSteps([{...base, failures:['not ready']}])[0].observations[0].label, /Retry limit reached/);
+});
+
+test('HTTP fixture requests share one numbered step with separate command lines and complete output', () => {
+  const reference = fixture(), example = reference.pages[0].reference.examples[1];
+  example.observed.test_steps = [{phase:'verify:ok', requests:[{argv:['curl','http://localhost:8098/one']},
+    {argv:['curl','http://localhost:8098/two']}], stdout:'one\ntwo\n', stderr:'warning\n', exit_code:0}];
+  prepareTranscripts(reference, document, x => x);
+  assert.equal(example.steps.length, 1);
+  assert.equal(example.steps[0].invocation, 'curl http://localhost:8098/one\ncurl http://localhost:8098/two');
+  assert.equal(example.steps[0].stdout, 'one\ntwo\n');
 });
