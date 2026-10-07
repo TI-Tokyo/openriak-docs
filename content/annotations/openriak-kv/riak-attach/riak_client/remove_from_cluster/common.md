@@ -80,7 +80,7 @@ Requests redistribution of the exiting member’s partitions. The RPC response d
 # Reviewed against
 
 3.4.0: cebb9deca86866a858404f7de4f1f7c5c2b645dfdacb5cea987c152d2ef40e83
-3.4.1: cebb9deca86866a858404f7de4f1f7c5c2b645dfdacb5cea987c152d2ef40e83
+3.4.1: f8cc47c619dadcb9582e668d051f6baf3f8375ac4bcadeaf77c84fce6ff2a759
 
 # Tags
 

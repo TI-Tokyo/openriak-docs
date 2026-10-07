@@ -1,7 +1,10 @@
-{{- if or .Params.related (.Store.Get "cliRelatedDocumentation") -}}
+{{- if or .Params.related (.Store.Get "cliRelatedDocumentation") (.Store.Get "referenceTags") -}}
   {{- $context := partial "product-context.html" $ -}}
   <aside class="related-documentation" aria-labelledby="related-documentation-heading">
     <h2 id="related-documentation-heading">Related documentation</h2>
+    {{ if .Store.Get "referenceTags" }}
+    {{ partial "cli/related.html" (dict "page" . "tags" (.Store.Get "referenceTags")) }}
+    {{ else }}
     {{ with .Store.Get "cliRelatedDocumentation" }}{{ . }}{{ end }}
     <ul>
       {{- range .Params.related -}}
@@ -30,5 +33,6 @@
         </li>
       {{- end }}
     </ul>
+    {{ end }}
   </aside>
 {{- end -}}

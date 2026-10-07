@@ -1,0 +1,33 @@
+{{- $page := .page -}}
+{{- $context := partial "product-context.html" $page -}}
+{{- $index := partialCached "reference-tag-index.html" $context $context.id $context.version -}}
+{{- $seen := slice (partial "cli/link-key.html" (dict "page" $page "url" $page.RelPermalink)) -}}
+{{- range $category := slice "feature" "repository" "module" "concept" -}}
+  {{- range $tag := index $.tags $category -}}
+    {{- $entries := slice -}}
+    {{- range sort (index $index (printf "%s/%s" $category $tag) | default slice) "title" -}}
+      {{- $key := partial "cli/link-key.html" (dict "page" $page "url" .url) -}}
+      {{- if not (in $seen $key) }}{{ $seen = $seen | append $key }}{{ $entries = $entries | append . }}{{ end -}}
+    {{- end -}}
+    {{- with $entries -}}
+    <h3>{{ $category | humanize }}: <a href="{{ printf "%s%s/reference/tags/%s/%s/" $context.productBase $context.version $category ($tag | urlize) }}">{{ $tag }}</a></h3>
+    <ul>{{ range . }}<li><a href="{{ .url }}">{{ .title }}</a></li>{{ end }}</ul>
+    {{- end -}}
+  {{- end -}}
+{{- end -}}
+{{- $other := slice -}}
+{{- $authored := $page.Store.Get "cliRelatedDocumentation" | default "" -}}
+{{- range findRE `<a\s[^>]*href="[^"]+"[^>]*>.*?</a>` $authored -}}
+  {{- $url := replaceRE `.*href="([^"]+)".*` "$1" . | htmlUnescape -}}
+  {{- $key := partial "cli/link-key.html" (dict "page" $page "url" $url) -}}
+  {{- if not (in $seen $key) }}{{ $seen = $seen | append $key }}{{ $other = $other | append (dict "url" $url "title" (. | plainify | htmlUnescape)) }}{{ end -}}
+{{- end -}}
+{{- range $page.Params.related -}}
+  {{- $path := . -}}{{- $title := "" -}}
+  {{- if reflect.IsMap . }}{{ $path = .page }}{{ $title = .title | default "" }}{{ end -}}
+  {{- with site.GetPage (printf "/%s/%s/%s" $context.id $context.version $path) -}}
+    {{- $key := partial "cli/link-key.html" (dict "page" $page "url" .RelPermalink) -}}
+    {{- if not (in $seen $key) }}{{ $seen = $seen | append $key }}{{ $other = $other | append (dict "url" .RelPermalink "title" ($title | default .LinkTitle)) }}{{ end -}}
+  {{- end -}}
+{{- end -}}
+{{- with $other }}<h3>Other</h3><ul>{{ range . }}<li><a href="{{ .url }}">{{ .title }}</a></li>{{ end }}</ul>{{ end -}}

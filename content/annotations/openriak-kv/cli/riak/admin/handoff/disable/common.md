@@ -82,7 +82,7 @@ Run the operation on the named node, such as `openriak-kv@node1.test`. Use the f
 # Reviewed against
 
 3.4.0: f6322ed32f142a339857b34bd526882b275f495cb9c9dde71295989cc26dec13
-3.4.1: f6322ed32f142a339857b34bd526882b275f495cb9c9dde71295989cc26dec13
+3.4.1: 00447392548f629999ee63d6a308aa16adec01e8ca85a1dadb0d89a290e75f08
 
 # Tags
 

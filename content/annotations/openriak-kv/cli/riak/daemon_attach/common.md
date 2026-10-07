@@ -60,7 +60,7 @@ An interactive Erlang shell on the running daemon.
 # Reviewed against
 
 3.4.0: f0c8a0562f88c59257676afe64c867a2afb7ca84ba492d79cc2af490ea2c400e
-3.4.1: f0c8a0562f88c59257676afe64c867a2afb7ca84ba492d79cc2af490ea2c400e
+3.4.1: 3a3fdb83c72a27b76ecbe40e0614cc725998a37ddbc369628f256947673890bf
 
 # Tags
 

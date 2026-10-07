@@ -80,7 +80,7 @@ The launcher returns success when the escript succeeds; otherwise it exits nonze
 # Reviewed against
 
 3.4.0: 97552f3b13fa169463b6dcd20ff18903e188ceebadec0fe51d185ac47a7a0ef5
-3.4.1: 97552f3b13fa169463b6dcd20ff18903e188ceebadec0fe51d185ac47a7a0ef5
+3.4.1: b008b77385e7c307a57bb09d8b1465d729ab886911ace4a3c3bf35ff39d26fe0
 
 # Tags
 

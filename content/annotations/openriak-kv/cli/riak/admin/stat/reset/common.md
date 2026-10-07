@@ -50,7 +50,7 @@ Reset a counter when starting a new measurement interval. Its value changes from
 # Reviewed against
 
 3.4.0: 134531f68528ee90b7bb7b158a5f8c05c6ea4f511e7b2aa65ee28c8506530121
-3.4.1: 134531f68528ee90b7bb7b158a5f8c05c6ea4f511e7b2aa65ee28c8506530121
+3.4.1: 9801ad3584a3fead2e3028a2cd9ba4fcd7f1435482df5ed67587695b3d5ce194
 
 # Tags
 

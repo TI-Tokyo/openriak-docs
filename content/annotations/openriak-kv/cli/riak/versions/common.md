@@ -16,7 +16,7 @@ The `permanent`, `current` and `old` labels describe release-handler state. Thes
 # Reviewed against
 
 3.4.0: 2cb8a8ba7e4ddac4d30dd4be2b4653b500124707f841af295277f75ee6a45c38
-3.4.1: 2cb8a8ba7e4ddac4d30dd4be2b4653b500124707f841af295277f75ee6a45c38
+3.4.1: c7c8934d652ddbb3e1fbbfb5a605649279a2ba91a53fd315f866184d46a86a1c
 
 # Tags
 

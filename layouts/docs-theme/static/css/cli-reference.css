@@ -21,6 +21,14 @@
 .cli-example { margin: 1.5rem 0; padding: 1rem; border: 1px solid var(--line); border-radius: .35rem; }
 .cli-example > h3 { margin-top: 0; }
 .cli-example > :last-child { margin-bottom: 0; }
+.cli-steps { list-style: none; padding-left: 0; }
+.cli-step + .cli-step { margin-top: 1.5rem; }
+.cli-output:has(> details[open]) > .cli-output-preview { display: none; }
+.cli-output-collapse, .cli-output-full[open] .cli-output-expand { display: none; }
+.cli-output-full[open] .cli-output-collapse { display: inline; }
+.cli-output-full > summary { cursor: pointer; color: var(--cyan); padding: .5rem 0; }
+.cli-exit-status { color: var(--muted); font-size: .85rem; }
+.cli-aliases, .cli-other-info { margin-block: 1.5rem; }
 .cli-valid-values { margin: 0; padding-left: 1.25rem; }
 .cli-valid-values li { margin-bottom: .35rem; }
 .cli-parameters { font-size: .875rem; table-layout: fixed; min-width: 44rem; border-collapse: collapse; }
@@ -53,3 +61,5 @@
 .cli-parameter-kind { display: inline-block; padding: .1rem .45rem; border: 1px solid currentColor; border-radius: .3rem; font-size: .8em; font-weight: 600; }
 .cli-parameter-kind--argument { color: var(--cyan); background: color-mix(in srgb, var(--cyan) 10%, var(--surface)); }
 .cli-parameter-kind--option { color: var(--orange); background: color-mix(in srgb, var(--orange) 10%, var(--surface)); }
+
+.related-documentation a, .reference-tag-documents a { overflow-wrap: anywhere; }

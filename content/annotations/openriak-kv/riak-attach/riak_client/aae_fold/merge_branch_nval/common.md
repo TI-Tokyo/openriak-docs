@@ -82,7 +82,7 @@ Choose branches containing the five stored keys. Verify every requested branch i
 # Reviewed against
 
 3.4.0: 69d6ecbc79e923c065ef9a574168dc46b585c61ddf5538cc7ebd02c25cc6bb35
-3.4.1: 69d6ecbc79e923c065ef9a574168dc46b585c61ddf5538cc7ebd02c25cc6bb35
+3.4.1: dfadd84f00999f5ddee4218aab353c55703db037f1a1e37da27e99340f8b020a
 
 # Tags
 

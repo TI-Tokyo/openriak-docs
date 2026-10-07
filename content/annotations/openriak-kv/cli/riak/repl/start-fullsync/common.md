@@ -32,7 +32,7 @@ Request start for the configured legacy listener. With no connected legacy repli
 # Reviewed against
 
 3.4.0: ce6684d5e4238ac94738900c7633ac22c0ba4c9beb902835fe6d9937174dc192
-3.4.1: ce6684d5e4238ac94738900c7633ac22c0ba4c9beb902835fe6d9937174dc192
+3.4.1: c07d96a638a8b051995a209c11e82eed76458bb24c7b2a42aec669a55e9ce0db
 
 # Tags
 

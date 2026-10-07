@@ -46,7 +46,7 @@ On a valid request, the ring metadata is updated or the membership operation sta
 # Reviewed against
 
 3.4.0: eba992eaf55b16ca1a3ed8a58ea6819884005dc8091b2598e4ec2cf92a820cc1
-3.4.1: eba992eaf55b16ca1a3ed8a58ea6819884005dc8091b2598e4ec2cf92a820cc1
+3.4.1: 65b61c38a41ba160d142cbe2fe3cd13769011bb5f74c66bf4fcb834290dd1400
 
 # Tags
 

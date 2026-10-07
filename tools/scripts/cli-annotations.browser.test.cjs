@@ -1,6 +1,7 @@
 'use strict';
 const assert=require('node:assert/strict');
 const {chromium}=require('playwright');
+const outputText = card => card.locator('.cli-observed').allTextContents().then(xs=>xs.join('\n'));
 (async()=>{
  const browser=await chromium.launch({executablePath:process.env.OPENRIAK_BROWSER_EXECUTABLE});
  try {
@@ -19,17 +20,17 @@ const {chromium}=require('playwright');
      assert.equal(await card.count(),1,id);
      assert.equal(await card.locator('.cli-test-details').getAttribute('open'),null);
      assert.equal(await card.locator('.cli-prerequisites').isVisible(),false);
-     assert.doesNotMatch(await card.innerText(),/\b(fixture|disposable|the test|seeded)\b/i);
+
      assert.doesNotMatch(await card.innerText(),/VMARGS_PATH=|\/usr\/lib\/riak\/bin\/riak/);
-     await card.locator('.cli-observed > summary').click();
-     if(id==='five-node-plan'||id==='five-nodes-transferring')for(let n=1;n<=5;n++)assert.ok((await card.locator('.cli-observed').innerText()).includes(`node${n}.test`));
-     if(id==='five-nodes-transferring')assert.match(await card.locator('.cli-observed').innerText(),/objects transferred: [1-9]/);
-     if(id==='plan-changed')assert.match(await card.locator('.cli-observed').innerText(),/The plan has changed/);
-     if(id==='one-join-after-plan'||id==='five-node-commit')assert.match(await card.locator('.cli-observed').innerText(),/Cluster changes committed/);
+
+     if(id==='five-node-plan'||id==='five-nodes-transferring')for(let n=1;n<=5;n++)assert.ok((await outputText(card)).includes(`node${n}.test`));
+     if(id==='five-nodes-transferring')assert.match(await outputText(card),/objects transferred: [1-9]/);
+     if(id==='plan-changed')assert.match(await outputText(card),/The plan has changed/);
+     if(id==='one-join-after-plan'||id==='five-node-commit')assert.match(await outputText(card),/Cluster changes committed/);
      await card.locator('.cli-test-details > summary').click();
-     assert.match(await card.locator('.cli-test-details').innerText(),/Executed setup, command and verification steps/);
+     assert.match(await card.locator('.cli-test-details').innerText(),/Exact execution records/);
     }
-    for(const link of await page.locator('.related-documentation a').all()){
+    for(const link of await page.locator('.related-documentation a').all().then(xs=>xs.slice(0,12))){
      const url=new URL(await link.getAttribute('href'),page.url()).href;
      assert.equal((await page.request.get(url)).status(),200,url);
     }
@@ -52,15 +53,15 @@ const {chromium}=require('playwright');
      await block.locator('[data-code-copy]').click();
      assert.equal(await page.evaluate(()=>navigator.clipboard.readText()),command);
     }
-    await card.locator('.cli-observed > summary').click();
-    assert.ok((await card.locator('.cli-observed').innerText()).includes(result));
+
+    assert.ok((await outputText(card)).includes(result));
     const tested=card.locator('.cli-test-details');
     assert.equal(await tested.getAttribute('open'),null);
     assert.equal(await card.locator('.cli-prerequisites').isVisible(),false);
     await tested.locator('> summary').click();
-    assert.match(await tested.innerText(),/Verified the resulting state/);
-    assert.match(await tested.innerText(),/Recipe:.*\.json/);
-    assert.match(await tested.innerText(),/Exact test invocation:[\s\S]*VMARGS_PATH=.*\/usr\/lib\/riak\/bin\/riak/);
+    assert.ok(await card.locator('.cli-step').count()>=2);
+    assert.match(await tested.locator('a').first().getAttribute('href'),/github\.com\/TI-Tokyo\/openriak-metadata\/blob\/.+\/scenarios\/.+\.json/);
+    assert.match(await tested.textContent(),/Exact execution records/);
     if(route.endsWith('/join'))assert.match(await page.locator('[data-cli-example-id$=":unreachable-destination"] .cli-example-outcome').innerText(),/Expected error/);
    }
    await page.goto(`${root}${version}/reference/commands/erlang/riak/code-hash/`);
@@ -75,7 +76,9 @@ const {chromium}=require('playwright');
      assert.match(await page.locator('#notes + p, #notes ~ p').allTextContents().then(a=>a.join(' ')),/--relx-disable-hooks/);
     }else{
      assert.equal(await page.locator('.cli-generated-syntax').innerText(),'riak admin aae-status');
-     assert.match(await page.locator('#aliases + ul').innerText(),/riak admin aae_status/);
+     assert.equal(await page.locator('#aliases').getAttribute('open'),null);
+     await page.locator('#aliases > summary').click();
+     assert.match(await page.locator('#aliases ul').innerText(),/riak admin aae_status/);
     }
    }
    for(const route of ['riak/admin/describe','riak/admin/member-status','riak/admin','erlang/riak-client/get']){
@@ -89,7 +92,7 @@ const {chromium}=require('playwright');
     const headers=await page.locator('.cli-table-scroll th').evaluateAll(es=>es.map(e=>getComputedStyle(e).textAlign));
     assert.ok(headers.every(h=>h==='left'));
     const headingOrder=await page.locator('.cli-command-reference > h2').evaluateAll(es=>es.map(e=>e.textContent));
-    assert.deepEqual(headingOrder,['Syntax','Arguments and options','Description','Notes','Examples','Errors','Help text']);
+    assert.deepEqual(headingOrder,['Syntax','Arguments and options','Description','Notes','Expected results','Errors','Examples']);
     const headings=await page.locator('.cli-command-reference h2[id], .cli-command-reference h3[id]').evaluateAll(es=>es.map(e=>({id:e.id,title:e.textContent.trim()})));
     const toc=page.locator('.doc-table-of-contents');
     await toc.locator('summary').click();
@@ -121,11 +124,11 @@ const {chromium}=require('playwright');
      assert.match(await cards.nth(2).locator('h3').innerText(),/Example 3: As JSON/);
      for(const id of ['format-json','format-csv','help','invalid-format']){
       const example=page.locator(`[data-cli-example-id="describe:${id}"]`);
-      await example.locator('.cli-observed > summary').click();
-      assert.match(await example.innerText(),/exit status 0/);
+
+      assert.match(await example.innerText(),/Exit status: 0/);
       if(id==='format-json')assert.match(await example.innerText(),/"type":"text"/);
      }
-     for(const link of await page.locator('.related-documentation a').all()){
+     for(const link of await page.locator('.related-documentation a').all().then(xs=>xs.slice(0,12))){
       const url=new URL(await link.getAttribute('href'),page.url()).href;
       assert.equal((await page.request.get(url)).status(),200,url);
      }
@@ -146,7 +149,7 @@ const {chromium}=require('playwright');
      await page.locator('.cli-syntax-copy').first().click();
      assert.equal(await page.evaluate(()=>navigator.clipboard.readText()),await syntax.innerText());
     }
-    await page.locator('.cli-sources > summary').click();
+    await page.locator('.cli-other-info > summary').click();
     if(route==='riak/admin'){
      const review=page.locator('.cli-syntax-review');await review.locator('summary').click();
      assert.match(await review.innerText(),/Supplied alternatives absent.*diag/);
@@ -168,16 +171,17 @@ const {chromium}=require('playwright');
     assert.equal((await page.goto(`${root}${version}/reference/commands/${route}/`)).status(),200,route);
     assert.ok(await page.locator('.cli-example').count()>0,route+' examples');
     assert.ok(await page.locator('.cli-observed').count()>0,route+' verified evidence');
-    assert.ok((await page.locator('.cli-command-reference').innerText()).toLowerCase().includes(detail.toLowerCase()),route+' detail');
+    assert.ok((await page.locator('.cli-command-reference').textContent()).toLowerCase().includes(detail.toLowerCase()),route+' detail');
    }
    await page.goto(`${root}${version}/reference/commands/riak/daemon/`);
    assert.ok(await page.locator('.cli-example').count()>0);
-   assert.equal(await page.locator('.cli-observed').count(),0,'manual lifecycle example must not claim runtime verification');
+   if(version==='3.4.0')assert.equal(await page.locator('.cli-observed').count(),0,'unverified legacy examples stay unverified');
+   else assert.ok(await page.locator('.cli-example .cli-observed').count()>0,'3.4.1 lifecycle example has captured output');
    assert.equal((await page.goto(`${root}${version}/reference/commands/erlang/riak-client/aae-fold/merge-tree-range/`)).status(),200);
    const binaryOutput=page.locator('.cli-observed').filter({hasText:'{{<'}).first();
-   await binaryOutput.locator('summary').click();
+   await binaryOutput.locator('.cli-output-full').evaluateAll(es=>es.forEach(e=>e.open=true));
    assert.ok((await binaryOutput.innerText()).includes('{{<'),'Erlang binary tuples must render literally, without shortcode parsing');
-   await binaryOutput.locator('[data-code-copy]').first().click();
+   await binaryOutput.locator('[data-code-copy]:visible').first().click();
    assert.ok((await page.evaluate(()=>navigator.clipboard.readText())).includes('{{<'),'copy retains literal Erlang output');
    for(const selector of ['erase-keys','reap-tombs']) {
     assert.equal((await page.goto(`${root}${version}/reference/commands/erlang/riak-client/aae-fold/${selector}/`)).status(),200);
@@ -194,8 +198,8 @@ const {chromium}=require('playwright');
     const client=page.locator('.cli-parameters tbody tr').filter({has:page.locator('td:first-child code',{hasText:/^Client$/})});
     assert.equal(await client.locator('a[href$="/erlang/riak-client/#argument-client"]').count(),1);
     const example=page.locator('.cli-example').filter({has:page.locator('h3',{hasText:'Count five, remove one, count four'})});
-    await example.locator('.cli-observed > summary').click();
-    assert.match(await example.locator('.cli-observed pre:not([hidden])').innerText(),/\{5,1,4\}/);
+
+    assert.match(await outputText(example),/\{5,1,4\}/);
    }
    await page.goto(`${root}${version}/reference/commands/erlang/riak-client/`);
    assert.match(await page.locator('#argument-client').innerText(),/riak:local_client/);

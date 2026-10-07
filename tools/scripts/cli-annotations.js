@@ -19,10 +19,10 @@ const reviewFingerprint = command => crypto.createHash('sha256').update(JSON.str
 }))).digest('hex');
 const defaultOverrideRoot = path.resolve(__dirname, '../../content/annotations/openriak-kv');
 const arrayFields = ['arguments', 'shared_arguments', 'examples', 'results', 'errors', 'notes'];
-const exampleFields = ['id', 'title', 'invocation', 'description', 'prerequisites', 'outcome', 'expected_output'];
+const exampleFields = ['id', 'title', 'invocation', 'description', 'prerequisites', 'outcome', 'expected_output', 'omit'];
 const fields = {
   arguments: ['name', 'format', 'description', 'datatype', 'required', 'repeatable', 'allowed_values', 'default'], examples: exampleFields,
-  results: ['id', 'description'], errors: ['id', 'condition', 'description', 'remedy']
+  results: ['id', 'description'], errors: ['id', 'condition', 'description', 'remedy', 'example_id', 'omit']
 };
 fields.shared_arguments = fields.arguments;
 function plain(value) { return value && typeof value === 'object' && !Array.isArray(value); }
@@ -43,12 +43,12 @@ function displayExampleDescription(text) {
     (_, start, commands, end) => start + displayShellInvocation(commands) + end);
 }
 function validateEntry(entry, file) {
-  const allowed = ['tags', 'versions', 'reviewed_against', 'summary', 'description', 'syntax', 'related_documentation', ...arrayFields, 'example_overrides', 'error_overrides', 'option_overrides'];
+  const allowed = ['tags', 'versions', 'reviewed_against', 'summary', 'description', 'syntax', 'related_documentation', 'known_good_example', ...arrayFields, 'example_overrides', 'error_overrides', 'option_overrides'];
   if (!plain(entry) || Object.keys(entry).some(k => !allowed.includes(k))) throw new Error(`${file}: unknown annotation fields`);
   if (entry.tags) validateTags(entry.tags, file);
   if (entry.versions && (!Array.isArray(entry.versions) || entry.versions.some(v => !/^\d+\.\d+\.\d+$/.test(v)))) throw new Error(`${file}: invalid versions`);
   if (entry.reviewed_against && (!plain(entry.reviewed_against) || Object.entries(entry.reviewed_against).some(([v, h]) => !/^\d+\.\d+\.\d+$/.test(v) || !/^[a-f0-9]{64}$/.test(h)))) throw new Error(`${file}: invalid review fingerprints`);
-  for (const field of ['summary', 'description', 'syntax', 'related_documentation']) if (field in entry && typeof entry[field] !== 'string') throw new Error(`${file}: ${field} must be text`);
+  for (const field of ['summary', 'description', 'syntax', 'related_documentation', 'known_good_example']) if (field in entry && typeof entry[field] !== 'string') throw new Error(`${file}: ${field} must be text`);
   if ('option_overrides' in entry) {
     if (!plain(entry.option_overrides)) throw new Error(`${file}: option_overrides must map flag names to fields`);
     for (const patch of Object.values(entry.option_overrides)) {
@@ -68,7 +68,7 @@ function validateEntry(entry, file) {
         if (typeof item !== 'string') throw new Error(`${file}: notes must be strings`);
         continue;
       }
-      if (!plain(item) || Object.keys(item).some(k => !fields[field].includes(k)) || Object.entries(item).some(([k,v]) => ['required', 'repeatable'].includes(k) ? typeof v !== 'boolean' : k === 'allowed_values' ? !Array.isArray(v) || v.some(x => typeof x !== 'string') : typeof v !== 'string')) throw new Error(`${file}: invalid ${field} entry`);
+      if (!plain(item) || Object.keys(item).some(k => !fields[field].includes(k)) || Object.entries(item).some(([k,v]) => ['required', 'repeatable', 'omit'].includes(k) ? typeof v !== 'boolean' : k === 'allowed_values' ? !Array.isArray(v) || v.some(x => typeof x !== 'string') : typeof v !== 'string')) throw new Error(`${file}: invalid ${field} entry`);
       const id = item[['arguments', 'shared_arguments'].includes(field) ? 'name' : 'id'];
       if (!id || ids.has(id)) throw new Error(`${file}: missing or duplicate ${field} ID`);
       ids.add(id);
@@ -81,7 +81,7 @@ function validateEntry(entry, file) {
     if (!(field in entry)) continue;
     if (!plain(entry[field])) throw new Error(`${file}: ${field} must map IDs to fields`);
     for (const patch of Object.values(entry[field])) {
-      if (!plain(patch) || Object.keys(patch).some(k => !permitted.includes(k) || k === 'id') || Object.values(patch).some(v => typeof v !== 'string')) throw new Error(`${file}: invalid ${field}`);
+      if (!plain(patch) || Object.keys(patch).some(k => !permitted.includes(k) || k === 'id') || Object.entries(patch).some(([k,v]) => typeof v !== (k === 'omit' ? 'boolean' : 'string'))) throw new Error(`${file}: invalid ${field}`);
       if (patch.outcome && !['success', 'error'].includes(patch.outcome)) throw new Error(`${file}: invalid outcome`);
     }
   }
@@ -131,7 +131,7 @@ function buildAnnotatedReference(document, { overrideRoot = defaultOverrideRoot 
       const expected = entry.reviewed_against?.[document.version];
       if (expected !== reviewFingerprint(command)) report.issues.push({ command: command.id, file: layer.name, status: expected ? 'stale' : 'unreviewed', fingerprint: reviewFingerprint(command) });
       if (entry.tags) content.tags = {...content.tags, ...entry.tags};
-      for (const field of ['summary', 'description', 'syntax', 'related_documentation', ...arrayFields]) if (field in entry) content[field] = structuredClone(entry[field]);
+      for (const field of ['summary', 'description', 'syntax', 'related_documentation', 'known_good_example', ...arrayFields]) if (field in entry) content[field] = structuredClone(entry[field]);
       for (const [id, patch] of Object.entries(entry.example_overrides || {})) {
         const example = content.examples.find(e => e.id === id);
         if (!example) {
@@ -159,6 +159,8 @@ function buildAnnotatedReference(document, { overrideRoot = defaultOverrideRoot 
       overrides.push(layer.name);
       report.overridden.push({ command: command.id, file: layer.name });
     }
+    content.examples = content.examples.filter(e => !e.omit);
+    content.errors = content.errors.filter(e => !e.omit);
     for (const example of content.examples) {
       if (command.context === 'shell') {
         example.display_invocation = displayShellInvocation(example.invocation);
@@ -188,6 +190,7 @@ function buildAnnotatedReference(document, { overrideRoot = defaultOverrideRoot 
       description: sources.map(s => s.content.description).filter(Boolean).join('\n\n'),
       syntax: sources.map(s => s.content.syntax).filter(Boolean).join('\n\n'),
       related_documentation: sources.map(s => s.content.related_documentation).filter(Boolean).join('\n\n'),
+      known_good_example: sources.map(s => s.content.known_good_example).find(Boolean),
       arguments: uniqueBy(sources.flatMap(s => s.content.arguments), 'name'),
       shared_arguments: uniqueBy(sources.flatMap(s => s.content.shared_arguments), 'name'),
       argumentsDefined: sources.some(s => s.argumentsDefined),
@@ -233,6 +236,7 @@ function buildAnnotatedReference(document, { overrideRoot = defaultOverrideRoot 
   report.total = report.commands.length;
   report.complete = report.commands.filter(c => !c.missing.length).length;
   reference.annotationCoverage = report;
+  require('./cli-transcripts').prepareTranscripts(reference, document, displayShellInvocation);
   return buildSyntax(reference, document);
 }
 module.exports = { buildAnnotatedReference, fingerprint, reviewFingerprint, readLayers, validateEntry, defaultOverrideRoot, annotationFiles };

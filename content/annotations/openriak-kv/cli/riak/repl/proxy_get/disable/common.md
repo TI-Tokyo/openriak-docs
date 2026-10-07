@@ -50,7 +50,7 @@ The command updates the proxy-get configuration for the named destination. Check
 # Reviewed against
 
 3.4.0: 75f91c74e86d94e2bea810833633bc363b187749768ff3c0cc6f3ab55e93f424
-3.4.1: 75f91c74e86d94e2bea810833633bc363b187749768ff3c0cc6f3ab55e93f424
+3.4.1: 73f44097ba8a38a24268bea04780b78607695440e6307a64157c17aa46bee611
 
 # Tags
 

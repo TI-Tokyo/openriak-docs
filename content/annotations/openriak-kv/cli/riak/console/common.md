@@ -60,7 +60,7 @@ An Erlang prompt and application startup logs.
 # Reviewed against
 
 3.4.0: b36fac0f272a51536a984f1b16b29981c438f95b5bf64bcbf38a78737ceedd6d
-3.4.1: b36fac0f272a51536a984f1b16b29981c438f95b5bf64bcbf38a78737ceedd6d
+3.4.1: 74b59f3d2f6a327c512139f3c34bace25708a767d78595be7de969495e9cc5b1
 
 # Tags
 

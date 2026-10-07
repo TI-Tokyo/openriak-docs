@@ -163,7 +163,7 @@ JSON destination path on the node. It must be writable by the Riak service accou
 # Reviewed against
 
 3.4.0: c2f99fd8c18d29f53aa6558ece14b5e7a9e23246186a719dd8532400b83145ca
-3.4.1: c2f99fd8c18d29f53aa6558ece14b5e7a9e23246186a719dd8532400b83145ca
+3.4.1: 17f0fd10e874b3f541c3c6ff72b667a4dc0ba18574ec632e7465d6a2e238015c
 
 # Tags
 

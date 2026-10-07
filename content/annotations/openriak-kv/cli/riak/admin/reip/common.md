@@ -44,7 +44,7 @@ The manual path rewrites stored ring information; the automatic reip path does n
 # Reviewed against
 
 3.4.0: 90101a5d345274bacd39633bfd49bb407e87d2ac4a68af57661c64c3eb8ab409
-3.4.1: 90101a5d345274bacd39633bfd49bb407e87d2ac4a68af57661c64c3eb8ab409
+3.4.1: 04e4fc851e92083514b518195f8d8b718f88f192c6ebe17b6617128e26a35dba
 
 # Tags
 

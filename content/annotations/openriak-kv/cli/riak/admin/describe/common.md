@@ -62,7 +62,7 @@ Describe two settings in one request. Separate their names with spaces.
 # Reviewed against
 
 3.4.0: 0aa6dc9a87ef20bc2268428f8855c33f3247e05ab1437eabf2e306e23d8a9263
-3.4.1: 0aa6dc9a87ef20bc2268428f8855c33f3247e05ab1437eabf2e306e23d8a9263
+3.4.1: 02cd303f5d08aa7b6eb32f57865ee537bdd64c2f9a9734751b2282c90856c53a
 
 # Tags
 

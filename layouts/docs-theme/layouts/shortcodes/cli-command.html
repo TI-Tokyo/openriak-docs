@@ -8,7 +8,8 @@
 {{ with $command.reference.related_documentation }}{{ $page.Store.Set "cliRelatedDocumentation" ($page.RenderString .) }}{{ end }}
 <div class="cli-command-reference">
 {{ with $command.reference.summary }}<div class="cli-summary">{{ $page.RenderString . }}</div>{{ else }}<p>{{ $command.summary }}</p>{{ end }}
-{{ with $command.reference.tags }}{{ partial "annotation-tags.html" . }}{{ end }}
+{{ $page.Store.Set "referenceTags" $command.reference.tags }}
+{{ with $command.reference.tags }}{{ partial "annotation-tags.html" (dict "tags" . "page" $page) }}{{ end }}
 <h2 id="syntax">Syntax</h2>
 {{ with $command.reference.syntax }}{{ $page.RenderString . }}{{ else }}
 {{ range $index, $form := $command.syntax.forms }}
@@ -20,7 +21,7 @@
 {{ end }}{{ end }}
 {{ if $command.syntax.hasSubcommands }}<p>Select a subcommand for its arguments and options.</p>{{ end }}
 {{ if eq $command.syntax.review.displayed "known_path_only" }}<p>Only the command prefix is shown. Argument and option syntax still needs review; consult the <a href="#help">help text</a> before running it.</p>{{ end }}
-{{ with $command.aliases }}<h3 id="aliases">Alternate spellings</h3><ul>{{ range . }}<li><code>{{ . }}</code></li>{{ end }}</ul>{{ end }}
+{{ with $command.aliases }}<details class="cli-aliases" id="aliases"><summary>Alternate spellings and aliases</summary><p>These spellings are retained for historical reference. Use the canonical syntax above in new commands and scripts.</p><ul>{{ range . }}<li><code>{{ . }}</code></li>{{ end }}</ul></details>{{ end }}
 {{ with $command.variants }}
 <h3 id="service-commands">Service commands</h3>
 <p>Choose the installed operating system using the OS selector. Use the row for the service manager running on that machine.</p>
@@ -66,7 +67,7 @@
 
 {{ with $command.reference.description }}{{ $page.RenderString . }}{{ else }}{{ with $command.description }}{{ $page.RenderString . }}{{ else }}{{ with $command.reference.summary }}{{ $page.RenderString . }}{{ end }}{{ end }}{{ end }}
 {{ with $command.children }}<h3 id="subcommands">Subcommands</h3><ul>{{ range . }}<li><a href="{{ partial "cli/link.html" (dict "context" $context "route" .route) }}"><code>{{ .title }}</code></a>{{ if .deprecated }} — deprecated{{ end }}</li>{{ end }}</ul>{{ end }}
-{{ with $command.reference.results }}<h3 id="expected-results">Expected results</h3><ul>{{ range . }}<li>{{ $page.RenderString (dict "display" "block") .description }}</li>{{ end }}</ul>{{ end }}
+
 {{ with $command.types }}<details><summary>Erlang argument type definitions</summary>{{ range . }}{{ partial "code-block.html" (dict "Page" $page "Type" "erlang" "Attributes" dict "Inner" .) }}{{ end }}</details>{{ end }}
 {{ end }}
 {{ range $command.forms }}{{ range .specifications }}{{ partial "code-block.html" (dict "Page" $page "Type" "erlang" "Attributes" dict "Inner" .) }}{{ end }}{{ end }}
@@ -76,41 +77,55 @@
 {{ with $command.prerequisites }}<ul>{{ range . }}<li>{{ . }}</li>{{ end }}</ul>{{ end }}
 {{ range $command.reference.notes }}{{ $page.RenderString (dict "display" "block") . }}{{ end }}
 {{ end }}
-{{ with $command.reference.examples }}
-<h2 id="examples">Examples</h2>
-{{ range $index, $example := . }}
-<section class="cli-example" data-cli-example-id="{{ .id }}" aria-labelledby="cli-example-{{ add $index 1 }}">
-  <h3 id="cli-example-{{ add $index 1 }}">Example {{ add $index 1 }}: {{ .title }}</h3>
-  {{ if and .observed .observed.known_issue }}<p class="cli-example-outcome"><strong>Known runtime limitation.</strong> This records an unsupported or broken path in this release; it is not a successful usage example.</p>{{ else if eq .outcome "error" }}<p class="cli-example-outcome"><strong>Expected error.</strong> This example demonstrates the failure described below.</p>{{ end }}
-  {{ $page.RenderString (dict "display" "block") (.display_description | default .description) }}
-  {{ if not .observed }}{{ with .prerequisites }}<div class="cli-prerequisites"><strong>Before running:</strong> {{ $page.RenderString . }}</div>{{ end }}{{ end }}
-  {{ partial "code-block.html" (dict "Page" $page "Type" (cond (eq $command.context "erlang") "erlang" "sh") "Attributes" dict "Inner" (.display_invocation | default .invocation)) }}
-  {{ with .expected_output }}<p>Expected output:</p>{{ partial "code-block.html" (dict "Page" $page "Type" "text" "Attributes" dict "Inner" .) }}{{ end }}
-  {{ with .observed }}
-  <details class="cli-observed"><summary>Example output · exit status {{ .exit_code }}</summary>
-  {{ with .stdout }}<p>Standard output:</p>{{ partial "code-block.html" (dict "Page" $page "Type" "text" "Attributes" dict "Inner" .) }}{{ end }}
-  {{ with .stderr }}<p>Standard error:</p>{{ partial "code-block.html" (dict "Page" $page "Type" "text" "Attributes" dict "Inner" .) }}{{ end }}
-  </details>
-  <details class="cli-test-details"><summary>Tested on OpenRiak KV {{ $context.reference.version }} · <time datetime="{{ substr .verification.tested_at 0 10 }}">{{ substr .verification.tested_at 0 10 }}</time></summary>
-  {{ with .prerequisites }}<div class="cli-prerequisites"><strong>Test environment:</strong> {{ $page.RenderString . }}</div>{{ end }}
-  <p>Exact test invocation:</p>
-  {{ partial "code-block.html" (dict "Page" $page "Type" (cond (eq $command.context "erlang") "erlang" "sh") "Attributes" dict "Inner" .invocation) }}
-  <p>Recipe: <code>{{ .verification.file }}</code>. Scenario: <code>{{ .verification.scenario }}</code>. Case: <code>{{ .verification.case }}</code>.</p>
-  <p>Runtime image: <code>{{ .verification.image_id }}</code>.</p>
-  {{ with .verification.checks }}<p>Verified the resulting state with {{ len . }} additional {{ if eq (len .) 1 }}check{{ else }}checks{{ end }}.</p>{{ end }}
-  {{ with .test_steps }}<details><summary>Executed setup, command and verification steps</summary>{{ partial "code-block.html" (dict "Page" $page "Type" "json" "Attributes" dict "Inner" (. | jsonify (dict "indent" "  "))) }}</details>{{ end }}
-  </details>
-  {{ end }}
-</section>
-{{ end }}{{ end }}
+<h2 id="expected-results">Expected results</h2>
+{{ if or $command.reference.knownGood $command.reference.knownFailure }}
+<p>Captured on OpenRiak KV {{ $context.reference.version }}, {{ $context.reference.testEnvironment.os }} {{ $context.reference.testEnvironment.osVersion }}, Erlang/OTP {{ $context.reference.testEnvironment.otp }}. These outputs belong to this tested environment; selecting another OS does not change the capture.</p>
+{{ end }}
+{{ with $command.reference.knownGood }}
+<p>A verified successful execution from <a href="#{{ .anchor }}">Example {{ .number }}: {{ .title }}</a>.</p>
+{{ $page.RenderString (dict "display" "block") (.display_description | default .description) }}
+{{ partial "cli/steps.html" (dict "page" $page "steps" .steps) }}
+{{ else }}
+{{ with $command.reference.knownFailure }}
+<p><strong>This operation has a verified limitation in the tested release.</strong> See <a href="#{{ .anchor }}">Example {{ .number }}: {{ .title }}</a> and the replacement guidance in Errors.</p>
+{{ $page.RenderString (dict "display" "block") (.display_description | default .description) }}
+{{ partial "cli/steps.html" (dict "page" $page "steps" .steps) }}
+{{ else }}
+<p>No verified successful execution is available for this command in this release. See the recorded examples and limitations below.</p>
+{{ end }}
+{{ end }}
 {{ if or $command.reference.errors $command.reference.sharedErrors }}
 <h2 id="errors">Errors</h2>
 {{ with $command.reference.errors }}
 <div class="cli-table-scroll"><table class="cli-errors"><thead><tr><th scope="col">Condition</th><th scope="col">Result</th><th scope="col">What to do</th></tr></thead><tbody>
-{{ range . }}<tr><td>{{ $page.RenderString (dict "display" "block") .condition }}</td><td>{{ $page.RenderString (dict "display" "block") .description }}</td><td>{{ $page.RenderString (dict "display" "block") .remedy }}</td></tr>{{ end }}
+{{ range . }}<tr><td>{{ $page.RenderString (dict "display" "block") .condition }}{{ with .example }}<p>See <a href="#{{ .anchor }}" title="{{ .title }}">Example {{ .number }}: {{ .title }}</a>.</p>{{ end }}</td><td>{{ $page.RenderString (dict "display" "block") .description }}</td><td>{{ $page.RenderString (dict "display" "block") .remedy }}</td></tr>{{ end }}
 </tbody></table></div>{{ end }}
-{{ with $command.reference.sharedErrors }}<p>For connection and other shared failures, see:</p><ul>{{ range . }}<li><a href="{{ partial "cli/link.html" (dict "context" $context "route" .route) }}#errors">{{ .title }} — shared errors</a></li>{{ end }}</ul>{{ end }}
+{{ with $command.reference.sharedErrors }}<h3 id="related-errors">Related errors</h3><ul>{{ range . }}<li><a href="{{ partial "cli/link.html" (dict "context" $context "route" .route) }}#errors">{{ .title }} — Errors</a></li>{{ end }}</ul>{{ end }}
 {{ end }}
+{{ with $command.reference.examples }}
+<h2 id="examples">Examples</h2>
+{{ range . }}
+<section class="cli-example" data-cli-example-id="{{ .id }}" aria-labelledby="{{ .anchor }}">
+  <span id="cli-example-{{ .number }}"></span>
+  <h3 id="{{ .anchor }}">Example {{ .number }}: {{ .title }}</h3>
+  {{ if and .observed .observed.known_issue }}<p class="cli-example-outcome"><strong>Known runtime limitation.</strong> This records an unsupported or broken path in this release.</p>{{ else if eq .outcome "error" }}<p class="cli-example-outcome"><strong>Expected error.</strong> This example demonstrates the failure described in Errors.</p>{{ end }}
+  {{ $page.RenderString (dict "display" "block") (.display_description | default .description) }}
+  {{ if .observed }}
+  {{ partial "cli/steps.html" (dict "page" $page "steps" .steps) }}
+  <details class="cli-test-details"><summary>Test environment · OpenRiak KV {{ $context.reference.version }} · {{ $context.reference.testEnvironment.os }} {{ $context.reference.testEnvironment.osVersion }} · <time datetime="{{ substr .observed.verification.tested_at 0 10 }}">{{ substr .observed.verification.tested_at 0 10 }}</time></summary>
+  {{ with .observed.prerequisites }}{{ $page.RenderString (dict "display" "block") . }}{{ end }}
+  <p><a href="{{ .recipe_url }}">Test recipe on GitHub</a> · Scenario: <code>{{ .observed.verification.scenario }}</code> · Case: <code>{{ .observed.verification.case }}</code>.</p>
+  <p>Runtime image: <code>{{ $context.reference.testEnvironment.image }}</code> (<code>{{ .observed.verification.image_id }}</code>).</p>
+  {{ with .environment_steps }}<details><summary>Environment setup commands and output</summary>{{ partial "cli/steps.html" (dict "page" $page "steps" .) }}</details>{{ end }}
+  {{ with .observed.test_steps }}<details><summary>Exact execution records</summary>{{ partial "code-block.html" (dict "Page" $page "Type" "json" "Attributes" dict "Inner" (. | jsonify (dict "indent" "  "))) }}</details>{{ end }}
+  </details>
+  {{ else }}
+  {{ partial "code-block.html" (dict "Page" $page "Type" (cond (eq $command.context "erlang") "erlang" "sh") "Attributes" dict "Inner" (.display_invocation | default .invocation)) }}
+  {{ with .expected_output }}{{ partial "cli/output.html" (dict "page" $page "text" . "stream" "Illustrative output (not captured)") }}{{ else }}<p>This example has no captured output yet.</p>{{ end }}
+  {{ end }}
+</section>
+{{ end }}{{ end }}
+<details class="cli-other-info" id="other-info"><summary>Other Info</summary>
 <h2 id="help">Help text</h2>
 {{ with $command.helpInvocations }}<ul>{{ range . }}<li><code>{{ . }}</code></li>{{ end }}</ul>{{ end }}
 {{- $helpCount := 0 -}}
@@ -120,7 +135,7 @@
   {{ range . }}{{ partial "code-block.html" (dict "Page" $page "Type" "text" "Attributes" dict "Inner" .) }}{{ end }}
 {{ end }}{{ end }}
 {{ if not $helpCount }}<p>The release does not provide help text for this entry.</p>{{ end }}
-<details class="cli-sources"><summary>Reference sources</summary>
+<section class="cli-sources"><h2 id="reference-sources">Reference Sources</h2>
 {{ with $command.syntax.review }}
 {{ if eq .status "needs_review" }}
 <details class="cli-syntax-review"><summary>Syntax differences requiring manual review</summary>
@@ -138,5 +153,6 @@
 {{ end }}
 <p>Extracted from the OpenRiak KV {{ $context.reference.version }} runtime and matching release source. Help is preserved as supplied by the release, including any format placeholders.</p>
 <ul>{{ range $command.provenance }}<li>{{ if and .repository .commit .path }}<a href="{{ printf "%s/blob/%s/%s" (.repository | strings.TrimSuffix ".git" | replaceRE "^(github.com/)" "https://$1") .commit .path }}">{{ .path }}</a>{{ else }}{{ with .path }}<code>{{ . }}</code>{{ end }}{{ with .module }}<code>{{ . }}</code>{{ end }}{{ with .callback }}<code>{{ .module }}:{{ .function }}/{{ .arity }}</code>{{ end }}{{ end }}</li>{{ end }}</ul>
+</section>
 </details>
 </div>

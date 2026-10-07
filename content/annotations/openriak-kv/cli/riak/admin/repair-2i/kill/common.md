@@ -38,7 +38,7 @@ Inspect the result of cancelling an inactive repair. When no repair is running, 
 # Reviewed against
 
 3.4.0: e66e8f7f45df6e602ac9ece64713df8350e612104ad47176f26227c9321f9179
-3.4.1: e66e8f7f45df6e602ac9ece64713df8350e612104ad47176f26227c9321f9179
+3.4.1: 354075f35c7180a12d044d45d1f4a274cf7f0fc77f881933447e4b6f2110f472
 
 # Tags
 

@@ -67,7 +67,7 @@ function parseMarkdown(text, file = 'annotation') {
     const name = key(title);
     if (used.has(name)) throw new Error(`${file}: duplicate section ${title}`);
     used.add(name);
-    if (['summary', 'description', 'syntax', 'related_documentation'].includes(name)) entry[name] = body;
+    if (['summary', 'description', 'syntax', 'related_documentation', 'known_good_example'].includes(name)) entry[name] = body;
     else if (name === 'tags') entry.tags = parseTags(body, file);
     else if (name === 'notes') entry.notes = body ? [body] : [];
     else if (name === 'reviewed_against') entry.reviewed_against = pairs(body, file);

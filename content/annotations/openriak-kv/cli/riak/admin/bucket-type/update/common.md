@@ -44,7 +44,7 @@ On success, subsequent bucket-type status output reflects the changed properties
 # Reviewed against
 
 3.4.0: 4b8a89ccc48f0347ea3f94fa8b77a87e9f6158ae8d96ab05585cb05b3b925aab
-3.4.1: 4b8a89ccc48f0347ea3f94fa8b77a87e9f6158ae8d96ab05585cb05b3b925aab
+3.4.1: 0e331015bc8ee7dbd68cc9f5093b714f162bb9d7536ab0e88fe316eb05194788
 
 # Tags
 

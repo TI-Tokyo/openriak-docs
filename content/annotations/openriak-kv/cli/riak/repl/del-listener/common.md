@@ -56,7 +56,7 @@ Update the legacy listener configuration inside the node.
 # Reviewed against
 
 3.4.0: 8cf5a303c06d665a0c823a035143c53d45630aa1f41ec49252acff5b84a67db0
-3.4.1: 8cf5a303c06d665a0c823a035143c53d45630aa1f41ec49252acff5b84a67db0
+3.4.1: 8a8408d94dd3c8bb501d10445a81a6cf3ce50d35560dd18518a607beeb60e69e
 
 # Tags
 

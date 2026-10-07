@@ -38,7 +38,7 @@ Inspect the repair state. When no repair is running, expect a not-running status
 # Reviewed against
 
 3.4.0: be06d91c05a938b64160a8fdec3cf7357d6c1671f0690cc2773c2b2239684cc9
-3.4.1: be06d91c05a938b64160a8fdec3cf7357d6c1671f0690cc2773c2b2239684cc9
+3.4.1: 2a0db930b60b5e31903fb806469ff54b75d0a5c5913b9d745e2a9954cb4b2c7b
 
 # Tags
 

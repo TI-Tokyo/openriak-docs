@@ -177,7 +177,7 @@ Successful schema translation produces effective settings or runtime files, depe
 # Reviewed against
 
 3.4.0: 18aa60b9d608d711de1405e6069df94b7e524ab0030153655b9bbcdee7141389
-3.4.1: 18aa60b9d608d711de1405e6069df94b7e524ab0030153655b9bbcdee7141389
+3.4.1: eb7a71c4b882b8eaa9832bd1ad48d786bad661c5902110f67e13d968348cc088
 
 # Tags
 

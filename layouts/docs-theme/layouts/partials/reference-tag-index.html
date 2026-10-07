@@ -1,0 +1,39 @@
+{{- $context := . -}}
+{{- $reference := index hugo.Data "cli-reference" $context.id $context.version -}}
+{{- $index := dict -}}
+{{- $root := printf "/%s/%s/" $context.id $context.version -}}
+{{- range $page := site.Pages -}}
+  {{- if and (strings.HasPrefix $page.Path $root) (not $page.Params.reference_tag_page) -}}
+    {{- $tags := $page.Params.annotation_tags | default dict -}}
+    {{- if reflect.IsMap $page.Params.tags }}{{ $tags = merge $tags $page.Params.tags }}{{ end -}}
+    {{- with $page.Params.cli_command_key -}}
+      {{- range where $reference.pages "key" . }}{{ $tags = merge $tags .reference.tags }}{{ end -}}
+    {{- end -}}
+    {{- range $category, $values := $tags -}}
+      {{- range $values -}}
+        {{- $key := printf "%s/%s" $category . -}}
+        {{- $entries := index $index $key | default slice -}}
+        {{- $index = merge $index (dict $key ($entries | append (dict "url" $page.RelPermalink "title" $page.Title))) -}}
+      {{- end -}}
+    {{- end -}}
+    {{- if and $page.Params.tags (not (reflect.IsMap $page.Params.tags)) -}}
+      {{- range $tag := $page.Params.tags -}}
+        {{- range $category := slice "feature" "repository" "module" "concept" -}}
+          {{- $key := printf "%s/%s" $category $tag -}}
+          {{- $index = merge $index (dict $key ((index $index $key | default slice) | append (dict "url" $page.RelPermalink "title" $page.Title))) -}}
+        {{- end -}}
+      {{- end -}}
+    {{- end -}}
+  {{- end -}}
+{{- end -}}
+{{- $settings := index hugo.Data "configuration-reference" $context.id $context.version -}}
+{{- range $setting := $settings.settings -}}
+  {{- range $category, $values := .tags -}}
+    {{- range $values -}}
+      {{- $key := printf "%s/%s" $category . -}}
+      {{- $url := printf "%s%s/reference/configuration/all-configuration-settings-and-defaults/#%s" $context.productBase $context.version $setting.anchor -}}
+      {{- $index = merge $index (dict $key ((index $index $key | default slice) | append (dict "url" $url "title" $setting.name))) -}}
+    {{- end -}}
+  {{- end -}}
+{{- end -}}
+{{- return $index -}}

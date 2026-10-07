@@ -26,7 +26,7 @@ See the shared `QueueName` argument on the parent module page.
 # Reviewed against
 
 3.4.0: a0770c682efc12006b9e39d510297a2f652b39602e6c1b0faf8c0c74f2fd6378
-3.4.1: a0770c682efc12006b9e39d510297a2f652b39602e6c1b0faf8c0c74f2fd6378
+3.4.1: 0db8c4bd39ee4772cee82d5aef1a650fe8d6574a6bbb1101b8ceb106090d21c5
 
 # Tags
 

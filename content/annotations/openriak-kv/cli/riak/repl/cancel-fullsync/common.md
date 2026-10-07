@@ -32,7 +32,7 @@ Request cancel for the configured legacy listener. With no connected legacy repl
 # Reviewed against
 
 3.4.0: 2a54b26ad11c0f4a69e6b5d089b8643b48e65db17b2772f89caa49b67c1af637
-3.4.1: 2a54b26ad11c0f4a69e6b5d089b8643b48e65db17b2772f89caa49b67c1af637
+3.4.1: 41d1229de6ff41c19016bcf2eaf9e8ad606f0db3c7de7f62c61cdc41e9d3fdc0
 
 # Tags
 

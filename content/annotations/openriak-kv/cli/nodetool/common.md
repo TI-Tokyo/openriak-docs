@@ -122,7 +122,7 @@ Prints the remote result or a distribution/RPC failure.
 # Reviewed against
 
 3.4.0: 628bdb2230d37edc474942cb8148838b7582d39d8a95ee2388feccd85fef8f4d
-3.4.1: 628bdb2230d37edc474942cb8148838b7582d39d8a95ee2388feccd85fef8f4d
+3.4.1: 984727e47635b0f3ae1384edd30c2ef448f53e884458e206a4f69d4b9ac8f8ca
 
 # Tags
 

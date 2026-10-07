@@ -26,7 +26,7 @@ Security group name, for example `cli_readers`.
 # Reviewed against
 
 3.4.0: 7765e1b18ddbabab6173726a7ffe6b580e60934f6249028b579492918ff445f8
-3.4.1: 7765e1b18ddbabab6173726a7ffe6b580e60934f6249028b579492918ff445f8
+3.4.1: e2717af1bb213ca98947aac434edff2011a5e0223aaae1937568699d47ea270c
 
 # Tags
 

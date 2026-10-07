@@ -1,0 +1,16 @@
+<ol class="cli-steps">
+{{ range $index, $step := .steps }}
+<li class="cli-step">
+  <p><strong>Step {{ add $index 1 }}: {{ .purpose }}</strong>{{ with .node }} · node{{ . }}.test{{ end }}</p>
+  {{ with .cwd }}<p>Working directory: <code>{{ . }}</code>.</p>{{ end }}
+  {{ partial "code-block.html" (dict "Page" $.page "Type" .language "Attributes" dict "Inner" .invocation) }}
+  {{ with .stdin }}<p>Standard input:</p>{{ partial "code-block.html" (dict "Page" $.page "Type" "text" "Attributes" dict "Inner" .) }}{{ end }}
+  <div class="cli-observed">
+  {{ with .stdout }}{{ partial "cli/output.html" (dict "page" $.page "text" . "stream" "Standard output") }}{{ end }}
+  {{ with .stderr }}{{ partial "cli/output.html" (dict "page" $.page "text" . "stream" "Standard error") }}{{ end }}
+  {{ if not (or .stdout .stderr) }}<p>No text was written to standard output or standard error.</p>{{ end }}
+  <p class="cli-exit-status">Exit status: <code>{{ .exit_code }}</code>.</p>
+  </div>
+</li>
+{{ end }}
+</ol>

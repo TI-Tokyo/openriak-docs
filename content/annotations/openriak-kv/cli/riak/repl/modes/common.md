@@ -16,7 +16,7 @@ The result lists the modes configured for the replication subsystem. It does not
 # Reviewed against
 
 3.4.0: 398f11fb4b59909fca13df8696ee81652fd16e34d08d240f4e51bff8736a0c25
-3.4.1: 398f11fb4b59909fca13df8696ee81652fd16e34d08d240f4e51bff8736a0c25
+3.4.1: c8df8514dd5bc5e9d1796fb648c9fc57b75ac2bb0daa95bfade0cb8f5490f7c3
 
 # Tags
 

@@ -65,7 +65,7 @@ Print usage without executing the command. The short spelling is `-h`.
 # Reviewed against
 
 3.4.0: 4117def24c042d5f05e8ff33d370e85fdde1fefae0556535b0cd410103ed9775
-3.4.1: 4117def24c042d5f05e8ff33d370e85fdde1fefae0556535b0cd410103ed9775
+3.4.1: 348b5fe561a0384e74c389c3b72fbdfe898dc98ceadaf1dd7011905a2e7e8f58
 
 # Tags
 

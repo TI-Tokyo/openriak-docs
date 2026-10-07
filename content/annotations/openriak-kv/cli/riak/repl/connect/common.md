@@ -34,7 +34,7 @@ Submit the connection-management request. If no remote cluster is listening at t
 # Reviewed against
 
 3.4.0: b184c4bee315072be42d09bc619a95c021d1ceac965148b7fbb2af8cf1ac6762
-3.4.1: b184c4bee315072be42d09bc619a95c021d1ceac965148b7fbb2af8cf1ac6762
+3.4.1: 3fbdbc6b68718675b39af8a89cb5f774afe83c3c4d9f09f7dd00b1e61b0f2f38
 
 # Tags
 

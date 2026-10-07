@@ -44,7 +44,7 @@ Join the second node and inspect the resulting ring members. This legacy API cha
 # Reviewed against
 
 3.4.0: 97aadf8f1d81bffad665e0bb7bc29d715219b9a130b2788faf10182bef298830
-3.4.1: 97aadf8f1d81bffad665e0bb7bc29d715219b9a130b2788faf10182bef298830
+3.4.1: 3c4694ed3575a4cae81b8bc51735b8051fb263cfeebacb06967b1570476fbb3d
 
 # Tags
 

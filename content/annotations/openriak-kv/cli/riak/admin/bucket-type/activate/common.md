@@ -26,7 +26,7 @@ Bucket type name, for example `cli_reference_type`. Creation and activation are 
 # Reviewed against
 
 3.4.0: ef9e8363dead9a86fef71a979ae6ef84bb7a8f284bae43bae0ca4afe8d54a59a
-3.4.1: ef9e8363dead9a86fef71a979ae6ef84bb7a8f284bae43bae0ca4afe8d54a59a
+3.4.1: 6b28abd866da336c8d0529a6c7c63cc54be3a9f0c10a806c353aaba697a39d2e
 
 # Tags
 

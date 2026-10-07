@@ -48,7 +48,7 @@ The command can print a refusal and still exit with status `0`. Read the result 
 # Reviewed against
 
 3.4.0: fe8b47ff15832f90147ba428819dd534cb57b54d7894fd117a09f32cda053943
-3.4.1: fe8b47ff15832f90147ba428819dd534cb57b54d7894fd117a09f32cda053943
+3.4.1: c80ea8a14ba94c4bd23c4673d66e444c23b26ccfcab2fc8fb71ecf5905daf2da
 
 # Tags
 

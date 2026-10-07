@@ -52,7 +52,7 @@
   {{- end -}}
   {{- $toc = printf `<nav id="TableOfContents">%s</nav>` (partial "heading-toc.html" $headings) -}}
 {{- end -}}
-{{- $hasRelatedDocumentation := or (gt (len (.Params.related | default (slice))) 0) (.Store.Get "cliRelatedDocumentation") -}}
+{{- $hasRelatedDocumentation := or (gt (len (.Params.related | default (slice))) 0) (.Store.Get "cliRelatedDocumentation") (.Store.Get "referenceTags") -}}
 {{- if $hasRelatedDocumentation -}}
   {{- $relatedItem := `<li><a href="#related-documentation-heading">Related documentation</a></li>` -}}
   {{- if in $toc "<li>" -}}

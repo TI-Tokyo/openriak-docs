@@ -1,0 +1,15 @@
+{{- $adapter := .adapter -}}
+{{- $version := .version -}}
+{{- $cli := index hugo.Data "cli-reference" "openriak-kv" $version -}}
+{{- $settings := index hugo.Data "configuration-reference" "openriak-kv" $version -}}
+{{- $tags := dict -}}
+{{- range $item := collections.Append $settings.settings $cli.pages -}}
+  {{- $itemTags := $item.tags | default $item.reference.tags -}}
+  {{- range $category, $values := $itemTags -}}
+    {{- range $values }}{{ $tags = merge $tags (dict (printf "%s/%s" $category (. | urlize)) (dict "category" $category "tag" .)) }}{{ end -}}
+  {{- end -}}
+{{- end -}}
+{{- range $path, $tag := $tags -}}
+  {{- $params := merge $tag (dict "product" "OpenRiak KV" "product_version" $version "reference_tag_page" true) -}}
+  {{- $adapter.AddPage (dict "path" $path "title" (printf "Documents tagged %s" $tag.tag) "draft" true "layout" "single" "params" $params "content" (dict "mediaType" "text/markdown" "value" "{{< reference-tag >}}")) -}}
+{{- end -}}

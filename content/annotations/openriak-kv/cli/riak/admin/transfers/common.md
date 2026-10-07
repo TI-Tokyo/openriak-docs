@@ -30,7 +30,7 @@ Joining nodes can report waiting secondary partitions before commit, while Activ
 # Reviewed against
 
 3.4.0: 4e349490c4f43a4dfe3b9f0d6023afb9162333638480eb35c57202f11c03ac3c
-3.4.1: 4e349490c4f43a4dfe3b9f0d6023afb9162333638480eb35c57202f11c03ac3c
+3.4.1: e09ccf37157ccf8021ebc94e4c72713873a89d202c2df5c38234e1c9f0e546b4
 
 # Tags
 

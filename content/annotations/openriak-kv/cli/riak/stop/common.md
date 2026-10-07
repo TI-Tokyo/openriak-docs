@@ -44,7 +44,7 @@ The VM exits; the launcher returns after shutdown checks.
 # Reviewed against
 
 3.4.0: a6d971d37f326a94d8c90cfad49008042ceca6e345cbbac7f4b6ba6c5dfd4341
-3.4.1: a6d971d37f326a94d8c90cfad49008042ceca6e345cbbac7f4b6ba6c5dfd4341
+3.4.1: 92c8ad0a24b36fe364213a8c1208db9472a4867f4297b5c1423954588e1b34d9
 
 # Tags
 

@@ -36,7 +36,7 @@ Optional full node name. Omit to wait on the local node.
 # Reviewed against
 
 3.4.0: 76dac7b09e6f30cf5348e7a364ff82be12528e51fd8ef785c884565ff942ea34
-3.4.1: 76dac7b09e6f30cf5348e7a364ff82be12528e51fd8ef785c884565ff942ea34
+3.4.1: 2421fa6a3e65672014d1894f4cdb9fee08d89fca750697904e4e24b6ef63fc77
 
 # Tags
 

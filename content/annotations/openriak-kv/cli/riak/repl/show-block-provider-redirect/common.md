@@ -34,7 +34,7 @@ Use a block-provider mapping during recovery when the provider identifier must c
 # Reviewed against
 
 3.4.0: 6a2c7a7e0e9dc7221fdb924ecf9e76fd959292dd796c64143c18438c0edae1c0
-3.4.1: 6a2c7a7e0e9dc7221fdb924ecf9e76fd959292dd796c64143c18438c0edae1c0
+3.4.1: 002f7a0935838162022fed759cddc1cc73c3dcde6af32621e7879fb905ae202d
 
 # Tags
 

@@ -20,7 +20,7 @@ These settings affect the current node. Runtime environment changes are not a re
 # Reviewed against
 
 3.4.0: 0792a3daeb532b41b56fad40f6681cab6086d2e1804582f944701fd50b21a1d9
-3.4.1: 0792a3daeb532b41b56fad40f6681cab6086d2e1804582f944701fd50b21a1d9
+3.4.1: aaf22fb006dcd59b62d0dca002e24de1c7ecb06dd2cbcb4cc71c34973899af3c
 
 # Tags
 

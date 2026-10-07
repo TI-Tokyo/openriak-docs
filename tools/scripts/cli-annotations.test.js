@@ -212,3 +212,12 @@ test('module and operation parents own shared Erlang parameter descriptions',()=
   assert.match(dates.description,/2026-12-24T23:59:59Z/);
  }
 });
+
+test('version-specific omissions preserve raw evidence and error overrides link numbered examples', () => fixture(root => {
+ write(root,'common','# Examples\n## legacy\ntitle: Old illustration\n### Invocation\nriak admin describe\n### Description\nUnverified illustration\n\n## describe:ok\ntitle: Captured setting\n### Description\nRead the captured setting.');
+ write(root,'3.4.1','# Examples\n## legacy\nomit: true\n\n# Errors\n## missing\nexample_id: describe:ok');
+ const ref = buildAnnotatedReference(document,{overrideRoot:root}).pages[0].reference;
+ assert.deepEqual(ref.examples.map(e=>e.id),['describe:ok']);
+ assert.equal(ref.evidence[0].stdout,'ring_size: documentation');
+ assert.deepEqual(ref.errors[0].example,{number:1,title:'Captured setting',anchor:'example-1'});
+}));

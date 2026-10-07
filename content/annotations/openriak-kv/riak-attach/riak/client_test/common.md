@@ -26,7 +26,7 @@ See the shared `Node` argument on the parent module page.
 # Reviewed against
 
 3.4.0: 97155a47eb62ade446f49b06687817511abe0141347961f689f52d7a4d7cd2e4
-3.4.1: 97155a47eb62ade446f49b06687817511abe0141347961f689f52d7a4d7cd2e4
+3.4.1: e0cc68da0ab5777571b75bcc75b8362a2c452af85284c9ce8cb61b91ec3e8974
 
 # Tags
 

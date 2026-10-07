@@ -66,7 +66,7 @@ Full Erlang node name, or `all` to select all available nodes. Omit to select th
 # Reviewed against
 
 3.4.0: ec9ac18df220885e2c7a3be180834f3eccb0b5a3152adb4be60f05c1edf8ce01
-3.4.1: ec9ac18df220885e2c7a3be180834f3eccb0b5a3152adb4be60f05c1edf8ce01
+3.4.1: a2b01928a7ad210ddefdf83311a7f084dfff565e5a37cb2846fdcd1eaaebe534
 
 # Tags
 

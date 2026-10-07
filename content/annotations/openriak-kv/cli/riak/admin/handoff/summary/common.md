@@ -45,7 +45,7 @@ Print usage without executing the command. The short spelling is `-h`.
 # Reviewed against
 
 3.4.0: 05d119ad9fe01bc43b7112c8854181d73a1f9b93b843d15161ccf9c6db680732
-3.4.1: 05d119ad9fe01bc43b7112c8854181d73a1f9b93b843d15161ccf9c6db680732
+3.4.1: 52e38498bb71ee9e6c541f0029afd0932f6269bc3d79629b302385719c42dff8
 
 # Tags
 

@@ -54,7 +54,7 @@ Repair legacy LevelDB secondary-index entries, then check the index results. Thi
 # Reviewed against
 
 3.4.0: f016463d7c5d39a6ee34a27f8a2aacdcc6c010875dd3b59e9f3dacc0ff37f1f2
-3.4.1: f016463d7c5d39a6ee34a27f8a2aacdcc6c010875dd3b59e9f3dacc0ff37f1f2
+3.4.1: e411a135397dbf323d7000ed35440900788e35f507db6bc9fdea05b65b01ae92
 
 # Tags
 

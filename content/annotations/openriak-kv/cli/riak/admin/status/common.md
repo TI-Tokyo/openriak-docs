@@ -16,7 +16,7 @@ The report combines counters, gauges and recent-window measurements. Values chan
 # Reviewed against
 
 3.4.0: eea0182f715b6342e462f8cbac2d31f668075f307aaa25ab27d881e79b792b17
-3.4.1: eea0182f715b6342e462f8cbac2d31f668075f307aaa25ab27d881e79b792b17
+3.4.1: 4124898ef7ce955d0fb12736bb720ea0a51be3fa062c6e1e691df28daa772d6e
 
 # Tags
 

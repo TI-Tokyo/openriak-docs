@@ -44,7 +44,7 @@ Stage a resize of the two-node ring. Review the resulting plan before committing
 # Reviewed against
 
 3.4.0: 74129a97185fb3fcefd6f6cbaa92e7f57e21ad10502bf7a62613283a2515e49e
-3.4.1: 74129a97185fb3fcefd6f6cbaa92e7f57e21ad10502bf7a62613283a2515e49e
+3.4.1: 21e7ea1ed52dc0c2a45fede1a32846f1115ad5fdc84adbf3a300e2da60f751b3
 
 # Tags
 

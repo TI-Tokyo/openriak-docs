@@ -131,7 +131,7 @@ Inspect the range tree to compare AAE data for five stored objects. Expect a pop
 # Reviewed against
 
 3.4.0: e003112ba2d812bd8d82c74cd9f57d96143712385df4631561c4a25665a522cf
-3.4.1: e003112ba2d812bd8d82c74cd9f57d96143712385df4631561c4a25665a522cf
+3.4.1: 5bd681d19564ce6ac931f5eb36bf8627ad0cf63239ffa431acf1bf1f19cb9620
 
 # Tags
 

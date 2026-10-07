@@ -36,7 +36,7 @@ See the shared `Client` argument on the parent module page.
 # Reviewed against
 
 3.4.0: a113b325faa462086ca7bac2df0beecf2efba8f7231643cb9d06a2d8da98f431
-3.4.1: a113b325faa462086ca7bac2df0beecf2efba8f7231643cb9d06a2d8da98f431
+3.4.1: e46547443d54ea89e339196b1c315c2a2b7b91f1cd9178990e50c939fa962be3
 
 # Tags
 

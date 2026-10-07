@@ -13,7 +13,7 @@
   {{ with .reference }}
     {{ with .summary }}{{ $page.RenderString . }}{{ end }}
     {{ with .description }}{{ $page.RenderString . }}{{ end }}
-    {{ with .tags }}{{ partial "annotation-tags.html" . }}{{ end }}
+    {{ with .tags }}{{ partial "annotation-tags.html" (dict "tags" . "page" $page) }}{{ end }}
     {{ partial "cli/shared-arguments.html" (dict "page" $page "arguments" .shared_arguments) }}
     {{ range .notes }}{{ $page.RenderString . }}{{ end }}
   {{ end }}

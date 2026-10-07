@@ -34,7 +34,7 @@ With no value, this prints the current concurrency limit. With an integer, it ch
 # Reviewed against
 
 3.4.0: fec6e0fb3917061ac2d03e32cec1beec54e23532c811b9f98a1a23b377e98988
-3.4.1: fec6e0fb3917061ac2d03e32cec1beec54e23532c811b9f98a1a23b377e98988
+3.4.1: 5b8e1ef99c19408af77f1c71702650c912c1832d3b951a8167c65603980cac59
 
 # Tags
 

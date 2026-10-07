@@ -74,7 +74,7 @@ A successful helper operation reports its result and returns. Verify archive int
 # Reviewed against
 
 3.4.0: df43c6619987f504c9e05f3feb30e315e96cc94f8983b2dacb41d10e812c4c04
-3.4.1: df43c6619987f504c9e05f3feb30e315e96cc94f8983b2dacb41d10e812c4c04
+3.4.1: 3607eeda5455ecea648ec49265d218cd8b382b976ba2cb3647de9c98804a9169
 
 # Tags
 

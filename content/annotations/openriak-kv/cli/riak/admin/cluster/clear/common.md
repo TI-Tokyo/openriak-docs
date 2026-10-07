@@ -32,7 +32,7 @@ Inspect ring-status, wait for convergence, then run cluster plan again.
 # Reviewed against
 
 3.4.0: e4614a2aea7d0247e41afee3f43a511baf72b767a8ef0b42ba94ae69990b361b
-3.4.1: e4614a2aea7d0247e41afee3f43a511baf72b767a8ef0b42ba94ae69990b361b
+3.4.1: b894b476a522cb3b33889dc99838dd91577bb89d82fc47eab194206904be6a07
 
 # Tags
 

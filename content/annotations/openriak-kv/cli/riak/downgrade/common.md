@@ -66,7 +66,7 @@ Success changes release-handler state. Confirm the resulting state with riak ver
 # Reviewed against
 
 3.4.0: c8b88bbf98926adf8cf097c12519809e2d6db5e4023cd446c0cdc29bd36b6f83
-3.4.1: c8b88bbf98926adf8cf097c12519809e2d6db5e4023cd446c0cdc29bd36b6f83
+3.4.1: 0d6bf00604c6343b1c31d3f4b7d5b91ff3a43f4223b963d61e2d8eb04ba63ff6
 
 # Tags
 

@@ -16,7 +16,7 @@ Use for a maintenance window and resume afterward so background consistency work
 # Reviewed against
 
 3.4.0: 09e6d31af3903fda48f8c3bf07e2d5bd3c709840c8485ff0a47956f51b6f1ffc
-3.4.1: 09e6d31af3903fda48f8c3bf07e2d5bd3c709840c8485ff0a47956f51b6f1ffc
+3.4.1: 1f6f324c10241c16830476084e7fdfb3f4c5a60e496a3b1549ccb30b280eaf07
 
 # Tags
 

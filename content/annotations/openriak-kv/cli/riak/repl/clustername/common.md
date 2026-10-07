@@ -26,7 +26,7 @@ Human-readable name for this cluster, for example `tokyo`. Omit to read the curr
 # Reviewed against
 
 3.4.0: a83857736fde18aacd26f4702247acee7de5f4402932b67b1a7caf008884a705
-3.4.1: a83857736fde18aacd26f4702247acee7de5f4402932b67b1a7caf008884a705
+3.4.1: 82f95007fe73977523ec4d68ef95538bd9f0a4e31b5aed9f37e7345bb6ae535a
 
 # Tags
 
