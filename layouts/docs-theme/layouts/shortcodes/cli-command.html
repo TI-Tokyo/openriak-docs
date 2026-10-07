@@ -100,7 +100,7 @@
 <div class="cli-table-scroll"><table class="cli-errors"><thead><tr><th scope="col">Condition</th><th scope="col">Result</th><th scope="col">What to do</th></tr></thead><tbody>
 {{ range . }}<tr><td>{{ $page.RenderString (dict "display" "block") .condition }}{{ with .example }}<p>See <a href="#{{ .anchor }}" title="{{ .title }}">Example {{ .number }}: {{ .title }}</a>.</p>{{ end }}</td><td>{{ $page.RenderString (dict "display" "block") .description }}</td><td>{{ $page.RenderString (dict "display" "block") .remedy }}</td></tr>{{ end }}
 </tbody></table></div>{{ end }}
-{{ with $command.reference.sharedErrors }}<h3 id="related-errors">Related errors</h3><ul>{{ range . }}<li><a href="{{ partial "cli/link.html" (dict "context" $context "route" .route) }}#errors">{{ .title }} — Errors</a></li>{{ end }}</ul>{{ end }}
+{{ with $command.reference.sharedErrors }}<h3 id="related-errors">Related errors</h3><ul>{{ range . }}<li><a href="{{ partial "cli/link.html" (dict "context" $context "route" .route) }}#errors">{{ .title }}</a></li>{{ end }}</ul>{{ end }}
 {{ end }}
 {{ with $command.reference.examples }}
 <h2 id="examples">Examples</h2>
