@@ -369,7 +369,9 @@ separate numbered step, including all stdout, stderr and exit status. Global tes
 setup remains in the collapsed environment section. Outputs longer than 15 lines
 use a single code block clipped to 15 rendered lines, with a faded bottom edge
 and an expand/collapse icon in its toolbar. A compact **Show more** button at the
-bottom expands the block and then disappears. Copy and download retain the complete
+bottom border forms a centred tab that expands the block and then disappears.
+Expansion is a saved preference shared by command-page code blocks. Changing it
+keeps the current block in place even when blocks above expand or collapse. Copy and download retain the complete
 capture. The same limit applies to command-page examples and test records. Do not
 combine shell commands with `&&` or abbreviate a captured module list or table.
 Describe what each example demonstrates, what its arguments mean and what result

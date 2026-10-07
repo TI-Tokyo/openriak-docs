@@ -89,6 +89,7 @@ const reference = buildAnnotatedReference(require('../../content/openriak-kv/met
     const boxes = await recordBlock.evaluate(e => ({block:e.getBoundingClientRect().toJSON(), button:e.querySelector('[data-code-show-more]').getBoundingClientRect().toJSON()}));
     assert.ok(Math.abs((boxes.button.x + boxes.button.width/2) - (boxes.block.x + boxes.block.width/2)) < 1, 'Show more is centred');
     assert.ok(boxes.button.width < boxes.block.width/2, 'Show more has compact width');
+    assert.ok(Math.abs(boxes.button.y - boxes.block.bottom) <= 2, 'Show more attaches beneath the bottom border');
     const original = await (await page.request.get(new URL(await recordBlock.locator('[data-code-source]').getAttribute('data-json-src'), page.url()).href)).json();
     await recordBlock.locator('[data-code-copy]').click();
     assert.equal(await page.evaluate(() => navigator.clipboard.readText()), original, 'copy includes hidden lines');

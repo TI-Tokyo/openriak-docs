@@ -536,7 +536,7 @@ button, select, input { border: 1px solid var(--line); border-radius: 3px; backg
 .doc-code-block[data-code-limit] { position: relative; }
 .doc-code-show-more {
   position: absolute;
-  bottom: .5rem;
+  top: 100%;
   left: 50%;
   transform: translateX(-50%);
   display: inline-flex;
@@ -546,7 +546,7 @@ button, select, input { border: 1px solid var(--line); border-radius: 3px; backg
   max-width: calc(100% - 1rem);
   padding: .35rem .7rem;
   border: 1px solid var(--line);
-  border-radius: .3rem;
+  border-radius: 0 0 .3rem .3rem;
   background: var(--panel-cool);
   color: var(--ink);
   font: inherit;
@@ -564,3 +564,5 @@ button, select, input { border: 1px solid var(--line); border-radius: 3px; backg
 }
 .doc-code-show-more:hover { color: var(--orange); border-color: currentColor; }
 .doc-code-show-more[hidden], .is-output-expanded .doc-code-show-more { display: none; }
+
+.doc-code-block.has-hidden-output:not(.is-output-expanded) { margin-bottom: 3.25rem; }
