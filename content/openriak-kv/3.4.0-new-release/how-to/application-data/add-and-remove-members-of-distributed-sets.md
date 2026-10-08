@@ -6,7 +6,7 @@ weight: 480
 diataxis: how-to
 product: OpenRiak KV
 product_version: 3.4.0
-status: editorially-rewritten
+status: Reviewed
 draft: true
 audience:
 - developers
@@ -21,9 +21,10 @@ tags:
 - kv
 - how-to
 editorial_review: complete
-technical_review: required
-last_reviewed: '2026-09-22'
-review_scope: diataxis-content-and-navigation
+technical_review: complete
+last_reviewed: '2026-09-27'
+review_scope: content review
+review-by: TI Tokyo/JOM
 restructured_from:
 - how-to/develop/use-sets.md
 related:
@@ -56,4 +57,4 @@ For removal, fetch the set first and include its returned context with `remove_a
 
 ## Verify concurrent behaviour
 
-Run two clients against a disposable key, then fetch the converged value. Preserve opaque context returned by the data-type API; it is not interchangeable with an ordinary object's vector-clock header. See [Distributed data-type operations]({{< product-version-root >}}reference/http-api/distributed-data-type-operations/) for response fields and operations, and [Build a shared counter and collection]({{< product-version-root >}}tutorials/data-and-concurrency/build-a-shared-counter-and-collection/) for a guided exercise.
+To verify the behaviour, run two clients against a test key, then fetch the converged value. Preserve opaque context returned by the data-type API; it is not interchangeable with an ordinary object's vector-clock header. See [Distributed data-type operations]({{< product-version-root >}}reference/http-api/distributed-data-type-operations/) for the response fields and operations, and [Build a shared counter and collection]({{< product-version-root >}}tutorials/data-and-concurrency/build-a-shared-counter-and-collection/) for a tutorial in this.

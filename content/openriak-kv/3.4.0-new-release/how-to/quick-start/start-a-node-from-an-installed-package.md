@@ -5,11 +5,12 @@ product: OpenRiak KV
 product_version: 3.4.0
 diataxis: how-to
 draft: true
-status: editorially-rewritten
+status: reviewed
 editorial_review: complete
-technical_review: required
-last_reviewed: '2026-09-22'
-review_scope: diataxis-content-and-navigation
+technical_review: complete
+last_reviewed: '2026-10-06'
+review_scope: content review
+review-by: TI Tokyo/JOM
 description: Start a node after installing the release-matched native package. Complete the platform installation
   guide first and keep the client listeners restricted until the node has been verified.
 related:
@@ -41,4 +42,4 @@ Use the service command shown for the operating system and service manager in th
 
 Check the HTTP ping endpoint at the configured listener, then perform a write and read in a test bucket. Inspect logs for backend, identity, and listener errors before joining another node.
 
-If validation fails, correct the reported setting and repeat the check. If the process starts but clients cannot connect, compare the listener binding, firewall, protocol, and client address.
+If verification fails, correct the reported setting and repeat the check. If the process starts but clients cannot connect, compare the listener binding, firewall, protocol, and client address.

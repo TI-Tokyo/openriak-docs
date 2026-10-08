@@ -7,9 +7,10 @@ diataxis: how-to
 draft: true
 status: editorially-rewritten
 editorial_review: complete
-technical_review: required
-last_reviewed: '2026-09-22'
-review_scope: diataxis-content-and-navigation
+technical_review: complete
+last_reviewed: '2026-10-06'
+review_scope: content review
+review-by: TI Tokyo/JOM
 description: Reduce Query API cost by changing a measured part of the query while preserving its answer.
 related:
 - how-to/performance/benchmark-a-representative-workload
@@ -36,6 +37,6 @@ Save the request body, result, latency distribution, dataset size, and concurren
 
 ## Verify correctness and impact
 
-Compare results against the same known dataset, including boundary and duplicate cases. Measure tail latency, worker queues, backend load, and the effect on writes and repair. Retain a change only when it improves the intended metric without violating the application's result contract.
+You should verify your results by comparing against the same known dataset, including boundary and duplicate cases. Measure tail latency, worker queues, backend load, and the effect on writes and repair. Retain a change only when it improves the intended metric without violating the application's result contract.
 
 If extra concurrency merely lengthens queues, reduce offered work or address the constrained resource rather than raising timeouts.

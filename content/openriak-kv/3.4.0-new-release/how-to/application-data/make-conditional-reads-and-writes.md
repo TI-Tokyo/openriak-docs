@@ -7,7 +7,7 @@ weight: 450
 diataxis: how-to
 product: OpenRiak KV
 product_version: 3.4.0
-status: editorially-rewritten
+status: reviewed
 draft: true
 audience:
 - developers
@@ -23,9 +23,10 @@ tags:
 - kv
 - how-to
 editorial_review: complete
-technical_review: required
-last_reviewed: '2026-09-22'
-review_scope: diataxis-content-and-navigation
+technical_review: complete
+last_reviewed: '2026-10-05'
+review_scope: content review
+review-by: TI Tokyo/JOM
 restructured_from:
 - how-to/develop/send-conditional-object-request.md
 related:
@@ -35,9 +36,9 @@ related:
 - foundations/data-and-consistency/conditional-updates-and-latch-objects
 ---
 
-Use conditional requests when an operation should depend on the version the client observed or on a key being absent. Conditions reduce unwanted overwrites but do not make ordinary objects a general transaction system.
+Conditional requests are used when an operation should depend on the version the client observed or on a key being absent. Conditions reduce unwanted overwrites but do not make ordinary objects a general transaction system.
 
-## Read conditionally
+## How to read conditionally
 
 Keep the ETag from a successful read and send `If-None-Match` on a later GET when the client already has that representation. Handle `304` without trying to decode a new object body.
 

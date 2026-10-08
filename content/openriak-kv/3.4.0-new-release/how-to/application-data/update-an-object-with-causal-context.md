@@ -6,7 +6,7 @@ weight: 410
 diataxis: how-to
 product: OpenRiak KV
 product_version: 3.4.0
-status: editorially-rewritten
+status: reviewed
 draft: true
 audience:
 - developers
@@ -25,9 +25,10 @@ tags:
 - kv
 - how-to
 editorial_review: complete
-technical_review: required
-last_reviewed: '2026-09-22'
-review_scope: diataxis-content-and-navigation
+technical_review: complete
+last_reviewed: '2026-10-05'
+review_scope: content review
+review-by: TI Tokyo/JOM
 restructured_from:
 - how-to/develop/update-object.md
 related:
@@ -50,7 +51,7 @@ VCLOCK=$(awk 'tolower($1)=="x-riak-vclock:" {gsub("\r", "", $2); print $2}' obje
 test -n "$VCLOCK"
 ```
 
-Handle siblings before proceeding. Keep the context opaque; do not decode or construct a replacement vector clock in application code.
+You should handle siblings however appropriate for your system before proceeding. Keep the context opaque; do not decode or construct a replacement vector clock in application code.
 
 ## Send the changed value
 
@@ -62,4 +63,4 @@ Preserve indexes and other metadata the application still needs; a replacement o
 
 ## Verify and handle races
 
-Read the object again and check its body, metadata, and context. Another writer may have updated it concurrently, so retain the application's sibling-resolution path. Use [Make conditional reads and writes]({{< product-version-root >}}how-to/application-data/make-conditional-reads-and-writes/) when the operation should fail if the fetched version has changed, and handle that failure by refetching rather than blindly retrying the old request.
+To verify, read the object again and check its body, metadata, and context. Another writer may have updated it concurrently, so retain the application's sibling-resolution path. Use [Make conditional reads and writes]({{< product-version-root >}}how-to/application-data/make-conditional-reads-and-writes/) when the operation should fail if the fetched version has changed, and handle that failure by refetching rather than blindly retrying the old request.

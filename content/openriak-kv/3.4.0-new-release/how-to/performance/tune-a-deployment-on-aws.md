@@ -6,7 +6,7 @@ weight: 1220
 diataxis: how-to
 product: OpenRiak KV
 product_version: 3.4.0
-status: editorially-rewritten
+status: reviewed
 draft: true
 audience:
 - performance-engineers
@@ -22,9 +22,10 @@ tags:
 - kv
 - how-to
 editorial_review: complete
-technical_review: required
-last_reviewed: '2026-09-22'
-review_scope: diataxis-content-and-navigation
+technical_review: complete
+last_reviewed: '2026-10-06'
+review_scope: content review
+review-by: TI Tokyo/JOM
 restructured_from:
 - how-to/tune/tune-aws-deployment.md
 related:
@@ -41,7 +42,7 @@ Tune an AWS deployment from measured instance, storage, and network behaviour. K
 
 ## Identify the limiting resource
 
-Compare Riak latency and queue growth with EC2 CPU, network, and EBS latency/throughput observations. Check whether the instance or volume is reaching its provisioned or burst limits. Include cross-zone traffic and recovery transfers in the measurement.
+Compare Riak latency and match growth with EC2 CPU, network, and EBS latency/throughput observations. Check whether the instance or volume is reaching its provisioned or burst limits. Include cross-zone traffic and recovery transfers in the measurement.
 
 ## Test a specific change
 

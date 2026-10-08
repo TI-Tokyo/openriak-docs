@@ -6,7 +6,10 @@ product_version: 3.4.0
 draft: true
 description: Start a disposable local node or cluster, or bring an already installed native package into service.
 editorial_review: complete
-technical_review: required
+technical_review: complete
+last_reviewed: '2026-10-06'
+review_scope: content review
+review-by: TI Tokyo/JOM
 related: []
 ---
 

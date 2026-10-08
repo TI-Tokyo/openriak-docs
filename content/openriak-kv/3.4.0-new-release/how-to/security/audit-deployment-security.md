@@ -6,7 +6,7 @@ weight: 1170
 diataxis: how-to
 product: OpenRiak KV
 product_version: 3.4.0
-status: editorially-rewritten
+status: reviewed
 draft: true
 audience:
 - security-operators
@@ -19,9 +19,10 @@ tags:
 - kv
 - how-to
 editorial_review: complete
-technical_review: required
-last_reviewed: '2026-09-22'
-review_scope: diataxis-content-and-navigation
+technical_review: complete
+last_reviewed: '2026-10-06'
+review_scope: content review
+review-by: TI Tokyo/JOM
 restructured_from:
 - how-to/secure/best-practices.md
 related:
@@ -35,7 +36,7 @@ related:
 
 Audit the access actually exposed by a deployment, then record the changes needed to meet its security requirements.
 
-## Inventory access
+## Inventory access routes and rules
 
 List client listeners, replication endpoints, node distribution ports, administrative hosts, and load-balancer paths. Compare the configured bindings and network rules with the clients and peers that should reach them.
 

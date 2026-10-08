@@ -6,7 +6,7 @@ weight: 130
 diataxis: how-to
 product: OpenRiak KV
 product_version: 3.4.0
-status: editorially-rewritten
+status: reviewed
 draft: true
 audience:
 - operators
@@ -28,9 +28,10 @@ tags:
 - kv
 - how-to
 editorial_review: complete
-technical_review: required
-last_reviewed: '2026-09-22'
-review_scope: diataxis-content-and-navigation
+technical_review: complete
+last_reviewed: '2026-10-06'
+review_scope: content review
+review-by: TI Tokyo/JOM
 restructured_from:
 - how-to/install/rhel-rocky.md
 related:
@@ -74,6 +75,9 @@ Complete [Configure node identity, directories, and the initial ring]({{< produc
 
 {{< cli-example key="shell:riak chkconfig" prefix="sudo" >}}
 {{< service-command action="start" os="rhel" >}}
+
+Check OpenRiak is running:
+
 {{< cli-example key="shell:riak ping" prefix="sudo" >}}
 
 Expect `pong`, then complete [Verify an installation]({{< product-version-root >}}how-to/installation/verify-an-installation/) before joining the cluster or admitting traffic. Containers without a service manager should use their image entrypoint, not the host-service commands above.

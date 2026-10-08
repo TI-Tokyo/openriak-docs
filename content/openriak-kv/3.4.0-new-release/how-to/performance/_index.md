@@ -7,8 +7,11 @@ draft: true
 description: Measure a representative workload first, then tune the specific runtime, storage, network, or query
   bottleneck.
 editorial_review: complete
-technical_review: required
+technical_review: complete
+last_reviewed: '2026-10-06'
+review_scope: content review
+review-by: TI Tokyo/JOM
 related: []
 ---
 
-Measure a representative workload first, then tune the specific runtime, storage, network, or query bottleneck.
+Measuring a representative workload, tuning the specific runtime, storage, network, or query bottleneck and reducing latency/api-cost.

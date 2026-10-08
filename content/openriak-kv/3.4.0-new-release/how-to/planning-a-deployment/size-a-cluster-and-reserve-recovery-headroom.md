@@ -6,7 +6,7 @@ weight: 50
 diataxis: how-to
 product: OpenRiak KV
 product_version: 3.4.0
-status: editorially-rewritten
+status: reviewed
 draft: true
 audience:
 - architects
@@ -26,9 +26,10 @@ tags:
 - kv
 - how-to
 editorial_review: complete
-technical_review: required
-last_reviewed: '2026-09-22'
-review_scope: diataxis-content-and-navigation
+technical_review: complete
+last_reviewed: '2026-10-06'
+review_scope: content review
+review-by: TI Tokyo/JOM
 restructured_from:
 - how-to/plan/size-cluster.md
 related:
@@ -55,4 +56,4 @@ Run a load test with production-like keys and values. Stop one test member, cont
 
 ## Set expansion triggers
 
-Alert on usable disk space, sustained device latency, queue growth, and request percentiles. Include provisioning and handoff time in the trigger threshold. Document the measured bottleneck, expected growth, and the next expansion step.
+You should set alerts for usable disk space, sustained device latency, queue growth, and request percentiles. Include provisioning and handoff time in the trigger threshold. Document the measured bottleneck, expected growth, and the next expansion step.

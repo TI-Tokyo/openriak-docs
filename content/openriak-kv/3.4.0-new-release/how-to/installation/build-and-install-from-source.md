@@ -6,7 +6,7 @@ weight: 180
 diataxis: how-to
 product: OpenRiak KV
 product_version: 3.4.0
-status: editorially-rewritten
+status: reviewed
 draft: true
 audience:
 - operators
@@ -32,9 +32,10 @@ tags:
 - kv
 - how-to
 editorial_review: complete
-technical_review: required
-last_reviewed: '2026-09-22'
-review_scope: diataxis-content-and-navigation
+technical_review: complete
+last_reviewed: '2026-10-06'
+review_scope: content review
+review-by: TI Tokyo/JOM
 restructured_from:
 - how-to/install/source.md
 related:
@@ -50,7 +51,7 @@ Build a release from its pinned source and dependencies when a suitable package 
 
 ## Choose the release and toolchain
 
-Check [Platforms, architectures, and Erlang/OTP compatibility]({{< product-version-root >}}reference/orientation-and-compatibility/platforms-architectures-and-erlang-otp-compatibility/) for the release's OTP compatibility. Install the compiler, build tools, Git, and native development libraries required by the repository's release-specific build instructions. Use the same OTP major version for build and runtime unless the release explicitly supports another combination.
+Check [Platforms, architectures, and Erlang/OTP compatibility]({{< product-version-root >}}reference/orientation-and-compatibility/platforms-architectures-and-erlang-otp-compatibility/) for the release's OTP compatibility. Install the compiler, build tools, Git, and native development libraries required by the repository's release-specific build instructions. Ensure that you use the same OTP major version for build and runtime unless the release explicitly supports another combination.
 
 Clone the OpenRiak release repository and check out the exact release tag, verifying that it exists before building:
 

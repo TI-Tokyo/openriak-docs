@@ -6,7 +6,7 @@ weight: 400
 diataxis: how-to
 product: OpenRiak KV
 product_version: 3.4.0
-status: editorially-rewritten
+status: reviewed
 draft: true
 audience:
 - developers
@@ -25,9 +25,10 @@ tags:
 - kv
 - how-to
 editorial_review: complete
-technical_review: required
-last_reviewed: '2026-09-22'
-review_scope: diataxis-content-and-navigation
+technical_review: complete
+last_reviewed: '2026-10-05'
+review_scope: content review
+review-by: TI Tokyo/JOM
 restructured_from:
 - how-to/develop/read-object.md
 related:
@@ -48,7 +49,7 @@ Fetch an object and distinguish a value, a missing key, siblings, and a failed r
 curl -sS -D object.headers -o object.body -w '%{http_code}\n' "$RIAK_HTTP/buckets/customers/keys/aiko"
 ```
 
-Interpret the status before decoding the body:
+Check the status code before decoding the body:
 
 - `200`: decode the value according to its content type and retain its causal context.
 - `300`: retrieve and resolve the sibling values using [Resolve concurrent object updates]({{< product-version-root >}}how-to/application-data/resolve-concurrent-object-updates/).

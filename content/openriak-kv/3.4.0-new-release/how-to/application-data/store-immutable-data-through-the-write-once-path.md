@@ -6,7 +6,7 @@ weight: 520
 diataxis: how-to
 product: OpenRiak KV
 product_version: 3.4.0
-status: editorially-rewritten
+status: reviewed
 draft: true
 audience:
 - developers
@@ -19,9 +19,10 @@ tags:
 - kv
 - how-to
 editorial_review: complete
-technical_review: required
-last_reviewed: '2026-09-22'
-review_scope: diataxis-content-and-navigation
+technical_review: complete
+last_reviewed: '2026-10-05'
+review_scope: content review
+review-by: TI Tokyo/JOM
 restructured_from:
 - how-to/develop/use-write-once-path.md
 related:
@@ -39,7 +40,7 @@ Maintain an existing write-once application while planning migration to the norm
 
 ## Confirm the application's assumptions
 
-Inventory bucket types using the write-once property and verify that keys are truly immutable. Identify any reliance on indexes, conditional updates, replication, or repair before changing the policy. Use [Write-once interface]({{< product-version-root >}}reference/extensions-and-specialist-interfaces/write-once-interface/) for the interface constraints.
+You should run an inventory of bucket types using the write-once property and verify that keys are truly immutable. Identify any reliance on indexes, conditional updates, replication, or repair before changing the policy. Use [Write-once interface]({{< product-version-root >}}reference/extensions-and-specialist-interfaces/write-once-interface/) for the interface constraints.
 
 ## Test the normal write path
 

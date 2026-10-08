@@ -6,7 +6,7 @@ weight: 1240
 diataxis: how-to
 product: OpenRiak KV
 product_version: 3.4.0
-status: editorially-rewritten
+status: reviewed
 draft: true
 audience:
 - performance-engineers
@@ -23,9 +23,10 @@ tags:
 - kv
 - how-to
 editorial_review: complete
-technical_review: required
-last_reviewed: '2026-09-22'
-review_scope: diataxis-content-and-navigation
+technical_review: complete
+last_reviewed: '2026-10-06'
+review_scope: content review
+review-by: TI Tokyo/JOM
 restructured_from:
 - how-to/tune/_index.md
 related:
@@ -49,4 +50,4 @@ Prefer fixing insufficient I/O capacity or an unsuitable storage layout over mas
 
 ## Verify persistence and behaviour
 
-Apply a candidate change to a pilot, repeat the workload through a maintenance cycle, and verify the setting survives reboot if that is intended. Compare request percentiles, errors, background completion, and memory headroom. Revert changes that improve a microbenchmark but worsen the database workload.
+Apply a candidate change to a test/pilot node, repeat the workload through a maintenance cycle, and verify the setting survives reboot if that is intended. Compare request percentiles, errors, background completion, and memory headroom. Revert changes that improve a microbenchmark but worsen the database workload.

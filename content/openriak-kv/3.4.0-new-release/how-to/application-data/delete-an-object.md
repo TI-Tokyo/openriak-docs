@@ -6,7 +6,7 @@ weight: 420
 diataxis: how-to
 product: OpenRiak KV
 product_version: 3.4.0
-status: editorially-rewritten
+status: reviewed
 draft: true
 audience:
 - developers
@@ -25,9 +25,10 @@ tags:
 - kv
 - how-to
 editorial_review: complete
-technical_review: required
-last_reviewed: '2026-09-22'
-review_scope: diataxis-content-and-navigation
+technical_review: complete
+last_reviewed: '2026-09-27'
+review_scope: content review
+review-by: TI Tokyo/JOM
 restructured_from:
 - how-to/develop/delete-object.md
 related:
@@ -40,7 +41,7 @@ related:
 - foundations/data-and-consistency/causality-version-vectors-and-siblings
 ---
 
-Delete an object using the context of the version the application intends to remove. Deletion can retain a tombstone for replication and repair.
+Delete an object using the context of the version the application intends to remove. Deletion can (depending on configuration) retain a tombstone for replication and repair.
 
 ## Fetch the current context
 
