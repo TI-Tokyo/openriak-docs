@@ -7,6 +7,12 @@ versions: 3.4.0, 3.4.1
 
 Leave the cluster using the legacy immediate command.
 
+# Deprecation
+
+Please use this replacement command instead:
+
+[`riak admin cluster leave`](../cluster/leave/).
+
 # Description
 
 Prefer the staged cluster subcommands for planned topology changes.

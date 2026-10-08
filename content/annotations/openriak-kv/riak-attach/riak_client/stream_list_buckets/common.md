@@ -7,6 +7,12 @@ versions: 3.4.0, 3.4.1
 
 Stream bucket names to an Erlang process.
 
+# Deprecation
+
+Please use this replacement command instead:
+
+[`riak_client:aae_fold — list_buckets`](../aae-fold/list-buckets/).
+
 # Description
 
 Returns a request identifier immediately. Receive messages tagged with that identifier until `{ReqId, done}`; do not interpret the initial acknowledgment as the complete list.

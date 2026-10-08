@@ -7,6 +7,12 @@ versions: 3.4.0, 3.4.1
 
 List keys in a bucket.
 
+# Deprecation
+
+Please use this replacement command instead:
+
+[`riak_client:aae_fold — find_keys`](../aae-fold/find-keys/).
+
 # Description
 
 This performs a cluster-wide listing and can be expensive on large buckets. Prefer an indexed query when you need a selective lookup.

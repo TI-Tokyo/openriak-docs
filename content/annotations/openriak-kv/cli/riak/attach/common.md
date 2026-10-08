@@ -7,6 +7,12 @@ versions: 3.4.0, 3.4.1
 
 Attach an interactive Erlang shell to the running node.
 
+# Deprecation
+
+Please use this replacement command instead:
+
+[`riak remote_console`](../remote-console/).
+
 # Description
 
 Use this shell for administrative Erlang expressions. End each expression with a period. Detach from the shell without calling q/0 or init:stop/0, which stop the node.

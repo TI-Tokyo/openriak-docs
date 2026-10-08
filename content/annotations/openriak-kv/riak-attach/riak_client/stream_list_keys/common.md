@@ -7,6 +7,12 @@ versions: 3.4.0, 3.4.1
 
 Stream bucket keys to an Erlang process.
 
+# Deprecation
+
+Please use this replacement command instead:
+
+[`riak_client:aae_fold — find_keys`](../aae-fold/find-keys/).
+
 # Description
 
 Returns a request identifier immediately. For `{ReqId, From, {keys, Keys}}` messages, call `riak_kv_keys_fsm:ack_keys(From)` before waiting for the next batch. Messages without `From` do not need acknowledgment. Receive messages tagged with that identifier until `{ReqId, done}`; do not interpret the initial acknowledgment as the complete list.

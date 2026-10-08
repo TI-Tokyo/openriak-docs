@@ -43,12 +43,12 @@ function displayExampleDescription(text) {
     (_, start, commands, end) => start + displayShellInvocation(commands) + end);
 }
 function validateEntry(entry, file) {
-  const allowed = ['tags', 'versions', 'reviewed_against', 'summary', 'description', 'syntax', 'related_documentation', 'known_good_example', ...arrayFields, 'example_overrides', 'error_overrides', 'option_overrides'];
+  const allowed = ['tags', 'versions', 'reviewed_against', 'summary', 'description', 'syntax', 'related_documentation', 'deprecation', 'known_good_example', ...arrayFields, 'example_overrides', 'error_overrides', 'option_overrides'];
   if (!plain(entry) || Object.keys(entry).some(k => !allowed.includes(k))) throw new Error(`${file}: unknown annotation fields`);
   if (entry.tags) validateTags(entry.tags, file);
   if (entry.versions && (!Array.isArray(entry.versions) || entry.versions.some(v => !/^\d+\.\d+\.\d+$/.test(v)))) throw new Error(`${file}: invalid versions`);
   if (entry.reviewed_against && (!plain(entry.reviewed_against) || Object.entries(entry.reviewed_against).some(([v, h]) => !/^\d+\.\d+\.\d+$/.test(v) || !/^[a-f0-9]{64}$/.test(h)))) throw new Error(`${file}: invalid review fingerprints`);
-  for (const field of ['summary', 'description', 'syntax', 'related_documentation', 'known_good_example']) if (field in entry && typeof entry[field] !== 'string') throw new Error(`${file}: ${field} must be text`);
+  for (const field of ['summary', 'description', 'syntax', 'related_documentation', 'deprecation', 'known_good_example']) if (field in entry && typeof entry[field] !== 'string') throw new Error(`${file}: ${field} must be text`);
   if ('option_overrides' in entry) {
     if (!plain(entry.option_overrides)) throw new Error(`${file}: option_overrides must map flag names to fields`);
     for (const patch of Object.values(entry.option_overrides)) {
@@ -131,7 +131,7 @@ function buildAnnotatedReference(document, { overrideRoot = defaultOverrideRoot 
       const expected = entry.reviewed_against?.[document.version];
       if (expected !== reviewFingerprint(command)) report.issues.push({ command: command.id, file: layer.name, status: expected ? 'stale' : 'unreviewed', fingerprint: reviewFingerprint(command) });
       if (entry.tags) content.tags = {...content.tags, ...entry.tags};
-      for (const field of ['summary', 'description', 'syntax', 'related_documentation', 'known_good_example', ...arrayFields]) if (field in entry) content[field] = structuredClone(entry[field]);
+      for (const field of ['summary', 'description', 'syntax', 'related_documentation', 'deprecation', 'known_good_example', ...arrayFields]) if (field in entry) content[field] = structuredClone(entry[field]);
       for (const [id, patch] of Object.entries(entry.example_overrides || {})) {
         const example = content.examples.find(e => e.id === id);
         if (!example) {
@@ -190,6 +190,7 @@ function buildAnnotatedReference(document, { overrideRoot = defaultOverrideRoot 
       description: sources.map(s => s.content.description).filter(Boolean).join('\n\n'),
       syntax: sources.map(s => s.content.syntax).filter(Boolean).join('\n\n'),
       related_documentation: sources.map(s => s.content.related_documentation).filter(Boolean).join('\n\n'),
+      deprecation: sources.map(s => s.content.deprecation).find(Boolean),
       known_good_example: sources.map(s => s.content.known_good_example).find(Boolean),
       arguments: uniqueBy(sources.flatMap(s => s.content.arguments), 'name'),
       shared_arguments: uniqueBy(sources.flatMap(s => s.content.shared_arguments), 'name'),

@@ -7,6 +7,12 @@ versions: 3.4.0, 3.4.1
 
 Run a release-helper operation over Erlang distribution.
 
+# Deprecation
+
+Please use this replacement command instead:
+
+[`riak rpc`](../../../riak/rpc/).
+
 # Description
 
 This bundled helper is normally invoked by the Riak launcher. Prefer riak ping, rpc or eval, which supply the configured target and cookie.

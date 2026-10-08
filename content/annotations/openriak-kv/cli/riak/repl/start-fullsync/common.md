@@ -7,6 +7,10 @@ versions: 3.4.0, 3.4.1
 
 Start fullsync for legacy replication.
 
+# Deprecation
+
+This operation belongs to the legacy replication protocol. There is no direct replacement within that protocol. Migrate to named-cluster replication using [`riak repl connect`](../connect/) and review [`riak repl fullsync start`](../fullsync/start/) and [`riak repl fullsync stop`](../fullsync/stop/) for full-sync control.
+
 # Description
 
 This is a deprecated replication-v2 control. For current named-cluster full-sync, use the repl fullsync subcommands.

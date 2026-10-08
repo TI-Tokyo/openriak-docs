@@ -29,6 +29,24 @@ with a command ID such as `erlang:riak_client:aae_fold/1:object_stats`.
 These files are build inputs, not Hugo pages. They are not mounted into public
 content and do not require Hugo front matter.
 
+## Deprecation warnings
+
+Deprecated commands display a Warning admonition before their summary. Add a
+`# Deprecation` section containing replacement guidance and links relative to the
+command's public URL. This text appears between the standard “Do not use it”
+warning and the future-removal notice. For example, on `riak start`:
+
+```markdown
+# Deprecation
+
+Please use this replacement command instead:
+
+[`riak daemon`](../daemon/).
+```
+
+For operations without a direct replacement, explain the migration path instead.
+The metadata's deprecated flag controls whether the warning is displayed.
+
 ## Format
 
 Use `#` for sections, `##` for named entries, and `###` for long fields.

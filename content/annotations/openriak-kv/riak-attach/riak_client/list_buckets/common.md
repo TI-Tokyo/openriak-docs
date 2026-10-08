@@ -7,6 +7,12 @@ versions: 3.4.0, 3.4.1
 
 List buckets that contain keys.
 
+# Deprecation
+
+Please use this replacement command instead:
+
+[`riak_client:aae_fold — list_buckets`](../aae-fold/list-buckets/).
+
 # Description
 
 This performs a cluster-wide listing and can be expensive. Bucket presence is updated asynchronously; a just-written bucket may not appear immediately.

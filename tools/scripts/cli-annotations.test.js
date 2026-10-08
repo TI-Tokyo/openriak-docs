@@ -24,6 +24,15 @@ test('every released CLI topic has usable annotations and matching runtime evide
     for (const page of ref.pages) {
       assert.ok(page.reference.summary && page.reference.description, page.key);
       assert.ok(page.reference.overrides.length, page.key);
+      if (page.deprecated) {
+        assert.ok(page.reference.deprecation, `${version} ${page.key}: replacement guidance`);
+        for (const match of page.reference.deprecation.matchAll(/\]\(([^)]+)\)/g)) {
+          const target = path.posix.normalize(path.posix.join(page.route, match[1])).replace(/\/$/, '');
+          const replacement = ref.pages.find(p => p.route === target);
+          assert.ok(replacement, `${page.key}: replacement ${target} exists in ${version}`);
+          assert.equal(replacement.deprecated, false, `${page.key}: replacement is supported`);
+        }
+      }
       for (const parameter of page.parameters) {
         assert.ok(parameter.description, `${page.key}: ${parameter.name}`);
         assert.ok(parameter.datatype || parameter.allowedValues?.length, `${page.key}: ${parameter.name} values`);

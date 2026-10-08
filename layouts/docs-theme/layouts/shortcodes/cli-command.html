@@ -7,6 +7,7 @@
 {{ partial "cli/legacy.html" $page }}
 {{ with $command.reference.related_documentation }}{{ $page.Store.Set "cliRelatedDocumentation" ($page.RenderString .) }}{{ end }}
 <div class="cli-command-reference">
+{{ partial "cli/deprecation.html" (dict "page" $page "command" $command) }}
 {{ with $command.reference.summary }}<div class="cli-summary">{{ $page.RenderString . }}</div>{{ else }}<p>{{ $command.summary }}</p>{{ end }}
 {{ $page.Store.Set "referenceTags" $command.reference.tags }}
 {{ with $command.reference.tags }}{{ partial "annotation-tags.html" (dict "tags" . "page" $page) }}{{ end }}
@@ -55,14 +56,6 @@
 <h2 id="description">Description</h2>
 {{ if ne $command.availability "available" }}
   <div class="cli-notice"><strong>This command is {{ $command.availability | humanize | lower }} in this release.</strong>{{ with $command.notice }} <p>{{ . }}</p>{{ end }}<p>The entry is retained for compatibility reference.</p></div>
-{{ else if $command.deprecated }}
-  <div class="cli-notice">
-  {{ with where $command.provenance "kind" "hint_deprecation" }}
-    {{ range . }}<p><strong>Deprecated since OpenRiak KV {{ .since }}.</strong> {{ .reason }} <a href="{{ .url }}">Deprecation source</a></p>{{ end }}
-  {{ else }}
-    This command is deprecated. Consult the help below before using it in new scripts.
-  {{ end }}
-  </div>
 {{ end }}
 
 {{ with $command.reference.description }}{{ $page.RenderString . }}{{ else }}{{ with $command.description }}{{ $page.RenderString . }}{{ else }}{{ with $command.reference.summary }}{{ $page.RenderString . }}{{ end }}{{ end }}{{ end }}

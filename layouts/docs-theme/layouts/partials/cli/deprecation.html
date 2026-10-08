@@ -1,0 +1,11 @@
+{{- if .command.deprecated -}}
+  {{- $text := "> [!WARNING] Deprecated Command\n> This command has been deprecated. **Do not use it**.\n>\n" -}}
+  {{- with .command.reference.deprecation -}}
+    {{- $text = printf "%s> %s\n>\n" $text (replace . "\n" "\n> ") -}}
+  {{- end -}}
+  {{- $text = printf "%s> This command may be removed in future versions." $text -}}
+  {{- .page.RenderString (dict "display" "block") $text -}}
+  {{- range where .command.provenance "kind" "hint_deprecation" -}}
+    <p class="cli-deprecation-source">Deprecated since OpenRiak KV {{ .since }}. {{ .reason }} <a href="{{ .url }}">Deprecation source</a></p>
+  {{- end -}}
+{{- end -}}

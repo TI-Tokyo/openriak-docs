@@ -7,6 +7,12 @@ versions: 3.4.0, 3.4.1
 
 Join another node using the legacy immediate command.
 
+# Deprecation
+
+Please use this replacement command instead:
+
+[`riak admin cluster join`](../cluster/join/).
+
 # Description
 
 Prefer the staged cluster subcommands for planned topology changes.
