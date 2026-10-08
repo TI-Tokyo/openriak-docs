@@ -117,7 +117,8 @@
   <p><a href="{{ .recipe_url }}">Test recipe on GitHub</a> · Scenario: <code>{{ .observed.verification.scenario }}</code> · Case: <code>{{ .observed.verification.case }}</code>.</p>
   <p>Runtime image: <code>{{ $context.reference.testEnvironment.image }}</code> (<code>{{ .observed.verification.image_id }}</code>).</p>
   {{ with .environment_steps }}<details><summary>Environment setup commands and output</summary>{{ partial "cli/steps.html" (dict "page" $page "steps" .) }}</details>{{ end }}
-  {{ with .observed.test_steps }}<details><summary>Exact execution records</summary>{{ partial "code-block.html" (dict "Page" $page "Type" "json" "Attributes" dict "Inner" (. | jsonify (dict "indent" "  "))) }}</details>{{ end }}
+  {{ $recordFilename := printf "openriak-%s-%s-execution" $context.reference.version (.id | urlize) }}
+  {{ with .observed.test_steps }}{{ partial "cli/evidence-download.html" (dict "data" . "filename" $recordFilename "label" "Download exact execution records") }}{{ end }}
   </details>
   {{ else }}
   {{ partial "code-block.html" (dict "Page" $page "Type" (cond (eq $command.context "erlang") "erlang" "sh") "Attributes" dict "Inner" (.display_invocation | default .invocation)) }}
@@ -147,9 +148,7 @@
 {{ end }}{{ end }}
 {{ with $command.reference.overrides }}<p>Editorial annotations: {{ delimit . ", " }}.</p>{{ end }}
 {{ with $command.reference.evidence }}
-<details><summary>Original scenario evidence</summary>
-{{ partial "code-block.html" (dict "Page" $page "Type" "json" "Attributes" dict "Inner" (. | jsonify (dict "indent" "  "))) }}
-</details>
+{{ partial "cli/evidence-download.html" (dict "data" . "filename" (printf "openriak-%s-%s-evidence" $context.reference.version ($command.title | urlize)) "label" "Download original scenario evidence") }}
 {{ end }}
 <p>Extracted from the OpenRiak KV {{ $context.reference.version }} runtime and matching release source. Help is preserved as supplied by the release, including any format placeholders.</p>
 <ul>{{ range $command.provenance }}<li>{{ if and .repository .commit .path }}<a href="{{ printf "%s/blob/%s/%s" (.repository | strings.TrimSuffix ".git" | replaceRE "^(github.com/)" "https://$1") .commit .path }}">{{ .path }}</a>{{ else }}{{ with .path }}<code>{{ . }}</code>{{ end }}{{ with .module }}<code>{{ . }}</code>{{ end }}{{ with .callback }}<code>{{ .module }}:{{ .function }}/{{ .arity }}</code>{{ end }}{{ end }}</li>{{ end }}</ul>

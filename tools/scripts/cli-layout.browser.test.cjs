@@ -67,7 +67,7 @@ const reference = buildAnnotatedReference(require('../../content/openriak-kv/met
             }
             const source = output.locator('[data-code-source]').last();
             const captured = await (await page.request.get(new URL(await source.getAttribute('data-json-src'), page.url()).href)).json();
-            assert.equal(captured, observation[field], example.id + ': full ' + field);
+            assert.equal(captured, observation[field].replace(/(?:^|\r?\n)\s*$/, ''), example.id + ': output without trailing blank lines');
           }
           }
         }
@@ -84,8 +84,14 @@ const reference = buildAnnotatedReference(require('../../content/openriak-kv/met
     await page.goto(root + 'riak/admin/cluster/commit/');
     const firstExample = page.locator('.cli-example').first();
     await firstExample.locator('.cli-test-details > summary').click();
-    await firstExample.getByText('Exact execution records', {exact: true}).click();
-    const recordBlock = firstExample.locator('.cli-test-details details').filter({has:page.getByText('Exact execution records', {exact:true})}).locator('.doc-code-block');
+    const records = firstExample.locator('[data-cli-evidence-download]');
+    assert.match(await records.getAttribute('download'), /execution\.json$/);
+    const downloaded = await (await page.request.get(new URL(await records.getAttribute('href'), page.url()).href)).json();
+    const commit = reference.pages.find(p => p.key === 'shell:riak admin cluster commit');
+    assert.deepEqual(downloaded, commit.reference.examples[0].observed.test_steps);
+    assert.equal(await firstExample.locator('[data-code-language="json"]').count(), 0);
+    await page.goto(root + 'riak/admin/status/');
+    const recordBlock = page.locator('.cli-example').first().locator('[data-cli-output-stream="Standard output"] .doc-code-block').first();
     const bottom = recordBlock.locator('[data-code-show-more]');
     await bottom.waitFor({state:'visible'});
     const boxes = await recordBlock.evaluate(e => ({block:e.getBoundingClientRect().toJSON(), button:e.querySelector('[data-code-show-more]').getBoundingClientRect().toJSON()}));

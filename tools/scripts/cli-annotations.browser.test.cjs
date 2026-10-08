@@ -28,7 +28,7 @@ const outputText = card => card.locator('.cli-observed').allTextContents().then(
      if(id==='plan-changed')assert.match(await outputText(card),/The plan has changed/);
      if(id==='one-join-after-plan'||id==='five-node-commit')assert.match(await outputText(card),/Cluster changes committed/);
      await card.locator('.cli-test-details > summary').click();
-     assert.match(await card.locator('.cli-test-details').innerText(),/Exact execution records/);
+     assert.match(await card.locator('.cli-test-details').innerText(),/Download exact execution records/);
     }
     for(const link of await page.locator('.related-documentation a').all().then(xs=>xs.slice(0,12))){
      const url=new URL(await link.getAttribute('href'),page.url()).href;
@@ -61,7 +61,7 @@ const outputText = card => card.locator('.cli-observed').allTextContents().then(
     await tested.locator('> summary').click();
     assert.ok(await card.locator('.cli-step').count()>=2);
     assert.match(await tested.locator('a').first().getAttribute('href'),/github\.com\/TI-Tokyo\/openriak-metadata\/blob\/.+\/scenarios\/.+\.json/);
-    assert.match(await tested.textContent(),/Exact execution records/);
+    assert.match(await tested.textContent(),/Download exact execution records/);
     if(route.endsWith('/join'))assert.match(await page.locator('[data-cli-example-id$=":unreachable-destination"] .cli-example-outcome').innerText(),/Expected error/);
    }
    await page.goto(`${root}${version}/reference/commands/erlang/riak/code-hash/`);
@@ -155,8 +155,9 @@ const outputText = card => card.locator('.cli-observed').allTextContents().then(
      assert.match(await review.innerText(),/Supplied alternatives absent.*diag/);
      assert.match(await review.innerText(),/Discovered subcommands missing.*remove/);
     }
-    const evidence=page.locator('.cli-sources details').filter({has:page.locator('summary', {hasText:'Original scenario evidence'})});await evidence.locator('summary').click();
-    const proof=JSON.parse(await evidence.locator('pre code').first().innerText());
+    const evidence=page.locator('.cli-sources [data-cli-evidence-download]');
+    assert.match(await evidence.getAttribute('download'), /evidence\.json$/);
+    const proof=await (await page.request.get(new URL(await evidence.getAttribute('href'),page.url()).href)).json();
     assert.ok(proof.every(e=>e.verification.image_id.startsWith('sha256:')));
    }
    for (const [route, detail] of [
@@ -199,7 +200,9 @@ const outputText = card => card.locator('.cli-observed').allTextContents().then(
     assert.equal(await client.locator('a[href$="/erlang/riak-client/#argument-client"]').count(),1);
     const example=page.locator('.cli-example').filter({has:page.locator('h3',{hasText:'Count five, remove one, count four'})});
 
-    assert.match(await outputText(example),/\{5,1,4\}/);
+    const results = await example.locator('.cli-observed pre').allTextContents();
+    assert.ok(results.includes('{5,1}'), 'the command counts five and removes one');
+    assert.ok(results.includes('{ok,4}'), 'a separate verification step counts four remaining');
    }
    await page.goto(`${root}${version}/reference/commands/erlang/riak-client/`);
    assert.match(await page.locator('#argument-client').innerText(),/riak:local_client/);

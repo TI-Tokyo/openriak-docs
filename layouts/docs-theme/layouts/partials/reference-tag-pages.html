@@ -12,5 +12,5 @@
 {{- range $path, $tag := $tags -}}
   {{- /* Tag indexes are generated from each release's annotations, not versioned Markdown. */ -}}
   {{- $params := merge $tag (dict "product" "OpenRiak KV" "product_version" $version "reference_tag_page" true "hide_provenance" true) -}}
-  {{- $adapter.AddPage (dict "path" $path "title" (printf "Documents tagged %s" $tag.tag) "draft" true "layout" "single" "params" $params "content" (dict "mediaType" "text/markdown" "value" "{{< reference-tag >}}")) -}}
+  {{- $adapter.AddPage (dict "path" $path "title" (printf "%s: %s" ($tag.category | humanize) $tag.tag) "draft" true "layout" "single" "params" $params "content" (dict "mediaType" "text/markdown" "value" "{{< reference-tag >}}")) -}}
 {{- end -}}

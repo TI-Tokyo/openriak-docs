@@ -16,14 +16,6 @@
         {{- $index = merge $index (dict $key ($entries | append (dict "url" $page.RelPermalink "title" $page.Title))) -}}
       {{- end -}}
     {{- end -}}
-    {{- if and $page.Params.tags (not (reflect.IsMap $page.Params.tags)) -}}
-      {{- range $tag := $page.Params.tags -}}
-        {{- range $category := slice "feature" "repository" "module" "concept" -}}
-          {{- $key := printf "%s/%s" $category $tag -}}
-          {{- $index = merge $index (dict $key ((index $index $key | default slice) | append (dict "url" $page.RelPermalink "title" $page.Title))) -}}
-        {{- end -}}
-      {{- end -}}
-    {{- end -}}
   {{- end -}}
 {{- end -}}
 {{- $settings := index hugo.Data "configuration-reference" $context.id $context.version -}}

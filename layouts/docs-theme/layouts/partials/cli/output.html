@@ -1,4 +1,5 @@
-{{- $text := .text -}}
+{{- /* Trim only trailing blank lines for display; downloadable evidence stays exact. */ -}}
+{{- $text := replaceRE `(?:^|\r?\n)\s*\z` "" .text -}}
 <div class="cli-output" data-cli-output-stream="{{ .stream }}">
 <p>{{ .stream }}:</p>
 {{ partial "code-block.html" (dict "Page" .page "Type" "text" "Attributes" (dict "output-limit" 15) "Inner" $text) }}
