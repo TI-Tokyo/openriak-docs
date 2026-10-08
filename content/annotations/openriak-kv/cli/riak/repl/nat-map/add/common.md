@@ -43,7 +43,7 @@ A successful call records an internal/external address mapping visible with `nat
 
 # Reviewed against
 
-3.4.0: 972be92a92eccf1b91ab874b450d6467aa7ac341afa4ab1cef26ec31703cbf15
+3.4.0: 783265ca68496033a566c04c777391d77b48be374cea260aa629185bf6d786f2
 3.4.1: 783265ca68496033a566c04c777391d77b48be374cea260aa629185bf6d786f2
 
 # Tags

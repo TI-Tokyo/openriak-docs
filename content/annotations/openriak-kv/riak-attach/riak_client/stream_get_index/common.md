@@ -85,7 +85,7 @@ Query an index value with no matching objects. Expect an empty result for a sync
 
 # Reviewed against
 
-3.4.0: d187a907daf5b0e8ce92db2cf7cd87f4458752f74a59b635392ed183ecd514fe
+3.4.0: d424f1b457118c04f4561f4671d14732891a33e3fe887b1477fc712190a400eb
 3.4.1: d424f1b457118c04f4561f4671d14732891a33e3fe887b1477fc712190a400eb
 
 # Tags

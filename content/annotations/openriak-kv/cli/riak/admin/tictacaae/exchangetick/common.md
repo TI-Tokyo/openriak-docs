@@ -73,7 +73,7 @@ The packaged runtime returns usage and {error,1} for both tested forms. No excha
 
 # Reviewed against
 
-3.4.0: ca909170a170bfcdc329a48569ede1b3be30a80c14b28246c2c72fd2df8aa8d4
+3.4.0: 0e8f711113c0997af074df0682d36e1ad9328f7a0a308a6be141e385423c2d6f
 3.4.1: 0e8f711113c0997af074df0682d36e1ad9328f7a0a308a6be141e385423c2d6f
 
 # Tags

@@ -25,7 +25,7 @@ Erlang expression, for example `node().` or `1 + 2.`. Quote it as one shell argu
 
 # Reviewed against
 
-3.4.0: 05fd2955e5e3032e33e437d2975257e866bda6e29eefd22e40dbd57e140b1163
+3.4.0: f238e9822e2456c0d20bbedcdd204ea49228ddeecb1442b0db70cf9632813c7e
 3.4.1: f238e9822e2456c0d20bbedcdd204ea49228ddeecb1442b0db70cf9632813c7e
 
 # Tags

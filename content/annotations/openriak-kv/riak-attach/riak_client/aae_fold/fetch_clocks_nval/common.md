@@ -91,7 +91,7 @@ Compute the cached-tree segments for the five stored keys and verify five clocks
 
 # Reviewed against
 
-3.4.0: ca8993333e6d1a9c9e66a9408d33dcd65ebac15c08e69861e81d6b805716cdb9
+3.4.0: 2f78dab97d8167ccb41704206834a965e7eca7a1e52ee85b7278c8e67b4dcc30
 3.4.1: 2f78dab97d8167ccb41704206834a965e7eca7a1e52ee85b7278c8e67b4dcc30
 
 # Tags

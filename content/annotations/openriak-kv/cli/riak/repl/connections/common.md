@@ -15,7 +15,7 @@ Inspect the remote cluster name, control process and member list. A header with 
 
 # Reviewed against
 
-3.4.0: 0743577096170bcd12ff784bf676ce86fc282af43dbcb1560b8f543c67d1fef1
+3.4.0: 1a7cf0ef80d78b72ae4045ccf87c68093cdf8f2bd7d380f914a1f4285778dee5
 3.4.1: 1a7cf0ef80d78b72ae4045ccf87c68093cdf8f2bd7d380f914a1f4285778dee5
 
 # Tags

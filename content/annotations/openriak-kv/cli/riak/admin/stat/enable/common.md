@@ -49,7 +49,7 @@ Enable a counter so it can collect measurements. Expect an acknowledgement of th
 
 # Reviewed against
 
-3.4.0: 4c9f24314817051c7748f2503b983e0567b92de50042aa83ab870704b2ee1b32
+3.4.0: e0193a2b5f4684f284f29b26e78d00874bd9a6092f52fab48511c161d8db053f
 3.4.1: e0193a2b5f4684f284f29b26e78d00874bd9a6092f52fab48511c161d8db053f
 
 # Tags

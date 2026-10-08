@@ -15,7 +15,7 @@ A `TRUE` result lists agreeing nodes. Investigate unreachable or disagreeing mem
 
 # Reviewed against
 
-3.4.0: 6da64521cf5d768c1bb88d1136f8757a7723d550eda611bd5c071c8238a662c6
+3.4.0: 3f4f727f37663097f04c9d8d25df881da9148cfc5ace681f49995d23a631abb4
 3.4.1: 3f4f727f37663097f04c9d8d25df881da9148cfc5ace681f49995d23a631abb4
 
 # Tags

@@ -23,7 +23,7 @@ Request module reload on the node.
 
 # Reviewed against
 
-3.4.0: e40c18c0b8adb423f6a5cd4f90a7f8577be7a1722eccd02d152fab0983fddbb2
+3.4.0: d9cf18e274ead7515611cf54e2c96b848472a9c89c3df58c3e955feca7b3dd54
 3.4.1: d9cf18e274ead7515611cf54e2c96b848472a9c89c3df58c3e955feca7b3dd54
 
 # Tags

@@ -43,7 +43,7 @@ A successful change removes the source rule from `security print-sources`. The f
 
 # Reviewed against
 
-3.4.0: 2a4a6416fc6efe1ea48eeeb255b4a196d8f0903111f318acf6386bb1a9d1209c
+3.4.0: 1d51e2f10abbc407e9f2da478bc592522e7851995ed0d7d8910356e83f272ea3
 3.4.1: 1d51e2f10abbc407e9f2da478bc592522e7851995ed0d7d8910356e83f272ea3
 
 # Tags

@@ -43,7 +43,7 @@ A successful call removes the matching mapping from `nat-map show`. The fixture 
 
 # Reviewed against
 
-3.4.0: 1c0e499903b3aabc1eb7e8196aa41696ac67e7c6430875321691323b43d5d18b
+3.4.0: 2c940c8e299894b5c64b805967050ee45bee23396990b714a3c9c564b74b2495
 3.4.1: 2c940c8e299894b5c64b805967050ee45bee23396990b714a3c9c564b74b2495
 
 # Tags

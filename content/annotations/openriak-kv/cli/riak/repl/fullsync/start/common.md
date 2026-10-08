@@ -41,7 +41,7 @@ Inspect repl connections and repl status, confirm the remote name, and restore t
 
 # Reviewed against
 
-3.4.0: e8196575b17403faef5f8292c696b466f2433d0ff6627470201e5feb4a86e095
+3.4.0: e8e0707f50e3d41d5c3cb766ad1d0a804d2cbf28fa61edfb2a71a4cec6295f68
 3.4.1: e8e0707f50e3d41d5c3cb766ad1d0a804d2cbf28fa61edfb2a71a4cec6295f68
 
 # Tags

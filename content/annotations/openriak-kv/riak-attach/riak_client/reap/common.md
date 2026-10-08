@@ -63,7 +63,7 @@ Delete the object to create one tombstone, reap it, and wait until the tombstone
 
 # Reviewed against
 
-3.4.0: ad0feae088e750513109e872d3cb4804b8568f6457ed5ea852393f6b994b6f61
+3.4.0: ed6de674fce22927167aaa76dd2a05fa2f130af7055847dfc889c04ef76b58e5
 3.4.1: ed6de674fce22927167aaa76dd2a05fa2f130af7055847dfc889c04ef76b58e5
 
 # Tags

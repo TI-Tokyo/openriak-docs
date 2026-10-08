@@ -101,7 +101,7 @@ Queue the five matching objects for replication. Expect five AAE entries in the 
 
 # Reviewed against
 
-3.4.0: 982a933dfb9bd813be2e50379f4af5395dca3ba7d496e70eb42868a806733d6c
+3.4.0: a893ed84ed68346234ea6a8c944421a139ea8e4c80a648a3d381741be76196f9
 3.4.1: a893ed84ed68346234ea6a8c944421a139ea8e4c80a648a3d381741be76196f9
 
 # Tags

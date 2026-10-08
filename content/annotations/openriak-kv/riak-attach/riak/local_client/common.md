@@ -25,7 +25,7 @@ See the shared `ClientId` argument on the parent module page.
 
 # Reviewed against
 
-3.4.0: c26cb82e223a976349aae70721bc51662c04760bef91846355ea5b29b32a8894
+3.4.0: fdde3aa5c370b6fba79c2f30d039ebadea2222aaa9278876b016cc12d2e0f4f8
 3.4.1: fdde3aa5c370b6fba79c2f30d039ebadea2222aaa9278876b016cc12d2e0f4f8
 
 # Tags

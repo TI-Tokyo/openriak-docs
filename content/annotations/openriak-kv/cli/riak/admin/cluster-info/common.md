@@ -43,7 +43,7 @@ A successful invocation writes a diagnostic report to the requested file. The te
 
 # Reviewed against
 
-3.4.0: 8c908ad00cb81db2ab8334e1b62eb6523e7c7e9238ee44192c7995d3eb97c29c
+3.4.0: cec9651de46029c224a283ea21109da93152bd960cd27b60976cb56eeef734c3
 3.4.1: cec9651de46029c224a283ea21109da93152bd960cd27b60976cb56eeef734c3
 
 # Tags

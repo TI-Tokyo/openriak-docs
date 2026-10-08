@@ -33,7 +33,7 @@ A successful call stages a join; `cluster plan` shows the proposed membership ch
 
 # Reviewed against
 
-3.4.0: 401ee3db5a9346f34aadc8145dda76b6e0a619695bb17e0aa467554c6f75e1a0
+3.4.0: ac82cfe7499936cd791688c36eabc26c93aa75dacc52d06d0570e2d66d5c494f
 3.4.1: 2283a355587d9b2b50f1ae9a39fe45e347724718dabad9117c288fa781556552
 
 # Tags

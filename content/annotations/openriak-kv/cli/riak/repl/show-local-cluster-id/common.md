@@ -15,7 +15,7 @@ The identifier is generated for the cluster and differs from its human-readable 
 
 # Reviewed against
 
-3.4.0: fd152348de4998edd3dcf8a78bac84bf0a16cecb9eaf5efe9a30bef8446721bc
+3.4.0: ae9c42b00bd65ebfe2d58256df927ce86af68167f6e52cc69496b695801d8778
 3.4.1: ae9c42b00bd65ebfe2d58256df927ce86af68167f6e52cc69496b695801d8778
 
 # Tags

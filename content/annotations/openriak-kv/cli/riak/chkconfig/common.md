@@ -15,7 +15,7 @@ Runs the packaged configuration generator. A successful check validates the sche
 
 # Reviewed against
 
-3.4.0: 775f446d31672c25238b85f3ae7699fd51da77d19baf1eec889b806e8fa2312e
+3.4.0: 5fee694d5abf9e3851338a0084df2d6eac98afe2e186ac74f7b663ad469c6839
 3.4.1: 5fee694d5abf9e3851338a0084df2d6eac98afe2e186ac74f7b663ad469c6839
 
 # Tags

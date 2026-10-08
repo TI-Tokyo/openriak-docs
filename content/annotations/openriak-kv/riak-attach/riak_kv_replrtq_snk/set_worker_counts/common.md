@@ -35,7 +35,7 @@ See the shared `PerPeerLimit` argument on the parent module page.
 
 # Reviewed against
 
-3.4.0: 6c835990f29395f83eddf9d48cc87be18e41c44c54c3e14ac0300a061e32cad6
+3.4.0: cf28447e60abe9f1981afc4900f06b1f4ff1d4ea0ba14ba5414bb7586b258168
 3.4.1: cf28447e60abe9f1981afc4900f06b1f4ff1d4ea0ba14ba5414bb7586b258168
 
 # Tags

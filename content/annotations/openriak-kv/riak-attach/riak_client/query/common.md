@@ -51,7 +51,7 @@ Inspect each builder result before submitting and correct the reported stage; ch
 
 # Reviewed against
 
-3.4.0: 17afad7800669525b6b63bfa7ed5e49195bc62c22a69ff0e65e72914b9db7684
+3.4.0: 38c3f68bace9e72252403c6657ec14bfe501b220a56ced13c2ea323a99e7577a
 3.4.1: 71ce3301b657c937e28aa951590bd65ec2f0d779fa9b34da00de6ab1f8c10c36
 
 # Tags

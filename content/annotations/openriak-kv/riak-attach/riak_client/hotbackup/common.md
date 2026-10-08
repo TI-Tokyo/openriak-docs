@@ -71,7 +71,7 @@ Check node availability and load. Read back state before retrying a mutation, an
 
 # Reviewed against
 
-3.4.0: 815bb88e538201eac507a52916d2b5200f2ba78fcc78c0db3c85617fddb241f8
+3.4.0: 52b2c766ab88e5dd01b3c811792ecd5da07605cef3dca7bc703d52adb8e6f5b4
 3.4.1: 52b2c766ab88e5dd01b3c811792ecd5da07605cef3dca7bc703d52adb8e6f5b4
 
 # Tags

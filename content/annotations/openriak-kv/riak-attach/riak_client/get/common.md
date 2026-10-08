@@ -103,7 +103,7 @@ Read an object with a quorum, exclude notfound replies from successful responses
 
 # Reviewed against
 
-3.4.0: 1e0cf7425b910050d191eec3d6df13447f0c21bc14bd37ae383bf0a3be1c4cb8
+3.4.0: 147d9fcfb8a65d553d4b6d6e446958c1592d34e38f790e848dff490d3161d970
 3.4.1: 147d9fcfb8a65d553d4b6d6e446958c1592d34e38f790e848dff490d3161d970
 
 # Tags

@@ -35,7 +35,7 @@ One or more assignments. Use `groups=cli_readers` for membership and `password=.
 
 # Reviewed against
 
-3.4.0: cb281472d0be87c83655599f81ca98102d5a27a5c5ef164552e9936310075544
+3.4.0: 2b76c97236c7d368555aecf1d6d0a46b1274477827802f408c22201413cf61a4
 3.4.1: 2b76c97236c7d368555aecf1d6d0a46b1274477827802f408c22201413cf61a4
 
 # Tags

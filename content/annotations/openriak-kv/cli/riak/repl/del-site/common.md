@@ -25,7 +25,7 @@ Legacy site label, for example `cli_site`.
 
 # Reviewed against
 
-3.4.0: 7e364add9f2c737b95af895a2a26ac9f89418785ed1d731afa96008d0fe78fab
+3.4.0: 1ef07b5dd86d6f47487694fc418b4bd7cb1d37a8be4ad94750800512951cf844
 3.4.1: 1ef07b5dd86d6f47487694fc418b4bd7cb1d37a8be4ad94750800512951cf844
 
 # Tags

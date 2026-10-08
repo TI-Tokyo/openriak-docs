@@ -30,7 +30,7 @@ API listener protocol to discover.
 
 # Reviewed against
 
-3.4.0: e8a03640663f735b038dba038b732e5b17eb02426b747bb66654e3137cccd906
+3.4.0: ed26a920a2ffca1b298211500a9d7dbb729f889d4fdfd0b7e80bb8df4bad6cfd
 3.4.1: ed26a920a2ffca1b298211500a9d7dbb729f889d4fdfd0b7e80bb8df4bad6cfd
 
 # Tags

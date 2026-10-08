@@ -43,7 +43,7 @@ Prepare a queue with five stored objects to inspect or change pending replicatio
 
 # Reviewed against
 
-3.4.0: 70b10c443eea5e9fa52868db9f432c56301dcb6be25d2c213ad5638d438411d8
+3.4.0: 2f1fb7186a33f54bf4a0c561288c108bab13c2378246fa7480be6d3cb07b354d
 3.4.1: 2f1fb7186a33f54bf4a0c561288c108bab13c2378246fa7480be6d3cb07b354d
 
 # Tags

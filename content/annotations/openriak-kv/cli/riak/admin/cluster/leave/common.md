@@ -33,7 +33,7 @@ On success, prints a staged-change confirmation. The membership change takes eff
 
 # Reviewed against
 
-3.4.0: c699f269b307dc1446769dd106c13987598bdfc0389c75b62a6d36c9f3b07ac0
+3.4.0: 2fff40d0f5447dbf5cd9dbeb55781e3d4cbf0460543fd3f5c789b12dd98778a7
 3.4.1: 248e517f461e00dfd9869ec0d7bc5420075edbeedf79ab3483ffe6bb0357ae5e
 
 # Tags

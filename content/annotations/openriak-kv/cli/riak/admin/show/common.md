@@ -93,7 +93,7 @@ Read the setting on all cluster members. On a single-member cluster, expect one 
 
 # Reviewed against
 
-3.4.0: 2895fd58ab7e9bd404c2ac661706ee44e41d954357dbab5f09d39b2526e8aef6
+3.4.0: 096cc195190547a515f37269725ca6c55aafb3f105da7ce23473779daa698992
 3.4.1: 096cc195190547a515f37269725ca6c55aafb3f105da7ce23473779daa698992
 
 # Tags

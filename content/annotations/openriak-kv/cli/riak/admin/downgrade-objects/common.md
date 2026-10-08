@@ -68,7 +68,7 @@ The conversion is a background maintenance job; monitor its completion before pr
 
 # Reviewed against
 
-3.4.0: 8c4270541f49f90f229fc1128c1b393ec6e7ebc6318f9dff598543f9bd7b847e
+3.4.0: 523a5bc7e0862dc74d9a471db91d0677641341fbc1bdad46651b67549ce6e137
 3.4.1: 523a5bc7e0862dc74d9a471db91d0677641341fbc1bdad46651b67549ce6e137
 
 # Tags

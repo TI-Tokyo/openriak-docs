@@ -25,7 +25,7 @@ Security user name, for example `cli_reader`. Names are distinct from Erlang nod
 
 # Reviewed against
 
-3.4.0: 0cc9e467b594fe276de8bc1368fa0dd90dff8e8701d8bde6786281bf07377367
+3.4.0: f2c5b47a42bc125792778ab3dbb91577536a2845c561ecc72b7541ac3de12668
 3.4.1: f2c5b47a42bc125792778ab3dbb91577536a2845c561ecc72b7541ac3de12668
 
 # Tags

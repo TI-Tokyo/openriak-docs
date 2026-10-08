@@ -88,7 +88,7 @@ A successful helper operation reports its result and returns. Verify archive int
 
 # Reviewed against
 
-3.4.0: a51d0976bf432b812096455311f3645cbdfcd08c732c6fa300989e97c5e4b277
+3.4.0: f8619d32ff31524f3ba586451c4f33658860706ddda813963cc00a8dddb60436
 3.4.1: 4fd620614d98a7052699551e7483315657029276ddd680f550d2f698c2b8a445
 
 # Tags

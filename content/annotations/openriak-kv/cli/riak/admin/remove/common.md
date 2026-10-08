@@ -23,7 +23,7 @@ No membership change is performed by this command.
 
 # Reviewed against
 
-3.4.0: 45223e7b87b56602927e1e4d243a849f45d4576c7d19bcf3d51e7c6fe82894e7
+3.4.0: ad567ae522fda00e7a858a20feab3809ad9f8d451fbe5fc7e9ba9c130cfb6583
 3.4.1: ad567ae522fda00e7a858a20feab3809ad9f8d451fbe5fc7e9ba9c130cfb6583
 
 # Tags

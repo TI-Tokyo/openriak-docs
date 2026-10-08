@@ -59,7 +59,7 @@ End of the UTC modification interval, for example `{{2026,12,24},{23,59,59}}` fo
 
 # Reviewed against
 
-3.4.0: 82847b50e2e2b4a64ae2c734560e7ce9a1172dd1fb9b96425fe8bf6b8c68a263
+3.4.0: a4f47d3f033f8f3a20e0ea5eebe0c29e71a5f0383308e56a1a550bcf53408933
 3.4.1: 1b39f9ed8b9ff46208abfc62040612d8c7ae9bd0417e42290f7395c51232e3a4
 
 # Tags

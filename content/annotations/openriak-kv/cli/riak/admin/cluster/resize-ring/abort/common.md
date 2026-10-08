@@ -23,7 +23,7 @@ When a resize can be cancelled, prints a staged abort confirmation. Review and c
 
 # Reviewed against
 
-3.4.0: 87cb0fa7a11222a762337a7d15a9ef3d51441051418cbd7682cf134c8ad94a5d
+3.4.0: 1f98971323e8a9efca0090b427918b32bc6acf5bf20ce577f3728ccf2b38ca99
 3.4.1: b531e81c5b23ffa230cb6d62514eae73d882023396ce5f2a4548ddadfb65ff7d
 
 # Tags

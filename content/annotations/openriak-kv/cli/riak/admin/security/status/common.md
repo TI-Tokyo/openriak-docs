@@ -15,7 +15,7 @@ This reports the cluster security state. It does not list grants or source rules
 
 # Reviewed against
 
-3.4.0: a028d2619cbbb8030ca68700cd277be840a877378103406e69fb32a68a9f3bc4
+3.4.0: 24ab41afe80f34e7f901b6b2c2683b29a90431a7f38a5b02bc2f493e9453f8cf
 3.4.1: 24ab41afe80f34e7f901b6b2c2683b29a90431a7f38a5b02bc2f493e9453f8cf
 
 # Tags

@@ -84,7 +84,7 @@ Apply a normal replicated object in the bucket.
 
 # Reviewed against
 
-3.4.0: 007723576e33fe99631c69f55fb408d8ad22569f0cacbc120562ad804294f3ef
+3.4.0: c82551b5188deac09435b7902aee742d240bc15f8497170ae3d0c59ad4825e64
 3.4.1: 5365e06ddba89e239f130c392f281a18a2c3f4a31e97df828560c0dbbefb1e6f
 
 # Tags

@@ -45,7 +45,7 @@ After `from`, give comma-separated user or group names.
 
 # Reviewed against
 
-3.4.0: 558f543c71976deffae8ba5a429cea82b30e8dd85eb2737b13480bff4472eb91
+3.4.0: 54de2f0369944307c63c05fab90d0c39095ac4df0e02a828a177d0c351d08275
 3.4.1: 54de2f0369944307c63c05fab90d0c39095ac4df0e02a828a177d0c351d08275
 
 # Tags

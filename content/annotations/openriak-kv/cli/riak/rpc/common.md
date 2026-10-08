@@ -45,7 +45,7 @@ Arguments as Erlang terms. Quote shell-sensitive terms. Omit for an arity-zero f
 
 # Reviewed against
 
-3.4.0: f334c9bc5f552102ad170e5c314393049cb4064466ad28e9fcc8a3ce090bbe8d
+3.4.0: 82c319b6fb2cf28fd1808a3c429e3bf3d5fb7cb5be7e5f3e4a4fec2c26ed4f46
 3.4.1: 82c319b6fb2cf28fd1808a3c429e3bf3d5fb7cb5be7e5f3e4a4fec2c26ed4f46
 
 # Tags

@@ -35,7 +35,7 @@ JSON object containing a `props` object. Quote the whole JSON value in the shell
 
 # Reviewed against
 
-3.4.0: e65ba9757d85819731aa433b2c3058733761f67bc2a8944bc74065106d649f0b
+3.4.0: b67a8bf17b4c0bcbd958abd610501a645a0ffdd9283745260aba74e1c5040004
 3.4.1: b67a8bf17b4c0bcbd958abd610501a645a0ffdd9283745260aba74e1c5040004
 
 # Tags

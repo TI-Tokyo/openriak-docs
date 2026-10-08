@@ -39,7 +39,7 @@ Replication factor used by the destination, for example `3`.
 
 # Reviewed against
 
-3.4.0: 54b2af46098ceae61817846d3cd1251659af08aa845776bd245180487bb76f6f
+3.4.0: 0d7eab25f8cca6bb03fd68a6800265143d10a7eb07a8f749a1279b0cb94e5a2f
 3.4.1: 0d7eab25f8cca6bb03fd68a6800265143d10a7eb07a8f749a1279b0cb94e5a2f
 
 # Tags

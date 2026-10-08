@@ -15,7 +15,7 @@ A `pong` response confirms Erlang distribution connectivity to the configured no
 
 # Reviewed against
 
-3.4.0: e948854b1ecf24fc876d523aea593f7b90a628f34d8963ee9fa72909f89594d8
+3.4.0: 281cf686021327d713fd4b4d96f3f4cc165b617009db23ebe7942834209816f0
 3.4.1: 281cf686021327d713fd4b4d96f3f4cc165b617009db23ebe7942834209816f0
 
 # Tags

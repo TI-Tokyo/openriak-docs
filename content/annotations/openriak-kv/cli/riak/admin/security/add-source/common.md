@@ -63,7 +63,7 @@ A successful change adds the source rule shown by `security print-sources`. The 
 
 # Reviewed against
 
-3.4.0: b89ae14176adf94893a71b7aab8c3137730ea6028c3791f49d5262254c8a1905
+3.4.0: fa1e9112677f54d9695e1cf1f46f9d1f81a3bf3155bfae1c10aa7f515e8e7a99
 3.4.1: fa1e9112677f54d9695e1cf1f46f9d1f81a3bf3155bfae1c10aa7f515e8e7a99
 
 # Tags

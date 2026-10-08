@@ -31,7 +31,7 @@ Request resume for the configured legacy listener. With no connected legacy repl
 
 # Reviewed against
 
-3.4.0: 1d84abfe7e3ec958305aa6e0f98c23ccefe4d970eed575a8e5ebd8c720a52f15
+3.4.0: 902acc43901253d0ce46116a790cbac413d98b00c27164d174f5414ed9a8bb52
 3.4.1: 902acc43901253d0ce46116a790cbac413d98b00c27164d174f5414ed9a8bb52
 
 # Tags

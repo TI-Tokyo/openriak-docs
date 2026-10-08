@@ -101,7 +101,7 @@ Count the returned entries; the selected key range contains exactly five matches
 
 # Reviewed against
 
-3.4.0: 89a9e70dc7dd7778f95a808dacf702b3042b112b5f530556bcc3a74ac278dad1
+3.4.0: 6efd4976e2e4b29a91377e022ab3d7e3a70a00a1429bdab4fe1cb40855c28c00
 3.4.1: 6efd4976e2e4b29a91377e022ab3d7e3a70a00a1429bdab4fe1cb40855c28c00
 
 # Tags

@@ -76,7 +76,7 @@ Full decimal partition index, or `all`. For example, `0` selects the zero index.
 
 # Reviewed against
 
-3.4.0: c8380f29394e50a3fe55405bdb5160c8feb826cbeffaf3382e7c4d450a8f399d
+3.4.0: b19113245b230e1c0971d6664b6625b446dd70d32e05e07e69cb1ec333cbfac2
 3.4.1: b19113245b230e1c0971d6664b6625b446dd70d32e05e07e69cb1ec333cbfac2
 
 # Tags

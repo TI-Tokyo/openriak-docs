@@ -23,7 +23,7 @@ Change the security state on this node.
 
 # Reviewed against
 
-3.4.0: 7c4eba010f2df357785c2b63d2ea73126cf0bf00de0b77483883faa9a1b3af1a
+3.4.0: dc04603deb382c27eee4b35e9cd5bd6c6dee5b2ecfe4d97de65cfcc55cbac13c
 3.4.1: dc04603deb382c27eee4b35e9cd5bd6c6dee5b2ecfe4d97de65cfcc55cbac13c
 
 # Tags

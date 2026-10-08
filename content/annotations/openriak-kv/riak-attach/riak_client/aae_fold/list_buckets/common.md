@@ -65,7 +65,7 @@ Create five objects to follow the range-query examples. Wait for AAE to include 
 
 # Reviewed against
 
-3.4.0: 550b6fe6856e2ec3d098d98bcfdec70f82e3f61eac212b3043c16746e9ae7058
+3.4.0: 75d8b57bac2951ed55cd1b7a00e474f77ccc07b5eb0dbf224f4508935a225cae
 3.4.1: 75d8b57bac2951ed55cd1b7a00e474f77ccc07b5eb0dbf224f4508935a225cae
 
 # Tags

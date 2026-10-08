@@ -55,7 +55,7 @@ Run the operation on the named node, such as `openriak-kv@node1.test`. Use the f
 
 # Reviewed against
 
-3.4.0: ce884baa9edba266ad4639b80eb8bef3b414f403f8bce173ddcee909841c03b6
+3.4.0: 03e8101d88e564e2921fb685e579b039d5c2586e551c34f53aea3109ba4ffffa
 3.4.1: 03e8101d88e564e2921fb685e579b039d5c2586e551c34f53aea3109ba4ffffa
 
 # Tags

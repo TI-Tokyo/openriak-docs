@@ -105,7 +105,7 @@ Request repair for a range containing five keys. The result reports processing o
 
 # Reviewed against
 
-3.4.0: 1a73ae3d816e2685fac5799d6f1c1b2b3dd24835d12b6f5e7a54d84e555cc4e5
+3.4.0: cfef63a0b65f3ca35ffa3a021874284adbef9260d60b8d9ac012a0921834f131
 3.4.1: cfef63a0b65f3ca35ffa3a021874284adbef9260d60b8d9ac012a0921834f131
 
 # Tags

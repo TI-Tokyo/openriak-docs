@@ -15,7 +15,7 @@ The report describes cipher configuration. A connection also depends on peer TLS
 
 # Reviewed against
 
-3.4.0: 996a384c112e0f830808009b9fc3e70a1995850e013eac3a7c22b5926e87b358
+3.4.0: 2867f7305832432b5e1da3e803f3ec95e6467da214a3fa1e58613e27f8256291
 3.4.1: dae70d7f41f2d03e4a2c9ee269b3fc915534a47c9187c215c8b8fb1f0677c780
 
 # Tags

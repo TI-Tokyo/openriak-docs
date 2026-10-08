@@ -35,7 +35,7 @@ Client identifier. Use `undefined` for the normal server-managed vector-clock be
 
 # Reviewed against
 
-3.4.0: 690f99b45b3de9c11e212f5e1fd32e903b19cd22cf48dbfd4c1aa62b20318dac
+3.4.0: 34299e1f0c6676eb2c83bbc22c0e79f69815f73d4e8d3a5814119150390c85a6
 3.4.1: 34299e1f0c6676eb2c83bbc22c0e79f69815f73d4e8d3a5814119150390c85a6
 
 # Tags

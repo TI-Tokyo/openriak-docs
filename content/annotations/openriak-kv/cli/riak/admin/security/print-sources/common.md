@@ -15,7 +15,7 @@ Source rules select the authentication method by user and client network. Review
 
 # Reviewed against
 
-3.4.0: 5c69761a817ceba3631d68d5d0c544bb836f2eab8847c60e1d6f1df7db80dd9d
+3.4.0: 762e4b6297ef6f75c1a0778eb58538d9c07fc085d17e38fc2421534b7de3b99a
 3.4.1: 762e4b6297ef6f75c1a0778eb58538d9c07fc085d17e38fc2421534b7de3b99a
 
 # Tags

@@ -23,7 +23,7 @@ A working application layout would return a hash of loaded Riak code. These runt
 
 # Reviewed against
 
-3.4.0: 4588bcd857ae34541a2824650dea3f8d3bbaae0dcc549baefd3fa2ab2566f503
+3.4.0: c83239b4579866c29ab30de897e019e2ed52329236ef84c3053ba5eac98744d8
 3.4.1: c83239b4579866c29ab30de897e019e2ed52329236ef84c3053ba5eac98744d8
 
 # Tags

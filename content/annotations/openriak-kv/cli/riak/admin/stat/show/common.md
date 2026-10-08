@@ -49,7 +49,7 @@ Read a counter to inspect its current value. This example counter contains seven
 
 # Reviewed against
 
-3.4.0: 2c577c11c1b3289532c4d2c7a59d32874d014fca119a2d93ebb4ded704dfa1e6
+3.4.0: 13d7371de8930ded1f552cfefdbe22860a566210286280f72972269ec04b21d8
 3.4.1: 13d7371de8930ded1f552cfefdbe22860a566210286280f72972269ec04b21d8
 
 # Tags
