@@ -1,4 +1,5 @@
-{{- $tags := merge .tags (dict "metadata" (.source.tags | default slice)) -}}
+{{- $context := .context -}}
+{{- $tags := merge .setting.tags (dict "metadata" (.setting.source.tags | default slice)) -}}
 {{- $categories := dict "metadata" "Metadata tag" "feature" "Feature" "repository" "Source repository" "module" "Source module" "concept" "Concept" -}}
 {{- $badges := slice -}}
 {{- range $category := slice "metadata" "feature" "repository" "module" "concept" -}}
@@ -9,7 +10,7 @@
 {{- with $badges -}}
 <div class="configuration-setting-tags" aria-label="Setting tags">
   {{- range . -}}
-  <span class="configuration-setting-tag" data-tag-category="{{ .category }}" title="{{ index $categories .category }}: {{ .value }}"><span class="sr-only">{{ index $categories .category }}: </span>{{ .value }}</span>
+  <a href="{{ printf "%s%s/tags/%s/%s/" $context.productBase $context.version .category (.value | urlize) }}" class="configuration-setting-tag" data-tag-category="{{ .category }}" title="{{ index $categories .category }}: {{ .value }}"><span class="sr-only">{{ index $categories .category }}: </span>{{ .value }}</a>
   {{- end -}}
 </div>
 {{- end -}}

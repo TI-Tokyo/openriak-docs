@@ -53,7 +53,8 @@ test('typed header links and tag results stay within the mounted product release
     write('content/openriak-kv/3.4.1/same-name.md','---\ntitle: Same name, different type\nconcepts: [handoff]\n---\nCommunity.');
     write('content/openriak-kv/3.4.1/draft.md','---\ntitle: Hidden draft\ndraft: true\nfeatures: [handoff]\n---\nDraft.');
     for(const version of ['3.4.0','3.4.1']) {
-      const {tagPageSource}=require('./validate-page-tags');
+      const {tagPageSource:stubSource}=require('./scaffold-page-tags');
+      const tagPageSource=(...args)=>stubSource(...args).replace('draft: true','draft: false');
       write(`content/openriak-kv/${version}/tags/_index.md`,tagPageSource());
       for(const [type,tags] of Object.entries({feature:['handoff','cluster-management'],concept:['partition-transfer',...(version==='3.4.1'?['handoff']:[])]})) {
         write(`content/openriak-kv/${version}/tags/${type}/_index.md`,tagPageSource(type));
@@ -94,28 +95,45 @@ test('typed header links and tag results stay within the mounted product release
   }finally{fs.rmSync(dir,{recursive:true,force:true});}
 });
 
-test('missing tag pages fail the build after staging editable Markdown stubs',()=>{
+test('build scaffolds missing draft pages directly into content and preserves authored pages',()=>{
   const fixture=fs.mkdtempSync(path.join(os.tmpdir(),'openriak-tag-stubs-'));
   try {
     const {generatePageProvenance}=require('./generate-version-mounts');
     const content=path.join(fixture,'content');
     const release=path.join(content,'openriak-kv/3.4.0-new-release');
     fs.mkdirSync(release,{recursive:true});
-    fs.writeFileSync(path.join(release,'guide.md'),'---\ntitle: Guide\nfeatures: [new-feature]\nconcepts: [new-concept]\n---\nGuide.');
+    fs.writeFileSync(path.join(release,'guide.md'),'---\ntitle: Guide\nfeatures: [new-feature]\nconcepts: [new-concept]\nannotation_tags:\n  repository: [shared-name]\n  module: [shared-name]\n---\nGuide.');
+    const annotation=path.join(content,'annotations/openriak-kv/settings/example');
+    fs.mkdirSync(annotation,{recursive:true});
+    fs.writeFileSync(path.join(annotation,'common.md'),'# Tags\n\nrepository: settings-repo\nmodule: settings-module\n');
+    const metadata=path.join(content,'openriak-kv/metadata/3.4.0');
+    fs.mkdirSync(metadata,{recursive:true});
+    fs.writeFileSync(path.join(metadata,'kv-settings.json'),JSON.stringify({settings:{example:{tags:['secretSettings']}}}));
     const products=[{source:'openriak-kv',target:'openriak-kv',minVersion:'3.4.0'}];
     const build=()=>generatePageProvenance(content,products,path.join(fixture,'page-provenance'));
-    assert.throws(build,/missing Markdown tag pages:[\s\S]*Stub files created/);
-    const stubs=path.join(fixture,'tag-stubs/openriak-kv/3.4.0-new-release');
-    assert.equal(walk(stubs).length,5,'create both type indexes, two tags and the root index');
-    assert.match(fs.readFileSync(path.join(stubs,'tags/feature/new-feature.md'),'utf8'),/\{\{< tag-list >\}\}/);
-    assert.ok(!fs.existsSync(path.join(release,'tags')),'build cannot silently fill authored content');
-    fs.cpSync(path.join(stubs,'tags'),path.join(release,'tags'),{recursive:true});
     assert.doesNotThrow(build);
+    const stubs=path.join(release,'tags');
+    assert.equal(walk(stubs).length,13,'include document, settings annotation and source metadata tags');
+    assert.ok(fs.existsSync(path.join(stubs,'repository/settings-repo.md')));
+    assert.ok(fs.existsSync(path.join(stubs,'module/settings-module.md')));
+    assert.ok(fs.existsSync(path.join(stubs,'metadata/secretsettings.md')));
+    for(const file of walk(stubs)) {
+      const source=fs.readFileSync(file,'utf8');
+      assert.match(source,/draft: true/);
+      assert.match(source,/hide_sidebar: true/);
+      assert.match(source,/exclude_search: true/);
+      assert.match(source,/\{\{< tag-list >\}\}/);
+    }
+    const authored=path.join(stubs,'feature/new-feature.md');
+    const edited=fs.readFileSync(authored,'utf8').replace('draft: true','draft: false')+'\nAuthored introduction.\n';
+    fs.writeFileSync(authored,edited);
+    build();
+    assert.equal(fs.readFileSync(authored,'utf8'),edited,'never overwrite authored changes');
     const patch=path.join(content,'openriak-kv/3.4.1');
     fs.mkdirSync(patch);
-    fs.writeFileSync(path.join(patch,'second.md'),'---\ntitle: Second guide\nfeatures: [new-feature]\n---\nInherited tag page.');
-    assert.doesNotThrow(build,'inherited Markdown tag pages satisfy the newer release');
-    fs.writeFileSync(path.join(patch,'second.md'),'---\ntitle: Second guide\nfeatures: [unregistered]\n---\nMissing tag page.');
-    assert.throws(build,/3.4.1: missing Markdown tag pages:[\s\S]*tags\/feature\/unregistered/);
+    fs.writeFileSync(path.join(patch,'second.md'),'---\ntitle: Second guide\nfeatures: [new-feature, another-feature]\n---\nInherited and new tags.');
+    assert.doesNotThrow(build);
+    assert.ok(!fs.existsSync(path.join(patch,'tags/feature/new-feature.md')),'reuse inherited Markdown');
+    assert.match(fs.readFileSync(path.join(patch,'tags/feature/another-feature.md'),'utf8'),/draft: true/);
   }finally{fs.rmSync(fixture,{recursive:true,force:true});}
 });

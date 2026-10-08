@@ -24,6 +24,8 @@ services:
     <<: *hugo-service
     volumes:
       - '..:/project:ro'
+      # Tag scaffolding writes only missing draft Markdown into authored KV content.
+      - '../content/openriak-kv:/project/content/openriak-kv'
       - '../tools/generated:/project/tools/generated'
       - 'hugo-core-cache:/cache'
       - type: bind

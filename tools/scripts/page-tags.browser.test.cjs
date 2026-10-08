@@ -40,8 +40,25 @@ const {chromium}=require('playwright');
   assert.equal(await page.locator('main a[href*="/3.4.0/"]').count(),0,'only the selected release is indexed');
   assert.ok(await page.locator('main a[href$="/3.4.1/reference/commands/riak/admin/cluster/commit/"]').count());
   assert.ok(await page.locator('main a[href$="/3.4.1/how-to/cluster-lifecycle/plan-and-commit-a-membership-change/"]').count());
-  await page.goto(`${base}openriak-kv/3.4.1/reference/tags/feature/handoff/`);
+  await page.goto(`${base}openriak-kv/3.4.1/tags/feature/handoff/`);
   assert.ok(await page.locator('main a[href$="/how-to/cluster-lifecycle/monitor-and-control-handoffs/"]').count(),'version-specific indexes include front-matter tags');
+  for(const version of ['3.4.0','3.4.1']) {
+   await page.goto(`${base}openriak-kv/${version}/reference/commands/erlang/riak-client/ensemble/`);
+   for(const link of await page.locator('.annotation-tag').all()) {
+    const href=await link.getAttribute('href');
+    assert.ok(href.startsWith(`/docs/openriak-kv/${version}/tags/`),href);
+    assert.equal((await page.request.get(new URL(href,page.url()).href)).status(),200,href);
+   }
+   await page.goto(`${base}openriak-kv/${version}/reference/configuration/all-configuration-settings-and-defaults/`);
+   const links=await page.locator('a.configuration-setting-tag').evaluateAll(es=>[...new Set(es.map(e=>e.href))]);
+   assert.ok(links.some(url=>url.includes('/tags/repository/')));
+   assert.ok(links.some(url=>url.includes('/tags/module/')));
+   assert.ok(links.some(url=>url.includes('/tags/metadata/')));
+   for(const href of links) {
+    assert.ok(href.includes(`/openriak-kv/${version}/tags/`),href);
+    assert.equal((await page.request.get(href)).status(),200,href);
+   }
+  }
   console.log('Header tags, multiple values, typed indexes, release isolation, front-matter reference matches and mobile wrapping passed.');
  } finally {await browser.close();}
 })().catch(e=>{console.error(e);process.exitCode=1;});

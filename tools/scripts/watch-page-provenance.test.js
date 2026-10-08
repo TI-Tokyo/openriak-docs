@@ -21,6 +21,8 @@ test('recognises Markdown edits and all rename events', () => {
   assert.equal(isRelevantChange('change', 'page.md'), true);
   assert.equal(isRelevantChange('change', 'PAGE.MD'), true);
   assert.equal(isRelevantChange('change', 'image.svg'), false);
+  assert.equal(isRelevantChange('change', 'openriak-kv/metadata/3.4.1/kv-settings.json'), true);
+  assert.equal(isRelevantChange('change', 'unrelated.json'), false);
   assert.equal(isRelevantChange('rename', 'new-directory'), true);
 });
 

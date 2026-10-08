@@ -3,7 +3,7 @@
 <dl class="annotation-tags">
 {{- range $category := slice "feature" "repository" "module" "concept" -}}
   {{- with index $tags $category -}}
-    <div><dt>{{ index (dict "feature" "Feature" "repository" "Source repository" "module" "Source module" "concept" "Concept") $category }}</dt><dd>{{ range . }}<a class="annotation-tag" href="{{ printf "%s%s/reference/tags/%s/%s/" $context.productBase $context.version $category (. | urlize) }}">{{ . }}</a>{{ end }}</dd></div>
+    <div><dt>{{ index (dict "feature" "Feature" "repository" "Source repository" "module" "Source module" "concept" "Concept") $category }}</dt><dd>{{ range . }}<a class="annotation-tag" href="{{ printf "%s%s/tags/%s/%s/" $context.productBase $context.version $category (. | urlize) }}">{{ . }}</a>{{ end }}</dd></div>
   {{- end -}}
 {{- end -}}
 </dl>

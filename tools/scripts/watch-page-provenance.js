@@ -1,7 +1,7 @@
 'use strict';
 
 if (require.main === module && process.argv.slice(2).some((arg) => arg === '-h' || arg === '--help')) {
-  console.log(`Watch Markdown content and regenerate page provenance after changes.
+  console.log(`Watch Markdown and source metadata; regenerate provenance and scaffold missing draft tag pages.
 Runs continuously until interrupted; writes generated provenance when content changes.
 
 Usage: node watch-page-provenance.js [OPTIONS]
@@ -43,7 +43,8 @@ const parseArguments = (argumentsList) => {
 };
 
 const isRelevantChange = (eventType, filename) => (
-  eventType === 'rename' || !filename || String(filename).toLowerCase().endsWith('.md')
+  eventType === 'rename' || !filename || String(filename).toLowerCase().endsWith('.md') ||
+  /(?:^|[\\/])metadata[\\/].*\.json$/i.test(String(filename))
 );
 
 const watchPageProvenance = ({ contentRoot, outputRoot, debounceMs }) => {
@@ -60,7 +61,7 @@ const watchPageProvenance = ({ contentRoot, outputRoot, debounceMs }) => {
     running = true;
     try {
       generatePageProvenance(contentRoot, productSources, outputRoot);
-      console.log('Regenerated page provenance after a Markdown content change.');
+      console.log('Regenerated page provenance and missing draft tag pages after a content change.');
     } catch (error) {
       console.error(`Unable to regenerate page provenance: ${error.message}`);
     } finally {

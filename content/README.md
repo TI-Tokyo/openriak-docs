@@ -17,8 +17,9 @@ Both projects mount common templates and site-section data directly from
 
 Each direct semantic-version product directory is a cumulative content layer over
 earlier versions in that source product. Everything under `content/` is
-user-maintained source. Build tools must not create or modify files here;
-generated Hugo inputs belong under `tools/generated/`.
+user-maintained source. Build tools normally write generated Hugo inputs under `tools/generated/`.
+Tag scaffolding is an exception: it creates missing draft Markdown tag pages here
+without overwriting existing files.
 
 ## Feature and concept tags
 
@@ -59,8 +60,13 @@ before or after it. On a tag page this lists matching documents from the current
 release; on an index page it lists its immediate child tag pages or types. The
 `category` and `tag` front-matter fields identify an individual tag page.
 
-Version mount generation validates these references. Before failing for missing
-pages, it creates Markdown stubs (including missing index folders/files) under
-`tools/generated/tag-stubs/<product>/<release-directory>/tags/`. Copy the stubs
-into the matching authored release directory, add suitable text, and rebuild.
-The build never silently publishes an automatically generated replacement.
+Version mount generation collects document, command and settings tags and creates
+missing Markdown pages directly in the appropriate content release directory.
+New stubs use `draft: true`, include `{{< tag-list >}}`, and are excluded from sidebar
+menus and search. Existing text and review status are never overwritten; inherited
+pages are reused. Scaffolding does not stop the build. Draft tag pages are visible
+in development and other builds using `--buildDrafts`.
+
+All typed tags use `<product>/<version>/tags/<type>/<tag>/`, including `repository`
+and `module`. Settings' original metadata tags use the separate `metadata` type.
+Repository and module tags with the same name always have different pages.
