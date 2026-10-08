@@ -7,7 +7,7 @@
   {{- $changes = $changes | append (dict "page" $section "status" $sectionProvenance.status) -}}
 {{- end -}}
 {{- range $child := $section.Pages.ByWeight -}}
-  {{- if ne $child.Kind "section" -}}
+  {{- if and (ne $child.Kind "section") (not $child.Params.hide_provenance) -}}
     {{- $provenance := partial "page-version-status.html" $child -}}
     {{- if in (slice "new" "updated") $provenance.status -}}
       {{- $changes = $changes | append (dict "page" $child "status" $provenance.status) -}}

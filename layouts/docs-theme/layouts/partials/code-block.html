@@ -60,7 +60,9 @@
     </div>
   </div>
   <div class="doc-code-content">
-    <div class="doc-code-highlight" data-code-highlight>{{ transform.Highlight .Inner $highlightLanguage "noClasses=false" }}</div>
+    {{- /* Large captured streams and JSON records must remain complete, but tokenizing
+          megabytes of fixture output is costly and adds no useful highlighting. */ -}}
+    <div class="doc-code-highlight" data-code-highlight>{{ if gt (len .Inner) 65536 }}<pre class="chroma"><code>{{ .Inner }}</code></pre>{{ else }}{{ transform.Highlight .Inner $highlightLanguage "noClasses=false" }}{{ end }}</div>
     <pre class="doc-code-shell-view chroma" data-code-shell-view hidden><code></code></pre>
   </div>
   {{ with $outputLimit }}

@@ -2,7 +2,7 @@
 {{- $versionHome := $context.versionHome -}}
 {{- $general := slice -}}
 {{- range $candidate := $versionHome.Pages.ByWeight -}}
-  {{- if and (ne $candidate.Kind "section") (ne $candidate.File.ContentBaseName "whats-changed") -}}
+  {{- if and (ne $candidate.Kind "section") (ne $candidate.File.ContentBaseName "whats-changed") (not $candidate.Params.hide_provenance) -}}
     {{- $provenance := partial "page-version-status.html" $candidate -}}
     {{- if in (slice "new" "updated") $provenance.status -}}
       {{- $general = $general | append (dict "page" $candidate "status" $provenance.status) -}}
