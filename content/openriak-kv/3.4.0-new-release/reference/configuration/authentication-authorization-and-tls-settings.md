@@ -27,6 +27,8 @@ related:
 - reference/commands/riak/admin/security
 - how-to/security/configure-and-rotate-tls-certificates
 - foundations/data-and-consistency/bucket-types-and-data-policies
+features: ["configuration","security"]
+concepts: ["authentication","node-lifecycle","tls"]
 ---
 
 Security settings configure certificate files, TLS controls, listener restrictions, and transport trust. User, group, source, and permission records are managed through the security commands.

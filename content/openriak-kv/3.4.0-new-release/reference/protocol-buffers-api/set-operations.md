@@ -31,6 +31,8 @@ related:
 - reference/protocol-buffers-api/update-data-type-messages
 - reference/protocol-buffers-api/protocol-framing-message-codes-and-errors
 - foundations/data-and-consistency/conflict-free-replicated-data-types
+features: ["client-operations","data-types","protocol-buffers"]
+concepts: ["data-access","data-model"]
 ---
 
 Set operations add or remove binary members. Removals require the context of observed additions, passed in the enclosing update request. Concurrent additions not observed by the remover may remain.

@@ -34,6 +34,8 @@ related:
 - reference/protocol-buffers-api/protocol-framing-message-codes-and-errors
 - foundations/data-and-consistency/objects-keys-and-buckets
 - foundations/data-and-consistency/causality-version-vectors-and-siblings
+features: ["client-operations","mapreduce","protocol-buffers"]
+concepts: ["data-access","querying"]
 ---
 
 The MapReduce transport carries an encoded job and streams phase responses. A final response with `done` marks completion and may contain no phase payload. MapReduce is deprecated; its presence in the wire schema does not imply support for every historical execution engine.

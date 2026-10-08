@@ -39,6 +39,8 @@ related:
 - foundations/cluster-architecture/membership-gossip-and-handoff
 - foundations/cluster-lifecycle/failure-and-recovery
 - foundations/cluster-lifecycle/rolling-maintenance-and-recovery-headroom
+features: ["cluster-management"]
+concepts: ["node-lifecycle","recovery"]
 ---
 
 Replace a node whose storage is lost or cannot be trusted, then repair the new member from surviving replicas. First determine whether the original node can simply return with intact data using [Recover a failed node or choose replacement]({{< product-version-root >}}how-to/troubleshooting/recover-a-failed-node-or-choose-replacement/).

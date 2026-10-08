@@ -21,6 +21,8 @@ related:
 - foundations/security/identities-authentication-and-permissions
 - foundations/security/tls-and-certificate-trust
 previous_page: tutorials/security/apply-and-test-group-permissions
+features: ["security"]
+concepts: ["authentication","tls"]
 ---
 
 Replace the server certificate while retaining the same learning CA, then verify the new certificate and the authenticated application request. Complete the first two security lessons before starting.

@@ -36,6 +36,8 @@ related:
 - reference/configuration/object-expiration-and-reclamation-settings
 - foundations/data-and-consistency/deletion-tombstones-and-expiration
 - foundations/storage-and-performance/persistence-filesystems-and-space-reclamation
+features: ["cluster-management","deletion"]
+concepts: ["deployment","retention","tombstones"]
 ---
 
 Choose how long deleted or expired data remains recoverable and how storage is reclaimed. Apply the policy consistently across replicating clusters.

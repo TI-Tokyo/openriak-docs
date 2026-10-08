@@ -8,6 +8,8 @@ description: Understand how stored index terms become bounded searches, projecte
 editorial_review: complete
 technical_review: required
 related: []
+features: ["query-processing","secondary-indexes"]
+concepts: ["querying"]
 ---
 
 Understand how stored index terms become bounded searches, projected attributes, and combined results.

@@ -36,6 +36,8 @@ related:
 - how-to/performance/benchmark-a-representative-workload
 - foundations/storage-and-performance/latency-queues-and-resource-contention
 - foundations/storage-and-performance/capacity-and-growth
+features: ["observability"]
+concepts: ["performance"]
 ---
 
 Reduce request latency by identifying where time is spent before changing database limits. Compare the same workload and percentile before and after each change.

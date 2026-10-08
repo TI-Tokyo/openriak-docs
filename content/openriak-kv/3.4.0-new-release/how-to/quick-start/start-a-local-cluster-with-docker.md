@@ -18,6 +18,8 @@ related:
 - tutorials/first-cluster/build-and-explore-a-docker-cluster
 - how-to/monitoring-and-diagnostics/inspect-node-and-cluster-health
 - how-to/installation/run-openriak-with-persistent-docker-storage
+features: ["installation"]
+concepts: ["deployment"]
 ---
 
 Start a local development cluster using the published cluster Compose file and verify that its nodes form one cluster.

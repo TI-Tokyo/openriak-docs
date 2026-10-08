@@ -36,6 +36,8 @@ related:
 - reference/legacy-and-experimental-features/legacy-aae-and-riak-repl-settings
 - foundations/replication-and-repair/replication-generations-and-compatibility
 - foundations/storage-and-performance/storage-backend-trade-offs
+features: ["legacy-replication"]
+concepts: ["compatibility","cross-cluster-replication"]
 ---
 
 Operate an existing legacy v3 `riak_repl` relationship with version-matched commands. Current-generation replication uses a different queue and fullsync system.

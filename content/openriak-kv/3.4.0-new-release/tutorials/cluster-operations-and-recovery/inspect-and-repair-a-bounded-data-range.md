@@ -23,6 +23,8 @@ related:
 - foundations/cluster-lifecycle/rolling-maintenance-and-recovery-headroom
 previous_page: tutorials/cluster-operations-and-recovery/perform-a-rolling-restart
 next_page: tutorials/cluster-operations-and-recovery/practise-a-backend-migration
+features: ["cluster-management"]
+concepts: ["node-lifecycle","recovery"]
 ---
 
 Inspect and request repair for three sample keys without scanning unrelated buckets. Use the Docker lab from [Build and explore a Docker cluster]({{< product-version-root >}}tutorials/first-cluster/build-and-explore-a-docker-cluster/) with TicTac AAE active and its initial trees built.

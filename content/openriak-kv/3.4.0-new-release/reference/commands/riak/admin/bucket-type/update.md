@@ -14,6 +14,8 @@ cli_reference_version: "3.4.0"
 related: ["how-to/application-data/create-and-activate-bucket-types","reference/configuration/bucket-properties-and-defaults","reference/commands"]
 linkTitle: "update"
 cli_command_key: "shell:riak admin bucket-type update"
+features: ["bucket-properties"]
+concepts: ["data-policy"]
 ---
 
 {{< cli-command >}}

@@ -17,6 +17,8 @@ editorial_review: 'not-required'
 technical_review: 'required'
 last_reviewed: '2026-09-02'
 review_scope: 'shortcode-integration'
+features: []
+concepts: ["documentation"]
 ---
 
 Use this draft page to test how code blocks are rendered.

@@ -45,6 +45,8 @@ related:
 - foundations/replication-and-repair/replication-sources-queues-and-sinks
 - foundations/replication-and-repair/real-time-replication-and-fullsync
 next_page: how-to/replication-and-reconciliation/connect-clusters-with-next-generation-replication
+features: ["tictac-aae"]
+concepts: ["replica-repair"]
 ---
 
 Enable TicTac anti-entropy on every cluster member and wait for its initial stores and trees to become usable before relying on reconciliation or AAE folds.

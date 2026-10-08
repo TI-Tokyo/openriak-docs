@@ -44,6 +44,8 @@ related:
 - foundations/replication-and-repair/real-time-replication-and-fullsync
 previous_page: how-to/replication-and-reconciliation/configure-replication-queues-and-filters
 next_page: how-to/replication-and-reconciliation/enable-real-time-replication
+features: ["queue-replication"]
+concepts: ["cross-cluster-replication"]
 ---
 
 Configure sink workers to consume a named source queue and apply its objects locally. Have the destination's bucket types ready before enabling consumption.

@@ -36,6 +36,8 @@ related:
 - how-to/data-inspection-and-repair/control-repair-impact-during-application-traffic
 - foundations/replication-and-repair/targeted-reconciliation-and-aae-folds
 - foundations/replication-and-repair/read-repair-and-tictac-anti-entropy
+features: ["tictac-aae"]
+concepts: ["replica-repair"]
 ---
 
 Request read repair for a known key range without rebuilding an entire node.

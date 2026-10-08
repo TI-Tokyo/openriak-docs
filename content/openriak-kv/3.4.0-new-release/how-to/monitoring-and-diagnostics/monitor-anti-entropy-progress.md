@@ -40,6 +40,8 @@ related:
 - how-to/monitoring-and-diagnostics/inspect-worker-queues-and-saturation
 - foundations/storage-and-performance/latency-queues-and-resource-contention
 - foundations/cluster-lifecycle/failure-and-recovery
+features: ["observability","tictac-aae"]
+concepts: ["diagnostics","replica-repair"]
 ---
 
 Monitor whether TicTac AAE stores, trees, exchanges, and repairs are making progress. A tree being built is a different state from a completed exchange that found matching replicas.

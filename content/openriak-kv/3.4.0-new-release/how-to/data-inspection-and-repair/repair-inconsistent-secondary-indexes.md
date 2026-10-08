@@ -39,6 +39,8 @@ related:
 - how-to/indexes-and-queries/add-and-query-secondary-indexes
 - foundations/replication-and-repair/targeted-reconciliation-and-aae-folds
 - foundations/replication-and-repair/read-repair-and-tictac-anti-entropy
+features: ["secondary-indexes","tictac-aae"]
+concepts: ["querying","replica-repair"]
 ---
 
 Repair secondary-index inconsistencies using the procedure supported by the affected backend. First distinguish a stale or incorrect application index entry from a backend index-format problem.

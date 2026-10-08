@@ -45,6 +45,8 @@ related:
 - foundations/security/tls-and-certificate-trust
 previous_page: how-to/security/manage-groups-and-membership
 next_page: how-to/security/grant-and-revoke-permissions
+features: ["security"]
+concepts: ["authentication"]
 ---
 
 Associate users and client networks with the intended authentication method. A source rule determines how a connection authenticates; grants determine which operations it may perform.

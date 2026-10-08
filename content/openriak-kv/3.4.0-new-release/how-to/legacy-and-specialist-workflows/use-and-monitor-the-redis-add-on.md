@@ -32,6 +32,8 @@ related:
 - how-to/monitoring-and-diagnostics/perform-routine-cluster-health-checks
 - foundations/replication-and-repair/replication-generations-and-compatibility
 - foundations/storage-and-performance/storage-backend-trade-offs
+features: ["redis"]
+concepts: ["compatibility"]
 ---
 
 Verify read-through and failure behaviour in an isolated Redis add-on deployment whose exact versions have been recorded with [Set up a compatible Redis add-on deployment]({{< product-version-root >}}how-to/legacy-and-specialist-workflows/set-up-a-compatible-redis-add-on-deployment/).

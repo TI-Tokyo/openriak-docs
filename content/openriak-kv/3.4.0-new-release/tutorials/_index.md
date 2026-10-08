@@ -10,6 +10,8 @@ editorial_review: complete
 technical_review: required
 diataxis: tutorial
 related: []
+features: []
+concepts: ["architecture"]
 ---
 
 Learn by building and testing a disposable OpenRiak deployment. Start with one first-cluster option, continue through the data exercises, then choose an application language or a more advanced workflow.

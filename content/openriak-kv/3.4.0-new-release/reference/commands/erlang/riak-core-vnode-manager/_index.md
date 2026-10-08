@@ -13,6 +13,8 @@ generated_by: "cli-reference"
 cli_reference_version: "3.4.0"
 related: ["how-to/monitoring-and-diagnostics/inspect-a-node-through-the-remote-console","reference/operations-and-observability/remote-console-interfaces","reference/commands"]
 cli_command_prefix: "erlang/riak-core-vnode-manager"
+features: ["node-operations"]
+concepts: ["replica-repair"]
 ---
 
 {{< cli-command-index >}}

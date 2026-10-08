@@ -43,6 +43,8 @@ related:
 - reference/orientation-and-compatibility/feature-status-and-deprecations
 - how-to/planning-a-deployment/choose-a-storage-backend
 - how-to/storage-maintenance/migrate-to-another-storage-backend
+features: ["storage-backends"]
+concepts: ["backend-selection","storage"]
 ---
 
 A storage backend manages each vnode's local data. Its design determines memory use, persistence behaviour, index support, and the maintenance work that competes with requests.

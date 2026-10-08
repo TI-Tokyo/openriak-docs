@@ -34,6 +34,8 @@ related:
 - how-to/application-data/add-and-remove-members-of-distributed-sets
 - how-to/application-data/update-distributed-maps
 - tutorials/data-and-concurrency/build-a-shared-counter-and-collection
+features: ["data-types"]
+concepts: ["concurrency", "consistency", "data-model"]
 ---
 
 Conflict-free replicated data types define operations whose concurrent effects can be merged. They are useful when the application's required behaviour matches the supplied counter, set, map, grow-only set, or HyperLogLog semantics.

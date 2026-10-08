@@ -31,6 +31,8 @@ related:
 - how-to/data-inspection-and-repair/rebuild-aae-trees
 - reference/configuration/tictac-anti-entropy-settings
 - reference/aae-fold-api/fold-invocation-and-result-conventions
+features: ["tictac-aae"]
+concepts: ["replica-repair"]
 ---
 
 TicTac AAE commands inspect trees, schedule rebuilds, adjust runtime controls, and submit folds. Availability, flags, and help are taken from the selected release's command metadata.

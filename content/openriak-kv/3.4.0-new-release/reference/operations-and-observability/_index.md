@@ -8,6 +8,8 @@ description: Look up metrics, logs, errors, handoff states, placement, console i
 editorial_review: complete
 technical_review: required
 related: []
+features: ["observability"]
+concepts: ["diagnostics"]
 ---
 
 Look up metrics, logs, errors, handoff states, placement, console interfaces, and recovery files.

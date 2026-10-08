@@ -9,6 +9,8 @@ description: 'Continue from a working learning cluster: store an object, choose 
 editorial_review: complete
 technical_review: required
 related: []
+features: ["client-operations"]
+concepts: ["concurrency","data-model"]
 ---
 
 Continue from a working learning cluster: store an object, choose a policy, handle concurrent updates, and practise distributed data types.

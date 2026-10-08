@@ -21,6 +21,8 @@ related:
 - foundations/replication-and-repair/targeted-reconciliation-and-aae-folds
 previous_page: tutorials/replication-and-reconciliation/replicate-data-between-two-clusters
 next_page: tutorials/replication-and-reconciliation/explore-bidirectional-replication
+features: ["queue-replication"]
+concepts: ["cross-cluster-replication"]
 ---
 
 Pause the sink from the preceding replication lesson, write a new object, and watch it catch up after resuming. Keep both clusters running throughout the interruption so this first exercise preserves the source queue.

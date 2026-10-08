@@ -1,0 +1,9 @@
+{{- range $type := slice "feature" "concept" -}}
+  {{- with $.GetTerms (printf "%ss" $type) -}}
+    <span class="page-tags" aria-label="{{ $type | humanize }} tags">
+    {{- range . -}}
+      <a class="page-tag" data-tag-type="{{ $type }}" href="{{ .RelPermalink }}"><span class="page-tag-type">{{ $type | humanize }}:</span> {{ .Data.Term }}</a>
+    {{- end -}}
+    </span>
+  {{- end -}}
+{{- end -}}

@@ -40,6 +40,8 @@ related:
 - reference/http-api/fetch-object
 - foundations/data-and-consistency/causality-version-vectors-and-siblings
 - foundations/data-and-consistency/resolving-concurrent-updates
+features: ["client-operations"]
+concepts: ["causality","concurrency","data-access"]
 ---
 
 Resolve concurrent versions using an application rule, then write the merged value with the combined causal context. Do not discard siblings merely to obtain a single convenient response.

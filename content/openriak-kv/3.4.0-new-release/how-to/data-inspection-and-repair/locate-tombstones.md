@@ -34,6 +34,8 @@ related:
 - reference/aae-fold-api/fold-filters
 - how-to/data-inspection-and-repair/control-repair-impact-during-application-traffic
 - foundations/data-and-consistency/deletion-tombstones-and-expiration
+features: ["deletion","tictac-aae"]
+concepts: ["replica-repair","retention","tombstones"]
 ---
 
 Locate retained tombstones before investigating deletion or planning reclamation.

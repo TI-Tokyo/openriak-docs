@@ -34,6 +34,8 @@ related:
 - how-to/cluster-lifecycle/upgrade-a-cluster
 - foundations/overview/what-openriak-kv-is
 - foundations/cluster-architecture/rings-partitions-and-virtual-nodes
+features: ["installation"]
+concepts: ["deployment"]
 ---
 
 Keep a Docker node's configuration, data, and logs on persistent storage so that recreating its container does not discard its state.

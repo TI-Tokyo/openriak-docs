@@ -31,6 +31,8 @@ related:
 - how-to/troubleshooting/investigate-a-running-node-with-erlang-diagnostics
 - foundations/replication-and-repair/replication-generations-and-compatibility
 - foundations/storage-and-performance/storage-backend-trade-offs
+features: ["observability"]
+concepts: ["diagnostics"]
 ---
 
 DTrace integration requires a build and platform that supply the relevant tracing support. The configuration switch alone does not establish that probes are available in the installed package.

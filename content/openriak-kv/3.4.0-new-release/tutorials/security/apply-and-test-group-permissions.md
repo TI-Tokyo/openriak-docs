@@ -23,6 +23,8 @@ related:
 - foundations/security/tls-and-certificate-trust
 previous_page: tutorials/security/make-an-authenticated-tls-client-connection
 next_page: tutorials/security/rotate-a-certificate-in-a-learning-environment
+features: ["security"]
+concepts: ["authentication"]
 ---
 
 Verify that group membership grants a read but not a write, then revoke the grant. Continue directly from the authenticated TLS lesson.

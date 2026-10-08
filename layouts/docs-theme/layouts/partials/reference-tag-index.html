@@ -9,6 +9,10 @@
     {{- with $page.Params.cli_command_key -}}
       {{- range where $reference.pages "key" . }}{{ $tags = merge $tags .reference.tags }}{{ end -}}
     {{- end -}}
+    {{- range $category := slice "feature" "concept" -}}
+      {{- $values := index $page.Params (printf "%ss" $category) | default slice -}}
+      {{- $tags = merge $tags (dict $category (uniq (collections.Append $values (index $tags $category | default slice)))) -}}
+    {{- end -}}
     {{- range $category, $values := $tags -}}
       {{- range $values -}}
         {{- $key := printf "%s/%s" $category . -}}

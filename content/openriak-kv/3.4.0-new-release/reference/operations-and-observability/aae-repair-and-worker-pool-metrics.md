@@ -19,6 +19,8 @@ related:
 - reference/operations-and-observability/node-and-cluster-metrics
 - foundations/storage-and-performance/latency-queues-and-resource-contention
 - foundations/cluster-lifecycle/failure-and-recovery
+features: ["observability","worker-pools"]
+concepts: ["diagnostics","queueing"]
 ---
 
 AAE and reconciliation metrics report work and timing on the responding node. Compare all participating nodes and the same time interval when diagnosing convergence.

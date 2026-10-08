@@ -41,6 +41,8 @@ related:
 - foundations/indexes-and-querying/secondary-indexes-and-projected-attributes
 - foundations/indexes-and-querying/how-distributed-queries-execute
 - foundations/indexes-and-querying/query-consistency-and-snapshots
+features: ["query-processing"]
+concepts: ["querying"]
 ---
 
 Submit a Query API request as JSON to a bucket's query endpoint. The backend must support the selected query operation and the bucket must contain the required index entries.

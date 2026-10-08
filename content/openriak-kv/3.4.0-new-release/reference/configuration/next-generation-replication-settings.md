@@ -33,6 +33,8 @@ related:
 - how-to/replication-and-reconciliation/connect-clusters-with-next-generation-replication
 - how-to/replication-and-reconciliation/configure-and-schedule-fullsync
 - foundations/data-and-consistency/bucket-types-and-data-policies
+features: ["configuration","queue-replication"]
+concepts: ["cross-cluster-replication","node-lifecycle"]
 ---
 
 Next-generation replication settings define source queues, sink consumers, and TicTac fullsync. Configure both ends of a path and verify the queue and dataset scope agree.

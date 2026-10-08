@@ -35,6 +35,8 @@ related:
 - foundations/data-and-consistency/objects-keys-and-buckets
 - foundations/data-and-consistency/bucket-types-and-data-policies
 - foundations/data-and-consistency/causality-version-vectors-and-siblings
+features: ["client-operations"]
+concepts: ["data-access"]
 ---
 
 Store values with a content type that tells clients how to interpret their bytes. OpenRiak stores the value; the application remains responsible for serialization and validation.

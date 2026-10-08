@@ -36,6 +36,8 @@ related:
 - foundations/replication-and-repair/read-repair-and-tictac-anti-entropy
 - foundations/replication-and-repair/replication-sources-queues-and-sinks
 - foundations/replication-and-repair/real-time-replication-and-fullsync
+features: ["queue-replication"]
+concepts: ["cross-cluster-replication"]
 ---
 
 Migrate an application to a separately provisioned cluster while preserving writes made during the copy. Keep a rollback plan for writes accepted after cutover.

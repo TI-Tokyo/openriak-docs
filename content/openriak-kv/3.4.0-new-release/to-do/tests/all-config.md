@@ -22,6 +22,8 @@ related:
     reason: 'Understand the configuration files and their precedence.'
   - page: 'reference/orientation-and-compatibility/glossary'
     title: 'Frequently asked questions'
+features: []
+concepts: ["documentation"]
 ---
 
 ## All config values

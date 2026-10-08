@@ -39,6 +39,8 @@ related:
 - foundations/data-and-consistency/objects-keys-and-buckets
 - foundations/data-and-consistency/bucket-types-and-data-policies
 - foundations/data-and-consistency/causality-version-vectors-and-siblings
+features: ["client-operations"]
+concepts: ["causality","concurrency","data-access"]
 ---
 
 Update a fetched object while preserving its causal context. Sending an ordinary replacement without the context can create a concurrent version.

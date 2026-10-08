@@ -8,6 +8,8 @@ description: Check client protocol capabilities and the runtime assumptions of t
 editorial_review: complete
 technical_review: required
 related: []
+features: ["client-libraries","client-operations"]
+concepts: ["data-access"]
 ---
 
 Check client protocol capabilities and the runtime assumptions of the language examples.

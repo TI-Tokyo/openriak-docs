@@ -32,6 +32,8 @@ related:
 - how-to/data-inspection-and-repair/run-and-retrieve-a-long-running-aae-fold
 - how-to/data-inspection-and-repair/control-repair-impact-during-application-traffic
 - foundations/replication-and-repair/targeted-reconciliation-and-aae-folds
+features: ["deletion","tictac-aae"]
+concepts: ["data-access","replica-repair","retention","tombstones"]
 ---
 
 Find retained tombstones in a selected AAE scope.

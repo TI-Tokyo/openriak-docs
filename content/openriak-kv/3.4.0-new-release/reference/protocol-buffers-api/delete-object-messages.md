@@ -34,6 +34,8 @@ related:
 - reference/protocol-buffers-api/protocol-framing-message-codes-and-errors
 - foundations/data-and-consistency/objects-keys-and-buckets
 - foundations/data-and-consistency/causality-version-vectors-and-siblings
+features: ["client-operations","deletion","protocol-buffers"]
+concepts: ["data-access","retention","tombstones"]
 ---
 
 Delete applies deletion to the identified object. Include the observed vector clock when deleting a known version. The successful response has no body; tombstone retention and later reclamation are separate from request completion.

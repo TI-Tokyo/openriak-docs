@@ -34,6 +34,8 @@ related:
 - reference/operations-and-observability/aae-repair-and-worker-pool-metrics
 - foundations/storage-and-performance/latency-queues-and-resource-contention
 - foundations/cluster-lifecycle/failure-and-recovery
+features: ["observability","worker-pools"]
+concepts: ["diagnostics","queueing"]
 ---
 
 Identify worker queues that delay background operations and distinguish insufficient processing capacity from excessive submitted work.

@@ -9,6 +9,8 @@ description: Look up identifiers, representations, metadata, causal context, dat
 editorial_review: complete
 technical_review: required
 related: []
+features: ["object-storage"]
+concepts: ["data-model"]
 ---
 
 Look up identifiers, representations, metadata, causal context, data types, index terms, and deletion states.

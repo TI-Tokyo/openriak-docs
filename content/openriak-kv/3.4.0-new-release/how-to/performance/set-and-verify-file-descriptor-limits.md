@@ -38,6 +38,8 @@ related:
 - reference/configuration/erlang-vm-and-runtime-settings
 - foundations/storage-and-performance/latency-queues-and-resource-contention
 - foundations/storage-and-performance/capacity-and-growth
+features: ["observability"]
+concepts: ["filesystem-layout","performance"]
 ---
 
 Set the open-file limit for the actual Riak service process, then verify that it inherited the intended value. A shell's `ulimit` does not necessarily control a service manager's child process.

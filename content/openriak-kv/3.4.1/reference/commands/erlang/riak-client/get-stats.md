@@ -14,6 +14,8 @@ cli_reference_version: "3.4.1"
 related: ["how-to/monitoring-and-diagnostics/inspect-a-node-through-the-remote-console","reference/operations-and-observability/remote-console-interfaces","reference/commands"]
 linkTitle: "get_stats"
 cli_command_key: "erlang:riak_client:get_stats"
+features: ["client-operations"]
+concepts: ["data-access","diagnostics"]
 ---
 
 {{< cli-command >}}

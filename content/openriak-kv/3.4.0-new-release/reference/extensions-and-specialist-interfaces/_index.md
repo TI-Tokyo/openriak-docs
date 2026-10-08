@@ -8,6 +8,8 @@ description: Check extension callbacks and specialist contracts before loading c
 editorial_review: complete
 technical_review: required
 related: []
+features: []
+concepts: ["compatibility"]
 ---
 
 Check extension callbacks and specialist contracts before loading custom code or integrating an add-on.

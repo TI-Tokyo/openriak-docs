@@ -41,6 +41,8 @@ related:
 - how-to/replication-and-reconciliation/configure-replication-queues-and-filters
 - how-to/replication-and-reconciliation/configure-sink-nodes-and-consumers
 - reference/replication-interfaces/next-generation-replication-runtime-controls
+features: ["queue-replication"]
+concepts: ["cross-cluster-replication"]
 ---
 
 Next-generation replication moves objects from a source cluster through named queues to consumers in a sink cluster. Each connection has a direction; reverse replication is a separate path.

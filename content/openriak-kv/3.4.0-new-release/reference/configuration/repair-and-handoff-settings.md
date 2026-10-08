@@ -27,6 +27,8 @@ related:
 - how-to/cluster-lifecycle/monitor-and-control-handoffs
 - how-to/data-inspection-and-repair/control-repair-impact-during-application-traffic
 - foundations/data-and-consistency/bucket-types-and-data-policies
+features: ["configuration","handoff"]
+concepts: ["node-lifecycle","partition-transfer"]
 ---
 
 Repair, handoff, and worker settings govern transfer concurrency and background work. Reducing their impact on client traffic also changes the time required to restore redundancy.

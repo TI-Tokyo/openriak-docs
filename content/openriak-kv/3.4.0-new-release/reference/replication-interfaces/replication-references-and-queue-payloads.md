@@ -36,6 +36,8 @@ related:
 - reference/configuration/next-generation-replication-settings
 - how-to/replication-and-reconciliation/configure-replication-queues-and-filters
 - foundations/replication-and-repair/replication-sources-queues-and-sinks
+features: ["queue-replication"]
+concepts: ["cross-cluster-replication"]
 ---
 
 A replication source queue contains references to current object changes for one consumer relationship. A reference can carry an object or identify an object to fetch later.

@@ -43,6 +43,8 @@ related:
 - foundations/indexes-and-querying/secondary-indexes-and-projected-attributes
 - foundations/indexes-and-querying/how-distributed-queries-execute
 - foundations/indexes-and-querying/query-consistency-and-snapshots
+features: ["query-processing"]
+concepts: ["querying"]
 ---
 
 The Query API operates over supported binary secondary indexes and partition-local snapshots. Supported field combinations are validated by the release's query implementation.

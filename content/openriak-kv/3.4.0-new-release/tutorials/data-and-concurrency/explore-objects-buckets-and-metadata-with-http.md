@@ -22,6 +22,8 @@ related:
 - foundations/data-and-consistency/conflict-free-replicated-data-types
 next_page: tutorials/data-and-concurrency/apply-different-policies-with-bucket-types
 previous_page: tutorials/first-cluster/build-and-explore-a-docker-cluster
+features: ["client-operations"]
+concepts: ["concurrency","data-model"]
 ---
 
 Store a JSON object, inspect its metadata, update it with the context returned by a read, and delete it. Start with the Docker learning cluster running.

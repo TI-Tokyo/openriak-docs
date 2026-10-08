@@ -22,6 +22,8 @@ related:
 - foundations/data-and-consistency/conflict-free-replicated-data-types
 previous_page: tutorials/data-and-concurrency/practise-conditional-updates
 next_page: tutorials/data-and-concurrency/build-a-record-with-a-distributed-map
+features: ["client-operations","data-types"]
+concepts: ["concurrency","data-model"]
 ---
 
 Count visits using a distributed data type. Use a fresh learning cluster or a fresh key so earlier runs do not change the observation.

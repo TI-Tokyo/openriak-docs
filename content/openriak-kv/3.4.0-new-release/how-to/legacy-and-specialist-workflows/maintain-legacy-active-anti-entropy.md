@@ -33,6 +33,8 @@ related:
 - reference/orientation-and-compatibility/feature-status-and-deprecations
 - foundations/replication-and-repair/replication-generations-and-compatibility
 - foundations/storage-and-performance/storage-backend-trade-offs
+features: ["legacy-aae"]
+concepts: ["compatibility","replica-repair"]
 ---
 
 Maintain legacy active anti-entropy where an existing workload still depends on it, and transition deliberately to TicTac AAE for current-generation operations.

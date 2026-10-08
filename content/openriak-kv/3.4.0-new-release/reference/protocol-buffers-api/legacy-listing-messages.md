@@ -34,6 +34,8 @@ related:
 - reference/protocol-buffers-api/protocol-framing-message-codes-and-errors
 - foundations/data-and-consistency/objects-keys-and-buckets
 - foundations/data-and-consistency/causality-version-vectors-and-siblings
+features: ["client-operations","protocol-buffers"]
+concepts: ["data-access"]
 ---
 
 Legacy listing can scan substantial portions of the database and return large results. Streaming responses are complete only when their terminal marker arrives. Prefer bounded indexes or AAE inventory when they meet the requirement.

@@ -22,6 +22,8 @@ related:
 - foundations/cluster-lifecycle/rolling-maintenance-and-recovery-headroom
 next_page: tutorials/cluster-operations-and-recovery/back-up-and-restore-a-sample-dataset
 previous_page: tutorials/cluster-operations-and-recovery/add-and-remove-cluster-members
+features: ["cluster-management"]
+concepts: ["node-lifecycle","recovery"]
 ---
 
 Observe how the learning cluster serves data while one node is stopped, then brings that node back. This exercise uses a graceful container stop; it does not simulate disk loss or prove tolerance of every failure pattern.

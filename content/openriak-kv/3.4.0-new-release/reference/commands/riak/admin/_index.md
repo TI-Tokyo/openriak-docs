@@ -14,6 +14,8 @@ cli_reference_version: "3.4.0"
 related: ["how-to/cluster-lifecycle/start-stop-or-restart-a-node","how-to/monitoring-and-diagnostics/perform-routine-cluster-health-checks","reference/commands"]
 linkTitle: "admin"
 cli_command_key: "shell:riak admin"
+features: ["node-operations"]
+concepts: ["node-lifecycle"]
 ---
 
 {{< cli-command >}}

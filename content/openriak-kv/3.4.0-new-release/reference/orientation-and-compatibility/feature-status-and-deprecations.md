@@ -39,6 +39,8 @@ related:
 - foundations/overview/what-openriak-kv-is
 - foundations/replication-and-repair/replication-generations-and-compatibility
 - foundations/storage-and-performance/storage-backend-trade-offs
+features: []
+concepts: ["compatibility"]
 ---
 
 Feature status distinguishes current interfaces from compatibility features that should not be selected for new deployments without a specific requirement.

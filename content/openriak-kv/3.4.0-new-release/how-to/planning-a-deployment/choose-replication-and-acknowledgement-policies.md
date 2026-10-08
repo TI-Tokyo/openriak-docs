@@ -36,6 +36,8 @@ related:
 - reference/http-api/object-request-options
 - foundations/data-and-consistency/quorums-availability-and-durability
 - foundations/data-and-consistency/causality-version-vectors-and-siblings
+features: ["bucket-properties", "object-storage"]
+concepts: ["availability", "data-policy", "durability", "quorums"]
 ---
 
 Choose replica and acknowledgement policies that meet the application's failure and durability requirements. Use [Quorums, availability, and durability]({{< product-version-root >}}foundations/data-and-consistency/quorums-availability-and-durability/) and [Causality, version vectors, and siblings]({{< product-version-root >}}foundations/data-and-consistency/causality-version-vectors-and-siblings/) if you need the relationship between replicas, causal context, and quorums.

@@ -35,6 +35,8 @@ related:
 - foundations/cluster-architecture/replica-placement-and-failure-domains
 - foundations/cluster-lifecycle/rolling-maintenance-and-recovery-headroom
 - how-to/performance/benchmark-a-representative-workload
+features: ["storage-backends"]
+concepts: ["capacity-planning","storage"]
 ---
 
 Cluster capacity must cover live data, replicated copies, indexes, retained history, and the temporary work needed to grow or recover. Steady-state disk occupancy alone is an incomplete sizing measure.

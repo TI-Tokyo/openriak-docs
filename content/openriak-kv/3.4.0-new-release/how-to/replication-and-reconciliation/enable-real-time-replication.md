@@ -45,6 +45,8 @@ related:
 - foundations/replication-and-repair/real-time-replication-and-fullsync
 previous_page: how-to/replication-and-reconciliation/configure-sink-nodes-and-consumers
 next_page: how-to/replication-and-reconciliation/configure-and-schedule-fullsync
+features: ["queue-replication"]
+concepts: ["cross-cluster-replication"]
 ---
 
 Enable real-time replication for newly coordinated writes after the source queues and destination consumers are prepared.

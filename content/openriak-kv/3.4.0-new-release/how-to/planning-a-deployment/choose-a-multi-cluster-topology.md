@@ -36,6 +36,8 @@ related:
 - tutorials/replication-and-reconciliation/explore-bidirectional-replication
 - foundations/replication-and-repair/multi-cluster-topologies-and-behaviour
 - foundations/replication-and-repair/replication-sources-queues-and-sinks
+features: ["cluster-management"]
+concepts: ["deployment"]
 ---
 
 Choose the direction and purpose of every inter-cluster replication relationship. Separate application availability, disaster recovery, migration, and backup requirements before configuring peers.

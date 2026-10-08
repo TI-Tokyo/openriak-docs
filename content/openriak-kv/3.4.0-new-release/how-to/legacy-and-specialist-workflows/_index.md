@@ -9,6 +9,8 @@ description: Maintain an existing specialist or deprecated interface with its co
 editorial_review: complete
 technical_review: required
 related: []
+features: []
+concepts: ["compatibility"]
 ---
 
 Maintain an existing specialist or deprecated interface with its compatibility limits explicit. Prefer the current interface for new deployments.

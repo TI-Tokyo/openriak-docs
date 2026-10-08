@@ -36,6 +36,8 @@ related:
 - how-to/application-data/install-and-use-a-commit-hook
 - foundations/replication-and-repair/replication-generations-and-compatibility
 - foundations/storage-and-performance/storage-backend-trade-offs
+features: ["legacy-replication"]
+concepts: ["cross-cluster-replication"]
 ---
 
 Implement a callback that filters or supplements objects on an existing legacy `riak_repl` path. These hooks do not configure current-generation replication.

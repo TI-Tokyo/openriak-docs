@@ -40,6 +40,8 @@ related:
 - reference/orientation-and-compatibility/replication-generation-compatibility
 - foundations/replication-and-repair/replication-generations-and-compatibility
 - foundations/storage-and-performance/storage-backend-trade-offs
+features: ["legacy-replication", "security"]
+concepts: ["compatibility", "cross-cluster-replication", "tls"]
 ---
 
 Protect an existing legacy replication relationship using its generation-specific TLS configuration. Keep the previous working files and a recovery path during certificate changes.

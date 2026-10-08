@@ -41,6 +41,8 @@ related:
 - reference/operations-and-observability/error-and-diagnostic-message-catalogue
 - foundations/storage-and-performance/latency-queues-and-resource-contention
 - foundations/cluster-lifecycle/failure-and-recovery
+features: ["observability"]
+concepts: ["diagnostics"]
 ---
 
 Log destinations, levels, formats, and rotation are controlled by the selected release's settings. Text and JSON handlers can represent the same event differently.

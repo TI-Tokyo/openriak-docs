@@ -21,6 +21,8 @@ related:
 - foundations/replication-and-repair/read-repair-and-tictac-anti-entropy
 - foundations/replication-and-repair/replication-sources-queues-and-sinks
 - foundations/replication-and-repair/real-time-replication-and-fullsync
+features: ["queue-replication"]
+concepts: ["cross-cluster-replication"]
 ---
 
 Restrict a fullsync manager to one bucket when the receiving cluster intentionally stores only a subset of the source. Bucket-scoped checks build trees from the selected data and can cost more than cached all-data checks.

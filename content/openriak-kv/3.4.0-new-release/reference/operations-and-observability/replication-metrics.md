@@ -37,6 +37,8 @@ related:
 - reference/replication-interfaces/legacy-riak-repl-runtime-controls
 - foundations/storage-and-performance/latency-queues-and-resource-contention
 - foundations/cluster-lifecycle/failure-and-recovery
+features: ["observability","queue-replication"]
+concepts: ["cross-cluster-replication","diagnostics"]
 ---
 
 Current-generation replication metrics distinguish source fetches, destination delivery, and fullsync exchanges. Preserve node and queue/peer scope when interpreting them.

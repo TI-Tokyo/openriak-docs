@@ -38,6 +38,8 @@ related:
 - foundations/cluster-architecture/replica-placement-and-failure-domains
 - foundations/storage-and-performance/storage-backend-trade-offs
 - foundations/storage-and-performance/capacity-and-growth
+features: ["cluster-management"]
+concepts: ["capacity-planning","deployment","recovery"]
 ---
 
 Estimate capacity from a representative workload, then reserve room for failure recovery and maintenance. Use measurements from the intended backend and infrastructure.

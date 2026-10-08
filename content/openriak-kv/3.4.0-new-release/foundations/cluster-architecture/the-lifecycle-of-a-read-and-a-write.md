@@ -19,6 +19,8 @@ related:
 - foundations/replication-and-repair/read-repair-and-tictac-anti-entropy
 - reference/http-api/fetch-object
 - reference/http-api/store-object
+features: ["cluster-management"]
+concepts: ["architecture"]
 ---
 
 A client can send an object request to a reachable OpenRiak node. That node coordinates work with the vnodes responsible for the object's replicas; it need not own the object's primary partition.

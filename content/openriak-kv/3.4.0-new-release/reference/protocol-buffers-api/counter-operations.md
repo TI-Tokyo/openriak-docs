@@ -32,6 +32,8 @@ related:
 - reference/data-model-contracts/distributed-data-type-contracts
 - reference/protocol-buffers-api/protocol-framing-message-codes-and-errors
 - foundations/data-and-consistency/conflict-free-replicated-data-types
+features: ["client-operations","data-types","protocol-buffers"]
+concepts: ["data-access","data-model"]
 ---
 
 A counter operation adds a signed increment to a counter or counter field. It does not assign an absolute total. Repeating an increment is a second operation, including when a client retries after losing the first response.

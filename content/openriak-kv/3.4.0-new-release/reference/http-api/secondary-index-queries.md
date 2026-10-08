@@ -32,6 +32,8 @@ related:
 - reference/query-api/endpoints-and-request-schema
 - foundations/data-and-consistency/objects-keys-and-buckets
 - foundations/data-and-consistency/quorums-availability-and-durability
+features: ["client-operations","http-api","query-processing","secondary-indexes"]
+concepts: ["data-access","querying"]
 ---
 
 The secondary-index HTTP interface returns object keys matching an exact term or an inclusive range on an index-capable backend.

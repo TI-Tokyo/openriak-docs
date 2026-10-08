@@ -12,6 +12,8 @@ hide_provenance: true
 audience:
   - 'all-readers'
 tags: ['kv', 'reference', 'release-notes']
+features: []
+concepts: ["compatibility","release-history"]
 ---
 
 OpenRiak KV 3.4.0 has entirely new documentation, so everything has changed.

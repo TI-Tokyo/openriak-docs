@@ -48,6 +48,8 @@ related:
 - foundations/replication-and-repair/replication-sources-queues-and-sinks
 - foundations/replication-and-repair/real-time-replication-and-fullsync
 previous_page: how-to/replication-and-reconciliation/enable-real-time-replication
+features: ["full-sync","queue-replication"]
+concepts: ["cross-cluster-replication"]
 ---
 
 Schedule TicTac fullsync checks and verify that discovered differences are delivered through the replication queues. Prepare source queues, sink workers, and usable AAE trees first.

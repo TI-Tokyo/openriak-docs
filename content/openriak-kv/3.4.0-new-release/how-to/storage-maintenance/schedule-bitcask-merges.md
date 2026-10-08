@@ -30,6 +30,8 @@ related:
 - how-to/performance/reduce-request-latency
 - reference/configuration/bitcask-settings
 - foundations/storage-and-performance/how-bitcask-stores-data
+features: ["bitcask","storage-backends"]
+concepts: ["compaction","storage"]
 ---
 
 Schedule Bitcask merges so obsolete data can be reclaimed without overwhelming the application's I/O budget.

@@ -46,6 +46,8 @@ related:
 - reference/orientation-and-compatibility/cluster-client-and-replication-compatibility
 - reference/orientation-and-compatibility/feature-status-and-deprecations
 - foundations/cluster-lifecycle/mixed-versions-capabilities-and-upgrade-boundaries
+features: ["cluster-management"]
+concepts: ["compatibility","node-lifecycle"]
 ---
 
 Upgrade an existing cluster in a rehearsed rolling sequence, preserving data and configuration on every member. Read the exact source and target release notes before selecting a package.

@@ -16,6 +16,8 @@ related:
 - reference/aae-fold-api/fold-invocation-and-result-conventions
 - reference/aae-fold-api/fold-filters
 - foundations/replication-and-repair/targeted-reconciliation-and-aae-folds
+features: ["tictac-aae"]
+concepts: ["data-access","replica-repair"]
 ---
 
 Tree and clock exchange folds expose anti-entropy comparison data. They are release-sensitive interfaces used by reconciliation, not ordinary application object queries.

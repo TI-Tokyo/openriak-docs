@@ -37,6 +37,8 @@ related:
 - reference/http-api/object-request-options
 - foundations/data-and-consistency/objects-keys-and-buckets
 - foundations/data-and-consistency/quorums-availability-and-durability
+features: ["client-operations","http-api"]
+concepts: ["data-access"]
 ---
 
 Fetch an ordinary object by its type, bucket, and key. The response includes its value and metadata, or identifies a missing value, siblings, or a failed request.

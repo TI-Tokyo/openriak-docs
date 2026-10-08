@@ -14,6 +14,8 @@ cli_reference_version: "3.4.0"
 related: ["how-to/monitoring-and-diagnostics/inspect-a-node-through-the-remote-console","reference/operations-and-observability/remote-console-interfaces","reference/commands"]
 linkTitle: "trigger_tree_repairs"
 cli_command_key: "erlang:riak_kv_ttaaefs_manager:trigger_tree_repairs"
+features: ["full-sync"]
+concepts: ["replica-repair"]
 ---
 
 {{< cli-command >}}

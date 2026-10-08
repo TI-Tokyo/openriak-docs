@@ -36,6 +36,8 @@ related:
 - reference/replication-interfaces/next-generation-replication-runtime-controls
 - foundations/storage-and-performance/latency-queues-and-resource-contention
 - foundations/cluster-lifecycle/failure-and-recovery
+features: ["erlang-runtime","observability"]
+concepts: ["diagnostics","runtime"]
 ---
 
 The Erlang remote console exposes node-local and cluster operations through the release's exported administrative interfaces. Arity, argument types, availability, and help are listed in the command metadata.

@@ -30,6 +30,8 @@ related:
 - how-to/security/authenticate-an-application-client
 - foundations/storage-and-performance/latency-queues-and-resource-contention
 - foundations/cluster-lifecycle/failure-and-recovery
+features: ["observability"]
+concepts: ["diagnostics","recovery"]
 ---
 
 Separate a client connectivity problem from an authentication, protocol, or application-request failure.

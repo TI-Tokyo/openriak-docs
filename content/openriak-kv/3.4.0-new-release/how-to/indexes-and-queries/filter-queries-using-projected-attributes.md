@@ -20,6 +20,8 @@ related:
 - foundations/indexes-and-querying/secondary-indexes-and-projected-attributes
 - foundations/indexes-and-querying/how-distributed-queries-execute
 - foundations/indexes-and-querying/query-cost-and-result-delivery
+features: ["query-processing","secondary-indexes"]
+concepts: ["querying"]
 ---
 
 Filter a Query API index range using attributes projected into each term. Prepare a small dataset whose expected matches you can calculate independently.

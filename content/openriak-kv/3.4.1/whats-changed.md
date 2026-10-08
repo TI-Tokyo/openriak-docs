@@ -12,6 +12,8 @@ hide_provenance: true
 audience:
   - 'all-readers'
 tags: ['kv', 'reference', 'release-notes']
+features: []
+concepts: ["compatibility","release-history"]
 ---
 
 This page lists documentation that is new or updated in OpenRiak KV {{< current-version>}}.

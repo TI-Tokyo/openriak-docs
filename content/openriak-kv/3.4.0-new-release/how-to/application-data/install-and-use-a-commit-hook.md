@@ -38,6 +38,8 @@ related:
 - foundations/data-and-consistency/objects-keys-and-buckets
 - foundations/data-and-consistency/bucket-types-and-data-policies
 - foundations/data-and-consistency/causality-version-vectors-and-siblings
+features: ["client-operations","commit-hooks"]
+concepts: ["data-access"]
 ---
 
 Deploy an Erlang commit hook and associate it with the intended bucket policy. Test the hook's return contract and failure behaviour before allowing application writes through it.

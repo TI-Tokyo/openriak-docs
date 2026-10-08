@@ -22,6 +22,8 @@ related:
 - foundations/indexes-and-querying/query-cost-and-result-delivery
 previous_page: tutorials/indexes-and-querying/build-and-query-a-people-search-index
 next_page: tutorials/indexes-and-querying/combine-query-conditions
+features: ["query-processing","secondary-indexes"]
+concepts: ["querying"]
 ---
 
 Search a projected city and age without fetching every candidate profile. Continue with the three-person dataset from the previous lesson.

@@ -31,6 +31,8 @@ related:
 - foundations/overview/what-openriak-kv-is
 - foundations/cluster-architecture/rings-partitions-and-virtual-nodes
 - foundations/data-and-consistency/objects-keys-and-buckets
+features: []
+concepts: ["architecture","data-model"]
 ---
 
 Definitions of terms used throughout OpenRiak KV. Each entry links to the relevant explanation or interface contract.

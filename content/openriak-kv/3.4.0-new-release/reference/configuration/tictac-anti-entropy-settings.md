@@ -31,6 +31,8 @@ related:
 - how-to/replication-and-reconciliation/enable-tictac-anti-entropy
 - reference/legacy-and-experimental-features/legacy-aae-and-riak-repl-settings
 - foundations/data-and-consistency/bucket-types-and-data-policies
+features: ["configuration","tictac-aae"]
+concepts: ["node-lifecycle","replica-repair"]
 ---
 
 TicTac settings control the current anti-entropy stores, tree rebuilds, exchanges, and repair pacing. Legacy anti-entropy settings are listed separately.

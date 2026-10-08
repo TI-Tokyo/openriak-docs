@@ -30,6 +30,8 @@ related:
 - how-to/application-data/use-bucket-types-in-an-application
 - reference/configuration/bucket-properties-and-defaults
 - reference/data-model-contracts/buckets-and-bucket-types
+features: ["bucket-properties","object-storage"]
+concepts: ["consistency","data-model","data-policy"]
 ---
 
 Bucket types group buckets under a named namespace and shared properties. They let an application make data-policy choices explicitly instead of relying on one cluster-wide policy for every object.

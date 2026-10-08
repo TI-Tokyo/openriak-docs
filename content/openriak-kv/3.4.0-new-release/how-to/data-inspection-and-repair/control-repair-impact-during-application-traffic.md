@@ -29,6 +29,8 @@ related:
 - reference/configuration/tictac-anti-entropy-settings
 - foundations/replication-and-repair/targeted-reconciliation-and-aae-folds
 - foundations/replication-and-repair/read-repair-and-tictac-anti-entropy
+features: ["cluster-management","tictac-aae"]
+concepts: ["partition-placement","replica-repair"]
 ---
 
 Control repair resource use while application traffic continues. Define both an application latency target and a recovery-progress target before adjusting concurrency.

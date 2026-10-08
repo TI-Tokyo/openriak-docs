@@ -21,6 +21,8 @@ related:
 - foundations/indexes-and-querying/secondary-indexes-and-projected-attributes
 - foundations/indexes-and-querying/how-distributed-queries-execute
 - foundations/indexes-and-querying/query-consistency-and-snapshots
+features: ["query-processing"]
+concepts: ["querying"]
 ---
 
 OpenRiak KV 3.4.1 provides continuation requests and disk-backed queued results. Choose the delivery contract explicitly; a queue reference is not a continuation token.

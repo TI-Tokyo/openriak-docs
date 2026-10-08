@@ -35,6 +35,8 @@ related:
 - reference/protocol-buffers-api/protocol-framing-message-codes-and-errors
 - foundations/data-and-consistency/objects-keys-and-buckets
 - foundations/data-and-consistency/causality-version-vectors-and-siblings
+features: ["client-operations","protocol-buffers"]
+concepts: ["data-access"]
 ---
 
 Fetch a distributed data type from an active type-specific namespace. The returned value union is selected by its datatype, and context is opaque. Keep that context when a later operation removes observed state.

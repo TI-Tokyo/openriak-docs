@@ -34,6 +34,8 @@ related:
 - foundations/cluster-architecture/membership-gossip-and-handoff
 - foundations/cluster-lifecycle/failure-and-recovery
 - foundations/cluster-lifecycle/rolling-maintenance-and-recovery-headroom
+features: ["cluster-management"]
+concepts: ["node-lifecycle"]
 ---
 
 Remove a healthy node through a graceful leave so its owned data can transfer to surviving members. Use [Replace a failed node]({{< product-version-root >}}how-to/cluster-lifecycle/replace-a-failed-node/) for a failed node that cannot hand data off.

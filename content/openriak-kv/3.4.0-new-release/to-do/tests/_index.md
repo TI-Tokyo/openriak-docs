@@ -5,6 +5,8 @@ weight: 50
 product: 'OpenRiak KV'
 product_version: '3.4.0'
 draft: true
+features: []
+concepts: ["documentation"]
 ---
 
 Use these pages to check code block rendering, downloads, configuration tables, copy controls, and operating-system-specific defaults.

@@ -1,0 +1,9 @@
+{{ define "main" }}
+<article class="site-section-page">
+  <p><a href="{{ `tags/` | relURL }}">Documentation tags</a></p>
+  <h1>{{ .Data.Singular | humanize }} tags</h1>
+  <ul>
+  {{ range .Pages.ByTitle }}<li><a href="{{ .RelPermalink }}">{{ .Data.Term }}</a> ({{ len .Pages }})</li>{{ end }}
+  </ul>
+</article>
+{{ end }}

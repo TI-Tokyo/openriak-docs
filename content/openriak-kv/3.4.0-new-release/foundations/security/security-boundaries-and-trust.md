@@ -33,6 +33,8 @@ related:
 - how-to/security/restrict-client-node-and-administrative-network-access
 - how-to/security/audit-deployment-security
 - reference/configuration/authentication-authorization-and-tls-settings
+features: ["security"]
+concepts: ["authentication"]
 ---
 
 OpenRiak security separates client authentication and permissions from trust in the host, cluster network, and administrative environment. Each exposed interface needs a deliberate access boundary.

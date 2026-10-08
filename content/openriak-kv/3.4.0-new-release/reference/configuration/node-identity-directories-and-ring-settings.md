@@ -26,6 +26,8 @@ restructured_from:
 related:
 - how-to/node-configuration/configure-node-identity-directories-and-the-initial-ring
 - foundations/data-and-consistency/bucket-types-and-data-policies
+features: ["cluster-management","configuration"]
+concepts: ["filesystem-layout","node-lifecycle","partition-placement"]
 ---
 
 Node settings define identity, storage paths, initial ring size, and placement. Set cluster identity and ring choices before forming a new cluster.

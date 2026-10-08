@@ -40,6 +40,8 @@ related:
 - foundations/replication-and-repair/real-time-replication-and-fullsync
 previous_page: how-to/replication-and-reconciliation/enable-tictac-anti-entropy
 next_page: how-to/replication-and-reconciliation/configure-replication-queues-and-filters
+features: ["queue-replication"]
+concepts: ["cross-cluster-replication"]
 ---
 
 Connect two clusters using current-generation source queues, sink consumers, and reconciliation. Use [Choose a multi-cluster topology]({{< product-version-root >}}how-to/planning-a-deployment/choose-a-multi-cluster-topology/) to decide which data moves in each direction before configuring the nodes.

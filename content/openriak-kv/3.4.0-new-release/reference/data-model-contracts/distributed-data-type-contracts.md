@@ -39,6 +39,8 @@ related:
 - reference/protocol-buffers-api/map-operations
 - reference/protocol-buffers-api/grow-only-and-union-operations
 - foundations/data-and-consistency/conflict-free-replicated-data-types
+features: ["data-types","object-storage"]
+concepts: ["data-model"]
 ---
 
 Distributed data types accept operations that the database merges across replicas. Their namespace is selected by an active bucket type whose datatype matches the operation.

@@ -36,6 +36,8 @@ related:
 - how-to/storage-maintenance/schedule-leveled-compaction
 - how-to/performance/benchmark-a-representative-workload
 - foundations/storage-and-performance/how-leveled-stores-data
+features: ["leveled","storage-backends"]
+concepts: ["storage"]
 ---
 
 Configure Leveled on empty nodes, or tune an existing Leveled deployment using a measured workload. Use [Migrate to another storage backend]({{< product-version-root >}}how-to/storage-maintenance/migrate-to-another-storage-backend/) to move data from another backend.

@@ -38,6 +38,8 @@ related:
 - foundations/cluster-architecture/membership-gossip-and-handoff
 - foundations/cluster-lifecycle/failure-and-recovery
 - foundations/cluster-lifecycle/rolling-maintenance-and-recovery-headroom
+features: ["cluster-management"]
+concepts: ["node-lifecycle"]
 ---
 
 Replace healthy members one at a time while they can transfer their data to prepared replacements. Use this for hardware changes or planned host retirement.

@@ -34,6 +34,8 @@ related:
 - reference/protocol-buffers-api/protocol-framing-message-codes-and-errors
 - foundations/data-and-consistency/objects-keys-and-buckets
 - foundations/data-and-consistency/causality-version-vectors-and-siblings
+features: ["client-operations","protocol-buffers"]
+concepts: ["data-access"]
 ---
 
 Fetch returns the stored content and causal context, or an error for a missing or unavailable value. Multiple content entries represent siblings. Preserve the returned vector clock for a later update; a conditional unchanged response may omit the value.

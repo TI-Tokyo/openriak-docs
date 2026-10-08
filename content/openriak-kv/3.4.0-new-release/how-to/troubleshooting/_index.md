@@ -9,6 +9,8 @@ description: Choose the observed symptom, preserve evidence, and verify the orig
 editorial_review: complete
 technical_review: required
 related: []
+features: ["observability"]
+concepts: ["diagnostics"]
 ---
 
 Choose the observed symptom, preserve evidence, and verify the original failing operation after the fix.

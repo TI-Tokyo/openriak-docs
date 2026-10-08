@@ -33,6 +33,8 @@ related:
 - reference/data-model-contracts/distributed-data-type-contracts
 - reference/protocol-buffers-api/protocol-framing-message-codes-and-errors
 - foundations/data-and-consistency/conflict-free-replicated-data-types
+features: ["client-operations","data-types","protocol-buffers"]
+concepts: ["data-access","data-model"]
 ---
 
 Map operations address typed fields. Each update selects the matching field datatype and operation; removals act on observed state using the enclosing context. Maps may contain nested maps, counters, sets, registers, and flags as defined below.

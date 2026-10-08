@@ -35,6 +35,8 @@ related:
 - reference/protocol-buffers-api/fetch-data-type-messages
 - reference/protocol-buffers-api/update-data-type-messages
 - foundations/data-and-consistency/conflict-free-replicated-data-types
+features: ["client-operations","data-types","http-api"]
+concepts: ["data-access","data-model"]
 ---
 
 The HTTP data-type API fetches structured values and applies datatype operations within an active bucket type.

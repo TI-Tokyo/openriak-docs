@@ -18,7 +18,7 @@ test('generated tags, large outputs and downloadable evidence render in producti
   };
   try {
     write('hugo.yaml', 'baseURL: https://example.test/docs/\ntimeout: 30s\ndisableKinds: [taxonomy, term, RSS, sitemap]\n');
-    for (const name of ['reference-tag-pages', 'reference-tag-index', 'page-summary', 'page-version-status', 'code-block', 'json-resource', 'whats-changed-section', 'whats-changed-table', 'cli/evidence-download', 'cli/output']) {
+    for (const name of ['reference-tag-pages', 'reference-tag-index', 'page-summary', 'page-tags', 'page-version-status', 'code-block', 'json-resource', 'whats-changed-section', 'whats-changed-table', 'cli/evidence-download', 'cli/output']) {
       write(`layouts/partials/${name}.html`, fs.readFileSync(path.join(root, `layouts/docs-theme/layouts/partials/${name}.html`)));
     }
     write('layouts/partials/product-context.html', '{{ return (dict "id" "openriak-kv" "version" "3.4.1" "productBase" "/docs/openriak-kv/" "versions" (dict "3.4.1" (dict "documentationSource" "openriak-kv"))) }}');

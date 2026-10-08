@@ -37,6 +37,8 @@ related:
 - reference/configuration/object-expiration-and-reclamation-settings
 - foundations/data-and-consistency/deletion-tombstones-and-expiration
 - foundations/storage-and-performance/persistence-filesystems-and-space-reclamation
+features: ["configuration","deletion"]
+concepts: ["node-lifecycle","retention","tombstones"]
 ---
 
 Configure expiration only for a backend that supports the required retention behaviour. Test it in an isolated deployment before applying it to existing data.

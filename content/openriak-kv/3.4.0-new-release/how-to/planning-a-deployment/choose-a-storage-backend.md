@@ -36,6 +36,8 @@ related:
 - foundations/cluster-architecture/replica-placement-and-failure-domains
 - foundations/storage-and-performance/storage-backend-trade-offs
 - foundations/storage-and-performance/capacity-and-growth
+features: ["cluster-management","storage-backends"]
+concepts: ["backend-selection","deployment"]
 ---
 
 Select a backend according to required query features, data size, memory budget, and maintenance behaviour. Make the choice before loading a new node's data.

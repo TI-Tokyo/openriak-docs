@@ -34,6 +34,8 @@ related:
 - reference/protocol-buffers-api/protocol-framing-message-codes-and-errors
 - foundations/data-and-consistency/objects-keys-and-buckets
 - foundations/data-and-consistency/causality-version-vectors-and-siblings
+features: ["client-operations","protocol-buffers"]
+concepts: ["data-access"]
 ---
 
 Bucket-type messages inspect or update an existing type. The server uses the bucket-property response/acknowledgement messages for these operations. Creating and activating a type are administrative operations; these messages do not replace that lifecycle.

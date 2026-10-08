@@ -36,6 +36,8 @@ related:
 - reference/configuration/next-generation-replication-settings
 - foundations/storage-and-performance/latency-queues-and-resource-contention
 - foundations/storage-and-performance/capacity-and-growth
+features: ["observability","queue-replication"]
+concepts: ["cross-cluster-replication","performance"]
 ---
 
 Adjust replication throughput while keeping both clusters' application workloads within their latency targets.

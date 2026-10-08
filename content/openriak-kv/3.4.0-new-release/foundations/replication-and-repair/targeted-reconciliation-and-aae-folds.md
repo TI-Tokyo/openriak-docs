@@ -35,6 +35,8 @@ related:
 - how-to/replication-and-reconciliation/re-replicate-a-key-range-or-time-window
 - reference/aae-fold-api/fold-invocation-and-result-conventions
 - reference/aae-fold-api/fold-filters
+features: ["queue-replication","tictac-aae"]
+concepts: ["cross-cluster-replication","replica-repair"]
 ---
 
 Targeted reconciliation limits inspection or repair to the data relevant to a question. AAE folds can examine bucket, key-range, time, segment, or object characteristics without requiring an unbounded client-side key listing.

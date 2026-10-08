@@ -29,6 +29,8 @@ related:
 - how-to/monitoring-and-diagnostics/monitor-replication-and-inter-cluster-reconciliation
 - foundations/storage-and-performance/latency-queues-and-resource-contention
 - foundations/cluster-lifecycle/failure-and-recovery
+features: ["observability","queue-replication"]
+concepts: ["cross-cluster-replication","diagnostics"]
 ---
 
 Locate the stalled stage of a replication path and verify convergence after restoring it.

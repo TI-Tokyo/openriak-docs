@@ -17,6 +17,8 @@ related:
 - how-to/replication-and-reconciliation/reconcile-selected-buckets
 - reference/replication-interfaces/next-generation-replication-runtime-controls
 - foundations/replication-and-repair/real-time-replication-and-fullsync
+features: ["queue-replication","tictac-aae"]
+concepts: ["cross-cluster-replication","replica-repair"]
 ---
 
 Targeted reconciliation limits inspection or repair to the data relevant to a question. AAE folds can examine bucket, key-range, time, segment, or object characteristics without requiring an unbounded client-side key listing.

@@ -33,6 +33,8 @@ related:
 - how-to/cluster-lifecycle/monitor-and-control-handoffs
 - foundations/cluster-lifecycle/rolling-maintenance-and-recovery-headroom
 - reference/operations-and-observability/handoff-states-and-transfer-records
+features: ["cluster-management","handoff"]
+concepts: ["architecture","node-lifecycle","partition-transfer"]
 ---
 
 Cluster membership records which nodes participate and how partitions are owned. Gossip spreads ring information between nodes; handoff moves the data needed when ownership changes.

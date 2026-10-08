@@ -38,6 +38,8 @@ related:
 - reference/query-api/endpoints-and-request-schema
 - reference/query-api/expression-grammar-and-operators
 - foundations/indexes-and-querying/secondary-indexes-and-projected-attributes
+features: ["object-storage","secondary-indexes"]
+concepts: ["data-model","querying"]
 ---
 
 Secondary-index entries associate terms with an object key. A projected attribute is extracted from an index term during Query API evaluation; it is not automatically read from the stored object body.

@@ -33,6 +33,8 @@ related:
 - tutorials/security/make-an-authenticated-tls-client-connection
 - tutorials/security/rotate-a-certificate-in-a-learning-environment
 - reference/configuration/authentication-authorization-and-tls-settings
+features: ["security"]
+concepts: ["authentication","tls"]
 ---
 
 TLS protects a connection only when the client and server use an appropriate trust chain and verify the peer they intended to reach. Encryption without identity verification leaves an important part of that contract unmet.

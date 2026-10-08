@@ -33,6 +33,8 @@ related:
 - reference/commands/repair-and-recovery-commands
 - foundations/replication-and-repair/targeted-reconciliation-and-aae-folds
 - foundations/replication-and-repair/read-repair-and-tictac-anti-entropy
+features: ["tictac-aae"]
+concepts: ["replica-repair"]
 ---
 
 Repair lost vnode or node data from surviving replicas after membership and storage are ready. This process cannot recover data for which no valid copy remains.

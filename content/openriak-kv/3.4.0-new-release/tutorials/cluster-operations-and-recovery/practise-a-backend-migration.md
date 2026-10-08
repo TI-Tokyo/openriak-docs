@@ -33,6 +33,8 @@ related:
 - foundations/cluster-lifecycle/backups-restores-and-disaster-recovery
 - foundations/cluster-lifecycle/rolling-maintenance-and-recovery-headroom
 previous_page: tutorials/cluster-operations-and-recovery/inspect-and-repair-a-bounded-data-range
+features: ["cluster-management","storage-backends"]
+concepts: ["backend-selection","node-lifecycle","recovery"]
 ---
 
 Move a small dataset from a Bitcask learning cluster to a new Leveled cluster using replication. Keep the source intact until the destination has been checked; changing a backend name does not convert existing files.

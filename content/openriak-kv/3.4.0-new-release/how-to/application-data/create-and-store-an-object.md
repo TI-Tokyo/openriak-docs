@@ -40,6 +40,8 @@ related:
 - foundations/data-and-consistency/objects-keys-and-buckets
 - foundations/data-and-consistency/bucket-types-and-data-policies
 - foundations/data-and-consistency/causality-version-vectors-and-siblings
+features: ["client-operations"]
+concepts: ["data-access"]
 ---
 
 Create an object at an application-selected key and check the result. Set `RIAK_HTTP` to your endpoint and include the required authentication and TLS options.

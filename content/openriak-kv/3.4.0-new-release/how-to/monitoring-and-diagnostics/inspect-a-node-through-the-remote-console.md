@@ -32,6 +32,8 @@ related:
 - reference/operations-and-observability/remote-console-interfaces
 - foundations/storage-and-performance/latency-queues-and-resource-contention
 - foundations/cluster-lifecycle/failure-and-recovery
+features: ["erlang-runtime","observability"]
+concepts: ["diagnostics","runtime"]
 ---
 
 Open an Erlang shell on a running node to inspect supported runtime interfaces. The shell has the node's privileges; use a known, bounded operation and record which node you are connected to.

@@ -30,6 +30,8 @@ related:
 - reference/operations-and-observability/log-files-and-event-formats
 - foundations/cluster-architecture/rings-partitions-and-virtual-nodes
 - foundations/cluster-architecture/the-lifecycle-of-a-read-and-a-write
+features: ["configuration","observability"]
+concepts: ["diagnostics","node-lifecycle"]
 ---
 
 Route OpenRiak log categories to separate handlers or JSON output, then verify that the intended events reach the collector.

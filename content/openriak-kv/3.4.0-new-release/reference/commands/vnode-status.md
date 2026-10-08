@@ -30,6 +30,8 @@ related:
 - how-to/monitoring-and-diagnostics/monitor-anti-entropy-progress
 - reference/operations-and-observability/handoff-states-and-transfer-records
 - reference/operations-and-observability/node-and-cluster-metrics
+features: ["node-operations", "observability"]
+concepts: ["diagnostics"]
 ---
 
 Vnode status identifies local partition and backend state. Use the command's availability notice to distinguish releases that expose this interface.

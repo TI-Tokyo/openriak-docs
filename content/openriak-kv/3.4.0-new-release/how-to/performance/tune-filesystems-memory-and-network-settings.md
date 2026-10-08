@@ -36,6 +36,8 @@ related:
 - how-to/performance/tune-a-deployment-on-aws
 - foundations/storage-and-performance/latency-queues-and-resource-contention
 - foundations/storage-and-performance/capacity-and-growth
+features: ["client-networking","observability"]
+concepts: ["connections","filesystem-layout","memory","performance"]
 ---
 
 Tune host storage, memory, and networking only when measurements show they constrain the workload. Record the host and kernel versions alongside any persistent change.

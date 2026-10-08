@@ -35,6 +35,8 @@ related:
 - foundations/indexes-and-querying/secondary-indexes-and-projected-attributes
 - foundations/indexes-and-querying/how-distributed-queries-execute
 - foundations/indexes-and-querying/query-cost-and-result-delivery
+features: ["query-processing","secondary-indexes"]
+concepts: ["querying"]
 ---
 
 Attach secondary-index terms to an object and query them using a backend that supports indexes. Check [Backend capability matrix]({{< product-version-root >}}reference/orientation-and-compatibility/backend-capability-matrix/) before changing the application.

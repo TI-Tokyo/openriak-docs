@@ -32,6 +32,8 @@ related:
 - how-to/data-inspection-and-repair/run-and-retrieve-a-long-running-aae-fold
 - how-to/data-inspection-and-repair/control-repair-impact-during-application-traffic
 - foundations/replication-and-repair/targeted-reconciliation-and-aae-folds
+features: ["observability","tictac-aae"]
+concepts: ["data-access","diagnostics","replica-repair"]
 ---
 
 Return object statistics for a bucket and optional key and modified-time bounds.

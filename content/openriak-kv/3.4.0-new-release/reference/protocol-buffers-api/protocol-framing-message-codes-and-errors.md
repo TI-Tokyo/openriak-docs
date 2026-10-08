@@ -37,6 +37,8 @@ related:
 - reference/protocol-buffers-api/secondary-index-query-messages
 - foundations/data-and-consistency/objects-keys-and-buckets
 - foundations/data-and-consistency/causality-version-vectors-and-siblings
+features: ["client-operations","protocol-buffers"]
+concepts: ["data-access"]
 ---
 
 Protocol Buffers requests use a four-byte unsigned big-endian length, followed by a one-byte message code and the encoded message body. The length includes the code byte but excludes the four-byte prefix.

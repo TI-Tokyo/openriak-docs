@@ -32,6 +32,8 @@ related:
 - how-to/data-inspection-and-repair/repair-a-vnode-or-node-from-surviving-replicas
 - reference/configuration/repair-and-handoff-settings
 - foundations/cluster-architecture/membership-gossip-and-handoff
+features: ["handoff","observability"]
+concepts: ["diagnostics","partition-transfer"]
 ---
 
 Handoffs transfer vnode data during ownership changes, temporary fallback recovery, or explicit repair. Their status records describe work in progress, not an atomic cluster transaction.

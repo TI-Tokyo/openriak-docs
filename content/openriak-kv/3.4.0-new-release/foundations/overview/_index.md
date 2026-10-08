@@ -12,6 +12,8 @@ review_scope: content changes
 review-by: TI Tokyo/JOM
 status: Reviewed
 related: []
+features: ["object-storage"]
+concepts: ["architecture"]
 ---
 
 Start with what the OpenRiak does, the workloads it suits, and how its design affects applications.

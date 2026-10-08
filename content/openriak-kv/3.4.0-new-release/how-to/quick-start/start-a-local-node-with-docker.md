@@ -18,6 +18,8 @@ related:
 - how-to/quick-start/start-a-local-cluster-with-docker
 - how-to/installation/run-openriak-with-persistent-docker-storage
 - reference/http-api/ping
+features: ["installation"]
+concepts: ["deployment"]
 ---
 
 Start one local OpenRiak node with a published Docker Compose file, then verify an HTTP write and read. This is a disposable development environment.

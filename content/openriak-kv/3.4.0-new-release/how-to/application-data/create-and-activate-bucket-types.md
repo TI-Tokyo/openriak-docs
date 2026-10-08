@@ -48,6 +48,8 @@ related:
 - foundations/data-and-consistency/objects-keys-and-buckets
 - foundations/data-and-consistency/bucket-types-and-data-policies
 - foundations/data-and-consistency/causality-version-vectors-and-siblings
+features: ["bucket-properties","client-operations"]
+concepts: ["data-access","data-policy"]
 ---
 
 Create a bucket type to apply a shared object policy or select a distributed data type. Type creation and activation are separate operations; activation makes the type available to applications.

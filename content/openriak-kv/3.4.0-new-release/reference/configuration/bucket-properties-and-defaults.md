@@ -43,6 +43,8 @@ related:
 - how-to/application-data/create-and-activate-bucket-types
 - reference/http-api/object-request-options
 - foundations/data-and-consistency/bucket-types-and-data-policies
+features: ["bucket-properties","configuration"]
+concepts: ["data-policy","node-lifecycle"]
 ---
 
 Bucket defaults supply the initial policy for ordinary object requests. A bucket type, bucket override, or request option can change the effective policy; data-type and lifecycle restrictions still apply.

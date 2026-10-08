@@ -30,6 +30,8 @@ related:
 - reference/protocol-buffers-api/ping-and-server-information-messages
 - foundations/data-and-consistency/objects-keys-and-buckets
 - foundations/data-and-consistency/quorums-availability-and-durability
+features: ["client-operations","http-api"]
+concepts: ["data-access"]
 ---
 
 `GET /ping` checks whether the HTTP API responds.

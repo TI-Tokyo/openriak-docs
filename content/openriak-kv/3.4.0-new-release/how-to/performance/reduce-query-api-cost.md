@@ -19,6 +19,8 @@ related:
 - reference/query-api/accumulation-modes
 - foundations/storage-and-performance/latency-queues-and-resource-contention
 - foundations/storage-and-performance/capacity-and-growth
+features: ["observability","query-processing"]
+concepts: ["performance","querying"]
 ---
 
 Reduce Query API cost by changing a measured part of the query while preserving its answer.

@@ -35,6 +35,8 @@ related:
 - reference/data-model-contracts/causal-context-and-version-vector-representations
 - how-to/application-data/create-and-store-an-object
 - foundations/data-and-consistency/objects-keys-and-buckets
+features: ["object-storage"]
+concepts: ["data-model"]
 ---
 
 An ordinary object is identified by bucket type, bucket, and key. Its value is an opaque byte sequence accompanied by content metadata and causal context.

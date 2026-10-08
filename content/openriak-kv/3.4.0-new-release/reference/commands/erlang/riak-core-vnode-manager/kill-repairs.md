@@ -14,6 +14,8 @@ cli_reference_version: "3.4.0"
 related: ["how-to/monitoring-and-diagnostics/inspect-a-node-through-the-remote-console","reference/operations-and-observability/remote-console-interfaces","reference/commands"]
 linkTitle: "kill_repairs"
 cli_command_key: "erlang:riak_core_vnode_manager:kill_repairs"
+features: ["read-repair"]
+concepts: ["replica-repair"]
 ---
 
 {{< cli-command >}}

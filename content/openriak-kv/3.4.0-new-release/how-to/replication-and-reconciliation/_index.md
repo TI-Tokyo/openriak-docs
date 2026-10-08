@@ -8,6 +8,8 @@ description: Enable AAE, establish source queues and sink consumers, then seed, 
 editorial_review: complete
 technical_review: required
 related: []
+features: ["queue-replication"]
+concepts: ["cross-cluster-replication"]
 ---
 
 Enable AAE, establish source queues and sink consumers, then seed, reconcile, and protect the connection.

@@ -36,6 +36,8 @@ related:
 - foundations/overview/what-openriak-kv-is
 - foundations/replication-and-repair/replication-generations-and-compatibility
 - foundations/storage-and-performance/storage-backend-trade-offs
+features: ["queue-replication"]
+concepts: ["compatibility","cross-cluster-replication"]
 ---
 
 Current-generation replication and legacy `riak_repl` are separate protocols with different configuration, transport, and fullsync controls.

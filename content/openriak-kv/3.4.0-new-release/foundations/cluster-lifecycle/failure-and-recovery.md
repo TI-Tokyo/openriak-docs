@@ -38,6 +38,8 @@ related:
 - how-to/cluster-lifecycle/recover-a-cluster-after-a-widespread-failure
 - foundations/replication-and-repair/read-repair-and-tictac-anti-entropy
 - foundations/cluster-lifecycle/backups-restores-and-disaster-recovery
+features: ["cluster-management"]
+concepts: ["node-lifecycle","recovery"]
 ---
 
 A node failure changes which replicas are reachable and which work the surviving nodes in the cluster must perform. Recovery is complete only when service, data, and replica placement have been checked.

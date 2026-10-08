@@ -9,6 +9,8 @@ description: Practise membership changes, failures, backups, rolling restarts, a
 editorial_review: complete
 technical_review: required
 related: []
+features: ["cluster-management"]
+concepts: ["node-lifecycle","recovery"]
 ---
 
 Practise membership changes, failures, backups, rolling restarts, and bounded repair with disposable data before applying a production procedure.

@@ -38,6 +38,8 @@ related:
 - how-to/performance/tune-the-erlang-vm-for-a-measured-bottleneck
 - reference/operations-and-observability/aae-repair-and-worker-pool-metrics
 - foundations/cluster-lifecycle/rolling-maintenance-and-recovery-headroom
+features: ["storage-backends"]
+concepts: ["storage"]
 ---
 
 Latency is the time a request waits as well as the time spent doing its work. Once a shared resource approaches saturation, queues can grow even when the operation itself has not changed.

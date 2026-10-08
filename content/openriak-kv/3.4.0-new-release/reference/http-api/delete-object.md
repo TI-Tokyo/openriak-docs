@@ -35,6 +35,8 @@ related:
 - reference/aae-fold-api/reap-tombstones
 - foundations/data-and-consistency/objects-keys-and-buckets
 - foundations/data-and-consistency/quorums-availability-and-durability
+features: ["client-operations","deletion","http-api"]
+concepts: ["data-access","retention","tombstones"]
 ---
 
 Delete an ordinary object identified by type, bucket, and key. The operation can retain a tombstone; it is not a request to immediately erase all physical storage.

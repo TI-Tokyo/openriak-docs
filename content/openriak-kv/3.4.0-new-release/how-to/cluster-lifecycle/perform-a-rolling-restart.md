@@ -37,6 +37,8 @@ related:
 - foundations/cluster-architecture/membership-gossip-and-handoff
 - foundations/cluster-lifecycle/failure-and-recovery
 - foundations/cluster-lifecycle/rolling-maintenance-and-recovery-headroom
+features: ["cluster-management"]
+concepts: ["node-lifecycle"]
 ---
 
 Restart cluster members in sequence, waiting for each member's recovery before stopping the next. Confirm the cluster can tolerate the unavailable member throughout the operation.

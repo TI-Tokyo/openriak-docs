@@ -33,6 +33,8 @@ related:
 - foundations/replication-and-repair/read-repair-and-tictac-anti-entropy
 - foundations/replication-and-repair/replication-generations-and-compatibility
 - reference/orientation-and-compatibility/feature-status-and-deprecations
+features: ["object-storage"]
+concepts: ["architecture"]
 ---
 
 OpenRiak continues the Riak family of distributed key/value databases. Its architecture carries forward Dynamo's partitioning, replication, and application-visible treatment of concurrent updates, while adding Riak and OpenRiak implementations of those ideas.

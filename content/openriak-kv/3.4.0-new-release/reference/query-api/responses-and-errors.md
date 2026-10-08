@@ -34,6 +34,8 @@ related:
 - foundations/indexes-and-querying/secondary-indexes-and-projected-attributes
 - foundations/indexes-and-querying/how-distributed-queries-execute
 - foundations/indexes-and-querying/query-consistency-and-snapshots
+features: ["query-processing"]
+concepts: ["querying"]
 ---
 
 A successful synchronous query returns JSON whose field corresponds to its accumulation mode: keys, terms, counts, or grouped counts. A continuation, when present, is returned in the `X-Riak-Continuation` response header.

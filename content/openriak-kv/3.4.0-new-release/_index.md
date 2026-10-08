@@ -34,6 +34,8 @@ related:
 - reference/configuration/all-configuration-settings-and-defaults
 - reference/commands
 - how-to/monitoring-and-diagnostics/perform-routine-cluster-health-checks
+features: []
+concepts: ["architecture"]
 ---
 
 OpenRiak KV is a distributed key-value database for applications that need to store and retrieve data across several servers. Its replica policies and conflict handling let applications make explicit choices about availability and consistency.

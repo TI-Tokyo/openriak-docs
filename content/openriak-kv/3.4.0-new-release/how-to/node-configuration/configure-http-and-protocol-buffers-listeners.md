@@ -40,6 +40,8 @@ related:
 - foundations/cluster-architecture/the-lifecycle-of-a-read-and-a-write
 previous_page: how-to/node-configuration/configure-node-identity-directories-and-the-initial-ring
 next_page: how-to/node-configuration/validate-configuration-before-startup
+features: ["client-networking","configuration"]
+concepts: ["connections","node-lifecycle"]
 ---
 
 Bind HTTP and Protocol Buffers to the interfaces and ports that the intended clients can reach. Keep administrative and distribution access separate from public client access.

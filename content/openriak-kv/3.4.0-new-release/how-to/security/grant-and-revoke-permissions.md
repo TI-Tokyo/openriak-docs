@@ -39,6 +39,8 @@ related:
 - foundations/security/tls-and-certificate-trust
 previous_page: how-to/security/configure-authentication-sources
 next_page: how-to/security/enable-authentication-and-authorization
+features: ["security"]
+concepts: ["authentication"]
 ---
 
 Grant the minimum operations an identity needs on the intended type and bucket, then test both permitted and forbidden requests.

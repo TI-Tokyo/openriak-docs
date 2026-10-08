@@ -23,6 +23,8 @@ editorial_review: 'complete'
 technical_review: 'complete'
 last_reviewed: '2026-09-01'
 review_scope: 'editorial-and-site-integration'
+features: ["installation"]
+concepts: ["deployment"]
 ---
 
 [DockerHub OpenRiak KV]: https://hub.docker.com/r/tiotjp/openriak-kv

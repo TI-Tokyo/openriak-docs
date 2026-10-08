@@ -30,6 +30,8 @@ related:
 - reference/protocol-buffers-api/protocol-framing-message-codes-and-errors
 - foundations/data-and-consistency/objects-keys-and-buckets
 - foundations/data-and-consistency/causality-version-vectors-and-siblings
+features: ["client-libraries","client-operations"]
+concepts: ["data-access"]
 ---
 
 The Node.js client example uses the HTTP API through the language's HTTP library. It does not depend on a Riak-specific Protocol Buffers client.

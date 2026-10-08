@@ -34,6 +34,8 @@ related:
 - foundations/security/identities-authentication-and-permissions
 - foundations/security/tls-and-certificate-trust
 next_page: tutorials/security/apply-and-test-group-permissions
+features: ["security"]
+concepts: ["authentication","tls"]
 ---
 
 Create a local certificate authority, enable an HTTPS listener, and authenticate a read-only user. Use the disposable Docker learning cluster; these changes enable security for that cluster.

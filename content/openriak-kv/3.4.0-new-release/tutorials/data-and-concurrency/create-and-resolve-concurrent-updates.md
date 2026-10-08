@@ -22,6 +22,8 @@ related:
 - foundations/data-and-consistency/conflict-free-replicated-data-types
 previous_page: tutorials/data-and-concurrency/apply-different-policies-with-bucket-types
 next_page: tutorials/data-and-concurrency/practise-conditional-updates
+features: ["client-operations"]
+concepts: ["causality","concurrency","data-model"]
 ---
 
 Create two concurrent values for one object, read the siblings, and resolve them into one value. Complete the bucket-type exercise first.

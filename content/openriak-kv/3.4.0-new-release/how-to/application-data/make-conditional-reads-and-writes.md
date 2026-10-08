@@ -34,6 +34,8 @@ related:
 - how-to/application-data/coordinate-an-update-with-a-latch-object
 - reference/http-api/conditional-requests-and-latch-objects
 - foundations/data-and-consistency/conditional-updates-and-latch-objects
+features: ["client-operations","conditional-writes"]
+concepts: ["concurrency-control","data-access"]
 ---
 
 Conditional requests are used when an operation should depend on the version the client observed or on a key being absent. Conditions reduce unwanted overwrites but do not make ordinary objects a general transaction system.

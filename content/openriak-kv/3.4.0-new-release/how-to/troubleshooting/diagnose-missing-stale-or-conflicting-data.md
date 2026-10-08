@@ -29,6 +29,8 @@ related:
 - how-to/monitoring-and-diagnostics/monitor-replication-and-inter-cluster-reconciliation
 - foundations/storage-and-performance/latency-queues-and-resource-contention
 - foundations/cluster-lifecycle/failure-and-recovery
+features: ["observability"]
+concepts: ["causality","concurrency","diagnostics"]
 ---
 
 Investigate an object that appears missing, stale, or conflicted without overwriting the evidence.

@@ -39,6 +39,8 @@ related:
 - how-to/monitoring-and-diagnostics/collect-diagnostic-evidence
 - foundations/storage-and-performance/latency-queues-and-resource-contention
 - foundations/cluster-lifecycle/failure-and-recovery
+features: ["cluster-management","observability"]
+concepts: ["diagnostics","partition-placement","recovery"]
 ---
 
 Choose between restarting an intact member, repairing lost storage, and replacing failed hardware. Preserve evidence before clearing data or changing membership.

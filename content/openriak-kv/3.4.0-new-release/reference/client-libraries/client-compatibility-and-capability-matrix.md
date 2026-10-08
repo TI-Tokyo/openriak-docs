@@ -36,6 +36,8 @@ related:
 - tutorials/first-application/build-a-small-application-with-python
 - foundations/data-and-consistency/objects-keys-and-buckets
 - foundations/data-and-consistency/causality-version-vectors-and-siblings
+features: ["client-libraries","client-operations"]
+concepts: ["compatibility","data-access"]
 ---
 
 Client compatibility depends on protocol support, server features, authentication, and the language runtime. A client that can read ordinary objects does not necessarily support data types, current queries, or every security mode.

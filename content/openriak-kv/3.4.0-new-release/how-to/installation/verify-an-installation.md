@@ -47,6 +47,8 @@ related:
 - foundations/cluster-architecture/rings-partitions-and-virtual-nodes
 previous_page: how-to/node-configuration/validate-configuration-before-startup
 next_page: how-to/cluster-lifecycle/add-nodes-to-a-cluster
+features: ["installation"]
+concepts: ["deployment","testing"]
 ---
 
 Verify that an installed node starts, serves requests, and reports the expected cluster state before admitting application traffic.

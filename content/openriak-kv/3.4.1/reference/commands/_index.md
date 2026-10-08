@@ -12,6 +12,8 @@ technical_review: "required"
 generated_by: "cli-reference"
 cli_reference_version: "3.4.1"
 related: ["how-to/cluster-lifecycle/start-stop-or-restart-a-node","how-to/monitoring-and-diagnostics/perform-routine-cluster-health-checks"]
+features: ["node-operations","cluster-management"]
+concepts: ["node-lifecycle"]
 ---
 
 {{< cli-command-index >}}

@@ -19,6 +19,8 @@ related:
 - foundations/replication-and-repair/read-repair-and-tictac-anti-entropy
 - foundations/replication-and-repair/replication-sources-queues-and-sinks
 - foundations/replication-and-repair/real-time-replication-and-fullsync
+features: ["queue-replication", "security"]
+concepts: ["cross-cluster-replication", "tls"]
 ---
 
 Secure the transport used by a next-generation replication sink and its source. Configure an authenticated path before admitting application data to it.

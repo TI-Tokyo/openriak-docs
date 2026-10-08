@@ -14,6 +14,8 @@ cli_reference_version: "3.4.1"
 related: ["how-to/security/enable-authentication-and-authorization","reference/configuration/authentication-authorization-and-tls-settings","reference/commands"]
 linkTitle: "print-users"
 cli_command_key: "shell:riak admin security print-users"
+features: ["security"]
+concepts: ["authentication"]
 ---
 
 {{< cli-command >}}

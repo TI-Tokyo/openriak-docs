@@ -23,6 +23,8 @@ editorial_review: 'complete'
 technical_review: 'complete'
 last_reviewed: '2026-09-01'
 review_scope: 'editorial-and-site-integration'
+features: ["installation"]
+concepts: ["deployment"]
 ---
 
 ## Recommended Downloads

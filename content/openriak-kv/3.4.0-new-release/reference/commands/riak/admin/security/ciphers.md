@@ -14,6 +14,8 @@ cli_reference_version: "3.4.0"
 related: ["how-to/security/enable-authentication-and-authorization","reference/configuration/authentication-authorization-and-tls-settings","reference/commands"]
 linkTitle: "ciphers"
 cli_command_key: "shell:riak admin security ciphers"
+features: ["security"]
+concepts: ["authentication","tls"]
 ---
 
 {{< cli-command >}}

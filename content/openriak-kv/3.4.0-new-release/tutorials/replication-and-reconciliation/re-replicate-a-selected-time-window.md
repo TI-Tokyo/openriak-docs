@@ -20,6 +20,8 @@ related:
 - foundations/replication-and-repair/real-time-replication-and-fullsync
 - foundations/replication-and-repair/targeted-reconciliation-and-aae-folds
 previous_page: tutorials/replication-and-reconciliation/reconcile-selected-buckets
+features: ["queue-replication"]
+concepts: ["cross-cluster-replication"]
 ---
 
 Requeue changes from a known time window and confirm that the destination receives them. Complete [Replicate data between two clusters]({{< product-version-root >}}tutorials/replication-and-reconciliation/replicate-data-between-two-clusters/) and [Catch up after a replication interruption]({{< product-version-root >}}tutorials/replication-and-reconciliation/catch-up-after-a-replication-interruption/) first.

@@ -31,6 +31,8 @@ related:
 - how-to/troubleshooting/investigate-a-running-node-with-erlang-diagnostics
 - foundations/storage-and-performance/latency-queues-and-resource-contention
 - foundations/cluster-lifecycle/failure-and-recovery
+features: ["observability"]
+concepts: ["diagnostics"]
 ---
 
 Collect a reproducible incident record before changing a failing node. Include timestamps and enough scope information to compare evidence from several nodes.

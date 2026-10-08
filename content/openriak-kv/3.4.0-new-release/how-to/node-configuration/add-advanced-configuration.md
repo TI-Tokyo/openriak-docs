@@ -34,6 +34,8 @@ related:
 - reference/configuration/runtime-environment-variables
 - foundations/cluster-architecture/rings-partitions-and-virtual-nodes
 - foundations/cluster-architecture/the-lifecycle-of-a-read-and-a-write
+features: ["configuration"]
+concepts: ["node-lifecycle"]
 ---
 
 Use `advanced.config` only for settings that require Erlang application terms or are not exposed through `riak.conf`. Prefer a named `riak.conf` setting when the schema provides it.

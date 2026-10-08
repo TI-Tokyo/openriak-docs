@@ -32,6 +32,8 @@ related:
 - reference/operations-and-observability/log-files-and-event-formats
 - foundations/storage-and-performance/latency-queues-and-resource-contention
 - foundations/cluster-lifecycle/failure-and-recovery
+features: ["observability"]
+concepts: ["diagnostics"]
 ---
 
 Diagnose a node that does not reach a usable running state. Preserve the first startup error before repeatedly restarting it.

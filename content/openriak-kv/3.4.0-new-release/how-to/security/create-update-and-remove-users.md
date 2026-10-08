@@ -39,6 +39,8 @@ related:
 - foundations/security/tls-and-certificate-trust
 previous_page: how-to/security/configure-and-rotate-tls-certificates
 next_page: how-to/security/manage-groups-and-membership
+features: ["security"]
+concepts: ["authentication"]
 ---
 
 Create an application user, verify its effective access, and remove the identity when it is no longer needed. Keep a working administrative connection while making security changes.

@@ -35,6 +35,8 @@ related:
 - how-to/cluster-lifecycle/upgrade-a-cluster
 - how-to/cluster-lifecycle/roll-back-a-compatible-cluster-upgrade
 - reference/configuration/all-configuration-settings-and-defaults
+features: ["cluster-management"]
+concepts: ["compatibility","node-lifecycle"]
 ---
 
 A rolling upgrade creates a period in which some nodes in a cluster run different software. Compatibility must cover their communication, stored data, negotiated capabilities, and Erlang/OTP runtimes.

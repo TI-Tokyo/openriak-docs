@@ -12,6 +12,8 @@ last_reviewed: '2026-10-06'
 review_scope: content review
 review-by: TI Tokyo/JOM
 related: []
+features: ["security"]
+concepts: ["authentication"]
 ---
 
 Work through identity, authentication, permissions, and transport protection. Test both allowed and denied access.

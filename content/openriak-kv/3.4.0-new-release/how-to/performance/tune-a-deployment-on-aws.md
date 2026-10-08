@@ -36,6 +36,8 @@ related:
 - how-to/performance/tune-filesystems-memory-and-network-settings
 - foundations/storage-and-performance/latency-queues-and-resource-contention
 - foundations/storage-and-performance/capacity-and-growth
+features: ["observability"]
+concepts: ["performance"]
 ---
 
 Tune an AWS deployment from measured instance, storage, and network behaviour. Keep a stable production workload and recovery target when comparing infrastructure choices.

@@ -40,6 +40,8 @@ related:
 - foundations/replication-and-repair/real-time-replication-and-fullsync
 previous_page: how-to/replication-and-reconciliation/connect-clusters-with-next-generation-replication
 next_page: how-to/replication-and-reconciliation/configure-sink-nodes-and-consumers
+features: ["queue-replication"]
+concepts: ["cross-cluster-replication"]
 ---
 
 Define source queues and filters so each destination receives the intended objects. Each independent destination needs its own queue on every source node.

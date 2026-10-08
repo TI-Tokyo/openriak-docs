@@ -37,6 +37,8 @@ related:
 - foundations/data-and-consistency/resolving-concurrent-updates
 - foundations/replication-and-repair/read-repair-and-tictac-anti-entropy
 - foundations/replication-and-repair/real-time-replication-and-fullsync
+features: ["object-storage"]
+concepts: ["consistency","data-model"]
 ---
 
 Eventual consistency allows replicas to differ temporarily. When updates stop and the required communication and repair work succeeds, replicas can converge on the same object state.

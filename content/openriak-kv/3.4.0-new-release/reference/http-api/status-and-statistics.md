@@ -34,6 +34,8 @@ related:
 - reference/operations-and-observability/aae-repair-and-worker-pool-metrics
 - foundations/data-and-consistency/objects-keys-and-buckets
 - foundations/data-and-consistency/quorums-availability-and-durability
+features: ["client-operations","http-api","observability"]
+concepts: ["data-access","diagnostics"]
 ---
 
 `GET /stats` returns node statistics as JSON. The response describes the addressed node; collect and label observations from all members when monitoring a cluster.

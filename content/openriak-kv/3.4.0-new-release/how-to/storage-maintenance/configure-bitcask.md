@@ -36,6 +36,8 @@ related:
 - how-to/storage-maintenance/schedule-bitcask-merges
 - how-to/performance/benchmark-a-representative-workload
 - foundations/storage-and-performance/how-bitcask-stores-data
+features: ["bitcask","storage-backends"]
+concepts: ["storage"]
 ---
 
 Configure Bitcask on empty nodes, or tune an existing Bitcask deployment using a measured workload. Use [Migrate to another storage backend]({{< product-version-root >}}how-to/storage-maintenance/migrate-to-another-storage-backend/) to move data from another backend.

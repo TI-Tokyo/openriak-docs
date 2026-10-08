@@ -31,6 +31,8 @@ related:
 - how-to/cluster-lifecycle/replace-nodes-without-stopping-the-cluster
 - how-to/cluster-lifecycle/perform-a-rolling-restart
 - how-to/data-inspection-and-repair/control-repair-impact-during-application-traffic
+features: ["cluster-management"]
+concepts: ["capacity-planning","node-lifecycle","recovery"]
 ---
 
 Rolling maintenance keeps part of a cluster serving traffic while nodes are changed in stages. Its success depends on spare capacity and on waiting for recovery between stages.

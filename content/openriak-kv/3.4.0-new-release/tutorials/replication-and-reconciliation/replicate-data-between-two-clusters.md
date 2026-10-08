@@ -41,6 +41,8 @@ related:
 - foundations/replication-and-repair/real-time-replication-and-fullsync
 - foundations/replication-and-repair/targeted-reconciliation-and-aae-folds
 next_page: tutorials/replication-and-reconciliation/catch-up-after-a-replication-interruption
+features: ["queue-replication"]
+concepts: ["cross-cluster-replication"]
 ---
 
 Replicate a new object from cluster A to cluster B, then seed an older object and verify convergence. Each cluster in this exercise has one node to keep resource use small; this arrangement provides no host-level fault tolerance.

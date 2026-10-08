@@ -30,6 +30,8 @@ related:
 - how-to/troubleshooting/diagnose-missing-stale-or-conflicting-data
 - reference/operations-and-observability/node-and-cluster-metrics
 - foundations/replication-and-repair/read-repair-and-tictac-anti-entropy
+features: ["observability","read-repair"]
+concepts: ["diagnostics","replica-repair"]
 ---
 
 Investigate increased read-repair work by correlating it with recent failures, ownership changes, and application traffic.

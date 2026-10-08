@@ -38,6 +38,8 @@ related:
 - foundations/security/identities-authentication-and-permissions
 - foundations/security/tls-and-certificate-trust
 next_page: how-to/security/create-update-and-remove-users
+features: ["security"]
+concepts: ["authentication","tls"]
 ---
 
 Install or rotate the server certificate, private key, and CA chain used by the client listeners. Use certificates whose identities match the hostnames clients verify.

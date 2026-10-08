@@ -34,6 +34,8 @@ related:
 - reference/orientation-and-compatibility/feature-status-and-deprecations
 - reference/http-api/conditional-requests-and-latch-objects
 - foundations/data-and-consistency/conditional-updates-and-latch-objects
+features: ["strong-consistency"]
+concepts: ["compatibility","consensus"]
 ---
 
 The ensemble-backed strong-consistency interface is experimental and deprecated in this release family. It has a separate availability and feature model from ordinary eventually consistent objects.

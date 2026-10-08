@@ -27,6 +27,8 @@ related:
 - how-to/storage-maintenance/configure-leveled
 - how-to/storage-maintenance/schedule-leveled-compaction
 - foundations/data-and-consistency/bucket-types-and-data-policies
+features: ["configuration","leveled"]
+concepts: ["node-lifecycle","storage"]
 ---
 
 Leveled settings control journals, ledgers, caches, compaction, and storage maintenance. Check units and restart requirements before changing an active store.

@@ -33,6 +33,8 @@ related:
 - reference/orientation-and-compatibility/backend-capability-matrix
 - foundations/overview/what-openriak-kv-is
 - foundations/cluster-architecture/rings-partitions-and-virtual-nodes
+features: ["cluster-management","installation"]
+concepts: ["deployment"]
 ---
 
 Build a five-node learning cluster, store a greeting, and read it through another node. You will use the same disposable cluster for the data and query exercises that follow.

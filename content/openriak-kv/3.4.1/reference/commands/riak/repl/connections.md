@@ -14,6 +14,8 @@ cli_reference_version: "3.4.1"
 related: ["how-to/legacy-and-specialist-workflows/maintain-legacy-v3-replication","reference/replication-interfaces/legacy-riak-repl-runtime-controls","reference/commands"]
 linkTitle: "connections"
 cli_command_key: "shell:riak repl connections"
+features: ["legacy-replication"]
+concepts: ["cross-cluster-replication"]
 ---
 
 {{< cli-command >}}

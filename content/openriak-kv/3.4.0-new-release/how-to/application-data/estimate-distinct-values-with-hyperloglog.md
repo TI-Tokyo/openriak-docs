@@ -32,6 +32,8 @@ related:
 - reference/http-api/distributed-data-type-operations
 - tutorials/data-and-concurrency/estimate-unique-activity-with-hyperloglog
 - foundations/data-and-consistency/conflict-free-replicated-data-types
+features: ["client-operations","data-types"]
+concepts: ["data-access","data-model"]
 ---
 
 Update a distributed hll through the data-type API. Set `RIAK_HTTP` to the intended endpoint and include the deployment's authentication options.

@@ -42,6 +42,8 @@ related:
 - reference/configuration/configuration-files-syntax-and-precedence
 - foundations/cluster-architecture/rings-partitions-and-virtual-nodes
 - foundations/cluster-architecture/the-lifecycle-of-a-read-and-a-write
+features: ["configuration"]
+concepts: ["node-lifecycle"]
 ---
 
 Inspect the configuration a node actually uses before diagnosing behaviour or changing a deployment.

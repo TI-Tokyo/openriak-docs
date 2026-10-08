@@ -12,6 +12,8 @@ last_reviewed: '2026-09-24'
 review_scope: content changes
 review-by: TI Tokyo/JOM
 related: []
+features: ["security"]
+concepts: ["authentication"]
 ---
 
 Work through identity, authentication, permissions, and transport protection.

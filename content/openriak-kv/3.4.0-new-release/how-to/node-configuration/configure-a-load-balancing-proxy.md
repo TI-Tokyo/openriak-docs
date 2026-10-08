@@ -38,6 +38,8 @@ related:
 - reference/http-api/http-conventions-authentication-and-errors
 - foundations/cluster-architecture/rings-partitions-and-virtual-nodes
 - foundations/cluster-architecture/the-lifecycle-of-a-read-and-a-write
+features: ["client-networking","configuration"]
+concepts: ["connections","node-lifecycle"]
 ---
 
 Put a proxy in front of client listeners when applications need a stable endpoint or coordinated connection draining. Keep Erlang distribution and administrative commands on their own network path.

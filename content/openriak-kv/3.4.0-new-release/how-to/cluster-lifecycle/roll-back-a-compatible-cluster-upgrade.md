@@ -37,6 +37,8 @@ related:
 - how-to/cluster-lifecycle/restore-node-data-from-a-backup
 - reference/orientation-and-compatibility/cluster-client-and-replication-compatibility
 - foundations/cluster-lifecycle/mixed-versions-capabilities-and-upgrade-boundaries
+features: ["cluster-management"]
+concepts: ["compatibility","node-lifecycle"]
 ---
 
 Roll back a cluster upgrade only when the previous release can read the current data and metadata formats. There is no blanket guarantee that an arbitrary older package can safely open newer state.

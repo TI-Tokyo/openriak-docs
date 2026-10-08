@@ -20,6 +20,8 @@ related:
 - how-to/legacy-and-specialist-workflows/secure-legacy-replication-connections
 - foundations/replication-and-repair/replication-sources-queues-and-sinks
 - foundations/replication-and-repair/real-time-replication-and-fullsync
+features: ["legacy-replication"]
+concepts: ["cross-cluster-replication"]
 ---
 
 Legacy v2/v3 replication uses the `riak_repl` command family. Its listeners, site connections, real-time streams, and fullsync controls are distinct from next-generation replication queues and consumers.

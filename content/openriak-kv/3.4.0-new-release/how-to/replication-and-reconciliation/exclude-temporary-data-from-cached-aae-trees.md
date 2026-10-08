@@ -31,6 +31,8 @@ related:
 - how-to/cluster-lifecycle/perform-a-rolling-restart
 - reference/configuration/bucket-properties-and-defaults
 - foundations/replication-and-repair/targeted-reconciliation-and-aae-folds
+features: ["bucket-properties","tictac-aae"]
+concepts: ["data-policy","replica-repair"]
 ---
 
 Exclude a bucket's objects from cached AAE trees when they must not participate in all-data comparisons. This is a policy change, not a deletion or a general replication filter.

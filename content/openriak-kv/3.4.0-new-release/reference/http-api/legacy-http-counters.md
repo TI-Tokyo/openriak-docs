@@ -31,6 +31,8 @@ related:
 - reference/orientation-and-compatibility/feature-status-and-deprecations
 - foundations/data-and-consistency/objects-keys-and-buckets
 - foundations/data-and-consistency/quorums-availability-and-durability
+features: ["client-operations","data-types","http-api"]
+concepts: ["data-access","data-model"]
 ---
 
 Legacy HTTP counters use a different interface from counters in an active datatype bucket type. The legacy interface is deprecated; new code should use [Distributed data-type operations]({{< product-version-root >}}reference/http-api/distributed-data-type-operations/).

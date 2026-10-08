@@ -39,6 +39,8 @@ related:
 - foundations/indexes-and-querying/secondary-indexes-and-projected-attributes
 - how-to/planning-a-deployment/map-application-data-to-objects-and-buckets
 - how-to/performance/benchmark-a-representative-workload
+features: ["object-storage"]
+concepts: ["architecture"]
 ---
 
 OpenRiak fits applications that can model their data as independently addressable objects and make explicit choices about availability, acknowledgement, and concurrent updates.

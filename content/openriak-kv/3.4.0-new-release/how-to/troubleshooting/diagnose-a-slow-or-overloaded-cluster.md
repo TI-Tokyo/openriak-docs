@@ -29,6 +29,8 @@ related:
 - how-to/data-inspection-and-repair/control-repair-impact-during-application-traffic
 - foundations/storage-and-performance/latency-queues-and-resource-contention
 - foundations/cluster-lifecycle/failure-and-recovery
+features: ["observability"]
+concepts: ["diagnostics"]
 ---
 
 Find the constrained part of a slow cluster before changing timeouts or concurrency.

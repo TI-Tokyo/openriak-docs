@@ -36,6 +36,8 @@ related:
 - reference/extensions-and-specialist-interfaces/replication-hook-interface
 - reference/configuration/bucket-properties-and-defaults
 - foundations/storage-and-performance/storage-backend-trade-offs
+features: ["commit-hooks"]
+concepts: ["compatibility","data-access"]
 ---
 
 Custom Erlang code must match the release's OTP, object representations, and callback contracts. Code installation and hook registration are separate from ordinary object writes.

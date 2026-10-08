@@ -41,6 +41,8 @@ related:
 - reference/orientation-and-compatibility/platforms-architectures-and-erlang-otp-compatibility
 - foundations/overview/what-openriak-kv-is
 - foundations/cluster-architecture/rings-partitions-and-virtual-nodes
+features: ["installation"]
+concepts: ["deployment"]
 ---
 
 Install a published OpenRiak KV package on Debian or Ubuntu. Use a fresh node for a new deployment; use [Upgrade an OpenRiak KV cluster]({{< product-version-root >}}how-to/cluster-lifecycle/upgrade-a-cluster/) when changing a member of an existing cluster.

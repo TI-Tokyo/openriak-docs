@@ -36,6 +36,8 @@ related:
 - reference/protocol-buffers-api/protocol-framing-message-codes-and-errors
 - foundations/data-and-consistency/objects-keys-and-buckets
 - foundations/data-and-consistency/causality-version-vectors-and-siblings
+features: ["client-operations","protocol-buffers"]
+concepts: ["data-access"]
 ---
 
 Update applies data-type operations rather than replacing an ordinary object body. Supply context for observed removals. The response may be empty unless a key was assigned or a returned body was requested. Retrying non-idempotent operations after an uncertain timeout can apply them again.

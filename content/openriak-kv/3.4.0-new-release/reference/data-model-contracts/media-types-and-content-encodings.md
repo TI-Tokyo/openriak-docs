@@ -32,6 +32,8 @@ related:
 - reference/data-model-contracts/object-metadata
 - reference/http-api/fetch-object
 - foundations/data-and-consistency/objects-keys-and-buckets
+features: ["object-storage"]
+concepts: ["data-model"]
 ---
 
 Object values are byte sequences. HTTP `Content-Type` describes the representation; `Content-Encoding` describes a transformation applied to those bytes.

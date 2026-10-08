@@ -19,6 +19,8 @@ related:
 - how-to/application-data/use-bucket-types-in-an-application
 - foundations/data-and-consistency/objects-keys-and-buckets
 - foundations/data-and-consistency/quorums-availability-and-durability
+features: ["client-operations","http-api"]
+concepts: ["data-access"]
 ---
 
 HTTP exposes properties of existing bucket types. Type creation and activation are administrative operations, not object writes or implicit side effects of addressing a typed bucket.
