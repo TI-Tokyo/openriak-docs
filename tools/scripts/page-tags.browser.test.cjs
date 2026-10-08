@@ -9,12 +9,19 @@ const {chromium}=require('playwright');
   const topic='foundations/replication-and-repair/read-repair-and-tictac-anti-entropy/';
   for(const version of ['3.4.0','3.4.1']) {
    assert.equal((await page.goto(`${base}openriak-kv/${version}/${topic}`)).status(),200);
+   assert.equal(await page.locator(`#docs-sidebar a[href^="/docs/openriak-kv/${version}/tags/"]`).count(),0);
+   for (const route of ['tags/','tags/feature/','tags/feature/client-operations/']) {
+    assert.equal((await page.request.get(`${base}openriak-kv/${version}/${route}`)).status(),200);
+   }
+   const search=await (await page.request.get(`${base}openriak-kv/${version}/index.json`)).json();
+   assert.ok(search.every(entry=>!entry.url.includes(`/${version}/tags/`)),'search excludes tag pages');
    const summary=page.locator('.doc-summary');
    assert.ok(await summary.locator('.doc-reading-time').isVisible());
    assert.deepEqual(await summary.locator('[data-tag-type="feature"]').allTextContents(),['Feature: read-repair','Feature: tictac-aae']);
    assert.equal(await summary.locator('[data-tag-type="concept"]').innerText(),'Concept: replica-repair');
    for(const link of await summary.locator('.page-tag').all()) {
     const href=await link.getAttribute('href');
+    assert.ok(href.startsWith(`/docs/openriak-kv/${version}/tags/`));
     const response=await page.request.get(new URL(href,page.url()).href);
     assert.equal(response.status(),200,href);
     assert.ok((await response.text()).includes(`/openriak-kv/${version}/${topic}`),href);
@@ -27,15 +34,14 @@ const {chromium}=require('playwright');
    await page.setViewportSize({width:1440,height:960});
   }
   await page.goto(`${base}openriak-kv/3.4.1/reference/commands/riak/admin/cluster/commit/`);
-  assert.ok(await page.locator('.doc-summary a[href$="/tags/feature/cluster-management/"]').isVisible());
-  await page.locator('.doc-summary a[href$="/tags/feature/cluster-management/"]').click();
+  assert.ok(await page.locator('.doc-summary a[href$="/3.4.1/tags/feature/cluster-management/"]').isVisible());
+  await page.locator('.doc-summary a[href$="/3.4.1/tags/feature/cluster-management/"]').click();
   assert.equal(await page.locator('main h1').innerText(),'Feature: cluster-management');
-  const groups=await page.locator('.tag-document-group h2').allTextContents();
-  assert.deepEqual(groups,['OpenRiak KV 3.4.0','OpenRiak KV 3.4.1']);
+  assert.equal(await page.locator('main a[href*="/3.4.0/"]').count(),0,'only the selected release is indexed');
   assert.ok(await page.locator('main a[href$="/3.4.1/reference/commands/riak/admin/cluster/commit/"]').count());
   assert.ok(await page.locator('main a[href$="/3.4.1/how-to/cluster-lifecycle/plan-and-commit-a-membership-change/"]').count());
   await page.goto(`${base}openriak-kv/3.4.1/reference/tags/feature/handoff/`);
   assert.ok(await page.locator('main a[href$="/how-to/cluster-lifecycle/monitor-and-control-handoffs/"]').count(),'version-specific indexes include front-matter tags');
-  console.log('Header tags, multiple values, typed indexes, release grouping, front-matter reference matches and mobile wrapping passed.');
+  console.log('Header tags, multiple values, typed indexes, release isolation, front-matter reference matches and mobile wrapping passed.');
  } finally {await browser.close();}
 })().catch(e=>{console.error(e);process.exitCode=1;});

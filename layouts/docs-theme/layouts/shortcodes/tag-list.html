@@ -1,0 +1,12 @@
+{{- $context := partial "product-context.html" .Page -}}
+{{- if .Page.Params.tag -}}
+  {{- $index := partialCached "reference-tag-index.html" $context $context.id $context.version -}}
+  {{- $key := printf "%s/%s" .Page.Params.category .Page.Params.tag -}}
+  <ul class="reference-tag-documents">
+  {{- range sort (uniq (index $index $key | default slice)) "title" }}<li><a href="{{ .url }}">{{ .title }}</a></li>{{ end -}}
+  </ul>
+{{- else -}}
+  <ul class="tag-index">
+  {{- range .Page.Pages.ByTitle }}<li><a href="{{ .RelPermalink }}">{{ .Title }}</a></li>{{ end -}}
+  </ul>
+{{- end -}}

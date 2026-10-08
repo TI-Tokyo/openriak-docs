@@ -405,7 +405,7 @@ annotation_tags:
 ```
 
 Ordinary document front matter should use `features` and `concepts` lists for
-site-wide feature/concept browsing and header links (see `content/README.md`).
+version-specific feature/concept browsing and header links (see `content/README.md`).
 Command-page generation writes these lists from the annotations. They also
 participate in the version-specific reference indexes. Legacy untyped `tags`
 lists do not imply membership in any reference tag type.

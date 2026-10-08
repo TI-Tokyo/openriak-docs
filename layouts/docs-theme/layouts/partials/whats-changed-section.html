@@ -18,6 +18,6 @@
   <h2>{{ delimit $pathTitles " / " }}</h2>
   {{ partial "whats-changed-table.html" $changes }}
 {{- end -}}
-{{- range $childSection := $section.Sections.ByWeight -}}
+{{- range $childSection := (where $section.Sections "Params.hide_provenance" "ne" true).ByWeight -}}
   {{- partial "whats-changed-section.html" (dict "section" $childSection "pathTitles" $pathTitles) -}}
 {{- end -}}

@@ -225,7 +225,7 @@ const generatePageProvenance = (
       const releaseDirectory = path.join(contentRoot, product.source, version.sourceDirectory);
       for (const [key, body] of readMarkdownPages(releaseDirectory)) effectivePages.set(key, body);
       const releases = releasesByTarget.get(product.target) || [];
-      releases.push({ version: version.raw, pages: new Map(effectivePages) });
+      releases.push({ version: version.raw, sourceDirectory: version.sourceDirectory, pages: new Map(effectivePages) });
       releasesByTarget.set(product.target, releases);
     }
   }
@@ -236,6 +236,7 @@ const generatePageProvenance = (
     let previousPages = new Map();
     let previousProvenance = {};
     for (const release of releases) {
+      require("./validate-page-tags").validateVersionTags(release, target, {stubRoot: path.resolve(outputRoot, "../tag-stubs")});
       const provenance = {};
       for (const [key, body] of release.pages) {
         if (key === 'whats-changed') continue;

@@ -14,6 +14,6 @@
   <h2>General</h2>
   {{ partial "whats-changed-table.html" $general }}
 {{- end -}}
-{{- range $section := $versionHome.Sections.ByWeight -}}
+{{- range $section := (where $versionHome.Sections "Params.hide_provenance" "ne" true).ByWeight -}}
   {{- partial "whats-changed-section.html" (dict "section" $section "pathTitles" (slice)) -}}
 {{- end -}}

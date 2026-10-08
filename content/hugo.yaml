@@ -1,20 +1,7 @@
 baseURL: 'https://www.openriak.org/docs/'
 title: 'OpenRiak Documentation'
 defaultContentLanguage: 'en'
-disableKinds: ['RSS']
-
-# Feature and concept tags apply to every kind of document. Repository and
-# module tags remain separate, version-specific reference indexes.
-taxonomies:
-  feature: features
-  concept: concepts
-permalinks:
-  taxonomy:
-    features: /tags/feature/
-    concepts: /tags/concept/
-  term:
-    features: /tags/feature/:slug/
-    concepts: /tags/concept/:slug/
+disableKinds: ['RSS', 'taxonomy', 'term']
 resourceDir: '../tools/generated/hugo-resources'
 
 pagination:
@@ -75,11 +62,6 @@ module:
     - {source: '../tools/generated/openriak-ts/data/versions', target: 'data/versions/openriak-ts'}
     - {source: '../tools/generated/page-provenance', target: 'data/page_provenance'}
     - {source: '../layouts/common-docs/data', target: 'data'}
-
-    # Shared feature/concept indexes use the general site shell.
-    - {source: '../layouts/common-docs/layouts/site-section/baseof.html', target: 'layouts/_default/baseof.html'}
-    - {source: '../layouts/common-docs/layouts/tags/taxonomy.html', target: 'layouts/taxonomy.html'}
-    - {source: '../layouts/common-docs/layouts/tags/term.html', target: 'layouts/term.html'}
 
     # Homepage, Community, and product template families.
     - {source: '../layouts/homepage/index.html', target: 'layouts/home.html'}

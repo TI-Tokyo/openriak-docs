@@ -1,7 +1,7 @@
 {{- $current := .current -}}
 <ul class="nav-tree">
-  {{- range .pages.ByWeight -}}
-    {{- $children := .Pages.ByWeight -}}
+  {{- range (where .pages "Params.hide_sidebar" "ne" true).ByWeight -}}
+    {{- $children := (where .Pages "Params.hide_sidebar" "ne" true).ByWeight -}}
     {{- $hasChildren := gt (len $children) 0 -}}
     {{- $isCurrent := eq $current.RelPermalink .RelPermalink -}}
     {{- $expanded := and $hasChildren (or $isCurrent (strings.HasPrefix $current.RelPermalink .RelPermalink)) -}}
