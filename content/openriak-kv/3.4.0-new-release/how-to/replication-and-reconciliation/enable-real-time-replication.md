@@ -6,7 +6,7 @@ weight: 610
 diataxis: how-to
 product: OpenRiak KV
 product_version: 3.4.0
-status: editorially-rewritten
+status: reviewed
 draft: true
 audience:
 - operators
@@ -29,9 +29,10 @@ tags:
 - kv
 - how-to
 editorial_review: complete
-technical_review: required
-last_reviewed: '2026-09-22'
-review_scope: diataxis-content-and-navigation
+technical_review: complete
+last_reviewed: '2026-10-09'
+review_scope: content review
+review-by: TI Tokyo/JOM
 restructured_from:
 - how-to/configure/replication/configure-real-time-replication.md
 related:
@@ -51,7 +52,7 @@ Enable real-time replication for newly coordinated writes after the source queue
 
 ## Enable source queuing
 
-On every source node, configure a queue for the intended destination. This example sends all eligible writes to `cluster_b`:
+On every source node, configure a queue for the intended destination. This example sends all eligible writes (dependent on filters) to `cluster_b`:
 
 {{< settings-example >}}
 replrtq_enablesrc = enabled

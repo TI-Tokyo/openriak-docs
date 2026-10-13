@@ -6,7 +6,7 @@ weight: 630
 diataxis: how-to
 product: OpenRiak KV
 product_version: 3.4.0
-status: editorially-rewritten
+status: reviewed
 draft: true
 audience:
 - operators
@@ -27,9 +27,10 @@ tags:
 - kv
 - how-to
 editorial_review: complete
-technical_review: required
-last_reviewed: '2026-09-22'
-review_scope: diataxis-content-and-navigation
+technical_review: complete
+last_reviewed: '2026-10-09'
+review_scope: content review
+review-by: TI Tokyo/JOM
 restructured_from:
 - how-to/configure/replication/configure-sink-nodes.md
 related:
@@ -50,7 +51,9 @@ Configure sink workers to consume a named source queue and apply its objects loc
 
 ## Define peers and workers
 
-Choose several reachable source listeners for resilience. Select PB for protected replication; peer discovery requires listeners that advertise addresses the sink can actually reach. A listener bound to an unspecified address is not a usable discovered peer address.
+You should choose several reachable source listeners for resilience. Select PB for protected replication; peer discovery requires listeners that advertise addresses the sink can actually reach. 
+
+>[NOTE!]A listener bound to an unspecified address is not a usable discovered peer address.
 
 {{< configuration-reference-table >}}
 ^replrtq_(enablesink|sinkqueue|sinkpeers|sinkworkers|sinkpeerlimit|peer_discovery|vnodecheck)$

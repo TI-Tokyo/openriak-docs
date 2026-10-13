@@ -6,7 +6,7 @@ weight: 670
 diataxis: how-to
 product: OpenRiak KV
 product_version: 3.4.0
-status: editorially-rewritten
+status: reviewed
 draft: true
 audience:
 - operators
@@ -19,9 +19,10 @@ tags:
 - kv
 - how-to
 editorial_review: complete
-technical_review: required
-last_reviewed: '2026-09-22'
-review_scope: diataxis-content-and-navigation
+technical_review: complete
+last_reviewed: '2026-10-12'
+review_scope: content review
+review-by: TI Tokyo/JOM
 restructured_from:
 - how-to/operate/rereplicate-time-window.md
 related:
@@ -36,7 +37,7 @@ related:
 - foundations/replication-and-repair/real-time-replication-and-fullsync
 ---
 
-Queue existing objects for a destination by bucket, key interval, or last-modified interval. Use this to seed a new cluster or recover a known gap.
+Queue existing objects for a destination by bucket, key interval, or last-modified interval. This is used to seed a new cluster or recover a known gap.
 
 ## Bound the operation
 

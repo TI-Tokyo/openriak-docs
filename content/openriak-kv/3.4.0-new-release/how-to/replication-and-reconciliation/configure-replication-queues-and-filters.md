@@ -6,7 +6,7 @@ weight: 620
 diataxis: how-to
 product: OpenRiak KV
 product_version: 3.4.0
-status: editorially-rewritten
+status: reviewed
 draft: true
 audience:
 - operators
@@ -24,9 +24,10 @@ tags:
 - kv
 - how-to
 editorial_review: complete
-technical_review: required
-last_reviewed: '2026-09-22'
-review_scope: diataxis-content-and-navigation
+technical_review: complete
+last_reviewed: '2026-10-09'
+review_scope: content review
+review-by: TI Tokyo/JOM
 restructured_from:
 - how-to/configure/replication/configure-replication-queues.md
 related:
@@ -46,7 +47,9 @@ Define source queues and filters so each destination receives the intended objec
 
 ## Choose names and scope
 
-Use stable queue names describing their consumers. Select `any` for all eligible real-time changes, or the release's bucket-type, bucket-name, or bucket-prefix filter for a subset. Name and prefix filters do not distinguish types by themselves; use a type filter when that distinction matters.
+Use stable queue names describing their consumers. Select `any` for all eligible real-time changes, or the release's bucket-type, bucket-name, or bucket-prefix filter for a subset.
+
+>[!Note] Name and prefix filters do not distinguish types by themselves; You should use a type filter when that distinction matters.
 
 {{< configuration-reference-item config-name="replrtq_srcqueue" >}}
 
@@ -56,7 +59,7 @@ For example:
 replrtq_srcqueue = cluster_b:any|audit:buckettype.audit
 {{< /settings-example >}}
 
-Use the schema's blocking filter only for queues that should carry explicit seeding or reconciliation work without ordinary real-time events. Check the exact spelling in the metadata rather than borrowing one from an older guide.
+You should use the schema's blocking filter only for queues that should carry explicit seeding or reconciliation work without ordinary real-time events. Check the exact spelling in the metadata rather than borrowing one from an older guide.
 
 ## Apply and check capacity
 

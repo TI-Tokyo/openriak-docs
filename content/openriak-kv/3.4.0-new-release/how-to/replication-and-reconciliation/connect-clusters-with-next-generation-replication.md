@@ -6,7 +6,7 @@ weight: 600
 diataxis: how-to
 product: OpenRiak KV
 product_version: 3.4.0
-status: editorially-rewritten
+status: reviewed
 draft: true
 audience:
 - operators
@@ -23,9 +23,10 @@ tags:
 - kv
 - how-to
 editorial_review: complete
-technical_review: required
-last_reviewed: '2026-09-22'
-review_scope: diataxis-content-and-navigation
+technical_review: complete
+last_reviewed: '2026-10-09'
+review_scope: content review
+review-by: TI Tokyo/JOM
 restructured_from:
 - how-to/configure/replication/configure-next-generation-replication.md
 related:
@@ -60,4 +61,4 @@ Use [Re-replicate a key range or time window]({{< product-version-root >}}how-to
 
 ## Verify recovery
 
-Compare known values and causal histories, including a deletion. Pause a sink, write during the pause, then resume and wait for delivery and a successful in-sync exchange. Keep a record of queue names, peers, scopes, and credentials for later incident diagnosis.
+Compare known values and causal histories, including a deletion. Pause a sink, write during the pause state, then resume and wait for delivery and a successful in-sync exchange. Keep a record of queue names, peers, scopes, and credentials for later incident diagnosis.
