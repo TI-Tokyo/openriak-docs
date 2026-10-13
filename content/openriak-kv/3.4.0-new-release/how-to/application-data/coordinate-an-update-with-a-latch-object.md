@@ -17,6 +17,8 @@ related:
 - reference/http-api/conditional-requests-and-latch-objects
 - how-to/application-data/make-conditional-reads-and-writes
 - foundations/data-and-consistency/conditional-updates-and-latch-objects
+features: ["client-operations","conditional-writes"]
+concepts: ["concurrency-control","data-access"]
 ---
 
 Use a small, purpose‑built object to mark when a specific task is in progress-like claiming a batch. Before you create that marker, spell out how ownership will be assigned and how any stopped or unfinished work will be recovered.

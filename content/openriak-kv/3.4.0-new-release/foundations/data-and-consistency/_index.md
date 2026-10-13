@@ -12,6 +12,8 @@ last_reviewed: '2026-09-24'
 review-by: TI Tokyo/JOM
 review_scope: editorial & technical
 related: []
+features: ["object-storage"]
+concepts: ["consistency","data-model"]
 ---
 
 Understand object identity and policy before causal context, conflicts, conditional requests, and distributed data types.

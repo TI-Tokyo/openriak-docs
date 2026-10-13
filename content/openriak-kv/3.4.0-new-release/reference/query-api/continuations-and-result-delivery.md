@@ -20,6 +20,8 @@ related:
 - foundations/indexes-and-querying/secondary-indexes-and-projected-attributes
 - foundations/indexes-and-querying/how-distributed-queries-execute
 - foundations/indexes-and-querying/query-consistency-and-snapshots
+features: ["query-processing"]
+concepts: ["querying"]
 ---
 
 OpenRiak KV 3.4.0 supports continuation-based retrieval for supported single-query accumulations. Disk-backed queued result retrieval is introduced in 3.4.1 and is not a 3.4.0 HTTP contract.

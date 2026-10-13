@@ -47,6 +47,8 @@ related:
 - foundations/security/tls-and-certificate-trust
 previous_page: how-to/security/grant-and-revoke-permissions
 next_page: how-to/security/authenticate-an-application-client
+features: ["security"]
+concepts: ["authentication"]
 ---
 
 Enable authentication and authorization after preparing identities, source rules, grants, and TLS. Keep an administrative shell available while testing access so you can correct a mistaken rule.

@@ -20,6 +20,8 @@ related:
 - how-to/cluster-lifecycle/restore-node-data-from-a-backup
 - how-to/storage-maintenance/remove-obsolete-leveled-backup-files
 - foundations/cluster-lifecycle/backups-restores-and-disaster-recovery
+features: ["backup-and-restore","observability"]
+concepts: ["diagnostics","filesystem-layout","recovery"]
 ---
 
 Runtime artefacts belong to several different recovery scopes. Record the active paths from the generated settings and the running configuration before copying, moving, or restoring them.

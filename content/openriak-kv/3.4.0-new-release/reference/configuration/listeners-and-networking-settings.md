@@ -32,6 +32,8 @@ restructured_from:
 related:
 - how-to/node-configuration/configure-http-and-protocol-buffers-listeners
 - foundations/data-and-consistency/bucket-types-and-data-policies
+features: ["client-networking","configuration"]
+concepts: ["connections","node-lifecycle"]
 ---
 
 Listener settings control client endpoints and node networking. Select the intended interfaces explicitly and verify access from both permitted clients and cluster peers.

@@ -34,6 +34,8 @@ related:
 - how-to/cluster-lifecycle/plan-and-commit-a-membership-change
 - how-to/cluster-lifecycle/replace-nodes-without-stopping-the-cluster
 - foundations/cluster-architecture/replica-placement-and-failure-domains
+features: ["cluster-management","observability"]
+concepts: ["diagnostics","partition-placement"]
 ---
 
 Claim algorithms assign partitions during a planned membership change. Replica and location constraints influence placement but must still be checked against the available members and ring.

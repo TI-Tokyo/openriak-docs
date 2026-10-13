@@ -30,6 +30,8 @@ related:
 - how-to/performance/reduce-request-latency
 - reference/configuration/leveled-settings
 - foundations/storage-and-performance/how-leveled-stores-data
+features: ["leveled","storage-backends"]
+concepts: ["compaction","storage"]
 ---
 
 Adjust Leveled journal compaction only after measuring its effect on disk use and application latency. Ledger maintenance continues independently and can throttle writes when it falls behind.

@@ -17,6 +17,8 @@ related:
 - reference/query-api/continuations-and-result-delivery
 - how-to/performance/reduce-query-api-cost
 - foundations/data-and-consistency/bucket-types-and-data-policies
+features: ["configuration","query-processing"]
+concepts: ["node-lifecycle","querying"]
 ---
 
 Query settings control the published index-query configuration and storage for queued results. Request fields, continuations, and delivery-mode behaviour are defined in the Query API reference.

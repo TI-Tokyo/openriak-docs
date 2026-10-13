@@ -69,7 +69,7 @@ The manager handles the requested resynchronisation; inspect replication progres
 
 # Reviewed against
 
-3.4.1: 038a90e2f38edaeb0a69a9c7754e6411d812916d8653f530773e7ca161d27caf
+3.4.1: be7609a90845be512bc9c24da772d0aaf46f8e6a60a9e6baf5ade95cc7f9bbe4
 
 # Tags
 

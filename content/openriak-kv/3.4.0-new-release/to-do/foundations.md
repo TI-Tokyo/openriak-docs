@@ -8,6 +8,8 @@ product_version: 3.4.0
 draft: true
 hide_provenance: true
 layout: single
+features: []
+concepts: ["documentation"]
 ---
 
 The 40 planned topics have been moved into the current foundations structure and reviewed for their Diátaxis purpose. This inventory links to their current locations; it replaces the earlier proposal table.

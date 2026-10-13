@@ -1,0 +1,11 @@
+{{- $page := . -}}
+{{- range $type := slice "feature" "concept" -}}
+  {{- with index $page.Params (printf "%ss" $type) -}}
+    {{- $context := partial "product-context.html" $page -}}
+    <span class="page-tags" aria-label="{{ $type | humanize }} tags">
+    {{- range . -}}
+      <a class="page-tag" data-tag-type="{{ $type }}" href="{{ printf "%s%s/tags/%s/%s/" $context.productBase $context.version $type (. | urlize) }}"><span class="page-tag-type">{{ $type | humanize }}:</span> {{ . }}</a>
+    {{- end -}}
+    </span>
+  {{- end -}}
+{{- end -}}

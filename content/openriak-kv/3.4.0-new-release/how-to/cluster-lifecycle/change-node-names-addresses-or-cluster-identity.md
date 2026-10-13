@@ -35,6 +35,8 @@ related:
 - foundations/cluster-architecture/membership-gossip-and-handoff
 - foundations/cluster-lifecycle/failure-and-recovery
 - foundations/cluster-lifecycle/rolling-maintenance-and-recovery-headroom
+features: ["cluster-management"]
+concepts: ["node-lifecycle"]
 ---
 
 Change a node's network address or identity without discarding its ownership metadata. Distinguish a client-listener change from an Erlang node-name change before proceeding.

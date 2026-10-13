@@ -33,6 +33,8 @@ related:
 - reference/extensions-and-specialist-interfaces/redis-add-on-commands-and-configuration
 - foundations/replication-and-repair/replication-generations-and-compatibility
 - foundations/storage-and-performance/storage-backend-trade-offs
+features: ["redis"]
+concepts: ["compatibility"]
 ---
 
 Design application behaviour around the verified Redis add-on contract, including stale values and failures. Complete the compatibility and read-through checks before making the add-on a production dependency.

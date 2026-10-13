@@ -7,6 +7,12 @@ versions: 3.4.0, 3.4.1
 
 Start the node using the deprecated daemon alias.
 
+# Deprecation
+
+Please use this replacement command instead:
+
+[`riak daemon`](../daemon/).
+
 # Description
 
 The release launcher maps start to daemon and prints a deprecation notice. Prefer daemon or the operating-system service manager.
@@ -60,7 +66,7 @@ A background node plus a deprecation notice.
 # Reviewed against
 
 3.4.0: f188b7f6fb40d434cc645bab5c2994dab75a25a1d8473582098eade96c6ea0c0
-3.4.1: f188b7f6fb40d434cc645bab5c2994dab75a25a1d8473582098eade96c6ea0c0
+3.4.1: 2df46e0ba06fd9a936a8da137ffb81ec856b521e84875c67ccf367b1216bf965
 
 # Tags
 

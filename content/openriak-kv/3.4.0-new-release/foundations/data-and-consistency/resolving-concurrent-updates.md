@@ -31,6 +31,8 @@ related:
 - foundations/data-and-consistency/conflict-free-replicated-data-types
 - foundations/data-and-consistency/conditional-updates-and-latch-objects
 - how-to/application-data/resolve-concurrent-object-updates
+features: ["object-storage"]
+concepts: ["causality","concurrency","consistency","data-model"]
 ---
 
 Concurrent updates need a rule that reflects the meaning of the application data. OpenRiak can retain siblings so that resolving a conflict does not silently discard an independent change.

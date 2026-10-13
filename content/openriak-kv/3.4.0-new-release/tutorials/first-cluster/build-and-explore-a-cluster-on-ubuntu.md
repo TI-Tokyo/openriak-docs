@@ -32,6 +32,8 @@ related:
 - tutorials/data-and-concurrency/explore-objects-buckets-and-metadata-with-http
 - foundations/overview/what-openriak-kv-is
 - foundations/cluster-architecture/rings-partitions-and-virtual-nodes
+features: ["cluster-management","installation"]
+concepts: ["deployment"]
 ---
 
 Build a small native-package cluster on three Ubuntu 24.04 virtual machines, then write through one node and read through another. Use disposable machines on a private network; this is a learning deployment.

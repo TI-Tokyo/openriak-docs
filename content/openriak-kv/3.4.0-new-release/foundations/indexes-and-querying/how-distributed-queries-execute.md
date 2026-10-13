@@ -38,6 +38,8 @@ related:
 - reference/query-api/accumulation-modes
 - reference/query-api/continuations-and-result-delivery
 - how-to/indexes-and-queries/combine-queries-and-accumulate-results
+features: ["query-processing","secondary-indexes"]
+concepts: ["querying"]
 ---
 
 The Query API distributes index work across the vnodes covering the requested bucket. Each vnode scans its local index range, evaluates and filters terms, and contributes results to the requested accumulation.

@@ -12,6 +12,8 @@ review-by: TI Tokyo/JOM
 review_scope: editorial & technical
 status: Reviewed
 related: []
+features: ["queue-replication"]
+concepts: ["cross-cluster-replication"]
 ---
 
 Understand how replicas converge within a cluster and how queues and reconciliation connect separate clusters.

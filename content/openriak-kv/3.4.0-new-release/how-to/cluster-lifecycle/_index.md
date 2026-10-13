@@ -9,6 +9,8 @@ description: Understand ownership changes, recovery, backups, maintenance, and r
 editorial_review: complete
 technical_review: required
 related: []
+features: ["cluster-management"]
+concepts: ["node-lifecycle"]
 ---
 
 Understand ownership changes, recovery, backups, maintenance, and release transitions before operating a live deployment.

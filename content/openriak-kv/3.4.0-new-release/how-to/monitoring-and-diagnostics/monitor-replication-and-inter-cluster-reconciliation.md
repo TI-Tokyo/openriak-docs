@@ -35,6 +35,8 @@ related:
 - reference/replication-interfaces/fullsync-requests-and-results
 - foundations/storage-and-performance/latency-queues-and-resource-contention
 - foundations/cluster-lifecycle/failure-and-recovery
+features: ["observability","queue-replication"]
+concepts: ["cross-cluster-replication","diagnostics"]
 ---
 
 Monitor current-generation replication delivery and fullsync convergence separately. A drained source queue does not prove that every destination value matches.

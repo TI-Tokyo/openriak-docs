@@ -30,6 +30,8 @@ related:
 - reference/operations-and-observability/log-files-and-event-formats
 - foundations/storage-and-performance/latency-queues-and-resource-contention
 - foundations/cluster-lifecycle/failure-and-recovery
+features: ["observability"]
+concepts: ["diagnostics","recovery"]
 ---
 
 Investigate an unexpected process exit using the evidence from the failure interval.

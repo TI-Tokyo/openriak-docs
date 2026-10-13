@@ -33,6 +33,8 @@ related:
 - how-to/security/restrict-client-node-and-administrative-network-access
 - foundations/storage-and-performance/latency-queues-and-resource-contention
 - foundations/cluster-lifecycle/failure-and-recovery
+features: ["observability"]
+concepts: ["diagnostics"]
 ---
 
 JMX integration depends on a compatible monitoring bridge; the Erlang node is not itself a Java VM. Treat bridge attributes and their mapping to Riak statistics as a separate versioned contract.

@@ -36,6 +36,8 @@ related:
 - foundations/cluster-architecture/membership-gossip-and-handoff
 - foundations/cluster-lifecycle/failure-and-recovery
 - foundations/cluster-lifecycle/rolling-maintenance-and-recovery-headroom
+features: ["cluster-management"]
+concepts: ["node-lifecycle"]
 ---
 
 Review and commit staged membership changes as one deliberate cluster operation. Do not commit while another operator is staging unrelated changes.

@@ -36,6 +36,8 @@ related:
 - foundations/indexes-and-querying/secondary-indexes-and-projected-attributes
 - foundations/indexes-and-querying/how-distributed-queries-execute
 - foundations/indexes-and-querying/query-cost-and-result-delivery
+features: ["query-processing","secondary-indexes"]
+concepts: ["querying"]
 ---
 
 Run exact and inclusive range queries through the Query API on a Leveled-backed bucket. The API queries stored index terms; it does not infer indexes from JSON fields.

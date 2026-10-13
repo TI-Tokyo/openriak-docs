@@ -36,6 +36,8 @@ related:
 - foundations/cluster-architecture/the-lifecycle-of-a-read-and-a-write
 previous_page: how-to/node-configuration/configure-http-and-protocol-buffers-listeners
 next_page: how-to/installation/verify-an-installation
+features: ["configuration"]
+concepts: ["node-lifecycle"]
 ---
 
 Validate the intended configuration before starting or restarting a node. Run the check with the same installation, environment, and file paths used by the service.

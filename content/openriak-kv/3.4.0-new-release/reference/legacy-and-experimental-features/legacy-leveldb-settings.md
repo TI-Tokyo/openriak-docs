@@ -30,6 +30,8 @@ related:
 - reference/orientation-and-compatibility/feature-status-and-deprecations
 - foundations/replication-and-repair/replication-generations-and-compatibility
 - foundations/storage-and-performance/storage-backend-trade-offs
+features: ["leveldb"]
+concepts: ["compatibility","storage"]
 ---
 
 These LevelDB settings are retained for existing deployments. Check the release and runtime compatibility before maintenance or upgrades; a setting appearing here is not a recommendation to choose this backend for a new cluster.

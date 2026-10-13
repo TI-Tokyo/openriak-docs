@@ -35,6 +35,8 @@ related:
 - how-to/planning-a-deployment/choose-replication-and-acknowledgement-policies
 - reference/http-api/object-request-options
 - reference/configuration/bucket-properties-and-defaults
+features: ["object-storage"]
+concepts: ["consistency","data-model","durability","quorums"]
 ---
 
 Request acknowledgements determine how much replica participation a client requires before an operation succeeds. Durability also depends on where those replicas live and what their storage acknowledgements mean.

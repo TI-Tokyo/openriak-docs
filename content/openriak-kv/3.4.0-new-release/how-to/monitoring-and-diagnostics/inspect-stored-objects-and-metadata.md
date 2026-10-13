@@ -34,6 +34,8 @@ related:
 - reference/data-model-contracts/causal-context-and-version-vector-representations
 - foundations/storage-and-performance/latency-queues-and-resource-contention
 - foundations/cluster-lifecycle/failure-and-recovery
+features: ["observability"]
+concepts: ["diagnostics"]
 ---
 
 Inspect a small set of known objects and their metadata when diagnosing a data problem. Start with the public API so you can compare what the application sees.

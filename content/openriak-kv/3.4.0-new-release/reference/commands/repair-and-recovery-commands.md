@@ -18,6 +18,8 @@ related:
 - how-to/data-inspection-and-repair/repair-inconsistent-secondary-indexes
 - how-to/cluster-lifecycle/back-up-node-data-and-cluster-metadata
 - how-to/cluster-lifecycle/restore-node-data-from-a-backup
+features: ["read-repair", "tictac-aae"]
+concepts: ["recovery", "replica-repair"]
 ---
 
 Repair and recovery commands act on different scopes. Choose the interface matching the affected node, vnode, backend, or index, and inspect its release-specific arguments before starting work.

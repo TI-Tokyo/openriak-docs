@@ -34,6 +34,8 @@ related:
 - tutorials/data-and-concurrency/practise-conditional-updates
 - reference/data-model-contracts/causal-context-and-version-vector-representations
 - foundations/data-and-consistency/conditional-updates-and-latch-objects
+features: ["client-operations","conditional-writes","http-api"]
+concepts: ["concurrency-control","data-access"]
 ---
 
 Conditional PUTs test absence or an observed object version before accepting a change. Their coordination is cluster-local and does not provide a formal cross-object or cross-cluster transaction guarantee.

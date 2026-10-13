@@ -9,6 +9,8 @@ description: Look up HTTP endpoints, headers, request bodies, response forms, an
 editorial_review: complete
 technical_review: required
 related: []
+features: ["client-operations","http-api"]
+concepts: ["data-access"]
 ---
 
 Look up HTTP endpoints, headers, request bodies, response forms, and error behaviour. Legacy interfaces are labelled explicitly.

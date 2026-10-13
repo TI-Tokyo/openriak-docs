@@ -28,6 +28,8 @@ related:
 - how-to/legacy-and-specialist-workflows/maintain-an-in-memory-backend-deployment
 - foundations/replication-and-repair/replication-generations-and-compatibility
 - foundations/storage-and-performance/storage-backend-trade-offs
+features: ["memory-backend"]
+concepts: ["compatibility","memory","storage"]
 ---
 
 The memory backend keeps data in memory. Its lifecycle and capacity limits differ from durable backends; use it only where the application can tolerate the documented loss of in-memory state.

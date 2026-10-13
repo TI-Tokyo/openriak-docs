@@ -23,6 +23,8 @@ related:
 - foundations/indexes-and-querying/query-cost-and-result-delivery
 previous_page: tutorials/indexes-and-querying/search-projected-attributes
 next_page: tutorials/indexes-and-querying/produce-counts-and-grouped-results
+features: ["query-processing","secondary-indexes"]
+concepts: ["querying"]
 ---
 
 Combine two independently verified index searches. Continue with the people dataset and find people whose surname is Ng and whose city is Tokyo.

@@ -18,6 +18,8 @@ related:
 - reference/configuration/erlang-vm-and-runtime-settings
 - reference/commands/riak
 - foundations/data-and-consistency/bucket-types-and-data-policies
+features: ["configuration"]
+concepts: ["node-lifecycle"]
 ---
 
 Runtime environment variables are read by the launcher, packaging, or service manager. They are distinct from the schema-backed settings in `riak.conf`.

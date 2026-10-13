@@ -35,6 +35,8 @@ related:
 - reference/orientation-and-compatibility/feature-status-and-deprecations
 - foundations/replication-and-repair/replication-generations-and-compatibility
 - foundations/storage-and-performance/storage-backend-trade-offs
+features: ["mapreduce"]
+concepts: ["compatibility","querying"]
 ---
 
 Run an existing MapReduce job with explicit inputs and bounded output. MapReduce is deprecated; prefer direct keys, secondary indexes, or the Query API for new workloads where they meet the requirement.

@@ -12,6 +12,8 @@ last_reviewed: '2026-10-06'
 review_scope: content review
 review-by: TI Tokyo/JOM
 related: []
+features: ["installation"]
+concepts: ["deployment"]
 ---
 
 Select a package for the actual operating system and architecture, install it, and verify the node before joining a cluster.

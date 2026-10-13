@@ -38,6 +38,8 @@ related:
 - foundations/cluster-architecture/membership-gossip-and-handoff
 - foundations/cluster-lifecycle/failure-and-recovery
 - foundations/cluster-lifecycle/rolling-maintenance-and-recovery-headroom
+features: ["cluster-management","handoff"]
+concepts: ["node-lifecycle","partition-transfer"]
 ---
 
 Observe ownership, hinted, and repair handoffs, and adjust transfer pressure when it interferes with the workload. Record the original limits before changing them.

@@ -35,6 +35,8 @@ related:
 - reference/aae-fold-api/fold-filters
 - foundations/replication-and-repair/targeted-reconciliation-and-aae-folds
 - foundations/replication-and-repair/read-repair-and-tictac-anti-entropy
+features: ["tictac-aae"]
+concepts: ["replica-repair"]
 ---
 
 Run an AAE fold with a bounded scope and retain its completed result outside an interactive terminal. Enable TicTac AAE and wait for usable stores before submitting the fold.

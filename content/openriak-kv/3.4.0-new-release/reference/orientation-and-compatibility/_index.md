@@ -9,6 +9,8 @@ description: Check terminology, platforms, feature status, replication generatio
 editorial_review: complete
 technical_review: required
 related: []
+features: []
+concepts: ["compatibility"]
 ---
 
 Check terminology, platforms, feature status, replication generations, and backend capabilities before selecting an interface.

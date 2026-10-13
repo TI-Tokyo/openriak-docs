@@ -10,6 +10,8 @@ editorial_review: complete
 technical_review: required
 diataxis: reference
 related: []
+features: []
+concepts: ["architecture"]
 ---
 
 Look up exact settings, command syntax, API contracts, and compatibility constraints for the selected OpenRiak KV release.

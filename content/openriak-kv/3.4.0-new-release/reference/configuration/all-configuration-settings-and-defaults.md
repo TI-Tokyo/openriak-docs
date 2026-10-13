@@ -15,6 +15,8 @@ description: Search the complete configuration catalogue for OpenRiak KV . The s
 related:
 - how-to/node-configuration/inspect-and-manage-effective-configuration
 - foundations/data-and-consistency/bucket-types-and-data-policies
+features: ["configuration"]
+concepts: ["node-lifecycle"]
 ---
 
 Search the complete configuration catalogue for OpenRiak KV {{< current-version >}}. The selected operating system determines platform-specific defaults.

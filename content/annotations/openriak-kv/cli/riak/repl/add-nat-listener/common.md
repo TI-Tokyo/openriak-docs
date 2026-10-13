@@ -7,9 +7,13 @@ versions: 3.4.0, 3.4.1
 
 Add a legacy replication listener behind NAT.
 
+# Deprecation
+
+This operation belongs to the legacy replication protocol. There is no direct replacement within that protocol. Migrate to named-cluster replication using [`riak repl connect`](../connect/) and review [`riak repl fullsync start`](../fullsync/start/) and [`riak repl fullsync stop`](../fullsync/stop/) for full-sync control.
+
 # Description
 
-This belongs to the deprecated replication protocol. Use it only for an existing deployment that still requires that protocol.
+This belongs to the deprecated replication protocol. It is documented here for historical reference; migrate existing deployments to named-cluster replication.
 
 # Arguments
 
@@ -79,8 +83,8 @@ title: A loopback listener
 
 # Reviewed against
 
-3.4.0: dd5fdc8f4038cab1c49fed565ec085387de22613d6b558066c719fb5045576fd
-3.4.1: dd5fdc8f4038cab1c49fed565ec085387de22613d6b558066c719fb5045576fd
+3.4.0: 8e4c05d648d33605710f7550de35bc650a51137633b3edf17bcf3e313c981a02
+3.4.1: 8e4c05d648d33605710f7550de35bc650a51137633b3edf17bcf3e313c981a02
 
 # Tags
 

@@ -33,6 +33,8 @@ related:
 - reference/replication-interfaces/next-generation-replication-runtime-controls
 - foundations/cluster-architecture/rings-partitions-and-virtual-nodes
 - foundations/cluster-architecture/the-lifecycle-of-a-read-and-a-write
+features: ["configuration"]
+concepts: ["node-lifecycle"]
 ---
 
 Change an Erlang application environment value on a running node when the target component supports reading it at runtime. A successful environment update does not mean a process that cached the value has reconfigured itself.

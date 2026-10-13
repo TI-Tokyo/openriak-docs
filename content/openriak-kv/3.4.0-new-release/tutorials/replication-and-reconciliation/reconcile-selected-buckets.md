@@ -21,6 +21,8 @@ related:
 - foundations/replication-and-repair/targeted-reconciliation-and-aae-folds
 previous_page: tutorials/replication-and-reconciliation/explore-bidirectional-replication
 next_page: tutorials/replication-and-reconciliation/re-replicate-a-selected-time-window
+features: ["queue-replication"]
+concepts: ["cross-cluster-replication"]
 ---
 
 Reconcile only the `repl-demo` bucket and observe that an unrelated bucket is outside the check. Continue from the two-cluster replication lab.

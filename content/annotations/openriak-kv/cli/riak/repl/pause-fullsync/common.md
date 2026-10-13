@@ -7,6 +7,10 @@ versions: 3.4.0, 3.4.1
 
 Pause fullsync for legacy replication.
 
+# Deprecation
+
+This operation belongs to the legacy replication protocol. There is no direct replacement within that protocol. Migrate to named-cluster replication using [`riak repl connect`](../connect/) and review [`riak repl fullsync start`](../fullsync/start/) and [`riak repl fullsync stop`](../fullsync/stop/) for full-sync control.
+
 # Description
 
 This is a deprecated replication-v2 control. For current named-cluster full-sync, use the repl fullsync subcommands.
@@ -31,8 +35,8 @@ Request pause for the configured legacy listener. With no connected legacy repli
 
 # Reviewed against
 
-3.4.0: 8546c2ad2a9c2b437d541fba4a20b9ce9b6a52ecdca5030a77e0fff9c926c9a1
-3.4.1: 8546c2ad2a9c2b437d541fba4a20b9ce9b6a52ecdca5030a77e0fff9c926c9a1
+3.4.0: 35b466b440f10c735beef046eafd07f0529e6af249e4c36d1ca3177c64377885
+3.4.1: 35b466b440f10c735beef046eafd07f0529e6af249e4c36d1ca3177c64377885
 
 # Tags
 

@@ -27,6 +27,8 @@ related:
 - how-to/storage-maintenance/configure-bitcask
 - how-to/storage-maintenance/schedule-bitcask-merges
 - foundations/data-and-consistency/bucket-types-and-data-policies
+features: ["bitcask","configuration"]
+concepts: ["node-lifecycle","storage"]
 ---
 
 Bitcask settings control local files, synchronisation, merging, expiry, and key-directory behaviour. Multi-backend variants apply only inside the corresponding named backend definition.

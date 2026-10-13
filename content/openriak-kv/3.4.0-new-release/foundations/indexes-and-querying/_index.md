@@ -11,6 +11,8 @@ status: Reviewed
 review-by: TI Tokyo/JOM
 review_scope: editorial & technical
 related: []
+features: ["query-processing","secondary-indexes"]
+concepts: ["querying"]
 ---
 
 Understand how stored index terms become bounded searches, projected attributes, and combined results.

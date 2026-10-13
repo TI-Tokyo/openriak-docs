@@ -35,6 +35,8 @@ related:
 - foundations/data-and-consistency/objects-keys-and-buckets
 - foundations/data-and-consistency/bucket-types-and-data-policies
 - foundations/data-and-consistency/causality-version-vectors-and-siblings
+features: ["bucket-properties","client-operations"]
+concepts: ["data-access","data-policy"]
 ---
 
 Address the intended bucket type explicitly in application requests. The same bucket and key under another type identify a different object.

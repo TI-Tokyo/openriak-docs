@@ -18,6 +18,8 @@ related:
 - how-to/node-configuration/inspect-and-manage-effective-configuration
 - how-to/node-configuration/validate-configuration-before-startup
 - foundations/data-and-consistency/bucket-types-and-data-policies
+features: ["configuration"]
+concepts: ["node-lifecycle"]
 ---
 
 OpenRiak uses `riak.conf` for schema-backed settings and `advanced.config` for Erlang application configuration that needs the advanced form. Paths and supported settings depend on the installed package.

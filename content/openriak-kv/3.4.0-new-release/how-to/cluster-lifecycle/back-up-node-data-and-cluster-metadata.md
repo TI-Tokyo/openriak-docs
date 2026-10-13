@@ -39,6 +39,8 @@ related:
 - reference/operations-and-observability/runtime-files-and-backup-contents
 - foundations/cluster-lifecycle/backups-restores-and-disaster-recovery
 next_page: how-to/cluster-lifecycle/restore-node-data-from-a-backup
+features: ["backup-and-restore","cluster-management"]
+concepts: ["node-lifecycle","recovery"]
 ---
 
 Capture backend data together with the metadata needed to interpret it, then prove that it can be restored. A collection of node backups is not an atomic cluster-wide snapshot.

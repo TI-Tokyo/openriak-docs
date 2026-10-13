@@ -38,6 +38,8 @@ related:
 - reference/data-model-contracts/keys-and-object-representations
 - foundations/data-and-consistency/objects-keys-and-buckets
 - foundations/data-and-consistency/bucket-types-and-data-policies
+features: ["cluster-management"]
+concepts: ["deployment"]
 ---
 
 Design object keys, bucket boundaries, and query paths before committing to a storage layout. Start with the application's reads and updates, including how it will resolve concurrent changes.

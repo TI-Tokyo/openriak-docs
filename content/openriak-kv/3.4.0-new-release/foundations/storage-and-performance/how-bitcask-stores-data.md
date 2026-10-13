@@ -42,6 +42,8 @@ related:
 - how-to/storage-maintenance/schedule-bitcask-merges
 - foundations/storage-and-performance/persistence-filesystems-and-space-reclamation
 - foundations/storage-and-performance/capacity-and-growth
+features: ["bitcask","storage-backends"]
+concepts: ["storage"]
 ---
 
 Bitcask stores values in append-only data files and keeps an in-memory directory locating the current record for each key. A lookup uses that directory to find the corresponding value on disk.

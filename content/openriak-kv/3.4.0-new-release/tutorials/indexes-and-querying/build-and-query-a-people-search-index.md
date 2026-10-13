@@ -45,6 +45,8 @@ related:
 - foundations/indexes-and-querying/query-cost-and-result-delivery
 next_page: tutorials/indexes-and-querying/search-projected-attributes
 previous_page: tutorials/data-and-concurrency/estimate-unique-activity-with-hyperloglog
+features: ["query-processing","secondary-indexes"]
+concepts: ["querying"]
 ---
 
 Load three people, find their keys by surname, and fetch a matching profile. Use the Leveled learning cluster and active `docs` bucket type from the earlier exercises. You also need Python 3.

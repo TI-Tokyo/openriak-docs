@@ -35,6 +35,8 @@ related:
 - foundations/replication-and-repair/read-repair-and-tictac-anti-entropy
 - foundations/replication-and-repair/replication-sources-queues-and-sinks
 - foundations/replication-and-repair/real-time-replication-and-fullsync
+features: ["queue-replication"]
+concepts: ["cross-cluster-replication"]
 ---
 
 Queue existing objects for a destination by bucket, key interval, or last-modified interval. This is used to seed a new cluster or recover a known gap.

@@ -33,6 +33,8 @@ related:
 - reference/operations-and-observability/log-files-and-event-formats
 - foundations/storage-and-performance/latency-queues-and-resource-contention
 - foundations/cluster-lifecycle/failure-and-recovery
+features: ["observability"]
+concepts: ["diagnostics"]
 ---
 
 Diagnostic messages identify a condition and its context; the same low-level error can have different causes in a client request, a backend, or a background job. Preserve the full message, node, timestamp, and operation before acting.

@@ -34,6 +34,8 @@ related:
 - reference/operations-and-observability/node-and-cluster-metrics
 - foundations/storage-and-performance/latency-queues-and-resource-contention
 - foundations/cluster-lifecycle/failure-and-recovery
+features: ["observability"]
+concepts: ["diagnostics"]
 ---
 
 Check cluster health on a schedule and before operational changes. Compare trends with the deployment's normal workload rather than relying on one status snapshot.

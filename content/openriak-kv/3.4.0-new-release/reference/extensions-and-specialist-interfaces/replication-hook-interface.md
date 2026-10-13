@@ -18,6 +18,8 @@ related:
 - reference/replication-interfaces/legacy-riak-repl-runtime-controls
 - how-to/replication-and-reconciliation/configure-replication-queues-and-filters
 - foundations/storage-and-performance/storage-backend-trade-offs
+features: ["legacy-replication"]
+concepts: ["cross-cluster-replication"]
 ---
 
 Legacy replication hooks filter or supplement objects on a `riak_repl` path. They are registered as replication helpers and are distinct from current-generation queue filters.

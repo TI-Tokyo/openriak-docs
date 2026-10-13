@@ -28,6 +28,8 @@ related:
 - reference/orientation-and-compatibility/backend-capability-matrix
 - how-to/installation/build-and-install-from-source
 - foundations/storage-and-performance/storage-backend-trade-offs
+features: ["storage-backends"]
+concepts: ["storage"]
 ---
 
 A storage backend implements the callback contract used by the KV vnode. Capability declarations determine which optional query, fold, and maintenance paths the vnode may use.

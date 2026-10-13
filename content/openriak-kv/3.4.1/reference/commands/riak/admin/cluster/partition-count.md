@@ -14,6 +14,8 @@ cli_reference_version: "3.4.1"
 related: ["how-to/cluster-lifecycle/plan-and-commit-a-membership-change","foundations/cluster-architecture/membership-gossip-and-handoff","reference/commands"]
 linkTitle: "partition-count"
 cli_command_key: "shell:riak admin cluster partition-count"
+features: ["cluster-management"]
+concepts: ["partition-placement"]
 ---
 
 {{< cli-command >}}

@@ -92,7 +92,7 @@ Starts index reformatting with the selected worker and batch limits.
 # Reviewed against
 
 3.4.0: bd7e6e3d2bf562925cd6bd0fc8a3755e6c9db7702b67521785a180a741c9e20d
-3.4.1: bd7e6e3d2bf562925cd6bd0fc8a3755e6c9db7702b67521785a180a741c9e20d
+3.4.1: d8d2535736a0f5db5b641b9f3fd3119d81887296ebdd6e372739a43f35218132
 
 # Tags
 

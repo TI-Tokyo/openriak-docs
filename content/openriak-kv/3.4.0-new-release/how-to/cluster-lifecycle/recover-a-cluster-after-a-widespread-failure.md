@@ -34,6 +34,8 @@ related:
 - how-to/cluster-lifecycle/restore-node-data-from-a-backup
 - foundations/cluster-lifecycle/failure-and-recovery
 - foundations/cluster-lifecycle/backups-restores-and-disaster-recovery
+features: ["cluster-management"]
+concepts: ["node-lifecycle","recovery"]
 ---
 
 Recover service after a widespread failure by first preserving evidence and determining which data copies remain trustworthy. Avoid making membership changes while the extent of the failure is still unknown.

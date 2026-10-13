@@ -33,6 +33,8 @@ related:
 - reference/client-libraries/client-compatibility-and-capability-matrix
 - foundations/replication-and-repair/replication-generations-and-compatibility
 - foundations/storage-and-performance/storage-backend-trade-offs
+features: ["redis"]
+concepts: ["compatibility"]
 ---
 
 Prepare an isolated compatibility test before deploying the historical Redis add-on with this OpenRiak release. A verified add-on package and compatibility matrix are not included in the current release metadata.

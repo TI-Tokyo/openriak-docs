@@ -37,6 +37,8 @@ related:
 - foundations/cluster-lifecycle/failure-and-recovery
 - foundations/cluster-lifecycle/rolling-maintenance-and-recovery-headroom
 previous_page: how-to/installation/verify-an-installation
+features: ["cluster-management"]
+concepts: ["node-lifecycle"]
 ---
 
 Add empty, configured nodes to an existing cluster, then wait for ownership transfers before relying on their capacity.

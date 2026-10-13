@@ -30,6 +30,8 @@ related:
 - foundations/data-and-consistency/objects-keys-and-buckets
 - foundations/data-and-consistency/eventual-consistency-and-convergence
 - reference/orientation-and-compatibility/glossary
+features: ["object-storage"]
+concepts: ["architecture"]
 ---
 
 OpenRiak KV stores values under keys and distributes copies across a cluster of servers. An application supplies a bucket and key to write or retrieve an object; OpenRiak locates the responsible partitions and coordinates the request.

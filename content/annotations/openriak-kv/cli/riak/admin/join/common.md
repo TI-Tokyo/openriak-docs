@@ -7,6 +7,12 @@ versions: 3.4.0, 3.4.1
 
 Join another node using the legacy immediate command.
 
+# Deprecation
+
+Please use this replacement command instead:
+
+[`riak admin cluster join`](../cluster/join/).
+
 # Description
 
 Prefer the staged cluster subcommands for planned topology changes.
@@ -45,8 +51,8 @@ On a valid request, the ring metadata is updated or the membership operation sta
 
 # Reviewed against
 
-3.4.0: eba992eaf55b16ca1a3ed8a58ea6819884005dc8091b2598e4ec2cf92a820cc1
-3.4.1: eba992eaf55b16ca1a3ed8a58ea6819884005dc8091b2598e4ec2cf92a820cc1
+3.4.0: 14e24b25af296f1fbed68e0ea0eb298266d0aeb86f88b1d9a19cf43a2a7e7adb
+3.4.1: 65b61c38a41ba160d142cbe2fe3cd13769011bb5f74c66bf4fcb834290dd1400
 
 # Tags
 

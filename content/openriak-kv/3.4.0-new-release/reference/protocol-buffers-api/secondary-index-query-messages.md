@@ -34,6 +34,8 @@ related:
 - reference/protocol-buffers-api/protocol-framing-message-codes-and-errors
 - foundations/data-and-consistency/objects-keys-and-buckets
 - foundations/data-and-consistency/causality-version-vectors-and-siblings
+features: ["client-operations","protocol-buffers","query-processing","secondary-indexes"]
+concepts: ["data-access","querying"]
 ---
 
 Secondary-index messages support exact and range requests, optional streaming, and continuations. The continuation is opaque and must be reused with the same logical query. This interface is distinct from the HTTP Query API expression and combination contract.

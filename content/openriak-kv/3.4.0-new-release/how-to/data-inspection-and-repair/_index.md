@@ -8,6 +8,8 @@ description: Inspect and count a bounded scope before submitting repair, erasure
 editorial_review: complete
 technical_review: required
 related: []
+features: ["tictac-aae"]
+concepts: ["replica-repair"]
 ---
 
 Inspect and count a bounded scope before submitting repair, erasure, or tombstone reclamation.

@@ -29,6 +29,24 @@ with a command ID such as `erlang:riak_client:aae_fold/1:object_stats`.
 These files are build inputs, not Hugo pages. They are not mounted into public
 content and do not require Hugo front matter.
 
+## Deprecation warnings
+
+Deprecated commands display a Warning admonition before their summary. Add a
+`# Deprecation` section containing replacement guidance and links relative to the
+command's public URL. This text appears between the standard “Do not use it”
+warning and the future-removal notice. For example, on `riak start`:
+
+```markdown
+# Deprecation
+
+Please use this replacement command instead:
+
+[`riak daemon`](../daemon/).
+```
+
+For operations without a direct replacement, explain the migration path instead.
+The metadata's deprecated flag controls whether the warning is displayed.
+
 ## Format
 
 Use `#` for sections, `##` for named entries, and `###` for long fields.
@@ -353,3 +371,76 @@ feature three points and each shared concept one point, then sorts ties by name.
 Source repository/module alone does not establish a relationship. Links target
 stable anchors in the complete settings catalogue. Tables do not show related
 settings. Names and defaults remain sourced from the unmodified release metadata.
+
+## Verified command transcripts and related documents
+
+Command pages select a successful captured example for **Expected results**. An
+optional `# Known good example` section containing its example ID selects a
+particular verified success. An unverified example or a capture marked
+`known_issue` cannot be selected. Removed or broken operations show their verified
+failure with replacement guidance instead. The current complete command coverage
+is for OpenRiak KV 3.4.1 on Alpine Linux 3.24.1; changing the OS selector does not
+turn that capture into evidence for another OS.
+
+Each scenario command, case preparation command and verification command is a
+separate numbered step, including all stdout, stderr and exit status. Global test
+setup remains in the collapsed environment section. Outputs longer than 15 lines
+use a single code block clipped to 15 rendered lines, with a faded bottom edge
+and an expand/collapse icon in its toolbar. A compact **Show more** button at the
+bottom border forms a centred tab that expands the block and then disappears.
+Expansion is a saved preference shared by command-page code blocks. Changing it
+keeps the current block in place even when blocks above expand or collapse. Copy and download retain the complete
+capture. The same limit applies to command-page examples and test records. Do not
+combine shell commands with `&&` or abbreviate a captured module list or table.
+Describe what each example demonstrates, what its arguments mean and what result
+to expect. Test recipe links use the recorded metadata repository commit when
+available; that commit must be pushed before its GitHub link is accessible.
+
+Each error must identify a captured example through `example_id` (the scenario
+runner supplies this automatically). An error override can set `example_id` to an
+existing example ID. Shared failures belong on the parent command; child pages
+link to that parent's Errors section under **Related errors**. When replacing a
+legacy illustrative example or speculative error, a version-specific
+`example_overrides` or `error_overrides` entry can set `omit: true`. This hides the
+editorial entry without changing the original evidence. Do not omit a real
+failure merely to satisfy coverage: capture it, link an existing matching example,
+or document it on the shared parent command.
+
+Command tags link to version-specific tag pages containing matching commands,
+settings and documents with front-matter tags. Related documentation combines
+those matches with authored links, removes duplicates across groups, and puts
+unmatched authored links under **Other**. Category order is feature, repository,
+module, concept; a document matching several tags appears in the first matching
+group. Tag identity includes its type: `module: riak_core` and
+`repository: riak_core` have separate pages and document lists. Use
+`annotation_tags` (a category-to-list map), or a typed `tags` map for ordinary
+documents to participate in this index. For example:
+
+```yaml
+annotation_tags:
+  module: [riak_core]
+  repository: [riak_core]
+```
+
+Ordinary document front matter should use `features` and `concepts` lists for
+version-specific feature/concept browsing and header links (see `content/README.md`).
+Command-page generation writes these lists from the annotations. They also
+participate in the version-specific reference indexes. Legacy untyped `tags`
+lists do not imply membership in any reference tag type.
+
+
+CLI verification steps should use the public administration commands when they
+can establish the expected result. Prefer `riak admin ringready`, `riak admin
+ring-status` and `riak admin member-status` over internal Erlang ring queries.
+The runner can retry asynchronous read-only checks with a bounded `retry` policy;
+each loop appears as one numbered step showing the first pending result and final
+result. Every attempt remains available in the downloadable JSON execution
+records. Raw records and original scenario evidence are download links, not code
+blocks, so search indexes contain the displayed commands and outputs without
+duplicating the raw evidence. Displayed output omits trailing blank lines; downloads
+preserve the original records. A check that succeeds immediately only shows its
+successful result. Use a step
+`description` to explain what to look for in the table or readiness message.
+Use batches of curl requests for fixture data, with one request per command line
+in a shared step. Internal APIs should be reserved for fixture operations without
+a suitable public interface.

@@ -22,6 +22,8 @@ related:
     reason: 'Understand the configuration files and their precedence.'
   - page: 'reference/orientation-and-compatibility/glossary'
     title: 'Frequently asked questions'
+features: []
+concepts: ["documentation"]
 ---
 
 Use this draft page to exercise the configuration reference table. Change the selected operating system and verify that defaults and OS badges update without reloading the page. The copy buttons should copy the mapping name, internal name, or currently displayed default.

@@ -30,6 +30,8 @@ related:
 - how-to/replication-and-reconciliation/secure-next-generation-replication-connections
 - reference/protocol-buffers-api/protocol-framing-message-codes-and-errors
 - foundations/replication-and-repair/replication-sources-queues-and-sinks
+features: ["cluster-management","queue-replication"]
+concepts: ["cross-cluster-replication","node-lifecycle"]
 ---
 
 The internal replication API exposes membership discovery, source-queue consumption, and requests to queue object references. It is release-sensitive and is not a general durable messaging API.

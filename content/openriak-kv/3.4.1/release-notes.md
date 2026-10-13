@@ -34,6 +34,8 @@ review_scope: editorial-and-site-integration
 related:
 - how-to/cluster-lifecycle/upgrade-a-cluster
 - reference/orientation-and-compatibility/feature-status-and-deprecations
+features: []
+concepts: ["compatibility","release-history"]
 ---
 
 OpenRiak KV 3.4.1 adds queued Query API result delivery, vnode/backend status inspection, and improvements to reconciliation and operational visibility.

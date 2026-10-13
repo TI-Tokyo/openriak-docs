@@ -13,6 +13,8 @@ review_scope: Content review
 review-by: TI Tokyo/JOM
 last_reviewed: '2026-09-23'
 related: []
+features: ["cluster-management"]
+concepts: ["architecture"]
 ---
 
 Follow a request through physical nodes, partitions, and replicas, then examine failure domains and placement.

@@ -35,6 +35,8 @@ related:
 - reference/protocol-buffers-api/protocol-framing-message-codes-and-errors
 - foundations/data-and-consistency/objects-keys-and-buckets
 - foundations/data-and-consistency/causality-version-vectors-and-siblings
+features: ["client-operations","protocol-buffers"]
+concepts: ["data-access"]
 ---
 
 Legacy client-identifier messages get or set a connection-associated client ID. They are not authentication messages and do not replace the causal context returned by object reads. New clients should follow the object and data-type context contracts.

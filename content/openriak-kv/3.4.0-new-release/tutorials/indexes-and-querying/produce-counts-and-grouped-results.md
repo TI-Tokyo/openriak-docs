@@ -22,6 +22,8 @@ related:
 - foundations/indexes-and-querying/query-cost-and-result-delivery
 previous_page: tutorials/indexes-and-querying/combine-query-conditions
 next_page: tutorials/indexes-and-querying/retrieve-a-larger-result-set
+features: ["query-processing","secondary-indexes"]
+concepts: ["querying"]
 ---
 
 Count the known people and group counts by city. Use the same three records so you can check the answer by inspection.

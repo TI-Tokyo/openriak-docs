@@ -14,6 +14,8 @@ cli_reference_version: "3.4.0"
 related: ["how-to/monitoring-and-diagnostics/inspect-a-node-through-the-remote-console","reference/operations-and-observability/remote-console-interfaces","reference/commands"]
 linkTitle: "resume_snkqueue"
 cli_command_key: "erlang:riak_kv_replrtq_snk:resume_snkqueue"
+features: ["queue-replication"]
+concepts: ["cross-cluster-replication","queueing"]
 ---
 
 {{< cli-command >}}

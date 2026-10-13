@@ -23,6 +23,8 @@ related:
 - foundations/data-and-consistency/conflict-free-replicated-data-types
 previous_page: tutorials/data-and-concurrency/explore-objects-buckets-and-metadata-with-http
 next_page: tutorials/data-and-concurrency/create-and-resolve-concurrent-updates
+features: ["bucket-properties","client-operations"]
+concepts: ["concurrency","data-model","data-policy"]
 ---
 
 Create a bucket type for the remaining object exercises and observe that typed and untyped buckets are separate namespaces.

@@ -32,6 +32,8 @@ related:
 - how-to/storage-maintenance/repair-a-leveled-store
 - foundations/storage-and-performance/latency-queues-and-resource-contention
 - foundations/cluster-lifecycle/failure-and-recovery
+features: ["observability"]
+concepts: ["diagnostics"]
 ---
 
 Inspect vnode and backend status when a partition or local store needs diagnosis. Record the node and partition identifiers with the observation.

@@ -12,6 +12,8 @@ last_reviewed: '2026-10-06'
 review_scope: content review
 review-by: TI Tokyo/JOM
 related: []
+features: ["query-processing","secondary-indexes"]
+concepts: ["querying"]
 ---
 
 Write index terms, run bounded queries, and add projection, combination, or result pagination for the required access pattern.

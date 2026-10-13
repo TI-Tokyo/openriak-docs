@@ -358,6 +358,58 @@ window.OpenRiakPageToolsReady = (async () => {
   };
 
   const codeBlocks = [...document.querySelectorAll('[data-code-block]')];
+  const outputPreferenceKey = 'openriak-code-output-expanded';
+  let outputsExpanded = false;
+  try { outputsExpanded = localStorage.getItem(outputPreferenceKey) === 'true'; } catch (_) { /* Storage may be disabled. */ }
+  const outputControllers = [];
+  const root = document.documentElement;
+  const originalOverflowAnchor = root.style.overflowAnchor;
+  let restoreAnchoring;
+  const setOutputsExpanded = (expanded, anchor) => {
+    const previousTop = anchor.getBoundingClientRect().top;
+    cancelAnimationFrame(restoreAnchoring);
+    root.style.overflowAnchor = 'none';
+    outputsExpanded = expanded;
+    outputControllers.forEach(controller => controller.apply(expanded));
+    // Preserve the current block's viewport position when earlier blocks grow or shrink.
+    const shift = anchor.getBoundingClientRect().top - previousTop;
+    if (shift) window.scrollBy({top: shift, behavior: 'instant'});
+    restoreAnchoring = requestAnimationFrame(() => { root.style.overflowAnchor = originalOverflowAnchor; });
+    try { localStorage.setItem(outputPreferenceKey, String(expanded)); } catch (_) { /* Keep the in-page preference. */ }
+  };
+  codeBlocks.filter(block => block.hasAttribute('data-code-limit')).forEach((block, index) => {
+    const button = block.querySelector('[data-code-expand]');
+    const pre = block.querySelector('[data-code-highlight] pre');
+    const showMore = block.querySelector('[data-code-show-more]');
+    if (!button || !pre) return;
+    pre.id = `command-output-${index}`;
+    button.setAttribute('aria-controls', pre.id);
+    showMore?.setAttribute('aria-controls', pre.id);
+    showMore?.addEventListener('click', () => {
+      button.click();
+      button.focus({preventScroll: true});
+    });
+    const measure = () => {
+      const style = getComputedStyle(pre);
+      const limit = Number(block.dataset.codeLimit) * parseFloat(style.lineHeight) +
+        parseFloat(style.paddingTop) + parseFloat(style.paddingBottom);
+      const overflow = pre.scrollHeight > limit + 1;
+      button.hidden = !overflow;
+      if (showMore) showMore.hidden = !overflow;
+      block.classList.toggle('has-hidden-output', overflow);
+    };
+    const apply = expanded => {
+      block.classList.toggle('is-output-expanded', expanded);
+      button.setAttribute('aria-expanded', String(expanded));
+      button.setAttribute('aria-label', expanded ? 'Collapse output' : 'Expand output');
+      button.title = expanded ? 'Collapse output' : 'Expand output';
+    };
+    outputControllers.push({apply});
+    apply(outputsExpanded);
+    button.addEventListener('click', () => setOutputsExpanded(!outputsExpanded, block));
+    new ResizeObserver(measure).observe(pre);
+    measure();
+  });
   const codeSources = new Map();
   await Promise.all(codeBlocks.map(async (block) => {
     try {

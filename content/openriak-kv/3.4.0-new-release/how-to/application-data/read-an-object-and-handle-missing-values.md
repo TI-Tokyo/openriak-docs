@@ -39,6 +39,8 @@ related:
 - foundations/data-and-consistency/objects-keys-and-buckets
 - foundations/data-and-consistency/bucket-types-and-data-policies
 - foundations/data-and-consistency/causality-version-vectors-and-siblings
+features: ["client-operations"]
+concepts: ["data-access"]
 ---
 
 Fetch an object and distinguish a value, a missing key, siblings, and a failed request. Use the endpoint, bucket type, and credentials expected by the application.

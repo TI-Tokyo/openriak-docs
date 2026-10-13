@@ -9,6 +9,8 @@ description: Find setting names, descriptions, types, and platform defaults. Val
 editorial_review: complete
 technical_review: required
 related: []
+features: ["configuration"]
+concepts: ["node-lifecycle"]
 ---
 
 Find setting names, descriptions, types, and platform defaults. Values follow the selected documentation release and operating system.

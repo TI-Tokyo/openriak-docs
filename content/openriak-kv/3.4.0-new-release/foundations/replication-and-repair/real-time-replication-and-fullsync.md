@@ -36,6 +36,8 @@ related:
 - how-to/replication-and-reconciliation/enable-real-time-replication
 - how-to/replication-and-reconciliation/configure-and-schedule-fullsync
 - reference/replication-interfaces/fullsync-requests-and-results
+features: ["full-sync","queue-replication"]
+concepts: ["cross-cluster-replication"]
 ---
 
 Real-time replication delivers ongoing changes, while fullsync compares datasets and repairs differences. A healthy multi-cluster deployment needs an understood path for both ordinary delivery and recovery after interruptions.

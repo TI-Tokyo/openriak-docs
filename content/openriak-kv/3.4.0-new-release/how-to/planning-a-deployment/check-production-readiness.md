@@ -45,6 +45,8 @@ related:
 - foundations/cluster-architecture/replica-placement-and-failure-domains
 - foundations/storage-and-performance/storage-backend-trade-offs
 - foundations/storage-and-performance/capacity-and-growth
+features: ["cluster-management"]
+concepts: ["deployment"]
 ---
 
 Check a deployment before sending production traffic. Keep the evidence with the release and infrastructure configuration so the checks can be repeated after changes.

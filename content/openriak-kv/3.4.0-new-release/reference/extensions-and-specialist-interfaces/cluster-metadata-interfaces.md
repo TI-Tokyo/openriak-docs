@@ -33,6 +33,8 @@ related:
 - how-to/cluster-lifecycle/restore-node-data-from-a-backup
 - reference/operations-and-observability/runtime-files-and-backup-contents
 - foundations/storage-and-performance/storage-backend-trade-offs
+features: ["cluster-management"]
+concepts: ["data-model"]
 ---
 
 Cluster metadata stores configuration state shared within a cluster, including definitions required to interpret object data. It is distinct from backend object files and from the ring's ownership records.

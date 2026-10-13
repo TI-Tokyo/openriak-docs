@@ -34,6 +34,8 @@ related:
 - how-to/security/grant-and-revoke-permissions
 - reference/commands/riak/admin/security
 - foundations/security/tls-and-certificate-trust
+features: ["security"]
+concepts: ["authentication"]
 ---
 
 A user identifies a client, an authentication source selects how a connection proves that identity, and permissions determine which operations it can perform. Groups allow related users to share permission assignments.

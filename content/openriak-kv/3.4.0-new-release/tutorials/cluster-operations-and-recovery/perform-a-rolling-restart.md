@@ -21,6 +21,8 @@ related:
 - foundations/cluster-lifecycle/rolling-maintenance-and-recovery-headroom
 previous_page: tutorials/cluster-operations-and-recovery/back-up-and-restore-a-sample-dataset
 next_page: tutorials/cluster-operations-and-recovery/inspect-and-repair-a-bounded-data-range
+features: ["cluster-management"]
+concepts: ["node-lifecycle","recovery"]
 ---
 
 Restart the five learning nodes one at a time while a sample read continues through another member. Complete [Build and explore a Docker cluster]({{< product-version-root >}}tutorials/first-cluster/build-and-explore-a-docker-cluster/) and use its Compose directory and shell helper.

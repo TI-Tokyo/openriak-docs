@@ -43,6 +43,8 @@ related:
 - foundations/overview/what-openriak-kv-is
 - foundations/replication-and-repair/replication-generations-and-compatibility
 - foundations/storage-and-performance/storage-backend-trade-offs
+features: ["erlang-runtime"]
+concepts: ["compatibility","runtime"]
 ---
 
 Select the operating system and architecture to see packages and runtime combinations published for OpenRiak KV {{< current-version >}}. Availability here comes from the package metadata for this release.

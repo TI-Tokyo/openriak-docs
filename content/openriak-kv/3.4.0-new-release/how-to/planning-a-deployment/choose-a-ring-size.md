@@ -35,6 +35,8 @@ related:
 - reference/operations-and-observability/claim-algorithms-and-placement-constraints
 - foundations/cluster-architecture/rings-partitions-and-virtual-nodes
 - foundations/cluster-architecture/replica-placement-and-failure-domains
+features: ["cluster-management"]
+concepts: ["deployment","partition-placement"]
 ---
 
 Choose the partition count before a new cluster receives data. The ring controls how work is divided into virtual nodes; see [Rings, partitions, and virtual nodes]({{< product-version-root >}}foundations/cluster-architecture/rings-partitions-and-virtual-nodes/) for the model.

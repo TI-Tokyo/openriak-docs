@@ -33,6 +33,8 @@ related:
 - how-to/indexes-and-queries/add-and-query-secondary-indexes
 - foundations/data-and-consistency/objects-keys-and-buckets
 - foundations/data-and-consistency/quorums-availability-and-durability
+features: ["client-operations","http-api"]
+concepts: ["data-access"]
 ---
 
 Legacy bucket and key listing scans stored data and can consume substantial cluster resources. It is not a bounded query or a transactional inventory.

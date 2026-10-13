@@ -36,6 +36,8 @@ related:
 - reference/operations-and-observability/remote-console-interfaces
 - foundations/storage-and-performance/latency-queues-and-resource-contention
 - foundations/cluster-lifecycle/failure-and-recovery
+features: ["erlang-runtime","observability"]
+concepts: ["diagnostics","runtime"]
 ---
 
 Inspect a running Erlang node when ordinary metrics and logs cannot explain a problem. Keep diagnostic scope and duration bounded so investigation does not worsen the incident.

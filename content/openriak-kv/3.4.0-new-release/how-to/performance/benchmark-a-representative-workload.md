@@ -39,6 +39,8 @@ related:
 - how-to/performance/reduce-query-api-cost
 - foundations/storage-and-performance/latency-queues-and-resource-contention
 - foundations/storage-and-performance/capacity-and-growth
+features: ["observability"]
+concepts: ["performance","testing"]
 ---
 
 Benchmark the intended workload and failure states before choosing capacity or tuning values. A short run against empty storage is not a reliable capacity measurement.

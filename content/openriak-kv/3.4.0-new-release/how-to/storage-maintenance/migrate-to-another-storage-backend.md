@@ -35,6 +35,8 @@ related:
 - how-to/planning-a-deployment/choose-a-storage-backend
 - foundations/storage-and-performance/storage-backend-trade-offs
 - foundations/storage-and-performance/persistence-filesystems-and-space-reclamation
+features: ["storage-backends"]
+concepts: ["backend-selection","storage"]
 ---
 
 Move data to a different backend by preparing storage that uses the destination backend and copying data through a supported recovery or replication path. A backend setting does not convert existing files.

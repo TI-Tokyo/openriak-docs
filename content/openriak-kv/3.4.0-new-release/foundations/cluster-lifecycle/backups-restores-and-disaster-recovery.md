@@ -34,6 +34,8 @@ related:
 - how-to/cluster-lifecycle/recover-a-cluster-after-a-widespread-failure
 - foundations/data-and-consistency/deletion-tombstones-and-expiration
 - reference/operations-and-observability/runtime-files-and-backup-contents
+features: ["backup-and-restore","cluster-management"]
+concepts: ["node-lifecycle","recovery"]
 ---
 
 A backup preserves a recoverable state independently of the current cluster. Replication maintains another evolving copy; it can also carry accidental updates and deletions.

@@ -15,6 +15,8 @@ description: Erlang runtime settings control process, scheduler, distribution, m
 related:
 - how-to/performance/tune-the-erlang-vm-for-a-measured-bottleneck
 - foundations/data-and-consistency/bucket-types-and-data-policies
+features: ["configuration","erlang-runtime"]
+concepts: ["node-lifecycle","runtime"]
 ---
 
 Erlang runtime settings control process, scheduler, distribution, memory, and shutdown behaviour. Apply changes to a measured bottleneck and verify the running service receives them.

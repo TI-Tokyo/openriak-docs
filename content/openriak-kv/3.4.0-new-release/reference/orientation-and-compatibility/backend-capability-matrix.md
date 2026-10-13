@@ -21,6 +21,8 @@ related:
 - foundations/overview/what-openriak-kv-is
 - foundations/replication-and-repair/replication-generations-and-compatibility
 - foundations/storage-and-performance/storage-backend-trade-offs
+features: ["storage-backends"]
+concepts: ["backend-selection","compatibility"]
 ---
 
 Backend capabilities vary by release and are not interchangeable. The matrix below records the capabilities declared by the installed release's backend implementations.

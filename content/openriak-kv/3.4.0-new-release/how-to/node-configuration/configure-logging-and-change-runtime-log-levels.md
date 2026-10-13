@@ -39,6 +39,8 @@ related:
 - reference/operations-and-observability/log-files-and-event-formats
 - foundations/cluster-architecture/rings-partitions-and-virtual-nodes
 - foundations/cluster-architecture/the-lifecycle-of-a-read-and-a-write
+features: ["configuration","observability"]
+concepts: ["diagnostics","node-lifecycle"]
 ---
 
 Choose persistent log destinations and temporarily increase detail when investigating a specific problem. Record the previous level and the time at which extra logging should end.

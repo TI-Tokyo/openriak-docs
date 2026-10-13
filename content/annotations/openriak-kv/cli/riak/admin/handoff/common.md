@@ -60,7 +60,7 @@ The selected subcommand determines the result. Invoking the group without a vali
 # Reviewed against
 
 3.4.0: e47c2c3cb2605c361b42ca8bf7f40dfd9409f08f1aff04864012ff18576fc7cf
-3.4.1: e47c2c3cb2605c361b42ca8bf7f40dfd9409f08f1aff04864012ff18576fc7cf
+3.4.1: dcf82150ba05c88747a236353f50fbed70ca1a03711ab6bfc5f003beb553ea5c
 
 # Tags
 

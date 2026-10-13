@@ -35,6 +35,8 @@ related:
 - how-to/cluster-lifecycle/back-up-node-data-and-cluster-metadata
 - foundations/replication-and-repair/replication-generations-and-compatibility
 - foundations/storage-and-performance/storage-backend-trade-offs
+features: ["leveldb"]
+concepts: ["compatibility","storage"]
 ---
 
 Maintain an existing deployment using LevelDB while planning its migration. These interfaces have compatibility and deprecation constraints; check [Feature status and deprecations]({{< product-version-root >}}reference/orientation-and-compatibility/feature-status-and-deprecations/) before choosing them for new data.

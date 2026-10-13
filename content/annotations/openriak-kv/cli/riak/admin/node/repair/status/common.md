@@ -71,7 +71,7 @@ Select the repair-status layout. Use `-f json` for JSON; the long `--format` sel
 
 # Reviewed against
 
-3.4.1: 2c25cf9428c9fecfa37f047eb8a694743880b605b5a9442df90bfc1cd88ee811
+3.4.1: f5eac0e3b445d092e05693cf58ad9095a635bc2eef0dba8a14a0c280d8f7d418
 
 # Tags
 

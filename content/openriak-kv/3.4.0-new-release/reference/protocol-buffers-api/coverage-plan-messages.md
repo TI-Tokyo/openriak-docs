@@ -31,6 +31,8 @@ related:
 - reference/protocol-buffers-api/protocol-framing-message-codes-and-errors
 - foundations/data-and-consistency/objects-keys-and-buckets
 - foundations/data-and-consistency/causality-version-vectors-and-siblings
+features: ["client-operations","protocol-buffers"]
+concepts: ["data-access"]
 ---
 
 A coverage request returns endpoints and opaque coverage contexts for partitioned extraction. A client must preserve each context and handle unavailable endpoints and replacement coverage; this is not a list of independent full-database query endpoints.

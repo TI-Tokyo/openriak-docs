@@ -20,6 +20,8 @@ related:
 - foundations/indexes-and-querying/how-distributed-queries-execute
 - foundations/indexes-and-querying/query-cost-and-result-delivery
 previous_page: tutorials/indexes-and-querying/produce-counts-and-grouped-results
+features: ["query-processing","secondary-indexes"]
+concepts: ["querying"]
 ---
 
 Retrieve the three people in small pages, preserving the continuation between requests. Continue with the dataset from the preceding index lessons. This exercise uses the secondary-index HTTP endpoint and needs Python 3 on your workstation.

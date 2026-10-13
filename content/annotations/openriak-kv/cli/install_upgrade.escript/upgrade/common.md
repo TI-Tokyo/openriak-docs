@@ -92,7 +92,7 @@ The helper calls the running node’s release handler. Acknowledgment is not a s
 # Reviewed against
 
 3.4.0: f847f55e41016342e9d533aad3d98478a6ebe72e2df67f5a1d3209b65c5e239f
-3.4.1: f847f55e41016342e9d533aad3d98478a6ebe72e2df67f5a1d3209b65c5e239f
+3.4.1: 85484a1d636419a63de8b0f104283e21d113eae45e37e2ed70e53a135e12d2ad
 
 # Tags
 

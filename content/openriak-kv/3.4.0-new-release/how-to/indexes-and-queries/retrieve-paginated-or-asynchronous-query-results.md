@@ -20,6 +20,8 @@ related:
 - foundations/indexes-and-querying/secondary-indexes-and-projected-attributes
 - foundations/indexes-and-querying/how-distributed-queries-execute
 - foundations/indexes-and-querying/query-cost-and-result-delivery
+features: ["query-processing","secondary-indexes"]
+concepts: ["querying"]
 ---
 
 Retrieve a larger query result using the delivery mechanism supported by the selected release. Keep the query definition and namespace stable between requests.

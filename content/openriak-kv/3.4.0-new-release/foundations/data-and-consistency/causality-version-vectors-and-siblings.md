@@ -34,6 +34,8 @@ related:
 - how-to/application-data/update-an-object-with-causal-context
 - how-to/application-data/resolve-concurrent-object-updates
 - reference/data-model-contracts/causal-context-and-version-vector-representations
+features: ["object-storage"]
+concepts: ["causality","concurrency","consistency","data-model"]
 ---
 
 Causal context records which object history a write has observed. OpenRiak uses version information to distinguish a later update from an update made independently of another writer.

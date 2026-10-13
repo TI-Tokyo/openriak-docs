@@ -70,7 +70,7 @@ A background VM using the selected boot file.
 # Reviewed against
 
 3.4.0: 72e850e4ddba1e9218539feb1a41a41596d8e081f4468f5dee7f5ef006c48c90
-3.4.1: 72e850e4ddba1e9218539feb1a41a41596d8e081f4468f5dee7f5ef006c48c90
+3.4.1: c3fc267d3cd96c818d80964e8bdeb147986408c5211b1427a294fed6a6ffb0ce
 
 # Tags
 

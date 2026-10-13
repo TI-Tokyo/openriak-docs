@@ -9,6 +9,8 @@ description: Look up retained legacy and experimental interfaces together with t
 editorial_review: complete
 technical_review: required
 related: []
+features: []
+concepts: ["compatibility"]
 ---
 
 Look up retained legacy and experimental interfaces together with their deprecation and compatibility boundaries.

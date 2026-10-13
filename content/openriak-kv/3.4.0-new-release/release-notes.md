@@ -25,6 +25,8 @@ review-by: TI Tokyo/JOM
 related:
 - how-to/cluster-lifecycle/upgrade-a-cluster
 - reference/orientation-and-compatibility/feature-status-and-deprecations
+features: []
+concepts: ["compatibility","release-history"]
 ---
 
 OpenRiak KV 3.4.0 introduces the current Query API and token-assisted conditional PUTs, with operational improvements for logging, anti-entropy, and repair.

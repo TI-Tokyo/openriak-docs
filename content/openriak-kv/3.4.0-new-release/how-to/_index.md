@@ -13,6 +13,8 @@ review_scope: content review
 review-by: TI Tokyo/JOM
 diataxis: how-to
 related: []
+features: []
+concepts: ["architecture"]
 ---
 
 Complete a specific deployment, application, or operational task. Begin with a local node, plan and install a deployment, then use the configuration and data guides before moving to maintenance and diagnosis.

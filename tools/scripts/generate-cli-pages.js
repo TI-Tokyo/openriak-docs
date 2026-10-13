@@ -35,6 +35,31 @@ pages are preserved. Build-time data is prepared by sync-product-metadata.js.`);
   const document = JSON.parse(fs.readFileSync(path.join(repo, 'content/openriak-kv/metadata', version, 'kv-cli-commands.json')));
   if (document.version !== version) throw new Error('Metadata version does not match the requested release');
   const reference = buildReference(document);
+  const { readLayers } = require('./cli-annotations');
+  const { mergeTags } = require('./annotation-tags');
+  const layers = readLayers(path.join(repo, 'content/annotations/openriak-kv'), version);
+  const commands = new Map(document.commands.map(command => [command.id, command]));
+  function topicTags(item) {
+    const tags = mergeTags((item.ids || [item.key]).map(id => {
+      let tags = commands.get(id)?.reference?.tags || {};
+      for (const layer of layers) {
+        const entry = layer.commands[id];
+        if (entry?.tags && (!entry.versions || entry.versions.includes(version))) tags = {...tags, ...entry.tags};
+      }
+      return tags;
+    }));
+    if (!tags.feature.length && !tags.concept.length) {
+      const defaults = {
+        erlang: [['client-operations'], ['data-access']],
+        'erlang/riak-core-vnode-manager': [['node-operations'], ['replica-repair']],
+        'erlang/riak-kv-ttaaefs-manager': [['full-sync'], ['cross-cluster-replication']],
+        helpers: [['node-operations'], ['node-lifecycle']],
+      };
+      const fallback = defaults[item.route];
+      if (fallback) return {features:fallback[0], concepts:fallback[1]};
+    }
+    return {features: tags.feature, concepts: tags.concept};
+  }
   const productRoot = path.join(repo, 'content/openriak-kv');
   const releaseRoot = path.join(productRoot, `${version}-new-release`);
   const patchRoot = path.join(productRoot, version);
@@ -80,10 +105,10 @@ pages are preserved. Build-time data is prepared by sync-product-metadata.js.`);
     const filename = !route ? '_index.md' : branchRoutes.has(route) ? `${route}/_index.md` : `${route}.md`;
     expected.set(filename, text);
   }
-  page('', 'Command reference', '{{< cli-command-index >}}');
-  for (const item of reference.pages) page(item.route, item.title, '{{< cli-command >}}', { linkTitle: item.linkTitle, cli_command_key: item.key });
+  page('', 'Command reference', '{{< cli-command-index >}}', {features:['node-operations', 'cluster-management'], concepts:['node-lifecycle']});
+  for (const item of reference.pages) page(item.route, item.title, '{{< cli-command >}}', { linkTitle: item.linkTitle, cli_command_key: item.key, ...topicTags(item) });
   for (const section of reference.sections) {
-    if (!reference.pages.some(p => p.route === section.route)) page(section.route, section.title, '{{< cli-command-index >}}', { cli_command_prefix: section.route });
+    if (!reference.pages.some(p => p.route === section.route)) page(section.route, section.title, '{{< cli-command-index >}}', { cli_command_prefix: section.route, ...topicTags({...section, key: `erlang:${section.title}`}) });
   }
   const obsolete = [];
   function walk(directory) {

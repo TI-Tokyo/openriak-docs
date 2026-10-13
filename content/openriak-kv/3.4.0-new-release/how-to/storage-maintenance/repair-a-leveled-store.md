@@ -31,6 +31,8 @@ related:
 - how-to/data-inspection-and-repair/repair-inconsistent-secondary-indexes
 - reference/operations-and-observability/runtime-files-and-backup-contents
 - foundations/storage-and-performance/how-leveled-stores-data
+features: ["leveled","storage-backends"]
+concepts: ["storage"]
 ---
 
 Rebuild a Leveled ledger from its intact journal when the ledger or its indexes are damaged. This procedure does not recover a missing or corrupt journal.

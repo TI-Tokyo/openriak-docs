@@ -60,7 +60,7 @@ The command returns after startup and hooks; use ping to confirm reachability.
 # Reviewed against
 
 3.4.0: e450156f935950ed29e45d67b3dd58f37e46d5fdd9d2ceb1d758b7ca6613977d
-3.4.1: e450156f935950ed29e45d67b3dd58f37e46d5fdd9d2ceb1d758b7ca6613977d
+3.4.1: ed1a0a62265a6725e59ec4a95c80fcdf94e83d7a1db62e9089f1bbfb1b1ed45a
 
 # Tags
 

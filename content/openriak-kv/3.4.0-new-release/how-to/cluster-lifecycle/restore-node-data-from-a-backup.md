@@ -34,6 +34,8 @@ related:
 - reference/operations-and-observability/runtime-files-and-backup-contents
 - foundations/cluster-lifecycle/backups-restores-and-disaster-recovery
 previous_page: how-to/cluster-lifecycle/back-up-node-data-and-cluster-metadata
+features: ["backup-and-restore","cluster-management"]
+concepts: ["node-lifecycle","recovery"]
 ---
 
 Restore a verified backup into an isolated recovery environment before returning application traffic. For one failed member in an otherwise healthy cluster, prefer replica-based repair using [Repair a vnode or node from surviving replicas]({{< product-version-root >}}how-to/data-inspection-and-repair/repair-a-vnode-or-node-from-surviving-replicas/).

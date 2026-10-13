@@ -32,6 +32,8 @@ related:
 - reference/data-model-contracts/secondary-index-terms-and-projected-attributes
 - how-to/indexes-and-queries/add-and-query-secondary-indexes
 - tutorials/indexes-and-querying/build-and-query-a-people-search-index
+features: ["query-processing","secondary-indexes"]
+concepts: ["querying"]
 ---
 
 Secondary indexes associate ordered terms with object keys. A query searches those terms to discover keys; it need not read and decode every object's value first.

@@ -40,6 +40,8 @@ related:
 - foundations/security/security-boundaries-and-trust
 - foundations/security/identities-authentication-and-permissions
 - foundations/security/tls-and-certificate-trust
+features: ["client-networking","security"]
+concepts: ["authentication","connections"]
 ---
 
 Restrict database access to the clients, peer nodes, and administrators that need it. Apply rules to the actual listener addresses and distribution range configured for the deployment.

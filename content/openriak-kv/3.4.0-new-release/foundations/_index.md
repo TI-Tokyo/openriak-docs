@@ -15,6 +15,8 @@ review_scope:
 - Phrasing tweaks
 diataxis: explanation
 related: []
+features: []
+concepts: ["architecture"]
 ---
 
 Understand how OpenRiak stores, distributes, and reconciles data. Start with the overview, then follow the architecture and data-policy topics before exploring querying, recovery, and security.

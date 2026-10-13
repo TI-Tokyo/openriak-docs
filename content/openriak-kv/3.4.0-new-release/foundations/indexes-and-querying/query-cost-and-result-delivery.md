@@ -41,6 +41,8 @@ related:
 - reference/query-api/continuations-and-result-delivery
 - how-to/performance/reduce-query-api-cost
 - tutorials/indexes-and-querying/retrieve-a-larger-result-set
+features: ["query-processing","secondary-indexes"]
+concepts: ["querying"]
 ---
 
 Query cost depends on how many index entries are examined, what work is done per entry, and how much data is returned. A small result does not necessarily mean a cheap query.

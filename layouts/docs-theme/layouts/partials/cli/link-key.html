@@ -1,0 +1,10 @@
+{{- $url := urls.Parse .url -}}
+{{- $path := $url.Path -}}
+{{- if not $url.IsAbs -}}
+  {{- if not $path }}{{ $path = .page.RelPermalink }}{{ else if not (strings.HasPrefix $path "/") }}{{ $path = path.Join .page.RelPermalink $path }}{{ end -}}
+{{- end -}}
+{{- $key := path.Clean $path -}}
+{{- with $url.Host }}{{ $key = printf "%s://%s%s" $url.Scheme . $key }}{{ end -}}
+{{- with $url.RawQuery }}{{ $key = printf "%s?%s" $key . }}{{ end -}}
+{{- with $url.Fragment }}{{ $key = printf "%s#%s" $key . }}{{ end -}}
+{{- return $key -}}

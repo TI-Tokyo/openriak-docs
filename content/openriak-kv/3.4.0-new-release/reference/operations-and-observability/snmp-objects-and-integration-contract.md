@@ -34,6 +34,8 @@ related:
 - how-to/security/restrict-client-node-and-administrative-network-access
 - foundations/storage-and-performance/latency-queues-and-resource-contention
 - foundations/cluster-lifecycle/failure-and-recovery
+features: ["observability"]
+concepts: ["diagnostics"]
 ---
 
 SNMP integration exposes selected runtime and database counters through the installed MIB and agent configuration. It is a specialist monitoring interface; metric availability depends on the packaged components and configuration.

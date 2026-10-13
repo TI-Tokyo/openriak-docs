@@ -21,6 +21,8 @@ related:
 - reference/operations-and-observability/aae-repair-and-worker-pool-metrics
 - foundations/storage-and-performance/latency-queues-and-resource-contention
 - foundations/cluster-lifecycle/failure-and-recovery
+features: ["observability"]
+concepts: ["diagnostics"]
 ---
 
 Node statistics report request activity, latency, storage, and runtime state. Collect them per node with a timestamp and release identifier before deriving cluster-wide views.

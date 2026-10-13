@@ -47,6 +47,8 @@ related:
 - how-to/monitoring-and-diagnostics/monitor-replication-and-inter-cluster-reconciliation
 - foundations/replication-and-repair/replication-sources-queues-and-sinks
 - foundations/replication-and-repair/real-time-replication-and-fullsync
+features: ["queue-replication"]
+concepts: ["cross-cluster-replication"]
 ---
 
 Next-generation replication has source-queue, sink-consumer, and TicTac fullsync controls. These Erlang entry points are release-sensitive operational interfaces; they are separate from legacy `riak repl` commands.

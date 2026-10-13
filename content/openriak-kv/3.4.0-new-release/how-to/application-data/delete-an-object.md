@@ -39,6 +39,8 @@ related:
 - foundations/data-and-consistency/objects-keys-and-buckets
 - foundations/data-and-consistency/bucket-types-and-data-policies
 - foundations/data-and-consistency/causality-version-vectors-and-siblings
+features: ["client-operations","deletion"]
+concepts: ["data-access","retention","tombstones"]
 ---
 
 Delete an object using the context of the version the application intends to remove. Deletion can (depending on configuration) retain a tombstone for replication and repair.

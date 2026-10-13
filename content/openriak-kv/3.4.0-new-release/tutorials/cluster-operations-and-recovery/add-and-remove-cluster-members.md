@@ -38,6 +38,8 @@ related:
 - foundations/cluster-lifecycle/backups-restores-and-disaster-recovery
 - foundations/cluster-lifecycle/rolling-maintenance-and-recovery-headroom
 next_page: tutorials/cluster-operations-and-recovery/observe-a-node-failure-and-recovery
+features: ["cluster-management"]
+concepts: ["node-lifecycle","recovery"]
 ---
 
 Practise removing a healthy member and joining it again while a small dataset remains available. Use only the disposable five-node cluster from [Build and explore a Docker cluster]({{< product-version-root >}}tutorials/first-cluster/build-and-explore-a-docker-cluster/).

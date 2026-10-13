@@ -37,6 +37,8 @@ related:
 - reference/operations-and-observability/node-and-cluster-metrics
 - foundations/storage-and-performance/latency-queues-and-resource-contention
 - foundations/cluster-lifecycle/failure-and-recovery
+features: ["observability"]
+concepts: ["diagnostics"]
 ---
 
 Inspect a node's reported state and compare it with the cluster's view when investigating availability or performance.

@@ -33,6 +33,8 @@ related:
 - reference/http-api/conditional-requests-and-latch-objects
 - reference/data-model-contracts/distributed-data-type-contracts
 - foundations/data-and-consistency/causality-version-vectors-and-siblings
+features: ["object-storage"]
+concepts: ["causality","concurrency","data-model"]
 ---
 
 Causal context identifies the versions a client has observed. Treat it as opaque and return it with an update or deletion based on that observed state.

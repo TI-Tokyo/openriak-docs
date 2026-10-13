@@ -16,6 +16,8 @@ related:
 - how-to/planning-a-deployment/choose-a-deletion-and-retention-policy
 - how-to/data-inspection-and-repair/schedule-erasure-and-tombstone-reaping
 - foundations/data-and-consistency/bucket-types-and-data-policies
+features: ["configuration","deletion"]
+concepts: ["node-lifecycle","retention","tombstones"]
 ---
 
 Expiration and reclamation settings govern different stages of the data lifecycle. Expiry, deletion-marker retention, erasure, and reaping are not interchangeable operations.

@@ -35,6 +35,8 @@ related:
 - how-to/storage-maintenance/migrate-to-another-storage-backend
 - how-to/cluster-lifecycle/back-up-node-data-and-cluster-metadata
 - foundations/storage-and-performance/multiple-backends-and-prefix-routing
+features: ["multi-backend"]
+concepts: ["backend-selection","compatibility"]
 ---
 
 Maintain an existing deployment using multi-backend and prefix routing while planning its migration. These interfaces have compatibility and deprecation constraints; check [Feature status and deprecations]({{< product-version-root >}}reference/orientation-and-compatibility/feature-status-and-deprecations/) before choosing them for new data.

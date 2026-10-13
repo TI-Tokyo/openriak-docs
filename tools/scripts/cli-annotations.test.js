@@ -24,6 +24,15 @@ test('every released CLI topic has usable annotations and matching runtime evide
     for (const page of ref.pages) {
       assert.ok(page.reference.summary && page.reference.description, page.key);
       assert.ok(page.reference.overrides.length, page.key);
+      if (page.deprecated) {
+        assert.ok(page.reference.deprecation, `${version} ${page.key}: replacement guidance`);
+        for (const match of page.reference.deprecation.matchAll(/\]\(([^)]+)\)/g)) {
+          const target = path.posix.normalize(path.posix.join(page.route, match[1])).replace(/\/$/, '');
+          const replacement = ref.pages.find(p => p.route === target);
+          assert.ok(replacement, `${page.key}: replacement ${target} exists in ${version}`);
+          assert.equal(replacement.deprecated, false, `${page.key}: replacement is supported`);
+        }
+      }
       for (const parameter of page.parameters) {
         assert.ok(parameter.description, `${page.key}: ${parameter.name}`);
         assert.ok(parameter.datatype || parameter.allowedValues?.length, `${page.key}: ${parameter.name} values`);
@@ -212,3 +221,12 @@ test('module and operation parents own shared Erlang parameter descriptions',()=
   assert.match(dates.description,/2026-12-24T23:59:59Z/);
  }
 });
+
+test('version-specific omissions preserve raw evidence and error overrides link numbered examples', () => fixture(root => {
+ write(root,'common','# Examples\n## legacy\ntitle: Old illustration\n### Invocation\nriak admin describe\n### Description\nUnverified illustration\n\n## describe:ok\ntitle: Captured setting\n### Description\nRead the captured setting.');
+ write(root,'3.4.1','# Examples\n## legacy\nomit: true\n\n# Errors\n## missing\nexample_id: describe:ok');
+ const ref = buildAnnotatedReference(document,{overrideRoot:root}).pages[0].reference;
+ assert.deepEqual(ref.examples.map(e=>e.id),['describe:ok']);
+ assert.equal(ref.evidence[0].stdout,'ring_size: documentation');
+ assert.deepEqual(ref.errors[0].example,{number:1,title:'Captured setting',anchor:'example-1'});
+}));

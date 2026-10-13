@@ -31,6 +31,8 @@ related:
 - reference/orientation-and-compatibility/feature-status-and-deprecations
 - foundations/data-and-consistency/objects-keys-and-buckets
 - foundations/data-and-consistency/quorums-availability-and-durability
+features: ["client-operations","http-api"]
+concepts: ["data-access"]
 ---
 
 The root HTTP resource can advertise available API resources. Discovery reflects the addressed listener and release; it is not a guarantee that every advertised operation is enabled for the caller.

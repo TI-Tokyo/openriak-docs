@@ -23,6 +23,8 @@ related:
 - foundations/data-and-consistency/conflict-free-replicated-data-types
 previous_page: tutorials/data-and-concurrency/create-and-resolve-concurrent-updates
 next_page: tutorials/data-and-concurrency/build-a-shared-counter-and-collection
+features: ["client-operations","conditional-writes"]
+concepts: ["concurrency","concurrency-control","data-model"]
 ---
 
 Observe a successful conditional creation and a rejected attempt to create the same object again. Use the active `docs` type from the previous exercise.

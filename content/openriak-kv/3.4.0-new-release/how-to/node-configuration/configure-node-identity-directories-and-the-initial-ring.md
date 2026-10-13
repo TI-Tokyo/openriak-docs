@@ -44,6 +44,8 @@ related:
 - foundations/cluster-architecture/rings-partitions-and-virtual-nodes
 - foundations/cluster-architecture/the-lifecycle-of-a-read-and-a-write
 next_page: how-to/node-configuration/configure-http-and-protocol-buffers-listeners
+features: ["cluster-management","configuration"]
+concepts: ["filesystem-layout","node-lifecycle","partition-placement"]
 ---
 
 Configure an empty node's stable identity, storage paths, and initial ring before joining it to a cluster. For a populated node, use the dedicated rename or migration procedure instead.

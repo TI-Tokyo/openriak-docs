@@ -42,6 +42,8 @@ related:
 - foundations/replication-and-repair/real-time-replication-and-fullsync
 - foundations/cluster-lifecycle/backups-restores-and-disaster-recovery
 - reference/orientation-and-compatibility/replication-generation-compatibility
+features: ["queue-replication"]
+concepts: ["cross-cluster-replication"]
 ---
 
 A multi-cluster topology defines where writes originate, which clusters receive them, and how applications behave when a site or connection fails.

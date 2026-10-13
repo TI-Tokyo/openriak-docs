@@ -36,6 +36,8 @@ related:
 - reference/orientation-and-compatibility/replication-generation-compatibility
 - foundations/replication-and-repair/replication-generations-and-compatibility
 - foundations/storage-and-performance/storage-backend-trade-offs
+features: ["legacy-replication"]
+concepts: ["compatibility","cross-cluster-replication"]
 ---
 
 Configure address translation for an existing legacy replication relationship when peers cannot reach the addresses advertised inside the source network.

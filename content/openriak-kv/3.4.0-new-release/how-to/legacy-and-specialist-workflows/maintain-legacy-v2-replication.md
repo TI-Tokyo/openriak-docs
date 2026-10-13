@@ -38,6 +38,8 @@ related:
 - how-to/replication-and-reconciliation/connect-clusters-with-next-generation-replication
 - foundations/replication-and-repair/replication-generations-and-compatibility
 - foundations/storage-and-performance/storage-backend-trade-offs
+features: ["legacy-replication"]
+concepts: ["compatibility","cross-cluster-replication"]
 ---
 
 Assess and maintain a deployment that still uses legacy v2 replication. Do not mix v2 peer and fullsync commands with current-generation replication queues.

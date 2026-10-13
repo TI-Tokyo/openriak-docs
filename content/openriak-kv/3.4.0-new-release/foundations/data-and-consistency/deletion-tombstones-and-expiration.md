@@ -34,6 +34,8 @@ related:
 - how-to/data-inspection-and-repair/schedule-erasure-and-tombstone-reaping
 - reference/data-model-contracts/deletion-tombstone-and-expiration-states
 - reference/configuration/object-expiration-and-reclamation-settings
+features: ["deletion","object-storage"]
+concepts: ["consistency","data-model","retention","tombstones"]
 ---
 
 Deleting an object changes its replicated state. The reclamation of disk space used by old values and deletion markers is a separate operation.

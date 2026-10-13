@@ -32,6 +32,8 @@ related:
 - how-to/installation/run-openriak-with-persistent-docker-storage
 - foundations/overview/what-openriak-kv-is
 - foundations/cluster-architecture/rings-partitions-and-virtual-nodes
+features: ["cluster-management","installation"]
+concepts: ["deployment"]
 ---
 
 Create a disposable Ubuntu VM with Vagrant, run the Docker learning cluster inside it, and remove the VM when finished. This isolates the exercise from your host's services while keeping the database lesson identical to [Build and explore a Docker cluster]({{< product-version-root >}}tutorials/first-cluster/build-and-explore-a-docker-cluster/).

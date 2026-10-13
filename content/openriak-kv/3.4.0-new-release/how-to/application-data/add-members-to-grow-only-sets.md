@@ -32,6 +32,8 @@ related:
 - reference/http-api/distributed-data-type-operations
 - tutorials/data-and-concurrency/build-a-shared-counter-and-collection
 - foundations/data-and-consistency/conflict-free-replicated-data-types
+features: ["client-operations","cluster-management","data-types"]
+concepts: ["data-access","data-model","node-lifecycle"]
 ---
 
 Update a distributed gset through the data-type API. Set `RIAK_HTTP` to the intended endpoint and include the deployment's authentication options.

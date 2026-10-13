@@ -34,6 +34,8 @@ related:
 - reference/configuration/object-expiration-and-reclamation-settings
 - foundations/data-and-consistency/deletion-tombstones-and-expiration
 - foundations/replication-and-repair/targeted-reconciliation-and-aae-folds
+features: ["deletion","tictac-aae"]
+concepts: ["replica-repair","retention","tombstones"]
 ---
 
 Schedule erasure and tombstone reaping as separate bounded jobs with clear retention and convergence requirements.

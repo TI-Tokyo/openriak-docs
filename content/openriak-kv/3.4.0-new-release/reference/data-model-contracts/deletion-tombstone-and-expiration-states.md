@@ -37,6 +37,8 @@ related:
 - reference/aae-fold-api/erase-keys
 - reference/aae-fold-api/reap-tombstones
 - foundations/data-and-consistency/deletion-tombstones-and-expiration
+features: ["deletion","object-storage"]
+concepts: ["data-model","retention","tombstones"]
 ---
 
 Deletion, tombstone retention, and physical reclamation are different object states. Expiration is backend-specific and must not be assumed to have the same propagation behaviour as an explicit object delete.

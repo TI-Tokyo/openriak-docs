@@ -30,6 +30,8 @@ related:
 - how-to/planning-a-deployment/size-a-cluster-and-reserve-recovery-headroom
 - foundations/overview/what-openriak-kv-is
 - foundations/cluster-architecture/rings-partitions-and-virtual-nodes
+features: ["cluster-management","installation"]
+concepts: ["deployment"]
 ---
 
 Run the five-node Docker learning cluster on an AWS EC2 instance and access it through an SSH tunnel. You will create and remove the AWS resources yourself. All five database nodes share one VM in this lesson; they do not provide availability across EC2 instances or Availability Zones.

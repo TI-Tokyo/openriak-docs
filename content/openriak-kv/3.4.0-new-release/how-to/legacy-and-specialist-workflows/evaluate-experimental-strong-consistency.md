@@ -32,6 +32,8 @@ related:
 - how-to/planning-a-deployment/choose-replication-and-acknowledgement-policies
 - foundations/replication-and-repair/replication-generations-and-compatibility
 - foundations/storage-and-performance/storage-backend-trade-offs
+features: ["strong-consistency"]
+concepts: ["compatibility","consensus"]
 ---
 
 Evaluate the deprecated experimental strong-consistency interface only in an isolated cluster with a workload that explicitly requires its semantics. Ordinary object quorums do not enable this interface.

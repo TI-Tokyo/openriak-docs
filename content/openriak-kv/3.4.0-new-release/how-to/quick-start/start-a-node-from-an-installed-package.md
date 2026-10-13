@@ -20,6 +20,8 @@ related:
 - how-to/installation/verify-an-installation
 - reference/configuration/node-identity-directories-and-ring-settings
 - reference/configuration/listeners-and-networking-settings
+features: ["installation"]
+concepts: ["deployment"]
 ---
 
 Start a node after installing the release-matched native package. Complete the platform installation guide first and keep the client listeners restricted until the node has been verified.

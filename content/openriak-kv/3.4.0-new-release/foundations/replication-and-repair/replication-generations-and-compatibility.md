@@ -44,6 +44,8 @@ related:
 - how-to/replication-and-reconciliation/connect-clusters-with-next-generation-replication
 - how-to/legacy-and-specialist-workflows/maintain-legacy-v2-replication
 - how-to/legacy-and-specialist-workflows/maintain-legacy-v3-replication
+features: ["queue-replication"]
+concepts: ["compatibility","cross-cluster-replication"]
 ---
 
 OpenRiak documentation covers more than one replication implementation. Next-generation replication, legacy v3 replication, and legacy v2 replication must be identified explicitly when configuring or diagnosing a deployment.

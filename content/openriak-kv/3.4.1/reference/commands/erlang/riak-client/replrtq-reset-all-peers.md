@@ -14,6 +14,8 @@ cli_reference_version: "3.4.1"
 related: ["how-to/monitoring-and-diagnostics/inspect-a-node-through-the-remote-console","reference/operations-and-observability/remote-console-interfaces","reference/commands"]
 linkTitle: "replrtq_reset_all_peers"
 cli_command_key: "erlang:riak_client:replrtq_reset_all_peers"
+features: ["queue-replication"]
+concepts: ["cross-cluster-replication"]
 ---
 
 {{< cli-command >}}

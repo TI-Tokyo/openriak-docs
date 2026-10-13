@@ -32,6 +32,8 @@ related:
 - reference/orientation-and-compatibility/backend-capability-matrix
 - foundations/replication-and-repair/replication-generations-and-compatibility
 - foundations/storage-and-performance/storage-backend-trade-offs
+features: ["query-processing"]
+concepts: ["compatibility","querying"]
 ---
 
 The legacy secondary-index interface selects an exact term or inclusive range and returns matching keys. It is distinct from the current Query API's projected-attribute and set-expression requests.

@@ -37,6 +37,8 @@ related:
 - reference/http-api/bucket-type-operations
 - how-to/application-data/create-and-activate-bucket-types
 - foundations/data-and-consistency/bucket-types-and-data-policies
+features: ["bucket-properties","object-storage"]
+concepts: ["data-model","data-policy"]
 ---
 
 A bucket type supplies a named property policy for buckets in its namespace. A bucket supplies the second part of the object address; it is not a separately allocated table that must be created before the first object.

@@ -70,7 +70,7 @@ Startup logs and an Erlang prompt when the boot script succeeds.
 # Reviewed against
 
 3.4.0: b67732ffb293431256a2cd850d6bdd5bc648e548c0dddd1b6fbbedadd260ef46
-3.4.1: b67732ffb293431256a2cd850d6bdd5bc648e548c0dddd1b6fbbedadd260ef46
+3.4.1: 95f0e624e1c13b172da63bb2f8f7e29dad2798f96ef67d48b68884ef43d2262e
 
 # Tags
 

@@ -13,6 +13,8 @@ generated_by: "cli-reference"
 cli_reference_version: "3.4.1"
 related: ["how-to/cluster-lifecycle/start-stop-or-restart-a-node","how-to/monitoring-and-diagnostics/perform-routine-cluster-health-checks","reference/commands"]
 cli_command_prefix: "helpers"
+features: ["node-operations"]
+concepts: ["node-lifecycle"]
 ---
 
 {{< cli-command-index >}}

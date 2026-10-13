@@ -19,6 +19,8 @@ related:
 - how-to/replication-and-reconciliation/configure-and-schedule-fullsync
 - foundations/replication-and-repair/real-time-replication-and-fullsync
 - foundations/replication-and-repair/targeted-reconciliation-and-aae-folds
+features: ["full-sync","queue-replication"]
+concepts: ["cross-cluster-replication"]
 ---
 
 TicTac fullsync requests select a comparison between the configured local and remote datasets. A request can report agreement, identify repair work, or fail before establishing agreement.

@@ -49,6 +49,8 @@ related:
 - reference/aae-fold-api/find-keys
 - reference/aae-fold-api/object-statistics
 - foundations/replication-and-repair/targeted-reconciliation-and-aae-folds
+features: ["tictac-aae"]
+concepts: ["data-access","replica-repair"]
 ---
 
 AAE folds perform cluster-wide inspection or queue bounded maintenance work. They require active TicTac AAE and usable native or parallel stores.

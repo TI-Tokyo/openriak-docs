@@ -35,6 +35,8 @@ related:
 - reference/http-api/bucket-type-operations
 - foundations/data-and-consistency/objects-keys-and-buckets
 - foundations/data-and-consistency/quorums-availability-and-durability
+features: ["bucket-properties","client-operations","http-api"]
+concepts: ["data-access","data-policy"]
 ---
 
 Bucket-property endpoints inspect, override, and reset the policy for one bucket. They do not create or delete its object contents.

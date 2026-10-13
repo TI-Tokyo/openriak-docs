@@ -32,6 +32,8 @@ related:
 - reference/orientation-and-compatibility/feature-status-and-deprecations
 - foundations/replication-and-repair/replication-generations-and-compatibility
 - foundations/storage-and-performance/storage-backend-trade-offs
+features: ["cluster-management"]
+concepts: ["compatibility","diagnostics"]
 ---
 
 Riak Control is a historical web administration interface whose availability depends on the packaged application and configuration. Use the current command reference for operational procedures.

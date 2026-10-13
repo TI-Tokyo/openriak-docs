@@ -1,0 +1,3 @@
+{{- $json := .data | jsonify (dict "indent" "  ") -}}
+{{- $resource := resources.FromString (printf "metadata/execution/%s.json" (crypto.SHA256 $json)) $json -}}
+<p><a data-cli-evidence-download href="{{ $resource.RelPermalink }}" download="{{ .filename }}.json">{{ .label }} (JSON)</a></p>

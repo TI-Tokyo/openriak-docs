@@ -35,6 +35,8 @@ related:
 - how-to/data-inspection-and-repair/control-repair-impact-during-application-traffic
 - foundations/data-and-consistency/deletion-tombstones-and-expiration
 - foundations/replication-and-repair/targeted-reconciliation-and-aae-folds
+features: ["deletion","tictac-aae"]
+concepts: ["replica-repair","retention","tombstones"]
 ---
 
 Reclaim retained tombstones only after the deletion has reached all required replicas and destinations.

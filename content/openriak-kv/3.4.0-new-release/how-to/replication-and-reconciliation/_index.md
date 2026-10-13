@@ -11,6 +11,8 @@ last_reviewed: '2026-10-06'
 review_scope: content review
 review-by: TI Tokyo/JOM
 related: []
+features: ["queue-replication"]
+concepts: ["cross-cluster-replication"]
 ---
 
 Enable AAE, establish source queues and sink consumers, then seed, reconcile, and protect the connection.

@@ -36,6 +36,8 @@ related:
 - reference/aae-fold-api/reap-tombstones
 - reference/aae-fold-api/replicate-keys-in-a-range
 - foundations/replication-and-repair/targeted-reconciliation-and-aae-folds
+features: ["tictac-aae"]
+concepts: ["data-access","replica-repair"]
 ---
 
 AAE fold filters select object namespaces, key intervals, modification intervals, or tree segments. Each operation accepts only the subset shown in its command contract.

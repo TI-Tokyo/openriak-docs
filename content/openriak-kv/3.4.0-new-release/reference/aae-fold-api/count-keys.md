@@ -29,6 +29,8 @@ related:
 - reference/aae-fold-api/fold-filters
 - how-to/data-inspection-and-repair/count-objects-in-a-selected-scope
 - foundations/replication-and-repair/targeted-reconciliation-and-aae-folds
+features: ["tictac-aae"]
+concepts: ["data-access","replica-repair"]
 ---
 
 Count matching keys by selecting the `count` change method of the erase-keys fold. This mode counts the selected candidates without executing erasure; there is no separate `count_keys` fold selector.

@@ -19,6 +19,8 @@ related:
 - how-to/legacy-and-specialist-workflows/develop-an-application-using-the-redis-add-on
 - reference/orientation-and-compatibility/feature-status-and-deprecations
 - foundations/storage-and-performance/storage-backend-trade-offs
+features: ["redis"]
+concepts: ["compatibility"]
 ---
 
 The Redis add-on is a separate integration with its own command and cache behaviour. It must be matched to an identified add-on build and compatible OpenRiak deployment; a standard OpenRiak package does not by itself establish that the add-on is installed.

@@ -34,6 +34,8 @@ related:
 - how-to/cluster-lifecycle/perform-a-rolling-restart
 - reference/configuration/erlang-vm-and-runtime-settings
 - foundations/storage-and-performance/latency-queues-and-resource-contention
+features: ["erlang-runtime","observability"]
+concepts: ["performance","runtime"]
 ---
 
 Tune the Erlang VM only for a measured bottleneck and with a repeatable rollback. Keep the package's baseline values until evidence identifies a limit worth changing.

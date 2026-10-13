@@ -36,6 +36,8 @@ related:
 - how-to/replication-and-reconciliation/enable-tictac-anti-entropy
 - how-to/monitoring-and-diagnostics/monitor-anti-entropy-progress
 - reference/configuration/tictac-anti-entropy-settings
+features: ["read-repair","tictac-aae"]
+concepts: ["replica-repair"]
 ---
 
 Read repair and TicTac active anti-entropy both help replicas converge. Read repair reacts to replica differences found while serving a read; TicTac compares replica state independently of client reads.

@@ -32,6 +32,8 @@ related:
 - reference/protocol-buffers-api/store-object-messages
 - reference/protocol-buffers-api/delete-object-messages
 - foundations/data-and-consistency/quorums-availability-and-durability
+features: ["client-operations","http-api"]
+concepts: ["data-access"]
 ---
 
 Object requests can override selected bucket policies for one operation. Prefer a stable bucket-type policy when the requirement applies to every request.

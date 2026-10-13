@@ -14,6 +14,8 @@ cli_reference_version: "3.4.1"
 related: ["how-to/monitoring-and-diagnostics/inspect-a-node-through-the-remote-console","reference/operations-and-observability/remote-console-interfaces","reference/commands"]
 linkTitle: "get_client_id"
 cli_command_key: "erlang:riak_client:get_client_id"
+features: ["client-operations"]
+concepts: ["data-access"]
 ---
 
 {{< cli-command >}}

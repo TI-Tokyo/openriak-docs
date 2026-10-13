@@ -12,6 +12,8 @@ last_reviewed: '2026-10-06'
 review_scope: content review
 review-by: TI Tokyo/JOM
 related: []
+features: ["observability"]
+concepts: ["performance"]
 ---
 
 Measuring a representative workload, tuning the specific runtime, storage, network, or query bottleneck and reducing latency/api-cost.

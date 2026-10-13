@@ -12,6 +12,8 @@ last_reviewed: '2026-10-06'
 review_scope: content review
 review-by: TI Tokyo/JOM
 related: []
+features: ["storage-backends"]
+concepts: ["storage"]
 ---
 
 Configure the selected backend, schedule maintenance, and use the appropriate migration or store-repair procedure.

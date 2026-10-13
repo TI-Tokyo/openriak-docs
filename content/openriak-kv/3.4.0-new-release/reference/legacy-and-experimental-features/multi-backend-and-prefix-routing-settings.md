@@ -29,6 +29,8 @@ related:
 - how-to/storage-maintenance/migrate-to-another-storage-backend
 - foundations/replication-and-repair/replication-generations-and-compatibility
 - foundations/storage-and-performance/storage-backend-trade-offs
+features: ["multi-backend"]
+concepts: ["backend-selection","compatibility"]
 ---
 
 Named backend definitions and routing select the store used for a dataset. Changing a route does not migrate the data already written through it.

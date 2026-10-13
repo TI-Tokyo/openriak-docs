@@ -40,6 +40,8 @@ related:
 - how-to/legacy-and-specialist-workflows/maintain-multi-backend-and-prefix-routing
 - how-to/storage-maintenance/migrate-to-another-storage-backend
 - foundations/storage-and-performance/storage-backend-trade-offs
+features: ["multi-backend","storage-backends"]
+concepts: ["backend-selection","storage"]
 ---
 
 Multi-backend routing assigns different datasets to different local storage engines. A routing layer selects the backend; it does not combine their files into one interchangeable format.

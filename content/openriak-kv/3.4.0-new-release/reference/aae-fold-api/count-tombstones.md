@@ -29,6 +29,8 @@ related:
 - reference/aae-fold-api/fold-filters
 - how-to/data-inspection-and-repair/count-retained-tombstones
 - foundations/replication-and-repair/targeted-reconciliation-and-aae-folds
+features: ["deletion","tictac-aae"]
+concepts: ["data-access","replica-repair","retention","tombstones"]
 ---
 
 Count matching tombstones by selecting the `count` change method of the reap-tombs fold. This mode counts candidates without reaping them; there is no separate `count_tombstones` selector.

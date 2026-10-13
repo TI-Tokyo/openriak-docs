@@ -37,6 +37,8 @@ related:
 - reference/http-api/secondary-index-queries
 - foundations/data-and-consistency/objects-keys-and-buckets
 - foundations/data-and-consistency/causality-version-vectors-and-siblings
+features: ["client-libraries","client-operations"]
+concepts: ["data-access"]
 ---
 
 Build a small HTTP client that creates a profile, reads and updates it with causal context, finds it by an index, and deletes it.

@@ -35,6 +35,8 @@ related:
 - reference/orientation-and-compatibility/feature-status-and-deprecations
 - foundations/data-and-consistency/objects-keys-and-buckets
 - foundations/data-and-consistency/quorums-availability-and-durability
+features: ["client-operations","http-api","mapreduce"]
+concepts: ["data-access","querying"]
 ---
 
 `POST /mapred` submits a legacy MapReduce job. MapReduce is deprecated; the request and execution constraints remain relevant to existing clients.

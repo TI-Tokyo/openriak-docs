@@ -18,6 +18,8 @@ related:
 - reference/query-api/continuations-and-result-delivery
 - reference/query-api/limits-and-behavioural-constraints
 - how-to/indexes-and-queries/retrieve-paginated-or-asynchronous-query-results
+features: ["query-processing","secondary-indexes"]
+concepts: ["querying"]
 ---
 
 A distributed query observes partition-local snapshots, not one transactionally consistent instant across the cluster. Concurrent object changes can therefore affect what the overall result represents.

@@ -36,6 +36,8 @@ related:
 - reference/data-model-contracts/causal-context-and-version-vector-representations
 - reference/data-model-contracts/secondary-index-terms-and-projected-attributes
 - foundations/data-and-consistency/objects-keys-and-buckets
+features: ["object-storage"]
+concepts: ["data-model"]
 ---
 
 Object metadata accompanies each content value. On updates, the application must preserve or replace the metadata it intends to retain.

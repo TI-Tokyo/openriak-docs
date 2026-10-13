@@ -33,6 +33,8 @@ related:
 - reference/protocol-buffers-api/protocol-framing-message-codes-and-errors
 - foundations/data-and-consistency/objects-keys-and-buckets
 - foundations/data-and-consistency/causality-version-vectors-and-siblings
+features: ["client-operations","protocol-buffers","security"]
+concepts: ["authentication","data-access"]
 ---
 
 Authentication is a connection-level exchange. A client requests TLS upgrade, verifies the server, then sends the authentication request before ordinary operations. Use a client that implements this sequence; sending credentials as an ordinary object request does not authenticate the connection.

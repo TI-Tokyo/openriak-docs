@@ -18,6 +18,8 @@ related:
 - how-to/legacy-and-specialist-workflows/maintain-legacy-v3-replication
 - foundations/replication-and-repair/replication-generations-and-compatibility
 - foundations/storage-and-performance/storage-backend-trade-offs
+features: ["configuration","legacy-aae","legacy-replication"]
+concepts: ["cross-cluster-replication","replica-repair"]
 ---
 
 These settings belong to legacy active anti-entropy and legacy multi-datacenter replication. Use the current TicTac and next-generation replication catalogues for the corresponding newer implementations.

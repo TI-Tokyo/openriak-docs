@@ -18,6 +18,8 @@ related:
 - reference/operations-and-observability/runtime-files-and-backup-contents
 - foundations/storage-and-performance/storage-backend-trade-offs
 - foundations/storage-and-performance/persistence-filesystems-and-space-reclamation
+features: ["backup-and-restore","leveled","storage-backends"]
+concepts: ["recovery","storage"]
 ---
 
 Remove Leveled files that have been explicitly renamed as obsolete `.bak` files after startup recovery. Do not remove active journal, ledger, manifest, or hot-backup files based only on their age.

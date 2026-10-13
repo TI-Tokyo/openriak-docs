@@ -9,6 +9,8 @@ description: Work through identity, authentication, permissions, and transport p
 editorial_review: complete
 technical_review: required
 related: []
+features: ["security"]
+concepts: ["authentication"]
 ---
 
 Work through identity, authentication, permissions, and transport protection. Test both allowed and denied access.

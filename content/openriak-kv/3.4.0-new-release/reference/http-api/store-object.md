@@ -37,6 +37,8 @@ related:
 - reference/http-api/object-request-options
 - foundations/data-and-consistency/objects-keys-and-buckets
 - foundations/data-and-consistency/quorums-availability-and-durability
+features: ["client-operations","http-api"]
+concepts: ["data-access"]
 ---
 
 Store an ordinary object's value and metadata at a supplied or server-assigned key. Supply causal context when replacing an observed version.

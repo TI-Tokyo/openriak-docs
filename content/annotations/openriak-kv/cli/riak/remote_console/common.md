@@ -44,7 +44,7 @@ A shell prompt connected to the configured running node.
 # Reviewed against
 
 3.4.0: 870df629a0764230ca4d6fdcb9eaa815a8ade547a60a26f8208a435c44a544ea
-3.4.1: 870df629a0764230ca4d6fdcb9eaa815a8ade547a60a26f8208a435c44a544ea
+3.4.1: 9b2379f57f6288d739c7bd8d9eedf6fdbfd499161d5978bd841d57275fc005ff
 
 # Tags
 

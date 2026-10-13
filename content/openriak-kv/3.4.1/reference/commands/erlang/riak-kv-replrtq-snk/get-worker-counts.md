@@ -14,6 +14,8 @@ cli_reference_version: "3.4.1"
 related: ["how-to/monitoring-and-diagnostics/inspect-a-node-through-the-remote-console","reference/operations-and-observability/remote-console-interfaces","reference/commands"]
 linkTitle: "get_worker_counts"
 cli_command_key: "erlang:riak_kv_replrtq_snk:get_worker_counts"
+features: ["queue-replication"]
+concepts: ["concurrency","cross-cluster-replication"]
 ---
 
 {{< cli-command >}}

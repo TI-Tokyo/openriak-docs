@@ -14,6 +14,8 @@ cli_reference_version: "3.4.1"
 related: ["how-to/data-inspection-and-repair/run-and-retrieve-a-long-running-aae-fold","reference/aae-fold-api/fold-filters","reference/commands"]
 linkTitle: "object_stats"
 cli_command_key: "erlang:riak_client:aae_fold:object_stats"
+features: ["tictac-aae"]
+concepts: ["diagnostics","replica-repair"]
 ---
 
 {{< cli-command >}}

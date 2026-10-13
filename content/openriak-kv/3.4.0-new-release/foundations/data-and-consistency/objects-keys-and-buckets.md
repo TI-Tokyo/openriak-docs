@@ -39,6 +39,8 @@ related:
 - how-to/planning-a-deployment/map-application-data-to-objects-and-buckets
 - reference/data-model-contracts/keys-and-object-representations
 - reference/data-model-contracts/buckets-and-bucket-types
+features: ["object-storage"]
+concepts: ["consistency","data-model"]
 ---
 
 An object is a value and its metadata, addressed by a bucket and key. A bucket type can add a namespace and a shared data policy to that address.

@@ -9,7 +9,7 @@
     <tr data-cli-tags="{{ .reference.tags | jsonify }}" data-cli-row data-cli-search-text="{{ printf "%s %s %s" .title (delimit .aliases " ") .category | lower }}">
       <td><a href="{{ partial "cli/link.html" (dict "context" $context "route" .route) }}"><code>{{ .title }}</code></a></td>
       <td>{{ partial "cli/status.html" . }}{{ if and (eq .availability "available") (not .deprecated) (not .helper) }}Available{{ end }}</td>
-      <td>{{ range $i, $alias := .aliases }}{{ if $i }}<br>{{ end }}<a href="{{ partial "cli/link.html" (dict "context" $context "route" $route) }}"><code>{{ $alias }}</code></a>{{ end }}</td>
+      <td>{{ with .aliases }}<details><summary>Historical aliases ({{ len . }})</summary><p>Use the canonical command.</p>{{ range $i, $alias := . }}{{ if $i }}<br>{{ end }}<code>{{ $alias }}</code>{{ end }}</details>{{ end }}</td>
     </tr>
   {{- end }}
   </tbody>

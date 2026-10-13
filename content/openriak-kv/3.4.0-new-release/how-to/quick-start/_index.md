@@ -11,6 +11,8 @@ last_reviewed: '2026-10-06'
 review_scope: content review
 review-by: TI Tokyo/JOM
 related: []
+features: ["installation"]
+concepts: ["deployment"]
 ---
 
 Start a disposable local node or cluster, or bring an already installed native package into service.

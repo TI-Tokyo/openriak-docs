@@ -47,6 +47,8 @@ related:
 - how-to/storage-maintenance/remove-obsolete-leveled-backup-files
 - how-to/storage-maintenance/repair-a-leveled-store
 - foundations/indexes-and-querying/query-consistency-and-snapshots
+features: ["leveled","storage-backends"]
+concepts: ["storage"]
 ---
 
 Leveled separates the journal of stored values from the ledger used to locate current objects and index entries. This supports indexed access without keeping the complete key directory in memory.

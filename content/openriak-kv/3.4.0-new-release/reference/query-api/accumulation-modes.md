@@ -33,6 +33,8 @@ related:
 - foundations/indexes-and-querying/secondary-indexes-and-projected-attributes
 - foundations/indexes-and-querying/how-distributed-queries-execute
 - foundations/indexes-and-querying/query-consistency-and-snapshots
+features: ["query-processing"]
+concepts: ["querying"]
 ---
 
 The accumulation option determines the response shape and whether repeated keys or terms are combined. It must be valid for the selected single or combination query.

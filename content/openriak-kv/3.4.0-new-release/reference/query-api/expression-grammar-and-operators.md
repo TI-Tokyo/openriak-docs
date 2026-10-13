@@ -38,6 +38,8 @@ related:
 - foundations/indexes-and-querying/secondary-indexes-and-projected-attributes
 - foundations/indexes-and-querying/how-distributed-queries-execute
 - foundations/indexes-and-querying/query-consistency-and-snapshots
+features: ["query-processing"]
+concepts: ["querying"]
 ---
 
 Query expressions evaluate projected attributes, filter index matches, and combine tagged query result sets. Syntax and operator names are case-sensitive where shown.

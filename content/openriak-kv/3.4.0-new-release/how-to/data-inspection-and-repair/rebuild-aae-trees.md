@@ -32,6 +32,8 @@ related:
 - reference/configuration/tictac-anti-entropy-settings
 - foundations/replication-and-repair/targeted-reconciliation-and-aae-folds
 - foundations/replication-and-repair/read-repair-and-tictac-anti-entropy
+features: ["tictac-aae"]
+concepts: ["replica-repair"]
 ---
 
 Prompt a TicTac AAE store or tree rebuild for selected nodes or partitions, then verify that it completes. Rebuild only the scope required by the diagnosis.

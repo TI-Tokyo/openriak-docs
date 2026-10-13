@@ -34,6 +34,8 @@ related:
 - foundations/data-and-consistency/objects-keys-and-buckets
 - foundations/data-and-consistency/bucket-types-and-data-policies
 - foundations/data-and-consistency/causality-version-vectors-and-siblings
+features: ["client-operations","object-storage"]
+concepts: ["data-access","data-policy"]
 ---
 
 Maintain an existing write-once application while planning migration to the normal object PUT path. The write-once interface is deprecated and lacks feature parity with coordinated writes, including real-time replication.

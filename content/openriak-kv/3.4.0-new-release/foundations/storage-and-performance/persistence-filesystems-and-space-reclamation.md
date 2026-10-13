@@ -39,6 +39,8 @@ related:
 - how-to/storage-maintenance/schedule-bitcask-merges
 - how-to/storage-maintenance/schedule-leveled-compaction
 - reference/operations-and-observability/runtime-files-and-backup-contents
+features: ["storage-backends"]
+concepts: ["filesystem-layout","storage"]
 ---
 
 Persistence concerns which acknowledged data survives a failure. Space reclamation concerns when storage occupied by obsolete state can be reused. Both depend on the backend and filesystem, but they answer different questions.

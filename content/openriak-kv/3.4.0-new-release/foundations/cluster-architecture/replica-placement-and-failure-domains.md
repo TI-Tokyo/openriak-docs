@@ -32,6 +32,8 @@ related:
 - foundations/cluster-lifecycle/rolling-maintenance-and-recovery-headroom
 - reference/operations-and-observability/claim-algorithms-and-placement-constraints
 - how-to/planning-a-deployment/choose-replication-and-acknowledgement-policies
+features: ["cluster-management"]
+concepts: ["architecture","partition-placement","recovery"]
 ---
 
 Replica placement determines which failures can remove all copies of an object. Copies on different partitions are useful only to the extent that their physical nodes and failure domains remain independent.

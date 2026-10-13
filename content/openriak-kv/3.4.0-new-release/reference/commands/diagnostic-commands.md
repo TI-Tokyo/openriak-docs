@@ -17,6 +17,8 @@ related:
 - how-to/monitoring-and-diagnostics/inspect-vnode-and-backend-status
 - how-to/monitoring-and-diagnostics/collect-diagnostic-evidence
 - reference/operations-and-observability/node-and-cluster-metrics
+features: ["observability"]
+concepts: ["diagnostics"]
 ---
 
 Diagnostic interfaces expose different parts of node and cluster state. A successful health command does not by itself verify every replica, backend, or application request.

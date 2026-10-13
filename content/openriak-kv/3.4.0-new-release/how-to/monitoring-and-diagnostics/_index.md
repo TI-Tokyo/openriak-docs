@@ -9,6 +9,8 @@ description: Begin with routine health checks, then narrow the investigation to 
 editorial_review: complete
 technical_review: required
 related: []
+features: ["observability"]
+concepts: ["diagnostics"]
 ---
 
 Begin with routine health checks, then narrow the investigation to nodes, replicas, queues, logs, or stored objects.

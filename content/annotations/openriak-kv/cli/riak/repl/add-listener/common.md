@@ -7,9 +7,13 @@ versions: 3.4.0, 3.4.1
 
 Add a legacy replication listener.
 
+# Deprecation
+
+This operation belongs to the legacy replication protocol. There is no direct replacement within that protocol. Migrate to named-cluster replication using [`riak repl connect`](../connect/) and review [`riak repl fullsync start`](../fullsync/start/) and [`riak repl fullsync stop`](../fullsync/stop/) for full-sync control.
+
 # Description
 
-This belongs to the deprecated replication protocol. Use it only for an existing deployment that still requires that protocol.
+This belongs to the deprecated replication protocol. It is documented here for historical reference; migrate existing deployments to named-cluster replication.
 
 # Arguments
 
@@ -55,8 +59,8 @@ Update the legacy listener configuration inside the node.
 
 # Reviewed against
 
-3.4.0: e6888c2f01078db72feb6e46c50129aeed6c14be9d7a1cee95334b45cc21411c
-3.4.1: e6888c2f01078db72feb6e46c50129aeed6c14be9d7a1cee95334b45cc21411c
+3.4.0: 370182f5cca0e2b0fa47d3277f91511aa5423de08399e12d7bd557c005f69391
+3.4.1: 370182f5cca0e2b0fa47d3277f91511aa5423de08399e12d7bd557c005f69391
 
 # Tags
 

@@ -33,6 +33,8 @@ related:
 - reference/orientation-and-compatibility/feature-status-and-deprecations
 - foundations/data-and-consistency/objects-keys-and-buckets
 - foundations/data-and-consistency/quorums-availability-and-durability
+features: ["client-operations","http-api"]
+concepts: ["data-access"]
 ---
 
 Legacy link walking traverses link metadata stored on objects. It is deprecated; use explicit application relationships or indexes for new data models.

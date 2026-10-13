@@ -3,6 +3,7 @@
 if (require.main === module && process.argv.slice(2).some((arg) => arg === '-h' || arg === '--help')) {
   console.log(`Generate Hugo version mounts, latest-version redirects and page provenance.
 Writes generated files from the product release directories in the content tree.
+Creates missing draft tag-page Markdown directly in those release directories.
 
 Usage: node generate-version-mounts.js [OPTIONS]
 
@@ -224,8 +225,10 @@ const generatePageProvenance = (
       if (version.newRelease) effectivePages = new Map();
       const releaseDirectory = path.join(contentRoot, product.source, version.sourceDirectory);
       for (const [key, body] of readMarkdownPages(releaseDirectory)) effectivePages.set(key, body);
+      require('./scaffold-page-tags').ensureVersionTagPages(
+        {version:version.raw, pages:effectivePages}, product.target, {contentRoot, releaseDirectory});
       const releases = releasesByTarget.get(product.target) || [];
-      releases.push({ version: version.raw, pages: new Map(effectivePages) });
+      releases.push({ version: version.raw, sourceDirectory: version.sourceDirectory, pages: new Map(effectivePages) });
       releasesByTarget.set(product.target, releases);
     }
   }

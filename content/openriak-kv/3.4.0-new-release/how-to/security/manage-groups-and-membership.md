@@ -38,6 +38,8 @@ related:
 - foundations/security/tls-and-certificate-trust
 previous_page: how-to/security/create-update-and-remove-users
 next_page: how-to/security/configure-authentication-sources
+features: ["cluster-management","security"]
+concepts: ["authentication","node-lifecycle"]
 ---
 
 Use a group to apply a common permission set to several users. Verify the resulting grants whenever membership changes.

@@ -29,6 +29,8 @@ related:
 - how-to/node-configuration/configure-split-and-json-log-handlers
 - reference/operations-and-observability/log-files-and-event-formats
 - foundations/data-and-consistency/bucket-types-and-data-policies
+features: ["configuration","observability"]
+concepts: ["diagnostics","node-lifecycle"]
 ---
 
 Logging settings control destinations, levels, rotation, and handler formats. Confirm the service account can write the configured paths and that downstream collectors parse the chosen format.

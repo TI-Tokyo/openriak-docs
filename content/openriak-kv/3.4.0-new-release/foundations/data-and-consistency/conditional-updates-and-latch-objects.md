@@ -35,6 +35,8 @@ related:
 - how-to/application-data/make-conditional-reads-and-writes
 - how-to/application-data/coordinate-an-update-with-a-latch-object
 - foundations/data-and-consistency/causality-version-vectors-and-siblings
+features: ["conditional-writes","object-storage"]
+concepts: ["concurrency-control","consistency","data-model"]
 ---
 
 Conditional updates check that an object is absent or still has the state a client observed before accepting a change. They reduce common update races but do not give ordinary OpenRiak objects a formal strong-consistency guarantee.

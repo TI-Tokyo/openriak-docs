@@ -14,6 +14,8 @@ cli_reference_version: "3.4.0"
 related: ["how-to/monitoring-and-diagnostics/inspect-a-node-through-the-remote-console","reference/operations-and-observability/remote-console-interfaces","reference/commands"]
 linkTitle: "stream_list_keys"
 cli_command_key: "erlang:riak_client:stream_list_keys"
+features: ["query-processing"]
+concepts: ["querying"]
 ---
 
 {{< cli-command >}}

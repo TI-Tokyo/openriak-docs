@@ -14,6 +14,8 @@ cli_reference_version: "3.4.0"
 related: ["how-to/monitoring-and-diagnostics/inspect-a-node-through-the-remote-console","reference/operations-and-observability/remote-console-interfaces","reference/commands"]
 linkTitle: "tictacaae_resume_node"
 cli_command_key: "erlang:riak_client:tictacaae_resume_node"
+features: ["tictac-aae"]
+concepts: ["replica-repair"]
 ---
 
 {{< cli-command >}}

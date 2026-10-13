@@ -39,6 +39,8 @@ related:
 - foundations/cluster-architecture/membership-gossip-and-handoff
 - how-to/planning-a-deployment/choose-a-ring-size
 - how-to/cluster-lifecycle/plan-and-commit-a-membership-change
+features: ["cluster-management"]
+concepts: ["architecture","partition-placement"]
 ---
 
 The ring divides the keyspace into partitions. A virtual node, or vnode, manages one partition on a physical node. Each physical node normally hosts many vnodes.

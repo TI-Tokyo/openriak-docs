@@ -39,7 +39,7 @@
         {{ end }}
         <tr>
           <th scope="row">Description</th>
-          <td class="configuration-reference-description">{{ partial "configuration-setting-tags.html" $setting }}{{ with $setting.description }}{{ . | markdownify }}{{ else }}<span class="configuration-reference-empty">No description available.</span>{{ end }}</td>
+          <td class="configuration-reference-description">{{ partial "configuration-setting-tags.html" (dict "setting" $setting "context" $context) }}{{ with $setting.description }}{{ . | markdownify }}{{ else }}<span class="configuration-reference-empty">No description available.</span>{{ end }}</td>
         </tr>
         <tr>
           <th scope="row">Datatype</th>

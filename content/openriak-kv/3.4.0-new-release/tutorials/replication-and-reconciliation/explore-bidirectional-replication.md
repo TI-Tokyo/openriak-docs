@@ -22,6 +22,8 @@ related:
 - foundations/replication-and-repair/targeted-reconciliation-and-aae-folds
 previous_page: tutorials/replication-and-reconciliation/catch-up-after-a-replication-interruption
 next_page: tutorials/replication-and-reconciliation/reconcile-selected-buckets
+features: ["queue-replication"]
+concepts: ["cross-cluster-replication"]
 ---
 
 Extend the one-way lab so each cluster can receive new writes from the other. Start with [Replicate data between two clusters]({{< product-version-root >}}tutorials/replication-and-reconciliation/replicate-data-between-two-clusters/) and keep both datasets small and disposable.

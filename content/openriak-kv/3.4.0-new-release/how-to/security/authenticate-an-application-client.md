@@ -43,6 +43,8 @@ related:
 - foundations/security/identities-authentication-and-permissions
 - foundations/security/tls-and-certificate-trust
 previous_page: how-to/security/enable-authentication-and-authorization
+features: ["security"]
+concepts: ["authentication"]
 ---
 
 Connect an application using the authentication method and trust policy configured for its identity. Keep credentials out of source code and command histories used for production operations.

@@ -38,6 +38,8 @@ related:
 - foundations/cluster-architecture/membership-gossip-and-handoff
 - foundations/cluster-lifecycle/failure-and-recovery
 - foundations/cluster-lifecycle/rolling-maintenance-and-recovery-headroom
+features: ["cluster-management"]
+concepts: ["node-lifecycle"]
 ---
 
 Start and stop a node through the process manager that owns it. Before stopping a cluster member, check surviving capacity and use [Perform a rolling restart]({{< product-version-root >}}how-to/cluster-lifecycle/perform-a-rolling-restart/) for a rolling change.

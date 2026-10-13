@@ -43,6 +43,8 @@ related:
 - how-to/security/authenticate-an-application-client
 - foundations/data-and-consistency/objects-keys-and-buckets
 - foundations/data-and-consistency/quorums-availability-and-durability
+features: ["client-operations","http-api","security"]
+concepts: ["authentication","data-access"]
 ---
 
 The HTTP API addresses resources under the configured HTTP or HTTPS listener. Examples use `RIAK_HTTP` for that base URL; replace it with the deployment's actual endpoint.

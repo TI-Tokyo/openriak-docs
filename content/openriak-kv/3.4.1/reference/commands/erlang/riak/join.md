@@ -14,6 +14,8 @@ cli_reference_version: "3.4.1"
 related: ["how-to/monitoring-and-diagnostics/inspect-a-node-through-the-remote-console","reference/operations-and-observability/remote-console-interfaces","reference/commands"]
 linkTitle: "join"
 cli_command_key: "erlang:riak:join"
+features: ["node-operations"]
+concepts: ["node-lifecycle"]
 ---
 
 {{< cli-command >}}

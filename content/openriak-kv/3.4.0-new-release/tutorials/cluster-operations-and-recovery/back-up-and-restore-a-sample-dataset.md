@@ -21,6 +21,8 @@ related:
 - foundations/cluster-lifecycle/rolling-maintenance-and-recovery-headroom
 previous_page: tutorials/cluster-operations-and-recovery/observe-a-node-failure-and-recovery
 next_page: tutorials/cluster-operations-and-recovery/perform-a-rolling-restart
+features: ["backup-and-restore","cluster-management"]
+concepts: ["node-lifecycle","recovery"]
 ---
 
 Take an offline backup of the learning cluster, change a value, then restore the saved state. All nodes will be stopped together. Keep this exercise isolated from applications and other clusters.

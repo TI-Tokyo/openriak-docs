@@ -33,6 +33,8 @@ related:
 - reference/http-api/conditional-requests-and-latch-objects
 - reference/orientation-and-compatibility/feature-status-and-deprecations
 - foundations/storage-and-performance/storage-backend-trade-offs
+features: ["object-storage"]
+concepts: ["compatibility","data-policy"]
 ---
 
 The historical write-once path optimizes a restricted immutable-object workflow and is deprecated. It is not equivalent to a conditional ordinary PUT.

@@ -33,6 +33,8 @@ related:
 - reference/http-api/object-request-options
 - foundations/storage-and-performance/latency-queues-and-resource-contention
 - foundations/cluster-lifecycle/failure-and-recovery
+features: ["observability"]
+concepts: ["diagnostics"]
 ---
 
 Interpret the response before retrying or changing data. An unexpected status can be correct for the request that was sent.

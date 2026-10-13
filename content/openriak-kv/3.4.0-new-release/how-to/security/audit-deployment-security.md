@@ -32,6 +32,8 @@ related:
 - foundations/security/security-boundaries-and-trust
 - foundations/security/identities-authentication-and-permissions
 - foundations/security/tls-and-certificate-trust
+features: ["security"]
+concepts: ["authentication"]
 ---
 
 Audit the access actually exposed by a deployment, then record the changes needed to meet its security requirements.
