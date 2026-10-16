@@ -7,7 +7,10 @@ draft: true
 description: Understand ownership changes, recovery, backups, maintenance, and release transitions before operating
   a live deployment.
 editorial_review: complete
-technical_review: required
+technical_review: complete
+last_reviewed: '2026-10-06'
+review_scope: content review
+review-by: TI Tokyo/JOM
 related: []
 features: ["cluster-management"]
 concepts: ["node-lifecycle"]

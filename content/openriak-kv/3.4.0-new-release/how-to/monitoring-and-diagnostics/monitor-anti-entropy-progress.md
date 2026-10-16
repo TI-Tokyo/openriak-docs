@@ -6,7 +6,7 @@ weight: 870
 diataxis: how-to
 product: OpenRiak KV
 product_version: 3.4.0
-status: editorially-rewritten
+status: reviewed
 draft: true
 audience:
 - operators
@@ -27,9 +27,10 @@ tags:
 - kv
 - how-to
 editorial_review: complete
-technical_review: required
-last_reviewed: '2026-09-22'
-review_scope: diataxis-content-and-navigation
+technical_review: complete
+last_reviewed: '2026-10-15'
+review_scope: content review
+review-by: TI Tokyo/JOM
 restructured_from:
 - how-to/operate/monitor-active-anti-entropy.md
 related:
@@ -50,11 +51,11 @@ Monitor whether TicTac AAE stores, trees, exchanges, and repairs are making prog
 
 {{< cli-example key="shell:riak admin tictacaae treestatus" >}}
 
-Compare last and next rebuild times, controller status, and native or parallel keystore state across affected partitions. Recently started nodes may need their initial rebuild before useful comparisons are available.
+Compare last and next rebuild times, controller status, and native or parallel keystore state across affected partitions. Any recently started nodes may need their initial rebuild before useful comparisons are available.
 
 ## Follow exchanges and repairs
 
-Correlate AAE logs with metrics from [AAE, repair, and worker-pool metrics]({{< product-version-root >}}reference/operations-and-observability/aae-repair-and-worker-pool-metrics/). Track completed work and changing discrepancy counts over time. A recurring timeout or a queue that only grows requires investigation of worker capacity and backend I/O before increasing exchange frequency.
+Correlate AAE logs with metrics from [AAE, repair, and worker-pool metrics]({{< product-version-root >}}reference/operations-and-observability/aae-repair-and-worker-pool-metrics/). Track completed work and changing discrepancy counts over time. A recurring timeout or a queue that only grows means you should review worker capacity and backend I/O before increasing exchange frequency.
 
 ## Act on a specific failure
 

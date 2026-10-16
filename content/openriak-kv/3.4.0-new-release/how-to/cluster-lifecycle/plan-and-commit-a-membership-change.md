@@ -6,7 +6,7 @@ weight: 710
 diataxis: how-to
 product: OpenRiak KV
 product_version: 3.4.0
-status: editorially-rewritten
+status: reviewed
 draft: true
 audience:
 - operators
@@ -22,9 +22,10 @@ tags:
 - kv
 - how-to
 editorial_review: complete
-technical_review: required
-last_reviewed: '2026-09-22'
-review_scope: diataxis-content-and-navigation
+technical_review: complete
+last_reviewed: '2026-10-13'
+review_scope: content review
+review-by: TI Tokyo/JOM
 restructured_from:
 - how-to/operate/plan-and-commit-cluster-change.md
 related:
@@ -42,11 +43,15 @@ concepts: ["node-lifecycle"]
 
 Review and commit staged membership changes as one deliberate cluster operation. Do not commit while another operator is staging unrelated changes.
 
-## Check the starting state
+### Check the starting state
 
 Confirm membership, reachability, free space, and outstanding transfers. Record the intended old and new Erlang node names and coordinate an exclusive change window.
 
+#### Confirm node members and status: 
 {{< cli-example key="shell:riak admin member-status" >}}
+
+#### Confirm tranfer status:
+
 {{< cli-example key="shell:riak admin transfers" >}}
 
 ## Stage and review

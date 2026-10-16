@@ -6,7 +6,7 @@ weight: 760
 diataxis: how-to
 product: OpenRiak KV
 product_version: 3.4.0
-status: editorially-rewritten
+status: reviewed
 draft: true
 audience:
 - operators
@@ -24,9 +24,10 @@ tags:
 - kv
 - how-to
 editorial_review: complete
-technical_review: required
-last_reviewed: '2026-09-22'
-review_scope: diataxis-content-and-navigation
+technical_review: complete
+last_reviewed: '2026-10-13'
+review_scope: content review
+review-by: TI Tokyo/JOM
 restructured_from:
 - how-to/operate/rolling-restart.md
 related:
@@ -49,7 +50,7 @@ Record membership, outstanding transfers, client latency, and the intended confi
 
 ## Restart one member
 
-Drain it from client routing, stop it gracefully through [Start, stop, or restart a node]({{< product-version-root >}}how-to/cluster-lifecycle/start-stop-or-restart-a-node/), and start it with the intended configuration. Watch startup logs and verify the process responds.
+Remove it from client routing, stop it gracefully through [Start, stop, or restart a node]({{< product-version-root >}}how-to/cluster-lifecycle/start-stop-or-restart-a-node/), and start it with the intended configuration. Watch startup logs and verify the process responds.
 
 ## Wait for recovery
 
