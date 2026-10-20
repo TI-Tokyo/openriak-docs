@@ -1,0 +1,4 @@
+<a class="sidebar-title" href="{{ `settings/` | relURL }}"{{ if not .page.Params.settings_group }} aria-current="page"{{ end }}>Settings</a>
+<nav class="sidebar-page-tree" tabindex="-1" aria-label="Settings pages"><ul class="site-section-tree">
+{{ range sort hugo.Data.settings_sections "title" }}<li><a href="{{ printf "settings/%s/" .id | relURL }}"{{ if eq $.page.Params.settings_group .id }} aria-current="page"{{ end }}>{{ .title }}</a></li>{{ end }}
+</ul></nav>

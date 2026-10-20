@@ -1,0 +1,36 @@
+{{ define "main" }}
+<link rel="stylesheet" href="{{ `css/settings.css` | relURL }}">
+<article class="settings-page" data-settings-page data-settings-group="{{ .Params.settings_group }}" data-settings-base="{{ `settings/` | relURL }}">
+  <h1>{{ .Title }}</h1>
+  <p>Preferences are saved in this browser and apply across the documentation.</p>
+  <a data-settings-return hidden>Return to documentation</a>
+  <noscript><p>Enable JavaScript to edit, import, or export browser settings.</p></noscript>
+  <p role="status" aria-live="polite" data-settings-status></p>
+  {{ if not .Params.settings_group }}
+  <div class="settings-cards">
+    {{ range hugo.Data.settings_sections }}
+    <a class="settings-card" href="{{ printf "settings/%s/" .id | relURL }}"><span class="settings-card-icon" aria-hidden="true">{{ .icon }}</span><h2>{{ .title }}</h2><p>{{ .description }}</p></a>
+    {{ end }}
+  </div>
+  <div class="settings-clear-area">
+    <p>Restore all preferences, example values, and saved filters to their defaults.</p>
+    <button type="button" data-settings-clear>Clear all</button>
+  </div>
+  <dialog class="settings-confirmation" data-settings-clear-dialog aria-labelledby="settings-clear-title" aria-describedby="settings-clear-description">
+    <form method="dialog">
+      <h2 id="settings-clear-title">Clear all settings?</h2>
+      <p id="settings-clear-description">This restores all preferences, example values, and saved filters in this browser to their defaults.</p>
+      <div class="settings-confirm-actions">
+        <button value="cancel" autofocus>Cancel</button>
+        <button value="clear" class="settings-confirm-danger">Clear all</button>
+      </div>
+    </form>
+  </dialog>
+  {{ end }}
+  <div data-settings-sections></div>
+</article>
+<script type="application/json" id="settings-platforms">{{ partial "settings-products.html" . | jsonify | safeJS }}</script>
+<script src="{{ `js/docs-runtime.js` | relURL }}?v=20261020-settings-platform" defer></script>
+<script type="application/json" id="settings-code-types">{{ hugo.Data.settings_code_types | jsonify | safeJS }}</script>
+<script src="{{ `js/settings-page.js` | relURL }}" defer></script>
+{{ end }}

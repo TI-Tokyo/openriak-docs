@@ -35,6 +35,16 @@
     });
   });
 
+  try {
+    const key = 'openriak-docs-filter-catalog';
+    const catalog = JSON.parse(localStorage.getItem(key) || '{}');
+    catalog[storageKey] = { title: `${root.dataset.reviewProduct} · Review filters`, controls: [
+      ...controls.map(control => ({ name: control.dataset.reviewFilter, label: control.dataset.reviewFilter, options: [...control.options].map(option => [option.value, option.textContent]) })),
+      { name: 'section', label: 'Section', options: [...sectionControl.options].map(option => [option.value, option.textContent]) },
+      { name: 'include_children', label: 'Include child sections', type: 'boolean', default: 'true' }
+    ] };
+    localStorage.setItem(key, JSON.stringify(catalog));
+  } catch {}
   const apply = () => {
     const section = sectionControl.value;
     includeChildren.disabled = !section || !groups.some(group => group.element.dataset.reviewSection.startsWith(`${section}/`));

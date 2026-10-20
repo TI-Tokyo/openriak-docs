@@ -370,6 +370,8 @@ window.OpenRiakPageToolsReady = (async () => {
     cancelAnimationFrame(restoreAnchoring);
     root.style.overflowAnchor = 'none';
     outputsExpanded = expanded;
+    Object.values(codeOptions).forEach(options => { delete options.outputExpanded; });
+    storeCodeOptions();
     outputControllers.forEach(controller => controller.apply(expanded));
     // Preserve the current block's viewport position when earlier blocks grow or shrink.
     const shift = anchor.getBoundingClientRect().top - previousTop;
@@ -404,16 +406,24 @@ window.OpenRiakPageToolsReady = (async () => {
       button.setAttribute('aria-label', expanded ? 'Collapse output' : 'Expand output');
       button.title = expanded ? 'Collapse output' : 'Expand output';
     };
-    outputControllers.push({apply});
-    apply(outputsExpanded);
-    button.addEventListener('click', () => setOutputsExpanded(!outputsExpanded, block));
+    const language = (block.dataset.codeLanguage || 'text').toLowerCase();
+    outputControllers.push({apply, language});
+    apply(codeOptions[language]?.outputExpanded ?? outputsExpanded);
+    button.addEventListener('click', () => setOutputsExpanded(!block.classList.contains('is-output-expanded'), block));
     new ResizeObserver(measure).observe(pre);
     measure();
   });
   const codeSources = new Map();
   await Promise.all(codeBlocks.map(async (block) => {
     try {
-      codeSources.set(block, await window.OpenRiakMetadata.read(block.querySelector('[data-code-source]')));
+      const exampleTemplate = block.querySelector('[data-example-code-source]');
+      if (exampleTemplate) {
+        const fragment = exampleTemplate.content.cloneNode(true);
+        fragment.querySelectorAll('[data-example]').forEach(node => {
+          node.textContent = window.OpenRiakSettings?.resolve(node.dataset.example, Number(node.dataset.exampleIndex), node.dataset.exampleField, node.textContent) ?? node.textContent;
+        });
+        codeSources.set(block, fragment.textContent);
+      } else codeSources.set(block, await window.OpenRiakMetadata.read(block.querySelector('[data-code-source]')));
     } catch (error) {
       // Keep the server-rendered code visible if its helper file is unavailable.
       block.querySelectorAll('button').forEach((button) => { button.disabled = true; });
@@ -423,7 +433,8 @@ window.OpenRiakPageToolsReady = (async () => {
   codeBlocks.forEach((block, index) => {
     if (!codeSources.has(block)) return;
     const language = (block.dataset.codeLanguage || 'text').toLowerCase();
-    const source = codeSources.get(block);
+    const rawSource = codeSources.get(block);
+    const source = window.OpenRiakSettings?.substitute(rawSource) ?? rawSource;
     const copyButton = block.querySelector('[data-code-copy]');
     const lineButton = block.querySelector('[data-code-lines]');
     const wrapButton = block.querySelector('[data-code-wrap]');
@@ -437,7 +448,9 @@ window.OpenRiakPageToolsReady = (async () => {
     const setLineNumberWidth = (lineCount) => block.style.setProperty('--code-line-number-digits', String(Math.max(1, String(lineCount).length)));
     const activeCodeSource = () => block.classList.contains('is-shell-wrapped') && shellWrapped ? shellWrapped.source : source;
     setLineNumberWidth(source.split('\n').length);
-    if (highlightedCode) renderCodeLines(highlightedCode, source);
+    if (highlightedCode) {
+      renderCodeLines(highlightedCode, source);
+    }
     if (shellCode && shellWrapped) {
       renderCodeLines(shellCode, shellWrapped.source, shellWrapped.lineNumbers);
       highlightShellCode(shellCode, shellWrapped.source);
@@ -461,7 +474,7 @@ window.OpenRiakPageToolsReady = (async () => {
     codeControllers.push(controller);
     if (!codeControllersByLanguage.has(language)) codeControllersByLanguage.set(language, []);
     codeControllersByLanguage.get(language).push(controller);
-    const savedOptions = codeOptions[language] || {};
+    const savedOptions = { ...codeOptions.global, ...codeOptions[language] };
     applyOption('lineNumbers', savedOptions.lineNumbers === true);
     applyOption('wrap', savedOptions.wrap === true);
     applyOption('shellWrap', savedOptions.shellWrap === true);
@@ -614,15 +627,16 @@ window.OpenRiakPageToolsReady = (async () => {
   });
 
   window.addEventListener('storage', (event) => {
-    if (event.key !== codeOptionsStorageKey) return;
+    if (event.key !== codeOptionsStorageKey && event.key !== null) return;
     try {
       codeOptions = JSON.parse(event.newValue || '{}') || {};
     } catch (_) {
       return;
     }
+    outputControllers.forEach(controller => controller.apply(codeOptions[controller.language]?.outputExpanded ?? outputsExpanded));
     const anchor = nearestVisibleCodeBlock();
     const applyStoredOptions = () => codeControllers.forEach((controller) => {
-      const options = codeOptions[controller.language] || {};
+      const options = { ...codeOptions.global, ...codeOptions[controller.language] };
       controller.applyOption('lineNumbers', options.lineNumbers === true);
       controller.applyOption('wrap', options.wrap === true);
       controller.applyOption('shellWrap', options.shellWrap === true);
@@ -664,3 +678,13 @@ window.OpenRiakPageToolsReady = (async () => {
   // Fetching helper files can finish after the initial pageshow event.
   if (document.readyState === 'complete') restoreCodeAnchor();
 })().catch((error) => console.error('Page tools could not be initialized', error));
+
+window.addEventListener('storage', event => {
+  if (['openriak-docs-examples-v1', 'openriak-docs-code-language', 'openriak-code-output-expanded'].includes(event.key) || event.key === null) location.reload();
+});
+const rememberedPageSettings = () => {
+  try { return ['openriak-docs-code-options-v1', 'openriak-docs-code-language', 'openriak-code-output-expanded', 'openriak-docs-examples-v1'].map(key => localStorage.getItem(key)).join('\n'); } catch { return ''; }
+};
+let pageSettingsSnapshot = rememberedPageSettings();
+window.addEventListener('pagehide', () => { pageSettingsSnapshot = rememberedPageSettings(); });
+window.addEventListener('pageshow', event => { if (event.persisted && pageSettingsSnapshot !== rememberedPageSettings()) location.reload(); });

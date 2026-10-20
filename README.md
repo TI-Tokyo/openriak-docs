@@ -109,7 +109,7 @@ failure handling.
 
 The same source tree supports three explicit profiles:
 
-- `development` builds only core and mounts one historical Riak KV release. It defaults to `3.2.5`; set `OPENRIAK_DOCS_RIAK_KV_VERSION` to work on another imported release.
+- `development` builds only core, with one historical Riak KV release and the latest CS and TS releases. Riak KV defaults to `3.2.5`; set `OPENRIAK_DOCS_RIAK_KV_VERSION` to work on another imported release.
 - `beta-test` builds only core, with every Riak KV and OpenRiak product release mounted.
 - `release` builds all core releases and both archive projects, then assembles one deployment tree.
 
@@ -205,3 +205,69 @@ an anchor. Optional `level="2"` renders the title as an `h2` (equivalent to `##`
 and includes it in “On this page”; levels 1 through 6 are supported and nested
 accordingly. Without `level`, the title is not included in the table of contents.
 These shortcodes use the version being viewed, including inherited pages.
+
+## Browser settings and personalized examples
+
+The Settings entry at the bottom of the Site sections menu opens `/settings/`, an overview linking to separate Appearance,
+Code blocks, OS and architecture, Tables and filters, Example values, and
+Import/export pages. The shared left sidebar searches controls across those pages. The landing page
+also offers Clear all, with confirmation before resetting preferences, example
+values, and saved filters.
+Changes use the existing preference keys, so earlier browser choices carry over.
+Code options are edited in a sortable, column-filterable table (initially Type,
+descending). Inapplicable cells have no control; Command Split is available only
+for Bash, Sh, and Shell. Type rows inherit
+DEFAULT values unless overridden; DEFAULT also sets global output expansion.
+Only one type can be preferred. Set to Default clears that row's overrides and
+preferred selection; Set All to Default clears all type overrides and the preferred
+selection while keeping the DEFAULT values. Maintainers define available types in
+`layouts/common-docs/data/settings_code_types.json`; readers cannot add types.
+The output expand/collapse buttons apply globally and clear output overrides.
+
+Platform settings list OpenRiak KV, CS, and TS with their project logos. Each
+project has a preferred documentation version, defaulting to Latest. Homepage
+project links follow that preference, with an additional Open Latest link when
+a specific version is selected. OS and architecture controls share the
+picker implementation used by the selected version's documentation and expose
+only that version's supported choices. Versions without an OS picker say so.
+Desktop forms align their fields after the longest label; mobile forms stack.
+Import, Export, and Reset have separate headings.
+
+Settings exports use versioned JSON (`format: openriak-docs-settings`, `version: 1`).
+Import validates the complete file before writing and previews changes. Merge
+preserves omitted preferences; Replace resets them. Exports can include all
+preferences or one group. Votes, scroll positions, and the local filter-control
+catalog are excluded. Table controls become available in Settings after a visit
+to the corresponding table; configuration filters are scoped by product, page,
+and table index, while review filters retain their existing product scope.
+
+Authors can insert browser-local example values with the `example` shortcode.
+Indices start at one; omitted fields select `name`:
+
+```text
+{{</* example "cluster" 1 */>}}
+{{</* example "node" 2 "host" */>}}
+{{</* example group="listener" index=1 field="port" */>}}
+{{</* example "clusterSize" */>}}
+{{</* example "ringSize" */>}}
+```
+
+Groups are `cluster`, `node`, `backend`, `listener`, `sink`, `domain`, and `user`.
+Their editable fields are defined in `settings-store.js`; build-time fallback
+values live in `layouts/common-docs/data/example_values.json`. Cluster and node
+names use `{index}` or `{letter}` patterns unless an explicit name is supplied.
+Example values do not modify authoritative configuration-reference defaults.
+Shortcodes work in prose, inline code, and fenced blocks. Code copy/download uses
+the personalized text. Without JavaScript, the default values remain readable.
+Fences containing shortcodes retain their resolved source in an HTML template
+because Hugo expands shortcodes after the code render hook runs.
+
+The draft page `openriak-kv/3.4.0/to-do/tests/example-values/` demonstrates these
+contexts. With the development preview and Playwright available, run:
+
+```sh
+node tools/scripts/settings.browser.test.cjs
+```
+
+`OPENRIAK_SETTINGS_TEST_BASE` overrides the preview root (default
+`http://127.0.0.1:1410/docs/`), and `OPENRIAK_BROWSER_EXECUTABLE` selects Chromium.

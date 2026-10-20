@@ -1,0 +1,13 @@
+{
+  "clusterPattern": "my-example-cluster-{letter}",
+  "nodePattern": "node-{index}",
+  "clusterSize": 3,
+  "ringSize": 64,
+  "cluster": [{"name":"", "backend":"bitcask"}],
+  "node": [{"name":"", "host":"node-1.example.com", "cluster":"1"}],
+  "backend": [{"name":"bitcask", "type":"bitcask", "settings":"data_root = /var/lib/riak/bitcask"}],
+  "listener": [{"name":"http", "bind":"127.0.0.1", "host":"node-1.example.com", "port":8098}, {"name":"protobuf", "bind":"127.0.0.1", "host":"node-1.example.com", "port":8087}],
+  "sink": [{"name":"sink-A", "host":"sink.example.com", "port":8087, "cluster":"2"}],
+  "domain": [{"name":"example.com"}],
+  "user": [{"name":"example-user"}]
+}

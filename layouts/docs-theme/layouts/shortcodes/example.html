@@ -1,0 +1,22 @@
+{{- $group := "" -}}{{- $number := 1 -}}{{- $field := "name" -}}
+{{- if .IsNamedParams -}}
+  {{- $group = .Get "group" -}}{{- $number = int (.Get "index" | default 1) -}}{{- $field = .Get "field" | default "name" -}}
+{{- else -}}
+  {{- $group = .Get 0 -}}{{- with .Get 1 }}{{ $number = int . }}{{ end -}}{{- with .Get 2 }}{{ $field = . }}{{ end -}}
+{{- end -}}
+{{- $defaults := hugo.Data.example_values -}}
+{{- $value := "" -}}
+{{- $fields := dict "cluster" (slice "name" "backend") "node" (slice "name" "host" "cluster") "backend" (slice "name" "type" "settings") "listener" (slice "name" "bind" "host" "port") "sink" (slice "name" "host" "port" "cluster") "domain" (slice "name") "user" (slice "name") -}}
+{{- if or (lt $number 1) (gt $number 10000) -}}{{- errorf "example index must be between 1 and 10000 on %s" .Page.Path -}}{{- end -}}
+{{- if in (slice "clusterSize" "ringSize") $group -}}
+  {{- $value = printf "%v" (index $defaults $group) -}}
+{{- else if and (isset $fields $group) (in (index $fields $group) $field) -}}
+  {{- $entries := index $defaults $group -}}
+  {{- if le $number (len $entries) -}}{{- $value = printf "%v" (index (index $entries (sub $number 1)) $field) -}}{{- end -}}
+  {{- if and (not $value) (eq $field "name") (in (slice "cluster" "node") $group) -}}
+    {{- $letter := "" -}}{{- $n := $number -}}
+    {{- range seq 4 -}}{{- if gt $n 0 -}}{{- $n = sub $n 1 -}}{{- $letter = printf "%c%s" (add 65 (mod $n 26)) $letter -}}{{- $n = int (math.Floor (div (float $n) 26)) -}}{{- end -}}{{- end -}}
+    {{- $value = replace (replace (index $defaults (printf "%sPattern" $group)) "{index}" (string $number)) "{letter}" $letter -}}
+  {{- end -}}
+{{- else -}}{{- errorf "Unknown example group/field %s.%s on %s" $group $field .Page.Path -}}{{- end -}}
+<span data-example="{{ $group }}" data-example-index="{{ $number }}" data-example-field="{{ $field }}">{{ $value }}</span>{{- "" -}}

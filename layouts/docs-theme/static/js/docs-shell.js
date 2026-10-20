@@ -213,6 +213,7 @@
       }
     });
   };
+  window.addEventListener('storage', event => { if (event.key === sidebarStorageKey || event.key === null) setSidebarCollapsed(readSidebarPreference(), false); });
   setSidebarCollapsed(readSidebarPreference(), false);
   sidebarCollapse?.addEventListener('click', () => {
     setSidebarCollapsed(true);

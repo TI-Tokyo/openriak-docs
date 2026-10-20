@@ -129,6 +129,11 @@
     const selected = panel.querySelector('[aria-pressed="true"]');
     window.requestAnimationFrame(() => (selected || visibleFocusable()[0] || panel).focus());
   };
+  window.addEventListener('storage', event => {
+    if (event.key === key || event.key === null) apply(stored());
+    if (event.key === contentWidthKey || event.key === null) applyContentWidth(storedContentWidth());
+    if (event.key === fontSizeKey || event.key === null) applyFontSize(storedFontSize());
+  });
   apply(stored());
   applyContentWidth(storedContentWidth());
   applyFontSize(storedFontSize());

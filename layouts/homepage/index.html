@@ -15,7 +15,7 @@
     :focus-visible { outline: 3px solid var(--home-focus); outline-offset: 2px; }
     .skip-link { position: fixed; left: .75rem; top: .75rem; z-index: 100; padding: .55rem .85rem; transform: translateY(-200%); background: var(--home-surface); }
     .skip-link:focus { transform: none; }
-    main { width: var(--site-content-width); max-width: none; margin: 0 auto; padding: clamp(3rem, 8vw, 7rem) 0; }
+    main { width: var(--site-content-width); max-width: none; margin: 0 auto; padding: .75rem 0 clamp(3rem, 8vw, 7rem); }
     h1 { max-width: 12ch; margin: 0; font-size: clamp(3rem, 8vw, 6.5rem); line-height: .95; letter-spacing: -.06em; }
     .intro { max-width: 44rem; margin: 1.5rem 0 2.5rem; color: var(--home-muted); font-size: 1.15rem; }
     .site-sections-title { margin: 0 0 1rem; font-size: 1rem; letter-spacing: .06em; text-transform: uppercase; }
@@ -25,34 +25,51 @@
     .site-section-heading { display: flex; align-items: center; gap: .85rem; min-height: 50px; font-size: 1.2rem; font-weight: 700; }
     .site-section-heading .site-section-icon { display: inline-flex; flex: 0 0 50px; align-items: center; justify-content: center; width: 50px; height: 50px; color: var(--home-ink); }
     .site-section-heading .site-section-icon svg { width: 34px; height: 34px; fill: none; stroke: currentColor; stroke-width: 1.8; stroke-linecap: round; stroke-linejoin: round; }
-    .site-section-heading .site-section-icon--openriak img { width: 50px; height: 50px; object-fit: contain; }
+    .site-section-heading .site-section-wordmark { display: block; width: auto; max-width: 100%; height: 50px; object-fit: contain; object-position: left center; }
     .site-section-heading .site-section-at { font-size: 2rem; font-weight: 800; line-height: 1; }
-    .site-section strong { align-self: end; color: var(--home-accent); }
+    .site-section-primary { display: grid; gap: 1.2rem; color: inherit; text-decoration: none; }
+    .site-section-actions { display: flex; flex-wrap: wrap; align-items: end; gap: 1.25rem; }
+    .site-section-actions a { color: var(--home-accent); font-weight: 400; text-decoration: none; }
+    .site-section-actions [data-home-project] { font-weight: 700; }
+    .site-section-actions a:hover { text-decoration: underline; }
+    .site-section-actions [hidden] { display: none; }
     @media (max-width: 760px) { main { width: calc(100% - 2rem); } }
     @media (max-width: 720px) { .site-sections { grid-template-columns: 1fr; } }
   </style>
-  <link rel="stylesheet" href="{{ `css/site-header.css` | relURL }}?v=20260903-share-icons">
+  <link rel="stylesheet" href="{{ `css/site-header.css` | relURL }}?v=20261020-settings">
 </head>
 <body>
   <a class="skip-link" href="#main-content">Skip to content</a>
   {{ partial "site-header.html" (dict "page" . "section" $homepage "showNavToggle" false "showContentWidth" true) }}
   <main id="main-content" tabindex="-1">
-    <p>OpenRiak</p>
     <h1>{{ .Title }}</h1>
     <div class="intro">{{ .Content }}</div>
     <h2 class="site-sections-title">Site sections</h2>
     <nav class="site-sections" aria-label="Site sections">
       {{ range where hugo.Data.site_sections "showOnHomepage" "ne" false }}
-        <a class="site-section" href="{{ partial "site-section-url.html" .url }}">
-          <span class="site-section-heading">{{ partial "site-picker-icon.html" . }}<span>{{ .name }}</span></span>
-          <span>{{ .description }}</span>
-          <strong>{{ .action }}</strong>
-        </a>
+        <article class="site-section">
+          <a class="site-section-primary" data-home-project-heading="{{ .id }}" href="{{ partial "site-section-url.html" .url }}">
+            <span class="site-section-heading">
+              {{ if eq .pickerIcon "openriak" }}
+                <img class="site-section-wordmark" src="{{ printf "images/products/%s-wordmark.svg" .id | relURL }}" alt="{{ .name }}">
+              {{ else }}
+                {{ partial "site-picker-icon.html" . }}<span>{{ .name }}</span>
+              {{ end }}
+            </span>
+            <span>{{ .description }}</span>
+          </a>
+          <div class="site-section-actions">
+            <a data-home-project="{{ .id }}" href="{{ partial "site-section-url.html" .url }}"><span data-home-project-action>{{ if .currentVersion }}Open Latest ({{ (index hugo.Data.product .id).currentVersion }}) →{{ else }}{{ .action }}{{ end }}</span></a>
+            {{ if .currentVersion }}<a data-home-project-latest="{{ .id }}" href="{{ printf "%s/latest/" .id | relURL }}" hidden>Open Latest ({{ (index hugo.Data.product .id).currentVersion }}) →</a>{{ end }}
+          </div>
+        </article>
       {{ end }}
     </nav>
   </main>
-  <script src="{{ `js/theme.js` | relURL }}?v=20260903-display-menu" defer></script>
+  <script type="application/json" id="homepage-projects">{{ partial "settings-products.html" . | jsonify | safeJS }}</script>
+  <script src="{{ `js/homepage-preferences.js` | relURL }}" defer></script>
+  <script src="{{ `js/theme.js` | relURL }}?v=20261020-settings" defer></script>
   <script src="{{ `js/share.js` | relURL }}?v=20260903-share-icons" defer></script>
-  <script src="{{ `js/docs-shell.js` | relURL }}?v=20260926-sidebar-current-page" defer></script>
+  <script src="{{ `js/docs-shell.js` | relURL }}?v=20261020-settings" defer></script>
 </body>
 </html>
