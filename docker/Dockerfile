@@ -47,6 +47,7 @@ RUN case "$CORE_BUILD_PROFILE" in \
         node tools/scripts/sync-product-metadata.js ;; \
       *) echo "Unknown core build profile: $CORE_BUILD_PROFILE" >&2; exit 2 ;; \
     esac
+RUN node tools/scripts/render-mermaid.mjs
 
 FROM ghcr.io/gohugoio/hugo:v${HUGO_VERSION} AS core-build
 ARG INCLUDE_DRAFTS=true

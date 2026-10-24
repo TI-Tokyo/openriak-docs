@@ -62,6 +62,37 @@ repeated languages end a tab group. The selected language is remembered in the
 browser and selected in other groups where available. Code controls remain
 available for each example; printing or disabling JavaScript shows every block.
 
+## Mermaid diagrams
+
+Mermaid fences render to inline SVG at build time using locally vendored
+[Pele](https://github.com/obsidianmd/pele) 1.9.0. For example:
+
+````markdown
+```mermaid
+flowchart LR
+    accTitle: Replicated write
+    Client --> Coordinator --> Replica
+```
+````
+
+The build preparation step runs `node tools/scripts/render-mermaid.mjs` before
+Hugo. It parses Markdown fences with Marked, renders each distinct diagram once,
+and writes SVG assets under `tools/generated/mermaid/`. Hugo embeds those SVGs;
+no diagram JavaScript is shipped to readers. Diagrams follow the site theme and
+remain visible with JavaScript disabled. Source is available in a disclosure.
+Use literal Mermaid text inside fences; Hugo shortcodes are not supported there.
+Invalid diagrams fail preparation with the source filename. Direct Hugo commands
+must run preparation first. Docker preview also watches Markdown for changes.
+
+Draft examples are under `openriak-kv/3.4.0/to-do/tests/mermaid/` and inherited by
+later releases. Run `node --test tools/scripts/render-mermaid.test.mjs` and
+`node tools/scripts/mermaid.browser.test.cjs` (with Playwright and preview running)
+to verify generation and rendering.
+
+Pinned ESM bundles and licenses live under `tools/scripts/vendor/pele/` and
+`tools/scripts/vendor/marked/`. Their README files record provenance and hashes.
+No npm install is needed to build the docs.
+
 ## Repository layout
 
 - `content/` — authored content, the core `hugo.yaml`, and `hugo-archives.yaml`.

@@ -91,6 +91,7 @@ case "$project" in
         --output "$generated_config"
       node "$site_root/tools/scripts/sync-product-metadata.js"
     fi
+    node "$site_root/tools/scripts/render-mermaid.mjs"
     config=$generated_config
     ;;
   archives)
