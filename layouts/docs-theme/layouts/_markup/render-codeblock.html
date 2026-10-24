@@ -1,15 +1,17 @@
 {{- if eq (lower .Type) "mermaid" -}}
   {{- $key := crypto.SHA256 (strings.TrimSpace .Inner) -}}
-  {{- $asset := resources.Get (printf "mermaid/%s.svg" $key) -}}
-  {{- if not $asset -}}
-    {{- errorf "Missing Mermaid SVG on %s. Run node tools/scripts/render-mermaid.mjs before Hugo; diagrams must contain literal text." .Page.File.Path -}}
-  {{- else -}}
-    {{- $id := printf "diagram-%s-%d" (crypto.MD5 .Page.RelPermalink) .Ordinal -}}
-    <div class="doc-diagram">
-      <div class="doc-diagram-render">{{ replace $asset.Content "__OPENRIAK_DIAGRAM__" $id | safeHTML }}</div>
-      <details><summary>Mermaid source</summary><pre><code>{{ .Inner }}</code></pre></details>
-    </div>
-  {{- end -}}
+  {{- $id := printf "diagram-%s-%d" (crypto.MD5 .Page.RelPermalink) .Ordinal -}}
+  <div class="doc-diagram">
+    {{- range slice "wide" "narrow" -}}
+      {{- $asset := resources.Get (printf "mermaid/%s.%s.svg" $key .) -}}
+      {{- if not $asset -}}
+        {{- errorf "Missing %s Mermaid SVG on %s. Run node tools/scripts/render-mermaid.mjs before Hugo; diagrams must contain literal text." . $.Page.File.Path -}}
+      {{- else -}}
+        <div class="doc-diagram-render doc-diagram-render--{{ . }}">{{ replace $asset.Content "__OPENRIAK_DIAGRAM__" (printf "%s-%s" $id .) | safeHTML }}</div>
+      {{- end -}}
+    {{- end -}}
+    <details><summary>Mermaid source</summary><pre><code>{{ .Inner }}</code></pre></details>
+  </div>
 {{- else -}}
   {{- partial "code-block.html" . -}}
 {{- end -}}

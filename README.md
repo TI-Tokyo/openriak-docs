@@ -76,10 +76,14 @@ flowchart LR
 ````
 
 The build preparation step runs `node tools/scripts/render-mermaid.mjs` before
-Hugo. It parses Markdown fences with Marked, renders each distinct diagram once,
-and writes SVG assets under `tools/generated/mermaid/`. Hugo embeds those SVGs;
+Hugo. It parses Markdown fences with Marked, renders narrow (320px) and wide
+(960px) layouts for each distinct diagram, and writes SVG assets under `tools/generated/mermaid/`. Hugo embeds those SVGs;
 no diagram JavaScript is shipped to readers. Diagrams follow the site theme and
-remain visible with JavaScript disabled. Source is available in a disclosure.
+remain visible with JavaScript disabled. CSS container queries select the narrow
+layout below 640px of diagram content width, including narrow columns on desktop.
+Pele can rearrange supported diagrams and wrap labels; diagrams that still exceed
+the target width scale to fit. These are two fixed layouts, not continuous browser
+re-layout. Source is available in a disclosure.
 Use literal Mermaid text inside fences; Hugo shortcodes are not supported there.
 Invalid diagrams fail preparation with the source filename. Direct Hugo commands
 must run preparation first. Docker preview also watches Markdown for changes.

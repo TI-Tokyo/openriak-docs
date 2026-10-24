@@ -17,7 +17,10 @@ diagram to see its input. These simplified examples illustrate diagram syntax,
 rather than specifying protocol behavior.
 
 Check these examples in light and dark themes and at a narrow window width.
-The SVGs are generated during the build and remain visible with JavaScript disabled.
+The wide and narrow SVGs are generated during the build and remain visible with
+JavaScript disabled. Below 640px of diagram content width, CSS selects the narrow
+layout. In the flowchart, Client and Coordinator change from a horizontal row to
+a vertical column. This also works in a narrow content column on a desktop.
 
 ## Flowchart: replicated write
 

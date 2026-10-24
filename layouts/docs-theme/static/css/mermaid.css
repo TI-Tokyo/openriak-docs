@@ -1,4 +1,5 @@
 .doc-diagram {
+  container: mermaid / inline-size;
   --pele-bg: var(--surface);
   --pele-fg: var(--ink);
   --pele-muted: var(--muted);
@@ -19,3 +20,10 @@
 .doc-diagram-render svg { display: block; max-width: 100%; height: auto; margin: 0 auto; }
 .doc-diagram summary { cursor: pointer; color: var(--muted); }
 .doc-diagram pre { overflow-x: auto; white-space: pre; }
+
+/* These are pre-rendered layouts: only one SVG enters the accessibility tree. */
+.doc-diagram-render--narrow { display: none; }
+@container mermaid (width < 640px) {
+  .doc-diagram-render--wide { display: none; }
+  .doc-diagram-render--narrow { display: block; }
+}

@@ -2,10 +2,12 @@ import fs from 'node:fs';
 import path from 'node:path';
 import { createHash } from 'node:crypto';
 import { fileURLToPath } from 'node:url';
-import { render } from './vendor/pele/pele-1.9.0.mjs';
+import { parse, render } from './vendor/pele/pele-1.9.0.mjs';
 import { marked } from './vendor/marked/marked-18.1.1.mjs';
 
 const root = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '../..');
+// Keep the 640px CSS container breakpoint aligned with Pele's direction threshold.
+export const diagramLayouts = { wide: 960, narrow: 320 };
 export const sourceKey = source => createHash('sha256').update(source.trim()).digest('hex');
 
 export function diagramSources(markdown) {
@@ -36,8 +38,11 @@ export function generate(contentRoot = path.join(root, 'content'), outputRoot = 
         if (diagrams.has(key)) continue;
         try {
           if (source.includes('{{<') || source.includes('{{%')) throw new Error('Use literal Mermaid text; Hugo shortcodes are not supported inside diagrams');
-          const { svg } = render(source, { idPrefix: '__OPENRIAK_DIAGRAM__', responsive: true, fontFamily: 'sans-serif' });
-          diagrams.set(key, svg);
+          const model = parse(source);
+          diagrams.set(key, Object.fromEntries(Object.entries(diagramLayouts).map(([layout, maxWidth]) => [
+            layout, render(model, { idPrefix: '__OPENRIAK_DIAGRAM__', responsive: true,
+              fontFamily: 'sans-serif', maxWidth, autoDirection: true, directionBreakpoint: 640 }).svg
+          ])));
         } catch (error) {
           throw new Error(`Mermaid diagram in ${filename}: ${error.message}`, { cause: error });
         }
@@ -46,14 +51,19 @@ export function generate(contentRoot = path.join(root, 'content'), outputRoot = 
   }
   // Validate the entire input before changing outputs; unchanged assets retain mtimes.
   fs.mkdirSync(outputRoot, { recursive: true });
-  for (const [key, svg] of diagrams) {
-    const filename = path.join(outputRoot, `${key}.svg`);
-    if (fs.existsSync(filename) && fs.readFileSync(filename, 'utf8') === svg) continue;
-    fs.writeFileSync(`${filename}.tmp`, svg);
-    fs.renameSync(`${filename}.tmp`, filename);
+  const expected = new Set();
+  for (const [key, layouts] of diagrams) {
+    for (const [layout, svg] of Object.entries(layouts)) {
+      const name = `${key}.${layout}.svg`;
+      expected.add(name);
+      const filename = path.join(outputRoot, name);
+      if (fs.existsSync(filename) && fs.readFileSync(filename, 'utf8') === svg) continue;
+      fs.writeFileSync(`${filename}.tmp`, svg);
+      fs.renameSync(`${filename}.tmp`, filename);
+    }
   }
   for (const file of fs.readdirSync(outputRoot)) {
-    if (/^[a-f0-9]{64}\.svg$/.test(file) && !diagrams.has(file.slice(0, -4))) fs.unlinkSync(path.join(outputRoot, file));
+    if (/^[a-f0-9]{64}(?:\.(?:wide|narrow))?\.svg$/.test(file) && !expected.has(file)) fs.unlinkSync(path.join(outputRoot, file));
   }
   return diagrams.size;
 }
@@ -64,14 +74,14 @@ if (process.argv[1] && path.resolve(process.argv[1]) === fileURLToPath(import.me
   } else {
     const args = process.argv.slice(2);
     if (args.some(arg => arg !== '--watch')) throw new Error('Unknown argument; use --help');
-    console.log(`Generated ${generate()} Mermaid SVGs.`);
+    console.log(`Generated ${generate()} Mermaid diagrams (wide and narrow SVGs).`);
     if (args.includes('--watch')) {
       let timer;
       fs.watch(path.join(root, 'content'), { recursive: true }, (_event, filename) => {
         if (filename && !String(filename).endsWith('.md')) return;
         clearTimeout(timer);
         timer = setTimeout(() => {
-          try { console.log(`Generated ${generate()} Mermaid SVGs.`); }
+          try { console.log(`Generated ${generate()} Mermaid diagrams (wide and narrow SVGs).`); }
           catch (error) { console.error(error.message); }
         }, 180);
       });
