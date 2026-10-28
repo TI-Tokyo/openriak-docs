@@ -143,8 +143,9 @@ assert.match(previousVersionShortcodeSource, /partial "previous-version\.html" \
 assert.match(previousVersionPartialSource, /index hugo\.Data\.versions \$productID[\s\S]*\$isEarlier[\s\S]*\$isLaterThanPrevious/, 'previous-version must select the greatest semantic version below the current release');
 assert.match(previousVersionPartialSource, /previous-version has no previous release: product=%s version=%s page=%s/, 'previous-version must stop the build when no earlier release exists');
 assert.match(baseSource, /js\/theme\.js[^"\n]+\?v=/, 'theme picker script must be cache-busted');
-assert.match(baseSource, /js\/metadata\.js[\s\S]*js\/docs-runtime\.js[^"\n]+\?v=20260922-version-redirects/, 'shared metadata must load before the documentation runtime with its current cache key');
-assert.match(headSource, /css\/docs\.css[^"\n]+\?v=20260922-review-sections/, 'documentation styling must use its current cache key');
+// Cache tokens change with asset updates; enforce their presence and script order, not historical dates.
+assert.match(baseSource, /js\/metadata\.js[\s\S]*js\/docs-runtime\.js[^"\n]+\?v=[A-Za-z0-9][A-Za-z0-9._-]*"/, 'shared metadata must load before the documentation runtime with a nonempty cache key');
+assert.match(headSource, /css\/docs\.css[^"\n]+\?v=[A-Za-z0-9][A-Za-z0-9._-]*"/, 'documentation styling must use a nonempty cache key');
 assert.match(configurationReferenceShortcodeSource, /strings\.Split \.Inner "\\n"/, 'configuration reference filters must be one regex per body line so commas remain part of the regex');
 assert.match(configurationReferenceShortcodeSource, /\.Get "area"[\s\S]*in \$setting\.areas \$area/, 'configuration references must support repository-area filtering');
 assert.match(configurationReferenceShortcodeSource, /data-configuration-default-copy[\s\S]*data-configuration-os-icon/, 'configuration references must render copyable defaults and OS-specific indicators');
@@ -175,7 +176,7 @@ assert.ok(!searchMatches('word-suffix', 'ring', 'ringing'));
 assert.ok(['ring', 'bing'].every((value) => searchMatches('regex', '[rb]ing', value)));
 assert.throws(() => configurationSearchExpression('[', 'regex'));
 assert.match(configurationReferenceShortcodeSource, /configuration-reference-arrow[^>]*[^<]*→[\s\S]*data-copy-label="Copy internal name"/, 'configuration names must point directly to their copyable internal names');
-assert.match(configurationReferenceShortcodeSource, /if and \$setting\.internalName \(ne \$setting\.internalName \$setting\.name\)/, 'identical public and internal configuration names must not be repeated');
+assert.match(configurationReferenceShortcodeSource, /if and \(partial "configuration-has-schema\.html" \$setting\) \$setting\.internalName \(ne \$setting\.internalName \$setting\.name\)/, 'identical public and internal configuration names must not be repeated');
 assert.doesNotMatch(configurationReferenceShortcodeSource, /<small>Internal<\/small>/, 'configuration names must not include a redundant Internal label');
 assert.match(configurationReferenceShortcodeSource, /partial "configuration-datatype-values.html"/, 'configuration tables must use the shared datatype value renderer');
 assert.match(configurationReferenceItemShortcodeSource, /partial "configuration-datatype-values.html"/, 'configuration details must use the shared datatype value renderer');
@@ -248,9 +249,9 @@ assert.ok(!sharedHeaderSource.includes('⌄') && !sidebarSource.includes('⌄'),
 assert.match(sharedHeaderSource, /data-theme-picker[\s\S]*class="theme-trigger"[^>]*aria-label="Display preferences"[\s\S]*class="display-trigger-icon"[^>]*>Aa<[\s\S]*class="display-trigger-label">Display<[\s\S]*class="picker-chevron"/, 'Display preferences must use a clear Aa trigger and shared picker');
 assert.match(themeSource, /syncTriggerLabel[\s\S]*Display preferences: \$\{themeLabel\}, \$\{currentContentWidth\}% width, \$\{currentFontSize\}% text/, 'the Display trigger must announce the current theme, width, and text size');
 assert.match(sharedHeaderCss, /\.display-trigger-icon[\s\S]*\.display-trigger-label[\s\S]*@media \(max-width: 760px\)[\s\S]*\.display-trigger-label \{ display: none; \}/, 'the Display trigger must retain its Aa symbol while hiding its text label on mobile');
-assert.match(baseSource, /js\/theme\.js[^"\n]+\?v=20260903-display-menu/, 'documentation pages must load the cache-busted Display preferences runtime');
-assert.match(baseSource, /js\/page-tools\.js[^"\n]+\?v=20260907-search-code-tabs[\s\S]*js\/search-highlight\.js/, 'search highlighting must load after the cache-busted page and code tools runtime');
-assert.match(headSource, /css\/site-header\.css[^"\n]+\?v=20260903-share-icons/, 'documentation pages must load the cache-busted shared-header styling');
+assert.match(baseSource, /js\/theme\.js[^"\n]+\?v=[A-Za-z0-9][A-Za-z0-9._-]*"/, 'documentation pages must load the cache-busted Display preferences runtime');
+assert.match(baseSource, /js\/page-tools\.js[^"\n]+\?v=[A-Za-z0-9][A-Za-z0-9._-]*"[\s\S]*js\/search-highlight\.js/, 'search highlighting must load after the cache-busted page and code tools runtime');
+assert.match(headSource, /css\/site-header\.css[^"\n]+\?v=[A-Za-z0-9][A-Za-z0-9._-]*"/, 'documentation pages must load the cache-busted shared-header styling');
 assert.match(sharedHeaderSource, /data-site-section-picker[\s\S]*data-share-control[\s\S]*data-theme-picker/, 'Share must appear between Site sections and Display');
 assert.match(sharedHeaderSource, /class="share-trigger"[^>]*aria-haspopup="menu"[\s\S]*data-share-copy[\s\S]*Copy to clipboard[\s\S]*data-share-native hidden[\s\S]*Share using device…[\s\S]*data-share-target="email"[\s\S]*data-share-target="bluesky"[\s\S]*data-share-target="linkedin"[\s\S]*data-share-target="reddit"[\s\S]*data-share-target="x"/, 'the Share menu must provide utility actions followed by alphabetically ordered Bluesky, LinkedIn, Reddit, and X actions');
 assert.match(sharedHeaderSource, /data-share-native[\s\S]*data-share-target="email"[\s\S]*class="share-separator"[\s\S]*data-share-target="bluesky"/, 'Email must appear in the utility group above the social-network separator');
@@ -262,7 +263,7 @@ assert.match(shareSource, /copyLabel\.textContent = 'Copied!'[\s\S]*copyLabel\.t
 assert.match(shareSource, /role="menuitem"[\s\S]*ArrowDown[\s\S]*ArrowUp[\s\S]*Home[\s\S]*End[\s\S]*Escape[\s\S]*close\(true\)/, 'the Share menu must support keyboard navigation and focus restoration');
 assert.match(shareSource, /Link copied to clipboard\.[\s\S]*data-share-status|data-share-status[\s\S]*Link copied to clipboard\./, 'copying a share link must produce an assistive status announcement');
 for (const [name, source] of [['product', baseSource], ['community', siteSectionBaseSource], ['mailing list', mailingListBaseSource], ['technical blog', blogBaseSource], ['homepage', homepageSource]]) {
-  assert.match(source, /js\/share\.js[^"\n]+\?v=20260903-share-icons/, `${name} pages must load the shared Share menu runtime`);
+  assert.match(source, /js\/share\.js[^"\n]+\?v=[A-Za-z0-9][A-Za-z0-9._-]*"/, `${name} pages must load the shared Share menu runtime`);
 }
 assert.match(runtimeSource, /dataset\.selectedOs = os\.id[\s\S]*searchParams\.delete\('os'\)[\s\S]*replaceState\(window\.history\.state/, 'OS selection must be stored for sharing while being removed from the visible URL');
 assert.doesNotMatch(runtimeSource, /preserveOsOnInternalLinks|const withOs/, 'ordinary product navigation must not retain OS query parameters');
@@ -273,9 +274,9 @@ assert.match(listTemplateSource, /page-summary\.html[\s\S]*\.Content[\s\S]*\.Pag
 assert.match(pageSummarySource, /\.WordCount[\s\S]*technicalReadingWordsPerMinute[\s\S]*technicalReadingCodeBlockSeconds[\s\S]*findRE "\(\?ms\)\^```[\s\S]*configurationReferenceRowCount[\s\S]*\$readingMinutes[\s\S]*min read/, 'page summaries must calculate technical reading time from prose, fenced code lines, and configuration-reference rows');
 assert.match(pageSummarySource, /documentationSource[\s\S]*strings\.HasPrefix \$documentationSource "openriak-"[\s\S]*if \$showProvenance[\s\S]*partial "page-version-status\.html"[\s\S]*if \$showProvenance[\s\S]*doc-version-status/, 'page provenance must only be resolved and rendered for OpenRiak source releases');
 assert.match(pageSummarySource, /Params\.hide_provenance[\s\S]*not/, 'individual generated pages must be able to suppress their own provenance');
-assert.match(whatsChangedShortcodeSource, /versionHome\.Pages\.ByWeight[\s\S]*ne \$candidate\.Kind "section"[\s\S]*ne \$candidate\.File\.ContentBaseName "whats-changed"[\s\S]*page-version-status\.html[\s\S]*slice "new" "updated"[\s\S]*<h2>General<\/h2>[\s\S]*versionHome\.Sections\.ByWeight/, "What's Changed must exclude the version root, itself, inherited pages, and group General before menu-ordered root sections");
+assert.match(whatsChangedShortcodeSource, /versionHome\.Pages\.ByWeight[\s\S]*ne \$candidate\.Kind "section"[\s\S]*ne \$candidate\.File\.ContentBaseName "whats-changed"[\s\S]*page-version-status\.html[\s\S]*slice "new" "updated"[\s\S]*<h2>General<\/h2>[\s\S]*where \$versionHome\.Sections "Params.hide_provenance" "ne" true\)\.ByWeight/, "What's Changed must exclude the version root, itself, inherited pages, and group General before menu-ordered root sections");
 assert.match(whatsChangedShortcodeSource, /partial "whats-changed-section\.html"/, "What's Changed must render a separate group for each changed container path");
-assert.match(whatsChangedSectionSource, /section\.Pages\.ByWeight[\s\S]*ne \$child\.Kind "section"[\s\S]*delimit \$pathTitles " \/ "[\s\S]*whats-changed-table\.html[\s\S]*section\.Sections\.ByWeight[\s\S]*partial "whats-changed-section\.html"/, "What's Changed container groups must include direct changed pages and recurse through container paths in menu order");
+assert.match(whatsChangedSectionSource, /section\.Pages\.ByWeight[\s\S]*ne \$child\.Kind "section"[\s\S]*delimit \$pathTitles " \/ "[\s\S]*whats-changed-table\.html[\s\S]*where \$section\.Sections "Params.hide_provenance" "ne" true\)\.ByWeight[\s\S]*partial "whats-changed-section\.html"/, "What's Changed container groups must include direct changed pages and recurse through container paths in menu order");
 assert.match(whatsChangedTableSource, /<th scope="col">Page<\/th>[\s\S]*<th scope="col">Type<\/th>[\s\S]*<th scope="col">Update Summary<\/th>[\s\S]*index \.page\.Params "update-summary"[\s\S]*doc-version-status--\{\{ \.status \}\}[\s\S]*Updated content/, "What's Changed tables must link pages and render styled change types with update-summary fallbacks");
 for (const source of [whatsChanged340Source, whatsChanged341Source]) {
   assert.match(source, /^weight: -15$/m, "What's Changed must appear between Release Notes and Downloads");
@@ -382,7 +383,7 @@ assert.match(sidebarSearchPartialSource, /aria-keyshortcuts="\/ Control\+K Meta\
 assert.match(mailingListSearchPartialSource, /aria-keyshortcuts="\/ Control\+K Meta\+K"[\s\S]*<kbd class="search-shortcut" aria-hidden="true">\/<\/kbd>/, 'mailing-list search must use the shared keyboard shortcut presentation');
 assert.match(shellSource, /isTyping[\s\S]*slashShortcut[\s\S]*commandShortcut[\s\S]*setNav\(true\)[\s\S]*setSidebarCollapsed\(false\)[\s\S]*searchInput\.focus\(\)/, 'slash and Ctrl/Cmd+K must reveal and focus Search without intercepting text entry');
 assert.match(sharedSidebarCss, /\.search-shortcut \{[^}]*pointer-events: none/, 'the visible search shortcut hint must not obstruct the input');
-assert.match(baseSource, /js\/docs-shell\.js[^"\n]+\?v=20260917-page-home-end/, 'documentation pages must load the cache-busted search and page navigation runtime');
+assert.match(baseSource, /js\/docs-shell\.js[^"\n]+\?v=[A-Za-z0-9][A-Za-z0-9._-]*"/, 'documentation pages must load the cache-busted search and page navigation runtime');
 assert.match(sharedSearchSource, /aria-busy[\s\S]*Searching…/, 'shared search must expose its loading state');
 assert.match(sharedSearchSource, /search result\$\{pages\.length === 1 \? '' : 's'\} found/, 'shared search must announce result counts');
 assert.match(downloadTableSource, /<caption class="sr-only">[\s\S]*<th scope="col">OTP<\/th>/, 'download tables must have an accessible caption and scoped column headers');
@@ -533,8 +534,6 @@ const ubuntu2404 = v341.operatingSystems.find((os) => os.id === 'ubuntu-noble-am
 const ubuntuArm64 = v341.operatingSystems.find((os) => os.id === 'ubuntu-noble-arm64');
 assert.equal(v341.generatedFrom, 'content/openriak-kv/metadata/3.4.1');
 assert.equal(v340.generatedFrom, 'content/openriak-kv/metadata/3.4.0');
-assert.equal(v340.metadataStatus.defaults, 'partial');
-assert.equal(v340.metadataWarnings.length, 2);
 assert.equal(resolveOs('ubuntu-noble-amd64', ubuntu2404, v341).id, 'ubuntu-noble-amd64', 'exact OS and architecture are retained');
 assert.equal(resolveOs('ubuntu-noble-arm64', ubuntuArm64, v340).id, 'ubuntu-noble-arm64', 'exact metadata OS and architecture are retained across versions');
 assert.equal(resolveOs('ubuntu-noble-amd64', ubuntu2404, v200), null, 'legacy Riak KV versions must not expose the OS picker');
@@ -566,6 +565,13 @@ for (const [version, adapter] of [['3.4.0', v340], ['3.4.1', v341]]) {
   const metadataRoot = path.join(repositoryRoot, 'content', 'openriak-kv', 'metadata', version);
   const supportedMetadata = JSON.parse(fs.readFileSync(path.join(metadataRoot, 'kv-supported-os.json')));
   const downloadMetadata = JSON.parse(fs.readFileSync(path.join(metadataRoot, 'kv-downloads.json')));
+  const defaultsMetadata = JSON.parse(fs.readFileSync(path.join(metadataRoot, 'kv-settings.json')));
+  assert.equal(adapter.metadataStatus.defaults, defaultsMetadata.status, version + ' defaults status must match source metadata');
+  assert.deepEqual(adapter.metadataWarnings, [...new Set([
+    ...(supportedMetadata.warnings || []),
+    ...(downloadMetadata.warnings || []),
+    ...(defaultsMetadata.warnings || [])
+  ])], version + ' warnings must match source metadata');
   assert.equal(adapter.operatingSystems.filter((os) => !os.aliasOf).length, supportedMetadata.operating_systems.length, 'all ' + version + ' metadata OS targets must be exposed');
   const nativeDownloadCount = adapter.downloadOperatingSystems
     .filter((os) => !os.aliasOf)

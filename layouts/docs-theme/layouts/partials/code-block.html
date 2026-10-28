@@ -71,5 +71,9 @@
     <span>Show more</span>
   </button>
   {{ end }}
+  {{ if strings.Contains .Inner "HAHAHUGOSHORTCODE" }}
+  <template data-example-code-source>{{ .Inner }}</template>
+  {{ else }}
   <script type="application/json" data-code-source data-json-src="{{ partial "json-resource.html" .Inner }}"></script>
+  {{ end }}
 </div>

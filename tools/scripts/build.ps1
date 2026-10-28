@@ -75,6 +75,8 @@ if ($Profile -eq 'development') {
 }
 & node (Join-Path $PSScriptRoot 'sync-product-metadata.js') @metadataArguments
 if ($LASTEXITCODE -ne 0) { throw 'Metadata synchronization failed' }
+node (Join-Path $PSScriptRoot 'render-mermaid.mjs')
+if ($LASTEXITCODE -ne 0) { throw 'Mermaid rendering failed' }
 
 function Invoke-HugoBuild([string] $Config, [string] $Output, [bool] $PanicOnWarning = $false) {
     $arguments = @('--source', (Join-Path $siteRoot 'content'), '--config', $Config, '--destination', $Output, '--baseURL', $BaseURL, '--gc', '--minify', '--noBuildLock', '--cleanDestinationDir')

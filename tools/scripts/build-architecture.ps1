@@ -24,6 +24,8 @@ node (Join-Path $PSScriptRoot 'generate-version-mounts.js')
 if ($LASTEXITCODE -ne 0) { throw 'Version mount generation failed' }
 node (Join-Path $PSScriptRoot 'sync-product-metadata.js')
 if ($LASTEXITCODE -ne 0) { throw 'Metadata synchronization failed' }
+node (Join-Path $PSScriptRoot 'render-mermaid.mjs')
+if ($LASTEXITCODE -ne 0) { throw 'Mermaid rendering failed' }
 
 Write-Host 'Building core site...'
 docker run --rm --volume "${repositoryRoot}:/workspace" --workdir /workspace/content $image `

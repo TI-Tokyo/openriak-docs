@@ -1,5 +1,10 @@
 {{- $page := .page -}}
 {{- $section := .section -}}
+{{- if eq $page.Layout "settings" -}}
+  {{- $section = dict "id" "settings" "name" "Settings" "url" "settings/" "pickerIcon" "settings" -}}
+{{- end -}}
+<script type="application/json" id="example-defaults">{{ hugo.Data.example_values | jsonify | safeJS }}</script>
+<script src="{{ `js/settings-store.js` | relURL }}?v=20261020" defer></script>
 <header class="global-header">
   {{ if .showNavToggle }}
     <button class="nav-toggle" type="button" data-nav-toggle aria-controls="docs-sidebar" aria-expanded="false">
@@ -15,8 +20,12 @@
   <nav class="header-controls" aria-label="Site controls">
     <div class="site-section-control" data-site-section-picker>
       <button class="site-section-trigger" type="button" aria-expanded="false" aria-controls="site-section-panel" aria-label="Site sections, current section: {{ $section.name }}">
-        {{ partial "site-picker-icon.html" $section }}
-        <span class="site-section-name">{{ $section.name }}</span>
+        {{ if eq $section.pickerIcon "openriak" }}
+          <img class="site-section-wordmark" src="{{ printf "images/products/%s-wordmark.svg" $section.id | relURL }}" alt="{{ $section.name }}">
+        {{ else }}
+          {{ partial "site-picker-icon.html" $section }}
+          <span class="site-section-name">{{ $section.name }}</span>
+        {{ end }}
         <span class="picker-chevron" aria-hidden="true"></span>
       </button>
       <div id="site-section-panel" class="site-section-panel" data-site-section-panel role="navigation" aria-label="Site sections" hidden>
@@ -24,10 +33,19 @@
         {{ range hugo.Data.site_sections }}
           {{ if or (eq .id "openriak-kv") (eq .id "community") }}<div class="site-section-separator" role="separator"></div>{{ end }}
           <a href="{{ partial "site-section-url.html" .url }}" data-site-section-id="{{ .id }}" class="site-section-option{{ if eq .id $section.id }} is-active{{ end }}"{{ if eq .id $section.id }} aria-current="page"{{ end }}>
-            {{ partial "site-picker-icon.html" . }}
-            <span class="site-section-name">{{ .name }}</span>
+            {{ if eq .pickerIcon "openriak" }}
+              <img class="site-section-wordmark" src="{{ printf "images/products/%s-wordmark.svg" .id | relURL }}" alt="{{ .name }}">
+            {{ else }}
+              {{ partial "site-picker-icon.html" . }}
+              <span class="site-section-name">{{ .name }}</span>
+            {{ end }}
           </a>
         {{ end }}
+        <div class="site-section-separator" role="separator"></div>
+        <a class="site-section-option{{ if eq $section.id "settings" }} is-active{{ end }}" href="{{ `settings/` | relURL }}" data-settings-link{{ if eq $section.id "settings" }} aria-current="page"{{ end }}>
+          {{ partial "site-picker-icon.html" (dict "pickerIcon" "settings") }}
+          <span class="site-section-name">Settings</span>
+        </a>
       </div>
     </div>
     <div class="share-control" data-share-control>

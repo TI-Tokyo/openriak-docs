@@ -1,3 +1,6 @@
+{{ if eq .Layout "settings" }}
+{{ partial "sidebar-shell.html" (dict "class" "site-section-sidebar" "label" "Settings navigation" "context" (dict "page" .) "toolsPartial" "settings-sidebar-tools.html" "treePartial" "settings-sidebar-tree.html" "showSearch" true "showTree" true "showScrim" true) }}
+{{ else }}
 {{- $section := .FirstSection -}}
 {{- $context := dict "page" . "section" $section -}}
 {{ partial "sidebar-shell.html" (dict
@@ -10,3 +13,5 @@
   "showTree" true
   "showScrim" true
 ) }}
+
+{{ end }}

@@ -1,0 +1,11 @@
+{{- $products := slice -}}
+{{- range slice "openriak-kv" "openriak-cs" "openriak-ts" -}}
+  {{- $id := . -}}
+  {{- $product := index hugo.Data.product $id -}}
+  {{- $versions := slice -}}
+  {{- range index hugo.Data.versions $id -}}
+    {{- $versions = $versions | append (dict "version" .version "defaultOs" .defaultOs "operatingSystems" (.operatingSystems | default slice)) -}}
+  {{- end -}}
+  {{- $products = $products | append (dict "id" $id "name" $product.name "logo" (printf "images/products/%s-wordmark.svg" $id | relURL) "base" (printf "%s/" $id | relURL) "versions" $versions) -}}
+{{- end -}}
+{{- return $products -}}

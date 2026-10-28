@@ -254,7 +254,135 @@
     return new RegExp(pattern, flags);
   };
 
-  const api = { parseSemVer, compareSemVer, resolveBrand, resolveOs, resolveValue, buildVersionCandidates, pageExists, resolveAssetUrl, configurationDefaultForOs, configurationSearchPattern, configurationSearchExpression, osReleaseKey, groupOsReleases, resolveReleaseArchitecture };
+  const osLabel = os => os.displayName || `${os.name} ${os.version}`;
+  const compareOsVersions = (left, right) => {
+    const a = String(left).split(/[.-]/).map((part) => Number.parseInt(part, 10) || 0);
+    const b = String(right).split(/[.-]/).map((part) => Number.parseInt(part, 10) || 0);
+    for (let i = 0; i < Math.max(a.length, b.length); i += 1) {
+      if ((a[i] || 0) !== (b[i] || 0)) return (a[i] || 0) - (b[i] || 0);
+    }
+    return 0;
+  };
+
+  const renderOsControl = ({ root, systems, selectedOs, assetBase, onSelect, close }) => {
+    const trigger = root?.querySelector('[data-os-trigger]');
+    const panel = root?.querySelector('[data-os-picker]');
+    const logo = root?.querySelector('[data-os-logo]');
+    const label = root?.querySelector('[data-os-label]');
+    if (!root || !trigger || !panel || !logo || !label || !selectedOs) return;
+    label.textContent = osLabel(selectedOs);
+    logo.src = resolveAssetUrl(selectedOs.logo, assetBase, window.location.origin);
+    panel.replaceChildren();
+    const families = new Map();
+    groupOsReleases(systems).forEach(([os]) => {
+      if (!families.has(os.family)) families.set(os.family, []);
+      families.get(os.family).push(os);
+    });
+    families.forEach((items, family) => {
+      const section = document.createElement('section');
+      section.className = 'os-family';
+      const heading = document.createElement('h2');
+      heading.textContent = items[0].name || family;
+      section.append(heading);
+      items.sort((a, b) => compareOsVersions(b.version, a.version)).forEach((os) => {
+        const option = document.createElement('button');
+        option.type = 'button';
+        option.className = 'os-option';
+        option.dataset.osId = os.id;
+        option.setAttribute('role', 'option');
+        const active = osReleaseKey(os) === osReleaseKey(selectedOs);
+        option.setAttribute('aria-selected', String(active));
+        if (active) option.classList.add('is-active');
+        const optionLogo = document.createElement('img');
+        optionLogo.className = 'os-option-logo';
+        optionLogo.src = resolveAssetUrl(os.logo, assetBase, window.location.origin);
+        optionLogo.alt = '';
+        const copy = document.createElement('span');
+        copy.className = 'os-option-copy';
+        const name = document.createElement('strong');
+        name.textContent = osLabel(os);
+        copy.append(name);
+        option.append(optionLogo, copy);
+        option.addEventListener('click', () => {
+          onSelect(os);
+          close(true);
+        });
+        section.append(option);
+      });
+      panel.append(section);
+    });
+  };
+
+  const osControlClosers = new Map();
+  let osOutsideClickBound = false;
+  const setupOsControl = (root) => {
+    const trigger = root?.querySelector('[data-os-trigger]');
+    const panel = root?.querySelector('[data-os-picker]');
+    if (!root || !trigger || !panel) return;
+    const closeOsPicker = (restoreFocus = false) => {
+      panel.hidden = true;
+      trigger.setAttribute('aria-expanded', 'false');
+      if (restoreFocus) trigger.focus();
+    };
+    const open = () => {
+      panel.hidden = false;
+      trigger.setAttribute('aria-expanded', 'true');
+    };
+    trigger.addEventListener('click', () => panel.hidden ? open() : closeOsPicker());
+    trigger.addEventListener('keydown', (event) => {
+      if (!['ArrowDown', 'Enter', ' '].includes(event.key)) return;
+      event.preventDefault();
+      open();
+      panel.querySelector('.os-option.is-active, .os-option')?.focus();
+    });
+    panel.addEventListener('keydown', (event) => {
+      if (event.ctrlKey || event.metaKey || event.altKey) return;
+      const options = [...panel.querySelectorAll('.os-option')];
+      const current = options.indexOf(document.activeElement);
+      let next = current;
+      if (event.key === 'ArrowDown') next = Math.min(current + 1, options.length - 1);
+      else if (event.key === 'ArrowUp') next = Math.max(current - 1, 0);
+      else if (event.key === 'Home') next = 0;
+      else if (event.key === 'End') next = options.length - 1;
+      else return;
+      event.preventDefault();
+      options[next]?.focus();
+    });
+    osControlClosers.set(root, closeOsPicker);
+    if (!osOutsideClickBound) {
+      osOutsideClickBound = true;
+      document.addEventListener('click', event => {
+        osControlClosers.forEach((close, control) => {
+          if (!control.isConnected) osControlClosers.delete(control);
+          else if (!control.contains(event.target)) close();
+        });
+      });
+    }
+    root.addEventListener('focusout', event => { if (!root.contains(event.relatedTarget)) closeOsPicker(); });
+    root.addEventListener('keydown', event => { if (event.key === 'Escape' && !panel.hidden) closeOsPicker(true); });
+    return closeOsPicker;
+  };
+
+  const renderArchitectureControl = ({ list, systems, selectedOs, onSelect }) => {
+    list.replaceChildren();
+    systems.filter(os => osReleaseKey(os) === osReleaseKey(selectedOs)).forEach(os => {
+      const item = document.createElement('li');
+      const button = document.createElement('button');
+      button.type = 'button';
+      button.dataset.downloadArchitectureSelect = os.id;
+      button.textContent = os.architecture;
+      const active = os.id === selectedOs.id;
+      button.setAttribute('aria-pressed', String(active));
+      button.classList.toggle('is-active', active);
+      button.addEventListener('click', () => {
+        onSelect(os);
+        list.querySelector(`[data-download-architecture-select="${CSS.escape(os.id)}"]`)?.focus();
+      });
+      item.append(button); list.append(item);
+    });
+  };
+
+  const api = { parseSemVer, compareSemVer, resolveBrand, resolveOs, resolveValue, buildVersionCandidates, pageExists, resolveAssetUrl, configurationDefaultForOs, configurationSearchPattern, configurationSearchExpression, osReleaseKey, groupOsReleases, resolveReleaseArchitecture, renderOsControl, setupOsControl, renderArchitectureControl };
   if (typeof module !== 'undefined' && module.exports) module.exports = api;
   if (typeof window !== 'undefined') window.OpenRiakDocs = api;
   if (typeof document === 'undefined') return;
@@ -422,7 +550,7 @@
         node.replaceWith(fragment);
       });
     };
-    document.querySelectorAll('[data-configuration-reference]').forEach((reference) => {
+    document.querySelectorAll('[data-configuration-reference]').forEach((reference, tableIndex) => {
       const input = reference.querySelector('[data-configuration-search]');
       const modeSelect = reference.querySelector('[data-configuration-search-mode]');
       const result = reference.querySelector('[data-configuration-results]');
@@ -433,6 +561,28 @@
       modeSelect.value = rememberedSearchMode;
       const rows = () => [...body.querySelectorAll('[data-configuration-key]')];
       const tagFilters = [...reference.querySelectorAll('[data-configuration-tag-filter]')];
+      const filterKey = `openriak-docs-table-filters:${context.product.id}:${location.pathname}:${tableIndex}`;
+      const restoreFilters = () => {
+        let saved = {};
+        try { const value = JSON.parse(localStorage.getItem(filterKey) || '{}'); if (value && typeof value === 'object' && !Array.isArray(value)) saved = value; } catch {}
+        input.value = saved.search || '';
+        tagFilters.forEach(filter => { filter.value = saved[filter.dataset.configurationTagFilter] || ''; });
+        const mode = localStorage.getItem(searchModeStorageKey);
+        modeSelect.value = searchModes.has(mode) ? mode : 'contains';
+      };
+      const saveFilters = () => {
+        try { localStorage.setItem(filterKey, JSON.stringify({ search: input.value, ...Object.fromEntries(tagFilters.map(filter => [filter.dataset.configurationTagFilter, filter.value])) })); } catch {}
+      };
+      try {
+        const catalogKey = 'openriak-docs-filter-catalog';
+        const catalog = JSON.parse(localStorage.getItem(catalogKey) || '{}');
+        catalog[filterKey] = { title: `${document.title} · Table ${tableIndex + 1}`, controls: [
+          { name: 'search', label: 'Search text', type: 'text' },
+          ...tagFilters.map(filter => ({ name: filter.dataset.configurationTagFilter, label: filter.dataset.configurationTagFilter, options: [...filter.options].map(option => [option.value, option.textContent]) }))
+        ] };
+        localStorage.setItem(catalogKey, JSON.stringify(catalog));
+      } catch {}
+      restoreFilters();
       const rowTags = new Map(rows().map(row => [row, JSON.parse(row.dataset.configurationTags || '{}')]));
       const refresh = () => {
         clearHighlights(reference);
@@ -467,14 +617,16 @@
         result.value = query || tagFilters.some(filter => filter.value) ? `${visible} of ${total} rows` : `${total} rows`;
         result.textContent = result.value;
       };
-      tagFilters.forEach(filter => filter.addEventListener('change', refresh));
+      tagFilters.forEach(filter => filter.addEventListener('change', () => { saveFilters(); refresh(); }));
       reference.querySelector('[data-configuration-reset]')?.addEventListener('click', () => {
         input.value = '';
         tagFilters.forEach(filter => { filter.value = ''; });
+        saveFilters();
         refresh();
       });
       reference.refreshConfigurationTable = refresh;
-      input.addEventListener('input', refresh);
+      input.addEventListener('input', () => { saveFilters(); refresh(); });
+      window.addEventListener('storage', event => { if ([null, filterKey, searchModeStorageKey].includes(event.key)) { restoreFilters(); refresh(); } });
       modeSelect.addEventListener('change', () => {
         if (!searchModes.has(modeSelect.value)) return;
         window.localStorage.setItem(searchModeStorageKey, modeSelect.value);
@@ -529,24 +681,7 @@
       button.classList.toggle('is-active', isSelected);
     });
     document.querySelectorAll('[data-download-architecture-options]').forEach(list => {
-      list.replaceChildren();
-      currentVersion.operatingSystems.filter(os => osReleaseKey(os) === osReleaseKey(selectedOs)).forEach(os => {
-        const item = document.createElement('li');
-        const button = document.createElement('button');
-        button.type = 'button';
-        button.dataset.downloadArchitectureSelect = os.id;
-        button.textContent = os.architecture;
-        const active = os.id === selectedOs.id;
-        button.setAttribute('aria-pressed', String(active));
-        button.classList.toggle('is-active', active);
-        button.addEventListener('click', () => {
-          setOs(os, true);
-          // Rendering replaces the buttons; retain keyboard focus on the choice.
-          list.querySelector(`[data-download-architecture-select="${CSS.escape(os.id)}"]`)?.focus();
-        });
-        item.append(button);
-        list.append(item);
-      });
+      renderArchitectureControl({ list, systems: currentVersion.operatingSystems, selectedOs, onSelect: os => setOs(os, true) });
       list.closest('[data-download-architecture-picker]').hidden = false;
     });
     document.querySelectorAll('[data-selected-download-os]').forEach((label) => {
@@ -671,106 +806,14 @@
     if (window.location.hash === '#all-downloads' && allDownloads) allDownloads.open = true;
   };
 
-  const osLabel = os => os.displayName || `${os.name} ${os.version}`;
   const osAssetUrl = (logo) => resolveAssetUrl(logo, context.assetBase, window.location.origin);
   let closeOsPicker = () => {};
 
-  const renderOsPicker = () => {
-    const root = document.querySelector('[data-os-control]');
-    const trigger = root?.querySelector('[data-os-trigger]');
-    const panel = root?.querySelector('[data-os-picker]');
-    const logo = root?.querySelector('[data-os-logo]');
-    const label = root?.querySelector('[data-os-label]');
-    if (!root || !trigger || !panel || !logo || !label || !selectedOs) return;
-    label.textContent = osLabel(selectedOs);
-    logo.src = osAssetUrl(selectedOs.logo);
-    panel.replaceChildren();
-    const families = new Map();
-    groupOsReleases(currentVersion.operatingSystems).forEach(([os]) => {
-      if (!families.has(os.family)) families.set(os.family, []);
-      families.get(os.family).push(os);
-    });
-    families.forEach((items, family) => {
-      const section = document.createElement('section');
-      section.className = 'os-family';
-      const heading = document.createElement('h2');
-      heading.textContent = items[0].name || family;
-      section.append(heading);
-      items.sort((a, b) => compareOsVersions(b.version, a.version)).forEach((os) => {
-        const option = document.createElement('button');
-        option.type = 'button';
-        option.className = 'os-option';
-        option.dataset.osId = os.id;
-        option.setAttribute('role', 'option');
-        const active = osReleaseKey(os) === osReleaseKey(selectedOs);
-        option.setAttribute('aria-selected', String(active));
-        if (active) option.classList.add('is-active');
-        const optionLogo = document.createElement('img');
-        optionLogo.className = 'os-option-logo';
-        optionLogo.src = osAssetUrl(os.logo);
-        optionLogo.alt = '';
-        const copy = document.createElement('span');
-        copy.className = 'os-option-copy';
-        const name = document.createElement('strong');
-        name.textContent = osLabel(os);
-        copy.append(name);
-        option.append(optionLogo, copy);
-        option.addEventListener('click', () => {
-          setOs(selectRelease(os));
-          closeOsPicker(true);
-        });
-        section.append(option);
-      });
-      panel.append(section);
-    });
-  };
-
-  const setupOsPicker = () => {
-    const root = document.querySelector('[data-os-control]');
-    const trigger = root?.querySelector('[data-os-trigger]');
-    const panel = root?.querySelector('[data-os-picker]');
-    if (!root || !trigger || !panel) return;
-    closeOsPicker = (restoreFocus = false) => {
-      panel.hidden = true;
-      trigger.setAttribute('aria-expanded', 'false');
-      if (restoreFocus) trigger.focus();
-    };
-    const open = () => {
-      panel.hidden = false;
-      trigger.setAttribute('aria-expanded', 'true');
-    };
-    trigger.addEventListener('click', () => panel.hidden ? open() : closeOsPicker());
-    trigger.addEventListener('keydown', (event) => {
-      if (!['ArrowDown', 'Enter', ' '].includes(event.key)) return;
-      event.preventDefault();
-      open();
-      panel.querySelector('.os-option.is-active, .os-option')?.focus();
-    });
-    panel.addEventListener('keydown', (event) => {
-      if (event.ctrlKey || event.metaKey || event.altKey) return;
-      const options = [...panel.querySelectorAll('.os-option')];
-      const current = options.indexOf(document.activeElement);
-      let next = current;
-      if (event.key === 'ArrowDown') next = Math.min(current + 1, options.length - 1);
-      else if (event.key === 'ArrowUp') next = Math.max(current - 1, 0);
-      else if (event.key === 'Home') next = 0;
-      else if (event.key === 'End') next = options.length - 1;
-      else return;
-      event.preventDefault();
-      options[next]?.focus();
-    });
-    document.addEventListener('click', (event) => { if (!root.contains(event.target)) closeOsPicker(); });
-    document.addEventListener('keydown', (event) => { if (event.key === 'Escape' && !panel.hidden) closeOsPicker(true); });
-  };
-
-  const compareOsVersions = (left, right) => {
-    const a = String(left).split(/[.-]/).map((part) => Number.parseInt(part, 10) || 0);
-    const b = String(right).split(/[.-]/).map((part) => Number.parseInt(part, 10) || 0);
-    for (let i = 0; i < Math.max(a.length, b.length); i += 1) {
-      if ((a[i] || 0) !== (b[i] || 0)) return (a[i] || 0) - (b[i] || 0);
-    }
-    return 0;
-  };
+  const renderOsPicker = () => renderOsControl({
+    root: document.querySelector('[data-os-control]'), systems: currentVersion.operatingSystems,
+    selectedOs, assetBase: context.assetBase, onSelect: os => setOs(selectRelease(os)), close: closeOsPicker
+  });
+  const setupOsPicker = () => { closeOsPicker = setupOsControl(document.querySelector('[data-os-control]')) || (() => {}); };
 
   const setOs = (os, rememberArchitecture = false) => {
     selectedOs = os;
@@ -795,6 +838,13 @@
     applyConfigurationReferences();
     renderDownloads();
   };
+
+  window.addEventListener('storage', event => {
+    if (![storageKey, architectureStorageKey, null].includes(event.key)) return;
+    readArchitecturePreferences();
+    const os = initialOs();
+    if (os && os.id !== selectedOs?.id) setOs(os);
+  });
 
   const switchVersion = async (target) => {
     const targetOs = selectedOs
@@ -839,7 +889,20 @@
       section.className = 'version-brand';
       section.dataset.brand = brand.name;
       const heading = document.createElement('h2');
-      heading.innerHTML = `<img src="${resolveAssetUrl(brand.logo, context.assetBase, window.location.origin)}" alt=""> <span>${brand.name}</span>`;
+      if (brand.name.startsWith('OpenRiak ') || brand.name === 'Riak KV') {
+        const logo = document.createElement('img');
+        const logoId = brand.name.toLowerCase().replaceAll(' ', '-');
+        logo.src = resolveAssetUrl(`images/products/${logoId}-wordmark.svg`, context.assetBase, window.location.origin);
+        logo.alt = brand.name;
+        heading.append(logo);
+      } else if (brand.name === 'Riak CS' || brand.name === 'Riak TS') {
+        const logo = document.createElement('img');
+        logo.src = resolveAssetUrl(brand.logo, context.assetBase, window.location.origin);
+        logo.alt = brand.name;
+        heading.append(logo);
+      } else {
+        heading.innerHTML = `<img src="${resolveAssetUrl(brand.logo, context.assetBase, window.location.origin)}" alt=""> <span>${brand.name}</span>`;
+      }
       section.append(heading);
       if (!matching.length) {
         const comingSoon = document.createElement('p');

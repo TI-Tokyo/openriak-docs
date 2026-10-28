@@ -50,6 +50,9 @@ module:
     # directories remain hand-authored; only the expanded Hugo config is generated.
     # GENERATED_VERSION_MOUNTS
 
+    # Build-time Pele SVGs; Hugo embeds these without a browser renderer.
+    - {source: '../tools/generated/mermaid', target: 'assets/mermaid'}
+
     # Project data is keyed by product ID.
     - {source: 'openriak-kv/data/product.json', target: 'data/product/openriak-kv.json'}
     - {source: 'openriak-cs/data/product.json', target: 'data/product/openriak-cs.json'}
