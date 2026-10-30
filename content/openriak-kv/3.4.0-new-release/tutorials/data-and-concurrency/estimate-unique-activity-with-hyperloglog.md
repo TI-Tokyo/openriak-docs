@@ -5,11 +5,12 @@ product: OpenRiak KV
 product_version: 3.4.0
 diataxis: tutorial
 draft: true
-status: editorially-rewritten
+status: reviewed
 editorial_review: complete
-technical_review: required
-last_reviewed: '2026-09-22'
-review_scope: diataxis-content-and-navigation
+technical_review: complete
+last_reviewed: '2026-10-29'
+review_scope: content review
+review-by: TI Tokyo/JOM
 description: Estimate unique visitors using a distributed data type. Use a fresh learning cluster or a fresh key
   so earlier runs do not change the observation.
 related:

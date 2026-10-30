@@ -7,7 +7,7 @@ draft: true
 description: Practise membership changes, failures, backups, rolling restarts, and bounded repair with disposable
   data before applying a production procedure.
 editorial_review: complete
-technical_review: required
+technical_review: complete
 related: []
 features: ["cluster-management"]
 concepts: ["node-lifecycle","recovery"]
