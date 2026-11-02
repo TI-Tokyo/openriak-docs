@@ -5,11 +5,12 @@ product: OpenRiak KV
 product_version: 3.4.0
 diataxis: tutorial
 draft: true
-status: editorially-rewritten
+status: reviewed
 editorial_review: complete
-technical_review: required
-last_reviewed: '2026-09-22'
-review_scope: diataxis-content-and-navigation
+technical_review: complete
+last_reviewed: '2026-11-02'
+review_scope: content review
+review-by: TI Tokyo/JOM
 description: Combine two independently verified index searches. Continue with the people dataset and find people
   whose surname is Ng and whose city is Tokyo.
 related:

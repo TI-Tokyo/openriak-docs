@@ -6,7 +6,7 @@ product_version: 3.4.0
 draft: true
 description: Understand how stored index terms become bounded searches, projected attributes, and combined results.
 editorial_review: complete
-technical_review: required
+technical_review: complete
 related: []
 features: ["query-processing","secondary-indexes"]
 concepts: ["querying"]

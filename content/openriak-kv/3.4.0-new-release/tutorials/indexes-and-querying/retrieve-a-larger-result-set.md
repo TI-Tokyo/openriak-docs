@@ -5,11 +5,12 @@ product: OpenRiak KV
 product_version: 3.4.0
 diataxis: tutorial
 draft: true
-status: editorially-rewritten
+status: reviewed
 editorial_review: complete
-technical_review: required
-last_reviewed: '2026-09-22'
-review_scope: diataxis-content-and-navigation
+technical_review: complete
+last_reviewed: '2026-11-02'
+review_scope: content review
+review-by: TI Tokyo/JOM
 description: Retrieve all three people using secondary-index continuations and verify the combined result.
 related:
 - tutorials/indexes-and-querying/produce-counts-and-grouped-results
@@ -28,7 +29,7 @@ Retrieve the three people in small pages, preserving the continuation between re
 
 ## Compatibility and release limits
 
-**This exercise uses a deprecated interface.** The legacy secondary-index HTTP endpoint is deprecated from 3.4. Use the [Query API]({{< product-version-root >}}reference/query-api/endpoints-and-request-schema/) for new applications where its query contract meets your requirements.
+>[!WARN]**This exercise uses a deprecated interface.** The legacy secondary-index HTTP endpoint is deprecated from 3.4. Use the [Query API]({{< product-version-root >}}reference/query-api/endpoints-and-request-schema/) for new applications where its query contract meets your requirements.
 
 On the tested 3.4.0 Alpine 3.24 / OTP 26 image, small-page Query API requests could time out when a vnode returned an empty result batch. The legacy endpoint provides a temporary workaround for this bounded index-range exercise. That failure has not been verified on 3.4.1; check [Continuations and result delivery]({{< product-version-root >}}reference/query-api/continuations-and-result-delivery/) for the selected release before choosing a production pagination interface.
 
