@@ -5,11 +5,12 @@ product: OpenRiak KV
 product_version: 3.4.0
 diataxis: tutorial
 draft: true
-status: editorially-rewritten
+status: reviewed
 editorial_review: complete
-technical_review: required
-last_reviewed: '2026-09-22'
-review_scope: diataxis-content-and-navigation
+technical_review: complete
+last_reviewed: '2026-11-03'
+review_scope: content review
+review-by: TI Tokyo/JOM
 description: Verify that group membership grants a read but not a write, then revoke the grant. Continue directly
   from the authenticated TLS lesson.
 related:

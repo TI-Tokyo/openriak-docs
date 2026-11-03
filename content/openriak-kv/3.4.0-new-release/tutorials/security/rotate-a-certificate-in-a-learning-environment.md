@@ -5,11 +5,12 @@ product: OpenRiak KV
 product_version: 3.4.0
 diataxis: tutorial
 draft: true
-status: editorially-rewritten
+status: reviewed
 editorial_review: complete
 technical_review: required
-last_reviewed: '2026-09-22'
-review_scope: diataxis-content-and-navigation
+last_reviewed: '2026-11-03'
+review_scope: content review
+review-by: TI Tokyo/JOM
 description: Replace the server certificate while retaining the same learning CA, then verify the new certificate
   and the authenticated application request. Complete the first two security lessons before starting.
 related:

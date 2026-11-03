@@ -6,7 +6,7 @@ product_version: 3.4.0
 draft: true
 description: Enable AAE, establish source queues and sink consumers, then seed, reconcile, and protect the connection.
 editorial_review: complete
-technical_review: required
+technical_review: complete
 related: []
 features: ["queue-replication"]
 concepts: ["cross-cluster-replication"]

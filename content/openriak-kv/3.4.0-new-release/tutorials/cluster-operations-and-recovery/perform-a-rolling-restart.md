@@ -7,9 +7,10 @@ diataxis: tutorial
 draft: true
 status: editorially-rewritten
 editorial_review: complete
-technical_review: required
-last_reviewed: '2026-09-22'
-review_scope: diataxis-content-and-navigation
+technical_review: complete
+last_reviewed: '2026-11-02'
+review_scope: content review
+review-by: TI Tokyo/JOM
 description: Restart the five learning nodes one at a time while a sample read continues through another member.
   Complete [[T0]] and use its Compose directory and shell helper.
 related:

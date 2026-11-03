@@ -7,7 +7,7 @@ weight: 1120
 diataxis: reference
 product: OpenRiak KV
 product_version: 3.4.0
-status: editorially-rewritten
+status: reviewed
 draft: true
 audience:
 - developers
@@ -23,8 +23,9 @@ tags:
 - reference
 editorial_review: complete
 technical_review: required
-last_reviewed: '2026-09-22'
-review_scope: diataxis-content-and-navigation
+last_reviewed: '2026-11-03'
+review_scope: content review
+review-by: TI Tokyo/JOM
 restructured_from:
 - reference/client-libraries/_index.md
 related:

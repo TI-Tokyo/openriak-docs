@@ -14,12 +14,12 @@ tags:
 - reference
 - release-notes
 draft: true
-status: needs-review
+status: reviewed
 review_scope:
 - link-checking
 - content
 editorial_review: complete
-technical_review: required
+technical_review: complete
 last_reviewed: '2026-09-17'
 review-by: TI Tokyo/JOM
 related:

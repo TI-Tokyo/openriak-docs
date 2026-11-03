@@ -5,11 +5,12 @@ product: OpenRiak KV
 product_version: 3.4.0
 diataxis: tutorial
 draft: true
-status: editorially-rewritten
+status: reviewed
 editorial_review: complete
-technical_review: required
-last_reviewed: '2026-09-22'
-review_scope: diataxis-content-and-navigation
+technical_review: complete
+last_reviewed: '2026-11-03'
+review_scope: content review
+review-by: TI Tokyo/JOM
 description: Requeue changes from a known time window and confirm that the destination receives them. Complete [[T31]]
   and [[T32]] first.
 related:

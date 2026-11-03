@@ -5,11 +5,12 @@ product: OpenRiak KV
 product_version: 3.4.0
 diataxis: tutorial
 draft: true
-status: editorially-rewritten
+status: reviewed
 editorial_review: complete
-technical_review: required
-last_reviewed: '2026-09-22'
-review_scope: diataxis-content-and-navigation
+technical_review: complete
+last_reviewed: '2026-11-03'
+review_scope: content review
+review-by: TI Tokyo/JOM
 description: Pause the sink from the preceding replication lesson, write a new object, and watch it catch up after
   resuming. Keep both clusters running throughout the interruption so this first exercise preserves the source queue.
 related:
@@ -25,7 +26,7 @@ features: ["queue-replication"]
 concepts: ["cross-cluster-replication"]
 ---
 
-Pause the sink from the preceding replication lesson, write a new object, and watch it catch up after resuming. Keep both clusters running throughout the interruption so this first exercise preserves the source queue.
+You will pause the sink from the preceding replication lesson, write a new object, and watch it catch up after resuming. Keep both clusters running throughout the interruption so this first exercise preserves the source queue.
 
 ## Pause cluster B's consumer
 

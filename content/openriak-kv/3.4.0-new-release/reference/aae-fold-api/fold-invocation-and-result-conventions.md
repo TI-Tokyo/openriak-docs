@@ -6,7 +6,7 @@ weight: 830
 diataxis: reference
 product: OpenRiak KV
 product_version: 3.4.0
-status: editorially-rewritten
+status: needs better tables
 draft: true
 audience:
 - operators
@@ -37,9 +37,10 @@ tags:
 - kv
 - reference
 editorial_review: complete
-technical_review: required
-last_reviewed: '2026-09-22'
-review_scope: diataxis-content-and-navigation
+technical_review: complete
+last_reviewed: '2026-11-03'
+review_scope: content review
+review-by: TI Tokyo/JOM
 restructured_from:
 - reference/aae-fold-api/_index.md
 related:

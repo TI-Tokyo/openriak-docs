@@ -5,11 +5,12 @@ product: OpenRiak KV
 product_version: 3.4.0
 diataxis: reference
 draft: true
-status: editorially-rewritten
+status: reviewed
 editorial_review: complete
 technical_review: required
-last_reviewed: '2026-09-22'
-review_scope: diataxis-content-and-navigation
+last_reviewed: '2026-11-03'
+review_scope: content review
+review-by: TI Tokyo/JOM
 description: Erlang runtime settings control process, scheduler, distribution, memory, and shutdown behaviour. Apply
   changes to a measured bottleneck and verify the running service receives them.
 related:

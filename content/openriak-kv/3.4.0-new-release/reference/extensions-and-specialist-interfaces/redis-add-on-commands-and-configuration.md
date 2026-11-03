@@ -5,11 +5,12 @@ product: OpenRiak KV
 product_version: 3.4.0
 diataxis: reference
 draft: true
-status: editorially-rewritten
+status: reviewed
 editorial_review: complete
 technical_review: required
-last_reviewed: '2026-09-22'
-review_scope: diataxis-content-and-navigation
+last_reviewed: '2026-11-03'
+review_scope: content review
+review-by: TI Tokyo/JOM
 description: The Redis add-on is a separate integration with its own command and cache behaviour. It must be matched
   to an identified add-on build and compatible OpenRiak deployment; a standard OpenRiak package does not by itself
   est

@@ -5,11 +5,12 @@ product: OpenRiak KV
 product_version: 3.4.0
 diataxis: tutorial
 draft: true
-status: editorially-rewritten
+status: reviewed
 editorial_review: complete
-technical_review: required
-last_reviewed: '2026-09-22'
-review_scope: diataxis-content-and-navigation
+technical_review: complete
+last_reviewed: '2026-11-03'
+review_scope: content review
+review-by: TI Tokyo/JOM
 description: Reconcile only the `repl-demo` bucket and observe that an unrelated bucket is outside the check. Continue
   from the two-cluster replication lab.
 related:
@@ -29,7 +30,7 @@ Reconcile only the `repl-demo` bucket and observe that an unrelated bucket is ou
 
 ## Select the bucket
 
-On A, change the fullsync scope to the selected bucket:
+On cluster A, change the fullsync scope to the selected bucket:
 
 {{< settings-example >}}
 ttaaefs_scope = bucket
@@ -37,11 +38,11 @@ ttaaefs_bucketfilter_name = repl-demo
 ttaaefs_bucketfilter_type = default
 {{< /settings-example >}}
 
-Keep the peer and queue definitions from [Replicate data between two clusters]({{< product-version-root >}}tutorials/replication-and-reconciliation/replicate-data-between-two-clusters/), restart A, and wait for AAE readiness. For a typed bucket, also supply the matching type using [Next-generation replication settings]({{< product-version-root >}}reference/configuration/next-generation-replication-settings/); this exercise uses the untyped bucket.
+Keep the peer and queue definitions from [Replicate data between two clusters]({{< product-version-root >}}tutorials/replication-and-reconciliation/replicate-data-between-two-clusters/), restart cluster A, and wait for AAE readiness. For a typed bucket, also supply the matching type using [Next-generation replication settings]({{< product-version-root >}}reference/configuration/next-generation-replication-settings/); this exercise uses the untyped bucket.
 
 ## Create an older missing value
 
-Pause B's sink queue as in [Catch up after a replication interruption]({{< product-version-root >}}tutorials/replication-and-reconciliation/catch-up-after-a-replication-interruption/). Write `bucket-check` to A's `repl-demo` bucket and `outside-check` to a separate `outside-demo` bucket. To make a reproducible reconciliation gap, clear A's source queue **only in this disposable lab**, then resume B:
+Pause cluster B's sink queue as in [Catch up after a replication interruption]({{< product-version-root >}}tutorials/replication-and-reconciliation/catch-up-after-a-replication-interruption/). Write `bucket-check` to cluster A's `repl-demo` bucket and `outside-check` to a separate `outside-demo` bucket. To make a reproducible reconciliation gap, clear cluster A's source queue **only in this disposable lab**, then resume cluster B:
 
 {{< cli-example key="erlang:riak_kv_replrtq_src:clear_rtq" args="cluster_b" >}}
 

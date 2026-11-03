@@ -7,7 +7,7 @@ draft: true
 description: Look up fold invocation, filters, result shapes, and the boundary between inspection and queued maintenance
   work.
 editorial_review: complete
-technical_review: required
+technical_review: complete
 related: []
 features: ["tictac-aae"]
 concepts: ["data-access","replica-repair"]

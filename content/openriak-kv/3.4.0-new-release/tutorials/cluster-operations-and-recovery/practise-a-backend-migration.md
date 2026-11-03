@@ -6,7 +6,7 @@ weight: 60
 diataxis: tutorial
 product: OpenRiak KV
 product_version: 3.4.0
-status: editorially-rewritten
+status: reviewed
 draft: true
 audience:
 - new-operators
@@ -20,9 +20,10 @@ tags:
 - kv
 - tutorial
 editorial_review: complete
-technical_review: required
-last_reviewed: '2026-09-22'
-review_scope: diataxis-content-and-navigation
+technical_review: complete
+last_reviewed: '2026-11-02'
+review_scope: content review
+review-by: TI Tokyo/JOM
 restructured_from:
 - tutorials/operations/change-storage-backend.md
 related:
@@ -45,7 +46,7 @@ Use the two isolated clusters in [Replicate data between two clusters]({{< produ
 
 Use the replication lesson's source and sink endpoints. Write three objects named `item-001`, `item-002`, and `item-003` in an untyped bucket named `migration-demo`. Record their bodies and read each one back from the source.
 
-## Enable delivery before seeding
+## Enable replication before seeding
 
 Follow the source-queue and sink-worker steps in [Replicate data between two clusters]({{< product-version-root >}}tutorials/replication-and-reconciliation/replicate-data-between-two-clusters/). Use a dedicated queue for this destination. Write `item-004` after enabling real-time replication and confirm it appears at the sink.
 

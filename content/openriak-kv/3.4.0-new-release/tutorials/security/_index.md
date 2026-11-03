@@ -7,7 +7,7 @@ draft: true
 description: Work through identity, authentication, permissions, and transport protection. Test both allowed and
   denied access.
 editorial_review: complete
-technical_review: required
+technical_review: complete
 related: []
 features: ["security"]
 concepts: ["authentication"]

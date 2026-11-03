@@ -7,9 +7,10 @@ diataxis: tutorial
 draft: true
 status: editorially-rewritten
 editorial_review: complete
-technical_review: required
-last_reviewed: '2026-09-22'
-review_scope: diataxis-content-and-navigation
+technical_review: complete
+last_reviewed: '2026-11-03'
+review_scope: content review
+review-by: TI Tokyo/JOM
 description: Extend the one-way lab so each cluster can receive new writes from the other. Start with [[T31]] and
   keep both datasets small and disposable.
 related:
@@ -47,7 +48,7 @@ Repeat the reads until each returns the other cluster's value. These distinct ke
 
 ## Make reconciliation bidirectional
 
-On A set `ttaaefs_queuename_peer` to `cluster_a`. Its local queue remains `cluster_b`. On B configure the reciprocal peer relationship, with local queue `cluster_a` and peer queue `cluster_b`. Use cluster slice 1 on A and 3 on B so their scheduled work is separated.
+On cluster A set `ttaaefs_queuename_peer` to `cluster_a`. Its local queue remains `cluster_b`. On cluster B configure the reciprocal peer relationship, with local queue `cluster_a` and peer queue `cluster_b`. Use cluster slice 1 on A and 3 on B so their scheduled work is separated.
 
 {{< configuration-reference-table >}}
 ^ttaaefs_
