@@ -294,7 +294,9 @@ window.OpenRiakPageToolsReady = (async () => {
         continue;
       }
       const end = command.slice(index).search(/[\s'"`$|;&<>]/);
-      const next = end < 0 ? command.length : index + end;
+      // Unsupported dollar forms (such as $(...), $((...)), or a literal $)
+      // must still consume a character rather than retrying the same token.
+      const next = end < 0 ? command.length : index + Math.max(1, end);
       const word = command.slice(index, next);
       let className = '';
       if (shellKeywords.has(word)) className = 'k';
