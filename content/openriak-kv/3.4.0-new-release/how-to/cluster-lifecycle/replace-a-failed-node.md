@@ -6,7 +6,7 @@ weight: 740
 diataxis: how-to
 product: OpenRiak KV
 product_version: 3.4.0
-status: editorially-rewritten
+status: reviewed
 draft: true
 audience:
 - operators
@@ -26,9 +26,10 @@ tags:
 - kv
 - how-to
 editorial_review: complete
-technical_review: required
-last_reviewed: '2026-09-22'
-review_scope: diataxis-content-and-navigation
+technical_review: complete
+last_reviewed: '2026-10-13'
+review_scope: content review
+review-by: TI Tokyo/JOM
 restructured_from:
 - how-to/operate/replace-node.md
 related:
@@ -50,6 +51,9 @@ Replace a node whose storage is lost or cannot be trusted, then repair the new m
 Prevent the failed process from returning unexpectedly. Inspect cluster status and mark the known failed member down from a healthy node when necessary:
 
 {{< cli-example key="shell:riak admin cluster status" >}}
+
+#### Mark the node as down
+
 {{< cli-example key="shell:riak admin down" args="riak@FAILED_NODE" >}}
 
 Confirm enough surviving data exists to repair the affected partitions. Preserve failed storage for investigation rather than overwriting it.

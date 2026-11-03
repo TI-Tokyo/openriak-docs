@@ -6,7 +6,7 @@ weight: 1450
 diataxis: how-to
 product: OpenRiak KV
 product_version: 3.4.0
-status: editorially-rewritten
+status: reviewed
 draft: true
 audience:
 - operators
@@ -21,9 +21,10 @@ tags:
 - kv
 - how-to
 editorial_review: complete
-technical_review: required
-last_reviewed: '2026-09-22'
-review_scope: diataxis-content-and-navigation
+technical_review: complete
+last_reviewed: '2026-10-16'
+review_scope: content review
+review-by: TI Tokyo/JOM
 restructured_from:
 - how-to/configure/strong-consistency.md
 related:
@@ -40,7 +41,7 @@ Evaluate the deprecated experimental strong-consistency interface only in an iso
 
 ## Check the constraints
 
-Read [Experimental strong-consistency interface]({{< product-version-root >}}reference/legacy-and-experimental-features/experimental-strong-consistency-interface/) for supported operations, feature limitations, and bucket-type requirements. Inventory incompatible indexes, data types, replication, and client features before creating test data. Keep production availability expectations separate from the experiment.
+Read [Experimental strong-consistency interface]({{< product-version-root >}}reference/legacy-and-experimental-features/experimental-strong-consistency-interface/) for supported operations, feature limitations, and bucket-type requirements. You should check for incompatible indexes, data types, replication, and client features before creating test data.
 
 ## Prepare a dedicated type
 
@@ -52,6 +53,6 @@ Test concurrent writes, missing-key operations, and the application's retry rule
 
 {{< cli-example key="shell:riak admin ensemble-status" >}}
 
-## Decide and clean up
+## Clean up
 
 Record both observed consistency and unavailability, along with unsupported features and recovery behaviour. Discard the isolated environment when finished. Do not present a successful single-node demonstration as evidence of a supported production consistency guarantee.

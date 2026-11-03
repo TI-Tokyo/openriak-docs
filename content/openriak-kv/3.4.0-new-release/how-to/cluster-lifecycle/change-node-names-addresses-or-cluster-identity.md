@@ -6,7 +6,7 @@ weight: 780
 diataxis: how-to
 product: OpenRiak KV
 product_version: 3.4.0
-status: editorially-rewritten
+status: reviewed
 draft: true
 audience:
 - operators
@@ -21,9 +21,10 @@ tags:
 - kv
 - how-to
 editorial_review: complete
-technical_review: required
-last_reviewed: '2026-09-22'
-review_scope: diataxis-content-and-navigation
+technical_review: complete
+last_reviewed: '2026-10-12'
+review_scope: content review
+review-by: TI Tokyo/JOM
 restructured_from:
 - how-to/operate/change-cluster-information.md
 related:
@@ -55,4 +56,4 @@ Use its metadata help for the required arguments and stopped-node preconditions.
 
 ## Apply and verify
 
-Stop the node, update the persistent identity and required offline ring metadata using the documented command, and start it. Check membership from another member, logs, transfers, and application reads. Update monitoring and replication peers that refer to the old address. If the rename cannot be validated, retain the original state and use a planned replacement instead.
+Stop the node, update the persistent identity and required offline ring metadata using the above process, and start it. Check membership from another member, logs, transfers, and application reads. Update monitoring and replication peers that refer to the old address. If the rename cannot be validated, retain the original state and use a planned replacement instead.

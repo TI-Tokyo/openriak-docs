@@ -5,11 +5,12 @@ product: OpenRiak KV
 product_version: 3.4.0
 diataxis: tutorial
 draft: true
-status: editorially-rewritten
+status: reviewed
 editorial_review: complete
-technical_review: required
-last_reviewed: '2026-09-22'
-review_scope: diataxis-content-and-navigation
+technical_review: complete
+last_reviewed: '2026-10-30'
+review_scope: content review
+review-by: TI Tokyo/JOM
 description: Observe a successful conditional creation and a rejected attempt to create the same object again. Use
   the active `docs` type from the previous exercise.
 related:
@@ -47,10 +48,6 @@ curl --fail "$url"
 ```
 
 Confirm that the stored value is `worker-a`. Repeat with a new key to check that the rejected response was caused by the existing object, rather than by a malformed request.
-
-## Interpret the boundary
-
-This exercise demonstrates the ordinary precondition path. It does not establish a formal distributed-lock guarantee under partitions, maintenance, or independent writers that omit conditions. Use the conditional-update explanation before building a coordination workflow.
 
 ## Cleanup
 

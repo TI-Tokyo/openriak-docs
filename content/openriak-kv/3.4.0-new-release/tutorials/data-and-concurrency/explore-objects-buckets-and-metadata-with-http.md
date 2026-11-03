@@ -5,11 +5,12 @@ product: OpenRiak KV
 product_version: 3.4.0
 diataxis: tutorial
 draft: true
-status: editorially-rewritten
+status: reviewed
 editorial_review: complete
-technical_review: required
-last_reviewed: '2026-09-22'
-review_scope: diataxis-content-and-navigation
+technical_review: complete
+last_reviewed: '2026-10-30'
+review_scope: content review
+review-by: TI Tokyo/JOM
 description: Store a JSON object, inspect its metadata, update it with the context returned by a read, and delete
   it. Start with the Docker learning cluster running.
 related:

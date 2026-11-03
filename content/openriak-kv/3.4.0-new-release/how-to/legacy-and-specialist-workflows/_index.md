@@ -7,7 +7,10 @@ draft: true
 description: Maintain an existing specialist or deprecated interface with its compatibility limits explicit. Prefer
   the current interface for new deployments.
 editorial_review: complete
-technical_review: required
+technical_review: complete
+last_reviewed: '2026-10-15'
+review_scope: content review
+review-by: TI Tokyo/JOM
 related: []
 features: []
 concepts: ["compatibility"]

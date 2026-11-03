@@ -6,7 +6,7 @@ weight: 10
 diataxis: tutorial
 product: OpenRiak KV
 product_version: 3.4.0
-status: editorially-rewritten
+status: reviewed
 draft: true
 audience:
 - new-operators
@@ -21,9 +21,10 @@ tags:
 - kv
 - tutorial
 editorial_review: complete
-technical_review: required
-last_reviewed: '2026-09-22'
-review_scope: diataxis-content-and-navigation
+technical_review: complete
+last_reviewed: '2026-10-27'
+review_scope: complete
+review-by: TI Tokyo/JOM
 restructured_from:
 - tutorials/first-cluster/docker.md
 related:

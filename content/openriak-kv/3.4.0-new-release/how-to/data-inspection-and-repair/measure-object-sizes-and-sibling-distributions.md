@@ -5,7 +5,7 @@ weight: 980
 diataxis: how-to
 product: OpenRiak KV
 product_version: 3.4.0
-status: editorially-rewritten
+status: reviewed
 draft: true
 audience:
 - operators
@@ -23,9 +23,10 @@ tags:
 - kv
 - how-to
 editorial_review: complete
-technical_review: required
-last_reviewed: '2026-09-22'
-review_scope: diataxis-content-and-navigation
+technical_review: complete
+last_reviewed: '2026-10-15'
+review_scope: content review
+review-by: TI Tokyo/JOM
 restructured_from:
 - how-to/operate/aae-fold/object-statistics.md
 related:
@@ -53,4 +54,4 @@ The bucket and range in this example are placeholders for your reviewed scope. F
 
 ## Verify
 
-Inspect total count, total size, size bands, and sibling bands. Investigate unexpectedly large objects or many siblings with a targeted find-keys fold.
+Inspect total count, total size, size bands, and sibling bands. You should investigate any unexpectedly large objects or many siblings with a targeted find-keys fold.

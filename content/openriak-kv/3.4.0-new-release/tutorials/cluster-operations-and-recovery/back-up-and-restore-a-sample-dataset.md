@@ -7,9 +7,10 @@ diataxis: tutorial
 draft: true
 status: editorially-rewritten
 editorial_review: complete
-technical_review: required
-last_reviewed: '2026-09-22'
-review_scope: diataxis-content-and-navigation
+technical_review: complete
+last_reviewed: '2026-10-30'
+review_scope: content review
+review-by: TI Tokyo/JOM
 description: Take an offline backup of the learning cluster, change a value, then restore the saved state. All nodes
   will be stopped together. Keep this exercise isolated from applications and other clusters.
 related:

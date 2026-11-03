@@ -6,7 +6,7 @@ weight: 720
 diataxis: how-to
 product: OpenRiak KV
 product_version: 3.4.0
-status: editorially-rewritten
+status: reviewed
 draft: true
 audience:
 - operators
@@ -22,11 +22,13 @@ tags:
 - kv
 - how-to
 editorial_review: complete
-technical_review: required
-last_reviewed: '2026-09-22'
-review_scope: diataxis-content-and-navigation
+technical_review: complete
+last_reviewed: '2026-10-13'
+review_scope: content review
+review-by: TI Tokyo/JOM
 restructured_from:
 - how-to/operate/add-node.md
+notes: Update page to show OS specific commands rather than all OS
 related:
 - how-to/node-configuration/configure-node-identity-directories-and-the-initial-ring
 - how-to/cluster-lifecycle/plan-and-commit-a-membership-change

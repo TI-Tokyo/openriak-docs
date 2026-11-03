@@ -7,7 +7,7 @@ draft: true
 description: Choose one environment and build a disposable cluster. Docker is the common starting environment for
   later exercises; Ubuntu, AWS EC2, and Vagrant are alternative setup paths.
 editorial_review: complete
-technical_review: required
+technical_review: complete
 related: []
 features: ["cluster-management","installation"]
 concepts: ["deployment"]

@@ -6,7 +6,7 @@ weight: 100
 diataxis: tutorial
 product: OpenRiak KV
 product_version: 3.4.0
-status: editorially-rewritten
+status: reviewed
 draft: true
 audience:
 - new-developers
@@ -24,8 +24,9 @@ tags:
 - tutorial
 editorial_review: complete
 technical_review: required
-last_reviewed: '2026-09-22'
-review_scope: diataxis-content-and-navigation
+last_reviewed: '2026-10-28'
+review_scope: content review
+review-by: TI Tokyo/JOM
 restructured_from:
 - tutorials/first-application/php.md
 related:
@@ -45,7 +46,7 @@ Build a small HTTP client that creates a profile, reads and updates it with caus
 
 ## Prepare
 
-Use the Leveled cluster from the Docker tutorial and **PHP 8.3 with URL stream wrappers enabled**. This exercise uses a local unauthenticated HTTP listener. Use the authentication guide before connecting this client to a secured deployment.
+Use the Leveled cluster from the Docker tutorial and **PHP 8.3 with URL stream wrappers enabled**. This exercise uses a local unauthenticated HTTP listener. We recommend reviewing the Security guide section before connecting this client to a secured deployment.
 
 Save the example as `app.php` in a new working directory.
 
