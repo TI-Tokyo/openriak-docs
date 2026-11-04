@@ -1,0 +1,132 @@
+---
+title: Grammar and spelling review
+linkTitle: Grammar and spelling review
+description: Grammar, spelling, and UK English consistency findings for OpenRiak KV 3.4.0.
+weight: -5
+product: OpenRiak KV
+product_version: 3.4.0
+draft: true
+hide_provenance: true
+features: []
+concepts: ["documentation"]
+---
+
+This is the grammar and spelling review for OpenRiak KV **3.4.0**, recorded on **4 November 2026** and scoped to this release on **5 November 2026**. No corrections have been applied to the reviewed documentation.
+
+The target is **UK English with a professional, friendly tone for IT readers**. Familiar technical terms, concise instructions, contractions, and short headings are acceptable. This list does not propose literary rewrites or changes to technical behaviour.
+
+## Scope and how to use this list
+
+The review covers the versioned Markdown, page titles and descriptions, and the rendered configuration, command, and Protocol Buffers reference text. Spelling checks were followed by contextual review of candidates and a grammar review. Archived documentation, third-party security advisory text in download records, and technical correctness are outside this editorial review.
+
+This page lists findings for **3.4.0**. Findings in unchanged content inherited by later releases stay here rather than being repeated in those releases’ reviews. The [3.4.1 review](/docs/openriak-kv/3.4.1/to-do/grammar-and-spelling-review/) covers only content added or changed in 3.4.1. Source line numbers are those at the original review date.
+
+Repeated wording is grouped where practical. The UK English section distinguishes spelling consistency from clear errors: several `-ize` forms are also valid British English, but mixing them with the documentation's established `-ise` forms is an editorial consistency issue. Identifiers, paths, protocol fields, product names such as **Leveled**, and literal output must retain their exact spelling.
+
+## Errors in authored prose
+
+Source paths in this table are relative to `content/openriak-kv/3.4.0-new-release/`.
+
+| Page and source location | Existing wording | Finding |
+| --- | --- | --- |
+| [Downloads]({{< product-version-root >}}downloads/) — `downloads/_index.md:44` | The tag for the OpenRiak KV | Unnecessary definite article before the product name; the phrase has no following noun such as “release”. |
+| [Downloads]({{< product-version-root >}}downloads/) — `downloads/_index.md:49` | Building from these branches may contain unreleased changes. | The subject is the act of building, but the sentence describes what the resulting builds contain. |
+| [For Docker]({{< product-version-root >}}downloads/for-docker/) — `downloads/for-docker.md:42` | Developent | Spelling mistake in the warning heading: “development”. |
+| [For Docker]({{< product-version-root >}}downloads/for-docker/) — `downloads/for-docker.md:43` | these docker images | Docker is a product name and needs its capital letter. |
+| [For Docker]({{< product-version-root >}}downloads/for-docker/) — `downloads/for-docker.md:49` | We recommend 256 at a minimum, and 512 as recommended on smaller systems. | The second recommendation repeats “recommend” without completing a parallel clause. Clarify the wording while retaining the intended values. |
+| [Foundations]({{< product-version-root >}}foundations/) — `foundations/_index.md:7` | Starting with the overview, then following | Sentence fragment in the description (lines 7–8): the participles do not supply a main verb. |
+| [The lifecycle of a read and a write]({{< product-version-root >}}foundations/cluster-architecture/the-lifecycle-of-a-read-and-a-write/) — `foundations/cluster-architecture/the-lifecycle-of-a-read-and-a-write.md:40` | converge; while application conflict handling | A semicolon incorrectly separates the main clause from a dependent “while” clause. |
+| [Rolling maintenance and recovery headroom]({{< product-version-root >}}foundations/cluster-lifecycle/rolling-maintenance-and-recovery-headroom/) — `foundations/cluster-lifecycle/rolling-maintenance-and-recovery-headroom.md:42` | Restarting it restores a process but is not the end of the sequence, but handoff and repair may still be catching up. | The repeated “but” misconnects the explanation. Handoff and repair explain why restarting is not the end of the sequence. |
+| [Overview]({{< product-version-root >}}foundations/overview/) — `foundations/overview/_index.md:19` | what the OpenRiak does | Unnecessary “the” before the product name. |
+| [What OpenRiak KV is]({{< product-version-root >}}foundations/overview/what-openriak-kv-is/) — `foundations/overview/what-openriak-kv-is.md:41` | massive distributed Dictionary | “Dictionary” is an ordinary technical noun here, not a proper name; the capital letter is unnecessary. |
+| [How Bitcask stores data]({{< product-version-root >}}foundations/storage-and-performance/how-bitcask-stores-data/) — `foundations/storage-and-performance/how-bitcask-stores-data.md:61` | regular operations however. | The final contrasting adverb “however” needs separating punctuation. |
+| [How Leveled stores data]({{< product-version-root >}}foundations/storage-and-performance/how-leveled-stores-data/) — `foundations/storage-and-performance/how-leveled-stores-data.md:58` | The Ledger structures | “Ledger” is an ordinary noun here; its capitalisation is inconsistent with the rest of the explanation. |
+| [How Leveled stores data]({{< product-version-root >}}foundations/storage-and-performance/how-leveled-stores-data/) — `foundations/storage-and-performance/how-leveled-stores-data.md:62` | an all encompassing view | The compound adjective before “view” is missing its hyphen. |
+| [Multiple backends and prefix routing]({{< product-version-root >}}foundations/storage-and-performance/multiple-backends-and-prefix-routing/) — `foundations/storage-and-performance/multiple-backends-and-prefix-routing.md:63` | the version specific legacy and specialist reference | The compound adjective before the noun is missing its hyphen. |
+| [Coordinate an update with a latch object]({{< product-version-root >}}how-to/application-data/coordinate-an-update-with-a-latch-object/) — `how-to/application-data/coordinate-an-update-with-a-latch-object.md:24` | in progress-like claiming a batch | A hyphen incorrectly joins the end of the clause to the example. The example needs clear separating punctuation or a linking phrase. |
+| [Coordinate an update with a latch object]({{< product-version-root >}}how-to/application-data/coordinate-an-update-with-a-latch-object/) — `how-to/application-data/coordinate-an-update-with-a-latch-object.md:32` | `If-None-Match: *.` | The sentence-ending full stop is inside the inline header example, making it appear to be part of the header value. |
+| [Add and remove members of distributed sets]({{< product-version-root >}}how-to/application-data/add-and-remove-members-of-distributed-sets/) — `how-to/application-data/add-and-remove-members-of-distributed-sets.md:62` | for a tutorial in this. | Incorrect preposition for the subject of a tutorial; the phrase should refer to a tutorial on the operation. |
+| [Plan and commit a membership change]({{< product-version-root >}}how-to/cluster-lifecycle/plan-and-commit-a-membership-change/) — `how-to/cluster-lifecycle/plan-and-commit-a-membership-change.md:53` | Confirm tranfer status | Spelling mistake in the heading: “transfer”. |
+| [Expression grammar and operators]({{< product-version-root >}}reference/query-api/expression-grammar-and-operators/) — `reference/query-api/expression-grammar-and-operators.md:50` | Parenthesis may be used for clarity. | The text refers to paired grouping brackets, so it needs the plural noun “parentheses”. |
+| [Expression grammar and operators]({{< product-version-root >}}reference/query-api/expression-grammar-and-operators/) — `reference/query-api/expression-grammar-and-operators.md:50` | clarity. e.g. | A lower-case abbreviation begins a new sentence after the full stop; the example needs consistent sentence punctuation. |
+| [Expression grammar and operators]({{< product-version-root >}}reference/query-api/expression-grammar-and-operators/) — `reference/query-api/expression-grammar-and-operators.md:52` | Query Json - Expressions | The acronym JSON is incorrectly capitalised in the heading. |
+| [Expression grammar and operators]({{< product-version-root >}}reference/query-api/expression-grammar-and-operators/) — `reference/query-api/expression-grammar-and-operators.md:68` | then only then only | Accidentally repeated two-word phrase in the delim description. |
+| [Expression grammar and operators]({{< product-version-root >}}reference/query-api/expression-grammar-and-operators/) — `reference/query-api/expression-grammar-and-operators.md:89` | the Key and Value and separated | “and” is a mistyped verb in the kvsplit description. |
+| [Expression grammar and operators]({{< product-version-root >}}reference/query-api/expression-grammar-and-operators/) — `reference/query-api/expression-grammar-and-operators.md:111` | If either X or Y are not integers | Subject–verb agreement: “either X or Y” selects one operand and needs singular agreement. This occurs in both subtract and add descriptions (lines 111 and 115). |
+| [Expression grammar and operators]({{< product-version-root >}}reference/query-api/expression-grammar-and-operators/) — `reference/query-api/expression-grammar-and-operators.md:93` | updated, otherwise the function | Comma splice between independent clauses in the regex description. |
+| [Expression grammar and operators]({{< product-version-root >}}reference/query-api/expression-grammar-and-operators/) — `reference/query-api/expression-grammar-and-operators.md:156` | ascii-based | The acronym ASCII is incorrectly lower-cased in the Unicode support section. |
+| [Expression grammar and operators]({{< product-version-root >}}reference/query-api/expression-grammar-and-operators/) — `reference/query-api/expression-grammar-and-operators.md:156` | support unicode. | Unicode is a proper name. It is lower-cased here and twice in the following paragraph. |
+
+## UK English consistency in authored prose
+
+These are wording conventions to standardise when the editorial corrections are made. The suggested forms below are reference spellings only; the source pages remain unchanged. For `authorization`, change ordinary prose and link labels, not the HTTP `Authorization` header or existing URL paths.
+
+| Existing spelling | UK form used for this review | Locations |
+| --- | --- | --- |
+| artifact | artefact | [Build and install from source]({{< product-version-root >}}how-to/installation/build-and-install-from-source/) (`how-to/installation/build-and-install-from-source.md:70`); [Build and install from source]({{< product-version-root >}}how-to/installation/build-and-install-from-source/) (`how-to/installation/build-and-install-from-source.md:76`); [Custom code and hook interfaces]({{< product-version-root >}}reference/extensions-and-specialist-interfaces/custom-code-and-hook-interfaces/) (`reference/extensions-and-specialist-interfaces/custom-code-and-hook-interfaces.md:48`) |
+| artifacts | artefacts | [Upgrade an OpenRiak KV cluster]({{< product-version-root >}}how-to/cluster-lifecycle/upgrade-a-cluster/) (`how-to/cluster-lifecycle/upgrade-a-cluster.md:74`) |
+| authorization | authorisation | [Identities, authentication, and permissions]({{< product-version-root >}}foundations/security/identities-authentication-and-permissions/) (`foundations/security/identities-authentication-and-permissions.md:57`); [Security boundaries and trust]({{< product-version-root >}}foundations/security/security-boundaries-and-trust/) (`foundations/security/security-boundaries-and-trust.md:44`); [TLS and certificate trust]({{< product-version-root >}}foundations/security/tls-and-certificate-trust/) (`foundations/security/tls-and-certificate-trust.md:48`); [Configure a load-balancing proxy]({{< product-version-root >}}how-to/node-configuration/configure-a-load-balancing-proxy/) (`how-to/node-configuration/configure-a-load-balancing-proxy.md:49`); [Configure and rotate TLS certificates]({{< product-version-root >}}how-to/security/configure-and-rotate-tls-certificates/) (`how-to/security/configure-and-rotate-tls-certificates.md:56`); [Enable authentication and authorization]({{< product-version-root >}}how-to/security/enable-authentication-and-authorization/) (`how-to/security/enable-authentication-and-authorization.md:2`); [Enable authentication and authorization]({{< product-version-root >}}how-to/security/enable-authentication-and-authorization/) (`how-to/security/enable-authentication-and-authorization.md:3`); [Enable authentication and authorization]({{< product-version-root >}}how-to/security/enable-authentication-and-authorization/) (`how-to/security/enable-authentication-and-authorization.md:54`); [Authentication, authorization, and TLS settings]({{< product-version-root >}}reference/configuration/authentication-authorization-and-tls-settings/) (`reference/configuration/authentication-authorization-and-tls-settings.md:2`); [Responses and errors]({{< product-version-root >}}reference/query-api/responses-and-errors/) (`reference/query-api/responses-and-errors.md:50`); [How To]({{< product-version-root >}}to-do/how-to/) (`to-do/how-to.md:129`); [Reference]({{< product-version-root >}}to-do/reference/) (`to-do/reference.md:41`) |
+| behavior | behaviour | [Mermaid diagrams]({{< product-version-root >}}to-do/tests/mermaid/) (`to-do/tests/mermaid.md:17`) |
+| catalog | catalogue | [Where OpenRiak fits]({{< product-version-root >}}foundations/overview/where-openriak-fits/) (`foundations/overview/where-openriak-fits.md:50`) |
+| customized | customised | [Restrict client, node, and administrative network access]({{< product-version-root >}}how-to/security/restrict-client-node-and-administrative-network-access/) (`how-to/security/restrict-client-node-and-administrative-network-access.md:58`) |
+| datacenter | data centre | [Legacy AAE and riak_repl settings]({{< product-version-root >}}reference/legacy-and-experimental-features/legacy-aae-and-riak-repl-settings/) (`reference/legacy-and-experimental-features/legacy-aae-and-riak-repl-settings.md:14`); [Legacy AAE and riak_repl settings]({{< product-version-root >}}reference/legacy-and-experimental-features/legacy-aae-and-riak-repl-settings/) (`reference/legacy-and-experimental-features/legacy-aae-and-riak-repl-settings.md:26`) |
+| generalize | generalise | [Use and monitor the Redis add-on]({{< product-version-root >}}how-to/legacy-and-specialist-workflows/use-and-monitor-the-redis-add-on/) (`how-to/legacy-and-specialist-workflows/use-and-monitor-the-redis-add-on.md:54`) |
+| initialization | initialisation | [Legacy HTTP counters]({{< product-version-root >}}reference/http-api/legacy-http-counters/) (`reference/http-api/legacy-http-counters.md:51`) |
+| journaled | journalled | [Storage backend trade-offs]({{< product-version-root >}}foundations/storage-and-performance/storage-backend-trade-offs/) (`foundations/storage-and-performance/storage-backend-trade-offs.md:56`) |
+| linearizable | linearisable | [Choose replication and acknowledgement policies]({{< product-version-root >}}how-to/planning-a-deployment/choose-replication-and-acknowledgement-policies/) (`how-to/planning-a-deployment/choose-replication-and-acknowledgement-policies.md:47`) |
+| optimizes | optimises | [Write-once interface]({{< product-version-root >}}reference/extensions-and-specialist-interfaces/write-once-interface/) (`reference/extensions-and-specialist-interfaces/write-once-interface.md:3`); [Write-once interface]({{< product-version-root >}}reference/extensions-and-specialist-interfaces/write-once-interface/) (`reference/extensions-and-specialist-interfaces/write-once-interface.md:41`) |
+| serialization | serialisation | [Store and retrieve different content types]({{< product-version-root >}}how-to/application-data/store-and-retrieve-different-content-types/) (`how-to/application-data/store-and-retrieve-different-content-types.md:42`); [Media types and content encodings]({{< product-version-root >}}reference/data-model-contracts/media-types-and-content-encodings/) (`reference/data-model-contracts/media-types-and-content-encodings.md:44`); [Conditional requests and latch objects]({{< product-version-root >}}reference/http-api/conditional-requests-and-latch-objects/) (`reference/http-api/conditional-requests-and-latch-objects.md:58`); [Reference]({{< product-version-root >}}to-do/reference/) (`to-do/reference.md:57`); [Reference]({{< product-version-root >}}to-do/reference/) (`to-do/reference.md:80`) |
+| unauthorized | unauthorised | [Restrict client, node, and administrative network access]({{< product-version-root >}}how-to/security/restrict-client-node-and-administrative-network-access/) (`how-to/security/restrict-client-node-and-administrative-network-access.md:66`) |
+
+## UK English consistency in configuration descriptions
+
+These findings occur in the authored descriptions shown in [All configuration settings and defaults]({{< product-version-root >}}reference/configuration/all-configuration-settings-and-defaults/), including filtered settings tables elsewhere. Search for the setting name to locate its description. The names below are identifiers and must remain unchanged; the spelling finding concerns only their explanatory prose. The descriptions are supplied through the settings annotations and generated version data.
+
+| Existing spelling in the description | UK form used for this review | Settings |
+| --- | --- | --- |
+| authorized | authorised | `permit_insecure_http_ops` |
+| datacenter | data centre | `mdc.cluster_manager`, `mdc.data_root` |
+| initialization | initialisation | `riak_core.vnode_parallel_start`, `riak_kv.replrtq_logfrequency` |
+| minimizes | minimises | `replrtq_vnodecheck` |
+| normalize | normalise | `riak_core.bucket_fixups` |
+| optimization | optimisation | `buckets.default.basic_quorum`, `riak_kv.tictacaae_enablekeyrange` |
+| randomization | randomisation | `riak_repl.realtime_connection_rebalance_max_delay_secs` |
+| randomized | randomised | `leveled.journal_objectcount`, `leveled.journal_size`, `multi_backend.$name.leveled.journal_objectcount`, `multi_backend.$name.leveled.journal_size`, `replrtq_peer_discovery`, `riak_kv.replrtq_prompt_min_seconds`, `riak_repl.realtime_connection_rebalance_max_delay_secs`, `tictacaae_rebuilddelay`, `tictacaae_rebuildwait` |
+| serialization | serialisation | `riak_kv.mdc_crdt_epoch` |
+| serializing | serialising | `datatypes.compression_level` |
+| synchronization | synchronisation | `aae_tokenbucket`, `bitcask.sync.interval`, `leveldb.sync_on_write`, `leveled.sync_strategy`, `multi_backend.$name.bitcask.sync.interval`, `multi_backend.$name.leveldb.sync_on_write`, `multi_backend.$name.leveled.sync_strategy`, `riak_kv.o_sync_warning_logged` |
+| synchronize | synchronise | `leveldb.sync_on_write`, `leveled.sync_strategy`, `multi_backend.$name.leveldb.sync_on_write`, `multi_backend.$name.leveled.sync_strategy` |
+| synchronizes | synchronises | `bitcask.sync.strategy`, `multi_backend.$name.bitcask.sync.strategy` |
+| unsynchronized | unsynchronised | `bitcask.sync.interval`, `multi_backend.$name.bitcask.sync.interval` |
+| utilization | utilisation | `erlang.schedulers.utilization_balancing` |
+
+## Errors reproduced from upstream reference text
+
+These are visible in generated command help, schema details, or protocol comments. They are listed separately because literal excerpts should continue to match their source. Any later correction should be made upstream or clearly annotated, then regenerated; do not silently edit captured output or generated JSON. No such changes have been made here.
+
+| Page and location | Existing wording | Finding |
+| --- | --- | --- |
+| [riak_client:aae_fold — help text]({{< product-version-root >}}reference/commands/erlang/riak-client/aae-fold/) | (which in the case of Leveled can be the native AAE store. | Opening parenthesis has no closing partner. The same help is repeated on the fold-selector child pages and embedded references. |
+| [riak_client:ttaaefs_fullsync — help text]({{< product-version-root >}}reference/commands/erlang/riak-client/ttaaefs-fullsync/) | previour sync | Spelling mistake: “previous”. Also repeated in Fullsync requests and results. |
+| [current_peers — help text]({{< product-version-root >}}reference/commands/erlang/riak-kv-replrtq-snk/current-peers/) | this host and he workers per peer | “he” is a mistyped article; the intended word is “the”. |
+| [resume_snkqueue — help text]({{< product-version-root >}}reference/commands/erlang/riak-kv-replrtq-snk/resume-snkqueue/) | activity asociated with | Spelling mistake: “associated”. |
+| [suspend_snkqueue — help text]({{< product-version-root >}}reference/commands/erlang/riak-kv-replrtq-snk/suspend-snkqueue/) | activity asociated with | Spelling mistake: “associated”. |
+| [register_rtq — help text]({{< product-version-root >}}reference/commands/erlang/riak-kv-replrtq-src/register-rtq/) | Setup a queue | “Setup” is a noun; the instruction needs the two-word verb. |
+| [suspend_rtq — help text]({{< product-version-root >}}reference/commands/erlang/riak-kv-replrtq-src/suspend-rtq/) | Suspend a queue form receiving | “form” is a mistyped preposition; the intended word is “from”. |
+| [suspend_rtq — help text]({{< product-version-root >}}reference/commands/erlang/riak-kv-replrtq-src/suspend-rtq/) | updates, all attempted updates | Comma splice between independent clauses. |
+| [riak admin stat show — help text]({{< product-version-root >}}reference/commands/riak/admin/stat/show/) | deliminators | Spelling mistake: “delimiters”. Appears twice in the wildcard explanation. |
+| [riak admin stat show — help text]({{< product-version-root >}}reference/commands/riak/admin/stat/show/) | separated by comma | Missing article or plural form for the countable noun “comma”. |
+| [riak debug — Privacy Note]({{< product-version-root >}}reference/commands/riak/debug/) | enviroment variable | Spelling mistake: “environment”. |
+| [riak debug — Privacy Note]({{< product-version-root >}}reference/commands/riak/debug/) | every file in the specified in Riak's | Incomplete/duplicated wording: “the specified” is missing the noun naming the directory. |
+| [riak repl — realtime help]({{< product-version-root >}}reference/commands/riak/repl/) | Realtime repliction | Spelling mistake: “replication”. |
+| [riak repl — cascades help]({{< product-version-root >}}reference/commands/riak/repl/) | forword that write | Spelling mistake: “forward”. |
+| [DtFetchReq — node_confirms comment]({{< product-version-root >}}reference/protocol-buffers-api/fetch-data-type-messages/) | Distinct phycical node quorum | Spelling mistake: “physical”. Repeated in the field table and protocol definition. |
+| [RpbGetReq — node_confirms comment]({{< product-version-root >}}reference/protocol-buffers-api/fetch-object-messages/) | Distinct phycical node quorum | Spelling mistake: “physical”. Repeated in the field table and protocol definition. |
+| [DtUpdateReq — node_confirms comment]({{< product-version-root >}}reference/protocol-buffers-api/update-data-type-messages/) | Distinct phycical node quorum | Spelling mistake: “physical”. Repeated in the field table and protocol definition. |
+| [delete_mode — original schema documentation]({{< product-version-root >}}how-to/planning-a-deployment/choose-a-deletion-and-retention-policy/) | here timout is limited | Spelling mistake: “timeout”. Expand the setting’s source/schema details to locate it. |
+| [replrtq_srcqueue — original schema documentation]({{< product-version-root >}}how-to/replication-and-reconciliation/configure-replication-queues-and-filters/) | Example configurtaion might be | Spelling mistake: “configuration”. Expand the setting’s source/schema details to locate it. |
+| [replrtq_srcqueue — original schema documentation]({{< product-version-root >}}how-to/replication-and-reconciliation/configure-replication-queues-and-filters/) | the second part indicated the filter | Past tense is inconsistent with the present-tense definition. Expand the setting’s source/schema details to locate it. |
+| [replrtq_srcqueue — original schema documentation]({{< product-version-root >}}how-to/replication-and-reconciliation/configure-replication-queues-and-filters/) | If a list of buckets or types need to be supported | Subject–verb agreement: the head of the subject is singular “list”. Expand the setting’s source/schema details to locate it. |
+| [replrtq_srcqueue — original schema documentation]({{< product-version-root >}}how-to/replication-and-reconciliation/configure-replication-queues-and-filters/) | made at runtime used the | Wrong verb form in the phrase describing how the definitions are made. Expand the setting’s source/schema details to locate it. |
+| [replrtq_srcqueue — original schema documentation]({{< product-version-root >}}how-to/replication-and-reconciliation/configure-replication-queues-and-filters/) | name of the queue, the second part | Comma splice between the descriptions of the two parts. Expand the setting’s source/schema details to locate it. |
+| [replrtq_srcqueue — original schema documentation]({{< product-version-root >}}how-to/replication-and-reconciliation/configure-replication-queues-and-filters/) | the ascii name | The acronym ASCII is incorrectly lower-cased. Expand the setting’s source/schema details to locate it. |
