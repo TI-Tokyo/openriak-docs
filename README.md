@@ -306,3 +306,86 @@ node tools/scripts/settings.browser.test.cjs
 
 `OPENRIAK_SETTINGS_TEST_BASE` overrides the preview root (default
 `http://127.0.0.1:1410/docs/`), and `OPENRIAK_BROWSER_EXECUTABLE` selects Chromium.
+
+## Social preview metadata
+
+All HTML heads (including archives, redirects and aliases) use
+`layouts/common-docs/layouts/partials/social/head.html`. Its resolver supplies a
+single structure for the document title, description, canonical link, Open Graph
+and Twitter tags. No browser JavaScript is involved.
+
+Nonempty, plain-text candidates are selected in this order:
+
+- Title: `social_title`, then the page title plus the configured site title,
+  then the site title, then `OpenRiak Documentation`. The homepage uses the site
+  title; titles already containing it do not gain a second copy.
+- Description: `social_description`, `description`, front matter `summary`,
+  cleaned main-source content, `params.description`, then
+  `OpenRiak documentation and reference guides.` Generated content descriptions
+  are shortened to about 200 characters at a word boundary. Explicit descriptions
+  retain their length. HTML, Markdown, code fences and shortcode tokens are
+  removed; menus and rendered shortcode output are never used as a summary.
+- Image: `social_image`, each entry of the `images` array in order, `image`,
+  an optional global `params.social_image` override, then the matching section’s
+  bundled preview from `data/social_previews.json`. Image fields
+  take a string path or URL (the configured protocol for same-host URLs; HTTPS for external URLs). Local paths refer to a page resource first,
+  then the shared static mounts, and are resolved relative to the configured
+  deployment base path. Empty entries are skipped. Invalid candidates warn and
+  fall through. PNG, JPEG, GIF and WebP are supported; SVG and favicons are not
+  automatically selected. Body images are never inferred.
+- Image alt text: `social_image_alt`, the selected page resource's `params.alt`,
+  then the section name for a bundled card, or `OpenRiak Documentation` for other
+  images. Identifiers and descriptions are not used as alt
+  text. Local images are decoded and their actual dimensions used. External
+  images have no invented dimensions; their extension supplies an expected MIME
+  type which the mandatory post-build HTTP check verifies against the response
+  header and image bytes.
+- Canonical: a valid absolute `canonical_url`, then the compatible
+  `canonicalURL` spelling, then the generated permalink (or redirect target).
+  Fragments and query parameters are removed. Invalid overrides fall through.
+  Local URLs retain the configured base path and HTTP/HTTPS protocol, including
+  explicit same-host overrides. External URLs must use HTTPS.
+- Type/card: `website` and `summary_large_image`. An explicit `twitter_card` of
+  `summary` or `summary_large_image` is honoured; other values use the default.
+
+The eight bundled 1200 × 630 PNGs cover OpenRiak KV, CS, TS, Community,
+Archived Technical Blog, Archived Mailing List, Settings and Homepage. Their
+filenames are `images/{section-id}-social-preview.png`. Product cards use the
+existing wordmarks; other cards feature the generic OpenRiak logo and name,
+with the section name as a subtitle. Descriptions come from `site_sections.json` and the
+Settings page template. Historical `riak-kv`, `riak-cs` and `riak-ts` routes map
+to the corresponding OpenRiak card. Pages outside those sections use Homepage.
+
+The matching bundled image is validated even when a custom image is selected;
+missing, corrupt or incorrectly sized fallback assets fail the build. The core
+build publishes all shared images; archive builds only read them for validation.
+Regenerate the cards, their HTML artwork and the section manifest with:
+
+```sh
+OPENRIAK_BROWSER_EXECUTABLE=/path/to/chromium node tools/scripts/generate-social-previews.cjs
+```
+
+The generator reuses the existing logo assets. It writes the
+artwork to `tools/assets/` and the manifest to
+`layouts/common-docs/data/social_previews.json`. `--source-only` updates the
+artwork and manifest without running Chromium; regenerate the PNGs before
+publishing any branding or description changes.
+
+Run the regression matrix with `node --test tools/scripts/social-metadata.test.cjs`.
+It uses the pinned Hugo Docker image by default; `HUGO_BIN` selects a local Hugo
+binary. Shell, PowerShell and Docker builds audit the generated HTML with
+`tools/scripts/check-social-metadata.cjs`: local images are checked in the output
+and external images always receive an HTTP check. The build fails on missing,
+conflicting or inaccessible metadata. No successful external-image validation is
+claimed by the Hugo templates themselves.
+
+After deployment, verify that the server also delivers the images correctly:
+
+```sh
+node tools/scripts/check-social-metadata.cjs public https://www.openriak.org/docs/ --http
+```
+
+Pass the deployment's actual base URL, including its subdirectory if applicable.
+`--http` fetches every selected image. Same-host URLs must match the configured
+HTTP/HTTPS protocol; external images and their redirects must use HTTPS. To check an archive-only output before assembly, use
+`--asset-root` pointing at the core output for its shared static images.

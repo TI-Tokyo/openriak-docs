@@ -58,7 +58,8 @@ COPY --from=core-metadata --chown=1000:1000 /project /project
 RUN drafts=''; if [ "$INCLUDE_DRAFTS" = true ]; then drafts=--buildDrafts; fi; \
     hugo --source=/project/content --config=/project/tools/generated/hugo.yaml \
       --destination=/project/public --baseURL="$HUGO_BASEURL" --gc --minify \
-      --noBuildLock --cleanDestinationDir $drafts
+      --noBuildLock --cleanDestinationDir $drafts && \
+    node tools/scripts/check-social-metadata.cjs /project/public "$HUGO_BASEURL"
 
 # Development and beta-test artifacts contain the core project only.
 FROM scratch AS core-static
@@ -72,6 +73,7 @@ ARG HUGO_BASEURL=https://www.openriak.org/docs/
 WORKDIR /project
 COPY .hugo-version ./
 COPY content/hugo-archives.yaml ./content/hugo-archives.yaml
+COPY content/static ./content/static
 COPY content/archive-technical-blog ./content/archive-technical-blog
 COPY content/archive-mailing-list ./content/archive-mailing-list
 COPY layouts/archive-technical-blog ./layouts/archive-technical-blog
@@ -83,11 +85,15 @@ COPY layouts/_vendor/github.com/KKKZOZ/hugo-admonitions ./layouts/_vendor/github
 RUN drafts=''; if [ "$INCLUDE_DRAFTS" = true ]; then drafts=--buildDrafts; fi; \
     hugo --source=/project/content --config=/project/content/hugo-archives.yaml \
       --destination=/project/public --baseURL="$HUGO_BASEURL" --gc --minify \
-      --panicOnWarning --noBuildLock --cleanDestinationDir $drafts
+      --noBuildLock --cleanDestinationDir $drafts
 
-FROM alpine:3.24 AS assembled
+FROM node:${NODE_VERSION}-alpine AS assembled
+ARG HUGO_BASEURL=https://www.openriak.org/docs/
+ENV HUGO_BASEURL=$HUGO_BASEURL
+ENV OPENRIAK_SOCIAL_CHECKER=/project/tools/scripts/check-social-metadata.cjs
 WORKDIR /project
 COPY tools/scripts/assemble-site.sh /usr/local/bin/assemble-site
+COPY tools/scripts/check-social-metadata.cjs tools/scripts/social-html.cjs /project/tools/scripts/
 COPY --from=core-build /project/public /project/core
 COPY --from=archive-build /project/public /project/archives
 RUN sh /usr/local/bin/assemble-site /project/core /project/archives /project/public

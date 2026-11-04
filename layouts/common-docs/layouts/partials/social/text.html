@@ -1,0 +1,13 @@
+{{- /* Clean source text before rendering: never use the rendered page shell. */ -}}
+{{- $text := "" -}}
+{{- if reflect.IsMap . -}}{{- else if reflect.IsSlice . -}}{{- else -}}
+  {{- with . -}}{{- $text = printf "%v" . -}}{{- end -}}
+{{- end -}}
+{{- $text = replaceRE `(?is)<(script|style|nav)[^>]*>.*?</(script|style|nav)>` " " $text -}}
+{{- $text = replaceRE "(?s)```.*?```|~~~.*?~~~" " " $text -}}
+{{- $text = replaceRE `(?s)\{\{[<%].*?[>%]\}\}` " " $text -}}
+{{- $text = replaceRE `(?m)^\s*\[[^\]]+\]:\s+.*$` " " $text -}}
+{{- $text = $text | markdownify | plainify | htmlUnescape -}}
+{{- $text = replaceRE `<[^>]*>` " " $text -}}
+{{- $text = replaceRE `\s+` " " $text | strings.TrimSpace -}}
+{{- return $text -}}

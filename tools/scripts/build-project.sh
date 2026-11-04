@@ -105,7 +105,9 @@ esac
 
 set -- --source "$site_root/content" --config "$config" --destination "$destination" \
   --baseURL "$base_url" --gc --minify --noBuildLock --cleanDestinationDir
-# Core logs non-failing editorial correction warnings; archives remain strict.
-if [ "$project" = archives ]; then set -- "$@" --panicOnWarning; fi
+# Invalid optional social images warn and fall back in both projects.
 if [ "${INCLUDE_DRAFTS:-true}" = "true" ]; then set -- "$@" --buildDrafts; fi
 hugo "$@"
+if [ "$project" = core ]; then
+  node "$site_root/tools/scripts/check-social-metadata.cjs" "$destination" "$base_url"
+fi

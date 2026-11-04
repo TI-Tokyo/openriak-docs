@@ -1,0 +1,24 @@
+{{- /* Use the configured site protocol for local URLs; external URLs must use HTTPS. */ -}}
+{{- $value := strings.TrimSpace (printf "%v" (.value | default "")) -}}
+{{- $result := "" -}}
+{{- $base := urls.Parse site.BaseURL -}}
+{{- if and $value (not (findRE `[\s<>"\\]|%0[adAD]` $value)) -}}
+  {{- $parsed := try (urls.Parse $value) -}}
+  {{- if not $parsed.Err -}}
+    {{- $u := $parsed.Value -}}
+    {{- if and (in (slice "http" "https") $u.Scheme) $u.Host (not $u.User) -}}
+      {{- if eq $u.Host $base.Host -}}
+        {{- $result = replaceRE `^https?://` (printf "%s://" $base.Scheme) $value -}}
+      {{- else if eq $u.Scheme "https" -}}{{- $result = $value -}}{{- end -}}
+    {{- else if and .relative (not $u.Scheme) (not $u.Host) (not (strings.HasPrefix $value "//")) (not (in $u.Path "..")) -}}
+      {{- $basePath := (urls.Parse site.BaseURL).Path -}}
+      {{- $path := strings.TrimPrefix $basePath $value -}}
+      {{- $result = strings.TrimPrefix "/" $path | absURL -}}
+    {{- end -}}
+    {{- if $result -}}
+      {{- $result = replaceRE `#.*$` "" $result -}}
+      {{- if .canonical -}}{{- $result = replaceRE `\?.*$` "" $result -}}{{- end -}}
+    {{- end -}}
+  {{- end -}}
+{{- end -}}
+{{- return $result -}}

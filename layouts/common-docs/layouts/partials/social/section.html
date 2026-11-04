@@ -1,0 +1,7 @@
+{{- /* Resolve product versions, legacy product routes, settings and site sections. */ -}}
+{{- $section := .Section | default "homepage" -}}
+{{- if eq .Layout "settings" -}}{{- $section = "settings" -}}{{- end -}}
+{{- $aliases := dict "riak-kv" "openriak-kv" "riak-cs" "openriak-cs" "riak-ts" "openriak-ts" -}}
+{{- with index $aliases $section -}}{{- $section = . -}}{{- end -}}
+{{- if not (isset hugo.Data.social_previews $section) -}}{{- $section = "homepage" -}}{{- end -}}
+{{- return (index hugo.Data.social_previews $section) -}}

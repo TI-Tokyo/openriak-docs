@@ -1,0 +1,10 @@
+{{- /* Decode the image, then identify the original bytes rather than trusting its extension. */ -}}
+{{- $probe := .Resize "1x" -}}
+{{- $decoded := $probe.Width -}}
+{{- $type := "" -}}
+{{- $bytes := .Content -}}
+{{- if strings.HasPrefix $bytes "\x89PNG\r\n\x1a\n" -}}{{- $type = "image/png" -}}
+{{- else if strings.HasPrefix $bytes "\xff\xd8\xff" -}}{{- $type = "image/jpeg" -}}
+{{- else if or (strings.HasPrefix $bytes "GIF87a") (strings.HasPrefix $bytes "GIF89a") -}}{{- $type = "image/gif" -}}
+{{- else if and (strings.HasPrefix $bytes "RIFF") (in (substr $bytes 0 16) "WEBP") -}}{{- $type = "image/webp" -}}{{- end -}}
+{{- return (dict "width" .Width "height" .Height "type" $type) -}}

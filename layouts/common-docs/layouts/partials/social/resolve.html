@@ -1,0 +1,44 @@
+{{- $page := .page -}}
+{{- $siteTitle := partial "social/text.html" site.Title | default "OpenRiak Documentation" -}}
+{{- $title := partial "social/text.html" $page.Params.social_title -}}
+{{- if not $title -}}
+  {{- $title = partial "social/text.html" $page.Title -}}
+  {{- if or $page.IsHome (not $title) -}}{{- $title = $siteTitle -}}
+  {{- else if not (in (lower $title) (lower $siteTitle)) -}}{{- $title = printf "%s · %s" $title $siteTitle -}}{{- end -}}
+{{- end -}}
+{{- $description := "" -}}
+{{- $generated := false -}}
+{{- range $index, $candidate := slice $page.Params.social_description $page.Params.description $page.Params.summary $page.RawContent site.Params.description "OpenRiak documentation and reference guides." -}}
+  {{- if not $description -}}{{- $description = partial "social/text.html" $candidate -}}{{- $generated = eq $index 3 -}}{{- end -}}
+{{- end -}}
+{{- if and $generated (gt (strings.RuneCount $description) 200) -}}
+  {{- $description = $description | truncate 200 "…" -}}
+{{- end -}}
+{{- $section := partial "social/section.html" $page -}}
+{{- $fallbackPath := $section.image | default "images/homepage-social-preview.png" -}}
+{{- $fallback := partialCached "social/image.html" (dict "page" $page "value" $fallbackPath "staticOnly" true) "bundled-social-fallback" $fallbackPath -}}
+{{- if or (not $fallback) (ne $fallback.width 1200) (ne $fallback.height 630) (ne $fallback.type "image/png") -}}
+  {{- errorf "Bundled social fallback must be a valid 1200 × 630 PNG: %s" $fallbackPath -}}
+{{- end -}}
+{{- $fallback = merge $fallback (dict "alt" (printf "%s — OpenRiak Documentation" ($section.name | default "Homepage"))) -}}
+{{- $candidates := slice $page.Params.social_image -}}
+{{- if reflect.IsSlice $page.Params.images -}}{{- range $page.Params.images -}}{{- $candidates = $candidates | append . -}}{{- end -}}{{- end -}}
+{{- range slice $page.Params.image site.Params.social_image -}}{{- $candidates = $candidates | append . -}}{{- end -}}
+{{- $image := dict -}}
+{{- range $candidates -}}
+  {{- if not $image -}}{{- $image = partial "social/image.html" (dict "page" $page "value" .) -}}{{- end -}}
+{{- end -}}
+{{- if not $image -}}{{- $image = $fallback -}}{{- end -}}
+{{- $alt := partial "social/text.html" $page.Params.social_image_alt -}}
+{{- if not $alt -}}{{- $alt = $image.alt | default "OpenRiak Documentation" -}}{{- end -}}
+{{- $canonical := "" -}}
+{{- range slice $page.Params.canonical_url $page.Params.canonicalurl .canonical -}}
+  {{- if not $canonical -}}{{- $canonical = partial "social/url.html" (dict "value" . "canonical" true) -}}{{- end -}}
+{{- end -}}
+{{- if not $canonical -}}
+  {{- $canonical = partial "social/url.html" (dict "value" $page.Permalink "canonical" true) -}}
+{{- end -}}
+{{- if not $canonical -}}{{- errorf "Cannot resolve an absolute HTTP(S) canonical URL for %s" $page.RelPermalink -}}{{- end -}}
+{{- $card := "summary_large_image" -}}
+{{- if in (slice "summary" "summary_large_image") $page.Params.twitter_card -}}{{- $card = $page.Params.twitter_card -}}{{- end -}}
+{{- return (dict "title" $title "description" $description "image" $image "alt" $alt "canonical" $canonical "type" "website" "card" $card) -}}

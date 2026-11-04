@@ -17,6 +17,8 @@ Arguments:
   -h, --help        Show help and exit without validating or changing files.
 
 Relative paths use the current directory.
+HUGO_BASEURL must match the URL used to build both inputs (default: https://www.openriak.org/docs/).
+The final HTML and its local/external social images are validated before success.
 OPENRIAK_HELP
     exit 0
     ;;
@@ -52,3 +54,6 @@ rm -rf "$destination"
 mkdir -p "$destination"
 cp -a "$core/." "$destination/"
 cp -a "$archives/." "$destination/"
+
+site_root=$(CDPATH= cd -- "$(dirname -- "$0")/../.." && pwd)
+node "${OPENRIAK_SOCIAL_CHECKER:-$site_root/tools/scripts/check-social-metadata.cjs}" "$destination" "${HUGO_BASEURL:-https://www.openriak.org/docs/}"

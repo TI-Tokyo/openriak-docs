@@ -88,7 +88,7 @@ function Invoke-HugoBuild([string] $Config, [string] $Output, [bool] $PanicOnWar
 
 Invoke-HugoBuild $generatedConfig $coreDestination
 if ($Profile -eq 'release') {
-    Invoke-HugoBuild (Join-Path $siteRoot 'content/hugo-archives.yaml') $archiveDestination $true
+    Invoke-HugoBuild (Join-Path $siteRoot 'content/hugo-archives.yaml') $archiveDestination
 
     $archiveFiles = @(Get-ChildItem -LiteralPath $archiveDestination -Recurse -File)
     foreach ($file in $archiveFiles) {
@@ -109,3 +109,6 @@ if ($Profile -eq 'release') {
     Copy-Item -Path (Join-Path $archiveDestination '*') -Destination $destinationRoot -Recurse -Force
 }
 Write-Host "Built the $Profile static site in $destinationRoot"
+
+& node (Join-Path $PSScriptRoot 'check-social-metadata.cjs') $destinationRoot $BaseURL
+if ($LASTEXITCODE -ne 0) { throw 'Social metadata validation failed' }

@@ -1,0 +1,36 @@
+{{- $page := .page -}}
+{{- $value := strings.TrimSpace (printf "%v" (.value | default "")) -}}
+{{- $result := dict -}}
+{{- if $value -}}
+  {{- $url := partial "social/url.html" (dict "value" $value "relative" true) -}}
+  {{- $ext := lower (path.Ext (index (split (index (split $value "?") 0) "#") 0)) -}}
+  {{- $types := dict ".png" "image/png" ".jpg" "image/jpeg" ".jpeg" "image/jpeg" ".gif" "image/gif" ".webp" "image/webp" -}}
+  {{- if and $url (isset $types $ext) -}}
+    {{- $base := urls.Parse site.BaseURL -}}
+    {{- $selected := urls.Parse $url -}}
+    {{- $absolute := findRE `^https?://` $value -}}
+    {{- $sameSite := and (eq $selected.Host $base.Host) (strings.HasPrefix $selected.Path $base.Path) -}}
+    {{- if and $absolute (not $sameSite) -}}
+      {{- /* No network dependency in Hugo. HTTP verification is mandatory after build. */ -}}
+      {{- $result = dict "url" $url "type" (index $types $ext) "external" true -}}
+    {{- else -}}
+      {{- $localPath := index (split (index (split $value "?") 0) "#") 0 -}}
+      {{- if $absolute -}}{{- $localPath = $selected.Path -}}{{- end -}}
+      {{- $name := strings.TrimPrefix $base.Path $localPath | strings.TrimPrefix "/" -}}
+      {{- $resource := false -}}
+      {{- if not .staticOnly -}}{{- $resource = $page.Resources.Get $name -}}{{- end -}}
+      {{- $bundled := false -}}
+      {{- if not $resource -}}{{- $resource = resources.Get (printf "social-static/%s" $name) -}}{{- $bundled = true -}}{{- end -}}
+      {{- if $resource -}}
+        {{- $info := try (partial "social/dimensions.html" $resource) -}}
+        {{- if and (not $info.Err) $info.Value.width $info.Value.height $info.Value.type -}}
+          {{- if not $bundled -}}{{- $url = $resource.Permalink -}}{{- end -}}
+          {{- $alt := partial "social/text.html" $resource.Params.alt -}}
+          {{- $result = merge $info.Value (dict "url" $url "alt" $alt "external" false) -}}
+        {{- end -}}
+      {{- end -}}
+    {{- end -}}
+  {{- end -}}
+  {{- if not $result -}}{{- warnf "Social metadata: skipping invalid or missing image %q on %s" $value $page.RelPermalink -}}{{- end -}}
+{{- end -}}
+{{- return $result -}}
