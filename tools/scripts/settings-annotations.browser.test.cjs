@@ -5,6 +5,7 @@ const { chromium } = require('playwright');
  const browser=await chromium.launch({executablePath:process.env.OPENRIAK_BROWSER_EXECUTABLE});
  try {
   const page=await browser.newPage({viewport:{width:1440,height:1000}});
+  await page.addInitScript(() => localStorage.setItem('openriak-docs-show-internal-configuration', 'true'));
   const errors=[];page.on('pageerror',error=>errors.push(error.message));
   const base=process.env.OPENRIAK_DOCS_TEST_URL || 'http://localhost:1410/docs/openriak-kv/';
   for(const version of ['3.4.0','3.4.1']) {

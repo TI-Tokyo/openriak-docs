@@ -1,0 +1,83 @@
+'use strict';
+const assert = require('node:assert/strict');
+const { chromium } = require('playwright');
+
+(async () => {
+  const base = process.env.OPENRIAK_SETTINGS_TEST_BASE || 'http://localhost:1410/docs/';
+  const browser = await chromium.launch({ executablePath: process.env.OPENRIAK_BROWSER_EXECUTABLE });
+  try {
+    const context = await browser.newContext();
+    const page = await context.newPage(), settings = await context.newPage(), errors = [];
+    for (const tab of [page, settings]) tab.on('pageerror', error => errors.push(error.message));
+    const key = 'openriak-docs-show-internal-configuration';
+    const advanced = base + 'settings/advanced/';
+    const toggle = settings.getByRole('switch', { name: 'Show internal configuration settings' });
+    await settings.goto(advanced);
+    await toggle.waitFor();
+    assert.equal(await toggle.isChecked(), false);
+    assert.equal(await settings.evaluate(key => localStorage.getItem(key), key), null, 'fresh browsers have no saved override');
+    assert.equal(await settings.evaluate(key => window.OpenRiakSettings.read(key), key), 'false');
+    const sidebar = settings.locator('nav[aria-label="Settings pages"] > ul > li');
+    assert.deepEqual((await sidebar.allTextContents()).slice(-2), ['Advanced', 'Import, export, and reset']);
+    assert.ok(await sidebar.evaluateAll(items => items.slice(-2).every(item => parseFloat(getComputedStyle(item).borderTopWidth) > 0)));
+    for (const version of ['3.4.0', '3.4.1']) {
+      const tableURL = base + `openriak-kv/${version}/reference/configuration/all-configuration-settings-and-defaults/`;
+      await settings.goto(advanced);
+      await settings.evaluate(key => window.OpenRiakSettings.apply({}, [key]), key);
+      await settings.reload();
+      assert.equal(await toggle.isChecked(), false, 'removing an override restores the off default');
+      assert.equal(await settings.evaluate(key => localStorage.getItem(key), key), null);
+      assert.equal((await page.goto(tableURL)).status(), 200);
+      const table = page.locator('.configuration-reference-wrap').first();
+      await page.waitForFunction(() => document.querySelector('.configuration-reference-wrap')?.refreshConfigurationTable);
+      const visible = table.locator('tbody tr[data-configuration-key]:visible');
+      const total = await table.locator('tbody tr[data-configuration-key]').count();
+      const secrets = await table.locator('tbody tr[data-configuration-key]').evaluateAll(rows => rows.filter(row => JSON.parse(row.dataset.configurationTags).metadata.includes('secretSettings')).length);
+      assert.ok(secrets > 0);
+      const metadata = table.locator('[data-configuration-tag-filter="metadata"]');
+      const secretOptions = metadata.locator('option[value="secretSettings"]');
+      assert.equal(await visible.count(), total - secrets);
+      assert.equal(await secretOptions.count(), 0);
+      assert.equal(await metadata.isVisible(), false);
+      await table.locator('[data-configuration-search-mode]').selectOption('regex');
+      await table.locator('[data-configuration-search]').fill('[');
+      assert.equal(await visible.count(), total - secrets, 'invalid regex must not expose internal rows');
+      await table.locator('[data-configuration-reset]').click();
+      await table.locator('[data-configuration-search-mode]').selectOption('contains');
+      await toggle.check();
+      await secretOptions.waitFor({ state: 'attached' });
+      assert.equal(await metadata.isVisible(), true);
+      assert.equal(await visible.count(), total);
+      await settings.reload(); assert.equal(await toggle.isChecked(), true);
+      const backup = await settings.evaluate(() => window.OpenRiakSettings.snapshot(['advanced']));
+      assert.equal(backup.settings[key], 'true');
+      await settings.evaluate(key => window.OpenRiakSettings.apply({}, [key]), key);
+      await secretOptions.waitFor({ state: 'detached' });
+      assert.equal(await visible.count(), total - secrets);
+      await settings.evaluate(saved => window.OpenRiakSettings.apply(window.OpenRiakSettings.parse(JSON.stringify(saved)).settings), backup);
+      await secretOptions.waitFor({ state: 'attached' });
+      await metadata.selectOption('secretSettings');
+      assert.equal(await visible.count(), secrets);
+      await toggle.uncheck();
+      await secretOptions.waitFor({ state: 'detached' });
+      assert.equal(await metadata.inputValue(), '');
+      assert.equal(await visible.count(), total - secrets);
+      await settings.goto(base + 'settings/tables/');
+      assert.equal(await settings.locator('option[value="secretSettings"]').count(), 0);
+      assert.equal(await settings.getByLabel('metadata', { exact: true }).count(), 0);
+      await page.reload();
+      await page.waitForFunction(() => document.querySelector('.configuration-reference-wrap')?.refreshConfigurationTable);
+      assert.equal(await visible.count(), total - secrets, 'saved secret filter is cleared');
+      await page.goto(base + `openriak-kv/${version}/to-do/tests/configuration-reference-table-test/`);
+      assert.equal(await page.locator('tbody[data-configuration-key="ibrowse.inactivity_timeout"]').isVisible(), true, 'explicit internal item remains visible');
+      console.log(`${version}: default hiding, filter availability, live toggle, persistence, export/import/reset and explicit item passed.`);
+    }
+    await settings.goto(advanced);
+    await settings.getByRole('searchbox', { name: 'Search settings' }).fill('internal configuration');
+    await settings.locator('[data-settings-results] [data-search-items] a').first().waitFor();
+    assert.match(await settings.locator('[data-settings-results] [data-search-items]').innerText(), /Show internal configuration settings/);
+    assert.deepEqual(errors, []);
+  } finally {
+    await browser.close();
+  }
+})().catch(error => { console.error(error); process.exitCode = 1; });

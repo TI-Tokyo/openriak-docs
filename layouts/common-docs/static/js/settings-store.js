@@ -20,6 +20,7 @@
         (field === 'port' ? Number.isInteger(entry) && entry > 0 && entry <= 65535 : text(entry))));
   });
   const fixed = {
+    [`${prefix}show-internal-configuration`]: ['advanced', 'false', ['true', 'false']],
     [`${prefix}theme`]: ['appearance', 'system', ['system', 'dark', 'light']],
     [`${prefix}content-width`]: ['appearance', '75', ['50', '75', '90', '98']],
     [`${prefix}font-size`]: ['appearance', '100', ['100', '110', '125', '150', '200', '250']],

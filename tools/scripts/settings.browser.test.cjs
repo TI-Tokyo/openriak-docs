@@ -14,7 +14,7 @@ const base = process.env.OPENRIAK_SETTINGS_TEST_BASE || 'http://127.0.0.1:1410/d
     page.on('console', message => { if (message.type() === 'error' && message.text().includes('could not be initialized')) errors.push(message.text()); });
     const go = path => page.goto(new URL(path, base).href);
     await go('settings/');
-    assert.equal(await page.locator('.settings-card').count(), 7);
+    assert.equal(await page.locator('.settings-card').count(), 8);
     assert.equal(await page.locator('#main-content').evaluate(node => parseFloat(getComputedStyle(node).paddingTop) / parseFloat(getComputedStyle(document.documentElement).fontSize)), 0.75);
     assert.equal(await page.locator('[data-settings-sections] section').count(), 0);
     assert.equal(await page.getByRole('link', { name: 'Settings', exact: true, includeHidden: true }).count(), 2);

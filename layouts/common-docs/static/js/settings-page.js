@@ -18,7 +18,7 @@
   });
   const pageGroup = root.dataset.settingsGroup || '';
   const base = root.dataset.settingsBase;
-  const names = { appearance: 'Appearance', code: 'Code blocks', platform: 'OS and architecture', tables: 'Tables and filters', search: 'Search', examples: 'Example values', transfer: 'Import, export, and reset' };
+  const names = { appearance: 'Appearance', code: 'Code blocks', platform: 'OS and architecture', tables: 'Tables and filters', search: 'Search', examples: 'Example values', advanced: 'Advanced', transfer: 'Import, export, and reset' };
   const el = (tag, text, parent) => { const node = document.createElement(tag); if (text !== undefined) node.textContent = text; parent?.append(node); return node; };
   // Logo-only legends still name their settings group through accessible text.
   const settingLabel = node => (
@@ -26,14 +26,10 @@
     node.querySelector(':scope > img[alt]')?.alt ||
     node.firstChild?.textContent || node.textContent
   ).trim();
-  const message = value => { status.textContent = value; };
-  const searchNotices = new Set();
-  const searchNotice = value => {
-    const notices=root.querySelector('[data-search-notices]');
-    if(!notices)return;
-    const notice=el('p',value,notices);notice.className='settings-search-notice';searchNotices.add(notice);
-    setTimeout(()=>notice.classList.add('is-fading'),3000);
-    setTimeout(()=>{notice.remove();searchNotices.delete(notice);},3500);
+  const message = value => {
+    const notice = el('p', value, status); notice.className = 'settings-notice';
+    setTimeout(() => notice.classList.add('is-fading'), 3000);
+    setTimeout(() => notice.remove(), 3500);
   };
   const safe = fn => { try { fn(); } catch (error) { message(`Could not save: ${error.message}`); } };
   const save = (key, value) => { S.write(key, value); message('Saved in this browser.'); };
@@ -272,13 +268,25 @@
   }
   let currentExport = 'all';
   function render() {
+    // Keep pending notices and their timers when controls are rebuilt.
+    root.append(status);
     sections.replaceChildren();
     const panels = {};
     Object.entries(names).forEach(([id, name]) => {
       const panel = el('section', undefined, sections); panel.id = id;
       el('h2', name, panel); panels[id] = panel;
     });
-    const { appearance, code, platform, tables, examples, transfer } = panels;
+    const { appearance, code, platform, tables, examples, advanced, transfer } = panels;
+    const internalKey = `${S.prefix}show-internal-configuration`;
+    const showInternal = S.read(internalKey) === 'true';
+    const internalLabel = el('label', undefined, advanced); internalLabel.className = 'settings-advanced-toggle';
+    internalLabel.setAttribute('aria-label', 'Show internal configuration settings');
+    const internalToggle = el('input', undefined, internalLabel);
+    internalToggle.type = 'checkbox'; internalToggle.setAttribute('role', 'switch');
+    internalToggle.checked = showInternal;
+    el('span', 'Show internal configuration settings', internalLabel);
+    internalToggle.addEventListener('change', () => safe(() => save(internalKey, String(internalToggle.checked))));
+    el('p', 'Applies to configuration tables across all products and versions in this browser. When off, internal settings and their metadata filter option are hidden. Explicitly requested single configuration items are always shown.', advanced);
     const preferences=window.OpenRiakSearchPreferences;
     el('p','Choose how each site section searches. Product preferences apply to all versions. Changes are saved in this browser.',panels.search);
     const searchWrapper=el('div',undefined,panels.search);searchWrapper.className='settings-table-scroll';
@@ -295,11 +303,11 @@
       else identity.textContent=section.name;
       for(const type of ['text','semantic','highlight']){
         const cell=el('td',undefined,row),toggle=el('input',undefined,cell);toggle.type='checkbox';toggle.checked=values[type];toggle.setAttribute('role','switch');toggle.setAttribute('aria-label',`${section.name}: ${type==='highlight'?'result highlighting':type+' search'}`);
-        toggle.addEventListener('change',()=>safe(()=>{preferences.write(section.id,{[type]:toggle.checked});searchNotice(`Search preferences saved for ${section.name}.`);}));
+        toggle.addEventListener('change',()=>safe(()=>{preferences.write(section.id,{[type]:toggle.checked});message(`Search preferences saved for ${section.name}.`);}));
       }
       const cell=el('td',undefined,row),timing=el('select',undefined,cell);timing.setAttribute('aria-label',`${section.name}: show results`);
       for(const [value,title] of [['asap','As soon as available (default)'],['together','When both have finished']]){const option=el('option',title,timing);option.value=value;}
-      timing.value=values.timing;timing.addEventListener('change',()=>safe(()=>{preferences.write(section.id,{timing:timing.value});searchNotice(`Search preferences saved for ${section.name}.`);}));
+      timing.value=values.timing;timing.addEventListener('change',()=>safe(()=>{preferences.write(section.id,{timing:timing.value});message(`Search preferences saved for ${section.name}.`);}));
     });
     selectSetting(appearance, 'Colour theme', 'theme', [['system', 'Device setting'], ['light', 'Light'], ['dark', 'Dark']]);
     selectSetting(appearance, 'Content width', 'content-width', ['50','75','90','98'].map(v => [v, `${v}%`]));
@@ -317,9 +325,14 @@
       const group = el('fieldset', undefined, tables); el('legend', catalog[key]?.title || key.replace(S.prefix, ''), group);
       const values = S.json(key);
       const controls = catalog[key]?.controls || Object.keys(values).map(name => ({ name, label: name, type: typeof values[name] === 'boolean' ? 'boolean' : 'text' }));
-      controls.forEach(control => field(group, control.label, String(values[control.name] ?? control.default ?? ''), control.type === 'boolean' ? toggles : control.options, value => {
-        const next = S.json(key); next[control.name] = control.type === 'boolean' ? value === 'true' : value; save(key, JSON.stringify(next));
-      }));
+      controls.forEach(control => {
+        const options = control.name === 'metadata' && !showInternal
+          ? control.options?.filter(([value]) => !['secretSettings', 'secretSettngs'].includes(value)) : control.options;
+        if (control.name === 'metadata' && !options?.some(([value]) => value)) return;
+        field(group, control.label, String(values[control.name] ?? control.default ?? ''), control.type === 'boolean' ? toggles : options, value => {
+          const next = S.json(key); next[control.name] = control.type === 'boolean' ? value === 'true' : value; save(key, JSON.stringify(next));
+        });
+      });
       button(group, 'Reset these filters', () => { S.apply({}, [key]); render(); message('Filters reset.'); });
     });
     el('p', 'These values personalize examples, not configuration-reference defaults. Use sample identities rather than passwords or credentials.', examples);
@@ -350,15 +363,11 @@
       button(group, `Add ${name}`, () => { values[name].push(Object.fromEntries(fields.map(key => [key, key === 'port' ? 8087 : '']))); saveExamples(); render(); });
     });
     Object.entries(panels).filter(([id]) => id !== 'transfer' && id !== 'code').forEach(([id, panel]) => {
-      if(id==='search'){
-        const notices=el('div',undefined,panel);notices.dataset.searchNotices='';
-        notices.setAttribute('role','status');notices.setAttribute('aria-live','polite');notices.setAttribute('aria-relevant','additions');notices.append(...searchNotices);
-      }
       button(panel, id==='search'?'Reset Search':`Reset ${names[id].toLowerCase()}`, () => {
         if (!confirm(`Reset all ${names[id].toLowerCase()} settings to defaults?`)) return;
         S.apply({}, S.keys().filter(key => S.spec(key)[0] === id)); render();
-        if(id==='search')searchNotice('Search reset.');else message(`${names[id]} reset.`);
-      });
+        message(id === 'search' ? 'Search reset.' : `${names[id]} reset.`);
+      }).dataset.settingsReset = '';
     });
     el('h3', 'Export', transfer);
     field(transfer, 'Export group', currentExport, [['all','All settings'], ...Object.entries(names).filter(([key]) => key !== 'transfer')], value => { currentExport = value; });
@@ -394,7 +403,7 @@
     button(transfer, 'Reset all settings', () => {
       if (!confirm('Reset all documentation preferences and example values?')) return;
       S.apply({}, S.keys()); render(); message('All settings reset.');
-    });
+    }).dataset.settingsReset = '';
     searchEntries = [];
     sections.querySelectorAll(':scope > section').forEach(section => {
       const labels = [...section.querySelectorAll('label, legend, .settings-platform-field, .settings-search-table input, .settings-search-table select')];
@@ -412,6 +421,10 @@
       if (section.id !== pageGroup) section.remove();
       else section.querySelector('h2')?.remove();
     });
+    const panel = panels[pageGroup];
+    const reset = panel?.querySelector('[data-settings-reset]') || root.querySelector('[data-settings-clear]');
+    if (reset) reset.before(status);
+    else (panel || root).append(status);
     alignLabels();
     filter();
   }

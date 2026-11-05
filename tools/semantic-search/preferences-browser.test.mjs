@@ -24,16 +24,15 @@ try{
  await community.locator('input').first().uncheck();
  await page.waitForTimeout(1100);
  await community.locator('select').selectOption('together');
- const notices=page.locator('[data-search-notices] .settings-search-notice');
+ const notices=page.locator('[data-settings-status] .settings-notice');
  assert.equal(await notices.count(),2);
- assert.equal(await page.locator('[data-settings-status]').textContent(),'');
  assert.equal((await page.locator('.settings-search-table').boundingBox()).y,tableTop);
- assert.equal(await page.locator('[data-search-notices]').evaluate(el=>el.nextElementSibling.textContent),'Reset Search');
+ assert.equal(await page.locator('[data-settings-status]').evaluate(el=>el.nextElementSibling.textContent),'Reset Search');
  assert.equal(await notices.first().evaluate(el=>getComputedStyle(el).transitionDuration),'0.5s');
- await page.waitForFunction(()=>document.querySelector('.settings-search-notice')?.classList.contains('is-fading'));
+ await page.waitForFunction(()=>document.querySelector('.settings-notice')?.classList.contains('is-fading'));
  assert.equal(await notices.count(),2);assert.equal(await notices.last().evaluate(el=>el.classList.contains('is-fading')),false);
- await page.waitForFunction(()=>document.querySelectorAll('.settings-search-notice').length===1);
- await page.waitForFunction(()=>document.querySelectorAll('.settings-search-notice').length===0);
+ await page.waitForFunction(()=>document.querySelectorAll('.settings-notice').length===1);
+ await page.waitForFunction(()=>document.querySelectorAll('.settings-notice').length===0);
  await page.reload();
  assert.equal(await community.locator('input').first().isChecked(),false);assert.equal(await community.locator('select').inputValue(),'together');
  let downloads=0;page.on('request',r=>{if(/manifest.json|\.bin$|model_quantized/.test(r.url()))downloads++;});
@@ -81,12 +80,44 @@ try{
  assert.equal(await page.evaluate(()=>OpenRiakSearchPreferences.read('openriak-kv').text),true);
  const snapshot=await page.evaluate(()=>OpenRiakSettings.snapshot(['search']));assert.ok(snapshot.settings['openriak-docs-search:settings']);
  await page.evaluate(()=>sessionStorage.setItem('openriak-docs-settings-return-context',JSON.stringify({url:location.origin+'/docs/openriak-kv/3.4.1/',project:'OpenRiak KV',version:'3.4.1',title:'OpenRiak KV 3.4.1'})));
- for(const group of ['','appearance/','code/','platform/','tables/','search/','examples/','transfer/']){
+ for(const group of ['','appearance/','code/','platform/','tables/','search/','examples/','advanced/','transfer/']){
    await page.goto(base+'settings/'+group);
    assert.equal(await page.locator('[data-settings-return]').textContent(),'Return to documentation (OpenRiak KV 3.4.1)');
+   const noticeArea=page.locator('[data-settings-status]');
+   await page.waitForFunction(()=>document.querySelector('[data-settings-status]')?.parentElement.matches('section, .settings-clear-area'));
+   assert.equal(await noticeArea.count(),1);
+   assert.equal(await noticeArea.evaluate(node=>node.parentElement.matches('section, .settings-clear-area')),true);
+   const headingTop=await page.locator('h1').evaluate(node=>node.getBoundingClientRect().top+scrollY);
+   if(group==='appearance/')await page.locator('[data-settings-page]').getByLabel('Colour theme',{exact:true}).selectOption('dark');
+   else if(group==='code/')await page.getByLabel('Line Numbers for DEFAULT',{exact:true}).selectOption('true');
+   else if(group==='platform/')await page.getByLabel('Default documentation version for OpenRiak KV',{exact:true}).selectOption('3.4.1');
+   else if(group==='tables/')await page.getByLabel('Configuration search mode',{exact:true}).selectOption('regex');
+   else if(group==='search/'){
+     const toggle=page.locator('[data-search-section="community"] input').first();
+     await toggle.setChecked(!await toggle.isChecked());
+   }
+   else if(group==='examples/'){
+     await page.getByRole('button',{name:'Add cluster',exact:true}).click();
+     await page.getByRole('button',{name:'Add cluster',exact:true}).click();
+     assert.equal(await noticeArea.locator('.settings-notice').count(),2,'notices survive rebuilding controls');
+   }
+   else if(group==='advanced/')await page.getByRole('switch',{name:'Show internal configuration settings'}).check();
+   else if(group==='transfer/'){
+     page.once('dialog',dialog=>dialog.accept());
+     await page.getByRole('button',{name:'Reset all settings',exact:true}).click();
+   }else{
+     await page.locator('[data-settings-clear]').click();
+     await page.getByRole('dialog').getByRole('button',{name:'Clear all',exact:true}).click();
+   }
+   await noticeArea.locator('.settings-notice').first().waitFor({state:'attached'});
+   assert.ok(await noticeArea.locator('.settings-notice').count()>0,`bottom notice for ${group||'overview'}`);
+   assert.equal(await page.locator('h1').evaluate(node=>node.getBoundingClientRect().top+scrollY),headingTop);
+   assert.equal(await noticeArea.locator('.settings-notice').first().evaluate(node=>getComputedStyle(node).transitionDuration),'0.5s');
+   if(group!=='code/')assert.equal(await noticeArea.evaluate(node=>node.nextElementSibling?.matches('[data-settings-reset], [data-settings-clear]')),true);
+   else assert.equal(await noticeArea.evaluate(node=>!node.nextElementSibling),true);
  }
  await page.evaluate(()=>sessionStorage.setItem('openriak-docs-settings-return-context',JSON.stringify({url:location.origin+'/docs/openriak-kv/3.4.1/using/',project:'OpenRiak KV',version:'3.4.1',title:'Using OpenRiak KV'})));
  await page.goto(base+'settings/search/');assert.equal(await page.locator('[data-settings-return]').textContent(),'Return to documentation (OpenRiak KV 3.4.1: Using OpenRiak KV)');
 
- assert.deepEqual(errors,[]);console.log('PASS Search table/defaults/logos, persistence, disabled links/choices, no disabled downloads, text-only, semantic-only and wait-for-both');
+ assert.deepEqual(errors,[]);console.log('PASS All Settings bottom notices, Search table/defaults/logos, persistence, disabled links/choices, no disabled downloads, text-only, semantic-only and wait-for-both');
 }finally{await browser.close();server.close();}
