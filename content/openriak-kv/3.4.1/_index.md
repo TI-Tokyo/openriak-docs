@@ -8,6 +8,7 @@ product_version: 3.4.1
 release_baseline: false
 inherits_from: 3.4.0
 layout: single
+outputs: [HTML, Search, SemanticSource]
 related:
 - tutorials/first-cluster/build-and-explore-a-docker-cluster
 - reference/configuration/all-configuration-settings-and-defaults

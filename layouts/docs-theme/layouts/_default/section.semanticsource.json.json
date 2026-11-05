@@ -1,0 +1,28 @@
+{{- $scope := strings.TrimPrefix ((urls.Parse site.BaseURL).Path) .RelPermalink -}}
+{{- $parts := split (strings.TrimSuffix "/" $scope) "/" -}}
+{{- $product := in (slice "openriak-kv" "openriak-cs" "openriak-ts" "riak-kv" "riak-cs" "riak-ts") (index $parts 0) -}}
+{{- $target := or .IsHome (and (not $product) (eq (len $parts) 1)) (and $product (eq (len $parts) 2) (ne (index $parts 1) "latest")) -}}
+{{- if and $target (not .Params.latest_redirect_route) -}}
+{{- $pages := slice . -}}
+{{- if not .IsHome -}}
+{{- range site.Pages -}}
+  {{- if and (ne .RelPermalink $.RelPermalink) (strings.HasPrefix .RelPermalink $.RelPermalink) (or .IsPage .Params.cli_command_key) -}}
+    {{- $pages = $pages | append . -}}
+  {{- end -}}
+{{- end -}}
+{{- end -}}
+{{- $entries := slice -}}
+{{- range $page := sort (where $pages "Params.exclude_search" "ne" true) "RelPermalink" -}}
+  {{- $content := $page.Content -}}
+  {{- if eq $page.Layout "settings" -}}
+    {{- range hugo.Data.settings_sections -}}
+      {{- if or (not $page.Params.settings_group) (eq .id $page.Params.settings_group) -}}
+        {{- $content = printf "%s<h2>%s</h2><p>%s</p>" $content (.title | htmlEscape) (.description | htmlEscape) -}}
+      {{- end -}}
+    {{- end -}}
+  {{- end -}}
+  {{- $entries = $entries | append (dict "title" $page.Title "html" $content "url" $page.RelPermalink "logicalPath" $page.Path) -}}
+{{- end -}}
+{{- $version := "" -}}{{- if and $product (eq (len $parts) 2) -}}{{- $version = index $parts 1 -}}{{- end -}}
+{{- dict "baseURL" site.BaseURL "scope" $scope "section" (cond .IsHome "homepage" (index $parts 0)) "version" $version "pages" $entries | jsonify -}}
+{{- else -}}{}{{- end -}}

@@ -68,7 +68,7 @@ const siteSectionUrlSource = fs.readFileSync(path.join(repositoryRoot, 'layouts'
 const contextDataSource = fs.readFileSync(path.join(themeRoot, 'layouts', 'partials', 'context-data.html'), 'utf8');
 const sharedSidebarSource = fs.readFileSync(path.join(repositoryRoot, 'layouts', 'common-docs', 'layouts', 'partials', 'sidebar-shell.html'), 'utf8');
 const sidebarSearchPartialSource = fs.readFileSync(path.join(repositoryRoot, 'layouts', 'common-docs', 'layouts', 'partials', 'sidebar-search.html'), 'utf8');
-const blogBaseSource = fs.readFileSync(path.join(repositoryRoot, 'layouts', 'archive-technical-blog', '_default', 'baseof.html'), 'utf8');
+const blogBaseSource = fs.readFileSync(path.join(repositoryRoot, 'layouts', 'archived-technical-blog', '_default', 'baseof.html'), 'utf8');
 const mailingListBaseSource = fs.readFileSync(path.join(repositoryRoot, 'layouts', 'archive-mailing-list', '_default', 'baseof.html'), 'utf8');
 const mailingListSearchPartialSource = fs.readFileSync(path.join(repositoryRoot, 'layouts', 'archive-mailing-list', 'partials', 'mailing-list-sidebar-tools.html'), 'utf8');
 const mailingListSearchSource = fs.readFileSync(path.join(repositoryRoot, 'content', 'static', 'archive-mailing-list', 'js', 'mailing-list-search.js'), 'utf8');
@@ -79,19 +79,19 @@ const archivePageSizeSource = fs.readFileSync(path.join(repositoryRoot, 'layouts
 const mailingListCategorySource = fs.readFileSync(path.join(repositoryRoot, 'layouts', 'archive-mailing-list', 'category.html'), 'utf8');
 const mailingListDateSource = fs.readFileSync(path.join(repositoryRoot, 'layouts', 'archive-mailing-list', 'date.html'), 'utf8');
 const mailingListMenuSource = fs.readFileSync(path.join(repositoryRoot, 'layouts', 'archive-mailing-list', 'partials', 'mailing-list-sidebar-tree.html'), 'utf8');
-const blogIndexSource = fs.readFileSync(path.join(repositoryRoot, 'layouts', 'archive-technical-blog', 'index.html'), 'utf8');
-const blogByYearSource = fs.readFileSync(path.join(repositoryRoot, 'layouts', 'archive-technical-blog', 'by-year.html'), 'utf8');
-const blogSingleSource = fs.readFileSync(path.join(repositoryRoot, 'layouts', 'archive-technical-blog', '_default', 'single.html'), 'utf8');
-const blogCategoriesSource = fs.readFileSync(path.join(repositoryRoot, 'layouts', 'archive-technical-blog', 'categories.html'), 'utf8');
-const blogCategorySource = fs.readFileSync(path.join(repositoryRoot, 'layouts', 'archive-technical-blog', 'category.html'), 'utf8');
-const blogDateSource = fs.readFileSync(path.join(repositoryRoot, 'layouts', 'archive-technical-blog', 'date.html'), 'utf8');
-const blogMenuSource = fs.readFileSync(path.join(repositoryRoot, 'layouts', 'archive-technical-blog', 'partials', 'blog-sidebar-tree.html'), 'utf8');
-const blogSortSource = fs.readFileSync(path.join(repositoryRoot, 'layouts', 'archive-technical-blog', 'partials', 'blog-sort.html'), 'utf8');
-const blogAuthorSource = fs.readFileSync(path.join(repositoryRoot, 'layouts', 'archive-technical-blog', 'author.html'), 'utf8');
+const blogIndexSource = fs.readFileSync(path.join(repositoryRoot, 'layouts', 'archived-technical-blog', 'index.html'), 'utf8');
+const blogByYearSource = fs.readFileSync(path.join(repositoryRoot, 'layouts', 'archived-technical-blog', 'by-year.html'), 'utf8');
+const blogSingleSource = fs.readFileSync(path.join(repositoryRoot, 'layouts', 'archived-technical-blog', '_default', 'single.html'), 'utf8');
+const blogCategoriesSource = fs.readFileSync(path.join(repositoryRoot, 'layouts', 'archived-technical-blog', 'categories.html'), 'utf8');
+const blogCategorySource = fs.readFileSync(path.join(repositoryRoot, 'layouts', 'archived-technical-blog', 'category.html'), 'utf8');
+const blogDateSource = fs.readFileSync(path.join(repositoryRoot, 'layouts', 'archived-technical-blog', 'date.html'), 'utf8');
+const blogMenuSource = fs.readFileSync(path.join(repositoryRoot, 'layouts', 'archived-technical-blog', 'partials', 'blog-sidebar-tree.html'), 'utf8');
+const blogSortSource = fs.readFileSync(path.join(repositoryRoot, 'layouts', 'archived-technical-blog', 'partials', 'blog-sort.html'), 'utf8');
+const blogAuthorSource = fs.readFileSync(path.join(repositoryRoot, 'layouts', 'archived-technical-blog', 'author.html'), 'utf8');
 const sharedHeaderCss = fs.readFileSync(path.join(repositoryRoot, 'layouts', 'common-docs', 'static', 'css', 'site-header.css'), 'utf8');
 const sharedSidebarCss = fs.readFileSync(path.join(repositoryRoot, 'layouts', 'common-docs', 'static', 'css', 'sidebar-shell.css'), 'utf8');
 const siteSectionBaseSource = fs.readFileSync(path.join(repositoryRoot, 'layouts', 'common-docs', 'layouts', 'site-section', 'baseof.html'), 'utf8');
-const archiveStylesSource = fs.readFileSync(path.join(repositoryRoot, 'content', 'static', 'archive-technical-blog', 'assets', 'styles.css'), 'utf8');
+const archiveStylesSource = fs.readFileSync(path.join(repositoryRoot, 'content', 'static', 'archived-technical-blog', 'assets', 'styles.css'), 'utf8');
 const sidebarSource = fs.readFileSync(path.join(themeRoot, 'layouts', 'partials', 'sidebar.html'), 'utf8');
 const headSource = fs.readFileSync(path.join(themeRoot, 'layouts', 'partials', 'head.html'), 'utf8');
 const baseSource = fs.readFileSync(path.join(themeRoot, 'layouts', 'baseof.html'), 'utf8');
@@ -621,7 +621,7 @@ assert.doesNotMatch(hugoConfig, /target: 'content\/archived-(technical-blog|mail
 const archiveHugoConfig = fs.readFileSync(archiveHugoConfigPath, 'utf8');
 assert.match(archiveHugoConfig, /target: 'content\/archived-technical-blog'/, 'the blog must be mounted into the archive project');
 assert.match(archiveHugoConfig, /target: 'content\/archived-mailing-list'/, 'the mailing list must be mounted into the archive project');
-assert.match(archiveHugoConfig, /archive-technical-blog\/by-year\.html', target: 'layouts\/blog\/by-year\.html'/, 'the blog year index template must be mounted into the archive project');
+assert.match(archiveHugoConfig, /archived-technical-blog\/by-year\.html', target: 'layouts\/blog\/by-year\.html'/, 'the blog year index template must be mounted into the archive project');
 assert.doesNotMatch(archiveHugoConfig, /source: '(homepage|community|openriak-kv|riak-kv)\//, 'active content must not be mounted into the archive project');
 assert.match(coreHugoConfig, /docs-theme\/layouts\/_markup\/render-blockquote-alert\.html', target: 'layouts\/_markup\/render-blockquote-alert\.html'/, 'core Hugo project must mount the local admonition render hook');
 assert.match(archiveHugoConfig, /hugo-admonitions\/layouts\/_default\/_markup\/render-blockquote-alert\.html', target: 'layouts\/_markup\/render-blockquote-alert\.html'/, 'archive Hugo project must mount the vendored admonition render hook');
@@ -635,10 +635,10 @@ assert.ok(fs.existsSync(path.join(repositoryRoot, 'content', 'community', 'pages
 assert.ok(fs.existsSync(path.join(commonAssets, 'images', 'sites', 'community.svg')), 'Community must have a shared Site section logo');
 assert.ok(fs.existsSync(path.join(commonAssets, 'images', 'sites', 'homepage.svg')), 'Homepage must have a shared Site section logo');
 
-const blogPostsRoot = path.join(repositoryRoot, 'content', 'archive-technical-blog', 'posts');
-const blogCategoriesRoot = path.join(repositoryRoot, 'content', 'archive-technical-blog', 'pages', 'categories');
-const blogDatesRoot = path.join(repositoryRoot, 'content', 'archive-technical-blog', 'pages', 'by-year');
-const blogAuthorsRoot = path.join(repositoryRoot, 'content', 'archive-technical-blog', 'pages', 'authors');
+const blogPostsRoot = path.join(repositoryRoot, 'content', 'archived-technical-blog', 'posts');
+const blogCategoriesRoot = path.join(repositoryRoot, 'content', 'archived-technical-blog', 'pages', 'categories');
+const blogDatesRoot = path.join(repositoryRoot, 'content', 'archived-technical-blog', 'pages', 'by-year');
+const blogAuthorsRoot = path.join(repositoryRoot, 'content', 'archived-technical-blog', 'pages', 'authors');
 const approvedBlogCategories = [
   'Architecture & Distributed Systems',
   'Case Studies',

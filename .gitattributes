@@ -1,1 +1,8 @@
 content/openriak-kv/metadata/*/kv-cli-commands.json filter=lfs diff=lfs merge=lfs -text
+
+# Prepared search assets are checksum-validated; preserve their exact bytes.
+content/static/semantic-search/** -text
+# Keep the upstream ONNX Runtime loader unmodified, including its whitespace.
+content/static/semantic-search/ort-wasm-simd-threaded.jsep.mjs -whitespace
+
+content/static/semantic-indexes/** -text

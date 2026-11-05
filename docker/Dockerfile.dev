@@ -1,0 +1,18 @@
+ARG HUGO_VERSION=0.166.0
+FROM ghcr.io/gohugoio/hugo:v${HUGO_VERSION} AS hugo-runtime
+# Keep Hugo's musl libraries private. The embedding engine needs glibc, so
+# installing Alpine's libraries into Debian's system library paths is unsafe.
+RUN mkdir -p /tmp/hugo-runtime/lib && \
+    cp /usr/bin/hugo /tmp/hugo-runtime/hugo && \
+    cp -L /lib/ld-musl-*.so.1 /usr/lib/libstdc++.so.6 /usr/lib/libgcc_s.so.1 /tmp/hugo-runtime/lib/
+
+FROM node:24-bookworm-slim
+COPY --from=hugo-runtime /tmp/hugo-runtime /opt/hugo
+COPY docker/hugo-wrapper.sh /usr/local/bin/hugo
+RUN chmod 755 /usr/local/bin/hugo && hugo version
+WORKDIR /project/tools/semantic-search
+COPY tools/semantic-search/package.json tools/semantic-search/package-lock.json ./
+RUN npm ci --omit=dev --no-audit --no-fund && npm cache clean --force
+WORKDIR /project
+RUN mkdir -p /cache/hugo /cache/resources && chown -R node:node /cache
+USER node

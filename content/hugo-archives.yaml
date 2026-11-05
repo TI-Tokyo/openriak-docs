@@ -17,6 +17,11 @@ mediaTypes:
     suffixes: ['json']
 
 outputFormats:
+  SemanticSource:
+    mediaType: application/json
+    baseName: semantic-source
+    isPlainText: true
+    notAlternative: true
   Search:
     mediaType: 'application/json'
     baseName: 'index'
@@ -32,14 +37,17 @@ params:
 
 module:
   mounts:
+    - {source: '../layouts/docs-theme/layouts/_default/section.semanticsource.json.json', target: 'layouts/_default/section.semanticsource.json.json'}
+    - {source: '../layouts/docs-theme/layouts/_default/section.semanticsource.json.json', target: 'layouts/_default/home.semanticsource.json.json'}
+    - {source: '../layouts/docs-theme/layouts/_default/section.semanticsource.json.json', target: 'layouts/_default/single.semanticsource.json.json'}
     - {source: '../layouts/common-docs/layouts/alias.html', target: 'layouts/alias.html'}
     - {source: 'static/common', target: 'assets/social-static'}
     - {source: 'static/openriak-kv', target: 'assets/social-static'}
-    - {source: 'static/archive-technical-blog', target: 'assets/social-static'}
+    - {source: 'static/archived-technical-blog', target: 'assets/social-static'}
     - {source: 'static/archive-mailing-list', target: 'assets/social-static'}
     # Immutable archive content. The generated mailing-list corpus is not watched.
-    - {source: 'archive-technical-blog/pages', target: 'content/archived-technical-blog'}
-    - {source: 'archive-technical-blog/posts', target: 'content/archived-technical-blog/posts'}
+    - {source: 'archived-technical-blog/pages', target: 'content/archived-technical-blog'}
+    - {source: 'archived-technical-blog/posts', target: 'content/archived-technical-blog/posts'}
     - {source: 'archive-mailing-list/pages', target: 'content/archived-mailing-list'}
     - {source: 'archive-mailing-list/generated', target: 'content/archived-mailing-list', disableWatch: true}
 
@@ -55,16 +63,16 @@ module:
     - {source: '../layouts/_vendor/github.com/KKKZOZ/hugo-admonitions/i18n', target: 'i18n'}
 
     # Archived Technical Blog templates.
-    - {source: '../layouts/archive-technical-blog/_default/baseof.html', target: 'layouts/blog/baseof.html'}
-    - {source: '../layouts/archive-technical-blog/_default/single.html', target: 'layouts/blog/single.html'}
-    - {source: '../layouts/archive-technical-blog/index.html', target: 'layouts/blog/list.html'}
-    - {source: '../layouts/archive-technical-blog/by-year.html', target: 'layouts/blog/by-year.html'}
-    - {source: '../layouts/archive-technical-blog/categories.html', target: 'layouts/blog/categories.html'}
-    - {source: '../layouts/archive-technical-blog/category.html', target: 'layouts/blog/category.html'}
-    - {source: '../layouts/archive-technical-blog/date.html', target: 'layouts/blog/date.html'}
-    - {source: '../layouts/archive-technical-blog/author.html', target: 'layouts/blog/author.html'}
-    - {source: '../layouts/archive-technical-blog/partials', target: 'layouts/_partials'}
-    - {source: '../layouts/archive-technical-blog/_markup', target: 'layouts/_markup'}
+    - {source: '../layouts/archived-technical-blog/_default/baseof.html', target: 'layouts/blog/baseof.html'}
+    - {source: '../layouts/archived-technical-blog/_default/single.html', target: 'layouts/blog/single.html'}
+    - {source: '../layouts/archived-technical-blog/index.html', target: 'layouts/blog/list.html'}
+    - {source: '../layouts/archived-technical-blog/by-year.html', target: 'layouts/blog/by-year.html'}
+    - {source: '../layouts/archived-technical-blog/categories.html', target: 'layouts/blog/categories.html'}
+    - {source: '../layouts/archived-technical-blog/category.html', target: 'layouts/blog/category.html'}
+    - {source: '../layouts/archived-technical-blog/date.html', target: 'layouts/blog/date.html'}
+    - {source: '../layouts/archived-technical-blog/author.html', target: 'layouts/blog/author.html'}
+    - {source: '../layouts/archived-technical-blog/partials', target: 'layouts/_partials'}
+    - {source: '../layouts/archived-technical-blog/_markup', target: 'layouts/_markup'}
 
     # Archived Mailing List templates.
     - {source: '../layouts/archive-mailing-list/_default/baseof.html', target: 'layouts/mailing-list/baseof.html'}
@@ -79,3 +87,9 @@ module:
     # Search data is part of the mailing-list section. All other static files are
     # owned by the core build and shared by the assembled site.
     - {source: 'archive-mailing-list/generated-static', target: 'static/archived-mailing-list'}
+
+# Index preparation needs rendered article content, not a second full HTML build.
+segments:
+  semantic:
+    includes:
+      - output: semanticsource

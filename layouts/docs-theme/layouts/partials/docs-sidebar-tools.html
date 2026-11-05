@@ -6,5 +6,5 @@
   {{- with $versionData.operatingSystems }}
   <div class="sidebar-control os-control" data-os-control><span class="control-label">Operating system</span><button class="picker-trigger os-picker-trigger" type="button" aria-expanded="false" aria-controls="os-panel" data-os-trigger>{{ with index $versionData.operatingSystems 0 }}<img data-os-logo src="{{ .logo | relURL }}" alt="">{{ end }}<span class="picker-label" data-os-label>Choose an operating system</span><span class="picker-chevron" aria-hidden="true"></span></button><div id="os-panel" class="picker-panel os-panel" data-os-picker role="listbox" aria-label="Operating system" hidden></div></div>
   {{- end }}
-  {{ partial "sidebar-search.html" (dict "id" "docs-search" "label" "Search" "placeholder" "Search this version" "indexURL" (printf "%sindex.json" .product.versionHome.RelPermalink) "emptyMessage" "No results in this version.") }}
+  {{ partial "sidebar-search.html" (dict "id" "docs-search" "label" "Search" "placeholder" "Search this version" "indexURL" (printf "%sindex.json" .product.versionHome.RelPermalink) "semanticIndexURL" (partial "semantic-index-url.html" .product.versionHome) "semanticScopeLabel" (printf "%s %s" .brand.name .version) "emptyMessage" "No results in this version.") }}
 </div>

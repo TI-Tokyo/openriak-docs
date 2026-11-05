@@ -1,6 +1,8 @@
 baseURL: 'https://www.openriak.org/docs/'
 title: 'OpenRiak Documentation'
 defaultContentLanguage: 'en'
+# Full-version exports include large captured CLI outputs.
+timeout: 10m
 disableKinds: ['RSS', 'taxonomy', 'term']
 resourceDir: '../tools/generated/hugo-resources'
 
@@ -17,6 +19,11 @@ mediaTypes:
     suffixes: ['json']
 
 outputFormats:
+  SemanticSource:
+    mediaType: application/json
+    baseName: semantic-source
+    isPlainText: true
+    notAlternative: true
   Search:
     mediaType: 'application/json'
     baseName: 'index'
@@ -24,8 +31,8 @@ outputFormats:
     notAlternative: true
 
 outputs:
-  home: ['HTML']
-  section: ['HTML', 'Search']
+  home: ['HTML', 'SemanticSource']
+  section: ['HTML', 'Search', 'SemanticSource']
 
 params:
   description: 'Documentation and technical archives for the OpenRiak product family.'
@@ -42,7 +49,7 @@ module:
     - {source: '../layouts/common-docs/layouts/alias.html', target: 'layouts/alias.html'}
     - {source: 'static/common', target: 'assets/social-static'}
     - {source: 'static/openriak-kv', target: 'assets/social-static'}
-    - {source: 'static/archive-technical-blog', target: 'assets/social-static'}
+    - {source: 'static/archived-technical-blog', target: 'assets/social-static'}
     - {source: 'static/archive-mailing-list', target: 'assets/social-static'}
     # Active site content. Immutable archives are built by hugo-archives.yaml.
     - {source: 'homepage/pages', target: 'content'}
@@ -80,6 +87,9 @@ module:
     - {source: '../layouts/docs-theme/layouts/_default/downloads.html', target: 'layouts/product/downloads.html'}
     - {source: '../layouts/common-docs/layouts/latest-redirect.html', target: 'layouts/_default/latest-redirect.html'}
     - {source: '../layouts/docs-theme/layouts/_default/section.search.json.json', target: 'layouts/_default/section.search.json.json'}
+    - {source: '../layouts/docs-theme/layouts/_default/section.semanticsource.json.json', target: 'layouts/_default/section.semanticsource.json.json'}
+    - {source: '../layouts/docs-theme/layouts/_default/section.semanticsource.json.json', target: 'layouts/_default/home.semanticsource.json.json'}
+    - {source: '../layouts/docs-theme/layouts/_default/section.semanticsource.json.json', target: 'layouts/_default/single.semanticsource.json.json'}
     - {source: '../layouts/docs-theme/layouts/partials', target: 'layouts/_partials'}
     - {source: '../layouts/common-docs/layouts/partials', target: 'layouts/_partials'}
     - {source: '../layouts/common-docs/layouts/site-section', target: 'layouts/site-section'}
@@ -99,8 +109,16 @@ module:
     # The core build owns every shared and section-specific static asset. The
     # archive build emits only its section trees, so assembly has one asset owner.
     - {source: 'static/common', target: 'static'}
+    - {source: 'static/semantic-indexes', target: 'static/semantic-indexes'}
+    - {source: 'static/semantic-search', target: 'static/semantic-search'}
     - {source: 'static/openriak-kv', target: 'static'}
-    - {source: 'static/archive-technical-blog', target: 'static'}
+    - {source: 'static/archived-technical-blog', target: 'static'}
     - {source: 'static/archive-mailing-list', target: 'static'}
     - {source: '../layouts/docs-theme/static', target: 'static'}
     - {source: '../layouts/common-docs/static', target: 'static'}
+
+# Index preparation needs rendered article content, not a second full HTML build.
+segments:
+  semantic:
+    includes:
+      - output: semanticsource

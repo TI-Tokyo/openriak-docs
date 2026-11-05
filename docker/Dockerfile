@@ -13,6 +13,7 @@ COPY content/hugo.yaml ./content/hugo.yaml
 COPY content/annotations ./content/annotations
 COPY content/homepage ./content/homepage
 COPY content/community ./content/community
+COPY content/archived-technical-blog ./content/archived-technical-blog
 COPY content/riak-kv ./content/riak-kv
 COPY content/riak-ts ./content/riak-ts
 COPY content/riak-cs ./content/riak-cs
@@ -49,7 +50,7 @@ RUN case "$CORE_BUILD_PROFILE" in \
     esac
 RUN node tools/scripts/render-mermaid.mjs
 
-FROM ghcr.io/gohugoio/hugo:v${HUGO_VERSION} AS core-build
+FROM ghcr.io/gohugoio/hugo:v${HUGO_VERSION} AS core-render
 ARG INCLUDE_DRAFTS=true
 ARG HUGO_BASEURL=https://www.openriak.org/docs/
 WORKDIR /project
@@ -60,6 +61,13 @@ RUN drafts=''; if [ "$INCLUDE_DRAFTS" = true ]; then drafts=--buildDrafts; fi; \
       --destination=/project/public --baseURL="$HUGO_BASEURL" --gc --minify \
       --noBuildLock --cleanDestinationDir $drafts && \
     node tools/scripts/check-social-metadata.cjs /project/public "$HUGO_BASEURL"
+
+# Native CPU embedding dependencies require glibc when a tracked index is absent.
+# Existing indexes only need Node's built-in validation; no npm install is run.
+FROM node:${NODE_VERSION}-bookworm-slim AS core-build
+WORKDIR /project
+COPY --from=core-render /project /project
+RUN node tools/scripts/build-semantic-index.mjs --ensure --all --site-dir /project/public --publish-dir /project/public
 
 # Development and beta-test artifacts contain the core project only.
 FROM scratch AS core-static
@@ -74,24 +82,28 @@ WORKDIR /project
 COPY .hugo-version ./
 COPY content/hugo-archives.yaml ./content/hugo-archives.yaml
 COPY content/static ./content/static
-COPY content/archive-technical-blog ./content/archive-technical-blog
+COPY content/archived-technical-blog ./content/archived-technical-blog
 COPY content/archive-mailing-list ./content/archive-mailing-list
-COPY layouts/archive-technical-blog ./layouts/archive-technical-blog
+COPY layouts/archived-technical-blog ./layouts/archived-technical-blog
 COPY layouts/archive-mailing-list ./layouts/archive-mailing-list
 COPY layouts/common-docs/data ./layouts/common-docs/data
 COPY layouts/common-docs/layouts ./layouts/common-docs/layouts
 COPY layouts/docs-theme/layouts/_default/section.search.json.json ./layouts/docs-theme/layouts/_default/section.search.json.json
+COPY layouts/docs-theme/layouts/_default/section.semanticsource.json.json ./layouts/docs-theme/layouts/_default/section.semanticsource.json.json
 COPY layouts/_vendor/github.com/KKKZOZ/hugo-admonitions ./layouts/_vendor/github.com/KKKZOZ/hugo-admonitions
 RUN drafts=''; if [ "$INCLUDE_DRAFTS" = true ]; then drafts=--buildDrafts; fi; \
     hugo --source=/project/content --config=/project/content/hugo-archives.yaml \
       --destination=/project/public --baseURL="$HUGO_BASEURL" --gc --minify \
       --noBuildLock --cleanDestinationDir $drafts
 
-FROM node:${NODE_VERSION}-alpine AS assembled
+FROM node:${NODE_VERSION}-bookworm-slim AS assembled
 ARG HUGO_BASEURL=https://www.openriak.org/docs/
 ENV HUGO_BASEURL=$HUGO_BASEURL
 ENV OPENRIAK_SOCIAL_CHECKER=/project/tools/scripts/check-social-metadata.cjs
 WORKDIR /project
+COPY --from=core-build /project/tools /project/tools
+COPY --from=core-build /project/content /project/content
+ENV OPENRIAK_SEMANTIC_BUILDER=/project/tools/scripts/build-semantic-index.mjs
 COPY tools/scripts/assemble-site.sh /usr/local/bin/assemble-site
 COPY tools/scripts/check-social-metadata.cjs tools/scripts/social-html.cjs /project/tools/scripts/
 COPY --from=core-build /project/public /project/core

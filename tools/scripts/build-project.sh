@@ -85,6 +85,15 @@ case "$project" in
         --include-version "riak-kv=$development_riak_kv_version" \
         --include-latest riak-cs \
         --include-latest riak-ts
+    elif [ -n "${OPENRIAK_DOCS_DEVELOPMENT_DATA_ROOT:-}" ]; then
+      # Isolated semantic exports can render every version without rewriting
+      # the repository's generated metadata.
+      node "$site_root/tools/scripts/generate-version-mounts.js" \
+        --base-config "$site_root/content/hugo.yaml" --output "$generated_config" \
+        --version-data-root "openriak-kv=$OPENRIAK_DOCS_DEVELOPMENT_DATA_ROOT/openriak-kv/data/versions" \
+        --version-data-root "openriak-cs=$OPENRIAK_DOCS_DEVELOPMENT_DATA_ROOT/openriak-cs/data/versions" \
+        --version-data-root "openriak-ts=$OPENRIAK_DOCS_DEVELOPMENT_DATA_ROOT/openriak-ts/data/versions"
+      node "$site_root/tools/scripts/sync-product-metadata.js" --output-root "$OPENRIAK_DOCS_DEVELOPMENT_DATA_ROOT"
     else
       node "$site_root/tools/scripts/generate-version-mounts.js" \
         --base-config "$site_root/content/hugo.yaml" \
@@ -107,7 +116,9 @@ set -- --source "$site_root/content" --config "$config" --destination "$destinat
   --baseURL "$base_url" --gc --minify --noBuildLock --cleanDestinationDir
 # Invalid optional social images warn and fall back in both projects.
 if [ "${INCLUDE_DRAFTS:-true}" = "true" ]; then set -- "$@" --buildDrafts; fi
+if [ "${OPENRIAK_SEMANTIC_EXPORT_ONLY:-0}" = 1 ]; then set -- "$@" --renderSegments semantic; fi
 hugo "$@"
-if [ "$project" = core ]; then
+if [ "$project" = core ] && [ "${OPENRIAK_SEMANTIC_EXPORT_ONLY:-0}" != 1 ]; then
   node "$site_root/tools/scripts/check-social-metadata.cjs" "$destination" "$base_url"
+  node "$site_root/tools/scripts/build-semantic-index.mjs" --ensure --all --site-dir "$destination" --publish-dir "$destination"
 fi

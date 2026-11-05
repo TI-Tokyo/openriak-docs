@@ -1,0 +1,4 @@
+{{- $scope := strings.TrimPrefix ((urls.Parse site.BaseURL).Path) .RelPermalink -}}
+{{- if not $scope -}}{{- $scope = "homepage/" -}}{{- end -}}
+{{- $url := printf "semantic-indexes/%smanifest.json" $scope -}}
+{{- return ($url | relURL) -}}

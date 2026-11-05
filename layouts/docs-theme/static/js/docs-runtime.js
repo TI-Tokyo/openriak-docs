@@ -972,7 +972,7 @@
 
   const setupSearch = () => {
     const root = document.querySelector('[data-search]');
-    if (root?.dataset.sharedSearchReady === 'true') return;
+    if (root?.dataset.sharedSearchReady === 'true' || root?.dataset.semanticIndexUrl) return;
     const input = document.querySelector('[data-search-input]');
     const results = document.querySelector('[data-search-results]');
     const status = root?.querySelector('[data-search-status]');

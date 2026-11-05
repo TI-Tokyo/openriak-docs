@@ -389,3 +389,39 @@ Pass the deployment's actual base URL, including its subdirectory if applicable.
 `--http` fetches every selected image. Same-host URLs must match the configured
 HTTP/HTTPS protocol; external images and their redirects must use HTTPS. To check an archive-only output before assembly, use
 `--asset-root` pointing at the core output for its shared static images.
+
+### Semantic search
+
+Documentation versions, Community and the Archived Technical Blog use browser-only
+semantic + text search. Indexes are prepared for every published version and site
+section and tracked in Git. The shared model and runtime live in
+`content/static/semantic-search/`. Existing text indexes and the specialised Settings
+and mailing-list search controls are preserved. Semantic panels show the active mode.
+
+```sh
+node tools/scripts/build-semantic-index.mjs --section archived-technical-blog
+node tools/scripts/build-semantic-index.mjs --section openriak-kv --version 3.4.1
+node tools/scripts/build-semantic-index.mjs --all
+```
+
+`--all` discovers every published version and section from Hugo’s semantic source exports.
+The default export profile is `release`, including both archives. Set
+`OPENRIAK_DOCS_BUILD_PROFILE=development` to use the development versions.
+`--site-dir` follows exactly the versions and sections in the supplied Hugo output.
+`tools/semantic-search/indexes.json` preserves the two original index locations;
+it does not restrict which sections receive indexes. Rebuilds remove
+superseded files after successful publication; add `--retain` to keep them. Normal
+builds generate missing indexes automatically, validate existing ones and include
+the resulting assets in the output. Stale or corrupt indexes require an explicit
+rebuild. See [the build and test guide](tools/semantic-search/README.md) for details.
+
+The local run script builds a development image containing Hugo and the pinned
+CPU embedding dependencies. The core container renders its active profile, detects missing indexes, generates
+them, and then starts Hugo’s server. For release, this includes both archives;
+the archive server waits until the core server is ready. This check also
+runs on direct core-container restarts. Dependencies are provided by the image in an
+anonymous volume, kept separate from host dependencies and refreshed by the run
+script when recreating containers. No separate indexing service is required.
+New indexes live in `content/static/semantic-indexes/SECTION[/VERSION]/` and are
+included in Git. Existing Technical Blog and KV 3.4.1 index URLs are preserved.
+Deployment assembly checks all core and archive exports before publishing.

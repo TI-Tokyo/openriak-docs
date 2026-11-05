@@ -81,18 +81,18 @@ if command -v docker >/dev/null 2>&1; then
   if docker info >/dev/null 2>&1; then
     if docker compose version >/dev/null 2>&1; then
       if [ -n "$compose_profile" ]; then
-        exec docker compose --file "$compose_file" --profile "$compose_profile" up --force-recreate "$@"
+        exec docker compose --file "$compose_file" --profile "$compose_profile" up --build --force-recreate --renew-anon-volumes "$@"
       fi
       docker compose --file "$compose_file" --profile release stop archives >/dev/null 2>&1 || true
-      exec docker compose --file "$compose_file" up --force-recreate "$@"
+      exec docker compose --file "$compose_file" up --build --force-recreate --renew-anon-volumes "$@"
     fi
 
     if command -v docker-compose >/dev/null 2>&1; then
       if [ -n "$compose_profile" ]; then
-        exec docker-compose --file "$compose_file" --profile "$compose_profile" up --force-recreate "$@"
+        exec docker-compose --file "$compose_file" --profile "$compose_profile" up --build --force-recreate --renew-anon-volumes "$@"
       fi
       docker-compose --file "$compose_file" --profile release stop archives >/dev/null 2>&1 || true
-      exec docker-compose --file "$compose_file" up --force-recreate "$@"
+      exec docker-compose --file "$compose_file" up --build --force-recreate --renew-anon-volumes "$@"
     fi
 
     echo 'Docker is running, but Docker Compose is unavailable.' >&2
@@ -106,10 +106,10 @@ if command -v docker.exe >/dev/null 2>&1 && command -v wslpath >/dev/null 2>&1; 
     export OPENRIAK_DOCS_ZONEINFO_DIR=$(wslpath -w "$zoneinfo_directory")
     export WSLENV="${WSLENV:+$WSLENV:}OPENRIAK_DOCS_BUILD_PROFILE:OPENRIAK_DOCS_RIAK_KV_VERSION:OPENRIAK_DOCS_TZ:OPENRIAK_DOCS_ZONEINFO_DIR"
     if [ -n "$compose_profile" ]; then
-      exec docker.exe compose --file "$(wslpath -w "$compose_file")" --profile "$compose_profile" up --force-recreate "$@"
+      exec docker.exe compose --file "$(wslpath -w "$compose_file")" --profile "$compose_profile" up --build --force-recreate --renew-anon-volumes "$@"
     fi
     docker.exe compose --file "$(wslpath -w "$compose_file")" --profile release stop archives >/dev/null 2>&1 || true
-    exec docker.exe compose --file "$(wslpath -w "$compose_file")" up --force-recreate "$@"
+    exec docker.exe compose --file "$(wslpath -w "$compose_file")" up --build --force-recreate --renew-anon-volumes "$@"
   fi
 fi
 

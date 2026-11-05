@@ -1,3 +1,3 @@
 <div class="sidebar-tools">
-  {{ partial "sidebar-search.html" (dict "id" "section-search" "label" "Search" "placeholder" (printf "Search %s" .section.Title) "indexURL" (printf "%sindex.json" .section.RelPermalink) "emptyMessage" "No results in this section.") }}
+  {{ partial "sidebar-search.html" (dict "id" "section-search" "label" "Search" "placeholder" (printf "Search %s" .section.Title) "indexURL" (printf "%sindex.json" .section.RelPermalink) "semanticIndexURL" (partial "semantic-index-url.html" .section) "semanticScopeLabel" .section.Title "emptyMessage" "No results in this section.") }}
 </div>

@@ -64,3 +64,21 @@
   .site-sidebar .sidebar-collapse, .site-sidebar .sidebar-rail { display: none; }
   .docs-sidebar.site-sidebar .sidebar-expanded { padding-top: 0; }
 }
+
+/* The blog's search mode is visible as well as announced to screen readers. */
+.site-sidebar [data-semantic-search] .search-status {
+  position: static;
+  width: auto;
+  height: auto;
+  margin: .3rem 0 0;
+  padding: .35rem .45rem;
+  overflow: visible;
+  clip: auto;
+  white-space: normal;
+  border-left: 3px solid var(--teal, #006a75);
+  color: var(--ink);
+  background: var(--panel-cool, var(--mint, #eef4f3));
+  font-size: .78rem;
+  line-height: 1.4;
+}
+.site-sidebar [data-semantic-search] .search-status:empty { display: none; }

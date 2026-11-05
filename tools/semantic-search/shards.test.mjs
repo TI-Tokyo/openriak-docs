@@ -1,0 +1,28 @@
+import {test} from 'node:test';
+import assert from 'node:assert/strict';
+import fs from 'node:fs';
+import path from 'node:path';
+import os from 'node:os';
+import {publishIndex} from './index-files.mjs';
+import {inspect,validateIndex} from './manager.mjs';
+import {loadPassages,loadVectors} from '../../content/static/semantic-search/index-loader.mjs';
+test('large indexes are split, loaded in order, checked for missing parts and cleaned safely',async()=>{
+ const root=fs.mkdtempSync(path.join(os.tmpdir(),'semantic-shards-')),dir=path.join(root,'index');
+ const model={dimensions:2,modelDirectory:'model-test',dtype:'q8',runtime:'test'};
+ const target={section:'test',directory:'index',scope:'test/',kind:'hugo'};
+ const pages=Array.from({length:6},(_,i)=>({url:`test/page-${i}/`,title:`Page ${i}`,heading:'Heading',text:`Passage ${i} has some words for a useful result.`}));
+ const vectors=pages.map((_,i)=>Buffer.from(new Float32Array([i,1]).buffer));
+ const m=publishIndex(dir,{...model,scope:target.scope},pages,vectors,{maxFileBytes:250});
+ assert.ok(m.indexParts.length>1);assert.equal(m.indexParts.length,m.vectorParts.length);
+ for(const file of Object.keys(m.assets))assert.ok(fs.statSync(path.join(dir,file)).size<=250);
+ const request=async url=>{const file=path.join(dir,path.basename(url.pathname));if(!fs.existsSync(file))return {ok:false};const bytes=fs.readFileSync(file);return {ok:true,json:async()=>JSON.parse(bytes),arrayBuffer:async()=>bytes.buffer.slice(bytes.byteOffset,bytes.byteOffset+bytes.byteLength)};};
+ assert.deepEqual(await loadPassages(m,'https://example.test/docs/index/',request),pages);
+ assert.deepEqual([...await loadVectors(m,'https://example.test/docs/index/',request)],pages.flatMap((_,i)=>[i,1]));
+ validateIndex(root,target,model);
+ const missing=m.vectorParts[1],backup=fs.readFileSync(path.join(dir,missing));fs.unlinkSync(path.join(dir,missing));
+ assert.equal(inspect(dir).missing,true);await assert.rejects(()=>loadVectors(m,'https://example.test/docs/index/',request));fs.writeFileSync(path.join(dir,missing),backup);
+ const next=publishIndex(dir,{...model,scope:target.scope},pages.slice(0,1),vectors.slice(0,1));
+ assert.ok(!next.indexParts);for(const name of Object.keys(m.assets))if(!next.assets[name])assert.ok(!fs.existsSync(path.join(dir,name)));
+ assert.deepEqual(await loadPassages(next,'https://example.test/docs/index/',request),pages.slice(0,1));
+ fs.rmSync(root,{recursive:true});
+});
