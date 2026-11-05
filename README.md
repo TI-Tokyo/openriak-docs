@@ -404,6 +404,16 @@ node tools/scripts/build-semantic-index.mjs --section openriak-kv --version 3.4.
 node tools/scripts/build-semantic-index.mjs --all
 ```
 
+To report which indexes need rebuilding without changing any index files:
+
+```sh
+OPENRIAK_DOCS_BUILD_PROFILE=release node tools/scripts/build-semantic-index.mjs --all --check
+```
+
+This checks all indexes against fresh source exports and reports every failure.
+It does not generate embeddings or repair missing files. Add `--site-dir` to
+compare against existing exports instead of rendering fresh ones.
+
 `--all` discovers every published version and section from Hugo’s semantic source exports.
 The default export profile is `release`, including both archives. Set
 `OPENRIAK_DOCS_BUILD_PROFILE=development` to use the development versions.

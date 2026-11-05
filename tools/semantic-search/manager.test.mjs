@@ -52,7 +52,7 @@ test('all rebuilds every registered target and renders source only once',async()
  for(const t of targets.filter(t=>t.exportPath)){fs.mkdirSync(path.dirname(path.join(site,t.exportPath)),{recursive:true});fs.writeFileSync(path.join(site,t.exportPath),JSON.stringify(source));}
  await run(root,{all:true,retain:true},{runtime:async()=>model,render:async()=>{renders++;return site;},rebuild:async(t,sourcePath,o)=>{
   built.push(t.section+(t.version||''));assert.equal(o.retain,true);build(root,t,{retain:o.retain});
-  if(sourcePath){const file=path.join(root,t.directory,'manifest.json'),m=JSON.parse(fs.readFileSync(file));m.sourceDigest=sourceTools.sourceDigest(source,t.scope);fs.writeFileSync(file,JSON.stringify(m));}
+  if(sourcePath){const file=path.join(root,t.directory,'manifest.json'),m=JSON.parse(fs.readFileSync(file));m.sourceDigest=sourceTools.sourceDigest(source,t.scope);m.sourceNormalization=3;fs.writeFileSync(file,JSON.stringify(m));}
  }});
  assert.deepEqual(built,['blog','kv1','kv2']);assert.equal(renders,1);
 });
@@ -70,4 +70,67 @@ test('publishing an existing index preserves generations retained in the source'
  const last=build(root,target,{},'Cleaned');syncAssets(root,target,last,out);
  assert.ok(!fs.existsSync(path.join(out,target.publicPath,first.index)));
  assert.ok(fs.existsSync(path.join(out,target.publicPath,last.index)));
+});
+
+test('check rejects options which rebuild or publish',()=>{
+ assert.equal(parseArgs(['--all','--check']).check,true);
+ for(const extra of [['--ensure'],['--retain'],['--publish-dir','public']])assert.throws(()=>parseArgs(['--all','--check',...extra]),/cannot be combined/);
+});
+function snapshot(root){
+ const files={};
+ function walk(dir){for(const entry of fs.readdirSync(dir,{withFileTypes:true})){
+  const file=path.join(dir,entry.name);
+  if(entry.isDirectory())walk(file);
+  else files[path.relative(root,file)]={digest:hash(fs.readFileSync(file)),mtime:fs.statSync(file).mtimeMs};
+ }}
+ walk(root);return files;
+}
+async function checkFixture(){
+ const root=fixture(),site=path.join(root,'rendered');
+ const {default:sourceTools}=await import('./kv-source.cjs');
+ const runtimeDir=path.join(root,'content/static/semantic-search');
+ fs.writeFileSync(path.join(runtimeDir,'runtime.json'),JSON.stringify({...model,assets:{'model.bin':hash('model')}}));
+ fs.writeFileSync(path.join(runtimeDir,'model.bin'),'model');
+ for(const target of targets){
+  build(root,target);
+  const exportPath=target.exportPath||'blog/semantic-source.json';
+  const source={baseURL:'https://example.test/',section:target.section,scope:target.scope,version:target.version||'',pages:[]};
+  fs.mkdirSync(path.dirname(path.join(site,exportPath)),{recursive:true});
+  fs.writeFileSync(path.join(site,exportPath),JSON.stringify(source));
+  const file=path.join(root,target.directory,'manifest.json'),manifest=JSON.parse(fs.readFileSync(file));
+  manifest.sourceDigest=sourceTools.sourceDigest(source,target.scope);manifest.sourceNormalization=3;fs.writeFileSync(file,JSON.stringify(manifest));
+ }
+ return {root,site};
+}
+test('check reports stale, corrupt and missing indexes, continues to valid ones, and writes nothing',async()=>{
+ const {root,site}=await checkFixture();
+ const extra={...targets[0],section:'other',scope:'other/',directory:'indexes/other'};
+ fs.writeFileSync(path.join(root,'tools/semantic-search/indexes.json'),JSON.stringify([...targets,extra]));
+ build(root,extra);
+ // Change only blog source; use another source for the healthy fourth index.
+ fs.mkdirSync(path.join(root,'content/other'));fs.writeFileSync(path.join(root,'content/other/a.md'),'Article');
+ extra.source='content/other';
+ fs.writeFileSync(path.join(root,'tools/semantic-search/indexes.json'),JSON.stringify([...targets,extra]));
+ fs.writeFileSync(path.join(root,'content/blog/a.md'),'Changed');
+ const dir=path.join(root,targets[1].directory);
+ fs.appendFileSync(path.join(dir,inspect(dir).manifest.index),' ');
+ fs.unlinkSync(path.join(root,targets[2].directory,'manifest.json'));
+ const before=snapshot(root);
+ const report=await run(root,{all:true,check:true,'site-dir':site},{runtime:async()=>model,rebuild:()=>assert.fail('check must not rebuild')});
+ assert.equal(report.failed,3);assert.equal(report.results.length,4);
+ assert.match(report.results[0].reason,/Stale/);assert.match(report.results[1].reason,/Corrupt/);assert.match(report.results[2].reason,/Missing/);assert.equal(report.results[3].ok,true);
+ assert.deepEqual(snapshot(root),before);
+});
+test('check uses exported Hugo content and never repairs a missing runtime',async()=>{
+ const {root,site}=await checkFixture();
+ let report=await run(root,{all:true,check:true,'site-dir':site});
+ assert.equal(report.failed,0);assert.equal(report.runtimeIssue,null);
+ const file=path.join(site,targets[1].exportPath),source=JSON.parse(fs.readFileSync(file));
+ source.pages=[{url:'/kv/1/page/',title:'Changed',html:'<p>New content.</p>'}];fs.writeFileSync(file,JSON.stringify(source));
+ fs.unlinkSync(path.join(root,'content/static/semantic-search/model.bin'));
+ const before=snapshot(root);
+ report=await run(root,{all:true,check:true,'site-dir':site});
+ assert.equal(report.failed,1);assert.match(report.runtimeIssue,/Missing shared/);
+ assert.match(report.results.find(r=>r.target.version==='1').reason,/Stale/);
+ assert.deepEqual(snapshot(root),before);
 });

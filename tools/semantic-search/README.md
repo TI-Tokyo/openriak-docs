@@ -66,6 +66,32 @@ node tools/scripts/build-semantic-index.mjs --all --retain
 `--retain` preserves the old files, but the manifest still selects the new index.
 Commit additions and removals together after a rebuild.
 
+## Check without rebuilding
+
+```sh
+OPENRIAK_DOCS_BUILD_PROFILE=release node tools/scripts/build-semantic-index.mjs --all --check
+```
+
+This reports `OK` or `REBUILD` for every selected index and continues after a
+failure. It checks freshness, checksums, scope, passage counts, vector sizes and
+shared-runtime compatibility. It never rebuilds indexes, repairs runtime files,
+installs embedding dependencies or publishes assets. The exit status is 1 if any
+index or the shared runtime needs attention, otherwise 0.
+
+Fresh Hugo source exports are rendered for comparison. To avoid that export,
+add `--site-dir /path/to/hugo-output`; freshness is then checked against those
+existing exports, which must cover the sections and versions you want to check.
+`--check` also supports `--section` and `--version`, but cannot be combined with
+`--ensure`, `--retain` or `--publish-dir`.
+
+Source fingerprints normalise site URLs without changing external documentation
+links or literal paths. New indexes use normalisation version 3. Older manifests
+can record a verified `sourceBaseURL`, allowing validation to reproduce their
+original fingerprint rules at another deployment URL. Adding that provenance
+requires an exact match against the existing digest; it does not make stale
+indexes current or change any passages or vectors. `HUGO_BASEURL` and
+`INCLUDE_DRAFTS` also apply to fresh check-only exports, including Docker exports.
+
 ## Build integration
 
 Shell, PowerShell and Docker core builds run:

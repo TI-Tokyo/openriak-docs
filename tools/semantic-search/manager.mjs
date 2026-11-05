@@ -8,7 +8,7 @@ export function parseArgs(args){
  const options={};
  for(let i=0;i<args.length;i++){
   const key=args[i];
-  if(['--all','--retain','--ensure','--help'].includes(key))options[key.slice(2)]=true;
+  if(['--all','--retain','--ensure','--check','--help'].includes(key))options[key.slice(2)]=true;
   else if(['--section','--version','--site-dir','--publish-dir'].includes(key)){
    const value=args[++i];if(!value||value.startsWith('--'))throw Error(`Missing value for ${key}`);options[key.slice(2)]=value;
   }else throw Error(`Unknown option: ${key}`);
@@ -16,6 +16,7 @@ export function parseArgs(args){
  if(options.help)return options;
  if(Boolean(options.all)===Boolean(options.section))throw Error('Choose --all or --section');
  if(options.version&&!options.section)throw Error('--version requires --section');
+ if(options.check&&(options.ensure||options.retain||options['publish-dir']))throw Error('--check cannot be combined with --ensure, --retain or --publish-dir');
  return options;
 }
 export function selectTargets(registry,options){
@@ -39,7 +40,7 @@ export function validateIndex(root,target,model,sourcePath){
  const dir=path.join(root,target.directory),{missing,manifest:m}=inspect(dir);
  if(missing)throw Error(`Missing index: ${target.section}`);
  for(const [file,digest] of Object.entries(m.assets))if(hash(fs.readFileSync(path.join(dir,file)))!==digest)throw Error(`Corrupt index asset: ${file}`);
- for(const key of ['modelDirectory','dimensions','dtype','runtime'])if(m[key]!==model[key])throw Error(`Index/runtime mismatch: ${key}`);
+ for(const key of ['modelDirectory','dimensions','dtype','runtime'])if(model&&m[key]!==model[key])throw Error(`Index/runtime mismatch: ${key}`);
  const passages=(m.indexParts||[m.index]).flatMap(file=>JSON.parse(fs.readFileSync(path.join(dir,file))));
  if(passages.length!==m.passages||passages.some(p=>!p.url.startsWith(target.scope)))throw Error('Index scope/count mismatch');
  if((m.vectorParts||[m.vectors]).reduce((bytes,file)=>bytes+fs.statSync(path.join(dir,file)).size,0)!==m.passages*m.dimensions*4)throw Error('Vector dimensions mismatch');
@@ -48,8 +49,7 @@ export function validateIndex(root,target,model,sourcePath){
   if(JSON.stringify(names)!==JSON.stringify(Object.keys(m.sources||{}).sort())||names.some(n=>hash(fs.readFileSync(path.join(dir,n)))!==m.sources[n]))throw Error(`Stale index: ${target.section}; run a targeted rebuild`);
  }else if(sourcePath){
   const source=JSON.parse(fs.readFileSync(sourcePath));
-  const digest=m.sourceNormalization===1?sourceTools.sourceDigestV1(source,target.scope):sourceTools.sourceDigest(source,target.scope);
-  if(digest!==m.sourceDigest&&(m.sourceNormalization||sourceTools.legacySourceDigest(source,target.scope)!==m.sourceDigest))throw Error(`Stale index: ${target.section} ${target.version}; run a targeted rebuild`);
+  if(!sourceTools.matchesSourceDigest(source,target.scope,m))throw Error(`Stale index: ${target.section} ${target.version}; run a targeted rebuild`);
  }
  return m;
 }
@@ -66,7 +66,7 @@ function dependencies(root){
   :spawnSync('npm',args,{stdio:'inherit'});
  if(result.status!==0)throw Error('Could not install pinned semantic-index build dependencies');
 }
-async function runtime(root){
+async function runtime(root,{repair=true}={}){
  const dir=path.join(root,'content/static/semantic-search'),file=path.join(dir,'runtime.json');
  let model=fs.existsSync(file)?JSON.parse(fs.readFileSync(file)):null;
  let missing=!model;
@@ -75,6 +75,7 @@ async function runtime(root){
   if(!fs.existsSync(file)){missing=true;continue;}
   if(hash(fs.readFileSync(file))!==digest)throw Error(`Corrupt shared runtime asset: ${name}`);
  }
+ if(missing&&!repair)throw Error('Missing shared semantic runtime; no files were downloaded or generated');
  if(missing){dependencies(root);model=await (await import('./engine.mjs')).prepareRuntime(root);}
  return model;
 }
@@ -88,7 +89,7 @@ function renderSource(root,project="core"){
   result=spawnSync('sh',[path.join(root,'tools/scripts/build-project.sh'),project,path.join(directory,'public')],{stdio:'inherit',env:{...process.env,OPENRIAK_SEMANTIC_EXPORT_ONLY:'1',OPENRIAK_DOCS_BUILD_PROFILE:process.env.OPENRIAK_DOCS_BUILD_PROFILE||'release',HUGO_GENERATED_CONFIG:path.join(directory,'hugo.yaml'),OPENRIAK_DOCS_DEVELOPMENT_DATA_ROOT:path.join(directory,'data'),GOMAXPROCS:'4',GOMEMLIMIT:'6GiB'}});
  }else{
   const version=fs.readFileSync(path.join(root,'.hugo-version'),'utf8').trim();
-  result=spawnSync('docker',['run','--rm','--user',`${process.getuid?.()??1000}:${process.getgid?.()??1000}`,'-e','OPENRIAK_SEMANTIC_EXPORT_ONLY=1','-e',`OPENRIAK_DOCS_BUILD_PROFILE=${process.env.OPENRIAK_DOCS_BUILD_PROFILE||'release'}`,'-e',`HUGO_GENERATED_CONFIG=/project/${relative}/hugo.yaml`,'-e',`OPENRIAK_DOCS_DEVELOPMENT_DATA_ROOT=/project/${relative}/data`,'-e','GOMAXPROCS=4','-e','GOMEMLIMIT=6GiB','-v',`${root}:/project`,'--entrypoint','sh',`ghcr.io/gohugoio/hugo:v${version}`,'/project/tools/scripts/build-project.sh',project,`/project/${relative}/public`],{stdio:'inherit'});
+  result=spawnSync('docker',['run','--rm','--user',`${process.getuid?.()??1000}:${process.getgid?.()??1000}`,'-e','OPENRIAK_SEMANTIC_EXPORT_ONLY=1','-e',`OPENRIAK_DOCS_BUILD_PROFILE=${process.env.OPENRIAK_DOCS_BUILD_PROFILE||'release'}`,...['HUGO_BASEURL','INCLUDE_DRAFTS'].filter(key=>process.env[key]!==undefined).flatMap(key=>['-e',`${key}=${process.env[key]}`]),'-e',`HUGO_GENERATED_CONFIG=/project/${relative}/hugo.yaml`,'-e',`OPENRIAK_DOCS_DEVELOPMENT_DATA_ROOT=/project/${relative}/data`,'-e','GOMAXPROCS=4','-e','GOMEMLIMIT=6GiB','-v',`${root}:/project`,'--entrypoint','sh',`ghcr.io/gohugoio/hugo:v${version}`,'/project/tools/scripts/build-project.sh',project,`/project/${relative}/public`],{stdio:'inherit'});
  }
  if(result.status!==0)throw Error('Hugo semantic-source export failed');
  return path.join(directory,'public');
@@ -120,6 +121,28 @@ export async function run(root,options,hooks={}){
   }
  }
  const selected=selectTargets(discovered||(site&&!hooks.runtime?discoverTargets(site,registry):registry),options);
+ if(options.check){
+  let model=null,runtimeIssue=null;
+  try{model=hooks.runtime?await hooks.runtime():await runtime(root,{repair:false});}
+  catch(error){runtimeIssue=error.message;console.log(`RUNTIME CHECK FAILED: ${runtimeIssue}`);}
+  const results=[];
+  for(const target of selected){
+   const label=`${target.section}${target.version?' '+target.version:''}`;
+   try{
+    const source=site&&target.exportPath?path.resolve(site,target.exportPath):null;
+    if(target.kind==='hugo'&&!source)throw Error('Missing source export; cannot check freshness');
+    validateIndex(root,target,model,source);
+    results.push({target,ok:true});
+    console.log(`OK ${label}${runtimeIssue?' (shared runtime check failed)':''}`);
+   }catch(error){
+    results.push({target,ok:false,reason:error.message});
+    console.log(`REBUILD ${label}: ${error.message}`);
+   }
+  }
+  const failed=results.filter(result=>!result.ok).length;
+  console.log(`Checked ${results.length} indexes: ${results.length-failed} passed, ${failed} need attention.${runtimeIssue?' Shared runtime also needs attention.':''} No indexes were rebuilt.`);
+  return {results,failed,runtimeIssue};
+ }
  const model=hooks.runtime?await hooks.runtime():await runtime(root);
  for(const target of selected){
   const missing=inspect(path.join(root,target.directory)).missing;
