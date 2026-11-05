@@ -82,3 +82,35 @@
   line-height: 1.4;
 }
 .site-sidebar [data-semantic-search] .search-status:empty { display: none; }
+
+/* Reserve exactly two status rows, including while idle, so results stay put. */
+.site-sidebar .search-status-panel,
+.site-sidebar [data-semantic-search] .search-status-panel,
+.site-sidebar .search-status-panel:empty {
+  display: block; position: static; width: auto; box-sizing: content-box;
+  height: 2.8em; min-height: 2.8em; max-height: 2.8em;
+  margin: .35rem 0 0; padding: 0; border: 0;
+  overflow: hidden; clip: auto; white-space: normal;
+  font-size: .75rem; line-height: 1.4; color: var(--muted); background: none;
+}
+.search-status-panel > span {
+  display: block; height: 1.4em; line-height: 1.4;
+  overflow: hidden; white-space: nowrap; text-overflow: ellipsis;
+}
+
+/* The result panel owns the status header; only the items are replaced/hidden. */
+.site-sidebar .search-results .search-status-panel {
+  position: sticky; top: -.35rem; z-index: 1; margin: 0;
+  padding: .35rem .65rem; border-bottom: 1px solid var(--line);
+  background: var(--surface, var(--white, #fff));
+}
+.site-sidebar .search-results .search-status-panel > span { font-size: inherit; }
+.site-sidebar .search-results .search-status-panel a {
+  display: inline; padding: 0; border-radius: 0; text-decoration: underline;
+}
+
+.site-sidebar .search-status-panel .search-enable {
+  display: inline; border: 0; border-radius: 0; padding: 0;
+  background: none; color: inherit; font: inherit;
+  text-decoration: underline; cursor: pointer;
+}

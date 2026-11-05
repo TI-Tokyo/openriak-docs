@@ -6,6 +6,9 @@
     <input id="{{ $id }}" type="search" placeholder="{{ .placeholder | default `Search this section` }}" autocomplete="off" aria-describedby="{{ $statusID }}" aria-keyshortcuts="/ Control+K Meta+K" data-search-input>
     <kbd class="search-shortcut" aria-hidden="true">/</kbd>
   </div>
-  <p id="{{ $statusID }}" class="search-status" data-search-status role="status" aria-live="polite" aria-atomic="true"></p>
-  <div class="search-results" data-search-results role="region" aria-label="Search results" hidden></div>
+  <div class="search-results" data-search-results role="region" aria-label="Search results" hidden>
+    <p id="{{ $statusID }}" class="search-status search-status-panel" data-search-status role="status" aria-live="polite" aria-atomic="true"></p>
+    <div data-search-items></div>
+  </div>
 </div>
+<script src="{{ `js/search-status.js` | relURL }}?v=20261105-highlighting1" defer></script>

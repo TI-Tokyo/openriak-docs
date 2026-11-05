@@ -1,6 +1,6 @@
 # Semantic search
 
-Documentation versions, Community and the Technical Blog use pre-built document embeddings and
+Documentation versions, Community, Settings and both archives use pre-built document embeddings and
 browser-side query embedding/search. Text indexes and text-only search remain in
 place. The panel explicitly shows semantic loading, semantic + text search, or
 text-only fallback. Searches make no requests to external inference services.
@@ -153,3 +153,23 @@ Model and Transformers.js licences are Apache-2.0; ONNX Runtime is MIT. Licence
 texts ship beside the runtime. Sources:
 https://huggingface.co/Xenova/all-MiniLM-L6-v2 and
 https://huggingface.co/sentence-transformers/all-MiniLM-L6-v2.
+
+Settings and Archived Mailing List panels combine their specialised text results with the shared semantic client. They retain text search if the model or semantic index cannot load. Settings semantic results currently point to settings sections; exact text results can link to individual controls.
+
+All semantic panels report download progress (file number and MiB), model preparation, search execution and elapsed time. Index, model and WASM downloads retry network failures, stalled transfers (30 seconds without data), HTTP 408/429 and server errors up to twice, after 1 and 2 seconds. Other HTTP errors, including 404/403, are not retried. Failed transfers restart the current file; completed index parts are retained for the current load. Exhausted retries retain text search.
+
+Editing a query while the model loads reuses the current download and retains its progress display. The worker searches the latest queued query after initialisation. If the worker produces no progress or result for two minutes, it is terminated and the panel retains text search; keystrokes do not extend that deadline.
+
+Search tolerates a single-letter edit or adjacent-letter transposition in an unknown word of at least five letters when a sufficiently common, unambiguous replacement occurs in section titles/headings. Exact indexed words and technical identifiers are preserved. Query expansion is applied to both lexical ranking and the query embedding; passage embeddings do not need rebuilding. Refocusing a search panel reopens existing results without rerunning the query.
+
+Search status reserves two fixed rows: text-search progress and counts on the first, semantic progress on the second. Completed searches show “Semantic + text search” above the combined result count. Long messages stay on one row with an ellipsis; hovering reveals the full message.
+
+## Per-section search preferences
+
+`layouts/common-docs/data/search.json` configures the initial text/semantic switches and result timing for each site section. Both search types default to `true`; `timing` is `asap` or `together`. The same configuration is loaded by core and archive builds. Product preferences cover all versions, including legacy Riak URLs. The homepage is excluded.
+
+Settings → Search presents these defaults with section logos and browser overrides. Overrides use `openriak-docs-search:SECTION` and participate in settings export, import and reset. Disabled types are not run; a disabled semantic search does not load its model or vectors. Disabling an active semantic search terminates its worker and aborts its index requests. Text search on documentation/blog pages still uses the existing passage index as its text corpus.
+
+ASAP displays each enabled type's results as they arrive. Together waits for all enabled types to finish (including failure), so disabling one type does not cause an indefinite wait. Semantic-only results exclude lexical ranking. Inline links and the both-disabled choices save the selected section preference and rerun the current query.
+
+Result highlighting is enabled by default per section (`highlight: true` in the shared search configuration). Settings → Search can override it independently of text/semantic search. Enabled results highlight literal query terms safely in titles/snippets and carry those terms to the destination page. Disabling highlighting removes both marks and highlight query parameters from new result links, while preserving other URL parameters and anchors.

@@ -99,11 +99,23 @@ services:
         --appendPort=false --buildDrafts --renderToMemory --noBuildLock
         --cacheDir=/cache/hugo --poll=700ms
 
+  archive-output-init:
+    <<: *hugo-service
+    profiles: ['release']
+    user: '0:0'
+    restart: 'no'
+    volumes:
+      - '../build/archives:/archive-output'
+    # Older preview containers created this generated output as root.
+    command: ['chown -R node:node /archive-output']
+
   archives:
     <<: *hugo-service
     depends_on:
       core:
         condition: service_healthy
+      archive-output-init:
+        condition: service_completed_successfully
     profiles: ['release']
     volumes:
       - '..:/project:ro'

@@ -7,10 +7,18 @@
   const sections = root.querySelector('[data-settings-sections]');
   const search = document.querySelector('[data-settings-search]');
   const results = document.querySelector('[data-settings-results]');
+  const searchUI=window.OpenRiakSearchStatus;
   let searchEntries = [];
+  let searchController;
+  const searchPanel=search.closest('.search-control');
+  const textSearch=async query=>searchEntries.filter(entry=>entry.text.includes(query.toLowerCase())).slice(0,30).map(entry=>({url:new URL(entry.href,location.href).href,title:entry.title,description:entry.context}));
+  const controller=import(searchPanel.dataset.searchPanelUrl).then(({mountSearch})=>{
+    searchController=mountSearch({root:searchPanel,input:search,status:document.querySelector('[data-settings-search-status]'),results,manifestURL:searchPanel.dataset.semanticIndexUrl,textSearch,noun:'items'});
+    return searchController;
+  });
   const pageGroup = root.dataset.settingsGroup || '';
   const base = root.dataset.settingsBase;
-  const names = { appearance: 'Appearance', code: 'Code blocks', platform: 'OS and architecture', tables: 'Tables and filters', examples: 'Example values', transfer: 'Import, export, and reset' };
+  const names = { appearance: 'Appearance', code: 'Code blocks', platform: 'OS and architecture', tables: 'Tables and filters', search: 'Search', examples: 'Example values', transfer: 'Import, export, and reset' };
   const el = (tag, text, parent) => { const node = document.createElement(tag); if (text !== undefined) node.textContent = text; parent?.append(node); return node; };
   // Logo-only legends still name their settings group through accessible text.
   const settingLabel = node => (
@@ -19,6 +27,14 @@
     node.firstChild?.textContent || node.textContent
   ).trim();
   const message = value => { status.textContent = value; };
+  const searchNotices = new Set();
+  const searchNotice = value => {
+    const notices=root.querySelector('[data-search-notices]');
+    if(!notices)return;
+    const notice=el('p',value,notices);notice.className='settings-search-notice';searchNotices.add(notice);
+    setTimeout(()=>notice.classList.add('is-fading'),3000);
+    setTimeout(()=>{notice.remove();searchNotices.delete(notice);},3500);
+  };
   const safe = fn => { try { fn(); } catch (error) { message(`Could not save: ${error.message}`); } };
   const save = (key, value) => { S.write(key, value); message('Saved in this browser.'); };
   const button = (parent, label, action) => { const node = el('button', label, parent); node.type = 'button'; node.addEventListener('click', () => safe(action)); return node; };
@@ -263,6 +279,28 @@
       el('h2', name, panel); panels[id] = panel;
     });
     const { appearance, code, platform, tables, examples, transfer } = panels;
+    const preferences=window.OpenRiakSearchPreferences;
+    el('p','Choose how each site section searches. Product preferences apply to all versions. Changes are saved in this browser.',panels.search);
+    const searchWrapper=el('div',undefined,panels.search);searchWrapper.className='settings-table-scroll';
+    const searchTable=el('table',undefined,searchWrapper);searchTable.className='settings-search-table';
+    const header=el('tr',undefined,el('thead',undefined,searchTable));
+    for(const title of ['Site section','Text search','Semantic search','Result highlighting','Show results'])el('th',title,header).scope='col';
+    const rows=el('tbody',undefined,searchTable);
+    preferences.sections.forEach(section=>{
+      const values=preferences.read(section.id),row=el('tr',undefined,rows);row.dataset.searchSection=section.id;
+      const label=el('th',undefined,row);label.scope='row';
+      const identity=el('span',undefined,label);identity.className='settings-search-identity';
+      const menuItem=document.querySelector(section.id==='settings'?'.site-section-panel [data-settings-link]':`.site-section-panel [data-site-section-id="${section.id}"]`);
+      if(menuItem)identity.append(...[...menuItem.childNodes].map(node=>node.cloneNode(true)));
+      else identity.textContent=section.name;
+      for(const type of ['text','semantic','highlight']){
+        const cell=el('td',undefined,row),toggle=el('input',undefined,cell);toggle.type='checkbox';toggle.checked=values[type];toggle.setAttribute('role','switch');toggle.setAttribute('aria-label',`${section.name}: ${type==='highlight'?'result highlighting':type+' search'}`);
+        toggle.addEventListener('change',()=>safe(()=>{preferences.write(section.id,{[type]:toggle.checked});searchNotice(`Search preferences saved for ${section.name}.`);}));
+      }
+      const cell=el('td',undefined,row),timing=el('select',undefined,cell);timing.setAttribute('aria-label',`${section.name}: show results`);
+      for(const [value,title] of [['asap','As soon as available (default)'],['together','When both have finished']]){const option=el('option',title,timing);option.value=value;}
+      timing.value=values.timing;timing.addEventListener('change',()=>safe(()=>{preferences.write(section.id,{timing:timing.value});searchNotice(`Search preferences saved for ${section.name}.`);}));
+    });
     selectSetting(appearance, 'Colour theme', 'theme', [['system', 'Device setting'], ['light', 'Light'], ['dark', 'Dark']]);
     selectSetting(appearance, 'Content width', 'content-width', ['50','75','90','98'].map(v => [v, `${v}%`]));
     selectSetting(appearance, 'Font size', 'font-size', ['100','110','125','150','200','250'].map(v => [v, `${v}%`]));
@@ -311,10 +349,17 @@
       });
       button(group, `Add ${name}`, () => { values[name].push(Object.fromEntries(fields.map(key => [key, key === 'port' ? 8087 : '']))); saveExamples(); render(); });
     });
-    Object.entries(panels).filter(([id]) => id !== 'transfer' && id !== 'code').forEach(([id, panel]) => button(panel, `Reset ${names[id].toLowerCase()}`, () => {
-      if (!confirm(`Reset all ${names[id].toLowerCase()} settings to defaults?`)) return;
-      S.apply({}, S.keys().filter(key => S.spec(key)[0] === id)); render(); message(`${names[id]} reset.`);
-    }));
+    Object.entries(panels).filter(([id]) => id !== 'transfer' && id !== 'code').forEach(([id, panel]) => {
+      if(id==='search'){
+        const notices=el('div',undefined,panel);notices.dataset.searchNotices='';
+        notices.setAttribute('role','status');notices.setAttribute('aria-live','polite');notices.setAttribute('aria-relevant','additions');notices.append(...searchNotices);
+      }
+      button(panel, id==='search'?'Reset Search':`Reset ${names[id].toLowerCase()}`, () => {
+        if (!confirm(`Reset all ${names[id].toLowerCase()} settings to defaults?`)) return;
+        S.apply({}, S.keys().filter(key => S.spec(key)[0] === id)); render();
+        if(id==='search')searchNotice('Search reset.');else message(`${names[id]} reset.`);
+      });
+    });
     el('h3', 'Export', transfer);
     field(transfer, 'Export group', currentExport, [['all','All settings'], ...Object.entries(names).filter(([key]) => key !== 'transfer')], value => { currentExport = value; });
     button(transfer, 'Export settings', () => {
@@ -352,7 +397,7 @@
     });
     searchEntries = [];
     sections.querySelectorAll(':scope > section').forEach(section => {
-      const labels = [...section.querySelectorAll('label, legend, .settings-platform-field')];
+      const labels = [...section.querySelectorAll('label, legend, .settings-platform-field, .settings-search-table input, .settings-search-table select')];
       labels.forEach((label, index) => {
         label.id = `${section.id}-setting-${index}`;
         const title = settingLabel(label);
@@ -385,34 +430,7 @@
   window.addEventListener('resize', alignLabels);
   new MutationObserver(alignLabels).observe(document.documentElement, { attributes: true, attributeFilter: ['data-font-size'] });
   document.fonts?.ready.then(alignLabels);
-  function filter() {
-    const query = search.value.trim().toLowerCase();
-    results.replaceChildren(); results.hidden = !query;
-    if (!query) {
-      document.querySelector('[data-settings-search-status]').textContent = '';
-      return;
-    }
-    const matches = searchEntries.filter(entry => entry.text.includes(query)).slice(0, 30);
-    matches.forEach(entry => {
-      const link = el('a', undefined, results); link.href = entry.href;
-      el('strong', entry.title, link);
-      el('span', entry.context, link);
-    });
-    if (!matches.length) el('p', 'No matching settings.', results);
-    document.querySelector('[data-settings-search-status]').textContent = `${matches.length} matching settings`;
-  }
-  search.addEventListener('input', filter);
-  search.addEventListener('click', filter);
-  search.addEventListener('keydown', event => {
-    if (event.key !== 'Escape') return;
-    event.preventDefault();
-    event.stopPropagation();
-    search.value = '';
-    filter();
-  });
-  document.addEventListener('click', event => {
-    if (!search.closest('.search-control').contains(event.target)) results.hidden = true;
-  });
+  function filter() { if(searchController)searchController.refresh(); }
   function revealSetting() {
     let target;
     try { target = document.getElementById(decodeURIComponent(location.hash.slice(1))); } catch { return; }
@@ -438,7 +456,9 @@
       if (destination.origin !== location.origin || !/^openriak-(kv|cs|ts)\/[^/]+\//.test(relative)) return;
       link.href = destination.href;
       const described = context && ['project', 'version', 'title'].every(key => typeof context[key] === 'string' && context[key]);
-      link.textContent = described ? `Return to documentation (${context.project} ${context.version}: ${context.title})` : 'Return to documentation';
+      const productVersion=described?`${context.project} ${context.version}`:'';
+      const versionRoot=/^openriak-(kv|cs|ts)\/[^/]+\/?$/.test(relative);
+      link.textContent = described ? `Return to documentation (${productVersion}${versionRoot?'':`: ${context.title}`})` : 'Return to documentation';
       link.hidden = false;
     } catch { /* Do not show a misleading link to the site root. */ }
   }

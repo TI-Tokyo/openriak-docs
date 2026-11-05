@@ -22,7 +22,7 @@ try{
   console.log(route,await status.innerText(),Date.now()-began,'ms');console.log(await links.first().innerText());
   await input.fill('n_val');await page.waitForFunction(()=>document.querySelector('[data-search-status]').textContent.startsWith('Semantic + text search'),{},{timeout:30000});
   assert.match((await links.allInnerTexts()).join(' '),/n_val/i);
-  await input.press('Escape');assert.equal(await status.textContent(),'');assert.equal(await root.locator('.search-results').isVisible(),false);
+  await input.press('Escape');assert.equal((await status.textContent()).trim(),'');assert.equal(await root.locator('.search-results').isVisible(),false);
  }
  await page.goto(base+'openriak-kv/3.4.0/');assert.match(await page.locator('[data-sidebar-search]').getAttribute('data-semantic-index-url'),/semantic-indexes\/openriak-kv\/3\.4\.0\/manifest.json/);
  assert.equal(await page.locator('script[src*="semantic-search/search.js"]').count(),1);
@@ -38,7 +38,7 @@ try{
  assert.deepEqual(errors,[]);assert.deepEqual(external,[]);await context.close();
  const fallback=await browser.newContext();await fallback.route('**/model_quantized.onnx',r=>r.abort());
  const p=await fallback.newPage();await p.goto(base+'openriak-kv/3.4.1/');await p.locator('[data-search-input]').fill('n_val');
- await p.waitForFunction(()=>document.querySelector('[data-search-status]').textContent==='Text search only — semantic search unavailable.',{},{timeout:120000});
+ await p.waitForFunction(()=>document.querySelector('[data-search-status]').textContent.includes('Semantic search unavailable'),{},{timeout:120000});
  assert.ok(await p.locator('.search-results a').count()>0);await fallback.close();
  console.log('PASS version scoping, inherited pages, visible mode, exact terms, model fallback and 3.4.0 enabled');
 }finally{await browser.close();}

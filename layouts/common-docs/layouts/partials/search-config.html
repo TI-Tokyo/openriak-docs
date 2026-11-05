@@ -1,0 +1,7 @@
+{{- $sections := slice -}}
+{{- range where hugo.Data.site_sections "id" "ne" "homepage" -}}
+  {{- $sections = $sections | append (dict "id" .id "name" .name "product" (eq .pickerIcon "openriak") "defaults" (index hugo.Data.search .id)) -}}
+{{- end -}}
+{{- $sections = $sections | append (dict "id" "settings" "name" "Settings" "product" false "defaults" hugo.Data.search.settings) -}}
+<script id="search-config" type="application/json">{{ $sections | jsonify | safeJS }}</script>
+<script src="{{ `js/search-preferences.js` | relURL }}?v=20261105-highlighting1" defer></script>

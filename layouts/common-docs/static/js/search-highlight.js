@@ -3,8 +3,9 @@
   const root = document.querySelector('[data-search-highlight-root]');
   const parameters = new URL(window.location.href).searchParams;
   const terms = [...new Map(parameters.getAll('highlight')
-    .map((term) => term.trim().slice(0, 200))
-    .filter(Boolean)
+    .flatMap((term) => term.trim().split(/\s+/))
+    .map((term) => term.slice(0, 200))
+    .filter((term) => [...term].length >= 2)
     .map((term) => [term.toLowerCase(), term])).values()]
     .sort((left, right) => right.length - left.length)
     .slice(0, 8);

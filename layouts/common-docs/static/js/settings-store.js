@@ -32,6 +32,7 @@
   };
   function spec(key) {
     if (Object.hasOwn(fixed, key)) return fixed[key];
+    if (/^openriak-docs-search:[a-z0-9-]+$/.test(key)) return ['search', '{}', value => object(value) && Object.entries(value).every(([k,v]) => k === 'timing' ? ['asap','together'].includes(v) : ['text','semantic','highlight'].includes(k) && typeof v === 'boolean'), true];
     if (/^openriak-docs-version:[\w-]+$/.test(key)) return ['platform', 'latest', value => value === 'latest' || /^\d+\.\d+\.\d+(?:-[\w.-]+)?$/.test(value)];
     if (/^openriak-docs-os:[\w-]+$/.test(key)) return ['platform', '', text];
     if (/^openriak-docs-architectures:[\w-]+$/.test(key)) return ['platform', '{}', value => map(value, text), true];

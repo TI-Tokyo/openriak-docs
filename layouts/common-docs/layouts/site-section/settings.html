@@ -1,5 +1,5 @@
 {{ define "main" }}
-<link rel="stylesheet" href="{{ `css/settings.css` | relURL }}">
+<link rel="stylesheet" href="{{ `css/settings.css` | relURL }}?v=20261105-highlighting1">
 <article class="settings-page" data-settings-page data-settings-group="{{ .Params.settings_group }}" data-settings-base="{{ `settings/` | relURL }}">
   <h1>{{ .Title }}</h1>
   <p>Preferences are saved in this browser and apply across the documentation.</p>
@@ -32,5 +32,5 @@
 <script type="application/json" id="settings-platforms">{{ partial "settings-products.html" . | jsonify | safeJS }}</script>
 <script src="{{ `js/docs-runtime.js` | relURL }}?v=20261020-settings-platform" defer></script>
 <script type="application/json" id="settings-code-types">{{ hugo.Data.settings_code_types | jsonify | safeJS }}</script>
-<script src="{{ `js/settings-page.js` | relURL }}" defer></script>
+<script src="{{ `js/settings-page.js` | relURL }}?v=20261105-highlighting1" defer></script>
 {{ end }}

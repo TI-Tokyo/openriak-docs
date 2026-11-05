@@ -28,9 +28,18 @@ try{
   page.on('console',m=>{if(['error','warning'].includes(m.type()))console.log('BROWSER',m.text());});
   page.on('requestfailed',r=>console.log('REQUEST FAILED',r.url(),r.failure()?.errorText));
   page.on('request',r=>{if(!r.url().startsWith(origin))external.push(r.url());});
+  let releaseModel;
+  const modelGate=new Promise(resolve=>releaseModel=resolve);
+  await context.route('**/model_quantized.onnx',async route=>{await modelGate;await route.continue();});
   await page.goto(origin+prefix+'archived-technical-blog/');
   const input=page.locator('[data-search-input]'),status=page.locator('[data-search-status]');
   const began=Date.now();await input.fill('how to recover from a failed node');
+  await page.waitForFunction(()=>document.querySelector('[data-search-status]').textContent.includes('semantic model'),{},{timeout:60000});
+  await input.fill('how to recover from a failed node now');
+  await page.waitForTimeout(1400);
+  const loading=await status.textContent();assert.match(loading,/semantic model/);
+  await page.waitForFunction(previous=>document.querySelector('[data-search-status]').textContent!==previous,loading,{timeout:5000});
+  releaseModel();
   await page.waitForFunction(()=>document.querySelector('[data-search-status]').textContent.startsWith('Semantic + text search'),{},{timeout:60000});
   assert.ok((await status.boundingBox()).height>10,'Mode indicator must be visibly sized');
   assert.equal(await status.evaluate(e=>getComputedStyle(e).clip),'auto','Mode indicator must not be screen-reader-only');
@@ -41,7 +50,7 @@ try{
   await page.waitForFunction(()=>document.querySelector('[data-search-status]').textContent.startsWith('Semantic + text search'),{},{timeout:30000});
   assert.match((await links.allInnerTexts()).join(' '),/quorum/i);console.log('Warm query:',Date.now()-warm,'ms');
   assert.equal(new Set(await links.evaluateAll(links=>links.map(l=>l.href))).size,await links.count());
-  await input.press('Escape');await page.waitForTimeout(500);assert.equal(await page.locator('.search-results').isVisible(),false);assert.equal(await status.textContent(),'');
+  await input.press('Escape');await page.waitForTimeout(500);assert.equal(await page.locator('.search-results').isVisible(),false);assert.equal((await status.textContent()).trim(),'');
   assert.deepEqual(errors,[]);assert.deepEqual(external,[]);await context.close();
  }
  // Exercise multiple real vector/passage files through the browser worker.
@@ -63,6 +72,6 @@ try{
  assert.ok(await shardPage.locator('.search-results a').count()>0);console.log('PASS sharded index produces semantic results');await sharded.close();
  const context=await browser.newContext();await context.route('**/model_quantized.onnx',r=>r.abort());
  const page=await context.newPage();await page.goto(origin+'/docs/archived-technical-blog/');await page.locator('[data-search-input]').fill('vector clocks');
- await page.waitForFunction(()=>document.querySelector('[data-search-status]').textContent==='Text search only — semantic search unavailable.',{},{timeout:60000});
+ await page.waitForFunction(()=>document.querySelector('[data-search-status]').textContent.includes('Semantic search unavailable'),{},{timeout:60000});
  assert.ok(await page.locator('.search-results a').count()>0);console.log('PASS model failure retains text results and explicit status');await context.close();
 }finally{await browser.close();server.close();}

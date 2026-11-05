@@ -7,26 +7,28 @@ const base = process.env.OPENRIAK_SETTINGS_TEST_BASE || 'http://127.0.0.1:1410/d
   const browser = await chromium.launch({ executablePath: process.env.OPENRIAK_BROWSER_EXECUTABLE || undefined });
   try {
     const context = await browser.newContext({ permissions: ['clipboard-read', 'clipboard-write'] });
+    await context.addInitScript(() => localStorage.setItem('openriak-docs-search:settings', JSON.stringify({text:true,semantic:false,timing:'asap'})));
     const page = await context.newPage();
     const errors = [];
     page.on('pageerror', error => errors.push(error.message));
     page.on('console', message => { if (message.type() === 'error' && message.text().includes('could not be initialized')) errors.push(message.text()); });
     const go = path => page.goto(new URL(path, base).href);
     await go('settings/');
-    assert.equal(await page.locator('.settings-card').count(), 6);
+    assert.equal(await page.locator('.settings-card').count(), 7);
     assert.equal(await page.locator('#main-content').evaluate(node => parseFloat(getComputedStyle(node).paddingTop) / parseFloat(getComputedStyle(document.documentElement).fontSize)), 0.75);
     assert.equal(await page.locator('[data-settings-sections] section').count(), 0);
     assert.equal(await page.getByRole('link', { name: 'Settings', exact: true, includeHidden: true }).count(), 2);
     await page.getByRole('searchbox', { name: 'Search settings' }).fill('version');
-    assert.deepEqual(await page.locator('[data-settings-results] a strong').allTextContents(), Array(3).fill('Default documentation version'));
-    assert.deepEqual(await page.locator('[data-settings-results] a span').allTextContents(), [
+    await page.locator('[data-settings-results] [data-search-items] a').first().waitFor();
+    assert.deepEqual(await page.locator('[data-settings-results] [data-search-items] a strong').allTextContents(), Array(3).fill('Default documentation version'));
+    assert.deepEqual(await page.locator('[data-settings-results] [data-search-items] a span').allTextContents(), [
       'OS and architecture: OpenRiak KV',
       'OS and architecture: OpenRiak CS',
       'OS and architecture: OpenRiak TS'
     ]);
     assert.equal(await page.locator('[data-settings-results]').evaluate(node => getComputedStyle(node).position), 'absolute');
     await page.getByRole('searchbox', { name: 'Search settings' }).fill('ring size');
-    await page.locator('[data-settings-results] a').first().click();
+    await page.locator('[data-settings-results] [data-search-items] a').first().click();
     assert.match(page.url(), /settings\/examples\/#examples-setting-/);
     assert.equal(await page.locator('[data-settings-sections] section').count(), 1);
     await page.getByLabel('Cluster naming pattern', { exact: true }).fill('custom-{letter}');
