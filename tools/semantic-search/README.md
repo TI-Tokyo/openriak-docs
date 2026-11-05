@@ -19,7 +19,7 @@ text-only fallback. Searches make no requests to external inference services.
   Development covers active versions; release covers every published version and
   both archives, plus Community, Settings and the homepage.
 
-Large indexes are split into ordered passage/vector files of at most 64 MiB;
+Large indexes are split into ordered passage/vector files of at most 45 MiB (below GitHub’s 50 MB warning threshold);
 the browser combines them using the manifest. Small indexes retain their original
 single-file format. Generated index files and shared runtime assets belong in Git. `node_modules`,
 embedding caches and intermediate Hugo exports are ignored. The core build owns

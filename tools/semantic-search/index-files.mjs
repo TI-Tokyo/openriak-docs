@@ -12,7 +12,7 @@ export function cleanOldFiles(directory,manifest){
   if(/^(passages-[a-f0-9]{16}\.json|vectors-[a-f0-9]{16}\.bin)$/.test(file)&&!Object.hasOwn(manifest.assets,file))fs.unlinkSync(path.join(directory,file));
  }
 }
-export function publishIndex(out,metadata,passages,vectors,{retain=false,deduplicate=true,maxFileBytes=64*1024*1024}={}){
+export function publishIndex(out,metadata,passages,vectors,{retain=false,deduplicate=true,maxFileBytes=45*1024*1024}={}){
  if(passages.length!==vectors.length)throw Error('Passage/vector count mismatch');
  if(vectors.some(v=>v.length!==metadata.dimensions*4))throw Error('Invalid vector dimensions');
  if(passages.some(p=>!p.url.startsWith(metadata.scope)))throw Error('Passage outside index scope');
