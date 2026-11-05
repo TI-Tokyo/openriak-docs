@@ -76,3 +76,22 @@ test('external URLs and literal paths remain part of the fingerprint',()=>{
  }
  assert.throws(()=>source.matchesSourceDigest(original,'openriak-kv/3.4.1/',{sourceNormalization:99}),/Unsupported/);
 });
+
+test('stale-index diagnostics identify changed, added and removed pages',()=>{
+ const scope='openriak-kv/3.4.1/',original=deploymentSample('https://example.test/docs/');
+ original.pages.push({...original.pages[0],url:'/docs/'+scope+'removed/'});
+ const manifest={sourceNormalization:3,sourceDigest:source.sourceDigest(original,scope),sourcePageDigests:source.sourcePageDigests(original,scope)};
+ const changed=structuredClone(original);
+ changed.pages[0].html+='<p>New content.</p>';
+ changed.pages[1].url='/docs/'+scope+'added/';
+ const details=source.sourceMismatchDetails(changed,scope,manifest);
+ assert.match(details,/page differences \(3\)/);
+ for(const [action,page] of [['changed','page'],['added','added'],['removed','removed']])assert.ok(details.includes(`${action} ${scope}${page}/`));
+ assert.ok(details.includes(`stored ${manifest.sourceDigest}, current ${source.sourceDigest(changed,scope)}`));
+ const rebased=source.rebaseSource(original,'https://other.test/beta/');
+ rebased.pages.reverse();
+ rebased.pages[0].html+='<style>presentation only</style>';
+ assert.deepEqual(source.sourcePageDigests(rebased,scope),manifest.sourcePageDigests);
+ assert.equal(source.matchesSourceDigest(rebased,scope,manifest),true);
+ assert.match(source.sourceMismatchDetails(changed,scope,{sourceDigest:'old'}),/page fingerprints unavailable/);
+});

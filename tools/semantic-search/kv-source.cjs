@@ -66,6 +66,22 @@ function presentationIndependent(pages){
  return pages.map(page=>({...page,html:page.html.split(/(<pre\b[\s\S]*?<\/pre>)/gi).map(part=>/^<pre\b/i.test(part)?part:part.replace(/<link\b[^>]*>/gi,'').replace(/>\s+</g,'> <').trim()).join('')}));
 }
 function sourceDigest(source,scope='openriak-kv/3.4.1/'){return digest(presentationIndependent(canonicalPages(source,scope)));}
+// Diagnostic fingerprints use exactly the same input as the index fingerprint.
+// They do not replace the full freshness check or affect existing indexes.
+function sourcePageDigests(source,scope){
+ return Object.fromEntries(presentationIndependent(canonicalPages(source,scope)).map(page=>[page.url,digest(page)]));
+}
+function sourceMismatchDetails(source,scope,manifest){
+ const details=[`stored ${manifest.sourceDigest}, current ${sourceDigest(source,scope)} (normalisation ${manifest.sourceNormalization??'legacy'} -> 3)`];
+ if(manifest.sourceNormalization===3&&manifest.sourcePageDigests){
+  const before=manifest.sourcePageDigests,after=sourcePageDigests(source,scope);
+  const changed=[...new Set([...Object.keys(before),...Object.keys(after)])].sort()
+   .filter(url=>before[url]!==after[url])
+   .map(url=>`${!Object.hasOwn(before,url)?'added':!Object.hasOwn(after,url)?'removed':'changed'} ${url}`);
+  details.push(`page differences (${changed.length}): ${changed.slice(0,10).join(', ')}${changed.length>10?', …':''}`);
+ }else details.push('page fingerprints unavailable; the next rebuild will record them');
+ return details.join('; ');
+}
 function sourceDigestV2(source,scope='openriak-kv/3.4.1/'){return digest(presentationIndependent(pagesFor(source,scope,true,true)));}
 function sourceDigestV1(source,scope='openriak-kv/3.4.1/'){return digest(pagesFor(source,scope,true,true));}
 function legacySourceDigest(source,scope='openriak-kv/3.4.1/'){return digest(pagesFor(source,scope,false,true));}
@@ -80,4 +96,4 @@ function matchesSourceDigest(source,scope,manifest){
  if(manifest.sourceNormalization)throw Error(`Unsupported source normalisation: ${manifest.sourceNormalization}`);
  return [sourceDigestV2(original,scope),sourceDigestV1(original,scope),legacySourceDigest(original,scope)].includes(manifest.sourceDigest);
 }
-module.exports={canonicalPages,sourceDigest,sourceDigestV2,sourceDigestV1,legacySourceDigest,rebaseSource,matchesSourceDigest};
+module.exports={canonicalPages,sourceDigest,sourcePageDigests,sourceMismatchDetails,sourceDigestV2,sourceDigestV1,legacySourceDigest,rebaseSource,matchesSourceDigest};

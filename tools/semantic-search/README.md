@@ -25,19 +25,36 @@ single-file format. Generated index files and shared runtime assets belong in Gi
 embedding caches and intermediate Hugo exports are ignored. The core build owns
 all shared static search files; archive builds own their HTML subtrees only.
 
-## Rebuild
+## Update indexes
 
 Run these from the repository root:
 
 ```sh
-node tools/scripts/build-semantic-index.mjs --section archived-technical-blog
+node tools/scripts/build-semantic-index.mjs --section archived-technical-blog --all
 node tools/scripts/build-semantic-index.mjs --section openriak-kv --version 3.4.1
 node tools/scripts/build-semantic-index.mjs --all
 ```
 
-For a product, omitting `--version` rebuilds all its published versions. Unknown
-sections/versions and conflicting selectors are rejected. Pinned dependencies
-are installed automatically with `npm ci` only if generation requires them.
+Normal runs leave valid indexes unchanged and rebuild only missing, stale or
+invalid indexes. Use `--force` to rebuild regardless of validity; unchanged text
+can still reuse cached embeddings. Superseded generations are cleaned only when
+an index is rebuilt, unless `--retain` is supplied.
+
+`--section` accepts `openriak-kv`, `openriak-cs`, `openriak-ts`, `community`,
+`settings`, `archived-technical-blog` or `archived-mailing-list`. It requires
+`--all` or one or more `--version` arguments. Sections without versions use
+`--all`. Global `--all` includes all published sections and versions, including
+the homepage. Unknown sections, unavailable versions and conflicting selectors
+are rejected before any index is changed.
+
+```sh
+node tools/scripts/build-semantic-index.mjs --section openriak-kv --version 3.4.0 --version 3.4.1
+node tools/scripts/build-semantic-index.mjs --section openriak-kv --all
+node tools/scripts/build-semantic-index.mjs --section settings --all
+node tools/scripts/build-semantic-index.mjs --all --force
+```
+
+Pinned dependencies are installed with `npm ci` only if generation requires them.
 The first missing model/runtime preparation also requires network access.
 
 The blog builder reads Markdown. Product indexes read rendered Hugo content,
@@ -46,6 +63,12 @@ is supplied, the command creates a fresh Hugo export under
 `tools/generated/semantic-render/`, using local Hugo or the pinned Docker image.
 It uses the release build profile unless `OPENRIAK_DOCS_BUILD_PROFILE` is set.
 Hugo's configured draft settings determine which pages enter the product index.
+
+Stale Hugo indexes report the stored and current source fingerprints and the
+export file used for comparison. Newly rebuilt indexes also record page
+fingerprints, allowing subsequent checks to list added, removed or changed pages
+(up to ten in the console). These diagnostics do not change freshness rules or
+require existing indexes to be rebuilt.
 
 To use the output of a build you have already completed:
 
@@ -69,20 +92,22 @@ Commit additions and removals together after a rebuild.
 ## Check without rebuilding
 
 ```sh
-OPENRIAK_DOCS_BUILD_PROFILE=release node tools/scripts/build-semantic-index.mjs --all --check
+OPENRIAK_DOCS_BUILD_PROFILE=release node tools/scripts/build-semantic-index.mjs --all --whatif
 ```
 
-This reports `OK` or `REBUILD` for every selected index and continues after a
+This reports `OK` or `WOULD REBUILD` for every selected index and continues after a
 failure. It checks freshness, checksums, scope, passage counts, vector sizes and
 shared-runtime compatibility. It never rebuilds indexes, repairs runtime files,
 installs embedding dependencies or publishes assets. The exit status is 1 if any
-index or the shared runtime needs attention, otherwise 0.
+index would be rebuilt or the shared runtime needs attention, otherwise 0.
 
 Fresh Hugo source exports are rendered for comparison. To avoid that export,
 add `--site-dir /path/to/hugo-output`; freshness is then checked against those
 existing exports, which must cover the sections and versions you want to check.
-`--check` also supports `--section` and `--version`, but cannot be combined with
-`--ensure`, `--retain` or `--publish-dir`.
+Use the same selectors as a normal run. `--whatif --force` previews a forced
+rebuild of every selected index. `--whatif` cannot be combined with
+`--publish-dir`. The old `--check` option is replaced by `--whatif`; `--ensure`
+is no longer needed because updating only when necessary is now the default.
 
 Source fingerprints normalise site URLs without changing external documentation
 links or literal paths. New indexes use normalisation version 3. Older manifests
@@ -90,30 +115,30 @@ can record a verified `sourceBaseURL`, allowing validation to reproduce their
 original fingerprint rules at another deployment URL. Adding that provenance
 requires an exact match against the existing digest; it does not make stale
 indexes current or change any passages or vectors. `HUGO_BASEURL` and
-`INCLUDE_DRAFTS` also apply to fresh check-only exports, including Docker exports.
+`INCLUDE_DRAFTS` also apply to fresh what-if exports, including Docker exports.
 
 ## Build integration
 
 Shell, PowerShell and Docker core builds run:
 
 ```sh
-node tools/scripts/build-semantic-index.mjs --ensure --all \
+node tools/scripts/build-semantic-index.mjs --all \
   --site-dir /path/to/hugo-output --publish-dir /path/to/hugo-output
 ```
 
-Missing manifests or referenced index files trigger generation. Existing indexes
-are validated and reused without loading an embedding model or installing ML
-packages. Corrupt or stale indexes fail the build with a rebuild instruction;
-they are not silently overwritten. Newly generated files are copied into the
-output after Hugo, so they are included in that same build. Generations retained
-in the source are also included in the published output. Deployment assembly
-checks the combined core and archive exports, so every published section is covered.
+Builds use the same default update behaviour: missing, stale or invalid indexes
+are regenerated and validated; valid indexes are reused without loading an
+embedding model or installing ML packages. A failed generation or validation
+stops the build. Generated assets are copied into the output after Hugo, so they
+are included in that build. Generations retained in the source are also included
+in the published output. Deployment assembly checks the combined core and archive
+exports, so every published section is covered.
 
 `docker/run.local.sh` builds the development image before starting containers.
 The image contains pinned Node embedding dependencies and Hugo, with Hugo’s musl
 libraries isolated from Node’s glibc environment. The core container prepares its
 profile’s focused `semantic` Hugo exports (without rendering the HTML site twice),
-runs the missing-index check, and then starts the server.
+updates indexes as needed, and then starts the server.
 For release, it includes both archive exports before starting; the archive server
 waits for core readiness. This ensures all shared static assets exist when Hugo starts.
 This also runs on direct core-container restarts. An anonymous dependency volume is

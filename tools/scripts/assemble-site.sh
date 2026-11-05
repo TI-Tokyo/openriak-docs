@@ -58,4 +58,4 @@ cp -a "$archives/." "$destination/"
 site_root=$(CDPATH= cd -- "$(dirname -- "$0")/../.." && pwd)
 node "${OPENRIAK_SOCIAL_CHECKER:-$site_root/tools/scripts/check-social-metadata.cjs}" "$destination" "${HUGO_BASEURL:-https://www.openriak.org/docs/}"
 
-node "${OPENRIAK_SEMANTIC_BUILDER:-$site_root/tools/scripts/build-semantic-index.mjs}" --ensure --all --site-dir "$destination" --publish-dir "$destination"
+node "${OPENRIAK_SEMANTIC_BUILDER:-$site_root/tools/scripts/build-semantic-index.mjs}" --all --site-dir "$destination" --publish-dir "$destination"

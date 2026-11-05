@@ -87,7 +87,7 @@ function Invoke-HugoBuild([string] $Config, [string] $Output, [bool] $PanicOnWar
 }
 
 Invoke-HugoBuild $generatedConfig $coreDestination
-& node (Join-Path $siteRoot 'tools/scripts/build-semantic-index.mjs') --ensure --all --site-dir $coreDestination --publish-dir $coreDestination
+& node (Join-Path $siteRoot 'tools/scripts/build-semantic-index.mjs') --all --site-dir $coreDestination --publish-dir $coreDestination
 if ($LASTEXITCODE -ne 0) { throw 'KV semantic search validation failed.' }
 if ($Profile -eq 'release') {
     Invoke-HugoBuild (Join-Path $siteRoot 'content/hugo-archives.yaml') $archiveDestination
@@ -115,5 +115,5 @@ Write-Host "Built the $Profile static site in $destinationRoot"
 & node (Join-Path $PSScriptRoot 'check-social-metadata.cjs') $destinationRoot $BaseURL
 if ($LASTEXITCODE -ne 0) { throw 'Social metadata validation failed' }
 
-& node (Join-Path $siteRoot 'tools/scripts/build-semantic-index.mjs') --ensure --all --site-dir $destinationRoot --publish-dir $destinationRoot
+& node (Join-Path $siteRoot 'tools/scripts/build-semantic-index.mjs') --all --site-dir $destinationRoot --publish-dir $destinationRoot
 if ($LASTEXITCODE -ne 0) { throw 'Semantic search index generation failed.' }

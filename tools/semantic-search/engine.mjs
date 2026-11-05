@@ -55,6 +55,7 @@ export async function rebuild(root,target,sourcePath,{retain=false}={}){
   const source=JSON.parse(fs.readFileSync(sourcePath));
   pages.push(...sourceTools.canonicalPages(source,target.scope).map(p=>({...p,body:p.html})));
   extra.sourceDigest=sourceTools.sourceDigest(source,target.scope);extra.sourceNormalization=3;extra.sourceBaseURL=source.baseURL;extra.pages=pages.length;
+  extra.sourcePageDigests=sourceTools.sourcePageDigests(source,target.scope);
  }
  const passages=[];
  const preparation=path.join(root,'tools/generated/semantic-cache',model.revision,'passages');fs.mkdirSync(preparation,{recursive:true});

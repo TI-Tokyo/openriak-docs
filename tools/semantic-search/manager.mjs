@@ -4,24 +4,38 @@ import {spawnSync} from 'node:child_process';
 import {hash} from './index-files.mjs';
 import {discoverTargets} from './discovery.mjs';
 import sourceTools from './kv-source.cjs';
+export const sections=['openriak-kv','openriak-cs','openriak-ts','community','settings','archived-technical-blog','archived-mailing-list'];
 export function parseArgs(args){
  const options={};
  for(let i=0;i<args.length;i++){
   const key=args[i];
-  if(['--all','--retain','--ensure','--check','--help'].includes(key))options[key.slice(2)]=true;
+  if(['--all','--retain','--whatif','--force','--help'].includes(key))options[key.slice(2)]=true;
   else if(['--section','--version','--site-dir','--publish-dir'].includes(key)){
-   const value=args[++i];if(!value||value.startsWith('--'))throw Error(`Missing value for ${key}`);options[key.slice(2)]=value;
-  }else throw Error(`Unknown option: ${key}`);
+   const value=args[++i];if(!value||value.startsWith('--'))throw Error(`Missing value for ${key}`);
+   if(key==='--version')options.versions=[...new Set([...(options.versions||[]),value])];
+   else{
+    if(options[key.slice(2)]!==undefined)throw Error(`${key} can only be specified once`);
+    options[key.slice(2)]=value;
+   }
+  }else if(key==='--check')throw Error('--check has been replaced by --whatif');
+  else if(key==='--ensure')throw Error('--ensure is no longer needed; updating only when needed is now the default');
+  else throw Error(`Unknown option: ${key}`);
  }
  if(options.help)return options;
- if(Boolean(options.all)===Boolean(options.section))throw Error('Choose --all or --section');
- if(options.version&&!options.section)throw Error('--version requires --section');
- if(options.check&&(options.ensure||options.retain||options['publish-dir']))throw Error('--check cannot be combined with --ensure, --retain or --publish-dir');
+ if(options.section&&!sections.includes(options.section))throw Error(`Unknown section: ${options.section}. Choose ${sections.join(', ')}`);
+ if(!options.section&&!options.all)throw Error('Choose --all or --section NAME with --version VERSION or --all');
+ if(options.versions&&!options.section)throw Error('--version requires --section');
+ if(options.all&&options.versions)throw Error('Choose --all or --version, not both');
+ if(options.section&&!options.all&&!options.versions)throw Error('--section requires --version or --all');
+ if(options.versions&&!options.section.startsWith('openriak-'))throw Error(`${options.section} has no versions; use --section ${options.section} --all`);
+ for(const version of options.versions||[])if(!/^\d+\.\d+\.\d+(?:-[\w.-]+)?(?:\+[\w.-]+)?$/.test(version))throw Error(`Invalid version: ${version}`);
+ if(options.whatif&&options['publish-dir'])throw Error('--whatif cannot be combined with --publish-dir');
  return options;
 }
 export function selectTargets(registry,options){
- const selected=registry.filter(t=>options.all||(t.section===options.section&&(!options.version||t.version===options.version)));
+ const selected=registry.filter(t=>(!options.section||t.section===options.section)&&(!options.versions||options.versions.includes(t.version)));
  if(!selected.length)throw Error('No configured semantic index matches this section/version');
+ for(const version of options.versions||[])if(!selected.some(t=>t.version===version))throw Error(`No published semantic source for ${options.section} ${version}`);
  return selected;
 }
 export function inspect(directory){
@@ -49,7 +63,7 @@ export function validateIndex(root,target,model,sourcePath){
   if(JSON.stringify(names)!==JSON.stringify(Object.keys(m.sources||{}).sort())||names.some(n=>hash(fs.readFileSync(path.join(dir,n)))!==m.sources[n]))throw Error(`Stale index: ${target.section}; run a targeted rebuild`);
  }else if(sourcePath){
   const source=JSON.parse(fs.readFileSync(sourcePath));
-  if(!sourceTools.matchesSourceDigest(source,target.scope,m))throw Error(`Stale index: ${target.section} ${target.version}; run a targeted rebuild`);
+  if(!sourceTools.matchesSourceDigest(source,target.scope,m))throw Error(`Stale index: ${target.section}${target.version?' '+target.version:''}; ${sourceTools.sourceMismatchDetails(source,target.scope,m)}; source export: ${sourcePath}`);
  }
  return m;
 }
@@ -115,46 +129,48 @@ export async function run(root,options,hooks={}){
   const archive=options.section?.startsWith('archived-');
   site=renderSource(root,archive?'archives':'core');
   discovered=discoverTargets(site,registry).map(t=>({...t,exportPath:path.resolve(site,t.exportPath)}));
-  if(options.all&&(process.env.OPENRIAK_DOCS_BUILD_PROFILE||'release')==='release'){
+  if(options.all&&!options.section&&(process.env.OPENRIAK_DOCS_BUILD_PROFILE||'release')==='release'){
    const archiveSite=renderSource(root,'archives');
    discovered.push(...discoverTargets(archiveSite,registry).map(t=>({...t,exportPath:path.resolve(archiveSite,t.exportPath)})));
   }
  }
  const selected=selectTargets(discovered||(site&&!hooks.runtime?discoverTargets(site,registry):registry),options);
- if(options.check){
-  let model=null,runtimeIssue=null;
-  try{model=hooks.runtime?await hooks.runtime():await runtime(root,{repair:false});}
-  catch(error){runtimeIssue=error.message;console.log(`RUNTIME CHECK FAILED: ${runtimeIssue}`);}
-  const results=[];
-  for(const target of selected){
-   const label=`${target.section}${target.version?' '+target.version:''}`;
-   try{
-    const source=site&&target.exportPath?path.resolve(site,target.exportPath):null;
-    if(target.kind==='hugo'&&!source)throw Error('Missing source export; cannot check freshness');
-    validateIndex(root,target,model,source);
-    results.push({target,ok:true});
-    console.log(`OK ${label}${runtimeIssue?' (shared runtime check failed)':''}`);
-   }catch(error){
-    results.push({target,ok:false,reason:error.message});
-    console.log(`REBUILD ${label}: ${error.message}`);
-   }
-  }
-  const failed=results.filter(result=>!result.ok).length;
-  console.log(`Checked ${results.length} indexes: ${results.length-failed} passed, ${failed} need attention.${runtimeIssue?' Shared runtime also needs attention.':''} No indexes were rebuilt.`);
-  return {results,failed,runtimeIssue};
+ let model=null,runtimeIssue=null;
+ try{model=hooks.runtime?await hooks.runtime():await runtime(root,{repair:!options.whatif});}
+ catch(error){
+  if(!options.whatif)throw error;
+  runtimeIssue=error.message;console.log(`RUNTIME CHECK FAILED: ${runtimeIssue}`);
  }
- const model=hooks.runtime?await hooks.runtime():await runtime(root);
+ const results=[];
  for(const target of selected){
-  const missing=inspect(path.join(root,target.directory)).missing;
+  const label=`${target.section}${target.version?' '+target.version:''}`;
   let source=site&&target.exportPath?path.resolve(site,target.exportPath):null;
-  if((!options.ensure||missing)&&target.kind==='hugo'&&!source){site=hooks.render?await hooks.render():renderSource(root);source=path.resolve(site,target.exportPath);}
-  if(!options.ensure||missing){
+  if(target.kind==='hugo'&&!source){
+   site=hooks.render?await hooks.render():renderSource(root);
+   source=path.resolve(site,target.exportPath);
+  }
+  let manifest=null,reason=options.force?'Forced by --force':null;
+  if(!options.force){
+   try{manifest=validateIndex(root,target,model,source);}
+   catch(error){reason=error.message;}
+  }
+  results.push({target,ok:!reason,reason,action:reason?'rebuild':'reuse'});
+  if(options.whatif){
+   console.log(reason?`WOULD REBUILD ${label}: ${reason}`:`OK ${label}${runtimeIssue?' (shared runtime check failed)':''}`);
+   continue;
+  }
+  if(reason){
+   console.log(`Rebuilding ${label}: ${reason}`);
    if(hooks.rebuild)await hooks.rebuild(target,source,options);
    else{dependencies(root);await (await import('./engine.mjs')).rebuild(root,target,source,{retain:options.retain});}
+   manifest=validateIndex(root,target,model,source);
   }
-  const m=validateIndex(root,target,model,source);
-  console.log(`Validated ${target.section}${target.version?' '+target.version:''}: ${m.passages} passages.`);
-  if(options['publish-dir'])syncAssets(root,target,m,path.resolve(options['publish-dir']),{retain:options.retain});
+  console.log(`${reason?'Updated':'Unchanged'} ${label}: ${manifest.passages} passages.`);
+  if(options['publish-dir'])syncAssets(root,target,manifest,path.resolve(options['publish-dir']),{retain:options.retain});
  }
+ const needed=results.filter(result=>result.action==='rebuild').length;
+ if(options.whatif)console.log(`Checked ${results.length} indexes: ${results.length-needed} unchanged, ${needed} would be rebuilt.${runtimeIssue?' Shared runtime also needs attention.':''} No indexes were rebuilt.`);
+ else console.log(`Processed ${results.length} indexes: ${needed} rebuilt, ${results.length-needed} unchanged.`);
  if(options['publish-dir'])fs.cpSync(path.join(root,'content/static/semantic-search'),path.join(path.resolve(options['publish-dir']),'semantic-search'),{recursive:true,dereference:true});
+ return {results,needed,runtimeIssue};
 }

@@ -399,7 +399,7 @@ section and tracked in Git. The shared model and runtime live in
 and mailing-list search controls are preserved. Semantic panels show the active mode.
 
 ```sh
-node tools/scripts/build-semantic-index.mjs --section archived-technical-blog
+node tools/scripts/build-semantic-index.mjs --section archived-technical-blog --all
 node tools/scripts/build-semantic-index.mjs --section openriak-kv --version 3.4.1
 node tools/scripts/build-semantic-index.mjs --all
 ```
@@ -407,27 +407,36 @@ node tools/scripts/build-semantic-index.mjs --all
 To report which indexes need rebuilding without changing any index files:
 
 ```sh
-OPENRIAK_DOCS_BUILD_PROFILE=release node tools/scripts/build-semantic-index.mjs --all --check
+OPENRIAK_DOCS_BUILD_PROFILE=release node tools/scripts/build-semantic-index.mjs --all --whatif
 ```
 
-This checks all indexes against fresh source exports and reports every failure.
+This compares all indexes with fresh source exports and reports what would be rebuilt.
 It does not generate embeddings or repair missing files. Add `--site-dir` to
 compare against existing exports instead of rendering fresh ones.
 
-`--all` discovers every published version and section from Hugo’s semantic source exports.
+Normal runs rebuild only missing, stale or invalid indexes. Add `--force` to
+rebuild selected indexes regardless of validity, or `--whatif --force` to preview
+that operation. A section requires `--all` or `--version`; repeat `--version` to
+select several versions, for example:
+
+```sh
+node tools/scripts/build-semantic-index.mjs --section openriak-kv --version 3.4.0 --version 3.4.1
+node tools/scripts/build-semantic-index.mjs --section settings --all
+```
+
+`--all` alone discovers every published version and section from Hugo’s semantic
+source exports, including the homepage. With `--section`, it selects only that
+section.
 The default export profile is `release`, including both archives. Set
 `OPENRIAK_DOCS_BUILD_PROFILE=development` to use the development versions.
 `--site-dir` follows exactly the versions and sections in the supplied Hugo output.
-`tools/semantic-search/indexes.json` preserves the two original index locations;
+`tools/semantic-search/indexes.json` supplies the Technical Blog source override;
 it does not restrict which sections receive indexes. Rebuilds remove
 superseded files after successful publication; add `--retain` to keep them. Normal
-builds generate missing indexes automatically, validate existing ones and include
-the resulting assets in the output. Stale or corrupt indexes require an explicit
-rebuild. See [the build and test guide](tools/semantic-search/README.md) for details.
+builds update indexes as needed and include the validated assets in the output. See [the build and test guide](tools/semantic-search/README.md) for details.
 
 The local run script builds a development image containing Hugo and the pinned
-CPU embedding dependencies. The core container renders its active profile, detects missing indexes, generates
-them, and then starts Hugo’s server. For release, this includes both archives;
+CPU embedding dependencies. The core container renders its active profile, updates indexes as needed, and then starts Hugo’s server. For release, this includes both archives;
 the archive server waits until the core server is ready. This check also
 runs on direct core-container restarts. Dependencies are provided by the image in an
 anonymous volume, kept separate from host dependencies and refreshed by the run

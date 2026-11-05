@@ -19,7 +19,7 @@ test('a build generates and publishes a genuinely missing blog index using the r
  assert.equal(inspect(path.join(root,target.directory)).missing,true);
  fs.mkdirSync(path.join(root,'export'),{recursive:true});
  fs.writeFileSync(path.join(root,'export/semantic-source.json'),JSON.stringify({section:target.section,scope:target.scope,pages:[]}));
- const options={ensure:true,section:target.section,'site-dir':path.join(root,'export'),'publish-dir':path.join(root,'public')};
+ const options={all:true,section:target.section,'site-dir':path.join(root,'export'),'publish-dir':path.join(root,'public')};
  await run(root,options);
  const m=inspect(path.join(root,target.directory)).manifest;
  assert.equal(m.articles,233);assert.ok(m.passages>0);
