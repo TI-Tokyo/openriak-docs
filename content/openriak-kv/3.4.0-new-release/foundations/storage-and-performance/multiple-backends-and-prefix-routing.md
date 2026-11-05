@@ -29,8 +29,8 @@ tags:
 - explanation
 editorial_review: complete
 technical_review: complete
-last_reviewed: '2026-09-24'
-review_scope: content changes
+last_reviewed: '2026-11-05'
+review_scope: error review
 review-by: TI Tokyo/JOM
 restructured_from:
 - foundations/storage/multi-backend.md
@@ -60,4 +60,4 @@ A migration therefore needs an explicit inventory, copy or replacement procedure
 
 Multiple engines share node memory, file descriptors, storage bandwidth, and recovery time. Each also brings its own compaction, persistence, and backup behaviour. A mixed deployment must account for the total resource use and for feature restrictions in each route.
 
-Use the version specific legacy and specialist reference to check the availability and limitations of the particular routing implementation.
+Use the version-specific legacy and specialist reference to check the availability and limitations of the particular routing implementation.

@@ -21,8 +21,8 @@ quickdocs_sources:
 tags: ['diataxis', 'kv', 'reference']
 editorial_review: 'complete'
 technical_review: 'complete'
-last_reviewed: '2026-09-01'
-review_scope: 'editorial-and-site-integration'
+last_reviewed: '2026-11-05'
+review_scope: 'error review'
 features: ["installation"]
 concepts: ["deployment"]
 ---
@@ -39,14 +39,14 @@ Please choose your Operating System from the below options for a matching set of
 {{< docker-downloads >}}
 
 {{< collapsable-section title="Notes and Tips" level="2" id="notes-and-tips" >}}
-> [!Warning] For Testing and Developent Only
-> The ring size of these docker images defaults to 8. This is very very small, and should not be used
+> [!Warning] For Testing and Development Only
+> The ring size of these Docker images defaults to 8. This is very very small, and should not be used
 > for anything other than testing and development on your local machine.
 >
 > If you want to use these images for larger testing purposes, update the Dockerfile and rebuild the image
 > with a much larger ring size.
 >
-> We recommend 256 at a minimum, and 512 as recommended on smaller systems.
+> We 256 is the minimum recommended ring size, and 512 as optimal on smaller systems.
 
 > [!Info] Architectures
 > All images are multi-architecture (when available).

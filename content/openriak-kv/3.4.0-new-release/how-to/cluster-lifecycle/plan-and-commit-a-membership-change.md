@@ -23,8 +23,8 @@ tags:
 - how-to
 editorial_review: complete
 technical_review: complete
-last_reviewed: '2026-10-13'
-review_scope: content review
+last_reviewed: '2026-11-05'
+review_scope: error review
 review-by: TI Tokyo/JOM
 restructured_from:
 - how-to/operate/plan-and-commit-cluster-change.md
@@ -50,7 +50,7 @@ Confirm membership, reachability, free space, and outstanding transfers. Record 
 #### Confirm node members and status: 
 {{< cli-example key="shell:riak admin member-status" >}}
 
-#### Confirm tranfer status:
+#### Confirm transfer status:
 
 {{< cli-example key="shell:riak admin transfers" >}}
 

@@ -8,8 +8,8 @@ draft: true
 status: Reviewed
 editorial_review: complete
 technical_review: complete
-last_reviewed: '2026-09-27'
-review_scope: content review
+last_reviewed: '2026-11-05'
+review_scope: error review
 review-by: TI Tokyo/JOM
 description: Use a conditionally created object as an application marker for a bounded activity, such as claiming
   a batch. Define how ownership and interrupted work are recovered before introducing the marker.
@@ -21,7 +21,7 @@ features: ["client-operations","conditional-writes"]
 concepts: ["concurrency-control","data-access"]
 ---
 
-Use a small, purpose‑built object to mark when a specific task is in progress-like claiming a batch. Before you create that marker, spell out how ownership will be assigned and how any stopped or unfinished work will be recovered.
+Use a small, purpose built, object to mark when a specific task is in progress-like claiming a batch. Before you create that marker, spell out how ownership will be assigned and how any stopped or unfinished work will be recovered.
 
 ## Establish the contract
 
@@ -29,7 +29,8 @@ Pick a single key to represent each claim, and store both the owner and the work
 
 ## Create the claim
 
-When using the HTTP object endpoint, send the creation request with `If-None-Match: *.` Include deliberate application data in the body. If the request fails its precondition, it means another value already holds the claim; treat this as a signal to stop, not as permission to overwrite the existing value.
+When using the HTTP object endpoint, send the creation request with `If-None-Match: *.`, include deliberate application data in the body.
+If the request fails its precondition, it means another value already holds the claim; treat this as a signal to stop, not as permission to overwrite the existing value.
 
 ## Complete or recover the work
 

@@ -22,8 +22,8 @@ tags:
 - how-to
 editorial_review: complete
 technical_review: complete
-last_reviewed: '2026-09-27'
-review_scope: content review
+last_reviewed: '2026-11-05'
+review_scope: error review
 review-by: TI Tokyo/JOM
 restructured_from:
 - how-to/develop/use-sets.md

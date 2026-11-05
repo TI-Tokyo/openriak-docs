@@ -35,8 +35,8 @@ tags:
 - explanation
 editorial_review: complete
 technical_review: complete
-last_reviewed: '2026-09-24'
-review_scope: content changes
+last_reviewed: '2026-11-05'
+review_scope: error review
 review-by: TI Tokyo/JOM
 restructured_from:
 - foundations/storage/leveled.md
@@ -55,7 +55,7 @@ Leveled separates the journal of stored values from the ledger used to locate cu
 
 ## Journal and ledger
 
-The journal records object values. The Ledger structures describe keys, metadata, and indexes and are organised so that reads can locate the needed state efficiently. Caches are used to reduce repeated work, while durable files let the store recover state across restarts.
+The journal records object values. The ledger structures describe keys, metadata, and indexes and are organised so that reads can locate the needed state efficiently. Caches are used to reduce repeated work, while durable files let the store recover state across restarts.
 
 ## Snapshots and background work
 

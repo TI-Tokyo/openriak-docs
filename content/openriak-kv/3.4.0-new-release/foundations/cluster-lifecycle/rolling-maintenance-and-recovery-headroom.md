@@ -20,9 +20,9 @@ tags:
 - explanation
 editorial_review: complete
 technical_review: complete
-last_reviewed: '2026-09-24'
+last_reviewed: '2026-11-05'
 review-by: TI Tokyo/JOM
-review_scope: editorial & technical
+review_scope: error review
 restructured_from:
 - foundations/operations/rolling-maintenance.md
 related:
@@ -39,7 +39,7 @@ Rolling maintenance keeps part of a cluster serving traffic while nodes are chan
 
 ## A rolling change is a sequence
 
-Stopping a node reduces the available placement and shifts requests to survivors. Restarting it restores a process but is not the end of the sequence, but handoff and repair may still be catching up. Starting the next stage too early can overlap those reduced-redundancy periods.
+Stopping a node reduces the available placement and shifts requests to survivors. Restarting it restores a process but is not the end of the sequence, as handoff and repair may still be catching up. Starting the next stage too early can overlap those reduced-redundancy periods.
 
 ## Define a completion state
 

@@ -25,8 +25,8 @@ tags:
 - reference
 editorial_review: complete
 technical_review: required
-last_reviewed: '2026-11-03'
-review_scope: content review
+last_reviewed: '2026-11-05'
+review_scope: error review
 review-by: TI Tokyo/JOM
 restructured_from:
 - reference/query-api/expressions.md
@@ -49,7 +49,7 @@ Query expressions evaluate projected attributes, filter index matches, and combi
 
 - If multiple queries are to be run, the aggregation expression is used to inform the database how those results should be combined, using $1, $2 etc to refer to the numeric `aggregation_tag` for each query - with the key words `UNION`, `INTERSECT` and `SUBTRACT` to show how the sets of results are to be combined.  Parenthesis may be used for clarity. e.g. `($1 INTERSECT $2) UNION ($3 SUBTRACT $1)`
 
-### Query Json - Expressions
+### Query JSON - Expressions
 
 There are two parts to using expressions in a Riak query: an evaluation expression (to convert the term into projected attributes), and a filter expression (to filter the results in or out by matching on the values of projected attributes).
 
@@ -65,7 +65,7 @@ The functions that can be used in a pipeline are:
 
 `delim ( IN_ID identifier , DELIM string , OUT_ID_LIST identifier_list )`
 
-- take a value associated with IN_ID and split it using the delimiter DELIM.  The parts are matched to the identifiers in OUT_ID_LIST.  If there are only N values following the application of the delimiter where N is less than the length of the OUT_ID_LIST, then only then only the first N identifiers in OUT_ID_LIST are assigned a value.  Any overhanging elements (i.e. where N is greater than the length of the OUT_ID_LIST) are ignored.
+- Take a value associated with IN_ID and split it using the delimiter DELIM. The parts are matched to the identifiers in OUT_ID_LIST. If there are only N values following the application of the delimiter where N is less than the length of the OUT_ID_LIST, then only the first N identifiers in OUT_ID_LIST are assigned a value. Any overhanging elements (i.e. where N is greater than the length of the OUT_ID_LIST) are ignored.
 
 `join ( IN_ID_LIST identifier_list , DELIM string , OUT_ID identifier )`
 
@@ -86,11 +86,11 @@ The functions that can be used in a pipeline are:
 
 `kvsplit ( IN_ID identifier , PAIR_DELIM string , KV_DELIM string )`
 
-- take a string value associated with IN_ID, where the string contains a delimited (by PAIR_DELIM) list of Key/Value pairs - where the Key and Value and separated by KV_DELIM.  The output will add each Key/Value pair to the map of projected attributes.
+- take a string value associated with IN_ID, where the string contains a delimited (by PAIR_DELIM) list of Key/Value pairs - where the Key and Value are separated by KV_DELIM.  The output will add each Key/Value pair to the map of projected attributes.
 
 `regex ( IN_ID identifier , REGEX string , OUT_ID_LIST identifier_list )`
 
-- use a regular expression to extract new projected attributes as Key/Value pairs, where the REGEX must match the value of IN_ID and extract named capture groups that align with the attribute keys in the OUT_ID_LIST.  All expected captures must exist in the input value for the projected attributes to be updated, otherwise the function will pass on the map of projected attributes unchanged.
+- use a regular expression to extract new projected attributes as Key/Value pairs, where the REGEX must match the value of IN_ID and extract named capture groups that align with the attribute keys in the OUT_ID_LIST.  All expected captures must exist in the input value for the projected attributes to be updated otherwise the function will pass on the map of projected attributes unchanged.
 
 `map ( IN_ID identifier , COMP comparator , MAP_LIST mappings_list , DEFAULT operand , OUT_ID identifier )`
 
@@ -108,7 +108,7 @@ The functions that can be used in a pipeline are:
 
 `subtract ( X math_operand , Y math_operand , OUT_ID identifier )`
 
-- subtract Y from X and map the output to the OUT_ID identifier of the map of projected attributes.  X and Y can either be an integer provided as an input, or an identifier of an existing projected attribute which has been converted to an integer.  If either X or Y are not integers, then the function will be skipped.
+- subtract Y from X and map the output to the OUT_ID identifier of the map of projected attributes. X and Y can either be an integer provided as an input, or an identifier of an existing projected attribute which has been converted to an integer. If either X or Y are not integers, then the function will be skipped.
 
 `add ( X math_operand , Y math_operand , OUT_ID identifier )`
 
@@ -153,6 +153,6 @@ function ::=
 
 ### Unicode support
 
-Testing is only undertaken on ascii-based index terms in Riak 3.4, although filter and evaluation expressions have been designed to support unicode.
+Testing is only undertaken on ASCII-based index terms in Riak 3.4, although filter and evaluation expressions have been designed to support Unicode.
 
-There are potential issues with unicode support, not least with support for unicode in HTTP headers, so significant additional work may be required to provide a comprehensive and well-tested solution with Unicode support in a future Riak release.
+There are potential issues with Unicode support, not least with support for Unicode in HTTP headers, so significant additional work may be required to provide a comprehensive and well-tested solution with Unicode support in a future Riak release.

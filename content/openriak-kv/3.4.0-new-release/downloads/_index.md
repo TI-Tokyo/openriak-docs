@@ -21,8 +21,8 @@ quickdocs_sources:
 tags: ['diataxis', 'kv', 'reference']
 editorial_review: 'complete'
 technical_review: 'complete'
-last_reviewed: '2026-09-01'
-review_scope: 'editorial-and-site-integration'
+last_reviewed: '2026-11-05'
+review_scope: 'spelling & Grammar'
 features: ["installation"]
 concepts: ["deployment"]
 ---
@@ -46,7 +46,10 @@ The tag for the OpenRiak KV {{< current-version >}} is `riak-{{< current-version
 > [!NOTE]
 > Tagged releases contain a `rebar.lock` file which ensures all major dependencies are fetched from the precise commit made at the point of release.
 
-Each major release has an associated branch which represents current development activity.  For Riak {{< current-version format="major-minor" >}} this is `openriak-{{< current-version format="major-minor" >}}` and can be accessed [here](https://github.com/OpenRiak/riak/tree/openriak-{{< current-version format="major-minor" >}}). Building from these branches may contain unreleased changes.
+Each major release has an associated branch which represents current development activity.  For Riak {{< current-version format="major-minor" >}} this is `openriak-{{< current-version format="major-minor" >}}` and can be accessed [here](https://github.com/OpenRiak/riak/tree/openriak-{{< current-version format="major-minor" >}}). 
+
+>[!NOTE]
+>Building from these branches may contain unreleased changes.
 
 {{< /collapsable-section >}}
 

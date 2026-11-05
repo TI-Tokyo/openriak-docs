@@ -8,9 +8,9 @@ draft: true
 status: Reviewed
 editorial_review: complete
 technical_review: complete
-last_reviewed: '2026-09-23'
+last_reviewed: '2026-11-05'
 review-by: TI Tokyo/JOM
-review_scope: editorial & technical
+review_scope: error review
 description: A client can send an object request to a reachable OpenRiak node. That node coordinates work with the
   vnodes responsible for the object's replicas; it need not own the object's primary partition.
 related:
