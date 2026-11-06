@@ -293,6 +293,32 @@
     const searchTable=el('table',undefined,searchWrapper);searchTable.className='settings-search-table';
     const header=el('tr',undefined,el('thead',undefined,searchTable));
     for(const title of ['Site section','Text search','Semantic search','Result highlighting','Show results'])el('th',title,header).scope='col';
+    const searchTypes=['text','semantic','highlight'];
+    const typeLabel=type=>type==='highlight'?'result highlighting':type+' search';
+    const columnToggles={},rowToggles={text:[],semantic:[],highlight:[]};
+    const syncColumn=type=>{
+      const toggles=rowToggles[type],enabled=toggles.filter(toggle=>toggle.checked).length;
+      columnToggles[type].checked=toggles.length>0&&enabled===toggles.length;
+      columnToggles[type].indeterminate=enabled>0&&enabled<toggles.length;
+      columnToggles[type].disabled=toggles.length===0;
+    };
+    searchTypes.forEach((type,index)=>{
+      const label=el('label',undefined,header.children[index+1]);label.className='settings-search-all';
+      const toggle=el('input',undefined,label);toggle.type='checkbox';
+      toggle.setAttribute('aria-label',`All sections: ${typeLabel(type)}`);
+      toggle.dataset.searchAll=type;columnToggles[type]=toggle;
+      el('span','All sections',label);
+      toggle.addEventListener('change',()=>safe(()=>{
+        const enabled=toggle.checked;
+        try{
+          preferences.sections.forEach(section=>preferences.write(section.id,{[type]:enabled}));
+          message(`${typeLabel(type)[0].toUpperCase()+typeLabel(type).slice(1)} ${enabled?'enabled':'disabled'} for all site sections.`);
+        }finally{
+          preferences.sections.forEach((section,index)=>{rowToggles[type][index].checked=preferences.read(section.id)[type];});
+          syncColumn(type);
+        }
+      }));
+    });
     const rows=el('tbody',undefined,searchTable);
     preferences.sections.forEach(section=>{
       const values=preferences.read(section.id),row=el('tr',undefined,rows);row.dataset.searchSection=section.id;
@@ -301,14 +327,19 @@
       const menuItem=document.querySelector(section.id==='settings'?'.site-section-panel [data-settings-link]':`.site-section-panel [data-site-section-id="${section.id}"]`);
       if(menuItem)identity.append(...[...menuItem.childNodes].map(node=>node.cloneNode(true)));
       else identity.textContent=section.name;
-      for(const type of ['text','semantic','highlight']){
-        const cell=el('td',undefined,row),toggle=el('input',undefined,cell);toggle.type='checkbox';toggle.checked=values[type];toggle.setAttribute('role','switch');toggle.setAttribute('aria-label',`${section.name}: ${type==='highlight'?'result highlighting':type+' search'}`);
-        toggle.addEventListener('change',()=>safe(()=>{preferences.write(section.id,{[type]:toggle.checked});message(`Search preferences saved for ${section.name}.`);}));
+      for(const type of searchTypes){
+        const cell=el('td',undefined,row),toggle=el('input',undefined,cell);toggle.type='checkbox';toggle.checked=values[type];toggle.setAttribute('role','switch');toggle.setAttribute('aria-label',`${section.name}: ${typeLabel(type)}`);
+        rowToggles[type].push(toggle);
+        toggle.addEventListener('change',()=>safe(()=>{
+          try{preferences.write(section.id,{[type]:toggle.checked});message(`Search preferences saved for ${section.name}.`);}
+          finally{toggle.checked=preferences.read(section.id)[type];syncColumn(type);}
+        }));
       }
       const cell=el('td',undefined,row),timing=el('select',undefined,cell);timing.setAttribute('aria-label',`${section.name}: show results`);
       for(const [value,title] of [['asap','As soon as available (default)'],['together','When both have finished']]){const option=el('option',title,timing);option.value=value;}
       timing.value=values.timing;timing.addEventListener('change',()=>safe(()=>{preferences.write(section.id,{timing:timing.value});message(`Search preferences saved for ${section.name}.`);}));
     });
+    searchTypes.forEach(syncColumn);
     selectSetting(appearance, 'Colour theme', 'theme', [['system', 'Device setting'], ['light', 'Light'], ['dark', 'Dark']]);
     selectSetting(appearance, 'Content width', 'content-width', ['50','75','90','98'].map(v => [v, `${v}%`]));
     selectSetting(appearance, 'Font size', 'font-size', ['100','110','125','150','200','250'].map(v => [v, `${v}%`]));
