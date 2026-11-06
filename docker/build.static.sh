@@ -31,7 +31,8 @@ if command -v docker >/dev/null 2>&1 && docker info >/dev/null 2>&1; then
     --build-arg "CORE_BUILD_PROFILE=$build_profile" --build-arg "RIAK_KV_VERSION=$riak_kv_version" \
     --build-arg "HUGO_BASEURL=$base_url" --build-arg "INCLUDE_DRAFTS=$include_drafts" \
     --tag "$export_image" "$repository_root"
-  docker run --rm --user "$(id -u):$(id -g)" --entrypoint sh \
+  # Both export targets use Debian images; use Bash for pipeline failure checks.
+  docker run --rm --user "$(id -u):$(id -g)" --entrypoint bash \
     --mount "type=bind,source=$staging,target=/output" \
     "$export_image" -ec 'set -o pipefail; tar -C /project/public -cf - . | tar -C /output -xf -'
 elif command -v docker.exe >/dev/null 2>&1 && command -v wslpath >/dev/null 2>&1 && docker.exe info >/dev/null 2>&1; then
@@ -42,7 +43,7 @@ elif command -v docker.exe >/dev/null 2>&1 && command -v wslpath >/dev/null 2>&1
     --build-arg "CORE_BUILD_PROFILE=$build_profile" --build-arg "RIAK_KV_VERSION=$riak_kv_version" \
     --build-arg "HUGO_BASEURL=$base_url" --build-arg "INCLUDE_DRAFTS=$include_drafts" \
     --tag "$export_image" "$repository_windows"
-  docker.exe run --rm --user "$(id -u):$(id -g)" --entrypoint sh \
+  docker.exe run --rm --user "$(id -u):$(id -g)" --entrypoint bash \
     --mount "type=bind,source=$staging_windows,target=/output" \
     "$export_image" -ec 'set -o pipefail; tar -C /project/public -cf - . | tar -C /output -xf -'
 else
