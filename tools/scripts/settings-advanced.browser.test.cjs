@@ -17,7 +17,7 @@ const { chromium } = require('playwright');
     assert.equal(await toggle.isChecked(), false);
     assert.equal(await settings.evaluate(key => localStorage.getItem(key), key), null, 'fresh browsers have no saved override');
     assert.equal(await settings.evaluate(key => window.OpenRiakSettings.read(key), key), 'false');
-    const sidebar = settings.locator('nav[aria-label="Settings pages"] > ul > li');
+    const sidebar = settings.locator('nav[aria-label="Site Settings pages"] > ul > li');
     assert.deepEqual((await sidebar.allTextContents()).slice(-2), ['Advanced', 'Import, export, and reset']);
     assert.ok(await sidebar.evaluateAll(items => items.slice(-2).every(item => parseFloat(getComputedStyle(item).borderTopWidth) > 0)));
     for (const version of ['3.4.0', '3.4.1']) {
@@ -73,7 +73,7 @@ const { chromium } = require('playwright');
       console.log(`${version}: default hiding, filter availability, live toggle, persistence, export/import/reset and explicit item passed.`);
     }
     await settings.goto(advanced);
-    await settings.getByRole('searchbox', { name: 'Search settings' }).fill('internal configuration');
+    await settings.getByRole('searchbox', { name: 'Search site settings' }).fill('internal configuration');
     await settings.locator('[data-settings-results] [data-search-items] a').first().waitFor();
     assert.match(await settings.locator('[data-settings-results] [data-search-items]').innerText(), /Show internal configuration settings/);
     assert.deepEqual(errors, []);

@@ -1,6 +1,6 @@
 ---
 outputs: [HTML, SemanticSource]
-title: Settings
+title: Site Settings
 type: site-section
 layout: settings
 url: /settings/

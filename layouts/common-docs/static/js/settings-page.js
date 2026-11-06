@@ -370,23 +370,23 @@
       }).dataset.settingsReset = '';
     });
     el('h3', 'Export', transfer);
-    field(transfer, 'Export group', currentExport, [['all','All settings'], ...Object.entries(names).filter(([key]) => key !== 'transfer')], value => { currentExport = value; });
-    button(transfer, 'Export settings', () => {
+    field(transfer, 'Export group', currentExport, [['all','All site settings'], ...Object.entries(names).filter(([key]) => key !== 'transfer')], value => { currentExport = value; });
+    button(transfer, 'Export site settings', () => {
       const blob = new Blob([JSON.stringify(S.snapshot(currentExport === 'all' ? undefined : [currentExport]), null, 2)], { type: 'application/json' });
       const url = URL.createObjectURL(blob); const link = el('a'); link.href = url; link.download = 'openriak-docs-settings.json'; link.click(); setTimeout(() => URL.revokeObjectURL(url), 1000);
     });
     el('h3', 'Import', transfer);
-    el('p', 'Choose a settings file to validate and preview before applying it.', transfer);
+    el('p', 'Choose a site settings file to validate and preview before applying it.', transfer);
     let pending;
     const fileLabel = el('label', undefined, transfer);
-    el('span', 'Import settings file', fileLabel);
+    el('span', 'Import site settings file', fileLabel);
     const file = el('input', undefined, fileLabel); file.type = 'file'; file.accept = '.json,application/json';
     const mode = field(transfer, 'Import mode', 'merge', [['merge','Merge — keep settings absent from the file'], ['replace','Replace — reset settings absent from the file']], () => {});
     const previewImport = el('pre', 'Choose a file to preview changes.', transfer);
     const applyButton = button(transfer, 'Apply import', () => {
       if (!pending) return;
       if (mode.value === 'replace' && !confirm('Replace all preferences? Settings absent from this file will reset to defaults.')) return;
-      S.apply(pending.settings, mode.value === 'replace' ? S.keys() : []); render(); message('Settings imported.');
+      S.apply(pending.settings, mode.value === 'replace' ? S.keys() : []); render(); message('Site settings imported.');
     }); applyButton.disabled = true;
     file.addEventListener('change', async () => {
       pending = null; applyButton.disabled = true;
@@ -400,9 +400,9 @@
     });
     el('h3', 'Reset', transfer);
     el('p', 'Restore all documentation preferences and example values to their original defaults.', transfer);
-    button(transfer, 'Reset all settings', () => {
+    button(transfer, 'Reset all site settings', () => {
       if (!confirm('Reset all documentation preferences and example values?')) return;
-      S.apply({}, S.keys()); render(); message('All settings reset.');
+      S.apply({}, S.keys()); render(); message('All site settings reset.');
     }).dataset.settingsReset = '';
     searchEntries = [];
     sections.querySelectorAll(':scope > section').forEach(section => {
@@ -496,7 +496,7 @@
     });
     clearDialog.addEventListener('close', () => {
       if (clearDialog.returnValue === 'clear') safe(() => {
-        S.apply({}, S.keys()); render(); message('All settings cleared. Defaults restored.');
+        S.apply({}, S.keys()); render(); message('All site settings cleared. Defaults restored.');
       });
       clearButton.focus({ preventScroll: true });
     });

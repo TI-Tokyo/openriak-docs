@@ -113,8 +113,8 @@
       }));
     } catch { /* Settings remain usable if session storage is unavailable. */ }
   };
-  // Remember documentation independently of how Settings is opened. Other site
-  // pages and Settings navigation must never overwrite this destination.
+  // Remember documentation independently of how Site Settings is opened. Other site
+  // pages and Site Settings navigation must never overwrite this destination.
   rememberDocumentation();
   window.addEventListener('pageshow', rememberDocumentation);
   window.addEventListener('hashchange', rememberDocumentation);

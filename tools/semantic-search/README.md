@@ -1,6 +1,6 @@
 # Semantic search
 
-Documentation versions, Community, Settings and both archives use pre-built document embeddings and
+Documentation versions, Community, Site Settings and both archives use pre-built document embeddings and
 browser-side query embedding/search. Text indexes and text-only search remain in
 place. The panel explicitly shows semantic loading, semantic + text search, or
 text-only fallback. Searches make no requests to external inference services.
@@ -17,7 +17,7 @@ text-only fallback. Searches make no requests to external inference services.
 - `content/static/semantic-indexes/SECTION[/VERSION]/`: section/version indexes.
 - `tools/semantic-search/indexes.json`: Markdown source override for the Technical Blog. Hugo exports determine the complete target list.
   Development covers active versions; release covers every published version and
-  both archives, plus Community, Settings and the homepage.
+  both archives, plus Community, Site Settings and the homepage.
 
 Large indexes are split into ordered passage/vector files of at most 45 MiB (below GitHub’s 50 MB warning threshold);
 the browser combines them using the manifest. Small indexes retain their original
@@ -196,7 +196,7 @@ The blog browser test serves fixtures at domain root and `/docs/`. The KV test u
 `OPENRIAK_KV_TEST_BASE` (default `http://localhost:1410/docs/`). Tests check scope,
 visible modes, exact terms, model failures and the 3.4.0 semantic endpoint.
 Discovery/startup tests cover build profiles and startup ordering; the Hugo export
-test checks domain-root/subdirectory deployment and generated Settings content.
+test checks domain-root/subdirectory deployment and generated Site Settings content.
 The evaluation commands print example results for relevance review, not a claim
 that one passage strategy is universally better.
 
@@ -205,7 +205,7 @@ texts ship beside the runtime. Sources:
 https://huggingface.co/Xenova/all-MiniLM-L6-v2 and
 https://huggingface.co/sentence-transformers/all-MiniLM-L6-v2.
 
-Settings and Archived Mailing List panels combine their specialised text results with the shared semantic client. They retain text search if the model or semantic index cannot load. Settings semantic results currently point to settings sections; exact text results can link to individual controls.
+Site Settings and Archived Mailing List panels combine their specialised text results with the shared semantic client. They retain text search if the model or semantic index cannot load. Site Settings semantic results currently point to settings sections; exact text results can link to individual controls.
 
 All semantic panels report download progress (file number and MiB), model preparation, search execution and elapsed time. Index, model and WASM downloads retry network failures, stalled transfers (30 seconds without data), HTTP 408/429 and server errors up to twice, after 1 and 2 seconds. Other HTTP errors, including 404/403, are not retried. Failed transfers restart the current file; completed index parts are retained for the current load. Exhausted retries retain text search.
 
@@ -219,8 +219,8 @@ Search status reserves two fixed rows: text-search progress and counts on the fi
 
 `layouts/common-docs/data/search.json` configures the initial text/semantic switches and result timing for each site section. Both search types default to `true`; `timing` is `asap` or `together`. The same configuration is loaded by core and archive builds. Product preferences cover all versions, including legacy Riak URLs. The homepage is excluded.
 
-Settings → Search presents these defaults with section logos and browser overrides. Overrides use `openriak-docs-search:SECTION` and participate in settings export, import and reset. Disabled types are not run; a disabled semantic search does not load its model or vectors. Disabling an active semantic search terminates its worker and aborts its index requests. Text search on documentation/blog pages still uses the existing passage index as its text corpus.
+Site Settings → Search presents these defaults with section logos and browser overrides. Overrides use `openriak-docs-search:SECTION` and participate in settings export, import and reset. Disabled types are not run; a disabled semantic search does not load its model or vectors. Disabling an active semantic search terminates its worker and aborts its index requests. Text search on documentation/blog pages still uses the existing passage index as its text corpus.
 
 ASAP displays each enabled type's results as they arrive. Together waits for all enabled types to finish (including failure), so disabling one type does not cause an indefinite wait. Semantic-only results exclude lexical ranking. Inline links and the both-disabled choices save the selected section preference and rerun the current query.
 
-Result highlighting is enabled by default per section (`highlight: true` in the shared search configuration). Settings → Search can override it independently of text/semantic search. Enabled results highlight literal query terms safely in titles/snippets and carry those terms to the destination page. Disabling highlighting removes both marks and highlight query parameters from new result links, while preserving other URL parameters and anchors.
+Result highlighting is enabled by default per section (`highlight: true` in the shared search configuration). Site Settings → Search can override it independently of text/semantic search. Enabled results highlight literal query terms safely in titles/snippets and carry those terms to the destination page. Disabling highlighting removes both marks and highlight query parameters from new result links, while preserving other URL parameters and anchors.

@@ -4,7 +4,7 @@
   <h1>{{ .Title }}</h1>
   <p>Preferences are saved in this browser and apply across the documentation.</p>
   <a data-settings-return hidden>Return to documentation</a>
-  <noscript><p>Enable JavaScript to edit, import, or export browser settings.</p></noscript>
+  <noscript><p>Enable JavaScript to edit, import, or export site settings.</p></noscript>
   {{ if not .Params.settings_group }}
   <div class="settings-cards">
     {{ range hugo.Data.settings_sections }}
@@ -17,7 +17,7 @@
   </div>
   <dialog class="settings-confirmation" data-settings-clear-dialog aria-labelledby="settings-clear-title" aria-describedby="settings-clear-description">
     <form method="dialog">
-      <h2 id="settings-clear-title">Clear all settings?</h2>
+      <h2 id="settings-clear-title">Clear all site settings?</h2>
       <p id="settings-clear-description">This restores all preferences, example values, and saved filters in this browser to their defaults.</p>
       <div class="settings-confirm-actions">
         <button value="cancel" autofocus>Cancel</button>
@@ -32,5 +32,5 @@
 <script type="application/json" id="settings-platforms">{{ partial "settings-products.html" . | jsonify | safeJS }}</script>
 <script src="{{ `js/docs-runtime.js` | relURL }}?v=20261106-advanced" defer></script>
 <script type="application/json" id="settings-code-types">{{ hugo.Data.settings_code_types | jsonify | safeJS }}</script>
-<script src="{{ `js/settings-page.js` | relURL }}?v=20261106-notices" defer></script>
+<script src="{{ `js/settings-page.js` | relURL }}?v=20261106-site-settings" defer></script>
 {{ end }}

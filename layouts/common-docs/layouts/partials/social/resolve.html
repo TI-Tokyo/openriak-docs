@@ -3,6 +3,9 @@
 {{- $title := partial "social/text.html" $page.Params.social_title -}}
 {{- if not $title -}}
   {{- $title = partial "social/text.html" $page.Title -}}
+  {{- if and (eq $page.Layout "settings") $page.Params.settings_group -}}
+    {{- $title = printf "%s · Site Settings" $title -}}
+  {{- end -}}
   {{- if or $page.IsHome (not $title) -}}{{- $title = $siteTitle -}}
   {{- else if not (in (lower $title) (lower $siteTitle)) -}}{{- $title = printf "%s · %s" $title $siteTitle -}}{{- end -}}
 {{- end -}}
