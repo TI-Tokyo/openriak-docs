@@ -20,6 +20,7 @@
         (field === 'port' ? Number.isInteger(entry) && entry > 0 && entry <= 65535 : text(entry))));
   });
   const fixed = {
+    [`${prefix}show-internal-configuration`]: ['advanced', 'false', ['true', 'false']],
     [`${prefix}theme`]: ['appearance', 'system', ['system', 'dark', 'light']],
     [`${prefix}content-width`]: ['appearance', '75', ['50', '75', '90', '98']],
     [`${prefix}font-size`]: ['appearance', '100', ['100', '110', '125', '150', '200', '250']],
@@ -32,6 +33,7 @@
   };
   function spec(key) {
     if (Object.hasOwn(fixed, key)) return fixed[key];
+    if (/^openriak-docs-search:[a-z0-9-]+$/.test(key)) return ['search', '{}', value => object(value) && Object.entries(value).every(([k,v]) => k === 'timing' ? ['asap','together'].includes(v) : ['text','semantic','highlight'].includes(k) && typeof v === 'boolean'), true];
     if (/^openriak-docs-version:[\w-]+$/.test(key)) return ['platform', 'latest', value => value === 'latest' || /^\d+\.\d+\.\d+(?:-[\w.-]+)?$/.test(value)];
     if (/^openriak-docs-os:[\w-]+$/.test(key)) return ['platform', '', text];
     if (/^openriak-docs-architectures:[\w-]+$/.test(key)) return ['platform', '{}', value => map(value, text), true];
@@ -111,8 +113,8 @@
       }));
     } catch { /* Settings remain usable if session storage is unavailable. */ }
   };
-  // Remember documentation independently of how Settings is opened. Other site
-  // pages and Settings navigation must never overwrite this destination.
+  // Remember documentation independently of how Site Settings is opened. Other site
+  // pages and Site Settings navigation must never overwrite this destination.
   rememberDocumentation();
   window.addEventListener('pageshow', rememberDocumentation);
   window.addEventListener('hashchange', rememberDocumentation);

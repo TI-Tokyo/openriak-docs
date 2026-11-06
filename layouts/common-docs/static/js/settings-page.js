@@ -7,10 +7,18 @@
   const sections = root.querySelector('[data-settings-sections]');
   const search = document.querySelector('[data-settings-search]');
   const results = document.querySelector('[data-settings-results]');
+  const searchUI=window.OpenRiakSearchStatus;
   let searchEntries = [];
+  let searchController;
+  const searchPanel=search.closest('.search-control');
+  const textSearch=async query=>searchEntries.filter(entry=>entry.text.includes(query.toLowerCase())).slice(0,30).map(entry=>({url:new URL(entry.href,location.href).href,title:entry.title,description:entry.context}));
+  const controller=import(searchPanel.dataset.searchPanelUrl).then(({mountSearch})=>{
+    searchController=mountSearch({root:searchPanel,input:search,status:document.querySelector('[data-settings-search-status]'),results,manifestURL:searchPanel.dataset.semanticIndexUrl,textSearch,noun:'items'});
+    return searchController;
+  });
   const pageGroup = root.dataset.settingsGroup || '';
   const base = root.dataset.settingsBase;
-  const names = { appearance: 'Appearance', code: 'Code blocks', platform: 'OS and architecture', tables: 'Tables and filters', examples: 'Example values', transfer: 'Import, export, and reset' };
+  const names = { appearance: 'Appearance', code: 'Code blocks', platform: 'OS and architecture', tables: 'Tables and filters', search: 'Search', examples: 'Example values', advanced: 'Advanced', transfer: 'Import, export, and reset' };
   const el = (tag, text, parent) => { const node = document.createElement(tag); if (text !== undefined) node.textContent = text; parent?.append(node); return node; };
   // Logo-only legends still name their settings group through accessible text.
   const settingLabel = node => (
@@ -18,7 +26,11 @@
     node.querySelector(':scope > img[alt]')?.alt ||
     node.firstChild?.textContent || node.textContent
   ).trim();
-  const message = value => { status.textContent = value; };
+  const message = value => {
+    const notice = el('p', value, status); notice.className = 'settings-notice';
+    setTimeout(() => notice.classList.add('is-fading'), 3000);
+    setTimeout(() => notice.remove(), 3500);
+  };
   const safe = fn => { try { fn(); } catch (error) { message(`Could not save: ${error.message}`); } };
   const save = (key, value) => { S.write(key, value); message('Saved in this browser.'); };
   const button = (parent, label, action) => { const node = el('button', label, parent); node.type = 'button'; node.addEventListener('click', () => safe(action)); return node; };
@@ -256,13 +268,47 @@
   }
   let currentExport = 'all';
   function render() {
+    // Keep pending notices and their timers when controls are rebuilt.
+    root.append(status);
     sections.replaceChildren();
     const panels = {};
     Object.entries(names).forEach(([id, name]) => {
       const panel = el('section', undefined, sections); panel.id = id;
       el('h2', name, panel); panels[id] = panel;
     });
-    const { appearance, code, platform, tables, examples, transfer } = panels;
+    const { appearance, code, platform, tables, examples, advanced, transfer } = panels;
+    const internalKey = `${S.prefix}show-internal-configuration`;
+    const showInternal = S.read(internalKey) === 'true';
+    const internalLabel = el('label', undefined, advanced); internalLabel.className = 'settings-advanced-toggle';
+    internalLabel.setAttribute('aria-label', 'Show internal configuration settings');
+    const internalToggle = el('input', undefined, internalLabel);
+    internalToggle.type = 'checkbox'; internalToggle.setAttribute('role', 'switch');
+    internalToggle.checked = showInternal;
+    el('span', 'Show internal configuration settings', internalLabel);
+    internalToggle.addEventListener('change', () => safe(() => save(internalKey, String(internalToggle.checked))));
+    el('p', 'Applies to configuration tables across all products and versions in this browser. When off, internal settings and their metadata filter option are hidden. Explicitly requested single configuration items are always shown.', advanced);
+    const preferences=window.OpenRiakSearchPreferences;
+    el('p','Choose how each site section searches. Product preferences apply to all versions. Changes are saved in this browser.',panels.search);
+    const searchWrapper=el('div',undefined,panels.search);searchWrapper.className='settings-table-scroll';
+    const searchTable=el('table',undefined,searchWrapper);searchTable.className='settings-search-table';
+    const header=el('tr',undefined,el('thead',undefined,searchTable));
+    for(const title of ['Site section','Text search','Semantic search','Result highlighting','Show results'])el('th',title,header).scope='col';
+    const rows=el('tbody',undefined,searchTable);
+    preferences.sections.forEach(section=>{
+      const values=preferences.read(section.id),row=el('tr',undefined,rows);row.dataset.searchSection=section.id;
+      const label=el('th',undefined,row);label.scope='row';
+      const identity=el('span',undefined,label);identity.className='settings-search-identity';
+      const menuItem=document.querySelector(section.id==='settings'?'.site-section-panel [data-settings-link]':`.site-section-panel [data-site-section-id="${section.id}"]`);
+      if(menuItem)identity.append(...[...menuItem.childNodes].map(node=>node.cloneNode(true)));
+      else identity.textContent=section.name;
+      for(const type of ['text','semantic','highlight']){
+        const cell=el('td',undefined,row),toggle=el('input',undefined,cell);toggle.type='checkbox';toggle.checked=values[type];toggle.setAttribute('role','switch');toggle.setAttribute('aria-label',`${section.name}: ${type==='highlight'?'result highlighting':type+' search'}`);
+        toggle.addEventListener('change',()=>safe(()=>{preferences.write(section.id,{[type]:toggle.checked});message(`Search preferences saved for ${section.name}.`);}));
+      }
+      const cell=el('td',undefined,row),timing=el('select',undefined,cell);timing.setAttribute('aria-label',`${section.name}: show results`);
+      for(const [value,title] of [['asap','As soon as available (default)'],['together','When both have finished']]){const option=el('option',title,timing);option.value=value;}
+      timing.value=values.timing;timing.addEventListener('change',()=>safe(()=>{preferences.write(section.id,{timing:timing.value});message(`Search preferences saved for ${section.name}.`);}));
+    });
     selectSetting(appearance, 'Colour theme', 'theme', [['system', 'Device setting'], ['light', 'Light'], ['dark', 'Dark']]);
     selectSetting(appearance, 'Content width', 'content-width', ['50','75','90','98'].map(v => [v, `${v}%`]));
     selectSetting(appearance, 'Font size', 'font-size', ['100','110','125','150','200','250'].map(v => [v, `${v}%`]));
@@ -279,9 +325,14 @@
       const group = el('fieldset', undefined, tables); el('legend', catalog[key]?.title || key.replace(S.prefix, ''), group);
       const values = S.json(key);
       const controls = catalog[key]?.controls || Object.keys(values).map(name => ({ name, label: name, type: typeof values[name] === 'boolean' ? 'boolean' : 'text' }));
-      controls.forEach(control => field(group, control.label, String(values[control.name] ?? control.default ?? ''), control.type === 'boolean' ? toggles : control.options, value => {
-        const next = S.json(key); next[control.name] = control.type === 'boolean' ? value === 'true' : value; save(key, JSON.stringify(next));
-      }));
+      controls.forEach(control => {
+        const options = control.name === 'metadata' && !showInternal
+          ? control.options?.filter(([value]) => !['secretSettings', 'secretSettngs'].includes(value)) : control.options;
+        if (control.name === 'metadata' && !options?.some(([value]) => value)) return;
+        field(group, control.label, String(values[control.name] ?? control.default ?? ''), control.type === 'boolean' ? toggles : options, value => {
+          const next = S.json(key); next[control.name] = control.type === 'boolean' ? value === 'true' : value; save(key, JSON.stringify(next));
+        });
+      });
       button(group, 'Reset these filters', () => { S.apply({}, [key]); render(); message('Filters reset.'); });
     });
     el('p', 'These values personalize examples, not configuration-reference defaults. Use sample identities rather than passwords or credentials.', examples);
@@ -311,28 +362,31 @@
       });
       button(group, `Add ${name}`, () => { values[name].push(Object.fromEntries(fields.map(key => [key, key === 'port' ? 8087 : '']))); saveExamples(); render(); });
     });
-    Object.entries(panels).filter(([id]) => id !== 'transfer' && id !== 'code').forEach(([id, panel]) => button(panel, `Reset ${names[id].toLowerCase()}`, () => {
-      if (!confirm(`Reset all ${names[id].toLowerCase()} settings to defaults?`)) return;
-      S.apply({}, S.keys().filter(key => S.spec(key)[0] === id)); render(); message(`${names[id]} reset.`);
-    }));
+    Object.entries(panels).filter(([id]) => id !== 'transfer' && id !== 'code').forEach(([id, panel]) => {
+      button(panel, id==='search'?'Reset Search':`Reset ${names[id].toLowerCase()}`, () => {
+        if (!confirm(`Reset all ${names[id].toLowerCase()} settings to defaults?`)) return;
+        S.apply({}, S.keys().filter(key => S.spec(key)[0] === id)); render();
+        message(id === 'search' ? 'Search reset.' : `${names[id]} reset.`);
+      }).dataset.settingsReset = '';
+    });
     el('h3', 'Export', transfer);
-    field(transfer, 'Export group', currentExport, [['all','All settings'], ...Object.entries(names).filter(([key]) => key !== 'transfer')], value => { currentExport = value; });
-    button(transfer, 'Export settings', () => {
+    field(transfer, 'Export group', currentExport, [['all','All site settings'], ...Object.entries(names).filter(([key]) => key !== 'transfer')], value => { currentExport = value; });
+    button(transfer, 'Export site settings', () => {
       const blob = new Blob([JSON.stringify(S.snapshot(currentExport === 'all' ? undefined : [currentExport]), null, 2)], { type: 'application/json' });
       const url = URL.createObjectURL(blob); const link = el('a'); link.href = url; link.download = 'openriak-docs-settings.json'; link.click(); setTimeout(() => URL.revokeObjectURL(url), 1000);
     });
     el('h3', 'Import', transfer);
-    el('p', 'Choose a settings file to validate and preview before applying it.', transfer);
+    el('p', 'Choose a site settings file to validate and preview before applying it.', transfer);
     let pending;
     const fileLabel = el('label', undefined, transfer);
-    el('span', 'Import settings file', fileLabel);
+    el('span', 'Import site settings file', fileLabel);
     const file = el('input', undefined, fileLabel); file.type = 'file'; file.accept = '.json,application/json';
     const mode = field(transfer, 'Import mode', 'merge', [['merge','Merge — keep settings absent from the file'], ['replace','Replace — reset settings absent from the file']], () => {});
     const previewImport = el('pre', 'Choose a file to preview changes.', transfer);
     const applyButton = button(transfer, 'Apply import', () => {
       if (!pending) return;
       if (mode.value === 'replace' && !confirm('Replace all preferences? Settings absent from this file will reset to defaults.')) return;
-      S.apply(pending.settings, mode.value === 'replace' ? S.keys() : []); render(); message('Settings imported.');
+      S.apply(pending.settings, mode.value === 'replace' ? S.keys() : []); render(); message('Site settings imported.');
     }); applyButton.disabled = true;
     file.addEventListener('change', async () => {
       pending = null; applyButton.disabled = true;
@@ -346,13 +400,13 @@
     });
     el('h3', 'Reset', transfer);
     el('p', 'Restore all documentation preferences and example values to their original defaults.', transfer);
-    button(transfer, 'Reset all settings', () => {
+    button(transfer, 'Reset all site settings', () => {
       if (!confirm('Reset all documentation preferences and example values?')) return;
-      S.apply({}, S.keys()); render(); message('All settings reset.');
-    });
+      S.apply({}, S.keys()); render(); message('All site settings reset.');
+    }).dataset.settingsReset = '';
     searchEntries = [];
     sections.querySelectorAll(':scope > section').forEach(section => {
-      const labels = [...section.querySelectorAll('label, legend, .settings-platform-field')];
+      const labels = [...section.querySelectorAll('label, legend, .settings-platform-field, .settings-search-table input, .settings-search-table select')];
       labels.forEach((label, index) => {
         label.id = `${section.id}-setting-${index}`;
         const title = settingLabel(label);
@@ -367,6 +421,10 @@
       if (section.id !== pageGroup) section.remove();
       else section.querySelector('h2')?.remove();
     });
+    const panel = panels[pageGroup];
+    const reset = panel?.querySelector('[data-settings-reset]') || root.querySelector('[data-settings-clear]');
+    if (reset) reset.before(status);
+    else (panel || root).append(status);
     alignLabels();
     filter();
   }
@@ -385,34 +443,7 @@
   window.addEventListener('resize', alignLabels);
   new MutationObserver(alignLabels).observe(document.documentElement, { attributes: true, attributeFilter: ['data-font-size'] });
   document.fonts?.ready.then(alignLabels);
-  function filter() {
-    const query = search.value.trim().toLowerCase();
-    results.replaceChildren(); results.hidden = !query;
-    if (!query) {
-      document.querySelector('[data-settings-search-status]').textContent = '';
-      return;
-    }
-    const matches = searchEntries.filter(entry => entry.text.includes(query)).slice(0, 30);
-    matches.forEach(entry => {
-      const link = el('a', undefined, results); link.href = entry.href;
-      el('strong', entry.title, link);
-      el('span', entry.context, link);
-    });
-    if (!matches.length) el('p', 'No matching settings.', results);
-    document.querySelector('[data-settings-search-status]').textContent = `${matches.length} matching settings`;
-  }
-  search.addEventListener('input', filter);
-  search.addEventListener('click', filter);
-  search.addEventListener('keydown', event => {
-    if (event.key !== 'Escape') return;
-    event.preventDefault();
-    event.stopPropagation();
-    search.value = '';
-    filter();
-  });
-  document.addEventListener('click', event => {
-    if (!search.closest('.search-control').contains(event.target)) results.hidden = true;
-  });
+  function filter() { if(searchController)searchController.refresh(); }
   function revealSetting() {
     let target;
     try { target = document.getElementById(decodeURIComponent(location.hash.slice(1))); } catch { return; }
@@ -438,7 +469,9 @@
       if (destination.origin !== location.origin || !/^openriak-(kv|cs|ts)\/[^/]+\//.test(relative)) return;
       link.href = destination.href;
       const described = context && ['project', 'version', 'title'].every(key => typeof context[key] === 'string' && context[key]);
-      link.textContent = described ? `Return to documentation (${context.project} ${context.version}: ${context.title})` : 'Return to documentation';
+      const productVersion=described?`${context.project} ${context.version}`:'';
+      const versionRoot=/^openriak-(kv|cs|ts)\/[^/]+\/?$/.test(relative);
+      link.textContent = described ? `Return to documentation (${productVersion}${versionRoot?'':`: ${context.title}`})` : 'Return to documentation';
       link.hidden = false;
     } catch { /* Do not show a misleading link to the site root. */ }
   }
@@ -463,7 +496,7 @@
     });
     clearDialog.addEventListener('close', () => {
       if (clearDialog.returnValue === 'clear') safe(() => {
-        S.apply({}, S.keys()); render(); message('All settings cleared. Defaults restored.');
+        S.apply({}, S.keys()); render(); message('All site settings cleared. Defaults restored.');
       });
       clearButton.focus({ preventScroll: true });
     });

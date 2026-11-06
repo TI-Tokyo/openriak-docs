@@ -235,7 +235,7 @@ assert.ok(siteSections.some((section) => section.id === 'homepage' && section.na
 assert.ok(siteSections.some((section) => section.id === 'archived-technical-blog' && section.url === 'archived-technical-blog/'), 'Archived Technical Blog must default to its base-independent browse path');
 assert.ok(siteSections.some((section) => section.id === 'community' && section.url === 'community/'), 'Community must use a base-independent path');
 assert.deepEqual(siteSections.map((section) => section.id), ['homepage', 'openriak-kv', 'openriak-cs', 'openriak-ts', 'community', 'archived-technical-blog', 'archived-mailing-list'], 'Site sections must be ordered Homepage, products, Community, then archives');
-assert.ok(siteSections.every((section) => section.name && section.logo && section.description && section.action && Object.hasOwn(section, 'url')), 'every Site section must provide complete shared navigation data');
+assert.ok(siteSections.every((section) => section.name && section.pickerIcon && (section.pickerIcon !== 'openriak' || section.logo) && section.description && section.action && Object.hasOwn(section, 'url')), 'every Site section must provide complete shared navigation data');
 assert.ok(siteSections.every((section) => !section.url.startsWith('/')), 'Site section paths must not bypass the configured base URL');
 assert.match(siteSectionUrlSource, /\. \| relURL/, 'Site section paths must resolve against Hugo baseURL');
 assert.match(homepageSource, /partial "site-section-url\.html" \.url/, 'Homepage cards must resolve Site section paths against baseURL');
@@ -378,7 +378,7 @@ assert.match(themeSource, /mobileAppearance[\s\S]*setAttribute\('role', 'dialog'
 assert.match(sharedHeaderSource, /data-theme-panel role="region" aria-label="Appearance preferences"/, 'the desktop appearance disclosure must not claim modal dialog semantics');
 assert.match(sharedHeaderCss, /--global-orange: #9b4d00[\s\S]*--global-focus: #006a75/, 'light shared-header accents and focus indicators must use contrast-safe colours');
 assert.match(docsCssSource, /--orange: #9b4d00[\s\S]*--focus-ring: #006a75[\s\S]*:focus-visible \{ outline: 3px solid var\(--focus-ring\)/, 'light documentation accents and focus indicators must use contrast-safe colours');
-assert.match(sidebarSearchPartialSource, /data-search-status role="status" aria-live="polite" aria-atomic="true"[\s\S]*data-search-results role="region" aria-label="Search results"/, 'shared search must expose announcements and a labelled results region');
+assert.match(sidebarSearchPartialSource, /data-search-results role="region" aria-label="Search results"[\s\S]*data-search-status role="status" aria-live="polite" aria-atomic="true"[\s\S]*data-search-items/, 'shared search must expose announcements and a labelled results region');
 assert.match(sidebarSearchPartialSource, /aria-keyshortcuts="\/ Control\+K Meta\+K"[\s\S]*<kbd class="search-shortcut" aria-hidden="true">\/<\/kbd>/, 'shared search must advertise and display its keyboard shortcut');
 assert.match(mailingListSearchPartialSource, /aria-keyshortcuts="\/ Control\+K Meta\+K"[\s\S]*<kbd class="search-shortcut" aria-hidden="true">\/<\/kbd>/, 'mailing-list search must use the shared keyboard shortcut presentation');
 assert.match(shellSource, /isTyping[\s\S]*slashShortcut[\s\S]*commandShortcut[\s\S]*setNav\(true\)[\s\S]*setSidebarCollapsed\(false\)[\s\S]*searchInput\.focus\(\)/, 'slash and Ctrl/Cmd+K must reveal and focus Search without intercepting text entry');
@@ -632,8 +632,8 @@ for (const [name, config] of [['core', coreHugoConfig], ['archive', archiveHugoC
 }
 assert.equal((dockerfileSource.match(/COPY layouts\/_vendor\/github\.com\/KKKZOZ\/hugo-admonitions \.\/layouts\/_vendor\/github\.com\/KKKZOZ\/hugo-admonitions/g) || []).length, 2, 'both Docker Hugo stages must include the vendored admonition module');
 assert.ok(fs.existsSync(path.join(repositoryRoot, 'content', 'community', 'pages', '_index.md')), 'Community must have an authored landing page');
-assert.ok(fs.existsSync(path.join(commonAssets, 'images', 'sites', 'community.svg')), 'Community must have a shared Site section logo');
-assert.ok(fs.existsSync(path.join(commonAssets, 'images', 'sites', 'homepage.svg')), 'Homepage must have a shared Site section logo');
+assert.equal(siteSections.find(section => section.id === 'community').pickerIcon, 'community', 'Community must use its shared menu icon');
+assert.equal(siteSections.find(section => section.id === 'homepage').pickerIcon, 'home', 'Homepage must use its shared menu icon');
 
 const blogPostsRoot = path.join(repositoryRoot, 'content', 'archived-technical-blog', 'posts');
 const blogCategoriesRoot = path.join(repositoryRoot, 'content', 'archived-technical-blog', 'pages', 'categories');
@@ -823,3 +823,7 @@ if (fs.existsSync(buildRoot)) {
   assert.ok(search.every((item) => item.url.includes('/docs/openriak-kv/3.4.1/')), 'search must not leak other versions');
 }
 console.log('Architecture, SemVer, OS fallback, data binding, and layered-output tests passed.');
+
+for (const [root, name] of [['content/static/common', 'homepage.svg'], ['content/static/common', 'community.svg'], ['content/static/common', 'archived-technical-blog.svg'], ['layouts/common-docs/static', 'archived-mailing-list.svg']]) {
+  assert.ok(!fs.existsSync(path.join(repositoryRoot, root, 'images/sites', name)), `obsolete section artwork must not return: ${name}`);
+}

@@ -16,3 +16,23 @@ test('exact configuration keys remain searchable without a model',()=>{
 test('cosine comparison uses every passage and rejects invalid dimensions',()=>{
  assert.deepEqual(cosineScores(new Float32Array([1,0,0,1]),new Float32Array([1,0])),[1,0]);assert.throws(()=>cosineScores([1,2,3],[1,0]));
 });
+
+test('one-letter misspellings and transpositions find cluster expansion',async()=>{
+ const {normaliseQuery}=await import('../../content/static/semantic-search/ranking.mjs');
+ const docs=[
+  {title:'Expand a cluster',heading:'Adding nodes',text:'Expand a cluster by joining another node.',url:'expand/'},
+  {title:'Cluster membership',heading:'Membership',text:'Manage cluster membership.',url:'members/'},
+  {title:'Client configuration',heading:'Options',text:'Configure a client.',url:'client/'},
+ ];
+ for(const query of ['expand a clister','expand a clsuter','expand a clustr']){
+  assert.equal(normaliseQuery(docs,query),'expand a cluster');
+  assert.equal(rank(docs,query)[0].url,'expand/');
+ }
+ assert.equal(normaliseQuery(docs,'n_val cluster_id riak-admin'),'n_val cluster_id riak-admin');
+ assert.equal(normaliseQuery([...docs,{title:'Literal',heading:'',text:'clister is a literal custom value',url:'literal/'}],'clister'),'clister');
+});
+
+test('semantic-only mode does not include lexical matches',()=>{
+ const results=rank(passages,'n_val',[.8,.9,.1,.05],8,{text:false});
+ assert.deepEqual(results.map(p=>p.url),['recovery/']);
+});

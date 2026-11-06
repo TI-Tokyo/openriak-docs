@@ -1,11 +1,14 @@
 <div class="sidebar-tools">
-  <div class="mailing-list-search sidebar-control search-control" data-mailing-list-search data-index-url="{{ printf `%sindex.json` .archiveHome.RelPermalink }}">
+  <div class="mailing-list-search sidebar-control search-control" data-mailing-list-search data-search-panel-url="{{ `semantic-search/panel.mjs` | relURL }}?v=20261105-highlighting2" data-semantic-client-url="{{ `semantic-search/client.mjs` | relURL }}?v=20261105-highlighting2" data-semantic-index-url="{{ `semantic-indexes/archived-mailing-list/manifest.json` | relURL }}" data-index-url="{{ printf `%sindex.json` .archiveHome.RelPermalink }}">
     <label class="control-label" for="mailing-list-search">Search</label>
     <div class="search-input-wrap">
       <input id="mailing-list-search" type="search" placeholder="Title, author, or message text" autocomplete="off" aria-keyshortcuts="/ Control+K Meta+K" data-search-input data-mailing-list-search-input>
       <kbd class="search-shortcut" aria-hidden="true">/</kbd>
     </div>
-    <p class="mailing-list-search__status" data-mailing-list-search-status role="status" aria-live="polite" aria-atomic="true"></p>
-    <div class="mailing-list-search__results search-results" data-mailing-list-search-results role="region" aria-label="Search results" hidden></div>
+    <div class="mailing-list-search__results search-results" data-mailing-list-search-results role="region" aria-label="Search results" hidden>
+      <p class="mailing-list-search__status search-status-panel" data-mailing-list-search-status role="status" aria-live="polite" aria-atomic="true"></p>
+      <div data-search-items></div>
+    </div>
   </div>
 </div>
+<script src="{{ `js/search-status.js` | relURL }}?v=20261105-highlighting1" defer></script>

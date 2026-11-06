@@ -85,13 +85,13 @@ services:
         hugo --source=/project/content --config=/tmp/openriak-core.yaml
         --destination=/project/tools/generated/semantic-dev/core --cleanDestinationDir --renderSegments semantic
         --baseURL=http://localhost:1410/docs/ --buildDrafts --noBuildLock --cacheDir=/cache/hugo &&
-        node /project/tools/scripts/build-semantic-index.mjs --ensure --all
+        node /project/tools/scripts/build-semantic-index.mjs --all
         --site-dir /project/tools/generated/semantic-dev/core || exit "$$?";
         if [ "$${OPENRIAK_DOCS_BUILD_PROFILE}" = release ]; then
         hugo --source=/project/content --config=/project/content/hugo-archives.yaml
         --destination=/project/tools/generated/semantic-dev/archives --cleanDestinationDir --renderSegments semantic
         --baseURL=http://localhost:1410/docs/ --buildDrafts --noBuildLock --cacheDir=/cache/hugo &&
-        node /project/tools/scripts/build-semantic-index.mjs --ensure --all
+        node /project/tools/scripts/build-semantic-index.mjs --all
         --site-dir /project/tools/generated/semantic-dev/archives || exit "$$?";
         fi;
         exec hugo server --source=/project/content --config=/tmp/openriak-core.yaml
@@ -99,11 +99,23 @@ services:
         --appendPort=false --buildDrafts --renderToMemory --noBuildLock
         --cacheDir=/cache/hugo --poll=700ms
 
+  archive-output-init:
+    <<: *hugo-service
+    profiles: ['release']
+    user: '0:0'
+    restart: 'no'
+    volumes:
+      - '../build/archives:/archive-output'
+    # Older preview containers created this generated output as root.
+    command: ['chown -R node:node /archive-output']
+
   archives:
     <<: *hugo-service
     depends_on:
       core:
         condition: service_healthy
+      archive-output-init:
+        condition: service_completed_successfully
     profiles: ['release']
     volumes:
       - '..:/project:ro'

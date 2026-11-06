@@ -243,7 +243,7 @@ These shortcodes use the version being viewed, including inherited pages.
 
 ## Browser settings and personalized examples
 
-The Settings entry at the bottom of the Site sections menu opens `/settings/`, an overview linking to separate Appearance,
+The Site Settings entry at the bottom of the Site sections menu opens `/settings/`, an overview linking to separate Appearance,
 Code blocks, OS and architecture, Tables and filters, Example values, and
 Import/export pages. The shared left sidebar searches controls across those pages. The landing page
 also offers Clear all, with confirmation before resetting preferences, example
@@ -268,11 +268,11 @@ only that version's supported choices. Versions without an OS picker say so.
 Desktop forms align their fields after the longest label; mobile forms stack.
 Import, Export, and Reset have separate headings.
 
-Settings exports use versioned JSON (`format: openriak-docs-settings`, `version: 1`).
+Site Settings exports use versioned JSON (`format: openriak-docs-settings`, `version: 1`).
 Import validates the complete file before writing and previews changes. Merge
 preserves omitted preferences; Replace resets them. Exports can include all
 preferences or one group. Votes, scroll positions, and the local filter-control
-catalog are excluded. Table controls become available in Settings after a visit
+catalog are excluded. Table controls become available in Site Settings after a visit
 to the corresponding table; configuration filters are scoped by product, page,
 and table index, while review filters retain their existing product scope.
 
@@ -349,11 +349,11 @@ Nonempty, plain-text candidates are selected in this order:
   `summary` or `summary_large_image` is honoured; other values use the default.
 
 The eight bundled 1200 × 630 PNGs cover OpenRiak KV, CS, TS, Community,
-Archived Technical Blog, Archived Mailing List, Settings and Homepage. Their
+Archived Technical Blog, Archived Mailing List, Site Settings and Homepage. Their
 filenames are `images/{section-id}-social-preview.png`. Product cards use the
 existing wordmarks; other cards feature the generic OpenRiak logo and name,
 with the section name as a subtitle. Descriptions come from `site_sections.json` and the
-Settings page template. Historical `riak-kv`, `riak-cs` and `riak-ts` routes map
+Site Settings page template. Historical `riak-kv`, `riak-cs` and `riak-ts` routes map
 to the corresponding OpenRiak card. Pages outside those sections use Homepage.
 
 The matching bundled image is validated even when a custom image is selected;
@@ -395,29 +395,48 @@ HTTP/HTTPS protocol; external images and their redirects must use HTTPS. To chec
 Documentation versions, Community and the Archived Technical Blog use browser-only
 semantic + text search. Indexes are prepared for every published version and site
 section and tracked in Git. The shared model and runtime live in
-`content/static/semantic-search/`. Existing text indexes and the specialised Settings
+`content/static/semantic-search/`. Existing text indexes and the specialised Site Settings
 and mailing-list search controls are preserved. Semantic panels show the active mode.
 
 ```sh
-node tools/scripts/build-semantic-index.mjs --section archived-technical-blog
+node tools/scripts/build-semantic-index.mjs --section archived-technical-blog --all
 node tools/scripts/build-semantic-index.mjs --section openriak-kv --version 3.4.1
 node tools/scripts/build-semantic-index.mjs --all
 ```
 
-`--all` discovers every published version and section from Hugo’s semantic source exports.
+To report which indexes need rebuilding without changing any index files:
+
+```sh
+OPENRIAK_DOCS_BUILD_PROFILE=release node tools/scripts/build-semantic-index.mjs --all --whatif
+```
+
+This compares all indexes with fresh source exports and reports what would be rebuilt.
+It does not generate embeddings or repair missing files. Add `--site-dir` to
+compare against existing exports instead of rendering fresh ones.
+
+Normal runs rebuild only missing, stale or invalid indexes. Add `--force` to
+rebuild selected indexes regardless of validity, or `--whatif --force` to preview
+that operation. A section requires `--all` or `--version`; repeat `--version` to
+select several versions, for example:
+
+```sh
+node tools/scripts/build-semantic-index.mjs --section openriak-kv --version 3.4.0 --version 3.4.1
+node tools/scripts/build-semantic-index.mjs --section settings --all
+```
+
+`--all` alone discovers every published version and section from Hugo’s semantic
+source exports, including the homepage. With `--section`, it selects only that
+section.
 The default export profile is `release`, including both archives. Set
 `OPENRIAK_DOCS_BUILD_PROFILE=development` to use the development versions.
 `--site-dir` follows exactly the versions and sections in the supplied Hugo output.
-`tools/semantic-search/indexes.json` preserves the two original index locations;
+`tools/semantic-search/indexes.json` supplies the Technical Blog source override;
 it does not restrict which sections receive indexes. Rebuilds remove
 superseded files after successful publication; add `--retain` to keep them. Normal
-builds generate missing indexes automatically, validate existing ones and include
-the resulting assets in the output. Stale or corrupt indexes require an explicit
-rebuild. See [the build and test guide](tools/semantic-search/README.md) for details.
+builds update indexes as needed and include the validated assets in the output. See [the build and test guide](tools/semantic-search/README.md) for details.
 
 The local run script builds a development image containing Hugo and the pinned
-CPU embedding dependencies. The core container renders its active profile, detects missing indexes, generates
-them, and then starts Hugo’s server. For release, this includes both archives;
+CPU embedding dependencies. The core container renders its active profile, updates indexes as needed, and then starts Hugo’s server. For release, this includes both archives;
 the archive server waits until the core server is ready. This check also
 runs on direct core-container restarts. Dependencies are provided by the image in an
 anonymous volume, kept separate from host dependencies and refreshed by the run

@@ -62,12 +62,12 @@ RUN drafts=''; if [ "$INCLUDE_DRAFTS" = true ]; then drafts=--buildDrafts; fi; \
       --noBuildLock --cleanDestinationDir $drafts && \
     node tools/scripts/check-social-metadata.cjs /project/public "$HUGO_BASEURL"
 
-# Native CPU embedding dependencies require glibc when a tracked index is absent.
-# Existing indexes only need Node's built-in validation; no npm install is run.
+# Native CPU embedding dependencies require glibc when an index needs updating.
+# Valid indexes only need Node's built-in validation; no npm install is run.
 FROM node:${NODE_VERSION}-bookworm-slim AS core-build
 WORKDIR /project
 COPY --from=core-render /project /project
-RUN node tools/scripts/build-semantic-index.mjs --ensure --all --site-dir /project/public --publish-dir /project/public
+RUN node tools/scripts/build-semantic-index.mjs --all --site-dir /project/public --publish-dir /project/public
 
 # Development and beta-test artifacts contain the core project only.
 FROM scratch AS core-static

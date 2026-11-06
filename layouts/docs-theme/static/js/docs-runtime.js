@@ -561,8 +561,23 @@
       modeSelect.value = rememberedSearchMode;
       const rows = () => [...body.querySelectorAll('[data-configuration-key]')];
       const tagFilters = [...reference.querySelectorAll('[data-configuration-tag-filter]')];
+      const internalKey = 'openriak-docs-show-internal-configuration';
+      const internalTag = value => ['secretSettings', 'secretSettngs'].includes(value);
+      const showInternal = () => { try { return localStorage.getItem(internalKey) === 'true'; } catch { return false; } };
+      const metadataFilter = tagFilters.find(filter => filter.dataset.configurationTagFilter === 'metadata');
+      const metadataOptions = metadataFilter ? [...metadataFilter.options] : [];
+      const updateInternalFilter = () => {
+        if (!metadataFilter) return;
+        const selected = metadataFilter.value;
+        metadataFilter.replaceChildren(...metadataOptions.filter(option => showInternal() || !internalTag(option.value)));
+        metadataOptions.forEach(option => { option.hidden = false; option.disabled = false; });
+        metadataFilter.value = !showInternal() && internalTag(selected) ? '' : selected;
+        metadataFilter.closest('label').hidden = ![...metadataFilter.options].some(option => option.value);
+        if (internalTag(selected) && !showInternal()) saveFilters();
+      };
       const filterKey = `openriak-docs-table-filters:${context.product.id}:${location.pathname}:${tableIndex}`;
       const restoreFilters = () => {
+        metadataFilter?.replaceChildren(...metadataOptions);
         let saved = {};
         try { const value = JSON.parse(localStorage.getItem(filterKey) || '{}'); if (value && typeof value === 'object' && !Array.isArray(value)) saved = value; } catch {}
         input.value = saved.search || '';
@@ -584,7 +599,9 @@
       } catch {}
       restoreFilters();
       const rowTags = new Map(rows().map(row => [row, JSON.parse(row.dataset.configurationTags || '{}')]));
+      const eligible = row => showInternal() || !(rowTags.get(row).metadata || []).some(internalTag);
       const refresh = () => {
+        updateInternalFilter();
         clearHighlights(reference);
         const mode = modeSelect.value;
         const query = mode === 'regex' ? input.value : input.value.trim();
@@ -598,7 +615,7 @@
           result.dataset.configurationSearchError = '';
           result.value = 'Invalid regular expression';
           result.textContent = result.value;
-          rows().forEach((row) => { row.hidden = false; });
+          rows().forEach((row) => { row.hidden = !eligible(row); });
           return;
         }
         let visible = 0;
@@ -607,13 +624,13 @@
           const tags = rowTags.get(row);
           const tagsMatch = tagFilters.every(filter => !filter.value || (tags[filter.dataset.configurationTagFilter] || []).includes(filter.value));
           const tagText = Object.entries(tags).flatMap(([category, values]) => values.map(value => `${category}: ${value}`)).join(' ');
-          const matches = tagsMatch && (!queryExpression || queryExpression.test(tagText) || nodes.some((node) => queryExpression.test(node.nodeValue)));
+          const matches = eligible(row) && tagsMatch && (!queryExpression || queryExpression.test(tagText) || nodes.some((node) => queryExpression.test(node.nodeValue)));
           row.hidden = !matches;
           if (!matches) return;
           visible += 1;
           if (query) highlightMatches(row, query, mode);
         });
-        const total = rows().length;
+        const total = rows().filter(eligible).length;
         result.value = query || tagFilters.some(filter => filter.value) ? `${visible} of ${total} rows` : `${total} rows`;
         result.textContent = result.value;
       };
@@ -626,7 +643,7 @@
       });
       reference.refreshConfigurationTable = refresh;
       input.addEventListener('input', () => { saveFilters(); refresh(); });
-      window.addEventListener('storage', event => { if ([null, filterKey, searchModeStorageKey].includes(event.key)) { restoreFilters(); refresh(); } });
+      window.addEventListener('storage', event => { if ([null, filterKey, searchModeStorageKey, internalKey].includes(event.key)) { restoreFilters(); refresh(); } });
       modeSelect.addEventListener('change', () => {
         if (!searchModes.has(modeSelect.value)) return;
         window.localStorage.setItem(searchModeStorageKey, modeSelect.value);

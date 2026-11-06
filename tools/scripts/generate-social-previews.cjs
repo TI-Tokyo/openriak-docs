@@ -7,7 +7,7 @@ const {spawnSync}=require('node:child_process');
 const repo=path.resolve(__dirname,'../..');
 const sections=JSON.parse(fs.readFileSync(path.join(repo,'layouts/common-docs/data/site_sections.json'),'utf8'));
 const settings=fs.readFileSync(path.join(repo,'layouts/common-docs/layouts/site-section/settings.html'),'utf8');
-sections.push({id:'settings',name:'Settings',pickerIcon:'settings',description:settings.match(/<p>(Preferences[^<]+)<\/p>/)[1]});
+sections.push({id:'settings',name:'Site Settings',pickerIcon:'settings',description:settings.match(/<p>(Preferences[^<]+)<\/p>/)[1]});
 const escape=s=>s.replaceAll('&','&amp;').replaceAll('<','&lt;').replaceAll('>','&gt;').replaceAll('"','&quot;');
 const manifest={};
 for(const section of sections){

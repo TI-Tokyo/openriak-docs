@@ -18,3 +18,14 @@ test('run script builds the toolchain; core prepares every selected index before
  assert.ok(service.volumes.includes('/project/tools/semantic-search/node_modules'));
  assert.equal(compose.services.archives.depends_on.core.condition,'service_healthy');
 });
+
+test('release repairs legacy root-owned archive output before starting unprivileged Hugo',()=>{
+ const init=compose.services['archive-output-init'];
+ assert.equal(init.user,'0:0');
+ assert.equal(init.restart,'no');
+ assert.deepEqual(init.profiles,['release']);
+ assert.deepEqual(init.volumes,['../build/archives:/archive-output']);
+ assert.deepEqual(init.command,['chown -R node:node /archive-output']);
+ assert.equal(compose.services.archives.depends_on['archive-output-init'].condition,'service_completed_successfully');
+ assert.equal(compose.services.archives.user,undefined);
+});

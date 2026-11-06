@@ -7,26 +7,28 @@ const base = process.env.OPENRIAK_SETTINGS_TEST_BASE || 'http://127.0.0.1:1410/d
   const browser = await chromium.launch({ executablePath: process.env.OPENRIAK_BROWSER_EXECUTABLE || undefined });
   try {
     const context = await browser.newContext({ permissions: ['clipboard-read', 'clipboard-write'] });
+    await context.addInitScript(() => localStorage.setItem('openriak-docs-search:settings', JSON.stringify({text:true,semantic:false,timing:'asap'})));
     const page = await context.newPage();
     const errors = [];
     page.on('pageerror', error => errors.push(error.message));
     page.on('console', message => { if (message.type() === 'error' && message.text().includes('could not be initialized')) errors.push(message.text()); });
     const go = path => page.goto(new URL(path, base).href);
     await go('settings/');
-    assert.equal(await page.locator('.settings-card').count(), 6);
+    assert.equal(await page.locator('.settings-card').count(), 8);
     assert.equal(await page.locator('#main-content').evaluate(node => parseFloat(getComputedStyle(node).paddingTop) / parseFloat(getComputedStyle(document.documentElement).fontSize)), 0.75);
     assert.equal(await page.locator('[data-settings-sections] section').count(), 0);
-    assert.equal(await page.getByRole('link', { name: 'Settings', exact: true, includeHidden: true }).count(), 2);
-    await page.getByRole('searchbox', { name: 'Search settings' }).fill('version');
-    assert.deepEqual(await page.locator('[data-settings-results] a strong').allTextContents(), Array(3).fill('Default documentation version'));
-    assert.deepEqual(await page.locator('[data-settings-results] a span').allTextContents(), [
+    assert.equal(await page.getByRole('link', { name: 'Site Settings', exact: true, includeHidden: true }).count(), 2);
+    await page.getByRole('searchbox', { name: 'Search site settings' }).fill('version');
+    await page.locator('[data-settings-results] [data-search-items] a').first().waitFor();
+    assert.deepEqual(await page.locator('[data-settings-results] [data-search-items] a strong').allTextContents(), Array(3).fill('Default documentation version'));
+    assert.deepEqual(await page.locator('[data-settings-results] [data-search-items] a span').allTextContents(), [
       'OS and architecture: OpenRiak KV',
       'OS and architecture: OpenRiak CS',
       'OS and architecture: OpenRiak TS'
     ]);
     assert.equal(await page.locator('[data-settings-results]').evaluate(node => getComputedStyle(node).position), 'absolute');
-    await page.getByRole('searchbox', { name: 'Search settings' }).fill('ring size');
-    await page.locator('[data-settings-results] a').first().click();
+    await page.getByRole('searchbox', { name: 'Search site settings' }).fill('ring size');
+    await page.locator('[data-settings-results] [data-search-items] a').first().click();
     assert.match(page.url(), /settings\/examples\/#examples-setting-/);
     assert.equal(await page.locator('[data-settings-sections] section').count(), 1);
     await page.getByLabel('Cluster naming pattern', { exact: true }).fill('custom-{letter}');
@@ -143,7 +145,7 @@ const base = process.env.OPENRIAK_SETTINGS_TEST_BASE || 'http://127.0.0.1:1410/d
     const download = await downloadWait;
     assert.equal(await fs.readFile(await download.path(), 'utf8'), copied);
     await page.locator('.site-section-trigger').click();
-    await page.getByRole('link', { name: 'Settings', exact: true }).click();
+    await page.getByRole('link', { name: 'Site Settings', exact: true }).click();
     const returnLink = page.getByRole('link', { name: 'Return to documentation (OpenRiak KV 3.4.0: Personalized example values)', exact: true });
     const exampleUrl = new URL('openriak-kv/3.4.0/to-do/tests/example-values/', base).href;
     assert.equal(await returnLink.getAttribute('href'), exampleUrl);
@@ -154,7 +156,7 @@ const base = process.env.OPENRIAK_SETTINGS_TEST_BASE || 'http://127.0.0.1:1410/d
     // Going through the homepage must not replace the documentation destination.
     await go('');
     await page.locator('.site-section-trigger').click();
-    await page.getByRole('link', { name: 'Settings', exact: true }).click();
+    await page.getByRole('link', { name: 'Site Settings', exact: true }).click();
     assert.equal(await returnLink.getAttribute('href'), `${exampleUrl}#example-anchor`);
     await returnLink.click();
     assert.equal(page.url(), `${exampleUrl}#example-anchor`);
@@ -222,12 +224,12 @@ const base = process.env.OPENRIAK_SETTINGS_TEST_BASE || 'http://127.0.0.1:1410/d
     for (const title of ['Export', 'Import', 'Reset']) assert.equal(await page.getByRole('heading', { name: title, exact: true }).count(), 1);
     await page.evaluate(() => localStorage.setItem('openriak-docs-feedback:test', 'keep'));
     const exportWait = page.waitForEvent('download');
-    await page.getByRole('button', { name: 'Export settings', exact: true }).click();
+    await page.getByRole('button', { name: 'Export site settings', exact: true }).click();
     const exported = await exportWait;
     const backup = JSON.parse(await fs.readFile(await exported.path(), 'utf8'));
     assert.equal(backup.version, 1);
     assert.equal(backup.settings['openriak-docs-feedback:test'], undefined);
-    const file = page.getByLabel('Import settings file');
+    const file = page.getByLabel('Import site settings file');
     await file.setInputFiles({ name: 'bad.json', mimeType: 'application/json', buffer: Buffer.from(JSON.stringify({ ...backup, settings: { 'openriak-docs-theme': 'bad' } })) });
     assert.equal(await page.getByRole('button', { name: 'Apply import', exact: true }).isDisabled(), true);
     assert.equal(await page.evaluate(() => localStorage.getItem('openriak-docs-theme')), 'dark');
@@ -235,7 +237,7 @@ const base = process.env.OPENRIAK_SETTINGS_TEST_BASE || 'http://127.0.0.1:1410/d
     await page.getByRole('button', { name: 'Apply import', exact: true }).click();
     assert.equal(await page.evaluate(() => localStorage.getItem('openriak-docs-font-size')), '125');
     assert.equal(await page.locator('html').getAttribute('data-theme'), 'light');
-    await page.getByLabel('Import settings file').setInputFiles({ name: 'restore.json', mimeType: 'application/json', buffer: Buffer.from(JSON.stringify(backup)) });
+    await page.getByLabel('Import site settings file').setInputFiles({ name: 'restore.json', mimeType: 'application/json', buffer: Buffer.from(JSON.stringify(backup)) });
     await page.getByLabel('Import mode').selectOption('replace');
     page.once('dialog', dialog => dialog.accept());
     await page.getByRole('button', { name: 'Apply import', exact: true }).click();
@@ -243,7 +245,7 @@ const base = process.env.OPENRIAK_SETTINGS_TEST_BASE || 'http://127.0.0.1:1410/d
     assert.equal(await page.evaluate(() => window.OpenRiakSettings.resolve('cluster', 1)), 'custom-A');
     await go('settings/');
     const clearAll = page.locator('[data-settings-clear]');
-    const clearDialog = page.getByRole('dialog', { name: 'Clear all settings?' });
+    const clearDialog = page.getByRole('dialog', { name: 'Clear all site settings?' });
     const savedBeforeClear = await page.evaluate(() => JSON.stringify(window.OpenRiakSettings.snapshot()));
     await clearAll.click();
     assert.equal(await clearDialog.isVisible(), true);
@@ -258,7 +260,7 @@ const base = process.env.OPENRIAK_SETTINGS_TEST_BASE || 'http://127.0.0.1:1410/d
     assert.equal(await page.evaluate(() => JSON.stringify(window.OpenRiakSettings.snapshot())), savedBeforeClear);
     await clearAll.click();
     await clearDialog.getByRole('button', { name: 'Clear all', exact: true }).click();
-    await page.waitForFunction(() => document.querySelector('[data-settings-status]').textContent === 'All settings cleared. Defaults restored.');
+    await page.waitForFunction(() => document.querySelector('[data-settings-status]').textContent === 'All site settings cleared. Defaults restored.');
     assert.equal(await page.evaluate(() => window.OpenRiakSettings.resolve('cluster', 1)), 'my-example-cluster-A');
     assert.equal(await page.evaluate(() => window.OpenRiakSettings.read('openriak-docs-version:openriak-kv')), 'latest');
     assert.equal(await page.evaluate(() => localStorage.getItem('openriak-docs-code-language')), null);
@@ -268,7 +270,7 @@ const base = process.env.OPENRIAK_SETTINGS_TEST_BASE || 'http://127.0.0.1:1410/d
     await go('settings/');
     assert.equal(await page.evaluate(() => document.documentElement.scrollWidth <= innerWidth), true);
     await page.locator('[data-nav-toggle]').click();
-    assert.equal(await page.getByRole('searchbox', { name: 'Search settings' }).isVisible(), true);
+    assert.equal(await page.getByRole('searchbox', { name: 'Search site settings' }).isVisible(), true);
     assert.deepEqual(errors, []);
     await context.close();
     const noJS = await browser.newContext({ javaScriptEnabled: false });

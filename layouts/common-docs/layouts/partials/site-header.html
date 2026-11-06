@@ -1,10 +1,11 @@
 {{- $page := .page -}}
 {{- $section := .section -}}
 {{- if eq $page.Layout "settings" -}}
-  {{- $section = dict "id" "settings" "name" "Settings" "url" "settings/" "pickerIcon" "settings" -}}
+  {{- $section = dict "id" "settings" "name" "Site Settings" "url" "settings/" "pickerIcon" "settings" -}}
 {{- end -}}
 <script type="application/json" id="example-defaults">{{ hugo.Data.example_values | jsonify | safeJS }}</script>
-<script src="{{ `js/settings-store.js` | relURL }}?v=20261020" defer></script>
+<script src="{{ `js/settings-store.js` | relURL }}?v=20261106-advanced" defer></script>
+{{ partial "search-config.html" . }}
 <header class="global-header">
   {{ if .showNavToggle }}
     <button class="nav-toggle" type="button" data-nav-toggle aria-controls="docs-sidebar" aria-expanded="false">
@@ -44,7 +45,7 @@
         <div class="site-section-separator" role="separator"></div>
         <a class="site-section-option{{ if eq $section.id "settings" }} is-active{{ end }}" href="{{ `settings/` | relURL }}" data-settings-link{{ if eq $section.id "settings" }} aria-current="page"{{ end }}>
           {{ partial "site-picker-icon.html" (dict "pickerIcon" "settings") }}
-          <span class="site-section-name">Settings</span>
+          <span class="site-section-name">Site Settings</span>
         </a>
       </div>
     </div>

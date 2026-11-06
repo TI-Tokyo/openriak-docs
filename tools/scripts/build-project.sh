@@ -120,5 +120,5 @@ if [ "${OPENRIAK_SEMANTIC_EXPORT_ONLY:-0}" = 1 ]; then set -- "$@" --renderSegme
 hugo "$@"
 if [ "$project" = core ] && [ "${OPENRIAK_SEMANTIC_EXPORT_ONLY:-0}" != 1 ]; then
   node "$site_root/tools/scripts/check-social-metadata.cjs" "$destination" "$base_url"
-  node "$site_root/tools/scripts/build-semantic-index.mjs" --ensure --all --site-dir "$destination" --publish-dir "$destination"
+  node "$site_root/tools/scripts/build-semantic-index.mjs" --all --site-dir "$destination" --publish-dir "$destination"
 fi

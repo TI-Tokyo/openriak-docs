@@ -41,102 +41,25 @@
 })();
 
 (() => {
-  const normalize = (value) => String(value || '').normalize('NFKD').replace(/[\u0300-\u036f]/g, '').toLowerCase();
-
-  document.querySelectorAll('[data-mailing-list-search]').forEach((root) => {
-    const input = root.querySelector('[data-mailing-list-search-input]');
-    const status = root.querySelector('[data-mailing-list-search-status]');
-    const results = root.querySelector('[data-mailing-list-search-results]');
-    let indexPromise;
-    let timer;
-
-    const loadIndex = () => {
-      if (!indexPromise) {
-        status.textContent = 'Loading search index…';
-        results.setAttribute('aria-busy', 'true');
-        indexPromise = fetch(root.dataset.indexUrl)
-          .then((response) => {
-            if (!response.ok) throw new Error(`Search index returned ${response.status}`);
-            return response.json();
-          })
-          .then((items) => items.map((item) => ({
-            ...item,
-            titleText: normalize(item.title),
-            authorText: normalize(item.authors || item.author),
-            contentText: normalize(item.content),
-          })))
-          .catch((error) => {
-            indexPromise = undefined;
-            results.setAttribute('aria-busy', 'false');
-            status.textContent = 'Search is temporarily unavailable.';
-            throw error;
-          });
-      }
-      return indexPromise;
-    };
-
-    const render = (matches, query) => {
-      results.replaceChildren();
-      if (!matches.length) {
-        results.hidden = true;
-        results.setAttribute('aria-busy', 'false');
-        status.textContent = `No conversations found for “${query}”.`;
-        return;
-      }
-      const fragment = document.createDocumentFragment();
-      matches.slice(0, 30).forEach(({ item }) => {
-        const link = document.createElement('a');
-        const url = new URL(item.url, new URL(root.dataset.indexUrl, window.location.href));
-        query.trim().split(/\s+/).filter(Boolean).slice(0, 8).forEach((term) => url.searchParams.append('highlight', term));
-        link.href = url;
-        const title = document.createElement('strong');
-        title.textContent = item.title;
-        const meta = document.createElement('span');
-        meta.textContent = `${item.author} · ${item.date}`;
-        link.append(title, meta);
-        fragment.append(link);
-      });
-      results.append(fragment);
-      results.hidden = false;
-      results.setAttribute('aria-busy', 'false');
-      status.textContent = `${matches.length} conversation${matches.length === 1 ? '' : 's'} found${matches.length > 30 ? '; showing 30' : ''}.`;
-    };
-
-    const search = async () => {
-      const query = input.value.trim();
-      const terms = normalize(query).split(/\s+/).filter(Boolean);
-      if (terms.join('').length < 2) {
-        results.hidden = true;
-        results.replaceChildren();
-        results.setAttribute('aria-busy', 'false');
-        status.textContent = '';
-        return;
-      }
-      results.setAttribute('aria-busy', 'true');
-      status.textContent = 'Searching…';
-      const items = await loadIndex();
-      const matches = [];
-      items.forEach((item) => {
-        const allText = `${item.titleText} ${item.authorText} ${item.contentText}`;
-        if (!terms.every((term) => allText.includes(term))) return;
-        let score = 0;
-        terms.forEach((term) => {
-          if (item.titleText.includes(term)) score += 8;
-          if (item.authorText.includes(term)) score += 4;
-          if (item.contentText.includes(term)) score += 1;
-        });
-        matches.push({ item, score });
-      });
-      matches.sort((left, right) => right.score - left.score || right.item.date.localeCompare(left.item.date) || left.item.title.localeCompare(right.item.title));
-      render(matches, query);
-    };
-
-    input.addEventListener('input', () => {
-      clearTimeout(timer);
-      timer = setTimeout(() => search().catch(() => {}), 140);
-    });
-    input.addEventListener('focus', () => {
-      if (input.value.trim().length >= 2) search().catch(() => {});
-    });
-  });
+ const normalize=value=>String(value||'').normalize('NFKD').replace(/[\u0300-\u036f]/g,'').toLowerCase();
+ document.querySelectorAll('[data-mailing-list-search]').forEach(root=>{
+  let index;
+  const textSearch=async query=>{
+   index ||= fetch(root.dataset.indexUrl).then(r=>{if(!r.ok)throw Error('Text index unavailable');return r.json();}).then(items=>items.map(item=>({...item,titleText:normalize(item.title),authorText:normalize(item.authors||item.author),contentText:normalize(item.content)}))).catch(error=>{index=null;throw error;});
+   const terms=normalize(query).split(/\s+/).filter(Boolean),matches=[];
+   for(const item of await index){
+    if(!terms.every(term=>`${item.titleText} ${item.authorText} ${item.contentText}`.includes(term)))continue;
+    let score=0;for(const term of terms)score+=(item.titleText.includes(term)?8:0)+(item.authorText.includes(term)?4:0)+(item.contentText.includes(term)?1:0);
+    matches.push({item,score});
+   }
+   matches.sort((a,b)=>b.score-a.score||b.item.date.localeCompare(a.item.date)||a.item.title.localeCompare(b.item.title));
+   return matches.slice(0,30).map(({item})=>{
+    const url=new URL(item.url,new URL(root.dataset.indexUrl,location.href));
+    // Search highlighting remains available on text results.
+    query.split(/\s+/).filter(Boolean).slice(0,8).forEach(term=>url.searchParams.append('highlight', term));
+    return {url:url.href,title:item.title,description:[item.author,item.date].filter(Boolean).join(' · ')};
+   });
+  };
+  import(root.dataset.searchPanelUrl).then(({mountSearch})=>mountSearch({root,input:root.querySelector('[data-mailing-list-search-input]'),status:root.querySelector('[data-mailing-list-search-status]'),results:root.querySelector('[data-mailing-list-search-results]'),manifestURL:root.dataset.semanticIndexUrl,textSearch,noun:'conversations'}));
+ });
 })();
